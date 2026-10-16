@@ -1,0 +1,15 @@
+digraph runtime {
+ graph [rankdir=TB, bgcolor="white", pad="0.3", nodesep="0.45", ranksep="0.48", splines=polyline, fontname="Helvetica", fontsize=12, label="Figure 2  |  What keeps happening while a world runs", labelloc=t, labeljust=l, fontcolor="#132842"];
+ node [shape=box, style="rounded,filled", color="#7794AC", fillcolor="#F4F8FC", fontcolor="#16324A", fontname="Helvetica", fontsize=11, margin="0.16,0.12"];
+ edge [color="#57718C", penwidth=1.5, arrowsize=0.74, fontname="Helvetica", fontsize=10];
+ load [label="Load validated world package", fillcolor="#E9F3FF"];
+ input [label="Collect input + events\nkeyboard, mouse, simulation signals"];
+ tick [label="Advance simulation time\nand process events"];
+ evaluate [label="Evaluate world behavior\n(e.g., position = 3 sin(time))", fillcolor="#E8F6F0", color="#5E9A84"];
+ state [label="Update world state\npositions, properties, relationships"];
+ adapter [label="Renderer adapter\nconvert world data to draw requests", fillcolor="#FFF4E7", color="#D1A365"];
+ frame [label="Renderer + GPU\ndisplay a frame", fillcolor="#FFF4E7", color="#D1A365"];
+ human [label="Human reviews result\nAI proposes reviewed changes", style="rounded,dashed", fillcolor="#FFFFFF"];
+ load -> input -> tick -> evaluate -> state -> adapter -> frame -> input;
+ frame -> human [style=dashed, color="#8B9BAB", constraint=false];
+ }

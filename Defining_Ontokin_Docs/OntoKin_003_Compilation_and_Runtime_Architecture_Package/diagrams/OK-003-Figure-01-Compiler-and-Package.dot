@@ -1,0 +1,16 @@
+digraph compiler {
+ graph [rankdir=LR, bgcolor="white", pad="0.34", nodesep="0.48", ranksep="0.58", splines=ortho, fontname="Helvetica", fontsize=12, label="Figure 1  |  From source to a runnable world", labelloc=t, labeljust=l, fontcolor="#132842"];
+ node [shape=box, style="rounded,filled", color="#7794AC", fillcolor="#F4F8FC", fontcolor="#16324A", fontname="Helvetica", fontsize=11, penwidth=1.2, margin="0.14,0.12"];
+ edge [color="#5D7690", penwidth=1.45, arrowsize=0.72, fontname="Helvetica", fontsize=10, fontcolor="#435F7A"];
+ author [label="Human + AI authoring\nOntoKin source", fillcolor="#E9F3FF"];
+ front [label="Language front end\nparse + name/type/unit checks"];
+ ir [label="Typed OntoKin IR\nworld graph + behavior rules", fillcolor="#E8F6F0", color="#5E9A84"];
+ static [label="World data\nentities, geometry, assets"];
+ behavior [label="Behavior execution\ninterpreted first\nLLVM backend possible later", fillcolor="#FFF4E7", color="#D1A365"];
+ pkg [label="Runnable world package\ndata + validated behaviors\n+ dependency references", fillcolor="#E9F3FF"];
+ runtime [label="OntoKin runtime\nstate + time + events"];
+ author -> front -> ir;
+ ir -> static; ir -> behavior;
+ static -> pkg; behavior -> pkg;
+ pkg -> runtime;
+ }
