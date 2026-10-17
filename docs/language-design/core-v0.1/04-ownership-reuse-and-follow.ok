@@ -1,0 +1,53 @@
+ontokin "0.1";
+module OwnershipReuse @ "ownership-reuse";
+profile "core-0.1";
+
+class Ball @ "ball-type" {
+    public param radius @ "radius": Length = 0.1[m];
+    public param mass @ "mass": Mass = 1[kg];
+    public derive diameter @ "diameter": Length = 2 * self.radius;
+    geometry = sphere(self.radius);
+    physical = sphere_body(self.radius, self.mass);
+    motion = dynamic;
+    public method width @ "width"() -> Length {
+        return self.diameter;
+    }
+}
+
+class WideBall @ "wide-ball-type" extends Ball {
+    override radius = 0.2[m];
+    public override method width @ "width"() -> Length {
+        return 2 * self.radius;
+    }
+}
+
+class Label @ "label-type" {
+    geometry = box(vec3(0.05[m], 0.05[m], 0.05[m]));
+}
+
+class Group @ "group-type" {
+    public part ball @ "ball": WideBall {
+        placement = pose(world, vec3(0[m], 2[m], 0[m]), quat(1, 0, 0, 0));
+    }
+}
+
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], -9.81[m/s^2], 0[m/s^2]);
+    object first @ "first": Group {}
+    object second @ "second": Group {
+        ball.radius = 0.3[m];
+    }
+    object label @ "label": Label {}
+    follow caption @ "caption" {
+        parent = first.ball.frame;
+        child = label;
+        offset = pose(first.ball.frame, vec3(0[m], 0.5[m], 0[m]),
+                      quat(1, 0, 0, 0));
+    }
+    action shift_group @ "shift-group" =
+        move(first, vector(world, 1[m/s], 0[m/s], 0[m/s]), 1[s]);
+    at 0[s] sequence { start shift_group; }
+    assert first.ball.width() == 0.4[m], "first ball uses its inherited default";
+    assert second.ball.width() == 0.6[m], "second ball uses its instance override";
+}
