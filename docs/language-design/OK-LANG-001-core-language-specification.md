@@ -4,34 +4,35 @@ document_id: OK-LANG-001
 title: "OntoKin Core Language Specification"
 version: 0.1
 date: 2026-10-17
-status: language-design
-review_state: proposed-normative-draft
+status: language-specification
+review_state: adopted-core-engineering-baseline
+engineering_baseline: 2026-10-17
 document_type: core-language-specification
 repository: https://github.com/Omegapy/OntoKin
 repository_snapshot: ded52f778418795c6dd523b32cd8470e188d5171
 related_documents: [OK-CAP-001 v0.1, OK-PRD-001 v0.2, OK-SEM-001 v0.1, OK-001, OK-002, OK-003]
 primary_operator: AI authoring agents
-implementation_status: not-implemented
+implementation_status: experimental-reference-prototype
 ---
 
 # OntoKin Core Language Specification
 
 | Document control | Value |
 | --- | --- |
-| Identifier | OK-LANG-001, proposed version 0.1 |
-| Status | Language design; proposed normative draft for review |
-| Purpose | Define source programs whose objects, relationships, validity, and behavior can be determined before a compiler exists. |
+| Identifier | OK-LANG-001, language version 0.1; engineering baseline October 17, 2026 |
+| Status | Adopted `core-0.1` engineering baseline; implementation support is measured separately |
+| Purpose | Define source programs whose objects, relationships, validity, and behavior can be determined and checked against an implementation. |
 | Language profile | `core-0.1`, a deliberately limited semantic contract |
 | Initial demonstrations | Nested parts with independent prescribed motion; a carried sphere released into uniform gravity. |
-| Authority | The owner's current task authorizes drafting these decisions. Publication does not certify implementation or imply separate approval of every earlier proposal. |
-| Implementation boundary | No compiler, host language, intermediate representation, physics engine, numerical integrator, controller library, or renderer is selected. |
+| Authority | The owner's October 17 prototype task authorizes finalizing the twelve core decisions and implementing this bounded baseline. Broader PRD, CAP, SEM, and founding proposals retain their recorded status. |
+| Implementation boundary | Python and its standard library are selected for the experimental headless reference prototype in OK-ENG-001. Production compiler, storage, physics-engine, controller, and renderer choices remain open. |
 | Companion artifacts | [Complete grammar](core-v0.1/ontokin-core.ebnf), [source fixtures and validation cases](core-v0.1/validation-cases.json), [diagnostic schema](core-v0.1/diagnostic.schema.json), [requirement coverage](core-v0.1/requirement-coverage.json) |
 
 ## 1. Purpose, authority, and reading order
 
 OntoKin is an object-oriented language for agents to describe reusable 3D objects, their parts, appearance, physical properties, mechanical relationships, and motion. The [capability definition](../product/OK-CAP-001-modeling-motion-and-object-structure.md) establishes the present modeling focus. The [PRD](../product/OK-PRD-001-product-requirements.md) records the broader product requirements. The [semantic model](OK-SEM-001-core-object-motion-and-physics-semantics.md) proposes what the concepts mean. This document defines one precise way to express a small, useful subset.
 
-**A program valid under this draft has a specified meaning. That statement does not mean an OntoKin implementation exists.** MUST, MUST NOT, and rejection conditions are normative *within this proposed draft*. They are language-design decisions offered for review, not retrospective approval of the PRD or SEM drafts.
+**A valid core program has a specified meaning; an implementation must establish which parts of that meaning it has demonstrated.** MUST, MUST NOT, and rejection conditions are normative within the adopted `core-0.1` engineering baseline. [Section 16](#16-engineering-baseline-adoption-and-clarifications) records the adoption and its clarifications. The [engineering plan and evidence](../engineering/OK-ENG-001-core-reference-implementation-and-conformance-plan.md) identify the experimental implementation's measured support. This adoption does not retrospectively approve all PRD or SEM proposals.
 
 The source grammar and this document jointly define `core-0.1`. Grammar determines whether text is syntactically well formed. The type, relationship, and state rules determine whether a well-formed program is valid. The behavior equations determine the intended state over time. A discovered disagreement between grammar, examples, and prose is a specification defect; a tool must report it rather than choose its preferred interpretation silently.
 
@@ -43,6 +44,7 @@ The source grammar and this document jointly define `core-0.1`. Grammar determin
 | Create, inspect, or repair through an agent | 11 |
 | Study complete programs and invalid cases | 12 and 13 |
 | Review remaining work and source evidence | 14 and 15 |
+| Identify the adopted engineering baseline and changes from the original draft | 16 and OK-ENG-001 |
 
 The earlier `entity`, `position(t)`, indentation-based, and `sin(t)` examples in OK-001 through OK-003 remain historical sketches. They did not define a grammar or unit contract. They are not valid `core-0.1` programs unless rewritten under this specification. The founding architecture options remain available for later engineering decisions.
 
@@ -50,13 +52,13 @@ The earlier `entity`, `position(t)`, indentation-based, and `sin(t)` examples in
 
 ### 2.1 Review result
 
-All SEM-01 through SEM-28 and all SC-01 through SC-24 were reviewed against the product and capability documents. No direct contradiction was found that requires discarding a semantic rule. The main gap is that several rules delegate details to a future "supported contract." This draft either supplies that contract for `core-0.1` or explicitly leaves the broader case outside it.
+All SEM-01 through SEM-28 and all SC-01 through SC-24 were reviewed against the product and capability documents. No direct contradiction was found that requires discarding a semantic rule. The main gap is that several rules delegate details to a future "supported contract." This specification either supplies that contract for `core-0.1` or explicitly leaves the broader case outside it.
 
 The distinction between composition, spatial following, and physical connection is essential. An owner organizes the lifetime of its parts. A following relation calculates one frame from another. A mechanical relationship constrains permitted relative motion under a stated physical interpretation. These meanings cannot be substituted for one another.
 
-The dispositions below apply to this draft only. **Retain** carries the meaning into the core. **Clarify** supplies a previously open rule. **Limit** preserves the general meaning while defining only a restricted case. None of these labels means a product requirement has passed implementation testing.
+The dispositions below apply to this core specification only. **Retain** carries the meaning into the core. **Clarify** supplies a previously open rule. **Limit** preserves the general meaning while defining only a restricted case. None of these labels means a product requirement has passed implementation testing.
 
-| Semantic rule | Disposition | Decision in this draft |
+| Semantic rule | Disposition | Decision in this core |
 | --- | --- | --- |
 | SEM-01 | Clarify | Explicit declaration keys, independently expanded instances, value/reference distinctions, and revision-pinned definitions; source cloning creates new occurrence keys. |
 | SEM-02 | Clarify | Single nominal inheritance; exact method override signatures; pure dispatch; no multiple inheritance or runtime part replacement. |
@@ -89,7 +91,7 @@ The dispositions below apply to this draft only. **Retain** carries the meaning 
 
 ### 2.2 Material decisions and remaining approval scope
 
-The following choices make the draft concrete enough to review. Each can be revised through a new specification revision before implementation. The earlier SEM draft did not already settle them.
+The following choices were proposed in the original language draft. They are now adopted for the bounded `core-0.1` engineering baseline under the owner's prototype instruction, as recorded in section 16. A later semantic change requires an explicit specification revision. The earlier SEM draft did not already settle them.
 
 | Decision | Chosen rule and reason |
 | --- | --- |
@@ -141,7 +143,7 @@ Output levels retain the PRD's distinction:
 | `evaluated` | A requested time interval has valid behavior under the declared semantic and numerical contract. |
 | `delivered` | The specified external artifact has been checked against its destination contract. |
 
-This draft provides expected results and structural contracts. It does not report any of these implementation levels as achieved for OntoKin. Grammar checking in section 13 is an editorial check, not `represented` product certification.
+This specification provides expected results and structural contracts. Actual achieved levels are reported by the experimental implementation and its separate engineering evidence. The original grammar checks recorded in section 13 remain editorial evidence; they do not by themselves establish `represented` acceptance.
 
 ## 4. Source text and complete grammar
 
@@ -471,7 +473,7 @@ If ω₀ is zero, R(t)=R₀; no zero-vector normalization is attempted. The angl
 
 These equations define the semantic trajectory. They do not specify an integrator. Constant angular velocity here relies on isotropic inertia; it is not a general promise for torque-free asymmetric bodies. General rigid-body rotation requires a separate contract.
 
-For an initially dynamic object, the constants are the elaborated canonical source values and represented rotation. At release, the constants are the saved incoming semantic state. The transition introduces no additional rounding jump. Between events the equations define mathematical real-valued trajectories over those constants. An implementation chooses its numeric machinery later and must meet the comparison contract in section 13. Exact event order does not imply bit-identical floating-point results across implementations.
+For an initially dynamic object, the constants are the elaborated canonical source values and represented rotation. At release, the constants are the saved incoming semantic state. The transition introduces no additional rounding jump. Between events the equations define mathematical real-valued trajectories over those constants. Each implementation chooses its numeric machinery and must meet the comparison contract in section 13. Exact event order does not imply bit-identical floating-point results across implementations.
 
 Every accepted evaluated interval must keep each exposed scalar state component within the finite binary64 magnitude range. A request crossing that range fails with `OKL-E-NUMERIC` and identifies the boundary of its valid interval; an out-of-range mathematical value cannot be serialized as infinity or certified as a valid core sample. This range condition is separate from the fixture comparison tolerances.
 
@@ -669,7 +671,7 @@ In this table Q is a numeric scalar or quantity type permitted for that operatio
 | `tween(JointRef,Angle,Time) -> Action` | Hinge coordinate builder |
 | `tween(JointRef,Length,Time) -> Action` | Slider coordinate builder |
 
-Type/domain validation of action arguments occurs when the description is elaborated; current-state admission checks occur at the start boundary. A timeline preflight can identify those later failures in advance without changing their meaning.
+Action-argument types, frame requirements, finite numeric values, and positive duration are checked when the description is elaborated. The tween target's membership in the target joint's mandatory range is an admission precondition, checked at the start boundary together with current mode, action state, and channel availability. This distinction preserves N14's required admission-phase diagnostic. A timeline preflight can identify those later failures in advance without changing their phase, timestamp, or meaning. Section 16 records this clarification to the original draft's broader action-domain wording.
 
 A named declaration `action a @ "a" = expression;` gives an immutable `Action` description its own lifecycle identity. Referring to `a` in another action initializer copies the description and target references but creates a separate lifecycle instance. Referring to `a` in `start a;` selects the named instance. Cyclic description references are invalid.
 
@@ -797,7 +799,7 @@ The normal repair cycle is: discover the needed contract; inspect the identified
 
 ## 12. Complete source programs and expected behavior
 
-These four programs are independent source bundles. Each has its own module, scene, and declared horizon. They can be written and reviewed now. Their expected results define later validation work; they have not been executed by an OntoKin compiler or runtime.
+These four programs are independent source bundles. Each has its own module, scene, and declared horizon. Their expected results were fixed before the reference prototype was implemented. Measured execution results are recorded separately in OK-ENG-001 and its linked conformance report; the examples remain independent expectations.
 
 The adjacent `.ok` files are the complete source fixtures. Their copies below must remain byte-for-byte equivalent after normalizing the final newline. The [validation manifest](core-v0.1/validation-cases.json) derives additional complete candidates by exact, ordered replacements. It records requirement IDs, language rules, semantic-check associations, and expected diagnostics or state.
 
@@ -1050,7 +1052,7 @@ $$
 
 The sphere continues rotating about Z; its angle relative to its release orientation is 1 rad at t=1.5 and 2 rad at t=2. Its carrier's eventual stop cannot change that free state. The uniform sphere model is what makes constant torque-free angular velocity a valid core contract.
 
-This is the exact numerical setup of SC-13, connected to SEM-07 and SEM-21. It also exercises LNG-009, OBJ-015, PHY-014, CAP-07, and CAP-12. It is an analytical specification example, not a measured simulation.
+This is the exact numerical setup of SC-13, connected to SEM-07 and SEM-21. It also exercises LNG-009, OBJ-015, PHY-014, CAP-07, and CAP-12. This table is the analytical specification expectation; measured prototype values belong to the separate engineering report.
 
 ### 12.4 P04: Ownership, reuse, specialization, and visual following
 
@@ -1258,7 +1260,7 @@ For unit quaternions, the orientation error is 2 arccos(min(1, |q_ref · q_resul
 
 These tolerances apply to the fixture comparisons only. They do not relax type checks, exact canonical source equality, hard bounds, transaction atomicity, or timestamp ordering. They are not a promise of broad scientific accuracy, long-term stability, or real-time performance.
 
-The October 17, 2026 drafting checks establish the following limited evidence:
+The following October 17, 2026 checks were completed when the original language draft was written, before the engineering prototype began. They remain the record of that drafting work:
 
 - All four base programs and all 43 complete manifest candidates were materialized and checked against the EBNF and explicit lexer. The expected 39 candidates parse; the expected four lexical/syntax negatives reject.
 - All 43 grammar productions were checked for undefined references, reachability, productivity, problematic left recursion, and nullable repetition. No such grammar defect was found.
@@ -1268,13 +1270,13 @@ The October 17, 2026 drafting checks establish the following limited evidence:
 - A separate review checked the normative sections against the examples and closed the identified gaps in initializer binding, nested overrides, mixed relation cycles, numeric projection, and candidate-revision diagnostics.
 - The repository's existing preservation checker and the current local links were checked after adding the specification and updating navigation.
 
-**No OntoKin type checker, compiler, runtime, physics simulation, renderer, or agent service was built or executed.** Expected semantic diagnostic codes and state trajectories remain conformance requirements for subsequent implementation work. The temporary grammar and equation checks are editorial evidence; they are not an OntoKin implementation deliverable.
+**That original drafting task built or executed no OntoKin type checker, compiler, runtime, physics simulation, renderer, or agent service.** Its temporary grammar and equation checks are editorial evidence. The later prototype is recorded in [OK-ENG-001](../engineering/OK-ENG-001-core-reference-implementation-and-conformance-plan.md), with its own execution evidence and limitations. The diagnostic and trajectory expectations above remain the conformance targets.
 
 ## 14. Review decisions and the next engineering gate
 
-Version 0.1 supplies one usable written language contract. The twelve choices in section 2.2 are proposed and reviewable. Review should concentrate on whether they preserve the intended product behavior and give agents enough expressiveness for the first modeling tasks.
+Version 0.1 supplies one usable written language contract. The twelve choices in section 2.2 are adopted for the engineering baseline in section 16. The questions below remain review criteria for the implementation and for later language revisions.
 
-| Review question | Acceptance evidence needed before implementation design |
+| Review question | Evidence needed for the engineering baseline |
 | --- | --- |
 | Does the syntax make local authoring and repair practical? | An agent can write each base fixture from this document alone and explain every declaration. |
 | Are identity, inheritance, parts, and overrides predictable? | Renaming, independent instances, exact dispatch, and nested parameter edits have unambiguous outcomes and scope. |
@@ -1284,11 +1286,11 @@ Version 0.1 supplies one usable written language contract. The twelve choices in
 | Can an agent diagnose and repair failure? | Source and candidate identities, exact spans, stable codes, requested levels, atomic patches, and retry outcomes are sufficient. |
 | Is the future conformance target reviewable? | Each case has complete source or an exact protocol setup, expected outcome, tolerances where appropriate, and traceability. |
 
-Once the language choices are accepted or revised, the next document can define compiler/runtime responsibilities and a prototype conformance plan against this contract. That work should derive its requirements from the language, including diagnostics, exact event ordering, preserved identities, and declared physical limits.
+[OK-ENG-001](../engineering/OK-ENG-001-core-reference-implementation-and-conformance-plan.md) now defines the prototype responsibilities and conformance gates against this contract, including diagnostics, exact event ordering, preserved identities, and declared physical limits.
 
 Potential later profiles must separately settle contacts and numerical tolerances, general rigid-body inertia and torque, dynamic joints and loops, actuator feasibility, capture and multi-grip, tracking and locomotion, deformation, materials/environmental fields, imports/generators, external events, and delivery mappings. Existing product requirements remain the source for that broader scope.
 
-No compiler, programming framework, intermediate representation, physics engine, integration method, or rendering engine is selected here. Their suitability becomes assessable against these written requirements and fixtures.
+The reference prototype's implementation choices are recorded in OK-ENG-001. They do not select the production compiler, serialized intermediate representation, physics engine, integration method, or rendering engine. Those decisions require evidence from the relevant workload and physical or delivery contract.
 
 ## 15. Source review, companion inventory, and references
 
@@ -1304,7 +1306,7 @@ The review used main-branch snapshot `ded52f778418795c6dd523b32cd8470e188d5171`.
 | Alternate format and figures | [OK-003 HTML](foundations/OK-003-compilation-and-runtime-architecture.html) and all files in [diagrams](foundations/diagrams/): six PNG, six SVG, and three DOT sources |
 | Navigation and preservation | Root overview, [documentation guide](../README.md), and the four files in [reorganization evidence](../maintenance/reorganization-2026-10-17/): retained navigation, source map, record, and verification procedure |
 
-The earlier substantive records and historical evidence retain their contents and statuses. Current navigation now points to this additional formal draft. A reference to an earlier syntax or architecture choice is read in its original proposed context, not silently promoted into this core.
+The earlier substantive records and historical evidence retain their contents and statuses. Current navigation points to this formal specification and the subsequent engineering work. A reference to an earlier syntax or architecture choice is read in its original proposed context, not silently promoted into this core.
 
 ### 15.2 Companion artifacts
 
@@ -1328,7 +1330,35 @@ External references support the mathematical conventions; they do not supply Ont
 
 **[T2]** Drake project, [SpatialVelocity class documentation](https://drake.mit.edu/doxygen_cxx/classdrake_1_1multibody_1_1_spatial_velocity.html). Primary technical documentation distinguishing a spatial velocity's measurement frame, expressed-in axes, and reference point, including velocity shifts between points. Citing this mathematical reference does not select Drake.
 
-**[T3]** Oracle, *Numerical Computation Guide*, [IEEE Arithmetic](https://docs.oracle.com/cd/E19957-01/806-3568/ncg_math.html). Primary technical reference for binary64 representation and rounding concepts. This draft states its own source and semantic-trajectory contract.
+**[T3]** Oracle, *Numerical Computation Guide*, [IEEE Arithmetic](https://docs.oracle.com/cd/E19957-01/806-3568/ncg_math.html). Primary technical reference for binary64 representation and rounding concepts. This specification states its own source and semantic-trajectory contract.
 
 **[U1]** Project owner task, October 17, 2026: examine the documentation; review the 28 SEM rules against product requirements; define minimum language scope and precise source, types, objects, mechanics, physical behavior, actions, time, and agent operations; create valid/invalid programs with expected behavior and traceability. Begin with independent parts and gravity/release. Leave compiler, physics-engine, and renderer choices for later requirements-driven work.
+
+## 16. Engineering baseline adoption and clarifications
+
+### 16.1 Adoption and version boundary
+
+The owner's subsequent October 17, 2026 instruction authorizes moving from this written specification to the first working prototype: finalize the twelve core decisions, build a parser and validator, evaluate headless motion and release, and execute the four programs and 43 source cases. That instruction supplies the authority for this engineering adoption. No additional approval of the earlier product or founding proposals is inferred.
+
+Language version `0.1`, profile `core-0.1`, stable rule IDs, grammar, source fixtures, and expected case outcomes are retained. The document's `engineering_baseline: 2026-10-17` field identifies this adoption. The pre-engineering repository snapshot is `1a9a52a7eedf4170d864c0d37d0f32ae69bf9a69`; its Git history preserves the original proposed draft. The `repository_snapshot` field near the beginning remains the earlier source-review basis for that draft, rather than being relabeled as implementation evidence.
+
+| Decisions adopted | Consequence for this baseline |
+| --- | --- |
+| D-01, D-02, D-03 | Preserve the declared source form, nominal single inheritance, exact overrides, and separation of pure construction from timeline effects. |
+| D-04, D-05 | Preserve checked numeric and unit rules, proper rotations, explicit frames, and the specified mathematical trajectories. Fixture tolerances do not weaken canonical arithmetic or exact event ordering. |
+| D-06, D-07, D-08, D-09 | Preserve exclusive channels, prescribed joints, the limited uniform-sphere model, complete incoming-state release, and ordered event transactions. |
+| D-10 | Keep the finite single-module scope; no host execution or hidden extension loading enters ordinary source evaluation. |
+| D-11 | Adopt the revision-safe agent-editing contract as a required future service contract. A file-based prototype does not establish service, retry, cancellation, or edit-transaction conformance. |
+| D-12 | Publish measured support separately from language and product requirements. Passing the finite source corpus establishes evidence for that corpus and its additional checked observations. |
+
+### 16.2 Clarifications made for execution
+
+| ID | Original ambiguity or reporting issue | Baseline treatment |
+| --- | --- | --- |
+| C-01 | Section 10.3's general action-argument domain wording could place an out-of-range tween target in elaboration, while N14 requires admission. | Section 10.3 now separates scalar/type/frame/duration checks from target-joint range admission. N14 retains `admission` and `OKL-E-JOINT-LIMIT`; no expected result is changed to accommodate an implementation. |
+| C-02 | Original fixture and coverage metadata say no implementation or conformance execution exists. | Those files remain the original design record and expected-outcome register. Current implementation evidence is the separate versioned engineering report. Their historical Boolean/status fields must not be read as current repository status. |
+| C-03 | The written agent-operation contract could be mistaken for an implemented service when a CLI is added. | The prototype exposes documented file-based operations. A01–A10 remain separately tracked protocol scenarios; overlapping local checks do not certify the full service contract. |
+| C-04 | Passing the small numerical examples could be mistaken for proof of all normative arithmetic behavior. | Correct rounding of static mathematical functions, exact represented rotations, finite-interval guarantees, and full-range behavior retain their normative meanings. The prototype must disclose any unproved support instead of claiming universal arithmetic conformance. |
+
+The original PRD/CAP requirement coverage, all SEM rules and checks, founding documents, alternate editions, diagrams, and reorganization evidence retain their substantive content. The engineering plan adds implementation decisions and measurements without using the earlier preservation task as authority to revise language behavior.
 
