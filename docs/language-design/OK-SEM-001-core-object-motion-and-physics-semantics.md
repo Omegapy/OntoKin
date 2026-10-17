@@ -645,15 +645,15 @@ The owner brief and project documents establish OntoKin's intended direction. Th
 
 **[U1] Project owner brief, October 17, 2026.** Create OK-SEM-001 as a conceptual core semantic model covering objects, hierarchy, motion, mechanics, physics, and animation. Preserve exterior models and short animations as the initial focus, human inspectability, and later decisions on syntax and implementation.
 
-**[P1] OK-CAP-001 v0.1.** [Modeling, motion, and object structure](../Product_Requirements_Docs/OntoKin_Modeling_Motion_and_Object_Structure.md). Main reference for the current modeling focus, relationships, and capability IDs.
+**[P1] OK-CAP-001 v0.1.** [Modeling, motion, and object structure](../product/OK-CAP-001-modeling-motion-and-object-structure.md). Main reference for the current modeling focus, relationships, and capability IDs.
 
-**[P2] OK-PRD-001 v0.2.** [OntoKin product requirements document](../Product_Requirements_Docs/OntoKin_PRD_v0.md). Broader product reference; still a product-review draft. Its filename retains the earlier v0 label.
+**[P2] OK-PRD-001 v0.2.** [OntoKin product requirements document](../product/OK-PRD-001-product-requirements.md). Broader product reference; still a product-review draft. Its original filename, `OntoKin_PRD_v0.md`, retained the earlier v0 label.
 
-**[P3] OK-001.** [Project vision and architecture](../OK-001/OntoKin_001_Project_Vision_and_Architecture.md). Founding vision, AI/human collaboration, responsibility boundaries, and historical document numbering.
+**[P3] OK-001.** [Project vision and architecture](foundations/OK-001-project-vision-and-architecture.md). Founding vision, AI/human collaboration, responsibility boundaries, and historical document numbering.
 
-**[P4] OK-002.** [Language foundations and conceptual minimal specification](../OK-002/OntoKin_002_Language_Foundations_and_Minimal_Specification.md). Founding concepts of objects, state, behavior, relationships, and unresolved language questions.
+**[P4] OK-002.** [Language foundations and conceptual minimal specification](foundations/OK-002-language-foundations-and-minimal-specification.md). Founding concepts of objects, state, behavior, relationships, and unresolved language questions.
 
-**[P5] OK-003.** [Compilation and runtime architecture](../OntoKin_003_Compilation_and_Runtime_Architecture_Package/OntoKin_003_Compilation_and_Runtime_Architecture.md). Prior architecture proposals and execution/rendering distinctions.
+**[P5] OK-003.** [Compilation and runtime architecture](foundations/OK-003-compilation-and-runtime-architecture.md). Prior architecture proposals and execution/rendering distinctions.
 
 **[S1] Lynch and Park, Modern Robotics, section 3.3.1.** [Homogeneous transformation matrices](https://modernrobotics.northwestern.edu/nu-gm-book-resource/3-3-1-homogeneous-transformation-matrices/). Background for rigid-pose composition and changing reference frames.
 

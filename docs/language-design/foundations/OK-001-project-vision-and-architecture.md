@@ -68,7 +68,7 @@ These are **design goals**, not capabilities that have already been built or val
 
 The discussion established three primary system layers. A parser/compiler and an integration adapter are additional components required to connect those layers in an implementation.
 
-![OntoKin concept architecture and proposed development phases](OntoKin_001_Architecture_Diagram.png)
+![OntoKin concept architecture and proposed development phases](diagrams/OntoKin_001_Architecture_Diagram.png)
 
 *Figure 1. Updated vector recreation of the founding concept diagram. It illustrates the AI/human authoring relationship, language, runtime, rendering layer, possible outputs, and a phased roadmap. The illustrated code is conceptual, not finalized OntoKin syntax.*
 

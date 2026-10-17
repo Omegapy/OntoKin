@@ -1,81 +1,33 @@
 # OntoKin
 
-**An AI-native mathematical programming language for interactive virtual worlds.**
+**An AI-native, object-oriented language for physical 3D models and animation.**
 
-OntoKin (pronounced **ON-toh-kin**) is a proposed programming language for describing, creating, and animating virtual worlds through mathematics and explicit rules. The goal is to make it possible for **AI agents and human developers** to work with the same structured world descriptions, rather than requiring an AI to operate a graphics editor through its interface.
+OntoKin (pronounced **ON-toh-kin**) is a proposed programming language designed primarily for AI agents to create reusable objects, characters, and animations. An agent describes an object's form, parts, appearance, physical properties, mechanical connections, and intended actions. The language system supplies supported construction and behavior. People can inspect the definitions, review the results, and direct changes.
 
-OntoKin is intended for interactive 2D and 3D environments, video games, animation, and simulation. A world could define its objects, geometry, properties, motion, relationships, and responses to input. The language would describe the world; a runtime would execute its behavior; and a renderer would turn the current scene into visible images.
+The current direction begins with exterior 3D models and short animations. Those objects should remain reusable in larger scenes, video games, and eventually more complex virtual worlds. Physics and mechanics are central to the design; mathematics gives those descriptions precise meaning.
 
-> **Project status:** Early concept and architecture exploration. The documentation records goals, proposals, and open questions. A working OntoKin compiler, runtime, or rendering engine has **not** been released.
+> **Project status:** Conceptual language design. The product requirements, capability definition, and semantic model are review drafts. This repository does not yet provide a working OntoKin compiler, runtime, or renderer.
 
-## The idea
+## Start reading
 
-Existing tools such as Blender and game engines already use mathematics for geometry and animation. OntoKin's proposed focus is **AI-native authoring and verification**: a language designed from the beginning so that AI agents can inspect, generate, validate, and modify individual parts of a world, while humans can understand the definitions and direct or approve changes.
+Use the [documentation guide](docs/README.md) for the full reading order, document status, diagrams, and earlier design records.
 
-The aim is to support:
+| Question | Document |
+| --- | --- |
+| What should OntoKin create, and what is the initial focus? | [OK-CAP-001: Modeling, motion, and object structure](docs/product/OK-CAP-001-modeling-motion-and-object-structure.md) |
+| What must the intended product support? | [OK-PRD-001: Product requirements](docs/product/OK-PRD-001-product-requirements.md) |
+| What do objects, movement, mechanics, and physics mean? | [OK-SEM-001: Core object, motion, and physics semantics](docs/language-design/OK-SEM-001-core-object-motion-and-physics-semantics.md) |
 
-- **Mathematical world descriptions:** Shapes, spatial properties, transformations, and motion expressed as data and mathematical rules.
-- **Interactive behavior:** Events, state changes, constraints, and responses to player input.
-- **Human and AI collaboration:** Readable source for developers and structured, verifiable representations for AI agents.
-- **Renderer independence:** The same underlying world definitions should not be tied permanently to one graphics engine.
-- **Incremental development:** Validate the language with small examples before attempting a full virtual-world engine.
+The documents are organized into **Product** and **Language design**. The [founding records](docs/README.md#founding-design-records) retain the original vision, language exploration, and architecture options. Their dates and proposal status remain visible. The guide explains how that earlier work relates to the current modeling direction.
 
-## Proposed architecture
+## Current design work
 
-```mermaid
-flowchart TD
-    H[Human goals and review] --> A[Human / AI authoring]
-    A --> S[OntoKin source]
-    S --> C[Parser and validation]
-    C --> IR[Structured world representation]
-    IR --> R[OntoKin runtime]
-    U[Player input and events] --> R
-    R --> X[Rendering adapter]
-    X --> G[Graphics engine / renderer]
-    G --> V[Interactive world on screen]
-    V -. Feedback .-> H
-```
+The semantic model proposes rules for classes, instances, nested parts, frames, joints, physical participation, and concurrent actions. Its main example follows a character walking, turning its head, using one hand, and carrying and releasing a prop. The rules and behavior checks are proposed meanings and expected outcomes, not implementation test results.
 
-The proposed compiler would first check and transform OntoKin source into a structured representation. The **runtime** would manage time, world state, and behavior as the scene changes. A **rendering adapter** would connect that state to an existing graphics system. Using an interpreter first, and potentially an LLVM-based compilation backend later, are architectural options under investigation, not finalized implementation decisions.
-
-### Conceptual example
-
-The following is **illustrative pseudocode**, not a finalized OntoKin syntax:
-
-```text
-world Demo {
-    entity Ball {
-        geometry: sphere(radius: 1.0)
-        position(t): (3 * sin(t), 0, 0)
-        color: rgb(0.2, 0.6, 1.0)
-    }
-}
-```
-
-The moving sphere is defined by an equation rather than a stored sequence of animation frames. During execution, the runtime would evaluate its position over time, and the renderer would draw the current result.
-
-## Defining OntoKin: project documents
-
-The [`Defining OntoKin Docs`](Defining_OntoKin_Docs/) directory contains the numbered documents created during the initial human–AI design discussions:
-
-| Document | Topic | Purpose |
-| --- | --- | --- |
-| **OK-001** | Project Vision and Initial Architecture | Explains the origins, goals, intended use cases, and high-level system design. |
-| **OK-002** | Language Foundations and Conceptual Minimal Specification | Explores what the language should describe and how people and AI might work with it. |
-| **OK-003** | Compilation and Runtime Architecture | Examines parsers, intermediate representations, interpretation, LLVM, the runtime, and rendering integration. |
-
-These documents are **design records**, not finished technical standards. Where relevant, they distinguish ideas already agreed upon from recommendations and unresolved decisions. Their diagrams are intended to help both people and future AI collaborators understand the architecture.
-
-## Direction of development
-
-The first proposed milestone is intentionally small: define a valid OntoKin world containing a sphere, move it with a mathematical expression, and respond to a simple player input. This would test the complete path from authoring and validation to runtime execution and real-time rendering.
-
-Later work may explore more expressive geometry, physics integration, game-engine adapters, optimized compilation, AI-guided structured editing, and possibly a dedicated renderer. Those capabilities remain research and engineering goals.
+Language syntax and implementation choices remain later work. OntoKin describes objects and behavior; execution evaluates their state over time; rendering turns the evaluated scene into visible images. The existing documents explore how those responsibilities might be implemented without selecting a final compiler, physics engine, or renderer.
 
 ## About the name
 
-**OntoKin** combines **onto-**, referring to ontology (what exists and how entities relate), with **kin-**, referring to kinematics (motion). Earlier drafts used the working name *OntoKine*; **OntoKin** is the current project name.
+**OntoKin** combines **onto-**, referring to ontology, or what exists and how entities relate, with **kin-**, referring to kinematics, or motion. Earlier drafts used the working name *OntoKine*; **OntoKin** is the current project name.
 
----
-
-*OntoKin is currently a concept-stage research and development project. This README describes its intended direction, not implemented functionality.*
+The [documentation reorganization record](docs/maintenance/reorganization-2026-10-17/reorganization-record.md) contains the requirements, implementation plan, source mapping, and preservation checks for the October 17, 2026 organization change.
