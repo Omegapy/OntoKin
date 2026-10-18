@@ -106,10 +106,21 @@ class ActionModel:
 
 
 @dataclass
+class ImpulsePayload:
+    """Elaborated source constants; application pose remains runtime state."""
+
+    impulse_world_n_s: Vec
+    point_self_m: Vec
+    sequence_index: int
+    source: dict[str, Any]
+
+
+@dataclass
 class Event:
     kind: str
     target: str
     span: Any = None
+    impulse: ImpulsePayload | None = None
 
 
 @dataclass

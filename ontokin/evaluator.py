@@ -17,6 +17,7 @@ import re
 from dataclasses import dataclass, field
 from decimal import Decimal, InvalidOperation
 from fractions import Fraction
+from itertools import groupby
 from typing import Any, Callable, Iterable
 
 from .diagnostics import OntoKinError
@@ -27,6 +28,7 @@ ZERO: Vec = (0.0, 0.0, 0.0)
 IDENTITY: Quat = (1.0, 0.0, 0.0, 0.0)
 MAX_SAMPLES = 1000
 MAX_OUTPUT_RECORDS = 100000
+IMPULSE_PROFILE = "impulse-0.1"
 
 
 class _NumericFault(Exception):
@@ -239,6 +241,18 @@ class _ActionState:
 class _DynamicInitial:
     time: Fraction
     state: _Kinematics
+    since: Fraction | None = None
+
+    def __post_init__(self) -> None:
+        if self.since is None:
+            self.since = self.time
+
+
+@dataclass
+class _ImpulseState:
+    applied_count: int = 0
+    last_time: Fraction | None = None
+    last_applications: list[dict[str, Any]] = field(default_factory=list)
 
 
 @dataclass
@@ -251,6 +265,7 @@ class _RunState:
     claims: dict[tuple[str, str], str] = field(default_factory=dict)
     active_grips: set[str] = field(default_factory=set)
     dynamic: dict[str, _DynamicInitial] = field(default_factory=dict)
+    impulses: dict[str, _ImpulseState] = field(default_factory=dict)
 
 
 class _Simulator:
@@ -272,6 +287,8 @@ class _Simulator:
             self.state.modes[path] = obj.motion
             self.state.positions[path] = obj.placement.position
             self.state.orientations[path] = obj.placement.rotation
+            if model.profile == IMPULSE_PROFILE:
+                self.state.impulses[path] = _ImpulseState()
             if obj.motion == "dynamic":
                 self.state.dynamic[path] = _DynamicInitial(Fraction(0), _Kinematics(
                     obj.placement.position, obj.placement.rotation, obj.velocity, obj.omega))
@@ -291,9 +308,13 @@ class _Simulator:
     def _incoming(self, state: _RunState) -> dict[str, tuple[str, str]]:
         relations: dict[str, tuple[str, str]] = {}
         for path, joint in self.model.joints.items():
+            if self.check is not None and self.model.profile == IMPULSE_PROFILE:
+                self.check()
             if joint.kind != "grip" or path in state.active_grips:
                 relations[self.model.sites[joint.child].owner] = ("joint", path)
         for path, follow in self.model.follows.items():
+            if self.check is not None and self.model.profile == IMPULSE_PROFILE:
+                self.check()
             relations[follow.child] = ("follow", path)
         return relations
 
@@ -309,6 +330,15 @@ class _Simulator:
             _f(runtime.initial) + difference * elapsed / action.duration)
         rate = _round(difference / action.duration) if runtime.status == "running" else 0.0
         return value, rate
+
+    def _dynamic_kinematics(self, path: str, time: Fraction, state: _RunState) -> _Kinematics:
+        anchor = state.dynamic[path]
+        elapsed = time - anchor.time
+        initial = anchor.state
+        position = tuple(_round(_f(p) + _f(v) * elapsed + _f(g) * elapsed * elapsed / 2)
+                         for p, v, g in zip(initial.position, initial.velocity, self.model.gravity))
+        return _Kinematics(position, _advance_orientation(initial.orientation, initial.omega, elapsed),
+                           _affine(initial.velocity, self.model.gravity, elapsed), initial.omega)
 
     def _kinematics(self, time: Fraction, state: _RunState) -> tuple[dict[str, _Kinematics], dict[str, _Kinematics]]:
         incoming = self._incoming(state)
@@ -357,13 +387,7 @@ class _Simulator:
                     child_site = self.model.sites[joint.child]
                     result = _compose(_compose(parent, relative), _inverse_pose(child_site.pose))
             elif state.modes[path] == "dynamic":
-                anchor = state.dynamic[path]
-                elapsed = time - anchor.time
-                initial = anchor.state
-                position = tuple(_round(_f(p) + _f(v) * elapsed + _f(g) * elapsed * elapsed / 2)
-                                 for p, v, g in zip(initial.position, initial.velocity, self.model.gravity))
-                result = _Kinematics(position, _advance_orientation(initial.orientation, initial.omega, elapsed),
-                                     _affine(initial.velocity, self.model.gravity, elapsed), initial.omega)
+                result = self._dynamic_kinematics(path, time, state)
             else:
                 position = state.positions[path]
                 orientation = state.orientations[path]
@@ -441,14 +465,92 @@ class _Simulator:
                touched: set[tuple[str, str]]) -> None:
         def fail(code: str, message: str, *, phase: str = "transition", conflict: bool = False,
                  rules: list[str] | None = None, repair: str | None = None,
-                 details: dict[str, Any] | None = None) -> None:
-            element = (self.model.joints.get(event.target) if event.kind == "release" else
+                 details: dict[str, Any] | None = None, category: str | None = None) -> None:
+            element = (self.model.objects.get(event.target) if event.kind == "impulse" else
+                       self.model.joints.get(event.target) if event.kind == "release" else
                        self.model.actions.get(event.target))
             related = [element.span] if element is not None and element.span is not None else []
-            raise OntoKinError(code, message, event.span, category="conflict" if conflict else "invalid",
-                               phase=phase, rule_ids=rules, time=time, repair=repair, details=details,
+            if event.kind == "impulse":
+                details = {"target_path": event.target,
+                           "sequence_index": None if event.impulse is None else event.impulse.sequence_index,
+                           **(details or {})}
+            raise OntoKinError(code, message, event.span,
+                               category=category or ("conflict" if conflict else "invalid"),
+                               phase=phase, rule_ids=rules, time=time,
+                               repair=repair, details=details,
                                element_id=list(element.element_id) if element is not None else None, related=related,
                                blocks=["evaluated", "delivered"])
+
+        if event.kind == "impulse":
+            if self.model.profile != IMPULSE_PROFILE:
+                fail("OKL-E-CAPABILITY-UNSUPPORTED", "Source impulses require impulse-0.1.",
+                     phase="support", category="unsupported", rules=["IMP-001"])
+            obj = self.model.objects.get(event.target)
+            if obj is None or event.impulse is None:
+                fail("OKL-E-TYPE", "An impulse requires a resolved object and elaborated operands.",
+                     phase="admission", rules=["IMP-001", "IMP-002"])
+            if state.modes[event.target] != "dynamic" or event.target in self._incoming(state):
+                fail("OKL-E-MOTION-MODE", "An impulse requires a currently free dynamic sphere.",
+                     phase="admission", rules=["IMP-002", "IMP-003"],
+                     repair="Use a free dynamic sphere, or release its grip earlier in this sequence.",
+                     details={"motion": state.modes[event.target]})
+            if obj.physical.get("kind") != "sphere_body" or obj.mass <= 0 or obj.inertia is None or obj.inertia <= 0:
+                fail("OKL-E-PHYSICAL-DOMAIN", "An impulse requires positive own sphere mass and inertia.",
+                     phase="admission", rules=["IMP-002"])
+            payload = event.impulse
+            operation = "current_dynamic_state"
+            try:
+                if not all(math.isfinite(value) for value in
+                           (*payload.impulse_world_n_s, *payload.point_self_m, obj.mass, obj.inertia)):
+                    raise _NumericFault("Impulse operands and sphere mass/inertia must be finite.")
+                current = self._dynamic_kinematics(event.target, time, state)
+                operation = "lever_arm_world_m"
+                lever = _rotate(current.orientation, payload.point_self_m)
+                operation = "application_point_world_m"
+                point = _add(current.position, lever)
+                operation = "angular_impulse_world_n_m_s"
+                angular_impulse = _cross(lever, payload.impulse_world_n_s)
+                # Round each exposed final component once. The unexposed
+                # quotient can exceed binary64 when the final sum cancels.
+                operation = "linear_velocity_after_world_m_per_s"
+                velocity = tuple(_round(_f(value) + _f(impulse) / _f(obj.mass))
+                                 for value, impulse in zip(current.velocity, payload.impulse_world_n_s))
+                operation = "angular_velocity_after_world_rad_per_s"
+                omega = tuple(_round(_f(value) + _f(impulse) / _f(obj.inertia))
+                              for value, impulse in zip(current.omega, angular_impulse))
+            except _NumericFault as error:
+                fail("OKL-E-NUMERIC", str(error), phase="evaluation", category="numerical_failure",
+                     rules=["IMP-002", "IMP-003", "LANG-004"],
+                     details={"operation": operation},
+                     repair="Use finite authored operands whose exposed impulse state remains representable.")
+            if self.check is not None:
+                self.check()
+            if payload.impulse_world_n_s != ZERO:
+                original = state.dynamic[event.target]
+                state.dynamic[event.target] = _DynamicInitial(
+                    time, _Kinematics(current.position, current.orientation, velocity, omega), original.since)
+                touched.add(("object", event.target))
+            # A zero impulse changes only its influence projection. In
+            # particular, it does not change another grip's motion dependency.
+            history = state.impulses[event.target]
+            if history.last_time != time:
+                history.last_applications = []
+                history.last_time = time
+            history.applied_count += 1
+            history.last_applications.append({
+                "sequence_index": payload.sequence_index,
+                "source_location": dict(payload.source),
+                "target_element_id": list(obj.element_id), "target_path": event.target,
+                "impulse_world_n_s": list(payload.impulse_world_n_s),
+                "application_point_self_m": list(payload.point_self_m),
+                "lever_arm_world_m": list(lever), "application_point_world_m": list(point),
+                "angular_impulse_world_n_m_s": list(angular_impulse),
+                "linear_velocity_before_world_m_per_s": list(current.velocity),
+                "linear_velocity_after_world_m_per_s": list(velocity),
+                "angular_velocity_before_world_rad_per_s": list(current.omega),
+                "angular_velocity_after_world_rad_per_s": list(omega),
+            })
+            return
 
         if event.kind == "release":
             joint = self.model.joints.get(event.target)
@@ -590,7 +692,11 @@ class _Simulator:
                 kind, relation = incoming[path]
                 authority: dict[str, Any] = {"kind": kind, "relation": relation}
             elif mode == "dynamic":
-                authority = {"kind": "free_sphere", "since_seconds": time_text(self.state.dynamic[path].time)}
+                anchor = self.state.dynamic[path]
+                authority = {"kind": "free_sphere", "since_seconds": time_text(
+                    anchor.since if self.model.profile == IMPULSE_PROFILE else anchor.time)}
+                if self.model.profile == IMPULSE_PROFILE:
+                    authority["trajectory_anchor_seconds"] = time_text(anchor.time)
             else:
                 authority = {"kind": mode, "translation_action": self.state.claims.get((path, "translation")),
                              "orientation_action": self.state.claims.get((path, "orientation"))}
@@ -610,6 +716,18 @@ class _Simulator:
                 "inertia_kg_m2": obj.inertia, "geometry": obj.geometry, "physical": obj.physical,
                 "gravity_participation": gravity, "collision": obj.collision,
             }
+            if self.model.profile == IMPULSE_PROFILE:
+                history = self.state.impulses[path]
+                applications = []
+                for record in history.last_applications:
+                    if self.check is not None:
+                        self.check()
+                    applications.append(copy.deepcopy(record))
+                objects[path]["impulses"] = {
+                    "applied_count": history.applied_count,
+                    "last_application_time_seconds": None if history.last_time is None else time_text(history.last_time),
+                    "last_applications": applications,
+                }
         joints: dict[str, Any] = {}
         for path, joint in self.model.joints.items():
             record: dict[str, Any] = {"element_id": list(joint.element_id), "kind": joint.kind,
@@ -637,21 +755,65 @@ class _Simulator:
 
 def preflight(model: SceneModel, *, check: Callable[[], None] | None = None) -> dict[str, Any]:
     """Validate the authored timeline without creating a persistent live run."""
+    if model.profile == IMPULSE_PROFILE:
+        _output_budget(model, 1, check=check)
     simulator = _Simulator(model, check=check)
     simulator.advance(model.duration)
     return {"outcome": "valid", "duration_seconds": time_text(model.duration),
             "boundary_times_seconds": simulator.boundaries}
 
 
-def _output_budget(model: SceneModel, sample_count: int, *, constructing: bool = False) -> None:
+def _records_per_sample(model: SceneModel, *, constructing: bool = False,
+                        check: Callable[[], None] | None = None) -> int:
+    """Conservative complete output weight, shared with recorded animation.
+
+    Existing row accounting is unchanged. Impulse projections additionally
+    charge their exact nested logical entries before any sample duplicates
+    them. Untouched objects retain their latest boundary's full record group.
+    """
     # Frames contain world, each object frame, and each declared/implicit site
     # frame. Include them so an object with many sites cannot bypass the cap.
-    records_per_sample = (2 * len(model.objects) + len(model.sites) + len(model.joints)
-                          + len(model.actions) + 1)
+    base = 2 * len(model.objects) + len(model.sites) + len(model.joints) + len(model.actions) + 1
+    if model.profile != IMPULSE_PROFILE:
+        return base
+    if check is not None:
+        check()
+    base += 4 * len(model.objects)
+    if constructing:
+        return base
+    retained: dict[str, int] = {}
+    total = maximum = 0
+    for _, blocks in groupby(sorted(model.events, key=lambda block: block.time), key=lambda block: block.time):
+        group: dict[str, int] = {}
+        for block in blocks:
+            if check is not None:
+                check()
+            for event in block.events:
+                if check is not None:
+                    check()
+                if event.kind == "impulse":
+                    obj = model.objects.get(event.target)
+                    weight = 45 + (0 if obj is None else len(obj.element_id))
+                    group[event.target] = group.get(event.target, 0) + weight
+        for target, weight in group.items():
+            if check is not None:
+                check()
+            total += weight - retained.get(target, 0)
+            retained[target] = weight
+        maximum = max(maximum, total)
+    return base + maximum
+
+
+def _output_budget(model: SceneModel, sample_count: int, *, constructing: bool = False,
+                   check: Callable[[], None] | None = None,
+                   records_per_sample: int | None = None) -> None:
+    if records_per_sample is None:
+        records_per_sample = _records_per_sample(model, constructing=constructing, check=check)
     if sample_count > MAX_SAMPLES or sample_count * records_per_sample > MAX_OUTPUT_RECORDS:
         raise OntoKinError("OKL-E-RESOURCE", "The requested state output exceeds the prototype's inspection budget.",
                            model.span, category="resource_limit", phase="elaboration" if constructing else "inspection",
                            blocks=["constructed", "evaluated", "delivered"] if constructing else [],
+                           rule_ids=["IMP-004"] if model.profile == IMPULSE_PROFILE else None,
                            details={"max_samples": MAX_SAMPLES, "max_output_records": MAX_OUTPUT_RECORDS,
                                     "requested_samples": sample_count, "records_per_sample": records_per_sample},
                            repair="Request fewer sample times, or use a smaller scene for this bounded prototype.")
@@ -686,9 +848,14 @@ def evaluate(model: SceneModel, times: Iterable[Any] | None = None, *, side: str
     """
     if times is None:
         times = ["0", model.duration]
+    records = _records_per_sample(model)
+    if model.profile == IMPULSE_PROFILE:
+        # Even an empty requested sample list still validates the full horizon
+        # and must not allocate an unbounded retained application group.
+        _output_budget(model, 1, records_per_sample=records)
     requests: list[tuple[Fraction, str, int]] = []
     for index, request in enumerate(times):
-        _output_budget(model, index + 1)
+        _output_budget(model, index + 1, records_per_sample=records)
         sample_side = request.get("side", side) if isinstance(request, dict) else side
         value = request.get("time_seconds", request.get("time")) if isinstance(request, dict) else request
         time = exact_time(value)
@@ -704,17 +871,22 @@ def evaluate(model: SceneModel, times: Iterable[Any] | None = None, *, side: str
     for time, sample_side, index in sorted(requests, key=lambda request: (request[0], request[1] == "after")):
         samples[index] = simulator.advance(time, sample_side)
     simulator.advance(model.duration)
+    assumptions = {
+        "gravity_m_per_s2": list(model.gravity), "collision": "disabled",
+        "contact_response": "unavailable", "drag": "absent", "ground_plane": "absent",
+        "dynamic_body_model": "homogeneous_solid_sphere", "external_torque": "absent",
+        "joint_coupling": "externally_prescribed_no_load_solution",
+    }
+    if model.profile == IMPULSE_PROFILE:
+        assumptions.update(external_torque="authored_instantaneous_angular_impulses_only",
+                           impulses="authored_world_impulse_at_target_self_point",
+                           continuous_external_forces="uniform_gravity_only", continuous_external_torque="absent")
     return {
         "outcome": "valid", "level": "evaluated", "profile": model.profile,
         "module": model.module_name, "scene": model.scene_name,
         "duration_seconds": time_text(model.duration), "samples": samples,
         "boundary_times_seconds": simulator.boundaries,
-        "physical_assumptions": {
-            "gravity_m_per_s2": list(model.gravity), "collision": "disabled",
-            "contact_response": "unavailable", "drag": "absent", "ground_plane": "absent",
-            "dynamic_body_model": "homogeneous_solid_sphere", "external_torque": "absent",
-            "joint_coupling": "externally_prescribed_no_load_solution",
-        },
+        "physical_assumptions": assumptions,
         "numerical_method": "analytical trajectories; rational event clock; binary64 spatial calculations",
     }
 
@@ -735,7 +907,7 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
                            model.span, phase="inspection", blocks=[],
                            details={"duration_seconds": time_text(model.duration),
                                     "requested_time_seconds": time_text(endpoint), "requested_side": side})
-    _output_budget(model, 1)
+    _output_budget(model, 1, check=check)
     simulator = None
     last = None
     failure = None

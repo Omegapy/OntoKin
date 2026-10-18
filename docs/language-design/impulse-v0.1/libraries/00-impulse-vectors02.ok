@@ -1,0 +1,7 @@
+ontokin "0.2";
+module ImpulseVectors @ "impulse-vectors";
+profile "construction-0.1";
+
+public fn along_y @ "along-y"(amount: Quantity[N*s]) -> Vector3<Quantity[N*s]> {
+    return vector(world, 0[N*s], amount, 0[N*s]);
+}

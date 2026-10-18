@@ -33,6 +33,29 @@ The first command serves an agent's own versioned JSONL requests. [OK-AGENT-003]
 
 The second command runs the fixed acceptance workflow: reject an invalid radius, repair one occurrence, change one palette region, insert/reorder/remove a keyed section, evaluate motion, and retrieve actual GLB bytes through the service. It also exports the predetermined dimensional variants, ordinary and generated compositions, and a rotated release. Its output retains source snapshots and every request/response for independent verification. It generates geometry through native source operations; the driver supplies no prepared mesh.
 
+## Apply source impulses and export their motion
+
+The explicit language `0.4` / `impulse-0.1` profile adds instantaneous world-expressed momentum changes at a free sphere's own local point. An off-center application changes both linear velocity and angular velocity. For a declared free sphere named `ball`, the source event is:
+
+```ontokin
+at 1[s] sequence {
+    impulse ball using vector(world, 0[N*s], 2[N*s], 0[N*s])
+        at point(ball.frame, 0.5[m], 0[m], 0[m]);
+}
+```
+
+Export the complete pinned source fixture, run the actual agent repair workflow, or start the explicit JSONL service:
+
+```bash
+python3 -m ontokin export docs/language-design/impulse-v0.1/p02-off-center-mixed-imports.files.json --bundle --target ontokin.glb/0.4 --output /tmp/ontokin-impulse.glb
+python3 tools/build_impulse_agent_demo.py --output-dir /tmp/ontokin-impulse-agent
+python3 -m ontokin agent --protocol ontokin.agent/0.4 --store /tmp/ontokin-impulse-state
+```
+
+[OK-LANG-004](docs/language-design/OK-LANG-004-source-impulses-and-free-sphere-dynamics.md) fixes units, frames, own sphere inertia, ordered release and impulse events, exact source identities, and atomic failure. [OK-AGENT-004](docs/engineering/OK-AGENT-004-source-impulse-program-workflows.md) defines complete bounded influence inspection, source-based mass/radius repair, and exact artifact retrieval. GLB/0.4 retains native lofts and regional PBR materials and records the resulting rigid motion, including sufficient samples for authored high-spin cases.
+
+The [I01–I12 release procedure](docs/engineering/OK-ENG-005-source-impulse-release-conformance.md) separately requires all 40 frozen source cases, actual agent workflows, independent destination/browser evidence and current inherited tests and CI. Implementation and finite release acceptance have separate identities in [STATUS](STATUS.md). Contacts, continuous forces and torques, general rigid dynamics and live destination physics remain open requirements; earlier source, agent and export profiles retain their existing meanings and defaults.
+
 ## Build an assembly from a pinned component library
 
 From the repository root, with Python 3.11 or later:
@@ -167,6 +190,9 @@ Use the [documentation guide](docs/README.md) for the full reading order, docume
 | How does an agent inspect and atomically edit a complete source bundle? | [OK-AGENT-002: Program bundles and atomic source edits](docs/engineering/OK-AGENT-002-program-bundles-and-atomic-source-edits.md) |
 | How do native exterior surfaces and material regions reach GLB? | [OK-ENG-003: Native surface GLB export](docs/engineering/OK-ENG-003-native-surface-glb-export.md) |
 | How do agents describe native exterior surfaces and material regions? | [OK-LANG-003: Parameterized exterior surfaces and material regions](docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md) |
+| How does source apply an off-center impulse and retain its physical meaning? | [OK-LANG-004: Source impulses and free-sphere dynamics](docs/language-design/OK-LANG-004-source-impulses-and-free-sphere-dynamics.md) |
+| How do agents inspect impulse state, repair physical parameters and retrieve recorded motion? | [OK-AGENT-004: Source impulse program workflows](docs/engineering/OK-AGENT-004-source-impulse-program-workflows.md) |
+| What establishes the complete finite impulse release gate? | [OK-ENG-005: Source impulse release conformance](docs/engineering/OK-ENG-005-source-impulse-release-conformance.md) |
 
 The documents are organized into **Product**, **Language design**, and **Engineering**. The [founding records](docs/README.md#founding-design-records) retain the original vision, language exploration, and architecture options. Their dates and proposal status remain visible. The guide explains how that earlier work relates to the current modeling direction.
 

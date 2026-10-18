@@ -1,6 +1,6 @@
 """Strict versioned agent contracts for immutable pinned source bundles.
 
-Module-level calls retain Agent/0.2. A bound interface selects Agent/0.3
+Module-level calls retain Agent/0.2. A bound interface selects Agent/0.3 or /0.4
 without changing process globals or another service instance's behavior.
 """
 from __future__ import annotations
@@ -11,9 +11,11 @@ import re
 from . import agent_protocol as core
 from .agent_protocol import ProtocolError, LEVELS, TERMINAL, FIELDS, _bad, _text, _integer, _object, _seconds, _options
 from .json_limits import bounded_dumps, JSONLimitError, MAX_JSON_BYTES, MAX_JSON_ENTRIES
+from .program_bindings import PROGRAM_BINDINGS
 
 SCHEMA_VERSION = "ontokin.agent/0.2"
 SURFACE_SCHEMA_VERSION = "ontokin.agent/0.3"
+IMPULSE_SCHEMA_VERSION = "ontokin.agent/0.4"
 MAX_REQUEST_BYTES = MAX_JSON_BYTES
 MAX_BUDGETS = {**core.MAX_BUDGETS, "max_value_entries": MAX_JSON_ENTRIES}
 COMMON = core.COMMON
@@ -37,15 +39,16 @@ SURFACE_OPERATIONS = {**OPERATIONS, "surface.mesh_page": (
 
 class ProgramProtocol:
     def __init__(self, schema_version=SCHEMA_VERSION):
-        if schema_version not in (SCHEMA_VERSION, SURFACE_SCHEMA_VERSION):
+        if not isinstance(schema_version, str) or schema_version not in PROGRAM_BINDINGS:
             raise ProtocolError("OKA-E-REQUEST", "Unknown program service binding.",
-                                available_protocols=[SCHEMA_VERSION, SURFACE_SCHEMA_VERSION])
+                                available_protocols=list(PROGRAM_BINDINGS))
+        self.definition = PROGRAM_BINDINGS[schema_version]
         self.SCHEMA_VERSION = schema_version
         self.MAX_BUDGETS = dict(MAX_BUDGETS)
         self.OPERATIONS = {name: (set(required), set(optional)) for name, (required, optional) in
-                           (SURFACE_OPERATIONS if schema_version == SURFACE_SCHEMA_VERSION else OPERATIONS).items()}
-        self.profile = "surface-0.1" if schema_version == SURFACE_SCHEMA_VERSION else "construction-0.1"
-        self.destination = "ontokin.glb/0.3" if schema_version == SURFACE_SCHEMA_VERSION else "ontokin.glb/0.2"
+                           (SURFACE_OPERATIONS if self.definition.native_surfaces else OPERATIONS).items()}
+        self.profile = self.definition.profile
+        self.destination = self.definition.destination
 
     def canonical_request(self, value):
         return canonical_request(value)
@@ -218,7 +221,7 @@ def envelope(request, status, accepted=None, *, schema_version=SCHEMA_VERSION):
     result["program_revision"] = None
     if isinstance(request, dict):
         operation = request.get("operation")
-        operations = SURFACE_OPERATIONS if schema_version == SURFACE_SCHEMA_VERSION else OPERATIONS
+        operations = bind(schema_version).OPERATIONS
         result["operation"] = operation if isinstance(operation, str) and operation in operations else None
         revision = request.get("program_revision")
         if isinstance(revision, str) and re.fullmatch(r"sha256:[0-9a-f]{64}", revision):

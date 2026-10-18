@@ -1,0 +1,17 @@
+ontokin "0.4";
+module ImpulseDemo @ "impulse-demo";
+profile "impulse-0.1";
+
+import bodies @ "impulse-parts" from "fixture.impulse-parts" version "1.0.0"
+    digest "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6";
+
+scene Demo @ "demo" {
+    duration = 2[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object ball @ "ball": bodies.SphereProp {
+        body_mass = 0[kg];
+    }
+    at 1[s] sequence {
+        impulse ball using vector(world, 6[N*s], 0[N*s], 0[N*s]) at point(ball.frame, 0[m], 0[m], 0[m]);
+    }
+}

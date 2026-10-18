@@ -128,6 +128,21 @@ def capabilities() -> dict:
                             "Agent 0.3 uses a separate store; the request schema does not select or migrate a service.",
                             "Finite source/workflow evidence does not establish the full GOAL; M01-M12 status is tracked separately."],
         },
+        "impulse_interface": {
+            "language_version": "0.4", "profile": "impulse-0.1",
+            "agent_contract": "ontokin.agent/0.4", "delivery_contract": "ontokin.glb/0.4",
+            "storage_schema": "ontokin.impulse-program-agent-store/0.1",
+            "source_event": "impulse OBJECT using WORLD_VECTOR_N_S at TARGET_LOCAL_POINT;",
+            "physical_model": "free homogeneous sphere with own mass and isotropic inertia",
+            "events": "ordered atomic instantaneous momentum updates; release uses saved incoming state",
+            "inspection": "bounded latest impulse boundary records with source spans, momentum and spin changes",
+            "transport": "ProgramAgentService(store, protocol='ontokin.agent/0.4') and agent --protocol ontokin.agent/0.4 JSONL CLI",
+            "pinned_bundle_command": "export PROGRAM.files.json --bundle --target ontokin.glb/0.4 --output MODEL.glb",
+            "geometry_capability": "inherited surface-0.1 geometry and material region inspection",
+            "limitations": ["Only source-authored instantaneous impulses; no host apply_impulse operation.",
+                            "No contacts, finite forces, continuous torques, actuators or nonspherical dynamics.",
+                            "Recorded GLB animation does not execute impulses or live physics in the destination."],
+        },
         "operations": ["check", "evaluate", "export", "agent", "conformance", "capabilities"],
         "output_levels": ["represented", "constructed", "evaluated"],
         "source_features": ["classes", "single_inheritance", "pure_functions_and_methods",
@@ -183,6 +198,18 @@ def capabilities() -> dict:
                 "validation": "decoded source topology, winding, normals, PBR, provenance and sampled animation",
                 "cancellation": "cooperative compiler, mesh, serialization and decoded-validation callbacks",
             },
+            "ontokin.glb/0.4": {
+                "format": "glTF 2.0 binary (.glb)", "profile": "impulse-0.1",
+                "geometry": ["empty", "box", "sphere", "loft", "placed"],
+                "materials": "inherited native PBR regions and one local visual placement",
+                "animation": "source-evaluated piecewise free-sphere motion after instantaneous impulses",
+                "source_of_truth": "the complete exact pinned .ok source bundle",
+                "selection": "explicit --target ontokin.glb/0.4 or Agent/0.4 destination",
+                "impulse_metadata": "complete latest per-object source impulse records at each boundary",
+                "sampling": "conservative authored-impulse spin bound plus every exact source boundary",
+                "validation": "decoded native geometry, materials, source influence metadata and world animation",
+                "limitations": "recorded rigid playback; no destination impulse engine or contacts",
+            },
         },
         "limitations": ["General correctly rounded transcendental functions are not certified.",
                         "Exact represented rotations are approximated in binary64 spatial calculations.",
@@ -202,7 +229,7 @@ def _program_export(args) -> int:
     program = None
     try:
         if args.target == "ontokin.glb/0.1":
-            raise BundleError("OKA-E-REQUEST", "A program bundle requires explicit GLB/0.2 or GLB/0.3 delivery.")
+            raise BundleError("OKA-E-REQUEST", "A program bundle requires explicit GLB/0.2, GLB/0.3 or GLB/0.4 delivery.")
         protected = []
         if args.bundle:
             manifest_path = args.file.resolve(strict=True)
@@ -276,7 +303,7 @@ def main(argv: list[str] | None = None) -> int:
     evaluate_parser.add_argument("--frame", default="world", help="Frame for --object inspection, for example first.frame")
     export_parser = commands.add_parser("export", help="Bake and verify an animation in a self-contained .glb file")
     export_parser.add_argument("file", type=Path)
-    export_parser.add_argument("--target", choices=["ontokin.glb/0.1", "ontokin.glb/0.2", "ontokin.glb/0.3"],
+    export_parser.add_argument("--target", choices=["ontokin.glb/0.1", "ontokin.glb/0.2", "ontokin.glb/0.3", "ontokin.glb/0.4"],
                                default="ontokin.glb/0.1", help="Explicit delivery profile; old source is never migrated")
     export_parser.add_argument("--bundle", action="store_true",
                                help="Read FILE as an ontokin.files/0.1 manifest of pinned offline .ok files")
@@ -292,7 +319,7 @@ def main(argv: list[str] | None = None) -> int:
     suite.add_argument("--fixtures", type=Path, default=DEFAULT_FIXTURES)
     suite.add_argument("--output", type=Path, help="Write the complete JSON report to this path")
     agent = commands.add_parser("agent", help="Serve an explicitly selected durable agent contract as local JSONL")
-    agent.add_argument("--protocol", choices=["ontokin.agent/0.1", "ontokin.agent/0.2", "ontokin.agent/0.3"], default="ontokin.agent/0.1", help="Select the explicit core, construction, or surface agent contract")
+    agent.add_argument("--protocol", choices=["ontokin.agent/0.1", "ontokin.agent/0.2", "ontokin.agent/0.3", "ontokin.agent/0.4"], default="ontokin.agent/0.1", help="Select the explicit core, construction, surface, or impulse agent contract")
     agent.add_argument("--store", type=Path, required=True, help="Directory for immutable snapshots and durable request/run state")
     agent.add_argument("--request", type=Path, help="Read one JSON request, emit its receipt, and exit")
     agent.add_argument("--wait", action="store_true", help="Wait for this request's terminal result instead of returning a queued receipt")

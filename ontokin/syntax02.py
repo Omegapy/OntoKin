@@ -1,4 +1,4 @@
-"""Source-aware syntax for language 0.2 and 0.3 source units.
+"""Source-aware entry point for explicitly versioned bundled source units.
 
 The core parser remains the entry point for legacy programs. This parser reuses
 its unchanged expression precedence and statements but has its own keyword set,
@@ -287,13 +287,18 @@ def parse_source_unit(unit: SourceUnit, *, check: Callable[[], None] | None = No
             raise OntoKinError("OKL-E-RESOURCE", "The source unit exceeds the token budget.",
                                tokens[MAX_TOKENS], category="resource_limit", phase="lexical",
                                rule_ids=["CON-012"], details={"limit": MAX_TOKENS})
-        # Surface calls/types are ordinary identifiers in the additive 0.3
-        # grammar. Every source unit still has its own explicit version/profile.
-        is_surface = (len(tokens) > 2 and tokens[0].kind == "ontokin"
-                      and tokens[1].kind == "STRING" and tokens[1].value == "0.3")
-        version, profile = ("0.3", "surface-0.1") if is_surface else (VERSION, PROFILE)
-        result = Parser02(tokens, unit.source_id, checkpoint if check is not None else None,
-                          expected_version=version, expected_profile=profile).program()
+        # Keep the existing lexer/0.2/0.3 grammar unchanged. Only an explicit
+        # 0.4 header selects the contextual impulse event statement.
+        declared = (tokens[1].value if len(tokens) > 2 and tokens[0].kind == "ontokin"
+                    and tokens[1].kind == "STRING" else None)
+        callback = checkpoint if check is not None else None
+        if declared == "0.4":
+            from .syntax04 import Parser04
+            result = Parser04(tokens, unit.source_id, callback).program()
+        else:
+            version, profile = ("0.3", "surface-0.1") if declared == "0.3" else (VERSION, PROFILE)
+            result = Parser02(tokens, unit.source_id, callback,
+                              expected_version=version, expected_profile=profile).program()
         result.data["filename"] = unit.filename
         result.data["token_count"] = len(tokens) - 1
         checkpoint()
