@@ -1,76 +1,62 @@
 # OntoKin status
 
-Current integration checkpoint: **2026-10-18T17:14:32Z**. Worker `interactive-glb03-20261018-1607Z-astra-root` is integrating native GLB/0.3 through [PR #7](https://github.com/Omegapy/OntoKin/pull/7), with the bounded lease below. The implemented branch is `908032be8762dfe533fcef06356bc0d768183d73`; final callback-regression CI and exact-commit destination evidence are in progress. This acquisition does not mark the branch merged or the surface release complete. The prior status is preserved in [the previous main checkpoint](docs/engineering/surface-validation/status-20261018-1442.md.txt).
+Current checkpoint: **2026-10-18T17:27:58Z**. Native `surface-0.1` source-to-GLB/0.3 export and material integration is merged into `main` through [PR #7](https://github.com/Omegapy/OntoKin/pull/7), merge `1976b615935ee17ff45e7e6392cded85dc317e87`. All four jobs passed independently on the resulting main revision. The complete [GOAL](GOAL.md) remains **in progress**. This adapter milestone does not complete the native surface release or the language.
 
-Previous main checkpoint: **2026-10-18T14:42:58.538Z**. The owner-directed integration of [PR #4](https://github.com/Omegapy/OntoKin/pull/4) (parallel development policy; merge `777e385fd0754a8e6e934116ecf1df130dd77b5b`) and [PR #5](https://github.com/Omegapy/OntoKin/pull/5) (native source front end; merge `12e0eb9183321a2e7a8a96d5e9da7bbf2e3ff1b3`) is on `main`. The previously reserved integration slot has been **released**. The legacy semantic-document PR #1 was closed as redundant with canonical docs already in main, without losing its content. All other previously identified old work branches have no unmerged unique commits. The complete [GOAL](GOAL.md) remains **in progress**.
+## Implemented and verified milestone
 
-**Validation:** PR #4 CI [39135836244](https://github.com/Omegapy/OntoKin/actions/runs/39135836244) and PR #5 CI [39136417020](https://github.com/Omegapy/OntoKin/actions/runs/39136417020) passed Python 3.11/3.12/3.13 and GLB/browser checks. New main-head [CI 39136957648](https://github.com/Omegapy/OntoKin/actions/runs/39136957648) was launched for commit `12e0eb9183321a2e7a8a96d5e9da7bbf2e3ff1b3`; its final conclusion must be read independently before marking main verified. No new release or end-to-end GLB/0.3/M01-M12 acceptance is asserted.
+[OK-ENG-003](docs/engineering/OK-ENG-003-native-surface-glb-export.md) documents the implemented adapter. The [identified native evidence](docs/engineering/surface-native-validation/README.md), [summary](docs/engineering/surface-native-validation/validation-summary.json), and retained archive contain actual source bundles, 12 GLBs, decoded geometry/material/animation checks, browser evidence, complete test results and exact hashes.
 
-**Current scope:** The 0.3 / `surface-0.1` typed `.ok` surface parser, keyed loft construction and local visual placement are now in main. Agent/0.3, source-driven GLB/0.3 material/animation delivery, repair and all M01-M12 end-to-end cases remain open. The separate construction C20 destination-evidence check still reports pending for the changed implementation identity even though legacy construction evidence is preserved.
-
-**Coordination:** Use the owner-approved [AGENTS.md](AGENTS.md) rule: independent, nonoverlapping branch work may proceed in parallel; only one confirmed main integrator publishes at a time, using an expiring lease, observed heads and conditional nonforce updates. The previous reservation was superseded only under an explicit owner direction and no unverified worker-activity claim. Routine technical work is authorized without another general permission request.
-
-**Historical context:** The older recovery/prototype details below describe prior checkpoints; do not reinterpret their earlier "unimplemented" or branch counts as current status.
-
-## Verified implementation and correction
-
-| Item | Recorded state |
+| Component | Delivered behavior |
 | --- | --- |
-| Installed experimental package | `ontokin-reference` **0.4.0**, unchanged by this repair |
-| Preserved source profiles | Language `0.1` / `core-0.1`; language `0.2` / `construction-0.1` |
-| Preserved service and delivery contracts | Agent/0.1 and Agent/0.2; GLB/0.1 and GLB/0.2 |
-| Published surface repair | [9a9ca2dea3220f67cf10a3923a794141bab03413](https://github.com/Omegapy/OntoKin/commit/9a9ca2dea3220f67cf10a3923a794141bab03413) |
-| Tested repair tree | `e700fef42de62b49a0d1623e184ea5a9ecea9301` |
-| Observed branch CI | [39106141202](https://github.com/Omegapy/OntoKin/actions/runs/39106141202), all four jobs passed |
-| Observed main CI | [39106452741](https://github.com/Omegapy/OntoKin/actions/runs/39106452741), all four jobs passed |
-| Repository test suite | Earlier baseline: 312 recovery tests; newer native branch CI reports 351 tests on Python 3.13; current main CI must confirm the final revision. |
-| Native surface-language gate | Initial source parsing and typed loft construction integrated via PR #5; Agent/0.3, GLB/0.3 and complete M01-M12 remain unpassed. |
+| Native geometry | Authored keyed loft sections, numeric station order, caps, outward flat normals, parameterized proportions and source-driven composition. |
+| Material regions | Separate indexed primitives and distinct region identities; actual linear RGBA, metallic, roughness and alpha behavior. |
+| Placement and animation | Local visual position/rotation applied once; evaluator-driven carrier world tracks, including noncommuting rotation and existing release regressions. |
+| Source integrity | Complete pinned program revision, entry/import bytes and hashes, occurrence identities, source locations, recipe/order/region metadata and artifact identity. |
+| Bounded work | Per-occurrence aggregate vertices and byte caps; cancellation through generation, encoding, full timeline validation and final return. |
+| CLI and compatibility | Explicit `--target ontokin.glb/0.3`, optional `--bundle`, unchanged pinned Studio manifest example, source/output alias protection; earlier source and export profiles preserved. |
 
-The correction passed branch CI before an exact-head update integrated it into main. Main CI passed independently. This evidence/status checkpoint adds documentation only; it preserves the tested code bytes. Its own later CI run is distinct from the identified implementation runs above and must be inspected rather than inferred.
+Changed runtime files: `ontokin/scene.py`, `gltf.py`, `cli.py`, narrow construction diagnostics, and the optional preflight callback in `evaluator.py`. Added `tests/test_surface_export.py`, `tests/test_surface_export_cli.py`, the native source/destination/browser tools, CI steps, adapter documentation and the source file manifest. Package version remains experimental **0.4.0**.
 
-## What the recovery completed
+| Evidence | Actual result |
+| --- | --- |
+| Published implementation | `908032be8762dfe533fcef06356bc0d768183d73`, branch `work/glb03-native-pbr-20261018-1519-gpt6` |
+| Implementation tree / runtime digest | `ae39d24ef7903a6b4c9e5bd5abe590ff2e74c686` / `14b2529edba069a5e98bf701c96988d36d5ada6469411da29623b9fc91ebb82c` |
+| Full Python suite | **390 passed**, 114.035 s locally; 39 added native export/CLI regressions over the recovered 351-test baseline. |
+| Original conformance | **43 source cases / 694 assertions** and **A01–A10** passed. |
+| Current construction conformance | **C01–C19 passed; C20 pending** for the changed implementation identity. Historical C20 remains verified and unchanged. |
+| Native external checks | 12 actual source GLBs; Khronos zero errors/warnings; **98** independent Three.js carrier pose comparisons; geometry, winding, normals, PBR, placement and provenance passed. |
+| Native browser checks | Chromium 141.0.7390.37; **28** pose comparisons, **six** visually inspected captures, playback hold, zero page/console/network errors. |
+| Documentation | 29 historical sources and 233 sections preserved; 548 local links passed before this added evidence record. |
+| Implementation PR CI | [39148556348](https://github.com/Omegapy/OntoKin/actions/runs/39148556348): all four jobs passed. |
+| Resulting main CI | [39148970424](https://github.com/Omegapy/OntoKin/actions/runs/39148970424): all four jobs passed for merge `1976b615`, including legacy and native GLB/browser paths. |
 
-The timed-out earlier session continued saving work. The recovery inspected actual branch state instead of replaying the interrupted batch, preserved its completed surface/export prototype, waited for an explicit lease release, and conditionally acquired a distinct worker lease.
+The maximum measured native local vertex conversion error was `2.727053982631844e-8 m`, within the fixed `1e-5 m` surface gate. Finite fixtures and samples do not establish continuous accuracy for arbitrary programs. The evidence preserves a reported untracked development-dependency symlink at build time; all tracked code matched the identified implementation. No dependency directory is committed.
 
-The experimental loft kernel now snapshots validated centers and colors, applies the explicit [C1 station-boundary rule](docs/language-design/surface-v0.1/clarification-c1.md), reports malformed inputs without invoking unsafe caller conversions, and checks cancellation during final grouping. Twelve new regression methods reproduce the earlier defects and pass after correction. Six more methods exercise actual frozen acceptance inputs through the kernel. The frozen manifest and installed runtime bytes are unchanged.
+## Next task: Agent/0.3 surface workflow
 
-[The recovery checkpoint](docs/engineering/surface-validation/recovery-2026-10-18.md) and [identified evidence](docs/engineering/surface-validation/recovery-evidence.json) record the exact work and observed checks. Branch and main CI passed Python 3.11-3.13, all original source/agent/construction conformance, independent prototype and legacy GLB validation, browser regressions and documentation preservation. The fresh 96-triangle, three-material prototype export is byte-identical to the prior demonstration, with zero reported format errors/warnings. This remains Python-input prototype evidence, not native OntoKin surface-source delivery.
+[Issue #8](https://github.com/Omegapy/OntoKin/issues/8) records the exact contract decisions and active branch scopes. Complete the explicit `ontokin.agent/0.3` binding with surface discovery, bounded summary inspection, revision-bound `surface.mesh_page`, atomic source section/material repair, evaluated state and GLB/0.3 artifact retrieval. Preserve the default Agent/0.2 service and separate stores.
 
-AGENTS now retains the user's requested interactive procedure: brief meaningful progress updates, bounded tool calls and verified checkpoints. After a timeout or unknown write result, inspect remote heads, files and the lease before retrying. These practices do not guarantee that the application or network will maintain the response stream.
+Parallel work began from published `b8ae453` and depends on the final `908032be` exporter. The contract worker owns new OK-AGENT-003/schemas and profile-aware catalog; the service worker owns program service/protocol/runtime/store files; the test worker owns new service/protocol tests. Root CLI/integration uses `work/agent03-integration-20261018-1722` from `908032be`. Exact worker branches, commits, tests and handoffs are in issue #8. No branch checkpoint is an integrated acceptance claim.
 
-## Preserved baseline and full scope
+Then execute the full native **M01–M12** gate: actual composed and generated sources, predetermined held-outs and boundaries, rejected-candidate preservation, scoped repair with unchanged siblings/library pins, insertion/reorder/removal, cursor/resource/cancellation failures, independently checked nonidentity rotation/release, and matching source/artifact/browser identities. Reissue current-implementation C20 evidence after the final runtime changes while retaining historical evidence. M07/M08 agent workflows and the complete M12 regression/attestation gate remain open.
 
-The [0.4.0 construction evidence](docs/engineering/construction-validation/validation-summary.json) and [preceding prototype checkpoint](docs/engineering/surface-validation/prototype-checkpoint.md) remain unchanged. The complete prior STATUS at the earlier handoff is preserved byte-for-byte in [the 06:54 snapshot](docs/engineering/surface-validation/status-20261018-0654.md.txt), including historical counts, hashes, CI links, limitations and scheduling observations.
+## Preserved scope and history
 
-The installed Python package identity remains `2fec4df8a853fb04f05981137165b093dbe5fe72abc1e49ceee15a7747bb4a24`. No `ontokin` runtime file was changed by the recovery. The [adopted surface contract](docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md) does not itself register source support.
+The [previous main STATUS](docs/engineering/surface-validation/status-20261018-1442.md.txt), [earlier recovery](docs/engineering/surface-validation/recovery-2026-10-18.md), [0.4.0 construction evidence](docs/engineering/construction-validation/validation-summary.json) and original core/agent evidence remain unchanged. Native parsing/construction had already merged in PR #5; those commits were reconciled, not replayed.
 
-Still unmet: broader distribution, reusable algorithms/components, compatible part replacement, rich surfaces/textures/deformation, contacts and collisions, general rigid-body dynamics, forces and dynamic joints, closed mechanisms, purposeful locomotion/manipulation, and live destination behavior. Creature, vehicle, flight/swimming, vegetation, terrain/building, fluid/deformable, appearance, scale/performance and measured agent-benefit requirements remain in GOAL. Prototype geometry adds no physical mass or motion authority. Existing physics remains uniform gravity/free homogeneous spheres and prescribed connections with collisions disabled. Recorded GLB playback is not live physics. Blender import and a generic delivered-level check are not established.
+Still unmet: richer algorithms/libraries and compatible part replacement; textures, mapping, smooth surfaces and deformation/skinning; contacts/collisions, general rigid dynamics, forces and dynamic or closed mechanisms; purposeful locomotion/manipulation; flight/swimming and medium forces; vegetation/flexibility/wind; terrain/buildings; fluids/deformable materials; reusable animation transitions, live engine behavior, scale/performance and measured agent-authoring benefit. Creature, vehicle, appearance and every other full-product area remain governed by GOAL. Existing physics is bounded uniform-gravity/free homogeneous spheres and prescribed connections with collisions disabled. Visual lofts add no physical matter or motion authority. GLB recorded playback is not live physics. Blender delivery and a generic delivered-level check are not established.
 
-## Current integration reconciliation
-
-PR #5 merged `work/surface-source-integration-20261018-1314` into main at `12e0eb9183321a2e7a8a96d5e9da7bbf2e3ff1b3`, preserving its verified native parser, typed surface constructors and tests. The original `work/native-surface-source-20261018-1116` commits are included through the integrated branch, so do not replay them. PR #4 separately integrated `AGENTS.md`. The old draft PR #1 duplicates the relocated OK-SEM-001 document and was closed with an explanation rather than reintroducing legacy paths. Confirm final main CI independently. Final exterior GLB/0.3 output and all M01-M12 are not yet delivered.
-
-## Next actions
-
-1. Read live `main` head and [CI 39136957648](https://github.com/Omegapy/OntoKin/actions/runs/39136957648); resolve any failures, then record exact test counts and the passing revision. Do not infer success from a passing PR run.
-2. Continue native `surface-0.1` source-to-GLB/0.3 integration, with actual PBR material regions, rigid visual placement, source-driven motion, resource/cancellation bounds and independent glTF/Three.js/browser validation.
-3. Implement revision-safe surface-source inspection/edit/repair and agent delivery; independently verify composition, variants, unchanged siblings/library pins and full M01-M12 acceptance.
-4. Continue the remaining broader GOAL domains after those gates. Preserve earlier source profiles and evidence.
-
-## Periodic review
-
-The owner intentionally disabled the hourly **Advance OntoKin** automation and explicitly instructed this development session not to reactivate it. That instruction supersedes earlier scheduling observations in historical checkpoints. No automation was changed by this worker. Repository branches and configured schedules are not evidence of running workers.
-
-## Integration lease and concurrent work
+## Integration and recovery
 
 | Lease field | Value |
 | --- | --- |
-| Integration owner | `interactive-glb03-20261018-1607Z-astra-root` |
-| Acquired UTC | 2026-10-18T17:14:32Z |
-| Expires UTC | 2026-10-18T17:44:32.000Z |
-| Scope | PR #7 native GLB/0.3 integration, STATUS and identified native validation evidence only. |
-| Observed main at acquisition | `45365e6c857c8f96563afe0361c12380e11a730e` |
-| Dependent parallel work | [Issue #8](https://github.com/Omegapy/OntoKin/issues/8): Agent/0.3 contract, service and tests on separate scoped branches; no main or STATUS writes. |
-| Recovery procedure | Inspect actual heads, PR #7 checks, issue #6 and this expiry before another conditional main write. Never replay an unknown write without reconciliation. |
+| Integration owner | **None: released after verified native GLB integration and evidence publication** |
+| Released UTC | 2026-10-18T17:27:58Z |
+| Previous owner | `interactive-glb03-20261018-1607Z-astra-root` |
+| Previous acquisition / expiry | 2026-10-18T17:14:32Z / 2026-10-18T17:44:32Z |
+| Integrated code | `1976b615935ee17ff45e7e6392cded85dc317e87` (PR #7) |
+| Next writer | Inspect live heads, STATUS, checks and issue #8; acquire a distinct bounded lease with an expected-head conditional nonforce update before main/STATUS integration writes. |
 
-The preceding lease was released at 2026-10-18T14:42:58.538Z. This new lease was acquired through an observed-head conditional nonforce update. Independent nonoverlapping work remains allowed under AGENTS.
+This status/evidence publication changes no runtime bytes. Its own later CI is distinct from the verified implementation/main runs above. After a timeout or unknown write, read actual refs and files before retrying; preserve ongoing branch work. A missing uploaded-image error in chat does not block repository development and does not require retrying that attachment.
+
+The owner intentionally disabled **Advance OntoKin** and instructed this session not to reactivate it. No automation was changed. Continue authorized development interactively; configured schedules and branch existence are not evidence of running workers.
