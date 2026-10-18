@@ -95,3 +95,59 @@ Explicit GLB/0.4 delivery inherits native geometry/PBR/provenance and source-dri
 The frozen [operational procedures](../language-design/impulse-v0.1/acceptance.json) require actual interface execution: P08→P09/P10 scoped repairs, rejected candidates/retries, separate stores, mixed-profile discovery and geometry pages, frame-preserving state, complete-response budget boundaries, cancellation and rollback. Delivery must retrieve the same accepted artifact later checked by the independent decoder/browser. Existing source, agent, construction, surface, destination, regression and CI gates remain mandatory.
 
 This interface document does not mark I01–I12 or the complete language finished. Current implementation/evidence status belongs in [STATUS](../../STATUS.md); [GOAL](../../GOAL.md) remains authoritative.
+
+## 7. Retained source workflow
+
+Run the source-only evidence builder in a new empty directory:
+
+```sh
+python tools/build_impulse_agent_demo.py --output-dir build/impulse-agent-demo
+```
+
+The builder submits exact pinned source bundles through `ProgramAgentService`
+under Agent/0.4. It never calls a compiler, evaluator, geometry generator or
+exporter directly. It executes all sixteen positive adopted source cases,
+including P06 through its actual three-second duration and P12's evaluation-only
+finite binary64 state. For P09 and P10 it first creates and evaluates exact P08
+in separate projects, inspects the `rack` source scope, then submits one scalar
+source patch that must produce the exact frozen target revision. Complete mesh
+pages compare unchanged geometry and PBR across those physical parameter edits.
+
+The output keeps exact requests and responses, accepted and rejected source
+snapshots, current implementation and builder hashes, and the nine required
+source-to-GLB deliveries. Every GLB byte comes from retained artifact retrieval
+responses. Independent scalar oracles in `tools/impulse_oracles.py` are check
+inputs only; they do not supply runtime geometry or state.
+
+| File | Retained content |
+| --- | --- |
+| `workflow.json` | `ontokin.impulse-agent-demo/0.1`: exchanges, source snapshots, artifact identities, all sixteen fixture request references and A01–A05 check details |
+| `native-build.json` | `ontokin.impulse-native-build/0.1`: the nine named delivery fixtures, exact artifact/source identities and authored export options |
+| `exchanges/*.request.json`, `*.response.json` | Every actual attempt in sequence, including identical-ID retries and changed-payload reuse rejection |
+| `snapshots/<project>/<revision>/` | Exact bundle, source manifest and raw source-unit bytes, with accepted-once state recorded separately |
+| `Pxx/scene.glb`, `scene.export.json` | Retrieved binary artifact and the corresponding actual export report |
+| `Pxx/program.bundle.json`, raw `.ok` units | The same accepted source closure delivered to that artifact |
+| `Pxx/oracle.json`, `scene.reference.json` | Fixed independent scalar expectations and full actual Agent-inspected object states, including empty-carrier impulse projections |
+
+The reference samples retain all frozen exact times/sides. Destination cases also
+include quarter-second after-side samples from zero through two seconds and both
+sides at zero, one and two seconds. Timestamps remain exact decimal strings;
+finite values above `1e300` do not acquire an invented numeric cutoff.
+
+Each exchange has its own sequence number and hashed request/response files.
+Request IDs deliberately repeat during A02: an identical payload must retain its
+original response, while a changed payload must report `OKL-E-REQUEST-ID`.
+Readers must preserve these separate attempts instead of overwriting them in a
+request-ID-only map.
+
+The service-only builder records A03 as **partial**, with exact executed run
+provenance requests and the required discovered test IDs for store isolation,
+wrong-version immutability, stale-engine rejection and controlled CLI startup.
+Those tests must actually execute and pass under the current implementation;
+metadata or their names alone cannot complete A03. A subset run likewise reports
+`partial`. Failed execution retains a failed manifest and the exact work already
+performed, so a later reader cannot mistake incomplete evidence for success.
+
+Even a complete successful builder run does not certify I01–I12. Independent
+destination/browser checks, all inherited conformance and regression gates, and
+identified current CI remain required for release acceptance.

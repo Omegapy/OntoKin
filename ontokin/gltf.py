@@ -29,7 +29,7 @@ from .scene import (MAX_GLB_BYTES, MAX_VALIDATION_POSES, TARGET_CONTRACT,
                     checked_contract, program_metadata,
                     BakedScene, ExportOptions, build_scene, export_error,
                     float32, rotation_error, sampled_states, relationship_metadata,
-                    _angular_speed_bound, impulse_profile_metadata)
+                    _angular_speed_bound, _boundary_output_budget, impulse_profile_metadata)
 from .evaluator import exact_time, preflight, time_text
 
 
@@ -549,6 +549,8 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
         node.get("extras", {}).get("ontokin", {}).get("kind") == "visual_helper" for node in decoded.document["nodes"]))
     end = options.checked_end(model)
     boundaries = sorted({Fraction(0), end} | {exact_time(t) for t in preflight(model, check=check)["boundary_times_seconds"] if exact_time(t) <= end})
+    if target_contract == IMPULSE_TARGET:
+        _boundary_output_budget(model, len(boundaries), target_contract=target_contract, check=check)
     sampler = animation["samplers"][0]
     times = [row[0] for row in decoded.accessor(sampler["input"])]
     if len(authored) != len(times) or authored[0] != 0 or authored[-1] != end or any(a >= b for a, b in zip(authored, authored[1:])) or not set(boundaries).issubset(authored):

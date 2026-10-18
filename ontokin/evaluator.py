@@ -477,7 +477,6 @@ class _Simulator:
             raise OntoKinError(code, message, event.span,
                                category=category or ("conflict" if conflict else "invalid"),
                                phase=phase, rule_ids=rules, time=time,
-                               side="after" if event.kind == "impulse" else None,
                                repair=repair, details=details,
                                element_id=list(element.element_id) if element is not None else None, related=related,
                                blocks=["evaluated", "delivered"])

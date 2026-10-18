@@ -13,8 +13,9 @@ from ontokin.bundle import ProgramBundle, SourceUnit, load_file_manifest
 from ontokin.construction import compile_construction
 from ontokin.diagnostics import OntoKinError
 from ontokin.evaluator import evaluate, _records_per_sample
-from ontokin.gltf import export_glb, validate_export
-from ontokin.scene import ExportOptions, _angular_speed_bound, sampled_states
+from ontokin.gltf import _encode, export_glb, validate_export
+from ontokin.scene import (ExportOptions, _angular_speed_bound, _boundary_output_budget,
+                          build_scene, sampled_states)
 from tests.test_export import DecodedGLB, encode_glb
 from tests.test_surface_export import mesh_content, change_accessor
 
@@ -190,6 +191,75 @@ class ImpulseExportTests(unittest.TestCase):
             with self.assertRaises(OntoKinError) as caught:
                 export_glb(self.compiler.model, target_contract=CONTRACT)
         self.assertEqual(caught.exception.diagnostic.details["export_code"], "OKE-E-BOUNDARY-BUDGET")
+
+    def test_supplied_artifact_cannot_bypass_complete_boundary_history_budget(self):
+        statement = ("        impulse ball using vectors.along_y(0[N*s]) "
+                     "at point(ball.frame, 0[m], 0[m], 0[m]);\n")
+        source = self.bundle.entry.text.split("    at 1[s] sequence {")[0]
+        source += "    at 1[s] sequence {\n" + statement * 100 + "    }\n"
+        source += "".join(f"    at 1.{index:02d}[s] sequence {{ }}\n"
+                          for index in range(1, 22))
+        source += "}\n"
+        bundle = ProgramBundle(SourceUnit("entry", self.bundle.entry.filename, source.encode()),
+                               self.bundle.modules)
+        model = compile_construction(bundle, level="evaluated").model
+        options = ExportOptions(helpers=False, fps=1)
+        self.assertEqual(_records_per_sample(model), 4808)
+
+        # Prepare source-correct supplied bytes under a larger publisher limit.
+        # Every actual sample batch still fits the unchanged kernel's 100000
+        # records. Validation below uses only the normal production limits.
+        with patch("ontokin.scene.MAX_OUTPUT_RECORDS", 200000), \
+                patch("ontokin.scene.MAX_SAMPLES", 20):
+            scene = build_scene(model, target_contract=CONTRACT, options=options)
+            data, _ = _encode(scene)
+        self.assertEqual(len(scene.boundaries), 24)
+        applications = sum(len(obj["last_applications"])
+                           for row in scene.metadata["boundary_states"]
+                           for obj in row["impulse_states_after"].values())
+        self.assertEqual(applications, 2300)
+        self.assertGreater(applications * (45 + len(model.objects["ball"].element_id)), 100000)
+
+        with patch("ontokin.scene._nodes", side_effect=AssertionError("unbudgeted mesh allocation")):
+            with self.assertRaises(OntoKinError) as caught:
+                export_glb(model, target_contract=CONTRACT, options=options)
+        self.assertEqual(caught.exception.diagnostic.details["export_code"], "OKE-E-BOUNDARY-BUDGET")
+        with patch("ontokin.gltf._validate_surface", side_effect=AssertionError("unbudgeted source mesh")), \
+                patch("ontokin.gltf.sampled_states", side_effect=AssertionError("unbudgeted sampled state")):
+            with self.assertRaises(OntoKinError) as caught:
+                validate_export(data, model, target_contract=CONTRACT, options=options)
+        self.assertEqual(caught.exception.code, "OKL-E-RESOURCE")
+        self.assertEqual(caught.exception.diagnostic.details["export_code"], "OKE-E-BOUNDARY-BUDGET")
+        self.assertEqual(caught.exception.diagnostic.details["target_contract"], CONTRACT)
+
+    def test_boundary_budget_cancellation_preserves_original_errors(self):
+        for operation in ("export", "validate"):
+            for interruption in (ValueError("caller cancelled metadata planning"),
+                                 OntoKinError("OKL-E-RESOURCE", "caller resource limit",
+                                              details={"caller": True})):
+                with self.subTest(operation=operation, error=type(interruption).__name__):
+                    entered = False
+
+                    def planning(*args, **kwargs):
+                        nonlocal entered
+                        entered = True
+                        return _boundary_output_budget(*args, **kwargs)
+
+                    def cancel():
+                        if entered:
+                            raise interruption
+
+                    module = "ontokin.scene" if operation == "export" else "ontokin.gltf"
+                    with patch(module + "._boundary_output_budget", planning):
+                        with self.assertRaises(type(interruption)) as caught:
+                            if operation == "export":
+                                export_glb(self.compiler.model, target_contract=CONTRACT, check=cancel)
+                            else:
+                                validate_export(self.result.data, self.compiler.model,
+                                                target_contract=CONTRACT, check=cancel)
+                    self.assertIs(caught.exception, interruption)
+                    if isinstance(interruption, OntoKinError):
+                        self.assertEqual(interruption.diagnostic.details, {"caller": True})
 
     def test_bound_loop_observes_cancellation_without_wrapping_it(self):
         class Cancelled(Exception):

@@ -363,6 +363,20 @@ def sampled_states(model: SceneModel, requests: list[Any], *,
             yield sample
 
 
+def _boundary_output_budget(model: SceneModel, boundary_count: int, *,
+                            target_contract: str,
+                            check: Callable[[], None] | None = None) -> None:
+    """Bound complete retained boundary metadata before source materialization."""
+    records = len(model.objects) + len(model.joints) + len(model.actions)
+    if target_contract == IMPULSE_TARGET:
+        # Share the kernel's conservative retained-history bound, dropping
+        # only frames and the duplicate object row absent from this projection.
+        records = _records_per_sample(model, check=check) - len(model.objects) - len(model.sites) - 1
+    if boundary_count * records > MAX_OUTPUT_RECORDS:
+        export_error("OKE-E-BOUNDARY-BUDGET", "Retained boundary metadata exceeds the state-record budget.",
+                     model, kind="resource", details={"max_boundary_state_records": MAX_OUTPUT_RECORDS})
+
+
 def _norm_upper(vector: Vec) -> Fraction:
     """An exact rational upper bound on a canonical vector's Euclidean norm.
 
@@ -632,15 +646,7 @@ def _build_scene(model: SceneModel, *, options: ExportOptions | None = None,
     timeline = preflight(model, check=check)
     exact_times, times, boundaries, speed, removed = _timeline(
         model, options, end, timeline["boundary_times_seconds"], check=check)
-    retained_boundary_records = len(boundaries) * (len(model.objects) + len(model.joints) + len(model.actions))
-    if target_contract == IMPULSE_TARGET:
-        # Use the kernel's same conservative retained-history bound, dropping
-        # only frames and the duplicate object row absent from this projection.
-        retained_boundary_records = len(boundaries) * (
-            _records_per_sample(model, check=check) - len(model.objects) - len(model.sites) - 1)
-    if retained_boundary_records > MAX_OUTPUT_RECORDS:
-        export_error("OKE-E-BOUNDARY-BUDGET", "Retained boundary metadata exceeds the state-record budget.",
-                     model, kind="resource", details={"max_boundary_state_records": MAX_OUTPUT_RECORDS})
+    _boundary_output_budget(model, len(boundaries), target_contract=target_contract, check=check)
     planned_nodes = len(model.objects) + (sum(obj.geometry.get("kind") == "empty" for obj in model.objects.values())
                                           + len(model.joints) if options.helpers else 0)
     if len(exact_times) * planned_nodes > MAX_BAKED_POSES:

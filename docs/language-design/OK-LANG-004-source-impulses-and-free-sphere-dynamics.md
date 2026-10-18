@@ -8,7 +8,7 @@ status: adopted-language-contract
 document_type: normative-language-contract
 language_version: "0.4"
 profile: impulse-0.1
-implementation_status: not-implemented
+implementation_status: implemented-release-verification-in-progress
 ---
 
 # OK-LANG-004: Source impulses on free homogeneous spheres
@@ -17,7 +17,7 @@ implementation_status: not-implemented
 
 This contract was **adopted on October 18, 2026 before impulse implementation**, after review of proposal `0f051affc211b996b38531873a146f54fdf442b6` and its predetermined source corpus. The [adoption record](impulse-v0.1/adoption.json) identifies the unchanged acceptance bytes. Adoption itself does not pass a test or release gate. The immutable source fixtures and independently derived expectations are in [impulse-v0.1](impulse-v0.1/README.md). Their expected outcomes must not be changed merely to fit an implementation.
 
-This proposal adds authored instantaneous linear impulses, including off-center angular response, to free homogeneous spheres. It inherits the units, frames, motion authority, ownership, source identity, rational event clock and atomic boundary rules of [OK-LANG-001](OK-LANG-001-core-language-specification.md), the offline construction model of [OK-LANG-002](OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md), and the native visual surfaces of [OK-LANG-003](OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md). Existing meanings remain in force except for the explicit new-profile additions below. The broader [GOAL](../../GOAL.md), including contact, finite forces and other physics domains, remains open.
+This contract adds authored instantaneous linear impulses, including off-center angular response, to free homogeneous spheres. It inherits the units, frames, motion authority, ownership, source identity, rational event clock and atomic boundary rules of [OK-LANG-001](OK-LANG-001-core-language-specification.md), the offline construction model of [OK-LANG-002](OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md), and the native visual surfaces of [OK-LANG-003](OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md). Existing meanings remain in force except for the explicit new-profile additions below. The broader [GOAL](../../GOAL.md), including contact, finite forces and other physics domains, remains open.
 
 | Binding | Explicit new value |
 | --- | --- |
