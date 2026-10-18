@@ -6,7 +6,20 @@ OntoKin (pronounced **ON-toh-kin**) is a programming language under development,
 
 The current direction begins with exterior 3D models and short animations. Those objects should remain reusable in larger scenes, video games, and eventually more complex virtual worlds. Physics and mechanics are central to the design; mathematics gives those descriptions precise meaning.
 
-> **Project status:** Experimental reference implementation with working 3D animation export. The parser, typed validator, and semantic evaluator process the bounded `core-0.1` demonstrations. A glTF 2.0 exporter turns their calculated world motion into `.glb` files, and an offline viewer plays those files. The twelve core language decisions remain the engineering baseline. Broader product and semantic requirements retain their draft status; a production compiler, general physics engine, and versioned agent service remain future work.
+> **Project status:** Experimental reference implementation **0.3.0** with a durable local agent interface and working 3D animation export. Agents can discover, create, inspect, atomically edit, validate, evaluate, and export the bounded `core-0.1` programs through a versioned JSON contract. The offline viewer plays the resulting GLBs. The twelve core language decisions remain the engineering baseline. Broader modeling, physical interaction, controllers, live delivery, and production-scale architecture remain unfinished.
+
+The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
+
+## Author and repair through the agent interface
+
+```bash
+python3 tools/build_agent_demo.py --output-dir /tmp/ontokin-agent-demo
+python3 -m ontokin agent --store /tmp/ontokin-agent-state
+```
+
+The first command runs a complete, inspectable workflow: create a two-assembly scene, reject an invalid units edit, repair only one head, confirm the sibling remains unchanged, evaluate the motion, and retrieve a verified GLB. The second starts the local JSONL interface for an agent's own requests. Python clients can use `from ontokin.agent import AgentService` directly.
+
+The [agent example guide](examples/agent/README.md) includes the editable sources, actual [repaired animation](examples/agent/repaired.glb), complete [request/response evidence](examples/agent/workflow.json), and instructions for opening the result in the offline viewer. [OK-AGENT-001](docs/engineering/OK-AGENT-001-ai-agent-authoring-and-inspection-interface.md) defines immutable source revisions, scoped UTF-8 patches, idempotent requests, cancellation, exact-time inspection, engine-bound runs, and recovery. The local interface requires no language-model call or external runtime dependency.
 
 ## See the animations
 
@@ -58,6 +71,8 @@ The head retains its 90-degree local yaw when that action completes. The hand co
 | Command | Purpose |
 | --- | --- |
 | `python3 -m ontokin capabilities` | Inspect implemented operations, output levels, physical assumptions, and numerical limits. |
+| `python3 -m ontokin agent --store DIR` | Serve versioned JSONL agent requests with durable local source, request, run, and artifact state. |
+| `python3 -m ontokin agent --store DIR --request request.json --wait` | Execute one request and return its terminal result; omit `--wait` for a retained queued receipt. |
 | `python3 -m ontokin check FILE.ok` | Validate and preflight the declared timeline. |
 | `python3 -m ontokin check FILE.ok --level represented` | Check source representation while disclosing unresolved support requests. |
 | `python3 -m ontokin check FILE.ok --level constructed` | Derive the initial world state before time-zero actions, without requiring later actions to be admissible. |
@@ -98,6 +113,7 @@ Use the [documentation guide](docs/README.md) for the full reading order, docume
 | How does an agent express those meanings in valid code? | [OK-LANG-001: Core language specification](docs/language-design/OK-LANG-001-core-language-specification.md) |
 | What does the first prototype implement, and how is it checked? | [OK-ENG-001: Core reference implementation and conformance plan](docs/engineering/OK-ENG-001-core-reference-implementation-and-conformance-plan.md) |
 | How do calculated objects and motion become a visible animation? | [OK-ENG-002: 3D scene representation, animation export, and visual validation](docs/engineering/OK-ENG-002-3d-scene-animation-export-and-visual-validation.md) |
+| How does an agent discover, inspect, edit, evaluate, and retrieve an animation? | [OK-AGENT-001: AI agent authoring and inspection interface](docs/engineering/OK-AGENT-001-ai-agent-authoring-and-inspection-interface.md) |
 
 The documents are organized into **Product**, **Language design**, and **Engineering**. The [founding records](docs/README.md#founding-design-records) retain the original vision, language exploration, and architecture options. Their dates and proposal status remain visible. The guide explains how that earlier work relates to the current modeling direction.
 
@@ -105,7 +121,7 @@ The documents are organized into **Product**, **Language design**, and **Enginee
 
 The [core language specification](docs/language-design/OK-LANG-001-core-language-specification.md) reviews all 28 proposed semantic rules and defines `core-0.1`: typed classes and pure methods, independently instantiated parts, explicit frames and units, prescribed joints, concurrent action channels, exact event ordering, and a limited gravity/release contract.
 
-Start with [independently moving parts](docs/language-design/core-v0.1/01-independent-parts.ok), then [gravity and release](docs/language-design/core-v0.1/02-gravity-and-release.ok). Two further programs check rotational velocity transfer and the distinction between ownership and following. The [validation manifest](docs/language-design/core-v0.1/validation-cases.json) preserves the original 43 source cases and ten agent-operation cases with their expected outcomes and historical design status. The separate [measured report](docs/engineering/visual-validation/core-conformance.json) records current source execution. No persistent agent editing/retry service or A01–A10 protocol certification is supplied.
+Start with [independently moving parts](docs/language-design/core-v0.1/01-independent-parts.ok), then [gravity and release](docs/language-design/core-v0.1/02-gravity-and-release.ok). Two further programs check rotational velocity transfer and the distinction between ownership and following. The [validation manifest](docs/language-design/core-v0.1/validation-cases.json) preserves the original 43 source cases and ten agent-operation cases with their expected outcomes and historical design status. The separate [source conformance report](docs/engineering/agent-validation/core-conformance.json) records execution under 0.3.0. The [agent conformance report](docs/engineering/agent-validation/conformance.json) executes A01–A10 against the durable service; both are finite test-corpus evidence, not full-product certification.
 
 The reference uses Python's standard library and analytic motion equations. Its GLB adapter exports sphere/box meshes, linear RGBA appearance, optional display markers, and sampled world transforms. Source ownership, physical properties, joints, and release events remain inspectable metadata; a destination plays baked motion without executing those rules. Production compiler, runtime, physics-engine, and renderer choices remain open. Contact, dynamic articulated mechanisms, general body dynamics, deformation, and broader delivery contracts remain future requirements.
 

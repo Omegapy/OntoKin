@@ -17,7 +17,7 @@ import re
 from dataclasses import dataclass, field
 from decimal import Decimal, InvalidOperation
 from fractions import Fraction
-from typing import Any, Iterable
+from typing import Any, Callable, Iterable
 
 from .diagnostics import OntoKinError
 from .model import ActionModel, Pose, Quat, SceneModel, Vec
@@ -256,8 +256,10 @@ class _RunState:
 class _Simulator:
     """Private staged evaluator; a failed event never commits a partial state."""
 
-    def __init__(self, model: SceneModel):
+    def __init__(self, model: SceneModel, check: Callable[[], None] | None = None):
         self.model = model
+        # Optional cooperative hook for bounded revision-bound agent work.
+        self.check = check
         self.state = _RunState()
         self.events = sorted(model.events, key=lambda block: block.time)
         self.event_index = 0
@@ -265,6 +267,8 @@ class _Simulator:
         self.last_boundary = Fraction(0)
         self.boundaries: list[str] = []
         for path, obj in model.objects.items():
+            if self.check is not None:
+                self.check()
             self.state.modes[path] = obj.motion
             self.state.positions[path] = obj.placement.position
             self.state.orientations[path] = obj.placement.rotation
@@ -272,6 +276,8 @@ class _Simulator:
                 self.state.dynamic[path] = _DynamicInitial(Fraction(0), _Kinematics(
                     obj.placement.position, obj.placement.rotation, obj.velocity, obj.omega))
         for path, joint in model.joints.items():
+            if self.check is not None:
+                self.check()
             if joint.initial is not None:
                 self.state.coordinates[path] = joint.initial
             if joint.kind == "grip":
@@ -325,6 +331,8 @@ class _Simulator:
         def instance(path: str) -> _Kinematics:
             if path in objects:
                 return objects[path]
+            if self.check is not None:
+                self.check()
             if path in resolving:
                 raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED", "The active pose graph contains a cycle.",
                                    self.model.objects[path].span, category="unsupported", phase="support")
@@ -384,6 +392,8 @@ class _Simulator:
         for path in self.model.objects:
             instance(path)
         for path in self.model.sites:
+            if self.check is not None:
+                self.check()
             frame(path + ".frame")
         return objects, frames
 
@@ -509,17 +519,23 @@ class _Simulator:
         touched.add(("joint" if action.kind == "tween" else "object", action.target))
 
     def _process_boundary(self, time: Fraction) -> None:
+        if self.check is not None:
+            self.check()
         incoming, _ = self._kinematics(time, self.state)
         dependencies = {path: self._dependencies(self.model.sites[self.model.joints[path].child].owner, self.state)
                         for path in self.state.active_grips}
         staged = copy.deepcopy(self.state)
         for path, runtime in staged.actions.items():
+            if self.check is not None:
+                self.check()
             if runtime.status == "running" and runtime.elapsed_at(time) == self.model.actions[path].duration:
                 self._latch(path, time, staged, "completed")
         has_source = self.event_index < len(self.events) and self.events[self.event_index].time == time
         if has_source:
             touched: set[tuple[str, str]] = set()
             for event in self.events[self.event_index].events:
+                if self.check is not None:
+                    self.check()
                 self._event(event, time, staged, incoming, dependencies, touched)
         self._kinematics(time, staged)
         self.state = staged
@@ -533,6 +549,8 @@ class _Simulator:
         # A free-flight position can leave the finite range and return before
         # either requested endpoint. Check every interior quadratic extremum.
         for anchor in self.state.dynamic.values():
+            if self.check is not None:
+                self.check()
             for velocity, gravity in zip(anchor.state.velocity, self.model.gravity):
                 if gravity:
                     extremum = anchor.time - _f(velocity) / _f(gravity)
@@ -542,6 +560,8 @@ class _Simulator:
     def advance(self, time: Fraction, side: str = "after") -> dict[str, Any]:
         try:
             while True:
+                if self.check is not None:
+                    self.check()
                 boundary = self._next_boundary()
                 if boundary is None or boundary > time or (boundary == time and side == "before"):
                     break
@@ -562,6 +582,8 @@ class _Simulator:
         incoming = self._incoming(self.state)
         objects: dict[str, Any] = {}
         for path, obj in self.model.objects.items():
+            if self.check is not None:
+                self.check()
             pose = poses[path]
             mode = self.state.modes[path]
             if path in incoming:
@@ -695,6 +717,81 @@ def evaluate(model: SceneModel, times: Iterable[Any] | None = None, *, side: str
         },
         "numerical_method": "analytical trajectories; rational event clock; binary64 spatial calculations",
     }
+
+
+def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
+                    check: Callable[[], None] | None = None) -> dict[str, Any]:
+    """Replay only through an exact endpoint, retaining the last checked state.
+
+    Unlike evaluate(), this additive agent hook does not preflight future
+    events. A failed atomic boundary retains its incoming before-state. Failure
+    between boundaries retains the last state actually checked. ``failure`` is
+    an OntoKinError for the caller to bind to its immutable source and run.
+    Wrap OntoKinError callback interruptions if they must propagate unchanged.
+    """
+    endpoint = exact_time(until)
+    if side not in ("before", "after") or not 0 <= endpoint <= model.duration:
+        raise OntoKinError("OKL-E-SAMPLE", "The requested run endpoint is outside the scene or has an invalid side.",
+                           model.span, phase="inspection", blocks=[],
+                           details={"duration_seconds": time_text(model.duration),
+                                    "requested_time_seconds": time_text(endpoint), "requested_side": side})
+    _output_budget(model, 1)
+    simulator = None
+    last = None
+    failure = None
+
+    def capture(time: Fraction, boundary_side: str) -> dict[str, Any]:
+        sample = simulator.advance(time, boundary_side)
+        # These fields belong to the prefix adapter; legacy samples stay intact.
+        for path, action in model.actions.items():
+            if check is not None:
+                check()
+            runtime = simulator.state.actions[path]
+            record = sample["actions"][path]
+            record["channel"] = simulator._channel(action)[1]
+            record["start_value"] = {"available": runtime.initial is not None,
+                                      "value": copy.deepcopy(runtime.initial)}
+            if action.kind == "tween":
+                current = sample["joints"][action.target]["coordinate"]
+            else:
+                name = "position_m" if action.kind == "move" else "orientation_wxyz"
+                current = sample["objects"][action.target][name]
+            record["current_value"] = {"available": True, "value": current}
+            target, reason = action.goal, None
+            if action.kind != "tween":
+                if runtime.initial is None:
+                    reason = "action_has_not_started"
+                else:
+                    try:
+                        target = (_affine(runtime.initial, action.vector, action.duration) if action.kind == "move"
+                                  else _advance_orientation(runtime.initial, action.vector, action.duration))
+                    except _NumericFault:
+                        reason = "target_exceeds_finite_range"
+            record["target_value"] = {"available": reason is None, "value": target, "reason": reason}
+            record["value_type"] = {"move": "Point3", "spin": "Rotation", "tween": "Quantity"}[action.kind]
+        return sample
+
+    try:
+        simulator = _Simulator(model, check=check)
+        last = capture(Fraction(0), "before")
+        while True:
+            if check is not None:
+                check()
+            boundary = simulator._next_boundary()
+            if boundary is None or boundary > endpoint or (boundary == endpoint and side == "before"):
+                break
+            last = capture(boundary, "before")
+            last = capture(boundary, "after")
+        if last["time_seconds"] != time_text(endpoint) or last["side"] != side:
+            last = capture(endpoint, side)
+        if check is not None:
+            check()
+    except OntoKinError as exc:
+        failure = exc
+    return {"valid_until_seconds": None if last is None else last["time_seconds"],
+            "valid_until_side": None if last is None else last["side"],
+            "last_valid_state": last, "failure": failure,
+            "boundary_times_seconds": [] if simulator is None else list(simulator.boundaries)}
 
 
 def inspect_in_frame(sample: dict[str, Any], object_path: str, frame_path: str = "world") -> dict[str, Any]:

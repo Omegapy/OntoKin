@@ -1,0 +1,87 @@
+ontokin "0.1";
+module AgentAuthoringDemo @ "agent-authoring-demo";
+profile "core-0.1";
+
+fn twice @ "twice"(value: Length) -> Length {
+    return 2 * value;
+}
+
+class Marker @ "marker" {
+    public param radius @ "radius": Length = 0.2[m];
+    public derive diameter @ "diameter": Length = twice(self.radius);
+    geometry = box(vec3(self.diameter, self.radius * 1.5, self.radius));
+    appearance = rgba(0.2, 0.6, 0.9, 1);
+}
+
+class SmallMarker @ "small-marker" extends Marker {
+    override radius = 0.1[m];
+}
+
+class Arm @ "arm" {
+    geometry = box(vec3(0.45[m], 0.14[m], 0.18[m]));
+    appearance = rgba(0.08, 0.65, 0.5, 1);
+    public part hand @ "hand": SmallMarker {}
+    public joint extension @ "extension": slider {
+        parent = self.origin;
+        child = self.hand.origin;
+        axis = vec3(1, 0, 0);
+        limits = range(0.25[m], 0.75[m]);
+        initial = 0.25[m];
+    }
+    public method reach @ "reach"(distance: Length, duration: Time) -> Action {
+        return tween(self.extension, distance, duration);
+    }
+}
+
+class Rig @ "rig-type" {
+    geometry = box(vec3(0.5[m], 1.5[m], 0.28[m]));
+    appearance = rgba(0.25, 0.31, 0.42, 1);
+    public part head @ "head": Marker {}
+    public part arm @ "arm": Arm {}
+    public site neck @ "neck" {
+        pose = pose(self.frame, vec3(0[m], 1[m], 0[m]), quat(1, 0, 0, 0));
+        interface = "rigid.origin";
+        size = 0[m];
+    }
+    public site shoulder @ "shoulder" {
+        pose = pose(self.frame, vec3(0.45[m], 0.5[m], 0[m]), quat(1, 0, 0, 0));
+        interface = "rigid.origin";
+        size = 0[m];
+    }
+    public joint yaw @ "yaw": hinge {
+        parent = self.neck;
+        child = self.head.origin;
+        axis = vec3(0, 1, 0);
+        limits = range(-90[deg], 90[deg]);
+        initial = 0[rad];
+    }
+    public joint mount @ "mount": fixed {
+        parent = self.shoulder;
+        child = self.arm.origin;
+    }
+    public method look @ "look"(angle: Angle, duration: Time) -> Action {
+        return tween(self.yaw, angle, duration);
+    }
+}
+
+scene Demo @ "demo" {
+    duration = 3[s];
+    gravity = vector(world, 0[m/s^2], -9.81[m/s^2], 0[m/s^2]);
+    object rig @ "rig": Rig {
+        head.radius = 0.35[m];
+        placement = pose(world, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+    }
+    // This second instance must keep its shared defaults when the first is edited.
+    object reference @ "reference": Rig {
+        placement = pose(world, vec3(0[m], 0[m], 1.5[m]), quat(1, 0, 0, 0));
+    }
+    action advance @ "advance" =
+        move(rig, vector(world, 1[m/s], 0[m/s], 0[m/s]), 2[s]);
+    action look @ "look" = rig.look(90[deg], 1[s]);
+    action reach @ "reach" = rig.arm.reach(0.75[m], 2[s]);
+    at 0[s] sequence {
+        start advance;
+        start look;
+        start reach;
+    }
+}

@@ -1,0 +1,204 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Omegapy/OntoKin/main/docs/language-design/agent-v0.1/response.schema.json",
+  "title": "OntoKin agent response envelope, version 0.1",
+  "description": "Versioned operation receipt/result with explicit revision, run, stage, pagination, and failure context.",
+  "$comment": "Unavailable identity fields may be null when rejecting a malformed envelope. Ordinary operations must retain actual request identity. Diagnostics require real source snapshots; protocol_error handles failures without one. Schema validation is not conformance evidence. Operation-specific result payloads are governed by OK-AGENT-001.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project_id",
+    "request_id",
+    "operation",
+    "status",
+    "source_revision",
+    "accepted_revision",
+    "requested_level",
+    "achieved_level",
+    "run_id",
+    "diagnostics",
+    "result",
+    "progress",
+    "next_cursor",
+    "truncated",
+    "protocol_error"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "ontokin.agent/0.1"
+    },
+    "project_id": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/nonemptyString"
+        }
+      ]
+    },
+    "request_id": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/nonemptyString"
+        }
+      ]
+    },
+    "operation": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/nonemptyString"
+        }
+      ]
+    },
+    "status": {
+      "enum": [
+        "queued",
+        "running",
+        "succeeded",
+        "rejected",
+        "failed",
+        "cancelled",
+        "unknown_outcome"
+      ]
+    },
+    "source_revision": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/nonemptyString"
+        }
+      ]
+    },
+    "accepted_revision": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/nonemptyString"
+        }
+      ]
+    },
+    "requested_level": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/level"
+        }
+      ]
+    },
+    "achieved_level": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/level"
+        }
+      ]
+    },
+    "run_id": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/nonemptyString"
+        }
+      ]
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "$ref": "../core-v0.1/diagnostic.schema.json"
+      }
+    },
+    "result": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "progress": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "next_cursor": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/nonemptyString"
+        }
+      ]
+    },
+    "truncated": {
+      "type": "boolean"
+    },
+    "protocol_error": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "code",
+            "message"
+          ],
+          "properties": {
+            "code": {
+              "type": "string",
+              "minLength": 1
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "details": {
+              "type": "object"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "nonemptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "level": {
+      "enum": [
+        "represented",
+        "constructed",
+        "evaluated",
+        "delivered"
+      ]
+    }
+  }
+}

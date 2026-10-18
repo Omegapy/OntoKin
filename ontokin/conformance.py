@@ -252,7 +252,7 @@ def run_conformance(directory: Path = DEFAULT_FIXTURES) -> dict:
         "cases": cases,
         "agent_protocol_checks": {"executed": False,
                                   "deferred_case_ids": [c["id"] for c in manifest["agent_contract_checks"]],
-                                  "reason": "No persistent agent editing/retry/transport service is implemented."},
+                                  "reason": "This command executes source cases only; run tools/run_agent_conformance.py for the separate A01–A10 protocol evidence."},
         "numerical_limits": [
             "Fixture tolerances do not certify all correctly rounded transcendental operations.",
             "Binary64 spatial rotations approximate the language's exact represented rotations.",

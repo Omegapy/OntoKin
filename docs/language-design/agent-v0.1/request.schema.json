@@ -1,0 +1,825 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Omegapy/OntoKin/main/docs/language-design/agent-v0.1/request.schema.json",
+  "title": "OntoKin agent request, version 0.1",
+  "description": "Strict request shapes for the local durable core-0.1 agent service and explicitly named GLB adapter.",
+  "$comment": "OK-LANG-001 LANG-025 through LANG-028 supply source authority, atomicity, request identity, stage, and inspection semantics. This schema alone cannot establish permissions, revision validity, resource enforcement, or execution success.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/discover"
+    },
+    {
+      "$ref": "#/$defs/create"
+    },
+    {
+      "$ref": "#/$defs/edit"
+    },
+    {
+      "$ref": "#/$defs/validate"
+    },
+    {
+      "$ref": "#/$defs/inspect"
+    },
+    {
+      "$ref": "#/$defs/evaluate"
+    },
+    {
+      "$ref": "#/$defs/reset"
+    },
+    {
+      "$ref": "#/$defs/status"
+    },
+    {
+      "$ref": "#/$defs/cancel"
+    },
+    {
+      "$ref": "#/$defs/export"
+    },
+    {
+      "$ref": "#/$defs/artifact"
+    }
+  ],
+  "$defs": {
+    "nonemptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "elementId": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "maxItems": 128
+    },
+    "seconds": {
+      "type": "string",
+      "pattern": "^[0-9]+(?:\\.[0-9]+)?$",
+      "maxLength": 1024
+    },
+    "level": {
+      "enum": [
+        "represented",
+        "constructed",
+        "evaluated",
+        "delivered"
+      ]
+    },
+    "limit": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000
+    },
+    "time": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "seconds",
+        "side"
+      ],
+      "properties": {
+        "seconds": {
+          "$ref": "#/$defs/seconds"
+        },
+        "side": {
+          "enum": [
+            "before",
+            "after"
+          ]
+        }
+      }
+    },
+    "selector": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "element_id": {
+          "$ref": "#/$defs/elementId"
+        },
+        "kind": {
+          "enum": [
+            "object",
+            "property",
+            "site",
+            "joint",
+            "follow",
+            "action",
+            "class",
+            "function",
+            "scene",
+            "module"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "class_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": "string"
+        },
+        "relation": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "$ref": "#/$defs/elementId"
+            }
+          ]
+        }
+      }
+    },
+    "patch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "element_id",
+        "start_byte",
+        "end_byte",
+        "expected_text",
+        "replacement"
+      ],
+      "properties": {
+        "element_id": {
+          "$ref": "#/$defs/elementId"
+        },
+        "start_byte": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_byte": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_text": {
+          "type": "string"
+        },
+        "replacement": {
+          "type": "string"
+        }
+      },
+      "$comment": "Source revision, UTF-8 boundaries, exact text, span containment, non-overlap, occurrence/definition authority, and stable-key rules are checked semantically."
+    },
+    "budgets": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_objects": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        },
+        "max_operations": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        },
+        "max_result_items": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        },
+        "max_elapsed_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30000
+        }
+      },
+      "$comment": "Omission selects published limits. Actual resource enforcement is an implementation contract, not a consequence of schema validation."
+    },
+    "exportOptions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fps": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 10000
+        },
+        "end": {
+          "$ref": "#/$defs/seconds"
+        },
+        "position_tolerance_m": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "rotation_tolerance_rad": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "time_tolerance_s": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "helpers": {
+          "type": "boolean"
+        }
+      }
+    },
+    "discover": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "profile",
+        "limit"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.1"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "request_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "operation": {
+          "const": "discover"
+        },
+        "profile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "$ref": "#/$defs/nonemptyString"
+                },
+                "name": {
+                  "$ref": "#/$defs/nonemptyString"
+                },
+                "capability": {
+                  "$ref": "#/$defs/nonemptyString"
+                }
+              }
+            }
+          ]
+        },
+        "limit": {
+          "$ref": "#/$defs/limit"
+        },
+        "cursor": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/nonemptyString"
+            }
+          ]
+        }
+      }
+    },
+    "create": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "filename",
+        "source",
+        "expected_revision",
+        "requested_level"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.1"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "request_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "operation": {
+          "const": "create"
+        },
+        "filename": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string"
+        },
+        "expected_revision": {
+          "type": "null"
+        },
+        "requested_level": {
+          "$ref": "#/$defs/level"
+        },
+        "budgets": {
+          "$ref": "#/$defs/budgets"
+        },
+        "destination": {
+          "const": "ontokin.glb/0.1"
+        },
+        "options": {
+          "$ref": "#/$defs/exportOptions"
+        }
+      },
+      "dependentRequired": {
+        "options": [
+          "destination"
+        ]
+      },
+      "if": {
+        "anyOf": [
+          {
+            "required": [
+              "destination"
+            ]
+          },
+          {
+            "required": [
+              "options"
+            ]
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "requested_level": {
+            "const": "delivered"
+          }
+        }
+      }
+    },
+    "edit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "expected_revision",
+        "patches",
+        "requested_level"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.1"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "request_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "operation": {
+          "const": "edit"
+        },
+        "expected_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "patches": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/patch"
+          },
+          "maxItems": 1000
+        },
+        "requested_level": {
+          "$ref": "#/$defs/level"
+        },
+        "budgets": {
+          "$ref": "#/$defs/budgets"
+        },
+        "destination": {
+          "const": "ontokin.glb/0.1"
+        },
+        "options": {
+          "$ref": "#/$defs/exportOptions"
+        }
+      },
+      "dependentRequired": {
+        "options": [
+          "destination"
+        ]
+      },
+      "if": {
+        "anyOf": [
+          {
+            "required": [
+              "destination"
+            ]
+          },
+          {
+            "required": [
+              "options"
+            ]
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "requested_level": {
+            "const": "delivered"
+          }
+        }
+      }
+    },
+    "validate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "source_revision",
+        "requested_level"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.1"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "request_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "operation": {
+          "const": "validate"
+        },
+        "source_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_level": {
+          "$ref": "#/$defs/level"
+        },
+        "budgets": {
+          "$ref": "#/$defs/budgets"
+        },
+        "destination": {
+          "const": "ontokin.glb/0.1"
+        },
+        "options": {
+          "$ref": "#/$defs/exportOptions"
+        }
+      },
+      "dependentRequired": {
+        "options": [
+          "destination"
+        ]
+      },
+      "if": {
+        "anyOf": [
+          {
+            "required": [
+              "destination"
+            ]
+          },
+          {
+            "required": [
+              "options"
+            ]
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "requested_level": {
+            "const": "delivered"
+          }
+        }
+      }
+    },
+    "inspect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "source_revision",
+        "selector",
+        "fields",
+        "limit"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.1"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "request_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "operation": {
+          "const": "inspect"
+        },
+        "source_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "selector": {
+          "$ref": "#/$defs/selector"
+        },
+        "fields": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "identity",
+              "source",
+              "values",
+              "geometry",
+              "matter",
+              "relations",
+              "actions",
+              "state",
+              "support"
+            ]
+          }
+        },
+        "limit": {
+          "$ref": "#/$defs/limit"
+        },
+        "cursor": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/nonemptyString"
+            }
+          ]
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/nonemptyString"
+            }
+          ]
+        },
+        "time": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/time"
+            }
+          ]
+        },
+        "frame": {
+          "type": "string",
+          "minLength": 1
+        },
+        "budgets": {
+          "$ref": "#/$defs/budgets"
+        }
+      }
+    },
+    "evaluate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "source_revision",
+        "run_id",
+        "until_seconds"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.1"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "request_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "operation": {
+          "const": "evaluate"
+        },
+        "source_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/nonemptyString"
+            }
+          ]
+        },
+        "until_seconds": {
+          "$ref": "#/$defs/seconds"
+        },
+        "budgets": {
+          "$ref": "#/$defs/budgets"
+        }
+      }
+    },
+    "reset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "source_revision"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.1"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "request_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "operation": {
+          "const": "reset"
+        },
+        "source_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "budgets": {
+          "$ref": "#/$defs/budgets"
+        }
+      }
+    },
+    "status": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "target_request_id"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.1"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "request_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "operation": {
+          "const": "status"
+        },
+        "target_request_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "cancel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "target_request_id"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.1"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "request_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "operation": {
+          "const": "cancel"
+        },
+        "target_request_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "export": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "source_revision",
+        "destination"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.1"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "request_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "operation": {
+          "const": "export"
+        },
+        "source_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "destination": {
+          "const": "ontokin.glb/0.1"
+        },
+        "options": {
+          "$ref": "#/$defs/exportOptions"
+        },
+        "budgets": {
+          "$ref": "#/$defs/budgets"
+        }
+      },
+      "dependentRequired": {
+        "options": [
+          "destination"
+        ]
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "artifact_id"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.1"
+        },
+        "project_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "request_id": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "operation": {
+          "const": "artifact"
+        },
+        "artifact_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65536
+        }
+      }
+    }
+  }
+}

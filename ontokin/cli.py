@@ -80,7 +80,7 @@ def capabilities() -> dict:
     return {
         "implementation": "ontokin-reference", "version": __version__,
         "language_version": "0.1", "profile": "core-0.1",
-        "operations": ["check", "evaluate", "export", "conformance", "capabilities"],
+        "operations": ["check", "evaluate", "export", "agent", "conformance", "capabilities"],
         "output_levels": ["represented", "constructed", "evaluated"],
         "source_features": ["classes", "single_inheritance", "pure_functions_and_methods",
                             "typed_quantities", "independent_parts", "sites", "follow",
@@ -90,7 +90,21 @@ def capabilities() -> dict:
         "numeric_contract": "exact canonical source arithmetic and event clock; binary64 analytical spatial calculations",
         "conformance_scope": "published source cases and bounded behavioral checks; not universal core certification",
         "unsupported": ["contact_and_collision_response", "dynamic_articulated_joints", "closed_mechanical_loops",
-                        "general_rigid_body_dynamics", "general_external_delivery", "persistent_agent_editing_service"],
+                        "general_rigid_body_dynamics", "general_external_delivery", "distributed_agent_service"],
+        "agent_interface": {
+            "schema_version": "ontokin.agent/0.1", "storage_schema": "ontokin.agent-store/0.1",
+            "transport": "local Python AgentService and UTF-8 JSONL CLI",
+            "operations": ["discover", "create", "edit", "validate", "inspect", "evaluate", "reset", "status", "cancel", "export", "artifact"],
+            "source_revisions": "immutable SHA-256 of exact UTF-8 bytes; first recorded filename is canonical per project and revision",
+            "durability": "local SQLite transactions; source acceptance, run/artifact changes and terminal request result commit together",
+            "retry": "project-scoped canonical request identity; exact retained results or nonreplayable tombstones",
+            "engine_binding": "runs and queued work pin the implementation version and Python source digest",
+            "limits": {"max_source_bytes": 2097152, "max_request_bytes": 4194304, "max_objects": 1000,
+                       "max_operations": 100000, "max_result_items": 1000, "max_elapsed_ms": 30000,
+                       "artifact_chunk_bytes": 65536},
+            "cancellation": "cooperative checkpoints and a final atomic commit fence; export kernels may delay observation",
+            "retention": "explicit result expiry preserves identity/digest tombstones; no automatic source/run/artifact expiry",
+        },
         "export_targets": {
             "ontokin.glb/0.1": {
                 "format": "glTF 2.0 binary (.glb)",
@@ -137,7 +151,14 @@ def main(argv: list[str] | None = None) -> int:
     suite = commands.add_parser("conformance", help="Execute the published source cases and expected observations")
     suite.add_argument("--fixtures", type=Path, default=DEFAULT_FIXTURES)
     suite.add_argument("--output", type=Path, help="Write the complete JSON report to this path")
+    agent = commands.add_parser("agent", help="Serve durable ontokin.agent/0.1 requests as local JSONL")
+    agent.add_argument("--store", type=Path, required=True, help="Directory for immutable snapshots and durable request/run state")
+    agent.add_argument("--request", type=Path, help="Read one JSON request, emit its receipt, and exit")
+    agent.add_argument("--wait", action="store_true", help="Wait for this request's terminal result instead of returning a queued receipt")
     args = parser.parse_args(argv)
+    if args.command == "agent":
+        from .agent_cli import run
+        return run(args)
     if args.command == "capabilities":
         _print(capabilities())
         return 0

@@ -1,0 +1,596 @@
+{
+  "schema_version": "ontokin.visual-validation/0.1",
+  "status": "passed",
+  "scenario": "agent-authoring-custom-import",
+  "generated_at_utc": "2026-10-18T02:59:26.037Z",
+  "source_revision": "sha256:d9b63c16c2efc92e947b0a39564234d9e14693cc9afb32bcffeabd08350cc324",
+  "artifact_sha256": "sha256:2cf4c92768ed6b5b07446f6b8e9d53ca13415a2596d8305f9401c2082bf92f3f",
+  "provenance": {
+    "authoring_source": {
+      "path": "examples/agent/authoring-demo.ok",
+      "byte_length": 2768,
+      "sha256": "sha256:8f3745a78295385ce7c3986614e24b936f3b466bfd5582312b272eb446c3bf13"
+    },
+    "repaired_source": {
+      "path": "examples/agent/repaired.ok",
+      "byte_length": 2799,
+      "sha256": "sha256:d9b63c16c2efc92e947b0a39564234d9e14693cc9afb32bcffeabd08350cc324"
+    },
+    "glb": {
+      "path": "examples/agent/repaired.glb",
+      "byte_length": 125892,
+      "sha256": "sha256:2cf4c92768ed6b5b07446f6b8e9d53ca13415a2596d8305f9401c2082bf92f3f"
+    },
+    "export_report": {
+      "path": "examples/agent/repaired.export.json",
+      "byte_length": 6193,
+      "sha256": "sha256:e7c073868183863029cd92950af5fd824b49c3a3abe3669ae17a0ad4b2f70f25"
+    },
+    "reference": {
+      "path": "examples/agent/repaired.reference.json",
+      "byte_length": 50148,
+      "sha256": "sha256:3448caf3ef2e568eb4f8b827e9d4b150406c7b4f0299fd031839d2c11f14423a"
+    },
+    "workflow": {
+      "path": "examples/agent/workflow.json",
+      "byte_length": 1048378,
+      "sha256": "sha256:8c0509f5ef8cc4d98304838adcf58011ad1dccfdb6d1979ea64f570fefb10b77"
+    },
+    "viewer_html": {
+      "path": "examples/visual/viewer.html",
+      "byte_length": 11700,
+      "sha256": "sha256:41b406bf03298d60e571b3a0c6bc25701e78f135650caab33313b5880d4bdcfb"
+    },
+    "viewer_bundle": {
+      "path": "examples/visual/viewer.bundle.js",
+      "byte_length": 612712,
+      "sha256": "sha256:ced4c09177ebb2661f0bae97b60adbf4a95b8d138715a34cc5720e3bdf73dc4d"
+    },
+    "viewer_builtin_data": {
+      "path": "examples/visual/demo-data.js",
+      "byte_length": 179745,
+      "sha256": "sha256:cf2489f079237c08962727ad7af87de7f4df7978796f4d2b6fb578008b7fe164"
+    },
+    "verifier": {
+      "path": "tools/verify_agent_viewer.mjs",
+      "byte_length": 16496,
+      "sha256": "sha256:b4540ba146567dd090f9b139e57beee429e9420fa96877e1115a88004caf1b7c"
+    },
+    "tooling_lock": {
+      "path": "tools/package-lock.json",
+      "byte_length": 16805,
+      "sha256": "sha256:f1351b945f847f937dcacc9736fea07a710f1c066dbc9d7a5e19e89a858d635a"
+    }
+  },
+  "agent_implementation": {
+    "name": "ontokin-reference",
+    "version": "0.3.0",
+    "source_code_sha256": "sha256:8a2eae260e2adfb28d6e1fd254cfefdb5fe47841509122ec1ad01e515a311142"
+  },
+  "exporter": {
+    "name": "OntoKin reference GLB exporter",
+    "version": "0.3.0"
+  },
+  "exporter_source_code_sha256": "8a2eae260e2adfb28d6e1fd254cfefdb5fe47841509122ec1ad01e515a311142",
+  "renderer": "Three.js 0.180.0 / WebGL2",
+  "playwright": "1.56.1",
+  "environment": {
+    "platform": "linux",
+    "architecture": "x64",
+    "node": "v24.19.0",
+    "rendering": "Headless Chromium with ANGLE SwiftShader software rendering"
+  },
+  "delivery": "Existing local file viewer, custom Open GLB input, exact agent-retrieved artifact bytes",
+  "tolerances": {
+    "position_m": 0.001,
+    "rotation_rad": 0.001,
+    "time_seconds": 0.000001
+  },
+  "geometry_metadata": {
+    "rig.head": {
+      "kind": "box",
+      "full_size_m": [
+        0.7,
+        0.5249999999999999,
+        0.35
+      ]
+    },
+    "reference.head": {
+      "kind": "box",
+      "full_size_m": [
+        0.4,
+        0.30000000000000004,
+        0.2
+      ]
+    }
+  },
+  "checks": [
+    "Exact source, workflow, inspection reference, GLB metadata and export-report identities agree.",
+    "GLB metadata retains the repaired first head dimensions and the second head’s unchanged dimensions.",
+    "The unchanged offline viewer loads the repaired artifact through its custom Open GLB input.",
+    "At 1.5 and 2 seconds, actual Three.js world positions and orientations match revision-bound inspection samples and fixed head/hand/reference position expectations.",
+    "Play advances the imported animation; Pause holds both time and world poses across rendered frames.",
+    "Selecting the unchanged reference assembly displays its decoded world position (0, 0, 1.5) metres.",
+    "Custom import keeps source download disabled, every tolerance unknown, both built-in demos unselected, and the source/conformance text unclaimed.",
+    "A WebGL2 frame is captured with no page errors, console errors, HTTP(S) requests, or failed resource requests."
+  ],
+  "samples": [
+    {
+      "time_seconds": "1.5",
+      "displayed_time_seconds": 1.5,
+      "objects": {
+        "reference": {
+          "position_m": [
+            0,
+            0,
+            1.5
+          ],
+          "orientation_xyzw": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "expected_position_m": [
+            0,
+            0,
+            1.5
+          ],
+          "expected_orientation_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "position_error_m": 0,
+          "rotation_error_rad": 0
+        },
+        "reference.arm": {
+          "position_m": [
+            0.44999998807907104,
+            0.5,
+            1.5
+          ],
+          "orientation_xyzw": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "expected_position_m": [
+            0.45,
+            0.5,
+            1.5
+          ],
+          "expected_orientation_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "position_error_m": 1.1920928966180355e-8,
+          "rotation_error_rad": 0
+        },
+        "reference.arm.hand": {
+          "position_m": [
+            0.699999988079071,
+            0.5,
+            1.5
+          ],
+          "orientation_xyzw": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "expected_position_m": [
+            0.7,
+            0.5,
+            1.5
+          ],
+          "expected_orientation_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "position_error_m": 1.1920928910669204e-8,
+          "rotation_error_rad": 0
+        },
+        "reference.head": {
+          "position_m": [
+            0,
+            1,
+            1.5
+          ],
+          "orientation_xyzw": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "expected_position_m": [
+            0,
+            1,
+            1.5
+          ],
+          "expected_orientation_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "position_error_m": 0,
+          "rotation_error_rad": 0
+        },
+        "rig": {
+          "position_m": [
+            1.5,
+            0,
+            0
+          ],
+          "orientation_xyzw": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "expected_position_m": [
+            1.5,
+            0,
+            0
+          ],
+          "expected_orientation_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "position_error_m": 0,
+          "rotation_error_rad": 0
+        },
+        "rig.arm": {
+          "position_m": [
+            1.9500000476837158,
+            0.5,
+            0
+          ],
+          "orientation_xyzw": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "expected_position_m": [
+            1.95,
+            0.5,
+            0
+          ],
+          "expected_orientation_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "position_error_m": 4.768371586472142e-8,
+          "rotation_error_rad": 0
+        },
+        "rig.arm.hand": {
+          "position_m": [
+            2.575000047683716,
+            0.5,
+            0
+          ],
+          "orientation_xyzw": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "expected_position_m": [
+            2.575,
+            0.5,
+            0
+          ],
+          "expected_orientation_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "position_error_m": 4.7683715642676816e-8,
+          "rotation_error_rad": 0
+        },
+        "rig.head": {
+          "position_m": [
+            1.5,
+            1,
+            0
+          ],
+          "orientation_xyzw": [
+            0,
+            0.7071067690849299,
+            0,
+            0.7071067932881648
+          ],
+          "expected_position_m": [
+            1.5,
+            1,
+            0
+          ],
+          "expected_orientation_wxyz": [
+            0.7071067811865476,
+            0,
+            0.7071067811865475,
+            0
+          ],
+          "position_error_m": 0,
+          "rotation_error_rad": 2.9802322387695312e-8
+        }
+      }
+    },
+    {
+      "time_seconds": "2",
+      "displayed_time_seconds": 2,
+      "objects": {
+        "reference": {
+          "position_m": [
+            0,
+            0,
+            1.5
+          ],
+          "orientation_xyzw": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "expected_position_m": [
+            0,
+            0,
+            1.5
+          ],
+          "expected_orientation_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "position_error_m": 0,
+          "rotation_error_rad": 0
+        },
+        "reference.arm": {
+          "position_m": [
+            0.44999998807907104,
+            0.5,
+            1.5
+          ],
+          "orientation_xyzw": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "expected_position_m": [
+            0.45,
+            0.5,
+            1.5
+          ],
+          "expected_orientation_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "position_error_m": 1.1920928966180355e-8,
+          "rotation_error_rad": 0
+        },
+        "reference.arm.hand": {
+          "position_m": [
+            0.699999988079071,
+            0.5,
+            1.5
+          ],
+          "orientation_xyzw": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "expected_position_m": [
+            0.7,
+            0.5,
+            1.5
+          ],
+          "expected_orientation_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "position_error_m": 1.1920928910669204e-8,
+          "rotation_error_rad": 0
+        },
+        "reference.head": {
+          "position_m": [
+            0,
+            1,
+            1.5
+          ],
+          "orientation_xyzw": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "expected_position_m": [
+            0,
+            1,
+            1.5
+          ],
+          "expected_orientation_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "position_error_m": 0,
+          "rotation_error_rad": 0
+        },
+        "rig": {
+          "position_m": [
+            2,
+            0,
+            0
+          ],
+          "orientation_xyzw": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "expected_position_m": [
+            2,
+            0,
+            0
+          ],
+          "expected_orientation_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "position_error_m": 0,
+          "rotation_error_rad": 0
+        },
+        "rig.arm": {
+          "position_m": [
+            2.450000047683716,
+            0.5,
+            0
+          ],
+          "orientation_xyzw": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "expected_position_m": [
+            2.45,
+            0.5,
+            0
+          ],
+          "expected_orientation_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "position_error_m": 4.7683715642676816e-8,
+          "rotation_error_rad": 0
+        },
+        "rig.arm.hand": {
+          "position_m": [
+            3.200000047683716,
+            0.5,
+            0
+          ],
+          "orientation_xyzw": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "expected_position_m": [
+            3.2,
+            0.5,
+            0
+          ],
+          "expected_orientation_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "position_error_m": 4.7683715642676816e-8,
+          "rotation_error_rad": 0
+        },
+        "rig.head": {
+          "position_m": [
+            2,
+            1,
+            0
+          ],
+          "orientation_xyzw": [
+            0,
+            0.7071067690849299,
+            0,
+            0.7071067932881648
+          ],
+          "expected_position_m": [
+            2,
+            1,
+            0
+          ],
+          "expected_orientation_wxyz": [
+            0.7071067811865476,
+            0,
+            0.7071067811865475,
+            0
+          ],
+          "position_error_m": 0,
+          "rotation_error_rad": 2.9802322387695312e-8
+        }
+      }
+    }
+  ],
+  "captures": [
+    {
+      "file": "agent-authoring.png",
+      "sha256": "sha256:732318820e637f5081769282d4c70f14da6ec1f4452d65129cec2efebe7f3893",
+      "time_seconds": 1.5,
+      "selected_object": "reference",
+      "viewport": {
+        "width": 1440,
+        "height": 1060
+      },
+      "source_revision": "sha256:d9b63c16c2efc92e947b0a39564234d9e14693cc9afb32bcffeabd08350cc324",
+      "artifact_sha256": "sha256:2cf4c92768ed6b5b07446f6b8e9d53ca13415a2596d8305f9401c2082bf92f3f"
+    }
+  ],
+  "page_errors": [],
+  "console_errors": [],
+  "network_requests": [],
+  "failed_requests": [],
+  "limits": [
+    "Browser world-pose comparisons cover 1.5 and 2 seconds for this artifact; the export report and independent importer checks provide separate evidence.",
+    "The custom-import UI receives only the GLB and correctly makes no source or numerical-conformance claim; this external harness verifies the sidecar provenance.",
+    "Geometry dimensions above are retained source metadata; the screenshot is a rendering observation, not a complete mesh validator.",
+    "No Blender import, model-authoring efficiency, or general rendering-quality certification is claimed."
+  ],
+  "browser": "141.0.7390.37",
+  "playback": {
+    "started_at_seconds": 1.5,
+    "paused_at_seconds": 1.5498999999999998,
+    "stable_across_rendered_frames": true
+  },
+  "local_import_ui": {
+    "asset-badge": "Local GLB · numerical status unknown",
+    "load-status": "Three.js loaded · no conformance report",
+    "source-code": "The editable source is not embedded in this imported GLB.",
+    "export-report": "No export report was supplied. Loading a file does not establish numerical conformance.",
+    "position-tolerance": "Unknown",
+    "rotation-tolerance": "Unknown",
+    "time-tolerance": "Unknown",
+    "evidence-note": "This file has not been compared with an OntoKin source program.",
+    "event-label": "Local GLB playback",
+    "source_download_disabled": true,
+    "builtin_demo_selected": false
+  },
+  "webgl": {
+    "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+    "vendor": "WebKit",
+    "renderer": "WebKit WebGL",
+    "unmasked_renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+  }
+}
