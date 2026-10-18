@@ -2,7 +2,7 @@
 
 This example exercises language `0.2` / `construction-0.1` through the separate `ontokin.agent/0.2` interface. One exact-pinned library supplies a reusable articulated component. The entry program generates two assemblies from immutable keyed inputs, then an agent-style client inspects, diagnoses, repairs, evaluates, and exports the complete program.
 
-**Release status:** this is part of the prospective 0.4.0 milestone, whose complete local, destination, and CI gate is under verification. [STATUS](../../STATUS.md) records the accepted release evidence. The [language contract](../../docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md) and [program-agent contract](../../docs/engineering/OK-AGENT-002-program-bundles-and-atomic-source-edits.md) define the promised scope; successful playback alone does not close that gate.
+**Release status:** the experimental 0.4.0 milestone passed its complete local, destination and CI gate. The [identified evidence](../../docs/engineering/construction-validation/validation-summary.json) and [STATUS](../../STATUS.md) record the result and the next unmet goal. The [language contract](../../docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md) and [program-agent contract](../../docs/engineering/OK-AGENT-002-program-bundles-and-atomic-source-edits.md) define the promised scope; successful playback alone does not close that gate.
 
 ## Build and open the animation
 
