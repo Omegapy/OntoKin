@@ -29,7 +29,7 @@ jobs:
       - name: Published agent-operation conformance
         run: python tools/run_agent_conformance.py --output /tmp/ontokin-agent-conformance.json
       - name: Current C01-C20 with immutable historical C20 and explicit identity status
-        run: python tools/verify_construction_ci.py --output /tmp/ontokin-construction-conformance.json --external-evidence docs/engineering/construction-validation/external-gate.json
+        run: python -m tools.verify_construction_ci --output /tmp/ontokin-construction-conformance.json --external-evidence docs/engineering/construction-validation/external-gate.json
       - name: Documentation preservation and links
         run: python docs/maintenance/reorganization-2026-10-17/verify_reorganization.py
       - name: Preserve source and agent conformance evidence
