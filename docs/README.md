@@ -31,9 +31,9 @@ Begin with the [two-source Rack program](language-design/construction-v0.1/01-ke
 
 The separate agent contract has [request](language-design/agent-v0.2/request.schema.json), [response](language-design/agent-v0.2/response.schema.json), and [diagnostic](language-design/agent-v0.2/diagnostic.schema.json) schemas. A `program_revision` identifies the complete supplied closure; a `source_revision` continues to identify one exact source file. The original 0.1 schemas and operation meanings remain in place.
 
-### Prospective surface-0.1 companion files
+### Surface-0.1 companion files
 
-The [surface-v0.1 folder](language-design/surface-v0.1/) fixes the M01–M12 analytical, boundary, negative, held-out and source-repair expectations. Its [pinned two-file sample](language-design/surface-v0.1/README.md) is authored future `0.3` source and does not yet run in the published `0.4.0` engine. The [standalone mesh/GLB workbench](../prototypes/surface_v01/README.md) verifies real surface geometry and glTF material regions independently of source compilation; CI reports identify it as prototype-only.
+The [surface-v0.1 folder](language-design/surface-v0.1/) fixes the M01–M12 analytical, boundary, negative, held-out and source-repair expectations. Its [pinned two-file sample](language-design/surface-v0.1/README.md) now compiles as native `0.3` source in the main development line and exports through the explicit `ontokin.glb/0.3` adapter. The [native export guide](engineering/OK-ENG-003-native-surface-glb-export.md) supplies the executable file-manifest command, limits and independent validation procedure. [STATUS](../STATUS.md) identifies current evidence and the remaining Agent/0.3 and full M01–M12 gate. The [standalone mesh/GLB workbench](../prototypes/surface_v01/README.md) verifies real surface geometry and glTF material regions independently of source compilation; CI reports identify it as prototype-only.
 
 ### Run the reference prototype
 
@@ -41,7 +41,7 @@ The [root quick start](../README.md) gives the commands. The Python package read
 
 ### Export and view an animation
 
-[OK-ENG-002](engineering/OK-ENG-002-3d-scene-animation-export-and-visual-validation.md#7-reproduce-and-inspect-the-demonstrations) explains the `.ok` to `.glb` workflow and the local visual demonstrations. The exporter generates spheres and boxes, records the evaluator's world transforms, and reports conversions and numerical limits. The released sphere follows its calculated free trajectory in playback. Source ownership remains metadata and does not apply carrier movement a second time.
+[OK-ENG-002](engineering/OK-ENG-002-3d-scene-animation-export-and-visual-validation.md#7-reproduce-and-inspect-the-demonstrations) explains the `.ok` to `.glb` workflow and the local visual demonstrations. The older exporter generates spheres and boxes; [GLB/0.3](engineering/OK-ENG-003-native-surface-glb-export.md) adds native lofts and regional PBR materials. Both record the evaluator's world transforms and report conversions and numerical limits. The released sphere follows its calculated free trajectory in playback. Source ownership remains metadata and does not apply carrier movement a second time.
 
 The GLB contains recorded animation. Contact, dynamic articulated mechanisms, and live destination physics remain future work. The generic `check --level delivered` command is still unsupported; export success belongs to the named `ontokin.glb/0.1` output contract. File validation, numerical agreement, and actual destination inspection have separate evidence in [the export engineering record](engineering/OK-ENG-002-3d-scene-animation-export-and-visual-validation.md#8-measured-evidence).
 

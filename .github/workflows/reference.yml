@@ -65,6 +65,10 @@ jobs:
         run: |
           python -m tools.build_surface_prototype --output-dir /tmp/ontokin-surface-prototype
           node tools/verify_surface_prototype.mjs /tmp/ontokin-surface-prototype/offset-taper.glb --output /tmp/ontokin-surface-validation.json
+      - name: Compile native surface sources to GLB/0.3 and verify actual destination geometry
+        run: |
+          python tools/build_surface_demo.py --output-dir /tmp/ontokin-surface-native
+          node tools/verify_surface_native.mjs --demo-dir /tmp/ontokin-surface-native --output /tmp/ontokin-surface-native-destination.json
       - name: Build the viewer and all six source animations
         run: |
           npm run build-viewer --prefix tools
@@ -87,6 +91,8 @@ jobs:
         run: node tools/verify_agent_viewer.mjs --output-dir /tmp/ontokin-agent-viewer-validation
       - name: Render and inspect all 126 construction poses
         run: node tools/verify_construction_viewer.mjs --output-dir /tmp/ontokin-construction-viewer-validation
+      - name: Render native surfaces in front, side, and animated views
+        run: node tools/verify_surface_viewer.mjs --demo-dir /tmp/ontokin-surface-native --output-dir /tmp/ontokin-surface-native-browser
       - name: Preserve validation evidence
         if: always()
         uses: actions/upload-artifact@v7
@@ -96,6 +102,9 @@ jobs:
             /tmp/ontokin-external-validation.json
             /tmp/ontokin-surface-validation.json
             /tmp/ontokin-surface-prototype/offset-taper.glb
+            /tmp/ontokin-surface-native
+            /tmp/ontokin-surface-native-destination.json
+            /tmp/ontokin-surface-native-browser
             /tmp/ontokin-viewer-validation
             /tmp/ontokin-agent-external-validation.json
             /tmp/ontokin-agent-viewer-validation
