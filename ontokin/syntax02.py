@@ -1,4 +1,4 @@
-"""Source-aware syntax for language 0.2 and construction-0.1.
+"""Source-aware syntax for language 0.2 and 0.3 source units.
 
 The core parser remains the entry point for legacy programs. This parser reuses
 its unchanged expression precedence and statements but has its own keyword set,
@@ -34,10 +34,13 @@ class PathStep:
 
 class Parser02(Parser):
     def __init__(self, tokens: list[Token], source_id: str,
-                 check: Callable[[], None] | None = None):
+                 check: Callable[[], None] | None = None, *,
+                 expected_version: str = VERSION, expected_profile: str = PROFILE):
         super().__init__(tokens)
         self.source_id = source_id
         self.check = check
+        self.expected_version = expected_version
+        self.expected_profile = expected_profile
 
     def node(self, kind: str, start: Token | Node, **data: Any) -> Node:
         if self.check is not None:
@@ -55,10 +58,11 @@ class Parser02(Parser):
         start = self.take("ontokin")
         version_node = self.take("STRING")
         self.take(";")
-        if version_node.value != VERSION:
-            raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED", "This source bundle requires language 0.2.",
+        if version_node.value != self.expected_version:
+            raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED",
+                               f"This source unit requires language {self.expected_version}.",
                                version_node, category="unsupported", phase="support", rule_ids=["CON-001"],
-                               details={"expected_version": VERSION, "actual_version": version_node.value})
+                               details={"expected_version": self.expected_version, "actual_version": version_node.value})
         self.take("module")
         name = self.take("IDENT").value
         key = self.identity()
@@ -66,10 +70,11 @@ class Parser02(Parser):
         self.take("profile")
         profile_node = self.take("STRING")
         self.take(";")
-        if profile_node.value != PROFILE:
-            raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED", "This source bundle requires construction-0.1.",
+        if profile_node.value != self.expected_profile:
+            raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED",
+                               f"This source unit requires {self.expected_profile}.",
                                profile_node, category="unsupported", phase="support", rule_ids=["CON-001"],
-                               details={"expected_profile": PROFILE, "actual_profile": profile_node.value})
+                               details={"expected_profile": self.expected_profile, "actual_profile": profile_node.value})
         requires = []
         while self.token.kind == "requires":
             token = self.take("requires")
@@ -282,7 +287,13 @@ def parse_source_unit(unit: SourceUnit, *, check: Callable[[], None] | None = No
             raise OntoKinError("OKL-E-RESOURCE", "The source unit exceeds the token budget.",
                                tokens[MAX_TOKENS], category="resource_limit", phase="lexical",
                                rule_ids=["CON-012"], details={"limit": MAX_TOKENS})
-        result = Parser02(tokens, unit.source_id, checkpoint if check is not None else None).program()
+        # Surface calls/types are ordinary identifiers in the additive 0.3
+        # grammar. Every source unit still has its own explicit version/profile.
+        is_surface = (len(tokens) > 2 and tokens[0].kind == "ontokin"
+                      and tokens[1].kind == "STRING" and tokens[1].value == "0.3")
+        version, profile = ("0.3", "surface-0.1") if is_surface else (VERSION, PROFILE)
+        result = Parser02(tokens, unit.source_id, checkpoint if check is not None else None,
+                          expected_version=version, expected_profile=profile).program()
         result.data["filename"] = unit.filename
         result.data["token_count"] = len(tokens) - 1
         checkpoint()

@@ -18,6 +18,8 @@ from typing import Any, Callable as Check
 from .diagnostics import Diagnostic, OntoKinError
 from .json_limits import JSONLimitError
 from .model import Event, EventBlock, ObjectModel, Pose, SiteModel
+from .surface_runtime import SURFACE_CALLS, SURFACE_TYPES, SURFACE_PROFILE, surface_builtin, materialize_surface
+from .surface import SurfaceError
 from .validator import (BUILTIN_TYPES, FIELD_TYPES,
                         PREDEFINED, READONLY_FIELDS, BoundExpression, Callable,
                         Context, EffectiveClass, Instance, Member, Validator,
@@ -146,6 +148,7 @@ class ConstructionCompiler(Validator):
         super().__init__(linked.entry.ast, level)
         self.linked, self.bundle, self.budget = linked, linked.bundle, budget
         self.linked_program = linked
+        self.surface_meshes: dict[str, dict] = {}
         self.source_registry = linked.source_registry
         self.definitions = dict(linked.definitions)
         self.bindings: dict[int, tuple[str, ...]] = {}
@@ -240,6 +243,10 @@ class ConstructionCompiler(Validator):
                 element = self.parse_type(args[0])
                 self._keyed_leaf(element, node)
                 result = Type("Keyed", element=element)
+            elif name in SURFACE_TYPES and self.linked.modules[node.source_id].ast.profile == SURFACE_PROFILE:
+                if args:
+                    fail("OKL-E-TYPE", f"Surface type '{name}' takes no type arguments.", node, phase="type")
+                result = Type(name)
             elif name == "Ref":
                 if len(args) != 1 or optional(args[0], "args", []) or optional(args[0], "unit") is not None:
                     fail("OKL-E-TYPE", "Ref requires exactly one declared nominal class.", node, phase="type")
@@ -256,10 +263,11 @@ class ConstructionCompiler(Validator):
         finally:
             self._type_depth -= 1
 
-    @staticmethod
-    def _keyed_leaf(element: Type, node: Any) -> None:
+    def _keyed_leaf(self, element: Type, node: Any) -> None:
         allowed = {"Int", "Real", "Bool", "String", "Quantity", "Vec3", "Vector3", "Range",
                    "FrameRef", "Point3", "Rotation", "Pose", "Color"}
+        if self.linked.modules[node.source_id].ast.profile == SURFACE_PROFILE:
+            allowed |= SURFACE_TYPES
         if element.kind not in allowed:
             fail("OKL-E-CAPABILITY-UNSUPPORTED", f"Authored Keyed<{element}> is outside the flat immutable leaf profile.",
                  node, phase="support", details={"profile": PROFILE, "element_type": str(element)})
@@ -572,6 +580,9 @@ class ConstructionCompiler(Validator):
                     stack.append((child, iter(self.call_edges.get(child, ()))))
 
     def name(self, name: str, ctx: Context, node: Any) -> Value:
+        if (name in SURFACE_CALLS and self.linked.modules[node.source_id].ast.profile == SURFACE_PROFILE
+                and name not in ctx.locals):
+            return Value(Type("BuiltinCallable"), name)
         if name == "self" and not ctx.abstract and ctx.self_path is not None:
             value = super().name(name, ctx, node)
             self.budget.charge_value(value, node)
@@ -731,6 +742,11 @@ class ConstructionCompiler(Validator):
             self._expression_depth -= 1
 
     def builtin(self, name: str, args: list[Value], node: Any, ctx: Context) -> Value:
+        if name in SURFACE_CALLS:
+            if self.linked.modules[node.source_id].ast.profile != SURFACE_PROFILE:
+                fail("OKL-E-CAPABILITY-UNSUPPORTED", "Surface constructors need the surface-0.1 profile.",
+                     node, phase="support")
+            return surface_builtin(self, name, args, node, ctx)
         if name != "len":
             return super().builtin(name, args, node, ctx)
         if len(args) != 1 or args[0].type.kind != "Keyed":
@@ -945,6 +961,33 @@ class ConstructionCompiler(Validator):
         if missing:
             fail("OKL-E-NAME", f"Missing required {node.kind} fields: {', '.join(sorted(missing))}.", node, phase="binding")
         return result
+
+    def resolve_objects(self) -> None:
+        # Mechanical objects retain one motion authority. The generated loft
+        # contributes visual mesh data only, never implicit physical mass.
+        super().resolve_objects()
+        from .syntax import Node
+        self.surface_meshes = {}
+        remaining_vertices = 250_000
+        for path, obj in self.model.objects.items():
+            recipe = obj.geometry
+            if not isinstance(recipe, dict) or recipe.get("kind") not in ("loft", "placed"):
+                continue
+            surface = recipe.get("surface", recipe)
+            location = Node("span", surface["start"], surface["end"],
+                            source_id=surface["source_id"])
+            try:
+                mesh, local_pose = materialize_surface(
+                    recipe, max_vertices=remaining_vertices,
+                    check=lambda: self.budget.tick(location))
+            except SurfaceError as error:
+                fail(error.code, str(error), location, details=error.details)
+            remaining_vertices -= len(mesh.positions)
+            self.surface_meshes[path] = {
+                "mesh": mesh, "local_pose": local_pose,
+                "source_id": surface["source_id"], "element_id": obj.element_id,
+                "object_path": path,
+            }
 
     def scene_fields(self) -> None:
         fields = {}
