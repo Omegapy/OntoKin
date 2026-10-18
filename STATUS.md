@@ -36,6 +36,10 @@ The installed Python package identity remains `2fec4df8a853fb04f05981137165b093d
 
 Still unmet: broader distribution, reusable algorithms/components, compatible part replacement, rich surfaces/textures/deformation, contacts and collisions, general rigid-body dynamics, forces and dynamic joints, closed mechanisms, purposeful locomotion/manipulation, and live destination behavior. Creature, vehicle, flight/swimming, vegetation, terrain/building, fluid/deformable, appearance, scale/performance and measured agent-benefit requirements remain in GOAL. Prototype geometry adds no physical mass or motion authority. Existing physics remains uniform gravity/free homogeneous spheres and prescribed connections with collisions disabled. Recorded GLB playback is not live physics. Blender import and a generic delivered-level check are not established.
 
+## Current integration reconciliation
+
+The prior issue #3 JSON-guard change is present in `main` at the observed head above and branch/main CI passed. The source-language 0.3 gate remains unimplemented. This new owner is distinct from the expired 09:12 UTC lease. Acquire it by a fast-forward update conditioned on the observed main SHA; the statement only becomes authoritative after that update succeeds.
+
 ## Next actions
 
 1. Recenter on GOAL, STATUS and AGENTS; inspect current main, CI and the lease. Acquire a new lease through a confirmed exact-head update before further edits.
@@ -51,11 +55,11 @@ The preceding checkpoint records the configured hourly **Advance OntoKin** task 
 
 | Lease field | Value |
 | --- | --- |
-| Integration owner | `scheduled-ontokin-20261018-091244Z-json-guard` |
-| Acquired UTC | 2026-10-18T09:12:44Z |
-| Lease expires UTC | 2026-10-18T10:42:44Z |
-| Work item | Integrate issue #3's reproduced JSON preflight guard failure, run full regression CI, then continue native `.ok` surface parser/type integration |
-| Parent main SHA | `4e343e4e8a883d5371e57003b4424696e66ae25b` |
-| Integration procedure | Isolated branch; verify all existing checks and publish through exact-head updates; release or renew this lease on completion |
+| Integration owner | `scheduled-ontokin-20261018-1115Z-native-source-front-end-gpt6` |
+| Acquired UTC | 2026-10-18T11:16:36.087Z |
+| Lease expires UTC | 2026-10-18T12:46:36.087Z |
+| Work item | Native language 0.3 / surface-0.1 source parser/type/construction integration, beginning with a compiled-source contract regression |
+| Parent main SHA | `cb84f0bd02e99dbe80dd0f708c413d69f69975cf` |
+| Integration procedure | Isolated branch; exact-head integration; verify implementation and release ownership or checkpoint before ending |
 
 Previous lease expired at 2026-10-18T09:09:09.885Z. This acquisition replaces it only upon a successful non-force, exact-head `update_ref`. Verify the resulting main SHA and status file before editing implementation. Issue #3 preserves a focused locally tested patch whose complete-repository tests and CI are still outstanding.
