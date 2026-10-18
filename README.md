@@ -6,9 +6,24 @@ OntoKin (pronounced **ON-toh-kin**) is a programming language under development,
 
 The current direction begins with exterior 3D models and short animations. Those objects should remain reusable in larger scenes, video games, and eventually more complex virtual worlds. Physics and mechanics are central to the design; mathematics gives those descriptions precise meaning.
 
-> **Project status:** The published experimental reference is **0.4.0**. It supports exact-pinned source modules and keyed assembly construction through language `0.2`, `construction-0.1`, and `ontokin.agent/0.2`, with working `ontokin.glb/0.2` animation export. Its [local and CI release gate passed](docs/engineering/construction-validation/validation-summary.json): 276 tests, the original source/agent cases, C01–C20, independent geometry/playback checks, and Python 3.11–3.13 plus browser CI. The existing core language and interfaces remain supported. Broader modeling, physical interaction, controllers, live delivery, and production architecture remain unfinished; [native exterior surfaces and material regions](docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md) are the next proposed gate.
+> **Project status:** The published experimental reference is **0.4.0**. It supports exact-pinned source modules and keyed assembly construction through language `0.2`, `construction-0.1`, and `ontokin.agent/0.2`, with working `ontokin.glb/0.2` animation export. Its [local and CI release gate passed](docs/engineering/construction-validation/validation-summary.json): 276 tests, the original source/agent cases, C01–C20, independent geometry/playback checks, and Python 3.11–3.13 plus browser CI. The existing core language and interfaces remain supported. Broader modeling, physical interaction, controllers, live delivery, and production architecture remain unfinished; [native exterior surfaces and material regions](docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md) have a newly adopted source contract and experimental research prototype, but are not supported by the published compiler yet.
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
+
+## Exterior-surface research prototype (not yet source-executable)
+
+The adopted [OK-LANG-003 surface-0.1 contract](docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md) specifies typed cross-sections, named material regions, bounded triangulation, and local rigid placement. The [frozen prospective M01–M12 corpus](docs/language-design/surface-v0.1/acceptance.json) and [pinned source example](docs/language-design/surface-v0.1/02-studio.ok) record intended behavior; **these new `.ok` programs cannot yet be compiled by version 0.4.0**.
+
+An [isolated geometry and GLB prototype](prototypes/surface_v01/README.md) now constructs ordered elliptical lofts, outward flat normals, real per-region glTF triangles and PBR material factors. Its CI generates a GLB, checks it with Khronos' glTF validator and Three.js, and preserves 0.4.0's separate evidence. To reproduce the geometry-only demonstration from a repository checkout:
+
+```bash
+python3 -m unittest discover -s tests -p 'test_surface_*.py' -v
+python3 -m tools.build_surface_prototype --output-dir /tmp/ontokin-surface-prototype
+npm ci --prefix tools --ignore-scripts
+node tools/verify_surface_prototype.mjs /tmp/ontokin-surface-prototype/offset-taper.glb
+```
+
+This demonstration builds from explicit Python data structures, **not OntoKin source or an agent operation**. It has no physical solver or recorded animation. Compiler integration, scoped source repair, source-driven scene animation, the versioned delivery adapter, and full M01–M12 evidence remain future steps.
 
 ## Build an assembly from a pinned component library
 
@@ -139,6 +154,7 @@ Use the [documentation guide](docs/README.md) for the full reading order, docume
 | How does an agent discover, inspect, edit, evaluate, and retrieve an animation? | [OK-AGENT-001: AI agent authoring and inspection interface](docs/engineering/OK-AGENT-001-ai-agent-authoring-and-inspection-interface.md) |
 | How do exact-pinned modules and immutable inputs generate reusable assemblies? | [OK-LANG-002: Pinned modules and keyed assembly construction](docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md) |
 | How does an agent inspect and atomically edit a complete source bundle? | [OK-AGENT-002: Program bundles and atomic source edits](docs/engineering/OK-AGENT-002-program-bundles-and-atomic-source-edits.md) |
+| How will agents describe native exterior surfaces and material regions? | [OK-LANG-003: Parameterized exterior surfaces and material regions](docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md) |
 
 The documents are organized into **Product**, **Language design**, and **Engineering**. The [founding records](docs/README.md#founding-design-records) retain the original vision, language exploration, and architecture options. Their dates and proposal status remain visible. The guide explains how that earlier work relates to the current modeling direction.
 
