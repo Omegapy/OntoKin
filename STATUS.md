@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-18T09:12:44Z**. The timeout-recovery correction is integrated and verified. A new lease is held for integrating issue #3's bounded JSON guard repair and resuming native surface-source work; no new implementation is claimed by lease acquisition. The complete [GOAL](GOAL.md) remains **in progress**. Read [AGENTS](AGENTS.md), the actual remote head and the integration lease before continuing.
+Checkpoint: **2026-10-18T13:14:01Z**. The issue #3 JSON guard is integrated; the separate native source branch has unpublished working code with successful branch CI (run 39124108720). Its seven commits are not on main. A new integration lease is conditionally acquired to reconcile, verify and publish that code; this lease is not proof of implementation. The complete [GOAL](GOAL.md) remains **in progress**. Read [AGENTS](AGENTS.md), the actual remote head and the integration lease before continuing.
 
 ## Verified implementation and correction
 
@@ -38,7 +38,7 @@ Still unmet: broader distribution, reusable algorithms/components, compatible pa
 
 ## Current integration reconciliation
 
-The prior issue #3 JSON-guard change is present in `main` at the observed head above and branch/main CI passed. The source-language 0.3 gate remains unimplemented. This new owner is distinct from the expired 09:12 UTC lease. Acquire it by a fast-forward update conditioned on the observed main SHA; the statement only becomes authoritative after that update succeeds.
+The prior issue #3 guard change is on main. The native surface worker published seven commits only to `work/native-surface-source-20261018-1116`, most recently `8580094dab77110ffd25e19317f87f7b32a715c5`; branch CI [39124108720](https://github.com/Omegapy/OntoKin/actions/runs/39124108720) passed all four jobs. Its work is not yet integrated, and end-to-end GLB/0.3 acceptance is not yet established. The prior worker's lease expired at 12:46:36 UTC. This worker acquired a distinct lease only if the exact-head ref update for this checkpoint succeeds. Check main and branch refs and CI again before integrating.
 
 ## Next actions
 
@@ -55,11 +55,11 @@ The preceding checkpoint records the configured hourly **Advance OntoKin** task 
 
 | Lease field | Value |
 | --- | --- |
-| Integration owner | `scheduled-ontokin-20261018-1115Z-native-source-front-end-gpt6` |
-| Acquired UTC | 2026-10-18T11:16:36.087Z |
-| Lease expires UTC | 2026-10-18T12:46:36.087Z |
-| Work item | Native language 0.3 / surface-0.1 source parser/type/construction integration, beginning with a compiled-source contract regression |
-| Parent main SHA | `cb84f0bd02e99dbe80dd0f708c413d69f69975cf` |
+| Integration owner | `scheduled-ontokin-20261018-1314Z-source-branch-integration-gpt6` |
+| Acquired UTC | 2026-10-18T13:14:01Z |
+| Lease expires UTC | 2026-10-18T14:44:01Z |
+| Work item | Reconcile seven unpublished native surface-source commits on work/native-surface-source-20261018-1116, fix verified defects, rerun CI, and integrate bounded source-language implementation |
+| Parent main SHA | `13c29824a77e84543d6d070092cc0ce6437f8528` |
 | Integration procedure | Isolated branch; exact-head integration; verify implementation and release ownership or checkpoint before ending |
 
 Previous lease expired at 2026-10-18T09:09:09.885Z. This acquisition replaces it only upon a successful non-force, exact-head `update_ref`. Verify the resulting main SHA and status file before editing implementation. Issue #3 preserves a focused locally tested patch whose complete-repository tests and CI are still outstanding.
