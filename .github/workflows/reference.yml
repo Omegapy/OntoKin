@@ -63,7 +63,7 @@ jobs:
         run: npm ci --prefix tools --ignore-scripts
       - name: Export and independently validate prototype multi-material loft
         run: |
-          python tools/build_surface_prototype.py --output-dir /tmp/ontokin-surface-prototype
+          python -m tools.build_surface_prototype --output-dir /tmp/ontokin-surface-prototype
           node tools/verify_surface_prototype.mjs /tmp/ontokin-surface-prototype/offset-taper.glb --output /tmp/ontokin-surface-validation.json
       - name: Build the viewer and all six source animations
         run: |
