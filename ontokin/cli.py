@@ -33,20 +33,24 @@ def _same_path(first: Path, second: Path) -> bool:
     )
 
 
-def _export_paths(source: Path, output: Path, report: Path | None) -> tuple[Path, Path]:
+def _export_paths(source: Path, output: Path, report: Path | None, *,
+                  target_contract: str = "ontokin.glb/0.1",
+                  protected_sources: tuple[Path, ...] = ()) -> tuple[Path, Path]:
     report = report if report is not None else output.with_suffix(".export.json")
     if output.suffix.lower() != ".glb" or report.suffix.lower() != ".json":
         raise OntoKinError(
             "OKL-E-CAPABILITY-UNSUPPORTED", "Export requires a .glb output and a .json report.",
             category="unsupported", phase="support", blocks=["delivered"],
-            details={"target_contract": "ontokin.glb/0.1", "export_code": "OKE-E-OUTPUT-PATH"},
+            details={"target_contract": target_contract, "export_code": "OKE-E-OUTPUT-PATH"},
             repair="Choose separate .glb and .json output paths.",
         )
-    if any(_same_path(a, b) for a, b in ((source, output), (source, report), (output, report))):
+    pairs = [(path, destination) for path in (source, *protected_sources)
+             for destination in (output, report)] + [(output, report)]
+    if any(_same_path(a, b) for a, b in pairs):
         raise OntoKinError(
             "OKL-E-CAPABILITY-UNSUPPORTED", "Export destinations must be separate from each other and the source.",
             category="unsupported", phase="support", blocks=["delivered"],
-            details={"target_contract": "ontokin.glb/0.1", "export_code": "OKE-E-OUTPUT-PATH"},
+            details={"target_contract": target_contract, "export_code": "OKE-E-OUTPUT-PATH"},
             repair="Choose new output paths that do not alias the .ok source.",
         )
     return output, report
@@ -103,6 +107,19 @@ def capabilities() -> dict:
                             "Bounded pure construction; no mutable collections, runtime generation, or new physics.",
                             "Agent 0.1 and 0.2 use separate stores; no implicit protocol or snapshot migration."],
         },
+        "surface_interface": {
+            "language_version": "0.3", "profile": "surface-0.1",
+            "delivery_contract": "ontokin.glb/0.3",
+            "source_features": ["typed_keyed_loft_sections", "parameterized_exterior_surfaces",
+                                "regional_linear_pbr_materials", "rigid_local_visual_placement"],
+            "single_source_command": "export SOURCE.ok --target ontokin.glb/0.3 --output MODEL.glb",
+            "pinned_bundle_command": "export PROGRAM.files.json --bundle --target ontokin.glb/0.3 --output MODEL.glb",
+            "agent_contract": "ontokin.agent/0.3 remains unimplemented",
+            "limits": {"max_sections": 64, "max_materials": 16, "max_facets": 64,
+                       "max_mesh_vertices_per_request": 250000, "max_glb_bytes": 67108864},
+            "limitations": ["Flat-shaded rigid lofts; no skin deformation, textures or automatic physical matter.",
+                            "A source GLB export does not establish full M01-M12 agent/repair acceptance."],
+        },
         "operations": ["check", "evaluate", "export", "agent", "conformance", "capabilities"],
         "output_levels": ["represented", "constructed", "evaluated"],
         "source_features": ["classes", "single_inheritance", "pure_functions_and_methods",
@@ -146,7 +163,18 @@ def capabilities() -> dict:
                 "selection": "explicit program-agent export destination; core-only models retain ontokin.glb/0.1",
                 "default_fps": 60,
                 "default_tolerances": {"position_m": 0.001, "rotation_rad": 0.001, "time_s": 0.000001},
-            }
+            },
+            "ontokin.glb/0.3": {
+                "format": "glTF 2.0 binary (.glb)", "profile": "surface-0.1",
+                "geometry": ["empty", "box", "sphere", "loft", "placed"],
+                "materials": "one indexed primitive per used source region with linear RGBA, metallic and roughness",
+                "animation": "source-evaluated rigid world poses; local visual placement baked once",
+                "source_of_truth": "the complete exact pinned .ok source bundle",
+                "selection": "explicit --target ontokin.glb/0.3 or Python export_glb target_contract",
+                "surface_vertex_tolerance_m": 0.00001,
+                "validation": "decoded source topology, winding, normals, PBR, provenance and sampled animation",
+                "cancellation": "cooperative compiler, mesh, serialization and decoded-validation callbacks",
+            },
         },
         "limitations": ["General correctly rounded transcendental functions are not certified.",
                         "Exact represented rotations are approximated in binary64 spatial calculations.",
@@ -154,6 +182,74 @@ def capabilities() -> dict:
                         "GLB export uses tessellated spheres and finite animation samples; it is not an all-time error proof.",
                         "Physics, live joint constraints, and editable source structure do not execute in a GLB viewer."],
     }
+
+
+def _program_export(args) -> int:
+    """Export explicitly selected newer profiles from exact offline source files."""
+    from .bundle import BundleError, MAX_MANIFEST_BYTES, load_bundle, load_file_manifest
+    from .construction import compile_construction
+    from .gltf import export_glb
+    from .program_diagnostics import diagnostic_dict
+    from .scene import ExportOptions
+    program = None
+    try:
+        if args.target == "ontokin.glb/0.1":
+            raise BundleError("OKA-E-REQUEST", "A program bundle requires explicit GLB/0.2 or GLB/0.3 delivery.")
+        protected = []
+        if args.bundle:
+            manifest_path = args.file.resolve(strict=True)
+            with manifest_path.open("rb") as stream:
+                manifest_bytes = stream.read(MAX_MANIFEST_BYTES + 1)
+            if len(manifest_bytes) > MAX_MANIFEST_BYTES:
+                raise BundleError("OKA-E-RESOURCE", "The file manifest exceeds its byte budget.")
+            program = load_file_manifest(manifest_path)
+            if manifest_path.read_bytes() != manifest_bytes:
+                raise BundleError("OKA-E-REQUEST", "The file manifest changed while its source snapshot was loaded.")
+            manifest = json.loads(manifest_bytes)
+            protected = [manifest_path.parent / descriptor["path"]
+                         for descriptor in [manifest["entry"], *manifest["modules"]]]
+        else:
+            source = _read_source(args.file)
+            try:
+                source_text = source.raw.decode("utf-8", errors="strict")
+            except UnicodeDecodeError:
+                raise BundleError("OKA-E-REQUEST", "The source file must contain valid UTF-8.") from None
+            program = load_bundle({"schema_version": "ontokin.bundle/0.1",
+                "entry": {"filename": str(args.file), "source": source_text}, "modules": []})
+        compiler = compile_construction(program, level="evaluated")
+        output, report_path = _export_paths(args.file, args.output, args.report,
+            target_contract=args.target, protected_sources=tuple(protected))
+        result = export_glb(compiler.model, target_contract=args.target,
+            source_uri=program.entry.filename, source_sha256=program.entry.revision,
+            options=ExportOptions(fps=args.fps, end=args.end,
+                position_tolerance_m=args.position_tolerance,
+                rotation_tolerance_rad=args.rotation_tolerance,
+                time_tolerance_s=args.time_tolerance, helpers=not args.no_helpers))
+        report = dict(result.report)
+        report.update(operation="export", output=str(output), report=str(report_path),
+            source_revision=program.entry.revision, program_revision=program.program_revision,
+            source_diagnostics=[diagnostic_dict(d, program) for d in compiler.model.diagnostics])
+        _write_export(output, result.data, report_path, report)
+        _print(report)
+        return 0
+    except BundleError as error:
+        _print({"outcome": "resource_limit" if error.code == "OKA-E-RESOURCE" else "invalid_request",
+                "requested_level": "delivered", "target_contract": args.target,
+                "error": error.to_dict()})
+        return 2
+    except OntoKinError as error:
+        diagnostic = diagnostic_dict(error.diagnostic, program)
+        diagnostic["details"]["target_contract"] = args.target
+        _print({"outcome": diagnostic["category"], "requested_level": "delivered",
+                "program_revision": program.program_revision, "diagnostics": [diagnostic]})
+        return 3 if diagnostic["category"] == "unsupported" else 2
+    except OSError as error:
+        _print({"outcome": "io_error", "file": str(args.file), "message": str(error)})
+        return 1
+    except RecursionError:
+        _print({"outcome": "resource_limit", "requested_level": "delivered",
+                "message": "Source construction or export nesting budget exceeded."})
+        return 2
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -172,6 +268,10 @@ def main(argv: list[str] | None = None) -> int:
     evaluate_parser.add_argument("--frame", default="world", help="Frame for --object inspection, for example first.frame")
     export_parser = commands.add_parser("export", help="Bake and verify an animation in a self-contained .glb file")
     export_parser.add_argument("file", type=Path)
+    export_parser.add_argument("--target", choices=["ontokin.glb/0.1", "ontokin.glb/0.2", "ontokin.glb/0.3"],
+                               default="ontokin.glb/0.1", help="Explicit delivery profile; old source is never migrated")
+    export_parser.add_argument("--bundle", action="store_true",
+                               help="Read FILE as an ontokin.files/0.1 manifest of pinned offline .ok files")
     export_parser.add_argument("--output", type=Path, required=True, help="Destination .glb file")
     export_parser.add_argument("--report", type=Path, help="JSON evidence sidecar; defaults to OUTPUT.export.json")
     export_parser.add_argument("--fps", type=float, default=60, help="Minimum sample rate; default 60 frames per second")
@@ -195,6 +295,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "capabilities":
         _print(capabilities())
         return 0
+    if args.command == "export" and (args.bundle or args.target != "ontokin.glb/0.1"):
+        return _program_export(args)
     if args.command == "conformance":
         from .conformance import run_conformance
         try:
