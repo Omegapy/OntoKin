@@ -11,7 +11,10 @@ ROOT = Path(__file__).resolve().parents[1] / "docs/language-design/surface-v0.1"
 
 
 def unit(text, *, source_id="entry"):
-    return SourceUnit(source_id, "surface.ok", text.encode("utf-8"))
+    return (SourceUnit(source_id, "surface.ok", text.encode("utf-8"),
+                       "fixture.surface-parts", "1.0.0")
+            if source_id.startswith("package:") else
+            SourceUnit(source_id, "surface.ok", text.encode("utf-8")))
 
 
 class NativeSurfaceSyntaxTests(unittest.TestCase):
