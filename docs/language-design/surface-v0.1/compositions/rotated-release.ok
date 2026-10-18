@@ -8,9 +8,9 @@ import shapes @ "surface-parts" from "fixture.surface-parts" version "1.0.0"
 public class Payload @ "payload" extends shapes.Shell {
     public param body_radius @ "body-radius": Length = 0.1[m];
     public param carrier_site @ "carrier-site": SiteRef = self.origin;
-    geometry = placed(loft(self.rings, self.palette, 16, "flat"),
+    override geometry = placed(loft(self.rings, self.palette, 16, "flat"),
         pose(self.frame, vec3(0.2[m], -0.1[m], 0.3[m]), axis_angle(vec3(1, 0, 0), 90[deg])));
-    physical = sphere_body(self.body_radius, 1[kg]);
+    override physical = sphere_body(self.body_radius, 1[kg]);
     public joint hold @ "hold": grip {
         parent = self.carrier_site;
         child = self.origin;
