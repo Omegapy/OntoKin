@@ -65,13 +65,9 @@ Creation and enablement are verified. The last independently observed scheduling
 
 | Lease field | Value |
 | --- | --- |
-| Integration owner | None; `root` releases the lease with this completed 0.4.0 checkpoint |
-| Release checkpoint | `2026-10-18T05:45:16Z` |
-| Lease expires | `2026-10-18T05:45:16Z` |
-| Completed integration task | OK-LANG-002 / OK-AGENT-002 implementation, verification and publication |
-| Next acquisition task | OK-LANG-003 contract and fixture adoption |
+| Integration owner | OntoKin interactive continuation, held for OK-LANG-003 adoption |\n| Acquisition checkpoint | 2026-10-18T06:08:09.322Z at main ad039341656e |\n| Lease expires | 2026-10-18T07:38:09.322Z |\n| Current integration task | Adopt OK-LANG-003 native surface/material grammar and independent fixtures on an isolated branch |\n| Prior completed task | 0.4.0 construction checkpoint, published 2026-10-18T05:45:16Z |
 
-This release takes effect when the checkpoint is published. Until then, the previously published live lease governs concurrent writers. After publication the closing worker may observe CI read-only; any further edit requires conditional reacquisition.
+The construction-release lease was released at its closing checkpoint. The active lease above supersedes that historical state. It is held only for the bounded OK-LANG-003 contract-and-fixtures iteration and must be explicitly released or renewed.
 
 Expiry permits an acquisition attempt, not automatic ownership. Fetch the current GitHub head and lease, acquire through a commit/update conditioned on that exact head, and confirm success before editing. Use an isolated branch for implementation. If the head or lease changed, reconcile instead of overwriting another writer. The integration owner may delegate bounded work and must renew this UTC lease at meaningful checkpoints. While a lease is live, independent sessions may inspect but must not edit or publish. The lease coordinates work; it does not grant platform permissions.
 
