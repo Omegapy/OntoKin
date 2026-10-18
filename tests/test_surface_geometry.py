@@ -8,7 +8,7 @@ import math
 import unittest
 from dataclasses import replace
 
-from ontokin.surface_geometry import (
+from prototypes.surface_v01.mesh import (
     LoftSection, SurfaceMaterial, SurfaceError, triangulate_loft,
 )
 
