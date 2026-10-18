@@ -7,15 +7,20 @@ import {build} from 'esbuild';
 import {chromium} from 'playwright';
 import {root,sha256,loadCase,expectedPose,comparePose,vectorError} from './verify_surface_native.mjs';
 
-const args=process.argv.slice(2);let demoDir,outputDir;
+const args=process.argv.slice(2);let demoDir,outputDir;const fixtureNames=[];
 for(let i=0;i<args.length;i++) {
-  if(args[i]==='--help') {console.log('Usage: node tools/verify_surface_viewer.mjs --demo-dir DIR --output-dir DIR');process.exit(0);}
-  assert.ok(['--demo-dir','--output-dir'].includes(args[i]));assert.ok(args[i+1]);
-  const option=args[i],value=path.resolve(args[++i]);if(option==='--demo-dir')demoDir=value;else outputDir=value;
+  if(args[i]==='--help') {console.log('Usage: node tools/verify_surface_viewer.mjs --demo-dir DIR --output-dir DIR [--fixture NAME ...]');process.exit(0);}
+  assert.ok(['--demo-dir','--output-dir','--fixture'].includes(args[i]));assert.ok(args[i+1]);
+  const option=args[i],value=args[++i];
+  if(option==='--fixture') {assert.match(value,/^[a-z0-9][a-z0-9-]*$/);fixtureNames.push(value);}
+  else if(option==='--demo-dir')demoDir=path.resolve(value);else outputDir=path.resolve(value);
 }
 assert.ok(demoDir&&outputDir,'Both --demo-dir and --output-dir are required');
 await mkdir(outputDir,{recursive:true});
-const cases=await Promise.all(['studio','rotated-animation'].map(name=>loadCase(path.join(demoDir,name))));
+if(!fixtureNames.length)fixtureNames.push('studio','rotated-animation');
+assert.equal(new Set(fixtureNames).size,fixtureNames.length,'Each browser fixture is selected once');
+assert.ok(fixtureNames.length<=16,'The validation harness supports at most 16 selected source fixtures');
+const cases=await Promise.all(fixtureNames.map(name=>loadCase(path.join(demoDir,name))));
 const tooling=JSON.parse(await readFile(path.join(root,'tools/package.json')));
 for(const dependency of ['playwright','three','esbuild'])
   assert.equal(JSON.parse(await readFile(path.join(root,'tools/node_modules',dependency,'package.json'))).version,tooling.devDependencies[dependency]);
@@ -107,7 +112,7 @@ const report={schema_version:'ontokin.surface-native-browser-validation/0.1',sta
     playwright:tooling.devDependencies.playwright,three:tooling.devDependencies.three,esbuild:tooling.devDependencies.esbuild,
     renderer:'Headless Chromium WebGL2 / ANGLE SwiftShader'},
   samples:[],captures:[],playback:[],page_errors:[],console_errors:[],failed_requests:[],network_requests:[],
-  limits:['The two captured source programs establish bounded native destination evidence, not complete M01--M12 acceptance.',
+  limits:['The selected source programs establish bounded native destination evidence; complete M01--M12 acceptance is a separate identified gate.',
     'The harness is an identified offline validation destination, not a replacement of the existing production viewer.',
     'Screenshots require human or visual review; numerical topology/material checks are in verify_surface_native.mjs.',
     'No Blender, external engine, deformation or live physics support is claimed.']};
@@ -153,10 +158,18 @@ try {
     for(const capture of [{name:'front',view:'front',time:0},{name:'side',view:'side',time:0},{name:'animated',view:'front',time:1.5}]) {
       await page.locator('#timeline').fill(String(capture.time));await page.click('#'+capture.view);
       await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+      const observed=await page.evaluate(()=>window.surfaceViewer.state),objects={};
+      assert.equal(observed.fixture,state.oracle.fixture);assert.equal(observed.time,capture.time);
+      assert.equal(observed.view,capture.view);assert.equal(observed.playing,false);
+      assert.equal(observed.revision,state.revision);assert.equal(observed.artifact,state.artifactHash);
+      for(const object of [...state.oracle.shapes,...state.oracle.empty_objects??[]]) {
+        const actual=observed.objects[object.path],expected=expectedPose(object,capture.time);
+        objects[object.path]={...actual,...comparePose(actual,expected,state.tolerances,object.path+' capture at '+capture.time)};
+      }
       const filename=state.oracle.fixture+'-'+capture.name+'.png',file=path.join(outputDir,filename);
       await page.screenshot({path:file,fullPage:true});
       report.captures.push({file:filename,sha256:sha256(await readFile(file)),fixture:state.oracle.fixture,
-        view:capture.view,time_seconds:capture.time,program_revision:state.revision,artifact_sha256:state.artifactHash});
+        view:capture.view,time_seconds:capture.time,program_revision:state.revision,artifact_sha256:state.artifactHash,objects});
     }
     await page.locator('#timeline').fill('0.5');await page.click('#play');
     await page.waitForFunction(()=>window.surfaceViewer.state.playing&&window.surfaceViewer.state.time>.5);

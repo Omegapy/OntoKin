@@ -3,6 +3,7 @@
 import copy
 import json
 from pathlib import Path
+import sqlite3
 import tempfile
 import unittest
 
@@ -190,6 +191,38 @@ class SurfaceAgentProtocolTests(unittest.TestCase):
                     diagnostic = next(item for item in response["diagnostics"] if item["code"] == "OKL-E-CAPABILITY-UNSUPPORTED")
                     self.assertEqual(diagnostic["details"]["required_profile"], expected_profile)
                     self.assertEqual(service.read_program("boundary", candidate.program_revision).to_payload(), bundle)
+
+    def test_wrong_store_version_is_rejected_before_any_schema_or_journal_change(self):
+        for version in ("ontokin.agent-store/0.1", "ontokin.program-agent-store/0.1",
+                        "ontokin.surface-program-agent-store/0.2"):
+            with self.subTest(version=version), tempfile.TemporaryDirectory() as directory:
+                path = Path(directory)
+                database = path / "surface-program-agent.sqlite3"
+                db = sqlite3.connect(database)
+                try:
+                    db.execute("CREATE TABLE metadata (name TEXT PRIMARY KEY, value TEXT NOT NULL)")
+                    db.execute("INSERT INTO metadata VALUES ('schema_version', ?)", (version,))
+                    db.execute("CREATE TABLE foreign_payload (retained BLOB)")
+                    db.execute("INSERT INTO foreign_payload VALUES (?)", (b"unchanged source and data",))
+                    db.commit()
+                    tables = db.execute("SELECT type, name, sql FROM sqlite_master ORDER BY name").fetchall()
+                    journal = db.execute("PRAGMA journal_mode").fetchone()[0]
+                finally:
+                    db.close()
+                original = database.read_bytes()
+                with self.assertRaises(ProtocolError) as caught:
+                    ProgramAgentService(path, protocol=PROTOCOL)
+                self.assertEqual(caught.exception.code, "OKA-E-STORE-VERSION")
+                self.assertEqual(caught.exception.details["actual"], version)
+                self.assertEqual(database.read_bytes(), original)
+                self.assertEqual(sorted(item.name for item in path.iterdir()), [database.name])
+                db = sqlite3.connect(database)
+                try:
+                    self.assertEqual(db.execute("SELECT type, name, sql FROM sqlite_master ORDER BY name").fetchall(), tables)
+                    self.assertEqual(db.execute("PRAGMA journal_mode").fetchone()[0], journal)
+                    self.assertEqual(db.execute("SELECT retained FROM foreign_payload").fetchone()[0], b"unchanged source and data")
+                finally:
+                    db.close()
 
     def test_native_profile_can_import_pinned_older_components_without_surface_relabeling(self):
         library = SourceUnit("package:fixture.legacy@1.0.0", "legacy.ok", b'''ontokin "0.2";

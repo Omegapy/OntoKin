@@ -52,6 +52,12 @@ class AgentStore:
         self.closed = False
         self.implementation = implementation
         with self.connection() as db:
+            # Reject an explicitly different store before journal mode, DDL or
+            # the supported prerelease migration can alter its retained data.
+            if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='metadata'").fetchone():
+                version = db.execute("SELECT value FROM metadata WHERE name='schema_version'").fetchone()
+                if version is not None and version[0] != self.schema_version:
+                    raise ProtocolError("OKA-E-STORE-VERSION", "This store uses an unsupported schema version.", actual=version[0])
             db.execute("PRAGMA journal_mode=WAL")
             db.executescript("""
                 CREATE TABLE IF NOT EXISTS metadata (name TEXT PRIMARY KEY, value TEXT NOT NULL);

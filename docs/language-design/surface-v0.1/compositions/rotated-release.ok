@@ -1,0 +1,47 @@
+ontokin "0.3";
+module SurfaceRelease @ "surface-release";
+profile "surface-0.1";
+
+import shapes @ "surface-parts" from "fixture.surface-parts" version "1.0.0"
+    digest "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce";
+
+public class Payload @ "payload" extends shapes.Shell {
+    public param body_radius @ "body-radius": Length = 0.1[m];
+    public param carrier_site @ "carrier-site": SiteRef = self.origin;
+    geometry = placed(loft(self.rings, self.palette, 16, "flat"),
+        pose(self.frame, vec3(0.2[m], -0.1[m], 0.3[m]), axis_angle(vec3(1, 0, 0), 90[deg])));
+    physical = sphere_body(self.body_radius, 1[kg]);
+    public joint hold @ "hold": grip {
+        parent = self.carrier_site;
+        child = self.origin;
+    }
+}
+
+public class Rig @ "rig-type" {
+    geometry = empty();
+    physical = no_body();
+    public site falling_mount @ "falling-mount" {
+        pose = pose(self.frame, vec3(0.5[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+        interface = "rigid.origin";
+        size = 0[m];
+    }
+    public site held_mount @ "held-mount" {
+        pose = pose(self.frame, vec3(0.5[m], -2[m], 0[m]), quat(1, 0, 0, 0));
+        interface = "rigid.origin";
+        size = 0[m];
+    }
+    public part falling @ "falling": Payload { carrier_site = self.falling_mount; }
+    public part held @ "held": Payload { carrier_site = self.held_mount; }
+}
+
+scene Demo @ "demo" {
+    duration = 2[s];
+    gravity = vector(world, 0[m/s^2], -10[m/s^2], 0[m/s^2]);
+    object rig @ "rig": Rig {
+        placement = pose(world, vec3(0[m], 2[m], 0[m]),
+            quat(0.7071067811865476, 0, 0, 0.7071067811865476));
+    }
+    action travel @ "travel" = move(rig, vector(world, 1[m/s], 0[m/s], 0[m/s]), 2[s]);
+    at 0[s] sequence { start travel; }
+    at 1[s] sequence { release rig.falling.hold using incoming; }
+}

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import sqlite3
 import sys
 import threading
 
@@ -50,7 +51,7 @@ def run(args) -> int:
         return _error(error, envelope_fn)
     try:
         service = service_type(args.store, **service_options)
-    except (OSError, ProtocolError) as exc:
+    except (OSError, sqlite3.Error, ProtocolError) as exc:
         error = exc if isinstance(exc, ProtocolError) else ProtocolError("OKA-E-STORE", "The local store could not be opened.", reason=str(exc))
         _emit(error_response(error))
         return 1

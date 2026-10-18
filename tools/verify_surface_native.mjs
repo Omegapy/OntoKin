@@ -26,6 +26,14 @@ export function expectedPose(object,time) {
   const motion=object.motion;
   const position=motion.position_m.map((p,i)=>p+time*motion.velocity_m_per_s[i]);
   if(motion.kind==='affine') return {position_m:position,orientation_xyzw:quat(motion.rotation_wxyz).toArray()};
+  if(motion.kind==='released_uniform_gravity') {
+    assert.ok(Number.isFinite(motion.release_time_s)&&motion.release_time_s>=0);
+    assert.equal(motion.gravity_m_per_s2.length,3);
+    assert.ok(motion.gravity_m_per_s2.every(Number.isFinite));
+    const elapsed=Math.max(0,time-motion.release_time_s);
+    return {position_m:position.map((p,i)=>p+.5*motion.gravity_m_per_s2[i]*elapsed*elapsed),
+      orientation_xyzw:quat(motion.rotation_wxyz).toArray()};
+  }
   assert.equal(motion.kind,'hinge_y_on_translating_z90_parent');
   const parent=new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,0,1),Math.PI/2);
   const local=new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),motion.angle_rad_per_second*time);
@@ -147,7 +155,10 @@ export function verifyGeometry(state,shape) {
   const {document,binary}=state,expected=analyticMesh(shape),tolerance=1e-5;
   const nodes=document.nodes.filter(n=>n.extras?.ontokin?.kind==='object'&&n.extras.ontokin.path===shape.path);
   assert.equal(nodes.length,1,shape.path+' one carrier identity'); const node=nodes[0],metadata=node.extras.ontokin;
-  assert.deepEqual(metadata.element_id,shape.element_id);assert.equal(metadata.physical.kind,'no_body');
+  assert.deepEqual(metadata.element_id,shape.element_id);
+  const physicalKind=shape.physical_kind??'no_body';
+  assert.ok(['no_body','sphere_body'].includes(physicalKind));
+  assert.equal(metadata.physical.kind,physicalKind);
   assert.equal(metadata.program_revision,state.revision);
   assert.deepEqual(metadata.source_mapping.element_id,shape.element_id);
   for(const part of ['definition','declaration']) {
@@ -161,6 +172,7 @@ export function verifyGeometry(state,shape) {
   assert.deepEqual(primitives.map(p=>p.extras?.ontokin?.region_key).sort(),regions);
   assert.equal(new Set(primitives.map(p=>p.material)).size,regions.length,'Source region identities cannot merge by equal PBR factors');
   const surface=metadata.surface;
+  assert.equal(surface.physical_participation,'none','A native visual cannot add physical matter');
   assert.equal(surface.profile,'surface-0.1');assert.deepEqual(surface.section_keys,expected.sections.map(s=>s.key));
   assert.deepEqual(surface.stations_m,expected.sections.map(s=>s.station_m));
   assert.equal(surface.facets,shape.facets);assert.equal(surface.caps,shape.caps);
@@ -362,16 +374,37 @@ async function main() {
       assert.equal(result.program_revision,item.program_revision);assert.equal(result.artifact_sha256,item.artifact_sha256);
       results.push(result);
     }
-    const before=results.find(r=>r.fixture==='regional-materials'),after=results.find(r=>r.fixture==='regional-materials-edited');
-    assert.notEqual(before.program_revision,after.program_revision);
-    assert.equal(before.geometry[0].positions_sha256,after.geometry[0].positions_sha256);
-    assert.equal(before.geometry[0].topology_sha256,after.geometry[0].topology_sha256);
-    for(const previous of before.geometry[0].regions) {
-      const current=after.geometry[0].regions.find(r=>r.region===previous.region);
-      if(previous.region==='middle')assert.notDeepEqual(current.rgba,previous.rgba);else assert.deepEqual(current,previous);
+    const paletteEdits=build.palette_edits??[{before_fixture:'regional-materials',
+      after_fixture:'regional-materials-edited',path:'shell',region:'middle'}];
+    assert.ok(Array.isArray(paletteEdits)&&paletteEdits.length>0);
+    report.palette_edits=[];
+    for(const edit of paletteEdits) {
+      const before=results.find(r=>r.fixture===edit.before_fixture),after=results.find(r=>r.fixture===edit.after_fixture);
+      assert.ok(before&&after,'Both independently decoded palette revisions must be present');
+      assert.notEqual(before.program_revision,after.program_revision);
+      assert.deepEqual(before.geometry.map(g=>g.path).sort(),after.geometry.map(g=>g.path).sort());
+      let changed=false;
+      for(const oldShape of before.geometry) {
+        const newShape=after.geometry.find(g=>g.path===oldShape.path);
+        assert.equal(oldShape.positions_sha256,newShape.positions_sha256);
+        assert.equal(oldShape.topology_sha256,newShape.topology_sha256);
+        assert.deepEqual(oldShape.regions.map(r=>r.region).sort(),newShape.regions.map(r=>r.region).sort());
+        for(const previous of oldShape.regions) {
+          const current=newShape.regions.find(r=>r.region===previous.region);
+          if(oldShape.path===edit.path&&previous.region===edit.region) {
+            const factors=r=>({rgba:r.rgba,metallic:r.metallic,roughness:r.roughness});
+            assert.notDeepEqual(factors(current),factors(previous),'The authored target PBR region must actually change');
+            assert.equal(current.triangles,previous.triangles);changed=true;
+          } else assert.deepEqual(current,previous,'Untargeted sibling and regional material must remain unchanged');
+        }
+      }
+      assert.ok(changed,'The isolated palette target must name an actual source region');
+      report.palette_edits.push({...edit,status:'passed',geometry_unchanged:true,only_target_material_changed:true});
     }
-    report.palette_variant={status:'passed',geometry_unchanged:true,only_middle_material_changed:true,
-      note:'Source recompilation test; atomic agent-edit behavior requires separate evidence.'};
+    report.palette_variant={status:'passed',geometry_unchanged:true,
+      ...(paletteEdits.length===1&&paletteEdits[0].region==='middle'
+        ?{only_middle_material_changed:true}:{only_target_materials_changed:true}),
+      note:'Source/decoded-artifact comparison; actual atomic edit and request evidence is retained separately.'};
     report.status='passed';
   } catch(error) {report.status='failed';report.failure={name:error.name,message:error.message};throw error;}
   finally {await mkdir(path.dirname(output),{recursive:true});await writeFile(output,JSON.stringify(report,null,2)+'\n');}

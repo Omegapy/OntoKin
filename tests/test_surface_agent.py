@@ -20,6 +20,7 @@ from unittest.mock import patch as instrument
 from ontokin.agent_protocol import ProtocolError
 from ontokin.bundle import ProgramBundle, SourceUnit, load_bundle
 from ontokin.program_agent import ProgramAgentService
+from ontokin.json_limits import measure_json
 from tests.test_construction import RELEASE_SOURCE
 from tests.test_export import DecodedGLB
 from tests.test_surface_export import (DEFAULT_PALETTE, DEFAULT_SECTIONS, cross,
@@ -700,6 +701,89 @@ class SurfaceAgentTests(unittest.TestCase):
         self.assertEqual(page["result"]["returned_triangles"], 256)
         self.assertEqual(len(page["result"]["positions_m"]), 768)
         self.assertTrue(page["truncated"])
+
+    def test_mesh_value_budget_includes_the_complete_final_envelope(self):
+        revision = self.create()["program_revision"]
+        complete = self.page(revision, count=256)
+        entries = measure_json(complete)["entries"]
+        result_entries = measure_json(complete["result"])["entries"]
+        self.assertLess(result_entries, entries)
+        for limit in (result_entries - 4, result_entries, entries - 1):
+            with self.subTest(limit=limit):
+                request = self.request("surface.mesh_page", program_revision=revision,
+                                       element_id=FIRST, count=256, budgets={"max_value_entries": limit})
+                failed = self.service.handle(request)
+                self.assert_code(failed, "OKA-E-RESOURCE")
+                self.assertFalse(failed["protocol_error"]["details"]["effects_committed"])
+                self.assertIsNone(failed["result"])
+                self.assertIsNone(failed["next_cursor"])
+                self.assertEqual(self.service.handle(request), failed)
+                self.assertEqual(failed["accepted_program_revision"], revision)
+        exact = self.send("surface.mesh_page", program_revision=revision, element_id=FIRST,
+                          count=256, budgets={"max_value_entries": entries})
+        self.assert_success(exact)
+        self.assertEqual(measure_json(exact)["entries"], entries)
+        self.assertEqual(geometry_payload(exact["result"]), geometry_payload(complete["result"]))
+        self.assertEqual(self.effect_counts(), {"runs": 0, "artifacts": 0})
+
+    def test_discovery_value_budget_counts_metadata_and_keeps_a_bounded_failure_receipt(self):
+        revision = self.create()["program_revision"]
+        fields = {"profile": "surface-0.1", "limit": 1, "filter": {"name": "LoftSection"}}
+        complete = self.send("discover", **fields)
+        self.assert_success(complete)
+        self.assertEqual(complete["result"]["total"], 1)
+        entries = measure_json(complete)["entries"]
+        for limit in (1, entries - 1):
+            with self.subTest(limit=limit):
+                failed = self.send("discover", **fields, budgets={"max_value_entries": limit})
+                self.assert_code(failed, "OKA-E-RESOURCE")
+                self.assertFalse(failed["protocol_error"]["details"]["effects_committed"])
+                self.assertIsNone(failed["result"])
+                self.assertEqual(failed["accepted_program_revision"], revision)
+                measure_json(failed)  # An impossibly small success budget still gets a typed failure.
+        exact = self.send("discover", **fields, budgets={"max_value_entries": entries})
+        self.assert_success(exact)
+        self.assertEqual(exact["result"], complete["result"])
+        self.assertEqual(measure_json(exact)["entries"], entries)
+        self.assertEqual(self.effect_counts(), {"runs": 0, "artifacts": 0})
+
+    def test_lowered_final_delivery_budget_rolls_back_head_run_and_artifact(self):
+        revision = self.create()["program_revision"]
+        created = self.request("create", bundle=self.original.to_payload(),
+                               expected_program_revision=None, requested_level="constructed")
+        created["project_id"] = "budget-baseline"
+        self.assert_success(self.service.handle(created))
+        fields = {"expected_program_revision": revision,
+                  "patches": [self.source_patch(self.original, "0.48[m]", "0.52[m]")],
+                  "requested_level": "delivered", "destination": DESTINATION,
+                  "options": {"end": "0.25", "fps": 8, "helpers": False}}
+        baseline_request = self.request("edit", **fields)
+        baseline_request["project_id"] = "budget-baseline"
+        baseline = self.service.handle(baseline_request)
+        self.assert_success(baseline)
+        limit = measure_json(baseline)["entries"] - 1
+        previous_effects = self.effect_counts()
+        execute = self.service._execute
+        prepared = []
+        def observe(task, check):
+            execute(task, check)
+            prepared.append((task.accept, task.run is not None, task.artifact is not None))
+        with instrument.object(self.service, "_execute", side_effect=observe):
+            failed = self.send("edit", **fields, budgets={"max_value_entries": limit})
+        self.assertEqual(prepared, [(True, True, True)], "Real delivery must finish before final publication rejects")
+        self.assert_code(failed, "OKA-E-RESOURCE")
+        self.assertFalse(failed["protocol_error"]["details"]["effects_committed"])
+        self.assertEqual(failed["accepted_program_revision"], revision)
+        self.assertEqual(failed["program_revision"], baseline["program_revision"])
+        self.assertEqual(self.service.accepted_revision(PROJECT), revision)
+        self.assertEqual(self.effect_counts(), previous_effects)
+        self.assertIsNone(failed["run_id"])
+        self.assertIsNone(failed["result"])
+        self.assert_code(self.send("surface.mesh_page", program_revision=failed["program_revision"],
+                                  element_id=SECOND, count=1), "OKL-E-REVISION")
+        repaired = self.send("edit", **fields)
+        self.assert_success(repaired)
+        self.assertEqual(repaired["program_revision"], baseline["program_revision"])
 
     def test_native_surface_errors_return_exact_candidate_sources_without_acceptance(self):
         invalid = [

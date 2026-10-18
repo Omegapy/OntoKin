@@ -225,6 +225,33 @@ class SurfaceAgentCLITests(unittest.TestCase):
         self.assert_success(page)
         self.assertEqual(page["accepted_program_revision"], self.program.program_revision)
 
+    def test_corrupt_or_directory_database_returns_json_without_modifying_existing_data(self):
+        for condition in ("corrupt-bytes", "database-is-directory"):
+            with self.subTest(condition=condition):
+                self.store = self.directory / condition
+                self.store.mkdir()
+                database = self.store / "surface-program-agent.sqlite3"
+                original = b"Preserve these bytes: this is not an SQLite database.\n"
+                if condition == "corrupt-bytes":
+                    database.write_bytes(original)
+                else:
+                    database.mkdir()
+                process = subprocess.run(self.command() + ["--wait"], cwd=ROOT,
+                                         input=b"", capture_output=True, timeout=20)
+                self.assertEqual(process.returncode, 1)
+                self.assertEqual(process.stderr, b"")
+                self.assertEqual(len(process.stdout.splitlines()), 1)
+                response = json.loads(process.stdout)
+                self.assertEqual(response["schema_version"], PROTOCOL)
+                self.assertEqual(response["status"], "rejected")
+                self.assertEqual(response["protocol_error"]["code"], "OKA-E-STORE")
+                self.assertIsNone(response["accepted_program_revision"])
+                if condition == "corrupt-bytes":
+                    self.assertEqual(database.read_bytes(), original)
+                else:
+                    self.assertTrue(database.is_dir())
+                    self.assertEqual(list(database.iterdir()), [])
+
 
 if __name__ == "__main__":
     unittest.main()

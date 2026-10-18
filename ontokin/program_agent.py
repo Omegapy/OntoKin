@@ -111,6 +111,21 @@ class ProgramAgentService(AgentService):
             raise ProtocolError("OKA-E-INTERNAL", "The operation produced an invalid bounded JSON response.",
                                 exception=type(exc).__name__, effects_committed=False) from exc
 
+    def _check_task_response(self, task):
+        self._check_response(task.response)
+        limit = task.request.get("budgets", {}).get("max_value_entries")
+        if self._profile != "surface-0.1" or limit is None or task.response["status"] != "succeeded":
+            return
+        # The final check runs inside the publication transaction after source
+        # identity, cursor, implementation and progress metadata are present.
+        # A smaller user budget cannot suppress the bounded failure receipt.
+        try:
+            measure_json(task.response, max_entries=limit)
+        except JSONLimitError as exc:
+            raise ProtocolError("OKA-E-RESOURCE", "The complete native response exceeds its requested value-entry budget; no new effects were committed.",
+                                **exc.details, effects_committed=False,
+                                repair="Request fewer triangles/fields or increase max_value_entries within the published limit.") from exc
+
     def _discover(self, task, check=None):
         from .construction_catalog import catalog
         from .linker import link_program
