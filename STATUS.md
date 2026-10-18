@@ -1,6 +1,14 @@
 # OntoKin status
 
-Checkpoint: **2026-10-18T13:14:01Z**. The issue #3 JSON guard is integrated; the separate native source branch has unpublished working code with successful branch CI (run 39124108720). Its seven commits are not on main. A new integration lease is conditionally acquired to reconcile, verify and publish that code; this lease is not proof of implementation. The complete [GOAL](GOAL.md) remains **in progress**. Read [AGENTS](AGENTS.md), the actual remote head and the integration lease before continuing.
+Current checkpoint: **2026-10-18T14:42:58.538Z**. The owner-directed integration of [PR #4](https://github.com/Omegapy/OntoKin/pull/4) (parallel development policy; merge `777e385fd0754a8e6e934116ecf1df130dd77b5b`) and [PR #5](https://github.com/Omegapy/OntoKin/pull/5) (native source front end; merge `12e0eb9183321a2e7a8a96d5e9da7bbf2e3ff1b3`) is on `main`. The previously reserved integration slot has been **released**. The legacy semantic-document PR #1 was closed as redundant with canonical docs already in main, without losing its content. All other previously identified old work branches have no unmerged unique commits. The complete [GOAL](GOAL.md) remains **in progress**.
+
+**Validation:** PR #4 CI [39135836244](https://github.com/Omegapy/OntoKin/actions/runs/39135836244) and PR #5 CI [39136417020](https://github.com/Omegapy/OntoKin/actions/runs/39136417020) passed Python 3.11/3.12/3.13 and GLB/browser checks. New main-head [CI 39136957648](https://github.com/Omegapy/OntoKin/actions/runs/39136957648) was launched for commit `12e0eb9183321a2e7a8a96d5e9da7bbf2e3ff1b3`; its final conclusion must be read independently before marking main verified. No new release or end-to-end GLB/0.3/M01-M12 acceptance is asserted.
+
+**Current scope:** The 0.3 / `surface-0.1` typed `.ok` surface parser, keyed loft construction and local visual placement are now in main. Agent/0.3, source-driven GLB/0.3 material/animation delivery, repair and all M01-M12 end-to-end cases remain open. The separate construction C20 destination-evidence check still reports pending for the changed implementation identity even though legacy construction evidence is preserved.
+
+**Coordination:** Use the owner-approved [AGENTS.md](AGENTS.md) rule: independent, nonoverlapping branch work may proceed in parallel; only one confirmed main integrator publishes at a time, using an expiring lease, observed heads and conditional nonforce updates. The previous reservation was superseded only under an explicit owner direction and no unverified worker-activity claim. Routine technical work is authorized without another general permission request.
+
+**Historical context:** The older recovery/prototype details below describe prior checkpoints; do not reinterpret their earlier "unimplemented" or branch counts as current status.
 
 ## Verified implementation and correction
 
@@ -13,8 +21,8 @@ Checkpoint: **2026-10-18T13:14:01Z**. The issue #3 JSON guard is integrated; the
 | Tested repair tree | `e700fef42de62b49a0d1623e184ea5a9ecea9301` |
 | Observed branch CI | [39106141202](https://github.com/Omegapy/OntoKin/actions/runs/39106141202), all four jobs passed |
 | Observed main CI | [39106452741](https://github.com/Omegapy/OntoKin/actions/runs/39106452741), all four jobs passed |
-| Repository test suite | 312 tests; includes 18 added recovery tests, not a new package release |
-| Native surface-language gate | `0.3` / `surface-0.1` source compilation, Agent/0.3, GLB/0.3 and full M01-M12 remain unimplemented or unpassed |
+| Repository test suite | Earlier baseline: 312 recovery tests; newer native branch CI reports 351 tests on Python 3.13; current main CI must confirm the final revision. |
+| Native surface-language gate | Initial source parsing and typed loft construction integrated via PR #5; Agent/0.3, GLB/0.3 and complete M01-M12 remain unpassed. |
 
 The correction passed branch CI before an exact-head update integrated it into main. Main CI passed independently. This evidence/status checkpoint adds documentation only; it preserves the tested code bytes. Its own later CI run is distinct from the identified implementation runs above and must be inspected rather than inferred.
 
@@ -38,28 +46,27 @@ Still unmet: broader distribution, reusable algorithms/components, compatible pa
 
 ## Current integration reconciliation
 
-The prior issue #3 guard change is on main. The native surface worker published seven commits only to `work/native-surface-source-20261018-1116`, most recently `8580094dab77110ffd25e19317f87f7b32a715c5`; branch CI [39124108720](https://github.com/Omegapy/OntoKin/actions/runs/39124108720) passed all four jobs. Its work is not yet integrated, and end-to-end GLB/0.3 acceptance is not yet established. The prior worker's lease expired at 12:46:36 UTC. This worker acquired a distinct lease only if the exact-head ref update for this checkpoint succeeds. Check main and branch refs and CI again before integrating.
+PR #5 merged `work/surface-source-integration-20261018-1314` into main at `12e0eb9183321a2e7a8a96d5e9da7bbf2e3ff1b3`, preserving its verified native parser, typed surface constructors and tests. The original `work/native-surface-source-20261018-1116` commits are included through the integrated branch, so do not replay them. PR #4 separately integrated `AGENTS.md`. The old draft PR #1 duplicates the relocated OK-SEM-001 document and was closed with an explanation rather than reintroducing legacy paths. Confirm final main CI independently. Final exterior GLB/0.3 output and all M01-M12 are not yet delivered.
 
 ## Next actions
 
-1. Recenter on GOAL, STATUS and AGENTS; inspect current main, CI and the lease. Acquire a new lease through a confirmed exact-head update before further edits.
-2. Implement the adopted `0.3` / `surface-0.1` parser, types, pure constructors and pinned-module rules. Compile the frozen `.ok` source rather than substituting host-language geometry preparation. Preserve old profiles and exact source identity.
-3. Integrate the corrected surface generator with rigid local visual placement, source-driven motion, request-wide resource/cancellation accounting and GLB/0.3 material primitives.
-4. Complete revision-safe source repair, independent compositions and variants, unchanged sibling/library checks, mesh-page inspection, animation/release and destination evidence. M01-M12 remain open as full end-to-end gates.
+1. Read live `main` head and [CI 39136957648](https://github.com/Omegapy/OntoKin/actions/runs/39136957648); resolve any failures, then record exact test counts and the passing revision. Do not infer success from a passing PR run.
+2. Continue native `surface-0.1` source-to-GLB/0.3 integration, with actual PBR material regions, rigid visual placement, source-driven motion, resource/cancellation bounds and independent glTF/Three.js/browser validation.
+3. Implement revision-safe surface-source inspection/edit/repair and agent delivery; independently verify composition, variants, unchanged siblings/library pins and full M01-M12 acceptance.
+4. Continue the remaining broader GOAL domains after those gates. Preserve earlier source profiles and evidence.
 
 ## Periodic review
 
-The preceding checkpoint records the configured hourly **Advance OntoKin** task `6ad42d31d3ec819196dc1cc1e3ede709`. Its scheduling-service state and review outcomes were not reread in this recovery. Historical observations remain in the snapshot above. Independent scheduled reviews are read-only while a live integration lease exists; these Markdown files do not themselves run background work.
+The hourly **Advance OntoKin** task `6ad42d31d3ec819196dc1cc1e3ede709` is enabled with an instruction to allow nonoverlapping independent branch development while reserving `main` integration. The two obsolete one-time merge-check tasks for PR #4/#5 were disabled after both completed here. Configured tasks are not proof of running workers; check the actual repository and scheduler state.
 
 ## Integration lease and concurrent work
 
 | Lease field | Value |
 | --- | --- |
-| Integration owner | `interactive-ontokin-20261018-owner-directed-merge-gpt6` |
-| Acquired UTC | 2026-10-18T14:37:20.550Z |
-| Lease expires UTC | 2026-10-18T15:12:20.551Z |
-| Work item | Owner-directed verified integration of green PR #4 and PR #5 into main; reconcile obsolete PR #1; verify main CI and record precise checkpoint. |
-| Parent main SHA | `7648f8e69c85d7196001d7f1c42ba284b2c2650c` |
-| Integration procedure | Expected-head, nonforce main updates, exact PR head merge; inspect and reconcile any changed refs. |
+| Integration owner | **None: released by the interactive owner-directed integrator** |
+| Released UTC | 2026-10-18T14:42:58.538Z |
+| Work completed | PR #4 and #5 merged to main; duplicate PR #1 resolved; original branches preserved. |
+| Final integrated source commit | `12e0eb9183321a2e7a8a96d5e9da7bbf2e3ff1b3` |
+| Next writer procedure | Inspect actual heads and CI; acquire a distinct integration lease through verified conditional expected-head publication before making shared integration writes. |
 
-**Owner-directed ownership handoff:** On October 18, 2026 the owner explicitly clarified this interactive development agent is the sole active project worker and directed immediate integration of finished branches. The earlier reservation held by `scheduled-ontokin-20261018-1314Z-source-branch-integration-gpt6` was superseded by this owner instruction, not inferred expired or stopped based only on GitHub inactivity. Live GitHub branches and CI were inspected. This change transfers the repository's advisory integration reservation; it does not overwrite the earlier worker's branch, revoke required tool approvals or claim that any unobserved session has terminated. If a concurrent write is detected, stop, reconcile and revalidate rather than force updates. The entire GOAL remains open.
+The preceding lease holder `scheduled-ontokin-20261018-1314Z-source-branch-integration-gpt6` was superseded at the owner's explicit instruction before its scheduled expiration. This does not establish another worker's runtime state. Neither the branch history nor original evidence was force overwritten.
