@@ -39,14 +39,17 @@ def _emit(response):
 
 def run(args) -> int:
     service_type, envelope_fn = AgentService, envelope
-    if getattr(args, "protocol", "ontokin.agent/0.1") == "ontokin.agent/0.2":
+    service_options = {}
+    selected_protocol = getattr(args, "protocol", "ontokin.agent/0.1")
+    if selected_protocol in ("ontokin.agent/0.2", "ontokin.agent/0.3"):
         from .program_agent import ProgramAgentService
-        from .program_protocol import envelope as program_envelope
-        service_type, envelope_fn = ProgramAgentService, program_envelope
+        from .program_protocol import bind
+        service_type, envelope_fn = ProgramAgentService, bind(selected_protocol).envelope
+        service_options = {"protocol": selected_protocol}
     def error_response(error):
         return _error(error, envelope_fn)
     try:
-        service = service_type(args.store)
+        service = service_type(args.store, **service_options)
     except (OSError, ProtocolError) as exc:
         error = exc if isinstance(exc, ProtocolError) else ProtocolError("OKA-E-STORE", "The local store could not be opened.", reason=str(exc))
         _emit(error_response(error))

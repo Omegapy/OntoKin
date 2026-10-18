@@ -1,13 +1,15 @@
-"""Durable ontokin.agent/0.2 service for complete pinned source programs."""
+"""Durable versioned program service sharing the proven request lifecycle."""
 from __future__ import annotations
 
 import hashlib
 import json
+from functools import partial
 
 from .agent import AgentService
 from .agent_protocol import ProtocolError
 from .agent_store import dumps
 from .bundle import load_bundle
+from .diagnostics import OntoKinError
 from .json_limits import measure_json, JSONLimitError
 from .program_diagnostics import diagnostic_dict
 from .program_store import ProgramStore
@@ -22,6 +24,14 @@ class ProgramAgentService(AgentService):
     _accepted_key = "accepted_program_revision"
     _expected_key = "expected_program_revision"
     _destination = "ontokin.glb/0.2"
+
+    def __init__(self, store_path, *, protocol=program_protocol.SCHEMA_VERSION):
+        self._protocol = program_protocol.bind(protocol)
+        self._profile = self._protocol.profile
+        self._destination = self._protocol.destination
+        self._runtime = program_runtime.ProgramRuntime(self._profile)
+        self._store_type = partial(ProgramStore, protocol=self._protocol)
+        super().__init__(store_path)
 
     @staticmethod
     def _revision(program):
@@ -41,8 +51,8 @@ class ProgramAgentService(AgentService):
         return program.sources[source_id]
 
     def _edit_source(self, base, request, check):
-        return program_runtime.apply_patches(base, request["patches"], module_changes=request.get("module_changes"),
-                                              budgets=request.get("budgets"), check=check)
+        return self._runtime.apply_patches(base, request["patches"], module_changes=request.get("module_changes"),
+                                            budgets=request.get("budgets"), check=check)
 
     @staticmethod
     def _diagnostic(error, program, run_id=None):
@@ -65,7 +75,30 @@ class ProgramAgentService(AgentService):
         return token
 
     def _context_binding(self):
-        return {"implementation": self.implementation, "protocol": program_protocol.SCHEMA_VERSION}
+        return {"implementation": self.implementation, "protocol": self._protocol.SCHEMA_VERSION}
+
+    def _execute(self, task, check):
+        if task.request["operation"] != "surface.mesh_page":
+            return super()._execute(task, check)
+        from .program_surface import prepare_surface_page
+        request = task.request
+        task.source = self.read_program(request["project_id"], request["program_revision"])
+        task.response["program_revision"] = task.source.program_revision
+        if not self._store.source_accepted_once(request["project_id"], task.source.program_revision):
+            raise OntoKinError("OKL-E-REVISION", "Surface mesh pages require an accepted program snapshot; this candidate has never been accepted.",
+                               category="stale", phase="inspection", blocks=[])
+        query = prepare_surface_page(task.source, request["element_id"], region=request.get("region"),
+                                     count=request["count"], budgets=request.get("budgets"), check=check)
+        context = {"project_id": request["project_id"], "operation": "surface.mesh_page",
+                   **query.binding(), **self._context_binding()}
+        offset = self._offset(request.get("cursor"), context)
+        try:
+            result, next_offset = query.page(offset, request["count"])
+        except program_runtime._Interrupt as exc:
+            raise exc.error
+        task.response.update(status="succeeded", achieved_level="constructed", run_id=None,
+                             result=result, truncated=next_offset is not None,
+                             next_cursor=None if next_offset is None else self._cursor(context, next_offset))
 
     def _check_response(self, response):
         try:
@@ -82,8 +115,8 @@ class ProgramAgentService(AgentService):
         from .construction_catalog import catalog
         from .linker import link_program
         request = task.request
-        if request["profile"] != "construction-0.1":
-            raise ProtocolError("OKL-E-CAPABILITY-UNSUPPORTED", "This binding requires construction-0.1.", available_profiles=["construction-0.1"])
+        if request["profile"] != self._profile:
+            raise ProtocolError("OKL-E-CAPABILITY-UNSUPPORTED", "This binding requires " + self._profile + ".", available_profiles=[self._profile])
         if request["limit"] > request.get("budgets", {}).get("max_result_items", 1000):
             raise ProtocolError("OKA-E-RESOURCE", "Discovery limit exceeds its requested result-item budget.")
         linked = None
@@ -94,7 +127,10 @@ class ProgramAgentService(AgentService):
         if task.source is not None:
             task.response["program_revision"] = task.source.program_revision
             linked = link_program(task.source, check=check)
-        result = catalog(linked_program=linked, check=check)
+            if linked.entry.ast.profile != self._profile:
+                raise ProtocolError("OKL-E-CAPABILITY-UNSUPPORTED", "Discovery entry does not match this program binding.",
+                                    required_profile=self._profile, actual_profile=linked.entry.ast.profile)
+        result = catalog(linked_program=linked, check=check, profile=self._profile)
         context = {"project_id": request["project_id"], "operation": "discover", "catalog_revision": result["revision"],
                    "program_revision": None if task.source is None else task.source.program_revision,
                    "profile": request["profile"], "filter": request.get("filter"), **self._context_binding()}
@@ -119,13 +155,16 @@ class ProgramAgentService(AgentService):
                              next_cursor=None if next_offset is None else self._cursor(context, next_offset))
 
     def _export(self, task, check):
-        from .construction import compile_construction
         from .gltf import export_glb
         from .scene import ExportOptions
-        compiler = compile_construction(task.source, level="evaluated", budgets=task.request.get("budgets"), check=check)
+        compiler = self._runtime.compile_program(task.source, budgets=task.request.get("budgets"), check=check)
+        # Agent/0.2's frozen operation budget never counted internal GLB work.
+        # The separately selected Agent/0.3 contract adds cooperative delivery
+        # checks without retroactively rejecting formerly valid old requests.
+        delivery_check = check if self._profile == "surface-0.1" else None
         artifact = export_glb(compiler.model, options=ExportOptions(**task.request.get("options", {})),
                               source_uri=task.source.entry.filename, source_sha256=task.source.entry.revision,
-                              target_contract="ontokin.glb/0.2")
+                              target_contract=self._destination, check=delivery_check)
         check()
         sha = hashlib.sha256(artifact.data).hexdigest()
         artifact_id = "artifact:" + sha

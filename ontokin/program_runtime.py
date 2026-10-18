@@ -19,13 +19,39 @@ from .program_diagnostics import diagnostic_dict
 from .program_protocol import MAX_BUDGETS
 from .syntax import Node
 from .validator import FIELD_TYPES, optional
-from .values import Value
+from .values import Value, bounded_data
 
 SCHEMA_VERSION = "ontokin.program-runtime/0.1"
+CONSTRUCTION_PROFILE = "construction-0.1"
+SURFACE_PROFILE = "surface-0.1"
+
+
+class ProgramRuntime:
+    """Bind existing pure operations to one explicit entry-language profile."""
+
+    def __init__(self, profile=CONSTRUCTION_PROFILE):
+        if profile not in (CONSTRUCTION_PROFILE, SURFACE_PROFILE):
+            raise ValueError("Unknown program runtime profile.")
+        self.profile = profile
+
+    def validate_revision(self, source, **kwargs):
+        return validate_revision(source, profile=self.profile, **kwargs)
+
+    def evaluate_revision(self, source, **kwargs):
+        return evaluate_revision(source, profile=self.profile, **kwargs)
+
+    def inspect_revision(self, source, **kwargs):
+        return inspect_revision(source, profile=self.profile, **kwargs)
+
+    def apply_patches(self, source, patches, **kwargs):
+        return apply_patches(source, patches, profile=self.profile, **kwargs)
+
+    def compile_program(self, source, **kwargs):
+        return compile_program(source, profile=self.profile, **kwargs)
 
 
 class _Budget(core._Budget):
-    def __init__(self, budgets=None, check=None):
+    def __init__(self, budgets=None, check=None, profile=CONSTRUCTION_PROFILE):
         incoming = {} if budgets is None else budgets
         if not isinstance(incoming, dict) or set(incoming) - set(MAX_BUDGETS):
             raise OntoKinError("OKL-E-RESOURCE", "Unknown program work budget.", category="resource_limit", phase="support")
@@ -34,6 +60,14 @@ class _Budget(core._Budget):
         if type(value_limit) is not int or not 1 <= value_limit <= MAX_BUDGETS["max_value_entries"]:
             raise OntoKinError("OKL-E-RESOURCE", "Invalid logical value budget.", category="resource_limit", phase="support")
         self.limits["max_value_entries"] = value_limit
+        self.profile = profile
+
+    def data(self, value):
+        try:
+            return bounded_data(value, max_entries=self.limits["max_value_entries"], check=self.tick)
+        except JSONLimitError as exc:
+            raise OntoKinError("OKL-E-RESOURCE", "The program result exceeded its materialization budget.",
+                               category="resource_limit", phase="support", details=exc.details) from exc
 
     def json(self, value):
         try:
@@ -46,7 +80,24 @@ class _Budget(core._Budget):
 
 def _compile(source: ProgramBundle, budget: _Budget):
     from .construction import compile_construction
-    return compile_construction(source, level="represented", budgets=budget.limits, check=budget.tick)
+    compiler = compile_construction(source, level="represented", budgets=budget.limits, check=budget.tick)
+    if compiler.model.profile != budget.profile:
+        raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED", "This program binding requires a " + budget.profile + " entry source.",
+                           compiler.program, category="unsupported", phase="support",
+                           blocks=["represented", "constructed", "evaluated", "delivered"],
+                           details={"required_profile": budget.profile, "actual_profile": compiler.model.profile})
+    return compiler
+
+
+def compile_program(source, *, budgets=None, check=None, profile=CONSTRUCTION_PROFILE):
+    """Compile one profile-bound source model without creating a run or effects."""
+    try:
+        budget = _Budget(budgets, check, profile)
+        compiler = _compile(source, budget)
+        _support(compiler)
+        return compiler
+    except _Interrupt as exc:
+        raise exc.error
 
 
 def _support(compiler: ConstructionCompiler) -> None:
@@ -59,7 +110,7 @@ def _support(compiler: ConstructionCompiler) -> None:
             compiler.annotate(error)
             raise error
     if model.requested_capabilities:
-        raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED", "The required capabilities are not supplied by construction-0.1: " +
+        raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED", "The required capabilities are not supplied by " + model.profile + ": " +
                            ", ".join(model.requested_capabilities), compiler.linked_program.capabilities[0],
                            category="unsupported", phase="support", blocks=["constructed", "evaluated", "delivered"])
 
@@ -78,7 +129,7 @@ def _error_result(source: ProgramBundle, requested: str | None, achieved: str | 
     return _result(source, requested, achieved, earlier + [diagnostic], error.diagnostic.category, **payload)
 
 
-def _run_state(source: ProgramBundle, prefix: dict, *, previous: dict | None = None) -> dict:
+def _run_state(source: ProgramBundle, prefix: dict, *, budget: _Budget, previous: dict | None = None) -> dict:
     error = prefix["failure"]
     diagnostic = None if error is None else diagnostic_dict(error.diagnostic, source, (previous or {}).get("run_id"))
     failure = None if error is None else {
@@ -102,7 +153,7 @@ def _run_state(source: ProgramBundle, prefix: dict, *, previous: dict | None = N
             state["retained_prior_prefix"] = True
     if previous is not None and "run_id" in previous:
         state["run_id"] = previous["run_id"]
-    return state
+    return budget.data(state)
 
 
 def _levels(compiler: ConstructionCompiler) -> dict:
@@ -112,13 +163,13 @@ def _levels(compiler: ConstructionCompiler) -> dict:
 
 
 def validate_revision(source: ProgramBundle, *, level: str = "represented", budgets: dict | None = None,
-                      check: Callable[[], None] | None = None) -> dict:
+                      check: Callable[[], None] | None = None, profile=CONSTRUCTION_PROFILE) -> dict:
     """Validate one requested stage; evaluated means the complete fresh horizon."""
     achieved = None
     diagnostics: list[dict] = []
     stages = {"represented": "unavailable", "constructed": "not_requested", "evaluated": "not_requested"}
     try:
-        budget = _Budget(budgets, check)
+        budget = _Budget(budgets, check, profile)
         compiler = _compile(source, budget)
         diagnostics = [diagnostic_dict(d, source) for d in compiler.model.diagnostics]
         achieved = "represented"
@@ -140,14 +191,14 @@ def validate_revision(source: ProgramBundle, *, level: str = "represented", budg
                 error.diagnostic.phase = "elaboration"
                 error.diagnostic.blocks = ["constructed", "evaluated", "delivered"]
             return _error_result(source, level, achieved, error, diagnostics, stages=stages,
-                                 run_state=_run_state(source, prefix))
+                                 run_state=_run_state(source, prefix, budget=budget))
         achieved = "constructed"
         stages["constructed"] = "valid"
         if level == "constructed":
             return _result(source, level, achieved, diagnostics, stages=stages,
-                           duration_seconds=time_text(compiler.model.duration), initial_state=prefix["last_valid_state"])
+                           duration_seconds=time_text(compiler.model.duration), initial_state=budget.data(prefix["last_valid_state"]))
         prefix = evaluate_prefix(compiler.model, compiler.model.duration, check=budget.tick)
-        run = _run_state(source, prefix)
+        run = _run_state(source, prefix, budget=budget)
         if prefix["failure"] is not None:
             stages["evaluated"] = prefix["failure"].diagnostic.category
             return _error_result(source, level, achieved, prefix["failure"], diagnostics, stages=stages, run_state=run)
@@ -175,12 +226,13 @@ def _point(time: Fraction, side: str) -> tuple[Fraction, bool]:
 
 
 def evaluate_revision(source: ProgramBundle, *, until: Any, side: str = "after", previous: dict | None = None,
-                      budgets: dict | None = None, check: Callable[[], None] | None = None) -> dict:
+                      budgets: dict | None = None, check: Callable[[], None] | None = None,
+                      profile=CONSTRUCTION_PROFILE) -> dict:
     """Return a forward, revision-bound run descriptor; never preflight its future."""
     achieved = None
     diagnostics: list[dict] = []
     try:
-        budget = _Budget(budgets, check)
+        budget = _Budget(budgets, check, profile)
         compiler = _compile(source, budget)
         achieved = "represented"
         diagnostics = [diagnostic_dict(d, source) for d in compiler.model.diagnostics]
@@ -199,7 +251,7 @@ def evaluate_revision(source: ProgramBundle, *, until: Any, side: str = "after",
                 raise OntoKinError("OKL-E-SAMPLE", "A failed run is retained for diagnosis; reset to start a new run.",
                                    compiler.program.scene, phase="inspection", blocks=[])
         prefix = evaluate_prefix(compiler.model, endpoint, side=side, check=budget.tick)
-        run = _run_state(source, prefix, previous=previous)
+        run = _run_state(source, prefix, budget=budget, previous=previous)
         if run["last_valid_state"] is not None:
             achieved = "constructed"
         if prefix["failure"] is not None:
@@ -370,15 +422,15 @@ def _index_context(program, budget):
         return _file_records(program), None, [diagnostic_dict(exc.diagnostic, program)], False
 
 
-def source_index(program, *, budgets=None, check=None):
+def source_index(program, *, budgets=None, check=None, profile=CONSTRUCTION_PROFILE):
     return inspect_revision(program, fields=["identity", "source"],
-                            limit=(budgets or {}).get("max_result_items", 1000), budgets=budgets, check=check)
+                            limit=(budgets or {}).get("max_result_items", 1000), budgets=budgets, check=check, profile=profile)
 
 
-def apply_patches(program, patches, *, module_changes=None, budgets=None, check=None):
+def apply_patches(program, patches, *, module_changes=None, budgets=None, check=None, profile=CONSTRUCTION_PROFILE):
     """Form one atomic candidate after checking all original-unit byte scopes."""
     try:
-        budget = _Budget(budgets, check)
+        budget = _Budget(budgets, check, profile)
         records, _, _, _ = _index_context(program, budget)
         by_id = {tuple(record["element_id"]): record for record in records}
         units = {unit.source_id: unit for unit in program.units}
@@ -494,8 +546,7 @@ def _value_record(program, compiler, path, name, budget):
     dependencies.extend({"element_id": list(ids), "program_revision": program.program_revision,
                          "relationship": "called_definition"} for ids in sorted(compiler.call_dependencies.get((path, name), set())))
     value = compiler.memo[(path, name)]
-    data = value.to_data()
-    budget.json(data)
+    data = budget.data(value)
     return {**data, "canonical_unit": core._unit(value.type), "display_unit": core._unit(value.type),
             "display_unit_origin": "canonical_presentation", "status": "resolved" if value.known else "unresolved",
             "stale": False, "origin": {"category": category, "scope": scope,
@@ -512,14 +563,18 @@ def _project(program, record, fields, compiler, sample, run, frame, budget):
     result = core._project(program.entry.to_source(), record, shared, compiler, sample, run, frame, budget)
     if "support" in fields:
         result["support"] = core._support_record(compiler, budget)
-        result["support"]["profile"] = "construction-0.1"
-        result["support"]["named_destination"] = "ontokin.glb/0.2"
+        result["support"]["profile"] = budget.profile
+        result["support"]["named_destination"] = "ontokin.glb/0.3" if budget.profile == SURFACE_PROFILE else "ontokin.glb/0.2"
     if compiler is None or record["_definition"]:
         for field in fields:
             if field not in result:
                 result[field] = {"available": False, "reason": "definition_has_no_occurrence_state" if record["_definition"] else "source_is_unresolved"}
         return result
     path = record.get("_object_path")
+    if "geometry" in fields and path is not None and compiler.model.objects[path].geometry["kind"] in ("loft", "placed"):
+        from .program_surface import surface_summary
+        result["geometry"]["representation"] = "native_parameterized_exterior_surface"
+        result["geometry"]["surface"] = surface_summary(compiler.model.objects[path].geometry, check=budget.tick)
     if "values" in fields:
         if path is not None:
             names = [record["_value_name"]] if "_value_name" in record else list(FIELD_TYPES) + list(compiler.model.objects[path].properties)
@@ -545,15 +600,15 @@ def _project(program, record, fields, compiler, sample, run, frame, budget):
                          valid_interval={"start_seconds": "0", "start_side": "before",
                                          "end_seconds": run["valid_until_seconds"], "end_side": run["valid_until_side"]})
             result["state"] = state
-    budget.json(result)
-    return result
+    return budget.data(result)
 
 
 def inspect_revision(program, *, selector=None, fields=None, limit=100, offset=0, run=None,
-                     time=None, side="after", frame="world", budgets=None, check=None):
+                     time=None, side="after", frame="world", budgets=None, check=None,
+                     profile=CONSTRUCTION_PROFILE):
     diagnostics, achieved = [], None
     try:
-        budget = _Budget(budgets, check)
+        budget = _Budget(budgets, check, profile)
         selector = {} if selector is None else selector
         source_id = selector.get("source_id")
         base_selector = {k: v for k, v in selector.items() if k != "source_id"}

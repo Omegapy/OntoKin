@@ -1,4 +1,8 @@
-"""Strict ontokin.agent/0.2 wire contract for immutable pinned source bundles."""
+"""Strict versioned agent contracts for immutable pinned source bundles.
+
+Module-level calls retain Agent/0.2. A bound interface selects Agent/0.3
+without changing process globals or another service instance's behavior.
+"""
 from __future__ import annotations
 
 import json
@@ -9,6 +13,7 @@ from .agent_protocol import ProtocolError, LEVELS, TERMINAL, FIELDS, _bad, _text
 from .json_limits import bounded_dumps, JSONLimitError, MAX_JSON_BYTES, MAX_JSON_ENTRIES
 
 SCHEMA_VERSION = "ontokin.agent/0.2"
+SURFACE_SCHEMA_VERSION = "ontokin.agent/0.3"
 MAX_REQUEST_BYTES = MAX_JSON_BYTES
 MAX_BUDGETS = {**core.MAX_BUDGETS, "max_value_entries": MAX_JSON_ENTRIES}
 COMMON = core.COMMON
@@ -26,6 +31,34 @@ OPERATIONS = {
     "export": ({"program_revision", "destination"}, {"options", "budgets"}),
     "artifact": ({"artifact_id"}, {"offset", "max_bytes"}),
 }
+SURFACE_OPERATIONS = {**OPERATIONS, "surface.mesh_page": (
+    {"program_revision", "element_id", "count"}, {"region", "cursor", "budgets"})}
+
+
+class ProgramProtocol:
+    def __init__(self, schema_version=SCHEMA_VERSION):
+        if schema_version not in (SCHEMA_VERSION, SURFACE_SCHEMA_VERSION):
+            raise ProtocolError("OKA-E-REQUEST", "Unknown program service binding.",
+                                available_protocols=[SCHEMA_VERSION, SURFACE_SCHEMA_VERSION])
+        self.SCHEMA_VERSION = schema_version
+        self.MAX_BUDGETS = dict(MAX_BUDGETS)
+        self.OPERATIONS = {name: (set(required), set(optional)) for name, (required, optional) in
+                           (SURFACE_OPERATIONS if schema_version == SURFACE_SCHEMA_VERSION else OPERATIONS).items()}
+        self.profile = "surface-0.1" if schema_version == SURFACE_SCHEMA_VERSION else "construction-0.1"
+        self.destination = "ontokin.glb/0.3" if schema_version == SURFACE_SCHEMA_VERSION else "ontokin.glb/0.2"
+
+    def canonical_request(self, value):
+        return canonical_request(value)
+
+    def validate_request(self, request):
+        return validate_request(request, schema_version=self.SCHEMA_VERSION)
+
+    def envelope(self, request, status, accepted=None):
+        return envelope(request, status, accepted, schema_version=self.SCHEMA_VERSION)
+
+
+def bind(schema_version=SCHEMA_VERSION):
+    return ProgramProtocol(schema_version)
 
 
 def _revision(value, name):
@@ -62,11 +95,13 @@ def _module(value):
         raise ProtocolError(exc.code, str(exc), **exc.details) from exc
 
 
-def validate_request(request):
+def validate_request(request, *, schema_version=SCHEMA_VERSION):
+    binding = bind(schema_version)
+    operations = binding.OPERATIONS
     op = request.get("operation")
-    if request.get("schema_version") != SCHEMA_VERSION or not isinstance(op, str) or op not in OPERATIONS:
-        _bad("Unknown program protocol schema or operation.", schema_version=SCHEMA_VERSION, operations=sorted(OPERATIONS))
-    required, optional = OPERATIONS[op]
+    if request.get("schema_version") != schema_version or not isinstance(op, str) or op not in operations:
+        _bad("Unknown program protocol schema or operation.", schema_version=schema_version, operations=sorted(operations))
+    required, optional = operations[op]
     _object(request, "request", COMMON | required | optional, COMMON | required)
     for name in ("project_id", "request_id", "target_request_id", "artifact_id"):
         if name in request:
@@ -96,6 +131,11 @@ def validate_request(request):
         _bad("Discovery context is a bundle or a retained program revision, not both.")
     if "limit" in request:
         _integer(request["limit"], "limit", 1, 1000)
+    if op == "surface.mesh_page":
+        _ids(request["element_id"], "element_id")
+        _integer(request["count"], "count", 1, 256)
+        if "region" in request:
+            _text(request["region"], "region", limit=64)
     if "budgets" in request:
         _object(request["budgets"], "budgets", set(MAX_BUDGETS))
         for key, value in request["budgets"].items():
@@ -158,8 +198,8 @@ def validate_request(request):
             _object(request["filter"], "filter", {"kind", "name", "capability"})
             for key, value in request["filter"].items():
                 _text(value, "filter." + key, limit=1024)
-    if "destination" in request and request["destination"] != "ontokin.glb/0.2":
-        _bad("The program destination contract is ontokin.glb/0.2.")
+    if "destination" in request and request["destination"] != binding.destination:
+        _bad("The program destination contract is " + binding.destination + ".")
     if "options" in request:
         _options(request["options"])
         if "destination" not in request:
@@ -172,11 +212,14 @@ def validate_request(request):
         _integer(request["max_bytes"], "max_bytes", 1, 65536)
 
 
-def envelope(request, status, accepted=None):
+def envelope(request, status, accepted=None, *, schema_version=SCHEMA_VERSION):
     result = core.envelope(request, status, accepted)
-    result["schema_version"] = SCHEMA_VERSION
+    result["schema_version"] = schema_version
     result["program_revision"] = None
     if isinstance(request, dict):
+        operation = request.get("operation")
+        operations = SURFACE_OPERATIONS if schema_version == SURFACE_SCHEMA_VERSION else OPERATIONS
+        result["operation"] = operation if isinstance(operation, str) and operation in operations else None
         revision = request.get("program_revision")
         if isinstance(revision, str) and re.fullmatch(r"sha256:[0-9a-f]{64}", revision):
             result["program_revision"] = revision

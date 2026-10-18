@@ -11,14 +11,22 @@ import json
 from .agent_store import AgentStore, dumps
 from .agent_protocol import ProtocolError
 from .bundle import load_bundle, BundleError
-from .program_protocol import envelope
+from . import program_protocol
 
 
 class ProgramStore(AgentStore):
     database_name = "program-agent.sqlite3"
     schema_version = "ontokin.program-agent-store/0.1"
     revision_key = "program_revision"
-    envelope = staticmethod(envelope)
+    envelope = staticmethod(program_protocol.envelope)
+
+    def __init__(self, path, implementation, *, protocol=None):
+        binding = protocol or program_protocol.bind()
+        self.envelope = binding.envelope
+        if binding.SCHEMA_VERSION == program_protocol.SURFACE_SCHEMA_VERSION:
+            self.database_name = "surface-program-agent.sqlite3"
+            self.schema_version = "ontokin.surface-program-agent-store/0.1"
+        super().__init__(path, implementation)
 
     @staticmethod
     def snapshot(db, project, program):
