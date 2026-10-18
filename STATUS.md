@@ -51,11 +51,11 @@ The preceding checkpoint records the configured hourly **Advance OntoKin** task 
 
 | Lease field | Value |
 | --- | --- |
-| Integration owner | None; `interactive-recovery-20261018-0636` releases its completed correction |
-| Release checkpoint | 2026-10-18T07:11:03Z |
-| Lease expires | 2026-10-18T07:11:03Z |
-| Completed task | Reconcile, harden, integrate and verify the experimental surface prototype after the timed-out request |
-| Retained recovery branch | `fix/surface-recovery-20261018` |
-| Next acquisition task | Native `.ok` surface-profile compiler integration and M01-M12 acceptance |
+| Integration owner | `scheduled-ontokin-20261018-1792308849885` |
+| Acquired UTC | 2026-10-18T07:34:09.885Z |
+| Lease expires UTC | 2026-10-18T09:09:09.885Z |
+| Work item | Native `.ok` surface profile integration, beginning with source-level parser/type/validation infrastructure and tests |
+| Parent main SHA | `8366c778ff47169fbeb712d13977d9eb88d0f214` |
+| Integration procedure | Isolated branch; verify all existing checks and publish through exact-head updates; release or renew this lease on completion |
 
-The release takes effect when this checkpoint is published to main. Until then the preceding published recovery lease governs writers. Subsequent work requires a fresh conditional acquisition; an old owner name or an expired timestamp does not itself confer ownership. If a head changes or a write has an unknown result, inspect and reconcile instead of force-overwriting another writer. The closing worker may inspect final CI read-only after publication.
+Conditional acquisition was requested using the observed main SHA, not inferred from expiry. Actual publication and confirmation will be recorded at the next checkpoint.
