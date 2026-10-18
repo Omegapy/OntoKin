@@ -50,12 +50,14 @@ Still unmet: richer algorithms/libraries and compatible part replacement; textur
 
 | Lease field | Value |
 | --- | --- |
-| Integration owner | **None: released after verified native GLB integration and evidence publication** |
-| Released UTC | 2026-10-18T17:27:58Z |
-| Previous owner | `interactive-glb03-20261018-1607Z-astra-root` |
-| Previous acquisition / expiry | 2026-10-18T17:14:32Z / 2026-10-18T17:44:32Z |
-| Integrated code | `1976b615935ee17ff45e7e6392cded85dc317e87` (PR #7) |
-| Next writer | Inspect live heads, STATUS, checks and issue #8; acquire a distinct bounded lease with an expected-head conditional nonforce update before main/STATUS integration writes. |
+| Integration owner | `interactive-agent03-20261018-1835Z-astra-root` |
+| Task | Integrate tested Agent/0.3 and the complete native M01–M12 gate through PR #9. |
+| Acquired UTC | 2026-10-18T18:36:06Z |
+| Expires UTC | 2026-10-18T19:06:06Z |
+| Observed main | `e0ebb9562ec03fb532355cca4c672bcc83a0f961` |
+| Verified branch checkpoint | `80d59bb2b09a5a57cad8e1b477d89f23a3e5a5a1`; M01–M12 all passed, 464 tests passed, current C01–C20 passed; PR CI 39153863765 all four jobs passed. |
+| Immediate action | Retain exact evidence, merge with observed-head conditional updates, verify resulting main CI, publish STATUS and release this lease. |
+| Recovery | Read actual main/PR refs and current STATUS before retrying an interrupted write. Independent nonoverlapping branch work remains permitted. |
 
 This status/evidence publication changes no runtime bytes. Its own later CI is distinct from the verified implementation/main runs above. After a timeout or unknown write, read actual refs and files before retrying; preserve ongoing branch work. A missing uploaded-image error in chat does not block repository development and does not require retrying that attachment.
 
