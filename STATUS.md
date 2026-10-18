@@ -1,17 +1,17 @@
 # OntoKin status
 
-Checkpoint: **2026-10-18T03:04:38Z**. Goal: [GOAL.md](GOAL.md). Project goal remains **in progress**.
+Checkpoint: **2026-10-18T03:25:00Z**. Goal: [GOAL.md](GOAL.md). Project goal remains **in progress**.
 
 ## Verified published baseline
 
 | Item | Recorded state |
 | --- | --- |
-| Published `main` observed at this checkpoint | [c4152509533f77ba54fac78268ba425df9b1a177](https://github.com/Omegapy/OntoKin/commit/c4152509533f77ba54fac78268ba425df9b1a177) |
-| Tree | `147d89c4905ab33520064c3f97aee7c192d990c4` |
+| Published `main` observed at this checkpoint | [3043e3a671662568e6e6e1a80417eaff7d55533d](https://github.com/Omegapy/OntoKin/commit/3043e3a671662568e6e6e1a80417eaff7d55533d) |
+| Tree | `5d2372ef64e532d883d3ea66b0a0e72887f3c89d` |
 | Implementation | `ontokin-reference` **0.3.0**, experimental |
 | Language / export contracts | Adopted `core-0.1`; `ontokin.agent/0.1`; bounded `ontokin.glb/0.1` |
-| Latest verified CI for the published baseline | [Run 39092228352](https://github.com/Omegapy/OntoKin/actions/runs/39092228352), all four jobs completed successfully for the identified 0.3.0 implementation |
-| Current milestone | **OK-LANG-002: Pinned Modules and Keyed Assembly Construction**; precise grammar, program-bundle identity, and acceptance fixtures are being designed before implementation |
+| Latest verified CI for the published baseline | [Run 39092480706](https://github.com/Omegapy/OntoKin/actions/runs/39092480706) completed successfully for the documentation/evidence checkpoint; implementation run 39092228352 passed all four jobs |
+| Current milestone | **OK-LANG-002: Pinned Modules and Keyed Assembly Construction**; contract and companions adopted; implementation begins on `work/construction-0.1` |
 
 The working checkout may use a synthetic connector snapshot commit with the same tree. Verify the actual remote head before publishing; a local commit identity is not automatically the published GitHub identity.
 
@@ -37,9 +37,9 @@ The current physical subset is uniform gravity and free homogeneous spheres, wit
 
 ## Next actions
 
-1. Publish this verified CI checkpoint and retain the completed 0.3.0 evidence.
-2. Review and adopt OK-LANG-002 with finite reuse, boundaries, failures, composition, targeted edits, and delivery cases. The proposed profile is `ontokin "0.2"` / `construction-0.1`; existing source meanings remain unchanged.
-3. Implement on a coordinated isolated branch: parser/bundle linker, construction/runtime, then durable agent 0.2 and complete source-to-animation verification. No new language behavior is implemented at this checkpoint.
+1. Implement the adopted [OK-LANG-002](docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md) on `work/construction-0.1`: parser/bundle linker, construction/runtime, then durable agent 0.2 and complete source-to-animation verification.
+2. Preserve its C01–C20 requirements and independent Rack oracle (18 objects, 126 expected poses); complete executable boundary/failure/composition cases before measuring the release.
+3. Keep `main` at the verified 0.3.0 baseline until the complete new gate and relevant CI pass. At this adoption checkpoint, no construction runtime result is claimed.
 
 ## Periodic review
 
@@ -52,9 +52,9 @@ Creation and enablement are verified. The scheduling service reports a last-run 
 | Lease field | Value |
 | --- | --- |
 | Integration owner | `root` in the owner's active stewardship chat |
-| Checkpoint / renewal | `2026-10-18T03:04:38Z` |
-| Lease expires | `2026-10-18T09:04:38Z` |
-| Current integration task | OK-LANG-002 contract and implementation preparation |
+| Checkpoint / renewal | `2026-10-18T03:25:00Z` |
+| Lease expires | `2026-10-18T09:25:00Z` |
+| Current integration task | OK-LANG-002 adopted contract; coordinated implementation on `work/construction-0.1` |
 
 Renew this UTC lease at each integration checkpoint. While it is live, scheduled reviews and other independent sessions may inspect and report but **must not edit or publish**. The owner may delegate bounded file work; publication remains coordinated by the integration owner.
 

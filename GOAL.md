@@ -60,7 +60,7 @@ The working **AI Agent Authoring and Inspection Interface** passed its finite re
 
 ## Next release gate: pinned modules and keyed assembly construction
 
-Add a versioned language/profile for reusable component definitions and bounded declarative generation of independently identifiable parts. Preserve the meaning and conformance of existing `ontokin "0.1"` / `core-0.1` source. Before implementation, adopt the precise grammar, source-bundle identities, dependency limits, patch authority, and acceptance fixtures in OK-LANG-002.
+Add a versioned language/profile for reusable component definitions and bounded declarative generation of independently identifiable parts. Preserve the meaning and conformance of existing `ontokin "0.1"` / `core-0.1` source. The precise grammar, source-bundle identities, dependency limits, patch authority, and predetermined acceptance requirements are adopted in [OK-LANG-002](docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md). Implement and verify that contract on the isolated construction branch before integration.
 
 The release must demonstrate actual imported libraries, variable keyed part counts and dimensions, stable identities under insertion/reordering, a targeted generated-instance repair with unchanged siblings/library bytes, and independently validated animation. Exact source files remain authoritative; accepted programs, runs, inspections, and artifacts must identify the complete pinned dependency closure. A source-only import preprocessor or a prepared generator script cannot stand in for the promised language behavior.
 

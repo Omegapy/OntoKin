@@ -1,0 +1,77 @@
+(* OK-LANG-002 adopted construction-0.1 grammar (2026-10-18). Not an implementation claim.
+   Lexical terminals and all unchanged rules follow OK-LANG-001 section 4.
+   The version/profile strings must be "0.2" / "construction-0.1".
+   The bundle entry must have one scene; dependency units must have none.
+   The new keywords apply only to the 0.2 lexer/parser, never to core-0.1.
+   Declaration visibility defaults to public at module scope.
+   Import version/package/digest domains and type restrictions are semantic
+   requirements in OK-LANG-002; STRING does not relax those requirements. *)
+
+source_unit = "ontokin", STRING, ";", "module", IDENT, identity, ";",
+              "profile", STRING, ";", { capability }, { import_decl },
+              { definition }, [ scene ] ;
+identity = "@", STRING ;
+capability = "requires", STRING, ";" ;
+import_decl = "import", IDENT, identity, "from", STRING,
+              "version", STRING, "digest", STRING, ";" ;
+definition = [ visibility ], ( class_decl | function_decl ) ;
+qualified_name = IDENT, [ ".", IDENT ] ;
+class_decl = "class", IDENT, identity, [ "extends", qualified_name ],
+             "{", { member }, "}" ;
+member = property_decl | method_decl | part_decl | parts_decl | site_decl
+       | joint_decl | follow_decl | assignment | override_default | assertion ;
+visibility = "public" | "private" ;
+property_decl = visibility, ( "param" | "derive" ), IDENT, identity, ":", type,
+                "=", expression, ";" ;
+override_default = "override", IDENT, "=", expression, ";" ;
+method_decl = visibility, [ "override" ], "method", IDENT, identity, parameters,
+              "->", type, function_body ;
+function_decl = "fn", IDENT, identity, parameters, "->", type, function_body ;
+parameters = "(", [ parameter, { ",", parameter } ], ")" ;
+parameter = IDENT, ":", type ;
+type = "Quantity", "[", unit_expr, "]"
+     | qualified_name, [ "<", type, { ",", type }, ">" ] ;
+function_body = "{", { local_decl }, "return", expression, ";", "}" ;
+local_decl = "let", IDENT, ":", type, "=", expression, ";" ;
+part_decl = visibility, "part", IDENT, identity, ":", qualified_name,
+            "{", { assignment }, "}" ;
+parts_decl = visibility, "parts", IDENT, identity, ":", qualified_name,
+             "for", "(", IDENT, ",", IDENT, ")", "in", expression,
+             "{", { assignment }, "}" ;
+site_decl = visibility, "site", IDENT, identity, "{", { assignment }, "}" ;
+joint_decl = [ visibility ], "joint", IDENT, identity, ":", IDENT,
+             "{", { assignment }, "}" ;
+follow_decl = [ visibility ], "follow", IDENT, identity,
+              "{", { assignment }, "}" ;
+scene = "scene", IDENT, identity, "{", { scene_member }, "}" ;
+scene_member = assignment | object_decl | joint_decl | follow_decl
+             | action_decl | event_block | assertion ;
+object_decl = "object", IDENT, identity, ":", qualified_name,
+              "{", { assignment }, "}" ;
+action_decl = "action", IDENT, identity, "=", expression, ";" ;
+event_block = "at", expression, "sequence", "{", { event }, "}" ;
+event = ( "start" | "pause" | "resume" | "stop" ), IDENT, ";"
+      | "release", path, "using", "incoming", ";" ;
+assignment = path, "=", expression, ";" ;
+assertion = "assert", expression, ",", STRING, ";" ;
+path = IDENT, { ".", IDENT | "[", STRING, "]" } ;
+expression = conditional ;
+conditional = "if", expression, "then", expression, "else", expression
+            | logical_or ;
+logical_or = logical_and, { "or", logical_and } ;
+logical_and = equality, { "and", equality } ;
+equality = comparison, [ ( "==" | "!=" ), comparison ] ;
+comparison = sum, [ ( "<" | "<=" | ">" | ">=" ), sum ] ;
+sum = product, { ( "+" | "-" ), product } ;
+product = unary, { ( "*" | "/" ), unary } ;
+unary = ( "-" | "not" ), unary | postfix ;
+postfix = primary, { ".", IDENT | "(", [ arguments ], ")"
+                  | "[", expression, "]" } ;
+arguments = expression, { ",", expression } ;
+primary = NUMBER, [ "[", unit_expr, "]" ] | STRING | "true" | "false" | IDENT
+        | "(", expression, ")" | keyed_literal ;
+keyed_literal = "keyed", "<", type, ">", "{",
+                [ keyed_entry, { ",", keyed_entry } ], "}" ;
+keyed_entry = STRING, ":", expression ;
+unit_expr = unit_factor, { ( "*" | "/" ), unit_factor } ;
+unit_factor = IDENT, [ "^", [ "-" ], INTEGER ] ;

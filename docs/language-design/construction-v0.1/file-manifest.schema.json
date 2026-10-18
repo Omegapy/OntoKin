@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://omegapy.github.io/OntoKin/schemas/ontokin.files-0.1.json",
+  "title": "OntoKin proposed explicit local source manifest 0.1",
+  "$comment": "Companion to proposed OK-LANG-002; this is not an implementation claim. The CLI reads only listed paths relative to this manifest's directory. Resolved paths including symlinks must remain within that directory and name regular files. After exact UTF-8 decoding, replace each path with source and set schema_version to ontokin.bundle/0.1. Paths do not participate in the sealed program revision; retained filenames do. The same aggregate byte, package uniqueness and version-domain rules as bundle.schema.json apply.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "entry", "modules"],
+  "properties": {
+    "schema_version": {"const": "ontokin.files/0.1"},
+    "entry": {"$ref": "#/$defs/entry"},
+    "modules": {
+      "type": "array",
+      "maxItems": 16,
+      "items": {"$ref": "#/$defs/module"}
+    }
+  },
+  "$defs": {
+    "filename": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "pattern": "^[^\u0000-\u001f\u007f-\u009f]+$",
+      "description": "Exact retained diagnostic label, bounded to 1024 UTF-8 bytes, unchanged when the local path moves."
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "pattern": "^(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.?(?:/|$))(?!.*//)(?!.*/$)[^\u0000-\u001f\u007f-\u009f]+$",
+      "description": "Explicit relative POSIX file path. Absolute paths, backslashes, empty/dot/parent segments, controls and symlink escapes are rejected. Runtime also enforces a 4096 UTF-8 byte limit."
+    },
+    "package_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 32,
+      "pattern": "^(?:0|[1-9][0-9]{0,9})\\.(?:0|[1-9][0-9]{0,9})\\.(?:0|[1-9][0-9]{0,9})$",
+      "description": "Exact major.minor.patch, each component <=2147483647."
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["filename", "path"],
+      "properties": {
+        "filename": {"$ref": "#/$defs/filename"},
+        "path": {"$ref": "#/$defs/path"}
+      }
+    },
+    "module": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["package_id", "version", "filename", "path"],
+      "properties": {
+        "package_id": {"$ref": "#/$defs/package_id"},
+        "version": {"$ref": "#/$defs/version"},
+        "filename": {"$ref": "#/$defs/filename"},
+        "path": {"$ref": "#/$defs/path"}
+      }
+    }
+  }
+}

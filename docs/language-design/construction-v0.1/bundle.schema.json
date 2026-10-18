@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://omegapy.github.io/OntoKin/schemas/ontokin.bundle-0.1.json",
+  "title": "OntoKin proposed immutable program bundle 0.1",
+  "$comment": "Companion to proposed OK-LANG-002; this is not an implementation claim. Runtime additionally enforces exact UTF-8 validity, 2,000,000 total source bytes, 1024 filename bytes, unique package IDs, version components <=2147483647, declared import pins, and the reachable closure. Program revision is available before source parsing or linking succeeds.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "entry", "modules"],
+  "properties": {
+    "schema_version": {"const": "ontokin.bundle/0.1"},
+    "entry": {"$ref": "#/$defs/entry"},
+    "modules": {
+      "type": "array",
+      "maxItems": 16,
+      "items": {"$ref": "#/$defs/module"}
+    }
+  },
+  "$defs": {
+    "filename": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "pattern": "^[^\u0000-\u001f\u007f-\u009f]+$",
+      "description": "Exact retained diagnostic label, never used for ambient file loading. The byte limit is 1024 UTF-8 bytes; spelling and Unicode normalization are preserved."
+    },
+    "source": {
+      "type": "string",
+      "maxLength": 2000000,
+      "description": "Exact source text encoded as UTF-8 without BOM stripping, Unicode normalization or newline changes. Total encoded bytes across all supplied units must not exceed 2,000,000."
+    },
+    "package_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 32,
+      "pattern": "^(?:0|[1-9][0-9]{0,9})\\.(?:0|[1-9][0-9]{0,9})\\.(?:0|[1-9][0-9]{0,9})$",
+      "description": "Exact major.minor.patch; every decimal component is <=2147483647. Ranges, prerelease/build suffixes, whitespace and leading zeroes are not part of this profile."
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["filename", "source"],
+      "properties": {
+        "filename": {"$ref": "#/$defs/filename"},
+        "source": {"$ref": "#/$defs/source"}
+      }
+    },
+    "module": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["package_id", "version", "filename", "source"],
+      "properties": {
+        "package_id": {"$ref": "#/$defs/package_id"},
+        "version": {"$ref": "#/$defs/version"},
+        "filename": {"$ref": "#/$defs/filename"},
+        "source": {"$ref": "#/$defs/source"}
+      }
+    }
+  }
+}
