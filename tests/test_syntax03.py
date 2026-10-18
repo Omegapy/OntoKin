@@ -25,7 +25,7 @@ class NativeSurfaceSyntaxTests(unittest.TestCase):
         self.assertEqual((ast.version, ast.profile), ("0.3", "surface-0.1"))
         self.assertIsNone(ast.scene)
         members = ast.classes[0].members
-        self.assertEqual([m.name if m.kind == "param" else m.path[0] for m in members],
+        self.assertEqual([m.name if m.kind == "param" else m.path[0].value for m in members],
                          ["rings", "palette", "geometry", "physical"])
         self.assertEqual(members[0].type.args[0].name, "LoftSection")
         self.assertEqual([item.key for item in members[0].value.entries],
