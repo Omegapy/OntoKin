@@ -48,3 +48,11 @@ Exporter/viewer changes also require fresh source-to-GLB builds, independent Khr
 Before declaring a release gate passed, identify the exact source/implementation revision, settings, artifacts, test results, relevant remote CI, and remaining limits. Preserve evidence in the repository or link to a durable identified result. Do not claim an untested destination, universal numeric accuracy, an unrun benchmark, a configured-but-unexecuted job, or all product requirements from a small passing corpus.
 
 Update STATUS with the result and the next unmet gate. Keep it short enough to reread after compaction; detailed reasoning, contracts, and evidence belong in linked engineering records.
+
+## Interactive progress and interrupted writes
+
+During long interactive work, send brief, factual progress updates at meaningful checkpoints and continue the task between them. Report completed inspection, a reproduced defect, a test result, a saved commit or a real blocker. Avoid long silent batches of unrelated connector operations, filler heartbeats, and acknowledgements that replace the requested work. Prefer individually bounded calls and small verified commits.
+
+An application timeout is not proof that the earlier worker stopped or that its last write failed. Before any retry, read the actual refs, relevant files and lease. Reconcile completed or concurrent work instead of replaying a batch or force-moving an old tree. Give each active integration worker a distinct owner token; do not reuse a generic owner name to infer authority across independent sessions.
+
+After an unknown write result, keep the intended parent, tree and commit identities, then inspect the remote head. Retry only after establishing the current state and the applicable lease. Save precise recovery instructions and release or renew ownership before ending. Frequent chat updates and repository checkpoints improve visibility and recoverability, but do not guarantee that the application or network will maintain the response stream.
