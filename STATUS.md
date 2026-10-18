@@ -1,6 +1,6 @@
 # OntoKin status
 
-Current checkpoint: **2026-10-18T19:02:44Z**. The complete native **M01–M12** release gate passed on implementation `80d59bb2b09a5a57cad8e1b477d89f23a3e5a5a1`, branch `work/agent03-integration-20261018-1722`, [PR #9](https://github.com/Omegapy/OntoKin/pull/9). Evidence publication and main integration are in progress under the lease below. The complete [GOAL](GOAL.md) remains **in progress**.
+Current checkpoint: **2026-10-18T19:23:19Z**. The complete native **M01–M12** release gate is implemented, verified and merged through [PR #9](https://github.com/Omegapy/OntoKin/pull/9) at `1a6dc3268c770d492b93e994b752c72eeb459cb0`. All four jobs passed in the fresh resulting-main [CI run 39157876920](https://github.com/Omegapy/OntoKin/actions/runs/39157876920). The complete [GOAL](GOAL.md) remains **in progress**. The next task is the separately versioned source impulse contract and implementation in [issue #10](https://github.com/Omegapy/OntoKin/issues/10).
 
 ## Completed implementation and acceptance
 
@@ -22,18 +22,21 @@ Language `0.3` / `surface-0.1` now supplies actual parameterized exterior geomet
 | Native browser | Four fixtures, **84 pose comparisons**, **12 visually inspected captures**; Chromium 141.0.7390.37; no page, console or network failures |
 | Current legacy destination | 18 objects; 126 Three.js and 126 browser pose comparisons; Khronos zero errors/warnings; inspected keyed-rack capture |
 | Identified implementation CI | [39153863765](https://github.com/Omegapy/OntoKin/actions/runs/39153863765): Python 3.11, 3.12, 3.13 and GLB/visual jobs all passed for `80d59bb` |
-| Documentation preservation | 29 historical sources, 233 sections and 602 local links passed |
-| Main integration | Pending verification of actual merge and its own four CI jobs; implementation CI is not a claim about a later changed revision |
+| Documentation preservation | 29 historical sources, 233 sections and 603 local links passed |
+| Reconciled PR CI | [39157391557](https://github.com/Omegapy/OntoKin/actions/runs/39157391557): all four jobs passed at `1a6dc326` |
+| Resulting main CI | [39157876920](https://github.com/Omegapy/OntoKin/actions/runs/39157876920): all four jobs passed at actual merge `1a6dc326` |
 
 Changed components: program service/protocol/runtime/store and new `program_surface.py`; profile-aware construction catalog; agent and main CLIs; narrow final-response transaction/store-startup hardening; Agent/0.3 schemas/contract; actual source workflow builder and fixed composition fixtures; independent native destination/browser tools; new surface conformance runner/mapping and tests; additive CI and guides. No installed dependency directory is committed. Package version remains experimental **0.4.0**.
 
 The release closes the adopted finite surface requirements, including real source edits and source-to-export functionality. The analytical and rendered fixture corpus does not establish arbitrary continuous accuracy or untested destinations. Recorded GLB playback is not live physics. Visual lofts add no represented matter or motion authority.
 
+[The integration record](docs/engineering/surface-release-validation/integration.json) retains raw PR/main run and job records, observed merge state, conditional parent/head identities and proof that all 182 eligible verification inputs match the tested implementation. Archival publication `3e7a2a61a68a7f7442cbe59e97753405ffbc7856` and merge `1a6dc326` preserve those input bytes. Later status-only CI is distinct from the identified resulting-main run above.
+
 ## Exact next development task
 
 Freeze a new explicit source/profile contract for an **instantaneous world-expressed impulse applied at a target-local point on a free homogeneous sphere**, then implement it through source parsing/type checking, ordered atomic events, evaluation, bounded source-aware inspection, agent repair and native recorded export. Include off-center angular momentum, rotated application frames, complete release state, zero/repeated impulses, invalid mode/unit/frame/overflow cases and high-spin export sampling. Existing profiles must retain their current meanings. This advances the off-center impulse portion of PHY-008; finite forces, contacts and general dynamics remain separate requirements. No new impulse operation is implemented or adopted by this status statement alone.
 
-The rationale is to reuse the exact authored-event clock and current sphere inertia before adding endogenous contact times. Sphere/static-plane contact remains a following candidate and requires an explicit rule for irrational impact times and event ordering. The implementation starts only after the versioned contract and predetermined fixtures are frozen.
+The rationale is to reuse the exact authored-event clock and current sphere inertia before adding endogenous contact times. Sphere/static-plane contact remains a following candidate and requires an explicit rule for irrational impact times and event ordering. The implementation starts only after the versioned contract and predetermined fixtures are frozen. Contract drafting uses `work/impulse01-contract-20261018-1911-astra` from observed main `1a6dc326`. Root continuation uses `work/impulse01-integration-20261018-1916-astra`; kernel and service branches are separately scoped in issue #10. Their work is not an impulse release acceptance claim.
 
 ## Remaining full-product scope
 
@@ -43,14 +46,14 @@ Still unmet: richer algorithms/libraries and compatible part replacement; textur
 
 | Lease field | Value |
 | --- | --- |
-| Integration owner | `interactive-agent03-20261018-1835Z-astra-root` |
-| Task | Preserve complete native release evidence, integrate PR #9 and verify resulting main CI. |
-| Acquired UTC | 2026-10-18T18:36:06Z |
-| Expires UTC | 2026-10-18T19:33:58Z |
-| Observed main | `3dffe428710f2abae8a929c25ac56487ef927093`, renewed after hash verification of the complete evidence archive; original lease `385dd7ec` |
-| Verified branch checkpoint | `80d59bb2b09a5a57cad8e1b477d89f23a3e5a5a1`; complete tests, M01–M12, current C20 and CI passed. |
-| Immediate action | Publish excluded documentation/evidence only, conditionally merge against observed main, inspect actual merge/CI and record result; then release or renew after a meaningful checkpoint. |
-| Recovery | Inspect actual refs, current STATUS, intended commit and outstanding operations before retrying an interrupted write. Independent nonoverlapping branches remain permitted. |
+| Integration owner | None — released after verified main integration. |
+| Completed task | Native surface release, Agent/0.3 and complete M01–M12 evidence integrated through PR #9. |
+| Prior owner | `interactive-agent03-20261018-1835Z-astra-root` |
+| Acquired / last expiry UTC | 2026-10-18T18:36:06Z / 2026-10-18T19:33:58Z |
+| Released UTC | 2026-10-18T19:23:19Z |
+| Verified main | `1a6dc3268c770d492b93e994b752c72eeb459cb0`; all four jobs in main CI 39157876920 passed. |
+| Immediate action | Continue issue #10 on declared isolated branches; review/adopt the impulse contract, implement, test and independently validate it. Acquire a new bounded lease before the next main integration. |
+| Recovery | Read current main/STATUS, branch scopes and actual CI before retrying an interrupted write. Preserve published work and exact historical evidence. |
 
 [Previous main STATUS at 17:27](docs/engineering/surface-validation/status-20261018-1727.md.txt), [earlier recovery](docs/engineering/surface-validation/recovery-2026-10-18.md), historical construction/agent/native evidence and original preservation hashes remain intact. [Issue #8](https://github.com/Omegapy/OntoKin/issues/8) records branch scopes and handoffs. A missing uploaded-image error in chat is unrelated to repository work; do not retry those attachments.
 
