@@ -621,6 +621,32 @@ public class Marker @ "marker" {
         self.assertEqual(caught.exception.diagnostic.details["target_contract"], CONTRACT)
         self.assertEqual(self.compiler.model, original)
 
+    def test_validation_can_cancel_inside_its_first_full_timeline_evaluation(self):
+        from ontokin.evaluator import _Simulator
+        original_advance = _Simulator.advance
+        sentinel = ValueError("Stop during decoded validation's source timeline")
+        advances = 0
+        in_first_advance = False
+
+        def observe_advance(simulator, *args, **kwargs):
+            nonlocal advances, in_first_advance
+            advances += 1
+            in_first_advance = advances == 1
+            try:
+                return original_advance(simulator, *args, **kwargs)
+            finally:
+                in_first_advance = False
+
+        def cancel():
+            if in_first_advance:
+                raise sentinel
+
+        with patch.object(_Simulator, "advance", observe_advance), self.assertRaises(ValueError) as caught:
+            validate_export(self.result.data, self.compiler.model, target_contract=CONTRACT,
+                            options=ExportOptions(helpers=False), check=cancel)
+        self.assertIs(caught.exception, sentinel)
+        self.assertEqual(advances, 1, "Cancellation must stop the first source-horizon evaluation")
+
     def test_export_and_validation_cancellation_propagate_original_exception(self):
         original = copy.deepcopy(self.compiler.model)
         for operation in ("export", "validate"):

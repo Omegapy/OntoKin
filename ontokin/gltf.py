@@ -548,7 +548,7 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
     options = options or ExportOptions(end=authored[-1], helpers=any(
         node.get("extras", {}).get("ontokin", {}).get("kind") == "visual_helper" for node in decoded.document["nodes"]))
     end = options.checked_end(model)
-    boundaries = sorted({Fraction(0), end} | {exact_time(t) for t in preflight(model)["boundary_times_seconds"] if exact_time(t) <= end})
+    boundaries = sorted({Fraction(0), end} | {exact_time(t) for t in preflight(model, check=check)["boundary_times_seconds"] if exact_time(t) <= end})
     sampler = animation["samplers"][0]
     times = [row[0] for row in decoded.accessor(sampler["input"])]
     if len(authored) != len(times) or authored[0] != 0 or authored[-1] != end or any(a >= b for a, b in zip(authored, authored[1:])) or not set(boundaries).issubset(authored):
