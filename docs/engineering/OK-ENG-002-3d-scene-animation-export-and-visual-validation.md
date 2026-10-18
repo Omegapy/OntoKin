@@ -342,7 +342,20 @@ The final desktop and narrow captures were visually inspected. The independent-p
 | [Gravity and release, 1.5 s](visual-validation/gravity-and-release.png) | The carrier is stopped at `(1.25, 2, 0) m`; the released payload is approximately `(1.92, 0.774, 0) m` in the displayed coordinates. |
 | [Narrow viewer, 720 pixels](visual-validation/viewer-narrow.png) | The scene, playback controls, object inspection, and evidence remain readable. |
 
-The prepared [viewer](../../examples/visual/viewer.html) is the playable result. Screenshots record particular frames and do not replace playback or the numerical comparisons. **Blender import was not executed.** The result establishes bounded source-to-GLB-to-Three.js behavior for the measured corpus. Remote CI execution had not been observed when this local evidence was recorded.
+The prepared [viewer](../../examples/visual/viewer.html) is the playable result. Screenshots record particular frames and do not replace playback or the numerical comparisons. **Blender import was not executed.** The result establishes bounded source-to-GLB-to-Three.js behavior for the measured corpus.
+
+### 8.5 Published implementation and remote CI
+
+The implementation was published to `main` as [commit fd6026634686db76ea2283959c0543bcc7cf23e0](https://github.com/Omegapy/OntoKin/commit/fd6026634686db76ea2283959c0543bcc7cf23e0). On October 18, 2026, [GitHub Actions run 39087492086](https://github.com/Omegapy/OntoKin/actions/runs/39087492086) completed successfully for that exact commit. The [retained CI record](visual-validation/ci-results.json) identifies the run, implementation digest, job results, and individual steps.
+
+| Remote job | Result |
+| --- | --- |
+| [Reference checks on Python 3.11](https://github.com/Omegapy/OntoKin/actions/runs/39087492086/job/117557016417) | Passed: unit tests, published source conformance, documentation preservation. |
+| [Reference checks on Python 3.12](https://github.com/Omegapy/OntoKin/actions/runs/39087492086/job/117557016377) | Passed: unit tests, published source conformance, documentation preservation. |
+| [Reference checks on Python 3.13](https://github.com/Omegapy/OntoKin/actions/runs/39087492086/job/117557016647) | Passed: unit tests, published source conformance, documentation preservation. |
+| [GLB format and visual validation](https://github.com/Omegapy/OntoKin/actions/runs/39087492086/job/117557016182) | Passed: fresh bundle and six-program export build, Khronos validation, Three.js numerical comparison, rendered viewer checks, evidence upload. |
+
+The workflow stores its independent external-validation report and browser evidence as a run artifact with a 14-day retention period. The checked-in reports and screenshots above remain the separately identified local evidence. A subsequent documentation commit records these observed remote results without changing the checked implementation.
 <!-- END VISUAL EXPORT MEASURED RESULTS -->
 
 The source-language conformance report remains the dated evidence for the original milestone. New export evidence belongs with this contract and its generated reports; it must not overwrite the original expected-outcome manifest or reclassify historical product-coverage entries as completed.
