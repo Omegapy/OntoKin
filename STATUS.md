@@ -1,6 +1,8 @@
 # OntoKin status
 
-Current checkpoint: **2026-10-18T14:42:58.538Z**. The owner-directed integration of [PR #4](https://github.com/Omegapy/OntoKin/pull/4) (parallel development policy; merge `777e385fd0754a8e6e934116ecf1df130dd77b5b`) and [PR #5](https://github.com/Omegapy/OntoKin/pull/5) (native source front end; merge `12e0eb9183321a2e7a8a96d5e9da7bbf2e3ff1b3`) is on `main`. The previously reserved integration slot has been **released**. The legacy semantic-document PR #1 was closed as redundant with canonical docs already in main, without losing its content. All other previously identified old work branches have no unmerged unique commits. The complete [GOAL](GOAL.md) remains **in progress**.
+Current integration checkpoint: **2026-10-18T17:14:32Z**. Worker `interactive-glb03-20261018-1607Z-astra-root` is integrating native GLB/0.3 through [PR #7](https://github.com/Omegapy/OntoKin/pull/7), with the bounded lease below. The implemented branch is `908032be8762dfe533fcef06356bc0d768183d73`; final callback-regression CI and exact-commit destination evidence are in progress. This acquisition does not mark the branch merged or the surface release complete. The prior status is preserved in [the previous main checkpoint](docs/engineering/surface-validation/status-20261018-1442.md.txt).
+
+Previous main checkpoint: **2026-10-18T14:42:58.538Z**. The owner-directed integration of [PR #4](https://github.com/Omegapy/OntoKin/pull/4) (parallel development policy; merge `777e385fd0754a8e6e934116ecf1df130dd77b5b`) and [PR #5](https://github.com/Omegapy/OntoKin/pull/5) (native source front end; merge `12e0eb9183321a2e7a8a96d5e9da7bbf2e3ff1b3`) is on `main`. The previously reserved integration slot has been **released**. The legacy semantic-document PR #1 was closed as redundant with canonical docs already in main, without losing its content. All other previously identified old work branches have no unmerged unique commits. The complete [GOAL](GOAL.md) remains **in progress**.
 
 **Validation:** PR #4 CI [39135836244](https://github.com/Omegapy/OntoKin/actions/runs/39135836244) and PR #5 CI [39136417020](https://github.com/Omegapy/OntoKin/actions/runs/39136417020) passed Python 3.11/3.12/3.13 and GLB/browser checks. New main-head [CI 39136957648](https://github.com/Omegapy/OntoKin/actions/runs/39136957648) was launched for commit `12e0eb9183321a2e7a8a96d5e9da7bbf2e3ff1b3`; its final conclusion must be read independently before marking main verified. No new release or end-to-end GLB/0.3/M01-M12 acceptance is asserted.
 
@@ -57,16 +59,18 @@ PR #5 merged `work/surface-source-integration-20261018-1314` into main at `12e0e
 
 ## Periodic review
 
-The hourly **Advance OntoKin** task `6ad42d31d3ec819196dc1cc1e3ede709` is enabled with an instruction to allow nonoverlapping independent branch development while reserving `main` integration. The two obsolete one-time merge-check tasks for PR #4/#5 were disabled after both completed here. Configured tasks are not proof of running workers; check the actual repository and scheduler state.
+The owner intentionally disabled the hourly **Advance OntoKin** automation and explicitly instructed this development session not to reactivate it. That instruction supersedes earlier scheduling observations in historical checkpoints. No automation was changed by this worker. Repository branches and configured schedules are not evidence of running workers.
 
 ## Integration lease and concurrent work
 
 | Lease field | Value |
 | --- | --- |
-| Integration owner | **None: released by the interactive owner-directed integrator** |
-| Released UTC | 2026-10-18T14:42:58.538Z |
-| Work completed | PR #4 and #5 merged to main; duplicate PR #1 resolved; original branches preserved. |
-| Final integrated source commit | `12e0eb9183321a2e7a8a96d5e9da7bbf2e3ff1b3` |
-| Next writer procedure | Inspect actual heads and CI; acquire a distinct integration lease through verified conditional expected-head publication before making shared integration writes. |
+| Integration owner | `interactive-glb03-20261018-1607Z-astra-root` |
+| Acquired UTC | 2026-10-18T17:14:32Z |
+| Expires UTC | 2026-10-18T17:44:32.000Z |
+| Scope | PR #7 native GLB/0.3 integration, STATUS and identified native validation evidence only. |
+| Observed main at acquisition | `45365e6c857c8f96563afe0361c12380e11a730e` |
+| Dependent parallel work | [Issue #8](https://github.com/Omegapy/OntoKin/issues/8): Agent/0.3 contract, service and tests on separate scoped branches; no main or STATUS writes. |
+| Recovery procedure | Inspect actual heads, PR #7 checks, issue #6 and this expiry before another conditional main write. Never replay an unknown write without reconciliation. |
 
-The preceding lease holder `scheduled-ontokin-20261018-1314Z-source-branch-integration-gpt6` was superseded at the owner's explicit instruction before its scheduled expiration. This does not establish another worker's runtime state. Neither the branch history nor original evidence was force overwritten.
+The preceding lease was released at 2026-10-18T14:42:58.538Z. This new lease was acquired through an observed-head conditional nonforce update. Independent nonoverlapping work remains allowed under AGENTS.
