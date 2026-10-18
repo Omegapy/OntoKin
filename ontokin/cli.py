@@ -80,6 +80,29 @@ def capabilities() -> dict:
     return {
         "implementation": "ontokin-reference", "version": __version__,
         "language_version": "0.1", "profile": "core-0.1",
+        "default_file_commands": "check/evaluate/export FILE.ok use language 0.1 and core-0.1",
+        "construction_interface": {
+            "language_version": "0.2", "profile": "construction-0.1",
+            "schema_version": "ontokin.agent/0.2", "bundle_schema": "ontokin.bundle/0.1",
+            "file_manifest_schema": "ontokin.files/0.1", "storage_schema": "ontokin.program-agent-store/0.1",
+            "transport": "local Python ProgramAgentService and agent --protocol ontokin.agent/0.2 JSONL CLI",
+            "source_features": ["offline_exact_pinned_imports", "module_qualified_nominal_types",
+                                "public_private_definitions", "immutable_flat_keyed_values",
+                                "declarative_keyed_parts", "stable_generated_identity", "per_key_public_overrides"],
+            "program_revisions": "SHA-256 of the canonical complete exact-source manifest before parsing or linking",
+            "edits": "atomic source-scoped UTF-8 patches and dependency add/replace/remove against one expected program revision",
+            "limits": {"max_dependency_modules": 16, "max_import_depth": 8, "max_source_bytes": 2000000,
+                       "max_tokens": 200000, "max_keyed_entries": 256, "max_objects": 1000,
+                       "max_ownership_depth": 64, "max_operations": 100000, "max_value_entries": 100000,
+                       "max_request_bytes": 4194304, "max_response_bytes": 4194304, "max_json_entries": 100000,
+                       "max_json_depth": 128, "max_elapsed_ms": 30000, "max_element_id_segments": 256},
+            "conformance_command": "python -m ontokin.construction_conformance --output REPORT.json --external-evidence MANIFEST.json",
+            "external_gate": "C20 requires identified successful source/workflow/GLB/independent-loader/browser evidence and capture review",
+            "limitations": ["No network dependency resolution or version ranges.",
+                            "Generated ownership does not supply attachment, matter, or motion authority.",
+                            "Bounded pure construction; no mutable collections, runtime generation, or new physics.",
+                            "Agent 0.1 and 0.2 use separate stores; no implicit protocol or snapshot migration."],
+        },
         "operations": ["check", "evaluate", "export", "agent", "conformance", "capabilities"],
         "output_levels": ["represented", "constructed", "evaluated"],
         "source_features": ["classes", "single_inheritance", "pure_functions_and_methods",
@@ -114,6 +137,15 @@ def capabilities() -> dict:
                 "default_fps": 60,
                 "default_tolerances": {"position_m": 0.001, "rotation_rad": 0.001, "time_s": 0.000001},
                 "validation": "encoded keyframes, event boundaries, and finite interior samples",
+            },
+            "ontokin.glb/0.2": {
+                "format": "glTF 2.0 binary (.glb)", "profile": "construction-0.1",
+                "geometry": ["empty", "box", "sphere"],
+                "animation": "same bounded world-pose baking with complete program, source-unit and occurrence provenance",
+                "source_of_truth": "the complete exact pinned .ok source bundle",
+                "selection": "explicit program-agent export destination; core-only models retain ontokin.glb/0.1",
+                "default_fps": 60,
+                "default_tolerances": {"position_m": 0.001, "rotation_rad": 0.001, "time_s": 0.000001},
             }
         },
         "limitations": ["General correctly rounded transcendental functions are not certified.",
@@ -125,7 +157,7 @@ def capabilities() -> dict:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="ontokin", description="OntoKin core-0.1 reference implementation and animation exporter")
+    parser = argparse.ArgumentParser(prog="ontokin", description="OntoKin reference evaluator, animation exporter, and versioned agent interfaces")
     parser.add_argument("--version", action="version", version=__version__)
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("capabilities", help="Show implemented operations and physical/numeric limits as JSON")
@@ -152,6 +184,7 @@ def main(argv: list[str] | None = None) -> int:
     suite.add_argument("--fixtures", type=Path, default=DEFAULT_FIXTURES)
     suite.add_argument("--output", type=Path, help="Write the complete JSON report to this path")
     agent = commands.add_parser("agent", help="Serve durable ontokin.agent/0.1 requests as local JSONL")
+    agent.add_argument("--protocol", choices=["ontokin.agent/0.1", "ontokin.agent/0.2"], default="ontokin.agent/0.1", help="Select the explicit single-source or program-bundle contract")
     agent.add_argument("--store", type=Path, required=True, help="Directory for immutable snapshots and durable request/run state")
     agent.add_argument("--request", type=Path, help="Read one JSON request, emit its receipt, and exit")
     agent.add_argument("--wait", action="store_true", help="Wait for this request's terminal result instead of returning a queued receipt")

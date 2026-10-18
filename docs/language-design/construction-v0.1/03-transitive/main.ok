@@ -1,0 +1,16 @@
+ontokin "0.2";
+module Transitive @ "transitive";
+profile "construction-0.1";
+
+import shapes @ "shapes-import" from "example.geometry" version "1.0.0" digest "sha256:f684a724c77210c07208dd0986ed460ed41f8aa502ccc2cd82a6ad549cab63cb";
+
+fn radius @ "entry-radius"(value: Length) -> Length {
+    return 99 * value;
+}
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object ball @ "ball": shapes.Ball {
+        base = 0.2[m];
+    }
+}

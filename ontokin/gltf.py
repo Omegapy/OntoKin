@@ -21,7 +21,10 @@ from typing import Any
 
 from .diagnostics import OntoKinError
 from .model import SceneModel
+from .json_limits import JSONLimitError, measure_json
+from .values import bounded_data
 from .scene import (MAX_GLB_BYTES, MAX_VALIDATION_POSES, TARGET_CONTRACT,
+                    CONSTRUCTION_TARGET, checked_contract, program_metadata,
                     BakedScene, ExportOptions, build_scene, export_error,
                     float32, rotation_error, sampled_states, relationship_metadata,
                     _angular_speed_bound)
@@ -123,7 +126,7 @@ def _encode(scene: BakedScene) -> tuple[bytes, float]:
         "bufferViews": builder.views, "accessors": builder.accessors,
         "animations": [{"name": scene.module_name + ": " + scene.scene_name,
                         "samplers": samplers, "channels": channels,
-                        "extras": {"ontokin": {"target_contract": TARGET_CONTRACT,
+                        "extras": {"ontokin": {"target_contract": scene.contract,
                                                "exact_times_seconds": [time_text(t) for t in scene.exact_times],
                                                "boundary_times_seconds": [time_text(t) for t in scene.boundaries]}}}],
         "extras": {"ontokin": scene.metadata},
@@ -131,6 +134,12 @@ def _encode(scene: BakedScene) -> tuple[bytes, float]:
     if meshes:
         document["meshes"] = meshes
         document["materials"] = materials
+    try:
+        measure_json(document, max_bytes=max(0, MAX_GLB_BYTES - len(builder.binary) - 34),
+                     max_entries=MAX_GLB_BYTES)
+    except JSONLimitError as error:
+        export_error("OKE-E-GLB-BUDGET", "Encoded glTF JSON and binary exceed the GLB byte budget.",
+                     kind="resource", details=error.details)
     json_bytes = json.dumps(document, ensure_ascii=False, allow_nan=False, separators=(",", ":")).encode("utf-8")
     json_bytes += b" " * (-len(json_bytes) % 4)
     binary = bytes(builder.binary)
@@ -349,13 +358,16 @@ def sample_animation(decoded: DecodedGLB, time_seconds: float | Fraction) -> dic
     return states
 
 
-def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions | None = None) -> dict[str, Any]:
+def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions | None = None,
+                     target_contract: str = TARGET_CONTRACT) -> dict[str, Any]:
     """Compare decoded bytes with fresh evaluator samples, without baked poses.
 
     Checks cover source key times, stored key times, three interior points per
     interval, and both sides of exact semantic boundaries. This is measured
     finite evidence, not a proof of continuous-error bounds for every program.
     """
+    version = checked_contract(model, target_contract)
+    program = program_metadata(model) if target_contract == CONSTRUCTION_TARGET else None
     decoded = read_glb(data)
     animation = decoded.document["animations"][0]
     try:
@@ -380,14 +392,24 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
         export_error("OKE-E-ROTATION-ALIAS", "Decoded key spacing cannot preserve the source's bounded rotation path.", model)
     if animation["extras"]["ontokin"].get("boundary_times_seconds") != [time_text(t) for t in boundaries]:
         _format_error("Animation metadata must retain the exact semantic boundary list.")
+    if animation["extras"]["ontokin"].get("target_contract") != target_contract:
+        _format_error("Animation metadata must retain the explicitly requested delivery contract.")
     def plain(value: Any) -> Any:
         return json.loads(json.dumps(value, allow_nan=False))
     metadata = decoded.document.get("extras", {}).get("ontokin", {})
     if any(metadata.get(key) != expected for key, expected in (
-        ("target_contract", TARGET_CONTRACT), ("module", model.module_name), ("scene", model.scene_name),
+        ("target_contract", target_contract), ("schema_version", version), ("module", model.module_name), ("scene", model.scene_name),
         ("profile", model.profile), ("gravity_m_per_s2", list(model.gravity)),
         ("transform_policy", "all_nodes_are_roots_with_baked_world_poses"))):
         _format_error("Scene metadata must match the supplied semantic model and export contract.")
+    if program is not None:
+        if metadata.get("program") != program:
+            _format_error("GLB bundle/source/occurrence provenance must match the complete supplied program.")
+        source = metadata.get("source", {})
+        if (source.get("entry_source_id") != "entry" or
+                source.get("entry_revision") != program["sources"]["entry"]["source_revision"] or
+                source.get("editable_source_of_truth") != "pinned .ok source bundle"):
+            _format_error("GLB entry source identity must remain separate from the program revision.")
     for key, expected in relationship_metadata(model).items():
         if metadata.get(key) != plain(expected):
             _format_error("Declared joint/follow metadata must match the supplied semantic model.")
@@ -407,6 +429,8 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
                      kind="resource", details={"max_validation_poses": MAX_VALIDATION_POSES})
     paths, frames, actual_helpers = set(), {}, set()
     max_geometry_error = 0.
+    properties = (bounded_data({path: dict(obj.properties) for path, obj in model.objects.items()})
+                  if program is not None else None)
     for index, node in enumerate(nodes):
         metadata = node.get("extras", {}).get("ontokin", {})
         if metadata.get("kind") == "object":
@@ -420,9 +444,13 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
                                   ("physical", obj.physical), ("collision", obj.collision),
                                   ("authored_motion", obj.motion), ("appearance_linear_rgba", obj.appearance),
                                   ("role", obj.role), ("pose_frame", "world"),
-                                  ("properties", {name: value.to_data() for name, value in obj.properties.items()})):
+                                  ("properties", properties[path] if properties is not None else
+                                   {name: value.to_data() for name, value in obj.properties.items()})):
                 if metadata.get(key) != plain(expected):
                     _format_error("Object metadata must preserve the supplied model's geometry, physical description, and resolved properties.")
+            if program is not None and (metadata.get("program_revision") != model.program_revision or
+                                        metadata.get("source_mapping") != model.occurrence_provenance[path]):
+                _format_error("Each exported object must retain its matching generated/ordinary source mapping.")
             if obj.geometry["kind"] == "empty":
                 if "mesh" in node:
                     _format_error("An empty source object cannot acquire untagged helper geometry.")
@@ -505,24 +533,34 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
             "scope": "Finite numerical evidence for this artifact and interval; no all-time error proof, rendering-quality proof, or destination import certification."}
 
 
-def validate_export(data: bytes, model: SceneModel, *, options: ExportOptions | None = None) -> dict[str, Any]:
+def validate_export(data: bytes, model: SceneModel, *, options: ExportOptions | None = None,
+                    target_contract: str = TARGET_CONTRACT) -> dict[str, Any]:
     """Return measured byte-validation results, or a structured malformed-data error."""
     try:
-        return _validate_export(data, model, options=options)
+        return _validate_export(data, model, options=options, target_contract=target_contract)
+    except OntoKinError as error:
+        error.diagnostic.details["target_contract"] = target_contract
+        raise
+    except JSONLimitError as error:
+        export_error("OKE-E-METADATA-BUDGET", "Supplied program values exceed bounded validation materialization.",
+                     model, kind="resource", details=error.details)
     except (KeyError, IndexError, TypeError, ValueError, AttributeError, OverflowError) as exc:
-        _format_error("Malformed source mapping or validation data in the bounded GLB contract: " + str(exc))
+        export_error("OKE-E-GLB-STRUCTURE", "Malformed source mapping or validation data in the bounded GLB contract: " + str(exc),
+                     model, kind="unsupported", details={"target_contract": target_contract})
 
 
-def export_glb(model: SceneModel, *, options: ExportOptions | None = None,
-               source_uri: str | None = None, source_sha256: str | None = None) -> ExportResult:
+def _export_glb(model: SceneModel, *, options: ExportOptions | None = None,
+                source_uri: str | None = None, source_sha256: str | None = None,
+                target_contract: str = TARGET_CONTRACT) -> ExportResult:
     """Produce verified GLB bytes and their report without writing any files."""
-    scene = build_scene(model, options=options, source_uri=source_uri, source_sha256=source_sha256)
+    scene = build_scene(model, options=options, source_uri=source_uri, source_sha256=source_sha256,
+                        target_contract=target_contract)
     data, geometry_error = _encode(scene)
     if geometry_error > scene.options.position_tolerance_m:
         export_error("OKE-E-GEOMETRY-PRECISION", "Mesh vertex binary32 quantization exceeds the position tolerance.", model,
                      details={"max_geometry_quantization_error_m": geometry_error,
                               "position_tolerance_m": scene.options.position_tolerance_m})
-    validation = validate_export(data, model, options=scene.options)
+    validation = validate_export(data, model, options=scene.options, target_contract=target_contract)
     if validation["status"] != "passed":
         export_error("OKE-E-ANIMATION-PRECISION", "Decoded GLB animation exceeds the requested numerical tolerance.", model,
                      details={"validation": validation, "tolerances": scene.report["tolerances"]})
@@ -543,3 +581,15 @@ def export_glb(model: SceneModel, *, options: ExportOptions | None = None,
                              "operating_system": platform.system()}
     scene.report = report
     return ExportResult(data, report, scene)
+
+
+def export_glb(model: SceneModel, *, options: ExportOptions | None = None,
+               source_uri: str | None = None, source_sha256: str | None = None,
+               target_contract: str = TARGET_CONTRACT) -> ExportResult:
+    """Produce verified bytes without writes; construction requires explicit 0.2."""
+    try:
+        return _export_glb(model, options=options, source_uri=source_uri, source_sha256=source_sha256,
+                           target_contract=target_contract)
+    except OntoKinError as error:
+        error.diagnostic.details["target_contract"] = target_contract
+        raise

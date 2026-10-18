@@ -1,0 +1,15 @@
+ontokin "0.2";
+module Components @ "components";
+profile "construction-0.1";
+
+private fn radius @ "radius"(value: Length) -> Length {
+    return 3 * value;
+}
+public fn sample @ "sample"(value: Length) -> Length {
+    return radius(value);
+}
+public class Marker @ "marker" {
+    public param base @ "base": Length = 0.1[m];
+    geometry = sphere(sample(self.base));
+    appearance = rgba(0.9, 0.4, 0.2, 1);
+}

@@ -1,0 +1,172 @@
+{
+  "schema_version": "ontokin.glb-report/0.1",
+  "target_contract": "ontokin.glb/0.1",
+  "outcome": "valid",
+  "exporter": {
+    "name": "OntoKin reference GLB exporter",
+    "version": "0.4.0"
+  },
+  "source": {
+    "uri": "docs/language-design/core-v0.1/03-rotating-release.ok",
+    "revision": "sha256:6b51b88c75a3973f475adba6c112be65130c76ff08a1839cae6b6329118a9938",
+    "editable_source_of_truth": ".ok",
+    "provenance": "caller_supplied; exporter receives a validated model, not source bytes"
+  },
+  "scene": {
+    "module": "RotatingRelease",
+    "name": "Demo",
+    "profile": "core-0.1",
+    "declared_duration_seconds": "2"
+  },
+  "sampling": {
+    "requested_fps": 60,
+    "start_seconds": "0",
+    "end_seconds": "2",
+    "keyframe_count": 121,
+    "angular_speed_bound_rad_per_s": 2.0,
+    "max_angular_step_rad": 0.7853981633974483,
+    "max_key_interval_seconds": 0.016666769981384277,
+    "boundary_times_seconds": [
+      "0",
+      "1",
+      "2"
+    ],
+    "boundary_time_mapping": [
+      {
+        "source_seconds": "0",
+        "export_seconds": 0.0,
+        "error_seconds": 0.0
+      },
+      {
+        "source_seconds": "1",
+        "export_seconds": 1.0,
+        "error_seconds": 0.0
+      },
+      {
+        "source_seconds": "2",
+        "export_seconds": 2.0,
+        "error_seconds": 0.0
+      }
+    ],
+    "max_time_quantization_error_seconds": 5.563100180516756e-08,
+    "redundant_grid_keys_removed": 0,
+    "max_boundary_position_jump_m": 0.0,
+    "max_boundary_rotation_jump_rad": 0.0
+  },
+  "tolerances": {
+    "position_m": 0.001,
+    "rotation_rad": 0.001,
+    "time_seconds": 1e-06,
+    "scope": "visual animation adapter; does not relax core evaluator conformance tolerances"
+  },
+  "representation": {
+    "coordinates": {
+      "handedness": "right",
+      "up": "+Y",
+      "length_unit": "m",
+      "time_unit": "s"
+    },
+    "hierarchy": "all_nodes_are_roots_with_baked_world_poses",
+    "translation_interpolation": "LINEAR",
+    "rotation_interpolation": "shortest-path SLERP",
+    "stored_components": "IEEE 754 binary32",
+    "quaternion_order": "XYZW"
+  },
+  "geometry": {
+    "object_nodes": 2,
+    "authored_mesh_nodes": 2,
+    "helper_nodes": 1,
+    "sphere_longitude_segments": 32,
+    "sphere_latitude_bands": 16,
+    "sphere_triangles": 960,
+    "sphere_approximation": "Inscribed triangle surface with radial vertex normals; curved surface is tessellated, not exact.",
+    "box_dimensions": "full XYZ lengths in metres",
+    "appearance": "linear RGBA; metallic=0, roughness=0.7",
+    "max_vertex_quantization_error_m": 3.291399819360663e-09
+  },
+  "retention": {
+    "preserved_metadata": [
+      "source URI/revision",
+      "stable occurrence IDs",
+      "ownership",
+      "geometry/physical descriptions",
+      "resolved parameters",
+      "joint/follow declarations",
+      "boundary lifecycle and pose authority"
+    ],
+    "baked": [
+      "world translations",
+      "world orientations",
+      "prescribed joint/follow motion",
+      "released sphere trajectories"
+    ],
+    "not_executable_in_glb": [
+      "source classes/methods",
+      "action commands",
+      "joint constraints",
+      "mass/inertia/gravity",
+      "release transactions"
+    ],
+    "losses": [
+      "Binary64 transforms and exact timestamps are quantized to binary32.",
+      "Analytical continuous motion becomes sampled LINEAR/SLERP animation.",
+      "Sphere surfaces are triangulated; no exact curved-surface retention is claimed.",
+      "Source syntax, class/callable definitions, source spans, site definitions, and source action/event arguments are not embedded for program reconstruction; retain the .ok source.",
+      "Velocities and accelerations are not native animation channels.",
+      "Blender/game-engine re-export may discard OntoKin extras; .ok remains authoritative."
+    ],
+    "helpers": "Explicit visual aids with no physical participation; joint markers label parent sites even after release.",
+    "outside_interval_omitted": false
+  },
+  "budgets": {
+    "max_keyframes": 10000,
+    "max_baked_poses": 250000,
+    "max_validation_poses": 1000000,
+    "max_mesh_vertices": 250000,
+    "max_glb_bytes": 67108864,
+    "max_boundary_state_records": 100000
+  },
+  "validation": {
+    "status": "passed",
+    "structure": "passed_bounded_glb_reader",
+    "method": "Decode serialized JSON/BIN accessors; LINEAR translation and shortest-path SLERP; compare fresh semantic evaluation.",
+    "position_metric": "maximum absolute XYZ component error in metres",
+    "rotation_metric": "orientation angle in radians, invariant to quaternion sign",
+    "probe_policy": "source/stored keys, quarter/mid/three-quarter interval times, before/after exact boundaries",
+    "sample_count": 596,
+    "node_pose_comparisons": 1788,
+    "max_position_error_m": 0.0003410325169450612,
+    "max_rotation_error_rad": 1.6740876139183672e-07,
+    "max_time_error_seconds": 5.563100180516756e-08,
+    "worst_position": {
+      "node": "payload",
+      "time_seconds": "1.9249999523162841796875",
+      "side": "after"
+    },
+    "worst_rotation": {
+      "node": "payload",
+      "time_seconds": "1.68333327770233154296875",
+      "side": "after"
+    },
+    "max_geometry_dimension_error_m": 4.610600165544376e-09,
+    "failures": [],
+    "failure_details_truncated": false,
+    "scope": "Finite numerical evidence for this artifact and interval; no all-time error proof, rendering-quality proof, or destination import certification."
+  },
+  "artifact": {
+    "media_type": "model/gltf-binary",
+    "gltf_version": "2.0",
+    "byte_length": 46164,
+    "sha256": "sha256:a78028fc00ad354dc5d455aefc16a1c1cd137a8774e30af9ea5a74316c9dae19"
+  },
+  "destination_validation": {
+    "status": "not_performed_by_exporter",
+    "note": "A named external viewer or Blender import requires separate recorded evidence."
+  },
+  "source_code_sha256": "2fec4df8a853fb04f05981137165b093dbe5fe72abc1e49ceee15a7747bb4a24",
+  "environment": {
+    "python": "3.12.14",
+    "python_implementation": "CPython",
+    "operating_system": "Linux"
+  }
+}

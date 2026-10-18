@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import math
 import re
-from dataclasses import asdict, dataclass, is_dataclass
+from dataclasses import asdict, dataclass, fields, is_dataclass
 from fractions import Fraction
 from typing import Any, Callable
 
@@ -79,6 +79,8 @@ class Value:
         def plain(value: Any) -> Any:
             if isinstance(value, Value):
                 return value.to_data()
+            if isinstance(value, KeyedValue):
+                return [{"key": key, "value": plain(entry)} for key, entry in value.entries]
             if isinstance(value, Fraction):
                 return {"numerator": value.numerator, "denominator": value.denominator}
             if isinstance(value, (tuple, list)):
@@ -92,6 +94,125 @@ class Value:
         if self.frame is not None:
             data["frame"] = self.frame
         return data
+
+
+@dataclass(frozen=True)
+class KeyedValue:
+    """Immutable construction-0.1 payload, in canonical stable-key order.
+
+    The construction compiler validates keys, element types and resource bounds
+    before creating this value. Its tuple representation cannot lose duplicate
+    input keys through dictionary insertion and contains no mutable simulation
+    state. Merely defining this host value does not enable Keyed in core-0.1.
+    """
+
+    entries: tuple[tuple[str, Value], ...]
+
+    def __len__(self) -> int:
+        return len(self.entries)
+
+    def lookup(self, key: str) -> Value:
+        for candidate, value in self.entries:
+            if candidate == key:
+                return value
+        raise KeyError(key)
+
+
+def bounded_data(value: Any, *, max_bytes: int = 4 * 1024 * 1024,
+                 max_entries: int = 100000, max_depth: int = 128,
+                 check: Callable[[], None] | None = None) -> Any:
+    """Materialize typed inspection values while charging before each expansion.
+
+    Unlike ``dataclasses.asdict`` this walks one logical occurrence at a time,
+    so repeated immutable keyed leaves cannot first allocate an unbounded JSON
+    representation. The exact compact UTF-8 byte count includes type labels and
+    repeated strings. This additive API leaves legacy ``to_data`` unchanged.
+    """
+    from .json_limits import JSONLimitError, measure_json
+    size = entries = string_checks = 0
+    active = set()
+
+    def string_checkpoint() -> None:
+        # measure_json checks each short label at character zero. Consolidate
+        # those into bounded work batches, while long strings still yield at
+        # most every 128 KiB and retain exact per-character byte accounting.
+        nonlocal string_checks
+        string_checks += 1
+        if check is not None and string_checks % 128 == 0:
+            check()
+
+    def add(n: int) -> None:
+        nonlocal size
+        size += n
+        if size > max_bytes:
+            raise JSONLimitError("encoded_json_bytes", max_bytes, size)
+
+    def string(text: str) -> None:
+        nonlocal size
+        try:
+            measured = measure_json(text, max_bytes=max_bytes - size,
+                                    max_entries=1, check=string_checkpoint if check is not None else None)
+        except JSONLimitError as exc:
+            raise JSONLimitError("encoded_json_bytes", max_bytes,
+                                 size + exc.details["consumed"]) from exc
+        size += measured["bytes"]
+
+    def plain(item: Any, depth: int) -> Any:
+        nonlocal entries
+        if depth > max_depth:
+            raise JSONLimitError("json_depth", max_depth, depth)
+        if isinstance(item, Value):
+            data = {"type": str(item.type), "value": item.value if item.known else None}
+            if item.known and item.frame is not None:
+                data["frame"] = item.frame
+            return plain(data, depth)
+        if isinstance(item, KeyedValue):
+            # The generator is consumed below with the same per-entry charges.
+            return sequence(({"key": key, "value": value} for key, value in item.entries), len(item.entries), depth)
+        if isinstance(item, Fraction):
+            return plain({"numerator": item.numerator, "denominator": item.denominator}, depth)
+        if is_dataclass(item):
+            return plain({field.name: getattr(item, field.name) for field in fields(item)}, depth)
+        if isinstance(item, (list, tuple)):
+            return sequence(iter(item), len(item), depth)
+        entries += 1
+        if entries > max_entries:
+            raise JSONLimitError("logical_json_entries", max_entries, entries)
+        if check is not None and entries % 128 == 0:
+            check()
+        if isinstance(item, dict):
+            if id(item) in active:
+                raise ValueError("Inspection cannot materialize cyclic data.")
+            add(2 + max(0, len(item) - 1))
+            active.add(id(item))
+            result = {}
+            try:
+                for key, child in item.items():
+                    if not isinstance(key, str):
+                        raise ValueError("Inspection object keys must be strings.")
+                    string(key); add(1)
+                    result[key] = plain(child, depth + 1)
+            finally:
+                active.remove(id(item))
+            return result
+        if isinstance(item, str):
+            string(item)
+        else:
+            measured = measure_json(item, max_bytes=max_bytes - size, max_entries=1)
+            add(measured["bytes"])
+        return item
+
+    def sequence(iterator, length: int, depth: int) -> list:
+        nonlocal entries
+        entries += 1
+        if entries > max_entries:
+            raise JSONLimitError("logical_json_entries", max_entries, entries)
+        if depth > max_depth:
+            raise JSONLimitError("json_depth", max_depth, depth)
+        add(2 + max(0, length - 1))
+        return [plain(child, depth + 1) for child in iterator]
+
+    return plain(value, 0)
 
 
 def quantity_type(dim: Dim) -> Type:

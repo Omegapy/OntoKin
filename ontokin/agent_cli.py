@@ -27,8 +27,8 @@ def _decode(raw: bytes):
         raise ProtocolError("OKA-E-JSON", "The request is not one valid UTF-8 JSON value with unique object members.") from exc
 
 
-def _error(error: ProtocolError):
-    response = envelope({}, "rejected")
+def _error(error: ProtocolError, envelope_fn=envelope):
+    response = envelope_fn({}, "rejected")
     response["protocol_error"] = error.to_dict()
     return response
 
@@ -38,11 +38,18 @@ def _emit(response):
 
 
 def run(args) -> int:
+    service_type, envelope_fn = AgentService, envelope
+    if getattr(args, "protocol", "ontokin.agent/0.1") == "ontokin.agent/0.2":
+        from .program_agent import ProgramAgentService
+        from .program_protocol import envelope as program_envelope
+        service_type, envelope_fn = ProgramAgentService, program_envelope
+    def error_response(error):
+        return _error(error, envelope_fn)
     try:
-        service = AgentService(args.store)
+        service = service_type(args.store)
     except (OSError, ProtocolError) as exc:
         error = exc if isinstance(exc, ProtocolError) else ProtocolError("OKA-E-STORE", "The local store could not be opened.", reason=str(exc))
-        _emit(_error(error))
+        _emit(error_response(error))
         return 1
     if args.request is not None:
         try:
@@ -51,7 +58,7 @@ def run(args) -> int:
             response = service.handle(request, wait=args.wait)
         except (OSError, ProtocolError) as exc:
             error = exc if isinstance(exc, ProtocolError) else ProtocolError("OKA-E-IO", "The request file could not be read.", reason=str(exc))
-            response = _error(error)
+            response = error_response(error)
         finally:
             service.close()
         _emit(response)
@@ -81,13 +88,13 @@ def run(args) -> int:
                 # Drain this one oversized line in bounded chunks; the next request remains usable.
                 while raw and not raw.endswith(b"\n"):
                     raw = sys.stdin.buffer.readline(MAX_REQUEST_BYTES + 1)
-                response = _error(ProtocolError("OKA-E-RESOURCE", "A JSONL request exceeds the 4 MiB transport limit."))
+                response = error_response(ProtocolError("OKA-E-RESOURCE", "A JSONL request exceeds the 4 MiB transport limit."))
             else:
                 try:
                     request = _decode(raw)
                     response = service.handle(request, wait=args.wait)
                 except ProtocolError as exc:
-                    response = _error(exc)
+                    response = error_response(exc)
             _emit(response)
             wake.set()
         finished.set()

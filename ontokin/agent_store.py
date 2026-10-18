@@ -38,10 +38,15 @@ def _process_start(pid: int) -> str | None:
 
 
 class AgentStore:
+    database_name = "agent.sqlite3"
+    schema_version = STORE_VERSION
+    revision_key = "source_revision"
+    envelope = staticmethod(envelope)
+
     def __init__(self, path: Path, implementation: dict):
         self.path = Path(path)
         self.path.mkdir(parents=True, exist_ok=True)
-        self.database_path = self.path / "agent.sqlite3"
+        self.database_path = self.path / self.database_name
         self.owner = "worker:" + uuid.uuid4().hex
         self.host, self.pid = socket.gethostname(), os.getpid()
         self.closed = False
@@ -79,9 +84,9 @@ class AgentStore:
             if "engine" not in {column["name"] for column in db.execute("PRAGMA table_info(requests)")}:
                 db.execute("ALTER TABLE requests ADD COLUMN engine TEXT")
         with self.transaction() as db:
-            db.execute("INSERT OR IGNORE INTO metadata VALUES ('schema_version', ?)", (STORE_VERSION,))
+            db.execute("INSERT OR IGNORE INTO metadata VALUES ('schema_version', ?)", (self.schema_version,))
             version = db.execute("SELECT value FROM metadata WHERE name='schema_version'").fetchone()[0]
-            if version != STORE_VERSION:
+            if version != self.schema_version:
                 raise ProtocolError("OKA-E-STORE-VERSION", "This store uses an unsupported schema version.", actual=version)
             db.execute("INSERT OR IGNORE INTO metadata VALUES ('cursor_secret', ?)", (secrets.token_hex(32),))
             self.cursor_secret = bytes.fromhex(db.execute("SELECT value FROM metadata WHERE name='cursor_secret'").fetchone()[0])
@@ -161,9 +166,10 @@ class AgentStore:
 
     def unknown(self, db, row, reason: str) -> dict:
         old = json.loads(row["response"])
-        result = envelope({"project_id": row["project_id"], "request_id": row["id"], "operation": row["operation"]},
+        result = self.envelope({"project_id": row["project_id"], "request_id": row["id"], "operation": row["operation"]},
                           "unknown_outcome", self.accepted(db, row["project_id"]))
-        result.update(source_revision=old.get("source_revision"), requested_level=old.get("requested_level"))
+        result[self.revision_key] = old.get(self.revision_key)
+        result["requested_level"] = old.get("requested_level")
         result["protocol_error"] = {"code": "OKA-E-UNKNOWN-OUTCOME", "message": reason,
                                     "details": {"replay_permitted": False, "reconcile": "Inspect the accepted revision and existing run before deliberately issuing new work."}}
         self.update_response(db, row["project_id"], row["id"], result)

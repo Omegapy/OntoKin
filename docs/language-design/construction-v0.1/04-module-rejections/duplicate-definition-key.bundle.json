@@ -1,0 +1,15 @@
+{
+  "schema_version": "ontokin.bundle/0.1",
+  "entry": {
+    "filename": "main.ok",
+    "source": "ontokin \"0.2\"; module Library @ \"library\"; profile \"construction-0.1\";\nimport lib @ \"lib\" from \"example.library\" version \"1.0.0\" digest \"sha256:0be99a6b1ada2e585ff83601182482e8d119798933c0307c917f6cdba7ee5b3e\";\n\nscene Demo @ \"demo\" { duration=1[s]; gravity=vector(world,0[m/s^2],0[m/s^2],0[m/s^2]); }"
+  },
+  "modules": [
+    {
+      "package_id": "example.library",
+      "version": "1.0.0",
+      "filename": "example.library.ok",
+      "source": "ontokin \"0.2\"; module Library @ \"library\"; profile \"construction-0.1\";\nclass First @ \"same\" {}\nclass Second @ \"same\" {}"
+    }
+  ]
+}

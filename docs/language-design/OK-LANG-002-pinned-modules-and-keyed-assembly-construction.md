@@ -2,7 +2,7 @@
 project: OntoKin
 document_id: OK-LANG-002
 title: Pinned Modules and Keyed Assembly Construction
-version: 0.1
+version: 0.1.1
 date: 2026-10-18
 status: adopted-for-experimental-implementation
 document_type: language-extension-contract
@@ -12,7 +12,7 @@ language_version: "0.2"
 profile: construction-0.1
 agent_contract: ontokin.agent/0.2
 delivery_contract: ontokin.glb/0.2
-implementation_status: not-claimed
+implementation_status: experimental-reference-0.4.0-release-gate-tracked-separately
 ---
 
 # Pinned modules and keyed assembly construction
@@ -21,7 +21,7 @@ implementation_status: not-claimed
 
 Make reusable OntoKin components usable across source files and allow one declarative construction to create a bounded family of independently identified parts. An agent should supply typed, explicitly keyed inputs, reuse a pinned component definition, inspect one generated occurrence, and repair that occurrence without rewriting its siblings or changing the shared library by accident.
 
-This contract was **adopted for experimental implementation on October 18, 2026** under the project owner’s delegated technical authority. Adoption fixes the syntax, semantic choices, source-bundle identity, companion grammar/schemas, limits, and predetermined acceptance requirements. It does not claim implemented support or measured results for this milestone. The published 0.3.0 implementation and its evidence belong to [OK-AGENT-001](../engineering/OK-AGENT-001-ai-agent-authoring-and-inspection-interface.md).
+This contract was **adopted for experimental implementation on October 18, 2026** under the project owner’s delegated technical authority. Adoption fixed the syntax, semantic choices, source-bundle identity, companion grammar/schemas, limits, and predetermined acceptance requirements before production implementation. The resulting experimental 0.4.0 implementation has a separate [measured evidence record](../engineering/construction-validation/README.md); [STATUS](../../STATUS.md) records whether its complete release and publication gate has passed. Adoption itself is not an execution result. The earlier 0.3.0 implementation and its evidence belong to [OK-AGENT-001](../engineering/OK-AGENT-001-ai-agent-authoring-and-inspection-interface.md).
 
 The extension advances [GOAL.md](../../GOAL.md): OntoKin is a programming language for agents to create, inspect, revise, and reuse meaningful 3D objects and behavior. Cross-file definitions and finite keyed construction address a specific missing programming capability. They do not complete procedural modeling, the required product domains, purposeful control, or the authoring-benefit benchmark.
 
@@ -230,6 +230,8 @@ Collection shape must be computable from permitted immutable definition inputs a
 
 Shape may not depend on **any generated collection or occurrence** in its actually evaluated pure dependency closure. This includes obtaining a generated collection view, `len(view)`, membership/index/reference lookup, reading an occurrence's properties, and consuming a cached scalar/leaf derived from those reads. The rule applies even if the collection is empty or already expanded. Generation inputs must be permitted flat keyed leaf values, not another generated reference view.
 
+For a generated owner’s nested collections, direct use of that owner’s own final immutable `self` parameters/derivations, body-bound inputs, and `self.frame` identity is permitted. It does not itself obtain or traverse a generated occurrence. This permitted lexical `self` origin also survives passage through a pure helper parameter and valid nominal `Ref` coercion: a helper may read an enclosing owner’s immutable inputs supplied directly as `self` while initializing its child. The permission belongs to that reference origin, not every reference to the same object. A reference obtained by traversing a generated collection or occurrence does not gain it by passing through the same helper. Any prohibited collection/occurrence lookup in the evaluated dependency closure of those values remains prohibited, including through an outer initializer, cached scalar, or copied parameter. This distinction permits C07 without allowing assignment, coercion, a helper call, or memoization to erase dependency provenance.
+
 This preserves the baseline's lazy `if` and short-circuit Boolean semantics: an unused branch is not evaluated, while both branches remain type/access checked. A pure helper call or memoization cannot hide a prohibited dependency. Cached values must retain the actual selected-branch dependency provenance, and shape validation checks that closure even when it performs no fresh generated lookup. Static checking of an empty collection body uses types and access rules, not fabricated concrete children or numeric sample values.
 
 An empty collection creates no parts, but the declaration, part class, body expression types, visibility, and allowed assignments must still be valid. Empty input does not make an invalid body valid. Static recursive class composition through ordinary or generated parts is rejected, including when a particular input is empty; this milestone does not supply a separate finite-recursion language feature.
@@ -383,7 +385,9 @@ Implementation reports must record package version/digest, source-bundle revisio
 
 The requirement sources are [OK-PRD-001](../product/OK-PRD-001-product-requirements.md) and [OK-CAP-001](../product/OK-CAP-001-modeling-motion-and-object-structure.md). The mapping describes intended progress, not completion of the cited full-product rows. It does not alter their historical review status or the original coverage register.
 
-## 11. Adoption checklist and present evidence
+## 11. Adoption, clarifications, and present evidence
+
+**Version 0.1.1 clarification, October 18, 2026:** section 5.3 makes the generated owner’s direct immutable input context explicit, including lexical `self` passed through pure helper parameters and valid nominal `Ref` coercion. The initial wording “any generated occurrence” was too broad when read as also forbidding a generated child’s own final inputs for C07. The clarification permits those inputs while retaining forbidden-lookup provenance; nested positive, helper/coercion positive, view-derived helper negative, and tainted-own-input negative cases must cover it. No prior implementation result is relabeled.
 
 The adopted language choices are explicit above: pinned package-qualified modules; candidate identity before parse/link; canonical source manifest/hash; flat keyed leaf values; intrinsic generated reference views; typed literal-key lvalues; final-override-first expansion; generated dependency provenance through memoization; static recursive-composition rejection; and finite construction/output limits. The integration owner adopted this version with its complete EBNF, bundle/file-manifest schemas, representative source bundle, and predetermined C01–C20 expectations on October 18, 2026, before production implementation began. Complete executable negative/boundary/composition test bodies may be written during implementation; they must be fixed before measuring their release outcomes. Implementing the contract does not require pretending those unwritten tests already exist or pass.
 

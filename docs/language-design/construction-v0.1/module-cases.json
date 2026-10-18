@@ -1,0 +1,400 @@
+{
+  "schema_version": "ontokin.construction-module-cases/0.1",
+  "language_version": "0.2",
+  "profile": "construction-0.1",
+  "authority": "../OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md",
+  "expectation_basis": "Source bundles, diagnostic categories, identities, and arithmetic requirements are fixed inputs to the acceptance gate. This manifest records no observed pass status.",
+  "settings": {
+    "resolver": "explicit_supplied_closure_offline",
+    "max_dependency_units": 16,
+    "max_import_depth_edges": 8,
+    "max_total_source_bytes": 2000000,
+    "max_total_tokens": 200000,
+    "default_requested_level": "constructed"
+  },
+  "ordering_rules": {
+    "transport_before_candidate": "Malformed transport has no program identity or invented source span; a valid-shaped supplied manifest seals before parse or link.",
+    "cycle_before_digest": "Linking validates the declared package/version graph for cycles before comparing exact content pins. The cyclic rejection fixture uses well-formed zero digests on its back edges, since cryptographic source-hash cycles cannot be authored as ordinary fixed points. This fixture must reject and never accepts any pinned content.",
+    "revision_semantics": "The canonical manifest hashes every supplied source unit, its exact filename, package/version/source identity and raw UTF-8 content hash; module array ordering is excluded. A changed filename or invalid dependency therefore has an identity even before successful linking."
+  },
+  "cases": [
+    {
+      "case_id": "C01",
+      "requirements": [
+        "CON-002",
+        "CON-003",
+        "CON-007",
+        "CON-009"
+      ],
+      "scenarios": [
+        {
+          "id": "01-keyed-rack",
+          "source": "01-keyed-rack/program.files.json",
+          "loader": "files",
+          "level": "constructed",
+          "expected": {
+            "outcome": "valid",
+            "fixture_expectations": "01-keyed-rack/expected.json",
+            "program_revision": "sha256:c77d102a4b201d3c3cce6cbdc73c38eedf0bb1dfca7c9843a92d697cc0c7e082",
+            "source_revisions": {
+              "entry": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+              "package:example.hinges@1.0.0": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+            }
+          }
+        }
+      ],
+      "tests": [
+        "test_linker.LinkerTests.test_c01_reusable_library_has_original_namespace_and_private_boundary",
+        "test_linker.ModuleExecutionTests.test_c01_actual_reused_component_instances_are_independent"
+      ]
+    },
+    {
+      "case_id": "C02",
+      "requirements": [
+        "CON-003"
+      ],
+      "scenarios": [
+        {
+          "id": "02-namespaces",
+          "source": "02-namespaces/program.files.json",
+          "loader": "files",
+          "level": "constructed",
+          "expected": {
+            "outcome": "valid",
+            "fixture_expectations": "02-namespaces/expected.json",
+            "program_revision": "sha256:297079ebd66992995bef39fbb9d6e4120848a40a9ddbeb88a6992becdbaa2669",
+            "source_revisions": {
+              "entry": "sha256:c1337f4355acd43dbaf4bf5916d3432050cb999087525b6d11b49cee80343d95",
+              "package:example.left@1.0.0": "sha256:7d7ed2502ba88acfdc7d32668ae9bd0cf77add38f70cec5856c6c4a2e6a835b1",
+              "package:example.right@1.0.0": "sha256:8f822d2b66bdb32e88304f846f1667ce940573d271e5d08202f6b75197ce2c67"
+            }
+          }
+        }
+      ],
+      "tests": [
+        "test_linker.LinkerTests.test_c02_equal_lexical_names_and_module_keys_are_package_scoped",
+        "test_linker.LinkerTests.test_alias_rename_and_two_aliases_do_not_create_nominal_types",
+        "test_linker.ModuleExecutionTests.test_c02_c03_execute_declaring_module_helpers_and_nominal_references",
+        "test_linker.ModuleExecutionTests.test_alias_change_preserves_constructed_types_and_strict_nominal_argument_check"
+      ]
+    },
+    {
+      "case_id": "C03",
+      "requirements": [
+        "CON-002",
+        "CON-003",
+        "CON-005"
+      ],
+      "scenarios": [
+        {
+          "id": "03-transitive",
+          "source": "03-transitive/program.files.json",
+          "loader": "files",
+          "level": "constructed",
+          "expected": {
+            "outcome": "valid",
+            "fixture_expectations": "03-transitive/expected.json",
+            "program_revision": "sha256:cd5e1dc9b47c89f6a82299b775e57e62f9e95b2de4d211006938f3f9318fb391",
+            "source_revisions": {
+              "entry": "sha256:023e0bce0158fad6494894bb2a60724bb8774446420a80ea136a9bc7e8b4758f",
+              "package:example.arithmetic@1.0.0": "sha256:0324f021efeba5a20e2a0bf05e920336f2b9307497705eb85d8d575f5a5e8081",
+              "package:example.geometry@1.0.0": "sha256:f684a724c77210c07208dd0986ed460ed41f8aa502ccc2cd82a6ad549cab63cb"
+            }
+          }
+        }
+      ],
+      "tests": [
+        "test_linker.LinkerTests.test_c03_transitive_and_diamond_resolution_use_supplied_exact_units_once",
+        "test_linker.ModuleExecutionTests.test_c02_c03_execute_declaring_module_helpers_and_nominal_references"
+      ]
+    },
+    {
+      "case_id": "C10",
+      "requirements": [
+        "CON-002",
+        "CON-004",
+        "CON-005"
+      ],
+      "scenarios": [
+        {
+          "id": "missing-library",
+          "source": "04-module-rejections/missing-library.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-NAME",
+            "primary_source_id": "entry",
+            "program_revision": "sha256:97763f35e35450c30fa5c7a8894c8fa2f806e70b4d97542f8b376c6e36e03666",
+            "source_revisions": {
+              "entry": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a"
+            },
+            "reason": "missing_dependency"
+          }
+        },
+        {
+          "id": "wrong-pin",
+          "source": "04-module-rejections/wrong-pin.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-REVISION",
+            "primary_source_id": "entry",
+            "program_revision": "sha256:e11dbf1b63f70f8496f2695a8574fbbec430d015b29a7fef68f62f7cae59983d",
+            "source_revisions": {
+              "entry": "sha256:3c59e9ffc5220708b075e882e99b3630756786e85e2deda5a7b029f1b851ab13",
+              "package:example.hinges@1.0.0": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+            },
+            "reason": "pin_mismatch"
+          }
+        },
+        {
+          "id": "changed-library",
+          "source": "04-module-rejections/changed-library.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-REVISION",
+            "primary_source_id": "entry",
+            "program_revision": "sha256:5a5b76c46878c43ab0f0067baabb6122323f20f32febf0e3382b32953e90caa1",
+            "source_revisions": {
+              "entry": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+              "package:example.hinges@1.0.0": "sha256:f10ca23a8cc6e29682f99cdb2e0b4403362d0d814be369ffaa6267d9f3a1286a"
+            },
+            "reason": "pin_mismatch"
+          }
+        },
+        {
+          "id": "undeclared-library",
+          "source": "04-module-rejections/undeclared-library.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-NAME",
+            "primary_source_id": "package:example.extra@1.0.0",
+            "program_revision": "sha256:11748180d9f29e8575144d1766cf7c54b394d99679964068bcbc71d3e3eb1257",
+            "source_revisions": {
+              "entry": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+              "package:example.extra@1.0.0": "sha256:12fbdedbb1549a8e295ae75662f0b506ae72e088e5b73f54a43a48c283d23a33",
+              "package:example.hinges@1.0.0": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+            },
+            "reason": "unreachable_dependency"
+          }
+        },
+        {
+          "id": "escaped-path",
+          "source": "04-module-rejections/escaped-path.files.json",
+          "loader": "files",
+          "level": "linked",
+          "expected": {
+            "outcome": "transport_error",
+            "code": "OKA-E-REQUEST",
+            "primary_source_id": null
+          }
+        }
+      ],
+      "tests": [
+        "test_linker.LinkerTests.test_c10_missing_wrong_changed_and_extra_content_rejects_with_candidate_identity",
+        "test_linker.LinkerTests.test_import_pin_literal_domains_are_source_diagnostics",
+        "test_bundle.BundleTests.test_file_path_validation_rejects_escape_symlink_and_nonregular"
+      ]
+    },
+    {
+      "case_id": "C11",
+      "requirements": [
+        "CON-001",
+        "CON-003",
+        "CON-004"
+      ],
+      "scenarios": [
+        {
+          "id": "import-cycle",
+          "source": "04-module-rejections/import-cycle.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-DEPENDENCY-CYCLE",
+            "primary_source_id": "package:example.b@1.0.0",
+            "program_revision": "sha256:cac904e78336f19eb08ad3d7d3a470a671618b8def4af1fa789490744c5aafd9",
+            "source_revisions": {
+              "entry": "sha256:6f562b9dadf604bfd1f25525c311292a0efef9c9350b5b4722adc620ab5f5913",
+              "package:example.a@1.0.0": "sha256:eb385793e041b563cf1771ff21ac1a80c48ce4a62b1df84510eab5420d7d77a1",
+              "package:example.b@1.0.0": "sha256:79c23b34f4440671a65197cf6765701a96105f57ac84e9ca89cc721e9c1ab87e"
+            },
+            "reason": "import_cycle"
+          }
+        },
+        {
+          "id": "conflicting-versions",
+          "source": "04-module-rejections/conflicting-versions.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-REVISION",
+            "primary_source_id": "entry",
+            "program_revision": "sha256:c953a959b37a3f2aa75e607adb66e0f307907402b972fbf380e56cc419acef23",
+            "source_revisions": {
+              "entry": "sha256:898dc9e7559d995ec88ed3213ffe73fa9f53866cd1071892156aad53bfc7d56b",
+              "package:example.a@1.0.0": "sha256:a481a2e5710edf6e56dfa2d9e7cbddf32cae9bfba66c3f52503e6e6e6831ddc0",
+              "package:example.a@2.0.0": "sha256:c498e0bd906d4f995e4ef433700a560da4e6194f0971df00e5c0c910cf167ebd"
+            },
+            "reason": "conflicting_package_versions"
+          }
+        },
+        {
+          "id": "imported-scene",
+          "source": "04-module-rejections/imported-scene.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-TYPE",
+            "primary_source_id": "package:example.library@1.0.0",
+            "program_revision": "sha256:e7845b4605053d3358c6847d99c122089bd321e30480798db0b27bd9ce1ed1b2",
+            "source_revisions": {
+              "entry": "sha256:ef4274c24952e94185f4b097b49639f11d0488ad32c930ae438abda00182b158",
+              "package:example.library@1.0.0": "sha256:5398887e0f1682c47ab08ff18d9c4b6097ef52c41acc01862451fbf1bbe973fd"
+            }
+          }
+        },
+        {
+          "id": "incompatible-language",
+          "source": "04-module-rejections/incompatible-language.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-CAPABILITY-UNSUPPORTED",
+            "primary_source_id": "package:example.library@1.0.0",
+            "program_revision": "sha256:c9648a339209fda1d49243f0c7cb86da1d8c0ac5a72c10cc8d5131b8aeb52c62",
+            "source_revisions": {
+              "entry": "sha256:b872fc860ed7fb4f07c416e18e7bcae4f98d44fa268910f60623988ca3398bd4",
+              "package:example.library@1.0.0": "sha256:a6444add01ee48d5d8a8a17cb8119d2c41e971507c13cfdfce969c3657d7767f"
+            }
+          }
+        },
+        {
+          "id": "incompatible-profile",
+          "source": "04-module-rejections/incompatible-profile.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-CAPABILITY-UNSUPPORTED",
+            "primary_source_id": "package:example.library@1.0.0",
+            "program_revision": "sha256:194c5227548a1264ea87f19ac6c2b07ba8270e071969fe9ad881b03286835604",
+            "source_revisions": {
+              "entry": "sha256:bfd85b1e3fb92b1921a71a7ce1998acad7e1671d67b18789e0fbea65e749a816",
+              "package:example.library@1.0.0": "sha256:57da99b74653ebc60cb6c6d6f8c5eb20636cd48af736a632d645065f99b5adbb"
+            }
+          }
+        },
+        {
+          "id": "top-level-effect",
+          "source": "04-module-rejections/top-level-effect.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-SYNTAX",
+            "primary_source_id": "package:example.library@1.0.0",
+            "program_revision": "sha256:5d3f7a9088c928f5ec3edc95159cf3d45663602787c3564bd373a4c0db1bc804",
+            "source_revisions": {
+              "entry": "sha256:d12f7c9e580329cbec74d59e59dfd4fb1d322c61f8f2293739f3b9762bd43a81",
+              "package:example.library@1.0.0": "sha256:8884400ab53770926e730c85c651eef28d7518c76053448687e4c702c9a7d400"
+            }
+          }
+        },
+        {
+          "id": "duplicate-definition-key",
+          "source": "04-module-rejections/duplicate-definition-key.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-ID",
+            "primary_source_id": "package:example.library@1.0.0",
+            "program_revision": "sha256:1a35fe6ba459edb69703dae0e31cff8e9445ff65a6cd2a9fea6700f7b79a5589",
+            "source_revisions": {
+              "entry": "sha256:0021247704ad9ddeb88cc61162daeb6dc82239cc25422d81dafab9011aee14c5",
+              "package:example.library@1.0.0": "sha256:0be99a6b1ada2e585ff83601182482e8d119798933c0307c917f6cdba7ee5b3e"
+            }
+          }
+        }
+      ],
+      "tests": [
+        "test_linker.LinkerTests.test_c11_cycles_are_detected_before_impossible_digest_fixed_points",
+        "test_linker.LinkerTests.test_conflicting_versions_are_revision_bound_semantic_rejection",
+        "test_linker.LinkerTests.test_imported_scene_missing_entry_scene_and_unsupported_profiles",
+        "test_linker.LinkerTests.test_module_lookup_scope_disallows_collisions_unqualified_imports_and_reexports",
+        "test_linker.ModuleExecutionTests.test_unused_imported_function_body_and_capability_requirements_are_not_ignored"
+      ]
+    },
+    {
+      "case_id": "C19",
+      "requirements": [
+        "CON-005",
+        "CON-013"
+      ],
+      "scenarios": [
+        {
+          "id": "reordered-modules",
+          "source": "04-module-rejections/reordered-modules.bundle.json",
+          "loader": "inline",
+          "level": "constructed",
+          "expected": {
+            "outcome": "valid",
+            "program_revision": "sha256:cd5e1dc9b47c89f6a82299b775e57e62f9e95b2de4d211006938f3f9318fb391",
+            "source_revisions": {
+              "entry": "sha256:023e0bce0158fad6494894bb2a60724bb8774446420a80ea136a9bc7e8b4758f",
+              "package:example.arithmetic@1.0.0": "sha256:0324f021efeba5a20e2a0bf05e920336f2b9307497705eb85d8d575f5a5e8081",
+              "package:example.geometry@1.0.0": "sha256:f684a724c77210c07208dd0986ed460ed41f8aa502ccc2cd82a6ad549cab63cb"
+            }
+          }
+        },
+        {
+          "id": "changed-filename",
+          "source": "04-module-rejections/changed-filename.bundle.json",
+          "loader": "inline",
+          "level": "constructed",
+          "expected": {
+            "outcome": "valid",
+            "program_revision": "sha256:e9b65be9db6e8dfb1aaf456598a8ff05d1672f1afa5aded2f9056eea13273576",
+            "source_revisions": {
+              "entry": "sha256:023e0bce0158fad6494894bb2a60724bb8774446420a80ea136a9bc7e8b4758f",
+              "package:example.arithmetic@1.0.0": "sha256:0324f021efeba5a20e2a0bf05e920336f2b9307497705eb85d8d575f5a5e8081",
+              "package:example.geometry@1.0.0": "sha256:f684a724c77210c07208dd0986ed460ed41f8aa502ccc2cd82a6ad549cab63cb"
+            }
+          }
+        },
+        {
+          "id": "invalid-library-candidate",
+          "source": "04-module-rejections/invalid-library-candidate.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-SYNTAX",
+            "primary_source_id": "package:example.geometry@1.0.0",
+            "program_revision": "sha256:8564b7fc41d030b209b75d576b86afe08b2f7e9fc6ff64c4c6d322471c2d6147",
+            "source_revisions": {
+              "entry": "sha256:023e0bce0158fad6494894bb2a60724bb8774446420a80ea136a9bc7e8b4758f",
+              "package:example.arithmetic@1.0.0": "sha256:0324f021efeba5a20e2a0bf05e920336f2b9307497705eb85d8d575f5a5e8081",
+              "package:example.geometry@1.0.0": "sha256:8cc518e29c1c120544d6c0060442082eea3ac7765b62a48b65e390120ccacb73"
+            }
+          }
+        }
+      ],
+      "tests": [
+        "test_bundle.BundleTests.test_frozen_golden_pin_and_exact_file_inline_round_trip",
+        "test_bundle.BundleTests.test_hash_order_and_every_declared_identity_input",
+        "test_linker.LinkerTests.test_c19_supplied_snapshot_hash_precedes_any_link_error"
+      ]
+    }
+  ]
+}

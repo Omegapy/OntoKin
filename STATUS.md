@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-18T03:25:00Z**. Goal: [GOAL.md](GOAL.md). Project goal remains **in progress**.
+Checkpoint: **2026-10-18T04:30:29Z**. Goal: [GOAL.md](GOAL.md). Project goal remains **in progress**.
 
 ## Verified published baseline
 
@@ -11,7 +11,7 @@ Checkpoint: **2026-10-18T03:25:00Z**. Goal: [GOAL.md](GOAL.md). Project goal rem
 | Implementation | `ontokin-reference` **0.3.0**, experimental |
 | Language / export contracts | Adopted `core-0.1`; `ontokin.agent/0.1`; bounded `ontokin.glb/0.1` |
 | Latest verified CI for the published baseline | [Run 39092480706](https://github.com/Omegapy/OntoKin/actions/runs/39092480706) completed successfully for the documentation/evidence checkpoint; implementation run 39092228352 passed all four jobs |
-| Current milestone | **OK-LANG-002: Pinned Modules and Keyed Assembly Construction**; contract and companions adopted; implementation begins on `work/construction-0.1` |
+| Current milestone | **OK-LANG-002: Pinned Modules and Keyed Assembly Construction**; complete 0.4.0 local gate passed on `work/construction-0.1`; publication and remote CI pending |
 
 The working checkout may use a synthetic connector snapshot commit with the same tree. Verify the actual remote head before publishing; a local commit identity is not automatically the published GitHub identity.
 
@@ -37,24 +37,24 @@ The current physical subset is uniform gravity and free homogeneous spheres, wit
 
 ## Next actions
 
-1. Implement the adopted [OK-LANG-002](docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md) on `work/construction-0.1`: parser/bundle linker, construction/runtime, then durable agent 0.2 and complete source-to-animation verification.
-2. Preserve its C01–C20 requirements and independent Rack oracle (18 objects, 126 expected poses); complete executable boundary/failure/composition cases before measuring the release.
-3. Keep `main` at the verified 0.3.0 baseline until the complete new gate and relevant CI pass. At this adoption checkpoint, no construction runtime result is claimed.
+1. Publish the frozen 0.4.0 implementation on `work/construction-0.1`, inspect actual remote CI, then integrate into `main` with an expected-head update. Its Python package SHA-256 is `2fec4df8a853fb04f05981137165b093dbe5fe72abc1e49ceee15a7747bb4a24`. Main remains the verified 0.3.0 baseline until the publication gate passes.
+2. The [complete local record](docs/engineering/construction-validation/validation-summary.json) passed **276 tests**, original **43 source cases / 694 assertions**, **A01–A10**, and **C01–C20** through 128 distinct required methods plus the identified external gate. The actual workflow passed 35 checks across 22 operations. Independent validation passed zero glTF errors/warnings, 18 decoded meshes and 126 poses; Chromium passed eight checks and 126 poses with the actual capture reviewed. Fresh six-GLB and single-source agent regressions passed 347 and 200 poses respectively; legacy browser checks also passed. Documentation preservation passed for all 29 historical sources and 233 sections. These results establish the local gate; remote CI remains a separate pending requirement.
+3. After construction, refine [OK-LANG-003](docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md) into an adopted native exterior-surface/material-region contract and independent fixtures. That proposal has no implementation claim.
 
 ## Periodic review
 
 The **Advance OntoKin** recovery review is configured and enabled with `RRULE:FREQ=HOURLY`, using `America/Denver`. Its task identity is `6ad42d31d3ec819196dc1cc1e3ede709`, created at `2026-10-18T02:21:37.977291Z`. It rereads GOAL/STATUS/AGENTS, the current contract, actual main and CI, then follows the integration lease. A live worker makes independent scheduled reviews read-only. An expired lease permits a conditional acquisition attempt and one bounded verified continuation iteration.
 
-Creation and enablement are verified. The scheduling service reports a last-run timestamp of `2026-10-18T02:22:40.519041Z`; its review outcome has not been independently inspected, so this file does not claim a completed scheduled review. This task and the recovery records do not promise an indefinitely running browser thread or unlimited background execution.
+Creation and enablement are verified. The scheduling service reports a last-run timestamp of `2026-10-18T03:07:05.478440Z`; its review outcome has not been independently inspected, so this file does not claim a completed scheduled review. This task and the recovery records do not promise an indefinitely running browser thread or unlimited background execution.
 
 ## Integration lease and concurrent work
 
 | Lease field | Value |
 | --- | --- |
 | Integration owner | `root` in the owner's active stewardship chat |
-| Checkpoint / renewal | `2026-10-18T03:25:00Z` |
-| Lease expires | `2026-10-18T09:25:00Z` |
-| Current integration task | OK-LANG-002 adopted contract; coordinated implementation on `work/construction-0.1` |
+| Checkpoint / renewal | `2026-10-18T04:30:29Z` |
+| Lease expires | `2026-10-18T10:30:29Z` |
+| Current integration task | OK-LANG-002 / OK-AGENT-002 final verification and coordinated publication on `work/construction-0.1` |
 
 Renew this UTC lease at each integration checkpoint. While it is live, scheduled reviews and other independent sessions may inspect and report but **must not edit or publish**. The owner may delegate bounded file work; publication remains coordinated by the integration owner.
 

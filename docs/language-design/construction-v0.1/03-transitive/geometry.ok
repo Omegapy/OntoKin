@@ -1,0 +1,14 @@
+ontokin "0.2";
+module GeometryLibrary @ "geometry";
+profile "construction-0.1";
+
+import arithmetic @ "arithmetic-import" from "example.arithmetic" version "1.0.0" digest "sha256:0324f021efeba5a20e2a0bf05e920336f2b9307497705eb85d8d575f5a5e8081";
+
+private fn radius @ "radius"(value: Length) -> Length {
+    return arithmetic.twice(value);
+}
+public class Ball @ "ball" {
+    public param base @ "base": Length = 0.1[m];
+    geometry = sphere(radius(self.base));
+    appearance = rgba(0.3, 0.8, 0.4, 1);
+}

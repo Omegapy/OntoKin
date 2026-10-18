@@ -137,6 +137,13 @@ class SceneModel:
     diagnostics: list[Any] = field(default_factory=list)
     requested_capabilities: tuple[str, ...] = ()
     span: Any = None
+    # These fields are populated only by the explicitly versioned construction
+    # compiler. Per-file hashes retain their original Source.revision meaning.
+    program_revision: str | None = None
+    source_manifest: dict[str, Any] | None = None
+    source_provenance: dict[str, Any] = field(default_factory=dict)
+    occurrence_provenance: dict[str, Any] = field(default_factory=dict)
+    collection_provenance: dict[str, Any] = field(default_factory=dict)
 
     def frame_owner(self, frame: str) -> str | None:
         """Return the instance containing an instance/site frame, or world."""

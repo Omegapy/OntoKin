@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 import re
-from typing import Any
+from typing import Any, Callable
 
 from .diagnostics import OntoKinError
 
@@ -19,6 +19,7 @@ class Node:
     start: int
     end: int
     data: dict[str, Any] = field(default_factory=dict)
+    source_id: str | None = None
 
     def __getattr__(self, name: str) -> Any:
         data = self.__dict__.get("data", {})
@@ -36,6 +37,7 @@ class Token:
     value: str
     start: int
     end: int
+    source_id: str | None = None
 
 
 RESERVED = frozenset("""ontokin module profile requires class extends public private
@@ -49,10 +51,14 @@ MAX_SOURCE_BYTES = 2_000_000
 MAX_TOKENS = 200_000
 
 
-def lex(text: str) -> list[Token]:
+def lex(text: str, *, reserved: frozenset[str] = RESERVED,
+        source_id: str | None = None, max_tokens: int = MAX_TOKENS,
+        check: Callable[[], None] | None = None) -> list[Token]:
     offsets = [0]
     for c in text:
         offsets.append(offsets[-1] + len(c.encode("utf-8", errors="surrogatepass")))
+        if check is not None and len(offsets) % 1024 == 0:
+            check()
     if offsets[-1] > MAX_SOURCE_BYTES:
         raise OntoKinError("OKL-E-RESOURCE", "Source exceeds the 2 MB reference budget.",
                            category="resource_limit", phase="lexical")
@@ -61,13 +67,15 @@ def lex(text: str) -> list[Token]:
 
     def fail(message: str, a: int, b: int) -> None:
         raise OntoKinError("OKL-E-LEXICAL", message,
-                           Node("span", offsets[a], offsets[b]), phase="lexical")
+                           Node("span", offsets[a], offsets[b], source_id=source_id), phase="lexical")
 
     def add(kind: str, value: str, a: int, b: int) -> None:
-        tokens.append(Token(kind, value, offsets[a], offsets[b]))
+        tokens.append(Token(kind, value, offsets[a], offsets[b], source_id))
+        if check is not None and len(tokens) % 128 == 0:
+            check()
 
     while i < len(text):
-        if len(tokens) >= MAX_TOKENS:
+        if len(tokens) >= max_tokens:
             raise OntoKinError("OKL-E-RESOURCE", "Token budget exceeded.",
                                category="resource_limit", phase="lexical")
         c = text[i]
@@ -128,7 +136,7 @@ def lex(text: str) -> list[Token]:
         match = _IDENT.match(text, i)
         if match:
             value = match.group()
-            add(value if value in RESERVED else "IDENT", value, i, match.end())
+            add(value if value in reserved else "IDENT", value, i, match.end())
             i = match.end()
             continue
         if text[i:i + 2] in {"->", "<=", ">=", "==", "!="}:
@@ -142,7 +150,7 @@ def lex(text: str) -> list[Token]:
             i += 1
             continue
         fail("Unexpected character in source.", i, i + 1)
-    tokens.append(Token("EOF", "", offsets[-1], offsets[-1]))
+    tokens.append(Token("EOF", "", offsets[-1], offsets[-1], source_id))
     return tokens
 
 

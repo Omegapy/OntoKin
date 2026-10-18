@@ -1,0 +1,102 @@
+{
+  "schema_version": "ontokin.construction-external-gate/0.1",
+  "generated_at_utc": "2026-10-18T04:27:50.788227+00:00",
+  "implementation": {
+    "name": "ontokin-reference",
+    "version": "0.4.0",
+    "source_code_sha256": "sha256:2fec4df8a853fb04f05981137165b093dbe5fe72abc1e49ceee15a7747bb4a24"
+  },
+  "program_revision": "sha256:c77d102a4b201d3c3cce6cbdc73c38eedf0bb1dfca7c9843a92d697cc0c7e082",
+  "source_manifest": {
+    "schema_version": "ontokin.bundle/0.1",
+    "entry_source_id": "entry",
+    "units": [
+      {
+        "source_id": "entry",
+        "package_id": null,
+        "version": null,
+        "filename": "main.ok",
+        "source_revision": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a"
+      },
+      {
+        "source_id": "package:example.hinges@1.0.0",
+        "package_id": "example.hinges",
+        "version": "1.0.0",
+        "filename": "hinges.ok",
+        "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+      }
+    ]
+  },
+  "artifact_sha256": "sha256:4b72428deea4604962b59f4391beeaabd2715610f0158fb7db09d25b68ec376e",
+  "checks": {
+    "workflow": {
+      "status": "passed",
+      "checks": 35,
+      "operations": 22
+    },
+    "format": {
+      "status": "passed",
+      "errors": 0,
+      "warnings": 0
+    },
+    "geometry": {
+      "status": "passed",
+      "objects": 18
+    },
+    "motion": {
+      "status": "passed",
+      "pose_comparisons": 126,
+      "max_position_error_m": 4.768371586472142e-08,
+      "max_rotation_error_rad": 3.018720990412825e-08
+    },
+    "viewer": {
+      "status": "passed",
+      "checks": 8,
+      "pose_comparisons": 126,
+      "capture_sha256": "sha256:37056a797f1acbd502daef56aec2dd585683475880afd1afe59bdf15b357b513",
+      "visual_review": {
+        "status": "reviewed",
+        "reviewer": "root",
+        "observation": "Inspected the actual Chromium capture at 1.5 seconds. The left Rack has three visible cyan articulated blades and the right Rack has five. The longer middle blade of the left Rack is rotated upward while its other blades remain horizontal. Both assemblies fit in the viewport; the selected second Rack displays world position (1, 0, 0) m. The custom-import UI correctly leaves source and numerical conformance unknown because only the GLB was supplied to that UI."
+      }
+    }
+  },
+  "provenance": [
+    {
+      "role": "source_bundle",
+      "path": "examples/construction/program.bundle.json",
+      "sha256": "sha256:83ca659aadd23d7ce09ebcd209c210efd69028ca6e51ebd70d69ec47f65098e4"
+    },
+    {
+      "role": "workflow",
+      "path": "examples/construction/workflow.json",
+      "sha256": "sha256:b90c86c796b1fcb7a778f5bf70f8f63bb8f4fe2ba764b7919ef59c3915ffed2e"
+    },
+    {
+      "role": "artifact",
+      "path": "examples/construction/keyed-rack.glb",
+      "sha256": "sha256:4b72428deea4604962b59f4391beeaabd2715610f0158fb7db09d25b68ec376e"
+    },
+    {
+      "role": "reference",
+      "path": "examples/construction/keyed-rack.reference.json",
+      "sha256": "sha256:a60149c9c0fdabcb22c2cd81863c9252fe0c1173fbe64953ffa875e38636b4d6"
+    },
+    {
+      "role": "external_results",
+      "path": "docs/engineering/construction-validation/external-results.json",
+      "sha256": "sha256:a18513af01939729ae7bbd233c9320b1b9ea3c0d94ef17f34ae7252c0c7475b1"
+    },
+    {
+      "role": "viewer_results",
+      "path": "docs/engineering/construction-validation/viewer-results.json",
+      "sha256": "sha256:8e81076b4f689b8340fae16e395fefac41fbf264b1f5fc0b4228140912ccbd0c"
+    },
+    {
+      "role": "capture",
+      "path": "docs/engineering/construction-validation/keyed-rack.png",
+      "sha256": "sha256:37056a797f1acbd502daef56aec2dd585683475880afd1afe59bdf15b357b513"
+    }
+  ],
+  "basis": "Actual separately executed workflow, format/geometry/playback validation and capture, verified by exact file identities. The stated review is supplied by the identified reviewer."
+}

@@ -26,12 +26,34 @@ for (const file of files) {
   if (reference.artifact_sha256 !== 'sha256:' + sha256) throw new Error(`Reference/artifact hash mismatch: ${file}`);
   const jsonSize = bytes.readUInt32LE(12);
   const document = JSON.parse(bytes.subarray(20,20+jsonSize).toString('utf8'));
-  if (document.extras.ontokin.source.revision !== reference.source_revision) throw new Error(`Source revision mismatch: ${file}`);
+  const metadata = document.extras.ontokin;
+  const program = reference.schema_version === 'ontokin.viewer-reference/0.2';
+  if (program) {
+    if (metadata.target_contract !== 'ontokin.glb/0.2' || metadata.profile !== 'construction-0.1' || metadata.program.revision !== reference.program_revision ||
+        JSON.stringify(metadata.program.manifest) !== JSON.stringify(reference.source_manifest)) throw new Error(`Program/source manifest mismatch: ${file}`);
+  } else if (metadata.source.revision !== reference.source_revision) throw new Error(`Source revision mismatch: ${file}`);
   const format = await validator.validateBytes(new Uint8Array(bytes), {uri: file, maxIssues: 200});
   const gltf = await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
   const clip = gltf.animations[0];
   const mixer = new AnimationMixer(gltf.scene);
   if (clip) mixer.clipAction(clip).setLoop(LoopOnce, 1).play().clampWhenFinished = true;
+  const geometry = [];
+  if (program) {
+    for (const expected of reference.geometry) {
+      const matches = [];
+      gltf.scene.traverse(node => {if(node.userData.ontokin?.kind==='object' && node.userData.ontokin.path===expected.path) matches.push(node);});
+      if (matches.length!==1) throw new Error(`Missing/ambiguous geometry occurrence: ${expected.path}`);
+      const node=matches[0];
+      if (!node.geometry) throw new Error(`Expected a real loaded mesh: ${expected.path}`);
+      node.geometry.computeBoundingBox();
+      const size=node.geometry.boundingBox.getSize(new Vector3()).toArray();
+      const wanted=expected.geometry.kind==='box'?expected.geometry.size_m:Array(3).fill(2*expected.geometry.radius_m);
+      const error=Math.max(...size.map((v,i)=>Math.abs(v-wanted[i])));
+      if(error>1e-6) throw new Error(`Decoded mesh dimensions differ for ${expected.path}: ${size} versus ${wanted}`);
+      if(JSON.stringify(node.userData.ontokin.element_id)!==JSON.stringify(expected.element_id)) throw new Error(`Decoded occurrence identity mismatch: ${expected.path}`);
+      geometry.push({path:expected.path,kind:expected.geometry.kind,decoded_full_size_m:size,expected_full_size_m:wanted,max_dimension_error_m:error,status:'passed'});
+    }
+  }
   const samples = [];
   let maxPosition = 0, maxRotation = 0, comparisons = 0;
   const failures = [];
@@ -57,7 +79,7 @@ for (const file of files) {
     }
     samples.push({time_seconds: time, objects});
   }
-  reports.push({file, sha256, source_revision: reference.source_revision,
+  reports.push({file, sha256, ...(program?{program_revision:reference.program_revision,source_manifest:reference.source_manifest,geometry}:{source_revision:reference.source_revision}),
     validator: {version: validator.version(), errors: format.issues.numErrors, warnings: format.issues.numWarnings,
       infos: format.issues.numInfos, hints: format.issues.numHints, messages: format.issues.messages},
     three_js: {revision: REVISION, loaded: true, animation_count: gltf.animations.length,

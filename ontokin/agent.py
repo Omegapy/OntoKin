@@ -19,6 +19,7 @@ import time
 import uuid
 
 from . import agent_runtime as runtime
+from . import agent_protocol as protocol
 from . import __version__
 from .agent_protocol import (MAX_BUDGETS, OPERATIONS, TERMINAL, ProtocolError,
                              canonical_request, envelope, validate_request)
@@ -55,7 +56,7 @@ class _Check:
     """Cooperative work/deadline checks, with cancellation polled at most 5ms apart."""
     def __init__(self, service, request):
         self.service, self.request = service, request
-        self.limits = {**MAX_BUDGETS, **request.get("budgets", {})}
+        self.limits = {**service._protocol.MAX_BUDGETS, **request.get("budgets", {})}
         self.started, self.last_poll, self.operations = time.monotonic(), 0., 0
 
     def __call__(self):
@@ -78,9 +79,40 @@ class _Check:
 
 
 class AgentService:
+    # Version bindings share durability/fencing, never revision field meanings.
+    _protocol = protocol
+    _runtime = runtime
+    _store_type = AgentStore
+    _revision_key = "source_revision"
+    _accepted_key = "accepted_revision"
+    _expected_key = "expected_revision"
+    _destination = "ontokin.glb/0.1"
+
+    @staticmethod
+    def _revision(source):
+        return source.revision
+
+    @staticmethod
+    def _create_source(request):
+        return Source(request["source"], request["filename"])
+
+    def _edit_source(self, base, request, check):
+        return self._runtime.apply_patches(base, request["patches"],
+                                           budgets=request.get("budgets"), check=check)
+
+    @staticmethod
+    def _diagnostic(error, source, run_id=None):
+        return error.diagnostic.to_dict(source, run_id)
+
+    def _context_binding(self):
+        return {}
+
+    def _check_response(self, response):
+        """A version binding may impose an additional encoded result limit."""
+
     def __init__(self, store_path: Path):
         self.implementation = copy.deepcopy(implementation_identity())
-        self._store = AgentStore(Path(store_path), self.implementation)
+        self._store = self._store_type(Path(store_path), self.implementation)
         self.store_path = self._store.path
         self.database_path = self._store.database_path
 
@@ -104,7 +136,7 @@ class AgentService:
             return self._store.accepted(db, project_id)
 
     def _protocol_response(self, request, error: ProtocolError, *, accepted=None, status="rejected"):
-        response = envelope(request, status, accepted)
+        response = self._protocol.envelope(request, status, accepted)
         response["protocol_error"] = error.to_dict()
         return response
 
@@ -114,7 +146,7 @@ class AgentService:
             return self._protocol_response(request, ProtocolError("OKA-E-CLOSED", "This service instance is closed."))
         original = request
         try:
-            request, payload = canonical_request(request)
+            request, payload = self._protocol.canonical_request(request)
         except ProtocolError as exc:
             return self._protocol_response(original, exc)
         project, request_id = request.get("project_id"), request.get("request_id")
@@ -131,7 +163,7 @@ class AgentService:
                                                                         original_operation=existing["operation"]), accepted=accepted)
                 return json.loads(existing["response"])
             try:
-                validate_request(request)
+                self._protocol.validate_request(request)
             except ProtocolError as exc:
                 response = self._protocol_response(request, exc, accepted=accepted)
                 # Even a malformed operation with a usable identity cannot later be repurposed.
@@ -139,9 +171,17 @@ class AgentService:
                 return response
             db.execute("INSERT OR IGNORE INTO projects (id) VALUES (?)", (project,))
             if request["operation"] in {"status", "cancel"}:
-                response = self._control(db, request)
+                db.execute("SAVEPOINT control_response")
+                try:
+                    response = self._control(db, request)
+                    self._check_response(response)
+                except ProtocolError as exc:
+                    db.execute("ROLLBACK TO control_response")
+                    response = self._protocol_response(request, exc, accepted=accepted)
+                finally:
+                    db.execute("RELEASE control_response")
             else:
-                response = envelope(request, "queued", accepted)
+                response = self._protocol.envelope(request, "queued", accepted)
                 response["progress"] = {"phase": "queued", "cancellation_requested": False}
             self._store.record(db, request, digest, payload, response)
             return response
@@ -150,9 +190,9 @@ class AgentService:
         project, target_id = request["project_id"], request["target_request_id"]
         accepted = self._store.accepted(db, project)
         target = self._store.request(db, project, target_id)
-        response = envelope(request, "succeeded", accepted)
+        response = self._protocol.envelope(request, "succeeded", accepted)
         if target is None:
-            target_response = envelope({"project_id": project, "request_id": target_id}, "unknown_outcome", accepted)
+            target_response = self._protocol.envelope({"project_id": project, "request_id": target_id}, "unknown_outcome", accepted)
             target_response["protocol_error"] = ProtocolError("OKA-E-UNKNOWN-OUTCOME", "No result or request identity is known in this store; reconcile before issuing effects.").to_dict()
             disposition = "unknown_identity"
         else:
@@ -204,7 +244,8 @@ class AgentService:
             request = json.loads(row["payload"])
             response = json.loads(row["response"])
             if row["engine"] != dumps(self.implementation):
-                response.update(status="rejected", accepted_revision=self._store.accepted(db, row["project_id"]),
+                response[self._accepted_key] = self._store.accepted(db, row["project_id"])
+                response.update(status="rejected",
                                 protocol_error=ProtocolError("OKA-E-ENGINE", "Queued work was authored for a different implementation; reconcile before deliberately submitting new work.",
                                                              recorded_implementation=None if row["engine"] is None else json.loads(row["engine"]),
                                                              current_implementation=self.implementation, effects_committed=False).to_dict())
@@ -268,18 +309,16 @@ class AgentService:
                                    "partial_results": partial}
         task.response["status"] = "failed" if error.diagnostic.category in {"numerical_failure", "resource_limit"} else "rejected"
         if task.source is not None:
-            task.response["source_revision"] = task.source.revision
-            task.response["diagnostics"].append(error.diagnostic.to_dict(task.source, task.response.get("run_id")))
+            task.response[self._revision_key] = self._revision(task.source)
+            task.response["diagnostics"].append(self._diagnostic(error, task.source, task.response.get("run_id")))
         else:
             task.response["protocol_error"] = ProtocolError(error.code, str(error)).to_dict()
 
-    def _snapshot(self, task: _Task, source: Source) -> None:
+    def _snapshot(self, task: _Task, source) -> None:
         with self._store.transaction() as db:
             self._store.snapshot(db, task.request["project_id"], source)
-            stored = db.execute("SELECT filename,raw FROM sources WHERE project_id=? AND revision=?",
-                                (task.request["project_id"], source.revision)).fetchone()
-            task.source = Source(bytes(stored["raw"]).decode("utf-8"), stored["filename"], bytes(stored["raw"]))
-        task.response["source_revision"] = task.source.revision
+        task.source = self.read_source(task.request["project_id"], self._revision(source))
+        task.response[self._revision_key] = self._revision(task.source)
 
     def _absorb(self, task: _Task, result: dict, *, origin: str | None = None) -> None:
         task.response["result"] = result
@@ -292,7 +331,7 @@ class AgentService:
             run_id = run.get("run_id") or "run:" + uuid.uuid4().hex
             run.update(run_id=run_id, origin=origin or "ordinary",
                        implementation=copy.deepcopy(self.implementation),
-                       candidate_only=not self._store.source_accepted_once(task.request["project_id"], task.source.revision))
+                       candidate_only=not self._store.source_accepted_once(task.request["project_id"], self._revision(task.source)))
             task.run = run
             task.response["run_id"] = run_id
             result["run_state"] = run
@@ -306,8 +345,8 @@ class AgentService:
     def _validate(self, task: _Task, check: _Check) -> None:
         request = task.request
         level = request["requested_level"]
-        explicit_delivery = level == "delivered" and request.get("destination") == "ontokin.glb/0.1"
-        result = runtime.validate_revision(task.source, level="evaluated" if explicit_delivery else level,
+        explicit_delivery = level == "delivered" and request.get("destination") == self._destination
+        result = self._runtime.validate_revision(task.source, level="evaluated" if explicit_delivery else level,
                                            budgets=request.get("budgets"), check=check)
         result["requested_level"] = level
         self._absorb(task, result, origin="validation")
@@ -320,7 +359,7 @@ class AgentService:
         # Object occurrence identity must not silently change nominal definition.
         identity = {}
         for source in (before, candidate):
-            inspected = runtime.inspect_revision(source, selector={"kind": "object"}, fields=["identity"],
+            inspected = self._runtime.inspect_revision(source, selector={"kind": "object"}, fields=["identity"],
                                                  limit=min(1000, (budgets or {}).get("max_result_items", 1000)),
                                                  budgets=budgets, check=check)
             if inspected["outcome"] != "valid" or inspected.get("truncated"):
@@ -340,13 +379,13 @@ class AgentService:
         operation, project = request["operation"], request["project_id"]
         budgets = request.get("budgets")
         if operation == "discover":
-            self._discover(task)
+            self._discover(task, check)
             return
         if operation == "artifact":
             self._read_artifact(task)
             return
         if operation == "create":
-            source = Source(request["source"], request["filename"])
+            source = self._create_source(request)
             self._snapshot(task, source)
             if self.accepted_revision(project) is not None:
                 raise OntoKinError("OKL-E-REVISION", "Create requires a project with no accepted revision.", category="stale", phase="edit")
@@ -354,29 +393,29 @@ class AgentService:
             task.accept = response["status"] == "succeeded"
             return
         if operation == "edit":
-            base = self.read_source(project, request["expected_revision"])
+            base = self.read_source(project, request[self._expected_key])
             task.source = base
-            response["source_revision"] = base.revision
-            if self.accepted_revision(project) != base.revision:
+            response[self._revision_key] = self._revision(base)
+            if self.accepted_revision(project) != self._revision(base):
                 raise OntoKinError("OKL-E-REVISION", "The edit's expected revision is stale.", category="stale", phase="edit")
-            candidate = runtime.apply_patches(base, request["patches"], budgets=budgets, check=check)
+            candidate = self._edit_source(base, request, check)
             self._snapshot(task, candidate)
             self._validate(task, check)
             if response["status"] == "succeeded":
                 self._identity_gate(base, candidate, check, budgets)
                 task.accept = True
             return
-        task.source = self.read_source(project, request["source_revision"])
+        task.source = self.read_source(project, request[self._revision_key])
         if operation == "validate":
             self._validate(task, check)
         elif operation == "inspect":
             self._inspect(task, check)
         elif operation in {"evaluate", "reset", "export"}:
-            if not self._store.source_accepted_once(project, task.source.revision):
+            if not self._store.source_accepted_once(project, self._revision(task.source)):
                 raise OntoKinError("OKL-E-REVISION", "Ordinary runs and export require an accepted source snapshot; this candidate has never been accepted.",
                                    category="stale", phase="inspection", blocks=[])
             if operation == "export":
-                result = runtime.validate_revision(task.source, level="evaluated", budgets=budgets, check=check)
+                result = self._runtime.validate_revision(task.source, level="evaluated", budgets=budgets, check=check)
                 self._absorb(task, result, origin="validation")
                 if response["status"] == "succeeded":
                     self._export(task, check)
@@ -389,10 +428,10 @@ class AgentService:
                 previous, task.run_version = self._store.read_run(project, request["run_id"])
                 self._check_engine(previous)
                 response["run_id"] = request["run_id"]
-                if previous["source_revision"] != task.source.revision or previous.get("candidate_only"):
+                if previous[self._revision_key] != self._revision(task.source) or previous.get("candidate_only"):
                     raise OntoKinError("OKL-E-SAMPLE", "The run belongs to another revision or is retained only for candidate diagnosis.",
                                        category="stale", phase="inspection", blocks=[])
-            result = runtime.evaluate_revision(task.source, until="0" if operation == "reset" else request["until_seconds"],
+            result = self._runtime.evaluate_revision(task.source, until="0" if operation == "reset" else request["until_seconds"],
                                                side="before" if operation == "reset" else "after", previous=previous,
                                                budgets=budgets, check=check)
             self._absorb(task, result, origin="reset" if operation == "reset" else (previous or {}).get("origin", "ordinary"))
@@ -427,11 +466,11 @@ class AgentService:
         sample = request.get("time")
         if sample is None and run is not None:
             sample = {"seconds": run.get("valid_until_seconds"), "side": run.get("valid_until_side")}
-        context = {"project_id": request["project_id"], "source_revision": task.source.revision,
+        context = {"project_id": request["project_id"], self._revision_key: self._revision(task.source),
                    "run_id": request.get("run_id"), "time": sample, "frame": request.get("frame", "world"),
-                   "selector": request["selector"], "fields": sorted(request["fields"])}
+                   "selector": request["selector"], "fields": sorted(request["fields"]), **self._context_binding()}
         offset = self._offset(request.get("cursor"), context)
-        result = runtime.inspect_revision(task.source, selector=request["selector"], fields=request["fields"], limit=request["limit"],
+        result = self._runtime.inspect_revision(task.source, selector=request["selector"], fields=request["fields"], limit=request["limit"],
                                           offset=offset, run=run, time=None if sample is None else sample["seconds"],
                                           side="after" if sample is None else sample["side"], frame=context["frame"],
                                           budgets=request.get("budgets"), check=check)
@@ -457,12 +496,12 @@ class AgentService:
         check()
         model = validate(parse(task.source.text, task.source.filename), level="evaluated")
         artifact = export_glb(model, options=ExportOptions(**task.request.get("options", {})),
-                              source_uri=task.source.filename, source_sha256=task.source.revision)
+                              source_uri=task.source.filename, source_sha256=self._revision(task.source))
         check()
         artifact_id = "artifact:" + hashlib.sha256(artifact.data).hexdigest()
         task.artifact = (artifact.data, artifact.report, artifact_id)
         task.response["result"].update({"artifact_id": artifact_id, "report": artifact.report,
-                                       "source_revision": task.source.revision, "total_bytes": len(artifact.data),
+                                       self._revision_key: self._revision(task.source), "total_bytes": len(artifact.data),
                                        "sha256": "sha256:" + hashlib.sha256(artifact.data).hexdigest(),
                                        "mime_type": "model/gltf-binary", "destination": "ontokin.glb/0.1"})
 
@@ -478,12 +517,13 @@ class AgentService:
             raise ProtocolError("OKA-E-ARTIFACT", "Artifact offset is beyond the byte length.", total_bytes=total)
         chunk = bytes(row["chunk"])
         next_offset = offset + len(chunk) if offset + len(chunk) < total else None
-        task.response.update(status="succeeded", source_revision=row["source_revision"], truncated=next_offset is not None)
+        task.response.update(status="succeeded", truncated=next_offset is not None)
+        task.response[self._revision_key] = row["source_revision"]
         task.response["result"] = {"artifact_id": request["artifact_id"], "offset": offset, "total_bytes": total,
                                    "data_base64": base64.b64encode(chunk).decode("ascii"), "next_offset": next_offset,
-                                   "mime_type": "model/gltf-binary", "sha256": row["sha256"], "source_revision": row["source_revision"]}
+                                   "mime_type": "model/gltf-binary", "sha256": row["sha256"], self._revision_key: row["source_revision"]}
 
-    def _discover(self, task: _Task) -> None:
+    def _discover(self, task: _Task, check=None) -> None:
         from .agent_catalog import catalog
         request = task.request
         if request["profile"] != "core-0.1":
@@ -507,26 +547,40 @@ class AgentService:
                              next_cursor=None if next_offset is None else self._cursor(context, next_offset))
 
     def _finish(self, task: _Task) -> None:
+        try:
+            self._commit_task(task)
+        except ProtocolError as exc:
+            # A result-limit failure rolls back the whole attempted transaction,
+            # including acceptance, runs and artifacts, before retaining failure.
+            task.accept, task.run, task.artifact = False, None, None
+            task.response = self._protocol.envelope(task.request, "failed")
+            if task.source is not None:
+                task.response[self._revision_key] = self._revision(task.source)
+            task.response["protocol_error"] = exc.to_dict()
+            self._commit_task(task)
+
+    def _commit_task(self, task: _Task) -> None:
         request, response = task.request, task.response
+        self._check_response(response)
         project, request_id = request["project_id"], request["request_id"]
         with self._store.transaction() as db:
             row = self._store.request(db, project, request_id)
             if row["state"] != "running" or row["owner"] != self._store.owner:
                 return  # Closed/dead worker has been fenced; it cannot commit late.
             accepted = self._store.accepted(db, project)
-            response["accepted_revision"] = accepted
+            response[self._accepted_key] = accepted
             if row["cancel_requested"]:
                 task.accept, task.run, task.artifact = False, None, None
                 response.update(status="cancelled", achieved_level=None, run_id=None, result=None,
                                 progress={"phase": "cancelled_before_commit", "cancellation_requested": True,
                                           "partial_results": "No source acceptance, artifact, or run advancement was committed."})
-            elif task.accept and accepted != request.get("expected_revision"):
+            elif task.accept and accepted != request.get(self._expected_key):
                 task.accept = False
                 task.artifact = None
                 error = OntoKinError("OKL-E-REVISION", "Another accepted edit advanced the project before this candidate could commit.",
-                                     category="stale", phase="edit", details={"expected_revision": request.get("expected_revision"), "accepted_revision": accepted})
+                                     category="stale", phase="edit", details={self._expected_key: request.get(self._expected_key), self._accepted_key: accepted})
                 response["status"] = "rejected"
-                response["diagnostics"].append(error.diagnostic.to_dict(task.source, response.get("run_id")))
+                response["diagnostics"].append(self._diagnostic(error, task.source, response.get("run_id")))
                 if response.get("result") is not None:
                     response["result"]["acceptance"] = "stale; source not accepted; any returned isolated validation run is retained for diagnosis"
             if task.run is not None:
@@ -538,23 +592,24 @@ class AgentService:
                     response["achieved_level"] = None
                     response["result"] = {"run_state": json.loads(old["descriptor"]), "run_advance_committed": False}
                 else:
-                    task.run["candidate_only"] = not (task.accept or self._source_accepted_db(db, project, task.source.revision))
+                    task.run["candidate_only"] = not (task.accept or self._source_accepted_db(db, project, self._revision(task.source)))
                     version = 1 if old is None else old["version"] + 1
                     db.execute("INSERT INTO runs VALUES (?,?,?,?,?) ON CONFLICT(project_id,id) DO UPDATE SET descriptor=excluded.descriptor,version=excluded.version",
-                               (project, run_id, task.source.revision, dumps(task.run), version))
+                               (project, run_id, self._revision(task.source), dumps(task.run), version))
             if task.accept:
-                db.execute("UPDATE projects SET accepted_revision=? WHERE id=?", (task.source.revision, project))
-                db.execute("UPDATE sources SET accepted_once=1 WHERE project_id=? AND revision=?", (project, task.source.revision))
-                response["accepted_revision"] = task.source.revision
+                db.execute("UPDATE projects SET accepted_revision=? WHERE id=?", (self._revision(task.source), project))
+                db.execute("UPDATE sources SET accepted_once=1 WHERE project_id=? AND revision=?", (project, self._revision(task.source)))
+                response[self._accepted_key] = self._revision(task.source)
             if task.artifact is not None and response["status"] == "succeeded":
                 data, report, artifact_id = task.artifact
                 db.execute("INSERT OR IGNORE INTO artifacts VALUES (?,?,?,?,?,?)",
-                           (project, artifact_id, task.source.revision, data, dumps(report), "sha256:" + hashlib.sha256(data).hexdigest()))
+                           (project, artifact_id, self._revision(task.source), data, dumps(report), "sha256:" + hashlib.sha256(data).hexdigest()))
             if response["status"] != "cancelled":
                 response["progress"] = {"phase": "complete", "cancellation_requested": False,
                                         "implementation": self.implementation}
             if isinstance(response.get("result"), dict):
                 response["result"]["implementation"] = self.implementation
+            self._check_response(response)
             self._store.update_response(db, project, request_id, response)
             db.execute("UPDATE requests SET owner=NULL WHERE project_id=? AND id=?", (project, request_id))
 

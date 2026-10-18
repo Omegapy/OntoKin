@@ -28,6 +28,8 @@ jobs:
         run: python -m ontokin conformance --output /tmp/ontokin-conformance.json
       - name: Published agent-operation conformance
         run: python tools/run_agent_conformance.py --output /tmp/ontokin-agent-conformance.json
+      - name: Construction C01-C20 and identified retained destination evidence
+        run: python -m ontokin.construction_conformance --output /tmp/ontokin-construction-conformance.json --external-evidence docs/engineering/construction-validation/external-gate.json
       - name: Documentation preservation and links
         run: python docs/maintenance/reorganization-2026-10-17/verify_reorganization.py
       - name: Preserve source and agent conformance evidence
@@ -38,6 +40,7 @@ jobs:
           path: |
             /tmp/ontokin-conformance.json
             /tmp/ontokin-agent-conformance.json
+            /tmp/ontokin-construction-conformance.json
           retention-days: 14
 
   visual:
@@ -68,12 +71,18 @@ jobs:
         run: python tools/build_agent_demo.py
       - name: Independently decode and validate the agent-produced GLB
         run: node tools/verify_gltf.mjs examples/agent --output /tmp/ontokin-agent-external-validation.json
+      - name: Program-bundle authoring, generated-instance repair and artifact retrieval
+        run: python tools/build_construction_demo.py
+      - name: Independently validate construction GLB geometry and animation
+        run: node tools/verify_gltf.mjs examples/construction --output /tmp/ontokin-construction-external-validation.json
       - name: Install the validation browser
         run: node tools/node_modules/playwright/cli.js install chromium --only-shell --with-deps
       - name: Render and operate the offline viewer
         run: node tools/verify_viewer.mjs --output-dir /tmp/ontokin-viewer-validation
       - name: Render and operate the agent-produced animation
         run: node tools/verify_agent_viewer.mjs --output-dir /tmp/ontokin-agent-viewer-validation
+      - name: Render and inspect all 126 construction poses
+        run: node tools/verify_construction_viewer.mjs --output-dir /tmp/ontokin-construction-viewer-validation
       - name: Preserve validation evidence
         if: always()
         uses: actions/upload-artifact@v7
@@ -84,6 +93,13 @@ jobs:
             /tmp/ontokin-viewer-validation
             /tmp/ontokin-agent-external-validation.json
             /tmp/ontokin-agent-viewer-validation
+            /tmp/ontokin-construction-external-validation.json
+            /tmp/ontokin-construction-viewer-validation
+            examples/construction/program.bundle.json
+            examples/construction/workflow.json
+            examples/construction/keyed-rack.glb
+            examples/construction/keyed-rack.export.json
+            examples/construction/keyed-rack.reference.json
             examples/agent/workflow.json
             examples/agent/repaired.glb
             examples/agent/repaired.export.json

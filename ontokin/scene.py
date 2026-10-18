@@ -8,6 +8,8 @@ their exact decimal spelling in metadata; glTF animation times are binary32.
 from __future__ import annotations
 
 import math
+import hashlib
+import json
 import struct
 from dataclasses import dataclass, field
 from fractions import Fraction
@@ -19,9 +21,12 @@ from .evaluator import MAX_OUTPUT_RECORDS, MAX_SAMPLES, evaluate, exact_time, pr
 from .geometry import (SPHERE_RINGS, SPHERE_SEGMENTS, Mesh, assembly_marker,
                        box_mesh, joint_marker, sphere_mesh)
 from .model import SceneModel, Vec
+from .json_limits import JSONLimitError
+from .values import bounded_data
 
 
 TARGET_CONTRACT = "ontokin.glb/0.1"
+CONSTRUCTION_TARGET = "ontokin.glb/0.2"
 MAX_KEYFRAMES = 10000
 MAX_BAKED_POSES = 250000
 MAX_VALIDATION_POSES = 1000000
@@ -42,9 +47,9 @@ def export_error(export_code: str, message: str, model: SceneModel | None = None
     }[kind]
     raise OntoKinError(code, message, model.span if model else None, phase=phase,
                        category=category, blocks=["delivered"],
-                       details={"target_contract": TARGET_CONTRACT,
+                       details={"target_contract": CONSTRUCTION_TARGET if model is not None and model.profile == "construction-0.1" else TARGET_CONTRACT,
                                 "export_code": export_code, **(details or {})},
-                       repair=("Use supported visual geometry and the core-0.1 profile." if kind == "unsupported" else
+                       repair=("Use supported visual geometry and the explicitly matching model/delivery profile." if kind == "unsupported" else
                                "Use a smaller scene or export interval, or a lower requested sampling rate." if kind == "resource" else
                                "Supply finite positive export settings and an end time within the scene horizon." if kind == "options" else
                                "Increase sampling for interpolation error; reduce magnitudes or the interval for binary32 precision limits. Review any changed tolerance explicitly."))
@@ -131,6 +136,66 @@ class BakedScene:
     options: ExportOptions
     contract: str = TARGET_CONTRACT
     schema_version: str = "0.1"
+
+
+def checked_contract(model: SceneModel, target_contract: str) -> str:
+    expected = {TARGET_CONTRACT: "core-0.1", CONSTRUCTION_TARGET: "construction-0.1"}
+    if target_contract not in expected or model.profile != expected[target_contract]:
+        export_error("OKE-E-SUPPORT", "The named GLB contract must explicitly match the authored semantic profile.",
+                     model, kind="unsupported", details={"target_contract": target_contract,
+                                                         "profile": model.profile})
+    if model.requested_capabilities or any(diagnostic.code.startswith("OKL-E-") for diagnostic in model.diagnostics):
+        export_error("OKE-E-SUPPORT", "The GLB adapter requires a supported, validated model.", model, kind="unsupported")
+    return "0.2" if target_contract == CONSTRUCTION_TARGET else "0.1"
+
+
+def program_metadata(model: SceneModel) -> dict[str, Any]:
+    """Check the construction model's sealed source-map identity before export.
+
+    The compiler supplies validated source hashes and locations. The exporter
+    receives the model, not source text, and does not invent a dependency hash
+    or claim to reconstruct omitted files from GLB metadata.
+    """
+    try:
+        manifest = bounded_data(model.source_manifest)
+        if not isinstance(manifest, dict) or manifest.get("schema_version") != "ontokin.bundle/0.1" or manifest.get("entry_source_id") != "entry":
+            raise ValueError("Missing canonical source manifest.")
+        canonical = json.dumps(manifest, sort_keys=True, ensure_ascii=False,
+                               separators=(",", ":"), allow_nan=False).encode("utf-8")
+        revision = "sha256:" + hashlib.sha256(b"ontokin.bundle/0.1\0" + canonical).hexdigest()
+        if model.program_revision != revision:
+            raise ValueError("Program revision differs from its canonical manifest.")
+        units = manifest["units"]
+        source_ids = [unit["source_id"] for unit in units]
+        if source_ids != sorted(set(source_ids)) or set(source_ids) != set(model.source_provenance) or "entry" not in source_ids:
+            raise ValueError("Source mapping differs from the manifest closure.")
+        for unit in units:
+            source = model.source_provenance[unit["source_id"]]
+            if any(source.get(key) != value for key, value in unit.items()):
+                raise ValueError("Source mapping hash/name/pin differs from the manifest.")
+        if set(model.occurrence_provenance) != set(model.objects):
+            raise ValueError("Occurrence source mapping is incomplete.")
+        for path, obj in model.objects.items():
+            record = model.occurrence_provenance[path]
+            if (record.get("path") != path or record.get("element_id") != list(obj.element_id)
+                    or record.get("owner_path") != obj.owner or record.get("class_id") != obj.class_name):
+                raise ValueError("Occurrence mapping differs from actual object identities.")
+            for location in (record.get("declaration"), record.get("definition")):
+                if location is not None:
+                    source = model.source_provenance[location["source_id"]]
+                    if location["source_revision"] != source["source_revision"] or location["filename"] != source["filename"] or not 0 <= location["start_byte"] <= location["end_byte"]:
+                        raise ValueError("Occurrence source location differs from its source identity.")
+        raw = {"revision": revision, "entry_source_id": "entry", "manifest": manifest,
+               "sources": model.source_provenance, "occurrences": model.occurrence_provenance,
+               "collections": model.collection_provenance,
+               "provenance": "Validated compiler source map; exact source text is not embedded."}
+        return bounded_data(raw)
+    except JSONLimitError as error:
+        export_error("OKE-E-METADATA-BUDGET", "Program provenance exceeds the bounded materialization budget.",
+                     model, kind="resource", details=error.details)
+    except (KeyError, TypeError, ValueError) as error:
+        export_error("OKE-E-PROVENANCE", "Construction delivery requires the complete, matching source-bundle provenance.",
+                     model, kind="unsupported", details={"cause": str(error)})
 
 
 def sampled_states(model: SceneModel, requests: list[Any]) -> Iterator[dict[str, Any]]:
@@ -222,13 +287,24 @@ def _nodes(model: SceneModel, options: ExportOptions) -> list[BakedNode]:
             meshes[key] = sphere_mesh(key[1]) if kind == "sphere" else box_mesh(key[1])
             charge(meshes[key])
         return meshes[key]
+    properties = None
+    if model.profile == "construction-0.1":
+        try:
+            properties = bounded_data({path: dict(obj.properties) for path, obj in model.objects.items()})
+        except JSONLimitError as error:
+            export_error("OKE-E-METADATA-BUDGET", "Resolved property materialization exceeds the construction output budget.",
+                         model, kind="resource", details=error.details)
     for path, obj in model.objects.items():
         metadata = {"kind": "object", "path": path, "element_id": list(obj.element_id),
                     "owner": obj.owner, "class_name": obj.class_name,
                     "geometry": obj.geometry, "physical": obj.physical,
                     "collision": obj.collision, "authored_motion": obj.motion,
                     "appearance_linear_rgba": list(obj.appearance), "pose_frame": "world",
-                    "role": obj.role, "properties": {name: value.to_data() for name, value in obj.properties.items()}}
+                    "role": obj.role, "properties": properties[path] if properties is not None else
+                    {name: value.to_data() for name, value in obj.properties.items()}}
+        if model.profile == "construction-0.1":
+            metadata["source_mapping"] = model.occurrence_provenance[path]
+            metadata["program_revision"] = model.program_revision
         nodes.append(BakedNode(path, path + ".frame", mesh_for(obj.geometry), obj.appearance, metadata))
     if options.helpers:
         marker = None
@@ -269,14 +345,16 @@ def relationship_metadata(model: SceneModel) -> dict[str, Any]:
 
 
 def build_scene(model: SceneModel, *, options: ExportOptions | None = None,
-                source_uri: str | None = None, source_sha256: str | None = None) -> BakedScene:
+                source_uri: str | None = None, source_sha256: str | None = None,
+                target_contract: str = TARGET_CONTRACT) -> BakedScene:
     """Build a renderer-neutral baked scene; ``export_glb`` also verifies bytes."""
+    version = checked_contract(model, target_contract)
+    program = program_metadata(model) if target_contract == CONSTRUCTION_TARGET else None
+    if program is not None and source_sha256 is not None and source_sha256 != program["sources"]["entry"]["source_revision"]:
+        export_error("OKE-E-PROVENANCE", "An optional entry source hash must match the sealed entry file, not the program revision.",
+                     model, kind="unsupported")
     options = options or ExportOptions()
     end = options.checked_end(model)
-    if model.profile != "core-0.1" or model.requested_capabilities or any(
-            diagnostic.code.startswith("OKL-E-") for diagnostic in model.diagnostics):
-        export_error("OKE-E-SUPPORT", "The GLB adapter requires a supported, validated core-0.1 model.",
-                     model, kind="unsupported")
     timeline = preflight(model)
     exact_times, times, boundaries, speed, removed = _timeline(
         model, options, end, timeline["boundary_times_seconds"])
@@ -321,15 +399,20 @@ def build_scene(model: SceneModel, *, options: ExportOptions | None = None,
     source = {"uri": source_uri, "revision": source_sha256, "editable_source_of_truth": ".ok",
               "provenance": "caller_supplied; exporter receives a validated model, not source bytes" if source_sha256 else
                             "unavailable; caller did not supply source identity"}
+    if program is not None:
+        source = {"uri": source_uri, "uri_kind": "caller_supplied_bundle_locator",
+                  "entry_source_id": "entry", "entry_revision": program["sources"]["entry"]["source_revision"],
+                  "editable_source_of_truth": "pinned .ok source bundle",
+                  "provenance": "Compiler supplied exact source identities; source text is not embedded."}
     relationships = relationship_metadata(model)
-    metadata = {"target_contract": TARGET_CONTRACT, "schema_version": "0.1", "source": source,
+    metadata = {"target_contract": target_contract, "schema_version": version, "source": source,
                 "module": model.module_name, "scene": model.scene_name, "profile": model.profile,
                 "coordinates": {"handedness": "right", "up": "+Y", "length_unit": "m", "time_unit": "s"},
                 "transform_policy": "all_nodes_are_roots_with_baked_world_poses", **relationships,
                 "boundary_states": boundary_records, "gravity_m_per_s2": list(model.gravity),
                 "motion_authority": "OntoKin semantic evaluator; playback contains no live solver"}
     report = {
-        "schema_version": "ontokin.glb-report/0.1", "target_contract": TARGET_CONTRACT,
+        "schema_version": "ontokin.glb-report/" + version, "target_contract": target_contract,
         "outcome": "baked_pending_binary_validation",
         "exporter": {"name": "OntoKin reference GLB exporter", "version": __version__},
         "source": source, "scene": {"module": model.module_name, "name": model.scene_name,
@@ -374,4 +457,18 @@ def build_scene(model: SceneModel, *, options: ExportOptions | None = None,
                     "max_validation_poses": MAX_VALIDATION_POSES, "max_mesh_vertices": MAX_MESH_VERTICES,
                     "max_glb_bytes": MAX_GLB_BYTES, "max_boundary_state_records": MAX_OUTPUT_RECORDS},
     }
-    return BakedScene(model.module_name, model.scene_name, exact_times, times, boundaries, nodes, metadata, report, options)
+    if program is not None:
+        metadata["program"] = program
+        report["program_revision"] = model.program_revision
+        report["program"] = program
+        report["retention"]["preserved_metadata"].extend([
+            "complete program revision and exact pinned source manifest", "per-source identities and original byte spans",
+            "nominal definition identities", "generated collection membership and occurrence source mappings"])
+        report["retention"]["not_executable_in_glb"].extend([
+            "pinned module resolution", "keyed generator recipes", "initializer precedence and parameter dependencies"])
+        losses = report["retention"]["losses"]
+        losses[3] = ("Source text, comments, full type declarations, library/generator recipes, parameter dependency expressions, "
+                     "site definitions, and action/event source arguments cannot be reconstructed from GLB; retain the full pinned .ok source bundle.")
+        losses[-1] = "External re-export may discard source/program/occurrence extras; the pinned .ok source bundle remains authoritative."
+    return BakedScene(model.module_name, model.scene_name, exact_times, times, boundaries, nodes, metadata, report,
+                      options, contract=target_contract, schema_version=version)

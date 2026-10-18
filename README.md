@@ -6,9 +6,25 @@ OntoKin (pronounced **ON-toh-kin**) is a programming language under development,
 
 The current direction begins with exterior 3D models and short animations. Those objects should remain reusable in larger scenes, video games, and eventually more complex virtual worlds. Physics and mechanics are central to the design; mathematics gives those descriptions precise meaning.
 
-> **Project status:** Experimental reference implementation **0.3.0** with a durable local agent interface and working 3D animation export. Agents can discover, create, inspect, atomically edit, validate, evaluate, and export the bounded `core-0.1` programs through a versioned JSON contract. The offline viewer plays the resulting GLBs. The twelve core language decisions remain the engineering baseline. Broader modeling, physical interaction, controllers, live delivery, and production-scale architecture remain unfinished.
+> **Project status:** The published experimental baseline is **0.3.0**, with a durable local agent interface and working 3D animation export for `core-0.1`. The prospective **0.4.0** implementation adds exact-pinned source modules and keyed assembly construction through language `0.2`, `construction-0.1`, and `ontokin.agent/0.2`. Its complete release gate is **under verification**. The core language meanings and existing interfaces remain supported. Broader modeling, physical interaction, controllers, live delivery, and production-scale architecture remain unfinished.
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
+
+## Build an assembly from a pinned component library
+
+From the repository root, with Python 3.11 or later:
+
+```bash
+python3 tools/build_construction_demo.py --help
+python3 tools/build_construction_demo.py --output-dir /tmp/ontokin-construction-demo
+python3 -m ontokin agent --protocol ontokin.agent/0.2 --store /tmp/ontokin-program-state
+```
+
+The demonstration uses a real imported component module and a `Keyed` input to construct two assemblies with three and five articulated parts. It discovers the pinned library, inspects a generated occurrence, rejects an invalid units edit, repairs that occurrence's public length parameter, evaluates the motion, and retrieves `keyed-rack.glb` through the agent interface. The final assembly contains 18 objects; the generated collection itself adds no object or mass. Its expected dimensions and 126 world poses are specified independently in the [Rack fixture](docs/language-design/construction-v0.1/01-keyed-rack/expected.json).
+
+Open [the offline viewer](examples/visual/viewer.html), choose **Open GLB**, and select `/tmp/ontokin-construction-demo/keyed-rack.glb`. The [construction example guide](examples/construction/README.md) explains the motion, exact source files, reports, and Python APIs for loading either a local file manifest or an inline bundle. The demo driver reproduces its fixed fixture; the program-bundle APIs support an agent's own authored sources.
+
+[OK-LANG-002](docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md) defines the versioned language extension. [OK-AGENT-002](docs/engineering/OK-AGENT-002-program-bundles-and-atomic-source-edits.md) defines program revisions, atomic edits across files, source provenance, and the separate agent service. `.ok` files remain the editable authority; the complete pinned source closure identifies an accepted program. The new animation target is `ontokin.glb/0.2`.
 
 ## Author and repair through the agent interface
 
@@ -44,7 +60,7 @@ Each successful command writes a self-contained GLB and a JSON report beside it,
 
 The default export samples at least 60 times per second and includes exact semantic event/completion boundaries. Its numerical checks read the encoded GLB and compare positions, orientations, and key timing with the reference evaluator. The adapter's default tolerances are `0.001 m`, `0.001 rad`, and `0.000001 s`. These concern exported playback and do not relax the evaluator's stricter language conformance checks. [OK-ENG-002](docs/engineering/OK-ENG-002-3d-scene-animation-export-and-visual-validation.md) defines the contract, evidence, and limits.
 
-## Run the prototype
+## Run the core prototype
 
 Use **Python 3.11 or later** from this repository's root. No external runtime dependency or installation is required.
 
@@ -68,11 +84,15 @@ The head retains its 90-degree local yaw when that action completes. The hand co
 
 ### Commands and failure results
 
+The `check`, `evaluate`, and `export` file commands use the existing single-source `core-0.1` contract. Program bundles use the explicitly selected agent service or the [construction Python APIs](examples/construction/README.md#use-local-source-files-or-an-inline-bundle).
+
 | Command | Purpose |
 | --- | --- |
 | `python3 -m ontokin capabilities` | Inspect implemented operations, output levels, physical assumptions, and numerical limits. |
 | `python3 -m ontokin agent --store DIR` | Serve versioned JSONL agent requests with durable local source, request, run, and artifact state. |
 | `python3 -m ontokin agent --store DIR --request request.json --wait` | Execute one request and return its terminal result; omit `--wait` for a retained queued receipt. |
+| `python3 -m ontokin agent --protocol ontokin.agent/0.2 --store DIR` | Serve program-bundle JSONL requests in a separate durable store, with exact dependency and per-file source identities. |
+| `python3 -m ontokin agent --protocol ontokin.agent/0.2 --store DIR --request request.json --wait` | Execute one versioned program request and return its terminal response. |
 | `python3 -m ontokin check FILE.ok` | Validate and preflight the declared timeline. |
 | `python3 -m ontokin check FILE.ok --level represented` | Check source representation while disclosing unresolved support requests. |
 | `python3 -m ontokin check FILE.ok --level constructed` | Derive the initial world state before time-zero actions, without requiring later actions to be admissible. |
@@ -84,7 +104,7 @@ The head retains its 90-degree local yaw when that action completes. The hand co
 
 JSON diagnostics contain the stable error code, failure phase, source revision, original UTF-8 byte span, governing rules, and repair guidance. Admission and transition failures found during preflight retain the time and phase of the authored failure. Receiving a suggested repair does not apply it.
 
-Exit status is `0` for success, `1` for I/O or conformance-run failure, `2` for an invalid/conflicting source, unavailable sample, numerical failure, or resource limit, and `3` for an unsupported requested capability/level. Generic `check --level delivered` still returns unsupported because it names no destination contract. Use `export` for the bounded GLB contract; no lower-level success substitutes for the requested result.
+For the core file commands, exit status is `0` for success, `1` for I/O failure, `2` for an invalid/conflicting source, unavailable sample, numerical failure, or resource limit, and `3` for an unsupported requested capability/level. Core conformance returns `1` when its run fails. Agent one-request mode returns `1` for a rejected, failed, or unknown result; JSONL clients inspect each response's status and diagnostics. Generic `check --level delivered` still returns unsupported because it names no destination contract. Use `export` for the bounded core GLB contract, or name `ontokin.glb/0.2` in a program-agent export request.
 
 Sample times written on the command line are exact decimal seconds. Source time quantities first become canonical binary64 values, and event scheduling preserves those values exactly. A decimal sample of `0.1` is therefore slightly earlier than an event authored as `0.1[s]`. Returned `boundary_times_seconds` gives the exact event and completion times; use those strings for exact boundary inspection.
 
@@ -97,9 +117,12 @@ python3 -m unittest discover -s tests -v
 python3 -m ontokin conformance --output /tmp/ontokin-conformance.json
 python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py
 python3 tools/build_visual_demos.py
+python3 tools/build_construction_demo.py --output-dir /tmp/ontokin-construction-demo
 ```
 
 The tests check source-to-state behavior, independent numerical expectations, diagnostics, event boundaries, release from moving joint chains, parameter scope, and command-line failures. Export tests also decode the GLB independently, check triangle geometry and several complete turns of rotation, and reject precision loss or unsupported output. The [GitHub Actions workflow](.github/workflows/reference.yml) runs Python checks on 3.11, 3.12, and 3.13, with a separate format and visual verification job. [OK-ENG-001](docs/engineering/OK-ENG-001-core-reference-implementation-and-conformance-plan.md#6-measured-evidence) preserves the original prototype evidence; [OK-ENG-002](docs/engineering/OK-ENG-002-3d-scene-animation-export-and-visual-validation.md#8-measured-evidence) records the export milestone.
+
+The [C01–C20 construction manifest](docs/language-design/construction-v0.1/validation-cases.json) fixes the new module, construction, scoped-edit, lifecycle, and delivery requirements. Its [runner](ontokin/construction_conformance.py) executes the selected tests and separately verifies identified external evidence. A run without the required external delivery evidence leaves that gate pending. [STATUS.md](STATUS.md) records when the complete local and CI release gate has closed; the fixture expectations and demo driver alone do not establish that result.
 
 ## Start reading
 
@@ -114,12 +137,16 @@ Use the [documentation guide](docs/README.md) for the full reading order, docume
 | What does the first prototype implement, and how is it checked? | [OK-ENG-001: Core reference implementation and conformance plan](docs/engineering/OK-ENG-001-core-reference-implementation-and-conformance-plan.md) |
 | How do calculated objects and motion become a visible animation? | [OK-ENG-002: 3D scene representation, animation export, and visual validation](docs/engineering/OK-ENG-002-3d-scene-animation-export-and-visual-validation.md) |
 | How does an agent discover, inspect, edit, evaluate, and retrieve an animation? | [OK-AGENT-001: AI agent authoring and inspection interface](docs/engineering/OK-AGENT-001-ai-agent-authoring-and-inspection-interface.md) |
+| How do exact-pinned modules and immutable inputs generate reusable assemblies? | [OK-LANG-002: Pinned modules and keyed assembly construction](docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md) |
+| How does an agent inspect and atomically edit a complete source bundle? | [OK-AGENT-002: Program bundles and atomic source edits](docs/engineering/OK-AGENT-002-program-bundles-and-atomic-source-edits.md) |
 
 The documents are organized into **Product**, **Language design**, and **Engineering**. The [founding records](docs/README.md#founding-design-records) retain the original vision, language exploration, and architecture options. Their dates and proposal status remain visible. The guide explains how that earlier work relates to the current modeling direction.
 
 ## Language and implementation scope
 
 The [core language specification](docs/language-design/OK-LANG-001-core-language-specification.md) reviews all 28 proposed semantic rules and defines `core-0.1`: typed classes and pure methods, independently instantiated parts, explicit frames and units, prescribed joints, concurrent action channels, exact event ordering, and a limited gravity/release contract.
+
+The prospective `construction-0.1` extension adds side-effect-free source modules with exact version/content pins, qualified nominal types and pure functions, flat immutable `Keyed<T>` inputs, and bounded generated parts with stable per-key identities. Public per-key overrides apply before nested construction. This profile uses the same motion and physical subset. Imports are resolved from explicitly supplied bytes; supported limits include 16 dependency modules, 256 entries per keyed value, 1,000 objects, and 2,000,000 total source bytes. Nested authored keyed values, runtime topology changes, host-language execution, and network package resolution are outside this profile. The [language contract](docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md) supplies the complete limits and version rules.
 
 Start with [independently moving parts](docs/language-design/core-v0.1/01-independent-parts.ok), then [gravity and release](docs/language-design/core-v0.1/02-gravity-and-release.ok). Two further programs check rotational velocity transfer and the distinction between ownership and following. The [validation manifest](docs/language-design/core-v0.1/validation-cases.json) preserves the original 43 source cases and ten agent-operation cases with their expected outcomes and historical design status. The separate [source conformance report](docs/engineering/agent-validation/core-conformance.json) records execution under 0.3.0. The [agent conformance report](docs/engineering/agent-validation/conformance.json) executes A01–A10 against the durable service; both are finite test-corpus evidence, not full-product certification.
 
