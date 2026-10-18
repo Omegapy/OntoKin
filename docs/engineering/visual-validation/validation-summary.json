@@ -1,0 +1,269 @@
+{
+  "schema_version": "ontokin.eng-002-evidence/0.1",
+  "generated_utc": "2026-10-17T23:45:20.293866+00:00",
+  "milestone": "OK-ENG-002",
+  "target_contract": "ontokin.glb/0.1",
+  "implementation_version": "0.2.0",
+  "reviewed_repository_base": "a14d9b9f4c5639ccfba2d85a9bda3552f2e9a9c5",
+  "source_code_sha256": "27f1e23e45e33aeea5c0634ff9fdda6a46a0912dcc4a60ac9b52bc40f7f7a9c0",
+  "environment": {
+    "python": "3.12.14",
+    "python_implementation": "CPython",
+    "operating_system": "Linux"
+  },
+  "unit_tests": {
+    "status": "passed",
+    "count": 103,
+    "seconds": 23.674,
+    "command": "python3 -m unittest discover -s tests -v",
+    "evidence": "docs/engineering/visual-validation/unit-tests.txt"
+  },
+  "source_conformance": {
+    "passed": 43,
+    "failed": 0,
+    "total": 43,
+    "assertions": 694,
+    "expected_valid": 12,
+    "expected_invalid_or_conflicting": 29,
+    "expected_unsupported": 2
+  },
+  "external_validation": {
+    "files": 6,
+    "khronos_errors": 0,
+    "khronos_warnings": 0,
+    "three_js_loaded": true,
+    "object_pose_comparisons": 347,
+    "numerical_status": "passed",
+    "evidence": "docs/engineering/visual-validation/external-results.json"
+  },
+  "browser_validation": {
+    "status": "passed",
+    "checks": 10,
+    "captures": 3,
+    "browser": "141.0.7390.37",
+    "evidence": "docs/engineering/visual-validation/viewer-results.json"
+  },
+  "demonstrations": [
+    {
+      "source": {
+        "uri": "examples/visual/01-independent-parts.ok",
+        "revision": "sha256:3c294428bdee06469bc6e8da68455900fd734be172482d8cfdf241b531a13303",
+        "editable_source_of_truth": ".ok",
+        "provenance": "caller_supplied; exporter receives a validated model, not source bytes"
+      },
+      "report": "examples/visual/01-independent-parts.export.json",
+      "artifact": {
+        "media_type": "model/gltf-binary",
+        "gltf_version": "2.0",
+        "byte_length": 76920,
+        "sha256": "sha256:53b8a5970459e93552b3f0e8506b48cc12a78c8d8e7f43d05bdb203228533811"
+      },
+      "sampling": {
+        "requested_fps": 60,
+        "start_seconds": "0",
+        "end_seconds": "3",
+        "keyframe_count": 181,
+        "angular_speed_bound_rad_per_s": 3.141592653589793,
+        "max_angular_step_rad": 0.7853981633974483,
+        "max_key_interval_seconds": 0.016666889190673828,
+        "boundary_times_seconds": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "boundary_time_mapping": [
+          {
+            "source_seconds": "0",
+            "export_seconds": 0.0,
+            "error_seconds": 0.0
+          },
+          {
+            "source_seconds": "1",
+            "export_seconds": 1.0,
+            "error_seconds": 0.0
+          },
+          {
+            "source_seconds": "2",
+            "export_seconds": 2.0,
+            "error_seconds": 0.0
+          },
+          {
+            "source_seconds": "3",
+            "export_seconds": 3.0,
+            "error_seconds": 0.0
+          }
+        ],
+        "max_time_quantization_error_seconds": 1.1126200361033511e-07,
+        "redundant_grid_keys_removed": 0,
+        "max_boundary_position_jump_m": 0.0,
+        "max_boundary_rotation_jump_rad": 0.0
+      },
+      "validation": {
+        "status": "passed",
+        "structure": "passed_bounded_glb_reader",
+        "method": "Decode serialized JSON/BIN accessors; LINEAR translation and shortest-path SLERP; compare fresh semantic evaluation.",
+        "position_metric": "maximum absolute XYZ component error in metres",
+        "rotation_metric": "orientation angle in radians, invariant to quaternion sign",
+        "probe_policy": "source/stored keys, quarter/mid/three-quarter interval times, before/after exact boundaries",
+        "sample_count": 893,
+        "node_pose_comparisons": 6251,
+        "max_position_error_m": 1.6689300519345807e-07,
+        "max_rotation_error_rad": 7.115158760987411e-08,
+        "max_time_error_seconds": 1.1126200361033511e-07,
+        "worst_position": {
+          "node": "rig.arm",
+          "time_seconds": "1.68333327770233154296875",
+          "side": "after"
+        },
+        "worst_rotation": {
+          "node": "rig.head",
+          "time_seconds": "0.949999988079071044921875",
+          "side": "after"
+        },
+        "max_geometry_dimension_error_m": 5.960464483090178e-09,
+        "failures": [],
+        "failure_details_truncated": false,
+        "scope": "Finite numerical evidence for this artifact and interval; no all-time error proof, rendering-quality proof, or destination import certification."
+      }
+    },
+    {
+      "source": {
+        "uri": "examples/visual/02-gravity-and-release.ok",
+        "revision": "sha256:c3b71bc1b5442c5bd2ba7432f6e95a698bf69fbdf3a0cd04bf077eb20fb957ba",
+        "editable_source_of_truth": ".ok",
+        "provenance": "caller_supplied; exporter receives a validated model, not source bytes"
+      },
+      "report": "examples/visual/02-gravity-and-release.export.json",
+      "artifact": {
+        "media_type": "model/gltf-binary",
+        "gltf_version": "2.0",
+        "byte_length": 46452,
+        "sha256": "sha256:43a5e9220b50043895342388fe50eaaf412bb03697877465332d8ff9cd2e0d79"
+      },
+      "sampling": {
+        "requested_fps": 60,
+        "start_seconds": "0",
+        "end_seconds": "2",
+        "keyframe_count": 121,
+        "angular_speed_bound_rad_per_s": 0.0,
+        "max_angular_step_rad": 0.7853981633974483,
+        "max_key_interval_seconds": 0.016666769981384277,
+        "boundary_times_seconds": [
+          "0",
+          "1",
+          "1.25",
+          "2"
+        ],
+        "boundary_time_mapping": [
+          {
+            "source_seconds": "0",
+            "export_seconds": 0.0,
+            "error_seconds": 0.0
+          },
+          {
+            "source_seconds": "1",
+            "export_seconds": 1.0,
+            "error_seconds": 0.0
+          },
+          {
+            "source_seconds": "1.25",
+            "export_seconds": 1.25,
+            "error_seconds": 0.0
+          },
+          {
+            "source_seconds": "2",
+            "export_seconds": 2.0,
+            "error_seconds": 0.0
+          }
+        ],
+        "max_time_quantization_error_seconds": 5.563100180516756e-08,
+        "redundant_grid_keys_removed": 0,
+        "max_boundary_position_jump_m": 0.0,
+        "max_boundary_rotation_jump_rad": 0.0
+      },
+      "validation": {
+        "status": "passed",
+        "structure": "passed_bounded_glb_reader",
+        "method": "Decode serialized JSON/BIN accessors; LINEAR translation and shortest-path SLERP; compare fresh semantic evaluation.",
+        "position_metric": "maximum absolute XYZ component error in metres",
+        "rotation_metric": "orientation angle in radians, invariant to quaternion sign",
+        "probe_policy": "source/stored keys, quarter/mid/three-quarter interval times, before/after exact boundaries",
+        "sample_count": 597,
+        "node_pose_comparisons": 1791,
+        "max_position_error_m": 0.00034103251694483916,
+        "max_rotation_error_rad": 0.0,
+        "max_time_error_seconds": 5.563100180516756e-08,
+        "worst_position": {
+          "node": "payload",
+          "time_seconds": "1.9249999523162841796875",
+          "side": "after"
+        },
+        "worst_rotation": null,
+        "max_geometry_dimension_error_m": 1.1920928966180355e-08,
+        "failures": [],
+        "failure_details_truncated": false,
+        "scope": "Finite numerical evidence for this artifact and interval; no all-time error proof, rendering-quality proof, or destination import certification."
+      }
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "docs/engineering/visual-validation/core-conformance.json",
+      "bytes": 230251,
+      "sha256": "b39c71e26de8212c581a832135a54c3c77ad38f30713dc32f5be6a804fbae440"
+    },
+    {
+      "path": "docs/engineering/visual-validation/external-results.json",
+      "bytes": 126108,
+      "sha256": "29e6ec3125d18e3cd73b7bb0533c624a7bb6bc9e04d45ae5d4c18fbc31584718"
+    },
+    {
+      "path": "docs/engineering/visual-validation/gravity-and-release.png",
+      "bytes": 417590,
+      "sha256": "9185112eea5d45f0f630327d9f21582c1f46082618d5b547adc5492e6557848f"
+    },
+    {
+      "path": "docs/engineering/visual-validation/independent-parts.png",
+      "bytes": 378607,
+      "sha256": "a54c1a1ac24d1f04b6dddff87b0e699a979310a85cb1ef297a92deebc96dd0f8"
+    },
+    {
+      "path": "docs/engineering/visual-validation/preservation.json",
+      "bytes": 6604,
+      "sha256": "2ea6351131bf85b52de7be1b4354f4919faf791c9bb1e3f8933a7a97c715bd0f"
+    },
+    {
+      "path": "docs/engineering/visual-validation/unit-tests.txt",
+      "bytes": 16085,
+      "sha256": "b44c2fc9509e5d7339c6fcc865b58267e701d38d6fac46eea0e7254becdd5090"
+    },
+    {
+      "path": "docs/engineering/visual-validation/viewer-narrow.png",
+      "bytes": 284742,
+      "sha256": "055c0e77719f23ffa0ff4b2906334d8dffc5d25894a8b76743b4ef513800e2fd"
+    },
+    {
+      "path": "docs/engineering/visual-validation/viewer-results.json",
+      "bytes": 1683,
+      "sha256": "820f12e79dc2d2e8eb2b8dc80e7a9ef08bef9bd7626fa41c3eafabf808557ba9"
+    }
+  ],
+  "limits": [
+    "Finite sample comparisons are not an all-time numerical error proof.",
+    "Independent destination validation covers Three.js; Blender import was not executed.",
+    "No production physics engine, collision response, graphical authoring editor, or A01-A10 agent protocol service is implemented."
+  ],
+  "preservation": {
+    "status": "passed",
+    "original_source_records": 29,
+    "historical_sections": 233,
+    "links": {
+      "documents": 16,
+      "local_links": 257,
+      "anchors": 70,
+      "external_skipped": 257
+    },
+    "evidence": "docs/engineering/visual-validation/preservation.json"
+  }
+}

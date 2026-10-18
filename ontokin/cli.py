@@ -1,11 +1,13 @@
-"""Command-line source checking and deterministic headless evaluation."""
+"""Check OntoKin source, evaluate its motion, and export verified animation."""
 
 from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 import sys
+import tempfile
 import uuid
 
 from . import __version__
@@ -24,11 +26,61 @@ def _read_source(path: Path) -> Source:
     return Source(raw.decode("utf-8", errors="replace"), str(path), raw=raw)
 
 
+def _same_path(first: Path, second: Path) -> bool:
+    """Include symlinks and existing hard links when protecting source files."""
+    return first.resolve() == second.resolve() or (
+        first.exists() and second.exists() and first.samefile(second)
+    )
+
+
+def _export_paths(source: Path, output: Path, report: Path | None) -> tuple[Path, Path]:
+    report = report if report is not None else output.with_suffix(".export.json")
+    if output.suffix.lower() != ".glb" or report.suffix.lower() != ".json":
+        raise OntoKinError(
+            "OKL-E-CAPABILITY-UNSUPPORTED", "Export requires a .glb output and a .json report.",
+            category="unsupported", phase="support", blocks=["delivered"],
+            details={"target_contract": "ontokin.glb/0.1", "export_code": "OKE-E-OUTPUT-PATH"},
+            repair="Choose separate .glb and .json output paths.",
+        )
+    if any(_same_path(a, b) for a, b in ((source, output), (source, report), (output, report))):
+        raise OntoKinError(
+            "OKL-E-CAPABILITY-UNSUPPORTED", "Export destinations must be separate from each other and the source.",
+            category="unsupported", phase="support", blocks=["delivered"],
+            details={"target_contract": "ontokin.glb/0.1", "export_code": "OKE-E-OUTPUT-PATH"},
+            repair="Choose new output paths that do not alias the .ok source.",
+        )
+    return output, report
+
+
+def _write_export(output: Path, data: bytes, report_path: Path, report: dict) -> None:
+    """Stage complete files before replacing either destination.
+
+    Each replacement is atomic. The report's artifact hash identifies its exact
+    GLB; two paths in different directories cannot form one atomic transaction.
+    """
+    staged: list[tuple[Path, Path]] = []
+    report_bytes = (json.dumps(report, indent=2, ensure_ascii=False, allow_nan=False) + "\n").encode("utf-8")
+    try:
+        for destination, content in ((output, data), (report_path, report_bytes)):
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            with tempfile.NamedTemporaryFile(dir=destination.parent, prefix=".ontokin-", suffix=".tmp", delete=False) as stream:
+                temporary = Path(stream.name)
+                staged.append((temporary, destination))
+                stream.write(content)
+                stream.flush()
+                os.fsync(stream.fileno())
+        for temporary, destination in staged:
+            os.replace(temporary, destination)
+    finally:
+        for temporary, _ in staged:
+            temporary.unlink(missing_ok=True)
+
+
 def capabilities() -> dict:
     return {
         "implementation": "ontokin-reference", "version": __version__,
         "language_version": "0.1", "profile": "core-0.1",
-        "operations": ["check", "evaluate", "conformance", "capabilities"],
+        "operations": ["check", "evaluate", "export", "conformance", "capabilities"],
         "output_levels": ["represented", "constructed", "evaluated"],
         "source_features": ["classes", "single_inheritance", "pure_functions_and_methods",
                             "typed_quantities", "independent_parts", "sites", "follow",
@@ -38,15 +90,28 @@ def capabilities() -> dict:
         "numeric_contract": "exact canonical source arithmetic and event clock; binary64 analytical spatial calculations",
         "conformance_scope": "published source cases and bounded behavioral checks; not universal core certification",
         "unsupported": ["contact_and_collision_response", "dynamic_articulated_joints", "closed_mechanical_loops",
-                        "general_rigid_body_dynamics", "rendering", "external_delivery", "persistent_agent_editing_service"],
+                        "general_rigid_body_dynamics", "general_external_delivery", "persistent_agent_editing_service"],
+        "export_targets": {
+            "ontokin.glb/0.1": {
+                "format": "glTF 2.0 binary (.glb)",
+                "geometry": ["empty", "box", "sphere"],
+                "animation": "evaluated world transforms baked to float32 LINEAR tracks",
+                "source_of_truth": ".ok source; exported playback does not execute OntoKin physics",
+                "default_fps": 60,
+                "default_tolerances": {"position_m": 0.001, "rotation_rad": 0.001, "time_s": 0.000001},
+                "validation": "encoded keyframes, event boundaries, and finite interior samples",
+            }
+        },
         "limitations": ["General correctly rounded transcendental functions are not certified.",
                         "Exact represented rotations are approximated in binary64 spatial calculations.",
-                        "Whole-interval range proofs for arbitrary rotating chains remain future work."],
+                        "Whole-interval range proofs for arbitrary rotating chains remain future work.",
+                        "GLB export uses tessellated spheres and finite animation samples; it is not an all-time error proof.",
+                        "Physics, live joint constraints, and editable source structure do not execute in a GLB viewer."],
     }
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="ontokin", description="OntoKin core-0.1 headless reference prototype")
+    parser = argparse.ArgumentParser(prog="ontokin", description="OntoKin core-0.1 reference implementation and animation exporter")
     parser.add_argument("--version", action="version", version=__version__)
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("capabilities", help="Show implemented operations and physical/numeric limits as JSON")
@@ -59,6 +124,16 @@ def main(argv: list[str] | None = None) -> int:
     evaluate_parser.add_argument("--side", choices=("before", "after"), default="after")
     evaluate_parser.add_argument("--object", help="Inspect one object's pose and world-measured velocity")
     evaluate_parser.add_argument("--frame", default="world", help="Frame for --object inspection, for example first.frame")
+    export_parser = commands.add_parser("export", help="Bake and verify an animation in a self-contained .glb file")
+    export_parser.add_argument("file", type=Path)
+    export_parser.add_argument("--output", type=Path, required=True, help="Destination .glb file")
+    export_parser.add_argument("--report", type=Path, help="JSON evidence sidecar; defaults to OUTPUT.export.json")
+    export_parser.add_argument("--fps", type=float, default=60, help="Minimum sample rate; default 60 frames per second")
+    export_parser.add_argument("--end", help="Exact decimal end time, from zero through the authored scene duration")
+    export_parser.add_argument("--position-tolerance", type=float, default=0.001, metavar="METRES")
+    export_parser.add_argument("--rotation-tolerance", type=float, default=0.001, metavar="RADIANS")
+    export_parser.add_argument("--time-tolerance", type=float, default=0.000001, metavar="SECONDS")
+    export_parser.add_argument("--no-helpers", action="store_true", help="Omit the display-only assembly and joint markers")
     suite = commands.add_parser("conformance", help="Execute the published source cases and expected observations")
     suite.add_argument("--fixtures", type=Path, default=DEFAULT_FIXTURES)
     suite.add_argument("--output", type=Path, help="Write the complete JSON report to this path")
@@ -85,7 +160,7 @@ def main(argv: list[str] | None = None) -> int:
     except OSError as exc:
         _print({"outcome": "io_error", "file": str(args.file), "message": str(exc)})
         return 1
-    requested = args.level if args.command == "check" else "evaluated"
+    requested = args.level if args.command == "check" else ("delivered" if args.command == "export" else "evaluated")
     try:
         if len(source.raw) > MAX_SOURCE_BYTES:
             raise OntoKinError("OKL-E-RESOURCE", "Source exceeds the 2 MB reference budget.",
@@ -100,11 +175,29 @@ def main(argv: list[str] | None = None) -> int:
         ast = parse(text, source.filename)
         # Source errors remain primary even if the requested delivery level is unavailable.
         model = validate(ast, level="evaluated" if requested == "delivered" else requested)
-        if requested == "delivered":
-            raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED", "The reference prototype has no external delivery operation.",
+        if requested == "delivered" and args.command == "check":
+            raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED", "Generic delivered-level checking has no target. Use export for the ontokin.glb/0.1 contract.",
                                ast, category="unsupported", phase="support", blocks=["delivered"])
         warnings = [d.to_dict(source) for d in model.diagnostics]
-        if args.command == "check":
+        if args.command == "export":
+            from .gltf import export_glb
+            from .scene import ExportOptions
+            output, report_path = _export_paths(args.file, args.output, args.report)
+            exported = export_glb(
+                model,
+                options=ExportOptions(fps=args.fps, end=args.end,
+                                      position_tolerance_m=args.position_tolerance,
+                                      rotation_tolerance_rad=args.rotation_tolerance,
+                                      time_tolerance_s=args.time_tolerance,
+                                      helpers=not args.no_helpers),
+                source_uri=str(args.file), source_sha256=source.revision,
+            )
+            report = dict(exported.report)
+            report.update({"operation": "export", "output": str(output), "report": str(report_path),
+                           "source_revision": source.revision, "source_diagnostics": warnings})
+            _write_export(output, exported.data, report_path, report)
+            _print(report)
+        elif args.command == "check":
             result = {"outcome": "valid", "operation": "check", "level": requested,
                       "profile": model.profile, "source_revision": source.revision,
                       "module": model.module_name, "scene": model.scene_name,
@@ -125,6 +218,9 @@ def main(argv: list[str] | None = None) -> int:
                            "run_id": str(uuid.uuid4()), "diagnostics": warnings})
             _print(result)
         return 0
+    except OSError as exc:
+        _print({"outcome": "io_error", "file": str(args.file), "message": str(exc)})
+        return 1
     except OntoKinError as exc:
         diagnostic = exc.diagnostic.to_dict(source)
         _print({"outcome": diagnostic["category"], "requested_level": requested,

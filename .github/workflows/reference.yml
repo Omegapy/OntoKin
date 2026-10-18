@@ -10,6 +10,7 @@ permissions:
 jobs:
   reference:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
@@ -27,3 +28,41 @@ jobs:
         run: python -m ontokin conformance --output /tmp/ontokin-conformance.json
       - name: Documentation preservation and links
         run: python docs/maintenance/reorganization-2026-10-17/verify_reorganization.py
+
+  visual:
+    name: GLB format and visual validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: tools/package-lock.json
+      - name: Install pinned verification tools
+        run: npm ci --prefix tools --ignore-scripts
+      - name: Build the viewer and all six source animations
+        run: |
+          npm run build-viewer --prefix tools
+          python tools/build_visual_demos.py --include-conformance
+      - name: Khronos format validation and Three.js numerical comparison
+        run: node tools/verify_gltf.mjs examples/visual --output /tmp/ontokin-external-validation.json
+      - name: Install the validation browser
+        run: node tools/node_modules/playwright/cli.js install chromium --only-shell --with-deps
+      - name: Render and operate the offline viewer
+        run: node tools/verify_viewer.mjs --output-dir /tmp/ontokin-viewer-validation
+      - name: Preserve validation evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ontokin-visual-validation
+          path: |
+            /tmp/ontokin-external-validation.json
+            /tmp/ontokin-viewer-validation
+          retention-days: 14

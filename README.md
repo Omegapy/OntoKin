@@ -6,7 +6,30 @@ OntoKin (pronounced **ON-toh-kin**) is a programming language under development,
 
 The current direction begins with exterior 3D models and short animations. Those objects should remain reusable in larger scenes, video games, and eventually more complex virtual worlds. Physics and mechanics are central to the design; mathematics gives those descriptions precise meaning.
 
-> **Project status:** Experimental headless reference prototype. The repository includes a working parser, typed validator, and semantic evaluator for the bounded `core-0.1` demonstrations. The twelve core language decisions are adopted as an engineering baseline. Broader product and semantic requirements retain their draft status. Rendering, external delivery, and a production compiler are future work.
+> **Project status:** Experimental reference implementation with working 3D animation export. The parser, typed validator, and semantic evaluator process the bounded `core-0.1` demonstrations. A glTF 2.0 exporter turns their calculated world motion into `.glb` files, and an offline viewer plays those files. The twelve core language decisions remain the engineering baseline. Broader product and semantic requirements retain their draft status; a production compiler, general physics engine, and versioned agent service remain future work.
+
+## See the animations
+
+Open [the offline animation viewer](examples/visual/viewer.html) from a local checkout. It includes two actual OntoKin exports: an assembly whose head and hand move independently, and a sphere that continues under gravity after its carrier releases it and stops. Play, pause, scrub the timeline, orbit the view, or inspect an object's world position. The viewer loads the exported GLB bytes through Three.js; it does not calculate another physical trajectory.
+
+On macOS, from the repository root:
+
+```bash
+open examples/visual/viewer.html
+```
+
+The bundled viewer and demonstrations work offline. The [visual example guide](examples/visual/README.md) explains the controls, editable sources, generated files, and optional verification tools. To open the exports in another application, use [independent parts](examples/visual/01-independent-parts.glb) or [gravity and release](examples/visual/02-gravity-and-release.glb). Blender import instructions are included in the guide; the measured target for this milestone is Three.js, with separate Khronos format validation.
+
+### Export an OntoKin program
+
+```bash
+python3 -m ontokin export examples/visual/01-independent-parts.ok --output /tmp/independent-parts.glb
+python3 -m ontokin export examples/visual/02-gravity-and-release.ok --output /tmp/gravity-and-release.glb
+```
+
+Each successful command writes a self-contained GLB and a JSON report beside it, such as `/tmp/gravity-and-release.export.json`. The report identifies the source revision, artifact hash, sampling settings, measured errors, and information retained only as metadata. The `.ok` source remains unchanged.
+
+The default export samples at least 60 times per second and includes exact semantic event/completion boundaries. Its numerical checks read the encoded GLB and compare positions, orientations, and key timing with the reference evaluator. The adapter's default tolerances are `0.001 m`, `0.001 rad`, and `0.000001 s`. These concern exported playback and do not relax the evaluator's stricter language conformance checks. [OK-ENG-002](docs/engineering/OK-ENG-002-3d-scene-animation-export-and-visual-validation.md) defines the contract, evidence, and limits.
 
 ## Run the prototype
 
@@ -40,11 +63,13 @@ The head retains its 90-degree local yaw when that action completes. The hand co
 | `python3 -m ontokin check FILE.ok --level constructed` | Derive the initial world state before time-zero actions, without requiring later actions to be admissible. |
 | `python3 -m ontokin evaluate FILE.ok --times 1 1.5 2 --side before` | Sample the incoming side of an event or natural completion. The default side is `after`. |
 | `python3 -m ontokin evaluate FILE.ok --times 0.5 --object first.ball --frame first.frame` | Inspect one object in another frame. Velocity remains measured relative to world and is expressed in the requested axes. |
-| `python3 -m ontokin conformance --output docs/engineering/conformance-results.json` | Execute all 43 published source cases and write their measured results. |
+| `python3 -m ontokin export FILE.ok --output FILE.glb` | Bake, encode, and numerically verify a GLB under the named `ontokin.glb/0.1` contract; write a JSON sidecar. |
+| `python3 -m ontokin export FILE.ok --output FILE.glb --fps 120 --end 1.5 --no-helpers` | Export a shorter interval with denser sampling and no display-only assembly/joint markers. |
+| `python3 -m ontokin conformance --output /tmp/ontokin-conformance.json` | Execute all 43 published source cases and write their measured results. |
 
 JSON diagnostics contain the stable error code, failure phase, source revision, original UTF-8 byte span, governing rules, and repair guidance. Admission and transition failures found during preflight retain the time and phase of the authored failure. Receiving a suggested repair does not apply it.
 
-Exit status is `0` for success, `1` for I/O or conformance-run failure, `2` for an invalid/conflicting source, unavailable sample, numerical failure, or resource limit, and `3` for an unsupported requested capability/level. `--level delivered` returns unsupported; no lower-level success substitutes for delivery.
+Exit status is `0` for success, `1` for I/O or conformance-run failure, `2` for an invalid/conflicting source, unavailable sample, numerical failure, or resource limit, and `3` for an unsupported requested capability/level. Generic `check --level delivered` still returns unsupported because it names no destination contract. Use `export` for the bounded GLB contract; no lower-level success substitutes for the requested result.
 
 Sample times written on the command line are exact decimal seconds. Source time quantities first become canonical binary64 values, and event scheduling preserves those values exactly. A decimal sample of `0.1` is therefore slightly earlier than an event authored as `0.1[s]`. Returned `boundary_times_seconds` gives the exact event and completion times; use those strings for exact boundary inspection.
 
@@ -56,9 +81,10 @@ For an optional installed `ontokin` command, install the checkout in a Python en
 python3 -m unittest discover -s tests -v
 python3 -m ontokin conformance --output /tmp/ontokin-conformance.json
 python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py
+python3 tools/build_visual_demos.py
 ```
 
-The tests check source-to-state behavior, independent numerical expectations, diagnostics, event boundaries, release from moving joint chains, parameter scope, and command-line failures. The [GitHub Actions workflow](.github/workflows/reference.yml) is configured to run these commands on Python 3.11, 3.12, and 3.13. Actual execution evidence and its limitations are recorded in [OK-ENG-001](docs/engineering/OK-ENG-001-core-reference-implementation-and-conformance-plan.md#6-measured-evidence).
+The tests check source-to-state behavior, independent numerical expectations, diagnostics, event boundaries, release from moving joint chains, parameter scope, and command-line failures. Export tests also decode the GLB independently, check triangle geometry and several complete turns of rotation, and reject precision loss or unsupported output. The [GitHub Actions workflow](.github/workflows/reference.yml) runs Python checks on 3.11, 3.12, and 3.13, with a separate format and visual verification job. [OK-ENG-001](docs/engineering/OK-ENG-001-core-reference-implementation-and-conformance-plan.md#6-measured-evidence) preserves the original prototype evidence; [OK-ENG-002](docs/engineering/OK-ENG-002-3d-scene-animation-export-and-visual-validation.md#8-measured-evidence) records the export milestone.
 
 ## Start reading
 
@@ -71,6 +97,7 @@ Use the [documentation guide](docs/README.md) for the full reading order, docume
 | What do objects, movement, mechanics, and physics mean? | [OK-SEM-001: Core object, motion, and physics semantics](docs/language-design/OK-SEM-001-core-object-motion-and-physics-semantics.md) |
 | How does an agent express those meanings in valid code? | [OK-LANG-001: Core language specification](docs/language-design/OK-LANG-001-core-language-specification.md) |
 | What does the first prototype implement, and how is it checked? | [OK-ENG-001: Core reference implementation and conformance plan](docs/engineering/OK-ENG-001-core-reference-implementation-and-conformance-plan.md) |
+| How do calculated objects and motion become a visible animation? | [OK-ENG-002: 3D scene representation, animation export, and visual validation](docs/engineering/OK-ENG-002-3d-scene-animation-export-and-visual-validation.md) |
 
 The documents are organized into **Product**, **Language design**, and **Engineering**. The [founding records](docs/README.md#founding-design-records) retain the original vision, language exploration, and architecture options. Their dates and proposal status remain visible. The guide explains how that earlier work relates to the current modeling direction.
 
@@ -78,9 +105,9 @@ The documents are organized into **Product**, **Language design**, and **Enginee
 
 The [core language specification](docs/language-design/OK-LANG-001-core-language-specification.md) reviews all 28 proposed semantic rules and defines `core-0.1`: typed classes and pure methods, independently instantiated parts, explicit frames and units, prescribed joints, concurrent action channels, exact event ordering, and a limited gravity/release contract.
 
-Start with [independently moving parts](docs/language-design/core-v0.1/01-independent-parts.ok), then [gravity and release](docs/language-design/core-v0.1/02-gravity-and-release.ok). Two further programs check rotational velocity transfer and the distinction between ownership and following. The [validation manifest](docs/language-design/core-v0.1/validation-cases.json) preserves the original 43 source cases and ten agent-operation cases with their expected outcomes and historical design status. The separate [measured report](docs/engineering/conformance-results.json) records current source execution. No persistent agent editing/retry service or A01–A10 protocol certification is supplied.
+Start with [independently moving parts](docs/language-design/core-v0.1/01-independent-parts.ok), then [gravity and release](docs/language-design/core-v0.1/02-gravity-and-release.ok). Two further programs check rotational velocity transfer and the distinction between ownership and following. The [validation manifest](docs/language-design/core-v0.1/validation-cases.json) preserves the original 43 source cases and ten agent-operation cases with their expected outcomes and historical design status. The separate [measured report](docs/engineering/visual-validation/core-conformance.json) records current source execution. No persistent agent editing/retry service or A01–A10 protocol certification is supplied.
 
-The reference uses Python's standard library and analytic motion equations. Production compiler, runtime, physics-engine, and renderer choices remain open. Contact, dynamic articulated mechanisms, general body dynamics, deformation, and delivery remain visible future requirements.
+The reference uses Python's standard library and analytic motion equations. Its GLB adapter exports sphere/box meshes, linear RGBA appearance, optional display markers, and sampled world transforms. Source ownership, physical properties, joints, and release events remain inspectable metadata; a destination plays baked motion without executing those rules. Production compiler, runtime, physics-engine, and renderer choices remain open. Contact, dynamic articulated mechanisms, general body dynamics, deformation, and broader delivery contracts remain future requirements.
 
 The physical subset is explicit: uniform gravity, free homogeneous solid spheres, and externally prescribed connections without a load solution. Collision response is disabled and there is no ground plane. A sphere can pass below zero height without a collision. Passing the bounded fixtures does not certify correctly rounded transcendental functions for every input, exact internal rotations, rigorous interval bounds for all rotating mechanisms, long-duration accuracy, or the broader product. [OK-ENG-001](docs/engineering/OK-ENG-001-core-reference-implementation-and-conformance-plan.md) records these limits and the production decisions that still need evidence.
 
