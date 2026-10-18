@@ -1,65 +1,52 @@
 # OntoKin status
 
-Current checkpoint: **2026-10-18T21:48:27Z**. Native **M01–M12** remains implemented, verified and merged through [PR #9](https://github.com/Omegapy/OntoKin/pull/9). The next source impulse milestone is implemented on [draft PR #11](https://github.com/Omegapy/OntoKin/pull/11) at `08de9bd341b7130236eab04467f192730d2d8141`; both current full-suite executions passed **588/588**, and all four jobs passed in branch [CI 39167806861](https://github.com/Omegapy/OntoKin/actions/runs/39167806861). Its complete **I01–I12 release gate is still in progress**. The complete [GOAL](GOAL.md) remains **in progress**.
+Checkpoint: **2026-10-18T23:28:32Z**. The complete [GOAL](GOAL.md) remains **in progress**. Native surface M01–M12 is merged. Source impulse I01–I12 now passes on the identified implementation branch; its durable evidence publication and main integration remain in progress. [AGENTS.md](AGENTS.md) governs coordination and recovery.
 
-## Completed implementation and acceptance
+## Completed native surface release
 
-Language `0.3` / `surface-0.1` now supplies actual parameterized exterior geometry, regional PBR materials, rigid placement and source-driven animation through the native source/compiler pipeline. [OK-AGENT-003](docs/engineering/OK-AGENT-003-native-surface-program-workflows.md) implements explicit `ontokin.agent/0.3`: source discovery, bounded summaries and revision-bound `surface.mesh_page`, atomic section/material edits, evaluation and exact `ontokin.glb/0.3` artifact retrieval. Pages contain at most 256 complete carrier-local triangles; signed cursors bind accepted revision, occurrence, complete geometry/material identity and ordering. Failed candidates, budgets and cancellation preserve accepted state. Earlier protocols, source profiles, catalog defaults and separate stores remain compatible.
+Source `0.3` / `surface-0.1`, Agent/0.3 and GLB/0.3 supply native parameterized loft geometry, regional PBR materials, rigid placement, source-driven animation, revision-bound triangle inspection and atomic scoped source edits. The finite M01–M12 gate is integrated through [PR #9](https://github.com/Omegapy/OntoKin/pull/9), actual merge `1a6dc3268c770d492b93e994b752c72eeb459cb0`. [The durable native evidence](docs/engineering/surface-release-validation/README.md), [summary](docs/engineering/surface-release-validation/validation-summary.json) and [integration record](docs/engineering/surface-release-validation/integration.json) preserve the original implementation `80d59bb`, 464-method suite, 22 source GLBs, 492 agent exchanges, destination checks, reviewed captures and successful PR/main CI. Earlier agent, construction, adapter and document-preservation evidence remains unchanged.
 
-[The durable release evidence](docs/engineering/surface-release-validation/README.md), [summary](docs/engineering/surface-release-validation/validation-summary.json), archive and per-file hash manifest identify exact sources, operations, artifacts, numerical results, captures, visual observations and CI. [OK-ENG-004](docs/engineering/OK-ENG-004-native-surface-release-conformance.md) documents reproduction and the strict evidence audit. Historical GLB adapter evidence and [PR #7](https://github.com/Omegapy/OntoKin/pull/7), merged at `1976b615935ee17ff45e7e6392cded85dc317e87`, remain unchanged.
+[The previous detailed STATUS](https://github.com/Omegapy/OntoKin/blob/b59c074505292bb579b31dfa4caaf4fe19f4e76d/STATUS.md) retains all historical hashes, exact test timings, component lists and earlier integration checkpoints. Visual geometry adds no physical matter or additional pose authority. Recorded GLB playback is not live physics.
 
-| Evidence | Actual result at implementation `80d59bb` |
+## Verified source impulse implementation, integration pending
+
+[PR #11](https://github.com/Omegapy/OntoKin/pull/11), branch `work/impulse01-integration-20261018-1916-astra`, contains exact implementation **`da0eb32c789a6f631a0d39eb219cbb3a912c9dfa`**, tree `b4da2ea696f93287e198475ef26b3cfe348e75e4`. Runtime identity is `ontokin-reference` 0.4.0 / SHA-256 `868b64f0f4644ae7e139f9cc5925e872953b71618172b52fab4a782dd532b784`. These branch capabilities are not yet merged into main.
+
+The adopted OK-LANG-004 contract supplies explicit source `0.4` / `impulse-0.1`, Agent/0.4 and GLB/0.4. It implements world impulses at target-self points on free homogeneous spheres, off-center angular response, ordered release/impulse events, whole-boundary rollback, source-aware inspection, mass/radius source repair and conservatively sampled recorded motion. Changes cover syntax04 and typed construction, evaluator/model, program service/protocol/store/catalog, both CLIs, scene/GLB delivery, actual source workflows, independent numerical/browser validators, mapped conformance tests and additive CI. Frozen expectations were adopted before implementation at `342788a2b5868189c72eae0541e86860a0de43ee` and remain unchanged.
+
+| Current evidence on `da0eb32` | Actual result |
 | --- | --- |
-| Runtime identity | `ontokin-reference` 0.4.0; SHA-256 `abebb2fe7f5af46862db0c24a83c244113a2cfabea1b8a69a22260e4aef2d4d6` |
-| Implementation tree | `a2d9d8f6cc897fb6b5781ed06f2a89e9b256b60c`; tracked checkout clean |
-| Verification inventory | SHA-256 `9cd60ecfc1e52f714adaa410f0928dc1f20bc48680c9ef596a4c54bbff93c012` |
-| Full regression suite | **464/464 passed**, 167.052457 s; every current method plus all 439 inherited identities retained; stable inputs |
-| Core / original agent | **43 source cases / 694 assertions** and **A01–A10** passed |
-| Current construction | **C01–C20: 20 passed, zero failed/pending**; 128 required methods passed; fresh matching source, GLB, browser and reviewed capture |
-| Native acceptance | **M01–M12: 12 passed, zero failed/pending**; 61 mapped methods passed in 35.252839 s; `full_gate_complete: true` |
-| Actual native agent workflow | 22 fixtures; **492 exchanges**, 22 immutable snapshots, 150 mesh pages, 308 source poses; rejected edits, scoped repairs, insertion/reorder/removal, ordinary and generated counts 1/3/7 |
-| Native destination | **22 GLBs / 1,636,624 bytes**; Khronos zero errors/warnings/infos/hints; geometry, winding, normals, PBR, placement, identity and **308 independent Three.js poses** passed |
-| Native browser | Four fixtures, **84 pose comparisons**, **12 visually inspected captures**; Chromium 141.0.7390.37; no page, console or network failures |
-| Current legacy destination | 18 objects; 126 Three.js and 126 browser pose comparisons; Khronos zero errors/warnings; inspected keyed-rack capture |
-| Identified implementation CI | [39153863765](https://github.com/Omegapy/OntoKin/actions/runs/39153863765): Python 3.11, 3.12, 3.13 and GLB/visual jobs all passed for `80d59bb` |
-| Documentation preservation | 29 historical sources, 233 sections and 603 local links passed |
-| Reconciled PR CI | [39157391557](https://github.com/Omegapy/OntoKin/actions/runs/39157391557): all four jobs passed at `1a6dc326` |
-| Resulting main CI | [39157876920](https://github.com/Omegapy/OntoKin/actions/runs/39157876920): all four jobs passed at actual merge `1a6dc326` |
+| Full regression, surface inventory | 588/588 methods passed; 195.795694 s; stable inputs |
+| Full regression, impulse inventory | 588/588 methods passed; 192.285004 s; stable inputs |
+| Core and original Agent | 43 source cases / 694 assertions; A01–A10 passed |
+| Fresh inherited acceptance | C01–C20 and M01–M12 passed; no failed or pending gate |
+| Impulse acceptance | I01–I12 passed; 40 frozen source cases and 124 mapped methods; `full_gate_complete: true` |
+| Native rechecks | 22 surface GLBs / 308 poses; nine impulse GLBs / 192 fixed and 7,628 dense poses passed |
+| Visual review | 24 identified native PNGs and the newly generated construction capture actually reviewed |
+| Exact implementation CI | [39169599694](https://github.com/Omegapy/OntoKin/actions/runs/39169599694): Python 3.11, 3.12, 3.13 and GLB/visual jobs passed |
 
-Changed components: program service/protocol/runtime/store and new `program_surface.py`; profile-aware construction catalog; agent and main CLIs; narrow final-response transaction/store-startup hardening; Agent/0.3 schemas/contract; actual source workflow builder and fixed composition fixtures; independent native destination/browser tools; new surface conformance runner/mapping and tests; additive CI and guides. No installed dependency directory is committed. Package version remains experimental **0.4.0**.
+Recovery re-read the actual remote refs after the interrupted approval. The original CI artifact omitted required construction browser inputs; [run 39174507443](https://github.com/Omegapy/OntoKin/actions/runs/39174507443) regenerated the actual C20 workflow and complete producer paths on exact `da0eb32`. Its source, native GLB and browser evidence now pass the retained-evidence reader. No runtime, reader, tolerance, frozen fixture or historical evidence was altered during recovery. The complete local archive contains 2,204 individually verified regular files.
 
-The release closes the adopted finite surface requirements, including real source edits and source-to-export functionality. The analytical and rendered fixture corpus does not establish arbitrary continuous accuracy or untested destinations. Recorded GLB playback is not live physics. Visual lofts add no represented matter or motion authority.
+[Publication run 39176062099](https://github.com/Omegapy/OntoKin/actions/runs/39176062099) is replaying the existing complete gates on a separate exact checkout before writing only new `docs/engineering/impulse-release-validation/` evidence on `work/impulse04-evidence-20261018-2310-astra`. The temporary recovery workflow is not a product change and will not be integrated. Its result must be observed, not assumed.
 
-[The integration record](docs/engineering/surface-release-validation/integration.json) retains raw PR/main run and job records, observed merge state, conditional parent/head identities and proof that all 182 eligible verification inputs match the tested implementation. Archival publication `3e7a2a61a68a7f7442cbe59e97753405ffbc7856` and merge `1a6dc326` preserve those input bytes. Later status-only CI is distinct from the identified resulting-main run above.
+## Exact next task and remaining goal
 
-## Exact next development task
+Verify that evidence publication actually completed, inspect its archive and exact commit, reconcile current main metadata into PR #11 without altering tested inputs, require current PR checks, merge safely and confirm resulting-main checks. Record the real integration identities and release the lease. [Issue #10](https://github.com/Omegapy/OntoKin/issues/10) retains actual defects, corrections, scopes and recovery evidence.
 
-Finish the adopted, separately versioned source impulse release in [issue #10](https://github.com/Omegapy/OntoKin/issues/10) and [PR #11](https://github.com/Omegapy/OntoKin/pull/11). The frozen OK-LANG-004 contract was published at `342788a2b5868189c72eae0541e86860a0de43ee`; its complete predetermined acceptance corpus remains unchanged. Branch `work/impulse01-integration-20261018-1916-astra` supplies source `0.4` / `impulse-0.1`, explicit Agent/0.4 and native recorded GLB/0.4.
+After impulse integration, reread GOAL and review/adopt the finite center-of-mass force-interval contract tracked in [issue #12](https://github.com/Omegapy/OntoKin/issues/12). It is not adopted or implemented. The earlier named drafting branch was not found in the recovered remote branch list; do not assume a draft or another worker is running. Freeze syntax, exact activation/completion semantics, additive forces, numerical limits, failure/repair fixtures and delivery requirements before new runtime work.
 
-The implemented scope includes instantaneous world momentum at an actual target-self point on a free homogeneous sphere, off-center angular response, ordered release/impulse events, whole-boundary rollback, source-aware bounded inspection, actual mass/radius source repair, conservative high-spin export and older-profile compatibility. All 40 fixed source cases and the published branch CI pass. This is an implementation checkpoint, not full release acceptance.
-
-The independent reader corrections are implemented and verified. At `08de9bd`, the two actual full-suite runs passed 588/588 in 229.885137 s and 230.945098 s; exact-commit CI passed all four jobs. Fresh core/Agent, C01–C20 and M01–M12 passed. The actual Agent/0.4 workflow retained 308 attempts and nine source-built GLBs; independent destination checks passed 192 fixed and 7,628 dense animation poses. The final browser audit found a precise camera-policy mismatch: the viewer fitted transformed local bounding-box corners rather than actual transformed mesh vertices. The one-argument Three.js correction is now being published; the twelve affected captures, both verification-inventory full-suite executions, current CI and final nested/outer release audits must be regenerated before acceptance. Existing source/runtime/GLB and unchanged legacy producer evidence remain identified at their actual producing revision. No reader tolerance or frozen acceptance limit is changed. The earlier diagnostic-default and boundary-budget defects remain documented in issue #10 and branch history.
-
-After this finite release is integrated, reread GOAL and adopt the next unmet physical-influence task. Finite center-of-mass force intervals are being drafted in [issue #12](https://github.com/Omegapy/OntoKin/issues/12) on the independently owned `work/force01-contract-20261018-2129-astra` branch; they are not yet adopted or implemented. Contacts still require an explicit rule for computed impact times and event ordering. Finite forces, contacts and general dynamics remain separate requirements.
-
-## Remaining full-product scope
-
-Still unmet: richer algorithms/libraries and compatible part replacement; textures, mapping, smooth surfaces and deformation/skinning; contacts/collisions, general rigid dynamics, forces and dynamic or closed mechanisms; purposeful locomotion/manipulation; flight/swimming and medium forces; vegetation/flexibility/wind; terrain/buildings; fluids/deformable materials; reusable animation transitions, live engine behavior, scale/performance and measured agent-authoring benefit. Creature, vehicle, appearance and every other full-product area remain governed by GOAL. Current physics is bounded uniform-gravity/free homogeneous spheres and prescribed connections with collisions disabled. Blender delivery and a generic delivered-level check are not established.
+Still unmet: richer typed algorithms and reusable libraries, compatible part replacement; textures, mapping, smooth surfaces and skin deformation; contact/collision response, finite forces, continuous torques, general rigid dynamics, dynamic and closed mechanisms; vehicle systems; articulated creatures and purposeful locomotion/manipulation; flight, swimming and medium forces; vegetation, flexibility and wind; terrain and buildings; liquids and deformable solids; animation transitions and live engine behavior; tested scale/performance and measured authoring benefit against a direct-tool baseline. Every full-product GOAL area remains required. Current profiles keep their collision-disabled meanings; impulse support is a separately versioned finite promise, not general physics. Blender delivery and a generic delivered-level check are not established.
 
 ## Integration and recovery
 
 | Lease field | Value |
 | --- | --- |
-| Integration owner | `interactive-impulse04-20261018-2148Z-astra-root` |
-| Task | Review, validate and integrate the separately versioned source impulse release through PR #11. |
-| Acquired UTC | 2026-10-18T21:48:27Z; reacquired after observing the prior expired lease and unchanged main. |
-| Expires UTC | 2026-10-18T22:18:27Z |
-| Observed main before acquisition | `ef3694f2e211799efe0fbaf64fc45fcdf4ed88ae`; prior native release and historical evidence preserved. |
-| Published branch checkpoint | `08de9bd341b7130236eab04467f192730d2d8141`; PR/push CI 39167806861 and 39167803959 passed. Both 588-test full suites and the pre-camera-correction nested M12 audit passed. |
-| Reserved shared scope | Main integration, STATUS/GOAL release records and new impulse release evidence. Kernel, service and conformance workers retain their declared isolated scopes in issue #10. |
-| Immediate action | Publish the precise vertex camera fit, regenerate its twelve captures and changed-inventory full-suite/CI records, then rerun nested M12 and all I01–I12. Merge only after required checks pass. |
-| Recovery | Read actual main/PR refs, this lease, issue #10 and CI before retrying any interrupted write. Preserve concurrent work and immutable historical evidence. |
+| Owner | `interactive-impulse04-final-20261018-2328Z-astra` |
+| Task | Preserve verified impulse evidence and integrate PR #11; no force runtime work yet. |
+| Acquired UTC | 2026-10-18T23:28:32Z, after observing the expired prior lease and unchanged main/PR refs and issue handoffs. |
+| Expires UTC | 2026-10-18T23:58:32Z |
+| Observed main before acquisition | `b59c074505292bb579b31dfa4caaf4fe19f4e76d` |
+| Reserved scope | Main integration, STATUS/GOAL impulse release records and new impulse evidence. Preserve other branches and all frozen/historical evidence. |
+| Recovery | Read actual main, PR #11 and evidence branch refs, issue #10 and CI before retrying any write. Publication run 39176062099 preserves intended parent/tree/commit identities. A failed chat stream does not establish that a repository write failed. |
 
-[Previous main STATUS at 17:27](docs/engineering/surface-validation/status-20261018-1727.md.txt), [earlier recovery](docs/engineering/surface-validation/recovery-2026-10-18.md), historical construction/agent/native evidence and original preservation hashes remain intact. [Issue #8](https://github.com/Omegapy/OntoKin/issues/8) records branch scopes and handoffs. A missing uploaded-image error in chat is unrelated to repository work; do not retry those attachments.
-
-The owner intentionally disabled **Advance OntoKin**. No automation was changed or reactivated. Continue development interactively toward GOAL; a branch or configured schedule does not establish that another worker is running.
+The owner intentionally disabled **Advance OntoKin**. No automation was changed or reactivated. Continue interactively toward GOAL. Missing uploaded-image or unrelated markdown errors do not change repository state and must not restart attachment work.
