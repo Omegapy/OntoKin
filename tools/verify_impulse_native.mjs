@@ -255,6 +255,27 @@ export async function verifyCase(directory) {
     }
     samples.push({time_seconds:sample.time_seconds,side:sample.side,objects:poses});
   }
+  // A dense clock alone cannot establish that its stored values are correct.
+  // Decode and inspect every actual key plus three interior interpolation
+  // points, independently of the fixed Agent reference sample schedule.
+  const decodedTimes=new Set(clockTimes);
+  for(let i=1;i<clockTimes.length;i++) {
+    const start=clockTimes[i-1],width=clockTimes[i]-start;
+    for(const fraction of [.25,.5,.75])decodedTimes.add(start+fraction*width);
+  }
+  const decodedSamples=[];
+  for(const time of [...decodedTimes].sort((a,b)=>a-b)) {
+    action.reset().play();mixer.setTime(time);gltf.scene.updateMatrixWorld(true);
+    const poses={};
+    for(const object of expectedObjects) {
+      const node=objects.get(object.path),actual={position_m:node.getWorldPosition(new THREE.Vector3()).toArray(),
+        orientation_xyzw:node.getWorldQuaternion(new THREE.Quaternion()).toArray()};
+      const independent=comparePose(actual,expectedPose(object,time),state.tolerances,
+        object.path+' decoded clock independent at '+time);
+      poses[object.path]={...actual,independent};
+    }
+    decodedSamples.push({time_seconds:time,objects:poses});
+  }
   return {fixture:state.oracle.fixture,status:'passed',case_ids:state.oracle.case_ids,
     program_revision:state.revision,artifact_sha256:state.artifactHash,provenance:state.provenance,
     exporter_source_code_sha256:state.exportReport.source_code_sha256,
@@ -264,7 +285,8 @@ export async function verifyCase(directory) {
     clock:{key_count:clockTimes.length,authored_angular_speed_bound_rad_per_s:bounds[state.oracle.fixture],
       maximum_interval_seconds:Math.max(...clockTimes.slice(1).map((t,i)=>t-clockTimes[i])),source_boundaries_retained:true},
     ...(state.oracle.fixture==='P11'?{coarsened_track_rejected:rejectCoarsenedTrack(state,samples)}:{}),
-    geometry,three_js:{version:THREE.REVISION,materials:decodedMaterials,world_pose_comparisons:samples.length*expectedObjects.length,samples}};
+    geometry,three_js:{version:THREE.REVISION,materials:decodedMaterials,world_pose_comparisons:samples.length*expectedObjects.length,samples,
+      decoded_clock_pose_comparisons:decodedSamples.length*expectedObjects.length,decoded_clock_samples:decodedSamples}};
 }
 
 async function main() {
@@ -292,7 +314,7 @@ async function main() {
     tooling_lock_sha256:sha256(await readFile(path.join(root,'tools/package-lock.json'))),
     environment:{node:process.version,platform:process.platform,architecture:process.arch,
       three:tooling.devDependencies.three,khronos_gltf_validator:validator.version()},fixtures:results,
-    limits:['This independently checks the named actual source-built impulse GLBs and fixed pose corpus.',
+    limits:['This independently checks the named actual source-built impulse GLBs, fixed poses, every decoded key and three interior points per interval.',
       'Finite pose samples and declared local float32 tolerances do not establish every continuous time or arbitrary programs.',
       'GLB is recorded motion; contacts, live impulses, Blender, external engine physics and authoring-productivity benchmarks were not executed.']};
   try {
@@ -323,9 +345,11 @@ async function main() {
     }
     report.status='passed';
   } catch(error) {report.status='failed';report.failure={name:error.name,message:error.message};throw error;}
-  finally {await mkdir(path.dirname(output),{recursive:true});await writeFile(output,JSON.stringify(report,null,2)+'\n');}
+  // Keep every decoded pose within the inherited bounded JSON reader.
+  finally {await mkdir(path.dirname(output),{recursive:true});await writeFile(output,JSON.stringify(report)+'\n');}
   console.log(JSON.stringify({status:report.status,fixtures:results.length,
-    world_pose_comparisons:results.reduce((s,r)=>s+r.three_js.world_pose_comparisons,0),output},null,2));
+    world_pose_comparisons:results.reduce((s,r)=>s+r.three_js.world_pose_comparisons,0),
+    decoded_clock_pose_comparisons:results.reduce((s,r)=>s+r.three_js.decoded_clock_pose_comparisons,0),output},null,2));
 }
 
 if(process.argv[1]&&pathToFileURL(path.resolve(process.argv[1])).href===import.meta.url)await main();

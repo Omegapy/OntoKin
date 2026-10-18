@@ -8,7 +8,8 @@ status: adopted-language-contract
 document_type: normative-language-contract
 language_version: "0.4"
 profile: impulse-0.1
-implementation_status: implemented-release-verification-in-progress
+implementation_status: implemented
+release_evidence: tracked-separately-in-STATUS
 ---
 
 # OK-LANG-004: Source impulses on free homogeneous spheres
@@ -179,4 +180,4 @@ For conservative spin sampling, add `sum(norm(q) * norm(J) / I)` over **every au
 
 A release must retain current implementation/source/artifact identities, actual executed test IDs and results, source-driven Agent repair records, independent numerical destination checks, browser captures and identified CI, following [the native release evidence discipline](../engineering/OK-ENG-004-native-surface-release-conformance.md). Historical evidence cannot certify changed runtime bytes. New-profile success alone cannot close the full programming-language goal.
 
-**Explicitly unimplemented by this profile:** finite force intervals, continuous torques, actuators/controllers, contacts/collision detection or response, friction, restitution, moving/static contact planes, sphere-sphere interaction, nonspherical inertia, compound rigid-body aggregation, deformable matter, solver selection, engine-side live simulation and performance or authoring-benefit benchmarks. Existing static and prescribed modes remain available with their established meanings; this proposal does not redefine them.
+**Explicitly unimplemented by this profile:** finite force intervals, continuous torques, actuators/controllers, contacts/collision detection or response, friction, restitution, moving/static contact planes, sphere-sphere interaction, nonspherical inertia, compound rigid-body aggregation, deformable matter, solver selection, engine-side live simulation and performance or authoring-benefit benchmarks. Existing static and prescribed modes remain available with their established meanings; this contract does not redefine them.

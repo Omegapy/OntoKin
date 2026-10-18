@@ -4,7 +4,9 @@ document_id: OK-AGENT-004
 title: Source Impulse Program Workflows
 version: 0.1
 date: 2026-10-18
-status: adopted-interface-contract-release-evidence-pending
+status: adopted-interface-contract
+implementation_status: implemented
+release_evidence: tracked-separately-in-STATUS
 language_contract: OK-LANG-004
 agent_contract: ontokin.agent/0.4
 diagnostic_contract: ontokin.diagnostic/0.2

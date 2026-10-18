@@ -1,6 +1,6 @@
 {
   "schema_version": "ontokin.impulse-conformance-map/0.1",
-  "version": "0.1",
+  "version": "0.2",
   "status": "predetermined_expectations_not_execution_results",
   "acceptance_sha256": "sha256:3b5c22b5a6c9a70b8e33ff568a0b4af963d530405d22f37dbe41516bea20b1f4",
   "profile": "impulse-0.1",
@@ -533,7 +533,20 @@
       "required_tests": [
         "test_impulse_conformance.ImpulseConformanceReaderTests.test_all_frozen_sources_hashes_and_spans_are_loaded",
         "test_impulse_conformance.ImpulseConformanceReaderTests.test_changed_acceptance_is_rejected_even_with_pass_labels",
-        "test_impulse_conformance.ImpulseConformanceReaderTests.test_source_revision_and_statement_span_are_not_self_asserted"
+        "test_impulse_conformance.ImpulseConformanceReaderTests.test_positive_case_requires_actual_compiler_execution",
+        "test_impulse_conformance.ImpulseConformanceReaderTests.test_source_revision_and_statement_span_are_not_self_asserted",
+        "test_impulse_source.ImpulseSourceTests.test_adopted_elaboration_and_profile_negatives_keep_exact_codes",
+        "test_impulse_source.ImpulseSourceTests.test_all_positive_adopted_programs_lower_native_source_occurrences",
+        "test_impulse_source.ImpulseSourceTests.test_callback_failure_inside_impulse_lowering_is_unchanged",
+        "test_impulse_source.ImpulseSourceTests.test_contextual_word_remains_an_identifier_outside_event_start",
+        "test_impulse_source.ImpulseSourceTests.test_mixed_closure_preserves_declaring_profiles",
+        "test_impulse_source.ImpulseSourceTests.test_new_profile_budget_reports_the_selected_binding",
+        "test_impulse_source.ImpulseSourceTests.test_nonobject_target_is_a_type_error",
+        "test_impulse_source.ImpulseSourceTests.test_occurrence_target_keeps_literal_key_grammar",
+        "test_impulse_source.ImpulseSourceTests.test_old_entry_bindings_do_not_gain_impulse_syntax",
+        "test_impulse_source.ImpulseSourceTests.test_older_transitive_bridge_cannot_import_new_profile",
+        "test_impulse_source.ImpulseSourceTests.test_point_frame_alias_resolves_to_the_actual_target",
+        "test_impulse_source.ImpulseSourceTests.test_unicode_prefix_preserves_every_payload_and_statement_span"
       ],
       "external_gates": [],
       "implementation_checks_pending": []
@@ -545,7 +558,7 @@
       ],
       "operational_case_ids": [],
       "required_tests": [
-        "test_impulse_conformance.ImpulseConformanceReaderTests.test_positive_case_requires_actual_compiler_execution"
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_center_momentum_and_energy"
       ],
       "external_gates": [],
       "implementation_checks_pending": []
@@ -559,7 +572,8 @@
       ],
       "operational_case_ids": [],
       "required_tests": [
-        "test_impulse_conformance.ImpulseConformanceReaderTests.test_high_spin_orientation_does_not_pass_from_regular_sample_alias"
+        "test_impulse_conformance.ImpulseConformanceReaderTests.test_high_spin_orientation_does_not_pass_from_regular_sample_alias",
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_rotated_off_center_world_momentum"
       ],
       "external_gates": [],
       "implementation_checks_pending": []
@@ -571,7 +585,10 @@
         "P07"
       ],
       "operational_case_ids": [],
-      "required_tests": [],
+      "required_tests": [
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_completion_release_preserves_incoming_derivatives_before_impulse",
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_frozen_positive_state_samples"
+      ],
       "external_gates": [],
       "implementation_checks_pending": []
     },
@@ -584,7 +601,19 @@
       "operational_case_ids": [
         "A05"
       ],
-      "required_tests": [],
+      "required_tests": [
+        "test_impulse_agent.ImpulseAgentTests.test_frame_projection_keeps_explicit_impulse_records_byte_equivalent",
+        "test_impulse_conformance.ImpulseConformanceReaderTests.test_native_positive_result_retains_json_physical_state",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_evaluation_only_impulse_record_uses_its_actual_application_pose",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_later_retained_copy_cannot_change_an_already_checked_application",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_nonworld_inspection_requires_complete_inherited_velocity_and_orientation_conversion",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_retained_history_cannot_invent_a_locally_consistent_staged_velocity",
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_frame_inspection_preserves_explicit_record_coordinates",
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_history_records_do_not_alias_other_samples",
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_new_profile_discloses_instantaneous_physical_influences",
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_repeated_impulses_retain_all_latest_boundary_records",
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_zero_impulse_preserves_original_trajectory_exactly"
+      ],
       "external_gates": [],
       "implementation_checks_pending": []
     },
@@ -603,7 +632,10 @@
       "operational_case_ids": [],
       "required_tests": [
         "test_impulse_conformance.ImpulseConformanceReaderTests.test_exact_decimal_boundary_and_side_cannot_be_relabelled",
-        "test_impulse_conformance.ImpulseConformanceReaderTests.test_runtime_negative_cannot_pass_from_early_same_code_rejection"
+        "test_impulse_conformance.ImpulseConformanceReaderTests.test_runtime_negative_cannot_pass_from_early_same_code_rejection",
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_binary64_clock_is_not_protocol_decimal",
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_every_frozen_atomic_failure_retains_before_state",
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_time_zero_and_duration_keep_before_after_semantics"
       ],
       "external_gates": [],
       "implementation_checks_pending": []
@@ -616,7 +648,17 @@
         "P10"
       ],
       "operational_case_ids": [],
-      "required_tests": [],
+      "required_tests": [
+        "test_impulse_agent.ImpulseAgentTests.test_frozen_mass_and_radius_repairs_are_single_occurrence_source_edits",
+        "test_impulse_agent.ImpulseAgentTests.test_run_provenance_rejects_wrong_revision_and_implementation",
+        "test_impulse_agent_protocol.ImpulseAgentProtocolTests.test_all_four_stores_keep_identical_request_ids_independent",
+        "test_impulse_agent_protocol.ImpulseAgentProtocolTests.test_wrong_store_version_rejects_before_journal_or_ddl_changes",
+        "test_impulse_cli.ImpulseCLITests.test_corrupt_or_directory_store_reports_controlled_selected_protocol_error",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_historical_scope_read_after_edit_cannot_authorize_the_earlier_patch",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_pass_labels_cannot_replace_actual_scoped_source_repairs",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_writable_repair_scope_requires_exact_program_source_and_file_identity",
+        "test_impulse_workflow.ImpulseWorkflowTests.test_snapshot_bytes_and_source_authorized_repairs_match_exact_frozen_programs"
+      ],
       "external_gates": [
         "workflow"
       ],
@@ -654,8 +696,12 @@
       ],
       "operational_case_ids": [],
       "required_tests": [
+        "test_impulse_agent.ImpulseAgentTests.test_huge_finite_evaluation_retains_json_safe_impulse_record",
+        "test_impulse_conformance.ImpulseConformanceReaderTests.test_application_diagnostic_needs_exact_time_target_span_and_index",
         "test_impulse_conformance.ImpulseConformanceReaderTests.test_extreme_cancellation_zero_cannot_hide_inside_relative_tolerance",
-        "test_impulse_conformance.ImpulseConformanceReaderTests.test_application_diagnostic_needs_exact_time_target_span_and_index"
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_rehashed_extreme_readback_still_uses_exact_frozen_cancellation",
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_finite_quotient_overflow_can_cancel_before_rounding",
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_numeric_failures_are_source_local_at_actual_boundary"
       ],
       "external_gates": [],
       "implementation_checks_pending": []
@@ -676,7 +722,59 @@
         "A04",
         "A05"
       ],
-      "required_tests": [],
+      "required_tests": [
+        "test_impulse_agent.ImpulseAgentTests.test_cancellation_after_real_impulse_delivery_publishes_no_effects",
+        "test_impulse_agent.ImpulseAgentTests.test_final_delivery_budget_rolls_back_impulse_source_run_and_artifact",
+        "test_impulse_agent.ImpulseAgentTests.test_frame_projection_keeps_explicit_impulse_records_byte_equivalent",
+        "test_impulse_agent.ImpulseAgentTests.test_frozen_mass_and_radius_repairs_are_single_occurrence_source_edits",
+        "test_impulse_agent.ImpulseAgentTests.test_huge_finite_evaluation_retains_json_safe_impulse_record",
+        "test_impulse_agent.ImpulseAgentTests.test_inspection_final_budget_counts_complete_latest_boundary_records",
+        "test_impulse_agent.ImpulseAgentTests.test_mesh_context_retains_surface_capability_and_binds_all_impulse_identity",
+        "test_impulse_agent.ImpulseAgentTests.test_rejected_evaluated_candidate_keeps_head_rollback_retry_and_history",
+        "test_impulse_agent.ImpulseAgentTests.test_run_provenance_rejects_wrong_revision_and_implementation",
+        "test_impulse_agent_protocol.ImpulseAgentProtocolTests.test_all_four_stores_keep_identical_request_ids_independent",
+        "test_impulse_agent_protocol.ImpulseAgentProtocolTests.test_binding_is_explicit_with_unchanged_old_defaults_and_operations",
+        "test_impulse_agent_protocol.ImpulseAgentProtocolTests.test_binding_lookup_and_per_instance_operation_sets_are_detached",
+        "test_impulse_agent_protocol.ImpulseAgentProtocolTests.test_context_binds_entry_only_for_impulse_without_public_profile_changes",
+        "test_impulse_agent_protocol.ImpulseAgentProtocolTests.test_inherited_page_token_bounds_and_envelope_operation_identity",
+        "test_impulse_agent_protocol.ImpulseAgentProtocolTests.test_malformed_request_fails_before_candidate_or_run_write",
+        "test_impulse_agent_protocol.ImpulseAgentProtocolTests.test_native_destination_is_explicit_and_never_coerced",
+        "test_impulse_agent_protocol.ImpulseAgentProtocolTests.test_no_host_impulse_rpc_or_state_mutation_request_fields",
+        "test_impulse_agent_protocol.ImpulseAgentProtocolTests.test_wrong_store_version_rejects_before_journal_or_ddl_changes",
+        "test_impulse_catalog.ImpulseCatalogTests.test_actual_mixed_import_declarations_keep_each_authored_profile",
+        "test_impulse_catalog.ImpulseCatalogTests.test_catalog_example_is_the_exact_adopted_mixed_source_closure",
+        "test_impulse_catalog.ImpulseCatalogTests.test_detached_catalog_revision_covers_actual_payload_and_cancellation",
+        "test_impulse_catalog.ImpulseCatalogTests.test_explicit_catalog_preserves_complete_older_payloads_and_hashes",
+        "test_impulse_catalog.ImpulseCatalogTests.test_mismatched_entry_is_rejected_without_relabelling_its_catalog",
+        "test_impulse_catalog.ImpulseCatalogTests.test_new_schema_reuses_exact_nested_geometry_and_diagnostic_contracts",
+        "test_impulse_catalog.ImpulseCatalogTests.test_source_impulse_is_an_event_and_unsupported_physics_remains_explicit",
+        "test_impulse_cli.ImpulseCLITests.test_capabilities_add_impulse_without_relabeling_old_defaults",
+        "test_impulse_cli.ImpulseCLITests.test_corrupt_or_directory_store_reports_controlled_selected_protocol_error",
+        "test_impulse_cli.ImpulseCLITests.test_explicit_bundle_export_preserves_frozen_sources_and_bound_sidecar",
+        "test_impulse_cli.ImpulseCLITests.test_failed_old_target_preserves_existing_artifacts",
+        "test_impulse_cli.ImpulseCLITests.test_jsonl_malformed_request_uses_selected_impulse_envelope",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_complete_actual_workflow_requires_all_sources_states_and_retrieved_bytes",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_evaluation_only_impulse_record_uses_its_actual_application_pose",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_historical_scope_read_after_edit_cannot_authorize_the_earlier_patch",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_identical_retry_attempt_cannot_be_omitted_from_passed_ledger",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_later_retained_copy_cannot_change_an_already_checked_application",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_malformed_selected_protocol_request_is_a_controlled_audit_failure",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_missing_retrieval_chunk_fails_even_after_rehashing_the_report",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_nonworld_inspection_requires_complete_inherited_velocity_and_orientation_conversion",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_pass_labels_cannot_replace_actual_scoped_source_repairs",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_public_mesh_capability_cannot_be_relabelled_as_entry_profile",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_real_workflow_remains_partial_without_actual_a03_test_complements",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_rehashed_extreme_readback_still_uses_exact_frozen_cancellation",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_rejected_snapshot_cannot_be_relabelled_as_accepted_once",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_retained_history_cannot_invent_a_locally_consistent_staged_velocity",
+        "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_writable_repair_scope_requires_exact_program_source_and_file_identity",
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_frame_inspection_preserves_explicit_record_coordinates",
+        "test_impulse_workflow.ImpulseWorkflowTests.test_delivered_glb_is_exactly_the_retrieved_artifact_and_has_complete_reference_sides",
+        "test_impulse_workflow.ImpulseWorkflowTests.test_nonstandard_duration_exact_clock_and_huge_state_are_retained",
+        "test_impulse_workflow.ImpulseWorkflowTests.test_partial_segment_is_honest_and_all_written_exchange_hashes_match",
+        "test_impulse_workflow.ImpulseWorkflowTests.test_retry_attempts_preserve_original_receipt_and_changed_payload_rejection",
+        "test_impulse_workflow.ImpulseWorkflowTests.test_snapshot_bytes_and_source_authorized_repairs_match_exact_frozen_programs"
+      ],
       "external_gates": [
         "workflow"
       ],
@@ -694,11 +792,25 @@
         "R02",
         "R03"
       ],
-      "required_tests": [],
+      "required_tests": [
+        "test_impulse_agent.ImpulseAgentTests.test_cancellation_after_real_impulse_delivery_publishes_no_effects",
+        "test_impulse_agent.ImpulseAgentTests.test_final_delivery_budget_rolls_back_impulse_source_run_and_artifact",
+        "test_impulse_agent.ImpulseAgentTests.test_inspection_final_budget_counts_complete_latest_boundary_records",
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_cancellation_during_complete_history_bound",
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_cancellation_during_history_projection_keeps_complete_state",
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_cancellation_during_staged_impulse_does_not_commit",
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_complete_history_weight_retains_each_objects_latest_group",
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_one_sample_overflow_fails_before_history_allocation",
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_sparse_and_dense_samples_obey_complete_history_weight",
+        "test_impulse_export.ImpulseExportTests.test_bound_loop_observes_cancellation_without_wrapping_it",
+        "test_impulse_export.ImpulseExportTests.test_boundary_budget_cancellation_preserves_original_errors",
+        "test_impulse_export.ImpulseExportTests.test_boundary_metadata_is_weighted_before_mesh_allocation",
+        "test_impulse_export.ImpulseExportTests.test_single_large_sample_rejects_before_private_simulator_allocation",
+        "test_impulse_export.ImpulseExportTests.test_supplied_artifact_cannot_bypass_complete_boundary_history_budget",
+        "test_impulse_source.ImpulseSourceTests.test_callback_failure_inside_impulse_lowering_is_unchanged"
+      ],
       "external_gates": [],
-      "implementation_checks_pending": [
-        "R01/R02/R03 concrete kernel/service resource and cancellation test bindings await their implementation checkpoint."
-      ]
+      "implementation_checks_pending": []
     },
     {
       "id": "I11",
@@ -718,7 +830,36 @@
         "D02"
       ],
       "required_tests": [
-        "test_impulse_conformance.ImpulseConformanceReaderTests.test_absent_and_stale_external_records_remain_pending"
+        "test_impulse_agent.ImpulseAgentTests.test_run_provenance_rejects_wrong_revision_and_implementation",
+        "test_impulse_agent_protocol.ImpulseAgentProtocolTests.test_all_four_stores_keep_identical_request_ids_independent",
+        "test_impulse_agent_protocol.ImpulseAgentProtocolTests.test_wrong_store_version_rejects_before_journal_or_ddl_changes",
+        "test_impulse_cli.ImpulseCLITests.test_corrupt_or_directory_store_reports_controlled_selected_protocol_error",
+        "test_impulse_conformance.ImpulseConformanceReaderTests.test_absent_and_stale_external_records_remain_pending",
+        "test_impulse_conformance.ImpulseDestinationEvidenceTests.test_actual_decoded_clock_guard_rejects_full_turn_alias",
+        "test_impulse_conformance.ImpulseDestinationEvidenceTests.test_camera_union_requires_actual_y_up_source_geometry",
+        "test_impulse_conformance.ImpulseDestinationEvidenceTests.test_changed_intermediate_key_cannot_hide_between_fixed_quarter_samples",
+        "test_impulse_conformance.ImpulseDestinationEvidenceTests.test_delivery_link_rejects_a_lookalike_with_different_retrieved_hash",
+        "test_impulse_conformance.ImpulseDestinationEvidenceTests.test_missing_changed_and_truncated_boundary_history_are_rejected",
+        "test_impulse_conformance.ImpulseDestinationEvidenceTests.test_quarter_time_exposes_wrong_coarse_rotation_despite_valid_endpoints",
+        "test_impulse_conformance.ImpulseDestinationEvidenceTests.test_retained_impulse_is_checked_at_original_application_pose",
+        "test_impulse_conformance.ImpulseDestinationEvidenceTests.test_three_js_dense_readback_requires_every_actual_interpolation_probe",
+        "test_impulse_export.ImpulseExportTests.test_all_authored_impulses_contribute_even_when_spin_cancels",
+        "test_impulse_export.ImpulseExportTests.test_all_required_source_fixtures_deliver_fixed_analytic_poses",
+        "test_impulse_export.ImpulseExportTests.test_bound_loop_observes_cancellation_without_wrapping_it",
+        "test_impulse_export.ImpulseExportTests.test_boundary_budget_cancellation_preserves_original_errors",
+        "test_impulse_export.ImpulseExportTests.test_boundary_metadata_is_weighted_before_mesh_allocation",
+        "test_impulse_export.ImpulseExportTests.test_coarsened_high_spin_track_is_rejected_even_with_valid_endpoint_poses",
+        "test_impulse_export.ImpulseExportTests.test_every_boundary_retains_exact_complete_source_impulse_records",
+        "test_impulse_export.ImpulseExportTests.test_finite_evaluation_does_not_claim_float32_delivery",
+        "test_impulse_export.ImpulseExportTests.test_high_spin_raises_sampling_above_requested_one_fps",
+        "test_impulse_export.ImpulseExportTests.test_missing_changed_or_truncated_influence_metadata_is_rejected",
+        "test_impulse_export.ImpulseExportTests.test_older_target_binding_cannot_export_new_semantics",
+        "test_impulse_export.ImpulseExportTests.test_parameter_repairs_change_physics_and_preserve_all_visual_meshes",
+        "test_impulse_export.ImpulseExportTests.test_rotated_application_uses_world_spin_composed_with_initial_orientation",
+        "test_impulse_export.ImpulseExportTests.test_single_large_sample_rejects_before_private_simulator_allocation",
+        "test_impulse_export.ImpulseExportTests.test_supplied_artifact_cannot_bypass_complete_boundary_history_budget",
+        "test_impulse_export.ImpulseExportTests.test_zero_duration_and_binary64_impulse_boundaries_are_never_erased",
+        "test_impulse_workflow.ImpulseWorkflowTests.test_delivered_glb_is_exactly_the_retrieved_artifact_and_has_complete_reference_sides"
       ],
       "external_gates": [
         "workflow",
@@ -734,8 +875,16 @@
         "L01"
       ],
       "required_tests": [
+        "test_impulse_agent_protocol.ImpulseAgentProtocolTests.test_binding_is_explicit_with_unchanged_old_defaults_and_operations",
+        "test_impulse_catalog.ImpulseCatalogTests.test_explicit_catalog_preserves_complete_older_payloads_and_hashes",
+        "test_impulse_cli.ImpulseCLITests.test_capabilities_add_impulse_without_relabeling_old_defaults",
         "test_impulse_conformance.ImpulseConformanceReaderTests.test_inventory_contains_adopted_sources_and_new_profile_schemas",
-        "test_impulse_conformance.ImpulseConformanceReaderTests.test_required_execution_records_are_exact_not_count_only"
+        "test_impulse_conformance.ImpulseConformanceReaderTests.test_required_execution_records_are_exact_not_count_only",
+        "test_impulse_conformance.ImpulseRegressionEvidenceTests.test_a03_test_names_or_pass_count_do_not_substitute_for_execution_records",
+        "test_impulse_conformance.ImpulseRegressionEvidenceTests.test_ci_uses_actual_git_blobs_and_requires_all_supported_job_roles",
+        "test_impulse_conformance.ImpulseRegressionEvidenceTests.test_current_m12_requires_complete_exact_mapped_test_records",
+        "test_impulse_conformance.ImpulseRegressionEvidenceTests.test_historical_or_partial_m12_cannot_close_new_profile_regression",
+        "test_impulse_evaluator.ImpulseEvaluatorTests.test_old_profiles_keep_snapshot_and_assumption_shapes"
       ],
       "external_gates": [
         "regression",
@@ -748,6 +897,9 @@
     "schema_version": "ontokin.impulse-release-evidence/0.1",
     "workflow_schema": "ontokin.impulse-agent-demo/0.1",
     "build_schema": "ontokin.impulse-native-build/0.1",
+    "destination_schema": "ontokin.impulse-native-destination-validation/0.1",
+    "browser_schema": "ontokin.impulse-browser-validation/0.1",
+    "ci_schema": "ontokin.impulse-ci/0.1",
     "file_identity_fields": [
       "path",
       "sha256"
@@ -759,6 +911,109 @@
       "regression",
       "ci"
     ],
-    "initial_reader_status": "in_progress_no_external_pass_claims"
+    "reader_status": "implemented_requires_current_identified_execution_evidence",
+    "workflow_requires_actual_test_complements": [
+      "test_impulse_agent_protocol.ImpulseAgentProtocolTests.test_all_four_stores_keep_identical_request_ids_independent",
+      "test_impulse_agent_protocol.ImpulseAgentProtocolTests.test_wrong_store_version_rejects_before_journal_or_ddl_changes",
+      "test_impulse_agent.ImpulseAgentTests.test_run_provenance_rejects_wrong_revision_and_implementation",
+      "test_impulse_cli.ImpulseCLITests.test_corrupt_or_directory_store_reports_controlled_selected_protocol_error"
+    ],
+    "dense_animation_probes": "every_decoded_key_and_interval_quarter_mid_three_quarter",
+    "full_product_conformance_certified": false
+  },
+  "operational_required_tests": {
+    "A01": [
+      "test_impulse_agent.ImpulseAgentTests.test_frozen_mass_and_radius_repairs_are_single_occurrence_source_edits",
+      "test_impulse_workflow.ImpulseWorkflowTests.test_snapshot_bytes_and_source_authorized_repairs_match_exact_frozen_programs",
+      "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_writable_repair_scope_requires_exact_program_source_and_file_identity",
+      "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_historical_scope_read_after_edit_cannot_authorize_the_earlier_patch"
+    ],
+    "A02": [
+      "test_impulse_agent.ImpulseAgentTests.test_rejected_evaluated_candidate_keeps_head_rollback_retry_and_history",
+      "test_impulse_workflow.ImpulseWorkflowTests.test_retry_attempts_preserve_original_receipt_and_changed_payload_rejection",
+      "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_rejected_snapshot_cannot_be_relabelled_as_accepted_once",
+      "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_identical_retry_attempt_cannot_be_omitted_from_passed_ledger"
+    ],
+    "A03": [
+      "test_impulse_agent_protocol.ImpulseAgentProtocolTests.test_all_four_stores_keep_identical_request_ids_independent",
+      "test_impulse_agent_protocol.ImpulseAgentProtocolTests.test_wrong_store_version_rejects_before_journal_or_ddl_changes",
+      "test_impulse_agent.ImpulseAgentTests.test_run_provenance_rejects_wrong_revision_and_implementation",
+      "test_impulse_cli.ImpulseCLITests.test_corrupt_or_directory_store_reports_controlled_selected_protocol_error"
+    ],
+    "A04": [
+      "test_impulse_agent.ImpulseAgentTests.test_mesh_context_retains_surface_capability_and_binds_all_impulse_identity",
+      "test_impulse_agent_protocol.ImpulseAgentProtocolTests.test_context_binds_entry_only_for_impulse_without_public_profile_changes",
+      "test_impulse_catalog.ImpulseCatalogTests.test_actual_mixed_import_declarations_keep_each_authored_profile",
+      "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_public_mesh_capability_cannot_be_relabelled_as_entry_profile"
+    ],
+    "A05": [
+      "test_impulse_agent.ImpulseAgentTests.test_frame_projection_keeps_explicit_impulse_records_byte_equivalent",
+      "test_impulse_evaluator.ImpulseEvaluatorTests.test_frame_inspection_preserves_explicit_record_coordinates",
+      "test_impulse_conformance.ImpulseWorkflowEvidenceTests.test_nonworld_inspection_requires_complete_inherited_velocity_and_orientation_conversion"
+    ],
+    "R01": [
+      "test_impulse_agent.ImpulseAgentTests.test_inspection_final_budget_counts_complete_latest_boundary_records",
+      "test_impulse_agent.ImpulseAgentTests.test_final_delivery_budget_rolls_back_impulse_source_run_and_artifact",
+      "test_impulse_export.ImpulseExportTests.test_boundary_metadata_is_weighted_before_mesh_allocation",
+      "test_impulse_export.ImpulseExportTests.test_supplied_artifact_cannot_bypass_complete_boundary_history_budget"
+    ],
+    "R02": [
+      "test_impulse_evaluator.ImpulseEvaluatorTests.test_complete_history_weight_retains_each_objects_latest_group",
+      "test_impulse_evaluator.ImpulseEvaluatorTests.test_sparse_and_dense_samples_obey_complete_history_weight",
+      "test_impulse_evaluator.ImpulseEvaluatorTests.test_one_sample_overflow_fails_before_history_allocation",
+      "test_impulse_export.ImpulseExportTests.test_single_large_sample_rejects_before_private_simulator_allocation"
+    ],
+    "R03": [
+      "test_impulse_source.ImpulseSourceTests.test_callback_failure_inside_impulse_lowering_is_unchanged",
+      "test_impulse_evaluator.ImpulseEvaluatorTests.test_cancellation_during_complete_history_bound",
+      "test_impulse_evaluator.ImpulseEvaluatorTests.test_cancellation_during_staged_impulse_does_not_commit",
+      "test_impulse_evaluator.ImpulseEvaluatorTests.test_cancellation_during_history_projection_keeps_complete_state",
+      "test_impulse_export.ImpulseExportTests.test_bound_loop_observes_cancellation_without_wrapping_it",
+      "test_impulse_export.ImpulseExportTests.test_boundary_budget_cancellation_preserves_original_errors",
+      "test_impulse_agent.ImpulseAgentTests.test_cancellation_after_real_impulse_delivery_publishes_no_effects"
+    ],
+    "D01": [
+      "test_impulse_export.ImpulseExportTests.test_all_required_source_fixtures_deliver_fixed_analytic_poses",
+      "test_impulse_export.ImpulseExportTests.test_rotated_application_uses_world_spin_composed_with_initial_orientation",
+      "test_impulse_export.ImpulseExportTests.test_every_boundary_retains_exact_complete_source_impulse_records",
+      "test_impulse_export.ImpulseExportTests.test_missing_changed_or_truncated_influence_metadata_is_rejected",
+      "test_impulse_export.ImpulseExportTests.test_parameter_repairs_change_physics_and_preserve_all_visual_meshes",
+      "test_impulse_export.ImpulseExportTests.test_high_spin_raises_sampling_above_requested_one_fps",
+      "test_impulse_export.ImpulseExportTests.test_coarsened_high_spin_track_is_rejected_even_with_valid_endpoint_poses",
+      "test_impulse_export.ImpulseExportTests.test_zero_duration_and_binary64_impulse_boundaries_are_never_erased",
+      "test_impulse_export.ImpulseExportTests.test_all_authored_impulses_contribute_even_when_spin_cancels",
+      "test_impulse_export.ImpulseExportTests.test_single_large_sample_rejects_before_private_simulator_allocation",
+      "test_impulse_export.ImpulseExportTests.test_boundary_metadata_is_weighted_before_mesh_allocation",
+      "test_impulse_export.ImpulseExportTests.test_supplied_artifact_cannot_bypass_complete_boundary_history_budget",
+      "test_impulse_export.ImpulseExportTests.test_boundary_budget_cancellation_preserves_original_errors",
+      "test_impulse_export.ImpulseExportTests.test_bound_loop_observes_cancellation_without_wrapping_it",
+      "test_impulse_export.ImpulseExportTests.test_finite_evaluation_does_not_claim_float32_delivery",
+      "test_impulse_export.ImpulseExportTests.test_older_target_binding_cannot_export_new_semantics",
+      "test_impulse_workflow.ImpulseWorkflowTests.test_delivered_glb_is_exactly_the_retrieved_artifact_and_has_complete_reference_sides",
+      "test_impulse_conformance.ImpulseDestinationEvidenceTests.test_retained_impulse_is_checked_at_original_application_pose",
+      "test_impulse_conformance.ImpulseDestinationEvidenceTests.test_missing_changed_and_truncated_boundary_history_are_rejected",
+      "test_impulse_conformance.ImpulseDestinationEvidenceTests.test_actual_decoded_clock_guard_rejects_full_turn_alias",
+      "test_impulse_conformance.ImpulseDestinationEvidenceTests.test_quarter_time_exposes_wrong_coarse_rotation_despite_valid_endpoints",
+      "test_impulse_conformance.ImpulseDestinationEvidenceTests.test_changed_intermediate_key_cannot_hide_between_fixed_quarter_samples",
+      "test_impulse_conformance.ImpulseDestinationEvidenceTests.test_three_js_dense_readback_requires_every_actual_interpolation_probe",
+      "test_impulse_conformance.ImpulseDestinationEvidenceTests.test_delivery_link_rejects_a_lookalike_with_different_retrieved_hash",
+      "test_impulse_conformance.ImpulseDestinationEvidenceTests.test_camera_union_requires_actual_y_up_source_geometry"
+    ],
+    "D02": [
+      "test_impulse_conformance.ImpulseDestinationEvidenceTests.test_camera_union_requires_actual_y_up_source_geometry",
+      "test_impulse_conformance.ImpulseConformanceReaderTests.test_absent_and_stale_external_records_remain_pending"
+    ],
+    "L01": [
+      "test_impulse_conformance.ImpulseRegressionEvidenceTests.test_a03_test_names_or_pass_count_do_not_substitute_for_execution_records",
+      "test_impulse_conformance.ImpulseRegressionEvidenceTests.test_current_m12_requires_complete_exact_mapped_test_records",
+      "test_impulse_conformance.ImpulseRegressionEvidenceTests.test_historical_or_partial_m12_cannot_close_new_profile_regression",
+      "test_impulse_conformance.ImpulseRegressionEvidenceTests.test_ci_uses_actual_git_blobs_and_requires_all_supported_job_roles",
+      "test_impulse_evaluator.ImpulseEvaluatorTests.test_old_profiles_keep_snapshot_and_assumption_shapes",
+      "test_impulse_catalog.ImpulseCatalogTests.test_explicit_catalog_preserves_complete_older_payloads_and_hashes",
+      "test_impulse_agent_protocol.ImpulseAgentProtocolTests.test_binding_is_explicit_with_unchanged_old_defaults_and_operations",
+      "test_impulse_cli.ImpulseCLITests.test_capabilities_add_impulse_without_relabeling_old_defaults",
+      "test_impulse_conformance.ImpulseConformanceReaderTests.test_inventory_contains_adopted_sources_and_new_profile_schemas",
+      "test_impulse_conformance.ImpulseConformanceReaderTests.test_required_execution_records_are_exact_not_count_only"
+    ]
   }
 }
