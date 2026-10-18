@@ -2,93 +2,134 @@
 project: OntoKin
 document_id: OK-LANG-003
 title: Parameterized Exterior Surfaces and Material Regions
-version: 0.1
+version: 0.2
 date: 2026-10-18
-status: proposal-requires-contract-and-fixture-adoption
-document_type: next-milestone-design
+status: adopted-language-contract
+document_type: normative-language-contract
+language_version: "0.3"
+profile: surface-0.1
 implementation_status: not-implemented
 ---
 
-# Parameterized exterior surfaces and material regions
+# OK-LANG-003: Native exterior surfaces and material regions
 
-## 1. Next capability and purpose
+## 1. Authority, boundary and history
 
-The next proposed modeling gate is a native, bounded surface family that lets an agent describe useful exterior shapes beyond spheres and boxes. An agent should import reusable component definitions, choose proportions and part counts, construct an exterior model, edit one section or material region of one occurrence, and inspect the resulting geometry and animation.
+This is the **adopted source-language and acceptance contract**, not a claim that the compiler or GLB exporter implements it. The original 2026-10-18 design proposal is preserved unchanged at [the proposal archive](../maintenance/contract-proposals/OK-LANG-003-original-proposal.md). Previous `ontokin "0.1"` / `core-0.1` and `ontokin "0.2"` / `construction-0.1` programs retain their exact original meanings. This contract introduces `ontokin "0.3"` with mandatory `profile "surface-0.1"`. Profile selection is explicit; there is no implicit migration.
 
-This proposal follows [GOAL](../../GOAL.md), the exterior-modeling emphasis in [OK-CAP-001](../product/OK-CAP-001-modeling-motion-and-object-structure.md), and the geometry, appearance, and delivery requirements in [OK-PRD-001](../product/OK-PRD-001-product-requirements.md). [OK-LANG-002](OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md) provides pinned component reuse and finite keyed construction. It does not itself supply a richer surface vocabulary.
+The purpose is native, agent-authored, rigid exterior modeling with geometric sections, named PBR material regions, a local visual placement and exact source provenance. It extends the pinned offline module and keyed-construction model of [OK-LANG-002](OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md); its new types are unavailable to old profiles. The broader [GOAL](../../GOAL.md) remains in progress. No collision, mass, inertia, skinning, texture, procedural noise, force or controller support is inferred from a visible surface.
 
-**This document selects a design direction for the next iteration. It does not adopt grammar, a new language/profile number, numeric limits, or implemented support.** The next worker must resolve the decisions below into a complete versioned contract, grammar, schemas, and independent positive/boundary/negative/composition/repair fixtures before measuring implementation results. Keep the construction release and its evidence intact while doing that work.
+## 2. Source grammar and typed values
 
-## 2. Proposed first surface family
+All pre-existing `0.2` grammar is available, except that an importer cannot reinterpret an older module under a newer profile. Source units in this gate use version `0.3` and `surface-0.1`. Imported definitions must be part of the exact, hash-pinned offline closure; both `0.3`-profile imports and explicitly compatible `0.2`-profile component imports are permitted. Imported source is compiled under its own declared version and profile. New surface types cannot leak into an older-profile import.
 
-A capped loft connects explicitly positioned cross-sections to form a surface. A bounded family of sections on parallel planes along a strictly advancing longitudinal axis would support tapered limbs, shaped shells, handles, bottles, and branch-like forms. Each section could specify its axial position, lateral offset, width, and depth. Positive elliptical cross-sections are a candidate starting point; the exact family and cap treatment need adoption.
+Add exactly two immutable, flat keyed leaf types: `LoftSection` and `SurfaceMaterial`. `Keyed<LoftSection>` and `Keyed<SurfaceMaterial>` are permitted in `0.3` fields, parameters, `let` values and pure function signatures. Their type constructors and surface constructors are:
 
-The family should permit meaningful changes through typed `.ok` parameters and pure constructors. An asset-specific Python generator or a prebuilt mesh imported by a demonstration would not establish the promised native language capability.
+```ontokin
+loft_section(station: Length, center: Vec3<Length>,
+             radius_x: Length, radius_y: Length, region: String) -> LoftSection
+surface_material(base_color: Color, metallic: Real,
+                 roughness: Real) -> SurfaceMaterial
+loft(sections: Keyed<LoftSection>,
+     materials: Keyed<SurfaceMaterial>,
+     facets: Int, caps: String) -> Geometry
+placed(surface: Geometry, placement: Pose) -> Geometry
+```
 
-Source keys identify sections. Explicit dimensional coordinates order their geometry. Lexicographic key order must not silently become geometric ordering. Stable region and section identities belong to source recipes; triangle indices remain derived output and may change when tessellation changes. Inserting a section must preserve surviving source identities without pretending that the old mesh topology remains identical.
+These are closed, positional function forms, not host-code hooks or arbitrary user-defined mesh instructions. `caps` is the string literal `"flat"` or `"none"`; other strings and dynamic cap-mode expressions fail explicitly. `loft` accepts only the authored `LoftSection` family, not a pre-baked triangle buffer. `placed` permits at most one explicit local pose for this family; nesting `placed(placed(...))` fails until composition semantics are adopted. The pose frame must be the carrier object's own `self.frame`, including a generated part's frame; `world` or a sibling frame is not silently converted. A nonidentity local translation/rotation affects vertices, not a second simulation node or action authority.
 
-### Decisions required before implementation
+A complete representative class-member source fragment (within a `0.3` module) is:
 
-| Decision | Required contract |
+```ontokin
+public class Shell @ "shell" {
+    public param rings @ "rings": Keyed<LoftSection> = keyed<LoftSection> {
+        "base": loft_section(0[m], vec3(0[m], 0[m], 0[m]), 0.5[m], 0.35[m], "clay"),
+        "rim": loft_section(1[m], vec3(0.2[m], 0[m], 0[m]), 0.3[m], 0.25[m], "paint")
+    };
+    public param palette @ "palette": Keyed<SurfaceMaterial> = keyed<SurfaceMaterial> {
+        "clay": surface_material(rgba(0.6, 0.3, 0.2, 1), 0.0, 0.8),
+        "paint": surface_material(rgba(0.1, 0.4, 0.8, 1), 0.2, 0.4)
+    };
+    geometry = placed(loft(self.rings, self.palette, 16, "flat"),
+                      pose(self.frame, vec3(0[m], 0[m], 0.1[m]), quat(1, 0, 0, 0)));
+    physical = no_body();
+}
+```
+
+Immutable keyed values preserve the `0.2` key domain, duplicate-key rejection, canonical ASCII iteration, stable identity, ordinary read lookup and public occurrence-override rules. No `Keyed` mutation, indexing assignment or new dynamic loop is introduced. A repair may patch one literal entry in an occurrence-specific parameter override, or replace that complete immutable parameter value as one atomic accepted revision. Repairing an imported shared definition through an occurrence handle is forbidden; the imported library's bytes and sibling occurrences are unchanged.
+
+## 3. Geometry definition and topological invariants
+
+The local coordinate system is right-handed, meters, with **+Z as the loft axis**. A section with station `z`, center `vec3(cx, cy, 0[m])`, and positive `rx, ry` defines the ellipse
+`p(z, θ) = (cx + rx cos θ, cy + ry sin θ, z)`, for `0 ≤ θ < 2π`. All five input values are immutable dimensional/typed source values. Exact +0 and -0 compare equal for station ordering. Only the X/Y center components are allowed to differ from zero; a nonzero Z component is a frame/geometry error. There is no implicit auto-rotation to a different long axis.
+
+Sections are **sorted by numeric station**, never source order or section key. Stations must be strictly increasing with adjacent separation at least `0.001[m]`. Equal stations are rejected even when keys differ. Surviving authored section keys and material keys remain stable across insertion, removal and input reordering. Their triangle/vertex offsets are derived output and are not stable identifiers.
+
+At station `i`, circumference vertices are `θ_j = 2πj/N` for `j=0..N-1`, with `N=facets`. Between consecutive rings, construct exactly two triangles per angular segment with outward winding `(lower_j, lower_{j+1}, upper_j)` and `(lower_{j+1}, upper_{j+1}, upper_j)` (angular indices modulo `N`). A `"flat"` loft closes the lower end with outward -Z normal and the upper end with outward +Z normal using fan triangles and no degenerate central vertex triangles. `"none"` exports open ends and makes **no volume/solid** claim. Both forms are manifold at side seams; `"flat"` has exactly two closed ends. The constructed family is limited to non-overlapping ordered horizontal sections; it does not support arbitrary swept twists, branching within one loft, negative radius, pinch-to-zero or shape booleans.
+
+This first gate deliberately chooses **flat-shaded triangle normals**: each triangle has three independent corner vertices and the normalized outward face cross product. The cap normals are exactly `(0,0,-1)` and `(0,0,1)` before local placement; the placement rotation transforms them. Material changes are allowed at station boundaries without smoothing ambiguities. A nonfinite or zero-area triangle is an explicit numerical failure. No unstated watertight-volume estimate is introduced for open profiles.
+
+For `S` sections and `N` facets, side triangle count is `2(S-1)N`; flat end caps add `2N` triangles, so a closed loft has `2SN` triangles and `6SN` independent triangle-corner vertices. An open loft has `2(S-1)N` triangles and `6(S-1)N` vertices. Positions and normals are authored geometry, not automatically physical matter.
+
+## 4. Material regions and rigid visual binding
+
+A `SurfaceMaterial` stores a linear RGBA `Color`, a metallic factor and roughness factor, each a finite number in `[0,1]`. A region is identified by its keyed palette name; every section's `region` string must resolve exactly to one palette key. Extra unused palette entries are permitted and appear only as source/inspection values, not empty glTF primitives.
+
+The material assigned to each side interval is the **lower station's region**; the lower cap uses the first section's region and the upper cap uses the last section's region. A region that covers disjoint intervals remains one stable source region and one material identity for this mesh. Output groups contain real triangle indices and serialized PBR factors. A palette edit changes material factors in the affected output primitive(s), not mere metadata. A station-region edit changes the prescribed triangle group membership without changing positions, unless another section value also changes.
+
+`loft` returns a rigid visual Geometry recipe. A single `placed` call defines local placement relative to its carrier object's `self.frame`. The carrier's evaluated world transform drives its mesh in animation. Neither the loft nor its visual offset adds an object, follows another frame, installs a joint, contributes physical mass, starts an action or changes the object motion mode. Existing prescribed actions, supported connections and sphere gravity/release retain their versioned mechanical limits.
+
+## 5. Numeric limits and deterministic errors
+
+These restrictions are fixed **before implementation** and apply alongside existing construction work, source, time, object, GLB, mesh and result-envelope caps. They are not performance guarantees.
+
+| Property | Adopted `surface-0.1` bound |
 | --- | --- |
-| Cross-section family | Supported outlines, positive dimensions, offset meaning, longitudinal axis, and unit/frame rules. |
-| Geometric ordering | Strict station ordering, treatment of input order, and exact duplicate-position rejection. |
-| Caps and topology | Supported end caps, closed/open distinction, winding, zero-area/zero-radius policy, and intersection guarantees or explicit exclusions. |
-| Surface approximation | Angular and longitudinal tessellation, ideal-surface versus mesh approximation, finite precision, and independently measured error. |
-| Normals | Smoothing and crease behavior, cap normals, finite normalization, and deterministic generation. |
-| Appearance | Stable named regions, actual triangle assignments, supported material parameters, defaults, and unsupported texture/deformation behavior. |
-| Visual binding | Logical carrier, explicit fixed local placement, geometry/physical-body distinction, and motion/release composition. |
-| Resource bounds | Maximum sections, regions, vertices, triangles, aggregate generated data and output bytes; maximum and one-over fixtures. |
-| Source API | Versioned immutable section/material values, pure constructors, generated identity rules, discovery, inspection, and scoped overrides. |
-| Delivery | Named GLB contract, multiple material primitives, source/recipe provenance, losses, and independent destination checks. |
+| Section count per loft | `2..64` |
+| Distinct palette keys per loft | `1..16` |
+| Angular facets | `8..64`, divisible by 4 |
+| Station `z` / center X,Y | Each finite and within `[-100, 100] m` |
+| Adjacent station separation | At least `0.001 m` |
+| Radii X,Y | Each finite within `[0.001, 100] m` |
+| Center Z | Exactly `0[m]` |
+| Material RGBA, metallic, roughness | All finite in `[0,1]` |
+| Triangles / vertices per closed loft | At most `8192` / `24576` |
+| Aggregate generated mesh vertices | Existing `250000` cap, charged before large allocation |
+| Binary delivery | Existing `64 MiB` GLB limit, with no silent output truncation |
 
-The existing `construction-0.1` flat `Keyed` value whitelist is fixed. New section or material values must be introduced through an explicit new language/profile contract. They cannot be inserted into the current profile while retaining its old name and claims.
+Resource use includes repeated instances, even if their source values share memory. Precompute the predicted triangle and vertex counts before materializing the arrays. Enforce aggregate budgets and cooperative cancellation during generation, grouping and serialization. Cancellation or an over-limit input never returns a successful partially generated mesh. The accepted program revision is preserved if generation/evaluation/export fails.
 
-## 3. Geometry, appearance, and mechanics
+Use stable typed diagnostics, with source-unit identity, span, occurrence identity and details where available. Baseline syntax/type/unit/identity/access errors remain unchanged. Add `OKL-E-SURFACE-SECTION` (section count or invalid definition), `OKL-E-SURFACE-STATION` (non-finite/out-of-range/duplicate/insufficient separation), `OKL-E-SURFACE-RADIUS`, `OKL-E-SURFACE-CENTER`, `OKL-E-SURFACE-REGION` (missing palette entry), `OKL-E-SURFACE-MATERIAL`, `OKL-E-SURFACE-FACETS`, `OKL-E-SURFACE-CAPS`, `OKL-E-SURFACE-PLACEMENT` and `OKL-E-SURFACE-NUMERIC`. Existing `OKL-E-RESOURCE` applies to aggregate work/mesh limits. Each error names the actual invalid value/key, except when sensitive output budgets require bounded truncation.
 
-Keep the surface recipe, regional appearance, and visual binding explicit. A surface or region must not automatically add an object, physical body, ownership edge, joint, mass contribution, or motion authority. Existing prescribed object/joint motion can carry a rigid surface under a declared binding. Existing sphere-body gravity/release remains available only under its actual physical contract.
+## 6. Accuracy and inspectable delivery contracts
 
-Deriving mass or inertia from loft geometry would require a separate physical-distribution rule and independent numerical checks. Producing a closed-looking mesh does not establish that rule. This preserves the distinctions in [OK-SEM-001](OK-SEM-001-core-object-motion-and-physics-semantics.md) and the adopted [core specification](OK-LANG-001-core-language-specification.md).
+The generator computes in binary64, then the named **`ontokin.glb/0.3`** adapter serializes float32 positions/normals and true glTF 2.0 PBR material groups. The generator's analytic station-ring coordinate difference must be at most `1e-10 m` in local binary64 for fixtures with all coordinates at most `10 m`. Each flat face normal has length within `1e-12` of 1 in local binary64. Per-axis float32 *local vertex* quantization error must be at most `1e-5 m` for input coordinates in `[-100,100] m`; failures are reported, not silently clamped. These are **per-fixture prescribed tolerances**, not guaranteed visual accuracy in arbitrary unbounded world coordinates.
 
-A material region must affect real triangle groups and serialized material assignments. Retaining a region name only in metadata would not satisfy this milestone. Similarly, a visual-binding record must affect the decoded placement, without introducing a second authority over the carrier's coordinates.
+Angular meshing approximates ideal ellipses; the specification does not claim exact curved geometry. A constant-radius round section of radius `R` has ideal-to-polygon radial sagitta `R(1-cos(π/N))`. Any more general loft error must be independently compared against the ideal piecewise-affine elliptical surface at declared samples and tolerances, rather than inferred from this circle formula. No unconditional volume-error or smooth-surface normal promise is made.
 
-## 4. Implementation boundary
+Extend the existing `ontokin.agent/0.2` program revision semantics under the separately versioned `ontokin.agent/0.3` contract. Ordinary object inspection returns section keys, ordered stations, profile, palette names, placement and geometric count summaries, without unbounded vertex arrays. A read-only `surface.mesh_page` request selects accepted program revision, occurrence identity, optional region filter, and an integer count (1..256), then returns stable-revision pages of positions, normals and triangle indices plus the next cursor or end. Cursors bind revision, occurrence, profile and ordering; stale revision or changed geometry invalidates the cursor rather than mixing pages. Agent edits still target authorized source spans, not derived vertex indices.
 
-Reuse the existing evaluator and durable program service where their contracts apply. Introduce pure, bounded surface inputs and a generator that produces positions, normals, indices, region assignments, bounds, and recipe-to-output provenance. Count required output before allocation and observe cancellation during generation.
+GLB/0.3 metadata identifies the program bundle revision, source declaration/occurrence identities, section ordering, regional material mapping, caps/facets, local visual transform, target profile, limitations and any quantization loss. Decoding must prove exported triangle count, winding, material assignment, color/metallic/roughness, physical/nonphysical semantics and world-space animation at fixed independently sampled times. Multiple primitives within one logical mesh are required; one material per node does not satisfy this contract. Asset-specific Python mesh generation outside the language is not valid source-conformance evidence.
 
-Extend the visual representation to support several region/material primitives for one logical carrier. Preserve source identities independently of mesh indices. Detailed geometry inspection must be bounded and paginated; ordinary object inspection should not return an unbounded full mesh.
+## 7. Frozen acceptance matrix, release rule and omissions
 
-Extend the named delivery adapter and its independent decoder checks to actual geometry, material groups, and promised attributes. Preserve world-transform baking, timing, source-bundle identity, and release semantics. Do not infer correct exported geometry from an in-memory recipe or metadata alone.
+The adopted **M01–M12** suite is frozen in [surface-v0.1/acceptance.json](surface-v0.1/acceptance.json) with fixed oracle values, boundary inputs, expected errors, composition and held-out variants. A sample source in that folder is an authored fixture, **not** a currently executable supported `0.2` program. Tests must compare independently derived geometry and animation expectations to actual `.ok` compilation and decoded glTF destination, and must run alongside all prior core/agent/construction regression suites.
 
-## 5. Acceptance work to adopt
-
-The following groups define what the next contract must turn into concrete fixtures. They are **unmeasured requirements**, not passed cases or frozen tolerance values.
-
-| Group | Evidence required |
+| Case | Required implementation gate |
 | --- | --- |
-| M01: Analytic shapes | Constant and tapered sections match independently derived bounds, cross-sections, orientation and, where promised, closed-surface volume. |
-| M02: Nontrivial shape | An offset and tapered exterior has valid caps/winding, finite normals and no degenerate triangles within the supported family. |
-| M03: Approximation | Separately measured ideal-surface approximation and float32 delivery error, with explicit tessellation settings and tolerances fixed in advance. |
-| M04: Regional appearance | Independently decoded triangles and materials carry the expected regions; a region edit visibly changes the intended area. |
-| M05: Reusable modeling | One pinned `.ok` library builds at least two different compositions through language parameters and constructors. |
-| M06: Unseen variants | Predetermined held-out proportions, section counts and composition combinations work within the declared support range. |
-| M07: Targeted repair | One section/region edit changes the chosen occurrence, preserving sibling/library bytes, unrelated identities and applicable mechanics. |
-| M08: Topology changes | Insertion/removal preserves surviving source keys and reports changed mesh data without promising stable triangle indices. |
-| M09: Motion composition | Independent actions, nonidentity local placement and release retain their expected world positions, rotations and timing. |
-| M10: Failure and bounds | Duplicate stations, invalid dimensions, frame mismatch, missing regions, unsupported caps/intersections, resource limits and cancellation fail precisely. |
-| M11: Destination evidence | Actual source, geometry/material decoding, numerical playback and inspected multi-view or animated captures identify the same program and artifact. |
-| M12: Regression | Existing core, agent, construction and destination gates remain true for their named versions. |
+| M01 | Exact constant circular and elliptic ring geometry; finite normals, winding, count and closed prism volume. |
+| M02 | Taper plus offset, explicit geometric sorting independent of source keys; caps and nondegenerate faces. |
+| M03 | Independently measured circular angular approximation, binary64 ring coordinates and float32 export error. |
+| M04 | Real regional triangle indices and decoded PBR material values; isolated palette change. |
+| M05 | One hash-pinned library reused in two structurally different complete exterior compositions. |
+| M06 | Held-out station counts, facets, proportions and generated-part numbers fixed prior to evaluation. |
+| M07 | Revision-safe single-occurrence section/material repair; unchanged siblings and imported library bytes. |
+| M08 | Section insertion/removal preserves surviving authored keys but changes derived geometry as expected. |
+| M09 | Local visual placement, inherited rigid animation and existing mechanical release numerically agree. |
+| M10 | Duplicate/near stations, invalid dimensions/frames/regions, cap/facet and aggregate budget failures; cancellation. |
+| M11 | Independent GLB/0.3 geometry/material/pose decode and browser capture on identical program/artifact identities. |
+| M12 | All original `0.1`, `0.2`, GLB/0.1, GLB/0.2, agent and construction gates still pass. |
 
-Fix candidate limits and the independent oracle before implementing their tests. A convenient passing example must not determine the acceptance range after the fact. A render is useful evidence of appearance and usability; it does not replace topology, material, dimensional or motion checks.
+**Adoption status:** The contract and case IDs are adopted here. **No M-case is marked passed by adopting text or fixtures.** A release gate can close only after compiled language source (including unseen variants), tests, independent destination and visual validation, actual agent repairs, and identified GitHub CI demonstrate the cases. Rejected and repaired candidates must retain exact byte hashes, no silent source migrations, and correct target contract labels.
 
-## 6. Proposed demonstration
-
-Use one library of shaped rigid components to build a complete segmented creature or articulated prop and a differently composed branch-like or ornamental object. Add another instance with different proportions and an occurrence-specific shape or region edit. The same native surface family should explain all of them without hidden host-language preparation.
-
-Retain the complete agent workflow: discover the public contracts, author a new combination, receive an invalid section/region diagnostic, repair it through the authorized source scope, inspect the affected dependencies, and export the corrected scene. Retain task-specific inputs and preparation along with the measured result.
-
-This gate would establish richer exterior construction and source-driven variation. Continuous skin deformation, purposeful locomotion, contacts, general rigid-body dynamics, wind response, textures and live engine behavior remain separate unmet goals. The later agent-benefit comparison still needs unseen tasks, repair effort, cost, quality and a documented direct-tool baseline; this milestone must not claim an unmeasured productivity gain.
-
-## 7. Recovery instruction
-
-After the construction gate closes, reread GOAL, STATUS and AGENTS, inspect the actual main head and CI, and follow the integration lease. Refine this proposal into one finite adoptable contract on an isolated branch. Do not change `0.1`/`0.2` semantics in place, start implementing an undecided surface contract, or mark the broader product complete because these shapes can be rendered.
+**Still excluded:** Subdivision/freeform NURBS, smooth normals and UV textures; automatic mesh mass/collision; deformation, skinning, contact and dynamics; branching inside one loft; arbitrary external engines or engine-side live simulation; performance or authoring-benefit benchmarks; worlds/terrain/fluids/creatures at full-product scale. Each remains a future versioned goal rather than being quietly dropped.
