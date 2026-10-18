@@ -2,6 +2,8 @@
 
 Repeated immutable values count on every occurrence. The walk retains only an
 iterator per nesting level and rejects cycles; it never expands shared graphs.
+Only exact built-in containers are accepted, matching the scalar type checks.
+Custom containers can expose different values to preflight and serialization.
 """
 from __future__ import annotations
 
@@ -73,13 +75,13 @@ def measure_json(value, *, max_bytes=MAX_JSON_BYTES, max_entries=MAX_JSON_ENTRIE
             if not math.isfinite(item):
                 raise ValueError("JSON numbers must be finite.")
             add(len(json.dumps(item, allow_nan=False)))
-        elif isinstance(item, (dict, list, tuple)):
+        elif type(item) is dict or type(item) is list or type(item) is tuple:
             if id(item) in active:
                 raise ValueError("JSON cannot encode cyclic values.")
             if depth >= max_depth:
                 raise JSONLimitError("json_depth", max_depth, depth + 1)
             add(2 + max(0, len(item) - 1))
-            if isinstance(item, dict):
+            if type(item) is dict:
                 for key in item:
                     if type(key) is not str:
                         raise ValueError("JSON object keys must be strings.")
