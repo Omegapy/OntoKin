@@ -6,7 +6,7 @@ OntoKin (pronounced **ON-toh-kin**) is a programming language under development,
 
 The current direction begins with exterior 3D models and short animations. Those objects should remain reusable in larger scenes, video games, and eventually more complex virtual worlds. Physics and mechanics are central to the design; mathematics gives those descriptions precise meaning.
 
-> **Project status:** OntoKin remains in development. The reference package is **0.4.0**. Its main development line now compiles native language `0.3` / `surface-0.1` exterior models and exports actual regional PBR geometry and recorded rigid animation through `ontokin.glb/0.3`. Earlier core, construction and agent profiles remain supported. [STATUS.md](STATUS.md) identifies current implementation and CI evidence. Agent/0.3 inspection/repair and the complete surface acceptance gate remain unfinished, together with the broader product requirements.
+> **Project status:** OntoKin remains in development. The reference package is **0.4.0**. Its development line compiles native language `0.3` / `surface-0.1` exterior models and exports actual regional PBR geometry and recorded rigid animation through `ontokin.glb/0.3`. The explicit Agent/0.3 service supports native source repair, bounded surface inspection and artifact retrieval. Earlier core, construction and agent profiles remain supported. [STATUS.md](STATUS.md) identifies integrated implementation, complete release evidence and remaining requirements; the broader product remains in progress.
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
 
@@ -20,7 +20,18 @@ python3 -m ontokin export docs/language-design/surface-v0.1/program.files.json -
 
 For a complete source without imports, use `python3 -m ontokin export model.ok --target ontokin.glb/0.3 --output /tmp/model.glb`. The [native export guide](docs/engineering/OK-ENG-003-native-surface-glb-export.md) explains pinned bundles, local transforms, PBR properties, source identities, resource limits, cancellation and independent validation.
 
-The [M01–M12 fixtures](docs/language-design/surface-v0.1/acceptance.json) remain the full surface-release acceptance contract. Passing the exporter stage does not establish the remaining agent inspection/repair or complete composition gates. The [earlier Python-input workbench](prototypes/surface_v01/README.md) remains preserved as historical prototype evidence.
+The [M01–M12 fixtures](docs/language-design/surface-v0.1/acceptance.json) remain the full surface-release acceptance contract. The [release procedure](docs/engineering/OK-ENG-004-native-surface-release-conformance.md) connects actual agent edits, composed source programs, delivered GLBs and current regression evidence. The [earlier Python-input workbench](prototypes/surface_v01/README.md) remains preserved as historical prototype evidence.
+
+### Inspect and repair a native surface program
+
+```bash
+python3 -m ontokin agent --protocol ontokin.agent/0.3 --store /tmp/ontokin-surface-state
+python3 tools/build_surface_agent_demo.py --output-dir /tmp/ontokin-surface-agent
+```
+
+The first command serves an agent's own versioned JSONL requests. [OK-AGENT-003](docs/engineering/OK-AGENT-003-native-surface-program-workflows.md) defines the operations and schemas. A `surface.mesh_page` request returns at most 256 complete triangles from an identified accepted program and object occurrence. It exposes carrier-local positions, normals and material-region keys, and binds continuation cursors to that exact geometry and implementation. Section and material edits remain edits to authoritative `.ok` bytes.
+
+The second command runs the fixed acceptance workflow: reject an invalid radius, repair one occurrence, change one palette region, insert/reorder/remove a keyed section, evaluate motion, and retrieve actual GLB bytes through the service. It also exports the predetermined dimensional variants, ordinary and generated compositions, and a rotated release. Its output retains source snapshots and every request/response for independent verification. It generates geometry through native source operations; the driver supplies no prepared mesh.
 
 ## Build an assembly from a pinned component library
 
@@ -105,6 +116,7 @@ The `check` and `evaluate` file commands, and default `export`, retain the exist
 | `python3 -m ontokin agent --store DIR --request request.json --wait` | Execute one request and return its terminal result; omit `--wait` for a retained queued receipt. |
 | `python3 -m ontokin agent --protocol ontokin.agent/0.2 --store DIR` | Serve program-bundle JSONL requests in a separate durable store, with exact dependency and per-file source identities. |
 | `python3 -m ontokin agent --protocol ontokin.agent/0.2 --store DIR --request request.json --wait` | Execute one versioned program request and return its terminal response. |
+| `python3 -m ontokin agent --protocol ontokin.agent/0.3 --store DIR` | Serve native surface source workflows and bounded triangle inspection in a separate durable store. |
 | `python3 -m ontokin check FILE.ok` | Validate and preflight the declared timeline. |
 | `python3 -m ontokin check FILE.ok --level represented` | Check source representation while disclosing unresolved support requests. |
 | `python3 -m ontokin check FILE.ok --level constructed` | Derive the initial world state before time-zero actions, without requiring later actions to be admissible. |
@@ -114,10 +126,11 @@ The `check` and `evaluate` file commands, and default `export`, retain the exist
 | `python3 -m ontokin export FILE.ok --output FILE.glb --fps 120 --end 1.5 --no-helpers` | Export a shorter interval with denser sampling and no display-only assembly/joint markers. |
 | `python3 -m ontokin export PROGRAM.files.json --bundle --target ontokin.glb/0.3 --output MODEL.glb` | Compile pinned native surface source and export regional PBR geometry plus rigid animation. |
 | `python3 -m ontokin conformance --output /tmp/ontokin-conformance.json` | Execute all 43 published source cases and write their measured results. |
+| `python3 tools/run_surface_conformance.py --output /tmp/ontokin-surface-conformance.json` | Execute the fixed M01–M12 tests and report any pending identified external gates. |
 
 JSON diagnostics contain the stable error code, failure phase, source revision, original UTF-8 byte span, governing rules, and repair guidance. Admission and transition failures found during preflight retain the time and phase of the authored failure. Receiving a suggested repair does not apply it.
 
-For the core file commands, exit status is `0` for success, `1` for I/O failure, `2` for an invalid/conflicting source, unavailable sample, numerical failure, or resource limit, and `3` for an unsupported requested capability/level. Core conformance returns `1` when its run fails. Agent one-request mode returns `1` for a rejected, failed, or unknown result; JSONL clients inspect each response's status and diagnostics. Generic `check --level delivered` still returns unsupported because it names no destination contract. Use `export` for the bounded core GLB contract, or name `ontokin.glb/0.2` in a program-agent export request.
+For the core file commands, exit status is `0` for success, `1` for I/O failure, `2` for an invalid/conflicting source, unavailable sample, numerical failure, or resource limit, and `3` for an unsupported requested capability/level. Core conformance returns `1` when its run fails. Agent one-request mode returns `1` for a rejected, failed, or unknown result; JSONL clients inspect each response's status and diagnostics. Generic `check --level delivered` still returns unsupported because it names no destination contract. Use `export` for the selected GLB contract, or name the compatible `ontokin.glb/0.2` or `ontokin.glb/0.3` destination in a program-agent export request. The separate surface conformance runner uses `1` for executed failures or an unstable run and `2` for pending selected requirements.
 
 Sample times written on the command line are exact decimal seconds. Source time quantities first become canonical binary64 values, and event scheduling preserves those values exactly. A decimal sample of `0.1` is therefore slightly earlier than an event authored as `0.1[s]`. Returned `boundary_times_seconds` gives the exact event and completion times; use those strings for exact boundary inspection.
 
