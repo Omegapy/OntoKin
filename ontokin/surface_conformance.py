@@ -21,6 +21,7 @@ import struct
 import subprocess
 import sys
 import unittest
+import zlib
 
 from .bundle import ProgramBundle, SourceUnit, load_bundle
 from . import construction_conformance as legacy
@@ -104,27 +105,41 @@ def load_manifest(directory: Path = FIXTURES) -> dict:
     return manifest
 
 
+def _inventory_path(value: str) -> bool:
+    """The same finite input policy is used for current files and the CI tree."""
+    path = Path(value)
+    parts = path.parts
+    if not parts or {"__pycache__", "node_modules"}.intersection(parts):
+        return False
+    if value == "pyproject.toml":
+        return True
+    if len(parts) == 3 and parts[:2] == (".github", "workflows"):
+        return path.suffix in {".yml", ".yaml"}
+    if len(parts) >= 2 and parts[0] in {"ontokin", "tests", "tools"}:
+        return path.suffix in {".py", ".mjs", ".json", ".ok", ".html"}
+    if len(parts) >= 2 and parts[0] == "prototypes":
+        return path.suffix == ".py"
+    if len(parts) >= 2 and parts[0] == "examples" and "demo-data" not in parts:
+        return path.suffix == ".ok" or value in {"examples/visual/viewer.js", "examples/visual/viewer.html"}
+    if len(parts) < 3 or parts[:2] != ("docs", "language-design"):
+        return False
+    if len(parts) == 3 and path.name.startswith("OK-LANG-") and path.suffix == ".md":
+        return True
+    fixtures = {"core-v0.1", "construction-v0.1", "surface-v0.1", "agent-v0.1", "agent-v0.2", "agent-v0.3"}
+    return (len(parts) >= 4 and parts[2] in fixtures
+            and not {"evidence", "validation"}.intersection(parts)
+            and path.suffix in {".py", ".ok", ".json", ".md", ".html", ".mjs"})
+
+
 def evidence_inventory() -> list[dict]:
     """Current reproducible inputs; generated evidence directories are excluded."""
     paths = set()
-    for folder in (ROOT / "ontokin", ROOT / "tests", ROOT / "tools"):
-        for path in folder.rglob("*"):
-            if path.is_file() and not {"__pycache__", "node_modules"}.intersection(path.parts) \
-                    and path.suffix in {".py", ".mjs", ".json", ".ok", ".html"}:
+    for name in ("ontokin", "tests", "tools", "prototypes", "examples", "docs/language-design", ".github/workflows"):
+        for path in (ROOT / name).rglob("*"):
+            if path.is_file() and _inventory_path(path.relative_to(ROOT).as_posix()):
                 paths.add(path)
-    paths.update((ROOT / ".github/workflows").glob("*.yml"))
-    paths.update((ROOT / ".github/workflows").glob("*.yaml"))
     if (ROOT / "pyproject.toml").is_file():
         paths.add(ROOT / "pyproject.toml")
-    design = ROOT / "docs/language-design"
-    paths.update(design.glob("OK-LANG-*.md"))
-    for name in ("core-v0.1", "construction-v0.1", "surface-v0.1", "agent-v0.1", "agent-v0.2", "agent-v0.3"):
-        for path in (design / name).rglob("*"):
-            # Validation history is independently hash-bound by the external
-            # manifest, and must not make a new report invalidate its own run.
-            if path.is_file() and not {"__pycache__", "evidence", "validation"}.intersection(path.parts) \
-                    and path.suffix in {".py", ".ok", ".json", ".md", ".html", ".mjs"}:
-                paths.add(path)
     return [{"path": path.relative_to(ROOT).as_posix(), "sha256": file_identity(path)}
             for path in sorted(paths)]
 
@@ -213,6 +228,7 @@ def _expected_fixtures() -> dict:
     rules = composition["workflow"]
     next(s for s in previous["shapes"][1]["sections"] if s["key"] == "middle")["radii_xy_m"][0] = rules["repaired_radius_x_m"]
     values["radius-repaired"] = {"oracle": copy.deepcopy(previous)}
+    previous["shapes"][1]["materials"] = copy.deepcopy(previous["shapes"][1]["materials"])
     previous["shapes"][1]["materials"][rules["palette_region"]] = rules["palette_after"]
     values["palette-repaired"] = {"oracle": copy.deepcopy(previous)}
     previous["shapes"][1]["sections"].append(rules["inserted_section"])
@@ -280,7 +296,7 @@ def _rotate(point, quaternion):
 
 
 def _analytic_triangles(shape: dict) -> list[tuple]:
-    """Independent scalar oracle: rings, oriented sides, alternating end caps."""
+    """Independent scalar oracle: rings, sides, then complete lower/upper caps."""
     sections = sorted(shape["sections"], key=lambda s: s["station_m"])
     n = shape["facets"]
     rings = [[[s["center_xy_m"][0] + s["radii_xy_m"][0] * math.cos(2 * math.pi * j / n),
@@ -294,6 +310,7 @@ def _analytic_triangles(shape: dict) -> list[tuple]:
     if shape["caps"] == "flat":
         for j in range(n):
             faces.append((sections[0]["region"], [[*sections[0]["center_xy_m"], sections[0]["station_m"]], rings[0][(j + 1) % n], rings[0][j]]))
+        for j in range(n):
             faces.append((sections[-1]["region"], [[*sections[-1]["center_xy_m"], sections[-1]["station_m"]], rings[-1][j], rings[-1][(j + 1) % n]]))
     result = []
     for region, points in faces:
@@ -508,6 +525,16 @@ def _verify_workflow(record: dict, evidence_root: Path, implementation: dict, ma
                  and program.entry.raw.split(b'    object second @ "second"')[0] == head_prefix
                  and program.entry.raw.split(b'    action walk @ "walk"')[1] == action_suffix,
                  "A targeted workflow edit changed the sibling, animation or pinned library.")
+    rules = _json_file(FIXTURES / "compositions/expected.json")["workflow"]
+    for fixture, wanted_keys in (("inserted", rules["inserted_ordered_keys"]),
+                                 ("reordered", rules["source_reorder_keys"]),
+                                 ("removed", rules["removed_ordered_keys"])):
+        item = artifacts[fixture]
+        program = snapshots[(item["project_id"], item["program_revision"])][0]
+        authored_keys = [line.split('"')[1] for line in program.entry.text.splitlines() if "loft_section(" in line]
+        _require(authored_keys == wanted_keys, "A topology scenario did not perform the fixed source key edit.")
+    _require(artifacts["reordered"]["program_revision"] != artifacts["inserted"]["program_revision"],
+             "The purported source reorder did not produce its distinct authored revision.")
     _require(artifacts["removed"]["program_revision"] == artifacts["palette-repaired"]["program_revision"],
              "Removing the inserted section did not restore the exact authored source revision.")
     context["workflow"] = {"artifacts": artifacts, "snapshots": snapshots, "exchanges": exchanges}
@@ -522,7 +549,13 @@ def _glb(path: Path):
     magic, version, total, size, kind = struct.unpack_from("<4sIIII", raw)
     _require(magic == b"glTF" and version == 2 and total == len(raw) and kind == 0x4E4F534A
              and size <= 4194304 and size % 4 == 0, "Invalid retained GLB container.")
-    document = json.loads(raw[20:20+size].decode("utf-8"),
+    def unique(pairs):
+        value = {}
+        for key, item in pairs:
+            _require(key not in value, "Duplicate member in retained GLB JSON: " + key)
+            value[key] = item
+        return value
+    document = json.loads(raw[20:20+size].decode("utf-8"), object_pairs_hook=unique,
                           parse_constant=lambda x: (_ for _ in ()).throw(ValueError("Nonfinite GLB JSON: " + x)))
     binary_size, binary_kind = struct.unpack_from("<II", raw, 20+size)
     _require(binary_kind == 0x004E4942 and 28+size+binary_size == len(raw), "Invalid retained GLB binary chunk.")
@@ -684,13 +717,28 @@ def _verify_poses(objects, oracle, time, *, reference=None, direct_metrics=False
     return len(expected)
 
 
+def _verify_delivery_link(fixture, program, artifact_sha, byte_length, context):
+    _require("workflow" in context, "Native destination validation requires the verified source workflow first.")
+    delivered = context["workflow"]["artifacts"][fixture]
+    snapshot, accepted = context["workflow"]["snapshots"][(delivered["project_id"], delivered["program_revision"])]
+    _require(accepted is True and program.to_payload() == snapshot.to_payload(),
+             "The independently decoded program is not the accepted workflow snapshot.")
+    _require(delivered["program_revision"] == program.program_revision and delivered["artifact_sha256"] == artifact_sha
+             and delivered["byte_length"] == byte_length,
+             "The independently decoded GLB is not the artifact retrieved from the source workflow.")
+
+
 def _verify_destination(native, evidence_root, implementation, manifest, context):
+    _require("workflow" in context, "Native destination validation requires the verified source workflow first.")
     build_path = _identified(native["build"], evidence_root)
     destination_path = _identified(native["destination"], evidence_root)
     build, report = _json_file(build_path), _json_file(destination_path)
     root = build_path.parent
     _require(build["schema_version"] == "ontokin.surface-native-build/0.1" and build["status"] == "built"
-             and build["acceptance_manifest_sha256"] == manifest["acceptance_manifest"]["sha256"],
+             and build["acceptance_manifest_sha256"] == manifest["acceptance_manifest"]["sha256"]
+             and build["composition_manifest_sha256"] == manifest["composition_manifest"]["sha256"]
+             and build["implementation"] == implementation
+             and build["builder_sha256"] == file_identity(ROOT / "tools/build_surface_agent_demo.py"),
              "Native build did not finish from the fixed acceptance corpus.")
     _require(report["schema_version"] == "ontokin.surface-native-destination-validation/0.1"
              and report["status"] == "passed" and report["build_sha256"] == file_identity(build_path),
@@ -729,6 +777,7 @@ def _verify_destination(native, evidence_root, implementation, manifest, context
         glb_path = directory / "scene.glb"
         artifact_sha = file_identity(glb_path)
         revision = program.program_revision
+        _verify_delivery_link(fixture, program, artifact_sha, glb_path.stat().st_size, context)
         _require(entry["program_revision"] == result["program_revision"] == revision
                  and entry["artifact_sha256"] == result["artifact_sha256"] == artifact_sha
                  and entry["glb_bytes"] == glb_path.stat().st_size
@@ -778,6 +827,51 @@ def _verify_destination(native, evidence_root, implementation, manifest, context
             "khronos_errors": 0, "khronos_warnings": 0}
 
 
+def _verify_png(path: Path):
+    """Validate actual bounded noninterlaced 8-bit Chromium PNG capture data."""
+    _require(8 < path.stat().st_size <= 16777216, "A browser capture is empty or exceeds the image byte cap.")
+    raw = path.read_bytes()
+    _require(raw[:8] == b"\x89PNG\r\n\x1a\n", "The browser capture lacks a PNG signature.")
+    offset, header, compressed, ended = 8, None, bytearray(), False
+    while offset < len(raw):
+        _require(offset+12 <= len(raw), "The browser capture contains a truncated PNG chunk.")
+        size = struct.unpack_from(">I", raw, offset)[0]
+        kind = raw[offset+4:offset+8]
+        _require(offset+12+size <= len(raw), "A browser PNG chunk exceeds its retained file.")
+        data = raw[offset+8:offset+8+size]
+        crc = struct.unpack_from(">I", raw, offset+8+size)[0]
+        _require(zlib.crc32(kind+data) == crc, "A browser PNG chunk failed its CRC.")
+        if header is None:
+            _require(kind == b"IHDR" and size == 13, "A browser PNG must begin with its complete IHDR.")
+            width,height,depth,color,compression,filtering,interlace = struct.unpack(">IIBBBBB", data)
+            _require(0 < width <= 8192 and 0 < height <= 8192 and depth == 8 and color in (0,2,4,6)
+                     and (compression,filtering,interlace) == (0,0,0), "Unsupported or invalid browser PNG dimensions/encoding.")
+            channels = {0:1,2:3,4:2,6:4}[color]
+            stride = 1+width*channels
+            expected = height*stride
+            _require(expected <= 134217728, "Decoded browser PNG exceeds its fixed memory bound.")
+            header = (width,height,stride,expected)
+        elif kind == b"IHDR":
+            raise ValueError("A browser PNG repeats its image header.")
+        elif kind == b"IDAT":
+            compressed.extend(data)
+        elif kind == b"IEND":
+            _require(size == 0 and offset+12 == len(raw), "A browser PNG has an invalid end or trailing data.")
+            ended = True
+        offset += size+12
+    _require(header is not None and ended and compressed, "A browser PNG has no complete image payload.")
+    decoder = zlib.decompressobj()
+    try:
+        pixels = decoder.decompress(bytes(compressed), header[3]+1)
+    except zlib.error as error:
+        raise ValueError("A browser PNG has invalid compressed image data.") from error
+    _require(decoder.eof and not decoder.unconsumed_tail and not decoder.unused_data and len(pixels) == header[3],
+             "A browser PNG has truncated, excess or inconsistent pixel data.")
+    _require(all(pixels[index] in (0,1,2,3,4) for index in range(0,len(pixels),header[2])),
+             "A browser PNG has invalid scanline filters.")
+    return {"width":header[0],"height":header[1]}
+
+
 def _verify_browser(native, evidence_root, implementation, manifest, context):
     _require("destination" in context, "The browser gate requires verified source/destination identities first.")
     path = _identified(native["browser"], evidence_root)
@@ -815,8 +909,7 @@ def _verify_browser(native, evidence_root, implementation, manifest, context):
                  "Required front, side or animated browser captures are missing.")
         for capture in captures:
             file = _nested(capture["file"], capture["sha256"], path.parent)
-            _require(file.read_bytes().startswith(b"\x89PNG\r\n\x1a\n") and file.stat().st_size > 100,
-                     "A retained browser capture is not a usable PNG.")
+            _verify_png(file)
             _require(capture["program_revision"] == source["program_revision"] and capture["artifact_sha256"] == source["artifact_sha256"],
                      "A capture names a different source/artifact revision.")
             _verify_poses(capture["objects"], expected["oracle"], float(capture["time_seconds"]), direct_metrics=True)
@@ -939,6 +1032,10 @@ def _verify_commit_inventory(commit: str, inventory: list[dict]):
         mode, kind, identity = descriptor.decode("ascii").split()
         if kind == "blob":
             tree[path.decode("utf-8")] = (mode, identity)
+    expected_paths = {record["path"] for record in inventory}
+    tree_paths = {path for path in tree if _inventory_path(path)}
+    _require(len(expected_paths) == len(inventory) and expected_paths == tree_paths,
+             "CI commit input path set differs from current runtime/test/spec/tool inventory.")
     for record in inventory:
         file = legacy._repository_file(record["path"], ROOT)
         raw = file.read_bytes()
