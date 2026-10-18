@@ -1,0 +1,561 @@
+{
+  "schema": "ontokin.acceptance/surface-0.1",
+  "status": "adopted-unexecuted",
+  "authored": "2026-10-18",
+  "normative_contract": "docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md",
+  "source_bundle": {
+    "entry": "02-studio.ok",
+    "library": "01-surface-parts.ok",
+    "package_id": "fixture.surface-parts",
+    "version": "1.0.0",
+    "sha256": "87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+  },
+  "limits": {
+    "min_sections": 2,
+    "max_sections": 64,
+    "min_materials": 1,
+    "max_materials": 16,
+    "min_facets": 8,
+    "max_facets": 64,
+    "facets_multiple": 4,
+    "min_radius_m": 0.001,
+    "max_radius_m": 100,
+    "min_station_gap_m": 0.001,
+    "max_coordinate_abs_m": 100,
+    "max_aggregate_vertices": 250000,
+    "max_glb_bytes": 67108864
+  },
+  "oracle_formulas": {
+    "closed_triangles": "2*S*N",
+    "open_triangles": "2*(S-1)*N",
+    "flat_shaded_vertices": "3*triangles",
+    "circle_radial_sagitta": "radius*(1-cos(pi/facets))",
+    "closed_circular_prism_volume": "facets*radius^2*sin(2*pi/facets)*height/2"
+  },
+  "tolerance": {
+    "ring_coordinate_m": 1e-10,
+    "normal_unit_length": 1e-12,
+    "volume_m3": 1e-9,
+    "per_axis_local_float32_m": 0.00001
+  },
+  "cases": [
+    {
+      "id": "M01",
+      "kind": "positive analytic",
+      "inputs": [
+        {
+          "name": "cylinder",
+          "stations_m": [
+            0,
+            2
+          ],
+          "centers_xy_m": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "radii_xy_m": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "keys": [
+            "z-base",
+            "a-top"
+          ],
+          "region_keys": [
+            "blue",
+            "blue"
+          ],
+          "facets": 16,
+          "caps": "flat",
+          "expected": {
+            "ordered_keys": [
+              "z-base",
+              "a-top"
+            ],
+            "bounds_m": [
+              [
+                -0.5,
+                -0.5,
+                0
+              ],
+              [
+                0.5,
+                0.5,
+                2
+              ]
+            ],
+            "triangles": 64,
+            "vertices": 192,
+            "volume_m3": 1.5307337294603591,
+            "ideal_circle_volume_m3": 1.5707963267948966,
+            "radial_sagitta_m": 0.009607359798384785
+          }
+        },
+        {
+          "name": "ellipse",
+          "stations_m": [
+            0,
+            1
+          ],
+          "centers_xy_m": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "radii_xy_m": [
+            [
+              0.4,
+              0.2
+            ],
+            [
+              0.4,
+              0.2
+            ]
+          ],
+          "keys": [
+            "bottom",
+            "top"
+          ],
+          "region_keys": [
+            "plain",
+            "plain"
+          ],
+          "facets": 16,
+          "caps": "flat",
+          "expected": {
+            "bounds_m": [
+              [
+                -0.4,
+                -0.2,
+                0
+              ],
+              [
+                0.4,
+                0.2,
+                1
+              ]
+            ],
+            "triangles": 64,
+            "vertices": 192
+          }
+        }
+      ],
+      "checks": [
+        "world-independent locally correct winding",
+        "geometrically closed flat caps",
+        "positive oriented signed volume",
+        "finite flat unit normals"
+      ]
+    },
+    {
+      "id": "M02",
+      "kind": "positive offset taper",
+      "input": {
+        "keys": [
+          "z-start",
+          "a-middle",
+          "b-end"
+        ],
+        "stations_m": [
+          0,
+          0.8,
+          2
+        ],
+        "centers_xy_m": [
+          [
+            0,
+            0
+          ],
+          [
+            0.25,
+            0.1
+          ],
+          [
+            0.4,
+            0.15
+          ]
+        ],
+        "radii_xy_m": [
+          [
+            0.5,
+            0.3
+          ],
+          [
+            0.4,
+            0.2
+          ],
+          [
+            0.1,
+            0.1
+          ]
+        ],
+        "section_regions": [
+          "base",
+          "middle",
+          "tip"
+        ],
+        "facets": 16,
+        "caps": "flat"
+      },
+      "expected": {
+        "numeric_station_order": [
+          "z-start",
+          "a-middle",
+          "b-end"
+        ],
+        "triangles": 96,
+        "vertices": 288,
+        "triangles_per_region": {
+          "base": 48,
+          "middle": 32,
+          "tip": 16
+        },
+        "lower_cap_normal": [
+          0,
+          0,
+          -1
+        ],
+        "upper_cap_normal": [
+          0,
+          0,
+          1
+        ],
+        "all_nonzero_areas": true
+      }
+    },
+    {
+      "id": "M03",
+      "kind": "independent approximation",
+      "input_from": "M01-cylinder",
+      "checks": {
+        "analytic_ring_tolerance_m": 1e-10,
+        "float32_local_axis_error_max_m": 0.00001,
+        "normal_length_max_error": 1e-12,
+        "sagitta_m": 0.009607359798384785,
+        "sagitta_max_m": 0.01
+      },
+      "expected": "independent analytic sample and decoded float32 mesh; no inferred general ellipse/ruled-surface bound"
+    },
+    {
+      "id": "M04",
+      "kind": "PBR region output",
+      "input": {
+        "facets": 16,
+        "stations_m": [
+          0,
+          1,
+          2
+        ],
+        "section_regions": [
+          "base",
+          "middle",
+          "top"
+        ],
+        "caps": "flat",
+        "materials": {
+          "base": {
+            "rgba": [
+              0.6,
+              0.3,
+              0.2,
+              1
+            ],
+            "metallic": 0,
+            "roughness": 0.8
+          },
+          "middle": {
+            "rgba": [
+              0.1,
+              0.4,
+              0.8,
+              1
+            ],
+            "metallic": 0.2,
+            "roughness": 0.4
+          },
+          "top": {
+            "rgba": [
+              0.8,
+              0.8,
+              0.8,
+              1
+            ],
+            "metallic": 0.5,
+            "roughness": 0.5
+          }
+        }
+      },
+      "expected": {
+        "per_region_triangles": {
+          "base": 48,
+          "middle": 32,
+          "top": 16
+        },
+        "decoded_primitive_count": 3,
+        "palette_edit_preserves_positions": true,
+        "palette_edit_changes_only_target_material": true
+      }
+    },
+    {
+      "id": "M05",
+      "kind": "pinned reuse and composition",
+      "source_files": [
+        "01-surface-parts.ok",
+        "02-studio.ok"
+      ],
+      "expected": {
+        "dependency_sha256": "87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce",
+        "instance_paths": [
+          "studio.first",
+          "studio.second"
+        ],
+        "first_station_count": 3,
+        "second_station_count": 3,
+        "second_has_middle_key": true,
+        "unequal_proportions": true,
+        "shared_library_unchanged": true
+      },
+      "release_addition": "Also exercise two structurally distinct generated/ordinary-part compositions from same pinned library, not merely these two root variants."
+    },
+    {
+      "id": "M06",
+      "kind": "held-out variants",
+      "variants": [
+        {
+          "sections": 2,
+          "facets": 8,
+          "caps": "flat",
+          "rx_m": 0.2,
+          "ry_m": 0.3,
+          "expected_triangles": 32,
+          "expected_vertices": 96
+        },
+        {
+          "sections": 3,
+          "facets": 12,
+          "caps": "none",
+          "rx_m": 0.5,
+          "ry_m": 0.25,
+          "expected_triangles": 48,
+          "expected_vertices": 144
+        },
+        {
+          "sections": 11,
+          "facets": 32,
+          "caps": "flat",
+          "rx_m": 0.15,
+          "ry_m": 0.2,
+          "expected_triangles": 704,
+          "expected_vertices": 2112
+        },
+        {
+          "sections": 64,
+          "facets": 64,
+          "caps": "flat",
+          "rx_m": 0.001,
+          "ry_m": 0.001,
+          "expected_triangles": 8192,
+          "expected_vertices": 24576
+        }
+      ],
+      "expected": "positive finite geometry, source key stability, counts and analytic stations across unseen proportions"
+    },
+    {
+      "id": "M07",
+      "kind": "atomic repair",
+      "target": "scene.studio.second.rings[\"middle\"]",
+      "source": "02-studio.ok",
+      "before_radius_x_m": 0.48,
+      "after_radius_x_m": 0.52,
+      "expected": [
+        "candidate rejected on bad variant without mutation",
+        "valid patch accepted as new revision",
+        "first and imported library exact bytes unchanged",
+        "only adjacent second-object surface spans change",
+        "export identifies repaired revision"
+      ]
+    },
+    {
+      "id": "M08",
+      "kind": "topology and source identity",
+      "operations": [
+        {
+          "op": "insert",
+          "key": "between",
+          "station_m": 0.4
+        },
+        {
+          "op": "reorder",
+          "keys": [
+            "tip",
+            "foot",
+            "middle"
+          ]
+        },
+        {
+          "op": "remove",
+          "key": "between"
+        }
+      ],
+      "expected": [
+        "surviving section names unchanged",
+        "geom ordered by numeric station",
+        "new mesh triangle offsets may differ",
+        "removed keys not silently aliased"
+      ]
+    },
+    {
+      "id": "M09",
+      "kind": "visual motion and release",
+      "source": "02-studio.ok",
+      "times_s": [
+        0,
+        1,
+        2
+      ],
+      "carrier": "studio.first",
+      "world_positions_m": [
+        [
+          -2,
+          0,
+          0
+        ],
+        [
+          -2,
+          0.5,
+          0
+        ],
+        [
+          -2,
+          1,
+          0
+        ]
+      ],
+      "local_visual_offset_m": [
+        0,
+        0,
+        0.1
+      ],
+      "expected": [
+        "one rigid carrier world transform",
+        "visual transform is not second motion authority",
+        "existing C17 release law remains valid",
+        "include independent nonidentity rotation/release fixture in final gate"
+      ]
+    },
+    {
+      "id": "M10",
+      "kind": "rejection and boundary",
+      "negative": [
+        [
+          "only one section",
+          "OKL-E-SURFACE-SECTION"
+        ],
+        [
+          "65 sections",
+          "OKL-E-SURFACE-SECTION"
+        ],
+        [
+          "duplicate stations 0 and 0",
+          "OKL-E-SURFACE-STATION"
+        ],
+        [
+          "station gap 0.000999m",
+          "OKL-E-SURFACE-STATION"
+        ],
+        [
+          "negative or zero radius",
+          "OKL-E-SURFACE-RADIUS"
+        ],
+        [
+          "radius 100.000001m",
+          "OKL-E-SURFACE-RADIUS"
+        ],
+        [
+          "center Z 1m",
+          "OKL-E-SURFACE-CENTER"
+        ],
+        [
+          "missing region palette key",
+          "OKL-E-SURFACE-REGION"
+        ],
+        [
+          "17 material entries",
+          "OKL-E-SURFACE-MATERIAL"
+        ],
+        [
+          "metallic 1.1",
+          "OKL-E-SURFACE-MATERIAL"
+        ],
+        [
+          "facets 9",
+          "OKL-E-SURFACE-FACETS"
+        ],
+        [
+          "facets 68",
+          "OKL-E-SURFACE-FACETS"
+        ],
+        [
+          "caps rounded",
+          "OKL-E-SURFACE-CAPS"
+        ],
+        [
+          "placed in world not carrier frame",
+          "OKL-E-SURFACE-PLACEMENT"
+        ],
+        [
+          "251000 requested mesh vertices",
+          "OKL-E-RESOURCE"
+        ]
+      ],
+      "valid_limits": [
+        "2 and 64 sections",
+        "1 and 16 materials",
+        "8 and 64 facets",
+        "0.001 and 100m radii",
+        "0.001m station gap",
+        "station -100 and 100m"
+      ],
+      "expected": "bounded source diagnostics with no partial accepted edits; cancellation checked at generation checkpoints"
+    },
+    {
+      "id": "M11",
+      "kind": "independent destination",
+      "expected": [
+        "glTF validator zero errors and warnings",
+        "actual GLB/0.3 region/material primitive inspection",
+        "vertex normals and timestamps decoded independently",
+        "browser front/side/animated captures match exported revision",
+        "source and artifact provenance identify same pinned closure"
+      ]
+    },
+    {
+      "id": "M12",
+      "kind": "full regression",
+      "expected": [
+        "baseline 276 Python tests remain passing",
+        "new module unit and end-to-end tests added",
+        "source core conformance and agent A01-A10 unchanged",
+        "C01-C20 and retained destination checks pass",
+        "preserve historical reports rather than rewrite to hide failures"
+      ]
+    }
+  ]
+}
