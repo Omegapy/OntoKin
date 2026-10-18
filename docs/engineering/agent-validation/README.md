@@ -4,7 +4,7 @@ This directory records execution evidence for [OK-AGENT-001](../OK-AGENT-001-ai-
 
 ## Current evidence status
 
-**Local checks passed; GitHub publication and exact-head CI are pending.** The [validation summary](validation-summary.json) identifies `ontokin-reference` **0.3.0**, the October 18, 2026 runs, source/artifact identities, evidence-file hashes, and remaining limits. Python tests used CPython 3.12.14 on Linux. The measured package-source SHA-256 is `8a2eae260e2adfb28d6e1fd254cfefdb5fe47841509122ec1ad01e515a311142`.
+**The finite release gate passed locally and on GitHub CI.** The [validation summary](validation-summary.json) identifies `ontokin-reference` **0.3.0**, the October 18, 2026 runs, source/artifact identities, evidence-file hashes, and remaining limits. Python tests used CPython 3.12.14 on Linux. The measured package-source SHA-256 is `8a2eae260e2adfb28d6e1fd254cfefdb5fe47841509122ec1ad01e515a311142`.
 
 Historical ENG-001/ENG-002 source/export evidence remains unchanged. The fresh regression reports here describe the new implementation; earlier success is not relabeled as agent-interface execution or new remote CI.
 
@@ -19,7 +19,7 @@ Historical ENG-001/ENG-002 source/export evidence remains unchanged. The fresh r
 | [Agent artifact validation](external-results.json) | One **125,892-byte GLB**; **0 Khronos errors/warnings** and **200 Three.js world-pose comparisons** passed. |
 | [Legacy artifact regression](legacy-external-results.json) | **Six GLBs**, **0 Khronos errors/warnings**, and **347 Three.js world-pose comparisons** passed. |
 | [Browser report](viewer-results.json) and [rendered capture](agent-authoring.png) | **8 checks and 16 world-pose comparisons passed**; capture visually reviewed; no page errors or HTTP(S) requests. |
-| Publication and CI | **Pending** for this implementation; the [summary](validation-summary.json) and [STATUS](../../../STATUS.md) track the actual outcome. |
+| [Publication and CI](ci-results.json) | Implementation [commit c415250](https://github.com/Omegapy/OntoKin/commit/c4152509533f77ba54fac78268ba425df9b1a177); [run 39092228352](https://github.com/Omegapy/OntoKin/actions/runs/39092228352) passed Python 3.11–3.13 and all original/agent GLB and browser checks. |
 
 The [service tests](../../../tests/test_agent.py), [transaction tests](../../../tests/test_agent_transactions.py), and [CLI tests](../../../tests/test_agent_cli.py) exercise real SQLite stores and semantic work. Their checks cover independent-process retry, competing prepared candidates and runs, cancellation before commit, controlled worker termination and recovery, live-worker non-stealing, and implementation-identity fencing. Passing those cases does not certify arbitrary power-loss recovery or distributed transactions. [Catalog tests](../../../tests/test_agent_catalog.py) verify registry coverage and execute the displayed callable examples in valid binding contexts.
 

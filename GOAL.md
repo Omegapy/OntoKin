@@ -48,9 +48,9 @@ Full-product acceptance additionally requires evidence across **every area above
 
 Completing a finite milestone does not complete the whole project. Deferred domains remain visible in STATUS. The longer-term world ambition remains an ongoing direction beyond any finite release's tested scale.
 
-## Next release gate: OK-AGENT-001
+## Completed release gate: OK-AGENT-001
 
-Provide a working **AI Agent Authoring and Inspection Interface** over the existing language and visual exporter. Its acceptance gate is:
+The working **AI Agent Authoring and Inspection Interface** passed its finite release gate in 0.3.0. [Identified local and CI evidence](docs/engineering/agent-validation/validation-summary.json) records these satisfied acceptance requirements:
 
 - Publish the concrete `ontokin.agent/0.1` operation/result contract and executable interface for discovery, create/edit, validation, bounded inspection, evaluation/reset, status, and cancellation.
 - Demonstrate all **A01–A10** in the [language contract](docs/language-design/OK-LANG-001-core-language-specification.md#134-agent-operation-cases), including stale revisions, atomic patches, idempotent retries, changed-payload rejection, cursor consistency, cancellation after acceptance, unknown-outcome reconciliation, and correct velocity meaning.
@@ -58,4 +58,10 @@ Provide a working **AI Agent Authoring and Inspection Interface** over the exist
 - Connect source, numerical inspection, GLB output, and visual evidence by matching revision/artifact identities. Any destination operation must name its actual contract.
 - Run a documented agent-style create → inspect → diagnose → repair → evaluate → export cycle, including an invalid candidate, a scoped instance edit, and an unchanged sibling. Preserve the existing source/export regression gates and publish actual results.
 
-After that gate, select finite milestones for versioned reuse and procedural construction, richer exterior modeling, physical interactions and mechanisms, supplied controllers, and the remaining domain/delivery capabilities. Each milestone must name representative tasks, limits, expected failures, and evidence before implementation. Production compiler, physics-engine, and editor choices follow relevant requirements and experiments; the present prototype does not settle them permanently.
+## Next release gate: pinned modules and keyed assembly construction
+
+Add a versioned language/profile for reusable component definitions and bounded declarative generation of independently identifiable parts. Preserve the meaning and conformance of existing `ontokin "0.1"` / `core-0.1` source. Before implementation, adopt the precise grammar, source-bundle identities, dependency limits, patch authority, and acceptance fixtures in OK-LANG-002.
+
+The release must demonstrate actual imported libraries, variable keyed part counts and dimensions, stable identities under insertion/reordering, a targeted generated-instance repair with unchanged siblings/library bytes, and independently validated animation. Exact source files remain authoritative; accepted programs, runs, inspections, and artifacts must identify the complete pinned dependency closure. A source-only import preprocessor or a prepared generator script cannot stand in for the promised language behavior.
+
+Subsequent finite milestones must address richer exterior modeling, physical interactions and mechanisms, supplied controllers, and the remaining domain/delivery capabilities. Each must name representative tasks, limits, expected failures, and evidence before implementation. Production compiler, physics-engine, and editor choices follow relevant requirements and experiments; the present prototype does not settle them permanently.

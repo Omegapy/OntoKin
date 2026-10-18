@@ -4,7 +4,7 @@ document_id: OK-AGENT-001
 title: AI Agent Authoring and Inspection Interface
 version: 0.1
 date: 2026-10-18
-status: locally-verified-publication-and-ci-pending
+status: implemented-and-verified
 document_type: engineering-contract-and-evidence
 repository: https://github.com/Omegapy/OntoKin
 reviewed_source_commit: 7a7d82b785de5968eb14b9527ea8d182d87eba8f
@@ -13,6 +13,7 @@ agent_contract: ontokin.agent/0.1
 delivery_profile: ontokin.glb/0.1
 implementation_language: Python 3.11 or later
 implementation_version: 0.3.0
+implementation_commit: c4152509533f77ba54fac78268ba425df9b1a177
 runtime_dependencies: Python standard library
 storage: local SQLite
 production_architecture: not-selected
@@ -30,7 +31,7 @@ The project owner's October 18, 2026 stewardship instruction authorizes this fin
 
 [OK-ENG-001](OK-ENG-001-core-reference-implementation-and-conformance-plan.md) established the parser, validator, and evaluator. [OK-ENG-002](OK-ENG-002-3d-scene-animation-export-and-visual-validation.md) established primitive scene generation, GLB export, and visible playback. This milestone connects those capabilities to durable authoring operations. `ontokin.glb/0.1` is the explicitly named destination extension; an unnamed `delivered` request remains unsupported.
 
-**Evidence status:** local implementation, protocol, transaction, source-regression, animation, and browser checks have passed for the identified 0.3.0 implementation. Section 12 records the measured results and their limits. GitHub publication and CI for this new implementation remain pending; the finite release gate is not yet closed.
+**Evidence status:** local implementation, protocol, transaction, source-regression, animation, and browser checks have passed for the identified 0.3.0 implementation. Section 12 records the measured results and their limits. The implementation and evidence are published, and all four GitHub CI jobs passed for the identified commit; the finite OK-AGENT-001 release gate is closed.
 
 ## 2. Scope and identities
 
@@ -331,7 +332,7 @@ The evidence record must identify the implementation digest/revision, Python/env
 
 ### 12.1 Identified local results
 
-The [validation summary](agent-validation/validation-summary.json) records the October 18, 2026 local checks for `ontokin-reference` **0.3.0**, `core-0.1`, `ontokin.agent/0.1`, and `ontokin.glb/0.1`. Python tests ran on **CPython 3.12.14, Linux**. The package-source SHA-256 is `8a2eae260e2adfb28d6e1fd254cfefdb5fe47841509122ec1ad01e515a311142`; this identifies the measured runtime independently of the pending GitHub commit. The summary also records sizes and hashes for the retained evidence files.
+The [validation summary](agent-validation/validation-summary.json) records the October 18, 2026 local checks for `ontokin-reference` **0.3.0**, `core-0.1`, `ontokin.agent/0.1`, and `ontokin.glb/0.1`. Python tests ran on **CPython 3.12.14, Linux**. The package-source SHA-256 is `8a2eae260e2adfb28d6e1fd254cfefdb5fe47841509122ec1ad01e515a311142`; this identifies the measured runtime independently of its GitHub commit. The summary also records sizes and hashes for the retained evidence files.
 
 | Check | Measured result | Retained evidence |
 | --- | --- | --- |
@@ -363,6 +364,6 @@ The viewer's custom-file interface intentionally labels numerical validation as 
 
 ### 12.3 Release state and unmet scope
 
-**Local gates have passed; GitHub publication and exact-head CI are pending.** No remote CI success for 0.3.0 is claimed here. The integration owner must publish the identified implementation and evidence, inspect its actual CI, and record that outcome in [STATUS.md](../../STATUS.md) and the validation summary before closing this finite release gate. Historical ENG-001/ENG-002 records remain unchanged.
+**The finite OK-AGENT-001 release gate passed.** Implementation and evidence are published in [commit c4152509533f77ba54fac78268ba425df9b1a177](https://github.com/Omegapy/OntoKin/commit/c4152509533f77ba54fac78268ba425df9b1a177). [GitHub Actions run 39092228352](https://github.com/Omegapy/OntoKin/actions/runs/39092228352) completed successfully: Python 3.11, 3.12, and 3.13, plus the format/visual job. The latter rebuilt the original animations and the agent-produced animation, validated their GLBs, and exercised both browser workflows. [ci-results.json](agent-validation/ci-results.json) retains the observed commit, tree, run and job outcomes. [STATUS.md](../../STATUS.md) records the next unmet goal. Historical ENG-001/ENG-002 records remain unchanged.
 
 The full OntoKin goal remains in progress. Unmet scope includes broader source modules and reusable libraries/generators; rich geometry and appearance; contact/general dynamics and mechanisms; creature/environment/control domains; multi-user authorization and distributed execution; calibrated performance guarantees; and a real agent-versus-direct-tool benchmark. The scripted workflow demonstrates a usable interface and observable repair. It does not certify autonomous LLM authoring or a productivity improvement. STATUS must continue to name the next unmet goal rather than declare OntoKin complete from this interface release.

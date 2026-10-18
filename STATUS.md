@@ -1,17 +1,17 @@
 # OntoKin status
 
-Checkpoint: **2026-10-18T03:01:09Z**. Goal: [GOAL.md](GOAL.md). Project goal remains **in progress**.
+Checkpoint: **2026-10-18T03:04:38Z**. Goal: [GOAL.md](GOAL.md). Project goal remains **in progress**.
 
 ## Verified published baseline
 
 | Item | Recorded state |
 | --- | --- |
-| Published `main` observed at this checkpoint | [7a7d82b785de5968eb14b9527ea8d182d87eba8f](https://github.com/Omegapy/OntoKin/commit/7a7d82b785de5968eb14b9527ea8d182d87eba8f) |
-| Tree | `52abf70e9fd547b01babea6dbf6e9cf55462b80a` |
-| Implementation | `ontokin-reference` **0.2.0**, experimental |
-| Language / export contracts | Adopted `core-0.1`; bounded `ontokin.glb/0.1` |
-| Latest verified CI for the published baseline | [Run 39089671015](https://github.com/Omegapy/OntoKin/actions/runs/39089671015), completed successfully after publishing the stewardship records |
-| Current milestone | **OK-AGENT-001: AI Agent Authoring and Inspection Interface**; implementation 0.3.0 exists in the working checkout and local gates pass; local numerical/visual evidence is complete; GitHub publication/CI remains in progress |
+| Published `main` observed at this checkpoint | [c4152509533f77ba54fac78268ba425df9b1a177](https://github.com/Omegapy/OntoKin/commit/c4152509533f77ba54fac78268ba425df9b1a177) |
+| Tree | `147d89c4905ab33520064c3f97aee7c192d990c4` |
+| Implementation | `ontokin-reference` **0.3.0**, experimental |
+| Language / export contracts | Adopted `core-0.1`; `ontokin.agent/0.1`; bounded `ontokin.glb/0.1` |
+| Latest verified CI for the published baseline | [Run 39092228352](https://github.com/Omegapy/OntoKin/actions/runs/39092228352), all four jobs completed successfully for the identified 0.3.0 implementation |
+| Current milestone | **OK-LANG-002: Pinned Modules and Keyed Assembly Construction**; precise grammar, program-bundle identity, and acceptance fixtures are being designed before implementation |
 
 The working checkout may use a synthetic connector snapshot commit with the same tree. Verify the actual remote head before publishing; a local commit identity is not automatically the published GitHub identity.
 
@@ -19,15 +19,15 @@ The working checkout may use a synthetic connector snapshot commit with the same
 
 The parser, typed validator, and semantic evaluator support the bounded core programs. Primitive sphere/box meshes and sampled world transforms export to GLB, including correct gravity/release motion. An offline Three.js viewer plays the actual files. The source remains editable and authoritative.
 
-[OK-ENG-001](docs/engineering/OK-ENG-001-core-reference-implementation-and-conformance-plan.md) records the headless milestone. [OK-ENG-002](docs/engineering/OK-ENG-002-3d-scene-animation-export-and-visual-validation.md) records scene/export contracts and evidence: 103 local tests, 43 source cases with 694 assertions, six independently validated GLBs, 347 Three.js pose comparisons, and ten browser checks. CI also passed Python 3.11–3.13 and the visual job. The retained CI JSON records the earlier implementation run; the latest run above additionally checked the subsequent documentation commit.
+[OK-ENG-001](docs/engineering/OK-ENG-001-core-reference-implementation-and-conformance-plan.md) records the headless milestone. [OK-ENG-002](docs/engineering/OK-ENG-002-3d-scene-animation-export-and-visual-validation.md) records scene/export contracts and evidence: 103 local tests, 43 source cases with 694 assertions, six independently validated GLBs, 347 Three.js pose comparisons, and ten browser checks. CI also passed Python 3.11–3.13 and the visual job. These retained reports are historical; fresh 0.3.0 regression and CI evidence is recorded separately.
 
-These are bounded demonstrations. The current working checkout additionally implements a durable local Python/JSONL agent service. Its first full regression run passed **150 tests**, including **47 new agent, catalog, CLI, and transaction tests**. A01–A10 pass through actual requests. The separate agent-style demonstration passes **18 checks across 41 operations**, including an invalid candidate, a scoped instance repair, an unchanged sibling, prefix evaluation, and retrieved GLB bytes. Independent Khronos validation reports zero errors/warnings; Three.js matches 200 object poses for that artifact. The actual agent GLB also passed eight browser checks and 16 world-pose comparisons; its capture was inspected. Fresh export regression passed all six legacy GLBs and 347 pose comparisons. The [identified evidence](docs/engineering/agent-validation/validation-summary.json) still needs publication and remote CI before the release gate closes.
+The published 0.3.0 release additionally implements a durable local Python/JSONL agent service. Its final local regression run passed **150 tests**, including **47 new agent, catalog, CLI, and transaction tests**. A01–A10 pass through actual requests. The separate agent-style demonstration passes **18 checks across 41 operations**, including an invalid candidate, a scoped instance repair, an unchanged sibling, prefix evaluation, and retrieved GLB bytes. Independent Khronos validation reports zero errors/warnings; Three.js matches 200 object poses for that artifact. The actual agent GLB also passed eight browser checks and 16 world-pose comparisons; its capture was inspected. Fresh export regression passed all six legacy GLBs and 347 pose comparisons. The [identified evidence](docs/engineering/agent-validation/validation-summary.json) and [observed CI results](docs/engineering/agent-validation/ci-results.json) close the finite OK-AGENT-001 gate. The full product remains unfinished.
 
 Generic `check --level delivered` remains unsupported; explicit GLB delivery has its own named contract. Blender import has not been tested.
 
 ## Scope still unmet
 
-- Final OK-AGENT-001 evidence/publication/CI gate; broader multi-file packages, production/distributed agent infrastructure, and an independently calibrated authoring-benefit benchmark.
+- The next language/profile for pinned modules and keyed generated parts, together with program-wide source/revision/agent contracts. Broader production/distributed agent infrastructure and an independently calibrated authoring-benefit benchmark remain future work.
 - Broader modules/packages, procedural generators and algorithms, compatible part replacement, rich geometry, deformation mappings, textures, and reusable standard components.
 - Contacts/collisions, general rigid-body dynamics, forces/actuation, dynamic joints/closed mechanisms, capture/multiple grips, and purposeful locomotion/manipulation.
 - Complete creature, vehicle, flight/swimming, vegetation, terrain/building, fluid/deformable, appearance, and live destination contracts from GOAL.
@@ -37,9 +37,9 @@ The current physical subset is uniform gravity and free homogeneous spheres, wit
 
 ## Next actions
 
-1. Local checks and final documentation preservation/navigation verification passed; the release tree is frozen for publication.
-2. Publish the verified 0.3.0 implementation and documentation against the observed GitHub head, inspect its CI, and record actual outcomes here.
-3. Select the next finite expressive-language milestone against the full GOAL. The next direction is version-pinned reusable modules and bounded keyed assembly construction, as an explicit new language/profile. Its precise contract and acceptance fixtures are being designed before implementation; current core semantics remain unchanged.
+1. Publish this verified CI checkpoint and retain the completed 0.3.0 evidence.
+2. Review and adopt OK-LANG-002 with finite reuse, boundaries, failures, composition, targeted edits, and delivery cases. The proposed profile is `ontokin "0.2"` / `construction-0.1`; existing source meanings remain unchanged.
+3. Implement on a coordinated isolated branch: parser/bundle linker, construction/runtime, then durable agent 0.2 and complete source-to-animation verification. No new language behavior is implemented at this checkpoint.
 
 ## Periodic review
 
@@ -52,9 +52,9 @@ Creation and enablement are verified. The scheduling service reports a last-run 
 | Lease field | Value |
 | --- | --- |
 | Integration owner | `root` in the owner's active stewardship chat |
-| Checkpoint / renewal | `2026-10-18T03:01:09Z` |
-| Lease expires | `2026-10-18T09:01:09Z` |
-| Current integration task | OK-AGENT-001 release evidence and publication |
+| Checkpoint / renewal | `2026-10-18T03:04:38Z` |
+| Lease expires | `2026-10-18T09:04:38Z` |
+| Current integration task | OK-LANG-002 contract and implementation preparation |
 
 Renew this UTC lease at each integration checkpoint. While it is live, scheduled reviews and other independent sessions may inspect and report but **must not edit or publish**. The owner may delegate bounded file work; publication remains coordinated by the integration owner.
 
