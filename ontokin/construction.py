@@ -17,7 +17,7 @@ from typing import Any, Callable as Check
 
 from .diagnostics import Diagnostic, OntoKinError
 from .json_limits import JSONLimitError
-from .model import Event, EventBlock, ObjectModel, Pose, SiteModel
+from .model import Event, EventBlock, ImpulsePayload, ObjectModel, Pose, SiteModel
 from .surface_runtime import SURFACE_CALLS, SURFACE_TYPES, SURFACE_PROFILE, surface_builtin, materialize_surface
 from .surface import SurfaceError
 from .validator import (BUILTIN_TYPES, FIELD_TYPES,
@@ -29,6 +29,9 @@ from .values import (ACCELERATION, ALIASES, BOOL, INT, LENGTH, STRING, TIME,
 
 
 PROFILE = "construction-0.1"
+IMPULSE_PROFILE = "impulse-0.1"
+SURFACE_PROFILES = frozenset({SURFACE_PROFILE, IMPULSE_PROFILE})
+IMPULSE_DIMENSION = (1, 1, -1, 0)
 PREDEFINED_02 = PREDEFINED | {"Keyed", "len"}
 MAX_KEYED_ENTRIES = 256
 MAX_OWNERSHIP_DEPTH = 64
@@ -55,10 +58,16 @@ class ConstructionBudget:
         self.value_entries = 0
         self.started = time.monotonic()
         self.check = check
+        self.profile = PROFILE
+        self.callback_error: BaseException | None = None
 
     def tick(self, node: Any = None, amount: int = 1) -> None:
         if self.check is not None:
-            self.check()
+            try:
+                self.check()
+            except BaseException as error:
+                self.callback_error = error
+                raise
         self.operations += amount
         if self.operations > self.limits["max_operations"]:
             self.exceeded("max_operations", self.operations, node)
@@ -69,7 +78,7 @@ class ConstructionBudget:
     def exceeded(self, name: str, consumed: int | float, node: Any = None) -> None:
         fail("OKL-E-RESOURCE", f"Construction exceeded {name}.", node, phase="support",
              details={"budget": name, "limit": self.limits[name], "consumed": consumed,
-                      "profile": PROFILE})
+                      "profile": self.profile})
 
     def charge_value(self, value: Value, node: Any = None) -> None:
         # Logical unfolding counts repeated immutable leaves on each occurrence.
@@ -147,6 +156,8 @@ class ConstructionCompiler(Validator):
     def __init__(self, linked, level: str, budget: ConstructionBudget):
         super().__init__(linked.entry.ast, level)
         self.linked, self.bundle, self.budget = linked, linked.bundle, budget
+        if self.model.profile == IMPULSE_PROFILE:
+            self.budget.profile = IMPULSE_PROFILE
         self.linked_program = linked
         self.surface_meshes: dict[str, dict] = {}
         self.source_registry = linked.source_registry
@@ -243,7 +254,7 @@ class ConstructionCompiler(Validator):
                 element = self.parse_type(args[0])
                 self._keyed_leaf(element, node)
                 result = Type("Keyed", element=element)
-            elif name in SURFACE_TYPES and self.linked.modules[node.source_id].ast.profile == SURFACE_PROFILE:
+            elif name in SURFACE_TYPES and self.linked.modules[node.source_id].ast.profile in SURFACE_PROFILES:
                 if args:
                     fail("OKL-E-TYPE", f"Surface type '{name}' takes no type arguments.", node, phase="type")
                 result = Type(name)
@@ -266,11 +277,13 @@ class ConstructionCompiler(Validator):
     def _keyed_leaf(self, element: Type, node: Any) -> None:
         allowed = {"Int", "Real", "Bool", "String", "Quantity", "Vec3", "Vector3", "Range",
                    "FrameRef", "Point3", "Rotation", "Pose", "Color"}
-        if self.linked.modules[node.source_id].ast.profile == SURFACE_PROFILE:
+        declaring_profile = self.linked.modules[node.source_id].ast.profile
+        if declaring_profile in SURFACE_PROFILES:
             allowed |= SURFACE_TYPES
         if element.kind not in allowed:
             fail("OKL-E-CAPABILITY-UNSUPPORTED", f"Authored Keyed<{element}> is outside the flat immutable leaf profile.",
-                 node, phase="support", details={"profile": PROFILE, "element_type": str(element)})
+                 node, phase="support", details={"profile": IMPULSE_PROFILE if declaring_profile == IMPULSE_PROFILE else PROFILE,
+                                                 "element_type": str(element)})
 
     def signature(self, node: Any) -> tuple:
         self.budget.tick(node)
@@ -559,6 +572,8 @@ class ConstructionCompiler(Validator):
                 for event in node.events:
                     if event.kind == "release":
                         self.expect(self.path_value(event.path, ctx, event), Type("JointRef"), event)
+                    elif event.kind == "impulse":
+                        self.impulse_values(event, ctx)
             elif node.kind in ("site", "joint", "follow"):
                 self.check_member_types(node, ctx)
         done, active = set(), set()
@@ -580,7 +595,7 @@ class ConstructionCompiler(Validator):
                     stack.append((child, iter(self.call_edges.get(child, ()))))
 
     def name(self, name: str, ctx: Context, node: Any) -> Value:
-        if (name in SURFACE_CALLS and self.linked.modules[node.source_id].ast.profile == SURFACE_PROFILE
+        if (name in SURFACE_CALLS and self.linked.modules[node.source_id].ast.profile in SURFACE_PROFILES
                 and name not in ctx.locals):
             return Value(Type("BuiltinCallable"), name)
         if name == "self" and not ctx.abstract and ctx.self_path is not None:
@@ -743,7 +758,7 @@ class ConstructionCompiler(Validator):
 
     def builtin(self, name: str, args: list[Value], node: Any, ctx: Context) -> Value:
         if name in SURFACE_CALLS:
-            if self.linked.modules[node.source_id].ast.profile != SURFACE_PROFILE:
+            if self.linked.modules[node.source_id].ast.profile not in SURFACE_PROFILES:
                 fail("OKL-E-CAPABILITY-UNSUPPORTED", "Surface constructors need the surface-0.1 profile.",
                      node, phase="support")
             return surface_builtin(self, name, args, node, ctx)
@@ -1019,6 +1034,37 @@ class ConstructionCompiler(Validator):
                     fail("OKL-E-FRAME", "Scene gravity must be expressed in world axes.", expression, phase="type")
                 self.model.gravity = tuple(v.value for v in value.value)
 
+    def impulse_values(self, event: Any, context: Context) -> tuple[Value, Value, Value]:
+        """Check pure source operands under their actual declaring profile."""
+        if self.linked.modules[event.source_id].ast.profile != IMPULSE_PROFILE:
+            raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED", "Source impulses require impulse-0.1.",
+                               event, phase="support", category="unsupported", rule_ids=["IMP-001"])
+
+        def require(value: Value, type_: Type, node: Any) -> Value:
+            # Coercion is pure; attaching this rule cannot reinterpret a
+            # cancellation raised while the operand itself was evaluated.
+            try:
+                return self.expect(value, type_, node)
+            except OntoKinError as error:
+                if error is not self.budget.callback_error:
+                    error.diagnostic.rule_ids = [*(error.diagnostic.rule_ids or []), "IMP-001"]
+                raise
+
+        target = require(self.path_value(event.path, context, event), Type("Ref", name="Object"), event)
+        vector = require(self.expression(event.vector, context),
+                         Type("Vector3", element=quantity_type(IMPULSE_DIMENSION)), event.vector)
+        point = require(self.expression(event.point, context),
+                        Type("Point3", element=quantity_type(LENGTH)), event.point)
+        if vector.frame is not None and vector.frame != "world":
+            raise OntoKinError("OKL-E-FRAME", "An impulse vector must be expressed in world.",
+                               event.vector, phase="type", rule_ids=["IMP-001"],
+                               details={"expected_frame": "world", "actual_frame": vector.frame})
+        if target.known and point.frame is not None and point.frame != target.value + ".frame":
+            raise OntoKinError("OKL-E-FRAME", "An impulse point must use the resolved target object's own frame.",
+                               event.point, phase="type", rule_ids=["IMP-001"],
+                               details={"expected_frame": target.value + ".frame", "actual_frame": point.frame})
+        return target, vector, point
+
     def event_blocks(self) -> None:
         seen = set()
         for node in self.program.scene.members:
@@ -1033,11 +1079,20 @@ class ConstructionCompiler(Validator):
                 fail("OKL-E-EVENT-ORDER", "Equal canonical event times require one ordered sequence block.", node.time)
             seen.add(time_)
             events = []
-            for event in node.events:
+            for sequence_index, event in enumerate(node.events):
                 self.budget.tick(event)
                 if event.kind == "release":
                     target = self.expect(self.path_value(event.path, Context(scene=True), event), Type("JointRef"), event)
                     events.append(Event("release", target.value, event))
+                elif event.kind == "impulse":
+                    target, vector, point = self.impulse_values(event, Context(scene=True))
+                    source = self.source_for(event)
+                    payload = ImpulsePayload(
+                        tuple(component.value for component in vector.value),
+                        tuple(component.value for component in point.value), sequence_index,
+                        {"source_id": event.source_id, "source_revision": source.revision,
+                         "start_byte": event.start, "end_byte": event.end})
+                    events.append(Event("impulse", target.value, event, payload))
                 else:
                     if event.name not in self.actions:
                         fail("OKL-E-NAME", f"'{event.name}' is not a named action instance.", event, phase="binding")
@@ -1171,7 +1226,8 @@ class ConstructionCompiler(Validator):
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "Required capabilities are not supplied by " + self.model.profile + ": " +
                  ", ".join(self.model.requested_capabilities), requires[0], phase="support")
         if self.level == "delivered":
-            target = "ontokin.glb/0.3" if self.model.profile == "surface-0.1" else "ontokin.glb/0.2"
+            target = ("ontokin.glb/0.4" if self.model.profile == IMPULSE_PROFILE else
+                      "ontokin.glb/0.3" if self.model.profile == "surface-0.1" else "ontokin.glb/0.2")
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "Delivery requires the explicit " + target + " target.", self.program, phase="support")
         self._attach_provenance()
         self.budget.tick(self.program)
@@ -1211,8 +1267,12 @@ def compile_construction(bundle, *, level: str = "represented", budgets: dict | 
         compiler.run()
         return compiler
     except OntoKinError as error:
+        if error is budget.callback_error:
+            raise
         compiler.annotate(error)
         raise
-    except RecursionError:
+    except RecursionError as error:
+        if error is budget.callback_error:
+            raise
         fail("OKL-E-RESOURCE", "Construction exceeded bounded host recursion work.", compiler.program,
-             phase="support", details={"budget": "host_recursion", "profile": PROFILE})
+             phase="support", details={"budget": "host_recursion", "profile": compiler.budget.profile})

@@ -24,12 +24,12 @@ from .model import SceneModel
 from .json_limits import JSONLimitError, measure_json
 from .values import bounded_data
 from .scene import (MAX_GLB_BYTES, MAX_VALIDATION_POSES, TARGET_CONTRACT,
-                    CONSTRUCTION_TARGET, SURFACE_TARGET, MAX_MESH_VERTICES,
+                    CONSTRUCTION_TARGET, SURFACE_TARGET, IMPULSE_TARGET, NATIVE_TARGETS, PROGRAM_TARGETS, MAX_MESH_VERTICES,
                     SurfaceMesh, build_surface_mesh, geometry_metadata, surface_metadata,
                     checked_contract, program_metadata,
                     BakedScene, ExportOptions, build_scene, export_error,
                     float32, rotation_error, sampled_states, relationship_metadata,
-                    _angular_speed_bound)
+                    _angular_speed_bound, impulse_profile_metadata)
 from .evaluator import exact_time, preflight, time_text
 
 
@@ -211,7 +211,7 @@ def _encode(scene: BakedScene, *, check=None) -> tuple[bytes, float]:
     if meshes:
         document["meshes"] = meshes
         document["materials"] = materials
-    if scene.contract == SURFACE_TARGET:
+    if scene.contract in NATIVE_TARGETS:
         document["extras"]["ontokin"]["surface_delivery"] = {
             "local_vertex_tolerance_m": min(scene.options.position_tolerance_m, 1e-5),
             "max_vertex_quantization_error_m": builder.max_surface_quantization_error_m,
@@ -536,7 +536,7 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
     version = checked_contract(model, target_contract)
     if check:
         check()
-    program = program_metadata(model, check=check) if target_contract in (CONSTRUCTION_TARGET, SURFACE_TARGET) else None
+    program = program_metadata(model, check=check) if target_contract in PROGRAM_TARGETS else None
     decoded = read_glb(data, check=check)
     animation = decoded.document["animations"][0]
     try:
@@ -555,7 +555,7 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
         _format_error("Exported source times must retain the complete interval and every exact semantic boundary.")
     if any([row[0] for row in decoded.accessor(s["input"])] != times for s in animation["samplers"]):
         _format_error("This adapter requires a common sampling clock for all channels.")
-    speed = _angular_speed_bound(model)
+    speed = _angular_speed_bound(model, check=check)
     if not math.isfinite(speed) or any(max(float(b - a), last - first) * speed >= math.pi / 2
         for a, b, first, last in zip(authored, authored[1:], times, times[1:])):
         export_error("OKE-E-ROTATION-ALIAS", "Decoded key spacing cannot preserve the source's bounded rotation path.", model)
@@ -579,6 +579,8 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
                 source.get("entry_revision") != program["sources"]["entry"]["source_revision"] or
                 source.get("editable_source_of_truth") != "pinned .ok source bundle"):
             _format_error("GLB entry source identity must remain separate from the program revision.")
+    if target_contract == IMPULSE_TARGET and metadata.get("impulse_profile") != impulse_profile_metadata():
+        _format_error("Impulse delivery metadata must disclose the source physical model and recorded playback.")
     for key, expected in relationship_metadata(model).items():
         if metadata.get(key) != plain(expected):
             _format_error("Declared joint/follow metadata must match the supplied semantic model.")
@@ -613,7 +615,7 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
             frames[index] = path + ".frame"
             obj = model.objects[path]
             for key, expected in (("class_name", obj.class_name), ("geometry", geometry_metadata(obj.geometry, check=check)
-                                  if target_contract == SURFACE_TARGET else obj.geometry),
+                                  if target_contract in NATIVE_TARGETS else obj.geometry),
                                   ("physical", obj.physical), ("collision", obj.collision),
                                   ("authored_motion", obj.motion), ("appearance_linear_rgba", obj.appearance),
                                   ("role", obj.role), ("pose_frame", "world"),
@@ -627,7 +629,7 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
             if obj.geometry["kind"] == "empty":
                 if "mesh" in node:
                     _format_error("An empty source object cannot acquire untagged helper geometry.")
-            elif obj.geometry["kind"] in ("loft", "placed") and target_contract == SURFACE_TARGET:
+            elif obj.geometry["kind"] in ("loft", "placed") and target_contract in NATIVE_TARGETS:
                 if "mesh" not in node:
                     _format_error("A native surface must have an actual mesh.")
                 error, vertex_count = _validate_surface(decoded, node, obj, model,
@@ -643,7 +645,7 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
                     _format_error("A source visual solid must use the adapter's single material primitive.")
                 primitive = primitives[0]
                 positions = decoded.accessor(primitive["attributes"]["POSITION"])
-                if target_contract == SURFACE_TARGET:
+                if target_contract in NATIVE_TARGETS:
                     remaining_vertices -= len(positions)
                 extents = ([obj.geometry["radius"]] * 3 if obj.geometry["kind"] == "sphere" else
                            [component / 2 for component in obj.geometry["size"]])
@@ -666,12 +668,12 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
             if identity in actual_helpers:
                 _format_error("Visual helper identities cannot be duplicated.")
             actual_helpers.add(identity)
-            if target_contract == SURFACE_TARGET and "mesh" in node:
+            if target_contract in NATIVE_TARGETS and "mesh" in node:
                 primitive = decoded.document["meshes"][node["mesh"]]["primitives"][0]
                 remaining_vertices -= len(decoded.accessor(primitive["attributes"]["POSITION"]))
         else:
             _format_error("Every node must identify its OntoKin occurrence or explicit visual-helper role.")
-        if target_contract == SURFACE_TARGET and remaining_vertices < 0:
+        if target_contract in NATIVE_TARGETS and remaining_vertices < 0:
             export_error("OKE-E-MESH-BUDGET", "Decoded surface occurrences exceed the aggregate mesh budget.",
                          model, kind="resource")
     if paths != set(model.objects):
@@ -690,6 +692,8 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
             record = boundary_records[reference["time_seconds"]]
             expected = {"joint_states_after": reference["joints"], "action_states_after": reference["actions"],
                         "pose_authorities_after": {path: obj["pose_authority"] for path, obj in reference["objects"].items()}}
+            if target_contract == IMPULSE_TARGET:
+                expected["impulse_states_after"] = {path: obj["impulses"] for path, obj in reference["objects"].items()}
             if any(record.get(key) != plain(value) for key, value in expected.items()):
                 _format_error("Stored boundary lifecycle/pose-authority metadata must match fresh semantic evaluation.")
         actual = sample_animation(decoded, request["time_seconds"])
@@ -710,7 +714,7 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
                     failures.append({**where, "position_error_m": position_error, "rotation_error_rad": angle_error})
     time_error = max(abs(float(Fraction(t) - exact)) for t, exact in zip(times, authored))
     surface_tolerance = min(options.position_tolerance_m, 1e-5)
-    if target_contract == SURFACE_TARGET:
+    if target_contract in NATIVE_TARGETS:
         delivery = decoded.document["extras"]["ontokin"].get("surface_delivery")
         expected_delivery = {"local_vertex_tolerance_m": surface_tolerance,
             "max_vertex_quantization_error_m": max_surface_error,
@@ -734,7 +738,7 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
             **({"max_surface_vertex_error_m": max_surface_error,
                 "surface_vertex_tolerance_m": surface_tolerance,
                 "surface_geometry_materials_and_provenance": "passed_source_comparison"}
-               if target_contract == SURFACE_TARGET else {}),
+               if target_contract in NATIVE_TARGETS else {}),
             "failures": failures, "failure_details_truncated": len(failures) == 20,
             "scope": "Finite numerical evidence for this artifact and interval; no all-time error proof, rendering-quality proof, or destination import certification."}
 

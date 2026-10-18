@@ -23,9 +23,8 @@ class ProgramStore(AgentStore):
     def __init__(self, path, implementation, *, protocol=None):
         binding = protocol or program_protocol.bind()
         self.envelope = binding.envelope
-        if binding.SCHEMA_VERSION == program_protocol.SURFACE_SCHEMA_VERSION:
-            self.database_name = "surface-program-agent.sqlite3"
-            self.schema_version = "ontokin.surface-program-agent-store/0.1"
+        self.database_name = binding.definition.store_filename
+        self.schema_version = binding.definition.store_schema
         super().__init__(path, implementation)
 
     @staticmethod

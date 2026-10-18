@@ -60,7 +60,7 @@ class SurfaceAgentProtocolTests(unittest.TestCase):
             with self.subTest(schema=schema), self.assertRaises(ProtocolError):
                 self.binding.validate_request(self.request(schema_version=schema))
         with self.assertRaises(ProtocolError):
-            program_protocol.bind("ontokin.agent/0.4")
+            program_protocol.bind("ontokin.agent/0.5")
 
     def test_mesh_count_is_a_required_integer_token_in_triangle_units(self):
         for count in (1, 7, 256):

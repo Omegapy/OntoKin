@@ -17,6 +17,7 @@ from .evaluator import evaluate_prefix, exact_time, inspect_in_frame, time_text
 from .json_limits import measure_json, JSONLimitError
 from .program_diagnostics import diagnostic_dict
 from .program_protocol import MAX_BUDGETS
+from .program_bindings import PROFILE_BINDINGS
 from .syntax import Node
 from .validator import FIELD_TYPES, optional
 from .values import Value, bounded_data
@@ -24,13 +25,14 @@ from .values import Value, bounded_data
 SCHEMA_VERSION = "ontokin.program-runtime/0.1"
 CONSTRUCTION_PROFILE = "construction-0.1"
 SURFACE_PROFILE = "surface-0.1"
+IMPULSE_PROFILE = "impulse-0.1"
 
 
 class ProgramRuntime:
     """Bind existing pure operations to one explicit entry-language profile."""
 
     def __init__(self, profile=CONSTRUCTION_PROFILE):
-        if profile not in (CONSTRUCTION_PROFILE, SURFACE_PROFILE):
+        if not isinstance(profile, str) or profile not in PROFILE_BINDINGS:
             raise ValueError("Unknown program runtime profile.")
         self.profile = profile
 
@@ -564,7 +566,7 @@ def _project(program, record, fields, compiler, sample, run, frame, budget):
     if "support" in fields:
         result["support"] = core._support_record(compiler, budget)
         result["support"]["profile"] = budget.profile
-        result["support"]["named_destination"] = "ontokin.glb/0.3" if budget.profile == SURFACE_PROFILE else "ontokin.glb/0.2"
+        result["support"]["named_destination"] = PROFILE_BINDINGS[budget.profile].destination
     if compiler is None or record["_definition"]:
         for field in fields:
             if field not in result:

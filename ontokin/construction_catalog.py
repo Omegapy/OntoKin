@@ -27,6 +27,10 @@ _SURFACE_PROFILE = "surface-0.1"
 _SURFACE_SPEC = "docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md"
 _SURFACE_AGENT = "docs/engineering/OK-AGENT-003-native-surface-program-workflows.md"
 _SURFACE_FIXTURE = "docs/language-design/surface-v0.1/"
+_IMPULSE_PROFILE = "impulse-0.1"
+_IMPULSE_SPEC = "docs/language-design/OK-LANG-004-source-impulses-and-free-sphere-dynamics.md"
+_IMPULSE_AGENT = "docs/engineering/OK-AGENT-004-source-impulse-program-workflows.md"
+_IMPULSE_FIXTURE = "docs/language-design/impulse-v0.1/"
 _LEVELS = ["represented", "constructed", "evaluated"]
 _MAX_MATERIALIZED_ENTRIES = 100_000
 _MAX_PREVIEW_BYTES = 1024
@@ -48,7 +52,7 @@ def _entry(kind: str, name: str, signature: str, description: str, *,
         "examples": list(examples), "language_rules": list(rules),
         "available_levels": list(_LEVELS) if available else [],
         "availability": "available_in_bounded_profile" if available else "unsupported",
-        "specification": _SURFACE_SPEC if profile == _SURFACE_PROFILE else _SPEC, **extra,
+        "specification": {_SURFACE_PROFILE: _SURFACE_SPEC, _IMPULSE_PROFILE: _IMPULSE_SPEC}.get(profile, _SPEC), **extra,
     }
 
 
@@ -430,6 +434,133 @@ def _surface_global() -> dict:
     return result
 
 
+def _impulse_global() -> dict:
+    """Add the adopted source impulse contract without altering older catalogs."""
+    from .program_bindings import PROFILE_BINDINGS
+    binding = PROFILE_BINDINGS[_IMPULSE_PROFILE]
+    result = copy.deepcopy(_SURFACE_GLOBAL)
+    previous_examples = result["complete_examples"]
+    for item in result["items"]:
+        item["inherited_from"] = item["id"]
+        item["id"] = item["id"].replace(_SURFACE_PROFILE + "/", _IMPULSE_PROFILE + "/", 1)
+        item["profile"] = _IMPULSE_PROFILE
+        if item["kind"] == "destination":
+            item.update(id=f"{_IMPULSE_PROFILE}/destination/{binding.destination}", name=binding.destination,
+                        capability=binding.destination, signature="destination: " + binding.destination,
+                        description="Native source geometry and regional PBR with recorded rigid motion from authored sphere impulses.",
+                        specification=_IMPULSE_SPEC,
+                        examples=[_IMPULSE_FIXTURE + "p02-off-center-mixed-imports.files.json"],
+                        domains=[
+                            "Explicit impulse-0.1 entry and ontokin.glb/0.4 destination",
+                            "Inherits native loft/PBR/placement/source identity and quantization limits of GLB/0.3",
+                            "Every exact source impulse boundary is retained; pose is continuous while derivatives may jump",
+                            "Complete impulse_states_after metadata per object is checked against source-evaluated boundaries",
+                            "Conservative whole-scene spin bound includes every authored norm(point)*norm(impulse)/inertia",
+                            "Recorded playback supplies no destination-side impulse engine or live physics",
+                            "Valid evaluated binary64 states may exceed bounded float32 GLB delivery",
+                        ])
+        elif item["kind"] == "protocol":
+            item.update(id=f"{_IMPULSE_PROFILE}/protocol/{binding.protocol}", name=binding.protocol,
+                        signature='ProgramAgentService(store, protocol="ontokin.agent/0.4"); agent --protocol ontokin.agent/0.4',
+                        description="Explicit source impulse program binding with inherited atomic edits, bounded inspection and isolated durable state.",
+                        specification=_IMPULSE_AGENT, store_filename=binding.store_filename,
+                        store_schema=binding.store_schema, diagnostic_contract="ontokin.diagnostic/0.2",
+                        domains=[
+                            "impulse-0.1 entry; exact immutable ontokin.bundle/0.1 closure; explicit GLB/0.4 delivery",
+                            "Default Python binding remains Agent/0.2; default CLI remains Agent/0.1",
+                            "Separate impulse-program-agent.sqlite3; no request-driven protocol selection or store migration",
+                            "All Agent/0.3 operations retained; there is no apply_impulse, impulse or state-replacement host RPC",
+                            "Create or patch source, evaluate a revision-bound run, and inspect its exact before/after state",
+                            "Only previously accepted snapshots permit ordinary evaluate/export/mesh access",
+                            "The complete final successful response obeys the selected lowered value-entry budget before effects commit",
+                        ])
+        elif item["name"] == "persistent_agent_editing_service":
+            item["description"] = "Isolated impulse-program-agent.sqlite3 with atomic whole-program acceptance, exact source patches, retained requests/runs/artifacts and no migration of older stores."
+            item["specification"] = _IMPULSE_AGENT
+        elif item["name"] == "general_external_delivery":
+            item["description"] = "Only explicit GLB/0.4 recorded impulse-profile delivery; arbitrary engines and live simulation remain unsupported."
+        elif item["name"] == "external_forces_and_actuators":
+            item["description"] = "Finite force intervals, continuous torques, motors, wind and controllers remain unsupported. The separate source_impulses capability supplies only authored instantaneous sphere momentum changes."
+        elif item["kind"] == "constant" and item["name"] == "dynamic":
+            item["description"] = "Free homogeneous sphere under uniform gravity and explicit authored instantaneous impulses; no contact or connected load solution."
+            item["specification"] = _IMPULSE_SPEC
+        elif item["name"] == "import":
+            item["domains"] += ["An impulse-0.1 declaring module may import compatible 0.2/0.3/0.4 definitions; older modules cannot import a 0.4 dependency"]
+        elif item["name"] == "Keyed" and item["kind"] == "type":
+            item["domains"] += ["impulse-0.1 inherits the native surface leaves; imported 0.2 declarations retain their earlier type restrictions"]
+        elif item["name"] in ("surface.mesh_page", "geometry.surface"):
+            item["domains"] += ["Nested geometry/page profile remains surface-0.1; the Agent/0.4 envelope and source closure identify the impulse entry"]
+            if item["name"] == "surface.mesh_page":
+                item["domains"] += ["The signed cursor additionally binds private entry_profile=impulse-0.1; the public page shape and geometry fingerprint are unchanged"]
+
+    def impulse(kind, name, signature, description, **kwargs):
+        return _entry(kind, name, signature, description, profile=_IMPULSE_PROFILE, **kwargs)
+
+    result["items"].extend([
+        impulse("event", "impulse", "impulse object_path using Vector3<Quantity[N*s]> at Point3;",
+                "Apply one elaborated world impulse at a point in the resolved target's own frame, inside an exact-time sequence.",
+                capability="source_impulses", rules=["IMP-001", "IMP-002", "IMP-003"],
+                domains=[
+                    "Contextual event spelling only in language 0.4 / impulse-0.1; payload expressions are pure elaboration-time values",
+                    "Target is an actual Ref<Object> occurrence; impulse uses world axes and point uses exactly that object's frame",
+                    "Currently free dynamic homogeneous sphere with positive finite own mass, radius and inertia",
+                    "The application point may be inside, on or outside the physical sphere; no contact or visible-mesh condition is implied",
+                    "Position/orientation stay continuous; velocity changes by J/m and omega by (R*point cross J)/I",
+                    "Release then impulse uses the transferred incoming state; impulse before release rejects",
+                    "Written-order statements stage atomically; a later failure rolls back all current-boundary changes and records",
+                    "Exactly zero impulse still validates/counts/records but preserves the existing trajectory anchor",
+                    "Exposed lever, world point, angular impulse and final velocities must remain finite",
+                ], effects=["authored instantaneous momentum update to one staged free sphere; no action handle or persistent channel"],
+                examples=['at 1[s] sequence { impulse ball using vector(world, 0[N*s], 2[N*s], 0[N*s]) at point(ball.frame, 0.5[m], 0[m], 0[m]);']),
+        impulse("projection", "state.impulses", 'inspect(..., fields=["state"]) -> state.impulses',
+                "Bounded cumulative count and complete latest impulse-bearing boundary records for this object.",
+                capability="bounded_impulse_state", rules=["IMP-004", "IMP-005"], specification=_IMPULSE_AGENT,
+                state_schema="https://ontokin.org/schemas/impulse-v0.1/impulses.schema.json",
+                domains=[
+                    "Initially applied_count=0, last_application_time_seconds=null, last_applications=[] for every object",
+                    "All applications at that object's latest impulse boundary, in statement order; unrelated boundaries and objects retain prior records",
+                    "Exact source/unit/UTF-8 spans and resolved occurrence identity accompany nine explicit world/self vectors",
+                    "World/self impulse fields are not re-expressed when ordinary top-level inspection uses another frame",
+                    "Existing exact-time before/after inspection recovers earlier states; no unbounded history log or new host operation",
+                    "Complete nested records count toward work, output, value-entry and encoded-envelope bounds; no successful truncation",
+                ], effects=["read revision/run-bound evaluated influence state"]),
+        impulse("projection", "state.pose_authority", 'inspect(..., fields=["state"]) -> state.pose_authority',
+                "Distinguish when an object became a free sphere from its current analytic trajectory anchor.",
+                capability="bounded_impulse_state", rules=["IMP-004"],
+                domains=["free_sphere.since_seconds remains zero or release time",
+                         "trajectory_anchor_seconds records the latest release or nonzero impulse; zero J preserves it"],
+                effects=["read existing pose authority; impulses add no second authority"]),
+        impulse("capability", "source_impulses", "source_impulses",
+                "Instantaneous source-authored linear and angular momentum updates on free homogeneous spheres.",
+                capability="source_impulses", rules=["IMP-001", "IMP-002", "IMP-003"],
+                effects=["bounded profile capability; validate and evaluate the actual source program"]),
+        impulse("capability", "bounded_impulse_state", "bounded_impulse_state",
+                "Exact source-bound latest-boundary influence inspection with inherited atomic repair and run semantics.",
+                capability="bounded_impulse_state", rules=["IMP-004", "IMP-005"],
+                effects=["read supported evaluated influence state"]),
+    ])
+    result.update(schema_version="ontokin.agent-catalog/0.4", profile=_IMPULSE_PROFILE, language_version="0.4",
+                  agent_contract=binding.protocol, delivery_targets=[binding.destination],
+                  source_header='ontokin "0.4"; module Example @ "example"; profile "impulse-0.1";',
+                  compatible_definition_profiles=["construction-0.1", "surface-0.1", "impulse-0.1"],
+                  complete_examples=[_IMPULSE_FIXTURE + "sources/p02-off-center-mixed-imports.ok"],
+                  example_file_manifests=[_IMPULSE_FIXTURE + "p02-off-center-mixed-imports.files.json"],
+                  example_bundles=[{"entry": _IMPULSE_FIXTURE + "sources/p02-off-center-mixed-imports.ok", "dependencies": [
+                      {"path": _IMPULSE_FIXTURE + "libraries/02-impulse-parts04.ok", "package_id": "fixture.impulse-parts", "version": "1.0.0", "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"},
+                      {"path": _IMPULSE_FIXTURE + "libraries/01-surface-parts03.ok", "package_id": "fixture.surface-parts", "version": "1.0.0", "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"},
+                      {"path": _IMPULSE_FIXTURE + "libraries/00-impulse-vectors02.ok", "package_id": "fixture.impulse-vectors", "version": "1.0.0", "source_revision": "sha256:0ca5a18550cd8832d9c0e388e69f4295b3a0f9b64b8a8c08cf171faa7e75f26c"}]}],
+                  surface_examples={"language_version": "0.3", "paths": previous_examples},
+                  example_context="Impulse snippets need a 0.4/impulse-0.1 entry, a free sphere occurrence and the shown value/frame bindings. The complete example uses its exact pinned file manifest. Inherited source examples retain their declared contexts; discovery executes none of them.")
+    result["unavailable_capabilities"] = sorted(item["name"] for item in result["items"]
+        if item["kind"] == "capability" and item["availability"] == "unsupported")
+    result["numeric_limitations"] += [
+        "Each final impulse velocity component is one rounded rational sum over canonical operands; exposed intermediate vectors must be finite.",
+        "Source type arithmetic retains its Angle tag; angular momentum divided by inertia is an explicit mechanical conversion to radians/second.",
+        "Impulses add no arbitrary minimum body mass/radius and no finite-force, torque, contact or general-body solver.",
+    ]
+    return result
+
+
 class _Budget:
     def __init__(self, check: Callable[[], Any] | None):
         self.check = check
@@ -616,6 +747,8 @@ def _revision(value: dict, budget: _Budget) -> str:
 
 _GLOBAL = _global()
 _SURFACE_GLOBAL = _surface_global()
+_IMPULSE_GLOBAL = _impulse_global()
+_PROFILE_GLOBALS = {_PROFILE: _GLOBAL, _SURFACE_PROFILE: _SURFACE_GLOBAL, _IMPULSE_PROFILE: _IMPULSE_GLOBAL}
 
 
 def catalog(*, linked_program: LinkedProgram | None = None,
@@ -628,18 +761,20 @@ def catalog(*, linked_program: LinkedProgram | None = None,
     """
     budget = _Budget(check)
     budget.step()
-    if profile not in (_PROFILE, _SURFACE_PROFILE):
+    if not isinstance(profile, str) or profile not in _PROFILE_GLOBALS:
         raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED", "Unsupported program discovery profile.",
                            category="unsupported", phase="inspection", blocks=[],
-                           details={"profile": profile, "available_profiles": [_PROFILE, _SURFACE_PROFILE]})
-    result = copy.deepcopy(_SURFACE_GLOBAL if profile == _SURFACE_PROFILE else _GLOBAL)
+                           details={"profile": profile, "available_profiles": list(_PROFILE_GLOBALS)})
+    result = copy.deepcopy(_PROFILE_GLOBALS[profile])
     budget.charge(result)
     if linked_program is not None:
         from .linker import LinkedProgram
         if not isinstance(linked_program, LinkedProgram):
             raise TypeError("linked_program must come from link_program(bundle).")
-        if profile == _SURFACE_PROFILE and linked_program.entry.ast.profile != profile:
-            raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED", "Surface discovery requires a surface-0.1 entry.",
+        if profile in (_SURFACE_PROFILE, _IMPULSE_PROFILE) and linked_program.entry.ast.profile != profile:
+            message = ("Surface discovery requires a surface-0.1 entry." if profile == _SURFACE_PROFILE
+                       else "Impulse discovery requires an impulse-0.1 entry.")
+            raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED", message,
                                linked_program.entry.ast, category="unsupported", phase="inspection", blocks=[],
                                details={"required_profile": profile, "actual_profile": linked_program.entry.ast.profile})
         context = {
@@ -650,7 +785,7 @@ def catalog(*, linked_program: LinkedProgram | None = None,
         }
         budget.charge(context)
         result["program_context"] = context
-        for entry, node in _public_interfaces(linked_program, budget, source_profiles=profile == _SURFACE_PROFILE):
+        for entry, node in _public_interfaces(linked_program, budget, source_profiles=profile in (_SURFACE_PROFILE, _IMPULSE_PROFILE)):
             budget.charge(entry, node)
             result["items"].append(entry)
     result["revision"] = _revision(result, budget)

@@ -18,7 +18,7 @@ from typing import Any, Callable, Iterable, Iterator
 from . import __version__
 from .diagnostics import OntoKinError
 from .evaluator import (MAX_OUTPUT_RECORDS, MAX_SAMPLES, _Simulator, _rotate,
-                        evaluate, exact_time, preflight, time_text)
+                        evaluate, exact_time, preflight, time_text, _records_per_sample)
 from .geometry import (SPHERE_RINGS, SPHERE_SEGMENTS, Mesh, assembly_marker,
                        box_mesh, joint_marker, sphere_mesh)
 from .model import SceneModel, Vec
@@ -31,6 +31,9 @@ from .values import bounded_data
 TARGET_CONTRACT = "ontokin.glb/0.1"
 CONSTRUCTION_TARGET = "ontokin.glb/0.2"
 SURFACE_TARGET = "ontokin.glb/0.3"
+IMPULSE_TARGET = "ontokin.glb/0.4"
+NATIVE_TARGETS = (SURFACE_TARGET, IMPULSE_TARGET)
+PROGRAM_TARGETS = (CONSTRUCTION_TARGET, *NATIVE_TARGETS)
 SURFACE_POSITION_TOLERANCE_M = 1e-5
 MAX_KEYFRAMES = 10000
 MAX_BAKED_POSES = 250000
@@ -72,7 +75,8 @@ def export_error(export_code: str, message: str, model: SceneModel | None = None
     raise OntoKinError(code, message, model.span if model else None, phase=phase,
                        category=category, blocks=["delivered"],
                        details={"target_contract": ({"construction-0.1": CONSTRUCTION_TARGET,
-                                                     "surface-0.1": SURFACE_TARGET}.get(model.profile, TARGET_CONTRACT)
+                                                     "surface-0.1": SURFACE_TARGET,
+                                                     "impulse-0.1": IMPULSE_TARGET}.get(model.profile, TARGET_CONTRACT)
                                                     if model is not None else TARGET_CONTRACT),
                                 "export_code": export_code, **(details or {})},
                        repair=("Use supported visual geometry and the explicitly matching model/delivery profile." if kind == "unsupported" else
@@ -247,14 +251,14 @@ class BakedScene:
 
 def checked_contract(model: SceneModel, target_contract: str) -> str:
     expected = {TARGET_CONTRACT: "core-0.1", CONSTRUCTION_TARGET: "construction-0.1",
-                SURFACE_TARGET: "surface-0.1"}
+                SURFACE_TARGET: "surface-0.1", IMPULSE_TARGET: "impulse-0.1"}
     if target_contract not in expected or model.profile != expected[target_contract]:
         export_error("OKE-E-SUPPORT", "The named GLB contract must explicitly match the authored semantic profile.",
                      model, kind="unsupported", details={"target_contract": target_contract,
                                                          "profile": model.profile})
     if model.requested_capabilities or any(diagnostic.code.startswith("OKL-E-") for diagnostic in model.diagnostics):
         export_error("OKE-E-SUPPORT", "The GLB adapter requires a supported, validated model.", model, kind="unsupported")
-    return {TARGET_CONTRACT: "0.1", CONSTRUCTION_TARGET: "0.2", SURFACE_TARGET: "0.3"}[target_contract]
+    return {TARGET_CONTRACT: "0.1", CONSTRUCTION_TARGET: "0.2", SURFACE_TARGET: "0.3", IMPULSE_TARGET: "0.4"}[target_contract]
 
 
 def program_metadata(model: SceneModel, *, check: Callable[[], None] | None = None) -> dict[str, Any]:
@@ -299,7 +303,7 @@ def program_metadata(model: SceneModel, *, check: Callable[[], None] | None = No
                     source = model.source_provenance[location["source_id"]]
                     if location["source_revision"] != source["source_revision"] or location["filename"] != source["filename"] or not 0 <= location["start_byte"] <= location["end_byte"]:
                         raise ValueError("Occurrence source location differs from its source identity.")
-            if model.profile == "surface-0.1" and obj.geometry.get("kind") in ("loft", "placed"):
+            if model.profile in ("surface-0.1", "impulse-0.1") and obj.geometry.get("kind") in ("loft", "placed"):
                 recipes = [obj.geometry]
                 if obj.geometry["kind"] == "placed":
                     recipes.append(obj.geometry["surface"])
@@ -324,7 +328,11 @@ def program_metadata(model: SceneModel, *, check: Callable[[], None] | None = No
 def sampled_states(model: SceneModel, requests: list[Any], *,
                    check: Callable[[], None] | None = None) -> Iterator[dict[str, Any]]:
     """Bound each public evaluator request without weakening its own budgets."""
-    records = 2 * len(model.objects) + len(model.sites) + len(model.joints) + len(model.actions) + 1
+    records = _records_per_sample(model, check=check)
+    if records > MAX_OUTPUT_RECORDS:
+        export_error("OKE-E-STATE-BUDGET", "A complete sample exceeds the state-record budget.",
+                     model, kind="resource", details={"records_per_sample": records,
+                                                       "max_output_records": MAX_OUTPUT_RECORDS})
     batch_size = max(1, min(MAX_SAMPLES, MAX_OUTPUT_RECORDS // records))
     for start in range(0, len(requests), batch_size):
         batch = requests[start:start + batch_size]
@@ -355,7 +363,19 @@ def sampled_states(model: SceneModel, requests: list[Any], *,
             yield sample
 
 
-def _angular_speed_bound(model: SceneModel) -> float:
+def _norm_upper(vector: Vec) -> Fraction:
+    """An exact rational upper bound on a canonical vector's Euclidean norm.
+
+    Integer square roots avoid overflowing an unexposed squared norm or
+    quotient when a tiny impulse and large lever arm have a finite product.
+    """
+    squared = sum((Fraction(component) ** 2 for component in vector), Fraction(0))
+    radicand = squared.numerator * squared.denominator
+    floor = math.isqrt(radicand)
+    return Fraction(floor + (floor * floor != radicand), squared.denominator)
+
+
+def _angular_speed_bound(model: SceneModel, *, check: Callable[[], None] | None = None) -> float:
     # A chain's instantaneous world angular speed is bounded by the sum of
     # root and local speeds. Sum across the whole scene deliberately overbounds
     # simultaneous chains, arbitrary axes, pauses, and the inherited release.
@@ -369,14 +389,47 @@ def _angular_speed_bound(model: SceneModel) -> float:
                 speeds.append(float((Fraction(limits[1]) - Fraction(limits[0])) / action.duration))
             except OverflowError:
                 speeds.append(math.inf)
-    return sum(speeds)
+    inherited = sum(speeds)
+    if model.profile != "impulse-0.1" or not math.isfinite(inherited):
+        return inherited
+    bound = Fraction(inherited)
+    for block in model.events:
+        if check is not None:
+            check()
+        for event in block.events:
+            if check is not None:
+                check()
+            if event.kind == "impulse":
+                payload = event.impulse
+                bound += (_norm_upper(payload.point_self_m) * _norm_upper(payload.impulse_world_n_s)
+                          / Fraction(model.objects[event.target].inertia))
+    try:
+        result = float(bound)
+    except OverflowError:
+        return math.inf
+    # Round upward so serialization and key planning cannot weaken the bound.
+    return math.nextafter(result, math.inf) if Fraction(result) < bound else result
+
+
+def impulse_profile_metadata() -> dict[str, Any]:
+    """The new delivery profile's physical meaning; playback stays recorded."""
+    return {
+        "name": "impulse-0.1",
+        "physical_model": "free_homogeneous_sphere_with_own_isotropic_inertia",
+        "source_impulses": "instantaneous_world_momentum_at_target_self_point",
+        "continuous_external_forces": "absent_except_uniform_gravity",
+        "continuous_external_torques": "absent",
+        "contacts": "disabled",
+        "boundary_state": "complete_per_object_latest_impulse_boundary_records",
+        "destination_behavior": "recorded_rigid_animation_without_live_impulse_execution",
+    }
 
 
 def _timeline(model: SceneModel, options: ExportOptions, end: Fraction,
               boundary_strings: list[str], *,
               check: Callable[[], None] | None = None) -> tuple[list[Fraction], list[float], list[Fraction], float, int]:
     boundaries = sorted({Fraction(0), end} | {exact_time(t) for t in boundary_strings if exact_time(t) <= end})
-    speed = _angular_speed_bound(model)
+    speed = _angular_speed_bound(model, check=check)
     rate = max(float(options.fps), speed / MAX_ANGULAR_STEP)
     if not math.isfinite(rate) or not math.isfinite(float(end) * rate) or float(end) * rate + 2 > MAX_KEYFRAMES:
         export_error("OKE-E-KEYFRAME-BUDGET", "The interval and angular motion exceed the export keyframe budget.",
@@ -425,7 +478,7 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
     nodes: list[BakedNode] = []
     meshes: dict[tuple, Mesh] = {}
     vertex_count = 0
-    native = model.profile == "surface-0.1"
+    native = model.profile in ("surface-0.1", "impulse-0.1")
 
     if native:
         predicted = 0
@@ -473,7 +526,7 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
                 raise OntoKinError(error.code, str(error), obj.span, phase="elaboration",
                                    category="resource_limit" if error.code == "OKL-E-RESOURCE" else "invalid",
                                    element_id=list(obj.element_id), blocks=["delivered"],
-                                   details={"target_contract": SURFACE_TARGET,
+                                   details={"target_contract": IMPULSE_TARGET if model.profile == "impulse-0.1" else SURFACE_TARGET,
                                             "object_path": obj.path, **error.details}) from error
             charge(mesh)
             return mesh
@@ -489,7 +542,7 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
         return meshes[key]
     properties = None
     geometries = None
-    if model.profile in ("construction-0.1", "surface-0.1"):
+    if model.profile in ("construction-0.1", "surface-0.1", "impulse-0.1"):
         try:
             properties = bounded_data({path: dict(obj.properties) for path, obj in model.objects.items()}, check=check)
             if native:
@@ -507,7 +560,7 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
                     "appearance_linear_rgba": list(obj.appearance), "pose_frame": "world",
                     "role": obj.role, "properties": properties[path] if properties is not None else
                     {name: value.to_data() for name, value in obj.properties.items()}}
-        if model.profile in ("construction-0.1", "surface-0.1"):
+        if model.profile in ("construction-0.1", "surface-0.1", "impulse-0.1"):
             metadata["source_mapping"] = model.occurrence_provenance[path]
             metadata["program_revision"] = model.program_revision
         mesh = mesh_for(obj.geometry, obj)
@@ -570,21 +623,21 @@ def _build_scene(model: SceneModel, *, options: ExportOptions | None = None,
     if check is not None:
         check()
     version = checked_contract(model, target_contract)
-    program = program_metadata(model, check=check) if target_contract in (CONSTRUCTION_TARGET, SURFACE_TARGET) else None
+    program = program_metadata(model, check=check) if target_contract in PROGRAM_TARGETS else None
     if program is not None and source_sha256 is not None and source_sha256 != program["sources"]["entry"]["source_revision"]:
         export_error("OKE-E-PROVENANCE", "An optional entry source hash must match the sealed entry file, not the program revision.",
                      model, kind="unsupported")
     options = options or ExportOptions()
     end = options.checked_end(model)
-    if check is None:
-        timeline = preflight(model)
-    else:
-        simulator = _Simulator(model, check=check)
-        simulator.advance(model.duration)
-        timeline = {"boundary_times_seconds": simulator.boundaries}
+    timeline = preflight(model, check=check)
     exact_times, times, boundaries, speed, removed = _timeline(
         model, options, end, timeline["boundary_times_seconds"], check=check)
     retained_boundary_records = len(boundaries) * (len(model.objects) + len(model.joints) + len(model.actions))
+    if target_contract == IMPULSE_TARGET:
+        # Use the kernel's same conservative retained-history bound, dropping
+        # only frames and the duplicate object row absent from this projection.
+        retained_boundary_records = len(boundaries) * (
+            _records_per_sample(model, check=check) - len(model.objects) - len(model.sites) - 1)
     if retained_boundary_records > MAX_OUTPUT_RECORDS:
         export_error("OKE-E-BOUNDARY-BUDGET", "Retained boundary metadata exceeds the state-record budget.",
                      model, kind="resource", details={"max_boundary_state_records": MAX_OUTPUT_RECORDS})
@@ -624,6 +677,13 @@ def _build_scene(model: SceneModel, *, options: ExportOptions | None = None,
         boundary_records.append({"source_seconds": time_text(boundary),
                                  "joint_states_after": after["joints"], "action_states_after": after["actions"],
                                  "pose_authorities_after": {path: record["pose_authority"] for path, record in after["objects"].items()}})
+        if target_contract == IMPULSE_TARGET:
+            applications = {}
+            for path, record in after["objects"].items():
+                if check is not None:
+                    check()
+                applications[path] = record["impulses"]
+            boundary_records[-1]["impulse_states_after"] = applications
     if max_jump_p > options.position_tolerance_m or max_jump_r > options.rotation_tolerance_rad:
         export_error("OKE-E-DISCONTINUOUS-POSE", "A boundary pose jump cannot be represented by continuous LINEAR tracks.",
                      model, kind="unsupported", details={"max_position_jump_m": max_jump_p,
@@ -702,7 +762,14 @@ def _build_scene(model: SceneModel, *, options: ExportOptions | None = None,
         losses[3] = ("Source text, comments, full type declarations, library/generator recipes, parameter dependency expressions, "
                      "site definitions, and action/event source arguments cannot be reconstructed from GLB; retain the full pinned .ok source bundle.")
         losses[-1] = "External re-export may discard source/program/occurrence extras; the pinned .ok source bundle remains authoritative."
-    if target_contract == SURFACE_TARGET:
+    if target_contract == IMPULSE_TARGET:
+        metadata["impulse_profile"] = impulse_profile_metadata()
+        report["impulse_profile"] = metadata["impulse_profile"]
+        report["retention"]["preserved_metadata"].append(
+            "exact source impulse boundaries, occurrence identities and complete recent momentum-change records")
+        report["retention"]["baked"].append("piecewise free-sphere trajectories after authored impulses")
+        report["retention"]["not_executable_in_glb"].append("source impulse transactions and momentum updates")
+    if target_contract in NATIVE_TARGETS:
         surface_nodes = [node for node in nodes if isinstance(node.mesh, SurfaceMesh)]
         metadata["surface_profile"] = {
             "name": "surface-0.1", "local_loft_axis": "+Z",

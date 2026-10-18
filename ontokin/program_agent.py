@@ -75,7 +75,10 @@ class ProgramAgentService(AgentService):
         return token
 
     def _context_binding(self):
-        return {"implementation": self.implementation, "protocol": self._protocol.SCHEMA_VERSION}
+        context = {"implementation": self.implementation, "protocol": self._protocol.SCHEMA_VERSION}
+        if self._protocol.SCHEMA_VERSION == program_protocol.IMPULSE_SCHEMA_VERSION:
+            context["entry_profile"] = self._profile
+        return context
 
     def _execute(self, task, check):
         if task.request["operation"] != "surface.mesh_page":
@@ -88,7 +91,8 @@ class ProgramAgentService(AgentService):
             raise OntoKinError("OKL-E-REVISION", "Surface mesh pages require an accepted program snapshot; this candidate has never been accepted.",
                                category="stale", phase="inspection", blocks=[])
         query = prepare_surface_page(task.source, request["element_id"], region=request.get("region"),
-                                     count=request["count"], budgets=request.get("budgets"), check=check)
+                                     count=request["count"], budgets=request.get("budgets"), check=check,
+                                     profile=self._profile)
         context = {"project_id": request["project_id"], "operation": "surface.mesh_page",
                    **query.binding(), **self._context_binding()}
         offset = self._offset(request.get("cursor"), context)
@@ -114,7 +118,7 @@ class ProgramAgentService(AgentService):
     def _check_task_response(self, task):
         self._check_response(task.response)
         limit = task.request.get("budgets", {}).get("max_value_entries")
-        if self._profile != "surface-0.1" or limit is None or task.response["status"] != "succeeded":
+        if not self._protocol.definition.bounded_delivery or limit is None or task.response["status"] != "succeeded":
             return
         # The final check runs inside the publication transaction after source
         # identity, cursor, implementation and progress metadata are present.
@@ -174,9 +178,9 @@ class ProgramAgentService(AgentService):
         from .scene import ExportOptions
         compiler = self._runtime.compile_program(task.source, budgets=task.request.get("budgets"), check=check)
         # Agent/0.2's frozen operation budget never counted internal GLB work.
-        # The separately selected Agent/0.3 contract adds cooperative delivery
+        # The separately selected Agent/0.3 and /0.4 contracts add cooperative delivery
         # checks without retroactively rejecting formerly valid old requests.
-        delivery_check = check if self._profile == "surface-0.1" else None
+        delivery_check = check if self._protocol.definition.bounded_delivery else None
         artifact = export_glb(compiler.model, options=ExportOptions(**task.request.get("options", {})),
                               source_uri=task.source.entry.filename, source_sha256=task.source.entry.revision,
                               target_contract=self._destination, check=delivery_check)
