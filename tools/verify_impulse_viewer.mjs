@@ -86,7 +86,7 @@ function setView(next) {
 function fitMotion() {
  const bounds=new THREE.Box3();
  const sampleTimes=Array.from({length:9},(_,i)=>i/4);
- for(const seconds of sampleTimes){seek(seconds);bounds.union(new THREE.Box3().setFromObject(content));}
+ for(const seconds of sampleTimes){seek(seconds);bounds.union(new THREE.Box3().setFromObject(content, true));}
  if(bounds.isEmpty())throw new Error('The source scene has no visible geometry');
  const center=bounds.getCenter(new THREE.Vector3()),size=bounds.getSize(new THREE.Vector3());
  const radius=Math.max(size.length()/2,.5);
