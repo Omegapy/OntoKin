@@ -110,6 +110,10 @@ class AgentService:
     def _check_response(self, response):
         """A version binding may impose an additional encoded result limit."""
 
+    def _check_task_response(self, task):
+        """Check a proposed publication with its immutable request context."""
+        self._check_response(task.response)
+
     def __init__(self, store_path: Path):
         self.implementation = copy.deepcopy(implementation_identity())
         self._store = self._store_type(Path(store_path), self.implementation)
@@ -561,7 +565,7 @@ class AgentService:
 
     def _commit_task(self, task: _Task) -> None:
         request, response = task.request, task.response
-        self._check_response(response)
+        self._check_task_response(task)
         project, request_id = request["project_id"], request["request_id"]
         with self._store.transaction() as db:
             row = self._store.request(db, project, request_id)
@@ -609,7 +613,7 @@ class AgentService:
                                         "implementation": self.implementation}
             if isinstance(response.get("result"), dict):
                 response["result"]["implementation"] = self.implementation
-            self._check_response(response)
+            self._check_task_response(task)
             self._store.update_response(db, project, request_id, response)
             db.execute("UPDATE requests SET owner=NULL WHERE project_id=? AND id=?", (project, request_id))
 

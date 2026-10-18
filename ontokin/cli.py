@@ -114,11 +114,19 @@ def capabilities() -> dict:
                                 "regional_linear_pbr_materials", "rigid_local_visual_placement"],
             "single_source_command": "export SOURCE.ok --target ontokin.glb/0.3 --output MODEL.glb",
             "pinned_bundle_command": "export PROGRAM.files.json --bundle --target ontokin.glb/0.3 --output MODEL.glb",
-            "agent_contract": "ontokin.agent/0.3 remains unimplemented",
+            "agent_contract": "ontokin.agent/0.3",
+            "storage_schema": "ontokin.surface-program-agent-store/0.1",
+            "transport": "ProgramAgentService(store, protocol='ontokin.agent/0.3') and agent --protocol ontokin.agent/0.3 JSONL CLI",
+            "operations": ["discover", "create", "edit", "validate", "inspect", "surface.mesh_page",
+                           "evaluate", "reset", "status", "cancel", "export", "artifact"],
+            "mesh_paging": {"count_unit": "complete triangles", "max_count": 256,
+                            "coordinates": "carrier-local meters after one authored visual placement",
+                            "identity": "accepted immutable program, occurrence, region, geometry digest and signed cursor"},
             "limits": {"max_sections": 64, "max_materials": 16, "max_facets": 64,
                        "max_mesh_vertices_per_request": 250000, "max_glb_bytes": 67108864},
             "limitations": ["Flat-shaded rigid lofts; no skin deformation, textures or automatic physical matter.",
-                            "A source GLB export does not establish full M01-M12 agent/repair acceptance."],
+                            "Agent 0.3 uses a separate store; the request schema does not select or migrate a service.",
+                            "Finite source/workflow evidence does not establish the full GOAL; M01-M12 status is tracked separately."],
         },
         "operations": ["check", "evaluate", "export", "agent", "conformance", "capabilities"],
         "output_levels": ["represented", "constructed", "evaluated"],
@@ -170,7 +178,7 @@ def capabilities() -> dict:
                 "materials": "one indexed primitive per used source region with linear RGBA, metallic and roughness",
                 "animation": "source-evaluated rigid world poses; local visual placement baked once",
                 "source_of_truth": "the complete exact pinned .ok source bundle",
-                "selection": "explicit --target ontokin.glb/0.3 or Python export_glb target_contract",
+                "selection": "explicit --target ontokin.glb/0.3, Agent/0.3 destination, or Python export_glb target_contract",
                 "surface_vertex_tolerance_m": 0.00001,
                 "validation": "decoded source topology, winding, normals, PBR, provenance and sampled animation",
                 "cancellation": "cooperative compiler, mesh, serialization and decoded-validation callbacks",
@@ -283,8 +291,8 @@ def main(argv: list[str] | None = None) -> int:
     suite = commands.add_parser("conformance", help="Execute the published source cases and expected observations")
     suite.add_argument("--fixtures", type=Path, default=DEFAULT_FIXTURES)
     suite.add_argument("--output", type=Path, help="Write the complete JSON report to this path")
-    agent = commands.add_parser("agent", help="Serve durable ontokin.agent/0.1 requests as local JSONL")
-    agent.add_argument("--protocol", choices=["ontokin.agent/0.1", "ontokin.agent/0.2"], default="ontokin.agent/0.1", help="Select the explicit single-source or program-bundle contract")
+    agent = commands.add_parser("agent", help="Serve an explicitly selected durable agent contract as local JSONL")
+    agent.add_argument("--protocol", choices=["ontokin.agent/0.1", "ontokin.agent/0.2", "ontokin.agent/0.3"], default="ontokin.agent/0.1", help="Select the explicit core, construction, or surface agent contract")
     agent.add_argument("--store", type=Path, required=True, help="Directory for immutable snapshots and durable request/run state")
     agent.add_argument("--request", type=Path, help="Read one JSON request, emit its receipt, and exit")
     agent.add_argument("--wait", action="store_true", help="Wait for this request's terminal result instead of returning a queued receipt")

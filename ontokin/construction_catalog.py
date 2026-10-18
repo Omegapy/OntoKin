@@ -1,4 +1,4 @@
-"""Discovery for construction-0.1 and public, revision-bound module interfaces.
+"""Discovery for versioned construction/surface module interfaces.
 
 The core catalog is copied, never modified. Linked interface records describe
 authored declarations; linking and discovery do not certify construction or
@@ -23,6 +23,10 @@ if TYPE_CHECKING:
 _PROFILE = "construction-0.1"
 _SPEC = "docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md"
 _FIXTURE = "docs/language-design/construction-v0.1/01-keyed-rack/"
+_SURFACE_PROFILE = "surface-0.1"
+_SURFACE_SPEC = "docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md"
+_SURFACE_AGENT = "docs/engineering/OK-AGENT-003-native-surface-program-workflows.md"
+_SURFACE_FIXTURE = "docs/language-design/surface-v0.1/"
 _LEVELS = ["represented", "constructed", "evaluated"]
 _MAX_MATERIALIZED_ENTRIES = 100_000
 _MAX_PREVIEW_BYTES = 1024
@@ -33,17 +37,18 @@ _LEAVES = ["Int", "Real", "Bool", "String", "Quantity[unit] and aliases",
 
 def _entry(kind: str, name: str, signature: str, description: str, *,
            capability: str, domains=(), effects=("pure definition-time description",),
-           defaults=None, examples=(), rules=(), available=True, **extra) -> dict:
+           defaults=None, examples=(), rules=(), available=True,
+           profile: str = _PROFILE, **extra) -> dict:
     return {
-        "id": f"{_PROFILE}/{kind}/{name}", "kind": kind, "name": name,
-        "profile": _PROFILE, "capability": capability,
+        "id": f"{profile}/{kind}/{name}", "kind": kind, "name": name,
+        "profile": profile, "capability": capability,
         "signature": signature, "description": description,
         "domains": list(domains), "effects": list(effects),
         "defaults": {} if defaults is None else defaults,
         "examples": list(examples), "language_rules": list(rules),
         "available_levels": list(_LEVELS) if available else [],
         "availability": "available_in_bounded_profile" if available else "unsupported",
-        "specification": _SPEC, **extra,
+        "specification": _SURFACE_SPEC if profile == _SURFACE_PROFILE else _SPEC, **extra,
     }
 
 
@@ -215,6 +220,216 @@ def _global() -> dict:
     return result
 
 
+def _surface_global() -> dict:
+    """Derive the explicit 0.3 view without rewriting any 0.2 catalog bytes."""
+    result = copy.deepcopy(_GLOBAL)
+    previous_examples = result["complete_examples"]
+    items = []
+    for item in result["items"]:
+        # The old combined omission no longer describes the regional PBR
+        # capability. Its still-unimplemented texture half is named below.
+        if item["name"] == "textures_and_regional_materials":
+            continue
+        item["inherited_from"] = item["id"]
+        item["id"] = item["id"].replace(_PROFILE + "/", _SURFACE_PROFILE + "/", 1)
+        item["profile"] = _SURFACE_PROFILE
+        if item["kind"] == "destination":
+            item.update(
+                id=f"{_SURFACE_PROFILE}/destination/ontokin.glb/0.3",
+                name="ontokin.glb/0.3", capability="ontokin.glb/0.3",
+                signature="destination: ontokin.glb/0.3",
+                description="Native loft triangles, regional glTF PBR materials and baked rigid world motion with complete program/source provenance.",
+                specification=_SURFACE_SPEC, examples=[_SURFACE_FIXTURE + "02-studio.ok"],
+                domains=[
+                    "Authoring entry remains surface-0.1; imported definitions keep their declared profiles",
+                    "One logical mesh per surface occurrence; one primitive and distinct material identity per used source region",
+                    "Local visual placement is baked once into carrier-local positions and normals",
+                    "Native palette RGBA/metallic/roughness are authoritative; Object.appearance is retained metadata for lofts",
+                    "Earlier primitive geometry retains its existing Color material conversion",
+                    "Binary64 local geometry becomes float32; local position tolerance is min(requested tolerance, 1e-5 m)",
+                    "Full authored timeline preflight; finite sampled motion checks are not a continuous-time proof",
+                    "Source recipes, active physics and source editing cannot be reconstructed from GLB",
+                ],
+            )
+        elif item["kind"] == "protocol":
+            item.update(
+                id=f"{_SURFACE_PROFILE}/protocol/ontokin.agent/0.3",
+                name="ontokin.agent/0.3",
+                signature='ProgramAgentService(store, protocol="ontokin.agent/0.3"); agent --protocol ontokin.agent/0.3',
+                description="Explicit native program binding with atomic source repairs, retained runs/artifacts, bounded surface inspection and separate durable state.",
+                specification=_SURFACE_AGENT,
+                domains=[
+                    "surface-0.1 entry and ontokin.glb/0.3 destination; exact immutable ontokin.bundle/0.1 source bytes",
+                    "Default Python binding stays Agent/0.2 and default CLI stays Agent/0.1",
+                    "Separate surface-program-agent.sqlite3; ontokin.surface-program-agent-store/0.1; no automatic migration",
+                    "Previously accepted immutable revisions remain readable; never-accepted candidates cannot page, evaluate or export ordinarily",
+                    "Source patches retain authorized source_id, source_revision, occurrence and UTF-8 span preconditions",
+                    "Native diagnostics reuse ontokin.diagnostic/0.2 with actual source-unit locations",
+                    "Discovery requires validation before any achieved stage is claimed",
+                ],
+                store_filename="surface-program-agent.sqlite3",
+                store_schema="ontokin.surface-program-agent-store/0.1",
+                diagnostic_contract="ontokin.diagnostic/0.2",
+            )
+        elif item["name"] == "persistent_agent_editing_service":
+            item["description"] = "Local surface-program-agent.sqlite3 store; atomic whole-program acceptance, per-source patches, retained requests/runs/artifacts and no silent migration of earlier protocols."
+            item["specification"] = _SURFACE_AGENT
+        elif item["name"] == "general_external_delivery":
+            item["description"] = "Only the explicit ontokin.glb/0.3 native baked asset contract; arbitrary destinations and engine-side live simulation remain unsupported."
+        elif item["name"] == "Geometry" and item["kind"] == "type":
+            item["description"] = "Immutable empty/sphere/box or native loft description; a loft permits one carrier-local placed pose."
+            item["domains"] += ["Visual geometry adds no physical body or motion authority", "No arbitrary triangle-buffer constructor"]
+            item["specification"] = _SURFACE_SPEC
+        elif item["name"] == "Keyed" and item["kind"] == "type":
+            item["element_types"] += ["LoftSection", "SurfaceMaterial"]
+            item["domains"] += ["LoftSection and SurfaceMaterial are additional immutable leaves only in surface-0.1 declarations"]
+            item["specification"] = _SURFACE_SPEC
+        elif item["name"] == "appearance" and item["kind"] == "capability":
+            item["description"] = "Linear RGBA for primitives and explicit per-region linear RGBA/metallic/roughness for native lofts; no textures or material animation."
+            item["specification"] = _SURFACE_SPEC
+        elif item["name"] == "Object.appearance":
+            item["domains"] += ["Native loft rendering uses its SurfaceMaterial palette; this Color remains retained metadata on a loft"]
+        elif item["name"] == "Object.physical":
+            item["domains"] += ["A loft contributes no mass or inertia; an explicitly authored supported sphere proxy remains independent"]
+        elif item["name"] == "import":
+            item["domains"] += ["A surface-0.1 entry may import compatible construction-0.1 components; each module keeps its own version, profile and type rules"]
+        items.append(item)
+
+    def native(kind, name, signature, description, **kwargs):
+        return _entry(kind, name, signature, description, profile=_SURFACE_PROFILE, **kwargs)
+
+    items.extend([
+        native("type", "LoftSection", "LoftSection",
+               "Immutable section station, planar center, two radii and authored region key.",
+               capability="native_loft_surfaces", domains=[
+                   "Flat Keyed leaf, parameter, let value or pure callable input/result",
+                   "No mutable members, nested Keyed, equality or derived vertex identity",
+               ], examples=['loft_section(0[m], vec3(0[m], 0[m], 0[m]), 0.5[m], 0.35[m], "clay")'],
+               rules=["CON-006"]),
+        native("type", "SurfaceMaterial", "SurfaceMaterial",
+               "Immutable linear RGBA, metallic and roughness material value; its palette key supplies region identity.",
+               capability="regional_pbr_materials", domains=[
+                   "All six numeric components finite and within [0,1]",
+                   "Flat Keyed leaf; no physical matter, texture, emissive or normal-map value",
+               ], examples=['surface_material(rgba(0.6, 0.3, 0.2, 1), 0, 0.8)'],
+               rules=["CON-006"]),
+        native("builtin", "loft_section",
+               "loft_section(station: Length, center: Vec3<Length>, radius_x: Length, radius_y: Length, region: String) -> LoftSection",
+               "Describe one elliptical ring around the fixed local +Z axis.",
+               capability="native_loft_surfaces", domains=[
+                   "Station and center X/Y are finite in [-100,100] m; center Z is exactly zero",
+                   "Both radii are finite in [0.001,100] m",
+                   "Region resolves to the loft palette; section key comes from its enclosing Keyed value",
+                   "Closed positional arguments; no source mesh-buffer injection",
+               ], examples=['loft_section(0[m], vec3(0[m], 0[m], 0[m]), 0.5[m], 0.35[m], "clay")'],
+               result_type="LoftSection"),
+        native("builtin", "surface_material",
+               "surface_material(base_color: Color, metallic: Real, roughness: Real) -> SurfaceMaterial",
+               "Describe the actual glTF PBR factors assigned to a stable authored region.",
+               capability="regional_pbr_materials", domains=[
+                   "Linear RGBA Color and both factors are finite in [0,1]",
+                   "No texture, UV, emissive, normal-map, clearcoat or runtime material animation overload",
+               ], examples=['surface_material(rgba(0.6, 0.3, 0.2, 1), 0, 0.8)'],
+               result_type="SurfaceMaterial"),
+        native("builtin", "loft",
+               "loft(sections: Keyed<LoftSection>, materials: Keyed<SurfaceMaterial>, facets: Int, caps: String) -> Geometry",
+               "Construct a bounded rigid exterior from authored elliptical sections and regional materials.",
+               capability="native_loft_surfaces", domains=[
+                   "2..64 sections, 1..16 palette keys; facets 8..64 divisible by four",
+                   "Caps must be the string literal flat or none; no computed cap-mode expression",
+                   "Sort sections by numeric station, independent of entry/key order; equal stations reject",
+                   "Minimum ideal station gap 0.001 m uses the exact binary64 coordinate allowance in OK-LANG-003-C1",
+                   "Lower-station region owns each side interval; first and last regions own flat end caps",
+                   "Unused palette entries remain inspectable without empty delivery primitives",
+                   "Flat outward triangle normals and separate corners; no welded-index manifold guarantee",
+                   "Open ends make no solid-volume claim; polygonal ellipses are an approximation",
+               ], examples=['loft(self.rings, self.palette, 16, "flat")'],
+               result_type="Geometry", rules=["LANG-024"],
+               numeric_clarification=_SURFACE_FIXTURE + "clarification-c1.md"),
+        native("builtin", "placed", "placed(surface: Geometry, placement: Pose) -> Geometry",
+               "Apply one rigid local visual transform to a native loft in its carrier's own frame.",
+               capability="rigid_visual_placement", domains=[
+                   "The geometry argument is an unplaced native loft; primitives and nested placed calls reject",
+                   "Pose references the carrier object's self.frame, including an independently generated part",
+                   "World and sibling frames reject; no scale, reflection or shear",
+                   "Translation changes vertices; rotation changes vertices and normals exactly once",
+                   "Adds no object, follows relation, joint, mass or action authority",
+               ], examples=['placed(loft(self.rings, self.palette, 16, "flat"), pose(self.frame, vec3(0[m], 0[m], 0.1[m]), quat(1, 0, 0, 0)))'],
+               result_type="Geometry", rules=["LANG-024"]),
+        native("projection", "geometry.surface", "inspect(..., fields=[\"geometry\"]) -> geometry.surface",
+               "Bounded occurrence summary with source section/palette keys, stations, counts, used regions and local placement.",
+               capability="surface_mesh_inspection", domains=[
+                   "ontokin.surface-summary/0.1 at result.items[i].geometry.surface for native loft/placed geometry",
+                   "All palette keys include valid unused entries; used region counts describe actual triangles",
+                   "No positions, normals or triangle-index arrays in ordinary geometry inspection",
+                   "Primitive objects retain their earlier projection; a class or collection has no occurrence mesh",
+               ], specification=_SURFACE_AGENT, summary_contract="ontokin.surface-summary/0.1",
+               physical_participation="none", motion_authority="carrier_evaluated_world_pose"),
+        native("operation", "surface.mesh_page",
+               "surface.mesh_page(program_revision, element_id, count, region?, cursor?, budgets?)",
+               "Read complete native triangles from one explicitly named previously accepted occurrence revision.",
+               capability="surface_mesh_inspection", domains=[
+                   "count is an integer JSON token 1..256 measured in triangles, with at most 768 flat corners",
+                   "Exact occurrence identity; never-accepted candidates, definitions and display-path aliases are not mesh targets",
+                   "region is an optional nonempty palette key; explicit null rejects; a known unused region gives an empty complete page",
+                   "Positions and normals are carrier-local after one visual placement; no world time or run is selected",
+                   "Page-local triangle indices retain complete-mesh native ordinals before regional grouping",
+                   "Opaque cursor binds project, operation, revision, occurrence, profile, region, geometry fingerprint, coordinates, ordering, implementation and protocol",
+                   "A continuation can change count and lower budgets with a new request ID; changed immutable context rejects",
+                   "count above max_result_items fails; cancellation and work/output exhaustion cannot return successful partial data",
+                   "Source edits target authorized UTF-8 spans, never a derived vertex or triangle",
+               ], specification=_SURFACE_AGENT, result_schema="ontokin.surface-mesh-page/0.1",
+               coordinate_system="carrier_local_after_placement/0.1",
+               ordering="native_triangle_ordinal/0.1", count_unit="triangles",
+               max_count=256, max_page_vertices=768, available_levels=["constructed"],
+               effects=["read immutable constructed geometry; no accepted-head or run advancement"]),
+    ])
+    for name, description in {
+        "native_loft_surfaces": "Bounded native .ok section-to-triangle construction with numeric station ordering and flat outward normals.",
+        "regional_pbr_materials": "Actual triangle groups and linear RGBA/metallic/roughness per stable palette region, including distinct equal-valued material identities.",
+        "rigid_visual_placement": "One carrier-local placement drives visible geometry under the existing evaluated object pose and rigid animation.",
+        "surface_mesh_inspection": "Revision-bound summaries and bounded triangle pages; inherited authorized source repair keeps the pinned bundle authoritative.",
+    }.items():
+        items.append(native("capability", name, name, description, capability=name,
+                            effects=["profile feature; validate and measure the actual program before claiming success"]))
+    for name, description in {
+        "textures_and_uv_coordinates": "No UVs, image textures, tangents, normal maps or displacement maps; native regional scalar PBR remains available.",
+        "advanced_or_animated_materials": "No emissive/clearcoat/transmission extensions or runtime material animation; the native constructor is linear RGBA, metallic and roughness only.",
+        "smooth_or_freeform_surfaces": "No smooth normals, subdivision, NURBS, branches within one loft or arbitrary authored triangle buffers.",
+        "automatic_surface_physics": "No mesh-derived mass, inertia, collision or contact; separately authored existing sphere proxies retain their mechanical limits.",
+    }.items():
+        items.append(native("capability", name, name, description, capability=name, available=False,
+                            effects=["unsupported behavior must remain explicit"]))
+    result.update(
+        schema_version="ontokin.agent-catalog/0.3", profile=_SURFACE_PROFILE, language_version="0.3",
+        agent_contract="ontokin.agent/0.3", delivery_targets=["ontokin.glb/0.3"], items=items,
+        source_header='ontokin "0.3"; module Example @ "example"; profile "surface-0.1";',
+        compatible_definition_profiles=["construction-0.1", "surface-0.1"],
+        complete_examples=[_SURFACE_FIXTURE + "02-studio.ok"],
+        example_bundles=[{"entry": _SURFACE_FIXTURE + "02-studio.ok", "dependencies": [{
+            "path": _SURFACE_FIXTURE + "01-surface-parts.ok", "package_id": "fixture.surface-parts", "version": "1.0.0",
+            "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"}]}],
+        construction_examples={"language_version": "0.2", "paths": previous_examples},
+        example_context="Native snippets require a 0.3/surface-0.1 declaring module and their shown self/value bindings. Studio requires the exact accompanying pinned SurfaceParts dependency. Inherited examples retain their original 0.1/0.2 source context; discovery executes none of them.",
+        unavailable_capabilities=sorted(item["name"] for item in items
+                                        if item["kind"] == "capability" and item["availability"] == "unsupported"),
+    )
+    result["limits"].update(
+        min_surface_sections=2, max_surface_sections=64, min_surface_palette_keys=1, max_surface_palette_keys=16,
+        min_surface_facets=8, max_surface_facets=64, surface_facets_multiple=4,
+        max_surface_coordinate_abs_m=100, min_surface_radius_m=.001, max_surface_radius_m=100,
+        min_surface_station_separation_m=.001, max_surface_triangles_per_loft=8192,
+        max_surface_vertices_per_loft=24576, max_aggregate_mesh_vertices=250000,
+        max_glb_bytes=64 * 1024 * 1024, max_surface_page_triangles=256, max_surface_page_vertices=768,
+    )
+    result["numeric_limitations"] += [
+        "Station separation uses only the coordinate representation allowance specified by OK-LANG-003-C1.",
+        "Polygonal elliptical rings and flat normals approximate curved geometry; no universal smooth-surface or volume-error bound is claimed.",
+        "Local mesh pages use finite binary64; native GLB uses checked float32 positions/normals and reports its quantization loss.",
+    ]
+    return result
+
+
 class _Budget:
     def __init__(self, check: Callable[[], Any] | None):
         self.check = check
@@ -265,12 +480,14 @@ def _name(value: str | tuple[str, ...] | list[str]) -> str:
     return value if isinstance(value, str) else ".".join(value)
 
 
-def _public_interfaces(linked, budget: _Budget):
+def _public_interfaces(linked, budget: _Budget, *, source_profiles: bool = False):
     """Yield records from actual symbols, without evaluating source defaults."""
     revision = linked.bundle.program_revision
     for source_id, module in sorted(linked.modules.items()):
         budget.step()
         unit = module.unit
+        profile = module.ast.profile if source_profiles else _PROFILE
+        source_context = {"profile": profile, "language_version": module.ast.version} if source_profiles else {}
         imports = []
         for importer_id, importer in sorted(linked.modules.items()):
             for alias, target_id in sorted(importer.imports.items()):
@@ -289,8 +506,9 @@ def _public_interfaces(linked, budget: _Budget):
             source_span=_span(module.ast, unit), program_revision=revision,
             package_id=unit.package_id, package_version=unit.version,
             import_paths=imports, validation_required=True,
+            **source_context,
         )
-        module_record["id"] = _identity_id(module.module_identity)
+        module_record["id"] = _identity_id(module.module_identity, profile=profile)
         yield module_record, module.ast
         for symbol in sorted(module.symbols.values(), key=lambda s: s.element_id):
             budget.step()
@@ -305,6 +523,7 @@ def _public_interfaces(linked, budget: _Budget):
                 "visibility": "public", "validation_required": True,
                 "availability": "linked_declaration_requires_validation",
                 "declaration_scope": "declared public interface; effective inherited values require inspection/validation",
+                **source_context,
             }
             if symbol.kind == "function":
                 entry = _callable(node, symbol.name, unit, budget, **common)
@@ -320,7 +539,7 @@ def _public_interfaces(linked, budget: _Budget):
                     entry["base_definition_id"] = list(base_symbol.element_id)
                 else:
                     entry["base_definition_id"] = None
-            entry["id"] = _identity_id(symbol.element_id)
+            entry["id"] = _identity_id(symbol.element_id, profile=profile)
             yield entry, node
             if symbol.kind != "class":
                 continue
@@ -358,7 +577,7 @@ def _public_interfaces(linked, budget: _Budget):
                         entry["signature"] += ": " + entry["value_type"]
                     else:
                         entry["source_writable"] = False
-                entry["id"] = _identity_id(identity)
+                entry["id"] = _identity_id(identity, profile=profile)
                 yield entry, member
 
 
@@ -382,8 +601,8 @@ def _callable(node, name: str, unit, budget: _Budget, **common) -> dict:
                   return_type_expression=result_type, result_type=result_type["text"], **common)
 
 
-def _identity_id(identity) -> str:
-    return _PROFILE + "/declaration/" + json.dumps(list(identity), ensure_ascii=False, separators=(",", ":"))
+def _identity_id(identity, *, profile: str = _PROFILE) -> str:
+    return profile + "/declaration/" + json.dumps(list(identity), ensure_ascii=False, separators=(",", ":"))
 
 
 def _revision(value: dict, budget: _Budget) -> str:
@@ -396,10 +615,11 @@ def _revision(value: dict, budget: _Budget) -> str:
 
 
 _GLOBAL = _global()
+_SURFACE_GLOBAL = _surface_global()
 
 
 def catalog(*, linked_program: LinkedProgram | None = None,
-            check: Callable[[], Any] | None = None) -> dict:
+            check: Callable[[], Any] | None = None, profile: str = _PROFILE) -> dict:
     """Return fresh content-pinned metadata, optionally from actual linked units.
 
     Filtering/pagination and the transmitted envelope cap belong to the agent
@@ -408,12 +628,20 @@ def catalog(*, linked_program: LinkedProgram | None = None,
     """
     budget = _Budget(check)
     budget.step()
-    result = copy.deepcopy(_GLOBAL)
+    if profile not in (_PROFILE, _SURFACE_PROFILE):
+        raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED", "Unsupported program discovery profile.",
+                           category="unsupported", phase="inspection", blocks=[],
+                           details={"profile": profile, "available_profiles": [_PROFILE, _SURFACE_PROFILE]})
+    result = copy.deepcopy(_SURFACE_GLOBAL if profile == _SURFACE_PROFILE else _GLOBAL)
     budget.charge(result)
     if linked_program is not None:
         from .linker import LinkedProgram
         if not isinstance(linked_program, LinkedProgram):
             raise TypeError("linked_program must come from link_program(bundle).")
+        if profile == _SURFACE_PROFILE and linked_program.entry.ast.profile != profile:
+            raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED", "Surface discovery requires a surface-0.1 entry.",
+                               linked_program.entry.ast, category="unsupported", phase="inspection", blocks=[],
+                               details={"required_profile": profile, "actual_profile": linked_program.entry.ast.profile})
         context = {
             "program_revision": linked_program.bundle.program_revision,
             "state": "linked declarations, not constructed or evaluated",
@@ -422,7 +650,7 @@ def catalog(*, linked_program: LinkedProgram | None = None,
         }
         budget.charge(context)
         result["program_context"] = context
-        for entry, node in _public_interfaces(linked_program, budget):
+        for entry, node in _public_interfaces(linked_program, budget, source_profiles=profile == _SURFACE_PROFILE):
             budget.charge(entry, node)
             result["items"].append(entry)
     result["revision"] = _revision(result, budget)

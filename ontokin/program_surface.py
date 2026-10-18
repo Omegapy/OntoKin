@@ -1,0 +1,184 @@
+"""Bounded source summaries and revision-independent native mesh page content.
+
+The service supplies accepted-snapshot authorization and signed query cursors.
+This module derives geometry only from the compiled OntoKin recipe; no derived
+vertex is an editable source identity or an independent motion authority.
+"""
+from __future__ import annotations
+
+from dataclasses import dataclass
+import hashlib
+import json
+import struct
+
+from .agent_protocol import ProtocolError
+from .diagnostics import OntoKinError
+from .scene import MAX_MESH_VERTICES, SurfaceMesh, build_surface_mesh
+from .surface import SurfaceError
+from .values import bounded_data
+
+
+PROFILE = "surface-0.1"
+PAGE_SCHEMA = "ontokin.surface-mesh-page/0.1"
+SUMMARY_SCHEMA = "ontokin.surface-summary/0.1"
+COORDINATE_SYSTEM = "carrier_local_after_placement/0.1"
+ORDERING = "native_triangle_ordinal/0.1"
+
+
+def surface_summary(geometry, *, check=None):
+    """Describe at most 64 sections and 16 regions without allocating vertices."""
+    if check is not None:
+        check()
+    recipe = geometry.get("surface", geometry)
+    ordered = sorted(recipe["sections"], key=lambda section: section.station_m)
+    facets, caps = recipe["facets"], recipe["caps"]
+    counts = {material.key: 0 for material in recipe["materials"]}
+    for section in ordered[:-1]:
+        if check is not None:
+            check()
+        counts[section.region] += 2 * facets
+    if caps == "flat":
+        counts[ordered[0].region] += facets
+        counts[ordered[-1].region] += facets
+    triangles = sum(counts.values())
+    return {"schema_version": SUMMARY_SCHEMA, "profile": PROFILE,
+            "section_keys": [section.key for section in ordered],
+            "stations_m": [section.station_m for section in ordered],
+            "palette_keys": sorted(counts), "facets": facets, "caps": caps,
+            "triangle_count": triangles, "vertex_count": 3 * triangles,
+            "regions": [{"key": key, "material_key": key, "triangle_count": counts[key]}
+                        for key in sorted(counts) if counts[key]],
+            "local_visual_placement": {
+                "frame": "carrier_self_frame",
+                "position_m": list(geometry.get("local_position", (0., 0., 0.))),
+                "orientation_wxyz": list(geometry.get("local_rotation", (1., 0., 0., 0.)))},
+            "physical_participation": "none",
+            "motion_authority": "carrier_evaluated_world_pose"}
+
+
+def _mesh_digest(geometry, mesh, *, check):
+    """Implementation-scoped fingerprint, streamed with bounded work callbacks.
+
+Domain, canonical recipe summary/palette, binary64 placed corner attributes,
+and source-region index streams cover all geometry and PBR inputs. This is an
+opaque cursor binding, not a replacement for the canonical program revision.
+"""
+    recipe = geometry.get("surface", geometry)
+    summary = surface_summary(geometry, check=check)
+    metadata = {"summary": summary, "coordinate_system": COORDINATE_SYSTEM,
+                "ordering": ORDERING,
+                "palette": bounded_data(sorted(recipe["materials"], key=lambda item: item.key), check=check)}
+    digest = hashlib.sha256(b"ontokin.surface-mesh/0.1\0")
+    digest.update(json.dumps(metadata, sort_keys=True, ensure_ascii=False,
+                             separators=(",", ":"), allow_nan=False).encode("utf-8") + b"\0")
+    corner = struct.Struct("<6d")
+    for index, (position, normal) in enumerate(zip(mesh.positions, mesh.normals)):
+        if index % 256 == 0:
+            check()
+        digest.update(corner.pack(*position, *normal))
+    for region in mesh.regions:
+        check()
+        digest.update(region.key.encode("ascii") + b"\0")
+        digest.update(struct.pack("<I", len(region.indices)))
+        for start in range(0, len(region.indices), 256):
+            check()
+            values = region.indices[start:start + 256]
+            digest.update(struct.pack("<" + "I" * len(values), *values))
+    return "sha256:" + digest.hexdigest()
+
+
+@dataclass
+class SurfacePageContext:
+    program_revision: str
+    element_id: list[str]
+    path: str
+    region: str | None
+    mesh: SurfaceMesh
+    geometry_sha256: str
+    ordinals: list[int]
+    region_keys: list[str]
+    budget: object
+
+    def binding(self):
+        return {"program_revision": self.program_revision, "element_id": self.element_id,
+                "profile": PROFILE, "region": self.region,
+                "geometry_sha256": self.geometry_sha256,
+                "ordering": ORDERING, "coordinate_system": COORDINATE_SYSTEM}
+
+    def page(self, offset, count):
+        if type(offset) is not int or not 0 <= offset <= len(self.ordinals):
+            raise ProtocolError("OKL-E-REVISION", "The cursor offset is outside this immutable surface query.")
+        if type(count) is not int or not 1 <= count <= 256:
+            raise ProtocolError("OKA-E-REQUEST", "Surface page count must be an integer from 1 through 256.")
+        if count > self.budget.limits["max_result_items"]:
+            raise OntoKinError("OKL-E-RESOURCE", "Surface page count exceeds its result-item budget.",
+                               category="resource_limit", phase="inspection",
+                               details={"count": count, "max_result_items": self.budget.limits["max_result_items"]})
+        selected = self.ordinals[offset:offset + count]
+        positions, normals, triangles, regions = [], [], [], []
+        for ordinal in selected:
+            self.budget.tick()
+            source_index, page_index = ordinal * 3, len(positions)
+            positions.extend(self.mesh.positions[source_index:source_index + 3])
+            normals.extend(self.mesh.normals[source_index:source_index + 3])
+            triangles.append((page_index, page_index + 1, page_index + 2))
+            regions.append(self.region_keys[ordinal])
+        result = {"schema_version": PAGE_SCHEMA, **self.binding(), "path": self.path,
+                  "total_triangles": self.mesh.triangle_count, "filtered_triangles": len(self.ordinals),
+                  "offset": offset, "returned_triangles": len(selected),
+                  "positions_m": positions, "normals": normals, "triangles": triangles,
+                  "source_triangle_ordinals": selected, "region_keys": regions}
+        result = self.budget.data(result)
+        end = offset + len(selected)
+        return result, end if end < len(self.ordinals) else None
+
+
+def prepare_surface_page(program, element_id, *, region=None, count=256, budgets=None, check=None):
+    """Compile a bounded native occurrence and prepare stable-order page state."""
+    from .program_runtime import _Budget, _Interrupt, _compile, _support
+    try:
+        budget = _Budget(budgets, check, PROFILE)
+        if count > budget.limits["max_result_items"]:
+            raise OntoKinError("OKL-E-RESOURCE", "Surface page count exceeds its result-item budget.",
+                               category="resource_limit", phase="inspection",
+                               details={"count": count, "max_result_items": budget.limits["max_result_items"]})
+        compiler = _compile(program, budget)
+        _support(compiler)
+        obj = next((obj for obj in compiler.model.objects.values() if list(obj.element_id) == element_id), None)
+        if obj is None:
+            raise ProtocolError("OKL-E-REVISION", "The occurrence identity does not name an object in this program.",
+                                element_id=element_id, program_revision=program.program_revision)
+        def error(code, message, **details):
+            raise OntoKinError(code, message, obj.span, phase="inspection", blocks=[],
+                               category="unsupported" if code == "OKL-E-CAPABILITY-UNSUPPORTED" else
+                               "resource_limit" if code == "OKL-E-RESOURCE" else "invalid",
+                               element_id=list(obj.element_id), details={"object_path": obj.path, **details})
+        if obj.geometry["kind"] not in ("loft", "placed"):
+            error("OKL-E-CAPABILITY-UNSUPPORTED", "Surface mesh pages require native loft geometry.",
+                  geometry_kind=obj.geometry["kind"])
+        recipe = obj.geometry.get("surface", obj.geometry)
+        palette = {material.key for material in recipe["materials"]}
+        if region is not None and region not in palette:
+            error("OKL-E-SURFACE-REGION", "The region is absent from this occurrence's authored palette.",
+                  region=region, palette_keys=sorted(palette))
+        try:
+            mesh = build_surface_mesh(obj.geometry, max_vertices=MAX_MESH_VERTICES, check=budget.tick)
+        except SurfaceError as exc:
+            error(exc.code, str(exc), **exc.details)
+        fingerprint = _mesh_digest(obj.geometry, mesh, check=budget.tick)
+        keys = [""] * mesh.triangle_count
+        for group in mesh.regions:
+            for start in range(0, len(group.indices), 3):
+                if start % 768 == 0:
+                    budget.tick()
+                keys[group.indices[start] // 3] = group.key
+        selected = []
+        for ordinal, key in enumerate(keys):
+            if ordinal % 256 == 0:
+                budget.tick()
+            if region is None or key == region:
+                selected.append(ordinal)
+        return SurfacePageContext(program.program_revision, list(obj.element_id), obj.path,
+                                  region, mesh, fingerprint, selected, keys, budget)
+    except _Interrupt as exc:
+        raise exc.error

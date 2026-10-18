@@ -334,7 +334,7 @@ class NativeSurfaceExportCLITests(unittest.TestCase):
             self.assertUnchanged(originals)
             self.assertNoStaging(directory)
 
-    def test_capabilities_distinguish_available_delivery_from_unimplemented_agent_contract(self):
+    def test_capabilities_identify_versioned_surface_delivery_and_agent_contracts(self):
         status, result = self.invoke(["capabilities"])
         self.assertEqual(status, 0)
         self.assertEqual(result["language_version"], "0.1")
@@ -345,14 +345,9 @@ class NativeSurfaceExportCLITests(unittest.TestCase):
         self.assertEqual(surface["profile"], "surface-0.1")
         self.assertEqual(surface["delivery_contract"], CONTRACT)
         self.assertIn("--bundle", surface["pinned_bundle_command"])
-        self.assertIn("unimplemented", surface["agent_contract"])
+        self.assertEqual(surface["agent_contract"], "ontokin.agent/0.3")
+        self.assertIn("surface.mesh_page", surface["operations"])
         self.assertEqual(result["export_targets"][CONTRACT]["surface_vertex_tolerance_m"], 1e-5)
-        with tempfile.TemporaryDirectory() as directory:
-            store = Path(directory) / "unavailable-agent-store"
-            with redirect_stderr(io.StringIO()), self.assertRaises(SystemExit) as caught:
-                main(["agent", "--protocol", "ontokin.agent/0.3", "--store", str(store)])
-            self.assertEqual(caught.exception.code, 2)
-            self.assertFalse(store.exists())
 
 
 if __name__ == "__main__":
