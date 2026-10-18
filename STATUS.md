@@ -1,6 +1,6 @@
 # OntoKin status
 
-Current checkpoint: **2026-10-18T19:23:19Z**. The complete native **M01–M12** release gate is implemented, verified and merged through [PR #9](https://github.com/Omegapy/OntoKin/pull/9) at `1a6dc3268c770d492b93e994b752c72eeb459cb0`. All four jobs passed in the fresh resulting-main [CI run 39157876920](https://github.com/Omegapy/OntoKin/actions/runs/39157876920). The complete [GOAL](GOAL.md) remains **in progress**. The next task is the separately versioned source impulse contract and implementation in [issue #10](https://github.com/Omegapy/OntoKin/issues/10).
+Current checkpoint: **2026-10-18T21:16:36Z**. Native **M01–M12** remains implemented, verified and merged through [PR #9](https://github.com/Omegapy/OntoKin/pull/9). The next source impulse milestone is implemented on [draft PR #11](https://github.com/Omegapy/OntoKin/pull/11) at `885fbc011b179422a8f6cb564219c66db09adac3`; all four jobs passed in branch [CI 39165524745](https://github.com/Omegapy/OntoKin/actions/runs/39165524745). Its complete **I01–I12 release gate is still in progress**. The complete [GOAL](GOAL.md) remains **in progress**.
 
 ## Completed implementation and acceptance
 
@@ -34,9 +34,13 @@ The release closes the adopted finite surface requirements, including real sourc
 
 ## Exact next development task
 
-Freeze a new explicit source/profile contract for an **instantaneous world-expressed impulse applied at a target-local point on a free homogeneous sphere**, then implement it through source parsing/type checking, ordered atomic events, evaluation, bounded source-aware inspection, agent repair and native recorded export. Include off-center angular momentum, rotated application frames, complete release state, zero/repeated impulses, invalid mode/unit/frame/overflow cases and high-spin export sampling. Existing profiles must retain their current meanings. This advances the off-center impulse portion of PHY-008; finite forces, contacts and general dynamics remain separate requirements. No new impulse operation is implemented or adopted by this status statement alone.
+Finish the adopted, separately versioned source impulse release in [issue #10](https://github.com/Omegapy/OntoKin/issues/10) and [PR #11](https://github.com/Omegapy/OntoKin/pull/11). The frozen OK-LANG-004 contract was published at `342788a2b5868189c72eae0541e86860a0de43ee`; its complete predetermined acceptance corpus remains unchanged. Branch `work/impulse01-integration-20261018-1916-astra` supplies source `0.4` / `impulse-0.1`, explicit Agent/0.4 and native recorded GLB/0.4.
 
-The rationale is to reuse the exact authored-event clock and current sphere inertia before adding endogenous contact times. Sphere/static-plane contact remains a following candidate and requires an explicit rule for irrational impact times and event ordering. The implementation starts only after the versioned contract and predetermined fixtures are frozen. Contract drafting uses `work/impulse01-contract-20261018-1911-astra` from observed main `1a6dc326`. Root continuation uses `work/impulse01-integration-20261018-1916-astra`; kernel and service branches are separately scoped in issue #10. Their work is not an impulse release acceptance claim.
+The implemented scope includes instantaneous world momentum at an actual target-self point on a free homogeneous sphere, off-center angular response, ordered release/impulse events, whole-boundary rollback, source-aware bounded inspection, actual mass/radius source repair, conservative high-spin export and older-profile compatibility. All 40 fixed source cases and the published branch CI pass. This is an implementation checkpoint, not full release acceptance.
+
+The immediate work is to close independent retained-evidence audit gaps for decoded intermediate animation values, complete application-history linkage, exact scoped-edit source authorization and ordinary self-frame conversion. Freeze and publish those reviewed corrections; execute fresh complete regression, current core/Agent/C01–C20/M01–M12, actual Agent/0.4 source workflows, independent GLB/browser validation and factual visual reviews; require all I01–I12 and exact-commit CI to pass before integration. Historical evidence cannot certify changed runtime bytes. The earlier diagnostic-default regression and boundary-budget validation gap were fixed; their actual failing and passing results remain in issue #10 and branch history.
+
+After this finite release is integrated, reread GOAL and adopt the next unmet physical-influence task. Finite center-of-mass force intervals are under technical review; they are not yet adopted or implemented. Contacts still require an explicit rule for computed impact times and event ordering. Finite forces, contacts and general dynamics remain separate requirements.
 
 ## Remaining full-product scope
 
@@ -46,14 +50,15 @@ Still unmet: richer algorithms/libraries and compatible part replacement; textur
 
 | Lease field | Value |
 | --- | --- |
-| Integration owner | None — released after verified main integration. |
-| Completed task | Native surface release, Agent/0.3 and complete M01–M12 evidence integrated through PR #9. |
-| Prior owner | `interactive-agent03-20261018-1835Z-astra-root` |
-| Acquired / last expiry UTC | 2026-10-18T18:36:06Z / 2026-10-18T19:33:58Z |
-| Released UTC | 2026-10-18T19:23:19Z |
-| Verified main | `1a6dc3268c770d492b93e994b752c72eeb459cb0`; all four jobs in main CI 39157876920 passed. |
-| Immediate action | Continue issue #10 on declared isolated branches; review/adopt the impulse contract, implement, test and independently validate it. Acquire a new bounded lease before the next main integration. |
-| Recovery | Read current main/STATUS, branch scopes and actual CI before retrying an interrupted write. Preserve published work and exact historical evidence. |
+| Integration owner | `interactive-impulse04-20261018-2116Z-astra-root` |
+| Task | Review, validate and integrate the separately versioned source impulse release through PR #11. |
+| Acquired UTC | 2026-10-18T21:16:36Z |
+| Expires UTC | 2026-10-18T21:46:36Z |
+| Observed main before acquisition | `b4366ccaacc672900b9def98c0a56003aadb826b`; prior native release and historical evidence preserved. |
+| Published branch checkpoint | `885fbc011b179422a8f6cb564219c66db09adac3`; PR/push CI 39165524745 and 39165521147 passed. |
+| Reserved shared scope | Main integration, STATUS/GOAL release records and new impulse release evidence. Kernel, service and conformance workers retain their declared isolated scopes in issue #10. |
+| Immediate action | Publish corrected independent readers/tools, freeze exact verification inputs and complete fresh I01–I12 evidence. Merge only after required checks pass. |
+| Recovery | Read actual main/PR refs, this lease, issue #10 and CI before retrying any interrupted write. Preserve concurrent work and immutable historical evidence. |
 
 [Previous main STATUS at 17:27](docs/engineering/surface-validation/status-20261018-1727.md.txt), [earlier recovery](docs/engineering/surface-validation/recovery-2026-10-18.md), historical construction/agent/native evidence and original preservation hashes remain intact. [Issue #8](https://github.com/Omegapy/OntoKin/issues/8) records branch scopes and handoffs. A missing uploaded-image error in chat is unrelated to repository work; do not retry those attachments.
 
