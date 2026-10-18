@@ -55,11 +55,11 @@ The preceding checkpoint records the configured hourly **Advance OntoKin** task 
 
 | Lease field | Value |
 | --- | --- |
-| Integration owner | `scheduled-ontokin-20261018-1314Z-source-branch-integration-gpt6` |
-| Acquired UTC | 2026-10-18T13:14:01Z |
-| Lease expires UTC | 2026-10-18T14:44:01Z |
-| Work item | Reconcile seven unpublished native surface-source commits on work/native-surface-source-20261018-1116, fix verified defects, rerun CI, and integrate bounded source-language implementation |
-| Parent main SHA | `13c29824a77e84543d6d070092cc0ce6437f8528` |
-| Integration procedure | Isolated branch; exact-head integration; verify implementation and release ownership or checkpoint before ending |
+| Integration owner | `interactive-ontokin-20261018-owner-directed-merge-gpt6` |
+| Acquired UTC | 2026-10-18T14:37:20.550Z |
+| Lease expires UTC | 2026-10-18T15:12:20.551Z |
+| Work item | Owner-directed verified integration of green PR #4 and PR #5 into main; reconcile obsolete PR #1; verify main CI and record precise checkpoint. |
+| Parent main SHA | `7648f8e69c85d7196001d7f1c42ba284b2c2650c` |
+| Integration procedure | Expected-head, nonforce main updates, exact PR head merge; inspect and reconcile any changed refs. |
 
-Previous lease expired at 2026-10-18T09:09:09.885Z. This acquisition replaces it only upon a successful non-force, exact-head `update_ref`. Verify the resulting main SHA and status file before editing implementation. Issue #3 preserves a focused locally tested patch whose complete-repository tests and CI are still outstanding.
+**Owner-directed ownership handoff:** On October 18, 2026 the owner explicitly clarified this interactive development agent is the sole active project worker and directed immediate integration of finished branches. The earlier reservation held by `scheduled-ontokin-20261018-1314Z-source-branch-integration-gpt6` was superseded by this owner instruction, not inferred expired or stopped based only on GitHub inactivity. Live GitHub branches and CI were inspected. This change transfers the repository's advisory integration reservation; it does not overwrite the earlier worker's branch, revoke required tool approvals or claim that any unobserved session has terminated. If a concurrent write is detected, stop, reconcile and revalidate rather than force updates. The entire GOAL remains open.
