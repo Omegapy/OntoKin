@@ -1,4 +1,4 @@
-"""Bake evaluator-owned world poses for the bounded ``ontokin.glb/0.1`` adapter.
+"""Bake evaluator-owned world poses for explicitly versioned GLB adapters.
 
 Ownership is metadata, not a second transform hierarchy. Every exported object
 is a scene root, including parts and released bodies. Source event times retain
@@ -13,20 +13,25 @@ import json
 import struct
 from dataclasses import dataclass, field
 from fractions import Fraction
-from typing import Any, Iterable, Iterator
+from typing import Any, Callable, Iterable, Iterator
 
 from . import __version__
 from .diagnostics import OntoKinError
-from .evaluator import MAX_OUTPUT_RECORDS, MAX_SAMPLES, evaluate, exact_time, preflight, time_text
+from .evaluator import (MAX_OUTPUT_RECORDS, MAX_SAMPLES, _Simulator, _rotate,
+                        evaluate, exact_time, preflight, time_text)
 from .geometry import (SPHERE_RINGS, SPHERE_SEGMENTS, Mesh, assembly_marker,
                        box_mesh, joint_marker, sphere_mesh)
 from .model import SceneModel, Vec
 from .json_limits import JSONLimitError
+from .surface import RegionTriangles, SurfaceError
+from .surface_runtime import materialize_surface
 from .values import bounded_data
 
 
 TARGET_CONTRACT = "ontokin.glb/0.1"
 CONSTRUCTION_TARGET = "ontokin.glb/0.2"
+SURFACE_TARGET = "ontokin.glb/0.3"
+SURFACE_POSITION_TOLERANCE_M = 1e-5
 MAX_KEYFRAMES = 10000
 MAX_BAKED_POSES = 250000
 MAX_VALIDATION_POSES = 1000000
@@ -34,6 +39,25 @@ MAX_MESH_VERTICES = 250000
 MAX_GLB_BYTES = 64 * 1024 * 1024
 MAX_FPS = 10000
 MAX_ANGULAR_STEP = math.pi / 4
+
+
+class _ExportInterrupt(Exception):
+    """Keep caller interruptions out of semantic/data-validation handlers."""
+
+    def __init__(self, error: BaseException):
+        self.error = error
+
+
+def _guard_check(check: Callable[[], None] | None) -> Callable[[], None] | None:
+    if check is None:
+        return None
+
+    def guarded() -> None:
+        try:
+            check()
+        except BaseException as error:
+            raise _ExportInterrupt(error) from error
+    return guarded
 
 
 def export_error(export_code: str, message: str, model: SceneModel | None = None,
@@ -47,7 +71,9 @@ def export_error(export_code: str, message: str, model: SceneModel | None = None
     }[kind]
     raise OntoKinError(code, message, model.span if model else None, phase=phase,
                        category=category, blocks=["delivered"],
-                       details={"target_contract": CONSTRUCTION_TARGET if model is not None and model.profile == "construction-0.1" else TARGET_CONTRACT,
+                       details={"target_contract": ({"construction-0.1": CONSTRUCTION_TARGET,
+                                                     "surface-0.1": SURFACE_TARGET}.get(model.profile, TARGET_CONTRACT)
+                                                    if model is not None else TARGET_CONTRACT),
                                 "export_code": export_code, **(details or {})},
                        repair=("Use supported visual geometry and the explicitly matching model/delivery profile." if kind == "unsupported" else
                                "Use a smaller scene or export interval, or a lower requested sampling rate." if kind == "resource" else
@@ -112,11 +138,92 @@ class ExportOptions:
         return end
 
 
+@dataclass(frozen=True)
+class SurfaceMesh:
+    """One rigid loft with placed local vertices and keyed PBR index groups."""
+
+    name: str
+    positions: tuple[Vec, ...]
+    normals: tuple[Vec, ...]
+    regions: tuple[RegionTriangles, ...]
+    section_keys: tuple[str, ...]
+    facets: int
+    caps: str
+
+    @property
+    def triangle_count(self) -> int:
+        return sum(len(region.indices) // 3 for region in self.regions)
+
+
+def geometry_metadata(geometry: dict[str, Any], *,
+                      check: Callable[[], None] | None = None) -> dict[str, Any]:
+    """Return the exact recipe as bounded JSON values, without derived arrays."""
+    if check is not None:
+        check()
+    return bounded_data(geometry, check=check)
+
+
+def build_surface_mesh(geometry: dict[str, Any], *, max_vertices: int = MAX_MESH_VERTICES,
+                       check: Callable[[], None] | None = None) -> SurfaceMesh:
+    """Lower an authored recipe and bake its one local visual placement.
+
+    The carrier's evaluated transform is deliberately absent here. Regions
+    retain their source keys and face membership while vertices/normals change
+    basis into that carrier's local frame.
+    """
+    mesh, placement = materialize_surface(geometry, max_vertices=max_vertices, check=check)
+    positions: list[Vec] = []
+    normals: list[Vec] = []
+    for position, normal in zip(mesh.positions, mesh.normals):
+        if check is not None:
+            check()
+        rotated = _rotate(placement.rotation, position)
+        transformed = tuple(a + b for a, b in zip(rotated, placement.position))
+        transformed_normal = _rotate(placement.rotation, normal)
+        if not all(math.isfinite(value) for value in (*transformed, *transformed_normal)):
+            raise SurfaceError("OKL-E-SURFACE-NUMERIC",
+                               "Local visual placement produced a nonfinite surface coordinate.")
+        positions.append(transformed)
+        normals.append(transformed_normal)
+    if check is not None:
+        check()
+    return SurfaceMesh("loft", tuple(positions), tuple(normals), mesh.regions,
+                       mesh.section_keys, mesh.facets, mesh.caps)
+
+
+def surface_metadata(geometry: dict[str, Any], mesh: SurfaceMesh, *,
+                     check: Callable[[], None] | None = None) -> dict[str, Any]:
+    """Describe authored surface identities and the actual derived counts."""
+    if check is not None:
+        check()
+    surface = geometry.get("surface", geometry)
+    sections = {section.key: section for section in surface["sections"]}
+    return bounded_data({
+        "profile": "surface-0.1", "section_keys": mesh.section_keys,
+        "stations_m": [sections[key].station_m for key in mesh.section_keys],
+        "facets": mesh.facets, "caps": mesh.caps,
+        "triangle_count": mesh.triangle_count, "vertex_count": len(mesh.positions),
+        "regions": [{"key": region.key, "material_key": region.material.key,
+                     "triangle_count": len(region.indices) // 3} for region in mesh.regions],
+        "local_visual_placement": {
+            "frame": "carrier_self_frame",
+            "position_m": geometry.get("local_position", (0., 0., 0.)),
+            "orientation_wxyz": geometry.get("local_rotation", (1., 0., 0., 0.)),
+        },
+        "source_location": {"source_id": surface["source_id"],
+                            "start_byte": surface["start"], "end_byte": surface["end"]},
+        "normal_policy": "flat_outward_triangle_normals",
+        "topology": "geometrically_edge_matched_unwelded_triangle_corners",
+        "physical_participation": "none",
+        "motion_authority": "carrier_evaluated_world_pose",
+    }, check=check)
+
+
 @dataclass
 class BakedNode:
     name: str
     frame_path: str
-    mesh: Mesh | None
+    mesh: Mesh | SurfaceMesh | None
     color: tuple[float, float, float, float]
     metadata: dict[str, Any]
     translations: list[Vec] = field(default_factory=list)
@@ -139,17 +246,18 @@ class BakedScene:
 
 
 def checked_contract(model: SceneModel, target_contract: str) -> str:
-    expected = {TARGET_CONTRACT: "core-0.1", CONSTRUCTION_TARGET: "construction-0.1"}
+    expected = {TARGET_CONTRACT: "core-0.1", CONSTRUCTION_TARGET: "construction-0.1",
+                SURFACE_TARGET: "surface-0.1"}
     if target_contract not in expected or model.profile != expected[target_contract]:
         export_error("OKE-E-SUPPORT", "The named GLB contract must explicitly match the authored semantic profile.",
                      model, kind="unsupported", details={"target_contract": target_contract,
                                                          "profile": model.profile})
     if model.requested_capabilities or any(diagnostic.code.startswith("OKL-E-") for diagnostic in model.diagnostics):
         export_error("OKE-E-SUPPORT", "The GLB adapter requires a supported, validated model.", model, kind="unsupported")
-    return "0.2" if target_contract == CONSTRUCTION_TARGET else "0.1"
+    return {TARGET_CONTRACT: "0.1", CONSTRUCTION_TARGET: "0.2", SURFACE_TARGET: "0.3"}[target_contract]
 
 
-def program_metadata(model: SceneModel) -> dict[str, Any]:
+def program_metadata(model: SceneModel, *, check: Callable[[], None] | None = None) -> dict[str, Any]:
     """Check the construction model's sealed source-map identity before export.
 
     The compiler supplies validated source hashes and locations. The exporter
@@ -157,7 +265,9 @@ def program_metadata(model: SceneModel) -> dict[str, Any]:
     or claim to reconstruct omitted files from GLB metadata.
     """
     try:
-        manifest = bounded_data(model.source_manifest)
+        if check is not None:
+            check()
+        manifest = bounded_data(model.source_manifest, check=check)
         if not isinstance(manifest, dict) or manifest.get("schema_version") != "ontokin.bundle/0.1" or manifest.get("entry_source_id") != "entry":
             raise ValueError("Missing canonical source manifest.")
         canonical = json.dumps(manifest, sort_keys=True, ensure_ascii=False,
@@ -170,12 +280,16 @@ def program_metadata(model: SceneModel) -> dict[str, Any]:
         if source_ids != sorted(set(source_ids)) or set(source_ids) != set(model.source_provenance) or "entry" not in source_ids:
             raise ValueError("Source mapping differs from the manifest closure.")
         for unit in units:
+            if check is not None:
+                check()
             source = model.source_provenance[unit["source_id"]]
             if any(source.get(key) != value for key, value in unit.items()):
                 raise ValueError("Source mapping hash/name/pin differs from the manifest.")
         if set(model.occurrence_provenance) != set(model.objects):
             raise ValueError("Occurrence source mapping is incomplete.")
         for path, obj in model.objects.items():
+            if check is not None:
+                check()
             record = model.occurrence_provenance[path]
             if (record.get("path") != path or record.get("element_id") != list(obj.element_id)
                     or record.get("owner_path") != obj.owner or record.get("class_id") != obj.class_name):
@@ -185,11 +299,20 @@ def program_metadata(model: SceneModel) -> dict[str, Any]:
                     source = model.source_provenance[location["source_id"]]
                     if location["source_revision"] != source["source_revision"] or location["filename"] != source["filename"] or not 0 <= location["start_byte"] <= location["end_byte"]:
                         raise ValueError("Occurrence source location differs from its source identity.")
+            if model.profile == "surface-0.1" and obj.geometry.get("kind") in ("loft", "placed"):
+                recipes = [obj.geometry]
+                if obj.geometry["kind"] == "placed":
+                    recipes.append(obj.geometry["surface"])
+                for recipe in recipes:
+                    if (recipe.get("source_id") not in model.source_provenance
+                            or type(recipe.get("start")) is not int or type(recipe.get("end")) is not int
+                            or not 0 <= recipe["start"] <= recipe["end"]):
+                        raise ValueError("Surface recipe source location is outside the supplied source mapping.")
         raw = {"revision": revision, "entry_source_id": "entry", "manifest": manifest,
                "sources": model.source_provenance, "occurrences": model.occurrence_provenance,
                "collections": model.collection_provenance,
                "provenance": "Validated compiler source map; exact source text is not embedded."}
-        return bounded_data(raw)
+        return bounded_data(raw, check=check)
     except JSONLimitError as error:
         export_error("OKE-E-METADATA-BUDGET", "Program provenance exceeds the bounded materialization budget.",
                      model, kind="resource", details=error.details)
@@ -198,12 +321,38 @@ def program_metadata(model: SceneModel) -> dict[str, Any]:
                      model, kind="unsupported", details={"cause": str(error)})
 
 
-def sampled_states(model: SceneModel, requests: list[Any]) -> Iterator[dict[str, Any]]:
+def sampled_states(model: SceneModel, requests: list[Any], *,
+                   check: Callable[[], None] | None = None) -> Iterator[dict[str, Any]]:
     """Bound each public evaluator request without weakening its own budgets."""
     records = 2 * len(model.objects) + len(model.sites) + len(model.joints) + len(model.actions) + 1
     batch_size = max(1, min(MAX_SAMPLES, MAX_OUTPUT_RECORDS // records))
     for start in range(0, len(requests), batch_size):
-        yield from evaluate(model, requests[start:start + batch_size])["samples"]
+        batch = requests[start:start + batch_size]
+        if check is None:
+            yield from evaluate(model, batch)["samples"]
+            continue
+        check()
+        # The existing simulator already has bounded callback checkpoints.
+        # Preserve evaluate()'s ordered samples and full-horizon validation.
+        simulator = _Simulator(model, check=check)
+        normalized = []
+        for index, request in enumerate(batch):
+            check()
+            side = request.get("side", "after") if isinstance(request, dict) else "after"
+            value = request.get("time_seconds", request.get("time")) if isinstance(request, dict) else request
+            timestamp = exact_time(value)
+            if side not in ("before", "after") or not 0 <= timestamp <= model.duration:
+                export_error("OKE-E-OPTIONS", "The requested sample time or boundary side is unavailable.",
+                             model, kind="options")
+            normalized.append((timestamp, side, index))
+        samples = [None] * len(batch)
+        for timestamp, side, index in sorted(normalized, key=lambda item: (item[0], item[1] == "after")):
+            check()
+            samples[index] = simulator.advance(timestamp, side)
+        simulator.advance(model.duration)
+        for sample in samples:
+            check()
+            yield sample
 
 
 def _angular_speed_bound(model: SceneModel) -> float:
@@ -224,7 +373,8 @@ def _angular_speed_bound(model: SceneModel) -> float:
 
 
 def _timeline(model: SceneModel, options: ExportOptions, end: Fraction,
-              boundary_strings: list[str]) -> tuple[list[Fraction], list[float], list[Fraction], float, int]:
+              boundary_strings: list[str], *,
+              check: Callable[[], None] | None = None) -> tuple[list[Fraction], list[float], list[Fraction], float, int]:
     boundaries = sorted({Fraction(0), end} | {exact_time(t) for t in boundary_strings if exact_time(t) <= end})
     speed = _angular_speed_bound(model)
     rate = max(float(options.fps), speed / MAX_ANGULAR_STEP)
@@ -233,6 +383,8 @@ def _timeline(model: SceneModel, options: ExportOptions, end: Fraction,
                      model, kind="resource", details={"max_keyframes": MAX_KEYFRAMES})
     required: dict[float, Fraction] = {}
     for boundary in boundaries:
+        if check is not None:
+            check()
         encoded = float32(float(boundary), model, context="boundary time")
         if encoded in required and required[encoded] != boundary:
             export_error("OKE-E-TIMES-COLLAPSED", "Distinct semantic boundaries collapse to the same binary32 key time.",
@@ -242,6 +394,8 @@ def _timeline(model: SceneModel, options: ExportOptions, end: Fraction,
     keys = dict(required)
     removed = 0
     for index in range(1, math.ceil(float(end) * rate)):
+        if check is not None:
+            check()
         exact = Fraction.from_float(index / rate)
         if exact >= end:
             continue
@@ -266,52 +420,111 @@ def _timeline(model: SceneModel, options: ExportOptions, end: Fraction,
     return exact_times, times, boundaries, speed, removed
 
 
-def _nodes(model: SceneModel, options: ExportOptions) -> list[BakedNode]:
+def _nodes(model: SceneModel, options: ExportOptions, *,
+           check: Callable[[], None] | None = None) -> list[BakedNode]:
     nodes: list[BakedNode] = []
     meshes: dict[tuple, Mesh] = {}
     vertex_count = 0
-    def charge(mesh: Mesh) -> None:
+    native = model.profile == "surface-0.1"
+
+    if native:
+        predicted = 0
+        for obj in model.objects.values():
+            if check is not None:
+                check()
+            geometry = obj.geometry
+            kind = geometry["kind"]
+            if kind in ("loft", "placed"):
+                surface = geometry.get("surface", geometry)
+                predicted += 6 * (len(surface["sections"]) - (surface["caps"] == "none")) * surface["facets"]
+            elif kind == "sphere":
+                predicted += SPHERE_SEGMENTS * (SPHERE_RINGS - 1) + 2
+            elif kind == "box":
+                predicted += 24
+            elif kind == "empty" and options.helpers:
+                predicted += 72
+            if predicted > MAX_MESH_VERTICES:
+                export_error("OKE-E-GEOMETRY-BUDGET", "Surface-profile occurrences exceed the aggregate mesh vertex budget.",
+                             model, kind="resource", details={"required_vertices": predicted,
+                                                               "max_mesh_vertices": MAX_MESH_VERTICES})
+        if options.helpers:
+            predicted += sum(62 + (24 if joint.axis is not None else 0) for joint in model.joints.values())
+        if predicted > MAX_MESH_VERTICES:
+            export_error("OKE-E-GEOMETRY-BUDGET", "Surface-profile occurrences and helpers exceed the mesh vertex budget.",
+                         model, kind="resource", details={"required_vertices": predicted,
+                                                           "max_mesh_vertices": MAX_MESH_VERTICES})
+
+    def charge(mesh: Mesh | SurfaceMesh) -> None:
         nonlocal vertex_count
         vertex_count += len(mesh.positions)
         if vertex_count > MAX_MESH_VERTICES:
             export_error("OKE-E-GEOMETRY-BUDGET", "Mesh generation exceeds the vertex budget.", model,
                          kind="resource", details={"max_mesh_vertices": MAX_MESH_VERTICES})
-    def mesh_for(geometry: dict[str, Any]) -> Mesh | None:
+    def mesh_for(geometry: dict[str, Any], obj) -> Mesh | SurfaceMesh | None:
+        if check is not None:
+            check()
         kind = geometry.get("kind")
         if kind == "empty":
             return None
+        if kind in ("loft", "placed") and native:
+            try:
+                mesh = build_surface_mesh(geometry, max_vertices=MAX_MESH_VERTICES - vertex_count, check=check)
+            except SurfaceError as error:
+                raise OntoKinError(error.code, str(error), obj.span, phase="elaboration",
+                                   category="resource_limit" if error.code == "OKL-E-RESOURCE" else "invalid",
+                                   element_id=list(obj.element_id), blocks=["delivered"],
+                                   details={"target_contract": SURFACE_TARGET,
+                                            "object_path": obj.path, **error.details}) from error
+            charge(mesh)
+            return mesh
         if kind not in ("sphere", "box"):
             export_error("OKE-E-GEOMETRY", f"Unsupported export geometry: {kind}.", model, kind="unsupported")
         key = (kind, geometry["radius"] if kind == "sphere" else tuple(geometry["size"]))
         if key not in meshes:
             meshes[key] = sphere_mesh(key[1]) if kind == "sphere" else box_mesh(key[1])
+            if not native:
+                charge(meshes[key])
+        if native:
             charge(meshes[key])
         return meshes[key]
     properties = None
-    if model.profile == "construction-0.1":
+    geometries = None
+    if model.profile in ("construction-0.1", "surface-0.1"):
         try:
-            properties = bounded_data({path: dict(obj.properties) for path, obj in model.objects.items()})
+            properties = bounded_data({path: dict(obj.properties) for path, obj in model.objects.items()}, check=check)
+            if native:
+                geometries = bounded_data({path: obj.geometry for path, obj in model.objects.items()}, check=check)
         except JSONLimitError as error:
             export_error("OKE-E-METADATA-BUDGET", "Resolved property materialization exceeds the construction output budget.",
                          model, kind="resource", details=error.details)
     for path, obj in model.objects.items():
+        if check is not None:
+            check()
         metadata = {"kind": "object", "path": path, "element_id": list(obj.element_id),
                     "owner": obj.owner, "class_name": obj.class_name,
-                    "geometry": obj.geometry, "physical": obj.physical,
+                    "geometry": geometries[path] if geometries is not None else obj.geometry, "physical": obj.physical,
                     "collision": obj.collision, "authored_motion": obj.motion,
                     "appearance_linear_rgba": list(obj.appearance), "pose_frame": "world",
                     "role": obj.role, "properties": properties[path] if properties is not None else
                     {name: value.to_data() for name, value in obj.properties.items()}}
-        if model.profile == "construction-0.1":
+        if model.profile in ("construction-0.1", "surface-0.1"):
             metadata["source_mapping"] = model.occurrence_provenance[path]
             metadata["program_revision"] = model.program_revision
-        nodes.append(BakedNode(path, path + ".frame", mesh_for(obj.geometry), obj.appearance, metadata))
+        mesh = mesh_for(obj.geometry, obj)
+        if isinstance(mesh, SurfaceMesh):
+            metadata["surface"] = surface_metadata(obj.geometry, mesh, check=check)
+        nodes.append(BakedNode(path, path + ".frame", mesh, obj.appearance, metadata))
     if options.helpers:
         marker = None
         for path, obj in model.objects.items():
+            if check is not None:
+                check()
             if obj.geometry["kind"] == "empty":
                 if marker is None:
                     marker = assembly_marker()
+                    if not native:
+                        charge(marker)
+                if native:
                     charge(marker)
                 nodes.append(BakedNode("[visual helper] " + path + " origin", path + ".frame", marker,
                                        (.1, .7, .8, 1.),
@@ -320,8 +533,13 @@ def _nodes(model: SceneModel, options: ExportOptions) -> list[BakedNode]:
                                         "object_path": path, "frame_path": path + ".frame"}))
         joint_meshes = {}
         for path, joint in model.joints.items():
+            if check is not None:
+                check()
             if joint.axis not in joint_meshes:
                 joint_meshes[joint.axis] = joint_marker(joint.axis)
+                if not native:
+                    charge(joint_meshes[joint.axis])
+            if native:
                 charge(joint_meshes[joint.axis])
             nodes.append(BakedNode("[visual helper] " + path + " parent site", joint.parent + ".frame",
                                    joint_meshes[joint.axis], (.9, .65, .08, 1.),
@@ -344,20 +562,28 @@ def relationship_metadata(model: SceneModel) -> dict[str, Any]:
     }
 
 
-def build_scene(model: SceneModel, *, options: ExportOptions | None = None,
-                source_uri: str | None = None, source_sha256: str | None = None,
-                target_contract: str = TARGET_CONTRACT) -> BakedScene:
+def _build_scene(model: SceneModel, *, options: ExportOptions | None = None,
+                 source_uri: str | None = None, source_sha256: str | None = None,
+                 target_contract: str = TARGET_CONTRACT,
+                 check: Callable[[], None] | None = None) -> BakedScene:
     """Build a renderer-neutral baked scene; ``export_glb`` also verifies bytes."""
+    if check is not None:
+        check()
     version = checked_contract(model, target_contract)
-    program = program_metadata(model) if target_contract == CONSTRUCTION_TARGET else None
+    program = program_metadata(model, check=check) if target_contract in (CONSTRUCTION_TARGET, SURFACE_TARGET) else None
     if program is not None and source_sha256 is not None and source_sha256 != program["sources"]["entry"]["source_revision"]:
         export_error("OKE-E-PROVENANCE", "An optional entry source hash must match the sealed entry file, not the program revision.",
                      model, kind="unsupported")
     options = options or ExportOptions()
     end = options.checked_end(model)
-    timeline = preflight(model)
+    if check is None:
+        timeline = preflight(model)
+    else:
+        simulator = _Simulator(model, check=check)
+        simulator.advance(model.duration)
+        timeline = {"boundary_times_seconds": simulator.boundaries}
     exact_times, times, boundaries, speed, removed = _timeline(
-        model, options, end, timeline["boundary_times_seconds"])
+        model, options, end, timeline["boundary_times_seconds"], check=check)
     retained_boundary_records = len(boundaries) * (len(model.objects) + len(model.joints) + len(model.actions))
     if retained_boundary_records > MAX_OUTPUT_RECORDS:
         export_error("OKE-E-BOUNDARY-BUDGET", "Retained boundary metadata exceeds the state-record budget.",
@@ -367,11 +593,13 @@ def build_scene(model: SceneModel, *, options: ExportOptions | None = None,
     if len(exact_times) * planned_nodes > MAX_BAKED_POSES:
         export_error("OKE-E-POSE-BUDGET", "The baked node samples exceed the export pose budget.", model,
                      kind="resource", details={"max_baked_poses": MAX_BAKED_POSES})
-    nodes = _nodes(model, options)
+    nodes = _nodes(model, options, check=check)
     if not nodes:
         export_error("OKE-E-EMPTY-SCENE", "The GLB adapter requires at least one object occurrence.", model, kind="unsupported")
-    for sample in sampled_states(model, exact_times):
+    for sample in sampled_states(model, exact_times, check=check):
         for node in nodes:
+            if check is not None:
+                check()
             frame = sample["frames"][node.frame_path]
             node.translations.append(tuple(frame["position_m"]))
             w, x, y, z = frame["orientation_wxyz"]
@@ -380,12 +608,16 @@ def build_scene(model: SceneModel, *, options: ExportOptions | None = None,
                 quaternion = tuple(-value for value in quaternion)
             node.rotations_xyzw.append(quaternion)
     requests = [{"time_seconds": t, "side": side} for t in boundaries for side in ("before", "after")]
-    boundary_states = sampled_states(model, requests)
+    boundary_states = sampled_states(model, requests, check=check)
     max_jump_p = max_jump_r = 0.
     boundary_records = []
     for boundary in boundaries:
+        if check is not None:
+            check()
         before, after = next(boundary_states), next(boundary_states)
         for node in nodes:
+            if check is not None:
+                check()
             first, last = before["frames"][node.frame_path], after["frames"][node.frame_path]
             max_jump_p = max(max_jump_p, max(abs(a - b) for a, b in zip(first["position_m"], last["position_m"])))
             max_jump_r = max(max_jump_r, rotation_error(first["orientation_wxyz"], last["orientation_wxyz"]))
@@ -470,5 +702,46 @@ def build_scene(model: SceneModel, *, options: ExportOptions | None = None,
         losses[3] = ("Source text, comments, full type declarations, library/generator recipes, parameter dependency expressions, "
                      "site definitions, and action/event source arguments cannot be reconstructed from GLB; retain the full pinned .ok source bundle.")
         losses[-1] = "External re-export may discard source/program/occurrence extras; the pinned .ok source bundle remains authoritative."
+    if target_contract == SURFACE_TARGET:
+        surface_nodes = [node for node in nodes if isinstance(node.mesh, SurfaceMesh)]
+        metadata["surface_profile"] = {
+            "name": "surface-0.1", "local_loft_axis": "+Z",
+            "local_placement": "baked_once_into_vertices_and_normals_in_carrier_frame",
+            "regional_materials": "explicit_linear_rgba_metallic_roughness",
+            "physical_participation": "visual_meshes_add_no_matter_or_motion_authority",
+            "quantization_tolerance_m": min(SURFACE_POSITION_TOLERANCE_M, options.position_tolerance_m),
+            "limitations": ["flat_shading", "polygonal_elliptical_sections", "no_textures_or_skin_deformation",
+                            "no_automatic_collision_or_mass", "recorded_rigid_animation_only"],
+        }
+        report["tolerances"]["surface_local_vertex_m"] = min(SURFACE_POSITION_TOLERANCE_M, options.position_tolerance_m)
+        report["geometry"].update({
+            "native_surface_nodes": len(surface_nodes),
+            "surface_triangles": sum(node.mesh.triangle_count for node in surface_nodes),
+            "surface_vertices": sum(len(node.mesh.positions) for node in surface_nodes),
+            "aggregate_occurrence_vertices": sum(len(node.mesh.positions) for node in nodes if node.mesh is not None),
+            "surface_regions": sum(len(node.mesh.regions) for node in surface_nodes),
+            "appearance": "Native surfaces retain regional source PBR factors; earlier primitives retain metallic=0, roughness=0.7.",
+            "surface_profile": metadata["surface_profile"],
+        })
+        report["retention"]["preserved_metadata"].extend([
+            "ordered authored surface section keys and stations", "regional material identities and triangle counts",
+            "local visual placement and exact surface recipe provenance"])
+        report["retention"]["losses"].append(
+            "Elliptical lofts are polygonal and flat shaded; open caps assert no solid volume. Local surface vertices and normals are quantized to binary32.")
+        report["budgets"]["mesh_accounting"] = "every occurrence, including repeated geometry and requested helpers"
+    if check is not None:
+        check()
     return BakedScene(model.module_name, model.scene_name, exact_times, times, boundaries, nodes, metadata, report,
                       options, contract=target_contract, schema_version=version)
+
+
+def build_scene(model: SceneModel, *, options: ExportOptions | None = None,
+                source_uri: str | None = None, source_sha256: str | None = None,
+                target_contract: str = TARGET_CONTRACT,
+                check: Callable[[], None] | None = None) -> BakedScene:
+    """Bake the explicit profile while preserving caller cancellation errors."""
+    try:
+        return _build_scene(model, options=options, source_uri=source_uri, source_sha256=source_sha256,
+                            target_contract=target_contract, check=_guard_check(check))
+    except _ExportInterrupt as interrupted:
+        raise interrupted.error

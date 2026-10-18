@@ -6,24 +6,21 @@ OntoKin (pronounced **ON-toh-kin**) is a programming language under development,
 
 The current direction begins with exterior 3D models and short animations. Those objects should remain reusable in larger scenes, video games, and eventually more complex virtual worlds. Physics and mechanics are central to the design; mathematics gives those descriptions precise meaning.
 
-> **Project status:** The published experimental reference is **0.4.0**. It supports exact-pinned source modules and keyed assembly construction through language `0.2`, `construction-0.1`, and `ontokin.agent/0.2`, with working `ontokin.glb/0.2` animation export. Its [local and CI release gate passed](docs/engineering/construction-validation/validation-summary.json): 276 tests, the original source/agent cases, C01–C20, independent geometry/playback checks, and Python 3.11–3.13 plus browser CI. The existing core language and interfaces remain supported. Broader modeling, physical interaction, controllers, live delivery, and production architecture remain unfinished; [native exterior surfaces and material regions](docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md) have a newly adopted source contract and experimental research prototype, but are not supported by the published compiler yet.
+> **Project status:** OntoKin remains in development. The reference package is **0.4.0**. Its main development line now compiles native language `0.3` / `surface-0.1` exterior models and exports actual regional PBR geometry and recorded rigid animation through `ontokin.glb/0.3`. Earlier core, construction and agent profiles remain supported. [STATUS.md](STATUS.md) identifies current implementation and CI evidence. Agent/0.3 inspection/repair and the complete surface acceptance gate remain unfinished, together with the broader product requirements.
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
 
-## Exterior-surface research prototype (not yet source-executable)
+## Export native exterior surfaces
 
-The adopted [OK-LANG-003 surface-0.1 contract](docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md) specifies typed cross-sections, named material regions, bounded triangulation, and local rigid placement. The [frozen prospective M01–M12 corpus](docs/language-design/surface-v0.1/acceptance.json) and [pinned source example](docs/language-design/surface-v0.1/02-studio.ok) record intended behavior; **these new `.ok` programs cannot yet be compiled by version 0.4.0**.
-
-An [isolated geometry and GLB prototype](prototypes/surface_v01/README.md) now constructs ordered elliptical lofts, outward flat normals, real per-region glTF triangles and PBR material factors. Its CI generates a GLB, checks it with Khronos' glTF validator and Three.js, and preserves 0.4.0's separate evidence. To reproduce the geometry-only demonstration from a repository checkout:
+The [OK-LANG-003 surface contract](docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md) defines typed keyed sections, material regions and rigid local placement. Its pinned studio source now compiles through the native language and produces two actual animated, multi-material meshes:
 
 ```bash
-python3 -m unittest discover -s tests -p 'test_surface_*.py' -v
-python3 -m tools.build_surface_prototype --output-dir /tmp/ontokin-surface-prototype
-npm ci --prefix tools --ignore-scripts
-node tools/verify_surface_prototype.mjs /tmp/ontokin-surface-prototype/offset-taper.glb
+python3 -m ontokin export docs/language-design/surface-v0.1/program.files.json --bundle --target ontokin.glb/0.3 --output /tmp/ontokin-studio.glb
 ```
 
-This demonstration builds from explicit Python data structures, **not OntoKin source or an agent operation**. It has no physical solver or recorded animation. Compiler integration, scoped source repair, source-driven scene animation, the versioned delivery adapter, and full M01–M12 evidence remain future steps.
+For a complete source without imports, use `python3 -m ontokin export model.ok --target ontokin.glb/0.3 --output /tmp/model.glb`. The [native export guide](docs/engineering/OK-ENG-003-native-surface-glb-export.md) explains pinned bundles, local transforms, PBR properties, source identities, resource limits, cancellation and independent validation.
+
+The [M01–M12 fixtures](docs/language-design/surface-v0.1/acceptance.json) remain the full surface-release acceptance contract. Passing the exporter stage does not establish the remaining agent inspection/repair or complete composition gates. The [earlier Python-input workbench](prototypes/surface_v01/README.md) remains preserved as historical prototype evidence.
 
 ## Build an assembly from a pinned component library
 
@@ -99,7 +96,7 @@ The head retains its 90-degree local yaw when that action completes. The hand co
 
 ### Commands and failure results
 
-The `check`, `evaluate`, and `export` file commands use the existing single-source `core-0.1` contract. Program bundles use the explicitly selected agent service or the [construction Python APIs](examples/construction/README.md#use-local-source-files-or-an-inline-bundle).
+The `check` and `evaluate` file commands, and default `export`, retain the existing single-source `core-0.1` contract. Export can explicitly select GLB/0.2 or GLB/0.3 with `--target`; `--bundle` reads a pinned offline file manifest. Program-agent operations retain their separately selected protocol.
 
 | Command | Purpose |
 | --- | --- |
@@ -115,6 +112,7 @@ The `check`, `evaluate`, and `export` file commands use the existing single-sour
 | `python3 -m ontokin evaluate FILE.ok --times 0.5 --object first.ball --frame first.frame` | Inspect one object in another frame. Velocity remains measured relative to world and is expressed in the requested axes. |
 | `python3 -m ontokin export FILE.ok --output FILE.glb` | Bake, encode, and numerically verify a GLB under the named `ontokin.glb/0.1` contract; write a JSON sidecar. |
 | `python3 -m ontokin export FILE.ok --output FILE.glb --fps 120 --end 1.5 --no-helpers` | Export a shorter interval with denser sampling and no display-only assembly/joint markers. |
+| `python3 -m ontokin export PROGRAM.files.json --bundle --target ontokin.glb/0.3 --output MODEL.glb` | Compile pinned native surface source and export regional PBR geometry plus rigid animation. |
 | `python3 -m ontokin conformance --output /tmp/ontokin-conformance.json` | Execute all 43 published source cases and write their measured results. |
 
 JSON diagnostics contain the stable error code, failure phase, source revision, original UTF-8 byte span, governing rules, and repair guidance. Admission and transition failures found during preflight retain the time and phase of the authored failure. Receiving a suggested repair does not apply it.
@@ -154,7 +152,8 @@ Use the [documentation guide](docs/README.md) for the full reading order, docume
 | How does an agent discover, inspect, edit, evaluate, and retrieve an animation? | [OK-AGENT-001: AI agent authoring and inspection interface](docs/engineering/OK-AGENT-001-ai-agent-authoring-and-inspection-interface.md) |
 | How do exact-pinned modules and immutable inputs generate reusable assemblies? | [OK-LANG-002: Pinned modules and keyed assembly construction](docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md) |
 | How does an agent inspect and atomically edit a complete source bundle? | [OK-AGENT-002: Program bundles and atomic source edits](docs/engineering/OK-AGENT-002-program-bundles-and-atomic-source-edits.md) |
-| How will agents describe native exterior surfaces and material regions? | [OK-LANG-003: Parameterized exterior surfaces and material regions](docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md) |
+| How do native exterior surfaces and material regions reach GLB? | [OK-ENG-003: Native surface GLB export](docs/engineering/OK-ENG-003-native-surface-glb-export.md) |
+| How do agents describe native exterior surfaces and material regions? | [OK-LANG-003: Parameterized exterior surfaces and material regions](docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md) |
 
 The documents are organized into **Product**, **Language design**, and **Engineering**. The [founding records](docs/README.md#founding-design-records) retain the original vision, language exploration, and architecture options. Their dates and proposal status remain visible. The guide explains how that earlier work relates to the current modeling direction.
 

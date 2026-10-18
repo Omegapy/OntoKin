@@ -635,9 +635,9 @@ class _Simulator:
                 "scene_mass_kg": _round(sum((_f(obj.mass) for obj in self.model.objects.values()), Fraction(0)))}
 
 
-def preflight(model: SceneModel) -> dict[str, Any]:
+def preflight(model: SceneModel, *, check: Callable[[], None] | None = None) -> dict[str, Any]:
     """Validate the authored timeline without creating a persistent live run."""
-    simulator = _Simulator(model)
+    simulator = _Simulator(model, check=check)
     simulator.advance(model.duration)
     return {"outcome": "valid", "duration_seconds": time_text(model.duration),
             "boundary_times_seconds": simulator.boundaries}

@@ -1168,10 +1168,11 @@ class ConstructionCompiler(Validator):
         requires = tuple(self.linked.capabilities)
         self.model.requested_capabilities = tuple(node.value for node in requires)
         if requires and self.level != "represented":
-            fail("OKL-E-CAPABILITY-UNSUPPORTED", "Required capabilities are not supplied by construction-0.1: " +
+            fail("OKL-E-CAPABILITY-UNSUPPORTED", "Required capabilities are not supplied by " + self.model.profile + ": " +
                  ", ".join(self.model.requested_capabilities), requires[0], phase="support")
         if self.level == "delivered":
-            fail("OKL-E-CAPABILITY-UNSUPPORTED", "Delivery requires the explicit ontokin.glb/0.2 target.", self.program, phase="support")
+            target = "ontokin.glb/0.3" if self.model.profile == "surface-0.1" else "ontokin.glb/0.2"
+            fail("OKL-E-CAPABILITY-UNSUPPORTED", "Delivery requires the explicit " + target + " target.", self.program, phase="support")
         self._attach_provenance()
         self.budget.tick(self.program)
         return self.model
