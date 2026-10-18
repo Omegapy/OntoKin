@@ -1,49 +1,61 @@
 # OntoKin status
 
-Checkpoint: **2026-10-18, interactive timeout recovery in progress**. The complete [GOAL](GOAL.md) remains **in progress**. Follow [AGENTS](AGENTS.md), inspect the actual remote head, and respect the integration lease below.
+Checkpoint: **2026-10-18T07:11:03Z**. The timeout-recovery correction is integrated and verified. The complete [GOAL](GOAL.md) remains **in progress**. Read [AGENTS](AGENTS.md), the actual remote head and the integration lease before continuing.
 
-## Verified published baseline
+## Verified implementation and correction
 
-The installed experimental package remains **ontokin-reference 0.4.0**. Its language `0.1` / `core-0.1`, language `0.2` / `construction-0.1`, agent/0.1 and agent/0.2, and GLB/0.1 and GLB/0.2 contracts retain their existing meanings. Its Python package SHA-256 is `2fec4df8a853fb04f05981137165b093dbe5fe72abc1e49ceee15a7747bb4a24`.
+| Item | Recorded state |
+| --- | --- |
+| Installed experimental package | `ontokin-reference` **0.4.0**, unchanged by this repair |
+| Preserved source profiles | Language `0.1` / `core-0.1`; language `0.2` / `construction-0.1` |
+| Preserved service and delivery contracts | Agent/0.1 and Agent/0.2; GLB/0.1 and GLB/0.2 |
+| Published surface repair | [9a9ca2dea3220f67cf10a3923a794141bab03413](https://github.com/Omegapy/OntoKin/commit/9a9ca2dea3220f67cf10a3923a794141bab03413) |
+| Tested repair tree | `e700fef42de62b49a0d1623e184ea5a9ecea9301` |
+| Observed branch CI | [39106141202](https://github.com/Omegapy/OntoKin/actions/runs/39106141202), all four jobs passed |
+| Observed main CI | [39106452741](https://github.com/Omegapy/OntoKin/actions/runs/39106452741), all four jobs passed |
+| Repository test suite | 312 tests; includes 18 added recovery tests, not a new package release |
+| Native surface-language gate | `0.3` / `surface-0.1` source compilation, Agent/0.3, GLB/0.3 and full M01-M12 remain unimplemented or unpassed |
 
-The native exterior-surface contract is adopted in [OK-LANG-003](docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md), but the language `0.3` / `surface-0.1` compiler, agent interface and GLB/0.3 adapter are **not implemented**. [The prototype checkpoint](docs/engineering/surface-validation/prototype-checkpoint.md) records an isolated Python-input mesh and multi-material GLB workbench. The published prototype source is `96c12d5a2bd11cc04423c497a7b134539c4e73ce`, followed by the status/lease-release checkpoint `7565694927082dacf0acfad679e9048ea52d766f`.
+The correction passed branch CI before an exact-head update integrated it into main. Main CI passed independently. This evidence/status checkpoint adds documentation only; it preserves the tested code bytes. Its own later CI run is distinct from the identified implementation runs above and must be inspected rather than inferred.
 
-That checkpoint identifies [branch CI 39105285128](https://github.com/Omegapy/OntoKin/actions/runs/39105285128): four successful jobs, 294 Python tests, original source/agent/construction conformance, prior destination checks, and independent prototype GLB validation. It does not establish native M01-M12 completion or an unobserved later CI outcome.
+## What the recovery completed
 
-The complete preceding STATUS, including all historical counts, hashes, CI links, prototype artifact identity, limitations, scheduling observations and release details, is preserved **byte-for-byte** in [this checkpoint snapshot](docs/engineering/surface-validation/status-20261018-0654.md.txt). The `.txt` archive retains the original relative-link text without pretending that its old Markdown links resolve in the archive directory. The [0.4.0 release evidence](docs/engineering/construction-validation/validation-summary.json) remains unchanged.
+The timed-out earlier session continued saving work. The recovery inspected actual branch state instead of replaying the interrupted batch, preserved its completed surface/export prototype, waited for an explicit lease release, and conditionally acquired a distinct worker lease.
 
-## Active recovery
+The experimental loft kernel now snapshots validated centers and colors, applies the explicit [C1 station-boundary rule](docs/language-design/surface-v0.1/clarification-c1.md), reports malformed inputs without invoking unsafe caller conversions, and checks cancellation during final grouping. Twelve new regression methods reproduce the earlier defects and pass after correction. Six more methods exercise actual frozen acceptance inputs through the kernel. The frozen manifest and installed runtime bytes are unchanged.
 
-The timed-out session continued saving work. A later repair attempt found that the feature branch had advanced; its expected-head update did not overwrite the newer work. The prior integration owner has now published its checkpoint and released its lease. This continuation must acquire the lease conditionally before publishing repaired source.
+[The recovery checkpoint](docs/engineering/surface-validation/recovery-2026-10-18.md) and [identified evidence](docs/engineering/surface-validation/recovery-evidence.json) record the exact work and observed checks. Branch and main CI passed Python 3.11-3.13, all original source/agent/construction conformance, independent prototype and legacy GLB validation, browser regressions and documentation preservation. The fresh 96-triangle, three-material prototype export is byte-identical to the prior demonstration, with zero reported format errors/warnings. This remains Python-input prototype evidence, not native OntoKin surface-source delivery.
 
-Local inspection reproduced mutable center/color aliases and an overbroad station-gap epsilon in the experimental kernel. Twelve new regression methods produced 20 failing assertion/subtest instances against the earlier kernel and pass against the prepared correction. Six additional methods feed the unchanged frozen acceptance inputs into the actual kernel. These 18 local tests are **kernel evidence only**; the correction has not yet passed repository CI or been integrated into main. The fixed blob, tests, and explicit numeric-boundary clarification will be applied on a separate recovery branch without altering the released `ontokin` package.
+AGENTS now retains the user's requested interactive procedure: brief meaningful progress updates, bounded tool calls and verified checkpoints. After a timeout or unknown write result, inspect remote heads, files and the lease before retrying. These practices do not guarantee that the application or network will maintain the response stream.
+
+## Preserved baseline and full scope
+
+The [0.4.0 construction evidence](docs/engineering/construction-validation/validation-summary.json) and [preceding prototype checkpoint](docs/engineering/surface-validation/prototype-checkpoint.md) remain unchanged. The complete prior STATUS at the earlier handoff is preserved byte-for-byte in [the 06:54 snapshot](docs/engineering/surface-validation/status-20261018-0654.md.txt), including historical counts, hashes, CI links, limitations and scheduling observations.
+
+The installed Python package identity remains `2fec4df8a853fb04f05981137165b093dbe5fe72abc1e49ceee15a7747bb4a24`. No `ontokin` runtime file was changed by the recovery. The [adopted surface contract](docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md) does not itself register source support.
+
+Still unmet: broader distribution, reusable algorithms/components, compatible part replacement, rich surfaces/textures/deformation, contacts and collisions, general rigid-body dynamics, forces and dynamic joints, closed mechanisms, purposeful locomotion/manipulation, and live destination behavior. Creature, vehicle, flight/swimming, vegetation, terrain/building, fluid/deformable, appearance, scale/performance and measured agent-benefit requirements remain in GOAL. Prototype geometry adds no physical mass or motion authority. Existing physics remains uniform gravity/free homogeneous spheres and prescribed connections with collisions disabled. Recorded GLB playback is not live physics. Blender import and a generic delivered-level check are not established.
 
 ## Next actions
 
-1. Reconcile the prepared repair with the current main and acquire the lease below through an exact-head update. Preserve the newly published prototype, tests, documentation and historical evidence.
-2. Publish and verify the corrected kernel, frozen-input execution tests and explicit boundary/immutability clarification. Run full repository CI and retain the precise result before integration.
-3. Continue native `0.3` / `surface-0.1` parser/type/constructor and pinned-module integration. Complete actual source revision/repair, visual placement, animation/release, agent inspection and GLB/0.3 delivery fixtures. All M01-M12 end-to-end gates remain open.
-
-## Scope still unmet
-
-Broader distribution, reusable algorithms/components, compatible part replacement, rich surfaces/textures/deformation, contacts and collisions, general rigid-body dynamics, forces and dynamic joints, closed mechanisms, purposeful locomotion/manipulation, and live destination behavior remain unfinished. The creature, vehicle, flight/swimming, vegetation, terrain/building, fluid/deformable, appearance, performance and agent-benefit requirements remain in GOAL. Prototype geometry adds no mass or motion authority. Existing physical support remains uniform gravity/free homogeneous spheres and prescribed connections with collisions disabled. Recorded GLB playback is not live OntoKin physics. Blender import and a generic delivered-level check are not established.
+1. Recenter on GOAL, STATUS and AGENTS; inspect current main, CI and the lease. Acquire a new lease through a confirmed exact-head update before further edits.
+2. Implement the adopted `0.3` / `surface-0.1` parser, types, pure constructors and pinned-module rules. Compile the frozen `.ok` source rather than substituting host-language geometry preparation. Preserve old profiles and exact source identity.
+3. Integrate the corrected surface generator with rigid local visual placement, source-driven motion, request-wide resource/cancellation accounting and GLB/0.3 material primitives.
+4. Complete revision-safe source repair, independent compositions and variants, unchanged sibling/library checks, mesh-page inspection, animation/release and destination evidence. M01-M12 remain open as full end-to-end gates.
 
 ## Periodic review
 
-The preceding checkpoint records the configured hourly **Advance OntoKin** task `6ad42d31d3ec819196dc1cc1e3ede709`. Its current scheduling-service state and review outcomes have not been reread in this recovery. The full prior observations remain in the snapshot above. A live integration lease makes independent scheduled reviews read-only; status files do not run background jobs themselves.
+The preceding checkpoint records the configured hourly **Advance OntoKin** task `6ad42d31d3ec819196dc1cc1e3ede709`. Its scheduling-service state and review outcomes were not reread in this recovery. Historical observations remain in the snapshot above. Independent scheduled reviews are read-only while a live integration lease exists; these Markdown files do not themselves run background work.
 
 ## Integration lease and concurrent work
 
 | Lease field | Value |
 | --- | --- |
-| Integration owner | interactive-recovery-20261018-0636 |
-| Acquisition base | main `7565694927082dacf0acfad679e9048ea52d766f` |
-| Lease expires | 2026-10-18T08:00:00Z |
-| Current task | Reconcile, harden and verify the surface prototype after the timed-out request |
-| Recovery branch | fix/surface-recovery-20261018 |
+| Integration owner | None; `interactive-recovery-20261018-0636` releases its completed correction |
+| Release checkpoint | 2026-10-18T07:11:03Z |
+| Lease expires | 2026-10-18T07:11:03Z |
+| Completed task | Reconcile, harden, integrate and verify the experimental surface prototype after the timed-out request |
+| Retained recovery branch | `fix/surface-recovery-20261018` |
+| Next acquisition task | Native `.ok` surface-profile compiler integration and M01-M12 acceptance |
 
-This acquisition takes effect only after a successful update conditioned on the exact acquisition-base head and a confirming read. The preceding lease was explicitly released. Do not infer ownership merely from expiry or from a failed/unknown write response. If a ref moves, inspect and reconcile instead of force-overwriting another writer. The owner must renew or release this lease at meaningful checkpoints and before ending active work. Independent sessions may inspect but must not edit or publish while it is live.
-
-## Recovery procedure
-
-Reread GOAL, STATUS, AGENTS and the active contracts. Inspect actual main, branch heads, lease and CI. Use bounded work units with brief interactive progress updates. After any timeout or unknown write result, read the remote head and intended files before retrying. Keep evidence, limitations and the concrete next step explicit. More frequent chat messages are not a guarantee against application or network timeouts.
+The release takes effect when this checkpoint is published to main. Until then the preceding published recovery lease governs writers. Subsequent work requires a fresh conditional acquisition; an old owner name or an expired timestamp does not itself confer ownership. If a head changes or a write has an unknown result, inspect and reconcile instead of force-overwriting another writer. The closing worker may inspect final CI read-only after publication.
