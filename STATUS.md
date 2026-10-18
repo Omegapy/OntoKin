@@ -1,6 +1,6 @@
 # OntoKin status
 
-Current checkpoint: **2026-10-18T21:16:36Z**. Native **M01–M12** remains implemented, verified and merged through [PR #9](https://github.com/Omegapy/OntoKin/pull/9). The next source impulse milestone is implemented on [draft PR #11](https://github.com/Omegapy/OntoKin/pull/11) at `885fbc011b179422a8f6cb564219c66db09adac3`; all four jobs passed in branch [CI 39165524745](https://github.com/Omegapy/OntoKin/actions/runs/39165524745). Its complete **I01–I12 release gate is still in progress**. The complete [GOAL](GOAL.md) remains **in progress**.
+Current checkpoint: **2026-10-18T21:48:27Z**. Native **M01–M12** remains implemented, verified and merged through [PR #9](https://github.com/Omegapy/OntoKin/pull/9). The next source impulse milestone is implemented on [draft PR #11](https://github.com/Omegapy/OntoKin/pull/11) at `08de9bd341b7130236eab04467f192730d2d8141`; both current full-suite executions passed **588/588**, and all four jobs passed in branch [CI 39167806861](https://github.com/Omegapy/OntoKin/actions/runs/39167806861). Its complete **I01–I12 release gate is still in progress**. The complete [GOAL](GOAL.md) remains **in progress**.
 
 ## Completed implementation and acceptance
 
@@ -38,9 +38,9 @@ Finish the adopted, separately versioned source impulse release in [issue #10](h
 
 The implemented scope includes instantaneous world momentum at an actual target-self point on a free homogeneous sphere, off-center angular response, ordered release/impulse events, whole-boundary rollback, source-aware bounded inspection, actual mass/radius source repair, conservative high-spin export and older-profile compatibility. All 40 fixed source cases and the published branch CI pass. This is an implementation checkpoint, not full release acceptance.
 
-The immediate work is to close independent retained-evidence audit gaps for decoded intermediate animation values, complete application-history linkage, exact scoped-edit source authorization and ordinary self-frame conversion. Freeze and publish those reviewed corrections; execute fresh complete regression, current core/Agent/C01–C20/M01–M12, actual Agent/0.4 source workflows, independent GLB/browser validation and factual visual reviews; require all I01–I12 and exact-commit CI to pass before integration. Historical evidence cannot certify changed runtime bytes. The earlier diagnostic-default regression and boundary-budget validation gap were fixed; their actual failing and passing results remain in issue #10 and branch history.
+The independent reader corrections are implemented and verified. At `08de9bd`, the two actual full-suite runs passed 588/588 in 229.885137 s and 230.945098 s; exact-commit CI passed all four jobs. Fresh core/Agent, C01–C20 and M01–M12 passed. The actual Agent/0.4 workflow retained 308 attempts and nine source-built GLBs; independent destination checks passed 192 fixed and 7,628 dense animation poses. The final browser audit found a precise camera-policy mismatch: the viewer fitted transformed local bounding-box corners rather than actual transformed mesh vertices. The one-argument Three.js correction is now being published; the twelve affected captures, both verification-inventory full-suite executions, current CI and final nested/outer release audits must be regenerated before acceptance. Existing source/runtime/GLB and unchanged legacy producer evidence remain identified at their actual producing revision. No reader tolerance or frozen acceptance limit is changed. The earlier diagnostic-default and boundary-budget defects remain documented in issue #10 and branch history.
 
-After this finite release is integrated, reread GOAL and adopt the next unmet physical-influence task. Finite center-of-mass force intervals are under technical review; they are not yet adopted or implemented. Contacts still require an explicit rule for computed impact times and event ordering. Finite forces, contacts and general dynamics remain separate requirements.
+After this finite release is integrated, reread GOAL and adopt the next unmet physical-influence task. Finite center-of-mass force intervals are being drafted in [issue #12](https://github.com/Omegapy/OntoKin/issues/12) on the independently owned `work/force01-contract-20261018-2129-astra` branch; they are not yet adopted or implemented. Contacts still require an explicit rule for computed impact times and event ordering. Finite forces, contacts and general dynamics remain separate requirements.
 
 ## Remaining full-product scope
 
@@ -50,14 +50,14 @@ Still unmet: richer algorithms/libraries and compatible part replacement; textur
 
 | Lease field | Value |
 | --- | --- |
-| Integration owner | `interactive-impulse04-20261018-2116Z-astra-root` |
+| Integration owner | `interactive-impulse04-20261018-2148Z-astra-root` |
 | Task | Review, validate and integrate the separately versioned source impulse release through PR #11. |
-| Acquired UTC | 2026-10-18T21:16:36Z |
-| Expires UTC | 2026-10-18T21:46:36Z |
-| Observed main before acquisition | `b4366ccaacc672900b9def98c0a56003aadb826b`; prior native release and historical evidence preserved. |
-| Published branch checkpoint | `885fbc011b179422a8f6cb564219c66db09adac3`; PR/push CI 39165524745 and 39165521147 passed. |
+| Acquired UTC | 2026-10-18T21:48:27Z; reacquired after observing the prior expired lease and unchanged main. |
+| Expires UTC | 2026-10-18T22:18:27Z |
+| Observed main before acquisition | `ef3694f2e211799efe0fbaf64fc45fcdf4ed88ae`; prior native release and historical evidence preserved. |
+| Published branch checkpoint | `08de9bd341b7130236eab04467f192730d2d8141`; PR/push CI 39167806861 and 39167803959 passed. Both 588-test full suites and the pre-camera-correction nested M12 audit passed. |
 | Reserved shared scope | Main integration, STATUS/GOAL release records and new impulse release evidence. Kernel, service and conformance workers retain their declared isolated scopes in issue #10. |
-| Immediate action | Publish corrected independent readers/tools, freeze exact verification inputs and complete fresh I01–I12 evidence. Merge only after required checks pass. |
+| Immediate action | Publish the precise vertex camera fit, regenerate its twelve captures and changed-inventory full-suite/CI records, then rerun nested M12 and all I01–I12. Merge only after required checks pass. |
 | Recovery | Read actual main/PR refs, this lease, issue #10 and CI before retrying any interrupted write. Preserve concurrent work and immutable historical evidence. |
 
 [Previous main STATUS at 17:27](docs/engineering/surface-validation/status-20261018-1727.md.txt), [earlier recovery](docs/engineering/surface-validation/recovery-2026-10-18.md), historical construction/agent/native evidence and original preservation hashes remain intact. [Issue #8](https://github.com/Omegapy/OntoKin/issues/8) records branch scopes and handoffs. A missing uploaded-image error in chat is unrelated to repository work; do not retry those attachments.
