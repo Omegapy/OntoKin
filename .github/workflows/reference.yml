@@ -61,6 +61,10 @@ jobs:
           cache-dependency-path: tools/package-lock.json
       - name: Install pinned verification tools
         run: npm ci --prefix tools --ignore-scripts
+      - name: Export and independently validate prototype multi-material loft
+        run: |
+          python tools/build_surface_prototype.py --output-dir /tmp/ontokin-surface-prototype
+          node tools/verify_surface_prototype.mjs /tmp/ontokin-surface-prototype/offset-taper.glb --output /tmp/ontokin-surface-validation.json
       - name: Build the viewer and all six source animations
         run: |
           npm run build-viewer --prefix tools
@@ -90,6 +94,8 @@ jobs:
           name: ontokin-visual-validation
           path: |
             /tmp/ontokin-external-validation.json
+            /tmp/ontokin-surface-validation.json
+            /tmp/ontokin-surface-prototype/offset-taper.glb
             /tmp/ontokin-viewer-validation
             /tmp/ontokin-agent-external-validation.json
             /tmp/ontokin-agent-viewer-validation
