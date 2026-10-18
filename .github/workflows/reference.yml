@@ -32,6 +32,8 @@ jobs:
         run: python -m tools.verify_construction_ci --output /tmp/ontokin-construction-conformance.json --external-evidence docs/engineering/construction-validation/external-gate.json
       - name: Native M01-M12 executed cases with explicit pending external attestation
         run: python tools/run_surface_conformance.py --allow-pending --output /tmp/ontokin-surface-conformance.json
+      - name: Source impulse I01-I12 cases with explicit pending external attestation
+        run: python tools/run_impulse_conformance.py --allow-pending --output /tmp/ontokin-impulse-conformance.json
       - name: Documentation preservation and links
         run: python docs/maintenance/reorganization-2026-10-17/verify_reorganization.py
       - name: Preserve source and agent conformance evidence
@@ -44,6 +46,7 @@ jobs:
             /tmp/ontokin-agent-conformance.json
             /tmp/ontokin-construction-conformance.json
             /tmp/ontokin-surface-conformance.json
+            /tmp/ontokin-impulse-conformance.json
           retention-days: 14
 
   visual:
@@ -76,6 +79,10 @@ jobs:
         run: |
           python tools/build_surface_agent_demo.py --output-dir /tmp/ontokin-surface-agent
           node tools/verify_surface_native.mjs --demo-dir /tmp/ontokin-surface-agent --output /tmp/ontokin-surface-agent-destination.json
+      - name: Source impulse agent repair and independently decoded GLB/0.4 motion
+        run: |
+          python tools/build_impulse_agent_demo.py --output-dir /tmp/ontokin-impulse-agent
+          node tools/verify_impulse_native.mjs --demo-dir /tmp/ontokin-impulse-agent --output /tmp/ontokin-impulse-destination.json
       - name: Build the viewer and all six source animations
         run: |
           npm run build-viewer --prefix tools
@@ -106,6 +113,10 @@ jobs:
           --fixture palette-repaired --fixture composition-ordinary
           --fixture composition-generated --fixture rotated-release
           --output-dir /tmp/ontokin-surface-agent-browser
+      - name: Render source impulses, release, physical repairs and high-spin motion
+        run: >-
+          node tools/verify_impulse_viewer.mjs --demo-dir /tmp/ontokin-impulse-agent
+          --output-dir /tmp/ontokin-impulse-browser
       - name: Preserve validation evidence
         if: always()
         uses: actions/upload-artifact@v7
@@ -121,6 +132,9 @@ jobs:
             /tmp/ontokin-surface-agent
             /tmp/ontokin-surface-agent-destination.json
             /tmp/ontokin-surface-agent-browser
+            /tmp/ontokin-impulse-agent
+            /tmp/ontokin-impulse-destination.json
+            /tmp/ontokin-impulse-browser
             /tmp/ontokin-viewer-validation
             /tmp/ontokin-agent-external-validation.json
             /tmp/ontokin-agent-viewer-validation

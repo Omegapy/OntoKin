@@ -151,3 +151,38 @@ performed, so a later reader cannot mistake incomplete evidence for success.
 Even a complete successful builder run does not certify I01–I12. Independent
 destination/browser checks, all inherited conformance and regression gates, and
 identified current CI remain required for release acceptance.
+
+### Offline browser validation
+
+After installing the existing pinned verification dependencies, render the same
+retrieved artifacts with:
+
+```sh
+node tools/verify_impulse_viewer.mjs --demo-dir build/impulse-agent-demo --output-dir build/impulse-browser
+```
+
+`PLAYWRIGHT_BROWSERS_PATH` may identify an existing compatible Chromium
+installation. The output directory must be empty; the verifier rejects an
+existing capture set before overwriting it. The default corpus is exactly P02,
+P04, P08 and P11. `--fixture Pxx` selects a smaller development probe, which does
+not replace that mandatory release corpus.
+
+The verifier generates an offline `impulse-viewer.html` and
+`browser-validation.json` under schema `ontokin.impulse-browser-validation/0.1`.
+It records the current verifier, imported native/surface verifier, dependency
+lock, accepted source closure, workflow/build, runtime, HTML and PNG hashes.
+Network requests are blocked and any attempted external request, page error,
+console error or failed request rejects the run.
+
+The Y-up cameras fit the union of actual geometry at quarter-second times from
+zero through two seconds. Seeking and playback retain that fit. The required
+captures are `front` at zero, `side` at zero, and `animated` at 1.5 seconds using
+the exact original front camera. Each capture records actual camera settings,
+artifact/source identities and numerical pose readback. The report also checks
+every retained Agent sample side against both the independent closed-form pose
+and the matching Agent state, actual browser PBR values, local-to-world surface
+probes, rendered triangle counts and stable playback/pause behavior.
+
+An identified reviewer must still inspect the actual PNG bytes and record the
+required visual observations. Numerical success alone does not mark those
+captures visually reviewed or complete the release.
