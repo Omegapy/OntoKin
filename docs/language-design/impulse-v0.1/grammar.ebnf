@@ -1,0 +1,15 @@
+(* Proposed additive grammar for ontokin "0.4" / impulse-0.1.
+   Inherit OK-LANG-002 source units, declarations, pure expressions and paths,
+   plus OK-LANG-003 types and constructors. No existing lexer keyword changes. *)
+
+event_statement_04 = lifecycle_event | release_event | impulse_event ;
+lifecycle_event = ("start" | "pause" | "resume" | "stop"), identifier, ";" ;
+release_event = "release", occurrence_path, "using", "incoming", ";" ;
+impulse_event = "impulse", occurrence_path, "using", expression,
+                "at", expression, ";" ;
+
+(* occurrence_path is the inherited member / literal-string-key path.
+   impulse is contextual only at event_statement_04 start; elsewhere IDENT.
+   First expression: Vector3<Quantity[N*s]>, world.
+   Second expression: Point3 (fixed Length components), target object's frame.
+   Both are pure elaboration-time expressions, not a runtime expression DSL. *)

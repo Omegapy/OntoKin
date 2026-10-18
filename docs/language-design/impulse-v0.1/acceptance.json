@@ -1,0 +1,4699 @@
+{
+  "schema": "ontokin.acceptance/impulse-0.1",
+  "status": "proposed-unexecuted",
+  "authored": "2026-10-18",
+  "normative_contract": "docs/language-design/OK-LANG-004-source-impulses-and-free-sphere-dynamics.md",
+  "authored_before_impulse_runtime_execution": true,
+  "base_implementation_commit": "1a6dc3268c770d492b93e994b752c72eeb459cb0",
+  "bindings": {
+    "language_version": "0.4",
+    "profile": "impulse-0.1",
+    "agent": "ontokin.agent/0.4",
+    "glb": "ontokin.glb/0.4",
+    "database": "impulse-program-agent.sqlite3",
+    "store_schema": "ontokin.impulse-program-agent-store/0.1",
+    "diagnostic_schema": "ontokin.diagnostic/0.2",
+    "bundle_schema": "ontokin.bundle/0.1"
+  },
+  "inherited_surface_library": {
+    "origin": "docs/language-design/surface-v0.1/01-surface-parts.ok",
+    "copy": "libraries/01-surface-parts03.ok",
+    "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce",
+    "declared_profile": "surface-0.1"
+  },
+  "oracle_formulas": {
+    "inertia": "(2/5)*m*r^2, using existing canonical sphere inertia",
+    "lever_arm": "R*q",
+    "angular_impulse": "lever_arm cross J",
+    "linear_after": "round_binary64(exact(v) + exact(J)/exact(m))",
+    "angular_after": "round_binary64(exact(omega) + exact(L)/exact(I))",
+    "translation_after": "p_boundary + v_after*dt + gravity*dt^2/2",
+    "rotation_after": "exp_world(omega_after*dt) * R_boundary",
+    "kinetic_energy": "m*dot(v,v)/2 + I*dot(omega,omega)/2",
+    "source_time": "exact rational value of canonical binary64 source seconds, not source spelling decimal",
+    "angular_unit_convention": "Physical L/I numeric components become rad/s; source arithmetic retains distinct Angle/rad dimensional tag."
+  },
+  "tolerance": {
+    "position_m": 1e-09,
+    "linear_velocity_m_per_s": 1e-09,
+    "angular_velocity_rad_per_s": 1e-09,
+    "orientation_geodesic_rad": 1e-09,
+    "other_scalar_absolute": 1e-12,
+    "other_scalar_relative": 1e-12,
+    "large_magnitude_policy": "For P12 use the exact canonical target values and rational affine cancellation; do not take a relative tolerance that can hide the zero-position result.",
+    "identity_order_diagnostic_codes": "exact",
+    "native_geometry": "inherit surface-v0.1 prescribed binary64/local-float32 tolerances",
+    "glb_animation": "use declared ExportOptions tolerances; default position .001 m, rotation .001 rad, time .000001 s"
+  },
+  "state_semantics": {
+    "sequence_index_base": 0,
+    "sequence_index_domain": "all statements",
+    "initial": {
+      "applied_count": 0,
+      "last_application_time_seconds": null,
+      "last_applications": []
+    },
+    "retention": "per object all successful applications at latest impulse-bearing boundary; retain across unrelated boundaries; replace only at a later impulse for that object",
+    "zero_impulse": "record/count but exact old trajectory anchor",
+    "frame_projection": "explicit world/self record components never transformed by top-level frame-relative inspection",
+    "geometry_capability_profile": "surface-0.1",
+    "private_cursor_entry_profile": "impulse-0.1",
+    "glb_boundary_field": "impulse_states_after: canonical object path to exact after-side impulses projection for every object including empty projections; GLB04 only"
+  },
+  "gates": [
+    {
+      "id": "I01",
+      "requirement": "Native spelling, units, frames, exact target references and mixed-profile closure",
+      "status": "pending",
+      "source_case_ids": [
+        "P01",
+        "P02",
+        "P08",
+        "N01",
+        "N02",
+        "N03",
+        "N04",
+        "N05",
+        "N09",
+        "N10",
+        "N21",
+        "N22",
+        "N23"
+      ],
+      "operational_case_ids": []
+    },
+    {
+      "id": "I02",
+      "requirement": "COM momentum and independent energy",
+      "status": "pending",
+      "source_case_ids": [
+        "P01"
+      ],
+      "operational_case_ids": []
+    },
+    {
+      "id": "I03",
+      "requirement": "Off-center and rotated lever arm",
+      "status": "pending",
+      "source_case_ids": [
+        "P02",
+        "P03",
+        "P16"
+      ],
+      "operational_case_ids": []
+    },
+    {
+      "id": "I04",
+      "requirement": "Gravity continuation and release at natural completion",
+      "status": "pending",
+      "source_case_ids": [
+        "P04",
+        "P07"
+      ],
+      "operational_case_ids": []
+    },
+    {
+      "id": "I05",
+      "requirement": "Zero/repeated/latest-boundary state and origin/anchor",
+      "status": "pending",
+      "source_case_ids": [
+        "P05",
+        "P06"
+      ],
+      "operational_case_ids": [
+        "A05"
+      ]
+    },
+    {
+      "id": "I06",
+      "requirement": "Exact source clock, boundary sides, written order and atomicity",
+      "status": "pending",
+      "source_case_ids": [
+        "P04",
+        "P06",
+        "P13",
+        "P14",
+        "P15",
+        "N19",
+        "N20",
+        "N24"
+      ],
+      "operational_case_ids": []
+    },
+    {
+      "id": "I07",
+      "requirement": "Actual source repair of generated occurrence mass/radius",
+      "status": "pending",
+      "source_case_ids": [
+        "P08",
+        "P09",
+        "P10"
+      ],
+      "operational_case_ids": []
+    },
+    {
+      "id": "I08",
+      "requirement": "Typed negatives and numerical domain",
+      "status": "pending",
+      "source_case_ids": [
+        "P12",
+        "P16",
+        "N01",
+        "N02",
+        "N03",
+        "N04",
+        "N05",
+        "N06",
+        "N07",
+        "N08",
+        "N09",
+        "N10",
+        "N11",
+        "N12",
+        "N13",
+        "N14",
+        "N15",
+        "N16",
+        "N17",
+        "N18",
+        "N19",
+        "N20",
+        "N21",
+        "N22",
+        "N23",
+        "N24"
+      ],
+      "operational_case_ids": []
+    },
+    {
+      "id": "I09",
+      "requirement": "Explicit Agent04 workflow, revisions, repairs, retries, stores and inherited geometry",
+      "status": "pending",
+      "source_case_ids": [
+        "P02",
+        "P08",
+        "P09",
+        "P10",
+        "N19"
+      ],
+      "operational_case_ids": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05"
+      ]
+    },
+    {
+      "id": "I10",
+      "requirement": "Nested output limits, sample accounting, cancellation and transaction rollback",
+      "status": "pending",
+      "source_case_ids": [
+        "P06",
+        "P08",
+        "P11"
+      ],
+      "operational_case_ids": [
+        "R01",
+        "R02",
+        "R03"
+      ]
+    },
+    {
+      "id": "I11",
+      "requirement": "Same-artifact GLB04 numerical and visual destination proof",
+      "status": "pending",
+      "source_case_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P07",
+        "P08",
+        "P09",
+        "P10",
+        "P11"
+      ],
+      "operational_case_ids": [
+        "D01",
+        "D02"
+      ]
+    },
+    {
+      "id": "I12",
+      "requirement": "Every inherited language/protocol/export/conformance/CI gate",
+      "status": "pending",
+      "source_case_ids": [],
+      "operational_case_ids": [
+        "L01"
+      ]
+    }
+  ],
+  "source_cases": [
+    {
+      "id": "P01",
+      "name": "center-momentum",
+      "kind": "positive",
+      "status": "proposed-unexecuted",
+      "file_manifest": "p01-center-momentum.files.json",
+      "program_revision": "sha256:2f513630916802d8c55ca4086651e2652cfa6c638e2d2739475d2ea75382f15a",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:22207df070a8057a6dc4e2c5c8bcddb1bed0a0797a764b0354682bb642a3881b"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I01",
+        "I02"
+      ],
+      "delivery_required": true,
+      "expected": {
+        "mass_kg": 2,
+        "radius_m": 0.5,
+        "inertia_kg_m2": 0.2,
+        "samples": [
+          {
+            "time_seconds": "1",
+            "side": "before",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "impulses": {
+                  "applied_count": 0,
+                  "last_application_time_seconds": null,
+                  "sequence_indices": []
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "0"
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "1",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  3,
+                  0,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "impulses": {
+                  "applied_count": 1,
+                  "last_application_time_seconds": "1",
+                  "sequence_indices": [
+                    0
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "1"
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "1.5",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  1.5,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  3,
+                  0,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          },
+          {
+            "time_seconds": "2",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  3,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  3,
+                  0,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          }
+        ],
+        "momentum_change_kg_m_per_s": [
+          6,
+          0,
+          0
+        ],
+        "kinetic_energy_after_j": 9
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:22207df070a8057a6dc4e2c5c8bcddb1bed0a0797a764b0354682bb642a3881b",
+            "start_byte": 425,
+            "end_byte": 521
+          },
+          "expected_text": "impulse ball using vector(world, 6[N*s], 0[N*s], 0[N*s]) at point(ball.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "P02",
+      "name": "off-center-mixed-imports",
+      "kind": "positive",
+      "status": "proposed-unexecuted",
+      "file_manifest": "p02-off-center-mixed-imports.files.json",
+      "program_revision": "sha256:ccf996e0060096655878f2bb5ad812cdaa025f4706604613597ea13c32f74a5d",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:a8db8cd4e42d00219978a985c8dd491b2c53e8ed21dcd77daa618d0e809e3adc"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.impulse-vectors@1.0.0",
+          "package_id": "fixture.impulse-vectors",
+          "version": "1.0.0",
+          "filename": "impulse-vectors.ok",
+          "source_revision": "sha256:0ca5a18550cd8832d9c0e388e69f4295b3a0f9b64b8a8c08cf171faa7e75f26c"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I01",
+        "I03"
+      ],
+      "delivery_required": true,
+      "expected": {
+        "declared_profiles": {
+          "entry": "impulse-0.1",
+          "package:fixture.impulse-parts@1.0.0": "impulse-0.1",
+          "package:fixture.surface-parts@1.0.0": "surface-0.1",
+          "package:fixture.impulse-vectors@1.0.0": "construction-0.1"
+        },
+        "samples": [
+          {
+            "time_seconds": "1",
+            "side": "before",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "impulses": {
+                  "applied_count": 0,
+                  "last_application_time_seconds": null,
+                  "sequence_indices": []
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "0"
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "1",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  1,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  5
+                ],
+                "orientation_wxyz": [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "impulses": {
+                  "applied_count": 1,
+                  "last_application_time_seconds": "1",
+                  "sequence_indices": [
+                    0
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "1"
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "1.5",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  0.5,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  1,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  5
+                ],
+                "orientation_wxyz": [
+                  0.3153223623952687,
+                  0.0,
+                  0.0,
+                  0.9489846193555862
+                ]
+              }
+            }
+          },
+          {
+            "time_seconds": "2",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  1,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  1,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  5
+                ],
+                "orientation_wxyz": [
+                  -0.8011436155469337,
+                  0.0,
+                  0.0,
+                  0.5984721441039565
+                ]
+              }
+            }
+          }
+        ],
+        "first_application": {
+          "lever_arm_world_m": [
+            0.5,
+            0,
+            0
+          ],
+          "application_point_world_m": [
+            0.5,
+            0,
+            0
+          ],
+          "angular_impulse_world_n_m_s": [
+            0,
+            0,
+            1
+          ]
+        },
+        "kinetic_energy_after_j": 3.5
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:a8db8cd4e42d00219978a985c8dd491b2c53e8ed21dcd77daa618d0e809e3adc",
+            "start_byte": 593,
+            "end_byte": 677
+          },
+          "expected_text": "impulse ball using vectors.along_y(2[N*s]) at point(ball.frame, 0.5[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "P03",
+      "name": "rotated-lever",
+      "kind": "positive",
+      "status": "proposed-unexecuted",
+      "file_manifest": "p03-rotated-lever.files.json",
+      "program_revision": "sha256:7782e8ece27fd8b956dbdfd832470ee578f2aed1d75fb5bfd303515fe22eb4b1",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:f86fec1605a0c767512041be06ffcdea3bf48f2741efb9c09de6184fce396321"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I03"
+      ],
+      "delivery_required": true,
+      "expected": {
+        "samples": [
+          {
+            "time_seconds": "1",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  1,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  5,
+                  0,
+                  0
+                ],
+                "impulses": {
+                  "applied_count": 1,
+                  "last_application_time_seconds": "1",
+                  "sequence_indices": [
+                    0
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "1"
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "2",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  1,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  1,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  5,
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        ],
+        "orientation_oracle": {
+          "world_rotation": "Rx(5*(t-1)) * Ry(pi/2)",
+          "after_time_seconds": "1"
+        },
+        "first_application": {
+          "lever_arm_world_m": [
+            0,
+            0,
+            -0.5
+          ],
+          "angular_impulse_world_n_m_s": [
+            1,
+            0,
+            0
+          ]
+        }
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:f86fec1605a0c767512041be06ffcdea3bf48f2741efb9c09de6184fce396321",
+            "start_byte": 518,
+            "end_byte": 616
+          },
+          "expected_text": "impulse ball using vector(world, 0[N*s], 2[N*s], 0[N*s]) at point(ball.frame, 0.5[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "P04",
+      "name": "release-at-completion",
+      "kind": "positive",
+      "status": "proposed-unexecuted",
+      "file_manifest": "p04-release-at-completion.files.json",
+      "program_revision": "sha256:8a989dc7da609b1841bfeb77552f886b50e79944f406b76340af4fc2f12e7211",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:cdbd64bf19a70f722e71ef80a4235ac60ebbb1c1ff39e126209a7afbdebf9e6d"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I04",
+        "I06"
+      ],
+      "delivery_required": true,
+      "expected": {
+        "samples": [
+          {
+            "time_seconds": "1",
+            "side": "before",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  1.5,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  1,
+                  1,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  2
+                ],
+                "orientation_wxyz": [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "impulses": {
+                  "applied_count": 0,
+                  "last_application_time_seconds": null,
+                  "sequence_indices": []
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "1",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  1.5,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  1,
+                  2,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  7
+                ],
+                "orientation_wxyz": [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "impulses": {
+                  "applied_count": 1,
+                  "last_application_time_seconds": "1",
+                  "sequence_indices": [
+                    1
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "1",
+                  "trajectory_anchor_seconds": "1"
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "1.5",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  2,
+                  -0.25,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  1,
+                  -3,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  7
+                ],
+                "orientation_wxyz": [
+                  -0.17824605564949209,
+                  0.0,
+                  0.0,
+                  0.9839859468739369
+                ]
+              }
+            }
+          },
+          {
+            "time_seconds": "2",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  2.5,
+                  -3,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  1,
+                  -8,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  7
+                ],
+                "orientation_wxyz": [
+                  -0.9364566872907963,
+                  -0.0,
+                  -0.0,
+                  -0.35078322768961984
+                ]
+              }
+            }
+          }
+        ],
+        "after_boundary": {
+          "hold": "inactive",
+          "carry": "completed",
+          "turn": "completed",
+          "carrier_velocity_m_per_s": [
+            0,
+            0,
+            0
+          ],
+          "carrier_angular_velocity_rad_per_s": [
+            0,
+            0,
+            0
+          ]
+        },
+        "first_application": {
+          "linear_velocity_before_world_m_per_s": [
+            1,
+            1,
+            0
+          ],
+          "angular_velocity_before_world_rad_per_s": [
+            0,
+            0,
+            2
+          ]
+        }
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 1,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:cdbd64bf19a70f722e71ef80a4235ac60ebbb1c1ff39e126209a7afbdebf9e6d",
+            "start_byte": 1194,
+            "end_byte": 1292
+          },
+          "expected_text": "impulse ball using vector(world, 0[N*s], 2[N*s], 0[N*s]) at point(ball.frame, 0.5[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "P05",
+      "name": "zero-preserves-anchor",
+      "kind": "positive",
+      "status": "proposed-unexecuted",
+      "file_manifest": "p05-zero-preserves-anchor.files.json",
+      "program_revision": "sha256:592cf260ff65ab6d22ad0e1d84ea8833dcec9e29c5a9ad0371c47b90e742b141",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:37ff9116c9f626756fd2b3c397fa48fe4bf22cd63544c002e78140328fbac4f7"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I05"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "samples": [
+          {
+            "time_seconds": "1",
+            "side": "before",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  1,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  1,
+                  0,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  2
+                ],
+                "orientation_wxyz": [
+                  0.5403023058681398,
+                  0.0,
+                  0.0,
+                  0.8414709848078965
+                ],
+                "impulses": {
+                  "applied_count": 0,
+                  "last_application_time_seconds": null,
+                  "sequence_indices": []
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "0"
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "1",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  1,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  1,
+                  0,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  2
+                ],
+                "orientation_wxyz": [
+                  0.5403023058681398,
+                  0.0,
+                  0.0,
+                  0.8414709848078965
+                ],
+                "impulses": {
+                  "applied_count": 1,
+                  "last_application_time_seconds": "1",
+                  "sequence_indices": [
+                    0
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "0"
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "2",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  2,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  1,
+                  0,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  2
+                ],
+                "orientation_wxyz": [
+                  -0.4161468365471424,
+                  0.0,
+                  0.0,
+                  0.9092974268256817
+                ],
+                "impulses": {
+                  "applied_count": 1,
+                  "last_application_time_seconds": "1",
+                  "sequence_indices": [
+                    0
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "0"
+                }
+              }
+            }
+          }
+        ],
+        "exact_identity_fields": [
+          "position_m",
+          "orientation_wxyz",
+          "velocity_m_per_s",
+          "angular_velocity_rad_per_s",
+          "pose_authority.trajectory_anchor_seconds"
+        ]
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:37ff9116c9f626756fd2b3c397fa48fe4bf22cd63544c002e78140328fbac4f7",
+            "start_byte": 544,
+            "end_byte": 642
+          },
+          "expected_text": "impulse ball using vector(world, 0[N*s], 0[N*s], 0[N*s]) at point(ball.frame, 0.5[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "P06",
+      "name": "repeated-latest-boundary",
+      "kind": "positive",
+      "status": "proposed-unexecuted",
+      "file_manifest": "p06-repeated-latest-boundary.files.json",
+      "program_revision": "sha256:056f242017fa2010a6ec199863c42e9d573c912b8ae1548b229bb65edb5750a4",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:5284e207f01c8750dc2d6f01d8cf83eae2d7ff6aba4d470d0bcf6b0c2821fa59"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I05",
+        "I06"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "samples": [
+          {
+            "time_seconds": "1",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  1,
+                  1,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "impulses": {
+                  "applied_count": 2,
+                  "last_application_time_seconds": "1",
+                  "sequence_indices": [
+                    0,
+                    1
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "1"
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "1.5",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0.5,
+                  0.5,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  1,
+                  1,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "impulses": {
+                  "applied_count": 2,
+                  "last_application_time_seconds": "1",
+                  "sequence_indices": [
+                    0,
+                    1
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "1"
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "2",
+            "side": "before",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  1,
+                  1,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  1,
+                  1,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "impulses": {
+                  "applied_count": 2,
+                  "last_application_time_seconds": "1",
+                  "sequence_indices": [
+                    0,
+                    1
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "1"
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "2",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  1,
+                  1,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  1,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "impulses": {
+                  "applied_count": 3,
+                  "last_application_time_seconds": "2",
+                  "sequence_indices": [
+                    0
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "2"
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "3",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  1,
+                  2,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  1,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "impulses": {
+                  "applied_count": 3,
+                  "last_application_time_seconds": "2",
+                  "sequence_indices": [
+                    0
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "2"
+                }
+              }
+            }
+          }
+        ],
+        "boundary_1_records": [
+          {
+            "sequence_index": 0,
+            "linear_velocity_after_world_m_per_s": [
+              0,
+              1,
+              0
+            ],
+            "angular_velocity_after_world_rad_per_s": [
+              0,
+              0,
+              5
+            ]
+          },
+          {
+            "sequence_index": 1,
+            "linear_velocity_before_world_m_per_s": [
+              0,
+              1,
+              0
+            ],
+            "angular_velocity_before_world_rad_per_s": [
+              0,
+              0,
+              5
+            ],
+            "linear_velocity_after_world_m_per_s": [
+              1,
+              1,
+              0
+            ],
+            "angular_velocity_after_world_rad_per_s": [
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:5284e207f01c8750dc2d6f01d8cf83eae2d7ff6aba4d470d0bcf6b0c2821fa59",
+            "start_byte": 425,
+            "end_byte": 523
+          },
+          "expected_text": "impulse ball using vector(world, 0[N*s], 2[N*s], 0[N*s]) at point(ball.frame, 0.5[m], 0[m], 0[m]);"
+        },
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 1,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:5284e207f01c8750dc2d6f01d8cf83eae2d7ff6aba4d470d0bcf6b0c2821fa59",
+            "start_byte": 532,
+            "end_byte": 630
+          },
+          "expected_text": "impulse ball using vector(world, 2[N*s], 0[N*s], 0[N*s]) at point(ball.frame, 0[m], 0.5[m], 0[m]);"
+        },
+        {
+          "event_time_literal": "2[s]",
+          "event_time_seconds": "2",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:5284e207f01c8750dc2d6f01d8cf83eae2d7ff6aba4d470d0bcf6b0c2821fa59",
+            "start_byte": 699,
+            "end_byte": 796
+          },
+          "expected_text": "impulse ball using vector(world, -2[N*s], 0[N*s], 0[N*s]) at point(ball.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "P07",
+      "name": "gravity-reanchoring",
+      "kind": "positive",
+      "status": "proposed-unexecuted",
+      "file_manifest": "p07-gravity-reanchoring.files.json",
+      "program_revision": "sha256:56c59082033ef004eb623d278c5fb823d27cdb0ea20a36fe4dafdd3fe12c263c",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:bbbbc04a5f91d4a9a632e0a99d2e6a74b77382a3047d57d1be10040899f93621"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I04"
+      ],
+      "delivery_required": true,
+      "expected": {
+        "samples": [
+          {
+            "time_seconds": "1",
+            "side": "before",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  -10,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "impulses": {
+                  "applied_count": 0,
+                  "last_application_time_seconds": null,
+                  "sequence_indices": []
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "0"
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "1",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "impulses": {
+                  "applied_count": 1,
+                  "last_application_time_seconds": "1",
+                  "sequence_indices": [
+                    0
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "1"
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "1.5",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  -1.25,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  -5,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          {
+            "time_seconds": "2",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  -5,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  -10,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:bbbbc04a5f91d4a9a632e0a99d2e6a74b77382a3047d57d1be10040899f93621",
+            "start_byte": 502,
+            "end_byte": 599
+          },
+          "expected_text": "impulse ball using vector(world, 0[N*s], 20[N*s], 0[N*s]) at point(ball.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "P08",
+      "name": "generated-base",
+      "kind": "positive",
+      "status": "proposed-unexecuted",
+      "file_manifest": "p08-generated-base.files.json",
+      "program_revision": "sha256:13717af0a4c9cec4c1147705ebbfca80bac6eb385a3269fd4a1b48ca7f58a940",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:6862fa3bf5a4d33c35eb81075b229739c7a8fdb6a1839c6adc36942ffcc35e98"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I07",
+        "I09"
+      ],
+      "delivery_required": true,
+      "expected": {
+        "samples": [
+          {
+            "time_seconds": "2",
+            "side": "after",
+            "objects": {
+              "rack.props[\"first\"]": {
+                "position_m": [
+                  0,
+                  1,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  1,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  5
+                ],
+                "orientation_wxyz": [
+                  -0.8011436155469337,
+                  0.0,
+                  0.0,
+                  0.5984721441039565
+                ],
+                "impulses": {
+                  "applied_count": 1,
+                  "last_application_time_seconds": "1",
+                  "sequence_indices": [
+                    0
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "1"
+                }
+              },
+              "rack.props[\"second\"]": {
+                "position_m": [
+                  3,
+                  0.5,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  0.5,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  2.5
+                ],
+                "orientation_wxyz": [
+                  0.3153223623952687,
+                  0.0,
+                  0.0,
+                  0.9489846193555862
+                ],
+                "impulses": {
+                  "applied_count": 1,
+                  "last_application_time_seconds": "1",
+                  "sequence_indices": [
+                    1
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "1"
+                }
+              }
+            }
+          }
+        ],
+        "first_inertia_kg_m2": 0.2,
+        "stable_element_ids": [
+          [
+            "impulse-demo",
+            "demo",
+            "rack",
+            "props",
+            "first"
+          ],
+          [
+            "impulse-demo",
+            "demo",
+            "rack",
+            "props",
+            "second"
+          ]
+        ],
+        "unchanged_on_repair": [
+          "all imported exact bytes",
+          "second body mass/radius/state",
+          "all visual loft recipes",
+          "all visual local placements",
+          "all PBR values"
+        ],
+        "repair_from": null
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "rack.props[\"first\"]",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:6862fa3bf5a4d33c35eb81075b229739c7a8fdb6a1839c6adc36942ffcc35e98",
+            "start_byte": 1051,
+            "end_byte": 1179
+          },
+          "expected_text": "impulse rack.props[\"first\"] using vector(world, 0[N*s], 2[N*s], 0[N*s]) at point(rack.props[\"first\"].frame, 0.5[m], 0[m], 0[m]);"
+        },
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 1,
+          "target_path_spelling": "rack.props[\"second\"]",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:6862fa3bf5a4d33c35eb81075b229739c7a8fdb6a1839c6adc36942ffcc35e98",
+            "start_byte": 1188,
+            "end_byte": 1318
+          },
+          "expected_text": "impulse rack.props[\"second\"] using vector(world, 0[N*s], 2[N*s], 0[N*s]) at point(rack.props[\"second\"].frame, 0.5[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "P09",
+      "name": "generated-mass-repair",
+      "kind": "positive",
+      "status": "proposed-unexecuted",
+      "file_manifest": "p09-generated-mass-repair.files.json",
+      "program_revision": "sha256:960b48a8ebee794ebcf3879a6b2c48033df061ae4acfb52996064d572e95027b",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:ce4a9e0d257f540b043e99a99f9382df7da0f12a9b68de4d897fd1178c259abb"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I07",
+        "I09"
+      ],
+      "delivery_required": true,
+      "expected": {
+        "samples": [
+          {
+            "time_seconds": "2",
+            "side": "after",
+            "objects": {
+              "rack.props[\"first\"]": {
+                "position_m": [
+                  0,
+                  0.5,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  0.5,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  2.5
+                ],
+                "orientation_wxyz": [
+                  0.3153223623952687,
+                  0.0,
+                  0.0,
+                  0.9489846193555862
+                ],
+                "impulses": {
+                  "applied_count": 1,
+                  "last_application_time_seconds": "1",
+                  "sequence_indices": [
+                    0
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "1"
+                }
+              },
+              "rack.props[\"second\"]": {
+                "position_m": [
+                  3,
+                  0.5,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  0.5,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  2.5
+                ],
+                "orientation_wxyz": [
+                  0.3153223623952687,
+                  0.0,
+                  0.0,
+                  0.9489846193555862
+                ],
+                "impulses": {
+                  "applied_count": 1,
+                  "last_application_time_seconds": "1",
+                  "sequence_indices": [
+                    1
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "1"
+                }
+              }
+            }
+          }
+        ],
+        "first_inertia_kg_m2": 0.4,
+        "stable_element_ids": [
+          [
+            "impulse-demo",
+            "demo",
+            "rack",
+            "props",
+            "first"
+          ],
+          [
+            "impulse-demo",
+            "demo",
+            "rack",
+            "props",
+            "second"
+          ]
+        ],
+        "unchanged_on_repair": [
+          "all imported exact bytes",
+          "second body mass/radius/state",
+          "all visual loft recipes",
+          "all visual local placements",
+          "all PBR values"
+        ],
+        "repair_from": "P08"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "rack.props[\"first\"]",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:ce4a9e0d257f540b043e99a99f9382df7da0f12a9b68de4d897fd1178c259abb",
+            "start_byte": 1051,
+            "end_byte": 1179
+          },
+          "expected_text": "impulse rack.props[\"first\"] using vector(world, 0[N*s], 2[N*s], 0[N*s]) at point(rack.props[\"first\"].frame, 0.5[m], 0[m], 0[m]);"
+        },
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 1,
+          "target_path_spelling": "rack.props[\"second\"]",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:ce4a9e0d257f540b043e99a99f9382df7da0f12a9b68de4d897fd1178c259abb",
+            "start_byte": 1188,
+            "end_byte": 1318
+          },
+          "expected_text": "impulse rack.props[\"second\"] using vector(world, 0[N*s], 2[N*s], 0[N*s]) at point(rack.props[\"second\"].frame, 0.5[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "P10",
+      "name": "generated-radius-repair",
+      "kind": "positive",
+      "status": "proposed-unexecuted",
+      "file_manifest": "p10-generated-radius-repair.files.json",
+      "program_revision": "sha256:c3fb7b4fcc5645d7367f726b22ca60e216ddcc02451cfb2f867893e47f62aa32",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:f03607e9c235c83f5e43a0a4b9a0d111496ca2d12db2463183e4cab75446c649"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I07",
+        "I09"
+      ],
+      "delivery_required": true,
+      "expected": {
+        "samples": [
+          {
+            "time_seconds": "2",
+            "side": "after",
+            "objects": {
+              "rack.props[\"first\"]": {
+                "position_m": [
+                  0,
+                  1,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  1,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  1.25
+                ],
+                "orientation_wxyz": [
+                  0.8109631195052179,
+                  0.0,
+                  0.0,
+                  0.5850972729404622
+                ],
+                "impulses": {
+                  "applied_count": 1,
+                  "last_application_time_seconds": "1",
+                  "sequence_indices": [
+                    0
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "1"
+                }
+              },
+              "rack.props[\"second\"]": {
+                "position_m": [
+                  3,
+                  0.5,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  0.5,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  2.5
+                ],
+                "orientation_wxyz": [
+                  0.3153223623952687,
+                  0.0,
+                  0.0,
+                  0.9489846193555862
+                ],
+                "impulses": {
+                  "applied_count": 1,
+                  "last_application_time_seconds": "1",
+                  "sequence_indices": [
+                    1
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "1"
+                }
+              }
+            }
+          }
+        ],
+        "first_inertia_kg_m2": 0.8,
+        "stable_element_ids": [
+          [
+            "impulse-demo",
+            "demo",
+            "rack",
+            "props",
+            "first"
+          ],
+          [
+            "impulse-demo",
+            "demo",
+            "rack",
+            "props",
+            "second"
+          ]
+        ],
+        "unchanged_on_repair": [
+          "all imported exact bytes",
+          "second body mass/radius/state",
+          "all visual loft recipes",
+          "all visual local placements",
+          "all PBR values"
+        ],
+        "repair_from": "P08"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "rack.props[\"first\"]",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:f03607e9c235c83f5e43a0a4b9a0d111496ca2d12db2463183e4cab75446c649",
+            "start_byte": 1049,
+            "end_byte": 1177
+          },
+          "expected_text": "impulse rack.props[\"first\"] using vector(world, 0[N*s], 2[N*s], 0[N*s]) at point(rack.props[\"first\"].frame, 0.5[m], 0[m], 0[m]);"
+        },
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 1,
+          "target_path_spelling": "rack.props[\"second\"]",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:f03607e9c235c83f5e43a0a4b9a0d111496ca2d12db2463183e4cab75446c649",
+            "start_byte": 1186,
+            "end_byte": 1316
+          },
+          "expected_text": "impulse rack.props[\"second\"] using vector(world, 0[N*s], 2[N*s], 0[N*s]) at point(rack.props[\"second\"].frame, 0.5[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "P11",
+      "name": "high-spin-low-fps",
+      "kind": "positive",
+      "status": "proposed-unexecuted",
+      "file_manifest": "p11-high-spin-low-fps.files.json",
+      "program_revision": "sha256:04cd6cc700f5fdeaa6b65b6e17b15839a9a96a484e5da7faabad5f1ac056a48a",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:6fae251adb6823c44589b801320118bcfa43f1406d18e184954054df9c714bf6"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I11"
+      ],
+      "delivery_required": true,
+      "expected": {
+        "samples": [
+          {
+            "time_seconds": "1",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  8,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  40
+                ],
+                "orientation_wxyz": [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          },
+          {
+            "time_seconds": "1.5",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  4,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  8,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  40
+                ],
+                "orientation_wxyz": [
+                  -0.8390715290764524,
+                  -0.0,
+                  -0.0,
+                  -0.5440211108893698
+                ]
+              }
+            }
+          },
+          {
+            "time_seconds": "2",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  8,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  8,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  40
+                ],
+                "orientation_wxyz": [
+                  0.40808206181339196,
+                  0.0,
+                  0.0,
+                  0.9129452507276277
+                ]
+              }
+            }
+          }
+        ],
+        "export_options": {
+          "fps": 1,
+          "end": "2",
+          "position_tolerance_m": 0.001,
+          "rotation_tolerance_rad": 0.001,
+          "time_tolerance_s": 1e-06
+        },
+        "conservative_angular_bound_rad_per_s": 40,
+        "required_checks": [
+          "extra keys beyond requested regular FPS",
+          "every source impulse boundary retained",
+          "decoded quaternion animation matches analytic Rx/Ry/Rz-independent oracle at fixed times",
+          "coarsening animation to regular FPS cannot pass independent verifier"
+        ]
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:6fae251adb6823c44589b801320118bcfa43f1406d18e184954054df9c714bf6",
+            "start_byte": 425,
+            "end_byte": 524
+          },
+          "expected_text": "impulse ball using vector(world, 0[N*s], 16[N*s], 0[N*s]) at point(ball.frame, 0.5[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "P12",
+      "name": "finite-quotient-cancellation",
+      "kind": "positive",
+      "status": "proposed-unexecuted",
+      "file_manifest": "p12-finite-quotient-cancellation.files.json",
+      "program_revision": "sha256:1689a68002246434677a4c4fd2cc9fc2d8c6a6af6cc50b51a3d6dab7078b885e",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:2b7dcbe8ed70c8df8e48ad6efddcba8149d69e0bcc352d04ca592c580bb6991b"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "samples": [
+          {
+            "time_seconds": "1",
+            "side": "before",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  -1e+308,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  -1e+308,
+                  0,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          {
+            "time_seconds": "1",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  -1e+308,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  1e+308,
+                  0,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "impulses": {
+                  "applied_count": 1,
+                  "last_application_time_seconds": "1",
+                  "sequence_indices": [
+                    0
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "1"
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "2",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  1e+308,
+                  0,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        ],
+        "numeric_rule": "Round the exact rational sum v + J/m once; do not round the unexposed 2e308 quotient.",
+        "evaluation_only": true,
+        "export_not_promised": "World positions exceed finite float32 delivery."
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:2b7dcbe8ed70c8df8e48ad6efddcba8149d69e0bcc352d04ca592c580bb6991b",
+            "start_byte": 545,
+            "end_byte": 645
+          },
+          "expected_text": "impulse ball using vector(world, 1e308[N*s], 0[N*s], 0[N*s]) at point(ball.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "P13",
+      "name": "time-zero",
+      "kind": "positive",
+      "status": "proposed-unexecuted",
+      "file_manifest": "p13-time-zero.files.json",
+      "program_revision": "sha256:b31dd77dc93ee70ff9f6451616ee04e0223da6c2f3af1a9317d0a41fb7e7b9e1",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:905206991948d1f29c727850fd9b9560a8532842f8d05ac1dd5ed935194ac325"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I06"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "samples": [
+          {
+            "time_seconds": "0",
+            "side": "before",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "impulses": {
+                  "applied_count": 0,
+                  "last_application_time_seconds": null,
+                  "sequence_indices": []
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "0"
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "0",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  3,
+                  0,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "impulses": {
+                  "applied_count": 1,
+                  "last_application_time_seconds": "0",
+                  "sequence_indices": [
+                    0
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "0"
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "2",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  6,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  3,
+                  0,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            }
+          }
+        ],
+        "constructed_state": "before time-zero source events, count=0"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "0[s]",
+          "event_time_seconds": "0",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:905206991948d1f29c727850fd9b9560a8532842f8d05ac1dd5ed935194ac325",
+            "start_byte": 425,
+            "end_byte": 521
+          },
+          "expected_text": "impulse ball using vector(world, 6[N*s], 0[N*s], 0[N*s]) at point(ball.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "P14",
+      "name": "duration-boundary",
+      "kind": "positive",
+      "status": "proposed-unexecuted",
+      "file_manifest": "p14-duration-boundary.files.json",
+      "program_revision": "sha256:9a8e28f491a0f92a6300b45cf0c1b95aee7b8408d4ad74295bc1affa7ea583ab",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:42ef142b73592d8285d0bb58c981d3341f6ec50001091d76b579786644ead67a"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I06"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "samples": [
+          {
+            "time_seconds": "2",
+            "side": "before",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "impulses": {
+                  "applied_count": 0,
+                  "last_application_time_seconds": null,
+                  "sequence_indices": []
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "0"
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "2",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  3,
+                  0,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "impulses": {
+                  "applied_count": 1,
+                  "last_application_time_seconds": "2",
+                  "sequence_indices": [
+                    0
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "2"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "2[s]",
+          "event_time_seconds": "2",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:42ef142b73592d8285d0bb58c981d3341f6ec50001091d76b579786644ead67a",
+            "start_byte": 425,
+            "end_byte": 521
+          },
+          "expected_text": "impulse ball using vector(world, 6[N*s], 0[N*s], 0[N*s]) at point(ball.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "P15",
+      "name": "canonical-clock",
+      "kind": "positive",
+      "status": "proposed-unexecuted",
+      "file_manifest": "p15-canonical-clock.files.json",
+      "program_revision": "sha256:74760858e2c7b546c8f5efed795d32363c80e0beb6379da7964c1c08af7ac69c",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:4241484e5a3a954afa258efa008ff89e784cff6d86f9245df12b20ed97da4973"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I06"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "source_literal": "0.1[s]",
+        "canonical_boundary_seconds": "0.1000000000000000055511151231257827021181583404541015625",
+        "samples": [
+          {
+            "time_seconds": "0.1",
+            "side": "before",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "impulses": {
+                  "applied_count": 0,
+                  "last_application_time_seconds": null,
+                  "sequence_indices": []
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "0"
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "0.1",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "impulses": {
+                  "applied_count": 0,
+                  "last_application_time_seconds": null,
+                  "sequence_indices": []
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "0"
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "0.1000000000000000055511151231257827021181583404541015625",
+            "side": "before",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "orientation_wxyz": [
+                  1.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "impulses": {
+                  "applied_count": 0,
+                  "last_application_time_seconds": null,
+                  "sequence_indices": []
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "0"
+                }
+              }
+            }
+          },
+          {
+            "time_seconds": "0.1000000000000000055511151231257827021181583404541015625",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  3,
+                  0,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  0
+                ],
+                "impulses": {
+                  "applied_count": 1,
+                  "last_application_time_seconds": "0.1000000000000000055511151231257827021181583404541015625",
+                  "sequence_indices": [
+                    0
+                  ]
+                },
+                "pose_authority": {
+                  "kind": "free_sphere",
+                  "since_seconds": "0",
+                  "trajectory_anchor_seconds": "0.1000000000000000055511151231257827021181583404541015625"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "0.1[s]",
+          "event_time_seconds": "0.1000000000000000055511151231257827021181583404541015625",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:4241484e5a3a954afa258efa008ff89e784cff6d86f9245df12b20ed97da4973",
+            "start_byte": 427,
+            "end_byte": 523
+          },
+          "expected_text": "impulse ball using vector(world, 6[N*s], 0[N*s], 0[N*s]) at point(ball.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "P16",
+      "name": "external-wrench-point",
+      "kind": "positive",
+      "status": "proposed-unexecuted",
+      "file_manifest": "p16-external-wrench-point.files.json",
+      "program_revision": "sha256:01c015532e137fa7a35679764b7e5a2f00a165640bd8180227d41a443352d779",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:d58c774e7fd031f8f9652f7e64d1b2694539ddf978cdd0bec496c68c08c5ecfc"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I03",
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "physical_radius_m": 0.5,
+        "application_distance_m": 2,
+        "first_application": {
+          "lever_arm_world_m": [
+            2,
+            0,
+            0
+          ],
+          "angular_impulse_world_n_m_s": [
+            0,
+            0,
+            4
+          ]
+        },
+        "samples": [
+          {
+            "time_seconds": "1",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  0,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  1,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  20
+                ]
+              }
+            }
+          },
+          {
+            "time_seconds": "2",
+            "side": "after",
+            "objects": {
+              "ball": {
+                "position_m": [
+                  0,
+                  1,
+                  0
+                ],
+                "velocity_m_per_s": [
+                  0,
+                  1,
+                  0
+                ],
+                "angular_velocity_rad_per_s": [
+                  0,
+                  0,
+                  20
+                ],
+                "orientation_wxyz": [
+                  -0.8390715290764524,
+                  -0.0,
+                  -0.0,
+                  -0.5440211108893698
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:d58c774e7fd031f8f9652f7e64d1b2694539ddf978cdd0bec496c68c08c5ecfc",
+            "start_byte": 425,
+            "end_byte": 521
+          },
+          "expected_text": "impulse ball using vector(world, 0[N*s], 2[N*s], 0[N*s]) at point(ball.frame, 2[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "N01",
+      "name": "wrong-impulse-units",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n01-wrong-impulse-units.files.json",
+      "program_revision": "sha256:a47021a83919b37035099e895a5a9ebadfeafcce2805683d6adbd69805de199e",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:53b05ef15432bde0e0dd99cd601d59d36bb3ce0dd5a8ba59dbad37d935248eca"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-UNIT",
+        "phase_group": "elaboration"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:53b05ef15432bde0e0dd99cd601d59d36bb3ce0dd5a8ba59dbad37d935248eca",
+            "start_byte": 425,
+            "end_byte": 515
+          },
+          "expected_text": "impulse ball using vector(world, 0[N], 2[N], 0[N]) at point(ball.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "N02",
+      "name": "nonworld-impulse",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n02-nonworld-impulse.files.json",
+      "program_revision": "sha256:9e2471ef87299cb9828b7c35b0fb8c4f1ad74a487bdcd668c81f80a3c995f147",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:0e367db4192cccce76b83145bcae3d30317a3ba7199c57699459f72e7164c7fa"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-FRAME",
+        "phase_group": "elaboration"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:0e367db4192cccce76b83145bcae3d30317a3ba7199c57699459f72e7164c7fa",
+            "start_byte": 425,
+            "end_byte": 526
+          },
+          "expected_text": "impulse ball using vector(ball.frame, 0[N*s], 2[N*s], 0[N*s]) at point(ball.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "N03",
+      "name": "world-point",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n03-world-point.files.json",
+      "program_revision": "sha256:157be183e55014ca1afb703606454388dd4e4f9f889e8a7ffd28d78701951524",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:326ced4a37bce5340c173cc25a712e6702403c9b9cd73cfaf9efef32958fec97"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-FRAME",
+        "phase_group": "elaboration"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:326ced4a37bce5340c173cc25a712e6702403c9b9cd73cfaf9efef32958fec97",
+            "start_byte": 425,
+            "end_byte": 516
+          },
+          "expected_text": "impulse ball using vector(world, 6[N*s], 0[N*s], 0[N*s]) at point(world, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "N04",
+      "name": "sibling-point",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n04-sibling-point.files.json",
+      "program_revision": "sha256:f0ced7d95c127c9d70b24995f40737433a51c8d162349b00029b480e05eb3176",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:b94a019d7872eda0d4a94a51484ed84ad6ce18c17721dd2e5a7e3bdd4fc993a6"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-FRAME",
+        "phase_group": "elaboration"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:b94a019d7872eda0d4a94a51484ed84ad6ce18c17721dd2e5a7e3bdd4fc993a6",
+            "start_byte": 474,
+            "end_byte": 571
+          },
+          "expected_text": "impulse ball using vector(world, 6[N*s], 0[N*s], 0[N*s]) at point(other.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "N05",
+      "name": "site-point",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n05-site-point.files.json",
+      "program_revision": "sha256:49e6239557a672f7b8f1f787307aff0b22e8392caf8a88a4ef0e92f694aaefa2",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:3010abdd59f12ddfbe0c25d04ff3955d61d77eee682f7a3afcdd51c191a3959f"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-FRAME",
+        "phase_group": "elaboration"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:3010abdd59f12ddfbe0c25d04ff3955d61d77eee682f7a3afcdd51c191a3959f",
+            "start_byte": 425,
+            "end_byte": 528
+          },
+          "expected_text": "impulse ball using vector(world, 6[N*s], 0[N*s], 0[N*s]) at point(ball.origin.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "N06",
+      "name": "prescribed-target",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n06-prescribed-target.files.json",
+      "program_revision": "sha256:ed5acf62f42b40dcc641929672bdbba11258edb761fbcadc1cff29290935c828",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:40e419e36a55f5cec1cfeb71230dd9f69b88f1af8ad3669e00cf5dbcf7f15418"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-MOTION-MODE",
+        "phase_group": "event_admission",
+        "event_time_seconds": "1",
+        "sequence_index": 0,
+        "target_element_id": [
+          "impulse-demo",
+          "demo",
+          "ball"
+        ],
+        "span": "entire failing impulse statement",
+        "side": "after",
+        "sequence_index_location": "diagnostic.details.sequence_index"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:40e419e36a55f5cec1cfeb71230dd9f69b88f1af8ad3669e00cf5dbcf7f15418",
+            "start_byte": 454,
+            "end_byte": 550
+          },
+          "expected_text": "impulse ball using vector(world, 6[N*s], 0[N*s], 0[N*s]) at point(ball.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "N07",
+      "name": "static-target",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n07-static-target.files.json",
+      "program_revision": "sha256:9f6a9e02fa0cf3d8f9dc7040a071baa11b9d2b4ec325c795e68aecd132f4d5a3",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:fd25b07d36a8d581070988956102e96681731463db549532c64031220a0c7126"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-MOTION-MODE",
+        "phase_group": "event_admission",
+        "event_time_seconds": "1",
+        "sequence_index": 0,
+        "target_element_id": [
+          "impulse-demo",
+          "demo",
+          "ball"
+        ],
+        "span": "entire failing impulse statement",
+        "side": "after",
+        "sequence_index_location": "diagnostic.details.sequence_index"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:fd25b07d36a8d581070988956102e96681731463db549532c64031220a0c7126",
+            "start_byte": 450,
+            "end_byte": 546
+          },
+          "expected_text": "impulse ball using vector(world, 6[N*s], 0[N*s], 0[N*s]) at point(ball.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "N08",
+      "name": "dynamic-no-body",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n08-dynamic-no-body.files.json",
+      "program_revision": "sha256:3cc71e06df341701f03c18f8373bb5b42035c87547f9ad1ec193c310fbdaa4fe",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:186b05ad1d53f2993e31a3b36d7c4fd881f8564baa8c1f04ec8bda7fe96087fc"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-PHYSICAL-DOMAIN",
+        "phase_group": "elaboration"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:186b05ad1d53f2993e31a3b36d7c4fd881f8564baa8c1f04ec8bda7fe96087fc",
+            "start_byte": 455,
+            "end_byte": 551
+          },
+          "expected_text": "impulse ball using vector(world, 6[N*s], 0[N*s], 0[N*s]) at point(ball.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "N09",
+      "name": "missing-target",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n09-missing-target.files.json",
+      "program_revision": "sha256:1daea9d712b3e46beafcc62fc102d32ca6124cfb9230e89da763b66794b938f0",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:95bbc72ebb58012b6063f0e3436d6ec26063fe92acca8a5221b6957f40fbedb6"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-NAME",
+        "phase_group": "elaboration"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "missing",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:95bbc72ebb58012b6063f0e3436d6ec26063fe92acca8a5221b6957f40fbedb6",
+            "start_byte": 425,
+            "end_byte": 527
+          },
+          "expected_text": "impulse missing using vector(world, 6[N*s], 0[N*s], 0[N*s]) at point(missing.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "N10",
+      "name": "point-is-vector",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n10-point-is-vector.files.json",
+      "program_revision": "sha256:c51559d7b7d32260380b13bb1d24e0d31aeda489ba23fab47e9da6f143f731e5",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:2902124fe3b8f17d131053fd323076de18506cc4acd4f8e017ecdb46dcf1a399"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-TYPE",
+        "phase_group": "elaboration"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:2902124fe3b8f17d131053fd323076de18506cc4acd4f8e017ecdb46dcf1a399",
+            "start_byte": 425,
+            "end_byte": 522
+          },
+          "expected_text": "impulse ball using vector(world, 6[N*s], 0[N*s], 0[N*s]) at vector(ball.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "N11",
+      "name": "zero-mass",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n11-zero-mass.files.json",
+      "program_revision": "sha256:097cb1bf15b0113f400972d3f0798595efc257cb4a3ebd4c77743743d3890b50",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:67c27351e1b5cd51c23940bd97f381f06b10a4383cd80187b2a8f2942ceb4e2b"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-PHYSICAL-DOMAIN",
+        "phase_group": "elaboration"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:67c27351e1b5cd51c23940bd97f381f06b10a4383cd80187b2a8f2942ceb4e2b",
+            "start_byte": 452,
+            "end_byte": 548
+          },
+          "expected_text": "impulse ball using vector(world, 6[N*s], 0[N*s], 0[N*s]) at point(ball.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "N12",
+      "name": "zero-radius",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n12-zero-radius.files.json",
+      "program_revision": "sha256:bc5fb1d7e294d3f9f39404ddddf220a550dac7b8f12ea4ba6778de4010a8547c",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:8d9c442896b8956e0cfbabaa8121ee72f2eb962170d1a60e7d8f310e6ce07d20"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-PHYSICAL-DOMAIN",
+        "phase_group": "elaboration"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:8d9c442896b8956e0cfbabaa8121ee72f2eb962170d1a60e7d8f310e6ce07d20",
+            "start_byte": 453,
+            "end_byte": 549
+          },
+          "expected_text": "impulse ball using vector(world, 6[N*s], 0[N*s], 0[N*s]) at point(ball.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "N13",
+      "name": "inertia-underflow",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n13-inertia-underflow.files.json",
+      "program_revision": "sha256:c61da9f179bf7554ee87c718be30a891b04e96bd69138e2bf2b80d06863123b9",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:ebe29fd635dab470d902806e2befb181251c72d725e38240517d2e11db8768f8"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-PHYSICAL-DOMAIN",
+        "phase_group": "elaboration",
+        "allowed_warning_codes": [
+          "OKL-W-UNDERFLOW"
+        ]
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:ebe29fd635dab470d902806e2befb181251c72d725e38240517d2e11db8768f8",
+            "start_byte": 485,
+            "end_byte": 581
+          },
+          "expected_text": "impulse ball using vector(world, 6[N*s], 0[N*s], 0[N*s]) at point(ball.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "N14",
+      "name": "inertia-overflow",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n14-inertia-overflow.files.json",
+      "program_revision": "sha256:172fed0de96cbfa9d2e23426c90877d6146ef8faea8a44c8e6eb04b0f1ecef5f",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:4a3b5be1e2f98a49b82365aca67353ad47e614267498980e0dc3e3934afe90a6"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-NUMERIC",
+        "phase_group": "elaboration"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:4a3b5be1e2f98a49b82365aca67353ad47e614267498980e0dc3e3934afe90a6",
+            "start_byte": 484,
+            "end_byte": 580
+          },
+          "expected_text": "impulse ball using vector(world, 6[N*s], 0[N*s], 0[N*s]) at point(ball.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "N15",
+      "name": "final-linear-overflow",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n15-final-linear-overflow.files.json",
+      "program_revision": "sha256:4270676f997543195bf5d35b27b201a808a117505acf713a8b94974519f9060c",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:db2e546366f0e64df3353f622f8cc97a3bab17b89044333204ce4336ad9ca26e"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-NUMERIC",
+        "phase_group": "event_admission",
+        "failed_quantity": "final linear velocity",
+        "event_time_seconds": "1",
+        "sequence_index": 0,
+        "target_element_id": [
+          "impulse-demo",
+          "demo",
+          "ball"
+        ],
+        "span": "entire failing impulse statement",
+        "diagnostic_category": "numerical_failure",
+        "side": "after",
+        "sequence_index_location": "diagnostic.details.sequence_index"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:db2e546366f0e64df3353f622f8cc97a3bab17b89044333204ce4336ad9ca26e",
+            "start_byte": 485,
+            "end_byte": 584
+          },
+          "expected_text": "impulse ball using vector(world, 1e20[N*s], 0[N*s], 0[N*s]) at point(ball.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "N16",
+      "name": "final-angular-overflow",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n16-final-angular-overflow.files.json",
+      "program_revision": "sha256:e5831cde2be609d466d1f75b99d9d7cd6028da22f1826d039e6da83912654794",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:56ba9a15ed2ed44404a99554dd867f568cc33dbb264b4f1f16250351b928e66d"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-NUMERIC",
+        "phase_group": "event_admission",
+        "failed_quantity": "final angular velocity",
+        "event_time_seconds": "1",
+        "sequence_index": 0,
+        "target_element_id": [
+          "impulse-demo",
+          "demo",
+          "ball"
+        ],
+        "span": "entire failing impulse statement",
+        "diagnostic_category": "numerical_failure",
+        "side": "after",
+        "sequence_index_location": "diagnostic.details.sequence_index"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:56ba9a15ed2ed44404a99554dd867f568cc33dbb264b4f1f16250351b928e66d",
+            "start_byte": 480,
+            "end_byte": 580
+          },
+          "expected_text": "impulse ball using vector(world, 0[N*s], 1e308[N*s], 0[N*s]) at point(ball.frame, 1[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "N17",
+      "name": "zero-impulse-world-point-overflow",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n17-zero-impulse-world-point-overflow.files.json",
+      "program_revision": "sha256:2d91ada2666a21138b339a2ae1cc31992535c1a8e5401694b977eb09ad48ea77",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:6296ab304d53928ef678faacfdc2244c8a565300bc510e5e3276d250d47fa040"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-NUMERIC",
+        "phase_group": "event_admission",
+        "failed_quantity": "exposed world application point",
+        "event_time_seconds": "1",
+        "sequence_index": 0,
+        "target_element_id": [
+          "impulse-demo",
+          "demo",
+          "ball"
+        ],
+        "span": "entire failing impulse statement",
+        "diagnostic_category": "numerical_failure",
+        "side": "after",
+        "sequence_index_location": "diagnostic.details.sequence_index"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:6296ab304d53928ef678faacfdc2244c8a565300bc510e5e3276d250d47fa040",
+            "start_byte": 504,
+            "end_byte": 604
+          },
+          "expected_text": "impulse ball using vector(world, 0[N*s], 0[N*s], 0[N*s]) at point(ball.frame, 1e308[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "N18",
+      "name": "exposed-angular-impulse-overflow",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n18-exposed-angular-impulse-overflow.files.json",
+      "program_revision": "sha256:3d26443d37d95d6757066ea67d98b3da16f87243504958f16662fca1d866196f",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:cff93f5ac6e6c741cb975819b8012d2dcb88d214aff71513fd78601bcda2a369"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-NUMERIC",
+        "phase_group": "event_admission",
+        "failed_quantity": "exposed angular impulse; hypothetical later division would be finite",
+        "event_time_seconds": "1",
+        "sequence_index": 0,
+        "target_element_id": [
+          "impulse-demo",
+          "demo",
+          "ball"
+        ],
+        "span": "entire failing impulse statement",
+        "diagnostic_category": "numerical_failure",
+        "side": "after",
+        "sequence_index_location": "diagnostic.details.sequence_index"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:cff93f5ac6e6c741cb975819b8012d2dcb88d214aff71513fd78601bcda2a369",
+            "start_byte": 484,
+            "end_byte": 584
+          },
+          "expected_text": "impulse ball using vector(world, 0[N*s], 2[N*s], 0[N*s]) at point(ball.frame, 1e308[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "N19",
+      "name": "atomic-later-mode-failure",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n19-atomic-later-mode-failure.files.json",
+      "program_revision": "sha256:0c3962435c5bb5540c318b4f0f6e24e1c7de40cf5d661fd4bf07756ef148525f",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:518c548a4c4f0e86ab48949e009d64ba758529f7d24e22dde11c74ff1f2df954"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-MOTION-MODE",
+        "phase_group": "event_admission",
+        "rollback": {
+          "ball_velocity_m_per_s": [
+            0,
+            0,
+            0
+          ],
+          "ball_applied_count": 0,
+          "ball_trajectory_anchor_seconds": "0",
+          "after_boundary_success": false
+        },
+        "event_time_seconds": "1",
+        "sequence_index": 1,
+        "target_element_id": [
+          "impulse-demo",
+          "demo",
+          "other"
+        ],
+        "span": "entire failing impulse statement",
+        "side": "after",
+        "sequence_index_location": "diagnostic.details.sequence_index"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:518c548a4c4f0e86ab48949e009d64ba758529f7d24e22dde11c74ff1f2df954",
+            "start_byte": 496,
+            "end_byte": 592
+          },
+          "expected_text": "impulse ball using vector(world, 6[N*s], 0[N*s], 0[N*s]) at point(ball.frame, 0[m], 0[m], 0[m]);"
+        },
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 1,
+          "target_path_spelling": "other",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:518c548a4c4f0e86ab48949e009d64ba758529f7d24e22dde11c74ff1f2df954",
+            "start_byte": 601,
+            "end_byte": 699
+          },
+          "expected_text": "impulse other using vector(world, 6[N*s], 0[N*s], 0[N*s]) at point(other.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "N20",
+      "name": "impulse-before-release",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n20-impulse-before-release.files.json",
+      "program_revision": "sha256:526301f1decec5eac9b722fdcf96fd5cfdcab607f029c4cf2f977660b6a47780",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:cde2c4bac75b4ac0d0b12082003942e78a3b8b7c656c02a76e91badc8ed01163"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-MOTION-MODE",
+        "phase_group": "event_admission",
+        "rollback": {
+          "hold": "active",
+          "motion": "prescribed",
+          "applied_count": 0
+        },
+        "event_time_seconds": "1",
+        "sequence_index": 0,
+        "target_element_id": [
+          "impulse-demo",
+          "demo",
+          "ball"
+        ],
+        "span": "entire failing impulse statement",
+        "side": "after",
+        "sequence_index_location": "diagnostic.details.sequence_index"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 0,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:cde2c4bac75b4ac0d0b12082003942e78a3b8b7c656c02a76e91badc8ed01163",
+            "start_byte": 1157,
+            "end_byte": 1255
+          },
+          "expected_text": "impulse ball using vector(world, 0[N*s], 2[N*s], 0[N*s]) at point(ball.frame, 0.5[m], 0[m], 0[m]);"
+        }
+      ]
+    },
+    {
+      "id": "N21",
+      "name": "old-profile-impulse-syntax",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n21-old-profile-impulse-syntax.files.json",
+      "program_revision": "sha256:9443ddd5959ce36679bb80b135da011567cb2c0813ab83aa9c5a1c9aafdfb2bb",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:aae38820a40b79a85fb03e694b4be7229e2d13bc71558dc3a8845e4c4324d24d"
+        }
+      ],
+      "gates": [
+        "I01",
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-SYNTAX",
+        "phase_group": "parse"
+      }
+    },
+    {
+      "id": "N22",
+      "name": "older-imports-newer",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n22-older-imports-newer.files.json",
+      "program_revision": "sha256:2948e7f2f9784ed21f2425141972c453fcbe4f5d33be53d342b783cdaf7c0f46",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:a777b0d1f2faefec30aef8d3b437080f9d301aae6725f59d851e1be3d8b9349f"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-CAPABILITY-UNSUPPORTED",
+        "phase_group": "link",
+        "span": "the import of fixture.impulse-parts"
+      },
+      "source_impulse_statements": []
+    },
+    {
+      "id": "N23",
+      "name": "wrong-profile-header",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n23-wrong-profile-header.files.json",
+      "program_revision": "sha256:c15471e44ad387fec3514f5e86c963c369046c91ad8b278353b28a2f6848d16c",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:8cdc4c79846de6b5a0494dee0309eef50e1a1e33dc088ce74f648964242ae6f6"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I01",
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-CAPABILITY-UNSUPPORTED",
+        "phase_group": "parse"
+      }
+    },
+    {
+      "id": "N24",
+      "name": "release-impulse-later-failure",
+      "kind": "negative",
+      "status": "proposed-unexecuted",
+      "file_manifest": "n24-release-impulse-later-failure.files.json",
+      "program_revision": "sha256:87a82655c021e103c0bbccd3c830552194e8d4ff82b155961768a71fd9d95de3",
+      "sources": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "impulse-demo.ok",
+          "source_revision": "sha256:f3d36ce36bcdade8d23beeff73d9596e7cd5b942a56373e084c86ac691bd5373"
+        },
+        {
+          "source_id": "package:fixture.impulse-parts@1.0.0",
+          "package_id": "fixture.impulse-parts",
+          "version": "1.0.0",
+          "filename": "impulse-parts.ok",
+          "source_revision": "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6"
+        },
+        {
+          "source_id": "package:fixture.surface-parts@1.0.0",
+          "package_id": "fixture.surface-parts",
+          "version": "1.0.0",
+          "filename": "surface-parts.ok",
+          "source_revision": "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce"
+        }
+      ],
+      "gates": [
+        "I08"
+      ],
+      "delivery_required": false,
+      "expected": {
+        "outcome": "reject",
+        "diagnostic_code": "OKL-E-MOTION-MODE",
+        "phase_group": "event_admission",
+        "rollback": {
+          "hold": "active",
+          "ball_motion": "prescribed",
+          "ball_applied_count": 0,
+          "ball_dynamic_origin_absent": true
+        },
+        "event_time_seconds": "1",
+        "sequence_index": 2,
+        "target_element_id": [
+          "impulse-demo",
+          "demo",
+          "other"
+        ],
+        "span": "entire failing impulse statement",
+        "side": "after",
+        "sequence_index_location": "diagnostic.details.sequence_index"
+      },
+      "source_impulse_statements": [
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 1,
+          "target_path_spelling": "ball",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:f3d36ce36bcdade8d23beeff73d9596e7cd5b942a56373e084c86ac691bd5373",
+            "start_byte": 1265,
+            "end_byte": 1363
+          },
+          "expected_text": "impulse ball using vector(world, 0[N*s], 2[N*s], 0[N*s]) at point(ball.frame, 0.5[m], 0[m], 0[m]);"
+        },
+        {
+          "event_time_literal": "1[s]",
+          "event_time_seconds": "1",
+          "sequence_index": 2,
+          "target_path_spelling": "other",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:f3d36ce36bcdade8d23beeff73d9596e7cd5b942a56373e084c86ac691bd5373",
+            "start_byte": 1372,
+            "end_byte": 1470
+          },
+          "expected_text": "impulse other using vector(world, 6[N*s], 0[N*s], 0[N*s]) at point(other.frame, 0[m], 0[m], 0[m]);"
+        }
+      ]
+    }
+  ],
+  "operational_cases": [
+    {
+      "id": "A01",
+      "gates": [
+        "I09"
+      ],
+      "steps": [
+        "Create P08 under explicit Agent04 at constructed level and retain returned accepted program revision.",
+        "Evaluate through duration; inspect before/after the impulse boundary and final state.",
+        "Perform one source-authorized occurrence patch producing exact P09 bytes/revision; repeat independently from P08 to exact P10.",
+        "Compare each accepted result against fixed P08/P09/P10 values and source/geometry/PBR invariants."
+      ],
+      "must_not_substitute": "Two unrelated direct compiler calls are not proof of the Agent source-patch workflow."
+    },
+    {
+      "id": "A02",
+      "gates": [
+        "I09"
+      ],
+      "steps": [
+        "Accept P01, then submit a candidate with N19 source as evaluated admission.",
+        "Require rejection, prior accepted source unchanged, no failed run published as successful.",
+        "Repeat same request ID and identical payload; require the inherited idempotent result.",
+        "Reuse request ID with changed payload; require inherited conflict/rejection.",
+        "Inspect an earlier accepted revision after a later accepted revision; never accept a never-accepted candidate as a mesh/read source."
+      ]
+    },
+    {
+      "id": "A03",
+      "gates": [
+        "I09"
+      ],
+      "steps": [
+        "Use separate Agent02/03/04 database filenames and schema identities.",
+        "Open an explicitly wrong-version store; reject before journal/DDL/migration or bytes change.",
+        "Require selected04 protocol, implementation, program revision and run provenance for state reuse.",
+        "Exercise malformed/corrupt SQLite startup and directory database paths through explicit CLI selection; controlled error with no traceback or source/artifact mutation."
+      ]
+    },
+    {
+      "id": "A04",
+      "gates": [
+        "I09"
+      ],
+      "steps": [
+        "Read P02 native geometry summary and paged triangles through Agent04.",
+        "Require public profile surface-0.1 and inherited page/summary schema versions and geometry hash meaning.",
+        "Require private signed cursor context binds protocol04 and entry_profile impulse-0.1 as well as inherited query context.",
+        "Vary revision, occurrence, region, implementation, protocol or entry profile; no mixed cursor page accepted.",
+        "Retain original 02/03 declaring profile for imported definitions in catalog/source projections."
+      ]
+    },
+    {
+      "id": "A05",
+      "gates": [
+        "I05",
+        "I09"
+      ],
+      "steps": [
+        "Inspect P03 impulse state with world and valid nonworld top-level pose expression frames.",
+        "Require ordinary pose/velocity conversion according to inherited rules, but every explicitly world/self impulse record byte-equivalent across those projections."
+      ]
+    },
+    {
+      "id": "R01",
+      "gates": [
+        "I10"
+      ],
+      "steps": [
+        "Compute exact logical entries of each full success envelope, including implementation, progress, cursors and all latest-boundary records.",
+        "Set max_value_entries to that exact value; require success if other limits admit it.",
+        "Set it to one less with a fresh request/project; require resource failure and atomic rollback of run/source/artifact effects.",
+        "Run both inspection and final export-delivery response boundary variants.",
+        "Charge complete boundary impulse_states_after records before metadata allocation and serialized GLB publication, using the shared weighted sampling bound."
+      ],
+      "record_weight": "45 + len(target_element_id)",
+      "empty_impulses_projection_entries": 4,
+      "sample_bound": "legacy base + 4*object_count + max over authored boundaries of total per-object retained latest-group application weights; constructing before t0 excludes future application groups"
+    },
+    {
+      "id": "R02",
+      "gates": [
+        "I10"
+      ],
+      "steps": [
+        "Use an authored bounded sequence with enough impulse records to exceed a deliberately lowered current output budget; charge every retained record before snapshot duplication.",
+        "Require explicit OKL-E-RESOURCE and no shortened successful record list.",
+        "Include several objects whose latest impulse boundaries differ so retained groups coexist.",
+        "Compare sparse and dense requested sample schedules against the conservative bound; never undercount an intermediate latest group."
+      ]
+    },
+    {
+      "id": "R03",
+      "gates": [
+        "I10"
+      ],
+      "steps": [
+        "Inject cooperative cancellation during each newly introduced compiler event iteration, event-application record loop, complete-history sample-bound loop and GLB angular-bound loop.",
+        "Require cancellation receipt, no partial successful snapshot/GLB and unchanged accepted transaction state.",
+        "Retry with cancellation absent and adequate current limits; recover the fixed analytic result."
+      ]
+    },
+    {
+      "id": "D01",
+      "gates": [
+        "I11"
+      ],
+      "steps": [
+        "For every delivery_required source case, build actual accepted Agent04 source-to-GLB04 delivery and retain exact .ok closure, source/program/runtime/artifact hashes and options.",
+        "Decode each delivered artifact independently with pinned Khronos validator and Three.js.",
+        "Require no validator errors/warnings, correct native triangles/winding/normals/PBR, baked-once local placement and exact source identities.",
+        "Check fixed analytical world position/orientation times from the manifest, including the high-spin case under its declared low FPS options.",
+        "Check full-turn alias/coarsened-track mutation is rejected by the independent bound and analytic sample oracle.",
+        "Require every GLB04 boundary impulse_states_after map matches the complete source-driven after-side impulses projections, including empty object projections; reject missing, changed or truncated source influence metadata."
+      ]
+    },
+    {
+      "id": "D02",
+      "gates": [
+        "I11"
+      ],
+      "fixtures": [
+        "P02",
+        "P04",
+        "P08",
+        "P11"
+      ],
+      "captures": [
+        {
+          "view": "front",
+          "time_seconds": "0"
+        },
+        {
+          "view": "side",
+          "time_seconds": "0"
+        },
+        {
+          "view": "animated",
+          "time_seconds": "1.5"
+        }
+      ],
+      "steps": [
+        "Render the same accepted-delivery artifact validated by D01 in the pinned browser viewer.",
+        "Retain PNG bytes, actual camera/time settings, source/program/artifact/runtime identities and numerical browser readback.",
+        "Inspect correct visible shape, local placement, material regions, object placement and source-driven animation.",
+        "Missing, stale, contradictory, invalid-image or differently hashed artifact evidence leaves the gate pending."
+      ]
+    },
+    {
+      "id": "L01",
+      "gates": [
+        "I12"
+      ],
+      "steps": [
+        "Execute every extant regression test ID plus all new profile tests, with named results; count-only reports are insufficient.",
+        "Execute inherited core cases, Agent A01-A10, construction C01-C20, native M01-M12 and each required independent destination gate under its original bindings.",
+        "Retain current required CI jobs for Python 3.11, 3.12, 3.13 and independent 3D validation on the exact implementation inventory.",
+        "Require old default catalog payloads/hashes, source diagnostics, stores, snapshots and export labels unchanged.",
+        "Do not reuse historical release artifacts as evidence for modified runtime bytes."
+      ]
+    }
+  ],
+  "release_rule": "All I01-I12 gates require actual execution and exact source/runtime/artifact identities. This frozen proposal is not a result and does not complete GOAL.",
+  "unimplemented_scope": [
+    "finite force intervals",
+    "continuous torques",
+    "actuators/controllers",
+    "contact and collision response",
+    "friction/restitution",
+    "non-spherical or compound inertia",
+    "automatic mesh mass/collision",
+    "deformable matter",
+    "external solver selection",
+    "engine-side live simulation",
+    "performance and authoring-benefit benchmarks"
+  ],
+  "rule_ids": {
+    "IMP-001": "syntax/types/frames/imports",
+    "IMP-002": "free-sphere admission and numeric momentum update",
+    "IMP-003": "ordered atomic boundary and clock sides",
+    "IMP-004": "projection and resource accounting",
+    "IMP-005": "explicit Agent and GLB delivery inheritance"
+  }
+}
