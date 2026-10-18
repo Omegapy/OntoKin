@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-18T07:11:03Z**. The timeout-recovery correction is integrated and verified. The complete [GOAL](GOAL.md) remains **in progress**. Read [AGENTS](AGENTS.md), the actual remote head and the integration lease before continuing.
+Checkpoint: **2026-10-18T09:12:44Z**. The timeout-recovery correction is integrated and verified. A new lease is held for integrating issue #3's bounded JSON guard repair and resuming native surface-source work; no new implementation is claimed by lease acquisition. The complete [GOAL](GOAL.md) remains **in progress**. Read [AGENTS](AGENTS.md), the actual remote head and the integration lease before continuing.
 
 ## Verified implementation and correction
 
@@ -51,11 +51,11 @@ The preceding checkpoint records the configured hourly **Advance OntoKin** task 
 
 | Lease field | Value |
 | --- | --- |
-| Integration owner | `scheduled-ontokin-20261018-1792308849885` |
-| Acquired UTC | 2026-10-18T07:34:09.885Z |
-| Lease expires UTC | 2026-10-18T09:09:09.885Z |
-| Work item | Native `.ok` surface profile integration, beginning with source-level parser/type/validation infrastructure and tests |
-| Parent main SHA | `8366c778ff47169fbeb712d13977d9eb88d0f214` |
+| Integration owner | `scheduled-ontokin-20261018-091244Z-json-guard` |
+| Acquired UTC | 2026-10-18T09:12:44Z |
+| Lease expires UTC | 2026-10-18T10:42:44Z |
+| Work item | Integrate issue #3's reproduced JSON preflight guard failure, run full regression CI, then continue native `.ok` surface parser/type integration |
+| Parent main SHA | `4e343e4e8a883d5371e57003b4424696e66ae25b` |
 | Integration procedure | Isolated branch; verify all existing checks and publish through exact-head updates; release or renew this lease on completion |
 
-Conditional acquisition was requested using the observed main SHA, not inferred from expiry. Actual publication and confirmation will be recorded at the next checkpoint.
+Previous lease expired at 2026-10-18T09:09:09.885Z. This acquisition replaces it only upon a successful non-force, exact-head `update_ref`. Verify the resulting main SHA and status file before editing implementation. Issue #3 preserves a focused locally tested patch whose complete-repository tests and CI are still outstanding.
