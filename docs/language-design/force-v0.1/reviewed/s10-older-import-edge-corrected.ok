@@ -1,0 +1,5 @@
+ontokin "0.4";
+module ImportCheck @ "import-check";
+profile "impulse-0.1";
+import future @ "future" from "fixture.future" version "1.0.0" digest "sha256:2add1581b1e2e4b22808db841da7ecdb5d2c24b9cbb4ae350074be2c817ff360";
+scene Demo @ "demo" { duration = 1[s]; gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]); object marker @ "marker": future.Marker { } }

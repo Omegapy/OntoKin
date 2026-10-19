@@ -1,0 +1,80 @@
+{
+  "changed_expected_physical_values_or_tolerances": true,
+  "contract_revision": "0.1.1",
+  "corrections": [
+    {
+      "expected": {
+        "code": "OKL-E-CAPABILITY-UNSUPPORTED",
+        "phase_group": "support"
+      },
+      "file_manifest": "s10-older-import-edge-corrected.files.json",
+      "id": "S10",
+      "original_file_manifest": "s10-older-import-edge.files.json",
+      "original_program_revision": "sha256:8cce2648b1724832b735e436834a2b6c39ae8dca4047e1259b544d000ef6c655",
+      "original_source_sha256": "sha256:8f10e6cb99f5e42717edea15cc80c309163858ece421459665e23beea313339e",
+      "program_revision": "sha256:99ae33da59b26904f4fabbf61b7091878dbe1a85f33eee2adbe33ef7d34f9c61",
+      "reason": "Use the inherited required object initializer; exercise import admission rather than unintended syntax failure.",
+      "replaced_utf8": "future.Marker;",
+      "replacement_utf8": "future.Marker { }",
+      "source_sha256": "sha256:e1345d91f16075121916212d27ea1ac52677d31e34337efc3a6ee3cd7254f3ba"
+    },
+    {
+      "expected": {
+        "force_projection_empty": true,
+        "free_body_count": 0,
+        "object_count": 1
+      },
+      "file_manifest": "s11-same-profile-import-edge-corrected.files.json",
+      "id": "S11",
+      "original_file_manifest": "s11-same-profile-import-edge.files.json",
+      "original_program_revision": "sha256:bf59cd4204e385567f7d4131b16fcc4436de15d7a0ea05591a036be606e3ea81",
+      "original_source_sha256": "sha256:6146424234e47831bf7275e7f092c047579bf5379f527efeba5e7207348df24f",
+      "program_revision": "sha256:da4d07ed6ac3079f16c098e709372d64072d7dca907de232f70a6fc5473bd57c",
+      "reason": "Use the inherited required object initializer; exercise import admission rather than unintended syntax failure.",
+      "replaced_utf8": "future.Marker;",
+      "replacement_utf8": "future.Marker { }",
+      "source_sha256": "sha256:ab2de74ee37054064c12975e0771ac902d276b56eca01a2593502150ef5f1ff2"
+    }
+  ],
+  "effective_source_cases": 56,
+  "original_files_preserved": true,
+  "sample_corrections": [
+    {
+      "id": "P09",
+      "new": {
+        "omega_world_rad_s": [
+          0,
+          0,
+          0
+        ],
+        "velocity_m_s": [
+          0,
+          0,
+          0
+        ]
+      },
+      "old": {
+        "omega_world_rad_s": [
+          0,
+          0,
+          2.0
+        ],
+        "velocity_m_s": [
+          1.9092974268256817,
+          -0.4161468365471424,
+          0.0
+        ]
+      },
+      "reason": "Before-side at zero precedes the authored start actions. Independent unchanged source-0.4 projection has zero prescribed linear/angular derivatives there; after-side and all later oracles remain unchanged.",
+      "side": "before",
+      "target": "ball",
+      "time": {
+        "denominator": "1",
+        "numerator": "0"
+      }
+    }
+  ],
+  "schema_version": "ontokin.force-source-errata/0.1",
+  "status": "adopted-fixture-correction",
+  "tolerances_unchanged": true
+}
