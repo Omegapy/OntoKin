@@ -2,10 +2,10 @@
 project: OntoKin
 document_id: OK-LANG-005
 title: Finite Center-of-Mass Force Intervals
-version: 0.1-recovery-proposal
+version: 0.1
 date: 2026-10-19
-status: proposed-language-contract
-document_type: normative-language-proposal
+status: adopted-source-contract
+document_type: normative-language-contract
 language_version: "0.5"
 profile: force-0.1
 implementation_status: not-implemented
@@ -15,7 +15,7 @@ implementation_status: not-implemented
 
 ## 1. Authority, status and scope
 
-This is a published proposal, not an adopted contract or a completed implementation. [The recovery record](force-v0.1/RECOVERY.md) preserves the earlier unpublished draft identifiers. This proposal does not claim to reproduce its unavailable bytes. Review the actual source fixtures and expected outcomes before publishing an adoption record. Runtime work starts only after that explicit decision.
+The source and evaluation semantics are adopted in [the versioned decision](force-v0.1/ADOPTION.md). Implementation and the full force release remain pending. [The recovery record](force-v0.1/RECOVERY.md) preserves the earlier unpublished draft identifiers. This proposal does not claim to reproduce its unavailable bytes. The decision identifies all 56 actual source fixtures, exact hashes, review results and normative clarifications. Runtime work starts after that decision is published.
 
 The finite scope is a constant world force applied at the center of mass of an actually free homogeneous sphere for an authored positive duration. Overlapping forces add. Existing gravity, release, source impulses, native surfaces, ownership, source revisions and immutable program bundles retain their meanings. The force has no lever arm and adds no torque, body, geometry or independent motion authority. It is an external influence on the existing free-sphere trajectory.
 

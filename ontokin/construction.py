@@ -30,7 +30,8 @@ from .values import (ACCELERATION, ALIASES, BOOL, INT, LENGTH, STRING, TIME,
 
 PROFILE = "construction-0.1"
 IMPULSE_PROFILE = "impulse-0.1"
-SURFACE_PROFILES = frozenset({SURFACE_PROFILE, IMPULSE_PROFILE})
+FORCE_PROFILE = "force-0.1"
+SURFACE_PROFILES = frozenset({SURFACE_PROFILE, IMPULSE_PROFILE, FORCE_PROFILE})
 IMPULSE_DIMENSION = (1, 1, -1, 0)
 PREDEFINED_02 = PREDEFINED | {"Keyed", "len"}
 MAX_KEYED_ENTRIES = 256
@@ -156,8 +157,8 @@ class ConstructionCompiler(Validator):
     def __init__(self, linked, level: str, budget: ConstructionBudget):
         super().__init__(linked.entry.ast, level)
         self.linked, self.bundle, self.budget = linked, linked.bundle, budget
-        if self.model.profile == IMPULSE_PROFILE:
-            self.budget.profile = IMPULSE_PROFILE
+        if self.model.profile in {IMPULSE_PROFILE, FORCE_PROFILE}:
+            self.budget.profile = self.model.profile
         self.linked_program = linked
         self.surface_meshes: dict[str, dict] = {}
         self.source_registry = linked.source_registry
@@ -574,6 +575,9 @@ class ConstructionCompiler(Validator):
                         self.expect(self.path_value(event.path, ctx, event), Type("JointRef"), event)
                     elif event.kind == "impulse":
                         self.impulse_values(event, ctx)
+                    elif event.kind == "force":
+                        from .force_source import force_values
+                        force_values(self, event, ctx)
             elif node.kind in ("site", "joint", "follow"):
                 self.check_member_types(node, ctx)
         done, active = set(), set()
@@ -1036,7 +1040,7 @@ class ConstructionCompiler(Validator):
 
     def impulse_values(self, event: Any, context: Context) -> tuple[Value, Value, Value]:
         """Check pure source operands under their actual declaring profile."""
-        if self.linked.modules[event.source_id].ast.profile != IMPULSE_PROFILE:
+        if self.linked.modules[event.source_id].ast.profile not in {IMPULSE_PROFILE, FORCE_PROFILE}:
             raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED", "Source impulses require impulse-0.1.",
                                event, phase="support", category="unsupported", rule_ids=["IMP-001"])
 
@@ -1067,6 +1071,7 @@ class ConstructionCompiler(Validator):
 
     def event_blocks(self) -> None:
         seen = set()
+        force_keys = set()
         for node in self.program.scene.members:
             self.budget.tick(node)
             if node.kind != "event_block":
@@ -1093,6 +1098,13 @@ class ConstructionCompiler(Validator):
                         {"source_id": event.source_id, "source_revision": source.revision,
                          "start_byte": event.start, "end_byte": event.end})
                     events.append(Event("impulse", target.value, event, payload))
+                elif event.kind == "force":
+                    from .force_source import lower_force
+                    if event.key in force_keys:
+                        fail("OKL-E-NAME", "A force key is reused in the scene.", event, phase="binding")
+                    force_keys.add(event.key)
+                    target, payload = lower_force(self, event, sequence_index)
+                    events.append(Event("force", target, event, force=payload))
                 else:
                     if event.name not in self.actions:
                         fail("OKL-E-NAME", f"'{event.name}' is not a named action instance.", event, phase="binding")
@@ -1226,7 +1238,8 @@ class ConstructionCompiler(Validator):
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "Required capabilities are not supplied by " + self.model.profile + ": " +
                  ", ".join(self.model.requested_capabilities), requires[0], phase="support")
         if self.level == "delivered":
-            target = ("ontokin.glb/0.4" if self.model.profile == IMPULSE_PROFILE else
+            target = ("ontokin.glb/0.5" if self.model.profile == FORCE_PROFILE else
+                      "ontokin.glb/0.4" if self.model.profile == IMPULSE_PROFILE else
                       "ontokin.glb/0.3" if self.model.profile == "surface-0.1" else "ontokin.glb/0.2")
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "Delivery requires the explicit " + target + " target.", self.program, phase="support")
         self._attach_provenance()

@@ -211,7 +211,14 @@ def link_program(bundle: ProgramBundle, *, check: Callable[[], None] | None = No
             if target not in modules:
                 _error("OKL-E-NAME", "The explicitly imported package version is not supplied in this bundle.",
                        node, rule="CON-002", reason="missing_dependency", source_id=target)
-            if modules[target].ast.profile == "impulse-0.1" and module.ast.profile != "impulse-0.1":
+            if modules[target].ast.profile == "force-0.1" and module.ast.profile != "force-0.1":
+                raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED",
+                                   "An older declaring module cannot import a force-0.1 dependency.",
+                                   node, phase="support", category="unsupported", rule_ids=["FOR-001"],
+                                   details={"declaring_profile": module.ast.profile,
+                                            "dependency_profile": modules[target].ast.profile,
+                                            "dependency_source_id": target})
+            if modules[target].ast.profile == "impulse-0.1" and module.ast.profile not in {"impulse-0.1", "force-0.1"}:
                 raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED",
                                    "An older declaring module cannot import an impulse-0.1 dependency.",
                                    node, phase="support", category="unsupported", rule_ids=["IMP-001"],

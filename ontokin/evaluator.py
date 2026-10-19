@@ -29,6 +29,8 @@ IDENTITY: Quat = (1.0, 0.0, 0.0, 0.0)
 MAX_SAMPLES = 1000
 MAX_OUTPUT_RECORDS = 100000
 IMPULSE_PROFILE = "impulse-0.1"
+FORCE_PROFILE = "force-0.1"
+IMPULSE_PROFILES = frozenset({IMPULSE_PROFILE, FORCE_PROFILE})
 
 
 class _NumericFault(Exception):
@@ -287,7 +289,7 @@ class _Simulator:
             self.state.modes[path] = obj.motion
             self.state.positions[path] = obj.placement.position
             self.state.orientations[path] = obj.placement.rotation
-            if model.profile == IMPULSE_PROFILE:
+            if model.profile in IMPULSE_PROFILES:
                 self.state.impulses[path] = _ImpulseState()
             if obj.motion == "dynamic":
                 self.state.dynamic[path] = _DynamicInitial(Fraction(0), _Kinematics(
@@ -308,12 +310,12 @@ class _Simulator:
     def _incoming(self, state: _RunState) -> dict[str, tuple[str, str]]:
         relations: dict[str, tuple[str, str]] = {}
         for path, joint in self.model.joints.items():
-            if self.check is not None and self.model.profile == IMPULSE_PROFILE:
+            if self.check is not None and self.model.profile in IMPULSE_PROFILES:
                 self.check()
             if joint.kind != "grip" or path in state.active_grips:
                 relations[self.model.sites[joint.child].owner] = ("joint", path)
         for path, follow in self.model.follows.items():
-            if self.check is not None and self.model.profile == IMPULSE_PROFILE:
+            if self.check is not None and self.model.profile in IMPULSE_PROFILES:
                 self.check()
             relations[follow.child] = ("follow", path)
         return relations
@@ -482,7 +484,7 @@ class _Simulator:
                                blocks=["evaluated", "delivered"])
 
         if event.kind == "impulse":
-            if self.model.profile != IMPULSE_PROFILE:
+            if self.model.profile not in IMPULSE_PROFILES:
                 fail("OKL-E-CAPABILITY-UNSUPPORTED", "Source impulses require impulse-0.1.",
                      phase="support", category="unsupported", rules=["IMP-001"])
             obj = self.model.objects.get(event.target)
@@ -694,8 +696,8 @@ class _Simulator:
             elif mode == "dynamic":
                 anchor = self.state.dynamic[path]
                 authority = {"kind": "free_sphere", "since_seconds": time_text(
-                    anchor.since if self.model.profile == IMPULSE_PROFILE else anchor.time)}
-                if self.model.profile == IMPULSE_PROFILE:
+                    anchor.since if self.model.profile in IMPULSE_PROFILES else anchor.time)}
+                if self.model.profile in IMPULSE_PROFILES:
                     authority["trajectory_anchor_seconds"] = time_text(anchor.time)
             else:
                 authority = {"kind": mode, "translation_action": self.state.claims.get((path, "translation")),
@@ -716,7 +718,7 @@ class _Simulator:
                 "inertia_kg_m2": obj.inertia, "geometry": obj.geometry, "physical": obj.physical,
                 "gravity_participation": gravity, "collision": obj.collision,
             }
-            if self.model.profile == IMPULSE_PROFILE:
+            if self.model.profile in IMPULSE_PROFILES:
                 history = self.state.impulses[path]
                 applications = []
                 for record in history.last_applications:
@@ -753,18 +755,26 @@ class _Simulator:
                 "scene_mass_kg": _round(sum((_f(obj.mass) for obj in self.model.objects.values()), Fraction(0)))}
 
 
+def _simulator(model, check=None):
+    if model.profile == FORCE_PROFILE:
+        from .force_runtime import ForceSimulator
+        return ForceSimulator(model, check=check)
+    return _Simulator(model, check=check)
+
+
 def preflight(model: SceneModel, *, check: Callable[[], None] | None = None) -> dict[str, Any]:
     """Validate the authored timeline without creating a persistent live run."""
-    if model.profile == IMPULSE_PROFILE:
+    if model.profile in IMPULSE_PROFILES:
         _output_budget(model, 1, check=check)
-    simulator = _Simulator(model, check=check)
+    simulator = _simulator(model, check=check)
     simulator.advance(model.duration)
     return {"outcome": "valid", "duration_seconds": time_text(model.duration),
             "boundary_times_seconds": simulator.boundaries}
 
 
 def _records_per_sample(model: SceneModel, *, constructing: bool = False,
-                        check: Callable[[], None] | None = None) -> int:
+                        check: Callable[[], None] | None = None,
+                        horizon: Fraction | None = None, side: str = "after") -> int:
     """Conservative complete output weight, shared with recorded animation.
 
     Existing row accounting is unchanged. Impulse projections additionally
@@ -774,16 +784,21 @@ def _records_per_sample(model: SceneModel, *, constructing: bool = False,
     # Frames contain world, each object frame, and each declared/implicit site
     # frame. Include them so an object with many sites cannot bypass the cap.
     base = 2 * len(model.objects) + len(model.sites) + len(model.joints) + len(model.actions) + 1
-    if model.profile != IMPULSE_PROFILE:
+    if model.profile not in IMPULSE_PROFILES:
         return base
     if check is not None:
         check()
     base += 4 * len(model.objects)
+    if model.profile == FORCE_PROFILE:
+        from .force_runtime import force_record_bound
+        base += force_record_bound(model, constructing=constructing, horizon=horizon, side=side, check=check)
     if constructing:
         return base
     retained: dict[str, int] = {}
     total = maximum = 0
-    for _, blocks in groupby(sorted(model.events, key=lambda block: block.time), key=lambda block: block.time):
+    for boundary, blocks in groupby(sorted(model.events, key=lambda block: block.time), key=lambda block: block.time):
+        if model.profile == FORCE_PROFILE and horizon is not None and (boundary > horizon or (boundary == horizon and side == "before")):
+            break
         group: dict[str, int] = {}
         for block in blocks:
             if check is not None:
@@ -813,7 +828,7 @@ def _output_budget(model: SceneModel, sample_count: int, *, constructing: bool =
         raise OntoKinError("OKL-E-RESOURCE", "The requested state output exceeds the prototype's inspection budget.",
                            model.span, category="resource_limit", phase="elaboration" if constructing else "inspection",
                            blocks=["constructed", "evaluated", "delivered"] if constructing else [],
-                           rule_ids=["IMP-004"] if model.profile == IMPULSE_PROFILE else None,
+                           rule_ids=["IMP-004"] if model.profile in IMPULSE_PROFILES else None,
                            details={"max_samples": MAX_SAMPLES, "max_output_records": MAX_OUTPUT_RECORDS,
                                     "requested_samples": sample_count, "records_per_sample": records_per_sample},
                            repair="Request fewer sample times, or use a smaller scene for this bounded prototype.")
@@ -827,7 +842,7 @@ def construct(model: SceneModel) -> dict[str, Any]:
     """
     _output_budget(model, 1, constructing=True)
     try:
-        initial = _Simulator(model).advance(Fraction(0), "before")
+        initial = _simulator(model).advance(Fraction(0), "before")
     except OntoKinError as exc:
         if exc.diagnostic.category == "numerical_failure":
             exc.diagnostic.phase = "elaboration"
@@ -849,7 +864,7 @@ def evaluate(model: SceneModel, times: Iterable[Any] | None = None, *, side: str
     if times is None:
         times = ["0", model.duration]
     records = _records_per_sample(model)
-    if model.profile == IMPULSE_PROFILE:
+    if model.profile in IMPULSE_PROFILES:
         # Even an empty requested sample list still validates the full horizon
         # and must not allocate an unbounded retained application group.
         _output_budget(model, 1, records_per_sample=records)
@@ -866,7 +881,7 @@ def evaluate(model: SceneModel, times: Iterable[Any] | None = None, *, side: str
                                         "requested_time_seconds": time_text(time), "requested_side": sample_side},
                                repair="Use before or after and a timestamp from zero through the scene duration.")
         requests.append((time, sample_side, index))
-    simulator = _Simulator(model)
+    simulator = _simulator(model)
     samples: list[Any] = [None] * len(requests)
     for time, sample_side, index in sorted(requests, key=lambda request: (request[0], request[1] == "after")):
         samples[index] = simulator.advance(time, sample_side)
@@ -877,10 +892,13 @@ def evaluate(model: SceneModel, times: Iterable[Any] | None = None, *, side: str
         "dynamic_body_model": "homogeneous_solid_sphere", "external_torque": "absent",
         "joint_coupling": "externally_prescribed_no_load_solution",
     }
-    if model.profile == IMPULSE_PROFILE:
+    if model.profile in IMPULSE_PROFILES:
         assumptions.update(external_torque="authored_instantaneous_angular_impulses_only",
                            impulses="authored_world_impulse_at_target_self_point",
                            continuous_external_forces="uniform_gravity_only", continuous_external_torque="absent")
+    if model.profile == FORCE_PROFILE:
+        assumptions.update(continuous_external_forces="authored_constant_world_com_intervals_and_uniform_gravity",
+                           force_intervals="exact_rational_start_plus_canonical_duration")
     return {
         "outcome": "valid", "level": "evaluated", "profile": model.profile,
         "module": model.module_name, "scene": model.scene_name,
@@ -907,7 +925,8 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
                            model.span, phase="inspection", blocks=[],
                            details={"duration_seconds": time_text(model.duration),
                                     "requested_time_seconds": time_text(endpoint), "requested_side": side})
-    _output_budget(model, 1, check=check)
+    _output_budget(model, 1, check=check, records_per_sample=(
+        _records_per_sample(model, check=check, horizon=endpoint, side=side) if model.profile == FORCE_PROFILE else None))
     simulator = None
     last = None
     failure = None
@@ -944,7 +963,7 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
         return sample
 
     try:
-        simulator = _Simulator(model, check=check)
+        simulator = _simulator(model, check=check)
         last = capture(Fraction(0), "before")
         while True:
             if check is not None:

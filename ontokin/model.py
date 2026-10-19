@@ -115,12 +115,23 @@ class ImpulsePayload:
     source: dict[str, Any]
 
 
+@dataclass(frozen=True)
+class ForcePayload:
+    """Canonical source constants; exact activation is held by the event block."""
+    key: str
+    force_world_n: Vec
+    duration: Fraction
+    sequence_index: int
+    source: dict[str, Any]
+
+
 @dataclass
 class Event:
     kind: str
     target: str
     span: Any = None
     impulse: ImpulsePayload | None = None
+    force: ForcePayload | None = None
 
 
 @dataclass
