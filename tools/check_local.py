@@ -113,24 +113,63 @@ def immutable_workspace_inputs(records: dict) -> dict:
     return inventory_records([item for item in records["files"] if not generated(item["path"])])
 
 
+def git_environment(root: Path) -> dict[str, str]:
+    """Keep Git local to this checkout and independent of caller Git overrides."""
+    environment = {key: value for key, value in os.environ.items() if not key.startswith("GIT_")}
+    environment.update(GIT_CONFIG_NOSYSTEM="1", GIT_CONFIG_GLOBAL=os.devnull, GIT_TERMINAL_PROMPT="0",
+                       GIT_OPTIONAL_LOCKS="0", GIT_NO_REPLACE_OBJECTS="1", GIT_NO_LAZY_FETCH="1",
+                       GIT_CEILING_DIRECTORIES=str(root.resolve().parent))
+    return environment
+
+
+def git_read(root: Path, *args: str, timeout: float = 10) -> str:
+    return subprocess.check_output(["git", "-c", "core.fsmonitor=false", "-C", str(root), *args],
+                                   stderr=subprocess.PIPE, text=True, timeout=timeout,
+                                   env=git_environment(root)).rstrip("\n")
+
+
 def git_metadata(root: Path) -> dict:
-    """Read local metadata only; a parent repository is not this source checkout."""
-    def read(*args: str) -> str:
-        return subprocess.check_output(["git", "-C", str(root), *args], stderr=subprocess.DEVNULL,
-                                       text=True, timeout=10).strip()
+    """Read exact local metadata without refreshing the source index."""
     try:
-        if Path(read("rev-parse", "--show-toplevel")).resolve() != root.resolve():
+        if Path(git_read(root, "rev-parse", "--show-toplevel")).resolve() != root.resolve():
             return {"available": False, "reason": "No Git checkout rooted at this source directory."}
-        return {"available": True, "local_head": read("rev-parse", "HEAD"),
-                "local_tree": read("rev-parse", "HEAD^{tree}"),
-                "tracked_worktree_status": read("status", "--porcelain=v1", "--untracked-files=no"),
-                "untracked_source_files": [name for name in read("ls-files", "--others", "--exclude-standard", "-z").split("\0")
+        head = git_read(root, "rev-parse", "--verify", "HEAD^{commit}")
+        tree = git_read(root, "rev-parse", "--verify", head + "^{tree}")
+        if (re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", head) is None or
+                re.fullmatch(r"[0-9a-f]{" + str(len(head)) + "}", tree) is None):
+            raise ValueError("The checkout does not identify a supported Git commit and tree.")
+        return {"available": True, "local_head": head, "local_tree": tree,
+                "tracked_worktree_status": git_read(root, "status", "--porcelain=v1", "--untracked-files=no"),
+                "untracked_source_files": [name for name in git_read(root, "ls-files", "--others", "--exclude-standard", "-z").split("\0")
                                            if name and (name.split("/")[0] in SOURCE_DIRS or name in ROOT_FILES)
                                            and not any(ignored(part) for part in name.split("/"))],
                 "head_is_base_revision": True, "source_inventory_includes_untracked_files": True,
                 "remote_head_verified": False}
     except (OSError, subprocess.SubprocessError):
         return {"available": False, "reason": "Local Git metadata unavailable; use the source inventory."}
+
+
+def prepare_workspace_git(root: Path, workspace: Path, source: dict) -> None:
+    """Retain the real commit in an independent repository; leave copied bytes intact."""
+    if not source["available"]:
+        if (root / ".git").exists() or (root / ".git").is_symlink():
+            raise ValueError("Cannot retain the source checkout's required Git metadata: " + source["reason"])
+        return
+    head, tree = source["local_head"], source["local_tree"]
+    object_format = "sha1" if len(head) == 40 else "sha256"
+    try:
+        git_read(workspace, "init", "--quiet", "--template=", "--object-format=" + object_format)
+        # Fetch only from the observed local checkout. No source config, remote,
+        # index, refs, credential helper or shared object alternates are copied.
+        git_read(workspace, "-c", "protocol.allow=never", "-c", "protocol.file.allow=always",
+                 "fetch", "--quiet", "--depth=1", "--no-tags", "--no-write-fetch-head",
+                 "--", str(root.resolve()), head, timeout=120)
+        git_read(workspace, "update-ref", "--no-deref", "HEAD", head)
+        git_read(workspace, "read-tree", head)
+        if (git_read(workspace, "rev-parse", "HEAD"), git_read(workspace, "rev-parse", "HEAD^{tree}")) != (head, tree):
+            raise ValueError("The isolated workspace did not retain the observed source commit/tree.")
+    except (OSError, subprocess.SubprocessError) as error:
+        raise ValueError(f"Cannot retain exact source Git metadata in the isolated workspace: {error}") from error
 
 
 def prepare_output(root: Path, output: Path) -> None:
@@ -141,10 +180,11 @@ def prepare_output(root: Path, output: Path) -> None:
     output.mkdir(parents=True, exist_ok=True)
 
 
-def prepare_workspace(root: Path, output: Path, full: bool) -> Path:
+def prepare_workspace(root: Path, output: Path, full: bool, *, source_git: dict | None = None) -> Path:
     """Retain an isolated copy so fixed-path builders cannot overwrite the checkout."""
     workspace = output / "workspace"
     workspace.mkdir()
+    source_git = git_metadata(root) if source_git is None else source_git
     def exclude(directory: str, names: list[str]) -> list[str]:
         excluded = [name for name in names if ignored(name)]
         for name in names:
@@ -157,6 +197,7 @@ def prepare_workspace(root: Path, output: Path, full: bool) -> Path:
     for name in ROOT_FILES:
         if (root / name).is_file():
             shutil.copy2(root / name, workspace / name)
+    prepare_workspace_git(root, workspace, source_git)
     dependencies = root / "tools/node_modules"
     if full and dependencies.is_dir():
         # Verification commands only read these installed tools; they never install.
@@ -353,7 +394,7 @@ def execute_step(step: Step, workspace: Path, output: Path, previous: dict, time
         else:
             try:
                 process = subprocess.Popen(step.argv, cwd=workspace, stdout=log, stderr=subprocess.STDOUT,
-                                           start_new_session=os.name == "posix")
+                                           start_new_session=os.name == "posix", env=git_environment(workspace))
                 try:
                     record["returncode"] = process.wait(timeout=timeout)
                     record["status"] = "passed" if process.returncode == 0 else "failed"
@@ -428,7 +469,11 @@ def run(root: Path, output: Path, full: bool, timeout: float, *, force_agent: bo
         summary["workspace_generated_exclusions"] = {"files": sorted(GENERATED_EXAMPLES),
             "patterns": ["examples/{visual,agent,construction}/*.{glb,export.json,reference.json}"],
             "scope": "Only the isolated workspace comparison; all original checkout example bytes are preserved and checked."}
-        workspace = prepare_workspace(root, output, full)
+        workspace = prepare_workspace(root, output, full, source_git=summary["git"])
+        summary["workspace_git"] = git_metadata(workspace)
+        if summary["workspace_git"]["available"]:
+            summary["workspace_git"].update(index_basis="source_commit_tree",
+                                             copied_worktree_changes_preserved=True, source_staging_preserved=False)
         if inventory(workspace) != before:
             raise ValueError("Source changed while the isolated workspace was copied.")
         (output / "reports").mkdir()
@@ -448,7 +493,11 @@ def run(root: Path, output: Path, full: bool, timeout: float, *, force_agent: bo
                 break
         after = inventory(root)
         write_json(output / "source-after.json", after)
-        summary["source_unchanged"] = after == before and immutable_workspace_inputs(inventory(workspace)) == immutable_workspace_inputs(before)
+        summary["git_after"] = git_metadata(root)
+        summary["git_revision_unchanged"] = all(summary["git"].get(key) == summary["git_after"].get(key)
+                                                 for key in ("available", "local_head", "local_tree"))
+        summary["source_unchanged"] = (after == before and summary["git_revision_unchanged"] and
+                                       immutable_workspace_inputs(inventory(workspace)) == immutable_workspace_inputs(before))
         summary["pending_external_cases"] = [dict(step=step["id"], report=report["path"], **case)
                                               for step in summary["steps"] for report in step["reports"]
                                               for case in report.get("pending_cases", [])]

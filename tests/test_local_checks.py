@@ -3,6 +3,7 @@ from contextlib import redirect_stderr, redirect_stdout
 import io
 import json
 from pathlib import Path
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -30,6 +31,13 @@ class LocalChecksTests(unittest.TestCase):
 
     def command(self, name, program, *, requires=(), reports=()):
         return checks.Step(name, (sys.executable, "-c", program), requires, reports)
+
+    def initialize_git(self, root, paths=(".",)):
+        checks.git_read(root, "init", "--quiet", "--template=")
+        checks.git_read(root, "add", "--", *paths)
+        checks.git_read(root, "-c", "user.name=Local check fixture", "-c", "user.email=fixture@example.invalid",
+                        "commit", "--quiet", "-m", "Source fixture")
+        return checks.git_metadata(root)
 
     def test_failed_builder_blocks_stale_artifact_validation(self):
         marker = self.directory / "checker-was-run"
@@ -59,6 +67,71 @@ class LocalChecksTests(unittest.TestCase):
         self.assertTrue((self.output / "source-before.json").is_file())
         self.assertEqual(summary["source_inventory"]["inventory_sha256"], checks.inventory(self.root)["sha256"])
         self.assertEqual(summary["source_inventory"]["sha256"], checks.file_identity(self.output / "source-before.json")["sha256"])
+
+    def test_external_workspace_retains_real_git_revision_and_copied_changes_with_own_index(self):
+        original = self.initialize_git(self.root)
+        checks.git_read(self.root, "config", "remote.origin.url", "https://example.invalid/source-only")
+        checks.git_read(self.root, "config", "credential.helper", "source-only-helper")
+        changed = self.root / "ontokin/__init__.py"
+        changed.write_text("VALUE = 2\n", encoding="utf-8")
+        checks.git_read(self.root, "add", "ontokin/__init__.py")
+        changed.write_text("VALUE = 3\n", encoding="utf-8")
+        (self.root / "docs/untracked.txt").write_text("new source evidence\n", encoding="utf-8")
+        source_index = self.root / ".git/index"
+        before = (source_index.read_bytes(), source_index.stat().st_mtime_ns)
+        code, summary = self.execute([self.command("git-provenance", "import subprocess; subprocess.run(['git', 'rev-parse', 'HEAD'], check=True)")])
+        workspace = self.output / "workspace"
+        self.assertEqual(code, 0)
+        for name in ("git", "workspace_git", "git_after"):
+            self.assertEqual(summary[name]["local_head"], original["local_head"])
+            self.assertEqual(summary[name]["local_tree"], original["local_tree"])
+        self.assertEqual(summary["workspace_git"]["index_basis"], "source_commit_tree")
+        self.assertIn(" M ontokin/__init__.py", checks.git_read(workspace, "status", "--porcelain"))
+        self.assertIn("docs/untracked.txt", summary["workspace_git"]["untracked_source_files"])
+        self.assertEqual((workspace / "ontokin/__init__.py").read_bytes(), changed.read_bytes())
+        self.assertEqual((workspace / "docs/untracked.txt").read_text(), "new source evidence\n")
+        self.assertEqual((source_index.read_bytes(), source_index.stat().st_mtime_ns), before)
+        self.assertFalse(source_index.samefile(workspace / ".git/index"))
+        self.assertFalse((workspace / ".git/objects/info/alternates").exists())
+        self.assertNotIn("source-only", (workspace / ".git/config").read_text())
+        self.assertEqual(checks.git_read(workspace, "rev-parse", "--show-toplevel"), str(workspace))
+        self.assertTrue(summary["git_revision_unchanged"])
+
+    def test_no_git_source_cannot_inherit_an_unrelated_parent_revision(self):
+        (self.directory / "parent.txt").write_text("unrelated repository\n", encoding="utf-8")
+        self.initialize_git(self.directory, ("parent.txt",))
+        step = self.command("no-parent-git", "import subprocess; result=subprocess.run(['git','rev-parse','HEAD'], capture_output=True); assert result.returncode != 0")
+        code, summary = self.execute([step])
+        self.assertEqual(code, 0)
+        self.assertFalse(summary["git"]["available"])
+        self.assertFalse(summary["workspace_git"]["available"])
+        self.assertNotIn("local_head", summary["workspace_git"])
+        self.assertFalse((self.output / "workspace/.git").exists())
+
+    def test_workspace_git_copy_failure_is_explicit_and_does_not_start_checks(self):
+        self.initialize_git(self.root)
+        read = checks.git_read
+        def fail_local_fetch(root, *args, **kwargs):
+            if root == self.output / "workspace" and "fetch" in args:
+                raise subprocess.CalledProcessError(128, ["git", "fetch"], stderr="missing local object")
+            return read(root, *args, **kwargs)
+        with patch.object(checks, "git_read", side_effect=fail_local_fetch):
+            code, summary = self.execute([self.command("unexpected", "raise RuntimeError('must not run')")])
+        self.assertEqual(code, 1)
+        self.assertEqual(summary["steps"], [])
+        self.assertIn("Cannot retain exact source Git metadata", summary["error"])
+
+    def test_source_head_movement_invalidates_unchanged_file_bytes(self):
+        original = self.initialize_git(self.root)
+        step = checks.Step("advance-head", ("git", "-C", str(self.root), "-c", "user.name=Local check fixture",
+            "-c", "user.email=fixture@example.invalid", "commit", "--quiet", "--allow-empty", "-m", "Concurrent head movement"))
+        code, summary = self.execute([step])
+        self.assertEqual(code, 1)
+        self.assertEqual(summary["steps"][0]["status"], "passed")
+        self.assertEqual(summary["git_after"]["local_tree"], original["local_tree"])
+        self.assertNotEqual(summary["git_after"]["local_head"], original["local_head"])
+        self.assertFalse(summary["git_revision_unchanged"])
+        self.assertFalse(summary["source_unchanged"])
 
     def test_pending_report_remains_pending_after_successful_command(self):
         report = self.output / "reports/cases.json"
