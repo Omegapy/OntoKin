@@ -19,6 +19,7 @@ class ProgramBinding:
     store_schema: str
     native_surfaces: bool
     bounded_delivery: bool
+    delivery_available: bool = True
 
 
 PROGRAM_BINDINGS = MappingProxyType({binding.protocol: binding for binding in (
@@ -28,5 +29,7 @@ PROGRAM_BINDINGS = MappingProxyType({binding.protocol: binding for binding in (
                    "surface-program-agent.sqlite3", "ontokin.surface-program-agent-store/0.1", True, True),
     ProgramBinding("ontokin.agent/0.4", "0.4", "impulse-0.1", "ontokin.glb/0.4",
                    "impulse-program-agent.sqlite3", "ontokin.impulse-program-agent-store/0.1", True, True),
+    ProgramBinding("ontokin.agent/0.5", "0.5", "force-0.1", "ontokin.glb/0.5",
+                   "force-program-agent.sqlite3", "ontokin.force-program-agent-store/0.1", True, True, False),
 )})
 PROFILE_BINDINGS = MappingProxyType({binding.profile: binding for binding in PROGRAM_BINDINGS.values()})
