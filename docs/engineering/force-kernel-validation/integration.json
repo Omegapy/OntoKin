@@ -1,0 +1,60 @@
+{
+  "schema_version": "ontokin.force-kernel-integration/0.1",
+  "observed_at_utc": "2026-10-19T05:30:00Z",
+  "status": "kernel_checkpoint_integrated_and_resulting_main_verified",
+  "force_release_complete": false,
+  "full_product_complete": false,
+  "implementation_commit": "cd5a6f2131b1fe2c760ab851a11c2c5b3cf119b1",
+  "implementation_tree": "a92aac948bbb6e80e7adaa136d8a6098f0f17563",
+  "merge": {
+    "pull_request": 13,
+    "commit": "74089239eb81b3c5a335b63145b3444eccfab148",
+    "tree": "204ec69db6261e1a89f08327df0ee21f300f3072",
+    "merged_at_utc": "2026-10-19T04:10:09Z",
+    "parents": ["b3c9811c9750f0aad5ffa0761a6f9b4bd10a0be6", "8bd62b0685c4c7b42c57ac84332d5d793b0fa3ae"]
+  },
+  "ci": {
+    "record_format": "Normalized observations from actual connected GitHub run and job reads, not raw API payloads.",
+    "checked_pr_head": "8bd62b0685c4c7b42c57ac84332d5d793b0fa3ae",
+    "pr_run": 39195106229,
+    "resulting_main_run": 39198117569,
+    "resulting_main_head": "74089239eb81b3c5a335b63145b3444eccfab148",
+    "completed_at_utc": "2026-10-19T04:18:01Z",
+    "conclusion": "success",
+    "jobs": [
+      {"id": 117885190534, "name": "reference (3.13)", "status": "completed", "conclusion": "success"},
+      {"id": 117885190684, "name": "reference (3.12)", "status": "completed", "conclusion": "success"},
+      {"id": 117885190866, "name": "reference (3.11)", "status": "completed", "conclusion": "success"},
+      {"id": 117885190802, "name": "GLB format and visual validation", "status": "completed", "conclusion": "success"}
+    ]
+  },
+  "git_input_comparison": {
+    "command": "git ls-tree -rz <implementation-commit> and git ls-tree -rz <merge-commit>; compare complete path/mode/type/blob maps",
+    "unchanged_tracked_paths": 593,
+    "canonical_unchanged_inventory_sha256": "sha256:ed46ae2dfde186ffbee42d593d58303147cf75dd31bdbe165234d9ac2b961ad5",
+    "inventory_encoding": "UTF-8 compact JSON array sorted by path; each entry has mode, path, sha, type; object keys sorted; separators comma and colon; no terminal newline",
+    "only_differing_paths": ["STATUS.md", "docs/language-design/force-v0.1/KERNEL-CHECKPOINT.md"],
+    "all_other_paths_modes_types_and_blobs_identical": true,
+    "repeated_at_utc": "2026-10-19T05:29:12Z"
+  },
+  "preserved_execution_record": "../../language-design/force-v0.1/KERNEL-CHECKPOINT.md",
+  "publication_run": 39194062765,
+  "source_bundle_artifact": 12161410669,
+  "artifact_zip_sha256": "sha256:e2e374d6d1e84497b27618a85335b00b80ecd63070c21664a44f85dbd81c8fb5",
+  "identified_kernel_results": {
+    "full_tests": 677,
+    "focused_tests": 89,
+    "effective_source_cases": 56,
+    "original_source_cases": 43,
+    "original_source_assertions": 694,
+    "publication_full_suite_seconds": 160.218,
+    "publication_focused_seconds": 1.716
+  },
+  "limitations": [
+    "The source parser/compiler/evaluator checkpoint is complete, not F01-F12.",
+    "Agent/0.5 checkpoint implementation is separately published in PR #14 and still undergoing additional schema/workflow checks.",
+    "GLB/0.5 source-driven force delivery and independent force destination/browser verification remain unfinished.",
+    "Historical surface and impulse evidence remains unchanged and identifies its own earlier runtime bytes.",
+    "No temporary publication workflow, staging payload or installed dependency directory was integrated."
+  ]
+}
