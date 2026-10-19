@@ -12,6 +12,7 @@ import argparse
 import base64
 import copy
 from datetime import datetime, timezone
+from dataclasses import replace
 from fractions import Fraction as Q
 from functools import lru_cache
 import hashlib
@@ -24,7 +25,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from ontokin.bundle import load_bundle, load_file_manifest
+from ontokin.bundle import ProgramBundle, load_bundle, load_file_manifest
 
 PROTOCOL = 'ontokin.agent/0.5'
 DATA = ROOT / 'docs/language-design/force-v0.1'
@@ -241,6 +242,9 @@ class Reader:
         self.root=Path(directory).resolve(); self.schemas=schemas or SchemaChecks();self.book=SourceBook()
         self.files=set(); self.roles={};self.heads={};self.accepted=set();self.runs={};self.counter=0
         self.implementation=identity()
+        self.run_ids=set()
+        self.request_ledger={}
+        self.bundles_by_revision={b.program_revision:b for b in self.book.bundles.values()}
 
     def read(self,name,expected=None):
         p=PurePosixPath(name)
@@ -256,6 +260,11 @@ class Reader:
 
     def recursive(self,value):
         if isinstance(value,dict):
+            if 'source_manifest' in value:
+                revision=value.get('program_revision')
+                require(revision in self.bundles_by_revision,'Source manifest has an unbound program revision')
+                require(value['source_manifest']==self.bundles_by_revision[revision].manifest(),
+                        'Source manifest differs from exact request source bytes')
             if 'implementation' in value:
                 require(value['implementation']==self.implementation,'Mixed implementation identity')
             if 'forces' in value and 'pose_authority' in value:
@@ -271,6 +280,10 @@ class Reader:
         return self.roles[role]
 
     def sample(self,name,obj,row):
+        expected_id=['force-demo','demo',*[a or b for a,b in re.findall(r'(\w+)|\["([^"]+)"\]',row['target'])]]
+        require(obj['element_id']==expected_id,'State occurrence identity differs from source')
+        require(obj['motion']==('dynamic' if row['dynamic_since'] is not None else 'prescribed'),
+                'State motion mode differs from source oracle')
         exact=name in ('P18','P19','P20')
         for a,b in [('position_m','position_m'),('velocity_m_per_s','velocity_m_s'),('angular_velocity_rad_per_s','omega_world_rad_s')]:
             vector(obj[a],row[b],a,exact=exact)
@@ -280,11 +293,59 @@ class Reader:
             require(clock(obj['pose_authority']['trajectory_anchor_seconds'])==authored_clock(row['anchor_time']),'Trajectory anchor changed')
         self.book.check_projection(name,row['target'],obj,authored_clock(row['time']),row['side'])
 
+    def register_candidate(self, request):
+        """Bind source manifests to transported bytes, without source execution."""
+        if request['operation']=='create':
+            candidate=load_bundle(request['bundle'])
+        elif request['operation']=='edit':
+            base=self.bundles_by_revision.get(request['expected_program_revision'])
+            require(base is not None,'Edit has no retained immutable source base')
+            require(not request.get('module_changes'),'Unexpected dependency edit in fixed workflow')
+            units={unit.source_id:unit for unit in base.units}
+            grouped={}
+            for patch in request['patches']:
+                unit=units.get(patch['source_id'])
+                require(unit is not None and patch['source_revision']==unit.revision,'Patch source revision differs')
+                a,b=patch['start_byte'],patch['end_byte']
+                require(0<=a<=b<=len(unit.raw) and unit.raw[a:b].decode()==patch['expected_text'],
+                        'Patch bytes do not match retained source')
+                grouped.setdefault(unit.source_id,[]).append(patch)
+            for source_id, patches in grouped.items():
+                unit=units[source_id];raw=unit.raw;end=len(raw)+1
+                for patch in sorted(patches,key=lambda p:p['start_byte'],reverse=True):
+                    a,b=patch['start_byte'],patch['end_byte']
+                    require(b<end,'Overlapping source edits in retained request')
+                    raw=raw[:a]+patch['replacement'].encode()+raw[b:];end=a
+                units[source_id]=replace(unit,raw=raw)
+            candidate=ProgramBundle(units['entry'],tuple(units[u.source_id] for u in base.modules))
+        else:
+            return
+        self.bundles_by_revision[candidate.program_revision]=candidate
+
+    def snapshot_state(self,name,state,time,side):
+        require(set(state['objects'])==self.book.objects(name),'Snapshot omitted or added a source object')
+        require(clock(state['time_seconds'])==time and state['side']==side,'Snapshot clock/side differs')
+        rows={r['target']:r for r in self.book.cases[name]['expected_samples']
+              if authored_clock(r['time'])==time and r['side']==side}
+        require(rows,'No predetermined state oracle for this checkpoint snapshot')
+        for target,obj in state['objects'].items():
+            if target in rows:
+                self.sample(name,obj,rows[target])
+            else:
+                self.book.check_projection(name,target,obj,time,side)
+            # A full snapshot must not contradict its own object frame.
+            frame=state['frames'].get(target+'.frame')
+            require(frame is not None,'Missing object frame in snapshot')
+            for key in ('position_m','orientation_wxyz','velocity_m_per_s','angular_velocity_rad_per_s'):
+                require(frame[key]==obj[key],'Snapshot object/frame state differs')
+
     def create(self,role,name):
         q,r=self.at(role);b=self.book.bundles[name]
         require(q['operation']=='create' and q['bundle']==b.to_payload(),'Create did not send the fixed source bundle')
         require(q['expected_program_revision'] is None and q['requested_level']=='constructed','Wrong create admission')
         require(r['status']=='succeeded' and r['accepted_program_revision']==b.program_revision,'Source was not accepted')
+        require(r['achieved_level']=='constructed','Create did not construct its source')
+        self.snapshot_state(name,r['result']['initial_state'],Q(0),'before')
         return q,r
 
     def check_run(self,name):
@@ -295,6 +356,9 @@ class Reader:
         require(r['status']=='succeeded' and r['achieved_level']=='evaluated' and run['status']=='ready' and run['failure'] is None,'Run is not ready')
         require(run['run_id']==r['run_id'] and run['program_revision']==b.program_revision and not run['candidate_only'] and run['origin']=='ordinary','Run provenance differs')
         require(clock(run['valid_until_seconds'])==authored_clock(case['request_horizon']) and run['valid_until_side']=='after','Run is not certified to the requested horizon')
+        require(r['run_id'] not in self.run_ids,'Run identity reused across independent source evaluations')
+        self.run_ids.add(r['run_id'])
+        self.snapshot_state(name,run['last_valid_state'],authored_clock(case['request_horizon']),'after')
         self.runs[name]=r['run_id']
         return run
 
@@ -329,6 +393,7 @@ class Reader:
         require((s['start_byte'],s['end_byte'])==expected_span and s['source_revision']==old.entry.revision and s['source_id']=='entry','Reported writable span differs from source declaration')
         require(s['start_byte']<=p['start_byte']<=p['end_byte']<=s['end_byte'],'Patch is outside source authority')
         require(r['status']=='succeeded' and r['accepted_program_revision']==b.program_revision,'Repair was not committed')
+        self.snapshot_state(name,r['result']['initial_state'],Q(0),'before')
         for role,head in [('reject-scope',old.program_revision),('stale',b.program_revision)]:
             fq,fr=self.at(name+'/'+role)
             self.failure(fr,'OKL-E-REVISION');require(fr['accepted_program_revision']==head,'Rejected edit changed the accepted head')
@@ -355,10 +420,24 @@ class Reader:
             for k in ('request_file','response_file'):
                 require(record[k] not in self.files,'Reused evidence file path');self.files.add(record[k])
             q=self.read(record['request_file'],record['request_sha256']);r=self.read(record['response_file'],record['response_sha256'])
-            self.schemas.validate('request',q);self.schemas.validate('response',r);self.recursive(r)
+            self.schemas.validate('request',q);self.schemas.validate('response',r)
+            self.register_candidate(q);self.recursive(r)
             require(all(q[k]==r[k] for k in ('schema_version','project_id','request_id','operation')),'Response does not belong to its request')
             require(record['method']==('submit' if role=='cancel/submit' else 'handle'),'Wrong actual transport method')
             self.roles[role]=(q,r)
+            key=(q['project_id'],q['request_id'])
+            previous=self.request_ledger.get(key)
+            if previous is None:
+                self.request_ledger[key]=(q,r)
+            elif previous[0]!=q:
+                require(r['status']=='rejected' and r['protocol_error'] is not None and
+                        r['protocol_error']['code']=='OKL-E-REQUEST-ID',
+                        'Reused request ID lacks changed-payload rejection')
+            elif previous[1]['status']=='queued':
+                require(r['status']=='cancelled','Queued request ID has an unexpected terminal receipt')
+                self.request_ledger[key]=(q,r)
+            else:
+                require(previous[1]==r,'Identical request ID retry changed its terminal receipt')
             project=q['project_id'];old=self.heads.get(project)
             if q['operation'] in ('create','edit') and r['status']=='succeeded':
                 if q['operation']=='create':
@@ -381,6 +460,7 @@ class Reader:
             for index,row in enumerate(c['expected_samples']):
                 role=f'{name}/sample/{index:04d}';required.add(role);q,r=self.at(role)
                 require(q['operation']=='inspect' and q['program_revision']==b.program_revision and q['run_id']==self.runs[name],'Inspection source/run mismatch')
+                require(q.get('frame','world')=='world','Inspection frame request was substituted')
                 require(q['selector']=={'path':row['target']} and q['fields']==['identity','state'] and q['limit']==1,'Inspection query was substituted')
                 require(Q(q['time']['seconds'])==authored_clock(row['time']) and q['time']['side']==row['side'],'Inspection time/side was substituted')
                 require(r['status']=='succeeded' and not r['truncated'] and r['next_cursor'] is None,'Incomplete state inspection')
@@ -460,7 +540,8 @@ class Reader:
         q,r=self.at('prefix/reset');run=r['result']['run_state']
         require(q['operation']=='reset' and r['status']=='succeeded' and r['run_id']!=self.runs['P21'] and run['origin']=='reset' and
                 run['valid_until_seconds']=='0' and run['valid_until_side']=='before','Reset did not create an independent before-zero run')
-        require(run['last_valid_state']['objects']['ball']['forces']['started_count']==0,'Reset retained an earlier force')
+        require(r['run_id'] not in self.run_ids,'Run identity reused for reset')
+        self.snapshot_state('P21',run['last_valid_state'],Q(0),'before')
         q,r=self.at('frame/self');local=r['result']['items'][0]['state']
         _,world_response=next(self.at(f'P07/sample/{i:04d}') for i,row in enumerate(self.book.cases['P07']['expected_samples'])
                               if authored_clock(row['time'])==Q(3,2) and row['side']=='after')
