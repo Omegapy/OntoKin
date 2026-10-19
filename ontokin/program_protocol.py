@@ -16,6 +16,7 @@ from .program_bindings import PROGRAM_BINDINGS
 SCHEMA_VERSION = "ontokin.agent/0.2"
 SURFACE_SCHEMA_VERSION = "ontokin.agent/0.3"
 IMPULSE_SCHEMA_VERSION = "ontokin.agent/0.4"
+FORCE_SCHEMA_VERSION = "ontokin.agent/0.5"
 MAX_REQUEST_BYTES = MAX_JSON_BYTES
 MAX_BUDGETS = {**core.MAX_BUDGETS, "max_value_entries": MAX_JSON_ENTRIES}
 COMMON = core.COMMON

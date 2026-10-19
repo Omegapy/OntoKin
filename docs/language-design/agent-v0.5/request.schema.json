@@ -1,0 +1,1396 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://omegapy.github.io/OntoKin/schemas/ontokin.agent-request-0.5.json",
+  "title": "OntoKin finite force program agent request 0.5",
+  "description": "Explicit Agent/0.5 binding under OK-AGENT-005 and adopted OK-LANG-005. Earlier source, agent, surface and diagnostic contracts retain their meanings. Structurally valid GLB/0.5 requests do not imply an available adapter. Finite JSON, exact source authority, temporal semantics and complete budgets require independent semantic checks.",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.5"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "operation": {
+          "const": "discover"
+        },
+        "profile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        },
+        "filter": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "capability": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "cursor": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "bundle": {
+          "$ref": "https://omegapy.github.io/OntoKin/schemas/ontokin.bundle-0.1.json"
+        },
+        "program_revision": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "budgets": {
+          "type": "object",
+          "properties": {
+            "max_objects": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "max_operations": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000
+            },
+            "max_result_items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "max_elapsed_ms": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 30000
+            },
+            "max_value_entries": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "profile",
+        "limit"
+      ],
+      "additionalProperties": false,
+      "not": {
+        "required": [
+          "bundle",
+          "program_revision"
+        ]
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.5"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "operation": {
+          "const": "create"
+        },
+        "bundle": {
+          "$ref": "https://omegapy.github.io/OntoKin/schemas/ontokin.bundle-0.1.json"
+        },
+        "expected_program_revision": {
+          "type": "null"
+        },
+        "requested_level": {
+          "enum": [
+            "represented",
+            "constructed",
+            "evaluated",
+            "delivered"
+          ]
+        },
+        "budgets": {
+          "type": "object",
+          "properties": {
+            "max_objects": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "max_operations": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000
+            },
+            "max_result_items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "max_elapsed_ms": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 30000
+            },
+            "max_value_entries": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "destination": {
+          "const": "ontokin.glb/0.5"
+        },
+        "options": {
+          "type": "object",
+          "properties": {
+            "fps": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 10000
+            },
+            "end": {
+              "type": "string",
+              "pattern": "^[0-9]+(?:\\.[0-9]+)?$",
+              "maxLength": 1024
+            },
+            "position_tolerance_m": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "rotation_tolerance_rad": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "time_tolerance_s": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "helpers": {
+              "type": "boolean"
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "bundle",
+        "expected_program_revision",
+        "requested_level"
+      ],
+      "additionalProperties": false,
+      "dependentRequired": {
+        "options": [
+          "destination"
+        ]
+      },
+      "allOf": [
+        {
+          "if": {
+            "anyOf": [
+              {
+                "required": [
+                  "destination"
+                ]
+              },
+              {
+                "required": [
+                  "options"
+                ]
+              }
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_level": {
+                "const": "delivered"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.5"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "operation": {
+          "const": "edit"
+        },
+        "expected_program_revision": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "patches": {
+          "type": "array",
+          "maxItems": 1000,
+          "items": {
+            "type": "object",
+            "properties": {
+              "source_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_revision": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              },
+              "element_id": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 256,
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                }
+              },
+              "start_byte": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 2000000
+              },
+              "end_byte": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 2000000
+              },
+              "expected_text": {
+                "type": "string"
+              },
+              "replacement": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "source_id",
+              "source_revision",
+              "element_id",
+              "start_byte",
+              "end_byte",
+              "expected_text",
+              "replacement"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "requested_level": {
+          "enum": [
+            "represented",
+            "constructed",
+            "evaluated",
+            "delivered"
+          ]
+        },
+        "module_changes": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "operation": {
+                    "const": "add"
+                  },
+                  "module": {
+                    "type": "object",
+                    "properties": {
+                      "package_id": {
+                        "type": "string",
+                        "maxLength": 128,
+                        "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+                      },
+                      "version": {
+                        "type": "string",
+                        "pattern": "^(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)$"
+                      },
+                      "filename": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "source": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "package_id",
+                      "version",
+                      "filename",
+                      "source"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "operation",
+                  "module"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "operation": {
+                    "const": "remove"
+                  },
+                  "source_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "source_revision": {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  }
+                },
+                "required": [
+                  "operation",
+                  "source_id",
+                  "source_revision"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "operation": {
+                    "const": "replace"
+                  },
+                  "source_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "source_revision": {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  },
+                  "module": {
+                    "type": "object",
+                    "properties": {
+                      "package_id": {
+                        "type": "string",
+                        "maxLength": 128,
+                        "pattern": "^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$"
+                      },
+                      "version": {
+                        "type": "string",
+                        "pattern": "^(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)\\.(?:0|[1-9][0-9]*)$"
+                      },
+                      "filename": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "source": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "package_id",
+                      "version",
+                      "filename",
+                      "source"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "operation",
+                  "source_id",
+                  "source_revision",
+                  "module"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "budgets": {
+          "type": "object",
+          "properties": {
+            "max_objects": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "max_operations": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000
+            },
+            "max_result_items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "max_elapsed_ms": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 30000
+            },
+            "max_value_entries": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "destination": {
+          "const": "ontokin.glb/0.5"
+        },
+        "options": {
+          "type": "object",
+          "properties": {
+            "fps": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 10000
+            },
+            "end": {
+              "type": "string",
+              "pattern": "^[0-9]+(?:\\.[0-9]+)?$",
+              "maxLength": 1024
+            },
+            "position_tolerance_m": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "rotation_tolerance_rad": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "time_tolerance_s": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "helpers": {
+              "type": "boolean"
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "expected_program_revision",
+        "patches",
+        "requested_level"
+      ],
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "properties": {
+            "patches": {
+              "minItems": 1
+            }
+          }
+        },
+        {
+          "required": [
+            "module_changes"
+          ],
+          "properties": {
+            "module_changes": {
+              "minItems": 1
+            }
+          }
+        }
+      ],
+      "dependentRequired": {
+        "options": [
+          "destination"
+        ]
+      },
+      "allOf": [
+        {
+          "if": {
+            "anyOf": [
+              {
+                "required": [
+                  "destination"
+                ]
+              },
+              {
+                "required": [
+                  "options"
+                ]
+              }
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_level": {
+                "const": "delivered"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.5"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "operation": {
+          "const": "validate"
+        },
+        "program_revision": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "requested_level": {
+          "enum": [
+            "represented",
+            "constructed",
+            "evaluated",
+            "delivered"
+          ]
+        },
+        "budgets": {
+          "type": "object",
+          "properties": {
+            "max_objects": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "max_operations": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000
+            },
+            "max_result_items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "max_elapsed_ms": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 30000
+            },
+            "max_value_entries": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "destination": {
+          "const": "ontokin.glb/0.5"
+        },
+        "options": {
+          "type": "object",
+          "properties": {
+            "fps": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 10000
+            },
+            "end": {
+              "type": "string",
+              "pattern": "^[0-9]+(?:\\.[0-9]+)?$",
+              "maxLength": 1024
+            },
+            "position_tolerance_m": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "rotation_tolerance_rad": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "time_tolerance_s": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "helpers": {
+              "type": "boolean"
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "program_revision",
+        "requested_level"
+      ],
+      "additionalProperties": false,
+      "dependentRequired": {
+        "options": [
+          "destination"
+        ]
+      },
+      "allOf": [
+        {
+          "if": {
+            "anyOf": [
+              {
+                "required": [
+                  "destination"
+                ]
+              },
+              {
+                "required": [
+                  "options"
+                ]
+              }
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_level": {
+                "const": "delivered"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.5"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "operation": {
+          "const": "inspect"
+        },
+        "program_revision": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "selector": {
+          "type": "object",
+          "properties": {
+            "element_id": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 256,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              }
+            },
+            "kind": {
+              "enum": [
+                "object",
+                "property",
+                "site",
+                "joint",
+                "follow",
+                "action",
+                "class",
+                "function",
+                "scene",
+                "module",
+                "source",
+                "import",
+                "collection"
+              ]
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "class_name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "role": {
+              "type": "string"
+            },
+            "relation": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "array",
+                  "minItems": 1,
+                  "maxItems": 256,
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  }
+                }
+              ]
+            },
+            "source_id": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "fields": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "identity",
+              "source",
+              "values",
+              "geometry",
+              "matter",
+              "relations",
+              "actions",
+              "state",
+              "support"
+            ]
+          }
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        },
+        "run_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "time": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "seconds": {
+                  "type": "string",
+                  "pattern": "^[0-9]+(?:\\.[0-9]+)?$",
+                  "maxLength": 1024
+                },
+                "side": {
+                  "enum": [
+                    "before",
+                    "after"
+                  ]
+                }
+              },
+              "required": [
+                "seconds",
+                "side"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "frame": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cursor": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "budgets": {
+          "type": "object",
+          "properties": {
+            "max_objects": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "max_operations": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000
+            },
+            "max_result_items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "max_elapsed_ms": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 30000
+            },
+            "max_value_entries": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "program_revision",
+        "selector",
+        "fields",
+        "limit"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.5"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "operation": {
+          "const": "evaluate"
+        },
+        "program_revision": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "run_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "until_seconds": {
+          "type": "string",
+          "pattern": "^[0-9]+(?:\\.[0-9]+)?$",
+          "maxLength": 1024
+        },
+        "budgets": {
+          "type": "object",
+          "properties": {
+            "max_objects": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "max_operations": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000
+            },
+            "max_result_items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "max_elapsed_ms": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 30000
+            },
+            "max_value_entries": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "program_revision",
+        "run_id",
+        "until_seconds"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.5"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "operation": {
+          "const": "reset"
+        },
+        "program_revision": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "budgets": {
+          "type": "object",
+          "properties": {
+            "max_objects": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "max_operations": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000
+            },
+            "max_result_items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "max_elapsed_ms": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 30000
+            },
+            "max_value_entries": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "program_revision"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.5"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "operation": {
+          "const": "status"
+        },
+        "target_request_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "target_request_id"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.5"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "operation": {
+          "const": "cancel"
+        },
+        "target_request_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "target_request_id"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.5"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "operation": {
+          "const": "export"
+        },
+        "program_revision": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "destination": {
+          "const": "ontokin.glb/0.5"
+        },
+        "options": {
+          "type": "object",
+          "properties": {
+            "fps": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 10000
+            },
+            "end": {
+              "type": "string",
+              "pattern": "^[0-9]+(?:\\.[0-9]+)?$",
+              "maxLength": 1024
+            },
+            "position_tolerance_m": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "rotation_tolerance_rad": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "time_tolerance_s": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "helpers": {
+              "type": "boolean"
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "budgets": {
+          "type": "object",
+          "properties": {
+            "max_objects": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "max_operations": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000
+            },
+            "max_result_items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "max_elapsed_ms": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 30000
+            },
+            "max_value_entries": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "program_revision",
+        "destination"
+      ],
+      "additionalProperties": false,
+      "dependentRequired": {
+        "options": [
+          "destination"
+        ]
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.5"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "operation": {
+          "const": "artifact"
+        },
+        "artifact_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65536
+        }
+      },
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "artifact_id"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.agent/0.5"
+        },
+        "project_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "budgets": {
+          "type": "object",
+          "properties": {
+            "max_objects": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "max_operations": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000
+            },
+            "max_result_items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "max_elapsed_ms": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 30000
+            },
+            "max_value_entries": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100000
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "operation": {
+          "const": "surface.mesh_page"
+        },
+        "program_revision": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "element_id": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          }
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256,
+          "description": "Complete triangles, not vertices; requires an integer JSON token."
+        },
+        "region": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "description": "Optional palette key. Omission selects all triangles; explicit null rejects."
+        },
+        "cursor": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 65536
+        }
+      },
+      "required": [
+        "schema_version",
+        "project_id",
+        "request_id",
+        "operation",
+        "program_revision",
+        "element_id",
+        "count"
+      ],
+      "additionalProperties": false
+    }
+  ]
+}

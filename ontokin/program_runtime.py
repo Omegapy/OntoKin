@@ -26,6 +26,7 @@ SCHEMA_VERSION = "ontokin.program-runtime/0.1"
 CONSTRUCTION_PROFILE = "construction-0.1"
 SURFACE_PROFILE = "surface-0.1"
 IMPULSE_PROFILE = "impulse-0.1"
+FORCE_PROFILE = "force-0.1"
 
 
 class ProgramRuntime:
@@ -567,6 +568,9 @@ def _project(program, record, fields, compiler, sample, run, frame, budget):
         result["support"] = core._support_record(compiler, budget)
         result["support"]["profile"] = budget.profile
         result["support"]["named_destination"] = PROFILE_BINDINGS[budget.profile].destination
+        if not PROFILE_BINDINGS[budget.profile].delivery_available:
+            result["support"]["destination_support"] = "unsupported"
+            result["support"]["delivery_targets"] = []
     if compiler is None or record["_definition"]:
         for field in fields:
             if field not in result:

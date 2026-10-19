@@ -3,6 +3,7 @@
 
 The default profile runs the seven Python reference checks. --full also builds
 and verifies the visual examples with already installed Node tools and Chromium.
+--force-agent adds the pinned Agent/0.5 tests and independent source workflow audit.
 Reports certify only the checks executed here, not a complete release gate.
 """
 from __future__ import annotations
@@ -11,6 +12,8 @@ import argparse
 from dataclasses import dataclass
 from datetime import datetime, timezone
 import hashlib
+import importlib
+from importlib import metadata
 import json
 import os
 from pathlib import Path
@@ -186,12 +189,70 @@ const {chromium} = require('./tools/node_modules/playwright');
 """
 
 
-def build_plan(workspace: Path, output: Path, full: bool, python: str = sys.executable) -> list[Step]:
+def force_agent_preflight(requirements: Path, output: Path) -> int:
+    """Check the selected interpreter's exact verification pins without installing."""
+    dependencies, errors, seen = [], [], set()
+    for line in requirements.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        match = re.fullmatch(r"([A-Za-z0-9][A-Za-z0-9_.-]*)==([A-Za-z0-9][A-Za-z0-9.!+_-]*)", line)
+        if match is None:
+            raise ValueError(f"Verification requirement must be an exact package==version pin: {line}")
+        name, expected = match.groups()
+        normalized = re.sub(r"[-_.]+", "-", name).lower()
+        if normalized in seen:
+            raise ValueError(f"Repeated verification dependency: {name}")
+        seen.add(normalized)
+        try:
+            actual = metadata.version(name)
+        except metadata.PackageNotFoundError:
+            actual = None
+        dependencies.append({"name": name, "expected": expected, "installed": actual})
+        if actual != expected:
+            errors.append(f"{name}: installed {actual or 'missing'}, expected {expected}")
+    if not dependencies:
+        errors.append("The verification requirements contain no exact dependency pins.")
+    if not errors:
+        for name in ("jsonschema", "referencing"):
+            try:
+                importlib.import_module(name)
+            except ImportError as error:
+                errors.append(f"Cannot import {name}: {error}")
+    report = {"schema_version": "ontokin.force-agent-tool-preflight/0.1",
+              "status": "failed" if errors else "passed", "python": sys.version,
+              "python_executable": sys.executable, "requirements": str(requirements),
+              "requirements_identity": file_identity(requirements),
+              "dependencies": dependencies, "errors": errors}
+    write_json(output, report)
+    if errors:
+        print("Pinned Agent/0.5 verification dependencies did not pass: " + "; ".join(errors), file=sys.stderr)
+        print(f"Prepare the environment from {requirements} before retrying; this runner does not install packages.", file=sys.stderr)
+    return 1 if errors else 0
+
+
+FORCE_AGENT_PREFLIGHT = """from pathlib import Path
+import sys
+from tools.check_local import force_agent_preflight
+raise SystemExit(force_agent_preflight(Path(sys.argv[1]), Path(sys.argv[2])))
+"""
+
+
+def selected_roles(full: bool, force_agent: bool) -> list[str]:
+    return ["core"] + (["visual"] if full else []) + (["force-agent"] if force_agent else [])
+
+
+def build_plan(workspace: Path, output: Path, full: bool, python: str = sys.executable,
+               *, force_agent: bool = False) -> list[Step]:
     reports, artifacts = output / "reports", output / "artifacts"
     steps: list[Step] = []
     node = shutil.which("node") or "node"
     def add(id: str, argv: list, requires: tuple[str, ...] = (), report: Path | None = None) -> None:
         steps.append(Step(id, tuple(map(str, argv)), requires, (report,) if report else ()))
+    if force_agent:
+        report = reports / "force-agent-tools.json"
+        add("force-agent-tools", [python, "-c", FORCE_AGENT_PREFLIGHT,
+                                  "tools/force-agent-verification-requirements.txt", report], report=report)
     add("unit-tests", [python, "-m", "unittest", "discover", "-s", "tests", "-v"])
     for id, command in (
         ("source", ["-m", "ontokin", "conformance"]),
@@ -204,6 +265,15 @@ def build_plan(workspace: Path, output: Path, full: bool, python: str = sys.exec
         report = reports / f"{id}.json"
         add(id, [python, *command, "--output", report], report=report)
     add("documents", [python, "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"])
+    if force_agent:
+        add("force-agent-tests", [python, "-m", "unittest", "discover", "-s", "tests",
+                                  "-p", "test_force_agent*.py", "-v"], ("force-agent-tools",))
+        directory = artifacts / "force-agent-workflow"
+        add("force-agent-build", [python, "tools/build_force_agent_demo.py", "--output-dir", directory],
+            ("force-agent-tests",), directory / "workflow.json")
+        report = reports / "force-agent-audit.json"
+        add("force-agent-audit", [python, "tools/verify_force_agent_workflow.py", "--workflow-dir", directory,
+                                  "--output", report], ("force-agent-build", "force-agent-tools"), report)
     if not full:
         return steps
     for id, script in (("node-tools", NODE_PREFLIGHT), ("browser-ready", BROWSER_PREFLIGHT)):
@@ -295,19 +365,21 @@ def execute_step(step: Step, workspace: Path, output: Path, previous: dict, time
             except OSError as error:
                 record.update(status="unavailable", reason=str(error))
                 log.write(str(error) + "\n")
-    if step.id == "unit-tests":
+    if step.id in {"unit-tests", "force-agent-tests"}:
         raw = log_path.read_text(encoding="utf-8", errors="replace")
         executions = re.findall(r"^Ran (\d+) tests? in ([0-9.]+)s$", raw, re.MULTILINE)
         endings = re.findall(r"^(?:OK|FAILED)(?: \(([^\n]*)\))?$", raw, re.MULTILINE)
         counts = {name.strip(): value for name, value in re.findall(r"([a-z ]+)=(\d+)", endings[-1])} if endings else {}
         skipped, expected_failures = int(counts.get("skipped", 0)), int(counts.get("expected failures", 0))
         count = int(executions[-1][0]) if executions else 0
+        pass_key = "complete_regression_passed" if step.id == "unit-tests" else "complete_cohort_passed"
         record["test_execution"] = {"tests_run": count, "skipped": skipped, "expected_failures": expected_failures,
                                     "executed_without_skips": max(0, count - skipped),
-                                    "complete_regression_passed": bool(count and not skipped and not expected_failures
-                                                                       and record["status"] == "passed")}
-        if record["status"] == "passed" and not record["test_execution"]["complete_regression_passed"]:
-            record.update(status="failed", reason="The complete unittest suite did not execute and pass without skips or expected failures.")
+                                    pass_key: bool(count and not skipped and not expected_failures
+                                                   and record["status"] == "passed")}
+        if record["status"] == "passed" and not record["test_execution"][pass_key]:
+            scope = "complete unittest suite" if step.id == "unit-tests" else "selected Agent/0.5 cohort"
+            record.update(status="failed", reason=f"The {scope} did not execute and pass without skips or expected failures.")
     record["reports"] = []
     for path in step.reports:
         if not path.is_file():
@@ -319,7 +391,8 @@ def execute_step(step: Step, workspace: Path, output: Path, previous: dict, time
             data = json.loads(path.read_text(encoding="utf-8"))
             if not isinstance(data, dict):
                 raise ValueError("Report must be a JSON object")
-            item["outcomes"] = {key: data[key] for key in ("summary", "full_gate_complete", "implementation") if key in data}
+            item["outcomes"] = {key: data[key] for key in ("status", "summary", "full_gate_complete", "implementation",
+                                                         "full_force_release_complete", "destination_validated") if key in data}
             item["pending_cases"] = [{"id": case.get("id"), "reasons": case.get("pending_reasons", [])}
                                      for case in data.get("cases", []) if case.get("status") == "pending"]
         except (OSError, ValueError, TypeError, AttributeError) as error:
@@ -331,9 +404,10 @@ def execute_step(step: Step, workspace: Path, output: Path, previous: dict, time
     return record
 
 
-def run(root: Path, output: Path, full: bool, timeout: float) -> int:
+def run(root: Path, output: Path, full: bool, timeout: float, *, force_agent: bool = False) -> int:
     prepare_output(root, output)
     summary = {"schema_version": "ontokin.local-checks/0.1", "profile": "full" if full else "core",
+               "selected_roles": selected_roles(full, force_agent),
                "started_at": utc_now(), "status": "running", "source_root": str(root),
                "environment": {"python": sys.version, "python_executable": sys.executable,
                                "platform": platform.platform(), "architecture": platform.machine()},
@@ -360,7 +434,7 @@ def run(root: Path, output: Path, full: bool, timeout: float) -> int:
         (output / "reports").mkdir()
         (output / "artifacts").mkdir()
         previous = {}
-        plan = build_plan(workspace, output, full)
+        plan = build_plan(workspace, output, full, force_agent=force_agent)
         summary["planned_steps"] = [step.id for step in plan]
         for step in plan:
             print(f"[{step.id}] running", flush=True)
@@ -402,6 +476,7 @@ def run(root: Path, output: Path, full: bool, timeout: float) -> int:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--full", action="store_true", help="Also execute visual checks with already installed Node tools and Chromium")
+    parser.add_argument("--force-agent", action="store_true", help="Also execute pinned Agent/0.5 tests and the independent source workflow audit")
     parser.add_argument("--output-dir", type=Path, help="New/empty evidence directory; default: build/local-checks/<unique-run>")
     parser.add_argument("--list", "--dry-run", dest="list_only", action="store_true", help="Print commands without running checks or writing files")
     parser.add_argument("--timeout", type=float, default=900, help="Maximum seconds per command (default: 900)")
@@ -414,11 +489,12 @@ def main(argv: list[str] | None = None) -> int:
     output = (args.output_dir or ROOT / "build/local-checks" / stamp).resolve()
     if args.list_only:
         print(json.dumps({"profile": "full" if args.full else "core", "output_dir": str(output),
+                          "selected_roles": selected_roles(args.full, args.force_agent),
                           "steps": [{"id": s.id, "argv": list(s.argv), "requires": list(s.requires)}
-                                    for s in build_plan(output / "workspace", output, args.full)]}, indent=2))
+                                    for s in build_plan(output / "workspace", output, args.full, force_agent=args.force_agent)]}, indent=2))
         return 0
     try:
-        return run(ROOT, output, args.full, args.timeout)
+        return run(ROOT, output, args.full, args.timeout, force_agent=args.force_agent)
     except (OSError, ValueError) as error:
         print(f"Cannot start local checks: {error}", file=sys.stderr)
         return 1

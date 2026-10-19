@@ -76,7 +76,8 @@ class ProgramAgentService(AgentService):
 
     def _context_binding(self):
         context = {"implementation": self.implementation, "protocol": self._protocol.SCHEMA_VERSION}
-        if self._protocol.SCHEMA_VERSION == program_protocol.IMPULSE_SCHEMA_VERSION:
+        if self._protocol.SCHEMA_VERSION in (program_protocol.IMPULSE_SCHEMA_VERSION,
+                                             program_protocol.FORCE_SCHEMA_VERSION):
             context["entry_profile"] = self._profile
         return context
 
@@ -174,6 +175,14 @@ class ProgramAgentService(AgentService):
                              next_cursor=None if next_offset is None else self._cursor(context, next_offset))
 
     def _export(self, task, check):
+        check()
+        if not self._protocol.definition.delivery_available:
+            raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED",
+                               "The selected program binding has no implemented delivery adapter.",
+                               category="unsupported", phase="support", blocks=["delivered"],
+                               details={"destination": self._destination, "delivery_targets": [],
+                                        "adapter_available": False},
+                               repair="Request represented, constructed or evaluated output; recorded force delivery remains unfinished.")
         from .gltf import export_glb
         from .scene import ExportOptions
         compiler = self._runtime.compile_program(task.source, budgets=task.request.get("budgets"), check=check)

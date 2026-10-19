@@ -42,7 +42,7 @@ def run(args) -> int:
     service_type, envelope_fn = AgentService, envelope
     service_options = {}
     selected_protocol = getattr(args, "protocol", "ontokin.agent/0.1")
-    if selected_protocol in ("ontokin.agent/0.2", "ontokin.agent/0.3", "ontokin.agent/0.4"):
+    if selected_protocol in ("ontokin.agent/0.2", "ontokin.agent/0.3", "ontokin.agent/0.4", "ontokin.agent/0.5"):
         from .program_agent import ProgramAgentService
         from .program_protocol import bind
         service_type, envelope_fn = ProgramAgentService, bind(selected_protocol).envelope
