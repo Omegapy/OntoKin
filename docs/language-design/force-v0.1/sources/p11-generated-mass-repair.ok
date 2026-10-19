@@ -1,0 +1,24 @@
+ontokin "0.5";
+module ForceDemo @ "force-demo";
+profile "force-0.1";
+
+import bodies @ "impulse-parts" from "fixture.impulse-parts" version "1.0.0"
+    digest "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6";
+
+public class Rack @ "rack-class" {
+    public param masses @ "masses": Keyed<Mass> = keyed<Mass> { "first": 2[kg], "second": 4[kg] };
+    public parts props @ "props": bodies.SphereProp for (key, mass) in self.masses {
+        body_mass = mass;
+        placement = pose(world, vec3(if key == "first" then 0[m] else 3[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+    }
+}
+
+scene Demo @ "demo" {
+    duration = 3[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object rack @ "rack": Rack { masses = keyed<Mass> { "first": 4[kg], "second": 4[kg] }; }
+    at 1[s] sequence {
+        force rack.props["first"] @ "push" using vector(world, 4[N], 0[N], 0[N]) for 1[s];
+        force rack.props["second"] @ "sibling" using vector(world, 4[N], 0[N], 0[N]) for 1[s];
+    }
+}
