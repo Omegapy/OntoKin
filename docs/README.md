@@ -142,3 +142,9 @@ The October 17, 2026 reorganization preserved the six substantive records that e
 | [Preservation checker](maintenance/reorganization-2026-10-17/verify_reorganization.py) | Repeats the source-content and local-navigation checks offline. |
 
 [Return to the project overview](../README.md).
+
+## Force agent checkpoint
+
+The [Agent/0.5 verification guide](engineering/force-agent-validation/README.md) and [source workflow example](../examples/force-agent/README.md) document finite-force inspection and repair. GLB/0.5 and complete F01–F12 acceptance remain unfinished.
+
+The [Agent/0.5 local integration record](engineering/force-agent-local-validation-2026-10-19/README.md) retains the identified complete local run, unsuccessful attempts and resulting-main verification.

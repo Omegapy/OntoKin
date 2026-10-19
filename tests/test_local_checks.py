@@ -1,8 +1,9 @@
 """Exercise local-check failure reporting and isolation with real child processes."""
-from contextlib import redirect_stdout
+from contextlib import redirect_stderr, redirect_stdout
 import io
 import json
 from pathlib import Path
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -23,13 +24,20 @@ class LocalChecksTests(unittest.TestCase):
         (self.root / "examples/visual/demo-data.js").write_text("historical bytes\n", encoding="utf-8")
         self.output = self.directory / "evidence"
 
-    def execute(self, steps, *, timeout=10):
+    def execute(self, steps, *, timeout=10, force_agent=False):
         with patch.object(checks, "build_plan", return_value=steps), redirect_stdout(io.StringIO()):
-            code = checks.run(self.root, self.output, False, timeout)
+            code = checks.run(self.root, self.output, False, timeout, force_agent=force_agent)
         return code, json.loads((self.output / "summary.json").read_text(encoding="utf-8"))
 
     def command(self, name, program, *, requires=(), reports=()):
         return checks.Step(name, (sys.executable, "-c", program), requires, reports)
+
+    def initialize_git(self, root, paths=(".",)):
+        checks.git_read(root, "init", "--quiet", "--template=")
+        checks.git_read(root, "add", "--", *paths)
+        checks.git_read(root, "-c", "user.name=Local check fixture", "-c", "user.email=fixture@example.invalid",
+                        "commit", "--quiet", "-m", "Source fixture")
+        return checks.git_metadata(root)
 
     def test_failed_builder_blocks_stale_artifact_validation(self):
         marker = self.directory / "checker-was-run"
@@ -59,6 +67,71 @@ class LocalChecksTests(unittest.TestCase):
         self.assertTrue((self.output / "source-before.json").is_file())
         self.assertEqual(summary["source_inventory"]["inventory_sha256"], checks.inventory(self.root)["sha256"])
         self.assertEqual(summary["source_inventory"]["sha256"], checks.file_identity(self.output / "source-before.json")["sha256"])
+
+    def test_external_workspace_retains_real_git_revision_and_copied_changes_with_own_index(self):
+        original = self.initialize_git(self.root)
+        checks.git_read(self.root, "config", "remote.origin.url", "https://example.invalid/source-only")
+        checks.git_read(self.root, "config", "credential.helper", "source-only-helper")
+        changed = self.root / "ontokin/__init__.py"
+        changed.write_text("VALUE = 2\n", encoding="utf-8")
+        checks.git_read(self.root, "add", "ontokin/__init__.py")
+        changed.write_text("VALUE = 3\n", encoding="utf-8")
+        (self.root / "docs/untracked.txt").write_text("new source evidence\n", encoding="utf-8")
+        source_index = self.root / ".git/index"
+        before = (source_index.read_bytes(), source_index.stat().st_mtime_ns)
+        code, summary = self.execute([self.command("git-provenance", "import subprocess; subprocess.run(['git', 'rev-parse', 'HEAD'], check=True)")])
+        workspace = self.output / "workspace"
+        self.assertEqual(code, 0)
+        for name in ("git", "workspace_git", "git_after"):
+            self.assertEqual(summary[name]["local_head"], original["local_head"])
+            self.assertEqual(summary[name]["local_tree"], original["local_tree"])
+        self.assertEqual(summary["workspace_git"]["index_basis"], "source_commit_tree")
+        self.assertIn(" M ontokin/__init__.py", checks.git_read(workspace, "status", "--porcelain"))
+        self.assertIn("docs/untracked.txt", summary["workspace_git"]["untracked_source_files"])
+        self.assertEqual((workspace / "ontokin/__init__.py").read_bytes(), changed.read_bytes())
+        self.assertEqual((workspace / "docs/untracked.txt").read_text(), "new source evidence\n")
+        self.assertEqual((source_index.read_bytes(), source_index.stat().st_mtime_ns), before)
+        self.assertFalse(source_index.samefile(workspace / ".git/index"))
+        self.assertFalse((workspace / ".git/objects/info/alternates").exists())
+        self.assertNotIn("source-only", (workspace / ".git/config").read_text())
+        self.assertEqual(checks.git_read(workspace, "rev-parse", "--show-toplevel"), str(workspace))
+        self.assertTrue(summary["git_revision_unchanged"])
+
+    def test_no_git_source_cannot_inherit_an_unrelated_parent_revision(self):
+        (self.directory / "parent.txt").write_text("unrelated repository\n", encoding="utf-8")
+        self.initialize_git(self.directory, ("parent.txt",))
+        step = self.command("no-parent-git", "import subprocess; result=subprocess.run(['git','rev-parse','HEAD'], capture_output=True); assert result.returncode != 0")
+        code, summary = self.execute([step])
+        self.assertEqual(code, 0)
+        self.assertFalse(summary["git"]["available"])
+        self.assertFalse(summary["workspace_git"]["available"])
+        self.assertNotIn("local_head", summary["workspace_git"])
+        self.assertFalse((self.output / "workspace/.git").exists())
+
+    def test_workspace_git_copy_failure_is_explicit_and_does_not_start_checks(self):
+        self.initialize_git(self.root)
+        read = checks.git_read
+        def fail_local_fetch(root, *args, **kwargs):
+            if root == self.output / "workspace" and "fetch" in args:
+                raise subprocess.CalledProcessError(128, ["git", "fetch"], stderr="missing local object")
+            return read(root, *args, **kwargs)
+        with patch.object(checks, "git_read", side_effect=fail_local_fetch):
+            code, summary = self.execute([self.command("unexpected", "raise RuntimeError('must not run')")])
+        self.assertEqual(code, 1)
+        self.assertEqual(summary["steps"], [])
+        self.assertIn("Cannot retain exact source Git metadata", summary["error"])
+
+    def test_source_head_movement_invalidates_unchanged_file_bytes(self):
+        original = self.initialize_git(self.root)
+        step = checks.Step("advance-head", ("git", "-C", str(self.root), "-c", "user.name=Local check fixture",
+            "-c", "user.email=fixture@example.invalid", "commit", "--quiet", "--allow-empty", "-m", "Concurrent head movement"))
+        code, summary = self.execute([step])
+        self.assertEqual(code, 1)
+        self.assertEqual(summary["steps"][0]["status"], "passed")
+        self.assertEqual(summary["git_after"]["local_tree"], original["local_tree"])
+        self.assertNotEqual(summary["git_after"]["local_head"], original["local_head"])
+        self.assertFalse(summary["git_revision_unchanged"])
+        self.assertFalse(summary["source_unchanged"])
 
     def test_pending_report_remains_pending_after_successful_command(self):
         report = self.output / "reports/cases.json"
@@ -130,6 +203,72 @@ class LocalChecksTests(unittest.TestCase):
         self.assertEqual(execution["executed_without_skips"], 0)
         self.assertFalse(execution["complete_regression_passed"])
 
+    def test_force_agent_preflight_reports_missing_and_mismatched_pins(self):
+        requirements = self.root / "tools/force-agent-verification-requirements.txt"
+        requirements.write_text("# verification only\njsonschema==4.26.0\n", encoding="utf-8")
+        for installed in (None, "0.0.0"):
+            with self.subTest(installed=installed):
+                report = self.output / f"preflight-{installed}.json"
+                error = checks.metadata.PackageNotFoundError("jsonschema") if installed is None else None
+                captured = io.StringIO()
+                with patch.object(checks.metadata, "version", return_value=installed, side_effect=error), redirect_stderr(captured):
+                    code = checks.force_agent_preflight(requirements, report)
+                result = json.loads(report.read_text(encoding="utf-8"))
+                self.assertEqual(code, 1)
+                self.assertEqual(result["status"], "failed")
+                self.assertEqual(result["dependencies"], [{"name": "jsonschema", "expected": "4.26.0", "installed": installed}])
+                self.assertEqual(result["requirements_identity"], checks.file_identity(requirements))
+                self.assertIn("expected 4.26.0", captured.getvalue())
+
+    def test_force_agent_preflight_failure_blocks_its_tests_builder_and_audit(self):
+        (self.root / "tools/check_local.py").write_bytes(Path(checks.__file__).read_bytes())
+        (self.root / "tools/force-agent-verification-requirements.txt").write_text(
+            "ontokin-local-checks-unavailable-test-package==0.0.0\n", encoding="utf-8")
+        marker = self.directory / "force-command-was-run"
+        for script in ("build_force_agent_demo.py", "verify_force_agent_workflow.py"):
+            (self.root / "tools" / script).write_text(
+                f"from pathlib import Path\nPath({str(marker)!r}).write_text('ran')\n", encoding="utf-8")
+        steps = [s for s in checks.build_plan(self.root, self.output, False, force_agent=True)
+                 if s.id.startswith("force-agent-")]
+        code, summary = self.execute(steps, force_agent=True)
+        self.assertEqual(code, 1)
+        self.assertEqual([s["status"] for s in summary["steps"]], ["failed", "blocked", "blocked", "blocked"])
+        self.assertEqual(summary["selected_roles"], ["core", "force-agent"])
+        self.assertFalse(marker.exists())
+        self.assertEqual(summary["not_executed_steps"], ["force-agent-tests", "force-agent-build", "force-agent-audit"])
+        preflight = json.loads((self.output / "reports/force-agent-tools.json").read_text())
+        self.assertIsNone(preflight["dependencies"][0]["installed"])
+        self.assertEqual(summary["steps"][0]["reports"][0]["outcomes"]["status"], "failed")
+
+    def test_force_agent_cohort_enforces_execution_without_skips_or_expected_failures(self):
+        cases = {
+            "skipped": "import unittest\nclass Probe(unittest.TestCase):\n"
+                       "    @unittest.skip('missing verifier')\n    def test_probe(self): pass\n",
+            "expected_failure": "import unittest\nclass Probe(unittest.TestCase):\n"
+                                "    @unittest.expectedFailure\n    def test_probe(self): self.fail('expected')\n",
+            "empty": "# No selected test cases.\n",
+            "passed": "import unittest\nclass Probe(unittest.TestCase):\n    def test_probe(self): pass\n",
+        }
+        for name, source in cases.items():
+            with self.subTest(case=name):
+                self.output = self.directory / ("evidence-" + name)
+                (self.root / "tests/test_force_agent_probe.py").write_text(source, encoding="utf-8")
+                selected = next(s for s in checks.build_plan(self.root, self.output, False, force_agent=True)
+                                if s.id == "force-agent-tests")
+                marker = self.directory / ("built-" + name)
+                steps = [checks.Step(selected.id, selected.argv),
+                         self.command("force-agent-build", f"from pathlib import Path; Path({str(marker)!r}).write_text('ran')",
+                                      requires=(selected.id,))]
+                code, summary = self.execute(steps, force_agent=True)
+                passed = name == "passed"
+                self.assertEqual(code, 0 if passed else 1)
+                execution = summary["steps"][0]["test_execution"]
+                self.assertEqual(execution["tests_run"], 0 if name == "empty" else 1)
+                self.assertEqual(execution["complete_cohort_passed"], passed)
+                self.assertNotIn("complete_regression_passed", execution)
+                self.assertEqual(summary["steps"][1]["status"], "passed" if passed else "blocked")
+                self.assertEqual(marker.exists(), passed)
+
     def test_timeout_stops_child_and_retains_failure(self):
         marker = self.directory / "late-write"
         step = self.command("timeout", f"import time; from pathlib import Path; time.sleep(2); Path({str(marker)!r}).write_text('late')")
@@ -174,6 +313,27 @@ class LocalChecksTests(unittest.TestCase):
         ids = {s["id"] for s in plan["steps"]}
         self.assertTrue({"unit-tests", "source", "agent", "construction", "surface", "impulse", "documents"} <= ids)
         self.assertIn("impulse-agent-browser", ids)
+        self.assertFalse(any("install" in s["argv"] or "ci" in s["argv"] for s in plan["steps"]))
+
+    def test_force_agent_plan_is_explicit_and_combines_with_existing_full_role(self):
+        original = checks.build_plan(self.root, self.output, False, "selected-python")
+        self.assertEqual([s.id for s in original], ["unit-tests", "source", "agent", "construction", "surface", "impulse", "documents"])
+        self.assertTrue(all(s.argv[0] == "selected-python" for s in original))
+        output = io.StringIO()
+        with patch.object(checks, "ROOT", self.root), patch.object(checks, "run") as execute, redirect_stdout(output):
+            code = checks.main(["--list", "--full", "--force-agent", "--output-dir", str(self.output)])
+        self.assertEqual(code, 0)
+        execute.assert_not_called()
+        self.assertFalse(self.output.exists())
+        plan = json.loads(output.getvalue())
+        self.assertEqual(plan["profile"], "full")
+        self.assertEqual(plan["selected_roles"], ["core", "visual", "force-agent"])
+        steps = {s["id"]: s for s in plan["steps"]}
+        self.assertIn("impulse-agent-browser", steps)
+        self.assertEqual(steps["force-agent-tests"]["requires"], ["force-agent-tools"])
+        self.assertEqual(steps["force-agent-build"]["requires"], ["force-agent-tests"])
+        self.assertEqual(steps["force-agent-audit"]["requires"], ["force-agent-build", "force-agent-tools"])
+        self.assertIn(str(self.output / "artifacts/force-agent-workflow"), steps["force-agent-build"]["argv"])
         self.assertFalse(any("install" in s["argv"] or "ci" in s["argv"] for s in plan["steps"]))
 
 

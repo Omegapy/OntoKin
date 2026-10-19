@@ -49,7 +49,7 @@ class ImpulseAgentProtocolTests(unittest.TestCase):
                 program_protocol.bind(older).validate_request(self.request())
             with self.subTest(older=older), self.assertRaises(ProtocolError):
                 self.binding.validate_request(self.request(schema_version=older))
-        for unknown in ("ontokin.agent/0.5", "ontokin.agent/0.1", None, [], {}):
+        for unknown in ("ontokin.agent/0.6", "ontokin.agent/0.1", None, [], {}):
             with self.subTest(unknown=unknown), self.assertRaises(ProtocolError):
                 program_protocol.bind(unknown)
 

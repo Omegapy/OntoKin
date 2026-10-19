@@ -39,6 +39,8 @@ The owner’s October 19, 2026 no-payment direction adopts [OK-ENG-006](docs/eng
 
 Record the actual source revision, input hashes, interpreter/platform, commands, logs and results. A core run establishes only its executed Python version and selected roles. Missing compatibility runs, external attestations and visual review remain pending. The local driver does not certify a full release or replace the historical CI-evidence schemas. Before integrating an older branch, inspect every workflow it adds or changes and apply the manual-only, default-false hosted-job opt-in policy; do not restore push, pull-request or scheduled hosted jobs. Repository-wide Actions disablement is a separate setting and must be reported from an observed result.
 
+For Agent/0.5 work, prepare the pinned verification-only packages and run `python3 tools/check_local.py --force-agent`. This adds exact dependency checks, a zero-skip Agent cohort, a fresh source workflow and its independent audit. It can be combined with `--full`; none of these local options alone closes the full force release. Preserve the actual source Git identity in isolated validation workspaces, including when evidence is written outside the repository.
+
 Use checks relevant to the change. Runtime or semantic changes normally require:
 
 ```bash

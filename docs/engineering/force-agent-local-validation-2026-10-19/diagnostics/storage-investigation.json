@@ -1,0 +1,83 @@
+{
+  "failed_attempt_commit": "0d56b255a9e813e92bacba0c4cf5891a2481bca3",
+  "failed_workflow": {
+    "completed_exchanges": 297,
+    "snapshots": 17,
+    "samples": 251,
+    "unpaired_request": "exchanges/0298.request.json",
+    "case": "P14",
+    "inspection_time": "2",
+    "side": "after",
+    "stored_request_count": 278,
+    "missing_completed_receipts": "0279 through 0297",
+    "missing_current_request": "0298",
+    "missing_project_source_run": "case-P14",
+    "quick_check": "ok"
+  },
+  "wal_reproduction": {
+    "script": "sqlite-store-diagnostic.py",
+    "path": "sqlite-store-diagnostic-wal-1792432813363270152/diagnostic.jsonl",
+    "requested": 1500,
+    "failed_iteration": 1271,
+    "count_max": [
+      1232,
+      1271
+    ],
+    "seconds": 11.648,
+    "inode_before": 1188643,
+    "inode_after": 1187864,
+    "mtime_before": "1792432824265221889",
+    "mtime_after": "1792432824098852326",
+    "overlap": "A separate source-read exec_command occurred during this probe."
+  },
+  "delete_comparison": {
+    "path": "sqlite-store-diagnostic-delete-1792432863616366769/diagnostic.jsonl",
+    "iterations": 1500,
+    "seconds": 10.298,
+    "stable_inode": 1188514,
+    "result": "passed",
+    "meaning": "A shorter successful comparison does not establish journal-mode causality."
+  },
+  "generic_probe": {
+    "path": "file-identity-diagnostic-1792432916657495698/events.jsonl",
+    "iterations": 3000,
+    "seconds": 17.834,
+    "stable_inode": 1188272,
+    "result": "passed",
+    "execution": "Only write_stdin polls after launch."
+  },
+  "isolated_wal_probe": {
+    "path": "sqlite-store-diagnostic-wal-1792432968856865697/diagnostic.jsonl",
+    "iterations": 2500,
+    "seconds": 24.305,
+    "stable_inode": 1188288,
+    "result": "passed",
+    "execution": "All agents idle; only write_stdin polls after launch."
+  },
+  "inference": "Concurrent executor/filesystem synchronization is consistent with the observed file replacement and disappearing committed rows. The replacing environment component has not been identified.",
+  "not_inference": "The isolated production AgentStore reproducer contains no file replacement/deletion operation; it observed main database inode change, timestamp regression and lost rows.",
+  "decision": "Do not change runtime, journal mode, source fixtures or tolerances. Repeat actual acceptance on the unchanged candidate with exclusive executor/filesystem access. Preserve every attempt.",
+  "primary_reference": "https://sqlite.org/howtocorrupt.html#unlinking_or_renaming_a_database_file_while_in_use",
+  "sql_reference_scope": "SQLite documents the risks of replacing an open database file; this is supporting context, not proof of the responsible environment component.",
+  "acceptance_repeat": {
+    "source_commit": "0d56b255a9e813e92bacba0c4cf5891a2481bca3",
+    "source_tree": "04f9f7029dcc85ab7e43fede69a572b45bfed232",
+    "summary_path": "passing-attempt.tar.gz:summary.json",
+    "status": "passed",
+    "duration_seconds": 427.837,
+    "started_at": "2026-10-19T18:03:53.536570+00:00",
+    "finished_at": "2026-10-19T18:11:01.390538+00:00",
+    "steps_passed": 11,
+    "source_unchanged": true,
+    "git_revision_unchanged": true,
+    "unit_tests": 753,
+    "agent_cohort_tests": 56,
+    "exchanges": 418,
+    "snapshots": 25,
+    "predetermined_samples": 334,
+    "force_projections": 411,
+    "execution_discipline": "All other agents and executor/filesystem calls paused. Only write_stdin polls plus remote PR metadata/UI updates occurred during the process. The suite's own concurrency and transaction cases ran unchanged."
+  },
+  "preserved_runtime_journal_mode": "WAL",
+  "remaining_uncertainty": "The environment component responsible for the observed earlier database file replacement remains unidentified. This run demonstrates successful bounded local acceptance under the stated execution discipline."
+}

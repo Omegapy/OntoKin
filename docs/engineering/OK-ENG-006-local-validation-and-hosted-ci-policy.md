@@ -50,7 +50,21 @@ Run the routine Python and documentation checks:
 python3 tools/check_local.py
 ```
 
+For Agent/0.5 integration, prepare the separate pinned packages in
+[`tools/force-agent-verification-requirements.txt`](../../tools/force-agent-verification-requirements.txt)
+and run `python3 tools/check_local.py --force-agent`. This additional role
+requires exact package versions, a zero-skip dedicated Agent test cohort,
+fresh source/message recording and its independent schema/semantic audit.
+It can be combined with `--full`; neither option closes the complete force
+release. See the [Agent/0.5 verification guide](force-agent-validation/README.md).
+
 The [runner](../../tools/check_local.py) records commands, outcomes and evidence in its reported output directory. Read individual reports as well as its overall result. Preserve failures and pending gates in the branch handoff; do not describe a successful preflight as a completed release.
+
+When the source is a Git checkout, the isolated workspace retains the captured
+source commit and tree in its own Git metadata and index. This uses local Git
+objects and preserves copied source edits; it does not create a replacement
+snapshot commit or depend on the evidence directory being inside the repository.
+The source checkout's metadata is not used as the workspace's writable index.
 
 An isolated Python environment is optional. It can be kept outside the repository:
 
