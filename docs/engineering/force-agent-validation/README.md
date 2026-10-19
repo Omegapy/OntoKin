@@ -5,6 +5,10 @@ agent interface. It does not implement GLB/0.5 or close F01–F12. The authorita
 scope and acceptance remain in [OK-AGENT-005](../OK-AGENT-005-finite-force-program-workflows.md)
 and [OK-LANG-005](../../language-design/OK-LANG-005-finite-center-of-mass-force-intervals.md).
 
+The [current local integration evidence](../force-agent-local-validation-2026-10-19/README.md)
+retains the full passing run, earlier failures, storage investigation and resulting-main record.
+Historical hosted evidence remains separate.
+
 ## Source and protocol evidence
 
 `tools/build_force_agent_demo.py` records real service operations. The current
