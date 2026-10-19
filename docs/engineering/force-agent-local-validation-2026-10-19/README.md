@@ -82,6 +82,42 @@ unidentified environment defect is repaired.
 
 ## Retention and reproduction
 
+### Resulting-main verification
+
+[PR #16](https://github.com/Omegapy/OntoKin/pull/16) merged at
+`2a7cf5651de7ffe2737ad06478de3f53716b8c4f`, tree
+`57f399e21490e3c7e8fc16ea7873ed5588e55209`. Its runtime, tests, tools,
+language fixtures and examples have the same Git subtree identities as the
+tested candidate. The original PR #14 head is an ancestor; GitHub now reports
+that PR closed and merged, while its branch remains preserved.
+
+All **six resulting-main checks passed** on that exact merge between
+**2026-10-19T18:19:09Z and 18:19:32Z**: 20 local-runner tests, original source
+conformance, standalone A01–A10, a fresh Agent/0.5 recorder, its independent
+audit and documentation preservation. The fresh workflow again supplied
+**418 exchanges, 25 source snapshots, 334 predetermined samples and 411 force
+projections**. The source Git revision remained unchanged and its worktree
+stayed clean. Other executor/filesystem activity was paused during those
+checks, as in the passing acceptance run.
+
+[Resulting-main verification](resulting-main-verification.json),
+[the exact evidence archive](resulting-main.tar.gz) and
+[its member manifest](resulting-main-manifest.json) retain this execution
+separately. [Integration metadata](integration.json) binds the actual merge,
+remote observations and checkpoint publication; the later documentation and
+lease-release commit does not change the implementation inputs.
+
+Verify the resulting-main archive with Python's standard library:
+
+```sh
+python3 reproduction/package_resulting_main.py --verify-only
+```
+
+This verifies the member hashes, recorded result closure and byte-identical
+archive reconstruction without reading the original execution directory.
+
+### Acceptance-run archives
+
 The three compressed archives preserve raw summaries, before/after inventories,
 commands, logs, reports, source bundles and recorded request/response bytes.
 Their member manifests and [retention verification](retention-verification.json)
