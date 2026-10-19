@@ -1,14 +1,23 @@
 name: OntoKin reference checks
 
 on:
-  push:
-  pull_request:
+  workflow_dispatch:
+    inputs:
+      enable_hosted_ci:
+        description: 'Run hosted jobs using the owner’s Actions allowance or paid budget'
+        type: boolean
+        required: true
+        default: false
+
+# Local checks are the default. Ordinary pushes and pull requests run no hosted jobs.
+# See docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md.
 
 permissions:
   contents: read
 
 jobs:
   reference:
+    if: ${{ inputs.enable_hosted_ci == true }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
@@ -51,6 +60,7 @@ jobs:
 
   visual:
     name: GLB format and visual validation
+    if: ${{ inputs.enable_hosted_ci == true }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:

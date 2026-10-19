@@ -77,7 +77,7 @@ try {
   checks.push('No page JavaScript errors or network requests during file-based playback.');
   const report={schema_version:'ontokin.visual-validation/0.1',status:'passed',
     renderer:'Three.js 0.180.0 / WebGL2',browser:await browser.version(),playwright:'1.56.1',
-    environment:'Headless Chromium on Linux with SwiftShader software rendering',
+    environment:`Headless Chromium on ${process.platform} (${process.arch}) with SwiftShader software rendering`,
     delivery:'Local file viewer with bundled Three.js and embedded exported GLB bytes',
     checks,captures,page_errors:errors,network_requests:networkRequests,
     limits:['Blender import was not run.','Screenshots and functional checks are bounded evidence for these demonstrations.']};

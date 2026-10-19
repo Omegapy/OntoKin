@@ -35,6 +35,10 @@ At every substantial branch checkpoint, record the work scope, code SHA, execute
 
 ## Verify the actual change
 
+The owner’s October 19, 2026 no-payment direction adopts [OK-ENG-006](docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md). Fresh local checks are the default for routine development and integration. Do not wait for hosted CI, retry blocked hosted jobs, or enable paid execution as a prerequisite for useful work. Run `python3 tools/check_local.py`; use `--full` for the complete existing visual job after preparing its pinned local tools. For a documentation-only change, the preservation/link checker below remains the focused check.
+
+Record the actual source revision, input hashes, interpreter/platform, commands, logs and results. A core run establishes only its executed Python version and selected roles. Missing compatibility runs, external attestations and visual review remain pending. The local driver does not certify a full release or replace the historical CI-evidence schemas. Before integrating an older branch, inspect every workflow it adds or changes and apply the manual-only, default-false hosted-job opt-in policy; do not restore push, pull-request or scheduled hosted jobs. Repository-wide Actions disablement is a separate setting and must be reported from an observed result.
+
 Use checks relevant to the change. Runtime or semantic changes normally require:
 
 ```bash
