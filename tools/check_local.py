@@ -299,7 +299,7 @@ def execute_step(step: Step, workspace: Path, output: Path, previous: dict, time
         raw = log_path.read_text(encoding="utf-8", errors="replace")
         executions = re.findall(r"^Ran (\d+) tests? in ([0-9.]+)s$", raw, re.MULTILINE)
         endings = re.findall(r"^(?:OK|FAILED)(?: \(([^\n]*)\))?$", raw, re.MULTILINE)
-        counts = dict(re.findall(r"([a-z ]+)=(\d+)", endings[-1])) if endings else {}
+        counts = {name.strip(): value for name, value in re.findall(r"([a-z ]+)=(\d+)", endings[-1])} if endings else {}
         skipped, expected_failures = int(counts.get("skipped", 0)), int(counts.get("expected failures", 0))
         count = int(executions[-1][0]) if executions else 0
         record["test_execution"] = {"tests_run": count, "skipped": skipped, "expected_failures": expected_failures,
@@ -360,7 +360,9 @@ def run(root: Path, output: Path, full: bool, timeout: float) -> int:
         (output / "reports").mkdir()
         (output / "artifacts").mkdir()
         previous = {}
-        for step in build_plan(workspace, output, full):
+        plan = build_plan(workspace, output, full)
+        summary["planned_steps"] = [step.id for step in plan]
+        for step in plan:
             print(f"[{step.id}] running", flush=True)
             record = execute_step(step, workspace, output, previous, timeout)
             previous[step.id] = record
@@ -376,6 +378,8 @@ def run(root: Path, output: Path, full: bool, timeout: float) -> int:
         summary["pending_external_cases"] = [dict(step=step["id"], report=report["path"], **case)
                                               for step in summary["steps"] for report in step["reports"]
                                               for case in report.get("pending_cases", [])]
+        summary["not_executed_steps"] = [step.id for step in plan if step.id not in previous
+                                         or previous[step.id]["status"] in {"blocked", "unavailable"}]
         if not summary["source_unchanged"]:
             raise ValueError("Source or verification inputs changed during this run.")
         if exit_code != 130:
