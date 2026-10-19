@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-19T16:29:43Z**. The complete [GOAL](GOAL.md) remains **in progress**. Native surface M01–M12, source impulse I01–I12 and the force source kernel are integrated. **Local validation is now the default under [OK-ENG-006](docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md); automatic hosted CI has been removed from the current main workflow.** [PR #15](https://github.com/Omegapy/OntoKin/pull/15) merged at `caeb98577db275b3e913fbba4cf97f4fd661c1af`. Agent/0.5 remains consolidated in [PR #14](https://github.com/Omegapy/OntoKin/pull/14) at `2f08ff2858a5fca3aac7cff95b3aa1ebdd823f1c`, awaiting scoped validation and integration under the new policy. **GLB/0.5 and complete F01–F12 remain unfinished.**
+Checkpoint: **2026-10-19T18:17:00Z**. The complete [GOAL](GOAL.md) remains **in progress**. Native surface M01–M12, source impulse I01–I12 and the force source kernel are integrated. **Local validation is now the default under [OK-ENG-006](docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md); automatic hosted CI has been removed from the current main workflow.** [PR #15](https://github.com/Omegapy/OntoKin/pull/15) merged at `caeb98577db275b3e913fbba4cf97f4fd661c1af`. Agent/0.5 remains consolidated in [PR #14](https://github.com/Omegapy/OntoKin/pull/14) at `2f08ff2858a5fca3aac7cff95b3aa1ebdd823f1c`, awaiting scoped validation and integration under the new policy. **GLB/0.5 and complete F01–F12 remain unfinished.**
 
 ## Integrated releases and preserved evidence
 
@@ -53,6 +53,12 @@ GOAL still requires richer typed algorithms/libraries and compatible replacement
 
 ## Integration and recovery
 
-**No main integration lease is held.** Holder `interactive-local-validation-20261019-1610Z-7of9` releases the bounded lease at **2026-10-19T16:29:43Z** after integrating PR #15 and verifying the resulting main. Lease acquisition was `e8a70c51e04eb78708a1dd9570190391153852ce`; the verified merge is `caeb98577db275b3e913fbba4cf97f4fd661c1af`. This checkpoint must publish through an expected-head nonforce update from that merge. PR #14 and other worker branches remain untouched. Independent development may continue; do not replay historical publication jobs or assume a branch/expired lease establishes active execution.
+**Main integration lease held.** Owner `interactive-agent05-local-20261019-1658Z-7of9` acquired this bounded lease at **2026-10-19T18:17:00Z**; it expires at **2026-10-19T18:47:00Z**.
 
-[Preceding checkpoint](https://github.com/Omegapy/OntoKin/blob/4737ede6967e27a42960cfaa1d46272377980a9d/STATUS.md), [issue #12](https://github.com/Omegapy/OntoKin/issues/12) and PR #14 retain scopes and handoffs. No other worker is claimed active. **Advance OntoKin remains intentionally disabled.** No automation changed. Attachment and stream errors do not change repository state.
+Task: integrate reviewed [PR #16](https://github.com/Omegapy/OntoKin/pull/16) at `ff5b77a0203fa188788b5a89736168aced36f5a7`, incorporating PR #14 without changing its branch, then verify resulting main and publish the Agent/0.5 checkpoint. Observed main before acquisition: `e605be2a3e165cee497dd81213c8c84f9ba610b9`. The exact code `0d56b255a9e813e92bacba0c4cf5891a2481bca3` passed all 11 local roles, 753 regression tests and 56 dedicated Agent tests; [retained evidence](https://github.com/Omegapy/OntoKin/blob/ff5b77a0203fa188788b5a89736168aced36f5a7/docs/engineering/force-agent-local-validation-2026-10-19/README.md) preserves all attempts and storage diagnostics.
+
+Reserved integration scope: main merge, shared STATUS coordination, and the new Agent/0.5 integration evidence record. Original worker branches, adopted fixtures and historical evidence remain intact. Independent nonoverlapping branch development remains allowed. No hosted run, paid execution or automation change is requested.
+
+Recovery: after any uncertain write, inspect the actual main ref, PR #16/#14 states and this lease before retrying. Verify the resulting-main code/input identities and actual protocol/audit checks; then publish the final checkpoint and explicitly release the lease. Do not interpret a timeout or this lease's eventual expiry as proof that a write failed or another worker stopped.
+
+[Previous complete checkpoint](https://github.com/Omegapy/OntoKin/blob/e605be2a3e165cee497dd81213c8c84f9ba610b9/STATUS.md) and [issue #12](https://github.com/Omegapy/OntoKin/issues/12) retain earlier releases and handoffs. No other worker or automation is claimed active.
