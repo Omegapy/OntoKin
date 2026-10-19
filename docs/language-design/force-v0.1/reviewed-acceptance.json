@@ -1,0 +1,195 @@
+{
+  "additional_cases": 12,
+  "base_cases_preserved": 44,
+  "base_corpus_sha256": "sha256:de423575e648ea9e14d8de8d5bb9b2bbe6330ae6fb01e182e34c3cb6df9d2ba2",
+  "observed_before_force_implementation": true,
+  "schema_version": "ontokin.force-contract-review/0.1",
+  "source_cases": [
+    {
+      "expected": {
+        "same_active_keys_counts_anchors_as": "P19",
+        "same_physical_samples_as": "P19",
+        "sequence_indices_follow_actual_source": true
+      },
+      "file_manifest": "s01-order-independent-sum.files.json",
+      "id": "S01",
+      "name": "order-independent-sum",
+      "outcome": "valid",
+      "program_revision": "sha256:56b4d9124564b6d8d6d6f3ed4c278db842da22bc3c356800298f1924fb9b1629",
+      "source_sha256": "sha256:f512f5e42d7a14037ca7310139184df2836a374b62365b0a078d3289cde9aadc"
+    },
+    {
+      "expected": {
+        "code": "OKL-E-EVENT-ORDER",
+        "phase_group": "elaboration"
+      },
+      "file_manifest": "s02-canonical-duration-underflow.files.json",
+      "id": "S02",
+      "name": "canonical-duration-underflow",
+      "outcome": "invalid",
+      "program_revision": "sha256:b7cd9e62dd8d11afa965e413f7208da23832ec93d9ad17ec61f0bce352fff603",
+      "source_sha256": "sha256:1f153466497a1ab6052bad6e3a2890ba760a7623654821c6e6722c9f227f641b"
+    },
+    {
+      "expected": {
+        "code": "OKL-E-SYNTAX",
+        "phase_group": "elaboration"
+      },
+      "file_manifest": "s03-required-source-key.files.json",
+      "id": "S03",
+      "name": "required-source-key",
+      "outcome": "invalid",
+      "program_revision": "sha256:dd1da5df7b8182a8852cf3b55f24a11443b57aad8741f0dfc2e8b3f9f4e68251",
+      "source_sha256": "sha256:bb94e4c59a02f7a25d20c5a2ad85d607f58a81b7c29a4425f856700b545c968c"
+    },
+    {
+      "expected": {
+        "code": "OKL-E-ID",
+        "phase_group": "elaboration"
+      },
+      "file_manifest": "s04-invalid-stable-key.files.json",
+      "id": "S04",
+      "name": "invalid-stable-key",
+      "outcome": "invalid",
+      "program_revision": "sha256:e2189c2f70a5bc162d70d4c9eaad0c6abe76a7adaa31d24db24f70d7bcb4b3dd",
+      "source_sha256": "sha256:17f9c869a943a21a3884d6d312a8d732899de2db1d5af1b56b522e60ec830193"
+    },
+    {
+      "expected": {
+        "code": "OKL-E-NUMERIC",
+        "failure_side": "before",
+        "failure_time": "3",
+        "finite_endpoint_positions": true,
+        "phase_group": "evaluation",
+        "request_horizon": "3",
+        "unrepresentable_interior_extremum": true,
+        "valid_prefix": "0.25"
+      },
+      "file_manifest": "s05-interior-position-overflow.files.json",
+      "id": "S05",
+      "name": "interior-position-overflow",
+      "outcome": "invalid",
+      "program_revision": "sha256:b0ca5b518f58b31bd55100097d2c2d4f912e0c1a90bc96abe76850d6d2c89bfa",
+      "source_sha256": "sha256:de339655905b828cd9572b60780a2fb32963675956b1ff5ec137ff80314bbc00"
+    },
+    {
+      "expected": {
+        "code": "OKL-E-NUMERIC",
+        "failure_side": "after",
+        "failure_time": "1",
+        "phase_group": "transition",
+        "retained_active_keys": [
+          "a",
+          "b"
+        ],
+        "retained_completed_count": 0,
+        "retained_side": "before",
+        "retained_started_count": 2,
+        "retained_time": "1",
+        "valid_prefix": "0.5"
+      },
+      "file_manifest": "s06-automatic-completion-rollback.files.json",
+      "id": "S06",
+      "name": "automatic-completion-rollback",
+      "outcome": "invalid",
+      "program_revision": "sha256:f509d00c3a275a3e5c8f446fa4a778aada5abc6b6e68a293361852b051690cce",
+      "source_sha256": "sha256:e2d7c72a117d3e3be981e693cc02f1bf8f145086836172d827daeb4a2304addc"
+    },
+    {
+      "expected": {
+        "same_physical_samples_as": "P01",
+        "target_path": "force"
+      },
+      "file_manifest": "s07-contextual-force-identifier.files.json",
+      "id": "S07",
+      "name": "contextual-force-identifier",
+      "outcome": "valid",
+      "program_revision": "sha256:f65ac228230bed24d95f9f6f5f6a522a1b3024a90a986f1f2d789f450f952125",
+      "source_sha256": "sha256:d2f57beea5a4de94d9871b7535fc50c13d52d927d2e3f149922a2a5c6022c2f1"
+    },
+    {
+      "expected": {
+        "same_physical_samples_as": "P01"
+      },
+      "file_manifest": "s08-pure-force-expressions.files.json",
+      "id": "S08",
+      "name": "pure-force-expressions",
+      "outcome": "valid",
+      "program_revision": "sha256:889257c0dd5f9319110db7939150251b5abbd7d4193edabe9b05bd7fbde2e2b5",
+      "source_sha256": "sha256:e7b598a53ee5bb8c326addf9fa199638c64ee4e7cf58869f49883a51a5ffc868"
+    },
+    {
+      "expected": {
+        "after_completion_completed_count": 1,
+        "after_completion_started_count": 1,
+        "completion_clock": {
+          "denominator": "202402253307310618352495346718917307049556649764142118356901358027430339567995346891960383701437124495187077864316811911389808737385793476867013399940738509921517424276566361364466907742093216341239767678472745068562007483424692698618103355649159556340810056512358769552333414615230502532186327508646006263307707741093494784",
+          "numerator": "1"
+        },
+        "net_force_always_zero": true,
+        "trajectory_anchor_always": "0"
+      },
+      "file_manifest": "s09-smallest-positive-duration.files.json",
+      "id": "S09",
+      "name": "smallest-positive-duration",
+      "outcome": "valid",
+      "program_revision": "sha256:52ecc23874b353b9446d2cd9e7861dca9ba8891d07d1348d315a3309cd8b494a",
+      "source_sha256": "sha256:ace2964390b4720edbcbb811942e96a2438a948b18df9bb6957c524ef24b4384"
+    },
+    {
+      "expected": {
+        "code": "OKL-E-CAPABILITY-UNSUPPORTED",
+        "phase_group": "support"
+      },
+      "file_manifest": "s10-older-import-edge.files.json",
+      "id": "S10",
+      "name": "older-import-edge",
+      "outcome": "invalid",
+      "program_revision": "sha256:8cce2648b1724832b735e436834a2b6c39ae8dca4047e1259b544d000ef6c655",
+      "source_sha256": "sha256:8f10e6cb99f5e42717edea15cc80c309163858ece421459665e23beea313339e"
+    },
+    {
+      "expected": {
+        "force_projection_empty": true,
+        "free_body_count": 0,
+        "object_count": 1
+      },
+      "file_manifest": "s11-same-profile-import-edge.files.json",
+      "id": "S11",
+      "name": "same-profile-import-edge",
+      "outcome": "valid",
+      "program_revision": "sha256:bf59cd4204e385567f7d4131b16fcc4436de15d7a0ea05591a036be606e3ea81",
+      "source_sha256": "sha256:6146424234e47831bf7275e7f092c047579bf5379f527efeba5e7207348df24f"
+    },
+    {
+      "expected": {
+        "completed_count": 1,
+        "net_force_after_n": [
+          0,
+          0,
+          0
+        ],
+        "position_m": [
+          -4,
+          2,
+          0
+        ],
+        "started_count": 1,
+        "time": "3",
+        "velocity_m_s": [
+          -4,
+          0,
+          0
+        ]
+      },
+      "file_manifest": "s12-reversed-force-offset-body.files.json",
+      "id": "S12",
+      "name": "reversed-force-offset-body",
+      "outcome": "valid",
+      "program_revision": "sha256:67818b7f5afa7ce5bb875b91b4f8de5155c356ca9d6e239e2d3fdd17ccd2d018",
+      "source_sha256": "sha256:a675e4eb98fa6330c2c64fdb8f8b76599c81b2e969a7f44b1f332df5b686e44f"
+    }
+  ],
+  "status": "predetermined-before-implementation",
+  "total_source_cases": 56
+}

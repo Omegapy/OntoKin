@@ -1,0 +1,19 @@
+ontokin "0.5";
+module ForceDemo @ "force-demo";
+profile "force-0.1";
+
+import bodies @ "impulse-parts" from "fixture.impulse-parts" version "1.0.0"
+    digest "sha256:bc122164d828386ec970f8cf183ff22d57dcc90180fe84c574de84c575fc78d6";
+
+scene Demo @ "demo" {
+    duration = 3[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object ball @ "ball": bodies.SphereProp {
+        body_mass = 1[kg];
+        placement = pose(world, vec3(1e308[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+        velocity = vector(world, 1.4e308[m/s], 0[m/s], 0[m/s]);
+    }
+    at 0[s] sequence {
+        force ball @ "push" using vector(world, -1e308[N], 0[N], 0[N]) for 3[s];
+    }
+}

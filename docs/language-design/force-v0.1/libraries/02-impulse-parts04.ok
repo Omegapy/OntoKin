@@ -1,0 +1,14 @@
+ontokin "0.4";
+module ImpulseParts @ "impulse-parts";
+profile "impulse-0.1";
+
+import shapes @ "surface-parts" from "fixture.surface-parts" version "1.0.0"
+    digest "sha256:87fed50bdcb9b6274ec87981cc67028463c10b1cdce301060416c69586b428ce";
+
+public class SphereProp @ "sphere-prop" extends shapes.Shell {
+    public param body_radius @ "body-radius": Length = 0.5[m];
+    public param body_mass @ "body-mass": Mass = 2[kg];
+    override physical = sphere_body(self.body_radius, self.body_mass);
+    motion = dynamic;
+    collision = disabled;
+}
