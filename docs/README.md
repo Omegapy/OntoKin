@@ -143,8 +143,8 @@ The October 17, 2026 reorganization preserved the six substantive records that e
 
 [Return to the project overview](../README.md).
 
-## Force agent checkpoint
+## Force workflows and recorded delivery
 
-The [Agent/0.5 verification guide](engineering/force-agent-validation/README.md) and [source workflow example](../examples/force-agent/README.md) document finite-force inspection and repair. GLB/0.5 and complete F01–F12 acceptance remain unfinished.
+The [Agent/0.5 verification guide](engineering/force-agent-validation/README.md) and [source workflow example](../examples/force-agent/README.md) document finite-force inspection and repair. [OK-ENG-007](engineering/OK-ENG-007-native-force-glb-export.md) defines bounded GLB/0.5 recording, and the [delivery guide](../examples/force/README.md) documents actual export, artifact retrieval, independent native decoding and browser validation. Implementation and component results do not close complete F01–F12 acceptance; [STATUS](../STATUS.md) identifies the integrated evidence and next unmet gate.
 
 The [Agent/0.5 local integration record](engineering/force-agent-local-validation-2026-10-19/README.md) retains the identified complete local run, unsuccessful attempts and resulting-main verification.

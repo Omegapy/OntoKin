@@ -23,14 +23,22 @@ from .diagnostics import OntoKinError
 from .model import SceneModel
 from .json_limits import JSONLimitError, measure_json
 from .values import bounded_data
-from .scene import (MAX_GLB_BYTES, MAX_VALIDATION_POSES, TARGET_CONTRACT,
-                    CONSTRUCTION_TARGET, SURFACE_TARGET, IMPULSE_TARGET, NATIVE_TARGETS, PROGRAM_TARGETS, MAX_MESH_VERTICES,
+from .scene import (MAX_GLB_BYTES, MAX_VALIDATION_POSES, MAX_KEYFRAMES, MAX_BAKED_POSES, TARGET_CONTRACT,
+                    CONSTRUCTION_TARGET, SURFACE_TARGET, IMPULSE_TARGET, FORCE_TARGET, NATIVE_TARGETS, PROGRAM_TARGETS, MAX_MESH_VERTICES,
                     SurfaceMesh, build_surface_mesh, geometry_metadata, surface_metadata,
                     checked_contract, program_metadata,
                     BakedScene, ExportOptions, build_scene, export_error,
                     float32, rotation_error, sampled_states, relationship_metadata,
-                    _angular_speed_bound, _boundary_output_budget, impulse_profile_metadata)
+                    _angular_speed_bound, _boundary_output_budget, impulse_profile_metadata,
+                    force_prefix_plan, force_interval_violation, force_profile_metadata)
 from .evaluator import exact_time, preflight, time_text
+
+
+# Every writer profile uses one clock, seven pose components, and at most six
+# triangle indices plus XYZ positions/normals per generated geometry vertex.
+# Charge each declared accessor separately: overlapping binary views still
+# create distinct Python caches. This preserves all bounded writer outputs.
+MAX_DECODED_COMPONENTS = MAX_KEYFRAMES + 7 * MAX_BAKED_POSES + 12 * MAX_MESH_VERTICES
 
 
 @dataclass
@@ -279,11 +287,122 @@ def _format_error(message: str) -> None:
     export_error("OKE-E-GLB-STRUCTURE", message, kind="unsupported")
 
 
-def read_glb(source: bytes | bytearray | str | Path, *, check=None) -> DecodedGLB:
+def _referenced(table, index, name):
+    if type(index) is not int or not 0 <= index < len(table):
+        _format_error(f"The {name} reference must be a nonnegative in-range integer.")
+    return table[index]
+
+
+def _preflight_accessor_layout(document, *, check=None) -> None:
+    """Bound all declared accessor expansion before allocating decoded rows."""
+    buffers, views = document["buffers"], document["bufferViews"]
+    for view in views:
+        if check:
+            check()
+        _referenced(buffers, view["buffer"], "buffer")
+        start, size = view.get("byteOffset", 0), view["byteLength"]
+        if (type(start) is not int or type(size) is not int or view["buffer"] != 0
+                or start < 0 or size <= 0 or start % 4 or start + size > buffers[0]["byteLength"]):
+            _format_error("A buffer view is out of bounds or misaligned.")
+    components = component_bytes = 0
+    for accessor in document["accessors"]:
+        if check:
+            check()
+        if accessor.get("sparse") or accessor.get("normalized"):
+            _format_error("Sparse and normalized accessors are outside this adapter's reader subset.")
+        count = accessor["count"]
+        if type(count) is not int or count <= 0:
+            _format_error("Accessor counts must be positive integers.")
+        view = _referenced(views, accessor["bufferView"], "accessor buffer view")
+        component_size = {5126: 4, 5123: 2, 5125: 4}[accessor["componentType"]]
+        arity = {"SCALAR": 1, "VEC2": 2, "VEC3": 3, "VEC4": 4}[accessor["type"]]
+        stride = view.get("byteStride", component_size * arity)
+        start = accessor.get("byteOffset", 0)
+        if (type(start) is not int or type(stride) is not int
+                or start < 0 or start % component_size or stride < arity * component_size
+                or stride % component_size or start + (count - 1) * stride + arity * component_size > view["byteLength"]):
+            _format_error("An accessor is out of bounds or misaligned.")
+        components += count * arity
+        component_bytes += count * arity * component_size
+        if components > MAX_DECODED_COMPONENTS or component_bytes > MAX_GLB_BYTES:
+            export_error("OKE-E-ACCESSOR-BUDGET", "Declared accessors exceed the bounded decoded allocation budget.",
+                         kind="resource", details={"max_decoded_components": MAX_DECODED_COMPONENTS,
+                                                   "required_components": components,
+                                                   "max_decoded_component_bytes": MAX_GLB_BYTES,
+                                                   "required_component_bytes": component_bytes})
+
+
+def _preflight_scene_layout(document, *, target_contract=None, check=None) -> None:
+    """Check reference and declared delivery limits before accessor decoding."""
+    nodes, accessors = document["nodes"], document["accessors"]
+    meshes, materials = document.get("meshes", []), document.get("materials", [])
+    _referenced(document["scenes"], document.get("scene", 0), "default scene")
+    for scene in document["scenes"]:
+        for node in scene["nodes"]:
+            if check:
+                check()
+            _referenced(nodes, node, "scene node")
+    selected = target_contract or document.get("extras", {}).get("ontokin", {}).get("target_contract")
+    mesh_vertices = []
+    native_indices = 0
+    for mesh in meshes:
+        position_ids = set()
+        for primitive in mesh["primitives"]:
+            if check:
+                check()
+            for kind in ("POSITION", "NORMAL"):
+                _referenced(accessors, primitive["attributes"][kind], kind + " accessor")
+            position_ids.add(primitive["attributes"]["POSITION"])
+            indices = _referenced(accessors, primitive["indices"], "triangle index accessor")
+            _referenced(materials, primitive["material"], "material")
+            native_indices += indices["count"]
+            if selected in NATIVE_TARGETS and native_indices > 6 * MAX_MESH_VERTICES:
+                export_error("OKE-E-MESH-BUDGET", "Declared native triangle work exceeds the aggregate geometry budget.",
+                             kind="resource", details={"max_triangle_indices": 6 * MAX_MESH_VERTICES})
+        mesh_vertices.append(sum(accessors[index]["count"] for index in position_ids))
+    vertices = 0
+    for node in nodes:
+        if check:
+            check()
+        if "mesh" in node:
+            _referenced(meshes, node["mesh"], "node mesh")
+            vertices += mesh_vertices[node["mesh"]]
+            if selected in NATIVE_TARGETS and vertices > MAX_MESH_VERTICES:
+                export_error("OKE-E-MESH-BUDGET", "Declared native occurrences exceed the aggregate vertex budget.",
+                             kind="resource", details={"max_mesh_vertices": MAX_MESH_VERTICES,
+                                                       "required_vertices": vertices})
+    if len(document["animations"]) != 1:
+        _format_error("This adapter requires exactly one baked clip.")
+    animation = document["animations"][0]
+    for sampler in animation["samplers"]:
+        if check:
+            check()
+        incoming = _referenced(accessors, sampler["input"], "animation input accessor")
+        _referenced(accessors, sampler["output"], "animation output accessor")
+        if incoming["count"] > MAX_KEYFRAMES:
+            export_error("OKE-E-KEY-BUDGET", "Declared animation clocks exceed the keyframe budget.",
+                         kind="resource", details={"max_keyframes": MAX_KEYFRAMES})
+        if incoming["count"] * len(nodes) > MAX_BAKED_POSES:
+            export_error("OKE-E-POSE-BUDGET", "Declared animation exceeds the baked-pose budget.",
+                         kind="resource", details={"max_baked_poses": MAX_BAKED_POSES})
+    for channel in animation["channels"]:
+        if check:
+            check()
+        _referenced(animation["samplers"], channel["sampler"], "animation sampler")
+        _referenced(nodes, channel["target"]["node"], "animation target node")
+
+
+def read_glb(source: bytes | bytearray | str | Path, *, check=None, target_contract=None) -> DecodedGLB:
     """Decode and structurally check the adapter's embedded, flat GLB subset."""
     if check:
         check()
-    data = bytes(source) if isinstance(source, (bytes, bytearray)) else Path(source).read_bytes()
+    if isinstance(source, (bytes, bytearray)):
+        if len(source) > MAX_GLB_BYTES:
+            _format_error("GLB size is outside the bounded reader contract.")
+        data = bytes(source)
+    else:
+        with Path(source).open("rb") as stream:
+            data = stream.read(MAX_GLB_BYTES + 1)
     if len(data) < 28 or len(data) > MAX_GLB_BYTES:
         _format_error("GLB size is outside the bounded reader contract.")
     magic, version, length = struct.unpack_from("<III", data)
@@ -302,33 +421,28 @@ def read_glb(source: bytes | bytearray | str | Path, *, check=None) -> DecodedGL
     if [kind for kind, _ in chunks] != [0x4E4F534A, 0x004E4942]:
         _format_error("This adapter requires one JSON chunk followed by one embedded BIN chunk.")
     try:
-        document = json.loads(chunks[0][1].decode("utf-8"), parse_constant=lambda value: (_ for _ in ()).throw(ValueError(value)))
+        try:
+            document = json.loads(chunks[0][1].decode("utf-8"), parse_constant=lambda value: (_ for _ in ()).throw(ValueError(value)))
+        except RecursionError:
+            export_error("OKE-E-METADATA-BUDGET", "Supplied glTF JSON exceeds bounded parser nesting.", kind="resource")
+        try:
+            measure_json(document, max_bytes=MAX_GLB_BYTES, max_entries=MAX_GLB_BYTES, check=check)
+        except JSONLimitError as error:
+            export_error("OKE-E-METADATA-BUDGET", "Supplied glTF JSON exceeds bounded metadata materialization.",
+                         kind="resource", details=error.details)
         if document["asset"]["version"] != "2.0" or document.get("extensionsRequired"):
             _format_error("The adapter requires plain glTF 2.0 without required extensions.")
         binary = chunks[1][1]
         buffers = document["buffers"]
         if len(buffers) != 1 or "uri" in buffers[0] or not 0 <= len(binary) - buffers[0]["byteLength"] <= 3:
             _format_error("GLB must have one embedded buffer with at most three padding bytes.")
-        for view in document["bufferViews"]:
-            start, size = view.get("byteOffset", 0), view["byteLength"]
-            if view["buffer"] != 0 or start < 0 or size <= 0 or start % 4 or start + size > buffers[0]["byteLength"]:
-                _format_error("A buffer view is out of bounds or misaligned.")
+        _preflight_accessor_layout(document, check=check)
+        _preflight_scene_layout(document, target_contract=target_contract, check=check)
         decoded = DecodedGLB(document, binary, check=check)
         for index, accessor in enumerate(document["accessors"]):
             if check:
                 check()
-            if accessor.get("sparse") or accessor.get("normalized"):
-                _format_error("Sparse and normalized accessors are outside this adapter's reader subset.")
-            count = accessor["count"]
-            if not isinstance(count, int) or count <= 0:
-                _format_error("Accessor counts must be positive integers.")
-            view = document["bufferViews"][accessor["bufferView"]]
-            component_size = {5126: 4, 5123: 2, 5125: 4}[accessor["componentType"]]
             size = {"SCALAR": 1, "VEC2": 2, "VEC3": 3, "VEC4": 4}[accessor["type"]]
-            stride = view.get("byteStride", component_size * size)
-            start = accessor.get("byteOffset", 0)
-            if start < 0 or start % component_size or stride < size * component_size or stride % component_size or start + (count - 1) * stride + size * component_size > view["byteLength"]:
-                _format_error("An accessor is out of bounds or misaligned.")
             values = decoded.accessor(index)
             if any(not math.isfinite(value) for row in values for value in row):
                 _format_error("Accessors may not contain NaN or infinity.")
@@ -347,6 +461,7 @@ def read_glb(source: bytes | bytearray | str | Path, *, check=None) -> DecodedGL
                 _format_error("This adapter stores source dimensions in geometry and does not support node scaling.")
             if "mesh" in node:
                 document["meshes"][node["mesh"]]
+        validated_normals = set()
         for mesh in document.get("meshes", []):
             if check:
                 check()
@@ -366,8 +481,10 @@ def read_glb(source: bytes | bytearray | str | Path, *, check=None) -> DecodedGL
                 indices = [row[0] for row in decoded.accessor(primitive["indices"])]
                 if len(positions) != len(normals) or len(indices) % 3 or any(i < 0 or i >= len(positions) for i in indices):
                     _format_error("Primitive indices or vertex attribute counts are invalid.")
-                if any(abs(math.hypot(*normal) - 1) > 1e-5 for normal in normals):
-                    _format_error("Decoded vertex normals must have unit length.")
+                if normal_id not in validated_normals:
+                    if any(abs(math.hypot(*normal) - 1) > 1e-5 for normal in normals):
+                        _format_error("Decoded vertex normals must have unit length.")
+                    validated_normals.add(normal_id)
                 for start in range(0, len(indices), 3):
                     if check and start % 768 == 0:
                         check()
@@ -537,30 +654,68 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
     if check:
         check()
     program = program_metadata(model, check=check) if target_contract in PROGRAM_TARGETS else None
-    decoded = read_glb(data, check=check)
+    decoded = read_glb(data, check=check, target_contract=target_contract)
     animation = decoded.document["animations"][0]
     try:
-        authored = [exact_time(t) for t in animation["extras"]["ontokin"]["exact_times_seconds"]]
-    except (KeyError, TypeError, OntoKinError) as exc:
+        source_times = animation["extras"]["ontokin"]["exact_times_seconds"]
+    except (KeyError, TypeError):
+        _format_error("The clip must retain exact source sampling timestamps.")
+    if not isinstance(source_times, list):
+        _format_error("Exact source sampling timestamps must be a list.")
+    if target_contract == FORCE_TARGET and len(source_times) > MAX_KEYFRAMES:
+        export_error("OKE-E-KEY-BUDGET", "Supplied force animation exceeds the keyframe budget.",
+                     model, kind="resource", details={"max_keyframes": MAX_KEYFRAMES})
+    try:
+        authored = [exact_time(t) for t in source_times]
+    except (TypeError, OntoKinError):
         _format_error("The clip must retain exact source sampling timestamps.")
     if not authored:
         _format_error("The clip must contain exact source timestamps.")
     options = options or ExportOptions(end=authored[-1], helpers=any(
         node.get("extras", {}).get("ontokin", {}).get("kind") == "visual_helper" for node in decoded.document["nodes"]))
     end = options.checked_end(model)
-    boundaries = sorted({Fraction(0), end} | {exact_time(t) for t in preflight(model, check=check)["boundary_times_seconds"] if exact_time(t) <= end})
-    if target_contract == IMPULSE_TARGET:
-        _boundary_output_budget(model, len(boundaries), target_contract=target_contract, check=check)
+    force_plan = force_prefix_plan(model, end, check=check) if target_contract == FORCE_TARGET else None
+    boundaries = (list(force_plan.boundaries) if force_plan is not None else
+                  sorted({Fraction(0), end} | {exact_time(t) for t in preflight(model, check=check)["boundary_times_seconds"] if exact_time(t) <= end}))
+    if target_contract in (IMPULSE_TARGET, FORCE_TARGET):
+        _boundary_output_budget(model, len(boundaries), target_contract=target_contract,
+                                horizon=end, check=check)
     sampler = animation["samplers"][0]
     times = [row[0] for row in decoded.accessor(sampler["input"])]
     if len(authored) != len(times) or authored[0] != 0 or authored[-1] != end or any(a >= b for a, b in zip(authored, authored[1:])) or not set(boundaries).issubset(authored):
         _format_error("Exported source times must retain the complete interval and every exact semantic boundary.")
     if any([row[0] for row in decoded.accessor(s["input"])] != times for s in animation["samplers"]):
         _format_error("This adapter requires a common sampling clock for all channels.")
-    speed = _angular_speed_bound(model, check=check)
-    if not math.isfinite(speed) or any(max(float(b - a), last - first) * speed >= math.pi / 2
-        for a, b, first, last in zip(authored, authored[1:], times, times[1:])):
-        export_error("OKE-E-ROTATION-ALIAS", "Decoded key spacing cannot preserve the source's bounded rotation path.", model)
+    if force_plan is not None:
+        # Rebuild prefix bounds from source, independently of the artifact's
+        # claimed sampling report. A coarse but endpoint-correct chord must
+        # not consume the margin reserved for binary32 timing and pose error.
+        if len(times) * len(decoded.document["nodes"]) > MAX_BAKED_POSES:
+            export_error("OKE-E-POSE-BUDGET", "Supplied force animation exceeds the baked-pose budget.",
+                         model, kind="resource", details={"max_baked_poses": MAX_BAKED_POSES})
+        for exact, stored in zip(authored, times):
+            if check:
+                check()
+            if stored != float32(float(exact), model, context="animation timestamp"):
+                _format_error("Stored force timestamps must be the binary32 encoding of their exact source keys.")
+        for a, b, first, last in zip(authored, authored[1:], times, times[1:]):
+            if check:
+                check()
+            for start, stop, source_start, source_end in (
+                    (a, b, a, b), (Fraction(first), Fraction(last), a, b)):
+                violation = force_interval_violation(force_plan, start, stop,
+                    source_start=source_start, source_end=source_end,
+                    position_tolerance_m=options.position_tolerance_m)
+                if violation is not None:
+                    angular = violation["kind"] == "rotation"
+                    export_error("OKE-E-ROTATION-ALIAS" if angular else "OKE-E-POSITION-ALIAS",
+                                 "Decoded force key spacing exceeds the source-derived motion bound.",
+                                 model, details=violation)
+    else:
+        speed = _angular_speed_bound(model, check=check)
+        if not math.isfinite(speed) or any(max(float(b - a), last - first) * speed >= math.pi / 2
+            for a, b, first, last in zip(authored, authored[1:], times, times[1:])):
+            export_error("OKE-E-ROTATION-ALIAS", "Decoded key spacing cannot preserve the source's bounded rotation path.", model)
     if animation["extras"]["ontokin"].get("boundary_times_seconds") != [time_text(t) for t in boundaries]:
         _format_error("Animation metadata must retain the exact semantic boundary list.")
     if animation["extras"]["ontokin"].get("target_contract") != target_contract:
@@ -583,6 +738,8 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
             _format_error("GLB entry source identity must remain separate from the program revision.")
     if target_contract == IMPULSE_TARGET and metadata.get("impulse_profile") != impulse_profile_metadata():
         _format_error("Impulse delivery metadata must disclose the source physical model and recorded playback.")
+    if target_contract == FORCE_TARGET and metadata.get("force_profile") != force_profile_metadata():
+        _format_error("Force delivery metadata must disclose the source physical model and recorded playback.")
     for key, expected in relationship_metadata(model).items():
         if metadata.get(key) != plain(expected):
             _format_error("Declared joint/follow metadata must match the supplied semantic model.")
@@ -694,8 +851,10 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
             record = boundary_records[reference["time_seconds"]]
             expected = {"joint_states_after": reference["joints"], "action_states_after": reference["actions"],
                         "pose_authorities_after": {path: obj["pose_authority"] for path, obj in reference["objects"].items()}}
-            if target_contract == IMPULSE_TARGET:
+            if target_contract in (IMPULSE_TARGET, FORCE_TARGET):
                 expected["impulse_states_after"] = {path: obj["impulses"] for path, obj in reference["objects"].items()}
+            if target_contract == FORCE_TARGET:
+                expected["force_states_after"] = {path: obj["forces"] for path, obj in reference["objects"].items()}
             if any(record.get(key) != plain(value) for key, value in expected.items()):
                 _format_error("Stored boundary lifecycle/pose-authority metadata must match fresh semantic evaluation.")
         actual = sample_animation(decoded, request["time_seconds"])
@@ -736,6 +895,10 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
             "sample_count": len(requests), "node_pose_comparisons": len(requests) * len(nodes),
             "max_position_error_m": max_position, "max_rotation_error_rad": max_rotation,
             "max_time_error_seconds": time_error, "worst_position": worst_position, "worst_rotation": worst_rotation,
+            **({"force_sampling_bounds": "passed_source_and_binary32_interval_checks",
+                "acceleration_chord_tolerance_fraction": .25,
+                "force_boundary_histories": "passed_fresh_prefix_evaluation"}
+               if target_contract == FORCE_TARGET else {}),
             "max_geometry_dimension_error_m": max_geometry_error,
             **({"max_surface_vertex_error_m": max_surface_error,
                 "surface_vertex_tolerance_m": surface_tolerance,

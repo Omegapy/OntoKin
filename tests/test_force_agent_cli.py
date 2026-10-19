@@ -55,18 +55,54 @@ class ForceAgentCLITests(unittest.TestCase):
                 else: self.assertEqual(list(path.iterdir()), [])
 
     def test_unavailable_delivery_returns_no_artifact_via_transport(self):
+        """Keep the legacy transport guard for generic delivery without a named target."""
+        b = support.source_case('P01')
+        common = dict(schema_version=PROTOCOL, project_id='cli')
+        requests = [dict(common, request_id='create', operation='create', bundle=b.to_payload(),
+                         expected_program_revision=None, requested_level='constructed'),
+                    dict(common, request_id='validate', operation='validate', program_revision=b.program_revision,
+                         requested_level='delivered')]
+        with tempfile.TemporaryDirectory() as directory:
+            code, results = self.invoke(directory, b'\n'.join(json.dumps(r).encode() for r in requests)+b'\n')
+            self.assertEqual(code, 0)
+            self.assertEqual(results[0]['status'], 'succeeded')
+            self.assertIn(results[1]['status'], ('failed', 'rejected'))
+            self.assertNotEqual(results[1]['achieved_level'], 'delivered')
+            self.assertEqual(results[1]['accepted_program_revision'], b.program_revision)
+            self.assertIn('OKL-E-CAPABILITY-UNSUPPORTED', [d['code'] for d in results[1]['diagnostics']])
+            with support.sqlite3.connect(Path(directory)/'force-program-agent.sqlite3') as db:
+                self.assertEqual(db.execute('SELECT count(*) FROM artifacts').fetchone()[0], 0)
+
+    def test_delivery_returns_bound_artifact_via_transport(self):
         b = support.source_case('P01')
         common = dict(schema_version=PROTOCOL, project_id='cli')
         requests = [dict(common, request_id='create', operation='create', bundle=b.to_payload(),
                          expected_program_revision=None, requested_level='constructed'),
                     dict(common, request_id='export', operation='export', program_revision=b.program_revision,
-                         destination='ontokin.glb/0.5')]
+                         destination='ontokin.glb/0.5', options={'end':'1.5','fps':2,'helpers':False})]
         with tempfile.TemporaryDirectory() as directory:
             code, results = self.invoke(directory, b'\n'.join(json.dumps(r).encode() for r in requests)+b'\n')
             self.assertEqual(code, 0)  # JSONL transport completion is not operation success.
             self.assertEqual(results[0]['status'], 'succeeded')
-            self.assertIn(results[1]['status'], ('failed', 'rejected'))
-            self.assertNotEqual(results[1]['achieved_level'], 'delivered')
-            self.assertIn('OKL-E-CAPABILITY-UNSUPPORTED', [d['code'] for d in results[1]['diagnostics']])
+            self.assertEqual(results[1]['status'], 'succeeded', results[1])
+            self.assertEqual(results[1]['achieved_level'], 'delivered')
+            self.assertEqual(results[1]['result']['destination'], 'ontokin.glb/0.5')
+            self.assertEqual(results[1]['result']['report']['program_revision'], b.program_revision)
+            self.assertEqual(results[1]['result']['run_state']['valid_until_seconds'], '1.5')
+            with support.sqlite3.connect(Path(directory)/'force-program-agent.sqlite3') as db:
+                self.assertEqual(db.execute('SELECT count(*) FROM artifacts').fetchone()[0], 1)
+
+    def test_future_force_failure_returns_no_artifact_via_transport(self):
+        b = support.source_case('P21')
+        common = dict(schema_version=PROTOCOL, project_id='cli')
+        request = dict(common, request_id='create', operation='create', bundle=b.to_payload(),
+                       expected_program_revision=None, requested_level='delivered', destination='ontokin.glb/0.5')
+        with tempfile.TemporaryDirectory() as directory:
+            code, results = self.invoke(directory, json.dumps(request).encode()+b'\n')
+            self.assertEqual(code, 0)
+            self.assertEqual(results[0]['status'], 'failed')
+            self.assertIsNone(results[0]['accepted_program_revision'])
+            self.assertNotEqual(results[0]['achieved_level'], 'delivered')
+            self.assertIn('OKL-E-NUMERIC', [d['code'] for d in results[0]['diagnostics']])
             with support.sqlite3.connect(Path(directory)/'force-program-agent.sqlite3') as db:
                 self.assertEqual(db.execute('SELECT count(*) FROM artifacts').fetchone()[0], 0)

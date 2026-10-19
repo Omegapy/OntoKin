@@ -30,6 +30,8 @@ After binary32 timestamps are known, recheck time tolerance, no collapsed/reorde
 
 Keep inherited caps: 10,000 keys, 250,000 baked poses, 1,000,000 validation poses, 250,000 aggregate occurrence vertices, 64 MiB GLB and 100,000 retained logical boundary entries. Force and impulse records count with nested source spans and IDs. Both construction and byte validation enforce the same prefix-local bound before copying output. Check cancellation through boundary discovery, exact summation, key planning, evaluation, geometry, serialization and validation. Preserve the original callback exception and publish no partial success.
 
+Supplied-byte validation preflights every accessor declaration before decoded allocation. Aliased and unused declarations count separately. The derived aggregate ceiling is 4,760,000 scalar components: one maximum common key clock, seven components per maximum baked pose, and twelve per maximum occurrence vertex for positions, normals and primitive indices. Decoded component storage is also limited to 64 MiB. Declared key, pose and native geometry limits apply before accessor copies; forged artifact profile metadata cannot override the requested delivery contract.
+
 ## Retained meaning and independent checks
 
 Every retained boundary includes complete after-side force and impulse projections for every object, including empty projections. Preserve exact source locations, force/target identities, sequence indices, activation/duration/completion clocks, canonical net force and acceleration, active keys, cumulative counts and latest changes. Retain mode-origin versus trajectory-anchor semantics. Validate these records against fresh source evaluation, not against the exporter report. Profile metadata must disclose COM-only world forces, absent continuous torque, disabled contacts and recorded-only delivery.
@@ -45,6 +47,8 @@ This revision preserves the scope and numerical gates of [the original contract]
 Implementing and verifying this adapter satisfies the conditional availability clause in [OK-AGENT-005](OK-AGENT-005-finite-force-program-workflows.md). Explicit Agent/0.5 and CLI GLB/0.5 delivery use the existing request, response, bundle and store shapes. Delivery preparation evaluates only the requested export endpoint; ordinary evaluated requests keep their existing full-horizon meaning. An omitted export endpoint means the authored duration. Failed preparation, cancellation or final-envelope limits cannot commit partial source, run or artifact success. Earlier bindings and defaults retain their existing behavior.
 
 The source contract's adopted additive errata, including the P09 before-zero derivative correction, remain part of the acceptance inputs. New evidence must name their exact bytes and apply old-value preconditions; it must not overwrite the original fixture records.
+
+The earlier regression method identities remain executable. Their unavailable-delivery guards now exercise generic delivery without a named target and unsupported general delivery/physics. Separate positive tests verify explicitly activated GLB/0.5; older-target rejection remains covered. This records the conditional interface transition without claiming that the earlier unavailable-adapter evidence established delivery success.
 
 ## Execution record
 

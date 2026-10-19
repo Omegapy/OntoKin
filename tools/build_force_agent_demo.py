@@ -72,14 +72,14 @@ class Recorder:
         self.service = ProgramAgentService(self.root / 'service-store', protocol=PROTOCOL)
         self.cases = {c['id']: c for c in json.loads((DATA/'acceptance.json').read_text())['source_cases']}
         self.trace = []; self.snapshots = []; self.bundles = {}; self.runs = {}
-        self.manifest = {'schema_version':'ontokin.force-agent-workflow/0.1',
+        self.manifest = {'schema_version':'ontokin.force-agent-workflow/0.2',
                          'status':'running', 'started_at_utc':datetime.now(timezone.utc).isoformat(),
                          'protocol':PROTOCOL, 'implementation':self.service.implementation,
                          'writer_sha256':sha(Path(__file__).read_bytes()),
                          'fixture_inputs':{name:sha((DATA/name).read_bytes()) for name in
                                            ('acceptance.json','reviewed-acceptance.json','source-errata.json','ADOPTION.md')},
                          'exchanges':self.trace, 'snapshots':self.snapshots,
-                         'limits':['This checkpoint does not implement GLB/0.5 or certify F01-F12.',
+                         'limits':['This source/interface checkpoint does not independently validate GLB delivery or certify F01-F12.',
                                    'Retained samples cover the adopted corpus, not arbitrary body dynamics.',
                                    'Recorded messages require the independent source/schema audit.']}
 
@@ -188,7 +188,7 @@ class Recorder:
         self.exchange('cancel/result',queued,expected='cancelled')
         self.send('cancel/status','queued','status',target_request_id=queued['request_id'])
         self.send('failure/delivery',project,'export',program_revision=b.program_revision,
-                  destination='ontokin.glb/0.5',expected=('failed','rejected'),code='OKL-E-CAPABILITY-UNSUPPORTED')
+                  destination='ontokin.glb/0.4',expected=('failed','rejected'),code='OKL-E-CAPABILITY-UNSUPPORTED')
         p=self.bundles['P21'];pr='case-P21'
         self.send('prefix/extend',pr,'evaluate',program_revision=p.program_revision,run_id=self.runs['P21'],
                   until_seconds='3',expected='failed',code='OKL-E-NUMERIC')

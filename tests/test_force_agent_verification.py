@@ -1,6 +1,6 @@
 """Actual Agent/0.5 messages and deliberate rehashed evidence counterexamples.
 
-Schema dependencies are verification-only; dedicated CI must execute this file.
+Schema dependencies are verification-only; the dedicated local cohort executes this file.
 """
 from __future__ import annotations
 import copy
@@ -72,6 +72,15 @@ class ForceAgentEvidenceTests(unittest.TestCase):
         self.assertEqual((result['exchanges'], result['source_snapshots'], result['predetermined_samples']), (418, 25, 334))
         self.assertFalse(result['full_force_release_complete'])
         self.assertFalse(result['destination_validated'])
+
+    def test_rehashed_legacy_workflow_version_cannot_relabel_current_delivery(self):
+        self.manifest['schema_version'] = 'ontokin.force-agent-workflow/0.1'
+        self.save_manifest()
+        self.reject('Discovery|availability')
+
+    def test_rehashed_delivery_failure_cannot_substitute_supported_contract(self):
+        self.change('failure/delivery', lambda q: q.__setitem__('destination', 'ontokin.glb/0.5'), 'request')
+        self.reject('destination')
 
     def test_rehashed_last_valid_position_is_not_accepted(self):
         self.change('P01/run', lambda d: d['result']['run_state']['last_valid_state']['objects']['ball']['position_m'].__setitem__(0, 99))

@@ -143,6 +143,22 @@ def capabilities() -> dict:
                             "No contacts, finite forces, continuous torques, actuators or nonspherical dynamics.",
                             "Recorded GLB animation does not execute impulses or live physics in the destination."],
         },
+        "force_interface": {
+            "language_version": "0.5", "profile": "force-0.1",
+            "agent_contract": "ontokin.agent/0.5", "delivery_contract": "ontokin.glb/0.5",
+            "storage_schema": "ontokin.force-program-agent-store/0.1",
+            "source_event": 'force OBJECT @ "KEY" using WORLD_VECTOR_N for DURATION;',
+            "physical_model": "finite constant world center-of-mass forces on free homogeneous spheres",
+            "events": "exact activation/completion clocks and additive overlaps at atomic source boundaries",
+            "inspection": "complete active and latest source-bound force records with world force and acceleration",
+            "transport": "ProgramAgentService(store, protocol='ontokin.agent/0.5') and agent --protocol ontokin.agent/0.5 JSONL CLI",
+            "single_source_command": "export SOURCE.ok --target ontokin.glb/0.5 --output MODEL.glb",
+            "pinned_bundle_command": "export PROGRAM.files.json --bundle --target ontokin.glb/0.5 --output MODEL.glb",
+            "recording_interval": "--end and Agent options.end evaluate only the requested prefix; omitted end uses scene duration",
+            "limitations": ["Only source-authored finite constant world forces at the center of mass; no host force mutation.",
+                            "No continuous torque, contacts, controllers or general rigid-body dynamics.",
+                            "Recorded GLB animation does not execute forces or live physics in the destination."],
+        },
         "operations": ["check", "evaluate", "export", "agent", "conformance", "capabilities"],
         "output_levels": ["represented", "constructed", "evaluated"],
         "source_features": ["classes", "single_inheritance", "pure_functions_and_methods",
@@ -210,6 +226,18 @@ def capabilities() -> dict:
                 "validation": "decoded native geometry, materials, source influence metadata and world animation",
                 "limitations": "recorded rigid playback; no destination impulse engine or contacts",
             },
+            "ontokin.glb/0.5": {
+                "format": "glTF 2.0 binary (.glb)", "profile": "force-0.1",
+                "geometry": ["empty", "box", "sphere", "loft", "placed"],
+                "materials": "inherited native PBR regions and one local visual placement",
+                "animation": "source-evaluated piecewise quadratic translation and inherited rigid angular motion",
+                "source_of_truth": "the complete exact pinned .ok source bundle",
+                "selection": "explicit --target ontokin.glb/0.5 or Agent/0.5 destination",
+                "force_metadata": "complete source force and impulse state at every recorded exact boundary",
+                "sampling": "requested-prefix acceleration and angular bounds plus every exact in-prefix boundary",
+                "validation": "decoded source geometry, materials, influence provenance, float32 tracks and intermediate motion",
+                "limitations": "bounded recorded rigid playback; no destination force engine, contacts or live physics",
+            },
         },
         "limitations": ["General correctly rounded transcendental functions are not certified.",
                         "Exact represented rotations are approximated in binary64 spatial calculations.",
@@ -229,7 +257,7 @@ def _program_export(args) -> int:
     program = None
     try:
         if args.target == "ontokin.glb/0.1":
-            raise BundleError("OKA-E-REQUEST", "A program bundle requires explicit GLB/0.2, GLB/0.3 or GLB/0.4 delivery.")
+            raise BundleError("OKA-E-REQUEST", "A program bundle requires explicit GLB/0.2, GLB/0.3, GLB/0.4 or GLB/0.5 delivery.")
         protected = []
         if args.bundle:
             manifest_path = args.file.resolve(strict=True)
@@ -303,7 +331,7 @@ def main(argv: list[str] | None = None) -> int:
     evaluate_parser.add_argument("--frame", default="world", help="Frame for --object inspection, for example first.frame")
     export_parser = commands.add_parser("export", help="Bake and verify an animation in a self-contained .glb file")
     export_parser.add_argument("file", type=Path)
-    export_parser.add_argument("--target", choices=["ontokin.glb/0.1", "ontokin.glb/0.2", "ontokin.glb/0.3", "ontokin.glb/0.4"],
+    export_parser.add_argument("--target", choices=["ontokin.glb/0.1", "ontokin.glb/0.2", "ontokin.glb/0.3", "ontokin.glb/0.4", "ontokin.glb/0.5"],
                                default="ontokin.glb/0.1", help="Explicit delivery profile; old source is never migrated")
     export_parser.add_argument("--bundle", action="store_true",
                                help="Read FILE as an ontokin.files/0.1 manifest of pinned offline .ok files")

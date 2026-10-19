@@ -410,7 +410,9 @@ class Reader:
 
     def audit(self):
         m=self.read('workflow.json')
-        require(m['schema_version']=='ontokin.force-agent-workflow/0.1' and m['status']=='recorded','Incomplete workflow')
+        require(m['schema_version'] in ('ontokin.force-agent-workflow/0.1', 'ontokin.force-agent-workflow/0.2')
+                and m['status']=='recorded','Incomplete workflow')
+        self.workflow_version = m['schema_version']
         require(m['implementation']==self.implementation and m['protocol']==PROTOCOL,'Stale implementation or binding')
         require(m['writer_sha256']==sha((ROOT/'tools/build_force_agent_demo.py').read_bytes()),'Stale workflow writer')
         require(m['fixture_inputs']=={k:sha((DATA/k).read_bytes()) for k in ('acceptance.json','reviewed-acceptance.json','source-errata.json','ADOPTION.md')},'Wrong adopted acceptance inputs')
@@ -494,7 +496,8 @@ class Reader:
         require(labels==set(self.book.positive)|{'P11-base','P12-base','P13-base'},'Missing accepted source snapshot')
         require(m['exchange_count']==len(self.roles) and m['snapshot_count']==len(labels) and
                 m['sample_count']==sum(len(self.book.cases[n]['expected_samples']) for n in self.book.positive),'Incorrect evidence counts')
-        return dict(schema_version='ontokin.force-agent-audit/0.1',status='passed',
+        return dict(schema_version='ontokin.force-agent-audit/0.2',status='passed',
+                    workflow_schema_version=self.workflow_version,
                     checked_at_utc=datetime.now(timezone.utc).isoformat(),implementation=self.implementation,
                     workflow_sha256=sha((self.root/'workflow.json').read_bytes()),verifier_sha256=sha(Path(__file__).read_bytes()),
                     schema_inputs=self.schemas.hashes,fixture_inputs=m['fixture_inputs'],
@@ -509,9 +512,12 @@ class Reader:
                'cursor/first','cursor/next','cursor/other-create','cursor/reject-project'}
         for role in roles:self.at(role)
         q,r=self.at('discovery');require(q['operation']=='discover' and q['profile']=='force-0.1' and r['status']=='succeeded','Missing force discovery')
-        require(not r['truncated'] and r['result']['delivery_targets']==[],'Discovery falsely advertises implemented delivery')
+        current = self.workflow_version == 'ontokin.force-agent-workflow/0.2'
+        targets = ['ontokin.glb/0.5'] if current else []
+        require(not r['truncated'] and r['result']['delivery_targets']==targets,'Discovery differs from its versioned delivery checkpoint')
         catalog={item['name']:item for item in r['result']['items']}
-        require(catalog['force']['kind']=='event' and catalog['ontokin.glb/0.5']['availability']=='unsupported','Capability availability differs')
+        availability = 'available_in_bounded_profile' if current else 'unsupported'
+        require(catalog['force']['kind']=='event' and catalog['ontokin.glb/0.5']['availability']==availability,'Capability availability differs')
         for role,code in [('failure/invalid-create','OKL-E-TYPE'),('failure/invalid-edit','OKL-E-EVENT-ORDER'),
                           ('retry/collision','OKL-E-REQUEST-ID'),('failure/budget','OKL-E-RESOURCE'),
                           ('failure/delivery','OKL-E-CAPABILITY-UNSUPPORTED'),('prefix/extend','OKL-E-NUMERIC'),
@@ -527,8 +533,9 @@ class Reader:
         cq,cr=self.at('cancel/submit');tq,tr=self.at('cancel/result');rq,rr=self.at('cancel/request');sq,sr=self.at('cancel/status')
         require(cq==tq and cr['status']=='queued' and tr['status']=='cancelled' and tr['accepted_program_revision'] is None and tr['run_id'] is None,'Queued cancellation published state or lost its request')
         require(rq['target_request_id']==sq['target_request_id']==cq['request_id'] and rr['result']['target']==sr['result']['target']==tr,'Cancellation target/status differs')
-        q,r=self.at('failure/delivery');require(q['operation']=='export' and q['destination']=='ontokin.glb/0.5' and
-            r['diagnostics'][0]['blocks']==['delivered'] and (r['result'] is None or 'artifact_id' not in r['result']),'Unavailable adapter produced an artifact claim')
+        rejected_destination = 'ontokin.glb/0.4' if current else 'ontokin.glb/0.5'
+        q,r=self.at('failure/delivery');require(q['operation']=='export' and q['destination']==rejected_destination and
+            r['diagnostics'][0]['blocks']==['delivered'] and (r['result'] is None or 'artifact_id' not in r['result']),'Wrong unsupported destination or unexpected artifact claim')
         q,r=self.at('prefix/extend');run=r['result']['run_state']
         require(q['run_id']==r['run_id']==run['run_id']==self.runs['P21'] and q['until_seconds']=='3','Failed prefix extension lost the original run')
         require(run['status']=='failed' and run['valid_until_seconds']=='2' and run['valid_until_side']=='before','Invalid later state was certified')
@@ -588,7 +595,7 @@ def main():
     args=p.parse_args()
     try:report=verify(args.workflow_dir)
     except EvidenceError as exc:
-        report=dict(schema_version='ontokin.force-agent-audit/0.1',status='failed',error=str(exc),full_force_release_complete=False)
+        report=dict(schema_version='ontokin.force-agent-audit/0.2',status='failed',error=str(exc),full_force_release_complete=False)
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(report,sort_keys=True,indent=2,allow_nan=False)+'\n')
     print(json.dumps(report,indent=2));return 0 if report['status']=='passed' else 1
