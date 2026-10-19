@@ -63,8 +63,16 @@ export async function loadWorkflow(directory,{agentWorkflow=false,agentAudit}={}
   const auditBytes=await readFile(agentAudit),audit=json(auditBytes);
   assert.equal(audit.schema_version,'ontokin.force-delivery-audit/0.1');assert.equal(audit.status,'passed');
   assert.equal(audit.workflow_sha256,sha256(bytes));assert.deepEqual(audit.implementation,workflow.implementation);
+  assert.deepEqual(audit.source_revision,workflow.source_revision);assert.deepEqual(audit.source_revision_after,workflow.source_revision_after);
   assert.deepEqual(audit.fixture_inputs,workflow.fixture_inputs);
   assert.equal(audit.verifier_sha256,sha256(await readFile(path.join(root,'tools/verify_force_delivery_workflow.py'))));
+  assert.deepEqual(audit.helper_inputs,{'tools/verify_force_agent_workflow.py':sha256(await readFile(path.join(root,'tools/verify_force_agent_workflow.py'))),
+    'tools/force_oracles.py':oracleHash},'Agent audit prerequisites changed');
+  const auditSchemas=['agent-v0.5/request.schema.json','agent-v0.5/response.schema.json',
+    'agent-v0.5/diagnostic.schema.json','agent-v0.2/diagnostic.schema.json','construction-v0.1/bundle.schema.json',
+    'impulse-v0.1/impulses.schema.json','force-v0.1/forces.schema.json'];
+  assert.deepEqual(audit.schema_inputs,Object.fromEntries(await Promise.all(auditSchemas.map(async name=>
+    [name,sha256(await readFile(path.join(root,'docs/language-design',name)))]))),'Agent audit schema prerequisites changed');
   assert.deepEqual(audit.deliveries.map(d=>d.case_id),agentDeliveryCases);
   const fixtures=[];
   for(const item of workflow.deliveries) {

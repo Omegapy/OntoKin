@@ -3,7 +3,7 @@ project: OntoKin
 document_id: OK-ENG-007
 version: 0.2
 date: 2026-10-19
-status: adopted-engineering-contract-implementation-pending
+status: implemented-component-complete-release-acceptance-pending
 target_contract: ontokin.glb/0.5
 source_profile: force-0.1
 ---
@@ -52,4 +52,4 @@ The earlier regression method identities remain executable. Their unavailable-de
 
 ## Execution record
 
-Implementation and measured results are tracked separately in STATUS and the component pull request. This adopted contract alone does not establish a passing exporter, destination, force release or full-product gate.
+Implementation and measured results are tracked separately in STATUS and [the component pull request](https://github.com/Omegapy/OntoKin/pull/17). Its source-corpus and actual Agent-delivery preflights have passed independent native and browser checks, with identified visual reviews. Complete force release acceptance remains a separate, unfinished gate until its current execution and evidence audit pass. This contract alone does not establish a release or full-product result.

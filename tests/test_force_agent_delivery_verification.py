@@ -56,6 +56,36 @@ def binary_scene(document=None, binary=None):
     return raw, document, binary
 
 
+def material_scene(revision='sha256:' + 'a' * 64):
+    """A placed triangle with real PBR and separate source revision metadata."""
+    _, document, binary = binary_scene()
+    element_id = ['force-demo', 'demo', 'ball']
+    document['extras'] = {'ontokin': {'program': {'revision': revision}}}
+    node = document['nodes'][0]
+    node['mesh'] = 0
+    node['extras']['ontokin'].update(element_id=element_id, program_revision=revision,
+        geometry={'kind': 'placed', 'local_position': [0., 0., .1], 'local_rotation': [1., 0., 0., 0.]},
+        surface={'profile': 'surface-0.1', 'local_visual_placement': {
+            'position_m': [0., 0., .1], 'orientation_wxyz': [1., 0., 0., 0.], 'frame': 'carrier_self_frame'}})
+    document['bufferViews'].extend({'buffer': 0, 'byteOffset': offset, 'byteLength': size}
+                                  for offset, size in ((64, 36), (100, 36), (136, 6)))
+    document['accessors'].extend([
+        {'bufferView': 3, 'componentType': 5126, 'count': 3, 'type': 'VEC3'},
+        {'bufferView': 4, 'componentType': 5126, 'count': 3, 'type': 'VEC3'},
+        {'bufferView': 5, 'componentType': 5123, 'count': 3, 'type': 'SCALAR'}])
+    binary += struct.pack('<9f9f3H', 0, 0, .1, 1, 0, .1, 0, 1, .1,
+                          0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 2)
+    document['buffers'][0]['byteLength'] = len(binary)
+    document['materials'] = [{'name': 'ball: clay', 'pbrMetallicRoughness': {
+        'baseColorFactor': [.6, .3, .2, 1.], 'metallicFactor': 0., 'roughnessFactor': .8},
+        'extras': {'ontokin': {'source_region_key': 'clay', 'occurrence_path': 'ball',
+                                'element_id': element_id, 'program_revision': revision}}}]
+    document['meshes'] = [{'name': 'placed triangle', 'primitives': [{
+        'attributes': {'POSITION': 3, 'NORMAL': 4}, 'indices': 5, 'material': 0, 'mode': 4,
+        'extras': {'ontokin': {'region_key': 'clay'}}}]}]
+    return binary_scene(document, binary)
+
+
 class PureDeliveryReaderTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -231,6 +261,111 @@ class PureDeliveryReaderTests(unittest.TestCase):
         self.assertEqual(pose['translation'], [1, 2, 3])
         self.assertLess(rotation_error(pose['rotation'], [math.cos(math.pi / 8), 0, 0, math.sin(math.pi / 8)]), 1e-7)
 
+    def test_reference_projection_requires_actual_unique_object_occurrences(self):
+        from tools.build_force_delivery_demo import reference_objects as recorded_objects
+        from tools.verify_force_delivery_workflow import reference_objects as audited_objects
+        element_id = ['force-demo', 'demo', 'ball']
+        state = dict(element_id=element_id, available=True, position_m=[0., 0., 0.],
+            orientation_wxyz=[1., 0., 0., 0.], velocity_m_per_s=[0., 0., 0.],
+            angular_velocity_rad_per_s=[0., 0., 0.], own_mass_kg=2.,
+            forces={'active': [], 'started_count': 0, 'completed_count': 0, 'last_change_time_seconds': None,
+                    'last_changes': [], 'net_force_world_n': [0., 0., 0.], 'acceleration_world_m_per_s2': [0., 0., 0.]},
+            impulses={'applied_count': 0, 'last_application_time_seconds': None, 'last_applications': []},
+            pose_authority={'kind': 'free_sphere', 'since_seconds': '0', 'trajectory_anchor_seconds': '0'})
+        item = {'kind': 'object', 'path': 'ball', 'element_id': element_id, 'state': state}
+        reply = {'truncated': False, 'next_cursor': None, 'result': {'total': 1, 'items': [item]}}
+        expected = {'ball': {'element_id': element_id}}
+        self.assertEqual(recorded_objects(reply), audited_objects([item], expected))
+        self.assertEqual(recorded_objects(reply)['ball']['element_id'], element_id)
+        # The failed smoke inspected every indexed entry: its first module had
+        # unavailable state, while a property repeated its owner's object state.
+        changes = (
+            lambda r: r['result']['items'][0].update(kind='module', state={'available': False}),
+            lambda r: r['result']['items'][0].update(kind='property', path='ball.body_mass'),
+            lambda r: r['result']['items'][0]['state'].__setitem__('available', False),
+            lambda r: r['result']['items'][0].__setitem__('element_id', ['wrong', 'identity']),
+            lambda r: r['result']['items'].append(copy.deepcopy(r['result']['items'][0])),
+        )
+        for index, change in enumerate(changes):
+            altered = copy.deepcopy(reply)
+            change(altered)
+            altered['result']['total'] = len(altered['result']['items'])
+            with self.subTest(index=index):
+                with self.assertRaises(ValueError):
+                    recorded_objects(altered)
+                with self.assertRaises(EvidenceError):
+                    audited_objects(altered['result']['items'], expected)
+
+    def test_reference_quaternion_order_preserves_source_wxyz_and_gltf_xyzw(self):
+        source_wxyz = [math.cos(.75), 0., 0., math.sin(.75)]
+        recorded_xyzw = [*source_wxyz[1:], source_wxyz[0]]
+        self.assertEqual(rotation_error(recorded_xyzw, source_wxyz), 0.)
+        self.assertEqual(rotation_error([-value for value in recorded_xyzw], source_wxyz), 0.)
+        self.assertGreater(rotation_error(source_wxyz, source_wxyz), .5)
+
+    def test_physical_repair_geometry_allows_its_correct_new_program_revision(self):
+        before = GLB(material_scene()[0])
+        after = GLB(material_scene('sha256:' + 'b' * 64)[0])
+        before.require_same_geometry(after, 'ball')
+        self.assertNotEqual(before.document['materials'][0]['extras']['ontokin']['program_revision'],
+                            after.document['materials'][0]['extras']['ontokin']['program_revision'])
+        # Comparison must leave both original provenance records intact.
+        self.assertEqual(after.document['materials'][0]['extras']['ontokin']['program_revision'], 'sha256:' + 'b' * 64)
+
+    def test_physical_repair_geometry_rejects_a_forged_material_revision(self):
+        _, document, binary = material_scene()
+        document['materials'][0]['extras']['ontokin']['program_revision'] = 'sha256:' + 'b' * 64
+        after = GLB(binary_scene(document, binary)[0])
+        with self.assertRaisesRegex(EvidenceError, 'wrong program or occurrence revision'):
+            GLB(material_scene()[0]).require_same_geometry(after, 'ball')
+
+    def test_physical_repair_geometry_rejects_changed_pbr_placement_and_regions(self):
+        changes = (
+            lambda d: d['materials'][0]['pbrMetallicRoughness']['baseColorFactor'].__setitem__(0, .7),
+            lambda d: d['materials'][0]['pbrMetallicRoughness'].__setitem__('roughnessFactor', .2),
+            lambda d: d['nodes'][0]['extras']['ontokin']['geometry']['local_position'].__setitem__(2, .2),
+            lambda d: d['nodes'][0]['extras']['ontokin']['surface']['local_visual_placement']['position_m'].__setitem__(2, .2),
+            lambda d: d['meshes'][0]['primitives'][0].__setitem__('mode', 1),
+            lambda d: d['meshes'][0]['primitives'][0]['extras']['ontokin'].__setitem__('region_key', 'other'),
+        )
+        for index, change in enumerate(changes):
+            _, document, binary = material_scene('sha256:' + 'b' * 64)
+            change(document)
+            after = GLB(binary_scene(document, binary)[0])
+            with self.subTest(index=index), self.assertRaises(EvidenceError):
+                GLB(material_scene()[0]).require_same_geometry(after, 'ball')
+
+    def test_physical_repair_geometry_rejects_changed_vertices_normals_and_indices(self):
+        for offset, fmt, value in ((64, '<f', .25), (100, '<f', 1.), (136, '<H', 1)):
+            _, document, binary = material_scene('sha256:' + 'b' * 64)
+            encoded = struct.pack(fmt, value)
+            binary = binary[:offset] + encoded + binary[offset + len(encoded):]
+            after = GLB(binary_scene(document, binary)[0])
+            with self.subTest(offset=offset), self.assertRaises(EvidenceError):
+                GLB(material_scene()[0]).require_same_geometry(after, 'ball')
+
+    def test_declared_animation_resource_bounds_precede_accessor_expansion(self):
+        for nodes, keys, message in ((1, 10001, 'keyframe bound'), (26, 10000, 'aggregate pose bound')):
+            _, document, binary = binary_scene()
+            document['nodes'] = [{'extras': {'ontokin': {'kind': 'object', 'path': 'body' + str(i)}}} for i in range(nodes)]
+            document['scenes'][0]['nodes'] = list(range(nodes))
+            document['animations'][0]['channels'] = [
+                {'sampler': index, 'target': {'node': node, 'path': kind}}
+                for node in range(nodes) for index, kind in enumerate(('translation', 'rotation'))]
+            for accessor in document['accessors']:
+                accessor['count'] = keys
+            forged = binary_scene(document, binary)[0]
+            with self.subTest(nodes=nodes, keys=keys), \
+                    patch.object(GLB, 'accessor', side_effect=AssertionError('Accessor expanded before preflight')), \
+                    self.assertRaisesRegex(EvidenceError, message):
+                GLB(forged)
+
+    def test_expected_source_object_set_precedes_accessor_expansion(self):
+        raw = binary_scene()[0]
+        with patch.object(GLB, 'accessor', side_effect=AssertionError('Accessor expanded before source binding')), \
+                self.assertRaisesRegex(EvidenceError, 'omitted or added source objects'):
+            GLB(raw, expected_objects={'other'})
+
     def test_binary_reader_rejects_invalid_headers_and_chunk_lengths(self):
         raw, _, _ = binary_scene()
         for corrupt in (b'XXXX' + raw[4:], raw[:-1], raw[:12] + struct.pack('<I', 3) + raw[16:]):
@@ -375,6 +510,14 @@ class PureDeliveryTraceTests(unittest.TestCase):
         self.append('first', self.query, self.reply)
         with self.assertRaisesRegex(EvidenceError, 'schema'):
             self.check()
+
+    def test_destination_reference_object_selector_is_an_existing_request_shape(self):
+        program = load_file_manifest(DATA / 'p01-single-interval.files.json')
+        query = dict(schema_version=PROTOCOL, project_id='case-P01', request_id='reference-object',
+            operation='inspect', program_revision=program.program_revision, run_id='run:fixture',
+            selector={'kind': 'object'}, fields=['identity', 'state'], limit=1000,
+            time={'seconds': '0', 'side': 'before'})
+        self.schemas.validate('request', query)
 
     def test_source_only_and_component_workflows_are_not_relabelled_as_delivery(self):
         from tools.verify_force_delivery_workflow import verify

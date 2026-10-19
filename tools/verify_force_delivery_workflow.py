@@ -32,6 +32,10 @@ TARGET = 'ontokin.glb/0.5'
 CASE_IDS = ('P01', 'P07', 'P10', 'P11', 'P12', 'P13', 'P21')
 CHUNK_BYTES = 32768
 MAX_GLB_BYTES = 64 * 1024 * 1024
+MAX_KEYFRAMES = 10000
+MAX_BAKED_POSES = 250000
+MAX_MESH_VERTICES = 250000
+MAX_DECODED_COMPONENTS = 9 * MAX_BAKED_POSES + 12 * MAX_MESH_VERTICES
 REFERENCE_FIELDS = ('element_id', 'position_m', 'orientation_wxyz', 'velocity_m_per_s',
                     'angular_velocity_rad_per_s', 'forces', 'impulses', 'pose_authority', 'own_mass_kg')
 FORCE_PROFILE = {
@@ -72,6 +76,7 @@ def entry_count(value):
 
 
 def rotation_error(actual_xyzw, expected_wxyz):
+    """Compare glTF XYZW with source/oracle WXYZ, including quaternion sign."""
     require(len(actual_xyzw) == len(expected_wxyz) == 4, 'Quaternion shape differs')
     actual_norm = math.hypot(*actual_xyzw)
     expected_norm = math.hypot(*expected_wxyz)
@@ -82,9 +87,26 @@ def rotation_error(actual_xyzw, expected_wxyz):
     return 4 * math.asin(min(1, chord / 2))
 
 
+def reference_objects(items, expected):
+    """Bind the native reference to occurrence identities in actual responses."""
+    require(len(items) == len(expected), 'Native reference contains the wrong object count')
+    projected = {}
+    for item in items:
+        path = item['path']
+        require(item['kind'] == 'object' and path in expected and path not in projected,
+                'Native reference must contain the complete unique object occurrences')
+        state = item['state']
+        require(state.get('available') is True and item['element_id'] == state['element_id'] == expected[path]['element_id'],
+                'Native reference occurrence identity and state differ')
+        projected[path] = {field: item['element_id'] if field == 'element_id' else state[field]
+                           for field in REFERENCE_FIELDS}
+    require(set(projected) == set(expected), 'Native reference contains wrong objects')
+    return projected
+
+
 class GLB:
     """Independent embedded-buffer reader and LINEAR/SLERP playback."""
-    def __init__(self, raw):
+    def __init__(self, raw, *, expected_objects=None):
         require(28 <= len(raw) <= MAX_GLB_BYTES, 'GLB byte bound differs')
         require(struct.unpack_from('<4sII', raw) == (b'glTF', 2, len(raw)), 'Malformed GLB header')
         offset = 12
@@ -104,6 +126,8 @@ class GLB:
         require(0 <= len(self.binary) - document['buffers'][0]['byteLength'] <= 3, 'GLB buffer length differs')
         self.nodes = {}
         self.tracks = {}
+        self.decoded_components = 0
+        require(0 < len(document['nodes']) <= 1000, 'Recorded object count exceeds its bound')
         require(document['scene'] == 0 and len(document['scenes']) == 1 and
                 document['scenes'][0]['nodes'] == list(range(len(document['nodes']))), 'The declared root-node scene differs')
         for index, node in enumerate(document['nodes']):
@@ -113,26 +137,43 @@ class GLB:
             path = metadata['path']
             require(path not in self.nodes, 'Duplicate source object node')
             self.nodes[path] = (index, node, metadata)
+        if expected_objects is not None:
+            require(set(self.nodes) == set(expected_objects), 'Encoded scene omitted or added source objects')
         require(len(document['animations']) == 1, 'Expected one recorded clip')
         animation = document['animations'][0]
+        require(len(animation['channels']) == 2 * len(self.nodes), 'Missing or repeated recorded object channels')
+        declared = {}
+        track_keys = 0
         for channel in animation['channels']:
             target = channel['target']
             key = (target['node'], target['path'])
-            require(key not in self.tracks and target['path'] in ('translation', 'rotation'), 'Duplicate or unsupported animation channel')
+            require(key not in declared and target['path'] in ('translation', 'rotation'), 'Duplicate or unsupported animation channel')
             require(type(target['node']) is int and 0 <= target['node'] < len(document['nodes']), 'Invalid animation node')
             require(type(channel['sampler']) is int and 0 <= channel['sampler'] < len(animation['samplers']), 'Invalid animation sampler')
             sampler = animation['samplers'][channel['sampler']]
             require(sampler['interpolation'] == 'LINEAR', 'Wrong recorded interpolation')
-            require(document['accessors'][sampler['input']]['type'] == 'SCALAR' and
-                    document['accessors'][sampler['input']]['componentType'] == 5126 and
-                    document['accessors'][sampler['output']]['componentType'] == 5126, 'Animation data must use float32 scalars and transforms')
+            require(all(type(sampler[kind]) is int and 0 <= sampler[kind] < len(document['accessors'])
+                        for kind in ('input', 'output')), 'Invalid animation accessor')
+            inputs, outputs = (document['accessors'][sampler[kind]] for kind in ('input', 'output'))
+            require(inputs['type'] == 'SCALAR' and inputs['componentType'] == outputs['componentType'] == 5126 and
+                    outputs['type'] == ('VEC3' if key[1] == 'translation' else 'VEC4'),
+                    'Animation data must use float32 scalars and transforms')
+            require(type(inputs['count']) is int and 0 < inputs['count'] <= MAX_KEYFRAMES and
+                    type(outputs['count']) is int and outputs['count'] == inputs['count'],
+                    'Recorded animation exceeds its keyframe bound or has unequal tracks')
+            track_keys += inputs['count']
+            require(track_keys <= 2 * MAX_BAKED_POSES, 'Recorded animation exceeds its aggregate pose bound')
+            declared[key] = sampler
+        require(set(declared) == {(index, kind) for index in range(len(document['nodes']))
+                                  for kind in ('translation', 'rotation')}, 'Missing recorded object channels')
+        # Complete declared counts and source cardinality are checked before any
+        # shared accessor can be expanded repeatedly through multiple channels.
+        for key, sampler in declared.items():
             times = [value[0] for value in self.accessor(sampler['input'])]
             values = self.accessor(sampler['output'])
             require(times and len(times) == len(values) and all(a < b for a, b in zip(times, times[1:])), 'Invalid animation key sequence')
             require(all(len(value) == (3 if key[1] == 'translation' else 4) for value in values), 'Wrong transform accessor arity')
             self.tracks[key] = (times, values)
-        require(set(self.tracks) == {(index, kind) for index in range(len(document['nodes']))
-                                    for kind in ('translation', 'rotation')}, 'Missing recorded object channels')
 
     def accessor(self, index):
         require(type(index) is int and 0 <= index < len(self.document['accessors']), 'Invalid accessor index')
@@ -141,6 +182,8 @@ class GLB:
         count = accessor['count']
         require(type(count) is int and 0 < count <= 250000, 'Accessor count exceeds the bounded profile')
         arity = {'SCALAR': 1, 'VEC2': 2, 'VEC3': 3, 'VEC4': 4}[accessor['type']]
+        self.decoded_components += count * arity
+        require(self.decoded_components <= MAX_DECODED_COMPONENTS, 'Decoded accessor expansion exceeds its aggregate bound')
         component = {5121: 'B', 5123: 'H', 5125: 'I', 5126: 'f'}[accessor['componentType']]
         fmt = '<' + component * arity
         size = struct.calcsize(fmt)
@@ -193,15 +236,31 @@ class GLB:
         return result
 
     def geometry(self, path):
-        node = self.nodes[path][1]
+        _, node, metadata = self.nodes[path]
         if 'mesh' not in node:
             return None
         mesh = self.document['meshes'][node['mesh']]
-        return [{'positions': self.accessor(part['attributes']['POSITION']),
-                 'normals': self.accessor(part['attributes']['NORMAL']),
-                 'indices': self.accessor(part['indices']),
-                 'material': self.document['materials'][part['material']]}
-                for part in mesh['primitives']]
+        program_revision = self.document['extras']['ontokin']['program']['revision']
+        require(metadata['program_revision'] == program_revision, 'Geometry occurrence has the wrong program revision')
+        primitives = []
+        for part in mesh['primitives']:
+            material = copy.deepcopy(self.document['materials'][part['material']])
+            provenance = material['extras']['ontokin']
+            require(provenance['program_revision'] == program_revision and provenance['occurrence_path'] == path and
+                    provenance['element_id'] == metadata['element_id'], 'Material has the wrong program or occurrence revision')
+            require(part.get('mode', 4) == 4 and provenance['source_region_key'] == part['extras']['ontokin']['region_key'],
+                    'Geometry primitive mode or material region binding differs')
+            # An accepted source repair necessarily changes the program revision.
+            # Validate that binding above, then compare all remaining material data.
+            del provenance['program_revision']
+            primitives.append({'positions': self.accessor(part['attributes']['POSITION']),
+                'normals': self.accessor(part['attributes']['NORMAL']), 'indices': self.accessor(part['indices']),
+                'mode': part.get('mode', 4), 'regions': copy.deepcopy(part['extras']), 'material': material})
+        return {'source_geometry': copy.deepcopy(metadata['geometry']),
+                'surface': copy.deepcopy(metadata.get('surface')), 'primitives': primitives}
+
+    def require_same_geometry(self, other, path):
+        require(self.geometry(path) == other.geometry(path), 'A physical repair changed decoded source geometry or materials')
 
 
 class Reader(SourceReader):
@@ -415,7 +474,7 @@ class Reader(SourceReader):
                 reference['tolerances'] == report['tolerances'], 'Native reference lost source/artifact/implementation identity')
         samples = sample_requests(name)
         require(len(record['reference_roles']) == len(reference['samples']) == len(samples), 'Native reference sample count differs')
-        decoded = GLB(data)
+        decoded = GLB(data, expected_objects=self.book.objects(name))
         metadata = decoded.document['extras']['ontokin']
         require(metadata['target_contract'] == TARGET and metadata['profile'] == 'force-0.1' and
                 metadata['program'] == report['program'] and metadata['source'] == report['source'] and
@@ -440,17 +499,16 @@ class Reader(SourceReader):
             self.required.add(role)
             query, reply = self.at(role)
             require(query['operation'] == 'inspect' and query['program_revision'] == program.program_revision and
-                    query['run_id'] == response['run_id'] and query['selector'] == {} and query['fields'] == ['identity', 'state'] and
+                    query['run_id'] == response['run_id'] and query['selector'] == {'kind': 'object'} and query['fields'] == ['identity', 'state'] and
                     query['limit'] == 1000 and query.get('frame', 'world') == 'world' and
                     query['time'] == {'seconds': sample['time_seconds'], 'side': sample['side']}, 'Native reference inspection was substituted')
             require(reply['status'] == 'succeeded' and not reply['truncated'] and reply['next_cursor'] is None and
                     reply['result']['total'] == len(reply['result']['items']) == len(objects), 'Native reference inspection is incomplete')
             require(reply['result']['context'] == dict(fields=['identity', 'state'], frame='world',
-                program_revision=program.program_revision, run_id=response['run_id'], selector={},
+                program_revision=program.program_revision, run_id=response['run_id'], selector={'kind': 'object'},
                 side=sample['side'], time_seconds=sample['time_seconds']), 'Native reference inspection context differs')
             states = {item['path']: item['state'] for item in reply['result']['items']}
-            require(set(states) == set(objects), 'Native reference contains wrong objects')
-            projected = {path: {field: state[field] for field in REFERENCE_FIELDS} for path, state in states.items()}
+            projected = reference_objects(reply['result']['items'], objects)
             require(reference['samples'][index] == {**sample, 'objects': projected}, 'Native reference was not obtained from the retained Agent responses')
             actual_samples[(sample['time_seconds'], sample['side'])] = states
             for path, state in states.items():
@@ -548,7 +606,7 @@ class Reader(SourceReader):
                 response['status'] == 'succeeded' and response['accepted_program_revision'] == program.program_revision, 'Failed repairs changed the accepted original source')
         for name in ('P11', 'P12', 'P13'):
             for path in ('rack.props["first"]', 'rack.props["second"]'):
-                require(self.delivered[name]['decoded'].geometry(path) == self.delivered['P10']['decoded'].geometry(path), 'A physical repair changed decoded source geometry or materials')
+                self.delivered['P10']['decoded'].require_same_geometry(self.delivered[name]['decoded'], path)
             before = self.at('P10/run')[1]['result']['run_state']['last_valid_state']['objects']['rack.props["second"]']
             after = self.at(name + '/run')[1]['result']['run_state']['last_valid_state']['objects']['rack.props["second"]']
             for field in ('position_m', 'orientation_wxyz', 'velocity_m_per_s', 'angular_velocity_rad_per_s'):

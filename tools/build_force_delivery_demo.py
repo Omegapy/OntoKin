@@ -45,6 +45,23 @@ def current_runtime_sha256():
     return 'sha256:' + digest.hexdigest()
 
 
+def reference_objects(reply):
+    """Project complete object occurrences from an explicit object inspection."""
+    items = reply['result']['items']
+    require(not reply['truncated'] and reply['next_cursor'] is None and
+            reply['result']['total'] == len(items), 'Destination reference is incomplete')
+    fields = ('position_m', 'orientation_wxyz', 'velocity_m_per_s', 'angular_velocity_rad_per_s',
+              'forces', 'impulses', 'pose_authority', 'own_mass_kg')
+    objects = {}
+    for item in items:
+        require(item['kind'] == 'object' and item['path'] not in objects and
+                item['state'].get('available') is True, 'Destination reference must contain unique available objects')
+        require(item['element_id'] == item['state']['element_id'], 'Object inspection identity and state differ')
+        objects[item['path']] = {'element_id': copy.deepcopy(item['element_id']),
+            **{field: copy.deepcopy(item['state'][field]) for field in fields}}
+    return objects
+
+
 class Recorder(SourceRecorder):
     def __init__(self, destination):
         revision = source_revision()
@@ -113,16 +130,12 @@ class Recorder(SourceRecorder):
             (directory / unit.filename).write_bytes(unit.raw)
         samples = []
         reference_roles = []
-        fields = ('element_id', 'position_m', 'orientation_wxyz', 'velocity_m_per_s',
-                  'angular_velocity_rad_per_s', 'forces', 'impulses', 'pose_authority', 'own_mass_kg')
         for index, sample in enumerate(sample_requests(name)):
             role = f'{name}/destination-sample/{index:04d}'
             reply = self.send(role, project, 'inspect', program_revision=program.program_revision,
-                run_id=response['run_id'], selector={}, fields=['identity', 'state'], limit=1000,
+                run_id=response['run_id'], selector={'kind': 'object'}, fields=['identity', 'state'], limit=1000,
                 time={'seconds': sample['time_seconds'], 'side': sample['side']})
-            require(not reply['truncated'] and reply['next_cursor'] is None, 'Destination reference is incomplete')
-            objects = {item['path']: {field: copy.deepcopy(item['state'][field]) for field in fields}
-                       for item in reply['result']['items']}
+            objects = reference_objects(reply)
             samples.append({**sample, 'objects': objects})
             reference_roles.append(role)
         write_json(directory / 'scene.reference.json', dict(schema_version='ontokin.force-native-reference/0.1',
