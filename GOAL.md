@@ -42,7 +42,7 @@ A release is complete only for its named scope when:
 2. Versioned positive, boundary, negative, composition, and targeted-edit fixtures pass predetermined acceptance limits. Changed limits are recorded as requirement changes.
 3. Actual source, geometry, physical state, action outcomes, and destination output establish the claims made. Metadata, a running solver, or a convincing image alone is insufficient.
 4. Agents complete the promised workflow through documented operations, with source/revision integrity, useful diagnostics, bounded work, and no hidden manual preparation.
-5. Relevant tests, numerical/visual checks, and CI pass for the identified implementation; evidence and known limits remain reviewable in GitHub.
+5. Relevant tests, numerical and visual checks, and the required integration-validation roles pass for the identified implementation under the [current validation policy](docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md). Evidence, execution environments, and known limits remain reviewable in GitHub. Historical release evidence retains its original meaning; future complete release audits need a versioned local-evidence contract before accepting a different execution provider.
 
 Full-product acceptance additionally requires evidence across **every area above** and the adopted full-product requirements. Proposed PRD numerical gates must be calibrated into versioned fixtures before use. The language's claimed authoring benefit must be evaluated against a documented direct-tool baseline, including unseen variants, repair effort, cost, quality, and reusable versus task-specific preparation. Do not invent a percentage improvement.
 

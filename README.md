@@ -161,15 +161,17 @@ For an optional installed `ontokin` command, install the checkout in a Python en
 
 ### Verification
 
+Run the existing Python test and conformance checks locally:
+
 ```bash
-python3 -m unittest discover -s tests -v
-python3 -m ontokin conformance --output /tmp/ontokin-conformance.json
-python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py
-python3 tools/build_visual_demos.py
-python3 tools/build_construction_demo.py --output-dir /tmp/ontokin-construction-demo
+python3 tools/check_local.py
 ```
 
-The tests check source-to-state behavior, independent numerical expectations, diagnostics, event boundaries, release from moving joint chains, parameter scope, and command-line failures. Export tests also decode the GLB independently, check triangle geometry and several complete turns of rotation, and reject precision loss or unsupported output. The [GitHub Actions workflow](.github/workflows/reference.yml) runs Python checks on 3.11, 3.12, and 3.13, with a separate format and visual verification job. [OK-ENG-001](docs/engineering/OK-ENG-001-core-reference-implementation-and-conformance-plan.md#6-measured-evidence) preserves the original prototype evidence; [OK-ENG-002](docs/engineering/OK-ENG-002-3d-scene-animation-export-and-visual-validation.md#8-measured-evidence) records the export milestone.
+Each run saves a source inventory, environment, per-step logs and JSON results in a new `build/local-checks/` directory. Use `python3 tools/check_local.py --list` to inspect the commands. After the one-time setup in [the local validation guide](docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md), `python3 tools/check_local.py --full` also rebuilds the 3D examples and runs the independent format and browser checks in an isolated copy. The original source and recorded historical evidence stay intact.
+
+The tests check source-to-state behavior, independent numerical expectations, diagnostics, event boundaries, release from moving joint chains, parameter scope, and command-line failures. Export tests also decode the GLB independently, check triangle geometry and several complete turns of rotation, and reject precision loss or unsupported output. The [GitHub Actions workflow](.github/workflows/reference.yml) is now manual-only with an explicit hosted-job input that defaults to false. Pushes and pull requests no longer start this workflow. Manually opting in still consumes the applicable GitHub allowance or paid budget; it is not needed for local checks. Existing older branches keep their previous workflow definitions until synchronized.
+
+A local run reports only the Python version and platform actually executed. Full compatibility still needs identified Python 3.11, 3.12 and 3.13 runs; complete release gates retain separate external-evidence and visual-review requirements. [OK-ENG-001](docs/engineering/OK-ENG-001-core-reference-implementation-and-conformance-plan.md#6-measured-evidence) preserves the original prototype evidence; [OK-ENG-002](docs/engineering/OK-ENG-002-3d-scene-animation-export-and-visual-validation.md#8-measured-evidence) records the export milestone.
 
 The [C01–C20 construction manifest](docs/language-design/construction-v0.1/validation-cases.json) fixes the new module, construction, scoped-edit, lifecycle, and delivery requirements. Its [runner](ontokin/construction_conformance.py) executes the selected tests and separately verifies identified external evidence. A run without the required external delivery evidence leaves that gate pending. [STATUS.md](STATUS.md) records when the complete local and CI release gate has closed; the fixture expectations and demo driver alone do not establish that result.
 

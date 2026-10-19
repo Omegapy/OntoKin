@@ -1,5 +1,7 @@
 # OntoKin documentation guide
 
+For current development checks, start with [OK-ENG-006: Local validation and hosted CI policy](engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md). Local execution is the default; historical CI records and complete release contracts retain their identified scope.
+
 Start with the capability definition, then use the PRD for detailed product requirements, the semantic model for proposed meanings, and OK-LANG-001 for the formal `core-0.1` source-language contract. OK-ENG-001 explains the first headless reference prototype; OK-ENG-002 adds viewable GLB animation; OK-AGENT-001 adds the durable single-source agent interface. The 0.4.0 milestone implements OK-LANG-002 and OK-AGENT-002 for pinned reusable modules, keyed assembly construction, and atomic program-bundle editing. Its [identified local and CI gate passed](engineering/construction-validation/validation-summary.json). OK-LANG-003 fixes the adopted surface-0.1 source contract. Native parsing, construction and GLB/0.3 export are implemented; OK-AGENT-003 supplies source-authoritative native surface workflows. [STATUS](../STATUS.md) separates implemented components from complete release evidence and unmet product requirements. The product, capability, and semantic records retain their review status. The original vision and architecture records remain available in full for their rationale, examples, alternatives, and open questions.
 
 ## Current definition and reading order
