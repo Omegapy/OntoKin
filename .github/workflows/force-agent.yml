@@ -1,0 +1,57 @@
+name: Force Agent checkpoint checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  force-agent:
+    name: Agent/0.5 source and evidence validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - name: Install isolated pinned verification tools and retain provenance
+        run: |
+          mkdir -p /tmp/ontokin-force-agent
+          python -m pip install --requirement tools/force-agent-verification-requirements.txt --report /tmp/ontokin-force-agent/pip-install.json
+      - name: Actual service, transport and rehashed evidence counterexamples
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONPATH=.:tests python - <<'PY' 2>&1 | tee /tmp/ontokin-force-agent/tests.log
+          import json, unittest
+          from pathlib import Path
+          import jsonschema, referencing
+          suite=unittest.defaultTestLoader.discover('tests', pattern='test_force_agent*.py')
+          count=suite.countTestCases()
+          result=unittest.TextTestRunner(verbosity=2).run(suite)
+          report={'tests_discovered':count,'tests_run':result.testsRun,
+                  'failures':len(result.failures),'errors':len(result.errors),
+                  'skips':len(result.skipped),'status':'passed' if result.wasSuccessful() and not result.skipped else 'failed',
+                  'full_force_release_complete':False}
+          Path('/tmp/ontokin-force-agent/tests.json').write_text(json.dumps(report,indent=2)+'\n')
+          assert count>0 and result.testsRun==count and result.wasSuccessful() and not result.skipped, report
+          PY
+      - name: Record and independently audit the actual source workflow
+        run: |
+          python tools/build_force_agent_demo.py --output-dir /tmp/ontokin-force-agent/workflow
+          python tools/verify_force_agent_workflow.py --workflow-dir /tmp/ontokin-force-agent/workflow --output /tmp/ontokin-force-agent/audit.json
+          git rev-parse HEAD HEAD^{tree} > /tmp/ontokin-force-agent/revision.txt
+          git diff --exit-code
+      - name: Preserve identified source and message evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ontokin-force-agent-checkpoint
+          path: /tmp/ontokin-force-agent/
+          retention-days: 14
+          if-no-files-found: error
