@@ -6,6 +6,7 @@ endpoints are integers, independently of the retained Fraction-based oracle.
 """
 from __future__ import annotations
 
+from collections import OrderedDict
 from dataclasses import dataclass
 from fractions import Fraction
 from math import isqrt
@@ -57,7 +58,7 @@ class ReachExecutionWork:
         self.started = monotonic()
         self.counts: dict[str, int] = {}
         self.callback_error: BaseException | None = None
-        self._cache: dict[tuple, object] = {}
+        self._cache: OrderedDict[tuple, object] = OrderedDict()
 
     def charge(self, kind="checkpoint", amount=1):
         if type(amount) is not int or amount < 0:
@@ -103,14 +104,25 @@ class ReachExecutionWork:
 
     def lookup(self, key):
         self.charge("cache_lookup")
-        return self._cache.get(key)
+        if key not in self._cache:
+            return None
+        self.charge("cache_promote")
+        self._cache.move_to_end(key)
+        return self._cache[key]
 
     def remember(self, key, value):
         self.charge("cache_insert")
-        if key not in self._cache and len(self._cache) >= self.max_cache_entries:
-            # A bounded cache may cease storing without inventing an outcome.
-            return
+        present = key in self._cache
+        # All required bookkeeping is precharged before changing values/order.
+        # A cancelled promotion or eviction leaves the previous cache intact.
+        if present:
+            self.charge("cache_promote")
+        elif len(self._cache) >= self.max_cache_entries:
+            self.charge("cache_evict")
+            self._cache.popitem(last=False)
         self._cache[key] = value
+        if present:
+            self._cache.move_to_end(key)
 
     def record(self):
         return {"operations": self.operations, "counts": dict(self.counts),
