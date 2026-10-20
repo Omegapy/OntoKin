@@ -168,3 +168,8 @@ The [Agent/0.5 local integration record](engineering/force-agent-local-validatio
 ## Reusable reach action development
 
 The [separate OK-LANG-006 adoption](language-design/planar-reach-v0.1/ADOPTION.md) establishes authority for the exact reviewed [language contract](language-design/OK-LANG-006-reusable-planar-reach-actions.md) and its original and supplementary corpora. Frozen draft labels remain historical. The [contract integration record](language-design/planar-reach-v0.1/contract-review/integration18.json) identifies the actual merge and fresh pure checks. Runtime implementation, all R01–R12/Q01–Q22 obligations and the complete [finite release gate](language-design/planar-reach-v0.1/release-contract.md) remain pending.
+
+The [source acceptance development record](engineering/reach-source-acceptance-validation/README.md)
+retains fresh integration and regression runs, failed source-export probes,
+legacy protocol-test corrections and the exact checkout recovery. Its source
+corpus mapping and execution outcomes are distinct from complete release acceptance.
