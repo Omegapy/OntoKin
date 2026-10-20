@@ -1,10 +1,71 @@
 # Recorded force release: execution and recovery record
 
-**Status: in progress.** This checkpoint preserves six attempted releases and
-the corrections they exposed. It does not close F01–F12 or the full
-[GOAL](../../../GOAL.md). The active acceptance contract is
+**Status: F01–F12 passed; main integration pending.** Attempt 008 closes the
+identified finite force source, Agent/0.5 and recorded GLB/0.5 release. The full
+[GOAL](../../../GOAL.md) remains in progress. All earlier failures and the
+interrupted attempt 007 remain separately preserved. The acceptance contract is
 [OK-ENG-008](../OK-ENG-008-force-release-conformance.md), with recorded delivery
 defined by [OK-ENG-007](../OK-ENG-007-native-force-glb-export.md).
+
+## Accepted attempt 008
+
+The [independent audit](audit-008.json) passed **all twelve F01–F12 gates and all
+required roles**, with zero failed or pending gates. The
+[measured checkpoint](checkpoint-008.json) identifies published source
+`c7db6520e172b2b38591969a4bdf75f97a993dbb`, tree
+`e10a8869d3f5d2259d3db9a3b7d78b0633d8e5bd`, and all 482 eligible inputs.
+Actual execution ran from **2026-10-20T04:02:55.905569Z** to
+**2026-10-20T04:31:57.333421Z**. The source stayed unchanged throughout all
+twenty stages and the subsequent independent audit.
+
+Implementation remains `ontokin-reference` 0.4.0, with runtime identity
+`sha256:0ff20c31e7233a21f164891576181cd4c11e3301e07567915502440be4137ea0`.
+The additive mapping is
+`sha256:8ecb81ebced19858fdd101f490ab3c6eeec975e23036567c5dfc28d66d76566d`.
+
+| Required evidence | Actual result |
+| --- | --- |
+| Adopted force source | 56/56 source cases passed with the original expectations and explicit adopted errata. |
+| Mapped methods | 242/242 actual methods passed, with no skips or substituted test identities. |
+| Full compatibility | 878/878 tests passed separately on CPython 3.11.17, 3.12.14 and 3.13.16; no failures, errors, skips or expected failures. |
+| Source Agent workflow | 418 exchanges, 25 source snapshots and 334 predetermined samples; independent source/message audit passed. |
+| Agent delivery workflow | 412 exchanges, seven delivered GLBs and eleven retrieved chunks; independent workflow and retained-byte readers passed. |
+| Source native delivery | 23 GLBs plus five required failures without artifacts; 857 fixed and 16,596 dense pose observations; no Khronos errors or warnings. |
+| Agent native delivery | Seven retrieved GLBs; 424 fixed and 6,139 dense pose observations; no Khronos errors or warnings. |
+| Force browsers | Complete nine-case source and seven-case Agent corpora; 27 source and 21 Agent PNGs actually reviewed. |
+| Inherited complete workflow | 34/34 local steps passed; all 35 legacy PNGs actually reviewed; current core, Agent, C/M/I and provider roles independently reconciled. |
+| Evidence closure | 5,261 inventoried files / 116,199,174 bytes passed independent hash and length verification. |
+| Final release audit | F01–F12 passed, all required roles passed, full-product certification remains false. |
+
+The three named reviewers inspected all **83 new captures**, retaining concrete
+observations against their exact source, GLB and PNG identities. No blocking
+visual defect was observed. Composed side views sometimes hide rear forms through
+camera alignment; wide spin/impulse framing limits fine surface detail. Those
+limits are recorded per image. Static image review and numerical motion checks
+retain their separate roles.
+
+Node 22.20.0 and the unchanged pinned native/browser tools were used with actual
+Chromium 141.0.7390.37, WebGL2 / ANGLE SwiftShader. Every Python environment used
+the six exact verification-only package pins. No hosted job was dispatched or
+retried; GitHub reported no runs for the tested head or observed main revision.
+No unexecuted destination or platform is claimed.
+
+The evidence manifest hash is
+`sha256:24e3d38198abcb29c55799195a76478fcf9bd235a4fa4cd7775e967f9bd5479f`;
+the final audit hash is
+`sha256:8f78950e2b9c68a4a6023e2565b862b0da6190d450ed2eb10a6d0cdf9d8c4cc8`.
+The accepted archive contains the complete collected root, the final audit,
+performed reviews, all 31 review sheets and identified orchestration records.
+
+## Interrupted attempt 007
+
+Attempt 007 started on the same published source at
+**2026-10-20T02:35:00.323937Z**. Eleven stages completed successfully through the
+Agent browser. The application connection was interrupted before a regression
+execution record was produced. The [recovery record](connection-recovery-007.json)
+retains the observed process/ref reconciliation. Its original driver still says
+`running`; those bytes are preserved, and no completion or release pass is
+inferred. Attempt 008 started in a fresh directory and executed all twenty roles.
 
 ## Actual attempt 006
 
@@ -56,7 +117,7 @@ renamed, changed-length and changed-hash entries still fail. The
 [explicit additive mapping decision](mapping-addendum-2026-10-20.json) adds the
 two regression methods to F12, preserving every earlier mapped method, fixture,
 source expectation and acceptance limit. The next current inventory contains
-878 tests and 242 mapped methods.
+878 tests and 242 mapped methods, executed by the accepted attempt 008 above.
 
 A [non-certifying comparison diagnostic](force05-audit-006-comparison-diagnostic.json)
 previewed these two corrections in memory against the unchanged retained files.
@@ -64,8 +125,8 @@ It reached the remaining browser and inherited raw readers without another
 exception. This diagnostic is neither a committed checker execution nor release
 acceptance. The [actual browser selection preflight](force05-browser-selection-preflight.json)
 executes the real selector prefix for nine positive/negative selections; it does
-not load a GLB or open a browser. Fresh complete execution and new identified
-visual review remain required after publishing the corrections.
+not load a GLB or open a browser. Attempt 008 subsequently supplied fresh
+complete execution and newly identified visual review after publication.
 
 ## Earlier failures and storage observations
 
@@ -109,6 +170,8 @@ serialized and checked against their retained hashes.
 | [Attempts 001–005 parts](force05-failed-attempts-001-005.zip.parts.json) | [4,664 members](force05-failed-attempts-001-005.members.json) | Original failed release runs. |
 | [Diagnostics and preflights parts](force05-diagnostics-and-preflights-serial.zip.parts.json) | [4,128 members](force05-diagnostics-and-preflights-serial.members.json) | Separately identified developmental checks and storage probes, serially reconstructed with the original hash. |
 | [Attempt 006 parts](force05-attempt-006.zip.parts.json) | [5,240 members](force05-attempt-006.members.json) | Complete collected evidence, original failed audit and actual visual reviews. |
+| [Interrupted attempt 007 parts](force05-interrupted-attempt-007.zip.parts.json) | [2,101 members](force05-interrupted-attempt-007.members.json) | Original incomplete execution and connection-recovery observation. |
+| [Accepted attempt 008 parts](force05-accepted-attempt-008.zip.parts.json) | [5,267 members](force05-accepted-attempt-008.members.json) | Complete passing evidence root, independent audit, all actual reviews and orchestration. |
 
 Each member inventory names every relative file, SHA-256 and byte length. The
 archive builder reopened each ZIP, checked CRCs and verified every member against
@@ -122,6 +185,7 @@ original bytes and rechecks the complete ZIP hash and CRCs:
 ```bash
 python docs/engineering/force-release-validation/restore_archives.py --output-dir /tmp/ontokin-force-archives
 python -m zipfile -e /tmp/ontokin-force-archives/force05-attempt-006.zip /tmp/ontokin-force-attempt006
+python -m zipfile -e /tmp/ontokin-force-archives/force05-accepted-attempt-008.zip /tmp/ontokin-force-attempt008
 ```
 
 Extract attempt 006 into a new directory, then inspect
@@ -129,6 +193,19 @@ Extract attempt 006 into a new directory, then inspect
 the separately authored visual reviews. Re-auditing it at its identified source
 revision reproduces the recorded failure; later corrected code cannot relabel
 those old execution inputs as current acceptance.
+
+For accepted attempt 008, use implementation commit
+`c7db6520e172b2b38591969a4bdf75f97a993dbb` and its pinned verification tools, then
+audit the extracted immutable root:
+
+```bash
+python tools/run_force_conformance.py audit --evidence /tmp/ontokin-force-attempt008/attempt-008/evidence.json --evidence-root /tmp/ontokin-force-attempt008/attempt-008 --output /tmp/ontokin-force-attempt008-reaudit.json
+```
+
+The [actual reconstruction observation](archive-parts-verification-008.json)
+records successful restoration of all five archives, exact whole-archive hashes
+and ZIP CRC verification. The accepted archive SHA-256 is
+`6351496602bc77c302c54263e243990bf0d1b8df37c3fca2b356806ecc503c41`.
 
 The captured [execution driver](run_force05_release_acceptance.py),
 [collection-plan preparer](prepare_force05_evidence_plan.py),
@@ -139,8 +216,8 @@ orchestration, including original absolute environment paths. Configure the
 identified interpreters and tools in a fresh environment when reproducing them.
 They do not replace the committed collector or independent conformance auditor.
 
-The next gate is fresh execution on the corrected published revision, reviewed
-new captures, a passing complete F01–F12 audit, durable publication and verified
-main integration. Contacts, continuous torque, general mechanisms, purposeful
+The next gate is durable publication and verified main integration of accepted
+attempt 008. Reusable planar reach actions remain an unadopted next contract.
+Contacts, continuous torque, general mechanisms, purposeful
 locomotion/manipulation, deformable matter, live destinations, other full-product
 domains and the measured direct-tool authoring comparison remain open.
