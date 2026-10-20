@@ -45,7 +45,7 @@ SCHEMA = "ontokin.force-local-conformance/0.1"
 EVIDENCE_SCHEMA = "ontokin.force-release-evidence/0.1"
 EXECUTION_SCHEMA = "ontokin.local-execution/0.1"
 SOURCE_SCHEMA = "ontokin.force-source-execution/0.1"
-MAPPING_SHA256 = 'sha256:813b4e6d0ec53d5239f91737a1dc638bf1b5b9e23e0ed515c96a6b0a63202386'
+MAPPING_SHA256 = 'sha256:3958a565c09b77d9ae2e5c559cf0fca94a8148211dabbbdf5805a6294c265b50'
 SOURCE_IDS = tuple([f"P{i:02}" for i in range(1, 23)]
                    + [f"N{i:02}" for i in range(1, 23)]
                    + [f"S{i:02}" for i in range(1, 13)])

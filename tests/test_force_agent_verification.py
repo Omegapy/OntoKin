@@ -72,6 +72,15 @@ class ForceAgentEvidenceTests(unittest.TestCase):
         self.assertEqual((result['exchanges'], result['source_snapshots'], result['predetermined_samples']), (418, 25, 334))
         self.assertFalse(result['full_force_release_complete'])
         self.assertFalse(result['destination_validated'])
+        entry = next(r for r in self.manifest['exchanges'] if r['role'] == 'failure/delivery')
+        request = json.loads((self.directory / entry['request_file']).read_text())
+        response = json.loads((self.directory / entry['response_file']).read_text())
+        self.assertEqual(request['operation'], 'validate')
+        self.assertEqual(request['requested_level'], 'delivered')
+        self.assertNotIn('destination', request)
+        self.assertIsNone(response['protocol_error'])
+        self.assertEqual(response['result']['outcome'], 'unsupported')
+        self.assertNotIn('artifact_id', response['result'])
 
     def test_rehashed_legacy_workflow_version_cannot_relabel_current_delivery(self):
         self.manifest['schema_version'] = 'ontokin.force-agent-workflow/0.1'
@@ -81,6 +90,15 @@ class ForceAgentEvidenceTests(unittest.TestCase):
     def test_rehashed_delivery_failure_cannot_substitute_supported_contract(self):
         self.change('failure/delivery', lambda q: q.__setitem__('destination', 'ontokin.glb/0.5'), 'request')
         self.reject('destination')
+
+    def test_rehashed_generic_delivery_failure_cannot_change_source(self):
+        revision = next(s['program_revision'] for s in self.manifest['snapshots'] if s['label'] == 'P02')
+        self.change('failure/delivery', lambda q: q.__setitem__('program_revision', revision), 'request')
+        self.reject('fixed source')
+
+    def test_rehashed_generic_delivery_failure_cannot_claim_artifact(self):
+        self.change('failure/delivery', lambda r: r['result'].__setitem__('artifact_id', 'artifact:' + '0' * 64))
+        self.reject('artifact claim')
 
     def test_rehashed_last_valid_position_is_not_accepted(self):
         self.change('P01/run', lambda d: d['result']['run_state']['last_valid_state']['objects']['ball']['position_m'].__setitem__(0, 99))

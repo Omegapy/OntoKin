@@ -18,9 +18,12 @@ samples and repairs three generated-instance programs through source patches.
 It retains every request and response, complete source snapshots, failed and
 stale candidates, retry receipts, cursor checks and a failed-run prefix/reset.
 No manually constructed Python geometry or hidden host-state force is used.
-Workflow version 0.2 checks current GLB/0.5 discovery and deliberately requests
-the older GLB/0.4 target for its unsupported-delivery case. Historical version
-0.1 evidence retains its original unavailable-adapter meaning.
+Workflow version 0.2 checks current GLB/0.5 discovery. Its unsupported-delivery
+case sends a valid `validate` request with `requested_level: "delivered"` and
+no destination; the response must reject generic delivery without a run or
+artifact. Agent/0.5 accepts only GLB/0.5 as an explicit export destination, so
+requesting an older target would test a protocol error instead. Historical
+version 0.1 evidence retains its original unavailable-adapter meaning.
 
 The separate verifier needs verification-only packages. Install them in a virtual
 environment, not as application runtime dependencies:

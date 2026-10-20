@@ -30,8 +30,14 @@ class ForceReleaseContractTests(unittest.TestCase):
         self.assertEqual(len(mapping["additional_branch_cohort"]["test_ids"]), 5)
         self.assertEqual(mapping["python_matrix"], ["3.11", "3.12", "3.13"])
         self.assertEqual({name for case in mapping["cases"] for name in case["source_case_ids"]}, set(force.SOURCE_IDS))
-        self.assertIn("test_force_agent.ForceAgentTests.test_planned_delivery_rejects_without_artifact_or_accepted_candidate",
-                      mapping["regression_required_test_ids"])
+        generic_delivery_guard = "test_force_agent.ForceAgentTests.test_planned_delivery_rejects_without_artifact_or_accepted_candidate"
+        self.assertIn(generic_delivery_guard, mapping["regression_required_test_ids"])
+        agent_gate = next(case for case in mapping["cases"] if case["id"] == "F09")
+        self.assertIn(generic_delivery_guard, agent_gate["required_tests"])
+        with patch("sqlite3.connect", side_effect=AssertionError("Discovery must not open an Agent store")):
+            discovered = set(force.surface.discover_test_ids())
+        required = {name for case in mapping["cases"] for name in case["required_tests"]}
+        self.assertEqual(required - discovered, set(), "Every mapped literal must resolve to a current executable test")
 
     def test_additional_destination_cohort_cannot_disappear_from_discovery(self):
         auditor = force.Auditor.__new__(force.Auditor)

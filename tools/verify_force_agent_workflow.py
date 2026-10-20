@@ -408,6 +408,38 @@ class Reader:
         require(r['status'] in ('rejected','failed') and code in codes,'Expected failure receipt is absent')
         require(r['achieved_level']!='delivered','A failure claimed delivered success')
 
+    def check_delivery_failure(self):
+        q,r=self.at('failure/delivery')
+        self.failure(r,'OKL-E-CAPABILITY-UNSUPPORTED')
+        if self.workflow_version == 'ontokin.force-agent-workflow/0.2':
+            b=self.book.bundles['P01']
+            require(q==dict(schema_version=PROTOCOL,project_id='case-P01',request_id=q['request_id'],
+                            operation='validate',program_revision=b.program_revision,requested_level='delivered'),
+                    'Generic delivery must request the fixed source without a destination')
+            require(r['status']=='rejected' and r['protocol_error'] is None and r['run_id'] is None and
+                    r['program_revision']==r['accepted_program_revision']==b.program_revision and
+                    r['requested_level']=='delivered' and r['achieved_level']=='represented',
+                    'Generic delivery did not retain its source-bound unsupported receipt')
+            result=r['result']
+            require(isinstance(result,dict) and set(result)=={'schema_version','program_revision','requested_level',
+                    'achieved_level','outcome','diagnostics','source_manifest','stages'},
+                    'Generic delivery returned an unexpected result or artifact claim')
+            require(result['schema_version']=='ontokin.program-runtime/0.1' and
+                    result['outcome']=='unsupported' and result['requested_level']=='delivered' and
+                    result['achieved_level']=='represented' and result['program_revision']==b.program_revision and
+                    result['source_manifest']==b.manifest() and result['diagnostics']==r['diagnostics'] and
+                    result['stages']==dict(represented='valid',constructed='not_requested',evaluated='not_requested',
+                                          construction_support='available',delivered='requires_named_external_contract'),
+                    'Generic delivery changed its validation result or claimed a later stage')
+        else:
+            # Historical workflow/0.1 recorded the then-unavailable explicit
+            # GLB/0.5 adapter. Do not reinterpret those archived messages.
+            require(q['operation']=='export' and q['destination']=='ontokin.glb/0.5',
+                    'Wrong historical unsupported destination')
+        require(r['diagnostics'][0]['blocks']==['delivered'] and
+                (r['result'] is None or 'artifact_id' not in r['result']),
+                'Wrong unsupported destination or unexpected artifact claim')
+
     def audit(self):
         m=self.read('workflow.json')
         require(m['schema_version'] in ('ontokin.force-agent-workflow/0.1', 'ontokin.force-agent-workflow/0.2')
@@ -520,7 +552,7 @@ class Reader:
         require(catalog['force']['kind']=='event' and catalog['ontokin.glb/0.5']['availability']==availability,'Capability availability differs')
         for role,code in [('failure/invalid-create','OKL-E-TYPE'),('failure/invalid-edit','OKL-E-EVENT-ORDER'),
                           ('retry/collision','OKL-E-REQUEST-ID'),('failure/budget','OKL-E-RESOURCE'),
-                          ('failure/delivery','OKL-E-CAPABILITY-UNSUPPORTED'),('prefix/extend','OKL-E-NUMERIC'),
+                          ('prefix/extend','OKL-E-NUMERIC'),
                           ('prefix/reject-later','OKL-E-SAMPLE'),('cursor/reject-project','OKL-E-REVISION')]:self.failure(self.at(role)[1],code)
         q,r=self.at('failure/invalid-create');require(q['bundle']==self.book.bundles['N01'].to_payload() and r['accepted_program_revision'] is None,'Wrong invalid candidate')
         q,r=self.at('failure/invalid-edit');p=q['patches'][0];b=self.book.bundles['P01']
@@ -533,9 +565,7 @@ class Reader:
         cq,cr=self.at('cancel/submit');tq,tr=self.at('cancel/result');rq,rr=self.at('cancel/request');sq,sr=self.at('cancel/status')
         require(cq==tq and cr['status']=='queued' and tr['status']=='cancelled' and tr['accepted_program_revision'] is None and tr['run_id'] is None,'Queued cancellation published state or lost its request')
         require(rq['target_request_id']==sq['target_request_id']==cq['request_id'] and rr['result']['target']==sr['result']['target']==tr,'Cancellation target/status differs')
-        rejected_destination = 'ontokin.glb/0.4' if current else 'ontokin.glb/0.5'
-        q,r=self.at('failure/delivery');require(q['operation']=='export' and q['destination']==rejected_destination and
-            r['diagnostics'][0]['blocks']==['delivered'] and (r['result'] is None or 'artifact_id' not in r['result']),'Wrong unsupported destination or unexpected artifact claim')
+        self.check_delivery_failure()
         q,r=self.at('prefix/extend');run=r['result']['run_state']
         require(q['run_id']==r['run_id']==run['run_id']==self.runs['P21'] and q['until_seconds']=='3','Failed prefix extension lost the original run')
         require(run['status']=='failed' and run['valid_until_seconds']=='2' and run['valid_until_side']=='before','Invalid later state was certified')

@@ -187,8 +187,10 @@ class Recorder:
         self.service.work_next()
         self.exchange('cancel/result',queued,expected='cancelled')
         self.send('cancel/status','queued','status',target_request_id=queued['request_id'])
-        self.send('failure/delivery',project,'export',program_revision=b.program_revision,
-                  destination='ontokin.glb/0.4',expected=('failed','rejected'),code='OKL-E-CAPABILITY-UNSUPPORTED')
+        # Generic delivery remains unsupported: an explicit destination is
+        # required. Another binding's GLB version is an invalid request shape.
+        self.send('failure/delivery',project,'validate',program_revision=b.program_revision,
+                  requested_level='delivered',expected=('failed','rejected'),code='OKL-E-CAPABILITY-UNSUPPORTED')
         p=self.bundles['P21'];pr='case-P21'
         self.send('prefix/extend',pr,'evaluate',program_revision=p.program_revision,run_id=self.runs['P21'],
                   until_seconds='3',expected='failed',code='OKL-E-NUMERIC')
