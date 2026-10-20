@@ -1,0 +1,25 @@
+test_frozen_protocol_inventory_is_exactly_forty_two_steps (test_reach_agent_protocol_cases.ReachProtocolCaseTests.test_frozen_protocol_inventory_is_exactly_forty_two_steps) ... ok
+test_lp01_failed_prefix_reset_all_nine_steps (test_reach_agent_protocol_cases.ReachProtocolCaseTests.test_lp01_failed_prefix_reset_all_nine_steps) ... ok
+test_lp02_authorized_root_repair_retry_history_all_nine_steps (test_reach_agent_protocol_cases.ReachProtocolCaseTests.test_lp02_authorized_root_repair_retry_history_all_nine_steps) ... FAIL
+test_lp03_accepted_construction_failed_admission_repair_all_five_steps (test_reach_agent_protocol_cases.ReachProtocolCaseTests.test_lp03_accepted_construction_failed_admission_repair_all_five_steps) ... ok
+test_lp04_q03_fixed_128_actions_real_n_and_n_minus_one_all_seven_steps (test_reach_agent_protocol_cases.ReachProtocolCaseTests.test_lp04_q03_fixed_128_actions_real_n_and_n_minus_one_all_seven_steps) ... ok
+test_lp05_candidate_and_later_accepted_history_all_twelve_steps (test_reach_agent_protocol_cases.ReachProtocolCaseTests.test_lp05_candidate_and_later_accepted_history_all_twelve_steps) ... ok
+
+======================================================================
+FAIL: test_lp02_authorized_root_repair_retry_history_all_nine_steps (test_reach_agent_protocol_cases.ReachProtocolCaseTests.test_lp02_authorized_root_repair_retry_history_all_nine_steps)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_agent_protocol_cases.py", line 104, in test_lp02_authorized_root_repair_retry_history_all_nine_steps
+    before = self.step("LP02.01")
+             ^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_agent_protocol_cases.py", line 43, in step
+    self.assertEqual(response["status"], expected["status"], (identity, response))
+AssertionError: 'failed' != 'succeeded'
+- failed
++ succeeded
+ : ('LP02.01', {'accepted_program_revision': None, 'achieved_level': None, 'diagnostics': [{'blocks': ['represented', 'constructed', 'evaluated', 'delivered'], 'category': 'resource_limit', 'code': 'OKL-E-RESOURCE', 'details': {'budget': 'max_operations', 'consumed': 100001, 'limit': 100000, 'partial_results': 'No uncommitted source, artifact or run advancement is available.', 'request_terminated': True}, 'location_status': 'program_condition_without_source_span', 'message': 'The request exhausted max_operations.', 'phase': 'support', 'primary': None, 'program_revision': 'sha256:a18c49d2a522b90b0b7e8f4ea5bf5f4f134fdfa8e1017ee4e24d0ad0c67400bd', 'related': [], 'repair': {'patches': [], 'summary': 'Correct the reported condition and validate the complete candidate again.'}, 'rule_ids': ['LANG-009'], 'run_id': None, 'schema_version': 'ontokin.diagnostic/0.2', 'severity': 'error', 'source_id': None, 'source_revision': None, 'time': None}], 'next_cursor': None, 'operation': 'create', 'program_revision': 'sha256:a18c49d2a522b90b0b7e8f4ea5bf5f4f134fdfa8e1017ee4e24d0ad0c67400bd', 'progress': {'cancellation_requested': False, 'implementation': {'name': 'ontokin-reference', 'source_code_sha256': 'sha256:3ba3f5bf65d2feefd1056743eff57dab0289771b11103843c4a286ef645363ec', 'version': '0.4.0'}, 'phase': 'complete'}, 'project_id': 'reach-reconstruction-lp02', 'protocol_error': None, 'request_id': 'LP02.01', 'requested_level': 'evaluated', 'result': {'achieved_level': None, 'delivery': 'not_requested', 'implementation': {'name': 'ontokin-reference', 'source_code_sha256': 'sha256:3ba3f5bf65d2feefd1056743eff57dab0289771b11103843c4a286ef645363ec', 'version': '0.4.0'}, 'outcome': 'resource_limit', 'partial_results': 'Only already-retained immutable source snapshots and any previously committed run descriptor are available.', 'requested_level': 'evaluated', 'run_state': None}, 'run_id': None, 'schema_version': 'ontokin.agent/0.6', 'status': 'failed', 'truncated': False})
+
+----------------------------------------------------------------------
+Ran 6 tests in 10.376s
+
+FAILED (failures=1)

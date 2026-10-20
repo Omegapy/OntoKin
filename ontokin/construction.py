@@ -31,7 +31,8 @@ from .values import (ACCELERATION, ALIASES, BOOL, INT, LENGTH, STRING, TIME,
 PROFILE = "construction-0.1"
 IMPULSE_PROFILE = "impulse-0.1"
 FORCE_PROFILE = "force-0.1"
-SURFACE_PROFILES = frozenset({SURFACE_PROFILE, IMPULSE_PROFILE, FORCE_PROFILE})
+REACH_PROFILE = "planar-reach-0.1"
+SURFACE_PROFILES = frozenset({SURFACE_PROFILE, IMPULSE_PROFILE, FORCE_PROFILE, REACH_PROFILE})
 IMPULSE_DIMENSION = (1, 1, -1, 0)
 PREDEFINED_02 = PREDEFINED | {"Keyed", "len"}
 MAX_KEYED_ENTRIES = 256
@@ -157,8 +158,15 @@ class ConstructionCompiler(Validator):
     def __init__(self, linked, level: str, budget: ConstructionBudget):
         super().__init__(linked.entry.ast, level)
         self.linked, self.bundle, self.budget = linked, linked.bundle, budget
-        if self.model.profile in {IMPULSE_PROFILE, FORCE_PROFILE}:
+        if self.model.profile in {IMPULSE_PROFILE, FORCE_PROFILE, REACH_PROFILE}:
             self.budget.profile = self.model.profile
+        self.reach_work = None
+        self._reach_descriptions = {}
+        if self.model.profile == REACH_PROFILE:
+            from .reach_numeric import ReachExecutionWork
+            self.reach_work = ReachExecutionWork(
+                check=budget.tick, max_operations=budget.limits["max_operations"],
+                max_elapsed_ms=budget.limits["max_elapsed_ms"])
         self.linked_program = linked
         self.surface_meshes: dict[str, dict] = {}
         self.source_registry = linked.source_registry
@@ -233,12 +241,18 @@ class ConstructionCompiler(Validator):
         for node in nodes:
             self.budget.tick(node)
             self.key(node, node.key)
-            if node.name in PREDEFINED_02 or node.name in names:
+            if node.name in self.predefined(node) or node.name in names:
                 fail("OKL-E-NAME", f"Name '{node.name}' is predefined or duplicated in this scope.", node, phase="binding")
             if node.key in keys:
                 fail("OKL-E-ID", f"Stable key '{node.key}' is reused in this scope.", node, phase="binding")
             names.add(node.name)
             keys.add(node.key)
+
+    def predefined(self, node: Any) -> frozenset | set:
+        if self.linked.modules[node.source_id].ast.profile == REACH_PROFILE:
+            from .reach_source import NAMES
+            return PREDEFINED_02 | NAMES
+        return PREDEFINED_02
 
     def parse_type(self, node: Any) -> Type:
         self.budget.tick(node)
@@ -255,6 +269,11 @@ class ConstructionCompiler(Validator):
                 element = self.parse_type(args[0])
                 self._keyed_leaf(element, node)
                 result = Type("Keyed", element=element)
+            elif name == "ReachBranch" and self.linked.modules[node.source_id].ast.profile == REACH_PROFILE:
+                if args:
+                    from .reach_source import reach_error
+                    raise reach_error("reach_type", "ReachBranch takes no type arguments.", node)
+                result = Type("ReachBranch")
             elif name in SURFACE_TYPES and self.linked.modules[node.source_id].ast.profile in SURFACE_PROFILES:
                 if args:
                     fail("OKL-E-TYPE", f"Surface type '{name}' takes no type arguments.", node, phase="type")
@@ -290,7 +309,7 @@ class ConstructionCompiler(Validator):
         self.budget.tick(node)
         names, params = set(), []
         for param in node.params:
-            if param.name in PREDEFINED_02 or param.name in names:
+            if param.name in self.predefined(param) or param.name in names:
                 fail("OKL-E-NAME", f"Parameter '{param.name}' duplicates or shadows a predefined symbol.", param, phase="binding")
             names.add(param.name)
             params.append((param.name, self.parse_type(param.type)))
@@ -309,6 +328,10 @@ class ConstructionCompiler(Validator):
         return result
 
     def expect(self, value: Value, typ: Type, node: Any) -> Value:
+        if typ.kind == "ReachBranch" and value.type != typ:
+            from .reach_source import reach_error
+            raise reach_error("reach_type", "ReachBranch has no implicit String, Int or other conversion.", node,
+                              details={"expected_type": "ReachBranch", "actual_type": str(value.type)})
         return self._inherit_value_info(value, super().expect(value, typ, node))
 
     def effective(self, name: str) -> EffectiveClass:
@@ -362,7 +385,7 @@ class ConstructionCompiler(Validator):
                     cls.defaults[target] = (member.value, name)
                     continue
                 self.key(member, member.key)
-                if member.name in PREDEFINED_02 or member.name in FIELD_TYPES or member.name in READONLY_FIELDS or member.name in local_names:
+                if member.name in self.predefined(member) or member.name in FIELD_TYPES or member.name in READONLY_FIELDS or member.name in local_names:
                     fail("OKL-E-NAME", f"Member name '{member.name}' is predefined or duplicated.", member, phase="binding")
                 local_names.add(member.name)
                 old = parent.members.get(member.name)
@@ -386,7 +409,7 @@ class ConstructionCompiler(Validator):
                 elif kind in ("part", "parts"):
                     self.class_reference(member)
                     if kind == "parts":
-                        if member.key_name == member.value_name or {member.key_name, member.value_name} & PREDEFINED_02:
+                        if member.key_name == member.value_name or {member.key_name, member.value_name} & self.predefined(member):
                             fail("OKL-E-NAME", "Generated-part binders must be distinct and cannot shadow predefined names.", member, phase="binding")
                 elif kind not in ("joint", "follow", "site"):
                     fail("OKL-E-NAME", f"Unsupported class member kind '{kind}'.", member, phase="binding")
@@ -531,7 +554,7 @@ class ConstructionCompiler(Validator):
         names = set(ctx.locals)
         for local in node.locals:
             self.budget.tick(local)
-            if local.name in names or local.name in PREDEFINED_02:
+            if local.name in names or local.name in self.predefined(local):
                 fail("OKL-E-NAME", f"Local '{local.name}' duplicates or shadows a predefined symbol.", local, phase="binding")
             typ = self.parse_type(local.type)
             self.expect(self.expression(local.value, ctx), typ, local.value)
@@ -599,6 +622,12 @@ class ConstructionCompiler(Validator):
                     stack.append((child, iter(self.call_edges.get(child, ()))))
 
     def name(self, name: str, ctx: Context, node: Any) -> Value:
+        if self.linked.modules[node.source_id].ast.profile == REACH_PROFILE and name not in ctx.locals:
+            from .reach_source import BRANCHES
+            if name in BRANCHES:
+                return Value(Type("ReachBranch"), name)
+            if name == "reach_planar":
+                return Value(Type("BuiltinCallable"), name)
         if (name in SURFACE_CALLS and self.linked.modules[node.source_id].ast.profile in SURFACE_PROFILES
                 and name not in ctx.locals):
             return Value(Type("BuiltinCallable"), name)
@@ -761,6 +790,9 @@ class ConstructionCompiler(Validator):
             self._expression_depth -= 1
 
     def builtin(self, name: str, args: list[Value], node: Any, ctx: Context) -> Value:
+        if name == "reach_planar":
+            from .reach_source import reach_builtin
+            return reach_builtin(self, args, node, ctx)
         if name in SURFACE_CALLS:
             if self.linked.modules[node.source_id].ast.profile not in SURFACE_PROFILES:
                 fail("OKL-E-CAPABILITY-UNSUPPORTED", "Surface constructors need the surface-0.1 profile.",
@@ -1040,7 +1072,7 @@ class ConstructionCompiler(Validator):
 
     def impulse_values(self, event: Any, context: Context) -> tuple[Value, Value, Value]:
         """Check pure source operands under their actual declaring profile."""
-        if self.linked.modules[event.source_id].ast.profile not in {IMPULSE_PROFILE, FORCE_PROFILE}:
+        if self.linked.modules[event.source_id].ast.profile not in {IMPULSE_PROFILE, FORCE_PROFILE, REACH_PROFILE}:
             raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED", "Source impulses require impulse-0.1.",
                                event, phase="support", category="unsupported", rule_ids=["IMP-001"])
 
@@ -1231,6 +1263,9 @@ class ConstructionCompiler(Validator):
             self.action_value(path)
         self.assertions()
         self.relation_validation()
+        if self.model.profile == REACH_PROFILE:
+            from .reach_source import bind_reaches
+            bind_reaches(self)
         self.event_blocks()
         requires = tuple(self.linked.capabilities)
         self.model.requested_capabilities = tuple(node.value for node in requires)
@@ -1238,13 +1273,21 @@ class ConstructionCompiler(Validator):
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "Required capabilities are not supplied by " + self.model.profile + ": " +
                  ", ".join(self.model.requested_capabilities), requires[0], phase="support")
         if self.level == "delivered":
-            target = ("ontokin.glb/0.5" if self.model.profile == FORCE_PROFILE else
+            target = ("ontokin.glb/0.6" if self.model.profile == REACH_PROFILE else
+                      "ontokin.glb/0.5" if self.model.profile == FORCE_PROFILE else
                       "ontokin.glb/0.4" if self.model.profile == IMPULSE_PROFILE else
                       "ontokin.glb/0.3" if self.model.profile == "surface-0.1" else "ontokin.glb/0.2")
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "Delivery requires the explicit " + target + " target.", self.program, phase="support")
         self._attach_provenance()
         self.budget.tick(self.program)
         return self.model
+
+    def action_value(self, path: str) -> Value:
+        value = super().action_value(path)
+        if self.model.profile == REACH_PROFILE:
+            from .reach_source import bind_description
+            bind_description(self, path, value)
+        return value
 
     def annotate(self, error: OntoKinError) -> None:
         diagnostic = error.diagnostic

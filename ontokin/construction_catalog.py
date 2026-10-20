@@ -751,8 +751,11 @@ _IMPULSE_GLOBAL = _impulse_global()
 from .force_catalog import force_catalog as _force_catalog
 _FORCE_PROFILE = "force-0.1"
 _FORCE_GLOBAL = _force_catalog(_IMPULSE_GLOBAL)
+from .reach_catalog import reach_catalog as _reach_catalog
+_REACH_PROFILE = "planar-reach-0.1"
+_REACH_GLOBAL = _reach_catalog(_FORCE_GLOBAL)
 _PROFILE_GLOBALS = {_PROFILE: _GLOBAL, _SURFACE_PROFILE: _SURFACE_GLOBAL, _IMPULSE_PROFILE: _IMPULSE_GLOBAL,
-                    _FORCE_PROFILE: _FORCE_GLOBAL}
+                    _FORCE_PROFILE: _FORCE_GLOBAL, _REACH_PROFILE: _REACH_GLOBAL}
 
 
 def catalog(*, linked_program: LinkedProgram | None = None,
@@ -775,7 +778,7 @@ def catalog(*, linked_program: LinkedProgram | None = None,
         from .linker import LinkedProgram
         if not isinstance(linked_program, LinkedProgram):
             raise TypeError("linked_program must come from link_program(bundle).")
-        if profile in (_SURFACE_PROFILE, _IMPULSE_PROFILE, _FORCE_PROFILE) and linked_program.entry.ast.profile != profile:
+        if profile in (_SURFACE_PROFILE, _IMPULSE_PROFILE, _FORCE_PROFILE, _REACH_PROFILE) and linked_program.entry.ast.profile != profile:
             message = ("Surface discovery requires a surface-0.1 entry." if profile == _SURFACE_PROFILE
                        else "This discovery binding requires a " + profile + " entry.")
             raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED", message,
@@ -789,7 +792,7 @@ def catalog(*, linked_program: LinkedProgram | None = None,
         }
         budget.charge(context)
         result["program_context"] = context
-        for entry, node in _public_interfaces(linked_program, budget, source_profiles=profile in (_SURFACE_PROFILE, _IMPULSE_PROFILE, _FORCE_PROFILE)):
+        for entry, node in _public_interfaces(linked_program, budget, source_profiles=profile in (_SURFACE_PROFILE, _IMPULSE_PROFILE, _FORCE_PROFILE, _REACH_PROFILE)):
             budget.charge(entry, node)
             result["items"].append(entry)
     result["revision"] = _revision(result, budget)

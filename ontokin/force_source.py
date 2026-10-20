@@ -11,7 +11,7 @@ FORCE_DIMENSION = (1, 1, -2, 0)
 
 
 def force_values(compiler, event, context):
-    if compiler.linked.modules[event.source_id].ast.profile != PROFILE:
+    if compiler.linked.modules[event.source_id].ast.profile not in {PROFILE, 'planar-reach-0.1'}:
         raise OntoKinError('OKL-E-CAPABILITY-UNSUPPORTED',
                            'Source force intervals require force-0.1.', event,
                            phase='support', category='unsupported', rule_ids=['FOR-001'])

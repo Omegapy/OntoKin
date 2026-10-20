@@ -30,7 +30,9 @@ MAX_SAMPLES = 1000
 MAX_OUTPUT_RECORDS = 100000
 IMPULSE_PROFILE = "impulse-0.1"
 FORCE_PROFILE = "force-0.1"
-IMPULSE_PROFILES = frozenset({IMPULSE_PROFILE, FORCE_PROFILE})
+REACH_PROFILE = "planar-reach-0.1"
+FORCE_PROFILES = frozenset({FORCE_PROFILE, REACH_PROFILE})
+IMPULSE_PROFILES = frozenset({IMPULSE_PROFILE, *FORCE_PROFILES})
 
 
 class _NumericFault(Exception):
@@ -507,19 +509,17 @@ class _Simulator:
                     raise _NumericFault("Impulse operands and sphere mass/inertia must be finite.")
                 current = self._dynamic_kinematics(event.target, time, state)
                 operation = "lever_arm_world_m"
-                lever = _rotate(current.orientation, payload.point_self_m)
+                lever = self._impulse_lever(current, payload.point_self_m)
                 operation = "application_point_world_m"
-                point = _add(current.position, lever)
+                point = self._impulse_point(current, lever)
                 operation = "angular_impulse_world_n_m_s"
-                angular_impulse = _cross(lever, payload.impulse_world_n_s)
+                angular_impulse = self._impulse_cross(lever, payload.impulse_world_n_s)
                 # Round each exposed final component once. The unexposed
                 # quotient can exceed binary64 when the final sum cancels.
                 operation = "linear_velocity_after_world_m_per_s"
-                velocity = tuple(_round(_f(value) + _f(impulse) / _f(obj.mass))
-                                 for value, impulse in zip(current.velocity, payload.impulse_world_n_s))
+                velocity = self._impulse_velocity(current.velocity, payload.impulse_world_n_s, obj.mass)
                 operation = "angular_velocity_after_world_rad_per_s"
-                omega = tuple(_round(_f(value) + _f(impulse) / _f(obj.inertia))
-                              for value, impulse in zip(current.omega, angular_impulse))
+                omega = self._impulse_velocity(current.omega, angular_impulse, obj.inertia)
             except _NumericFault as error:
                 fail("OKL-E-NUMERIC", str(error), phase="evaluation", category="numerical_failure",
                      rules=["IMP-002", "IMP-003", "LANG-004"],
@@ -530,7 +530,7 @@ class _Simulator:
             if payload.impulse_world_n_s != ZERO:
                 original = state.dynamic[event.target]
                 state.dynamic[event.target] = _DynamicInitial(
-                    time, _Kinematics(current.position, current.orientation, velocity, omega), original.since)
+                    time, self._impulse_anchor(current, velocity, omega), original.since)
                 touched.add(("object", event.target))
             # A zero impulse changes only its influence projection. In
             # particular, it does not change another grip's motion dependency.
@@ -621,6 +621,22 @@ class _Simulator:
         else:
             self._latch(event.target, time, state, "stopped")
         touched.add(("joint" if action.kind == "tween" else "object", action.target))
+
+    def _impulse_lever(self, current, point):
+        return _rotate(current.orientation, point)
+
+    def _impulse_point(self, current, lever):
+        return _add(current.position, lever)
+
+    def _impulse_cross(self, lever, impulse):
+        return _cross(lever, impulse)
+
+    def _impulse_velocity(self, initial, impulse, denominator):
+        return tuple(_round(_f(value) + _f(delta) / _f(denominator))
+                     for value, delta in zip(initial, impulse))
+
+    def _impulse_anchor(self, current, velocity, omega):
+        return _Kinematics(current.position, current.orientation, velocity, omega)
 
     def _process_boundary(self, time: Fraction) -> None:
         if self.check is not None:
@@ -755,18 +771,47 @@ class _Simulator:
                 "scene_mass_kg": _round(sum((_f(obj.mass) for obj in self.model.objects.values()), Fraction(0)))}
 
 
-def _simulator(model, check=None):
+def _simulator(model, check=None, *, work=None):
+    if model.profile == REACH_PROFILE:
+        from .reach_runtime import ReachSimulator
+        return ReachSimulator(model, check=check, work=work)
     if model.profile == FORCE_PROFILE:
         from .force_runtime import ForceSimulator
         return ForceSimulator(model, check=check)
     return _Simulator(model, check=check)
 
 
-def preflight(model: SceneModel, *, check: Callable[[], None] | None = None) -> dict[str, Any]:
+def _request_work(model, check, work):
+    """A direct reach evaluation is bounded even without an Agent callback.
+
+    Source/Agent/export callers pass their transient compiler context for a
+    single combined request. A separate call without it starts a fresh context;
+    no counters or cache are retained in the reusable source model.
+    """
+    if model.profile == REACH_PROFILE:
+        if work is None:
+            from .reach_numeric import ReachExecutionWork
+            work = ReachExecutionWork(check=check)
+        def checkpoint():
+            from .reach_numeric import ReachAdmissionError
+            from .reach_source import reach_error
+            try:
+                work.tick()
+            except ReachAdmissionError as error:
+                if error is work.callback_error:
+                    raise
+                raise reach_error(error.reach_code, str(error), model.span,
+                                  phase="evaluation", details=error.details) from error
+        return checkpoint, work
+    return check, work
+
+
+def preflight(model: SceneModel, *, check: Callable[[], None] | None = None, work=None) -> dict[str, Any]:
     """Validate the authored timeline without creating a persistent live run."""
+    check, work = _request_work(model, check, work)
     if model.profile in IMPULSE_PROFILES:
         _output_budget(model, 1, check=check)
-    simulator = _simulator(model, check=check)
+    simulator = _simulator(model, check=check, work=work)
     simulator.advance(model.duration)
     return {"outcome": "valid", "duration_seconds": time_text(model.duration),
             "boundary_times_seconds": simulator.boundaries}
@@ -789,15 +834,18 @@ def _records_per_sample(model: SceneModel, *, constructing: bool = False,
     if check is not None:
         check()
     base += 4 * len(model.objects)
-    if model.profile == FORCE_PROFILE:
+    if model.profile in FORCE_PROFILES:
         from .force_runtime import force_record_bound
         base += force_record_bound(model, constructing=constructing, horizon=horizon, side=side, check=check)
+    if model.profile == REACH_PROFILE:
+        from .reach_projection import reach_record_bound
+        base += reach_record_bound(model, check=check)
     if constructing:
         return base
     retained: dict[str, int] = {}
     total = maximum = 0
     for boundary, blocks in groupby(sorted(model.events, key=lambda block: block.time), key=lambda block: block.time):
-        if model.profile == FORCE_PROFILE and horizon is not None and (boundary > horizon or (boundary == horizon and side == "before")):
+        if model.profile in FORCE_PROFILES and horizon is not None and (boundary > horizon or (boundary == horizon and side == "before")):
             break
         group: dict[str, int] = {}
         for block in blocks:
@@ -834,15 +882,19 @@ def _output_budget(model: SceneModel, sample_count: int, *, constructing: bool =
                            repair="Request fewer sample times, or use a smaller scene for this bounded prototype.")
 
 
-def construct(model: SceneModel) -> dict[str, Any]:
+def construct(model: SceneModel, *, check=None, work=None) -> dict[str, Any]:
     """Construct initial world state, before t=0 action/event processing.
 
     Construction resolves the relationship graph and physical descriptions. A
     later action conflict does not prevent this lower-level result.
     """
-    _output_budget(model, 1, constructing=True)
+    check, work = _request_work(model, check, work)
+    _output_budget(model, 1, constructing=True, check=check)
     try:
-        initial = _simulator(model).advance(Fraction(0), "before")
+        simulator = _simulator(model, check=check, work=work)
+        if model.profile == REACH_PROFILE:
+            simulator.context_kind = "constructed_initial"
+        initial = simulator.advance(Fraction(0), "before")
     except OntoKinError as exc:
         if exc.diagnostic.category == "numerical_failure":
             exc.diagnostic.phase = "elaboration"
@@ -854,23 +906,24 @@ def construct(model: SceneModel) -> dict[str, Any]:
             "duration_seconds": time_text(model.duration), "initial_state": initial}
 
 
-def evaluate(model: SceneModel, times: Iterable[Any] | None = None, *, side: str = "after") -> dict[str, Any]:
+def evaluate(model: SceneModel, times: Iterable[Any] | None = None, *, side: str = "after", check=None, work=None) -> dict[str, Any]:
     """Evaluate requested times and verify all authored events through the horizon.
 
     A request may be a decimal string/number, or a dictionary containing
     ``time_seconds`` and an optional ``side``. Results retain the caller's order.
     Exact decimal strings are recommended; float arguments retain binary64 time.
     """
+    check, work = _request_work(model, check, work)
     if times is None:
         times = ["0", model.duration]
-    records = _records_per_sample(model)
+    records = _records_per_sample(model, check=check)
     if model.profile in IMPULSE_PROFILES:
         # Even an empty requested sample list still validates the full horizon
         # and must not allocate an unbounded retained application group.
-        _output_budget(model, 1, records_per_sample=records)
+        _output_budget(model, 1, records_per_sample=records, check=check)
     requests: list[tuple[Fraction, str, int]] = []
     for index, request in enumerate(times):
-        _output_budget(model, index + 1, records_per_sample=records)
+        _output_budget(model, index + 1, records_per_sample=records, check=check)
         sample_side = request.get("side", side) if isinstance(request, dict) else side
         value = request.get("time_seconds", request.get("time")) if isinstance(request, dict) else request
         time = exact_time(value)
@@ -881,7 +934,7 @@ def evaluate(model: SceneModel, times: Iterable[Any] | None = None, *, side: str
                                         "requested_time_seconds": time_text(time), "requested_side": sample_side},
                                repair="Use before or after and a timestamp from zero through the scene duration.")
         requests.append((time, sample_side, index))
-    simulator = _simulator(model)
+    simulator = _simulator(model, check=check, work=work)
     samples: list[Any] = [None] * len(requests)
     for time, sample_side, index in sorted(requests, key=lambda request: (request[0], request[1] == "after")):
         samples[index] = simulator.advance(time, sample_side)
@@ -896,7 +949,7 @@ def evaluate(model: SceneModel, times: Iterable[Any] | None = None, *, side: str
         assumptions.update(external_torque="authored_instantaneous_angular_impulses_only",
                            impulses="authored_world_impulse_at_target_self_point",
                            continuous_external_forces="uniform_gravity_only", continuous_external_torque="absent")
-    if model.profile == FORCE_PROFILE:
+    if model.profile in FORCE_PROFILES:
         assumptions.update(continuous_external_forces="authored_constant_world_com_intervals_and_uniform_gravity",
                            force_intervals="exact_rational_start_plus_canonical_duration")
     return {
@@ -910,7 +963,8 @@ def evaluate(model: SceneModel, times: Iterable[Any] | None = None, *, side: str
 
 
 def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
-                    check: Callable[[], None] | None = None) -> dict[str, Any]:
+                    check: Callable[[], None] | None = None, work=None,
+                    context_kind: str = "recorded_prefix") -> dict[str, Any]:
     """Replay only through an exact endpoint, retaining the last checked state.
 
     Unlike evaluate(), this additive agent hook does not preflight future
@@ -919,6 +973,7 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
     an OntoKinError for the caller to bind to its immutable source and run.
     Wrap OntoKinError callback interruptions if they must propagate unchanged.
     """
+    check, work = _request_work(model, check, work)
     endpoint = exact_time(until)
     if side not in ("before", "after") or not 0 <= endpoint <= model.duration:
         raise OntoKinError("OKL-E-SAMPLE", "The requested run endpoint is outside the scene or has an invalid side.",
@@ -926,7 +981,7 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
                            details={"duration_seconds": time_text(model.duration),
                                     "requested_time_seconds": time_text(endpoint), "requested_side": side})
     _output_budget(model, 1, check=check, records_per_sample=(
-        _records_per_sample(model, check=check, horizon=endpoint, side=side) if model.profile == FORCE_PROFILE else None))
+        _records_per_sample(model, check=check, horizon=endpoint, side=side) if model.profile in FORCE_PROFILES else None))
     simulator = None
     last = None
     failure = None
@@ -939,6 +994,16 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
                 check()
             runtime = simulator.state.actions[path]
             record = sample["actions"][path]
+            if action.kind == "reach_planar":
+                value = sample["reaches"][path]["current"]["value"]
+                resolved = value["resolved_joint_targets_rad"]
+                record.update(channel="joint_coordinates", value_type="AnglePair",
+                              start_value={"available": runtime.initial is not None,
+                                           "value": copy.deepcopy(runtime.initial)},
+                              current_value={"available": True, "value": value["joint_coordinates_rad"]},
+                              target_value={"available": resolved is not None, "value": resolved,
+                                            "reason": "action_has_not_started" if resolved is None else None})
+                continue
             record["channel"] = simulator._channel(action)[1]
             record["start_value"] = {"available": runtime.initial is not None,
                                       "value": copy.deepcopy(runtime.initial)}
@@ -963,7 +1028,9 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
         return sample
 
     try:
-        simulator = _simulator(model, check=check)
+        simulator = _simulator(model, check=check, work=work)
+        if model.profile == REACH_PROFILE:
+            simulator.context_kind = context_kind
         last = capture(Fraction(0), "before")
         while True:
             if check is not None:
@@ -978,6 +1045,8 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
         if check is not None:
             check()
     except OntoKinError as exc:
+        if model.profile == REACH_PROFILE and work is not None and exc is work.callback_error:
+            raise
         failure = exc
     return {"valid_until_seconds": None if last is None else last["time_seconds"],
             "valid_until_side": None if last is None else last["side"],

@@ -309,15 +309,19 @@ class ForceSimulator(_Simulator):
                 self._event(event, time, staged, incoming, dependencies, touched)
         for path in staged.forces:
             self._aggregate(path, time, staged)
-        self._kinematics(time, staged)
-        self._bounded_projection(staged)
-        self._check()
+        self._validate_staged(time, staged, incoming)
         self.state = staged
         if has_source:
             self.event_index += 1
         self.zero_pending = False
         self.last_boundary = time
         self.boundaries.append(time_text(time))
+
+    def _validate_staged(self, time: Fraction, staged: _ForceRunState, incoming) -> None:
+        """Complete the profile checks before publishing the whole boundary."""
+        self._kinematics(time, staged)
+        self._bounded_projection(staged)
+        self._check()
 
     def _check_dynamic_extrema(self, start: Fraction, end: Fraction) -> None:
         for path, anchor in self.state.dynamic.items():

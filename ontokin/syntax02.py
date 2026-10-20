@@ -292,7 +292,10 @@ def parse_source_unit(unit: SourceUnit, *, check: Callable[[], None] | None = No
         declared = (tokens[1].value if len(tokens) > 2 and tokens[0].kind == "ontokin"
                     and tokens[1].kind == "STRING" else None)
         callback = checkpoint if check is not None else None
-        if declared == "0.5":
+        if declared == "0.6":
+            from .syntax06 import Parser06
+            result = Parser06(tokens, unit.source_id, callback).program()
+        elif declared == "0.5":
             from .syntax05 import Parser05
             result = Parser05(tokens, unit.source_id, callback).program()
         elif declared == "0.4":

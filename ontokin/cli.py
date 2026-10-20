@@ -159,6 +159,21 @@ def capabilities() -> dict:
                             "No continuous torque, contacts, controllers or general rigid-body dynamics.",
                             "Recorded GLB animation does not execute forces or live physics in the destination."],
         },
+        "reach_interface": {
+            "language_version": "0.6", "profile": "planar-reach-0.1",
+            "agent_contract": "ontokin.agent/0.6", "delivery_contract": "ontokin.glb/0.6",
+            "storage_schema": "ontokin.planar-reach-program-agent-store/0.1",
+            "source_action": "reach_planar(shoulder, elbow, tip, target, duration, branch)",
+            "motion_model": "two prescribed planar hinge coordinates with atomic coupled ownership",
+            "inspection": "complete source-bound lifecycle, physical coordinates/rates, goal and latched terminal result",
+            "transport": "ProgramAgentService(store, protocol='ontokin.agent/0.6') and agent --protocol ontokin.agent/0.6 JSONL CLI",
+            "pinned_bundle_command": "export PROGRAM.files.json --bundle --target ontokin.glb/0.6 --output MODEL.glb",
+            "limits": {"bound_chains": 32, "named_actions": 128, "active_reaches": 32,
+                       "goal_residual_m": 1e-9, "max_interval_certificates": 100000},
+            "limitations": ["Finite planar prescribed motion; no torque actuator, obstacle avoidance or contact solver.",
+                            "Recorded playback is bound to the identified destination numerical method.",
+                            "The finite release and full product have separate published acceptance gates."],
+        },
         "operations": ["check", "evaluate", "export", "agent", "conformance", "capabilities"],
         "output_levels": ["represented", "constructed", "evaluated"],
         "source_features": ["classes", "single_inheritance", "pure_functions_and_methods",
@@ -238,6 +253,16 @@ def capabilities() -> dict:
                 "validation": "decoded source geometry, materials, influence provenance, float32 tracks and intermediate motion",
                 "limitations": "bounded recorded rigid playback; no destination force engine, contacts or live physics",
             },
+            "ontokin.glb/0.6": {
+                "format": "glTF 2.0 binary (.glb)", "profile": "planar-reach-0.1",
+                "geometry": ["empty", "box", "sphere", "loft", "placed"],
+                "source_of_truth": "the complete exact pinned .ok source bundle",
+                "selection": "explicit --target ontokin.glb/0.6 or Agent/0.6 destination",
+                "clock_conversion": "binary32_rne_ties_to_even_from_exact_rational",
+                "histories": "complete before/after joints, actions, authorities, impulses, forces, reaches and incoming releases",
+                "validation": "independent supplied-byte clocks, complete geometry/PBR, source phases and continuous error certificates",
+                "limitations": "bounded recorded motion; destination numerical identity is explicit and no live solver is embedded",
+            },
         },
         "limitations": ["General correctly rounded transcendental functions are not certified.",
                         "Exact represented rotations are approximated in binary64 spatial calculations.",
@@ -257,7 +282,7 @@ def _program_export(args) -> int:
     program = None
     try:
         if args.target == "ontokin.glb/0.1":
-            raise BundleError("OKA-E-REQUEST", "A program bundle requires explicit GLB/0.2, GLB/0.3, GLB/0.4 or GLB/0.5 delivery.")
+            raise BundleError("OKA-E-REQUEST", "A program bundle requires explicit GLB/0.2 through GLB/0.6 delivery.")
         protected = []
         if args.bundle:
             manifest_path = args.file.resolve(strict=True)
@@ -284,6 +309,7 @@ def _program_export(args) -> int:
             target_contract=args.target, protected_sources=tuple(protected))
         result = export_glb(compiler.model, target_contract=args.target,
             source_uri=program.entry.filename, source_sha256=program.entry.revision,
+            work=compiler.reach_work if compiler.model.profile == "planar-reach-0.1" else None,
             options=ExportOptions(fps=args.fps, end=args.end,
                 position_tolerance_m=args.position_tolerance,
                 rotation_tolerance_rad=args.rotation_tolerance,
@@ -331,7 +357,7 @@ def main(argv: list[str] | None = None) -> int:
     evaluate_parser.add_argument("--frame", default="world", help="Frame for --object inspection, for example first.frame")
     export_parser = commands.add_parser("export", help="Bake and verify an animation in a self-contained .glb file")
     export_parser.add_argument("file", type=Path)
-    export_parser.add_argument("--target", choices=["ontokin.glb/0.1", "ontokin.glb/0.2", "ontokin.glb/0.3", "ontokin.glb/0.4", "ontokin.glb/0.5"],
+    export_parser.add_argument("--target", choices=["ontokin.glb/0.1", "ontokin.glb/0.2", "ontokin.glb/0.3", "ontokin.glb/0.4", "ontokin.glb/0.5", "ontokin.glb/0.6"],
                                default="ontokin.glb/0.1", help="Explicit delivery profile; old source is never migrated")
     export_parser.add_argument("--bundle", action="store_true",
                                help="Read FILE as an ontokin.files/0.1 manifest of pinned offline .ok files")
@@ -347,7 +373,7 @@ def main(argv: list[str] | None = None) -> int:
     suite.add_argument("--fixtures", type=Path, default=DEFAULT_FIXTURES)
     suite.add_argument("--output", type=Path, help="Write the complete JSON report to this path")
     agent = commands.add_parser("agent", help="Serve an explicitly selected durable agent contract as local JSONL")
-    agent.add_argument("--protocol", choices=["ontokin.agent/0.1", "ontokin.agent/0.2", "ontokin.agent/0.3", "ontokin.agent/0.4", "ontokin.agent/0.5"], default="ontokin.agent/0.1", help="Select the explicit core, construction, surface, impulse or force agent contract")
+    agent.add_argument("--protocol", choices=["ontokin.agent/0.1", "ontokin.agent/0.2", "ontokin.agent/0.3", "ontokin.agent/0.4", "ontokin.agent/0.5", "ontokin.agent/0.6"], default="ontokin.agent/0.1", help="Select the explicit core, construction, surface, impulse, force or planar reach agent contract")
     agent.add_argument("--store", type=Path, required=True, help="Directory for immutable snapshots and durable request/run state")
     agent.add_argument("--request", type=Path, help="Read one JSON request, emit its receipt, and exit")
     agent.add_argument("--wait", action="store_true", help="Wait for this request's terminal result instead of returning a queued receipt")
