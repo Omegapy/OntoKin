@@ -27,7 +27,8 @@ budget is not enlarged by these destination limits.
 
 Carrier translation magnitude plus the full stored landmark radius must be at
 most `2^400`. The certified quaternion sphere arc is at most the strict rational
-lower bound `7853981633974483/10^16` on pi/4. Delivered carriers are scene roots
+lower bound equal to the exact binary64 value of `0.7853981633974483` on pi/4.
+Delivered carriers are scene roots
 with identity ancestors and unit scale. The identified transform is the CPU
 world matrix in Three.js revision 180, followed by its CPU point transform.
 Rasterization, projection to screen pixels and arbitrary other players are not
@@ -93,6 +94,12 @@ bounds the computed difference by integer square root, and adds `2E`. For
 `theta = 2 asin(d/2) <= d/sqrt(1-d^2/4) <= d/(1-d^2/4)`.
 
 The final rational upper bound is checked against the arc cap before it is used.
+
+Certificate serialization rounds every primitive bound upward to binary64,
+then recomputes the dependent destination, quaternion, carrier and total bounds
+from those reported values, rounding each dependent result upward in order.
+Consequently the reported numbers satisfy the inequalities directly; a
+downward-rounded final sum cannot hide behind an unreported exact value.
 
 ## Translation, matrix defect and local points
 

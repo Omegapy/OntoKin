@@ -34,7 +34,8 @@ CONSTRUCTION_TARGET = "ontokin.glb/0.2"
 SURFACE_TARGET = "ontokin.glb/0.3"
 IMPULSE_TARGET = "ontokin.glb/0.4"
 FORCE_TARGET = "ontokin.glb/0.5"
-NATIVE_TARGETS = (SURFACE_TARGET, IMPULSE_TARGET, FORCE_TARGET)
+REACH_TARGET = "ontokin.glb/0.6"
+NATIVE_TARGETS = (SURFACE_TARGET, IMPULSE_TARGET, FORCE_TARGET, REACH_TARGET)
 PROGRAM_TARGETS = (CONSTRUCTION_TARGET, *NATIVE_TARGETS)
 SURFACE_POSITION_TOLERANCE_M = 1e-5
 MAX_KEYFRAMES = 10000
@@ -79,7 +80,8 @@ def export_error(export_code: str, message: str, model: SceneModel | None = None
                        details={"target_contract": ({"construction-0.1": CONSTRUCTION_TARGET,
                                                      "surface-0.1": SURFACE_TARGET,
                                                      "impulse-0.1": IMPULSE_TARGET,
-                                                     "force-0.1": FORCE_TARGET}.get(model.profile, TARGET_CONTRACT)
+                                                     "force-0.1": FORCE_TARGET,
+                                                     "planar-reach-0.1": REACH_TARGET}.get(model.profile, TARGET_CONTRACT)
                                                     if model is not None else TARGET_CONTRACT),
                                 "export_code": export_code, **(details or {})},
                        repair=("Use supported visual geometry and the explicitly matching model/delivery profile." if kind == "unsupported" else
@@ -254,7 +256,8 @@ class BakedScene:
 
 def checked_contract(model: SceneModel, target_contract: str) -> str:
     expected = {TARGET_CONTRACT: "core-0.1", CONSTRUCTION_TARGET: "construction-0.1",
-                SURFACE_TARGET: "surface-0.1", IMPULSE_TARGET: "impulse-0.1", FORCE_TARGET: "force-0.1"}
+                SURFACE_TARGET: "surface-0.1", IMPULSE_TARGET: "impulse-0.1", FORCE_TARGET: "force-0.1",
+                REACH_TARGET: "planar-reach-0.1"}
     if target_contract not in expected or model.profile != expected[target_contract]:
         export_error("OKE-E-SUPPORT", "The named GLB contract must explicitly match the authored semantic profile.",
                      model, kind="unsupported", details={"target_contract": target_contract,
@@ -262,7 +265,7 @@ def checked_contract(model: SceneModel, target_contract: str) -> str:
     if model.requested_capabilities or any(diagnostic.code.startswith("OKL-E-") for diagnostic in model.diagnostics):
         export_error("OKE-E-SUPPORT", "The GLB adapter requires a supported, validated model.", model, kind="unsupported")
     return {TARGET_CONTRACT: "0.1", CONSTRUCTION_TARGET: "0.2", SURFACE_TARGET: "0.3",
-            IMPULSE_TARGET: "0.4", FORCE_TARGET: "0.5"}[target_contract]
+            IMPULSE_TARGET: "0.4", FORCE_TARGET: "0.5", REACH_TARGET: "0.6"}[target_contract]
 
 
 def program_metadata(model: SceneModel, *, check: Callable[[], None] | None = None) -> dict[str, Any]:
@@ -307,7 +310,7 @@ def program_metadata(model: SceneModel, *, check: Callable[[], None] | None = No
                     source = model.source_provenance[location["source_id"]]
                     if location["source_revision"] != source["source_revision"] or location["filename"] != source["filename"] or not 0 <= location["start_byte"] <= location["end_byte"]:
                         raise ValueError("Occurrence source location differs from its source identity.")
-            if model.profile in ("surface-0.1", "impulse-0.1", "force-0.1") and obj.geometry.get("kind") in ("loft", "placed"):
+            if model.profile in ("surface-0.1", "impulse-0.1", "force-0.1", "planar-reach-0.1") and obj.geometry.get("kind") in ("loft", "placed"):
                 recipes = [obj.geometry]
                 if obj.geometry["kind"] == "placed":
                     recipes.append(obj.geometry["surface"])
@@ -680,7 +683,7 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
     nodes: list[BakedNode] = []
     meshes: dict[tuple, Mesh] = {}
     vertex_count = 0
-    native = model.profile in ("surface-0.1", "impulse-0.1", "force-0.1")
+    native = model.profile in ("surface-0.1", "impulse-0.1", "force-0.1", "planar-reach-0.1")
 
     if native:
         predicted = 0
@@ -729,7 +732,8 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
                                    category="resource_limit" if error.code == "OKL-E-RESOURCE" else "invalid",
                                    element_id=list(obj.element_id), blocks=["delivered"],
                                    details={"target_contract": {"impulse-0.1": IMPULSE_TARGET,
-                                                                "force-0.1": FORCE_TARGET}.get(model.profile, SURFACE_TARGET),
+                                                                "force-0.1": FORCE_TARGET,
+                                                                "planar-reach-0.1": REACH_TARGET}.get(model.profile, SURFACE_TARGET),
                                             "object_path": obj.path, **error.details}) from error
             charge(mesh)
             return mesh
@@ -745,7 +749,7 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
         return meshes[key]
     properties = None
     geometries = None
-    if model.profile in ("construction-0.1", "surface-0.1", "impulse-0.1", "force-0.1"):
+    if model.profile in ("construction-0.1", "surface-0.1", "impulse-0.1", "force-0.1", "planar-reach-0.1"):
         try:
             properties = bounded_data({path: dict(obj.properties) for path, obj in model.objects.items()}, check=check)
             if native:
@@ -763,7 +767,7 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
                     "appearance_linear_rgba": list(obj.appearance), "pose_frame": "world",
                     "role": obj.role, "properties": properties[path] if properties is not None else
                     {name: value.to_data() for name, value in obj.properties.items()}}
-        if model.profile in ("construction-0.1", "surface-0.1", "impulse-0.1", "force-0.1"):
+        if model.profile in ("construction-0.1", "surface-0.1", "impulse-0.1", "force-0.1", "planar-reach-0.1"):
             metadata["source_mapping"] = model.occurrence_provenance[path]
             metadata["program_revision"] = model.program_revision
         mesh = mesh_for(obj.geometry, obj)
@@ -1031,9 +1035,13 @@ def _build_scene(model: SceneModel, *, options: ExportOptions | None = None,
 def build_scene(model: SceneModel, *, options: ExportOptions | None = None,
                 source_uri: str | None = None, source_sha256: str | None = None,
                 target_contract: str = TARGET_CONTRACT,
-                check: Callable[[], None] | None = None) -> BakedScene:
+                check: Callable[[], None] | None = None, work=None) -> BakedScene:
     """Bake the explicit profile while preserving caller cancellation errors."""
     try:
+        if target_contract == REACH_TARGET:
+            from .reach_export import build_reach_scene
+            return build_reach_scene(model, options=options, source_uri=source_uri,
+                                     source_sha256=source_sha256, check=_guard_check(check), work=work)
         return _build_scene(model, options=options, source_uri=source_uri, source_sha256=source_sha256,
                             target_contract=target_contract, check=_guard_check(check))
     except _ExportInterrupt as interrupted:
