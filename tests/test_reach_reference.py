@@ -158,15 +158,20 @@ class ReachReferenceTests(unittest.TestCase):
             for side in ("before", "after"))})
 
     def test_continuous_ideal_start_survives_stop_and_replacement(self):
-        # A new identified source variant makes the stopped coordinate's /6
-        # rounding discrepancy observable without changing frozen fixtures.
+        # At t=0.5, duration 3 divides these targets by 6 exactly in binary64.
+        # Duration 5 instead gives a genuine /10 rounding discrepancy on both
+        # coordinates. Only this derived variant changes, not frozen L02.
         payload = source_case("L02").to_payload()
         old = "point(rig.arm.reach_frame, 0[m], 1[m], 0[m]), 2[s], elbow_positive)"
-        new = "point(rig.arm.reach_frame, 0[m], 1[m], 0[m]), 3[s], elbow_positive)"
+        new = "point(rig.arm.reach_frame, 0[m], 1[m], 0[m]), 5[s], elbow_positive)"
         self.assertEqual(payload["entry"]["source"].count(old), 1)
         payload["entry"]["source"] = payload["entry"]["source"].replace(old, new)
         compiler = compile_construction(load_bundle(payload))
         reference = build_reference(compiler.model, end=2, work=compiler.reach_work)
+        started = reference.sample(0)["reaches"]["reach_a"]["current"]["value"]
+        ideal_stops = [F(target) / 10 for target in started["resolved_joint_targets_rad"]]
+        self.assertEqual(len(ideal_stops), 2)
+        self.assertTrue(all(F(float(value)) != value for value in ideal_stops))
         action = compiler.model.actions["reach_b"]
         phases = reference.phases(action.reach.tip + ".frame", F(1, 2), F(3, 2))
         self.assertEqual(len(phases), 1)

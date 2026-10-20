@@ -9,6 +9,7 @@ from unittest.mock import patch
 from ontokin.construction import ConstructionBudget
 from ontokin.json_limits import measure_json
 from ontokin import program_runtime
+from reach_fixture_support import source_unit_identity
 from reach_agent_support import (CASES, PROTOCOL_CASES, STEPS, ReachAgentFixture,
                                  reach_records, source_case)
 
@@ -178,10 +179,7 @@ class ReachProtocolCaseTests(ReachAgentFixture, unittest.TestCase):
                     self.assertEqual(len(actual_units), 4)
                     identities = []
                     for unit in actual_units:
-                        stored = program.sources[unit["source_id"]]
-                        self.assertEqual(unit["source"].encode("utf-8"), stored.raw)
-                        identities.append({"source_id": unit["source_id"], "source_revision": unit["source_revision"],
-                            "filename": unit["filename"], "package_id": stored.package_id, "version": stored.version})
+                        identities.append(source_unit_identity(program, unit))
                         sources[unit["source_id"]] = unit
                     self.assertEqual(identities, expected["exact_source_unit_identities"])
                     self.assertEqual({item["source"]["source_id"] for item in items}, set(sources))
