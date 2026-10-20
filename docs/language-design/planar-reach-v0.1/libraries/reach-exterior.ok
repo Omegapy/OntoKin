@@ -1,0 +1,58 @@
+ontokin "0.3";
+module ReachExterior @ "reach-exterior";
+profile "surface-0.1";
+
+// Reusable source geometry: every section and region remains independently named.
+public class Segment @ "segment" {
+    public param length @ "length": Length = 1[m];
+    public param width @ "width": Length = 0.08[m];
+    public param palette @ "palette": Keyed<SurfaceMaterial> = keyed<SurfaceMaterial> {
+        "shell": surface_material(rgba(0.16, 0.38, 0.68, 1), 0.25, 0.4),
+        "trim": surface_material(rgba(0.82, 0.64, 0.18, 1), 0.5, 0.3)
+    };
+    public derive sections @ "sections": Keyed<LoftSection> = keyed<LoftSection> {
+        "base": loft_section(0[m], vec3(0[m], 0[m], 0[m]), self.width, self.width * 0.75, "shell"),
+        "middle": loft_section(self.length / 2, vec3(0[m], 0[m], 0[m]), self.width * 0.85, self.width * 0.65, "trim"),
+        "end": loft_section(self.length, vec3(0[m], 0[m], 0[m]), self.width * 0.65, self.width * 0.5, "trim")
+    };
+    geometry = placed(loft(self.sections, self.palette, 16, "flat"),
+        pose(self.frame, vec3(0[m], 0[m], 0[m]), axis_angle(vec3(0, 1, 0), 90[deg])));
+    physical = no_body();
+    motion = prescribed;
+    collision = disabled;
+    public site base @ "base" {
+        pose = pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+        interface = "planar-reach.hinge";
+        size = 0[m];
+    }
+    public site hinge_tip @ "hinge-tip" {
+        pose = pose(self.frame, vec3(self.length, 0[m], 0[m]), quat(1, 0, 0, 0));
+        interface = "planar-reach.hinge";
+        size = 0[m];
+    }
+    public site tip @ "tip" {
+        pose = pose(self.frame, vec3(self.length, 0[m], 0[m]), quat(1, 0, 0, 0));
+        interface = "rigid.origin";
+        size = 0[m];
+    }
+}
+
+public class Marker @ "marker" {
+    public param radius @ "radius": Length = 0.06[m];
+    public param tint @ "tint": Color = rgba(0.9, 0.7, 0.2, 1);
+    geometry = sphere(self.radius);
+    appearance = self.tint;
+    physical = no_body();
+    motion = prescribed;
+    collision = disabled;
+}
+
+public class Payload @ "payload" {
+    public param radius @ "radius": Length = 0.1[m];
+    public param mass @ "mass": Mass = 0.5[kg];
+    geometry = sphere(self.radius);
+    appearance = rgba(0.75, 0.22, 0.12, 1);
+    physical = sphere_body(self.radius, self.mass);
+    motion = prescribed;
+    collision = disabled;
+}
