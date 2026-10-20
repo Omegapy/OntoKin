@@ -1,0 +1,129 @@
+{
+  "agent_sqlite_executed": false,
+  "glb_or_destination_executed": false,
+  "included_in_original_42_protocol_steps": false,
+  "probes": [
+    {
+      "execution_status": "not_executed",
+      "expected": {
+        "actual_artifact_chunks_retrieved_and_reassembled": true,
+        "additional_to_nine_ordinary_agent_artifacts": true,
+        "delivery_run_not_failed_LP01_run": true,
+        "fresh_delivery_run_identity": true,
+        "independent_byte_validation_required": true,
+        "new_run_prefix": "0.25",
+        "program_revision": "sha256:af42329216000f3799b08cf4ec4272c8907bcc1446c2d0b0b5edc9f044e57e0e",
+        "reset_does_not_change_source": true,
+        "status": "succeeded"
+      },
+      "id": "L04-tenth-agent-artifact",
+      "prerequisite": "LP01.09 succeeds with unchanged accepted L04 and new successful prefix run",
+      "request_template": {
+        "destination": "ontokin.glb/0.6",
+        "operation": "export",
+        "options": {
+          "end": "0.25"
+        },
+        "program_revision": "sha256:af42329216000f3799b08cf4ec4272c8907bcc1446c2d0b0b5edc9f044e57e0e",
+        "project_id": "reach-reconstruction-lp01",
+        "request_id": "L04-release.01",
+        "schema_version": "ontokin.agent/0.6"
+      }
+    },
+    {
+      "edit_request_template": {
+        "expected_program_revision": "sha256:af42329216000f3799b08cf4ec4272c8907bcc1446c2d0b0b5edc9f044e57e0e",
+        "operation": "edit",
+        "patches": [
+          {
+            "element_id": [
+              "planar-reach-lifecycle",
+              "demo",
+              "reach-b"
+            ],
+            "end_byte": 1098,
+            "expected_text": "point(rig.arm.reach_frame, 8[m], 8[m], 0[m]), 1[s], elbow_positive",
+            "replacement": "point(rig.arm.reach_frame, 1[m], 1[m], 0[m]), 1[s], elbow_negative",
+            "source_id": "entry",
+            "source_revision": "sha256:ee74c0c6b6702dd16abed60a5e9acfdbceac19996b00e6c49c3398dbed7cfc6c",
+            "start_byte": 1032
+          }
+        ],
+        "project_id": "reach-reconstruction-lp01",
+        "request_id": "Q22.01",
+        "requested_level": "evaluated",
+        "schema_version": "ontokin.agent/0.6"
+      },
+      "execution_status": "not_executed",
+      "expected_edit": {
+        "accepted_program_revision": "sha256:8fe2123277e94597d3e4ca518e3c1c1fd68d9a18325459f563c9eb5a270fe748",
+        "exact_entry_target": "sources/l02-stopped-action-new-owner.ok",
+        "libraries_unchanged": true,
+        "new_successful_run": true,
+        "one_expression_patch": true,
+        "same_project": true,
+        "status": "succeeded"
+      },
+      "expected_historical_control": {
+        "accepted_program_revision": "sha256:8fe2123277e94597d3e4ca518e3c1c1fd68d9a18325459f563c9eb5a270fe748",
+        "old_failed_history_unchanged": true,
+        "program_revision": "sha256:af42329216000f3799b08cf4ec4272c8907bcc1446c2d0b0b5edc9f044e57e0e",
+        "status": "succeeded"
+      },
+      "expected_mismatch": {
+        "category": "stale",
+        "diagnostic_code": "OKL-E-SAMPLE",
+        "failed_create_is_not_a_substitute": true,
+        "reason": "old L04 run cannot supply L02 program sample",
+        "status": "rejected"
+      },
+      "historical_control_request_template": {
+        "fields": [
+          "actions"
+        ],
+        "limit": 128,
+        "operation": "inspect",
+        "program_revision": "sha256:af42329216000f3799b08cf4ec4272c8907bcc1446c2d0b0b5edc9f044e57e0e",
+        "project_id": "reach-reconstruction-lp01",
+        "request_id": "Q22.03",
+        "run_id": {
+          "$binding": "LP01.failed_run"
+        },
+        "schema_version": "ontokin.agent/0.6",
+        "selector": {
+          "kind": "action"
+        },
+        "time": {
+          "seconds": "0.5",
+          "side": "before"
+        }
+      },
+      "id": "Q22-same-project-repair-and-stale-history",
+      "mismatch_request_template": {
+        "fields": [
+          "actions"
+        ],
+        "limit": 128,
+        "operation": "inspect",
+        "program_revision": "sha256:8fe2123277e94597d3e4ca518e3c1c1fd68d9a18325459f563c9eb5a270fe748",
+        "project_id": "reach-reconstruction-lp01",
+        "request_id": "Q22.02",
+        "run_id": {
+          "$binding": "LP01.failed_run"
+        },
+        "schema_version": "ontokin.agent/0.6",
+        "selector": {
+          "kind": "action"
+        },
+        "time": {
+          "seconds": "0.5",
+          "side": "before"
+        }
+      },
+      "prerequisite": "Same LP01 project retains accepted L04 and its failed run; capture actual failed run ID before edit"
+    }
+  ],
+  "schema_version": "ontokin.proposed-reach-additional-release-probes/0.1",
+  "source_runtime_executed": false,
+  "status": "new_expected_preparation_not_executed"
+}

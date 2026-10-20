@@ -1,0 +1,24 @@
+ontokin "0.6";
+module ReachFixture @ "planar-reach-fixture";
+profile "planar-reach-0.1";
+
+// Proposed source. This profile and reach_planar are not implemented yet.
+import assets @ "assets" from "proposal.reach-assets" version "0.1.0"
+    digest "sha256:6551d3dd5a772e85e92547d71db081e6ae7c21a0f3d57424b01c64a18191d6ba";
+import shapes @ "shapes" from "proposal.reach-exterior" version "0.1.0"
+    digest "sha256:3b94fc91ca96f8fb0b21a90a1d6b4d78cdbd19600383a10cb6a3646ba67af763";
+
+scene Demo @ "demo" {
+    duration = 3[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object rig @ "rig": assets.BenchArm {
+        upper_length = 1[m];
+        forearm_length = 1[m];
+        arm.shoulder_initial = 0[rad];
+        arm.elbow_high = 60[deg];
+        placement = pose(world, vec3(0[m], 0[m], 0[m]),
+                         axis_angle(vec3(0, 0, 1), 0[deg]));
+    }
+    action reach @ "reach" = rig.arm.reach_to(point(rig.arm.reach_frame, 1[m], 1[m], 0[m]), 2[s], elbow_positive);
+    at 0[s] sequence { start reach; }
+}

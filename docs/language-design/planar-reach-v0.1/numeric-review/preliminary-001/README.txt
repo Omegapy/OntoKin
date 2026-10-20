@@ -1,0 +1,1 @@
+Preserved preliminary proof/check artifacts, before changing the report to derive its observed precision field from actual certificate records. The initial reported 96 bits was true for every original case. No expected values or numerical method changed. This report applies only to its identified inputs and original checkout state.

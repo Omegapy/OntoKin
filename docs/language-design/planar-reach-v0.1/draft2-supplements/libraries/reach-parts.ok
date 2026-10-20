@@ -1,0 +1,58 @@
+ontokin "0.6";
+module ReachParts @ "reach-parts";
+profile "planar-reach-0.1";
+
+import shapes @ "shapes" from "proposal.reach-exterior" version "0.1.0"
+    digest "sha256:3b94fc91ca96f8fb0b21a90a1d6b4d78cdbd19600383a10cb6a3646ba67af763";
+
+// The new goal builder is intentionally unavailable in older profiles.
+public class PlanarArm @ "planar-arm" {
+    public param parent_frame @ "parent-frame": FrameRef = world;
+    public param mount_offset @ "mount-offset": Vec3<Length> = vec3(0[m], 0[m], 0[m]);
+    public param mount_rotation @ "mount-rotation": Rotation = quat(1, 0, 0, 0);
+    public param upper_length @ "upper-length": Length = 1[m];
+    public param forearm_length @ "forearm-length": Length = 1[m];
+    public param width @ "width": Length = 0.08[m];
+    public param shoulder_initial @ "shoulder-initial": Angle = 0[rad];
+    public param shoulder_low @ "shoulder-low": Angle = -180[deg];
+    public param shoulder_high @ "shoulder-high": Angle = 180[deg];
+    public param elbow_low @ "elbow-low": Angle = -180[deg];
+    public param elbow_high @ "elbow-high": Angle = 180[deg];
+    public param elbow_axis @ "elbow-axis": Vec3<Real> = vec3(0, 0, 1);
+    public follow mounting @ "mounting" {
+        parent = self.parent_frame;
+        child = self;
+        offset = pose(self.parent_frame, self.mount_offset, self.mount_rotation);
+    }
+    public site pivot @ "pivot" {
+        pose = pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+        interface = "planar-reach.hinge";
+        size = 0[m];
+    }
+    public derive reach_frame @ "reach-frame": FrameRef = self.pivot.frame;
+    public part upper @ "upper": shapes.Segment {
+        length = self.upper_length;
+        width = self.width;
+    }
+    public part forearm @ "forearm": shapes.Segment {
+        length = self.forearm_length;
+        width = self.width;
+    }
+    public joint shoulder @ "shoulder": hinge {
+        parent = self.pivot;
+        child = self.upper.base;
+        axis = vec3(0, 0, 1);
+        limits = range(self.shoulder_low, self.shoulder_high);
+        initial = self.shoulder_initial;
+    }
+    public joint elbow @ "elbow": hinge {
+        parent = self.upper.hinge_tip;
+        child = self.forearm.base;
+        axis = self.elbow_axis;
+        limits = range(self.elbow_low, self.elbow_high);
+        initial = 0[rad];
+    }
+    public method reach_to @ "reach-to"(target: Point3, duration: Time, branch: ReachBranch) -> Action {
+        return reach_planar(self.shoulder, self.elbow, self.forearm.tip, target, duration, branch);
+    }
+}

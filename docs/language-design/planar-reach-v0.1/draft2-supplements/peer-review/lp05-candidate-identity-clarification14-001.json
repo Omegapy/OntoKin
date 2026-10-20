@@ -1,0 +1,153 @@
+{
+  "agent_sqlite_executed": false,
+  "all_other_42_protocol_meanings_unchanged": true,
+  "all_sources_and_lifecycle_sample_states_byte_identical": true,
+  "authorization": "Root explicitly authorized this narrow correction during combined peer review on 2026-10-20; no implementation has been executed.",
+  "changed_members": [
+    {
+      "after": {
+        "bytes": 25223,
+        "path": "author_protocol.py",
+        "sha256": "sha256:d68321c67e1ae69fec1cab75da0a26e62987d94bba80ecf42c4e483244dfa56e"
+      },
+      "before": {
+        "bytes": 25161,
+        "path": "author_protocol.py",
+        "sha256": "sha256:52ddffa1d2c3f439f65711fc8a8ad625af268e65dac66dbcf32dc36b16f229f3"
+      }
+    },
+    {
+      "after": {
+        "bytes": 20150,
+        "path": "verify_supplements.py",
+        "sha256": "sha256:23fa3f0cb471c05a146a3bb45bf5c3d6b509947ee2f7dfe0fec6ab691726f947"
+      },
+      "before": {
+        "bytes": 19937,
+        "path": "verify_supplements.py",
+        "sha256": "sha256:d8759895dd451187b2b4aeb22f4896d88cee6aa012e4bc22c52d9fffb93d274c"
+      }
+    },
+    {
+      "after": {
+        "bytes": 66141,
+        "path": "protocol-cases.json",
+        "sha256": "sha256:df37bbfc6ff43ca7de8617877b086152a2c83efd22b60eaf4d465005067d8f02"
+      },
+      "before": {
+        "bytes": 66080,
+        "path": "protocol-cases.json",
+        "sha256": "sha256:2f51ecd4cf1a4a5d196cb6331f3f785db8f604eb42a8e34c994c1653730fca56"
+      }
+    },
+    {
+      "after": {
+        "bytes": 12946,
+        "path": "effective-recording-probes.json",
+        "sha256": "sha256:8cb5b74fb4e38ed524521e8bf1ef032d2dcf6bd8ee15efbf77ee45aa830d883a"
+      },
+      "before": {
+        "bytes": 12946,
+        "path": "effective-recording-probes.json",
+        "sha256": "sha256:93dcc3815faaa620c4e45a9c20bf992a390c35f7e6d7e26c58f9e8b9e6d3dcb0"
+      }
+    },
+    {
+      "after": {
+        "bytes": 3747,
+        "path": "recording-probe-inputs.json",
+        "sha256": "sha256:254589cb4b55c7dfa382dbff9e421f4953723b45a7cb85bdaaad5e079a3f94cf"
+      },
+      "before": {
+        "bytes": 3747,
+        "path": "recording-probe-inputs.json",
+        "sha256": "sha256:15b4572a2b5c180e78dbff01add67354c07170161886967589c4e3ce1815488d"
+      }
+    },
+    {
+      "after": {
+        "bytes": 3896,
+        "path": "generated-members.json",
+        "sha256": "sha256:95243274406899c25a1e5f200d38c1af86d7fa1c904c5f6fd7a8cfa04720c978"
+      },
+      "before": {
+        "bytes": 3896,
+        "path": "generated-members.json",
+        "sha256": "sha256:0f46023b6acb7255beb26d5c3d749ef5246555c6b702d7c839e5e0428b577a8c"
+      }
+    }
+  ],
+  "finding": "LP05.09 previously used unqualified candidate_only:true after the same immutable source had been accepted. This could conflate the new current projection with the retained earlier candidate run.",
+  "glb_or_destination_executed": false,
+  "historical_protocol_commit": "2c9399f86edfaa590287fe14e05bbb204d8feabc",
+  "historical_protocol_path": "docs/language-design/planar-reach-v0.1/draft2-supplements/protocol-cases.json",
+  "new_expected": {
+    "accepted_program_revision": "sha256:61a49cebac61f0f204c9ef5ad67592d54b1372e7a8c1b5af458ed04917d26e95",
+    "no_unrequested_source_change": true,
+    "old_run_unchanged": true,
+    "projection_candidate_only": false,
+    "retained_run_candidate_only": true,
+    "run_marker_is_historical": true,
+    "status": "succeeded"
+  },
+  "old_expected": {
+    "accepted_program_revision": "sha256:61a49cebac61f0f204c9ef5ad67592d54b1372e7a8c1b5af458ed04917d26e95",
+    "candidate_only": true,
+    "no_unrequested_source_change": true,
+    "old_run_unchanged": true,
+    "run_marker_is_historical": true,
+    "status": "succeeded"
+  },
+  "original_41_case_corpus_modified": false,
+  "resolution": "Name current projection_candidate_only:false and retained_run_candidate_only:true separately. Source accepted_once semantics and immutable run/receipt provenance do not change.",
+  "schema_changes_required": false,
+  "schema_reviewer_confirmation": "Agent worker confirms projection accepted_once flag and retained historical run marker are distinct; schema checker has no LP05/protocol-cases field dependency.",
+  "schema_version": "ontokin.reach-lp05-identity-clarification/0.1",
+  "source_runtime_executed": false,
+  "stages": [
+    {
+      "command": [
+        "python3",
+        "docs/language-design/planar-reach-v0.1/draft2-supplements/author_supplements.py"
+      ],
+      "ended_at_utc": "2026-10-20T14:48:56.323485+00:00",
+      "exit_code": 0,
+      "started_at_utc": "2026-10-20T14:48:56.188335+00:00",
+      "stderr": "",
+      "stdout": "{\"action_states\": 86, \"agent_sqlite_executed\": false, \"generated_file_count\": 10, \"glb_or_destination_executed\": false, \"protocol_steps\": 42, \"sample_sides\": 51, \"source_runtime_executed\": false, \"status\": \"reproduced\"}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "docs/language-design/planar-reach-v0.1/draft2-supplements/verify_supplements.py"
+      ],
+      "ended_at_utc": "2026-10-20T14:48:56.378034+00:00",
+      "exit_code": 0,
+      "started_at_utc": "2026-10-20T14:48:56.323540+00:00",
+      "stderr": "",
+      "stdout": "{\"action_states\": 86, \"additional_release_probes\": 2, \"agent_sqlite_executed\": false, \"glb_or_destination_executed\": false, \"protocol_steps\": 42, \"sample_sides\": 51, \"scope\": \"pure reconstruction checks; not source/Agent/export acceptance\", \"source_runtime_executed\": false, \"status\": \"passed\"}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "docs/language-design/planar-reach-v0.1/draft2-supplements/verify_recording_probes.py"
+      ],
+      "ended_at_utc": "2026-10-20T14:48:56.421795+00:00",
+      "exit_code": 0,
+      "started_at_utc": "2026-10-20T14:48:56.378093+00:00",
+      "stderr": "",
+      "stdout": "{\"agent_sqlite_executed\": false, \"completion_exact\": \"3 + 2^-53\", \"effective_probe_unchanged\": true, \"explicit_effective_rebindings\": 3, \"glb_or_destination_executed\": false, \"historical_lost_references\": 3, \"positive_incoming_overlap\": {\"denominator\": \"9007199254740992\", \"numerator\": \"180143985\"}, \"scope\": \"exact recovered Q16 inputs and pure clock mathematics; future GLB mutation not executed\", \"source_runtime_executed\": false, \"status\": \"passed\"}\n"
+    }
+  ],
+  "status": "pre_adoption_reconstruction_clarification_checked",
+  "unchanged_acceptance": {
+    "bytes": 586282,
+    "path": "acceptance.json",
+    "sha256": "sha256:4e671c66d462f85b7861e0f6e75f63c260d62249bb77ef9c763356e3dfa8e0bd"
+  },
+  "unchanged_recovered_q16": {
+    "bytes": 10932,
+    "path": "recording-probes.json",
+    "sha256": "sha256:cf50015e6c7e46833ede254963806fa28aa4b9f3cc9939234799bfdf043e7123"
+  }
+}
