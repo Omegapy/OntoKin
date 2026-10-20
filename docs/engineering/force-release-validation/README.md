@@ -1,11 +1,35 @@
 # Recorded force release: execution and recovery record
 
-**Status: F01–F12 passed; main integration pending.** Attempt 008 closes the
+**Status: F01–F12 passed and integrated.** Attempt 008 closes the
 identified finite force source, Agent/0.5 and recorded GLB/0.5 release. The full
 [GOAL](../../../GOAL.md) remains in progress. All earlier failures and the
 interrupted attempt 007 remain separately preserved. The acceptance contract is
 [OK-ENG-008](../OK-ENG-008-force-release-conformance.md), with recorded delivery
 defined by [OK-ENG-007](../OK-ENG-007-native-force-glb-export.md).
+
+## Verified main integration
+
+[PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as
+`e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, tree
+`3ec761a7657976c87b3b7bb9ff1de1ee50be2fde`. The
+[integration record](integration.json) binds the actual GitHub merge and parents,
+the main lease, all 482 unchanged eligible inputs and fresh resulting-main checks.
+
+All six integration stages passed from **2026-10-20T04:53:24.902433Z** to
+**2026-10-20T05:01:38.985628Z**. The local `--force-agent` plan passed all eleven
+steps, including **878 regression tests** and the **106-test Agent/0.5 cohort**.
+Fresh force source cases, a new seven-artifact Agent delivery workflow, its
+independent audit and native checks also passed. The
+[resulting-main re-audit](resulting-main-audit.json) passed all F01–F12 again
+against the merged inputs. Source and Git identity stayed unchanged. No hosted
+run was dispatched or retried, and GitHub reported no run for the merge.
+
+A [preflight observation](main-preflight-001.json) retains an initial rejection
+before any checks started: a newly prepared dependency symlink appeared as an
+untracked file. It was replaced by a real directory containing the same pinned
+verification packages. Source, ignore rules and acceptance assertions were unchanged.
+The successful run is retained separately, including its actual logs, immutable
+messages, source snapshots, seven new GLBs and reports.
 
 ## Accepted attempt 008
 
@@ -172,6 +196,7 @@ serialized and checked against their retained hashes.
 | [Attempt 006 parts](force05-attempt-006.zip.parts.json) | [5,240 members](force05-attempt-006.members.json) | Complete collected evidence, original failed audit and actual visual reviews. |
 | [Interrupted attempt 007 parts](force05-interrupted-attempt-007.zip.parts.json) | [2,101 members](force05-interrupted-attempt-007.members.json) | Original incomplete execution and connection-recovery observation. |
 | [Accepted attempt 008 parts](force05-accepted-attempt-008.zip.parts.json) | [5,267 members](force05-accepted-attempt-008.members.json) | Complete passing evidence root, independent audit, all actual reviews and orchestration. |
+| [Resulting-main parts](force05-resulting-main-008.zip.parts.json) | [1,809 members](force05-resulting-main-008.members.json) | Fresh merged-revision execution, independent re-audit, preflight observation and actual Git identities. |
 
 Each member inventory names every relative file, SHA-256 and byte length. The
 archive builder reopened each ZIP, checked CRCs and verified every member against
@@ -207,6 +232,10 @@ records successful restoration of all five archives, exact whole-archive hashes
 and ZIP CRC verification. The accepted archive SHA-256 is
 `6351496602bc77c302c54263e243990bf0d1b8df37c3fca2b356806ecc503c41`.
 
+The [resulting-main reconstruction observation](archive-parts-verification-main008.json)
+extends this to all six retained archives. The resulting-main archive SHA-256 is
+`75fea972ec61cfee9884da0938d83e85cea466216d3016147115c766b4c0af31`.
+
 The captured [execution driver](run_force05_release_acceptance.py),
 [collection-plan preparer](prepare_force05_evidence_plan.py),
 [archive writer](archive_force05_retained_files.py),
@@ -216,8 +245,9 @@ orchestration, including original absolute environment paths. Configure the
 identified interpreters and tools in a fresh environment when reproducing them.
 They do not replace the committed collector or independent conformance auditor.
 
-The next gate is durable publication and verified main integration of accepted
-attempt 008. Reusable planar reach actions remain an unadopted next contract.
+The finite force gate and main integration are complete. The next development
+gate is to finish, independently review and freeze the unadopted reusable planar
+reach action contract and its supplemental acceptance cases before implementation.
 Contacts, continuous torque, general mechanisms, purposeful
 locomotion/manipulation, deformable matter, live destinations, other full-product
 domains and the measured direct-tool authoring comparison remain open.
