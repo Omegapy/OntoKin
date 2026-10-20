@@ -44,12 +44,14 @@ class ImpulseAgentProtocolTests(unittest.TestCase):
         self.assertEqual(program_protocol.bind().profile, "construction-0.1")
         self.assertNotIn("surface.mesh_page", program_protocol.OPERATIONS)
         self.binding.validate_request(self.request())
-        for older in ("ontokin.agent/0.2", "ontokin.agent/0.3"):
-            with self.subTest(older=older), self.assertRaises(ProtocolError):
-                program_protocol.bind(older).validate_request(self.request())
-            with self.subTest(older=older), self.assertRaises(ProtocolError):
-                self.binding.validate_request(self.request(schema_version=older))
-        for unknown in ("ontokin.agent/0.6", "ontokin.agent/0.1", None, [], {}):
+        for other in ("ontokin.agent/0.2", "ontokin.agent/0.3", "ontokin.agent/0.5", "ontokin.agent/0.6"):
+            with self.subTest(other=other), self.assertRaises(ProtocolError):
+                program_protocol.bind(other).validate_request(self.request())
+            with self.subTest(other=other), self.assertRaises(ProtocolError):
+                self.binding.validate_request(self.request(schema_version=other))
+        unknown_protocol = "ontokin.agent/9999"
+        self.assertNotIn(unknown_protocol, PROGRAM_BINDINGS)
+        for unknown in (unknown_protocol, "ontokin.agent/0.1", None, [], {}):
             with self.subTest(unknown=unknown), self.assertRaises(ProtocolError):
                 program_protocol.bind(unknown)
 
