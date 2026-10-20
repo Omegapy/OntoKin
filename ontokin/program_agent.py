@@ -81,7 +81,48 @@ class ProgramAgentService(AgentService):
             context["entry_profile"] = self._profile
         return context
 
+    def _validate(self, task, check):
+        request = task.request
+        if (self._protocol.SCHEMA_VERSION == program_protocol.FORCE_SCHEMA_VERSION
+                and request["requested_level"] == "delivered"
+                and request.get("destination") == self._destination
+                and self._protocol.definition.delivery_available):
+            return self._force_delivery(task, check)
+        return super()._validate(task, check)
+
+    def _force_delivery(self, task, check):
+        """Prepare a fresh requested-prefix run and its recorded artifact.
+
+        A GLB/0.5 end time authorizes only that prefix. In particular, a later
+        force completion or authored event cannot invalidate this request by
+        being evaluated before export. Ordinary evaluated validation and all
+        earlier Agent bindings retain their complete-horizon semantics.
+        """
+        request = task.request
+        endpoint = request.get("options", {}).get("end")
+        if endpoint is None:
+            compiler = self._runtime.compile_program(task.source,
+                budgets=request.get("budgets"), check=check)
+            endpoint = compiler.model.duration
+        result = self._runtime.evaluate_revision(task.source, until=endpoint,
+            budgets=request.get("budgets"), check=check)
+        result["requested_level"] = "delivered"
+        self._absorb(task, result, origin="validation")
+        if result["outcome"] == "valid":
+            self._export(task, check)
+            task.response["achieved_level"] = "delivered"
+            result["achieved_level"] = "delivered"
+
     def _execute(self, task, check):
+        if (task.request["operation"] == "export"
+                and self._protocol.SCHEMA_VERSION == program_protocol.FORCE_SCHEMA_VERSION
+                and self._protocol.definition.delivery_available):
+            task.source = self.read_program(task.request["project_id"], task.request["program_revision"])
+            task.response["program_revision"] = task.source.program_revision
+            if not self._store.source_accepted_once(task.request["project_id"], task.source.program_revision):
+                raise OntoKinError("OKL-E-REVISION", "Ordinary export requires an accepted program snapshot; this candidate has never been accepted.",
+                                   category="stale", phase="inspection", blocks=[])
+            return self._force_delivery(task, check)
         if task.request["operation"] != "surface.mesh_page":
             return super()._execute(task, check)
         from .program_surface import prepare_surface_page
@@ -187,7 +228,7 @@ class ProgramAgentService(AgentService):
         from .scene import ExportOptions
         compiler = self._runtime.compile_program(task.source, budgets=task.request.get("budgets"), check=check)
         # Agent/0.2's frozen operation budget never counted internal GLB work.
-        # The separately selected Agent/0.3 and /0.4 contracts add cooperative delivery
+        # The separately selected Agent/0.3, /0.4 and /0.5 contracts add cooperative delivery
         # checks without retroactively rejecting formerly valid old requests.
         delivery_check = check if self._protocol.definition.bounded_delivery else None
         artifact = export_glb(compiler.model, options=ExportOptions(**task.request.get("options", {})),

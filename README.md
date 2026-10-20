@@ -6,7 +6,7 @@ OntoKin (pronounced **ON-toh-kin**) is a programming language under development,
 
 The current direction begins with exterior 3D models and short animations. Those objects should remain reusable in larger scenes, video games, and eventually more complex virtual worlds. Physics and mechanics are central to the design; mathematics gives those descriptions precise meaning.
 
-> **Project status:** OntoKin remains in development. The reference package is **0.4.0**. Its development line compiles native language `0.3` / `surface-0.1` exterior models and exports actual regional PBR geometry and recorded rigid animation through `ontokin.glb/0.3`. The explicit Agent/0.3 service supports native source repair, bounded surface inspection and artifact retrieval. Earlier core, construction and agent profiles remain supported. [STATUS.md](STATUS.md) identifies integrated implementation, complete release evidence and remaining requirements; the broader product remains in progress.
+> **Project status:** OntoKin remains in development. The reference package is **0.4.0**. Its development line supports pinned reusable assemblies, native exterior surfaces and regional PBR materials, instantaneous impulses, and finite center-of-mass force intervals. Explicit Agent/0.5 and recorded GLB/0.5 support force-program inspection, source repair and artifact retrieval. Earlier profiles retain their meanings and defaults. [STATUS.md](STATUS.md) identifies integrated implementation, complete release evidence and remaining requirements; component implementation alone does not close a release or the broader product goal.
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
 
@@ -54,7 +54,21 @@ python3 -m ontokin agent --protocol ontokin.agent/0.4 --store /tmp/ontokin-impul
 
 [OK-LANG-004](docs/language-design/OK-LANG-004-source-impulses-and-free-sphere-dynamics.md) fixes units, frames, own sphere inertia, ordered release and impulse events, exact source identities, and atomic failure. [OK-AGENT-004](docs/engineering/OK-AGENT-004-source-impulse-program-workflows.md) defines complete bounded influence inspection, source-based mass/radius repair, and exact artifact retrieval. GLB/0.4 retains native lofts and regional PBR materials and records the resulting rigid motion, including sufficient samples for authored high-spin cases.
 
-The [I01–I12 release procedure](docs/engineering/OK-ENG-005-source-impulse-release-conformance.md) separately requires all 40 frozen source cases, actual agent workflows, independent destination/browser evidence and current inherited tests and CI. Implementation and finite release acceptance have separate identities in [STATUS](STATUS.md). Contacts, continuous forces and torques, general rigid dynamics and live destination physics remain open requirements; earlier source, agent and export profiles retain their existing meanings and defaults.
+The [I01–I12 release procedure](docs/engineering/OK-ENG-005-source-impulse-release-conformance.md) separately requires all 40 frozen source cases, actual agent workflows, independent destination/browser evidence and current inherited execution roles. Implementation and finite release acceptance have separate identities in [STATUS](STATUS.md). Contacts, continuous torque, general rigid dynamics and live destination physics remain open requirements; earlier source, agent and export profiles retain their existing meanings and defaults.
+
+## Apply finite force intervals and retrieve recorded motion
+
+Language `0.5` / `force-0.1` adds a constant world force at the center of mass of a supported free homogeneous sphere. Authored intervals have exact activation and completion times; overlapping forces add to the existing gravity and impulse behavior. Source inspections expose the complete revision-bound force history, current acceleration and motion authority.
+
+```bash
+python3 -m ontokin export docs/language-design/force-v0.1/p01-single-interval.files.json --bundle --target ontokin.glb/0.5 --end 2.5 --output /tmp/ontokin-force.glb
+python3 -m ontokin agent --protocol ontokin.agent/0.5 --store /tmp/ontokin-force-state
+python3 tools/build_force_delivery_demo.py --output-dir /tmp/ontokin-force-delivery
+```
+
+The explicit export records the requested prefix, including its exact completion boundaries, and checks decoded binary32 motion against the chosen tolerances. A valid short prefix can succeed when a later authored activation would fail. Acceleration and angular bounds add samples within fixed resource limits; a representation that cannot meet its contract fails explicitly. GLB playback uses recorded transforms.
+
+The [force delivery guide](examples/force/README.md) explains source-authoritative mass/force/duration repairs, actual chunk retrieval, independent native decoding, and real browser inspection. [OK-LANG-005](docs/language-design/OK-LANG-005-finite-center-of-mass-force-intervals.md), [OK-AGENT-005](docs/engineering/OK-AGENT-005-finite-force-program-workflows.md) and [OK-ENG-007](docs/engineering/OK-ENG-007-native-force-glb-export.md) fix the source, interface and export contracts. [OK-ENG-008](docs/engineering/OK-ENG-008-force-release-conformance.md) defines complete F01–F12 acceptance under the current local execution policy, including all required source, regression, compatibility, destination and visual evidence. The complete finite release result is recorded separately in [STATUS](STATUS.md).
 
 ## Build an assembly from a pinned component library
 
@@ -195,6 +209,9 @@ Use the [documentation guide](docs/README.md) for the full reading order, docume
 | How does source apply an off-center impulse and retain its physical meaning? | [OK-LANG-004: Source impulses and free-sphere dynamics](docs/language-design/OK-LANG-004-source-impulses-and-free-sphere-dynamics.md) |
 | How do agents inspect impulse state, repair physical parameters and retrieve recorded motion? | [OK-AGENT-004: Source impulse program workflows](docs/engineering/OK-AGENT-004-source-impulse-program-workflows.md) |
 | What establishes the complete finite impulse release gate? | [OK-ENG-005: Source impulse release conformance](docs/engineering/OK-ENG-005-source-impulse-release-conformance.md) |
+| How are finite forces authored, inspected and repaired? | [OK-LANG-005: Finite center-of-mass force intervals](docs/language-design/OK-LANG-005-finite-center-of-mass-force-intervals.md) and [OK-AGENT-005: Finite-force program workflows](docs/engineering/OK-AGENT-005-finite-force-program-workflows.md) |
+| How is force motion recorded and independently validated? | [OK-ENG-007: Native force GLB export](docs/engineering/OK-ENG-007-native-force-glb-export.md) and [the delivery guide](examples/force/README.md) |
+| What establishes F01–F12 with actual local execution? | [OK-ENG-008: Provider-neutral finite force release conformance](docs/engineering/OK-ENG-008-force-release-conformance.md) |
 
 The documents are organized into **Product**, **Language design**, and **Engineering**. The [founding records](docs/README.md#founding-design-records) retain the original vision, language exploration, and architecture options. Their dates and proposal status remain visible. The guide explains how that earlier work relates to the current modeling direction.
 

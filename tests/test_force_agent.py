@@ -212,20 +212,34 @@ class ForceAgentTests(unittest.TestCase):
         with self.assertRaises(ProtocolError):
             bind('ontokin.agent/0.4').validate_request(self.request('surface.mesh_page',program_revision=b.program_revision,element_id=BALL,count=1))
 
-    def test_planned_delivery_rejects_without_artifact_or_accepted_candidate(self):
+    def test_older_destinations_reject_without_artifact_or_accepted_candidate(self):
         b,_=self.create()
         for operation in ('export','validate'):
-            kw=dict(program_revision=b.program_revision,destination='ontokin.glb/0.5')
+            kw=dict(program_revision=b.program_revision,destination='ontokin.glb/0.4')
             if operation=='validate':kw['requested_level']='delivered'
-            r=self.error(self.send(operation,**kw),'OKL-E-CAPABILITY-UNSUPPORTED')
+            r=self.error(self.send(operation,**kw),'OKA-E-REQUEST')
             self.assertNotEqual(r['achieved_level'],'delivered')
             self.assertEqual(r['accepted_program_revision'],b.program_revision)
-            self.assertEqual(r['diagnostics'][0]['blocks'],['delivered'])
         with self.service._store.connection() as db:
             self.assertEqual(db.execute('SELECT count(*) FROM artifacts').fetchone()[0],0)
         new=source_case('P02')
-        r=self.error(self.service.handle({**self.request('create',bundle=new.to_payload(),expected_program_revision=None,requested_level='delivered',destination='ontokin.glb/0.5'),'project_id':'new'}),'OKL-E-CAPABILITY-UNSUPPORTED')
+        r=self.error(self.service.handle({**self.request('create',bundle=new.to_payload(),expected_program_revision=None,requested_level='delivered',destination='ontokin.glb/0.4'),'project_id':'new'}),'OKA-E-REQUEST')
         self.assertIsNone(r['accepted_program_revision'])
+
+    def test_planned_delivery_rejects_without_artifact_or_accepted_candidate(self):
+        """Preserve the legacy identity for unsupported generic delivery after GLB/0.5 activation."""
+        b,_=self.create()
+        r=self.error(self.send('validate',program_revision=b.program_revision,requested_level='delivered'),
+                     'OKL-E-CAPABILITY-UNSUPPORTED')
+        self.assertNotEqual(r['achieved_level'],'delivered')
+        self.assertEqual(r['accepted_program_revision'],b.program_revision)
+        new=source_case('P02')
+        request={**self.request('create',bundle=new.to_payload(),expected_program_revision=None,
+                               requested_level='delivered'),'project_id':'generic-delivery'}
+        rejected=self.error(self.service.handle(request),'OKL-E-CAPABILITY-UNSUPPORTED')
+        self.assertIsNone(rejected['accepted_program_revision'])
+        with self.service._store.connection() as db:
+            self.assertEqual(db.execute('SELECT count(*) FROM artifacts').fetchone()[0],0)
 
     def test_final_response_entry_limit_rejects_inside_publication_transaction(self):
         b,baseline=self.create(level='evaluated')
@@ -269,14 +283,24 @@ class ForceAgentBindingTests(unittest.TestCase):
                                  ('surface-0.1','e11dab7746fa2ee9f7b36f172cef110fbb226e7a5f8b7cb5786dc07ee9234c35'),
                                  ('impulse-0.1','c6f868fc62f877f2849d3de228ca90412a6503bb5ff83043e15aa170ead57a8f')]:
             self.assertEqual(catalog(profile=profile)['revision'],'sha256:'+revision)
-        self.assertFalse(PROGRAM_BINDINGS[PROTOCOL].delivery_available)
+        self.assertTrue(PROGRAM_BINDINGS[PROTOCOL].delivery_available)
 
     def test_force_discovery_does_not_claim_delivery_or_general_physics(self):
-        c=catalog(profile='force-0.1');self.assertEqual(c['delivery_targets'],[])
+        """The historical guard now names general delivery; explicit GLB/0.5 has its own gate."""
+        result=catalog(profile='force-0.1')
+        items={item['name']:item for item in result['items']}
+        self.assertFalse(result['full_product_conformance_certified'])
+        self.assertEqual(items['general_external_delivery']['availability'],'unsupported')
+        self.assertEqual(items['external_forces_and_actuators']['availability'],'unsupported')
+
+    def test_force_discovery_advertises_bounded_delivery_without_general_physics(self):
+        c=catalog(profile='force-0.1');self.assertEqual(c['delivery_targets'],['ontokin.glb/0.5'])
+        self.assertEqual(c['planned_delivery_targets'],[])
         self.assertEqual(c['agent_contract'],PROTOCOL)
         self.assertFalse(c['full_product_conformance_certified'])
         items={i['name']:i for i in c['items']}
-        self.assertEqual(items['ontokin.glb/0.5']['availability'],'unsupported')
+        self.assertEqual(items['ontokin.glb/0.5']['availability'],'available_in_bounded_profile')
+        self.assertEqual(items['ontokin.glb/0.5']['available_levels'],['delivered'])
         self.assertEqual(items['force']['kind'],'event')
         self.assertIn('source_com_forces',items)
         self.assertEqual(items['external_forces_and_actuators']['availability'],'unsupported')

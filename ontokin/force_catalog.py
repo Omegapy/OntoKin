@@ -6,6 +6,7 @@ import copy
 PROFILE = "force-0.1"
 SPEC = "docs/language-design/OK-LANG-005-finite-center-of-mass-force-intervals.md"
 AGENT = "docs/engineering/OK-AGENT-005-finite-force-program-workflows.md"
+EXPORT = "docs/engineering/OK-ENG-007-native-force-glb-export.md"
 FIXTURE = "docs/language-design/force-v0.1/"
 
 
@@ -19,10 +20,16 @@ def force_catalog(inherited: dict) -> dict:
         if item["kind"] == "destination":
             item.update(id=PROFILE + "/destination/ontokin.glb/0.5", name="ontokin.glb/0.5",
                         capability="ontokin.glb/0.5", signature="destination: ontokin.glb/0.5",
-                        availability="unsupported", available_levels=[], specification=AGENT,
-                        description="Planned recorded force delivery; no adapter or artifact success is currently available.",
-                        domains=["Requires an implemented and independently validated source-to-GLB/0.5 adapter",
-                                 "Earlier destinations are not a fallback for force programs"], examples=[])
+                        availability="available_in_bounded_profile", available_levels=["delivered"], specification=EXPORT,
+                        description="Native source geometry and regional PBR with recorded force-driven rigid motion.",
+                        domains=["Explicit force-0.1 entry and ontokin.glb/0.5 destination; no automatic migration",
+                                 "The requested end bounds evaluation; later source events and completions remain outside the recording",
+                                 "Every exact boundary in the interval retains complete source force and impulse state",
+                                 "Acceleration-aware sampling bounds translation chords and inherited angular motion within declared limits",
+                                 "Binary64 evaluated states can exceed bounded float32 GLB delivery",
+                                 "Recorded playback supplies no destination force engine, contacts or live physics",
+                                 "Earlier destinations are not a fallback for force programs"],
+                        examples=[FIXTURE + "p01-single-interval.files.json"])
         elif item["kind"] == "protocol":
             item.update(id=PROFILE + "/protocol/ontokin.agent/0.5", name="ontokin.agent/0.5",
                         signature='ProgramAgentService(store, protocol="ontokin.agent/0.5")',
@@ -34,11 +41,12 @@ def force_catalog(inherited: dict) -> dict:
                                  "No host-only force, impulse or velocity mutation operation",
                                  "Accepted source revisions authorize edits; derived force identities do not",
                                  "The complete final response is budgeted before any successful effect commits",
-                                 "GLB/0.5 requests fail explicitly until its separate adapter is implemented"])
+                                 "Explicit GLB/0.5 delivery evaluates and records only its requested prefix",
+                                 "A failed or cancelled delivery commits no artifact or accepted candidate"])
         elif item["name"] == "persistent_agent_editing_service":
             item.update(description="Isolated force-program-agent.sqlite3; immutable source closure, requests and runs; no older-store migration.", specification=AGENT)
         elif item["name"] == "general_external_delivery":
-            item["description"] = "No delivery target is implemented for force-0.1; planned GLB/0.5 and live engine behavior remain unfinished."
+            item["description"] = "Only explicit GLB/0.5 recorded force-profile delivery; arbitrary engines and live simulation remain unsupported."
         elif item["name"] == "external_forces_and_actuators":
             item["description"] = "General actuators, continuous torque, fields and controllers remain unsupported. The separate source_com_forces capability supplies only finite constant world COM intervals."
         elif item["kind"] == "constant" and item["name"] == "dynamic":
@@ -83,8 +91,8 @@ def force_catalog(inherited: dict) -> dict:
             item["state_schema"] = "https://ontokin.org/schemas/force-v0.1/forces.schema.json"
         result["items"].append(item)
     result.update(schema_version="ontokin.agent-catalog/0.5", profile=PROFILE, language_version="0.5",
-                  agent_contract="ontokin.agent/0.5", delivery_targets=[],
-                  planned_delivery_targets=[{"contract": "ontokin.glb/0.5", "availability": "unsupported"}],
+                  agent_contract="ontokin.agent/0.5", delivery_targets=["ontokin.glb/0.5"],
+                  planned_delivery_targets=[],
                   source_header='ontokin "0.5"; module Example @ "example"; profile "force-0.1";',
                   compatible_definition_profiles=["construction-0.1", "surface-0.1", "impulse-0.1", PROFILE],
                   complete_examples=[FIXTURE + "sources/p01-single-interval.ok"],

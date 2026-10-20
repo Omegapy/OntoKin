@@ -2,9 +2,9 @@
 
 Agent/0.5 processes immutable source `0.5` / `force-0.1` programs. A force statement
 applies a constant world force at a free sphere's center of mass for an authored
-duration. The source kernel is implemented; the GLB/0.5 adapter is not yet
-available. This example deliberately requires an unsupported-delivery error,
-not an empty artifact described as a successful export.
+duration. The source kernel and explicit GLB/0.5 adapter are implemented. This
+source workflow records inspection and repair; the [delivery workflow](../force/README.md)
+separately records export, complete artifact retrieval and destination checks.
 
 From the repository root, record the actual interface workflow:
 
@@ -18,6 +18,12 @@ samples and repairs three generated-instance programs through source patches.
 It retains every request and response, complete source snapshots, failed and
 stale candidates, retry receipts, cursor checks and a failed-run prefix/reset.
 No manually constructed Python geometry or hidden host-state force is used.
+Workflow version 0.2 checks current GLB/0.5 discovery. Its unsupported-delivery
+case sends a valid `validate` request with `requested_level: "delivered"` and
+no destination; the response must reject generic delivery without a run or
+artifact. Agent/0.5 accepts only GLB/0.5 as an explicit export destination, so
+requesting an older target would test a protocol error instead. Historical
+version 0.1 evidence retains its original unavailable-adapter meaning.
 
 The separate verifier needs verification-only packages. Install them in a virtual
 environment, not as application runtime dependencies:
@@ -40,7 +46,8 @@ python tools/check_local.py --force-agent
 This runs the inherited local regression roles, checks the pinned verification
 packages, executes the Agent/0.5 tests without skips, then records and audits
 a fresh workflow in an isolated evidence directory. The successful scope
-remains Agent/0.5; GLB/0.5 and the complete force release need separate work.
+remains the executed Agent source/interface roles. Complete delivery and the
+force release require their separate artifact, destination and release audits.
 
 To send your own requests, explicitly select the protocol:
 

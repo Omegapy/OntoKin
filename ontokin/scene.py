@@ -18,7 +18,8 @@ from typing import Any, Callable, Iterable, Iterator
 from . import __version__
 from .diagnostics import OntoKinError
 from .evaluator import (MAX_OUTPUT_RECORDS, MAX_SAMPLES, _Simulator, _rotate,
-                        evaluate, exact_time, preflight, time_text, _records_per_sample)
+                        evaluate, exact_time, preflight, time_text, _records_per_sample, _simulator)
+from .force_export import ForcePrefixPlan, force_interval_violation, force_prefix_plan
 from .geometry import (SPHERE_RINGS, SPHERE_SEGMENTS, Mesh, assembly_marker,
                        box_mesh, joint_marker, sphere_mesh)
 from .model import SceneModel, Vec
@@ -32,7 +33,8 @@ TARGET_CONTRACT = "ontokin.glb/0.1"
 CONSTRUCTION_TARGET = "ontokin.glb/0.2"
 SURFACE_TARGET = "ontokin.glb/0.3"
 IMPULSE_TARGET = "ontokin.glb/0.4"
-NATIVE_TARGETS = (SURFACE_TARGET, IMPULSE_TARGET)
+FORCE_TARGET = "ontokin.glb/0.5"
+NATIVE_TARGETS = (SURFACE_TARGET, IMPULSE_TARGET, FORCE_TARGET)
 PROGRAM_TARGETS = (CONSTRUCTION_TARGET, *NATIVE_TARGETS)
 SURFACE_POSITION_TOLERANCE_M = 1e-5
 MAX_KEYFRAMES = 10000
@@ -76,7 +78,8 @@ def export_error(export_code: str, message: str, model: SceneModel | None = None
                        category=category, blocks=["delivered"],
                        details={"target_contract": ({"construction-0.1": CONSTRUCTION_TARGET,
                                                      "surface-0.1": SURFACE_TARGET,
-                                                     "impulse-0.1": IMPULSE_TARGET}.get(model.profile, TARGET_CONTRACT)
+                                                     "impulse-0.1": IMPULSE_TARGET,
+                                                     "force-0.1": FORCE_TARGET}.get(model.profile, TARGET_CONTRACT)
                                                     if model is not None else TARGET_CONTRACT),
                                 "export_code": export_code, **(details or {})},
                        repair=("Use supported visual geometry and the explicitly matching model/delivery profile." if kind == "unsupported" else
@@ -251,14 +254,15 @@ class BakedScene:
 
 def checked_contract(model: SceneModel, target_contract: str) -> str:
     expected = {TARGET_CONTRACT: "core-0.1", CONSTRUCTION_TARGET: "construction-0.1",
-                SURFACE_TARGET: "surface-0.1", IMPULSE_TARGET: "impulse-0.1"}
+                SURFACE_TARGET: "surface-0.1", IMPULSE_TARGET: "impulse-0.1", FORCE_TARGET: "force-0.1"}
     if target_contract not in expected or model.profile != expected[target_contract]:
         export_error("OKE-E-SUPPORT", "The named GLB contract must explicitly match the authored semantic profile.",
                      model, kind="unsupported", details={"target_contract": target_contract,
                                                          "profile": model.profile})
     if model.requested_capabilities or any(diagnostic.code.startswith("OKL-E-") for diagnostic in model.diagnostics):
         export_error("OKE-E-SUPPORT", "The GLB adapter requires a supported, validated model.", model, kind="unsupported")
-    return {TARGET_CONTRACT: "0.1", CONSTRUCTION_TARGET: "0.2", SURFACE_TARGET: "0.3", IMPULSE_TARGET: "0.4"}[target_contract]
+    return {TARGET_CONTRACT: "0.1", CONSTRUCTION_TARGET: "0.2", SURFACE_TARGET: "0.3",
+            IMPULSE_TARGET: "0.4", FORCE_TARGET: "0.5"}[target_contract]
 
 
 def program_metadata(model: SceneModel, *, check: Callable[[], None] | None = None) -> dict[str, Any]:
@@ -303,7 +307,7 @@ def program_metadata(model: SceneModel, *, check: Callable[[], None] | None = No
                     source = model.source_provenance[location["source_id"]]
                     if location["source_revision"] != source["source_revision"] or location["filename"] != source["filename"] or not 0 <= location["start_byte"] <= location["end_byte"]:
                         raise ValueError("Occurrence source location differs from its source identity.")
-            if model.profile in ("surface-0.1", "impulse-0.1") and obj.geometry.get("kind") in ("loft", "placed"):
+            if model.profile in ("surface-0.1", "impulse-0.1", "force-0.1") and obj.geometry.get("kind") in ("loft", "placed"):
                 recipes = [obj.geometry]
                 if obj.geometry["kind"] == "placed":
                     recipes.append(obj.geometry["surface"])
@@ -328,6 +332,9 @@ def program_metadata(model: SceneModel, *, check: Callable[[], None] | None = No
 def sampled_states(model: SceneModel, requests: list[Any], *,
                    check: Callable[[], None] | None = None) -> Iterator[dict[str, Any]]:
     """Bound each public evaluator request without weakening its own budgets."""
+    if model.profile == "force-0.1":
+        yield from _sample_force_states(model, requests, check=check)
+        return
     records = _records_per_sample(model, check=check)
     if records > MAX_OUTPUT_RECORDS:
         export_error("OKE-E-STATE-BUDGET", "A complete sample exceeds the state-record budget.",
@@ -363,15 +370,58 @@ def sampled_states(model: SceneModel, requests: list[Any], *,
             yield sample
 
 
+def _sample_force_states(model: SceneModel, requests: list[Any], *,
+                         check: Callable[[], None] | None = None) -> Iterator[dict[str, Any]]:
+    """Evaluate only the requested force prefix, with complete bounded rows."""
+    normalized = []
+    for request in requests:
+        if check is not None:
+            check()
+        side = request.get("side", "after") if isinstance(request, dict) else "after"
+        value = request.get("time_seconds", request.get("time")) if isinstance(request, dict) else request
+        timestamp = exact_time(value)
+        if side not in ("before", "after") or not 0 <= timestamp <= model.duration:
+            export_error("OKE-E-OPTIONS", "The requested sample time or boundary side is unavailable.",
+                         model, kind="options")
+        normalized.append((timestamp, side))
+    if not normalized:
+        return
+    horizon, last_side = max(normalized, key=lambda item: (item[0], item[1] == "after"))
+    records = _records_per_sample(model, horizon=horizon, side=last_side, check=check)
+    if records > MAX_OUTPUT_RECORDS:
+        export_error("OKE-E-STATE-BUDGET", "A complete sample exceeds the state-record budget.",
+                     model, kind="resource", details={"records_per_sample": records,
+                                                       "max_output_records": MAX_OUTPUT_RECORDS})
+    batch_size = max(1, min(MAX_SAMPLES, MAX_OUTPUT_RECORDS // records))
+    for start in range(0, len(normalized), batch_size):
+        if check is not None:
+            check()
+        batch = normalized[start:start + batch_size]
+        simulator = _simulator(model, check=check)
+        samples = [None] * len(batch)
+        ordered = sorted(enumerate(batch), key=lambda item: (item[1][0], item[1][1] == "after"))
+        for index, (timestamp, side) in ordered:
+            if check is not None:
+                check()
+            samples[index] = simulator.advance(timestamp, side)
+        for sample in samples:
+            if check is not None:
+                check()
+            yield sample
+
+
 def _boundary_output_budget(model: SceneModel, boundary_count: int, *,
                             target_contract: str,
+                            horizon: Fraction | None = None,
                             check: Callable[[], None] | None = None) -> None:
     """Bound complete retained boundary metadata before source materialization."""
     records = len(model.objects) + len(model.joints) + len(model.actions)
-    if target_contract == IMPULSE_TARGET:
+    if target_contract in (IMPULSE_TARGET, FORCE_TARGET):
         # Share the kernel's conservative retained-history bound, dropping
         # only frames and the duplicate object row absent from this projection.
-        records = _records_per_sample(model, check=check) - len(model.objects) - len(model.sites) - 1
+        records = _records_per_sample(model, check=check,
+                                      horizon=horizon if target_contract == FORCE_TARGET else None)
+        records -= len(model.objects) + len(model.sites) + 1
     if boundary_count * records > MAX_OUTPUT_RECORDS:
         export_error("OKE-E-BOUNDARY-BUDGET", "Retained boundary metadata exceeds the state-record budget.",
                      model, kind="resource", details={"max_boundary_state_records": MAX_OUTPUT_RECORDS})
@@ -439,6 +489,144 @@ def impulse_profile_metadata() -> dict[str, Any]:
     }
 
 
+def force_profile_metadata() -> dict[str, Any]:
+    """Force delivery records evaluated motion and complete boundary history."""
+    return {
+        "name": "force-0.1",
+        "physical_model": "free_homogeneous_sphere_with_own_isotropic_inertia",
+        "source_forces": "finite_duration_world_force_at_target_center_of_mass",
+        "source_impulses": "instantaneous_world_momentum_at_target_self_point",
+        "continuous_external_forces": "canonical_active_source_force_sum_plus_uniform_gravity",
+        "continuous_external_torques": "absent",
+        "contacts": "disabled",
+        "boundary_state": "complete_per_object_active_force_and_latest_force_impulse_boundary_records",
+        "destination_behavior": "recorded_rigid_animation_without_live_force_or_impulse_execution",
+    }
+
+
+def _force_timeline(model: SceneModel, options: ExportOptions, plan: ForcePrefixPlan, *,
+                    check: Callable[[], None] | None = None
+                    ) -> tuple[list[Fraction], list[float], list[Fraction], float, int]:
+    """Plan bounded interval subdivisions using exact, canonical motion bounds."""
+    def ceil_fraction(value: Fraction) -> int:
+        return -(-value.numerator // value.denominator)
+
+    def ceil_sqrt(value: Fraction) -> int:
+        floor = math.isqrt(value.numerator // value.denominator)
+        return floor + (floor * floor * value.denominator < value.numerator)
+
+    def key_budget() -> None:
+        export_error("OKE-E-KEYFRAME-BUDGET", "The prefix and its motion exceed the export keyframe budget.",
+                     model, kind="resource", details={"max_keyframes": MAX_KEYFRAMES})
+
+    boundaries = list(plan.boundaries)
+    if len(boundaries) > MAX_KEYFRAMES:
+        key_budget()
+    required = {}
+    for boundary in boundaries:
+        if check is not None:
+            check()
+        try:
+            encoded = float32(float(boundary), model, context="boundary time")
+        except OverflowError:
+            export_error("OKE-E-FLOAT32", "An exact boundary time exceeds finite binary32.", model)
+        if encoded in required and required[encoded] != boundary:
+            export_error("OKE-E-TIMES-COLLAPSED", "Distinct semantic boundaries collapse to the same binary32 key time.",
+                         model, details={"source_seconds": [time_text(required[encoded]), time_text(boundary)],
+                                         "export_seconds": encoded})
+        required[encoded] = boundary
+
+    subdivisions = []
+    count = 1
+    tolerance = Fraction(options.position_tolerance_m)
+    angular_step = Fraction(MAX_ANGULAR_STEP)
+    for interval in plan.intervals:
+        if check is not None:
+            check()
+        width = interval.end - interval.start
+        acceleration, angular = interval.acceleration_bound, interval.angular_speed_bound
+        steps = max(1, ceil_fraction(width * Fraction(options.fps)),
+                    ceil_fraction(width * angular / angular_step),
+                    ceil_sqrt(acceleration * width * width / (2 * tolerance)))
+        remaining = MAX_KEYFRAMES - count
+        if steps > remaining:
+            key_budget()
+        # Two binary32 ulps conservatively cover both stored endpoint errors
+        # and the binary64 rounding of an optional subdivision's source clock.
+        # Compute this allowance exactly; huge finite bounds never multiply in
+        # binary64. A bounded integer search reserves precision before keys.
+        if acceleration or angular:
+            encoded_end = float32(float(interval.end), model, context="boundary time")
+            bits = struct.unpack("<I", struct.pack("<f", encoded_end))[0]
+            adjacent_bits = bits + 1 if bits < 0x7f7fffff else bits - 1
+            adjacent = struct.unpack("<f", struct.pack("<I", adjacent_bits))[0]
+            rounding_allowance = 2 * abs(Fraction(adjacent) - Fraction(encoded_end))
+
+            def too_wide(number: int) -> bool:
+                gap = width / number + rounding_allowance
+                return acceleration * gap * gap > 2 * tolerance or angular * gap > angular_step
+
+            if too_wide(steps):
+                if too_wide(remaining):
+                    key_budget()
+                low, high = steps, remaining
+                while low < high:
+                    if check is not None:
+                        check()
+                    middle = (low + high) // 2
+                    if too_wide(middle):
+                        low = middle + 1
+                    else:
+                        high = middle
+                steps = low
+        subdivisions.append(steps)
+        count += steps
+    # Only bounded plans allocate optional source and destination key arrays.
+    keys = dict(required)
+    removed = 0
+    for interval, steps in zip(plan.intervals, subdivisions):
+        for index in range(1, steps):
+            if check is not None:
+                check()
+            rational = interval.start + (interval.end - interval.start) * index / steps
+            # Binary64 optional keys have an exact finite decimal spelling;
+            # required semantic boundaries above keep their original rational.
+            exact = Fraction.from_float(float(rational))
+            encoded = float32(float(exact), model, context="sample time")
+            if encoded in keys:
+                removed += int(keys[encoded] != exact)
+            else:
+                keys[encoded] = exact
+    times = sorted(keys)
+    exact_times = [keys[timestamp] for timestamp in times]
+    time_tolerance = Fraction(options.time_tolerance_s)
+    for exact, encoded in zip(exact_times, times):
+        if check is not None:
+            check()
+        error = abs(Fraction(encoded) - exact)
+        if error > time_tolerance:
+            export_error("OKE-E-TIME-PRECISION", "Binary32 key times exceed the requested timing tolerance.", model,
+                         details={"time_error_seconds": float(error), "tolerance_seconds": options.time_tolerance_s})
+    for a, b, first, last in zip(exact_times, exact_times[1:], times, times[1:]):
+        for start, stop in ((a, b), (Fraction(first), Fraction(last))):
+            violation = force_interval_violation(plan, start, stop,
+                                                 position_tolerance_m=options.position_tolerance_m,
+                                                 source_start=a, source_end=b, check=check)
+            if violation is not None:
+                export_error("OKE-E-POSITION-ALIAS" if violation["kind"] == "position" else "OKE-E-ROTATION-ALIAS",
+                             "Key spacing cannot preserve the source prefix's conservative motion bounds.",
+                             model, details=violation)
+    try:
+        speed = float(plan.angular_speed_bound)
+    except OverflowError:
+        export_error("OKE-E-ROTATION-ALIAS", "The prefix angular bound exceeds finite report precision.", model)
+    if Fraction(speed) < plan.angular_speed_bound:
+        speed = math.nextafter(speed, math.inf)
+    if not math.isfinite(speed):
+        export_error("OKE-E-ROTATION-ALIAS", "The prefix angular bound exceeds finite report precision.", model)
+    return exact_times, times, boundaries, speed, removed
+
+
 def _timeline(model: SceneModel, options: ExportOptions, end: Fraction,
               boundary_strings: list[str], *,
               check: Callable[[], None] | None = None) -> tuple[list[Fraction], list[float], list[Fraction], float, int]:
@@ -492,7 +680,7 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
     nodes: list[BakedNode] = []
     meshes: dict[tuple, Mesh] = {}
     vertex_count = 0
-    native = model.profile in ("surface-0.1", "impulse-0.1")
+    native = model.profile in ("surface-0.1", "impulse-0.1", "force-0.1")
 
     if native:
         predicted = 0
@@ -540,7 +728,8 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
                 raise OntoKinError(error.code, str(error), obj.span, phase="elaboration",
                                    category="resource_limit" if error.code == "OKL-E-RESOURCE" else "invalid",
                                    element_id=list(obj.element_id), blocks=["delivered"],
-                                   details={"target_contract": IMPULSE_TARGET if model.profile == "impulse-0.1" else SURFACE_TARGET,
+                                   details={"target_contract": {"impulse-0.1": IMPULSE_TARGET,
+                                                                "force-0.1": FORCE_TARGET}.get(model.profile, SURFACE_TARGET),
                                             "object_path": obj.path, **error.details}) from error
             charge(mesh)
             return mesh
@@ -556,7 +745,7 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
         return meshes[key]
     properties = None
     geometries = None
-    if model.profile in ("construction-0.1", "surface-0.1", "impulse-0.1"):
+    if model.profile in ("construction-0.1", "surface-0.1", "impulse-0.1", "force-0.1"):
         try:
             properties = bounded_data({path: dict(obj.properties) for path, obj in model.objects.items()}, check=check)
             if native:
@@ -574,7 +763,7 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
                     "appearance_linear_rgba": list(obj.appearance), "pose_frame": "world",
                     "role": obj.role, "properties": properties[path] if properties is not None else
                     {name: value.to_data() for name, value in obj.properties.items()}}
-        if model.profile in ("construction-0.1", "surface-0.1", "impulse-0.1"):
+        if model.profile in ("construction-0.1", "surface-0.1", "impulse-0.1", "force-0.1"):
             metadata["source_mapping"] = model.occurrence_provenance[path]
             metadata["program_revision"] = model.program_revision
         mesh = mesh_for(obj.geometry, obj)
@@ -643,10 +832,15 @@ def _build_scene(model: SceneModel, *, options: ExportOptions | None = None,
                      model, kind="unsupported")
     options = options or ExportOptions()
     end = options.checked_end(model)
-    timeline = preflight(model, check=check)
-    exact_times, times, boundaries, speed, removed = _timeline(
-        model, options, end, timeline["boundary_times_seconds"], check=check)
-    _boundary_output_budget(model, len(boundaries), target_contract=target_contract, check=check)
+    force_plan = None
+    if target_contract == FORCE_TARGET:
+        force_plan = force_prefix_plan(model, end, check=check)
+        exact_times, times, boundaries, speed, removed = _force_timeline(model, options, force_plan, check=check)
+    else:
+        timeline = preflight(model, check=check)
+        exact_times, times, boundaries, speed, removed = _timeline(
+            model, options, end, timeline["boundary_times_seconds"], check=check)
+    _boundary_output_budget(model, len(boundaries), target_contract=target_contract, horizon=end, check=check)
     planned_nodes = len(model.objects) + (sum(obj.geometry.get("kind") == "empty" for obj in model.objects.values())
                                           + len(model.joints) if options.helpers else 0)
     if len(exact_times) * planned_nodes > MAX_BAKED_POSES:
@@ -683,13 +877,20 @@ def _build_scene(model: SceneModel, *, options: ExportOptions | None = None,
         boundary_records.append({"source_seconds": time_text(boundary),
                                  "joint_states_after": after["joints"], "action_states_after": after["actions"],
                                  "pose_authorities_after": {path: record["pose_authority"] for path, record in after["objects"].items()}})
-        if target_contract == IMPULSE_TARGET:
+        if target_contract in (IMPULSE_TARGET, FORCE_TARGET):
             applications = {}
             for path, record in after["objects"].items():
                 if check is not None:
                     check()
                 applications[path] = record["impulses"]
             boundary_records[-1]["impulse_states_after"] = applications
+        if target_contract == FORCE_TARGET:
+            forces = {}
+            for path, record in after["objects"].items():
+                if check is not None:
+                    check()
+                forces[path] = record["forces"]
+            boundary_records[-1]["force_states_after"] = forces
     if max_jump_p > options.position_tolerance_m or max_jump_r > options.rotation_tolerance_rad:
         export_error("OKE-E-DISCONTINUOUS-POSE", "A boundary pose jump cannot be represented by continuous LINEAR tracks.",
                      model, kind="unsupported", details={"max_position_jump_m": max_jump_p,
@@ -775,6 +976,25 @@ def _build_scene(model: SceneModel, *, options: ExportOptions | None = None,
             "exact source impulse boundaries, occurrence identities and complete recent momentum-change records")
         report["retention"]["baked"].append("piecewise free-sphere trajectories after authored impulses")
         report["retention"]["not_executable_in_glb"].append("source impulse transactions and momentum updates")
+    if target_contract == FORCE_TARGET:
+        metadata["force_profile"] = force_profile_metadata()
+        report["force_profile"] = metadata["force_profile"]
+        report["sampling"]["evaluated_horizon"] = "requested_prefix_inclusive_after_side"
+        report["sampling"]["acceleration_chord_allocation_m"] = options.position_tolerance_m / 4
+        report["sampling"]["interval_motion_bounds"] = [
+            {"start_seconds": time_text(interval.start), "end_seconds": time_text(interval.end),
+             "acceleration_norm_upper_m_per_s2": str(interval.acceleration_bound),
+             "angular_speed_upper_rad_per_s": str(interval.angular_speed_bound)}
+            for interval in force_plan.intervals]
+        report["retention"]["preserved_metadata"].extend([
+            "complete per-object active force and latest force/impulse records, including empty projections",
+            "exact force activations/completions, source spans, occurrence IDs and sequence indices",
+            "canonical net force/acceleration, complete counts and mode-origin/trajectory-anchor separation"])
+        report["retention"]["baked"].append("piecewise constant-acceleration free-sphere trajectories")
+        report["retention"]["not_executable_in_glb"].extend([
+            "source force transactions, active force aggregation and completion",
+            "source impulse transactions and momentum updates"])
+        report["budgets"]["boundary_accounting"] = "complete prefix-local nested force and impulse projections"
     if target_contract in NATIVE_TARGETS:
         surface_nodes = [node for node in nodes if isinstance(node.mesh, SurfaceMesh)]
         metadata["surface_profile"] = {
