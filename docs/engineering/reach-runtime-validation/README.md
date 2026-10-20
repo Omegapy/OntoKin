@@ -94,11 +94,71 @@ selector to the complete `element_id` tuple and retains the same four unchanged
 siblings. Its rerun and the corrected source fixture remain pending here.
 No frozen expected value or acceptance limit is changed.
 
+## Attempt 004 and corrected LP02 diagnosis
+
+[The fourth actual run](attempt004/report.json) identifies implementation
+`35031a6a8566489646344f008e87b276bf4e5ed6`, including continuous phase bounds
+and ideal state transfer through numerical anchors. All tracked source inputs
+and Git identity stayed unchanged. Its 32 methods include seven source tests,
+four new phase-proof tests, seven lifecycle/evaluator tests, six protocol-case
+tests and eight ordinary Agent tests. Every cohort passes except the final LP02
+sibling assertion. The complete report remains **failed**.
+
+The new source tests cover nonbinary stop/restart slope correction, incoming
+release state, nonzero anchor errors and equal-force replacement that retains
+the actual trajectory anchor while updating its separate proof clock. The
+older-profile gravity fixture now passes. No frozen fixture changed.
+
+Subsequent read-only inspection corrects the preliminary LP02 diagnosis above.
+P13 and P20 contain one reach action on `arms["first"]`; the four untouched
+siblings are property/geometry occurrences, not four other reach actions.
+Changing the selector to a complete identity did not repair that mistaken test.
+The frozen LP02.08 and LP02.09 steps each prescribe five additional evidence
+reads. Agent checkpoint `2e1a3b9c443803ca4706a23ead0a518d8062e4c4` now executes
+all ten reads, checks four unchanged property identities/values/library origins
+and exact source-unit bytes on both revisions, and compares the one changed
+reach with the original frozen P13/P20 values. Its rerun is pending at this
+checkpoint. The nine principal LP02 requests and all 42 principal protocol
+steps remain unchanged.
+
+## Attempt 005 — independent reference and reader
+
+[The fifth actual run](attempt005/report.json) identifies implementation
+`7a7287c71aaaa7c573ecf246b6033ae0c91b355a`, tree
+`f4e4e36e7b1d8bfc727db9fecc66d37795838fac`, on CPython 3.12.14. All 1,129
+tracked inputs and the clean Git identity stayed unchanged. All workers paused
+before execution and the exclusive window was released after every subprocess
+completed. The run executed 69 methods: **67 passed and two failed**. Its overall
+status remains **failed**.
+
+The 29 numerical methods, two guarded-accounting methods, four recording
+sampler methods, two controlled-observation methods, ten independent-reader
+methods and eight ordinary Agent methods all pass. The sampler preserves the
+full pose sampler's same-plan position/orientation bits while avoiding unused
+derivatives. The reader probes check exact clock cells, dependent inequalities,
+operand allocation limits, cancellation and immutable field types. These are
+focused methods, not actual complete GLB delivery evidence.
+
+Seven of eight independent-reference methods pass, including exact signed
+admission, producer-independent source expectations, complete stopped history,
+release/force state, valid failed-scene prefixes and nonbinary phase clocks.
+The fresh stop/replacement test fails its assertion that this fixture's initial
+actual and ideal coordinates differ. That failure must be diagnosed against
+the exact fixture before changing either implementation or test.
+
+Five of six protocol-case methods pass. LP02 now reaches its prescribed extra
+source reads, but the test accesses a nonexistent `Source.package_id` attribute.
+The raw traceback and original test bytes remain preserved. The correction
+must read package identity from the actual source-unit contract and retain all
+ten evidence reads, four unchanged sibling properties, nine principal LP02
+requests and 42 principal protocol steps.
+
 ## Pending gates
 
 The eight Agent delivery methods remain explicitly unexecuted because the
-independent GLB/0.6 reader and Agent delivery binding are incomplete. Whole-phase
-continuous ideal anchors, independent source/byte certification, hostile-byte
+complete GLB/0.6 path has not passed actual-byte execution and the Agent delivery
+binding remains unavailable. The writer's remaining guarded arithmetic,
+independent impulse-history allowances, source/byte certification, hostile-byte
 probes, complete source and Agent artifacts, Khronos/Three/browser execution,
 actual visual review, all three Python compatibility versions, inherited
 workflows, full R01–R12/Q01–Q22 audit and resulting-main verification remain

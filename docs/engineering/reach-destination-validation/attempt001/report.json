@@ -1,0 +1,67 @@
+{
+  "changed_inputs": [],
+  "commands": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_reach_export_arithmetic.py",
+        "-v"
+      ],
+      "duration_seconds": 0.16478276252746582,
+      "exit_code": 0,
+      "log_sha256": "99c0956f62749b7683609b5b232f452b96f840f5b606bc417af440c3a63f5e49",
+      "name": "python-arithmetic",
+      "tests": 8
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_reach_destination_resources.py",
+        "-v"
+      ],
+      "duration_seconds": 0.11505484580993652,
+      "exit_code": 0,
+      "log_sha256": "a657607cec486e664690d687dc18a4c19d7f83df93ce6b640b343161d67d975c",
+      "name": "python-resources",
+      "tests": 12
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "tests/reach_destination_resources.mjs"
+      ],
+      "duration_seconds": 0.1649479866027832,
+      "exit_code": 0,
+      "log_sha256": "466546744730ebf4666687acff9453a22fde622127eca9f47cae8f8b7f704cf3",
+      "name": "node-resources",
+      "tests": null
+    }
+  ],
+  "git_stable": true,
+  "identity": {
+    "branch": "work/planar06-destination-numeric-20261020-1900-7of9",
+    "head": "02cb0abbcb9aff3f84ea80382642db4fe7390187",
+    "node": "v24.19.0",
+    "platform": "Linux-6.18.55-x86_64-with-glibc2.39",
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "status": "",
+    "tree": "d6615b476ad3de9e84fce9a92467cdbc9b07fd72"
+  },
+  "inputs_stable": true,
+  "process_state": "All three subprocesses exited; no child session remains running",
+  "scope": "20 Python arithmetic/resource tests and 8 Node resource probes only; no source/Agent/SQLite/export/browser/full-suite execution",
+  "tracked_inputs": 989
+}

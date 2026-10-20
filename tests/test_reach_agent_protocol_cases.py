@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import copy
+from fractions import Fraction
 import unittest
 from unittest.mock import patch
 
@@ -126,21 +127,73 @@ class ReachProtocolCaseTests(ReachAgentFixture, unittest.TestCase):
         old_records = {tuple(item["element_id"]): item for item in reach_records(old)}
         new_records = {tuple(item["element_id"]): item for item in reach_records(new)}
         self.assertEqual(set(old_records), set(new_records))
-        same = 0
-        for name, record in old_records.items():
-            comparison = new_records[name]
+        self.assertEqual(len(old_records), 1)  # Only the edited first arm has a named reach.
+        for record in old_records.values():
             self.assertEqual(record["accepted_program_revision"], edited["program_revision"])
             self.assertFalse(record["candidate_only"])
-            if record["chain"]["lengths_m"] == comparison["chain"]["lengths_m"]:
-                same += 1
-                for field in ("joint_coordinates_rad", "joint_rates_rad_per_s", "resolved_joint_targets_rad"):
-                    self.assertEqual(record["current"]["value"][field], comparison["current"]["value"][field])
-        self.assertEqual(same, 4)
+        for fixture, records in (("P13", old_records), ("P20", new_records)):
+            expectation = CASES[fixture][1]["expected"]
+            sample = next(item for item in expectation["samples"] if item["side"] == "after"
+                          and Fraction(int(item["time"]["numerator"]), int(item["time"]["denominator"])) == Fraction(3, 2))
+            actual = next(iter(records.values()))["current"]["value"]
+            for field in ("joint_coordinates_rad", "joint_rates_rad_per_s"):
+                self.assertEqual(actual[field], sample[field])
+            self.assertEqual(actual["resolved_joint_targets_rad"], expectation["independent_solution"]["resolved_joint_targets_rad"])
         original, changed = source_case("P13"), source_case("P20")
         self.assertEqual(self.service.read_program(project, changed.program_revision), changed)
         for source_id in original.sources:
             if source_id != "entry":
                 self.assertEqual(original.sources[source_id].raw, changed.sources[source_id].raw)
+
+        def evidence(identity, program):
+            siblings, sources = {}, {}
+            reads = STEPS[identity]["required_evidence_reads"]
+            self.assertEqual(len(reads), 5)
+            for row in reads:
+                request = self.resolve(row["request_template"])
+                response = self.success(self.service.handle(request))
+                self.exchanges.append((request, response))
+                expected = row["expected"]
+                items = response["result"]["items"]
+                self.assertEqual(len(items), expected["returned_item_count"])
+                self.assertFalse(response["truncated"])
+                self.assertIsNone(response["next_cursor"])
+                if "canonical_length_m" in expected:
+                    item = items[0]
+                    value = item["values"]["forearm_length"]
+                    self.assertEqual(value["value"], expected["canonical_length_m"])
+                    self.assertNotEqual(value["origin"]["source_id"], "entry")
+                    self.assertEqual(value["origin"]["source_revision"], program.sources[value["origin"]["source_id"]].revision)
+                    # Only revision context changes in dependency records; the
+                    # full nominal identities, values and library origins must persist.
+                    normalized = copy.deepcopy(value)
+                    for dependency in normalized["dependencies"]:
+                        self.assertEqual(dependency.pop("program_revision"), program.program_revision)
+                    siblings[tuple(item["element_id"])] = {
+                        "path": item["path"], "identity": item["identity"], "value": normalized,
+                        "source_id": item["source"]["source_id"], "source_revision": item["source"]["source_revision"],
+                        "definition_span": item["source"]["definition_span"]}
+                else:
+                    actual_units = response["result"]["source_units"]
+                    self.assertEqual(len(actual_units), 4)
+                    identities = []
+                    for unit in actual_units:
+                        stored = program.sources[unit["source_id"]]
+                        self.assertEqual(unit["source"].encode("utf-8"), stored.raw)
+                        identities.append({"source_id": unit["source_id"], "source_revision": unit["source_revision"],
+                            "filename": unit["filename"], "package_id": stored.package_id, "version": stored.version})
+                        sources[unit["source_id"]] = unit
+                    self.assertEqual(identities, expected["exact_source_unit_identities"])
+                    self.assertEqual({item["source"]["source_id"] for item in items}, set(sources))
+            self.assertEqual(len(siblings), 4)
+            return siblings, sources
+
+        old_siblings, old_sources = evidence("LP02.08", original)
+        new_siblings, new_sources = evidence("LP02.09", changed)
+        self.assertEqual(old_siblings, new_siblings)
+        self.assertEqual(sum(old_siblings[key] == new_siblings[key] for key in old_siblings), 4)
+        self.assertEqual({key: value for key, value in old_sources.items() if key != "entry"},
+                         {key: value for key, value in new_sources.items() if key != "entry"})
         self.assertEqual(self.frozen_run(project, before["run_id"]), old_run)
         self.assertEqual(len(self.receipts), 9)
 

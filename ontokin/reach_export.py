@@ -30,6 +30,32 @@ DESTINATION_COMPONENT_LIMIT = Fraction(1 << 400)
 NORMALIZATION_ERROR = Fraction(1, 1 << 51)
 
 
+class _LocalArithmeticWork:
+    """Bound standalone helper calls; production supplies its inherited work."""
+    def __init__(self):
+        self.operations = 0
+
+    def charge(self, kind="recording_arithmetic"):
+        if self.operations >= 100000:
+            _fail("OKE-E-NUMERIC-BUDGET", "Recording arithmetic exhausted its operation bound.",
+                  kind="resource", details={"max_operations": 100000})
+        self.operations += 1
+
+    def guard_bits(self, width):
+        if width > MAX_ARITHMETIC_BITS:
+            _fail("OKE-E-NUMERIC-BUDGET", "Recording arithmetic exceeds its finite operand bound.",
+                  kind="resource", details={"max_operand_bits": MAX_ARITHMETIC_BITS})
+
+    def guard(self, *values):
+        for value in values:
+            self.guard_bits(max(value.numerator.bit_length(), value.denominator.bit_length())
+                            if isinstance(value, Fraction) else value.bit_length())
+
+
+def _arithmetic_work(work):
+    return _LocalArithmeticWork() if work is None else work
+
+
 def _charge(work=None, kind="recording_arithmetic"):
     if work is not None:
         work.charge(kind)
@@ -38,9 +64,99 @@ def _charge(work=None, kind="recording_arithmetic"):
 def _guard(value: Fraction, work=None):
     if work is not None:
         work.guard(value)
-    elif max(abs(value.numerator).bit_length(), value.denominator.bit_length()) > MAX_ARITHMETIC_BITS:
+    elif max(value.numerator.bit_length(), value.denominator.bit_length()) > MAX_ARITHMETIC_BITS:
         _fail("OKE-E-NUMERIC-BUDGET", "Recording arithmetic exceeds its finite operand bound.",
               kind="resource", details={"max_operand_bits": MAX_ARITHMETIC_BITS})
+
+
+def _guard_bits(width, work):
+    work.guard_bits(width)
+
+
+def _rational(value, work):
+    _charge(work, "recording_decode")
+    if isinstance(value, bool) or not isinstance(value, (int, float, Fraction)):
+        raise ValueError("Recording arithmetic requires an exact or finite numeric value")
+    if isinstance(value, float):
+        if not math.isfinite(value):
+            raise ValueError("Recording arithmetic requires finite operands")
+        # Every finite binary64 decoder fits within 1075 bits.
+        work.guard_bits(1075)
+    else:
+        if isinstance(value, int):
+            work.guard_bits(value.bit_length())
+        work.guard(value)
+    result = Fraction(value)
+    _guard(result, work)
+    return result
+
+
+def _exact(left, right, operation, work):
+    _charge(work, "recording_exact_" + operation)
+    work.guard(left, right)
+    an, ad = left.numerator.bit_length(), left.denominator.bit_length()
+    bn, bd = right.numerator.bit_length(), right.denominator.bit_length()
+    if operation in {"add", "sub"}:
+        width = max(an + bd, bn + ad, ad + bd) + 1
+    elif operation == "mul":
+        width = max(an + bn, ad + bd)
+    elif operation == "div":
+        if not right:
+            raise ZeroDivisionError("Zero exact recording divisor")
+        width = max(an + bd, ad + bn)
+    else:
+        raise ValueError("Unknown recording arithmetic operation")
+    _guard_bits(width, work)
+    result = {"add": Fraction.__add__, "sub": Fraction.__sub__,
+              "mul": Fraction.__mul__, "div": Fraction.__truediv__}[operation](left, right)
+    _guard(result, work)
+    return result
+
+
+def _compare(left, right, work):
+    _charge(work, "recording_exact_compare")
+    work.guard(left, right)
+    _guard_bits(max(left.numerator.bit_length() + right.denominator.bit_length(),
+                    right.numerator.bit_length() + left.denominator.bit_length()), work)
+    return (left > right) - (left < right)
+
+
+def _sum(values, work):
+    total = Fraction(0)
+    for value in values:
+        total = _exact(total, value, "add", work)
+    return total
+
+
+def _vector(values, work, *, size=None):
+    result = []
+    for index, value in enumerate(values):
+        _charge(work, "recording_vector_component")
+        if index >= (4 if size is None else size):
+            raise ValueError("Recording arithmetic vector exceeds its fixed dimension")
+        result.append(_rational(value, work))
+    if size is not None and len(result) != size:
+        raise ValueError("Recording arithmetic vector has the wrong dimension")
+    return tuple(result)
+
+
+def _shift(value, amount, work):
+    _charge(work, "recording_integer_shift")
+    work.guard_bits(value.bit_length())
+    work.guard(value)
+    if type(amount) is not int or amount < 0:
+        raise ValueError("An integer left shift requires a nonnegative count")
+    _guard_bits(value.bit_length() + amount, work)
+    return value << amount
+
+
+def _integer_sqrt(value, work):
+    _charge(work, "recording_integer_sqrt")
+    work.guard_bits(value.bit_length())
+    work.guard(value)
+    result = math.isqrt(value)
+    _charge(work, "recording_integer_sqrt_return")
+    return result
 
 
 def _fail(code, message, *, model=None, kind="numeric", details=None):
@@ -49,24 +165,43 @@ def _fail(code, message, *, model=None, kind="numeric", details=None):
     export_error(code, message, model, kind=kind, details=details)
 
 
-def _floor_log2_ratio(n: int, d: int) -> int:
+def _floor_log2_ratio(n: int, d: int, work) -> int:
+    _charge(work, "recording_binary_exponent")
+    work.guard(n, d)
     exponent = n.bit_length() - d.bit_length()
-    if (n < d << exponent) if exponent >= 0 else (n << -exponent < d):
+    if (n < _shift(d, exponent, work)) if exponent >= 0 else (_shift(n, -exponent, work) < d):
         exponent -= 1
     return exponent
 
 
-def _nearest_even(n: int, d: int) -> int:
+def _nearest_even(n: int, d: int, work) -> int:
+    _charge(work, "recording_integer_round")
+    work.guard(n, d)
+    _guard_bits(max(n.bit_length(), d.bit_length()) + 1, work)
     q, remainder = divmod(n, d)
     twice = remainder * 2
+    _charge(work, "recording_integer_round_return")
     return q + int(twice > d or (twice == d and q & 1))
 
 
-def rational_record(value) -> dict[str, str]:
-    value = Fraction(value)
+def rational_record(value, *, work=None) -> dict[str, str]:
+    work = _arithmetic_work(work)
+    value = _rational(value, work)
     if value < 0:
         raise ValueError("A recording clock must be nonnegative")
-    return {"numerator": str(value.numerator), "denominator": str(value.denominator)}
+    # Fixed-size chunks avoid interpreter-wide integer-string limits and keep
+    # every division/cancellation checkpoint within this request's work.
+    def decimal(integer):
+        chunks = []
+        while integer:
+            _charge(work, "recording_decimal_chunk")
+            integer, remainder = divmod(integer, 1_000_000_000)
+            chunks.append(remainder)
+        _charge(work, "recording_decimal_result")
+        if not chunks:
+            return "0"
+        return str(chunks[-1]) + "".join(f"{chunk:09d}" for chunk in reversed(chunks[:-1]))
+    return {"numerator": decimal(value.numerator), "denominator": decimal(value.denominator)}
 
 
 def direct_binary32(value, *, work=None, model=None) -> tuple[float, str]:
@@ -75,23 +210,23 @@ def direct_binary32(value, *, work=None, model=None) -> tuple[float, str]:
     No binary64 intermediate participates in choosing the stored bits. The
     final unpack only exposes the already selected binary32 value to Python.
     """
+    work = _arithmetic_work(work)
     _charge(work, "clock_conversion")
-    value = Fraction(value)
-    _guard(value, work)
+    value = _rational(value, work)
     if value < 0:
         _fail("OKE-E-CLOCK", "A recorded clock must be nonnegative.", model=model)
     if not value:
         return 0.0, "00000000"
-    exponent = _floor_log2_ratio(value.numerator, value.denominator)
+    exponent = _floor_log2_ratio(value.numerator, value.denominator, work)
     if exponent > 127:
         _fail("OKE-E-FLOAT32", "The exact clock rounds outside finite binary32.", model=model)
     shift = 149 if exponent < -126 else 23 - exponent
     numerator, denominator = value.numerator, value.denominator
     if shift >= 0:
-        numerator <<= shift
+        numerator = _shift(numerator, shift, work)
     else:
-        denominator <<= -shift
-    significand = _nearest_even(numerator, denominator)
+        denominator = _shift(denominator, -shift, work)
+    significand = _nearest_even(numerator, denominator, work)
     if exponent < -126:
         bits = significand
     else:
@@ -106,16 +241,17 @@ def direct_binary32(value, *, work=None, model=None) -> tuple[float, str]:
 
 def upper_binary64(value, *, work=None, model=None) -> float:
     """Expose a nonnegative rational upper bound without rounding it down."""
-    _charge(work)
-    value = Fraction(value)
-    _guard(value, work)
+    work = _arithmetic_work(work)
+    value = _rational(value, work)
     if value < 0:
         raise ValueError("A certificate upper bound cannot be negative")
     try:
         result = float(value)
     except OverflowError:
         result = math.inf
-    if math.isfinite(result) and Fraction(result) < value:
+    _charge(work, "recording_bound_float_return")
+    if math.isfinite(result) and _compare(_rational(result, work), value, work) < 0:
+        _charge(work, "recording_bound_nextafter")
         result = math.nextafter(result, math.inf)
     if not math.isfinite(result):
         _fail("OKE-E-NUMERIC-BOUND", "A proved bound exceeds finite report precision.", model=model)
@@ -124,61 +260,60 @@ def upper_binary64(value, *, work=None, model=None) -> float:
 
 def sqrt_upper(value, *, work=None, bits=96) -> Fraction:
     """An outward dyadic square-root bound obtained solely by integer isqrt."""
-    _charge(work)
-    value = Fraction(value)
-    _guard(value, work)
+    work = _arithmetic_work(work)
+    value = _rational(value, work)
+    _charge(work, "recording_sqrt_precision")
+    if type(bits) is not int or not 0 <= bits <= 1536:
+        raise ValueError("The recording square-root precision must be within the finite schedule extent")
     if value < 0:
         raise ValueError("Negative square root")
-    scaled_numerator = value.numerator << (2 * bits)
-    if work is not None:
-        work.guard_bits(scaled_numerator.bit_length())
-    root = math.isqrt(scaled_numerator // value.denominator)
-    return Fraction(root + int(root * root * value.denominator < scaled_numerator), 1 << bits)
+    scaled_numerator = _shift(value.numerator, 2 * bits, work)
+    _charge(work, "recording_sqrt_quotient")
+    root = _integer_sqrt(scaled_numerator // value.denominator, work)
+    _guard_bits(2 * root.bit_length() + value.denominator.bit_length(), work)
+    _charge(work, "recording_sqrt_exactness")
+    return Fraction(root + int(root * root * value.denominator < scaled_numerator), _shift(1, bits, work))
 
 
 def norm_upper(values, *, work=None) -> Fraction:
-    values = tuple(Fraction(value) for value in values)
-    _charge(work)
-    for value in values:
-        _guard(value, work)
-    return sqrt_upper(sum((value * value for value in values), Fraction(0)), work=work)
+    work = _arithmetic_work(work)
+    values = _vector(values, work)
+    return sqrt_upper(_sum((_exact(value, value, "mul", work) for value in values), work), work=work)
 
 
 def normalized_component(component, squared_norm, *, work=None) -> float:
     """Correctly rounded component/sqrt(norm2), with an exact midpoint test."""
+    work = _arithmetic_work(work)
     _charge(work, "destination_normalization")
-    component, squared_norm = Fraction(component), Fraction(squared_norm)
-    _guard(component, work)
-    _guard(squared_norm, work)
+    component, squared_norm = _rational(component, work), _rational(squared_norm, work)
     if squared_norm <= 0:
         _fail("OKE-E-QUATERNION", "A stored quaternion must have positive finite norm.")
     if not component:
         return 0.0
-    square = component * component / squared_norm
-    if square > 1:
+    square = _exact(_exact(component, component, "mul", work), squared_norm, "div", work)
+    if _compare(square, Fraction(1), work) > 0:
         raise ValueError("Component exceeds the supplied squared norm")
-    exponent = _floor_log2_ratio(square.numerator, square.denominator) // 2
+    exponent = _floor_log2_ratio(square.numerator, square.denominator, work) // 2
     shift = 1074 if exponent < -1022 else 52 - exponent
-    numerator = square.numerator << (2 * shift)
+    numerator = _shift(square.numerator, 2 * shift, work)
     denominator = square.denominator
-    if work is not None:
-        work.guard_bits(numerator.bit_length())
-    q = math.isqrt(numerator // denominator)
-    midpoint_left = numerator * 4
+    _charge(work, "recording_sqrt_quotient")
+    q = _integer_sqrt(numerator // denominator, work)
+    midpoint_left = _shift(numerator, 2, work)
+    _guard_bits(denominator.bit_length() + 2 * (q.bit_length() + 2), work)
+    _charge(work, "recording_sqrt_midpoint")
     midpoint_right = denominator * (2 * q + 1) ** 2
     if midpoint_left > midpoint_right or (midpoint_left == midpoint_right and q & 1):
         q += 1
     answer = math.ldexp(float(q), -shift)
-    return -answer if component < 0 else answer
+    _charge(work, "recording_normalization_return")
+    return -answer if component < 0 and answer else answer
 
 
 def normalized_quaternion(values, *, work=None) -> tuple[float, ...]:
-    values = tuple(Fraction(value) for value in values)
-    if len(values) != 4:
-        _fail("OKE-E-QUATERNION", "A stored rotation requires four finite components.")
-    for value in values:
-        _guard(value, work)
-    squared = sum((value * value for value in values), Fraction(0))
+    work = _arithmetic_work(work)
+    values = _vector(values, work, size=4)
+    squared = _sum((_exact(value, value, "mul", work) for value in values), work)
     if not squared:
         _fail("OKE-E-QUATERNION", "A zero quaternion has no normalized interpretation.")
     return tuple(normalized_component(value, squared, work=work) for value in values)
@@ -186,17 +321,21 @@ def normalized_quaternion(values, *, work=None) -> tuple[float, ...]:
 
 def quaternion_arc_upper(first, last, *, work=None) -> Fraction:
     """Bound the S^3 short arc, not the doubled SO(3) rotation angle."""
-    raw_first, raw_last = tuple(map(Fraction, first)), tuple(map(Fraction, last))
-    if sum((a * b for a, b in zip(raw_first, raw_last)), Fraction(0)) < 0:
+    work = _arithmetic_work(work)
+    raw_first, raw_last = _vector(first, work, size=4), _vector(last, work, size=4)
+    dot = _sum((_exact(a, b, "mul", work) for a, b in zip(raw_first, raw_last)), work)
+    if dot < 0:
         _fail("OKE-E-QUATERNION-LIFT", "Stored quaternions must retain one coherent short lift.")
     a, b = normalized_quaternion(raw_first, work=work), normalized_quaternion(raw_last, work=work)
-    chord = norm_upper((Fraction(x) - Fraction(y) for x, y in zip(a, b)), work=work)
-    chord += 2 * NORMALIZATION_ERROR
-    if chord > Fraction(1, 2):
+    chord = norm_upper((_exact(_rational(x, work), _rational(y, work), "sub", work)
+                        for x, y in zip(a, b)), work=work)
+    chord = _exact(chord, _exact(Fraction(2), NORMALIZATION_ERROR, "mul", work), "add", work)
+    if _compare(chord, Fraction(1, 2), work) > 0:
         _fail("OKE-E-ROTATION-ALIAS", "The normalized endpoint chord exceeds the proved short-arc range.")
     # 2 asin(d/2) <= d/sqrt(1-d*d/4) <= d/(1-d*d/4).
-    arc = chord / (1 - chord * chord / 4)
-    if arc > ANGULAR_STEP:
+    arc = _exact(chord, _exact(Fraction(1), _exact(_exact(chord, chord, "mul", work),
+                 Fraction(4), "div", work), "sub", work), "div", work)
+    if _compare(arc, ANGULAR_STEP, work) > 0:
         _fail("OKE-E-ROTATION-ALIAS", "The stored quaternion arc exceeds pi/4.")
     return arc
 
@@ -208,29 +347,47 @@ def controlled_destination_sample(first_position, last_position, first_quaternio
     This function is additional playback checking. Its samples do not establish
     the continuous certificate, whose algebraic terms are computed separately.
     """
-    amount = min(Fraction(1), max(Fraction(0), Fraction(amount)))
+    work = _arithmetic_work(work)
+    amount = _rational(amount, work)
+    amount = Fraction(0) if _compare(amount, Fraction(0), work) < 0 else amount
+    amount = Fraction(1) if _compare(amount, Fraction(1), work) > 0 else amount
+    complement = _exact(Fraction(1), amount, "sub", work)
     a, b = normalized_quaternion(first_quaternion, work=work), normalized_quaternion(last_quaternion, work=work)
-    if sum((Fraction(x) * Fraction(y) for x, y in zip(a, b)), Fraction(0)) < 0:
+    a, b = _vector(a, work, size=4), _vector(b, work, size=4)
+    if _sum((_exact(x, y, "mul", work) for x, y in zip(a, b)), work) < 0:
+        _charge(work, "recording_quaternion_sign")
         b = tuple(-value for value in b)
-    position = tuple(float((1 - amount) * Fraction(x) + amount * Fraction(y))
-                     for x, y in zip(first_position, last_position))
-    chord = tuple((1 - amount) * Fraction(x) + amount * Fraction(y) for x, y in zip(a, b))
-    return position, normalized_quaternion(chord, work=work)
+    first_position, last_position = _vector(first_position, work, size=3), _vector(last_position, work, size=3)
+    interpolate = lambda x, y: _exact(_exact(complement, x, "mul", work), _exact(amount, y, "mul", work), "add", work)
+    position_values = tuple(interpolate(x, y) for x, y in zip(first_position, last_position))
+    position = []
+    for value in position_values:
+        _charge(work, "recording_translation_round")
+        result = float(value)
+        _charge(work, "recording_translation_round_return")
+        if not math.isfinite(result):
+            _fail("OKE-E-NUMERIC-BOUND", "A destination position is not finite.")
+        position.append(0.0 if result == 0 else result)
+    chord = tuple(interpolate(x, y) for x, y in zip(a, b))
+    return tuple(position), normalized_quaternion(chord, work=work)
 
 
 def destination_numeric_bounds(arc, translation_magnitude, radius, vertex_error,
                                *, work=None) -> tuple[Fraction, Fraction]:
     """Uniform actual destination error, including nonorthogonal matrix error."""
+    work = _arithmetic_work(work)
     _charge(work, "destination_bound")
-    arc, magnitude, radius, vertex_error = map(Fraction, (arc, translation_magnitude, radius, vertex_error))
-    if min(arc, magnitude, radius, vertex_error) < 0 or arc > ANGULAR_STEP:
+    arc, magnitude, radius, vertex_error = tuple(_rational(v, work) for v in
+                                                (arc, translation_magnitude, radius, vertex_error))
+    if any(v < 0 for v in (arc, magnitude, radius, vertex_error)) or _compare(arc, ANGULAR_STEP, work) > 0:
         _fail("OKE-E-NUMERIC-BOUND", "Destination operands exceed the proved range.")
-    if magnitude + radius + vertex_error > DESTINATION_COMPONENT_LIMIT:
+    extent = _sum((magnitude, radius, vertex_error), work)
+    if _compare(extent, DESTINATION_COMPONENT_LIMIT, work) > 0:
         _fail("OKE-E-NUMERIC-BOUND", "Destination magnitude exceeds its finite arithmetic proof.")
     # Exact-endpoint normalized chord vs SLERP plus correctly rounded unit
     # component errors. Matrix defect and matrix/vector rounding are positional.
-    rotation = arc * arc + Fraction(1, 1 << 44)
-    position = (magnitude + radius + vertex_error + 1) / (1 << 38)
+    rotation = _exact(_exact(arc, arc, "mul", work), Fraction(1, 1 << 44), "add", work)
+    position = _exact(_exact(extent, Fraction(1), "add", work), Fraction(1 << 38), "div", work)
     return position, rotation
 
 
@@ -581,25 +738,35 @@ def complete_interval_bounds(*, width, bound: MotionBound, enclosing: MotionBoun
                              radius, vertex_error, endpoint_position_error,
                              endpoint_quaternion_error, stored_arc, time_shift,
                              source_position_error, source_rotation_error,
-                             destination_position_error, destination_rotation_error):
+                             destination_position_error, destination_rotation_error, work=None):
     """The adopted nonzero-endpoint inequalities, with exact rational sums."""
-    width, radius, vertex_error, ep, eq, arc, shift, nsp, nsr, ndp, ndr = map(Fraction,
+    work = _arithmetic_work(work)
+    width, radius, vertex_error, ep, eq, arc, shift, nsp, nsr, ndp, ndr = tuple(_rational(value, work) for value in
         (width, radius, vertex_error, endpoint_position_error, endpoint_quaternion_error,
          stored_arc, time_shift, source_position_error, source_rotation_error,
          destination_position_error, destination_rotation_error))
-    if min(width, radius, vertex_error, ep, eq, arc, shift, nsp, nsr, ndp, ndr) < 0:
+    acceleration, angular, enclosing_speed, enclosing_angular = tuple(_rational(value, work) for value in
+        (bound.acceleration, bound.angular_speed, enclosing.speed, enclosing.angular_speed))
+    if any(value < 0 for value in (width, radius, vertex_error, ep, eq, arc, shift, nsp, nsr, ndp, ndr,
+                                   acceleration, angular, enclosing_speed, enclosing_angular)):
         raise ValueError("Negative certificate input")
-    difference = eq + bound.angular_speed ** 2 * width ** 2 / 32 + arc ** 2 / 8
-    if difference > Fraction(1, 2):
+    op = lambda a, b, kind: _exact(a, b, kind, work)
+    width_squared = op(width, width, "mul")
+    angular_width_squared = op(op(angular, angular, "mul"), width_squared, "mul")
+    curvature = op(op(acceleration, width_squared, "mul"), Fraction(8), "div")
+    difference = _sum((eq, op(angular_width_squared, Fraction(32), "div"),
+                       op(op(arc, arc, "mul"), Fraction(8), "div")), work)
+    if _compare(difference, Fraction(1, 2), work) > 0:
         _fail("OKE-E-NUMERIC-BOUND", "The quaternion comparison exceeds its proved local range.")
-    rotation = 4 * difference + nsr + ndr + enclosing.angular_speed * shift
-    carrier = ep + bound.acceleration * width ** 2 / 8 + nsp + ndp + enclosing.speed * shift
+    rotation = _sum((op(Fraction(4), difference, "mul"), nsr, ndr,
+                     op(enclosing_angular, shift, "mul")), work)
+    carrier = _sum((ep, curvature, nsp, ndp, op(enclosing_speed, shift, "mul")), work)
     return {"unit_quaternion_difference_bound": difference,
-            "ideal_rotation_bound_rad": bound.angular_speed ** 2 * width ** 2 / 4,
-            "ideal_position_bound_m": bound.acceleration * width ** 2 / 8,
+            "ideal_rotation_bound_rad": op(angular_width_squared, Fraction(4), "div"),
+            "ideal_position_bound_m": curvature,
             "carrier_position_bound_m": carrier,
             "total_rotation_bound_rad": rotation,
-            "total_position_bound_m": carrier + radius * rotation + vertex_error}
+            "total_position_bound_m": _sum((carrier, op(radius, rotation, "mul"), vertex_error), work)}
 
 
 def destination_numeric_basis() -> dict[str, str]:

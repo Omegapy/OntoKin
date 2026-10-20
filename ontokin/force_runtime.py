@@ -235,6 +235,19 @@ class ForceSimulator(_Simulator):
             result[path] = projection
         return result
 
+    def _force_components(self, path: str, state: _ForceRunState) -> tuple[Vec, Vec]:
+        """Inherited canonical aggregation; later profiles can meter its math."""
+        sums = [Fraction(0), Fraction(0), Fraction(0)]
+        for key in sorted(state.forces[path].active):
+            self._check()
+            for index, value in enumerate(state.forces[path].active[key].payload.force_world_n):
+                sums[index] += _f(value)
+        net = tuple(_round(value) for value in sums)
+        mass = _f(self.model.objects[path].mass)
+        acceleration = tuple(_round(_f(g) + _f(f) / mass)
+                             for g, f in zip(self.model.gravity, net))
+        return net, acceleration
+
     def _aggregate(self, path: str, time: Fraction, state: _ForceRunState) -> None:
         history = state.forces[path]
         if state.modes[path] != 'dynamic':
@@ -242,15 +255,7 @@ class ForceSimulator(_Simulator):
             return
         self._check()
         try:
-            sums = [Fraction(0), Fraction(0), Fraction(0)]
-            for key in sorted(history.active):
-                self._check()
-                for index, value in enumerate(history.active[key].payload.force_world_n):
-                    sums[index] += _f(value)
-            net = tuple(_round(value) for value in sums)
-            mass = _f(self.model.objects[path].mass)
-            acceleration = tuple(_round(_f(g) + _f(f) / mass)
-                                 for g, f in zip(self.model.gravity, net))
+            net, acceleration = self._force_components(path, state)
             if acceleration != self._acceleration(path, state):
                 anchor = state.dynamic[path]
                 current = self._dynamic_kinematics(path, time, state)

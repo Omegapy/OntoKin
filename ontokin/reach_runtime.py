@@ -2,20 +2,22 @@
 from __future__ import annotations
 
 import copy
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from fractions import Fraction
+from types import MappingProxyType
 
 from .diagnostics import OntoKinError
 from .evaluator import (_ActionState, _DynamicInitial, _Kinematics, _NumericFault,
                         ZERO, _f, _round, time_text)
-from .force_runtime import ForceSimulator
+from .force_runtime import ForceSimulator, _ForceRunState
 from .json_limits import JSONLimitError, measure_json
 from .reach_kinematics import (admit_planar, measured_residual_squared,
                                rounded_sqrt, sample_pair)
-from .reach_numeric import ReachAdmissionError, ReachExecutionWork, exact, round_binary64
+from .reach_numeric import ReachAdmissionError, ReachExecutionWork, compare, exact, round_binary64
 from .reach_projection import (occurrence, reach_projection, reach_record_bound,
                                measure_reach_json)
 from .reach_source import reach_error
+from .reach_phase import AnchorError, PhaseArithmetic, joint_phase, phase_bounds
 from .values import bounded_data
 
 
@@ -115,6 +117,27 @@ class _ReachActionState(_ActionState):
     start_time: Fraction | None = None
     solution: object | None = None
     terminal: dict | None = None
+    ideal_initial: object | None = None
+    ideal_rotation_error: Fraction = Fraction(0)
+    initial_rotation: object | None = None
+
+
+@dataclass
+class _ReachRunState(_ForceRunState):
+    ideal_coordinates: dict = field(default_factory=dict)
+    ideal_positions: dict = field(default_factory=dict)
+    root_rotation_errors: dict = field(default_factory=dict)
+    root_rotation_values: dict = field(default_factory=dict)
+    dynamic_errors: dict = field(default_factory=dict)
+    dynamic_error_times: dict = field(default_factory=dict)
+    ideal_accelerations: dict = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
+class RecordingPose:
+    """Only the actual canonical components consumed by a recorded key."""
+    position: tuple[float, float, float]
+    orientation: tuple[float, float, float, float]
 
 
 class ReachSimulator(ForceSimulator):
@@ -133,10 +156,19 @@ class ReachSimulator(ForceSimulator):
         self.pose_ops = ReachPoseOps(self.work)
         self._identity_pose = self.pose_ops.identity()
         super().__init__(model, check=self._work_check)
+        self.state = _ReachRunState(**vars(self.state))
+        arithmetic = PhaseArithmetic(self.work)
+        self.state.ideal_coordinates = {path: arithmetic.number(value) for path, value in self.state.coordinates.items()}
+        self.state.ideal_positions = {path: tuple(arithmetic.number(value) for value in position)
+                                     for path, position in self.state.positions.items()}
+        for path in self.state.dynamic:
+            self._check()
+            self.state.dynamic_errors[path] = AnchorError()
+            self.state.dynamic_error_times[path] = Fraction(0)
+            self.state.ideal_accelerations[path] = tuple(arithmetic.number(value) for value in model.gravity)
         for path, action in model.actions.items():
             self._check()
-            if action.kind == "reach_planar":
-                self.state.actions[path] = _ReachActionState()
+            self.state.actions[path] = _ReachActionState()
         # Bound the maximal complete shape before allocating sampled maps.
         self.reach_weight_bound = reach_record_bound(model, check=self._work_check)
 
@@ -182,6 +214,83 @@ class ReachSimulator(ForceSimulator):
             self.work.remember(key, result)
         return result
 
+    def _incoming(self, state):
+        # Only grip activity can change this finite profile's relation graph.
+        # A cached mapping is immutable and shares the same bounded work cache.
+        self.work.charge("source_topology_key", len(state.active_grips) + 1)
+        key = ("reach_source_topology", self.model.program_revision, frozenset(state.active_grips))
+        result = self.work.lookup(key)
+        if result is None:
+            result = MappingProxyType(super()._incoming(state))
+            self.work.remember(key, result)
+        return result
+
+    def _register_spin_plan(self, omega, plan):
+        key = ("reach_source_spin_phase", tuple(omega))
+        old = self.work.lookup(key)
+        if old is None or plan.max_elapsed_s > old.max_elapsed_s:
+            self.work.remember(key, plan)
+
+    def _advance_orientation(self, initial, omega, elapsed):
+        plan = self.work.lookup(("reach_source_spin_phase", tuple(omega)))
+        if plan is not None and abs(elapsed) > plan.max_elapsed_s:
+            plan = None
+        return self.pose_ops.advance_orientation(initial, omega, elapsed, phase_plan=plan)
+
+    def phase_bounds(self, start, end, state=None):
+        try:
+            return phase_bounds(self, start, end, state)
+        except ReachAdmissionError as error:
+            self._numeric_error(error, time=Fraction(start))
+
+    def _anchor_bound(self, path, time, state):
+        return phase_bounds(self, time, time, state, selected_frames=[path + ".frame"])["objects"][path]
+
+    @staticmethod
+    def _anchor_error(bound):
+        return AnchorError(bound.position_error_m, bound.rotation_error_rad,
+                           bound.velocity_error_m_per_s, bound.angular_velocity_error_rad_per_s)
+
+    def _ideal_coordinate(self, path, time, state):
+        return joint_phase(self, path, time, time, state).ideal_start
+
+    def _ideal_position(self, path, time, state):
+        claimant = state.claims.get((path, "translation"))
+        if claimant is None:
+            return state.ideal_positions[path]
+        action, runtime = self.model.actions[claimant], state.actions[claimant]
+        return self.pose_ops.affine(runtime.ideal_initial, action.vector, runtime.elapsed_at(time))
+
+    def ordinary_target(self, path, time):
+        """Project an ordinary action's target through the same 0.6 arithmetic."""
+        action, runtime = self.model.actions[path], self.state.actions[path]
+        try:
+            key = ("reach_ordinary_target", self.model.program_revision, path,
+                   runtime.initial, runtime.initial_rotation)
+            cached = self.work.lookup(key)
+            if cached is not None:
+                return cached
+            if action.kind == "move":
+                values = self.pose_ops.affine(runtime.initial, action.vector, action.duration)
+                # The exact midpoint above maximum finite binary64 rounds to
+                # infinity under nearest-even. Keep the inherited unavailable
+                # target projection without hiding other numeric/work failures.
+                overflow = Fraction((1 << 1024) - (1 << 970))
+                arithmetic = PhaseArithmetic(self.work)
+                if any(compare(arithmetic.absolute(value), overflow, self.work) >= 0 for value in values):
+                    raise _NumericFault("The ordinary action target exceeds finite binary64.")
+                result = tuple(round_binary64(value, work=self.work) for value in values)
+            elif action.kind == "spin":
+                rotation = self._advance_orientation(runtime.initial_rotation or runtime.initial,
+                                                     action.vector, action.duration)
+                result = self.pose_ops.make(orientation=rotation).orientation
+            else:
+                raise ValueError("An ordinary target projection requires move or spin.")
+            self.work.remember(key, result)
+            return result
+        except ReachAdmissionError as error:
+            self._numeric_error(error, action=action, time=time)
+
     def _pair(self, path, time, state):
         runtime, action = state.actions[path], self.model.actions[path]
         self._check()
@@ -196,9 +305,20 @@ class ReachSimulator(ForceSimulator):
 
     def _coordinate(self, path, time, state):
         claimant = state.claims.get((path, "coordinate"))
-        if claimant is None or self.model.actions[claimant].kind != "reach_planar":
-            return super()._coordinate(path, time, state)
+        if claimant is None:
+            return state.coordinates[path], 0.0
         action = self.model.actions[claimant]
+        if action.kind != "reach_planar":
+            runtime = state.actions[claimant]
+            elapsed = runtime.elapsed_at(time)
+            arithmetic = PhaseArithmetic(self.work)
+            initial, target = arithmetic.number(runtime.initial), arithmetic.number(action.goal)
+            difference = arithmetic.sub(target, initial)
+            value = (action.goal if elapsed == action.duration else round_binary64(arithmetic.add(initial,
+                arithmetic.div(arithmetic.mul(difference, elapsed), action.duration)), work=self.work))
+            rate = (round_binary64(arithmetic.div(difference, action.duration), work=self.work)
+                    if runtime.status == "running" else 0.0)
+            return value, rate
         index = 0 if path == action.reach.shoulder else 1
         pair = self._pair(claimant, time, state)
         return pair.coordinates_rad[index], pair.rates_rad_s[index]
@@ -213,35 +333,75 @@ class ReachSimulator(ForceSimulator):
             index = 0 if path == action.reach.shoulder else 1
             pair = self._pair(claimant, time, state)
             return coordinate, pair.exact_slopes[index], pair.exact_coordinates[index]
-        slope = (Fraction(action.goal) - Fraction(runtime.initial)) / action.duration
-        ideal = Fraction(runtime.initial) + slope * runtime.elapsed_at(time)
+        arithmetic = PhaseArithmetic(self.work)
+        slope = arithmetic.div(arithmetic.sub(arithmetic.number(action.goal),
+                                             arithmetic.number(runtime.initial)), action.duration)
+        ideal = arithmetic.add(arithmetic.number(runtime.initial),
+                               arithmetic.mul(slope, runtime.elapsed_at(time)))
         return coordinate, slope if runtime.status == "running" else Fraction(0), ideal
 
-    def _dynamic_kinematics(self, path, time, state):
+    def _dynamic_kinematics(self, path, time, state, *, pose_only=False):
         self._check()
         anchor = state.dynamic[path]
         initial = anchor.state
         elapsed = time - anchor.time
         acceleration = self._acceleration(path, state)
+        rotation = initial.rotation if hasattr(initial, "rotation") else initial.orientation
         return self.pose_ops.make(
             position=self.pose_ops.parabolic(initial.position, initial.velocity, acceleration, elapsed),
-            orientation=self.pose_ops.advance_orientation(initial.orientation, initial.omega, elapsed),
-            velocity=self.pose_ops.affine(initial.velocity, acceleration, elapsed), omega=initial.omega)
+            orientation=self._advance_orientation(rotation, initial.omega, elapsed),
+            velocity=ZERO if pose_only else self.pose_ops.affine(initial.velocity, acceleration, elapsed),
+            omega=ZERO if pose_only else initial.omega)
 
     def _kinematics(self, time, state):
+        return self._resolve_kinematics(time, state)
+
+    def recording_frames(self, time, state, selected_paths):
+        """Sample p/q from a validated phase without constructing unused rates.
+
+        The recording planner must first validate the complete requested prefix
+        and derive its whole-phase bounds. This method neither advances events
+        nor substitutes partial output for a complete source observation. Its
+        private derivative-free graph cannot enter the full-kinematics cache.
+        """
+        selected = []
+        seen = set()
+        try:
+            for path in selected_paths:
+                self._check()
+                if not isinstance(path, str) or (path != "world" and (
+                        not path.endswith(".frame") or
+                        path[:-6] not in self.model.objects and path[:-6] not in self.model.sites)):
+                    raise ValueError("A recording selector must name an actual source frame.")
+                if path not in seen:
+                    seen.add(path)
+                    selected.append(path)
+            _, frames = self._resolve_kinematics(time, state, selected_frames=selected, pose_only=True)
+            result = {}
+            for path in selected:
+                self._check()
+                result[path] = RecordingPose(frames[path].position, frames[path].orientation)
+            return result
+        except ReachAdmissionError as error:
+            self._numeric_error(error, time=time)
+
+    def _resolve_kinematics(self, time, state, *, selected_frames=None, pose_only=False):
         """Resolve the actual pose graph without intermediate float exposure.
 
         This separate 0.6 path leaves every older profile's pose arithmetic
         unchanged. Only public sample/anchor components materialize binary64.
         """
         key = (id(state), time)
-        cached = self._pose_cache.get(key)
+        cached = self._pose_cache.get(key) if not pose_only and selected_frames is None else None
         if cached is not None and cached[0] is state:
             self._check()
             return cached[1], cached[2]
         ops = self.pose_ops
         incoming = self._incoming(state)
         objects, frames, resolving = {}, {"world": self._identity_pose}, set()
+
+        def slot(path, signature, build):
+            return self._pose_slot(("recording", path) if pose_only else path, signature, build)
 
         def frame(path):
             if path not in frames:
@@ -251,7 +411,7 @@ class ReachSimulator(ForceSimulator):
                 else:
                     site = self.model.sites[stem]
                     owner = instance(site.owner)
-                    frames[path] = self._pose_slot(path, (owner, site.pose),
+                    frames[path] = slot(path, (owner, site.pose),
                         lambda: ops.compose(owner, self._constant_pose(site.pose)))
             return frames[path]
 
@@ -268,14 +428,17 @@ class ReachSimulator(ForceSimulator):
                 if kind == "follow":
                     follow = self.model.follows[relation_path]
                     parent = frame(follow.parent)
-                    result = self._pose_slot(path, ("follow", parent, follow.offset),
+                    result = slot(path, ("follow", parent, follow.offset),
                         lambda: ops.compose(parent, self._constant_pose(follow.offset)))
                 else:
                     joint = self.model.joints[relation_path]
                     parent = frame(joint.parent + ".frame")
                     coordinate, slope = None, None
                     if joint.kind in {"hinge", "slider"}:
-                        coordinate, slope, _ = self._exact_coordinate(relation_path, time, state)
+                        if pose_only:
+                            coordinate, slope = self._coordinate(relation_path, time, state)[0], Fraction(0)
+                        else:
+                            coordinate, slope, _ = self._exact_coordinate(relation_path, time, state)
                     child_pose = self.model.sites[joint.child].pose
                     def connected():
                         relative = self._identity_pose
@@ -286,41 +449,49 @@ class ReachSimulator(ForceSimulator):
                                                 velocity=ops.scale(joint.axis, slope))
                         return ops.compose(ops.compose(parent, relative),
                                            self._constant_pose(child_pose, inverse=True))
-                    result = self._pose_slot(path,
+                    result = slot(path,
                         ("joint", parent, joint.kind, joint.axis, coordinate, slope, child_pose), connected)
             elif state.modes[path] == "dynamic":
-                result = self._dynamic_kinematics(path, time, state)
+                result = self._dynamic_kinematics(path, time, state, pose_only=pose_only)
             else:
-                position, rotation = state.positions[path], state.orientations[path]
+                position = state.positions[path]
+                rotation = state.root_rotation_values.get(path, state.orientations[path])
                 velocity, omega = ZERO, ZERO
                 claimant = state.claims.get((path, "translation"))
                 if claimant is not None:
                     action, runtime = self.model.actions[claimant], state.actions[claimant]
                     position = ops.affine(runtime.initial, action.vector, runtime.elapsed_at(time))
-                    if runtime.status == "running":
+                    if runtime.status == "running" and not pose_only:
                         velocity = action.vector
                 claimant = state.claims.get((path, "orientation"))
                 if claimant is not None:
                     action, runtime = self.model.actions[claimant], state.actions[claimant]
-                    rotation = ops.advance_orientation(runtime.initial, action.vector, runtime.elapsed_at(time))
-                    if runtime.status == "running":
+                    rotation = self._advance_orientation(runtime.initial_rotation or runtime.initial,
+                                                         action.vector, runtime.elapsed_at(time))
+                    if runtime.status == "running" and not pose_only:
                         omega = action.vector
-                result = self._pose_slot(path, ("root", position, rotation, velocity, omega),
+                result = slot(path, ("root", position, rotation, velocity, omega),
                     lambda: ops.make(position=position, orientation=rotation, velocity=velocity, omega=omega))
             resolving.remove(path)
             # This is an explicit finiteness check; opaque internals continue
             # down the graph even after canonical components are cached.
-            result.position, result.orientation, result.velocity, result.omega
+            if not pose_only:
+                result.position, result.orientation, result.velocity, result.omega
             objects[path] = result
             frames[path + ".frame"] = result
             return result
 
-        for path in self.model.objects:
-            instance(path)
-        for path in self.model.sites:
-            self._check()
-            frame(path + ".frame")
-        self._pose_cache = {key: (state, objects, frames)}
+        if selected_frames is None:
+            for path in self.model.objects:
+                instance(path)
+            for path in self.model.sites:
+                self._check()
+                frame(path + ".frame")
+        else:
+            for path in selected_frames:
+                frame(path)
+        if not pose_only and selected_frames is None:
+            self._pose_cache = {key: (state, objects, frames)}
         return objects, frames
 
     def _tip_base(self, action, time, state):
@@ -355,12 +526,17 @@ class ReachSimulator(ForceSimulator):
         action, runtime = self.model.actions[path], state.actions[path]
         elapsed = runtime.elapsed_at(time)
         if action.kind == "move":
+            state.ideal_positions[action.target] = self._ideal_position(action.target, time, state)
             state.positions[action.target] = tuple(round_binary64(value, work=self.work) for value in
                 self.pose_ops.affine(runtime.initial, action.vector, elapsed))
         elif action.kind == "spin":
-            state.orientations[action.target] = self.pose_ops.make(orientation=
-                self.pose_ops.advance_orientation(runtime.initial, action.vector, elapsed)).orientation
+            state.root_rotation_errors[action.target] = self._anchor_bound(action.target, time, state).rotation_error_rad
+            anchor = self.pose_ops.materialize(self.pose_ops.make(orientation=
+                self._advance_orientation(runtime.initial_rotation or runtime.initial, action.vector, elapsed)))
+            state.orientations[action.target] = anchor.orientation
+            state.root_rotation_values[action.target] = anchor.rotation
         else:
+            state.ideal_coordinates[action.target] = self._ideal_coordinate(action.target, time, state)
             state.coordinates[action.target] = self._coordinate(action.target, time, state)[0]
         runtime.elapsed = elapsed
         runtime.status = status
@@ -386,6 +562,52 @@ class ReachSimulator(ForceSimulator):
         return self.pose_ops.materialize(self.pose_ops.make(
             position=current.position, orientation=current.rotation, velocity=velocity, omega=omega))
 
+    def _impulse_error(self, event, time, state, before):
+        """Propagate the actual impulse's rounding and incoming orientation error."""
+        a = PhaseArithmetic(self.work)
+        obj, payload = self.model.objects[event.target], event.impulse
+        record = state.impulses[event.target].last_applications[-1]
+        lever_size = a.l1(record["lever_arm_world_m"])
+        lever_error = a.add(a.mul(before.rotation_error_rad, a.l1(payload.point_self_m)),
+                           a.mul(Fraction(2), Fraction(1, 1 << 96)), a.rounding(lever_size))
+        angular_impulse_error = a.add(a.mul(lever_error, a.l1(payload.impulse_world_n_s)),
+                                      a.rounding(a.l1(record["angular_impulse_world_n_m_s"])))
+        nominal_velocity = tuple(a.add(a.number(value), a.div(a.number(delta), a.number(obj.mass)))
+            for value, delta in zip(record["linear_velocity_before_world_m_per_s"], payload.impulse_world_n_s))
+        nominal_omega = tuple(a.add(a.number(value), a.div(a.number(delta), a.number(obj.inertia)))
+            for value, delta in zip(record["angular_velocity_before_world_rad_per_s"], record["angular_impulse_world_n_m_s"]))
+        velocity_round = a.l1(tuple(a.sub(a.number(actual), ideal) for actual, ideal in zip(
+            record["linear_velocity_after_world_m_per_s"], nominal_velocity)))
+        omega_round = a.l1(tuple(a.sub(a.number(actual), ideal) for actual, ideal in zip(
+            record["angular_velocity_after_world_rad_per_s"], nominal_omega)))
+        state.dynamic_errors[event.target] = AnchorError(before.position_error_m, before.rotation_error_rad,
+            a.add(before.velocity_error_m_per_s, velocity_round),
+            a.add(before.angular_velocity_error_rad_per_s, a.div(angular_impulse_error, a.number(obj.inertia)), omega_round))
+        state.dynamic_error_times[event.target] = time
+
+    def _ideal_acceleration(self, path, state):
+        a = PhaseArithmetic(self.work)
+        net = [Fraction(0), Fraction(0), Fraction(0)]
+        for force in state.forces[path].active.values():
+            self._check()
+            net = [a.add(value, a.number(delta)) for value, delta in zip(net, force.payload.force_world_n)]
+        mass = a.number(self.model.objects[path].mass)
+        return tuple(a.add(a.number(gravity), a.div(force, mass)) for gravity, force in zip(self.model.gravity, net))
+
+    def _force_components(self, path, state):
+        """Preserve canonical net/acceleration order while charging every helper."""
+        a = PhaseArithmetic(self.work)
+        sums = [Fraction(0), Fraction(0), Fraction(0)]
+        for key in sorted(state.forces[path].active):
+            self._check()
+            values = state.forces[path].active[key].payload.force_world_n
+            sums = [a.add(value, a.number(delta)) for value, delta in zip(sums, values)]
+        net = tuple(round_binary64(value, work=self.work) for value in sums)
+        mass = a.number(self.model.objects[path].mass)
+        acceleration = tuple(round_binary64(a.add(a.number(gravity), a.div(a.number(force), mass)), work=self.work)
+                             for gravity, force in zip(self.model.gravity, net))
+        return net, acceleration
+
     def _event(self, event, time, state, incoming, dependencies, touched):
         self._invalidate()
         action = self.model.actions.get(event.target)
@@ -397,11 +619,30 @@ class ReachSimulator(ForceSimulator):
                     raise reach_error("reach_claim_conflict", "A reach already owns this coordinate.", event.span,
                                       phase="admission", time=time, element_id=action.element_id,
                                       details={"joint": action.target, "claimant": owner, "requested": action.path})
+            ideal_initial = None
+            if event.kind == "start" and action is not None:
+                if action.kind == "move":
+                    ideal_initial = self._ideal_position(action.target, time, state)
+                elif action.kind == "tween":
+                    ideal_initial = self._ideal_coordinate(action.target, time, state)
+            impulse_bound = (self._anchor_bound(event.target, time, state)
+                             if event.kind == "impulse" and event.target in state.dynamic else None)
             super()._event(event, time, state, incoming, dependencies, touched)
+            if event.kind == "start" and action is not None:
+                runtime = state.actions[action.path]
+                runtime.ideal_initial = ideal_initial
+                if action.kind == "spin":
+                    runtime.ideal_rotation_error = state.root_rotation_errors.get(action.target, Fraction(0))
+                    runtime.initial_rotation = state.root_rotation_values.get(action.target)
             if event.kind == "release":
                 child = self.model.sites[self.model.joints[event.target].child].owner
                 state.dynamic[child].state = self.pose_ops.materialize(incoming[child])
+                state.dynamic_errors[child] = self._anchor_error(self._anchor_bound(child, time, self.state))
+                state.dynamic_error_times[child] = time
+                state.ideal_accelerations[child] = tuple(PhaseArithmetic(self.work).number(value) for value in self.model.gravity)
                 self._pending_releases.append(self._release_record(event, time, incoming, dependencies))
+            if event.kind == "impulse" and event.impulse.impulse_world_n_s != ZERO:
+                self._impulse_error(event, time, state, impulse_bound)
             self._invalidate()
             return
         runtime = state.actions[event.target]
@@ -436,6 +677,7 @@ class ReachSimulator(ForceSimulator):
                     raise reach_error("reach_chain", "The admitted reach links must remain prescribed.",
                                       event.span, time=time, element_id=action.element_id)
             initial = tuple(self._coordinate(path, time, state)[0] for path in (payload.shoulder, payload.elbow))
+            ideal_initial = tuple(self._ideal_coordinate(path, time, state) for path in (payload.shoulder, payload.elbow))
             try:
                 solution = admit_planar(payload.lengths_m, payload.target_m, payload.branch,
                                         payload.limits_rad, work=self.work)
@@ -444,6 +686,7 @@ class ReachSimulator(ForceSimulator):
             # All admission checks succeeded. These writes affect only the
             # staged whole-boundary state, never one externally visible claim.
             runtime.initial = initial
+            runtime.ideal_initial = ideal_initial
             runtime.solution = solution
             runtime.start_time = time
             runtime.elapsed = Fraction(0)
@@ -481,6 +724,7 @@ class ReachSimulator(ForceSimulator):
                     "time_seconds": time_text(time), "position_residual_m": rounded_sqrt(squared, work=self.work),
                     "joint_coordinates_rad": list(pair.coordinates_rad), "tip_pose_base": self._pose_record(tip)}
         for joint_path, coordinate in zip((payload.shoulder, payload.elbow), pair.coordinates_rad):
+            state.ideal_coordinates[joint_path] = self._ideal_coordinate(joint_path, time, state)
             state.coordinates[joint_path] = coordinate
         runtime.elapsed = runtime.elapsed_at(time)
         runtime.status = status
@@ -511,7 +755,30 @@ class ReachSimulator(ForceSimulator):
 
     def _aggregate(self, path, time, state):
         self._invalidate()
+        changed = path in state.dynamic and (state.forces[path].last_time == time or
+                                            state.forces[path].acceleration is None)
+        original = state.dynamic.get(path)
+        before = self._anchor_bound(path, time, state) if changed else None
         super()._aggregate(path, time, state)
+        if changed:
+            error = self._anchor_error(before)
+            if state.dynamic[path] is original:
+                # A net-zero/equal-force replacement keeps the inherited actual
+                # trajectory anchor. The ideal acceleration still has a new
+                # phase. Convert the public-point bound back to this private
+                # continuing trajectory using its exact publication discrepancy.
+                a = PhaseArithmetic(self.work)
+                point = self._dynamic_kinematics(path, time, state)
+                position_round = a.l1(tuple(a.sub(a.number(x), y) for x, y in zip(point.position, point.exact_position)))
+                velocity_round = a.l1(tuple(a.sub(a.number(x), y) for x, y in zip(point.velocity, point.exact_velocity)))
+                error = AnchorError(a.add(error.position_m, position_round),
+                    a.add(error.rotation_rad, Fraction(1, 1 << 50)),
+                    a.add(error.velocity_m_per_s, velocity_round), error.angular_velocity_rad_per_s)
+            else:
+                state.dynamic[path].state = self.pose_ops.materialize(state.dynamic[path].state)
+            state.dynamic_errors[path] = error
+            state.dynamic_error_times[path] = time
+            state.ideal_accelerations[path] = self._ideal_acceleration(path, state)
         self._invalidate()
 
     def _validate_staged(self, time, staged, incoming):

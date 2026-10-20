@@ -1019,8 +1019,11 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
                     reason = "action_has_not_started"
                 else:
                     try:
-                        target = (_affine(runtime.initial, action.vector, action.duration) if action.kind == "move"
-                                  else _advance_orientation(runtime.initial, action.vector, action.duration))
+                        if model.profile == REACH_PROFILE:
+                            target = simulator.ordinary_target(path, time)
+                        else:
+                            target = (_affine(runtime.initial, action.vector, action.duration) if action.kind == "move"
+                                      else _advance_orientation(runtime.initial, action.vector, action.duration))
                     except _NumericFault:
                         reason = "target_exceeds_finite_range"
             record["target_value"] = {"available": reason is None, "value": target, "reason": reason}
@@ -1054,7 +1057,7 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
             "boundary_times_seconds": [] if simulator is None else list(simulator.boundaries)}
 
 
-def inspect_in_frame(sample: dict[str, Any], object_path: str, frame_path: str = "world") -> dict[str, Any]:
+def inspect_in_frame(sample: dict[str, Any], object_path: str, frame_path: str = "world", *, work=None) -> dict[str, Any]:
     """Re-express a sampled pose and world-measured velocity in another frame.
 
     Velocity components are rotated into the requested axes. They remain
@@ -1067,17 +1070,48 @@ def inspect_in_frame(sample: dict[str, Any], object_path: str, frame_path: str =
         raise OntoKinError("OKL-E-SAMPLE", "The requested object or frame is absent from this sample.",
                            phase="inspection", blocks=[],
                            repair="Use an object and frame present in this revision's sample.") from exc
-    try:
-        inverse = _inverse(tuple(reference["orientation_wxyz"]))
-        position = _rotate(inverse, _add(tuple(obj["position_m"]), _neg(tuple(reference["position_m"]))))
-        rotation = _multiply(inverse, tuple(obj["orientation_wxyz"]))
-        velocity = _rotate(inverse, tuple(obj["velocity_m_per_s"]))
-        omega = _rotate(inverse, tuple(obj["angular_velocity_rad_per_s"]))
-    except _NumericFault as exc:
-        raise OntoKinError("OKL-E-NUMERIC", str(exc), phase="inspection", category="numerical_failure",
-                           time=exact_time(sample["time_seconds"]), side=sample["side"], blocks=[],
-                           element_id=obj["element_id"], details={"object": object_path, "frame": frame_path},
-                           repair="Inspect in world or in a frame whose relative coordinates remain finite.") from exc
+    if work is not None:
+        from .reach_numeric import ReachAdmissionError
+        from .reach_pose import ReachPoseOps
+        try:
+            work.tick()
+            if frame_path == "world":
+                position, rotation = obj["position_m"], obj["orientation_wxyz"]
+                velocity, omega = obj["velocity_m_per_s"], obj["angular_velocity_rad_per_s"]
+            else:
+                ops = ReachPoseOps(work)
+                value = ops.make(obj["position_m"], obj["orientation_wxyz"],
+                                 obj["velocity_m_per_s"], obj["angular_velocity_rad_per_s"])
+                base = ops.make(reference["position_m"], reference["orientation_wxyz"])
+                inverse = ops.inverse_rotation(base.rotation)
+                relative = ops.make(position=ops.relative_point(base, value),
+                    orientation=ops.multiply(inverse, value.rotation),
+                    velocity=ops.rotate(inverse, value.exact_velocity),
+                    omega=ops.rotate(inverse, value.exact_omega))
+                position, rotation, velocity, omega = (relative.position, relative.orientation,
+                                                       relative.velocity, relative.omega)
+        except ReachAdmissionError as exc:
+            if exc is work.callback_error:
+                raise
+            resource = exc.reach_code == "reach_resource"
+            raise OntoKinError("OKL-E-RESOURCE" if resource else "OKL-E-NUMERIC", str(exc),
+                phase="inspection", category="resource_limit" if resource else "numerical_failure",
+                time=exact_time(sample["time_seconds"]), side=sample["side"], blocks=[],
+                element_id=obj["element_id"],
+                details={**exc.details, "object": object_path, "frame": frame_path},
+                repair="Inspect in world or in a frame whose relative coordinates remain finite.") from exc
+    else:
+        try:
+            inverse = _inverse(tuple(reference["orientation_wxyz"]))
+            position = _rotate(inverse, _add(tuple(obj["position_m"]), _neg(tuple(reference["position_m"]))))
+            rotation = _multiply(inverse, tuple(obj["orientation_wxyz"]))
+            velocity = _rotate(inverse, tuple(obj["velocity_m_per_s"]))
+            omega = _rotate(inverse, tuple(obj["angular_velocity_rad_per_s"]))
+        except _NumericFault as exc:
+            raise OntoKinError("OKL-E-NUMERIC", str(exc), phase="inspection", category="numerical_failure",
+                               time=exact_time(sample["time_seconds"]), side=sample["side"], blocks=[],
+                               element_id=obj["element_id"], details={"object": object_path, "frame": frame_path},
+                               repair="Inspect in world or in a frame whose relative coordinates remain finite.") from exc
     return {
         "element_id": obj["element_id"], "time_seconds": sample["time_seconds"], "side": sample["side"],
         "pose_frame": frame_path, "position_m": list(position),

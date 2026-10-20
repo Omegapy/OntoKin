@@ -133,7 +133,10 @@ class ReachPoseTests(unittest.TestCase):
     def test_basis_identifies_current_sources_and_derivation(self):
         work=ReachExecutionWork()
         basis=source_numeric_basis(work=work)
-        self.assertEqual(len(basis.inputs),4)
+        self.assertEqual(tuple(name for name,_ in basis.inputs),(
+            "ontokin/reach_numeric.py","ontokin/reach_kinematics.py","ontokin/reach_pose.py",
+            "ontokin/reach_phase.py","ontokin/reach_runtime.py",
+            "docs/engineering/reach-numeric-kernel.md","docs/engineering/reach-source-kernel.md"))
         self.assertEqual(set(basis.as_dict()),{"name","version","implementation","method","derivation"})
         before=work.operations
         self.assertIs(source_numeric_basis(work=work),basis)

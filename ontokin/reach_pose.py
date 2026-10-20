@@ -592,8 +592,11 @@ def source_numeric_basis(*,work):
     cached=work.lookup(key)
     if cached is not None: return cached
     root=Path(__file__).resolve().parent.parent
-    names=("ontokin/reach_numeric.py","ontokin/reach_kinematics.py","ontokin/reach_pose.py",
-           "docs/engineering/reach-numeric-kernel.md")
+    implementation_names=("ontokin/reach_numeric.py","ontokin/reach_kinematics.py","ontokin/reach_pose.py",
+                          "ontokin/reach_phase.py","ontokin/reach_runtime.py")
+    derivation_names=("docs/engineering/reach-numeric-kernel.md",
+                      "docs/engineering/reach-source-kernel.md")
+    names=implementation_names+derivation_names
     entries=[]
     for name in names:
         work.charge("numeric_basis_open")
@@ -614,9 +617,12 @@ def source_numeric_basis(*,work):
             raise ReachAdmissionError("reach_numeric","The source numerical basis cannot be identified.",
                                       missing_basis_input=name) from error
         entries.append((name,digest.hexdigest()))
-    work.charge("numeric_basis_digest")
-    implementation=sha256("".join(name+"\0"+digest+"\n" for name,digest in entries[:3]).encode("ascii")).hexdigest()
+    def aggregate(values):
+        work.charge("numeric_basis_digest")
+        return sha256("".join(name+"\0"+digest+"\n" for name,digest in values).encode("ascii")).hexdigest()
+    implementation=aggregate(entries[:len(implementation_names)])
+    derivation=aggregate(entries[len(implementation_names):])
     result=SourceNumericBasis("OntoKin controlled source poses","0.1","sha256:"+implementation,
-        METHOD,"sha256:"+entries[-1][1],tuple(entries))
+        METHOD,"sha256:"+derivation,tuple(entries))
     work.remember(key,result)
     return result

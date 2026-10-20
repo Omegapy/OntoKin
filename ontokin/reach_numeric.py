@@ -95,7 +95,7 @@ class ReachExecutionWork:
             if isinstance(value, Fraction):
                 self.guard_bits(max(value.numerator.bit_length(), value.denominator.bit_length()))
             else:
-                self.guard_bits(abs(value).bit_length())
+                self.guard_bits(value.bit_length())
 
     def admission(self):
         self.charge("admission")

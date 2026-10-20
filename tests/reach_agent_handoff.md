@@ -78,6 +78,21 @@ cursor context, changed request payloads, strict wire/options limits,
 competing accepted heads and run versions, cancellation after computation,
 source/run/artifact transaction rollback, and explicit JSONL selection.
 
+### LP02 evidence correction after focused execution
+
+The first focused LP02 comparisons incorrectly looked for four unchanged reach
+actions. P13 and P20 each contain one named reach, on `arms["first"]`; the four
+untouched siblings are generated part/property occurrences. Retaining full
+nominal identity tuples was useful, but did not correct that mistaken model.
+The corrected test executes all ten frozen `required_evidence_reads` attached
+to LP02.08 and LP02.09: four sibling `forearm_length` reads and one complete
+source-unit read for each revision. It requires exactly four identical sibling
+identities, canonical values, dependency identities and library origins, plus
+byte-identical pinned libraries. The single changed reach is checked against
+the exact P13/P20 coordinates and targets. The nine main LP02 receipts and all
+42 main protocol steps remain unchanged. Earlier failed logs remain evidence
+of the test defect; this correction requires a fresh executed check.
+
 Q03 fixes P24, its actual run at `1.5 after`, `selector.kind=action`,
 `fields=[actions]`, `limit=128`, complete groups and no cursor. It measures N
 from the entire published response. It also records actual cumulative

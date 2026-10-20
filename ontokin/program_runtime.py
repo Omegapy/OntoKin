@@ -642,7 +642,7 @@ def _project(program, record, fields, compiler, sample, run, frame, budget):
         else:
             state = copy.deepcopy(sample["objects"][path])
             if frame != "world":
-                state.update(inspect_in_frame(sample, path, frame))
+                state.update(inspect_in_frame(sample, path, frame, **_reach_work(compiler)))
             state.update(available=True, program_revision=program.program_revision, run_id=run.get("run_id"),
                          time_seconds=sample["time_seconds"], side=sample["side"],
                          valid_interval={"start_seconds": "0", "start_side": "before",

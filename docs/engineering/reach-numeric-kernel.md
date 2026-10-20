@@ -286,6 +286,37 @@ all whole-phase arguments from its actual analytical source path, including
 both sides of positive-width event neighbors and exact unrounded slopes.
 Unproved or disconnected ideal anchors must fail explicitly.
 
+## Identified implementation and derivation aggregates
+
+The source numerical basis identifies the complete controlled arithmetic and
+the phase/anchor recurrence that supplies its uniform inputs. Its ordered
+implementation input list is:
+
+1. `ontokin/reach_numeric.py`
+2. `ontokin/reach_kinematics.py`
+3. `ontokin/reach_pose.py`
+4. `ontokin/reach_phase.py`
+5. `ontokin/reach_runtime.py`
+
+Its separately ordered derivation input list is:
+
+1. `docs/engineering/reach-numeric-kernel.md`
+2. `docs/engineering/reach-source-kernel.md`
+
+For each input, compute the lowercase hexadecimal SHA-256 of its exact bytes.
+For each list separately, concatenate the ASCII records
+`path + NUL + hex_sha256 + newline` in the listed order, then take the SHA-256
+of those concatenated bytes. The implementation and derivation identities are
+respectively these two aggregate hashes, each prefixed by `sha256:`. Individual
+input digests remain available in the immutable basis record. No file embeds
+its own digest. Missing files or a file exceeding 262,144 bytes fail explicitly;
+bounded reads, hashing and cache lookups consume the same request work.
+
+The independent supplied-byte reader reconstructs the two lists and aggregates
+without calling the writer's identity helper. The execution procedure must
+preserve these exact input bytes throughout one request; a request-local cache
+does not authorize changing code or derivations during execution.
+
 ## Verification and remaining scope
 
 The focused tests retain the original 54 target encodings, exact geometric

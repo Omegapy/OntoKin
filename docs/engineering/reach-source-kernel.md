@@ -28,6 +28,15 @@ cannot synthesize a run; it returns the adopted `run_required` availability.
 Agent acceptance and issued run identities are bound by the Agent publication
 layer, rather than inferred from a zero timestamp or modified in historical data.
 
+Ordinary move/spin target projections in a 0.6 prefix use the same controlled
+arithmetic as its source poses and share its request cache. An exactly overflowing
+move target retains the inherited unavailable-target result; resource failures
+and callback interruptions remain failures. Explicit non-world inspection accepts
+the same work context and interprets sampled canonical quaternions as proper
+projective rotations. It rotates world-measured velocities into the requested
+axes without subtracting carrier motion. World inspection preserves the original
+sampled tuples. The default inspection path for older profiles is unchanged.
+
 ## Work and output counting
 
 The compiler owns a transient `ReachExecutionWork` whose external callback charges
@@ -39,6 +48,11 @@ saved run stores the elapsed clock, proof cache or request counter.
 Numerical helpers charge every actual arithmetic constituent through that shared
 work context. The separately capped admission recurrence count never creates a
 second 100,000-operation allowance. Callback exceptions keep their original identity.
+Ordinary scalar tweens in a 0.6 scene also use the guarded exact helpers. A narrow
+force-aggregation hook preserves the inherited order (exact force sum, canonical
+net force, exact gravity plus canonical net force divided by mass, canonical
+acceleration), while charging each executed decode, arithmetic and rounding
+operation. Earlier profiles retain the original helper body and callback counts.
 
 JSON traversal has different units. `measure_reach_json` still counts every
 recursive value/container occurrence and every compact UTF-8 byte, including
@@ -74,7 +88,7 @@ signature. Each lookup and insertion is charged, while arithmetic actually
 avoided by reuse is not invented as executed work. Cache capacity and all
 per-output occurrence counts remain unchanged.
 
-## Controlled poses and remaining proof integration
+## Controlled poses and continuous ideal state
 
 Only source 0.6 dispatches to the controlled pose helpers. Private projective
 rotations and exact derivative values remain private through parent/child
@@ -82,7 +96,227 @@ composition. Canonical tuples are exposed at samples and true event anchors;
 older profiles retain their existing arithmetic. The separate numerical derivation
 identifies each controlled helper and its error bound.
 
-Continuous-phase certificates additionally require explicit ideal starts,
-derivative bounds and propagated anchor discrepancies across stop, restart,
-release and force/impulse anchors. Those phase inputs are a separate integration
-obligation; a successful point sample is never a uniform phase certificate.
+`reach_phase.py` derives a uniform bound from the actual incoming topology,
+exact phase operands and retained anchor errors. `phase_bounds(start, end,
+state=None)` returns immutable `PhaseBound` records for objects and frames, plus
+`JointPhase` records for resolved scalar joints. The caller must split at every
+authored event, action completion and force completion; an interval crossing one
+of those boundaries is rejected. A point interval is useful for transferring
+anchor error, but is never substituted for the subsequent whole interval.
+
+Every action retains an ideal initial coordinate or position separately from its
+actual canonical initial value. The ideal reference is continuous at a stop or
+replacement. Both paths subsequently approach the same canonical admitted target.
+For a scalar action of duration D, with actual initial a, continuous ideal initial
+i, canonical target g and exact lifecycle elapsed clock u:
+
+```
+actual affine coordinate = a + (g-a)*u/D
+ideal coordinate         = i + (g-i)*u/D
+actual slope             = (g-a)/D
+ideal slope              = (g-i)/D.
+```
+
+These slopes apply while running; held phases have zero derivatives. The source
+hinge receives the separately rounded actual affine coordinate, while its spatial
+derivative receives the exact actual slope. `JointPhase.actual_start` and
+`actual_end` name the exact affine values before scalar exposure, not a sampled
+binary64 result. The maximum affine discrepancy on a phase is attained at an
+endpoint. Its coordinate bound adds `max(abs(actual endpoints))*2^-53 +
+3*2^-1075` for exposure. An unclaimed held coordinate uses the exact discrepancy
+between its canonical coordinate and retained ideal coordinate. Completion at
+the common canonical target removes the initial-coordinate discrepancy; stopping
+partway retains it for the next action.
+
+Root translations use exact affine arithmetic from separately retained actual
+and ideal starts. A stopped root spin retains an angular discrepancy and the
+actual materialized projective quaternion. A subsequent spin begins at that
+same canonical quaternion without an extra normalization of its elapsed-zero
+public bits. All ideal state lives inside the staged boundary transaction, so a
+failed admission also rolls back these proof inputs.
+
+## Uniform path counts and extents
+
+All quantities below are exact Fractions. `e = 2^-96` is one private vector
+rounding allowance. Position extents are L1 upper bounds; position, angular and
+derivative errors bound Euclidean norms or proper-rotation angles. For a proper
+rotation, an output L1 norm is at most twice the input L1 norm, and a rounded
+three-vector adds less than `2*e` in L1 norm. These deliberately conservative
+inequalities avoid a host square root in the path proof.
+
+| Local operation | Trig count | Product count | Position-vector rounds |
+| --- | ---: | ---: | ---: |
+| Canonical root or constant local pose | 0 | 1 | 0 |
+| Root/dynamic spin with nonzero angular velocity and elapsed extent | 1 | 3 | 0 |
+| Hinge local pose | 1 | 1 | 0 |
+| Slider local pose | 0 | 1 | 0 |
+| Inverse constant child site | 0 | 1 | 1 |
+| Compose two private poses | sum of children | sum of children + 1 | sum of children + 2 |
+
+The counts bound all imports, axis/spin constructors, Hamilton products and
+position-vector stages, including a constructor's own rescale. An exact or
+cached fast path may execute less arithmetic; that does not invalidate the
+conservative error allowance. Fixed identity joints add no local constructor.
+The actual relation path includes parent sites, follows, both joint site
+transforms and the selected final site. It is not just the two reach hinges.
+
+Let M denote a private position's L1 extent and L the accumulated offset extent.
+A constant pose has its exact canonical position L1 norm as M and zero L. Its
+inverse has `M <= 2*input_M + 2*e`, `L = input_M`. For a composition of parent p
+and local l, the recurrences are
+
+```
+M = M_p + 2*M_l + 4*e
+L = L_p + L_l + M_l.
+```
+
+Root affine and dynamic parabolic extents use the triangle bound over the full
+absolute elapsed interval, not endpoint samples. Slider extent is its canonical
+axis L1 norm times the maximum absolute affine coordinate. Coordinate-angle and
+anchor errors sum through composition. The shared numerical derivation then
+gives, including final source exposure,
+
+```
+R_internal = R_anchor + R_coordinate + N_trig*2^-74 + N_product*2^-91
+n_sr       = R_internal + 2^-50
+n_sp       = P_anchor + L*R_internal + N_vector*e + M*2^-53 + 3*2^-1075.
+```
+
+`PhaseBound` exposes every input to these formulas as well as `position_error_m`
+and `rotation_error_rad`. No successful inverse-kinematics residual or point pose
+certificate supplies a missing path term. Root and dynamic spins register a
+`spin_plan(omega, maximum_absolute_elapsed)` over the complete phase. Sampling
+may reuse that plan only for the same canonical angular velocity and within its
+proved elapsed range; a point reduction never establishes uniform coverage.
+The finite reducer certifies an error bound, not exactly rounded transcendental
+values. A larger phase extent can select a different precision and change the
+last source pose bits. Comparisons across independently chosen reduction plans
+therefore use the explicit source allowance. Actual materialized event anchors
+always retain their original canonical tuples and are never regenerated from a
+later plan.
+
+## Ideal derivative and source derivative bounds
+
+The path recursion retains ideal bounds V, A, W and B for linear speed, linear
+acceleration, angular speed and angular acceleration. With `d = M_l + n_sp_l`,
+one composition obeys
+
+```
+V = V_p + W_p*d + V_l
+A = A_p + (B_p + W_p^2)*d + 2*W_p*V_l + A_l
+W = W_p + W_l
+B = B_p + W_p*W_l + B_l.
+```
+
+These follow by differentiating the actual parent/local pose relation. They
+cover moving local joints and a moving carrier together. Constant poses have
+zero ideal derivatives. A hinge has ideal W equal to the absolute exact ideal
+slope. A slider has V bounded by axis L1 norm times that slope. Root translation
+and spin use the canonical authored velocity vectors; free dynamics use the
+ideal acceleration and propagated anchor velocity discrepancy.
+
+Separate `actual_speed_upper_m_per_s` and
+`actual_angular_speed_upper_rad_per_s` bound private source derivatives. Denote
+these by v and w. The source composition bounds include private rounding:
+
+```
+v = v_p + w_p*(M_l + e) + v_l + 2*e
+w = w_p + w_l + 2*e.
+```
+
+With source derivative errors E_v and E_w, let
+`E_offset = n_sp_l + n_sr_p*M_l + e` and
+`round(x) = x*2^-53 + 3*2^-1075`. Then
+
+```
+E_v = E_v_p + E_w_p*(M_l+n_sp_l) + w_p*E_offset
+      + E_v_l + n_sr_p*v_l + 4*e + round(2*v)
+E_w = E_w_p + E_w_l + n_sr_p*w_l + 2*e + round(2*w).
+```
+
+The factor two converts a Euclidean derivative bound to a safe L1 bound before
+public component rounding. These error quantities remain separate from ideal
+V/A/W: numerical error is not presented as intended physical motion.
+
+Reach axes are exact +Z. An auxiliary hinge can have a canonical axis whose norm
+differs from one, while the controlled rotation normalizes its axis. Its inherited
+raw-axis velocity convention therefore contributes the additional discrepancy
+`abs(norm(axis)-1)*abs(ideal_slope)`. The implementation bounds this without a
+square root by `abs(sum(axis_i^2)-1)*abs(ideal_slope)`, since the positive norm
+plus one is at least one. It also includes axis L1 norm times the actual/ideal
+slope difference. A slider includes the corresponding linear slope discrepancy.
+
+## Release, force and impulse anchors
+
+An incoming release transfers the actual exposed position, orientation, velocity
+and angular velocity at the incoming side, even if a contributing action naturally
+completes at that clock. Its four source error bounds are captured from the same
+incoming topology and carried into the free trajectory. They are not reset to
+zero when the new actual canonical anchor is created.
+
+For a dynamic phase, let P0/R0/Ev0/Ew0 be the retained errors at its proof clock,
+T the maximum elapsed distance from that clock, and Ea the L1 difference between
+actual canonical acceleration and exact ideal acceleration. The ideal acceleration
+uses canonical gravity plus the exact sum of all active canonical forces divided
+by canonical mass. The source retains the inherited canonical net-force and
+acceleration arithmetic. Consequently
+
+```
+P_anchor = P0 + Ev0*T + Ea*T^2/2
+R_anchor = R0 + Ew0*T
+E_v      = Ev0 + Ea*T + round(actual_speed_upper)
+E_w      = Ew0.
+```
+
+The current phase's controlled spin and final source pose exposure are added by
+the uniform formulas above. Ideal speed and angular speed are bounded by their
+actual magnitudes plus the corresponding errors. Ideal acceleration uses the
+exact active-force sum. A force change that leaves canonical acceleration equal
+retains the original actual trajectory anchor, as inherited semantics require.
+Its proof clock may still move: exact ideal force sums can differ even when both
+round to the same acceleration. The incoming public-point bound is converted
+back to the continuing private trajectory by adding the exactly measured
+position/velocity publication discrepancies and the quaternion exposure bound.
+Actual anchor time and proof anchor time are distinct fields.
+
+A nonzero impulse preserves incoming position/orientation discrepancies. Its
+lever error is bounded by incoming rotation error times the self-point L1 norm,
+controlled rotation error and actual lever publication error. Multiplying by the
+impulse L1 norm and adding angular-impulse publication error bounds the applied
+angular-momentum discrepancy. Division by canonical inertia and the exactly
+measured final angular-velocity rounding are added to incoming angular-velocity
+error. Linear impulse propagation analogously adds the exact final velocity
+rounding to incoming error. A zero impulse does not replace either actual or
+proof trajectory anchors.
+
+All phase arithmetic, width guards, cache operations and source traversal checks
+consume the same request work context. The implementation and focused tests are
+separately identified code inputs; source-to-recording, independent destination
+and visual acceptance still require their actual release execution evidence.
+
+## Recording samples after complete prefix validation
+
+`recording_frames(time, state, selected_paths)` consumes an already validated
+phase state and its previously derived uniform bounds. It returns immutable
+records containing only canonical `position` and `orientation` tuples. It does
+not advance events, materialize action histories, or claim that partial output
+is a complete source observation. Full prefix replay, complete boundary records
+and the complete uniform proof remain required before the recording sampler.
+
+The sampler shares the full resolver's topology and controlled position/rotation
+expressions. Position and rotation are algebraically independent of the spatial
+derivative components. Its private intermediate derivative vectors are therefore
+zero, allowing the existing exact-zero arithmetic paths to avoid unused cross
+products, rotations and final derivative projections. Those private zeros are
+never returned as source velocities. The selected frame ancestry alone is
+resolved, and only selected final p/q tuples are exposed. Given the same source
+state and reduction plan, the canonical position and quaternion bits match the
+complete resolver. Frozen event anchors remain their original tuples.
+
+Recording pose slots have a distinct cache namespace, so a derivative-free value
+cannot replace a complete lifecycle pose. Both namespaces and immutable topology
+maps use the same finite request cache. The topology key contains the complete
+program revision and active grip set: only grip activity can change this
+profile's relation graph. Each key/lookup remains charged, and a changed release
+state cannot hit the earlier topology. A full source observation still resolves
+and checks every required object, frame, derivative and lifecycle field.

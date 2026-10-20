@@ -65,6 +65,16 @@ class ReachNumericTests(unittest.TestCase):
         self.assertEqual(len(seen),17)
         self.assertEqual(work.operations,17)
 
+    def test_guard_rejects_negative_integer_without_absolute_value_allocation(self):
+        class OversizedInteger(int):
+            def __abs__(self):
+                raise AssertionError("oversized absolute value was allocated")
+        value=OversizedInteger(-(1 << 40000))
+        with self.assertRaises(ReachAdmissionError) as raised:
+            ReachExecutionWork().guard(value)
+        self.assertEqual(raised.exception.reach_code,"reach_resource")
+        self.assertEqual(raised.exception.details["budget"],"numeric_operand_bits")
+
     def test_cancellation_preserves_original_exception_before_and_after_isqrt(self):
         import ontokin.reach_numeric as numeric
         marker=RuntimeError("caller cancellation")

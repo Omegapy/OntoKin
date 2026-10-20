@@ -149,6 +149,13 @@ The October 17, 2026 reorganization preserved the six substantive records that e
 
 [Return to the project overview](../README.md).
 
+## Reach delivery implementation work
+
+The [recorded delivery checkpoints](engineering/reach-delivery-implementation.md)
+and [independent reader implementation](engineering/reach-independent-validation.md)
+describe branch work and its remaining execution obligations. Implementation
+notes do not establish complete reach or product acceptance.
+
 ## Force workflows and recorded delivery
 
 The [Agent/0.5 verification guide](engineering/force-agent-validation/README.md) and [source workflow example](../examples/force-agent/README.md) document finite-force inspection and repair. [OK-ENG-007](engineering/OK-ENG-007-native-force-glb-export.md) defines bounded GLB/0.5 recording, and the [delivery guide](../examples/force/README.md) documents actual export, artifact retrieval, independent native decoding and browser validation. Implementation and component results do not close complete F01–F12 acceptance; [STATUS](../STATUS.md) identifies the integrated evidence and next unmet gate.

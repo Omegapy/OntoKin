@@ -52,3 +52,28 @@ source/lifecycle, Agent and delivery-arithmetic cohorts with stable input
 hashes and raw logs. Failures must be retained and fixed before broader source,
 native/browser, compatibility and full R01–R12/Q01–Q22 acceptance. No runtime
 acceptance is inferred from this checkpoint or from the contract's adoption.
+
+## Checkpoint 3 — independent reader, 2026-10-20
+
+The supplied-byte reader is now implemented in `ontokin/reach_conformance.py`.
+It uses the independent source reference, exact binary32 clock-cell checks,
+source and native geometry identity checks, complete boundary projections and
+the full per-interval inequalities. Its guarded rational arithmetic is separate
+from the writer. [The implementation note](reach-independent-validation.md)
+records the proof boundaries, resource accounting and remaining obligations.
+The existing native geometry validator can reuse a mesh already independently
+constructed during this request, preserving its older default path.
+
+Nine focused reader probes are written. Only AST parsing and diff checks have
+executed on this new checkpoint. Earlier combined runs separately executed the
+original eight writer arithmetic tests, and the destination worker executed
+twelve additional Python guard probes plus eight actual named Node probes.
+Those results do not validate the new reader. The combined branch preserves
+the original failures, exact source identities and raw evidence.
+
+The immediate next gate is combined execution of the independent reference,
+reader, controlled phase/recording sampler, exact writer arithmetic, guarded
+source operations and corrected Agent protocol cases. Final after-state source
+bounds are being reconciled across writer and independent reference. Agent
+delivery remains unavailable until the complete adapter passes actual-byte
+validation; there is still no complete reach release or full-product claim.

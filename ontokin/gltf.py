@@ -639,9 +639,13 @@ def sample_animation(decoded: DecodedGLB, time_seconds: float | Fraction) -> dic
 
 
 def _validate_surface(decoded: DecodedGLB, node: dict, obj, model: SceneModel,
-                      *, remaining_vertices: int, check=None) -> tuple[float, int]:
+                      *, remaining_vertices: int, check=None, expected_mesh=None) -> tuple[float, int]:
     """Compare actual regional buffers and PBR assignments with the source recipe."""
-    expected = build_surface_mesh(obj.geometry, max_vertices=remaining_vertices, check=check)
+    expected = (expected_mesh if expected_mesh is not None else
+                build_surface_mesh(obj.geometry, max_vertices=remaining_vertices, check=check))
+    if len(expected.positions) > remaining_vertices:
+        export_error("OKE-E-MESH-BUDGET", "Decoded surface occurrences exceed the aggregate mesh budget.",
+                     model, kind="resource")
     if node["extras"]["ontokin"].get("surface") != surface_metadata(obj.geometry, expected, check=check):
         _format_error("Surface metadata must preserve authored section ordering, regions and local placement.")
     primitives = decoded.document["meshes"][node["mesh"]]["primitives"]
@@ -692,7 +696,7 @@ def _validate_surface(decoded: DecodedGLB, node: dict, obj, model: SceneModel,
     return max_error, len(expected.positions)
 
 
-def _validate_geometry(decoded, model, options, target_contract, program, *, check=None):
+def _validate_geometry(decoded, model, options, target_contract, program, *, check=None, source_meshes=None):
     """Preserve complete inherited geometry/PBR/identity byte obligations."""
     nodes = decoded.document["nodes"]
     def plain(value):
@@ -732,7 +736,8 @@ def _validate_geometry(decoded, model, options, target_contract, program, *, che
                 if "mesh" not in node:
                     _format_error("A native surface must have an actual mesh.")
                 error, vertex_count = _validate_surface(decoded, node, obj, model,
-                    remaining_vertices=remaining_vertices, check=check)
+                    remaining_vertices=remaining_vertices, check=check,
+                    expected_mesh=None if source_meshes is None else source_meshes.get(index))
                 max_geometry_error = max(max_geometry_error, error)
                 max_surface_error = max(max_surface_error, error)
                 remaining_vertices -= vertex_count

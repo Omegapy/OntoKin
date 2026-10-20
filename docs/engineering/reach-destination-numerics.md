@@ -28,12 +28,64 @@ budget is not enlarged by these destination limits.
 Carrier translation magnitude plus the full stored landmark radius must be at
 most `2^400`. The certified quaternion sphere arc is at most the strict rational
 lower bound equal to the exact binary64 value of `0.7853981633974483` on pi/4.
-Delivered carriers are scene roots
-with identity ancestors and unit scale. The identified transform is the CPU
+Delivered carriers are direct children of the delivered scene, with identity
+scene ancestors and unit scale. The player rejects a nested carrier even if
+its parent initially has an identity transform; such a parent could otherwise
+move later and change the meaning of a recorded world transform. It checks the
+scene ancestor chain and each carrier's parent again at each sampled time.
+The identified transform is the CPU
 world matrix in Three.js revision 180, followed by its CPU point transform.
 Rasterization, projection to screen pixels and arbitrary other players are not
 part of this numerical statement; their actual rendered images are separately
 inspected. Browser integration must invoke this player, not the default mixer.
+
+## Work, operand growth and interruption
+
+The Python writer's numeric helpers accept the inherited request work object.
+Nested calls pass that same object; a standalone helper without one creates a
+local context capped at 100,000 operations and 32,768 operand bits. This local
+fallback is for bounded direct use and cannot substitute for the inherited
+context in a source-to-recording request. The work protocol consists of
+`charge(kind)`, `guard(value, ...)` and `guard_bits(predicted_width)`. The writer's
+builder must also use that protocol for its planning, geometry and metadata
+arithmetic; limiting only these numeric leaf functions would be insufficient.
+
+Exact rational addition, subtraction, multiplication, division and comparison
+each charge their executed helper and check the input sizes. Before invoking
+the standard-library Fraction operation, the helper checks a conservative bound
+on every unreduced cross product, denominator and carry bit. Integer left shifts
+are checked from the operand bit length plus the shift count before allocation.
+Root extraction checks the scaled radicand and midpoint products before their
+allocation, charges the integer root, and polls the inherited callback again
+after it returns. The bounded Fraction operation includes its standard-library
+gcd reduction; it is not treated as an unbounded or uncharged external solve.
+A predicted intermediate can exceed the limit even if subsequent cancellation
+would produce a small final rational. That case is an explicit resource failure.
+
+The JavaScript implementation charges each executed integer product, sum,
+shift, quotient, division/remainder pair, rational constructor, comparison
+constituent, decoder, rounding operation, Euclid iteration, Newton iteration
+and bounded traversal. It checks operands against a fixed 32,768-bit sentinel
+before calling `toString` to obtain a bit length, and checks growth before
+allocating the next integer. Product, sum, shift and division helpers poll
+cancellation again after the operation. These return polls perform no new
+arithmetic and do not increment the local arithmetic count; the supplied
+callback still runs and may itself consume the caller's inherited work. A
+callback exception is propagated unchanged. No callback or arithmetic budget
+is reset within a sampled scene.
+
+All numeric vectors have their dimension checked before a bounded copy or
+conversion: three position components or four quaternion components. Python
+streaming norm inputs stop after detecting the fifth component. Rational
+metadata is formatted through charged, fixed nine-digit decimal chunks, so
+its bounded serialization does not change or depend on the interpreter's
+process-wide integer-to-string digit limit.
+
+The player computes every carrier sample into a bounded staging array, then
+precharges the carrier updates before mutating any scene component. A work or
+cancellation failure during staging or precharge preserves every carrier's
+previous displayed pose. The finite updates are then applied synchronously,
+without yielding to a cancellation callback midway through publication.
 
 ## Integer rounding
 
@@ -42,7 +94,9 @@ Division to a binary64 component finds its exact binary exponent and rounds the
 scaled integer quotient by comparing twice its remainder with the denominator;
 an exact tie chooses an even significand. It explicitly handles normal,
 subnormal, zero and overflow cases. Unpacking the selected bits does not decide
-the rounding. Cancellation is polled before integer work.
+the rounding. Cancellation is polled before integer work and after the bounded
+large operations described above. A value rounded to zero has the canonical
+positive-zero encoding in both the Python and JavaScript implementations.
 
 To normalize a component `x` of a vector with exact squared norm `S`, form
 `z=x^2/S`. Since `0<=z<=1`, choose the binary64 output grid from the exact
@@ -142,3 +196,11 @@ probes compare actual Three CPU matrices and transformed native geometry against
 independent source expectations. The browser must import this exact module and
 retain its actual implementation identity in evidence. These are implementation
 acceptance obligations; no passing execution is asserted by this document.
+
+The focused Python probes are in `tests/test_reach_destination_resources.py`;
+the JavaScript probes are in `tests/reach_destination_resources.mjs`. They cover
+preallocation guards, preserved cancellation identity, shared work, finite
+vector dimensions, typed-array conversion, canonical zero, bounded decimal
+serialization, rejected nonroot carriers, ancestor revalidation and staged
+scene updates. These probes use lightweight scene objects and do not replace
+actual Three/native, supplied-GLB, browser or complete release validation.
