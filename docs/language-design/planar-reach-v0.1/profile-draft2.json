@@ -1,0 +1,374 @@
+{
+  "schema_version": "ontokin.proposed-planar-reach-profile/0.2",
+  "document_id": "OK-LANG-006",
+  "proposal_version": "0.1.0-draft.2",
+  "status": "proposed_not_adopted",
+  "implementation_status": "not_implemented",
+  "bindings": {
+    "source_version": "0.6",
+    "source_profile": "planar-reach-0.1",
+    "agent_contract": "ontokin.agent/0.6",
+    "recorded_contract": "ontokin.glb/0.6",
+    "bundle_schema": "ontokin.bundle/0.1",
+    "diagnostic_schema": "ontokin.diagnostic/0.2",
+    "store_filename": "planar-reach-program-agent.sqlite3",
+    "store_schema": "ontokin.planar-reach-program-agent-store/0.1",
+    "exact_package_version": "0.1.0",
+    "compatible_import_language_versions": [
+      "0.2",
+      "0.3",
+      "0.4",
+      "0.5",
+      "0.6"
+    ],
+    "old_profiles_acquire_new_builtins": false
+  },
+  "source_interface": {
+    "type": "ReachBranch",
+    "values": [
+      "elbow_positive",
+      "elbow_negative"
+    ],
+    "implicit_string_or_integer_conversion": false,
+    "builder": "reach_planar",
+    "arguments": [
+      {
+        "name": "shoulder",
+        "type": "JointRef"
+      },
+      {
+        "name": "elbow",
+        "type": "JointRef"
+      },
+      {
+        "name": "tip",
+        "type": "SiteRef"
+      },
+      {
+        "name": "target",
+        "type": "Point3"
+      },
+      {
+        "name": "duration",
+        "type": "Time"
+      },
+      {
+        "name": "branch",
+        "type": "ReachBranch"
+      }
+    ],
+    "result": "Action",
+    "construction_is_pure": true,
+    "target_frame": "exact shoulder.parent.frame identity",
+    "chain_tuple_identity": [
+      "shoulder joint occurrence",
+      "elbow joint occurrence",
+      "tip site occurrence"
+    ],
+    "chain_count_scope": "distinct tuples bound by constructed named reach actions; uncalled methods are not instances"
+  },
+  "hard_limits": {
+    "link_length_closed_m": [
+      0.125,
+      4
+    ],
+    "target_component_abs_max_m": 8,
+    "target_z_m": 0,
+    "duration_closed_seconds": [
+      0.0009765625,
+      60
+    ],
+    "joint_coordinate_abs_max_radians": 3.141592653589793,
+    "joint_limits_closed": true,
+    "bound_chain_tuples": 32,
+    "named_reach_actions": 128,
+    "running_or_paused_reaches": 32,
+    "inherited_objects": 1000,
+    "inherited_agent_response_bytes": 4194304,
+    "inherited_glb_keys": 10000,
+    "inherited_baked_poses": 250000,
+    "inherited_validation_poses": 1000000,
+    "inherited_native_occurrence_vertices": 250000,
+    "inherited_glb_bytes": 67108864,
+    "inherited_source_history_entries": 100000,
+    "requests_may_raise_maxima": false,
+    "construction_semantic_operations": 100000,
+    "construction_logical_source_values": 100000,
+    "agent_logical_json_entries": 100000,
+    "agent_json_depth": 128,
+    "inherited_source_history_counting_unit": "weighted_state_records",
+    "whole_glb_json_entries": 67108864,
+    "interval_certificates": 100000,
+    "elapsed_work_ms": 30000,
+    "numeric_precision_bits": [
+      96,
+      192,
+      384,
+      768,
+      1536
+    ],
+    "numeric_series_recurrence_steps_per_admission": 12000,
+    "numeric_interval_operations_per_admission": 100000,
+    "numeric_rational_component_bits": 32768,
+    "numerical_work_is_additional_program_allowance": false
+  },
+  "numerical_meaning": {
+    "reachability": "exact rational products/sums of canonical binary64 source values; closed annulus; no epsilon or clamping",
+    "equal_link_origin": "reach_singular",
+    "shoulder_interval": "exact [-pi,pi), rounded once; rounded positive Pi64 canonicalizes to negative Pi64",
+    "elbow_interval": "chosen branch sign; positive/negative half-turn preserved",
+    "target_coordinates": "exact binary64 result of specified real solution; no comparison tolerance",
+    "tween_coordinates": "exact binary64 rounding of rational canonical start/target/time expression",
+    "source_position_residual_max_m": 1e-09,
+    "default_delivered_position_tolerance_m": 0.001,
+    "default_delivered_rotation_tolerance_rad": 0.001,
+    "derived_pose_reference_angle_tolerance_rad": 2e-15,
+    "correct_rounding_evidence": "Independent exact rational/outward dyadic rounding-cell and real forward-residual proof; finite corpus certificates validate predetermined bits, while runtime must apply the bounded method to arbitrary supported inputs.",
+    "canonical_limit_order": "prove selected rounded coordinate pair, then compare canonical closed limits",
+    "numeric_contract": "numeric-admission.md",
+    "counter_clarification": "numeric-counter-units.md",
+    "precision_unresolved": "reach_numeric",
+    "work_exhausted": "reach_resource",
+    "cancellation": "interruption, never a geometric outcome"
+  },
+  "goal_projection": {
+    "status": "concrete proposed JSON schema and actual-operation mapping; not runtime evidence",
+    "always_required": [
+      "requested program revision and complete source-unit hashes",
+      "context_origin and actual service accepted-head/candidate fields or explicit source-recording nulls",
+      "action occurrence identity and source unit/hash/UTF-8 span",
+      "ordered shoulder/elbow/tip occurrence identities",
+      "typed canonical target and exact frame identity",
+      "selected ReachBranch and canonical duration",
+      "current availability; sampled lifecycle and separate goal outcome only when actual observation exists"
+    ],
+    "pending_null_fields": [
+      "resolved_joint_targets_rad",
+      "start_coordinates_rad",
+      "start_time_seconds",
+      "elapsed_seconds",
+      "completion_time_seconds",
+      "current_residual_m",
+      "terminal_result"
+    ],
+    "admitted_required": [
+      "canonical resolved target pair",
+      "captured start pair",
+      "exact start and elapsed clocks",
+      "both effective closed joint limits",
+      "both current coordinate values and rates",
+      "both claimed joint identities when running/paused",
+      "actual end-site pose",
+      "current base-frame target residual",
+      "current equivalent world target and its frame identity"
+    ],
+    "lifecycle_states": [
+      "pending",
+      "running",
+      "paused",
+      "stopped",
+      "completed"
+    ],
+    "accepted_goal_outcomes": [
+      "pending",
+      "active",
+      "satisfied",
+      "interrupted"
+    ],
+    "failed_admission_outcome": "failure only in request/boundary diagnostic; incoming current projection unchanged",
+    "paused_completion_time": null,
+    "stopped_goal_can_be_satisfied": false,
+    "source_repair_reuses_stale_goal_result": false,
+    "schema": "schema-drafts/reach-projection.schema.json",
+    "operation_mapping": "agent-operations.md",
+    "terminal_outcomes": [
+      "satisfied",
+      "interrupted"
+    ],
+    "unavailable_current": {
+      "available": false,
+      "reason": "run_required",
+      "value": null
+    },
+    "observation_contexts": {
+      "run_sample": "actual nonempty run_id and matching immutable program revision",
+      "constructed_initial": "explicit before-zero constructed observation, null run_id; not a fabricated unsampled run",
+      "recorded_prefix": "identified immutable source recording, null Agent run/acceptance fields"
+    },
+    "physical_and_action_rates": "joint rates describe current physical state; own action rates are zero pending/paused/stopped/completed even when another owner moves the joints",
+    "terminal_snapshot_policy": "latched terminal time/coordinates/tip/residual never overwritten by later owners; current physical residual may change",
+    "candidate_history_policy": "requested candidate, actual accepted head, ever-accepted history and immutable old run/receipt identities remain distinct; after the identical source is accepted, current projection candidate_only is false while a retained earlier candidate run keeps candidate_only true (LP05.09, D27)"
+  },
+  "diagnostics": [
+    {
+      "reach_code": "reach_type",
+      "meaning": "wrong type, including String/Int branch; use inherited typed envelope",
+      "source_semantic_phase": "source typing",
+      "envelope_code": "OKL-E-TYPE",
+      "category": "invalid",
+      "validation_status": "rejected",
+      "envelope_phases": [
+        "type"
+      ]
+    },
+    {
+      "reach_code": "reach_frame",
+      "meaning": "different target frame or nonzero target-plane z",
+      "source_semantic_phase": "immutable action construction",
+      "envelope_code": "OKL-E-REACH",
+      "category": "invalid",
+      "validation_status": "rejected",
+      "envelope_phases": [
+        "elaboration"
+      ]
+    },
+    {
+      "reach_code": "reach_chain",
+      "meaning": "unsupported joint/site/authority topology or canonical axis geometry",
+      "source_semantic_phase": "immutable action construction",
+      "envelope_code": "OKL-E-REACH",
+      "category": "unsupported",
+      "validation_status": "rejected",
+      "envelope_phases": [
+        "support"
+      ]
+    },
+    {
+      "reach_code": "reach_domain",
+      "meaning": "nonfinite/out-of-supported length, target, duration or coordinate domain",
+      "source_semantic_phase": "immutable action construction",
+      "envelope_code": "OKL-E-REACH",
+      "category": "unsupported",
+      "validation_status": "rejected",
+      "envelope_phases": [
+        "support"
+      ]
+    },
+    {
+      "reach_code": "reach_claim_conflict",
+      "meaning": "either joint already has a coordinate action claim; neither new claim may survive",
+      "source_semantic_phase": "admission",
+      "envelope_code": "OKL-E-REACH",
+      "category": "invalid",
+      "validation_status": "rejected",
+      "envelope_phases": [
+        "admission"
+      ]
+    },
+    {
+      "reach_code": "reach_unreachable",
+      "meaning": "exact target radius lies outside closed geometric annulus",
+      "source_semantic_phase": "admission",
+      "envelope_code": "OKL-E-REACH",
+      "category": "invalid",
+      "validation_status": "rejected",
+      "envelope_phases": [
+        "admission"
+      ]
+    },
+    {
+      "reach_code": "reach_singular",
+      "meaning": "equal link lengths with exact zero target radius leave shoulder undetermined",
+      "source_semantic_phase": "admission",
+      "envelope_code": "OKL-E-REACH",
+      "category": "invalid",
+      "validation_status": "rejected",
+      "envelope_phases": [
+        "admission"
+      ]
+    },
+    {
+      "reach_code": "reach_limit",
+      "meaning": "selected canonical joint target outside actual closed limits",
+      "source_semantic_phase": "admission",
+      "envelope_code": "OKL-E-REACH",
+      "category": "invalid",
+      "validation_status": "rejected",
+      "envelope_phases": [
+        "admission"
+      ]
+    },
+    {
+      "reach_code": "reach_numeric",
+      "meaning": "required finite canonical solution/residual cannot be established",
+      "source_semantic_phase": "admission or measured completion",
+      "envelope_code": "OKL-E-NUMERIC",
+      "category": "numerical_failure",
+      "validation_status": "failed",
+      "envelope_phases": [
+        "admission",
+        "evaluation"
+      ]
+    },
+    {
+      "reach_code": "reach_resource",
+      "meaning": "profile or request work/output budget; no complete lower-level substitute",
+      "source_semantic_phase": "bounded construction/execution/output",
+      "envelope_code": "OKL-E-RESOURCE",
+      "category": "resource_limit",
+      "validation_status": "failed",
+      "envelope_phases": [
+        "support"
+      ]
+    }
+  ],
+  "diagnostic_precedence": [
+    "inherited syntax/types/references",
+    "immutable frame, chain and scalar domains in source argument order",
+    "inherited current motion mode and coordinate claim conflicts",
+    "exact geometric reachability, then singularity",
+    "bounded proof of selected canonical coordinate pair",
+    "selected-branch closed canonical limits",
+    "certified rounded-pair residual and completion residual"
+  ],
+  "budget_and_cancellation_policy": "budget-counting.md defines distinct units, conservative preflight, full response/intermediate guards and actual-work bounded caching; all numerical work consumes remaining inherited work.",
+  "unclaimed_domains": [
+    "dynamic actuator/load model",
+    "torque",
+    "contact or acquired grasp",
+    "balance or locomotion",
+    "skin deformation",
+    "general articulated base",
+    "world-target tracking",
+    "live destination IK",
+    "measured authoring improvement",
+    "complete GOAL acceptance"
+  ],
+  "reconstruction": "2026-10-20-recovery-14",
+  "original_profile": "profile.json",
+  "effective_amendments": "draft2-amendments.json",
+  "accepted_dependency": {
+    "main": "59b937d16ec0c82c9bc1395bd0c9bcc63e597261",
+    "force_implementation": "c7db6520e172b2b38591969a4bdf75f97a993dbb",
+    "force_main_merge": "e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c",
+    "finite_force_release_complete": true,
+    "whole_goal_complete": false
+  },
+  "work_and_cancellation_precedence": "Check/precharge throughout all phases; a first exhausted budget or observed cancellation interrupts without claiming later mathematical classification.",
+  "recorded_delivery": {
+    "quantization_contract": "quantization.md",
+    "metadata_schema": "schema-drafts/glb-metadata.schema.json",
+    "quantization_schema": "schema-drafts/quantization.schema.json",
+    "clock_conversion": "binary32_rne_ties_to_even_from_exact_rational",
+    "clock_bits_must_match_actual_accessor": true,
+    "all_touching_phases_required": true,
+    "unknown_uniform_numeric_error": "reject",
+    "history_maps": [
+      "joint_states_before",
+      "joint_states_after",
+      "action_states_before",
+      "action_states_after",
+      "pose_authorities_before",
+      "pose_authorities_after",
+      "impulse_states_before",
+      "impulse_states_after",
+      "force_states_before",
+      "force_states_after",
+      "reach_states_before",
+      "reach_states_after",
+      "incoming_releases"
+    ],
+    "failed_prefix_recovery": "reset, evaluate a fresh L04 run through0.25, actually export/retrieve under the unchanged L04 program revision"
+  },
+  "release_contract": "release-contract.md"
+}

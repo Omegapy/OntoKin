@@ -1,0 +1,15 @@
+{
+  "schema_version": "ontokin.reach-contract-preflight/0.1",
+  "recorded_at": "2026-10-20T14:42:10.902185+00:00",
+  "command": [
+    "python3",
+    "docs/language-design/planar-reach-v0.1/verify_fixtures.py"
+  ],
+  "status": "failed",
+  "exit_code": 1,
+  "command_start_time": "not captured by this preflight",
+  "failure": "AssertionError: broken proposal link: planar-reach-v0.1/numeric-admission.md",
+  "cause": "The root draft had already linked the numeric worker contribution, which had not yet been integrated. The checker reached its proposal-navigation gate; this is not an actual source/runtime failure.",
+  "subsequent_action": "Integrated separately reviewed numeric and Agent/lifecycle worker commits; run fresh combined checks on the actual final input set.",
+  "passing_original_fixture_run_claimed": false
+}

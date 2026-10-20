@@ -1,0 +1,346 @@
+#!/usr/bin/env python3
+"""Reproduce the finite proposed rounding certificates without OntoKin imports."""
+from __future__ import annotations
+
+import argparse
+from datetime import datetime, timezone
+from fractions import Fraction as Q
+import hashlib
+import json
+import math
+from pathlib import Path
+import platform
+import struct
+import subprocess
+import sys
+
+sys.dont_write_bytecode = True
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+import interval_oracle as proof
+
+INPUTS = ("acceptance.json", "oracle.py", "generated-members.json", "profile.json", "requirements.json",
+          "numeric-admission.md", "interval_oracle.py", "verify_rounding.py")
+BASELINE = "e5ffcf98f2532a2cf8e7a15a7446dac7be7d6f9d"
+OLD_CERTIFICATE_SHA256 = "24494a51ebdc33eaa4e1ac8f9a9fcbebe8fcee73dc823cfe82644bf38c2585a6"
+
+
+def require(condition, message):
+    if not condition:
+        raise AssertionError(message)
+
+
+def encoded(value):
+    return (json.dumps(value, sort_keys=True, indent=2, ensure_ascii=False, allow_nan=False)+"\n").encode()
+
+
+def digest(raw):
+    return "sha256:"+hashlib.sha256(raw).hexdigest()
+
+
+def input_inventory():
+    return [{"path": name, "bytes": len(raw := (HERE/name).read_bytes()), "sha256": digest(raw)} for name in INPUTS]
+
+
+def read_q(value):
+    require(set(value) == {"numerator", "denominator"}, "rational fields")
+    n, d = int(value["numerator"]), int(value["denominator"])
+    require(d > 0, "positive denominator")
+    result = Q(n, d)
+    require(str(result.numerator) == value["numerator"] and str(result.denominator) == value["denominator"],
+            "canonical exact rational")
+    return result
+
+
+def read_interval(value):
+    require(set(value) == {"lower", "upper"}, "interval fields")
+    return proof.Interval(read_q(value["lower"]), read_q(value["upper"]))
+
+
+def independent_cell(enclosure, bits):
+    """Use native adjacent binary64 encodings, independent of the proof's cells."""
+    value = struct.unpack(">d", struct.pack(">Q", bits))[0]
+    require(math.isfinite(value), "finite cell")
+    if value == 0:
+        lower, upper, ties = -Q(1, 1 << 1075), Q(1, 1 << 1075), True
+    else:
+        before, after = math.nextafter(value, -math.inf), math.nextafter(value, math.inf)
+        prior = -Q(1 << 1024) if math.isinf(before) else Q.from_float(before)
+        following = Q(1 << 1024) if math.isinf(after) else Q.from_float(after)
+        lower, upper = (prior+Q.from_float(value))/2, (Q.from_float(value)+following)/2
+        ties = bits % 2 == 0
+    return ((lower <= enclosure.lo and enclosure.hi <= upper) if ties else
+            (lower < enclosure.lo and enclosure.hi < upper))
+
+
+def build_certificate():
+    require(sys.float_info.radix == 2 and sys.float_info.mant_dig == 53 and sys.float_info.max_exp == 1024,
+            "this checker needs binary64 host storage")
+    acceptance = json.loads((HERE/"acceptance.json").read_text())
+    require(acceptance["source_case_count"] == 41 and acceptance["status"] == "proposed_not_adopted",
+            "original 41-case proposal remains unadopted")
+    cases, rejected = [], []
+    for case in acceptance["source_cases"]:
+        expected = case["expected"].get("independent_solution", {})
+        spec = case["specification"]
+        if "resolved_joint_targets_rad" in expected:
+            result = proof.prove_solution(spec["lengths"], spec["target"], spec["branch"])
+            require(result["status"] == "proved", case["id"]+" target proof")
+            expected_bits = [proof.binary64_bits(v) for v in expected["resolved_joint_targets_rad"]]
+            require([int(v["canonical_bits"], 16) for v in result["coordinates"]] == expected_bits,
+                    case["id"]+" differs from original target bits; preserve corpus and report an erratum")
+            lower = -proof.bits_fraction(proof.PI64_BITS)
+            upper_shoulder = -lower
+            # Initial fixtures use exact integer fractions of Pi64, as their
+            # unchanged author_fixtures.py explicitly specifies.
+            upper_elbow_bits = proof.round_binary64(upper_shoulder*Q(spec.get("elbow_high_deg", 180), 180))
+            upper_elbow = proof.bits_fraction(upper_elbow_bits)
+            limits = [[lower, upper_shoulder], [lower, upper_elbow]]
+            within = all(low <= proof.bits_fraction(bits) <= high for bits, (low, high) in zip(expected_bits, limits))
+            expected_code = "resolved" if within else "reach_limit"
+            require(expected_code == expected.get("reach_code", expected.get("status")), case["id"]+" closed limits")
+            cases.append({"case_id": case["id"], "source_revision": case["source_sha256"],
+                          "program_revision": case["program_revision"],
+                          "original_expected_bits": [f"{v:016x}" for v in expected_bits],
+                          "closed_limit_result": expected_code,
+                          "canonical_limits_rad": [[proof.rational_record(v) for v in pair] for pair in limits],
+                          "proof": result})
+        elif case["id"] in ("N01", "N02", "N03", "N04", "N07"):
+            actual = proof.classify(spec["lengths"], spec["target"], spec["branch"])
+            require(actual["status"] == "rejected" and actual["reach_code"] == expected["reach_code"],
+                    case["id"]+" exact numeric classification")
+            rejected.append({"case_id": case["id"], "source_revision": case["source_sha256"],
+                             "program_revision": case["program_revision"], "classification": actual})
+    require(len(cases) == 27 and len(rejected) == 5, "finite certificate inventory")
+    return {"schema_version": "ontokin.reach-rounding-certificates/0.2", "proposal_status": "proposed_not_adopted",
+            "method": "outward-dyadic-planar-ik/0.2", "reconstruction": {
+                "baseline": BASELINE, "revision": "recovery14",
+                "status": "new_identified_reconstruction_not_exact_recovery",
+                "unavailable_previous_certificate_sha256": "sha256:"+OLD_CERTIFICATE_SHA256,
+                "previous_execution_results_apply_to_this_file": False},
+            "input_members": input_inventory(),
+            "limits": {"precision_passes_bits": list(proof.PRECISIONS),
+                       "per_admission_series_terms": proof.MAX_SERIES_TERMS,
+                       "series_terms_unit": "one_atan_term_or_one_paired_sine_cosine_recurrence_step",
+                       "per_admission_interval_operations": proof.MAX_INTERVAL_OPERATIONS,
+                       "combined_declared_proof_operations": proof.MAX_INTERVAL_OPERATIONS,
+                       "rational_or_integer_operand_bits": proof.MAX_OPERAND_BITS,
+                       "runtime_semantic_budget_is_shared_not_additional": True},
+            "case_count": len(cases), "coordinate_count": 2*len(cases), "classification_count": len(rejected),
+            "maximum_observed_series_terms_per_case": max(c["proof"]["work"]["series_terms"] for c in cases),
+            "maximum_observed_interval_operations_per_case": max(c["proof"]["work"]["interval_operations"] for c in cases),
+            "maximum_observed_exact_proof_operations_per_case": max(c["proof"]["work"]["exact_proof_operations"] for c in cases),
+            "cases": cases, "classifications": rejected,
+            "scope": "Fixed mathematical preparation only; no source runtime, claims, Agent, GLB or release execution."}
+
+
+def reference_atan(value, count=160):
+    """Separate exact-rational sum, with no outward-arithmetic helper calls."""
+    require(abs(value) <= Q(1, 2), "reference atan domain")
+    total = sum(((-1)**k * value**(2*k+1)/Q(2*k+1) for k in range(count)), Q(0))
+    tail = abs(value)**(2*count+1)/Q(2*count+1)
+    return proof.Interval(total-tail, total+tail)
+
+
+def reference_sincos(value, count=100):
+    sine = sum(((-1)**k * value**(2*k+1)/Q(math.factorial(2*k+1)) for k in range(count)), Q(0))
+    cosine = sum(((-1)**k * value**(2*k)/Q(math.factorial(2*k)) for k in range(count)), Q(0))
+    st = abs(value)**(2*count+1)/Q(math.factorial(2*count+1))
+    ct = abs(value)**(2*count)/Q(math.factorial(2*count))
+    return proof.Interval(sine-st, sine+st), proof.Interval(cosine-ct, cosine+ct)
+
+
+def overlaps(left, right):
+    return left.lo <= right.hi and right.lo <= left.hi
+
+
+def mathematical_probes():
+    done = []
+    context = proof.Context(192, proof.Budget())
+    # Tangent identities are checked with exact rational arithmetic, including
+    # a different atan addition formula for an independent pi enclosure.
+    ta = Q(1, 5); t2 = 2*ta/(1-ta*ta); t4 = 2*t2/(1-t2*t2); tb = Q(1, 239)
+    require((t4-tb)/(1+t4*tb) == 1, "Machin tangent identity")
+    a, b = reference_atan(Q(1, 2)), reference_atan(Q(1, 3))
+    other_pi = proof.Interval(4*(a.lo+b.lo), 4*(a.hi+b.hi))
+    require(overlaps(context.pi(), other_pi), "independent pi identity enclosure")
+    require(proof.certify_rounding(context.pi(), context.budget)["rounded_bits"] == f"{proof.PI64_BITS:016x}", "Pi64 cell")
+    done.append("machin_pi_against_distinct_exact_atan_addition_identity")
+
+    root = context.sqrt_point(Q(2))
+    require(root.lo*root.lo < 2 < root.hi*root.hi and root.hi-root.lo == Q(1, 1 << 192), "sqrt2 enclosure")
+    done.append("irrational_integer_square_root_bracket")
+    root = context.sqrt_point(Q(9, 16))
+    require(root.lo == root.hi == Q(3, 4), "exact square root")
+    done.append("exact_dyadic_square_root")
+
+    for q, name in [(Q(1, 2), "positive_half"), (Q(-1, 2), "negative_half")]:
+        require(overlaps(context.atan_point(q), reference_atan(q)), name+" atan")
+        done.append("atan_"+name+"_exact_series_crosscheck")
+    require(overlaps(context.atan_point(Q(1)), proof.Interval(other_pi.lo/4, other_pi.hi/4)), "atan1 pi/4")
+    done.append("atan_one_quarter_turn")
+    small = reference_atan(Q(1, 9))
+    require(overlaps(context.atan_point(Q(9)), proof.Interval(other_pi.lo/2-small.hi, other_pi.hi/2-small.lo)), "atan reciprocal")
+    done.append("atan_reciprocal_reduction")
+
+    for q, name in [(Q(1), "one"), (Q(-8), "negative_eight")]:
+        actual, reference = context.sincos_point(q), reference_sincos(q)
+        require(all(overlaps(x, y) for x, y in zip(actual, reference)), name+" paired sine/cosine")
+        done.append("paired_sine_cosine_"+name+"_exact_polynomial_crosscheck")
+
+    for a, b, d, expected in [(2,-1,4,0),(-2,1,4,0),(1,-1,2,-1),(-1,1,2,1),(2,-1,2,1),(-2,1,2,-1)]:
+        require(proof.radical_sign(Q(a),Q(b),Q(d),context.budget) == expected, "algebraic radical sign")
+    done.append("exact_radical_sign_cancellation_and_opposed_signs")
+
+    wrap = proof.prove_solution([1,1],[-1, math.nextafter(-1., math.inf), 0], "positive")
+    require(wrap["coordinates"][0]["positive_pi_shoulder_remap"] and
+            wrap["coordinates"][0]["canonical_bits"] == f"{proof.PI64_BITS | proof.SIGN:016x}", "positive Pi shoulder remap")
+    done.append("one_ulp_neighbor_positive_pi_shoulder_remap")
+
+    reverse = proof.prove_solution([1,2],[1,0,0], "positive")
+    require([int(p["canonical_bits"],16) for p in reverse["coordinates"]] == [proof.PI64_BITS | proof.SIGN, proof.PI64_BITS],
+            "longer second link inner boundary")
+    done.append("reversed_unequal_inner_boundary")
+    right = proof.prove_solution([.75,.5],[.75,-.5,0], "negative")
+    require([int(p["canonical_bits"],16) for p in right["coordinates"]] == [0, proof.PI64_BITS-(1 << 52) | proof.SIGN],
+            "P11 additional right-arm goal")
+    done.append("original_character_second_arm_goal")
+
+    for q, bits in [(1+Q(1,1 << 53),0x3FF0000000000000),(1+Q(3,1 << 53),0x3FF0000000000002),
+                    (-1-Q(1,1 << 53),0xBFF0000000000000),(-1-Q(3,1 << 53),0xBFF0000000000002)]:
+        require(proof.round_binary64(q) == bits and independent_cell(proof.Interval(q,q), bits), "normal ties-even")
+    done.append("normal_and_negative_midpoint_ties_to_even")
+    for q, bits in [(Q(1,1 << 1075),0),(-Q(1,1 << 1075),0),(Q(3,1 << 1075),2),(-Q(3,1 << 1075),proof.SIGN|2)]:
+        require(proof.round_binary64(q) == bits and independent_cell(proof.Interval(q,q),bits), "subnormal ties-even")
+    done.append("subnormal_midpoints_and_canonical_zero")
+    transition = Q(1,1 << 1022)-Q(1,1 << 1075)
+    overflow = Q(1 << 1024)-Q(1 << 970)
+    require(proof.round_binary64(transition) == 0x0010000000000000, "normal transition tie")
+    require(proof.round_binary64(overflow) == 0x7FF0000000000000, "overflow tie")
+    require(proof.round_binary64(overflow-Q(1)) == proof.MAX_FINITE_BITS, "below overflow midpoint")
+    done.append("normal_transition_and_overflow_midpoints")
+
+    tiny = proof.prove_solution([1,1],[proof.bits_float(1),0,0])
+    require(tiny["status"] == "proved" and tiny["precision_bits"] == 1536, "smallest subnormal target precision refinement")
+    require([int(p["canonical_bits"],16) for p in tiny["coordinates"]] ==
+            [(proof.PI64_BITS-(1 << 52)) | proof.SIGN, proof.PI64_BITS], "subnormal target canonical pair")
+    done.append("smallest_subnormal_target_with_bounded_refinement")
+    require(len(done) == 17, "mathematical probe inventory")
+    return {"count": len(done), "passed": done, "smallest_subnormal_target_work": tiny["work"],
+            "smallest_subnormal_target_precision_attempts": tiny["precision_attempts"]}
+
+
+def resource_probes():
+    done = []
+    tests = [
+        ("series_limit_before_first_recurrence", proof.ResourceLimit,
+         lambda: proof.Context(96,proof.Budget(max_series_terms=0)).atan_small(Q(1,5))),
+        ("interval_limit_before_first_operation", proof.ResourceLimit,
+         lambda: proof.Context(96,proof.Budget(max_interval_operations=0)).point(1)),
+        ("combined_proof_work_exhaustion", proof.ResourceLimit,
+         lambda: proof.prove_solution([1,1],[1,1,0],budget=proof.Budget(max_proof_operations=0))),
+        ("operand_width_preflight", proof.ResourceLimit,
+         lambda: proof.Context(96,proof.Budget(max_operand_bits=64))),
+        ("explicit_cancellation_is_not_geometry_failure", proof.Cancelled,
+         lambda: proof.prove_solution([1,1],[1,1,0],budget=proof.Budget(cancel=lambda: True))),
+        ("precision_outside_fixed_schedule", ValueError, lambda: proof.Context(97,proof.Budget())),
+        ("request_cannot_raise_fixed_series_maximum", ValueError,
+         lambda: proof.Budget(max_series_terms=proof.MAX_SERIES_TERMS+1)),
+    ]
+    for name, kind, operation in tests:
+        try:
+            operation()
+        except kind:
+            done.append(name)
+        else:
+            raise AssertionError("missing expected finite failure: "+name)
+    # Lowered counters are cumulative across contexts: a new precision does not
+    # obtain a second allowance. This is a proof-tool check, not a runtime run.
+    budget = proof.Budget(max_interval_operations=1)
+    proof.Context(96,budget).point(1)
+    try:
+        proof.Context(192,budget).point(1)
+    except proof.ResourceLimit:
+        require(budget.interval_operations == 1, "cumulative counter did not advance beyond cap")
+        done.append("precision_passes_share_cumulative_counter")
+    else:
+        raise AssertionError("precision pass reset the work counter")
+    budget = proof.Budget(max_proof_operations=1)
+    proof.exact_op(budget,"add",Q(1),Q(1))
+    try:
+        proof.Context(96,budget).point(1)
+    except proof.ResourceLimit:
+        require(budget.exact_proof_operations == 1 and budget.interval_operations == 0,
+                "exact and interval helpers must share the declared proof-work counter")
+        done.append("exact_and_interval_helpers_share_declared_proof_allowance")
+    else:
+        raise AssertionError("exact and interval work received separate allowances")
+    return {"count":len(done), "passed":done}
+
+
+def verify():
+    start = datetime.now(timezone.utc).isoformat()
+    before = input_inventory()
+    raw = (HERE/"rounding-certificates.json").read_bytes()
+    stored = json.loads(raw)
+    regenerated = build_certificate()
+    require(raw == encoded(regenerated), "stored certificate bytes differ from fresh bounded proof")
+    rejected_mutations = []
+    for case in stored["cases"]:
+        for p in case["proof"]["coordinates"]:
+            require(independent_cell(read_interval(p["enclosure"]), int(p["rounded_bits"],16)),
+                    case["case_id"]+" independent adjacent-cell inclusion")
+        residual = read_interval(case["proof"]["residual_squared_m2"])
+        require(0 <= residual.lo <= residual.hi <= Q(1,10**18), case["case_id"]+" squared residual bound")
+        nonzero = next((p for p in case["proof"]["coordinates"] if int(p["rounded_bits"],16) & ~proof.SIGN), None)
+        if nonzero is not None:
+            bits = int(nonzero["rounded_bits"],16)
+            wrong = bits+1  # One adjacent finite magnitude; both signs are tested.
+            require(not independent_cell(read_interval(nonzero["enclosure"]),wrong),
+                    case["case_id"]+" adjacent wrong cell was accepted")
+            rejected_mutations.append({"case_id":case["case_id"],"coordinate":nonzero["coordinate"],
+                "true_bits":f"{bits:016x}","corrupt_bits":f"{wrong:016x}","rejected":True})
+    require(len(rejected_mutations) == 25,"one-ULP corruption inventory")
+    math_checks, resources = mathematical_probes(), resource_probes()
+    require(before == input_inventory(), "numerical contract inputs changed during verification")
+    require(raw == (HERE/"rounding-certificates.json").read_bytes(),"certificate changed during verification")
+    try:
+        head = subprocess.check_output(["git","rev-parse","HEAD"],cwd=HERE,text=True).strip()
+    except (OSError,subprocess.CalledProcessError):
+        head = None
+    observed_precisions = sorted({c["proof"]["precision_bits"] for c in stored["cases"]})
+    return {"schema_version":"ontokin.reach-rounding-check/0.2","status":"passed", "proposal_status":"proposed_not_adopted",
+            "source_head":head,"started_at":start,"finished_at":datetime.now(timezone.utc).isoformat(),
+            "python":sys.version,"implementation":platform.python_implementation(),"platform":platform.platform(),
+            "input_members":before,"certificate_bytes":len(raw),"certificate_sha256":digest(raw),
+            "byte_identical_reproduction":True,"coordinate_cells_checked":54,"classification_cases_checked":5,
+            "case_count":27,"original_case_precision_bits":observed_precisions,
+            "all_original_cases_resolved_at_precision_bits":observed_precisions[0] if len(observed_precisions) == 1 else None,
+            "maximum_original_case_work":{k:max(c["proof"]["work"][k] for c in stored["cases"]) for k in stored["cases"][0]["proof"]["work"]},
+            "mathematical_probes":math_checks,"resource_probes":resources,"one_ulp_corruptions_rejected":rejected_mutations,
+            "no_original_expected_values_changed":True,"runtime_agent_export_or_release_executed":False,
+            "scope":"Fresh reconstruction proof against the unchanged original expected target bits; no historical result relabeled."}
+
+
+def main():
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--emit-certificate",type=Path,help="Author a new deterministic certificate at a nonexisting path")
+    parser.add_argument("--output",type=Path,help="Save this fresh verification report at a nonexisting path")
+    args=parser.parse_args()
+    if args.emit_certificate:
+        require(not args.emit_certificate.exists(),"refusing to overwrite an existing certificate")
+        args.emit_certificate.parent.mkdir(parents=True,exist_ok=True)
+        args.emit_certificate.write_bytes(encoded(build_certificate()))
+        print(json.dumps({"status":"prepared","path":str(args.emit_certificate),
+                          "sha256":digest(args.emit_certificate.read_bytes())},sort_keys=True))
+        return
+    report=verify()
+    if args.output:
+        require(not args.output.exists(),"refusing to overwrite an existing check report")
+        args.output.parent.mkdir(parents=True,exist_ok=True)
+        args.output.write_bytes(encoded(report))
+    print(json.dumps(report,sort_keys=True,indent=2,allow_nan=False))
+
+
+if __name__ == "__main__":
+    main()

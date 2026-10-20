@@ -1,0 +1,979 @@
+{
+  "$comment": "Proposed OK-LANG-006 0.1.0-draft.2; no adoption or implementation claim.",
+  "$defs": {
+    "angle_pair": {
+      "items": {
+        "maximum": 3.141592653589793,
+        "minimum": -3.141592653589793,
+        "type": "number"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "chain": {
+      "additionalProperties": false,
+      "properties": {
+        "base_frame": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/site_frame"
+        },
+        "closed_limits_rad": {
+          "additionalProperties": false,
+          "properties": {
+            "elbow": {
+              "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/angle_pair"
+            },
+            "shoulder": {
+              "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/angle_pair"
+            }
+          },
+          "required": [
+            "shoulder",
+            "elbow"
+          ],
+          "type": "object"
+        },
+        "elbow": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/occurrence_ref"
+        },
+        "lengths_m": {
+          "items": {
+            "maximum": 4,
+            "minimum": 0.125,
+            "type": "number"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array"
+        },
+        "shoulder": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/occurrence_ref"
+        },
+        "tip": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/occurrence_ref"
+        }
+      },
+      "required": [
+        "shoulder",
+        "elbow",
+        "tip",
+        "base_frame",
+        "lengths_m",
+        "closed_limits_rad"
+      ],
+      "type": "object"
+    },
+    "element_id": {
+      "items": {
+        "maxLength": 200,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 256,
+      "minItems": 1,
+      "type": "array"
+    },
+    "incoming_reach_contributor": {
+      "additionalProperties": false,
+      "properties": {
+        "action": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/occurrence_ref"
+        },
+        "elbow": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/occurrence_ref"
+        },
+        "joint_coordinates_rad": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/angle_pair"
+        },
+        "joint_rates_rad_per_s": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/rate_pair"
+        },
+        "shoulder": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/occurrence_ref"
+        }
+      },
+      "required": [
+        "action",
+        "shoulder",
+        "elbow",
+        "joint_coordinates_rad",
+        "joint_rates_rad_per_s"
+      ],
+      "type": "object"
+    },
+    "incoming_release": {
+      "additionalProperties": false,
+      "properties": {
+        "grip": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/occurrence_ref"
+        },
+        "incoming_angular_velocity_world_rad_per_s": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/vector3"
+        },
+        "incoming_linear_velocity_world_m_per_s": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/vector3"
+        },
+        "incoming_pose_world": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/pose"
+        },
+        "program_revision": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/revision"
+        },
+        "reach_contributors": {
+          "items": {
+            "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/incoming_reach_contributor"
+          },
+          "maxItems": 32,
+          "minItems": 0,
+          "type": "array"
+        },
+        "sequence_index": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "source_location": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/source_location"
+        },
+        "target": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/occurrence_ref"
+        },
+        "time_seconds": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/time"
+        }
+      },
+      "required": [
+        "program_revision",
+        "source_location",
+        "sequence_index",
+        "time_seconds",
+        "grip",
+        "target",
+        "reach_contributors",
+        "incoming_pose_world",
+        "incoming_linear_velocity_world_m_per_s",
+        "incoming_angular_velocity_world_rad_per_s"
+      ],
+      "type": "object"
+    },
+    "observation": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "context_kind": {
+                "const": "run_sample"
+              }
+            },
+            "required": [
+              "context_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "run_id": {
+                "maxLength": 4096,
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "context_kind": {
+                "const": "constructed_initial"
+              }
+            },
+            "required": [
+              "context_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "run_id": {
+                "type": "null"
+              },
+              "side": {
+                "const": "before"
+              },
+              "time_seconds": {
+                "const": "0"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "context_kind": {
+                "const": "recorded_prefix"
+              }
+            },
+            "required": [
+              "context_kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "run_id": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "context_kind": {
+          "enum": [
+            "run_sample",
+            "constructed_initial",
+            "recorded_prefix"
+          ]
+        },
+        "run_id": {
+          "oneOf": [
+            {
+              "maxLength": 4096,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "side": {
+          "enum": [
+            "before",
+            "after"
+          ]
+        },
+        "time_seconds": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/time"
+        }
+      },
+      "required": [
+        "time_seconds",
+        "side",
+        "run_id",
+        "context_kind"
+      ],
+      "type": "object"
+    },
+    "occurrence_ref": {
+      "additionalProperties": false,
+      "properties": {
+        "element_id": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/element_id"
+        },
+        "path": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/path"
+        }
+      },
+      "required": [
+        "path",
+        "element_id"
+      ],
+      "type": "object"
+    },
+    "path": {
+      "maxLength": 32768,
+      "minLength": 1,
+      "type": "string"
+    },
+    "pose": {
+      "additionalProperties": false,
+      "properties": {
+        "orientation_wxyz": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/quaternion_wxyz"
+        },
+        "position_m": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/vector3"
+        }
+      },
+      "required": [
+        "position_m",
+        "orientation_wxyz"
+      ],
+      "type": "object"
+    },
+    "quaternion_wxyz": {
+      "items": {
+        "type": "number"
+      },
+      "maxItems": 4,
+      "minItems": 4,
+      "type": "array"
+    },
+    "rate_pair": {
+      "items": {
+        "type": "number"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "rational_time": {
+      "additionalProperties": false,
+      "properties": {
+        "denominator": {
+          "maxLength": 4096,
+          "pattern": "^[1-9][0-9]*$",
+          "type": "string"
+        },
+        "numerator": {
+          "maxLength": 4096,
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "numerator",
+        "denominator"
+      ],
+      "type": "object"
+    },
+    "reach_state": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "observation": {
+                "properties": {
+                  "context_kind": {
+                    "const": "constructed_initial"
+                  }
+                },
+                "required": [
+                  "context_kind"
+                ]
+              }
+            },
+            "required": [
+              "observation"
+            ]
+          },
+          "then": {
+            "properties": {
+              "lifecycle": {
+                "const": "pending"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "lifecycle": {
+                "const": "pending"
+              }
+            },
+            "required": [
+              "lifecycle"
+            ]
+          },
+          "then": {
+            "properties": {
+              "action_joint_rates_rad_per_s": {
+                "const": [
+                  0,
+                  0
+                ]
+              },
+              "claimed_joint_ids": {
+                "maxItems": 0
+              },
+              "completion_time_seconds": {
+                "type": "null"
+              },
+              "current_residual_m": {
+                "type": "null"
+              },
+              "elapsed_seconds": {
+                "type": "null"
+              },
+              "goal_outcome": {
+                "const": "pending"
+              },
+              "resolved_joint_targets_rad": {
+                "type": "null"
+              },
+              "start_coordinates_rad": {
+                "type": "null"
+              },
+              "start_time_seconds": {
+                "type": "null"
+              },
+              "terminal_result": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "lifecycle": {
+                "const": "running"
+              }
+            },
+            "required": [
+              "lifecycle"
+            ]
+          },
+          "then": {
+            "properties": {
+              "claimed_joint_ids": {
+                "maxItems": 2,
+                "minItems": 2
+              },
+              "completion_time_seconds": {
+                "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/time"
+              },
+              "current_residual_m": {
+                "minimum": 0,
+                "type": "number"
+              },
+              "elapsed_seconds": {
+                "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/time"
+              },
+              "goal_outcome": {
+                "const": "active"
+              },
+              "resolved_joint_targets_rad": {
+                "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/angle_pair"
+              },
+              "start_coordinates_rad": {
+                "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/angle_pair"
+              },
+              "start_time_seconds": {
+                "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/time"
+              },
+              "terminal_result": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "lifecycle": {
+                "const": "paused"
+              }
+            },
+            "required": [
+              "lifecycle"
+            ]
+          },
+          "then": {
+            "properties": {
+              "action_joint_rates_rad_per_s": {
+                "const": [
+                  0,
+                  0
+                ]
+              },
+              "claimed_joint_ids": {
+                "maxItems": 2,
+                "minItems": 2
+              },
+              "completion_time_seconds": {
+                "type": "null"
+              },
+              "current_residual_m": {
+                "minimum": 0,
+                "type": "number"
+              },
+              "elapsed_seconds": {
+                "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/time"
+              },
+              "goal_outcome": {
+                "const": "active"
+              },
+              "joint_rates_rad_per_s": {
+                "const": [
+                  0,
+                  0
+                ]
+              },
+              "resolved_joint_targets_rad": {
+                "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/angle_pair"
+              },
+              "start_coordinates_rad": {
+                "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/angle_pair"
+              },
+              "start_time_seconds": {
+                "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/time"
+              },
+              "terminal_result": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "lifecycle": {
+                "const": "stopped"
+              }
+            },
+            "required": [
+              "lifecycle"
+            ]
+          },
+          "then": {
+            "properties": {
+              "action_joint_rates_rad_per_s": {
+                "const": [
+                  0,
+                  0
+                ]
+              },
+              "claimed_joint_ids": {
+                "maxItems": 0
+              },
+              "completion_time_seconds": {
+                "type": "null"
+              },
+              "current_residual_m": {
+                "minimum": 0,
+                "type": "number"
+              },
+              "elapsed_seconds": {
+                "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/time"
+              },
+              "goal_outcome": {
+                "const": "interrupted"
+              },
+              "resolved_joint_targets_rad": {
+                "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/angle_pair"
+              },
+              "start_coordinates_rad": {
+                "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/angle_pair"
+              },
+              "start_time_seconds": {
+                "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/time"
+              },
+              "terminal_result": {
+                "properties": {
+                  "outcome": {
+                    "const": "interrupted"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "lifecycle": {
+                "const": "completed"
+              }
+            },
+            "required": [
+              "lifecycle"
+            ]
+          },
+          "then": {
+            "properties": {
+              "action_joint_rates_rad_per_s": {
+                "const": [
+                  0,
+                  0
+                ]
+              },
+              "claimed_joint_ids": {
+                "maxItems": 0
+              },
+              "completion_time_seconds": {
+                "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/time"
+              },
+              "current_residual_m": {
+                "minimum": 0,
+                "type": "number"
+              },
+              "elapsed_seconds": {
+                "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/time"
+              },
+              "goal_outcome": {
+                "const": "satisfied"
+              },
+              "resolved_joint_targets_rad": {
+                "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/angle_pair"
+              },
+              "start_coordinates_rad": {
+                "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/angle_pair"
+              },
+              "start_time_seconds": {
+                "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/time"
+              },
+              "terminal_result": {
+                "properties": {
+                  "outcome": {
+                    "const": "satisfied"
+                  },
+                  "position_residual_m": {
+                    "maximum": 1e-09,
+                    "minimum": 0,
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "action_joint_rates_rad_per_s": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/rate_pair"
+        },
+        "claimed_joint_ids": {
+          "items": {
+            "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/element_id"
+          },
+          "maxItems": 2,
+          "minItems": 0,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "completion_time_seconds": {
+          "oneOf": [
+            {
+              "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "current_residual_m": {
+          "oneOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "current_world_target_m": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/vector3"
+        },
+        "elapsed_seconds": {
+          "oneOf": [
+            {
+              "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "goal_outcome": {
+          "enum": [
+            "pending",
+            "active",
+            "interrupted",
+            "satisfied"
+          ]
+        },
+        "joint_coordinates_rad": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/angle_pair"
+        },
+        "joint_rates_rad_per_s": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/rate_pair"
+        },
+        "lifecycle": {
+          "enum": [
+            "pending",
+            "running",
+            "paused",
+            "stopped",
+            "completed"
+          ]
+        },
+        "observation": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/observation"
+        },
+        "resolved_joint_targets_rad": {
+          "oneOf": [
+            {
+              "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/angle_pair"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "start_coordinates_rad": {
+          "oneOf": [
+            {
+              "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/angle_pair"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "start_time_seconds": {
+          "oneOf": [
+            {
+              "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "terminal_result": {
+          "oneOf": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "joint_coordinates_rad": {
+                  "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/angle_pair"
+                },
+                "outcome": {
+                  "enum": [
+                    "satisfied",
+                    "interrupted"
+                  ]
+                },
+                "position_residual_m": {
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "time_seconds": {
+                  "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/time"
+                },
+                "tip_pose_base": {
+                  "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/pose"
+                }
+              },
+              "required": [
+                "outcome",
+                "time_seconds",
+                "position_residual_m",
+                "joint_coordinates_rad",
+                "tip_pose_base"
+              ],
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tip_pose_base": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/pose"
+        },
+        "tip_pose_world": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/pose"
+        }
+      },
+      "required": [
+        "observation",
+        "lifecycle",
+        "goal_outcome",
+        "resolved_joint_targets_rad",
+        "start_coordinates_rad",
+        "start_time_seconds",
+        "elapsed_seconds",
+        "completion_time_seconds",
+        "joint_coordinates_rad",
+        "joint_rates_rad_per_s",
+        "action_joint_rates_rad_per_s",
+        "claimed_joint_ids",
+        "current_residual_m",
+        "tip_pose_base",
+        "tip_pose_world",
+        "current_world_target_m",
+        "terminal_result"
+      ],
+      "type": "object"
+    },
+    "revision": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "site_frame": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/path"
+        },
+        "site_element_id": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/element_id"
+        }
+      },
+      "required": [
+        "path",
+        "site_element_id"
+      ],
+      "type": "object"
+    },
+    "source_location": {
+      "additionalProperties": false,
+      "properties": {
+        "end_byte": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "source_id": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "type": "string"
+        },
+        "source_revision": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/revision"
+        },
+        "start_byte": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "source_id",
+        "source_revision",
+        "start_byte",
+        "end_byte"
+      ],
+      "type": "object"
+    },
+    "source_manifest": {
+      "additionalProperties": false,
+      "properties": {
+        "entry_source_id": {
+          "const": "entry"
+        },
+        "schema_version": {
+          "const": "ontokin.bundle/0.1"
+        },
+        "units": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "filename": {
+                "maxLength": 4096,
+                "minLength": 1,
+                "type": "string"
+              },
+              "package_id": {
+                "oneOf": [
+                  {
+                    "maxLength": 4096,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "source_id": {
+                "maxLength": 4096,
+                "minLength": 1,
+                "type": "string"
+              },
+              "source_revision": {
+                "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/revision"
+              },
+              "version": {
+                "oneOf": [
+                  {
+                    "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "source_id",
+              "source_revision",
+              "filename",
+              "package_id",
+              "version"
+            ],
+            "type": "object"
+          },
+          "maxItems": 17,
+          "minItems": 1,
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "entry_source_id",
+        "units"
+      ],
+      "type": "object"
+    },
+    "target": {
+      "additionalProperties": false,
+      "properties": {
+        "coordinates_m": {
+          "items": false,
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "maximum": 8,
+              "minimum": -8,
+              "type": "number"
+            },
+            {
+              "maximum": 8,
+              "minimum": -8,
+              "type": "number"
+            },
+            {
+              "const": 0
+            }
+          ],
+          "type": "array"
+        },
+        "frame": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/site_frame"
+        },
+        "type": {
+          "const": "Point3"
+        }
+      },
+      "required": [
+        "type",
+        "frame",
+        "coordinates_m"
+      ],
+      "type": "object"
+    },
+    "time": {
+      "maxLength": 4096,
+      "pattern": "^[0-9]+(?:\\.[0-9]+)?$",
+      "type": "string"
+    },
+    "vector3": {
+      "items": {
+        "type": "number"
+      },
+      "maxItems": 3,
+      "minItems": 3,
+      "type": "array"
+    }
+  },
+  "$id": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "All JSON numbers must additionally be finite. Canonical clocks, reduced rational times, source closure, equality of referenced identities, closed-limit order and unit quaternion meaning require independent semantic validation.",
+  "title": "Proposed bounded reach values"
+}

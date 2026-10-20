@@ -2,7 +2,7 @@
 
 Document: **OK-LANG-006, Draft 2 numerical counter clarification**, version `0.1.0-draft.2`, October 20, 2026. Status: **proposed for adoption**.
 
-This clarification replaces only the counting-unit interpretation of the **Series terms per admission** row in section 1 of [numeric-admission.md](numeric-admission.md). Its limit remains 12,000. The original document, mathematical checker, certificate and review records retain their exact bytes and recorded scope. This supplement does not adopt the proposal or implement runtime accounting.
+This clarification fixes the counting-unit interpretation of the series limit in [numeric-admission.md](numeric-admission.md). Its limit remains 12,000. The exact pre-rollback version of this clarification is preserved in published checkpoint `1431e5f006ed73578afa3c1c08115a8502979d71`, with SHA-256 `fffe0a36c4e0292b6f02b690249488daddc1f1332f3eebecf3cd6ebfefa08194`. The older numerical checker, certificate and review bytes were not recovered; their historical results stay bound to those missing identities. The reconstructed files receive new hashes and fresh review. This provenance correction changes no numerical limit or counting unit, adopts no proposal and implements no runtime accounting.
 
 ## Effective counting unit
 
@@ -23,4 +23,4 @@ Every constituent outward interval operation within a recurrence step still rece
 
 The production implementation must also count or conservatively precharge exact-rational classification, algebraic signs, rounding, integer-square-root work and other work required by the original numerical admission contract. A lower request budget may stop admission earlier. The standalone mathematical checker records its declared series and interval counters; the inherited runtime accounting and cancellation implementation remains a separate obligation.
 
-All numerical maxima, precision passes, interval arithmetic, remainder bounds, rounding-cell tests and predetermined target values remain as specified by the unchanged numerical evidence. This clarification resolves the wording of the counting unit before adoption.
+All numerical maxima, precision passes, interval arithmetic, remainder bounds, rounding-cell obligations and original predetermined target values retain their specified meaning. Fresh reconstructed evidence must independently establish those obligations and record its actual measured counts; it cannot inherit the missing checker's results. This clarification resolves the counting unit before adoption.

@@ -1,6 +1,6 @@
 # Review decisions for OK-LANG-006 drafts 1–2
 
-**No adoption decision has been made.** The language document and corpus were authored before runtime implementation from published force candidate `06cf8206a8e7205f1b5f87c37c3c12dff0f65b9a`. Peer review and reconciliation of PR #17 remain prerequisites. This file records proposals and preparation corrections, so implementation results cannot silently redefine the expected behavior.
+**No adoption decision has been made.** The original proposal was authored from force candidate `06cf8206a8e7205f1b5f87c37c3c12dff0f65b9a`; Draft 2 now depends on accepted main `59b937d16ec0c82c9bc1395bd0c9bcc63e597261` and complete F01–F12 evidence. This ledger preserves preparation corrections and identifies the later amendments. Fresh reconstructed files after the executor rollback receive their own hashes and checks; missing predecessor reports are not evidence for changed bytes.
 
 ## Proposed semantic decisions
 
@@ -37,16 +37,48 @@ On October 20, 2026, the main integrator identified that draft 1's normalized-ch
 
 **D13:** Replace the interpolant and proof with SLERP; preserve the numerical bound, support limits and all 41 source/expected records. The original draft-1 preparation reports retain their exact original contract/input hashes; they do not become evidence for changed draft prose. Draft 2 remains proposed. Its new projection, operation, GLB metadata and quantization schemas are review inputs, not published runtime support or an adoption record.
 
-## Still unresolved before adoption
+## Effective Draft 2 amendments and recovery
 
-| Item | Required review result |
+The machine-readable [amendment record](draft2-amendments.json), [effective profile](profile-draft2.json) and [effective requirements](requirements-draft2.json) preserve the exact original six input identities. The [authoring script](author_draft2_amendments.py) deterministically reproduces them. Original D01–D13 and original corpus values remain reviewable. These additions complete the proposed contract; they do not adopt or implement it.
+
+| ID | Decision | Required meaning |
+| --- | --- | --- |
+| D14 | Accepted force dependency | Use actual main 59b937d16ec0c82c9bc1395bd0c9bcc63e597261 with complete F01-F12 evidence and released integration lease; preserve manual-only default-false hosted policy. |
+| D15 | Current state and terminal identity | Requested program, actual accepted head, candidate history and sampled run identity are distinct. Current outcomes are exactly pending/active/satisfied/interrupted. Failed admission changes no incoming projection. Terminal snapshots remain latched while physical joints may have another owner. |
+| D16 | Failed-prefix publication and recovery | A failed boundary retains only the valid incoming prefix. Reset/re-evaluate supplies a new run; L04 requires a separate tenth Agent artifact exported through exactly 0.25 seconds with the fresh delivery run produced by export and unchanged L04 program revision; retain reset/evaluation run IDs separately. |
+| D17 | Complete-response output budget | Q03 fixes P24, actual sampled t=1.5 after, selector.kind action, fields actions, limit128, all128 complete items without cursor. Measure the full canonical envelope N; N succeeds including constructor/intermediates and N-1 fails at final publication without effects. No adaptive smaller query or pagination exemption. |
+| D18 | Actual root source authority | P13 to P20 repair follows the inspected initializer target to writable root rig and exact source span. Reject generated occurrence and property identities; preserve sibling and library bytes. |
+| D19 | Both-moving lifecycle supplements | Add independently identified L01 pause/resume, L02 stopped/new-owner, L03 completed/new-owner, L04 failed handoff rollback and fixed LP01-LP05 protocol steps; original41 cases remain byte-identical. |
+| D20 | Stored time, SLERP and incoming histories | Use direct exact-rational to binary32 ties-even clocks, normalized actual stored endpoint SLERP, all enclosing source phases, independently proved uniform numerical bounds and complete incoming release contributors/state/spans. Unknown error terms reject. |
+| D21 | Diagnostic and canonical-limit order | Use inherited envelope codes with structured reach_code; establish correctly rounded selected targets before checking their closed canonical limits. Work/cancellation may interrupt every bounded phase. |
+| D22 | Bounded numeric admission | Exact rational classification and algebraic signs plus outward interval proof at96/192/384/768/1536bits establish rounding cells and residual. Bound recurrence/work/operand sizes; unresolved precision is numeric failure, exhausted work is resource failure. |
+| D23 | Complete numerical/interface/delivery release obligations | Add R10-R12 and Q13-Q22 and the provider-neutral release contract. Execute actual source, Agent, destination, browser, compatibility and inherited roles; preparation is not acceptance. |
+| D24 | Distinct budget units | Distinguish semantic/source-value work, full Agent JSON, weighted source history and whole GLB JSON/bytes. Extend F05/H05 weights by complete reach maps and incoming releases before allocation; do not equate all100000 counters. |
+| D25 | Series recurrence unit | The12000cap counts one atan-term iteration or one paired sin/cos iteration. Every constituent interval operation is charged separately to the100000cap and inherited remaining semantic budget; no additional program allowance. |
+| D26 | Reconstruction provenance and stored bits | After the executor rollback, exact recovered files retain their recorded old identities at checkpoint1431e5f; reconstructed proof/schema/protocol/quantization files receive new hashes and fresh review. The retained clock row also exposes stored_binary32_bits, which must agree with actual bytes and exact conversion. No lost check is relabeled for new bytes. |
+| D27 | Current source and historical run acceptance | Clarify reconstructed LP05.09 without changing the existing semantic rule: after the identical source is accepted, its current projection has candidate_only=false, while the retained earlier candidate run has immutable candidate_only=true. Name these two observations separately; preserve all 42 protocol steps and the original corpus. |
+
+The reconstruction also states explicitly that ideal motion bounds use exact
+canonical coordinate slopes with outward arithmetic. A rounded inspection rate
+may understate the unrounded derivative and cannot be used as an upper bound
+without accounting for that error. This clarifies the intended reference path;
+it changes no source target, recorded tolerance or original expected sample.
+
+## Remaining gates and execution boundary
+
+| Gate | Concrete required result |
 | --- | --- |
-| Force dependency | Identify the actual accepted force implementation and complete F01–F12 record; reconcile imports, workflow policy and bounds |
-| Scalar rounding evidence | Independently review the finite high-precision oracle, singular and hard-limit behavior; determine how runtime will establish canonical results without claiming unproved universal libm accuracy |
-| Inspection shape | Adopt the final versioned JSON schema and operation mapping for accepted goal projections and failed-admission diagnostics, including nullability, byte/entry budgets and source spans |
-| Sampling | Independently accept the carrier/quaternion/landmark derivation and explicit remaining error allocation for endpoint/time quantization |
-| Actual execution roles | Adopt provider-neutral local Agent/GLB/release evidence contracts and corrupt-byte/cancellation probes before implementation acceptance; preserve inherited local-only hosted-job policy |
-| Whole assets and held-outs | Confirm source-generated geometry, actual identities and independent expected endpoints cover reusable bench/character tasks and local repair |
-| Input freeze | Publish a separate adoption record naming exact contract/corpus/member hashes and any changes from this draft; retain review history |
+| Original and supplemental inputs | Original 41-case closure unchanged; exact recovered source identities distinguished from new lifecycle/protocol expectations; effective bindings identify every new hash. |
+| Numerical proof | Fresh exact-cell/residual checks, independent math/corruption/resource probes and mathematical review of the bounded strategy; no universal host-libm claim. |
+| Agent and recording contract | Strict existing-operation schemas, complete 128-action budget case, candidate/terminal identities, incoming-release maps and actual source repair authority reconciled. |
+| Continuous recording proof | Independently reviewed normalized stored-endpoint SLERP, direct clock conversion, all touched phases, radius/vertex terms and uniform source/destination numerical obligations. |
+| Combined fresh checks | One identified immutable input set, reproducible effective artifacts, raw commands/logs and every relevant pure check; prior reports apply only to their original hashes. |
+| Separate adoption | Publish an exact-input adoption record and implementation ownership plan after review. Runtime remains unimplemented until that decision. |
+| Actual finite release | Execute all R01–R12, Q01–Q22, source/Agent/native/browser/compatibility/inherited roles and resulting-main checks in [release-contract.md](release-contract.md). |
 
-The next concrete step after review is a bounded implementation plan for the accepted semantics: typed/profile elaboration and source IK, atomic simulator lifecycle/inspection, explicit Agent service, curvature-aware writer and independently hostile reader, then actual source/Agent/destination/visual acceptance. No runtime work is authorized by the draft's mere presence; the main integrator will record the adoption decision separately.
+The next implementation work is typed/profile elaboration and bounded IK, atomic
+simulator lifecycle/inspection, explicit Agent/0.6, controlled source kinematics,
+curvature-aware recording and an independently hostile supplied-byte reader.
+Actual Agent/SQLite, full suite and archive runs retain the exclusive-executor
+rule. No hosted job dispatch, retry or paid execution is required. The full GOAL
+and actual direct-tool authoring comparison remain open beyond this finite gate.

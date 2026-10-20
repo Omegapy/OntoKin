@@ -1,0 +1,312 @@
+{
+  "$comment": "Proposed OK-LANG-006 0.1.0-draft.2; no adoption or implementation claim.",
+  "$id": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/quantization.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "The document quantization.md defines every quantity, proof inequality and rejection condition. Claimed true/recomputed fields do not prove a certificate: the independent reader must derive it from exact source and actual bytes before acceptance. All repeated entries consume inherited aggregate budgets.",
+  "properties": {
+    "all_values_independently_recomputed": {
+      "const": true
+    },
+    "certificate_scope": {
+      "const": "specified source and supplied bytes; separately identified destination numeric behavior"
+    },
+    "clock_conversion": {
+      "const": "binary32_rne_ties_to_even_from_exact_rational"
+    },
+    "destination_numeric_bound_basis": {
+      "additionalProperties": false,
+      "properties": {
+        "derivation_sha256": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/revision"
+        },
+        "implementation_sha256": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/revision"
+        },
+        "method": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "type": "string"
+        },
+        "version": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "version",
+        "implementation_sha256",
+        "method",
+        "derivation_sha256"
+      ],
+      "type": "object"
+    },
+    "interval_certificates": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "angular_speed_bound_rad_per_s": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "carrier": {
+            "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/occurrence_ref"
+          },
+          "carrier_acceleration_bound_m_per_s2": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "carrier_position_bound_m": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "destination_numeric_position_bound_m": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "destination_numeric_rotation_bound_rad": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "enclosing_angular_speed_bound_rad_per_s": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "enclosing_carrier_acceleration_bound_m_per_s2": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "enclosing_carrier_speed_bound_m_per_s": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "h_authored_seconds": {
+            "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/rational_time"
+          },
+          "h_stored_seconds": {
+            "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/rational_time"
+          },
+          "ideal_position_bound_m": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "ideal_rotation_bound_rad": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "landmark_radius_m": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "left_key_index": {
+            "maximum": 9998,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "local_vertex_error_bound_m": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "max_endpoint_position_error_m": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "max_endpoint_time_shift_s": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "max_endpoint_unit_quaternion_error": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "right_key_index": {
+            "maximum": 9999,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "source_numeric_position_bound_m": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "source_numeric_rotation_bound_rad": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "source_phase_indices": {
+            "items": {
+              "maximum": 99999,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "maxItems": 100000,
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "stored_quaternion_arc_upper_rad": {
+            "maximum": 0.7853981633974483,
+            "minimum": 0,
+            "type": "number"
+          },
+          "total_position_bound_m": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "total_rotation_bound_rad": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "unit_quaternion_difference_bound": {
+            "maximum": 0.5,
+            "minimum": 0,
+            "type": "number"
+          }
+        },
+        "required": [
+          "left_key_index",
+          "right_key_index",
+          "carrier",
+          "source_phase_indices",
+          "h_authored_seconds",
+          "h_stored_seconds",
+          "landmark_radius_m",
+          "angular_speed_bound_rad_per_s",
+          "carrier_acceleration_bound_m_per_s2",
+          "enclosing_carrier_speed_bound_m_per_s",
+          "enclosing_carrier_acceleration_bound_m_per_s2",
+          "carrier_position_bound_m",
+          "enclosing_angular_speed_bound_rad_per_s",
+          "max_endpoint_time_shift_s",
+          "max_endpoint_position_error_m",
+          "max_endpoint_unit_quaternion_error",
+          "stored_quaternion_arc_upper_rad",
+          "source_numeric_position_bound_m",
+          "source_numeric_rotation_bound_rad",
+          "destination_numeric_position_bound_m",
+          "destination_numeric_rotation_bound_rad",
+          "local_vertex_error_bound_m",
+          "ideal_position_bound_m",
+          "ideal_rotation_bound_rad",
+          "unit_quaternion_difference_bound",
+          "total_position_bound_m",
+          "total_rotation_bound_rad"
+        ],
+        "type": "object"
+      },
+      "maxItems": 100000,
+      "minItems": 0,
+      "type": "array"
+    },
+    "position_tolerance_m": {
+      "exclusiveMinimum": 0,
+      "type": "number"
+    },
+    "retained_keys": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "authored_seconds": {
+            "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/rational_time"
+          },
+          "semantic_boundary": {
+            "type": "boolean"
+          },
+          "stored_binary32_bits": {
+            "pattern": "^[0-9a-f]{8}$",
+            "type": "string"
+          },
+          "stored_seconds": {
+            "minimum": 0,
+            "type": "number"
+          }
+        },
+        "required": [
+          "authored_seconds",
+          "stored_seconds",
+          "stored_binary32_bits",
+          "semantic_boundary"
+        ],
+        "type": "object"
+      },
+      "maxItems": 10000,
+      "minItems": 1,
+      "type": "array"
+    },
+    "rotation_interpolation": {
+      "const": "shortest_arc_slerp"
+    },
+    "rotation_tolerance_rad": {
+      "exclusiveMinimum": 0,
+      "type": "number"
+    },
+    "schema_version": {
+      "const": "ontokin.reach-quantization/0.1"
+    },
+    "source_numeric_bound_basis": {
+      "additionalProperties": false,
+      "properties": {
+        "derivation_sha256": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/revision"
+        },
+        "implementation_sha256": {
+          "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json#/$defs/revision"
+        },
+        "method": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "type": "string"
+        },
+        "name": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "type": "string"
+        },
+        "version": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "version",
+        "implementation_sha256",
+        "method",
+        "derivation_sha256"
+      ],
+      "type": "object"
+    },
+    "time_tolerance_s": {
+      "exclusiveMinimum": 0,
+      "maximum": 1e-06,
+      "type": "number"
+    },
+    "unknown_error_bound_policy": {
+      "const": "reject"
+    }
+  },
+  "required": [
+    "schema_version",
+    "rotation_interpolation",
+    "clock_conversion",
+    "position_tolerance_m",
+    "rotation_tolerance_rad",
+    "time_tolerance_s",
+    "source_numeric_bound_basis",
+    "destination_numeric_bound_basis",
+    "retained_keys",
+    "interval_certificates",
+    "all_values_independently_recomputed",
+    "unknown_error_bound_policy",
+    "certificate_scope"
+  ],
+  "title": "Proposed source/stored-time reach error certificate",
+  "type": "object"
+}
