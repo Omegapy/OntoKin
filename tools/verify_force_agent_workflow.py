@@ -422,8 +422,10 @@ class Reader:
                     'Generic delivery did not retain its source-bound unsupported receipt')
             result=r['result']
             require(isinstance(result,dict) and set(result)=={'schema_version','program_revision','requested_level',
-                    'achieved_level','outcome','diagnostics','source_manifest','stages'},
+                    'achieved_level','outcome','diagnostics','source_manifest','stages','implementation'},
                     'Generic delivery returned an unexpected result or artifact claim')
+            require(result['implementation']==self.implementation,
+                    'Generic delivery result differs from the independently checked implementation identity')
             require(result['schema_version']=='ontokin.program-runtime/0.1' and
                     result['outcome']=='unsupported' and result['requested_level']=='delivered' and
                     result['achieved_level']=='represented' and result['program_revision']==b.program_revision and

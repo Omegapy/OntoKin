@@ -80,6 +80,7 @@ class ForceAgentEvidenceTests(unittest.TestCase):
         self.assertNotIn('destination', request)
         self.assertIsNone(response['protocol_error'])
         self.assertEqual(response['result']['outcome'], 'unsupported')
+        self.assertEqual(response['result']['implementation'], self.manifest['implementation'])
         self.assertNotIn('artifact_id', response['result'])
 
     def test_rehashed_legacy_workflow_version_cannot_relabel_current_delivery(self):
@@ -99,6 +100,14 @@ class ForceAgentEvidenceTests(unittest.TestCase):
     def test_rehashed_generic_delivery_failure_cannot_claim_artifact(self):
         self.change('failure/delivery', lambda r: r['result'].__setitem__('artifact_id', 'artifact:' + '0' * 64))
         self.reject('artifact claim')
+
+    def test_rehashed_generic_delivery_failure_cannot_forge_implementation(self):
+        self.change('failure/delivery', lambda r: r['result']['implementation'].__setitem__('source_code_sha256', 'sha256:' + '0' * 64))
+        self.reject('implementation identity')
+
+    def test_rehashed_generic_delivery_failure_cannot_omit_implementation(self):
+        self.change('failure/delivery', lambda r: r['result'].pop('implementation'))
+        self.reject('unexpected result')
 
     def test_rehashed_last_valid_position_is_not_accepted(self):
         self.change('P01/run', lambda d: d['result']['run_state']['last_valid_state']['objects']['ball']['position_m'].__setitem__(0, 99))
