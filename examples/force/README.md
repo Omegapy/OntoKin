@@ -90,3 +90,24 @@ The explicit Agent mode requires the separately passed audit and verifies its wo
 To exercise the broader source corpus, use `tools/build_force_demo.py --output-dir NEW_DIR`, followed by the same native and browser tools without the Agent options. That corpus contains 23 successful artifacts and five explicit delivery failures. The native checker covers all 23; the default browser selection covers nine representative cases and produces 27 captures. Each role reports its actual selection.
 
 Use the repository's [local validation policy](../../docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md) and the current instructions in [AGENTS](../../AGENTS.md). Source-to-destination numerical checks and reviewed browser captures establish separate evidence from an Agent success receipt. Neither a receipt nor this guide declares the full product complete.
+
+## Record and audit complete release evidence
+
+[OK-ENG-008](../../docs/engineering/OK-ENG-008-force-release-conformance.md) defines the complete F01–F12 evidence contract. The separately versioned runner records the actual command, interpreter, dependency pins, source commit/tree, eligible input bytes, output hashes and measured results:
+
+```bash
+python3 tools/run_force_conformance.py execute --role source --output-dir /tmp/ontokin-force-source-execution
+python3 tools/run_force_conformance.py record --role source-build --output-dir /tmp/ontokin-force-build-execution --report /tmp/ontokin-force-source-artifacts/workflow.json -- python3 tools/build_force_demo.py --output-dir /tmp/ontokin-force-source-artifacts
+```
+
+Prepare the [six pinned Python verification packages](../../tools/force-agent-verification-requirements.txt) before recording acceptance roles. All execution and primary report destinations must be new. Source, mapped tests, the three complete CPython compatibility runs, both actual Agent workflows and audits, native/browser checks, and current inherited core/Agent/construction/surface/impulse roles remain distinct requirements. Node 22 and the locked viewer tools are required for the native/browser and complete inherited visual roles.
+
+`tools/build_force_release_evidence.py --plan PLAN.json --output-dir NEW_DIR` collects explicitly named immutable files without changing raw results. Its plan names copy sources and relative destinations, optional new reference manifests, and role records. A `{"$file": "relative/path"}` placeholder inserts that collected file's measured path, SHA-256 and byte length. Mutable stores and caches are excluded and disclosed. The collector does not execute checks or provide a visual review.
+
+After all required actual captures have been inspected and their identified reviews collected, audit the complete retained evidence:
+
+```bash
+python3 tools/run_force_conformance.py audit --evidence /tmp/ontokin-force-release/evidence.json --evidence-root /tmp/ontokin-force-release --output /tmp/ontokin-force-release/audit.json
+```
+
+The audit rechecks current source identities, execution inventories, raw source observations, complete retrieved bytes, independently decoded motion, inherited evidence readers and each required PNG review. `--allow-pending` changes only the exit policy; it cannot turn missing evidence into a pass. Historical CI-shaped reports retain their original pending reasons, while the new contract reconciles only their execution-provider role with actual current local runs.
