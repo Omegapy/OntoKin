@@ -1,0 +1,95 @@
+{
+  "schema_version": "ontokin.proposed-planar-reach-requirements/0.1",
+  "document_id": "OK-LANG-006",
+  "proposal_version": "0.1.0-draft.1",
+  "status": "proposed_not_adopted",
+  "execution_status": "not_executed",
+  "requirements": [
+    {
+      "id": "R01",
+      "requirement": "A typed reusable source method constructs one goal action from actual joints/sites, without authored solved angles or host fixture selection.",
+      "cases": ["P01", "P02", "P11", "N08"],
+      "independent_oracle": "Complete pinned source libraries, nominal types and actual occurrence references; explicit builder signature.",
+      "actual_evidence_required": ["source typing/elaboration", "Agent capability discovery", "source spans and complete bundle identity", "old-profile rejection and compatibility regressions"]
+    },
+    {
+      "id": "R02",
+      "requirement": "Resolve the selected analytic branch from arbitrary supported lengths and goals; preserve endpoint residual and actual intermediate path.",
+      "cases": ["P01", "P02", "P03", "P18", "P19"],
+      "independent_oracle": "High-precision real IK from exact canonical input ratios; independent FK and derivative; held-out inputs predetermined.",
+      "actual_evidence_required": ["exact resolved binary64 target pair", "exact-rational coordinate samples", "base/world tip residual <=1e-9 m", "decoded intermediate carrier/landmark poses"]
+    },
+    {
+      "id": "R03",
+      "requirement": "Keep closed support boundaries, exact reachability and branch/wrapping decisions; do not clamp, choose a fallback or erase a long path.",
+      "cases": ["P06", "P07", "P08", "P09", "P10", "P21", "P22", "P25", "P26", "N01", "N02", "N03"],
+      "independent_oracle": "Exact rational annulus; unequal inner +/-Pi64; equal origin singular; principal shoulder target; canonical support endpoints.",
+      "actual_evidence_required": ["exact boundary diagnostics and source spans", "closed joint limit comparisons", "both one-sided states", "curvature and angular bounds for long/fast paths"]
+    },
+    {
+      "id": "R04",
+      "requirement": "Enforce the authored target frame and actual planar chain; compose root motion without silently converting a different frame.",
+      "cases": ["P04", "P05", "P16", "N04", "N05", "N10", "N15"],
+      "independent_oracle": "Exact frame identities and site constraints, rigid-root transform plus full angular lever transport.",
+      "actual_evidence_required": ["actual site and joint inspection", "static/rotated/moving base poses", "world target and site correspondence", "precise unsupported-chain diagnostics"]
+    },
+    {
+      "id": "R05",
+      "requirement": "Reject unsupported type, geometry, frame, domain and selected-branch limit requests explicitly without partial motion or successful output.",
+      "cases": ["N04", "N05", "N06", "N07", "N08", "N10", "N12", "N14", "N15"],
+      "independent_oracle": "Fixed diagnostic phases/codes and source-domain values, including one-ULP domain neighbors.",
+      "actual_evidence_required": ["invalid candidate source preserved for diagnosis", "accepted revision unchanged", "source-span/frame/branch/limit details", "no artifact for failed delivery"]
+    },
+    {
+      "id": "R06",
+      "requirement": "The same complete pinned component library creates a bench arm, segmented character and variable keyed assemblies with independent actions.",
+      "cases": ["P01", "P05", "P11", "P12", "P13", "P23"],
+      "independent_oracle": "Required full object/visible-carrier sets, source dimensions/materials, two independent character goals plus head action.",
+      "actual_evidence_required": ["native source geometry/PBR inspection", "all object identities, no missing or fixture-substituted parts", "source-built and Agent-retrieved recorded output", "independent Khronos/Three.js checks", "reviewed full bench/character browser captures"]
+    },
+    {
+      "id": "R07",
+      "requirement": "Treat two joint coordinates as one atomic action through pause/resume/stop/completion and preserve exact boundaries, valid prefixes and incoming release state.",
+      "cases": ["P14", "P15", "P16", "P17", "N09"],
+      "independent_oracle": "Exact elapsed clocks and rates, pending/before/after outcomes; both nonzero joint rates and root velocity feed released sphere force/coast equations.",
+      "actual_evidence_required": ["partial-claim failure rolls back all earlier effects at the boundary", "pause retains both claims", "stop releases both claims and reports interrupted", "natural completion measures satisfied", "short prefix never evaluates future admission", "complete force/impulse/authority/reach histories", "reset and same-boundary stop/start follow inherited rules"]
+    },
+    {
+      "id": "R08",
+      "requirement": "An actual Agent diagnoses and repairs one reused occurrence while preserving accepted source integrity, library bytes and unchanged siblings.",
+      "cases": ["P13", "P20", "N06", "P10"],
+      "independent_oracle": "Exact one-entry repair diff, independently re-solved target pair, four unchanged arm subtrees and complete old/new source hashes.",
+      "actual_evidence_required": ["discover/create/inspect/diagnose/patch/evaluate/deliver/retrieve through real protocol", "stale revision and UTF-8 precondition failures", "idempotent retry and changed-payload rejection", "unknown-outcome reconciliation", "old runs/artifacts retain old revision", "same pinned libraries in both whole asset clients"]
+    },
+    {
+      "id": "R09",
+      "requirement": "Bound construction, two-coordinate work, goal projection, curved recording and supplied-byte expansion; preserve cancellation and every inherited gate.",
+      "cases": ["P23", "P24", "N11", "N13"],
+      "independent_oracle": "32/33 distinct bound chain tuples, 128/129 named actions and the conservative source-derived carrier/quaternion/landmark inequalities.",
+      "actual_evidence_required": ["preflight before materialization", "complete requested-level result or explicit failure", "actual accepted-task cancellation and terminal reconciliation", "no stale artifact reuse", "predetermined hostile-byte probes below", "current local regression/source/Agent/construction/surface/impulse/force roles"]
+    }
+  ],
+  "predetermined_execution_probes": [
+    {"id": "Q01", "source": "P01", "operation": "actual accepted evaluation cancellation before publication", "expected": "cancelled terminal operation; no partial two-joint claims or committed cancelled run; accepted source unchanged", "timing": "observe acceptance and reconcile terminal state; no sleep-only claim"},
+    {"id": "Q02", "source": "P23", "operation": "actual accepted delivery cancellation during bounded plan/geometry/serialization work", "expected": "no committed or retrievable success artifact; immutable source and prior successful artifacts unchanged"},
+    {"id": "Q03", "source": "P24", "operation": "inspect complete reach projection with max_bytes one below measured canonical complete envelope size", "expected": "explicit output budget or documented complete pagination; no truncated projection labeled complete"},
+    {"id": "Q04", "source": "P23", "operation": "supply GLB declaring 10001 shared input time keys", "expected": "key budget rejection before accessor values are decoded"},
+    {"id": "Q05", "source": "P23", "operation": "supply GLB with all 97 expected objects times 3000 translation/rotation keys sharing backing accessors", "expected": "aggregate 291000-pose budget rejection before decoded copies, even when raw bytes fit 64 MiB; preserve the full expected object set so an unrelated object-set error cannot satisfy this probe"},
+    {"id": "Q06", "source": "P09", "operation": "delete interior keys to retain a long principal-shoulder interval above pi/4 or curvature allocation", "expected": "source-derived interval rejection, not successful endpoint-only validation"},
+    {"id": "Q07", "source": "P16", "operation": "erase incoming reach derivative or replace released sphere velocity by completed outgoing zero rates", "expected": "independent source/Agent history and later decoded trajectory rejection"},
+    {"id": "Q08", "source": "P17", "operation": "deliver through t=2 and separately request full t=4", "expected": "valid source-bound prefix output; full request fails at exact t=3 and emits no success artifact"},
+    {"id": "Q09", "source": "P01", "operation": "change GLB source-unit, artifact, helper/schema or Agent workflow identity while leaving geometry valid", "expected": "identity/closure rejection before output can establish acceptance"},
+    {"id": "Q10", "source": "P14", "operation": "derive source by replacing resume time 1.5[s] with 0.50000001[s]; record both exact clocks", "expected": "valid source lifecycle but GLB rejection if distinct pause/resume boundaries collapse to identical float32 time"},
+    {"id": "Q11", "source": "P05", "operation": "test source/exact and stored intervals against phase-specific acceleration/quaternion/landmark bounds, including rounded boundary neighbors", "expected": "no midpoint-only future-phase selection or stored-gap coarsening bypass"},
+    {"id": "Q12", "source": "P11", "operation": "remove an untouched leg/eye, change carrier geometry radius or bind sampled poses to a wrong occurrence", "expected": "full object/geometry/pose closure rejection"}
+  ],
+  "release_preconditions": [
+    "Peer review resolves all draft decisions; separate exact-hash adoption record.",
+    "Actual accepted force dependency and F01-F12 evidence reconciled.",
+    "Final explicit Agent/GLB0.6 schemas, operations, diagnostics and role mappings adopted.",
+    "Independent review of correct rounding and conservative interpolation/quantization allocations.",
+    "Actual source, Agent, decoded native delivery and reviewed whole-asset visuals pass on identified implementation.",
+    "Current local-only policy, pinned verification prerequisites and inherited regression roles retained.",
+    "Complete GOAL and direct-tool authoring comparison remain separately open."
+  ]
+}
