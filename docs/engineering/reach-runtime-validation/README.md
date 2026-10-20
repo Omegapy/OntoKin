@@ -60,6 +60,40 @@ arithmetic while preserving cancellation, constituent accounting, exact
 admission and the same request budget. The complete numerical source bounds
 and independent reference must remain valid after optimization.
 
+## Attempt 003
+
+[The third report](attempt003/report.json) identifies implementation
+`9e46219637241299fb85431d54c4f8bbcf3e2a96`, tree
+`815522af03fe6c0ac25cf30475c688d809a7ab1d`, and CPython 3.12.14. All 1,075
+tracked inputs and Git identity remained unchanged. The 81-method run retains
+its **failed** overall status: two newly written test fixtures still need
+correction, while the implementation paths described below passed.
+
+The complete lifecycle test now passes all 51 boundary observations and 86
+action states, including exact targets, rates, pause/resume, stop/handoff,
+incoming release and failed-boundary rollback. All 28 numerical methods,
+eight recording-arithmetic methods, eight ordinary Agent methods, six Agent
+transaction methods, CLI, schema and protocol-isolation cohorts pass. The
+unchanged shared 100,000-operation limit is sufficient after immutable
+constant-transform reuse, cached stationary poses and exact sparse quaternion
+arithmetic remove redundant work. Every remaining constituent and cache access
+still charges the same request work object; cancellation remains active.
+
+[The new cost probe](attempt003/operation-costs.json) completes all L01, L02
+and L03 observations at 44,036, 51,107 and 53,410 shared operations respectively.
+Fresh moving samples cost approximately 2,773–2,870 numeric operations and a
+cached paused sample costs 319. These measurements establish the executed
+source-observation costs, not yet a complete recorded export budget.
+
+The source compatibility test's hand-written gravity value uses an unframed
+vector instead of the older profile's required world-framed vector. In LP02,
+all nine protocol requests succeed, but the test's final sibling comparison
+collapses generated identities by selecting only their final path component.
+Agent checkpoint `d194837dfa4ccdedd143c1c025e570f1c7657ec7` changes that test
+selector to the complete `element_id` tuple and retains the same four unchanged
+siblings. Its rerun and the corrected source fixture remain pending here.
+No frozen expected value or acceptance limit is changed.
+
 ## Pending gates
 
 The eight Agent delivery methods remain explicitly unexecuted because the

@@ -123,8 +123,8 @@ class ReachProtocolCaseTests(ReachAgentFixture, unittest.TestCase):
         self.assertEqual(self.effects(project), effects)
         old = self.step("LP02.08")
         new = self.step("LP02.09")
-        old_records = {item["element_id"][-1]: item for item in reach_records(old)}
-        new_records = {item["element_id"][-1]: item for item in reach_records(new)}
+        old_records = {tuple(item["element_id"]): item for item in reach_records(old)}
+        new_records = {tuple(item["element_id"]): item for item in reach_records(new)}
         self.assertEqual(set(old_records), set(new_records))
         same = 0
         for name, record in old_records.items():

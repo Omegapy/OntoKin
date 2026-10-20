@@ -63,6 +63,17 @@ include every potentially contributing named action. The prefix horizon prevents
 later authored force/impulse histories from entering the bound. Actual output is
 still measured after this conservative preflight.
 
+The first integrated lifecycle run demonstrated real shared-work exhaustion,
+despite valid individual samples. The next implementation reuses immutable
+constant transforms and one replaceable pose slot per source path inside the
+same bounded request cache. A slot is valid only when its private parent and all
+local numerical operands match. Paused states therefore reuse the same actual
+arithmetic result across different clocks. Changed coordinates, exact slopes,
+root motion, attachment or dynamic anchors invalidate the corresponding input
+signature. Each lookup and insertion is charged, while arithmetic actually
+avoided by reuse is not invented as executed work. Cache capacity and all
+per-output occurrence counts remain unchanged.
+
 ## Controlled poses and remaining proof integration
 
 Only source 0.6 dispatches to the controlled pose helpers. Private projective

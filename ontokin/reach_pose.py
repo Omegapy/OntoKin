@@ -114,9 +114,20 @@ class ReachPoseOps:
         self.work.charge("pose_vector_domain")
         if not isinstance(values,(list,tuple)) or len(values)!=length:
             raise ReachAdmissionError("reach_numeric","A pose vector has the wrong dimension.")
+        # Private Fraction tuples are already exact. Checking their bounded
+        # representation does not require decoding each component again.
+        if isinstance(values,tuple) and all(type(value) is F for value in values):
+            self.work.guard(*values)
+            return values
         return tuple(rational(value,self.work) for value in values)
 
     def _rounded_vector(self,values):
+        self.work.charge("pose_grid_check")
+        values=tuple(values)
+        self.work.guard(*values)
+        if all(value.denominator.bit_length()<=BITS+1 and
+               value.denominator & (value.denominator-1)==0 for value in values):
+            return values
         return tuple(round_dyadic(value,BITS,work=self.work) for value in values)
 
     def _l1(self,values):
@@ -125,14 +136,22 @@ class ReachPoseOps:
 
     def add(self,a,b):
         a,b=self._vector(a),self._vector(b)
+        self.work.charge("pose_add_zero_check")
+        if not any(a): return b
+        if not any(b): return a
         return tuple(self._op(x,y,"add") for x,y in zip(a,b))
 
     def scale(self,vector,factor):
         vector,factor=self._vector(vector),rational(factor,self.work)
+        self.work.charge("pose_scale_identity_check")
+        if not factor or not any(vector): return ZERO
+        if factor==1: return vector
         return tuple(self._op(value,factor,"mul") for value in vector)
 
     def cross(self,a,b):
         a,b=self._vector(a),self._vector(b)
+        self.work.charge("pose_cross_zero_check")
+        if not any(a) or not any(b): return ZERO
         return tuple(self._op(self._op(a[j],b[k],"mul"),self._op(a[k],b[j],"mul"),"sub")
                      for j,k in ((1,2),(2,0),(0,1)))
 
@@ -172,9 +191,11 @@ class ReachPoseOps:
         if below: exponent-=1
         shift=-exponent-1
         self.work.guard_bits(abs(shift)+2)
-        factor=F(1 << shift) if shift>=0 else F(1,1 << -shift)
-        result=tuple(round_dyadic(self._op(value,factor,"mul"),BITS,work=self.work)
-                     for value in values)
+        if shift==0:
+            result=self._rounded_vector(values)
+        else:
+            factor=F(1 << shift) if shift>=0 else F(1,1 << -shift)
+            result=self._rounded_vector(self._op(value,factor,"mul") for value in values)
         self.work.charge("quaternion_sign",4)
         if next(value for value in result if value)<0: result=tuple(-value for value in result)
         return RotationValue(result,self._op(error,PRODUCT_ERROR,"add"))
@@ -183,12 +204,23 @@ class ReachPoseOps:
         a,b=self._rotation(a),self._rotation(b)
         aw,ax,ay,az=a.components; bw,bx,by,bz=b.components
         mul=lambda x,y:self._op(x,y,"mul")
+        self.work.charge("quaternion_sparse_check")
+        error=self._op(a.error_rad,b.error_rad,"add")
+        # These branches compute the identical exact Hamilton product before
+        # the same rescale/grid operation, including non-power-of-two scales.
+        if not any((bx,by,bz)):
+            return self._rescale(tuple(mul(value,bw) for value in a.components),error)
+        if not any((ax,ay,az)):
+            return self._rescale(tuple(mul(aw,value) for value in b.components),error)
+        if not any((ax,ay,bx,by)):
+            return self._rescale((self._op(mul(aw,bw),mul(az,bz),"sub"),F(0),F(0),
+                                  self._op(mul(aw,bz),mul(az,bw),"add")),error)
         self.work.charge("quaternion_signed_terms",6)
         values=(self._sum((mul(aw,bw),-mul(ax,bx),-mul(ay,by),-mul(az,bz))),
                 self._sum((mul(aw,bx),mul(ax,bw),mul(ay,bz),-mul(az,by))),
                 self._sum((mul(aw,by),-mul(ax,bz),mul(ay,bw),mul(az,bx))),
                 self._sum((mul(aw,bz),mul(ax,by),-mul(ay,bx),mul(az,bw))))
-        return self._rescale(values,self._op(a.error_rad,b.error_rad,"add"))
+        return self._rescale(values,error)
 
     def inverse_rotation(self,value):
         value=self._rotation(value)
@@ -199,6 +231,9 @@ class ReachPoseOps:
     def rotate(self,rotation,vector):
         rotation,vector=self._rotation(rotation),self._vector(vector)
         q=rotation.components
+        self.work.charge("rotation_sparse_check")
+        if not any(vector): return ZERO
+        if not any(q[1:]): return self._rounded_vector(vector)
         key=(METHOD,"rotation_rows",q)
         rows=self.work.lookup(key)
         if rows is None:
@@ -308,6 +343,9 @@ class ReachPoseOps:
 
     def _scaled_axis(self,axis,precision=96):
         axis=self._vector(axis)
+        key=(METHOD,"scaled_axis",axis,precision)
+        cached=self.work.lookup(key)
+        if cached is not None: return cached
         self.work.charge("axis_scale",3)
         maximum=max(abs(v) for v in axis)
         if not maximum:
@@ -316,20 +354,30 @@ class ReachPoseOps:
         square=self._sum(self._op(v,v,"mul") for v in scaled)
         context=DyadicContext(precision,self.work)
         bounds=context.bounds(context.sqrt_point(square))
-        return scaled,maximum,bounds
+        result=scaled,maximum,bounds
+        self.work.remember(key,result)
+        return result
 
     def axis_rotation(self,axis,angle):
         angle=rational(angle,self.work)
+        axis=self._vector(axis)
+        key=(METHOD,"axis_rotation",axis,angle)
+        cached=self.work.lookup(key)
+        if cached is not None: return cached
         if not angle:
             # Still validate the axis; a zero axis does not become admissible.
             self._scaled_axis(axis)
-            return RotationValue(UNIT)
+            result=RotationValue(UNIT)
+            self.work.remember(key,result)
+            return result
         scaled,_,norm=self._scaled_axis(axis)
         middle=self._op(self._op(norm[0],norm[1],"add"),F(2),"div")
         unit=tuple(round_dyadic(self._op(v,middle,"div"),BITS,work=self.work) for v in scaled)
         sine,cosine=self.sincos(self._op(angle,F(2),"div"))
         values=(cosine,*(self._op(v,sine,"mul") for v in unit))
-        return self._rescale(values,AXIS_ERROR)
+        result=self._rescale(values,AXIS_ERROR)
+        self.work.remember(key,result)
+        return result
 
     def spin_plan(self,omega,max_elapsed_s):
         omega=self._vector(omega); maximum_time=abs(rational(max_elapsed_s,self.work))
@@ -388,8 +436,17 @@ class ReachPoseOps:
         return PoseValue(ZERO,RotationValue(UNIT),ZERO,ZERO,F(0),self)
 
     def make(self,position=ZERO,orientation=UNIT,velocity=ZERO,omega=ZERO):
-        return PoseValue(self._vector(position),self._rotation(orientation),
-                         self._vector(velocity),self._vector(omega),F(0),self)
+        position,rotation=self._vector(position),self._rotation(orientation)
+        velocity,omega=self._vector(velocity),self._vector(omega)
+        self.work.charge("pose_stationary_check")
+        stationary=not any(velocity) and not any(omega)
+        key=(METHOD,"stationary_pose",position,rotation)
+        if stationary:
+            cached=self.work.lookup(key)
+            if cached is not None: return cached
+        result=PoseValue(position,rotation,velocity,omega,F(0),self)
+        if stationary: self.work.remember(key,result)
+        return result
 
     def constant_pose(self,pose):
         return self.make(pose.position,pose.rotation)
@@ -400,6 +457,12 @@ class ReachPoseOps:
     def compose(self,parent,local):
         if not isinstance(parent,PoseValue) or not isinstance(local,PoseValue):
             raise TypeError("Controlled composition requires private PoseValue inputs")
+        self.work.charge("composition_stationary_check")
+        stationary=not any((*parent.exact_velocity,*parent.exact_omega,*local.exact_velocity,*local.exact_omega))
+        key=(METHOD,"stationary_composition",parent,local)
+        if stationary:
+            cached=self.work.lookup(key)
+            if cached is not None: return cached
         offset=self.rotate(parent.rotation,local.exact_position)
         position=self._rounded_vector(self.add(parent.exact_position,offset))
         velocity=self._rounded_vector(self.add(self.add(parent.exact_velocity,
@@ -408,11 +471,16 @@ class ReachPoseOps:
         position_error=self._sum((parent.position_error_m,local.position_error_m,
             self._op(self._l1(local.exact_position),parent.angular_error_rad,"mul"),
             VECTOR_ERROR,VECTOR_ERROR))
-        return PoseValue(position,self.multiply(parent.rotation,local.rotation),velocity,omega,
+        result=PoseValue(position,self.multiply(parent.rotation,local.rotation),velocity,omega,
                          position_error,self)
+        if stationary: self.work.remember(key,result)
+        return result
 
     def inverse_pose(self,pose):
         value=pose if isinstance(pose,PoseValue) else self.constant_pose(pose)
+        key=(METHOD,"inverse_pose",value.exact_position,value.rotation,value.position_error_m)
+        cached=self.work.lookup(key)
+        if cached is not None: return cached
         rotation=self.inverse_rotation(value.rotation)
         self.work.charge("pose_position_negate",3)
         position=self.rotate(rotation,tuple(-x for x in value.exact_position))
@@ -420,7 +488,9 @@ class ReachPoseOps:
         # zero; use relative_point for the measured moving-frame position.
         error=self._sum((value.position_error_m,
             self._op(self._l1(value.exact_position),value.angular_error_rad,"mul"),VECTOR_ERROR))
-        return PoseValue(position,rotation,ZERO,ZERO,error,self)
+        result=PoseValue(position,rotation,ZERO,ZERO,error,self)
+        self.work.remember(key,result)
+        return result
 
     def relative_point(self,base,world_point):
         if not isinstance(base,PoseValue): raise TypeError("A private base pose is required")

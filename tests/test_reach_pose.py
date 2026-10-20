@@ -152,5 +152,51 @@ class ReachPoseTests(unittest.TestCase):
         self.assertIs(raised.exception,marker)
         self.assertEqual(calls,60)
 
+    def test_sparse_paths_preserve_dense_exact_product_and_grid_rotation(self):
+        from ontokin.reach_pose import RotationValue
+        ops=ReachPoseOps(ReachExecutionWork())
+        def grid(value): return F(round(value*(1<<96)),1<<96)
+        def rescale(values):
+            maximum=max(map(abs,values)); exponent=maximum.numerator.bit_length()-maximum.denominator.bit_length()
+            power=F(1<<exponent) if exponent>=0 else F(1,1<<-exponent)
+            if maximum<power: exponent-=1
+            shift=-exponent-1
+            factor=F(1<<shift) if shift>=0 else F(1,1<<-shift)
+            result=tuple(grid(value*factor) for value in values)
+            return tuple(-v for v in result) if next(v for v in result if v)<0 else result
+        rotations=((F(1),F(0),F(0),F(0)),(F(3,4),F(0),F(0),F(0)),
+                   (F(1,3),F(0),F(0),F(2,7)),(F(3,5),F(2,11),F(-1,13),F(1,1<<1074)))
+        for a in rotations:
+            for b in rotations:
+                aw,ax,ay,az=a; bw,bx,by,bz=b
+                product=(aw*bw-ax*bx-ay*by-az*bz,aw*bx+ax*bw+ay*bz-az*by,
+                         aw*by-ax*bz+ay*bw+az*bx,aw*bz+ax*by-ay*bx+az*bw)
+                self.assertEqual(ops.multiply(RotationValue(a),RotationValue(b)).components,rescale(product))
+            w,x,y,z=a; denominator=sum(v*v for v in a)
+            rows=((denominator-2*(y*y+z*z),2*(x*y-w*z),2*(x*z+w*y)),
+                  (2*(x*y+w*z),denominator-2*(x*x+z*z),2*(y*z-w*x)),
+                  (2*(x*z-w*y),2*(y*z+w*x),denominator-2*(x*x+y*y)))
+            for vector in ((F(0),)*3,(F(1,1<<1074),F(1,3),F(-7,11))):
+                expected=tuple(grid(sum(a*b for a,b in zip(row,vector))/denominator) for row in rows)
+                self.assertEqual(ops.rotate(RotationValue(a),vector),expected)
+
+    def test_static_pose_reuse_is_bounded_and_still_checks_cancellation(self):
+        marker=RuntimeError("cancel static cache hit"); cancelled=False
+        def check():
+            if cancelled: raise marker
+        work=ReachExecutionWork(check=check,max_cache_entries=12)
+        ops=ReachPoseOps(work)
+        first=ops.make((1,2,3)); second=ops.make((F(1,7),0,0))
+        result=ops.compose(first,second)
+        before=work.operations
+        again=ops.compose(first,second)
+        self.assertIs(again,result)
+        self.assertGreater(work.operations,before)
+        self.assertLess(work.operations-before,10)
+        self.assertLessEqual(len(work._cache),12)
+        cancelled=True
+        with self.assertRaises(RuntimeError) as raised: ops.compose(first,second)
+        self.assertIs(raised.exception,marker)
+
 
 if __name__=="__main__": unittest.main()

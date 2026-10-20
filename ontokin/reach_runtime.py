@@ -131,6 +131,7 @@ class ReachSimulator(ForceSimulator):
         self.incoming_release_time = None
         from .reach_pose import ReachPoseOps
         self.pose_ops = ReachPoseOps(self.work)
+        self._identity_pose = self.pose_ops.identity()
         super().__init__(model, check=self._work_check)
         for path, action in model.actions.items():
             self._check()
@@ -155,13 +156,37 @@ class ReachSimulator(ForceSimulator):
 
     def _invalidate(self):
         self._pose_cache.clear()
-        self._pair_cache.clear()
         self._derived_pose_cache.clear()
+
+    def _pose_slot(self, path, signature, build):
+        """Reuse only a numerically identical node within the bounded work cache.
+
+        Each path has one replaceable slot, not one retained entry per sample.
+        The signature retains its private parent value and complete local
+        operands, so neither object-id reuse nor a changed claim can hit it.
+        Every lookup/insertion remains a charged request operation.
+        """
+        key = ("reach_source_pose", self.model.program_revision, path)
+        old = self.work.lookup(key)
+        if old is not None and old[0] == signature:
+            return old[1]
+        result = build()
+        self.work.remember(key, (signature, result))
+        return result
+
+    def _constant_pose(self, value, *, inverse=False):
+        key = ("reach_source_constant_pose", inverse, value.position, value.rotation)
+        result = self.work.lookup(key)
+        if result is None:
+            result = (self.pose_ops.inverse_pose(value) if inverse else self.pose_ops.constant_pose(value))
+            self.work.remember(key, result)
+        return result
 
     def _pair(self, path, time, state):
         runtime, action = state.actions[path], self.model.actions[path]
         self._check()
-        key = (id(state), path, time, runtime.status, runtime.elapsed, runtime.running_since)
+        key = (runtime.initial, runtime.solution.target_rad, self.model.actions[path].duration,
+               runtime.elapsed_at(time), runtime.status == "running")
         if key not in self._pair_cache:
             if len(self._pair_cache) >= 256:
                 self._pair_cache.clear()
@@ -216,7 +241,7 @@ class ReachSimulator(ForceSimulator):
             return cached[1], cached[2]
         ops = self.pose_ops
         incoming = self._incoming(state)
-        objects, frames, resolving = {}, {"world": ops.identity()}, set()
+        objects, frames, resolving = {}, {"world": self._identity_pose}, set()
 
         def frame(path):
             if path not in frames:
@@ -225,7 +250,9 @@ class ReachSimulator(ForceSimulator):
                     frames[path] = instance(stem)
                 else:
                     site = self.model.sites[stem]
-                    frames[path] = ops.compose(instance(site.owner), ops.constant_pose(site.pose))
+                    owner = instance(site.owner)
+                    frames[path] = self._pose_slot(path, (owner, site.pose),
+                        lambda: ops.compose(owner, self._constant_pose(site.pose)))
             return frames[path]
 
         def instance(path):
@@ -240,20 +267,27 @@ class ReachSimulator(ForceSimulator):
                 kind, relation_path = incoming[path]
                 if kind == "follow":
                     follow = self.model.follows[relation_path]
-                    result = ops.compose(frame(follow.parent), ops.constant_pose(follow.offset))
+                    parent = frame(follow.parent)
+                    result = self._pose_slot(path, ("follow", parent, follow.offset),
+                        lambda: ops.compose(parent, self._constant_pose(follow.offset)))
                 else:
                     joint = self.model.joints[relation_path]
                     parent = frame(joint.parent + ".frame")
-                    relative = ops.identity()
+                    coordinate, slope = None, None
                     if joint.kind in {"hinge", "slider"}:
                         coordinate, slope, _ = self._exact_coordinate(relation_path, time, state)
+                    child_pose = self.model.sites[joint.child].pose
+                    def connected():
+                        relative = self._identity_pose
                         if joint.kind == "hinge":
                             relative = ops.hinge_pose(joint.axis, coordinate, slope)
-                        else:
+                        elif joint.kind == "slider":
                             relative = ops.make(position=ops.scale(joint.axis, Fraction(coordinate)),
                                                 velocity=ops.scale(joint.axis, slope))
-                    result = ops.compose(ops.compose(parent, relative),
-                                         ops.inverse_pose(self.model.sites[joint.child].pose))
+                        return ops.compose(ops.compose(parent, relative),
+                                           self._constant_pose(child_pose, inverse=True))
+                    result = self._pose_slot(path,
+                        ("joint", parent, joint.kind, joint.axis, coordinate, slope, child_pose), connected)
             elif state.modes[path] == "dynamic":
                 result = self._dynamic_kinematics(path, time, state)
             else:
@@ -271,7 +305,8 @@ class ReachSimulator(ForceSimulator):
                     rotation = ops.advance_orientation(runtime.initial, action.vector, runtime.elapsed_at(time))
                     if runtime.status == "running":
                         omega = action.vector
-                result = ops.make(position=position, orientation=rotation, velocity=velocity, omega=omega)
+                result = self._pose_slot(path, ("root", position, rotation, velocity, omega),
+                    lambda: ops.make(position=position, orientation=rotation, velocity=velocity, omega=omega))
             resolving.remove(path)
             # This is an explicit finiteness check; opaque internals continue
             # down the graph even after canonical components are cached.
@@ -296,8 +331,10 @@ class ReachSimulator(ForceSimulator):
             return self._derived_pose_cache[key]
         _, frames = self._kinematics(time, state)
         base, tip = frames[payload.base_frame], frames[payload.tip + ".frame"]
-        relative = self.pose_ops.compose(self.pose_ops.inverse_pose(base), tip)
-        result = self.pose_ops.make(position=self.pose_ops.relative_point(base, tip), orientation=relative.rotation)
+        def relative_pose():
+            rotation = self.pose_ops.multiply(self.pose_ops.inverse_rotation(base.rotation), tip.rotation)
+            return self.pose_ops.make(position=self.pose_ops.relative_point(base, tip), orientation=rotation)
+        result = self._pose_slot(("tip_in_base", payload.base_frame, payload.tip), (base, tip), relative_pose)
         if len(self._derived_pose_cache) < 256:
             self._derived_pose_cache[key] = result
         return result
@@ -306,7 +343,9 @@ class ReachSimulator(ForceSimulator):
         key = (id(state), time, "target", payload.base_frame, payload.target_m)
         self._check()
         if key not in self._derived_pose_cache:
-            result = self.pose_ops.compose(frames[payload.base_frame], self.pose_ops.make(position=payload.target_m))
+            base = frames[payload.base_frame]
+            result = self._pose_slot(("target_in_world", payload.base_frame, payload.target_m), (base,),
+                lambda: self.pose_ops.compose(base, self.pose_ops.make(position=payload.target_m)))
             if len(self._derived_pose_cache) >= 256:
                 return result
             self._derived_pose_cache[key] = result

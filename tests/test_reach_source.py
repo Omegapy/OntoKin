@@ -73,7 +73,7 @@ class ReachSourceTests(unittest.TestCase):
 module Older @ "older";
 profile "force-0.1";
 public fn elbow_positive @ "ordinary"(reach_planar: Int) -> Int { return reach_planar; }
-scene Demo @ "demo" { duration = 0[s]; gravity = vec3(0[m/s^2], 0[m/s^2], 0[m/s^2]); }
+scene Demo @ "demo" { duration = 1[s]; gravity = vec3(0[m/s^2], 0[m/s^2], 0[m/s^2]); }
 '''
         compiler = compile_construction(ProgramBundle(SourceUnit("entry", "older.ok", text.encode())))
         self.assertEqual(compiler.model.profile, "force-0.1")

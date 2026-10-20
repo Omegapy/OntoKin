@@ -46,6 +46,19 @@ caller's fresh responsibility. Cached counters describe the current lookup,
 not the historical solve. Actual source/Agent tests and execution logs must
 identify their code revision separately from this derivation.
 
+The source pose implementation additionally reuses immutable axis reductions,
+stationary poses, stationary compositions and constant inverse frames in that
+same bounded cache. Valid exact Fraction tuples are width-checked without a
+redundant numeric decode. Zero vectors and identity rotations skip operations
+whose exact results are already known. Sparse Hamilton products compute the
+same exact components as the dense formula before the same dyadic rounding;
+they do not assume a unit quaternion or a power-of-two identity scale. Grid
+rounding is omitted only when every component is already exactly on the grid.
+These paths retain the original canonical output bits and conservative error
+records while charging their actual checks and executed arithmetic. They do
+not reduce the IK counters, reset request work or promise that every scene
+below the independent pose-count limit fits the shared operation allowance.
+
 ## Independently implemented correctly rounded IK
 
 The retained proposal oracle uses Fraction interval endpoints. Production
