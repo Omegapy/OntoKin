@@ -165,6 +165,41 @@ class ForceEvidenceInputTests(unittest.TestCase):
                 force.check_visual_output("visual-browser" if category in {"browser", "failed-request"} else "visual-format", changed)
         force.check_visual_output("surface", {"status": "pending", "summary": {"failed": 0, "pending": 3}})
 
+    def test_visual_inventory_accepts_actual_driver_path_order_without_changing_named_bytes(self):
+        from tools.check_local import inventory
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            fixtures = root / "docs/language-design/fixture"
+            fixtures.mkdir(parents=True)
+            (fixtures / "example.ok").write_text('ontokin "0.1";\n')
+            (fixtures.with_suffix(".json")).write_text('{"frozen":true}\n')
+            driver = inventory(root)
+            current = force.evidence_inventory(root)
+            self.assertNotEqual([row["path"] for row in driver["files"]],
+                                [row["path"] for row in current])
+            original = copy.deepcopy(driver)
+            force.check_visual_source_inventory(driver["files"], current)
+            force.check_visual_source_inventory(list(reversed(driver["files"])), current)
+            self.assertEqual(driver, original)
+
+    def test_visual_inventory_rejects_changed_missing_duplicate_or_renamed_inputs(self):
+        records = [{"path": "ontokin/example.py", "sha256": "sha256:" + "a" * 64, "bytes": 17},
+                   {"path": "tests/test_example.py", "sha256": "sha256:" + "b" * 64, "bytes": 23}]
+        current = [{"path": row["path"], "sha256": row["sha256"], "byte_length": row["bytes"]}
+                   for row in records]
+        force.check_visual_source_inventory(records, current)
+        for kind in ("hash", "length", "missing", "duplicate", "renamed", "extra"):
+            with self.subTest(kind=kind):
+                changed = copy.deepcopy(records)
+                if kind == "hash": changed[0]["sha256"] = "sha256:" + "c" * 64
+                if kind == "length": changed[0]["bytes"] += 1
+                if kind == "missing": changed.pop()
+                if kind == "duplicate": changed.append(copy.deepcopy(changed[0]))
+                if kind == "renamed": changed[0]["path"] = "ontokin/renamed.py"
+                if kind == "extra": changed.append({**changed[0], "path": "ontokin/extra.py"})
+                with self.assertRaisesRegex(force.EvidenceError, "omitted or changed"):
+                    force.check_visual_source_inventory(changed, current)
+
 
 class ForceGitInputTests(unittest.TestCase):
     def test_commit_blob_binding_ignores_ambient_git_and_replacement_refs_without_index_changes(self):

@@ -45,7 +45,7 @@ SCHEMA = "ontokin.force-local-conformance/0.1"
 EVIDENCE_SCHEMA = "ontokin.force-release-evidence/0.1"
 EXECUTION_SCHEMA = "ontokin.local-execution/0.1"
 SOURCE_SCHEMA = "ontokin.force-source-execution/0.1"
-MAPPING_SHA256 = 'sha256:3958a565c09b77d9ae2e5c559cf0fca94a8148211dabbbdf5805a6294c265b50'
+MAPPING_SHA256 = 'sha256:8ecb81ebced19858fdd101f490ab3c6eeec975e23036567c5dfc28d66d76566d'
 SOURCE_IDS = tuple([f"P{i:02}" for i in range(1, 23)]
                    + [f"N{i:02}" for i in range(1, 23)]
                    + [f"S{i:02}" for i in range(1, 13)])
@@ -1490,6 +1490,18 @@ def check_visual_output(step_id, output):
     inspect(output)
 
 
+def check_visual_source_inventory(records, current):
+    # The local driver orders Path objects by path components; the release
+    # inventory orders POSIX path strings. Compare the same named bytes in one
+    # canonical order without rewriting either retained inventory or its hash.
+    eligible = sorted(
+        ({"path": row["path"], "sha256": row["sha256"], "byte_length": row["bytes"]}
+         for row in records if eligible_path(row["path"])),
+        key=lambda row: row["path"],
+    )
+    require(eligible == current, "The actual visual workspace omitted or changed a current eligible input.")
+
+
 class Auditor:
     def __init__(self, evidence, *, root=None):
         self.path = None if evidence is None else Path(evidence).resolve()
@@ -1718,9 +1730,7 @@ class Auditor:
         require(before == inventory_records(before["files"])
                 and before == json_file(relative_file(directory, "source-after.json")),
                 "The visual driver input inventory changed or was incompletely retained.")
-        eligible = [{"path": row["path"], "sha256": row["sha256"], "byte_length": row["bytes"]}
-                    for row in before["files"] if eligible_path(row["path"])]
-        require(eligible == self.current["inputs"], "The actual visual workspace omitted or changed a current eligible input.")
+        check_visual_source_inventory(before["files"], self.current["inputs"])
         for identity in (report["git"], report["workspace_git"], report["git_after"]):
             require(identity["available"] is True
                     and identity["local_head"] == envelope["source_before"]["git"]["commit"]

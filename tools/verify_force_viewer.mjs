@@ -27,11 +27,13 @@ for(let i=0;i<args.length;i++) {
   else {assert.equal(outputDir,undefined,'Duplicate --output-dir');outputDir=path.resolve(value);}
 }
 assert.ok(demoDir&&outputDir,'Both --demo-dir and --output-dir are required');
-if(!fixtureNames.length)fixtureNames.push(...(agentWorkflow?agentDeliveryCases:['P02','P07','P09','P10','P11','P12','P13','held-out-oblique','held-out-spin']));
+const requiredCases=agentWorkflow?agentDeliveryCases:['P02','P07','P09','P10','P11','P12','P13','held-out-oblique','held-out-spin'];
+if(!fixtureNames.length)fixtureNames.push(...requiredCases);
 assert.equal(new Set(fixtureNames).size,fixtureNames.length,'Each browser fixture must be selected once');
 const availableCases=agentWorkflow?agentDeliveryCases:deliveryCases;
 assert.ok(fixtureNames.length<=availableCases.length);
 for(const name of fixtureNames)assert.ok(availableCases.includes(name),'Unknown delivery fixture '+name);
+const completeBrowserCorpus=fixtureNames.length===requiredCases.length&&requiredCases.every(name=>fixtureNames.includes(name));
 await mkdir(outputDir,{recursive:true});
 assert.deepEqual(await readdir(outputDir),[],'Use an empty output directory so captures cannot mix runs');
 
@@ -201,7 +203,7 @@ const report={schema_version:agentWorkflow?'ontokin.force-delivery-browser-valid
   tooling_lock_sha256:sha256(await readFile(path.join(root,'tools/package-lock.json'))),
   selected_fixtures:fixtureNames,source_workflow_complete_component_corpus:workflow.complete_component_corpus??false,
   source_workflow_complete_agent_delivery_corpus:agentWorkflow,
-  complete_browser_corpus:fixtureNames.length===availableCases.length,
+  complete_browser_corpus:completeBrowserCorpus,
   source_fixtures:cases.map(c=>({fixture:c.oracle.fixture,program_revision:c.revision,artifact_sha256:c.artifactHash,
     end_seconds:c.oracle.end_seconds,provenance:c.provenance,exporter_source_code_sha256:c.exportReport.source_code_sha256})),
   environment:{node:process.version,platform:process.platform,architecture:process.arch,
