@@ -339,7 +339,8 @@ class NativeSurfaceExportCLITests(unittest.TestCase):
         self.assertEqual(status, 0)
         self.assertEqual(result["language_version"], "0.1")
         self.assertEqual(result["profile"], "core-0.1")
-        self.assertEqual(set(result["export_targets"]), {"ontokin.glb/0.1", "ontokin.glb/0.2", CONTRACT, "ontokin.glb/0.4"})
+        self.assertEqual(set(result["export_targets"]),
+                         {"ontokin.glb/0.1", "ontokin.glb/0.2", CONTRACT, "ontokin.glb/0.4", "ontokin.glb/0.5"})
         surface = result["surface_interface"]
         self.assertEqual(surface["language_version"], "0.3")
         self.assertEqual(surface["profile"], "surface-0.1")
