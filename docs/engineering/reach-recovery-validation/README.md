@@ -244,3 +244,60 @@ All ten Agent artifacts, complete changed-cut regression and rates, the Python
 compatibility matrix, full native/browser/visual roles, complete hostile-input
 coverage and final independent release audit remain required. Main is unchanged;
 these failed full recording runs cannot justify a merge or a release claim.
+
+## Recording and Agent checkpoint, 19:18 UTC
+
+The integrated implementation is `7bfa47c5d6582d460ba61637d724e837e8a35ea0`,
+tree `33068412914a63b94aeb0698e480327498adaf0d`. Its source Taylor polynomials
+and independent adaptive Taylor sums now use exact guarded integer layouts,
+with the original fractions retained when a smaller operand cap requires them.
+Independent orientation proofs can be reused across translated carriers while
+position comparisons and original cold failure order remain fresh. Moving
+recording nodes no longer pollute reusable arithmetic with changing path slots.
+These changes preserve the original numerical results and public limits.
+
+| Archive | Members | Bytes | SHA-256 |
+| --- | ---: | ---: | --- |
+| `recording-agent-006.zip` | 556 | 3,295,694 | `211a322005a47034f59024a1ed0ce97126e2b1246488bac158644e18f48fa15c` |
+| `optimization-focused-006.zip` | 127 | 2,488,613 | `a76c8d3a8ece52eb58ca6ca87fd6937feff917cc01ad61dbf7aaebedc8dcc56e` |
+
+Both adjacent member manifests identify every original byte. All 683 member
+hashes, lengths, archive membership and ZIP CRCs were checked against originals.
+Original failed attempts retain their exact reports and source identities.
+
+- Complete source run `integrated-artifacts-004` at `39107f2` passes **13/28**
+  with stable inputs. P01 uses **84,389**, P14 **94,183**, and P17 **80,936**
+  operations. The same 15 cases fail at 100,001. No increased cap was used.
+- Actual `integrated-agent-001` at the same cut completes 176 exchanges and
+  retrieves L04, P01 and P17: **3/10** artifacts. Seven recording requests
+  exhaust the cap. It also loses committed LP03/LP04 database history and
+  fails later source acceptance checks. The configured 42 protocol steps
+  cannot be reported as 42 successful executions.
+- Read-only database integrity checks pass, but persisted receipts disagree
+  with the retained coherent older store state, and request sequence numbers
+  are reused. The exact LP04.01 request passes on the same clean `39107f2`
+  through a fresh live `/tmp` store, with accepted source and stable inputs.
+  Workspace synchronization can explain the observed replacement pattern,
+  but was not traced at the failure instant and is only an inference. The
+  diagnosis, actual failed store, raw receipts and successful narrow replay
+  are preserved. No runtime or synchronization setting was changed.
+- Integrated focused runs pass **63/63** at `26c1fe6` and **35/35** at
+  `e1670da`, with stable inputs. Separate orientation, cache-policy and
+  independent-series worker results retain their actual distinct revisions.
+  The final integer-series worker `c68affc` passes **101/101** and reduces
+  its P01 profile from 84,766 to 83,378 operations; its other five profiles
+  still exhaust the cap. Root integrates that reviewed change as `7bfa47c`.
+- The initial cache-policy test fixture failure and a source-probe wrapper's
+  exclusive-write error remain retained alongside corrected passing reruns.
+- Separate auditor/collector worker `6119dd2` passes **49/49** focused
+  methods with stable inputs. Its actual empty-evidence audit reports all
+  12 roles, R01–R12, Q01–Q22, 43 exact subtypes and 54 protocol records
+  pending, with all completion booleans false. Its two earlier failing
+  attempts remain in `release-tooling-validation-001`. That test result
+  establishes tooling behavior, not any missing release execution.
+
+The next sampler change uses a separately identified finite rotation recurrence
+and conservative endpoint excesses. It is still unexecuted work in isolated
+branches at this checkpoint. Complete integrated regression, all source/Agent
+artifacts, current rates, independent destinations, visual review, compatibility,
+actual hostile probes and final release acceptance remain mandatory before main.

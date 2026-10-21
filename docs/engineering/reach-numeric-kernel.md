@@ -266,9 +266,79 @@ most 2,485 bits. Final 96-bit grid extraction, including the integer quotient
 guard, requires at most 2,582 bits. All are below 2,600 and the unchanged
 32,768-bit request maximum. A caller's smaller operand limit still applies to
 every executed intermediate. No enlarged limit or hidden fallback is used.
-Only completed grid results are retained in the bounded cache, and every
-executed recurrence, exact operation, final projection and coefficient
-construction continues to charge the same request and cancellation callback.
+Completed grid results and immutable coefficient tables use the bounded
+request cache. Every executed recurrence, exact operation, final projection
+and coefficient construction charges the same request and cancellation
+callback.
+
+### Exact paired integer evaluation
+
+The same two polynomials can be evaluated together with integer arithmetic
+when the caller's operand limit admits the complete packed layout. This is
+an exact change of representation, with the original Fraction recurrence
+retained for smaller operand limits. It does not change the argument grid,
+polynomial coefficients, degree, final projection or error allowances.
+
+Write the reduced grid argument as `x = n/d`, where `d = 2^e`, and put
+`N = n^2`, `D = d^2`, `m = 12` and `M = 25!`. The nonnegative integers
+`a_k = M/(2k+1)!` and `b_k = M/(2k)!` are exact. Define the integer Horner
+numerators by
+
+```
+S_m = a_m,                     C_m = b_m,
+S_k = a_k * D^(m-k) - N*S_(k+1),
+C_k = b_k * D^(m-k) - N*C_(k+1).
+```
+
+Then the original sine polynomial is `x*S_0/(M*D^m)` and the original cosine
+polynomial is `C_0/(M*D^m)`. Since `0 <= N <= D` and both factorial coefficient
+sequences are nonincreasing, downward induction gives
+`0 <= S_k <= a_k*D^(m-k)` and `0 <= C_k <= b_k*D^(m-k)`.
+This also covers `x = 0`, `x = +/-1` and `d = 1`.
+
+Choose `B = bit_length(M) + 2*e*m + 1`, so `2^B > M*D^m` strictly.
+The single recurrence
+
+```
+H_m = (a_m << B) + b_m,
+H_k = (((a_k << B) + b_k) << (2*e*(m-k))) - N*H_(k+1)
+```
+
+has the exact invariant `H_k = 2^B*S_k + C_k`. Multiplication may carry
+between lanes temporarily, but the integer identity and the proved final
+lane bounds give `divmod(H_0, 2^B) = (S_0, C_0)` without approximation.
+Two exact Fraction constructions, the original final multiplication by x
+and the original two nearest-even grid projections therefore reproduce every
+output bit of the Fraction recurrence.
+
+All packed allocations and arithmetic are preflighted before construction.
+The conservative bound `2*B + 2*e + 4` covers coefficient shifts, the full
+integer product, subtraction and extraction. With `e <= 96`, it is below
+5,000 bits and the unchanged 32,768-bit maximum. The fast path also requires
+`2*bit_length(M) + 2*e*m + e + 96 + 16` bits, which dominates the original
+Fraction path's prospective cross-products and final rounding: every reduced
+partial denominator divides `M*D^(m-k)`, its numerator has at most one extra
+bit by the absolute-value bound above, adding a factorial coefficient adds
+at most `bit_length(M)+1` prospective bits, multiplication by x adds at most
+`e+1`, and grid extraction adds at most `96+2`. Thus the fast path cannot
+newly admit an operand limit for which the old arithmetic would reject.
+If either bound exceeds the actual caller limit, the original Fraction path
+runs with its original operation-by-operation guards and diagnostics.
+
+An immutable table of the thirteen shifted integer coefficient pairs is
+keyed by method, term count, reduced denominator exponent, lane width and
+current operand limit in the same 256-entry request cache. Its values are
+width-checked again on use. Each executed integer division, shift, packing
+addition, multiply, subtraction, extraction and Fraction construction is
+precharged, as are recurrence and cache operations. Cancellation propagates
+unchanged, and an incomplete table or result is never inserted.
+
+When both complete bounds for `e = 96` fit the actual operand cap, a smaller
+reduced denominator is promoted exactly to that one common layout by shifting
+its numerator by `96-e`. This shift is width-checked and charged before
+allocation. The final sine multiplication still uses the original exact x.
+All ordinary grid arguments can then reuse one table; the unchanged smaller
+cap path still uses its actual reduced exponent or the Fraction fallback.
 
 Pi is enclosed with exact alternating sums in Machin's identity, with a
 fixed term count for each permitted precision, then outwardly projected to

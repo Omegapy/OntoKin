@@ -385,13 +385,15 @@ class ReachSimulator(ForceSimulator):
         self.work.charge("source_pose_time_key")
         return None if not state.dynamic and not state.claims else time
 
-    def recording_frames(self, time, state, selected_paths):
+    def recording_frames(self, time, state, selected_paths, *, moving_frames=None):
         """Sample p/q from a validated phase without constructing unused rates.
 
         The recording planner must first validate the complete requested prefix
         and derive its whole-phase bounds. This method neither advances events
         nor substitutes partial output for a complete source observation. Its
         private derivative-free graph cannot enter the full-kinematics cache.
+        A phase movement classification only avoids caching changing nodes;
+        current dependencies and exact local operands are still resolved.
         """
         selected = []
         seen = set()
@@ -406,7 +408,8 @@ class ReachSimulator(ForceSimulator):
                     seen.add(path)
                     selected.append(path)
             _, frames = self._resolve_kinematics(time, state, selected_frames=selected,
-                                               pose_only=True, recording_only=True)
+                                               pose_only=True, recording_only=True,
+                                               recording_moving_frames=moving_frames)
             result = {}
             for path in selected:
                 self._check()
@@ -489,7 +492,8 @@ class ReachSimulator(ForceSimulator):
 
         return frozenset(path for path in selected_paths if frame(path))
 
-    def _resolve_kinematics(self, time, state, *, selected_frames=None, pose_only=False, recording_only=False):
+    def _resolve_kinematics(self, time, state, *, selected_frames=None, pose_only=False,
+                            recording_only=False, recording_moving_frames=None):
         """Resolve the actual pose graph without intermediate float exposure.
 
         This separate 0.6 path leaves every older profile's pose arithmetic
@@ -510,7 +514,19 @@ class ReachSimulator(ForceSimulator):
         incoming = self._incoming(state)
         objects, frames, resolving = {}, {"world": self._identity_pose}, set()
 
-        def slot(path, signature, build):
+        def slot(path, signature, build, *, owner=None):
+            if recording_only and recording_moving_frames is not None:
+                # Changing nodes already have same-clock sharing in objects /
+                # frames below. Their previous-clock path slot is otherwise a
+                # one-use numeric result that displaces reusable arithmetic.
+                # A site's movement follows its actual owner. Every dependency
+                # and local signature above this cache policy remains fresh;
+                # incomplete hints merely retain the ordinary bounded lookup.
+                frame_path = path if owner is not None else path + ".frame"
+                if (frame_path in recording_moving_frames or
+                        owner is not None and owner + ".frame" in recording_moving_frames):
+                    self.work.charge("recording_moving_pose")
+                    return build()
             namespace = "recorded_transform" if recording_only else "recording"
             return self._pose_slot((namespace, path) if pose_only else path, signature, build)
 
@@ -523,7 +539,7 @@ class ReachSimulator(ForceSimulator):
                     site = self.model.sites[stem]
                     owner = instance(site.owner)
                     frames[path] = slot(path, (owner, site.pose),
-                        lambda: compose(owner, self._constant_pose(site.pose)))
+                        lambda: compose(owner, self._constant_pose(site.pose)), owner=site.owner)
             return frames[path]
 
         def instance(path):

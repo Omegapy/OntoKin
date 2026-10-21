@@ -977,7 +977,8 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach
         if new_phase:
             moving_frames = plan.simulator.recording_moving_frames(state, frame_paths)
         selected_frames = frame_paths if new_phase else tuple(path for path in frame_paths if path in moving_frames)
-        frames = plan.simulator.recording_frames(time, state, selected_frames)
+        frames = plan.simulator.recording_frames(time, state, selected_frames,
+                                                moving_frames=moving_frames)
         for node in nodes:
             _charge(work, "recording_pose")
             if not new_phase and node.frame_path not in moving_frames:

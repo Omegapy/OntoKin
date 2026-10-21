@@ -62,7 +62,10 @@ class _Bounds:
         """Cache only independently derived immutable arithmetic results."""
         if self.work is None or not hasattr(self.work, "lookup") or not hasattr(self.work, "remember"):
             return calculate()
-        key = ("reach_independent_bounds_v1", *key)
+        # A successful proof also establishes its intermediate operand domain.
+        # A later narrower request limit must re-establish that domain, even
+        # when the exact external values still fit and compare equal.
+        key = ("reach_independent_bounds_v1", getattr(self.work, "max_operand_bits", MAX_OPERAND_BITS), *key)
         result = self.work.lookup(key)
         if result is None:
             result = calculate()
@@ -963,6 +966,37 @@ def _recording_vector(value, size, arithmetic):
     return tuple(value)
 
 
+def _recording_orientation_comparison(quaternion, expected, arithmetic, *, before_error=None):
+    """Share one independent orientation proof across translated carriers.
+
+    Every actual stored quaternion and all four source interval cells are
+    admitted before reuse. Position never enters this calculation; the raw
+    quaternion sign and ordered exact source cells remain in its complete key.
+    The bounded work cache returns only immutable normalized cells and error.
+    A caller's position comparison still executes between normalization/sign
+    selection and the orientation error on a miss, preserving cold failure
+    order. That current comparison executes on a hit too and is never cached.
+    """
+    arithmetic.tick("independent_orientation_comparison_domain")
+    quaternion = _recording_vector(quaternion, 4, arithmetic)
+    if type(expected) not in (tuple, list) or len(expected) != 4:
+        _error("OKE-E-CERTIFICATE", "An independent orientation comparison requires four source cells.")
+    expected = tuple(arithmetic.cell(value) for value in expected)
+    compared_position = False
+    def compare():
+        nonlocal compared_position
+        normalized = arithmetic.normalize(quaternion)
+        aligned = _aligned_reference(quaternion, expected, arithmetic)
+        if before_error is not None:
+            before_error()
+            compared_position = True
+        return normalized, arithmetic.difference(normalized, aligned)
+    result = arithmetic.reuse(("recording_orientation_comparison", quaternion, expected), compare)
+    if before_error is not None and not compared_position:
+        before_error()
+    return result
+
+
 def _key_comparisons(reference, geometry, tracks, time, index, arithmetic, *, previous=None, previous_time=None):
     result, pending, observed, candidates = {}, [], [], []
     for carrier, item in geometry.items():
@@ -992,11 +1026,15 @@ def _key_comparisons(reference, geometry, tracks, time, index, arithmetic, *, pr
     for carrier, item, position, quaternion in pending:
         ideal = ideals[item["frame"]]
         def compare():
-            normalized = arithmetic.normalize(quaternion)
             expected = (ideal.orientation[1], ideal.orientation[2], ideal.orientation[3], ideal.orientation[0])
-            expected = _aligned_reference(quaternion, expected, arithmetic)
-            return (("position_error", arithmetic.difference(position, ideal.position)),
-                    ("quaternion_error", arithmetic.difference(normalized, expected)), ("normalized", normalized),
+            position_error = None
+            def compare_position():
+                nonlocal position_error
+                position_error = arithmetic.difference(position, ideal.position)
+            normalized, quaternion_error = _recording_orientation_comparison(
+                quaternion, expected, arithmetic, before_error=compare_position)
+            return (("position_error", position_error),
+                    ("quaternion_error", quaternion_error), ("normalized", normalized),
                     ("magnitude", arithmetic.total(abs(arithmetic.value(value)) for value in position)))
         result[carrier] = dict(arithmetic.reuse(("key_pose_comparison", tuple(position), tuple(quaternion),
                                                 ideal.position, ideal.orientation), compare))

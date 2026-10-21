@@ -264,6 +264,104 @@ as a common conservative tail, stops only when it is below `2^-(bits+8)`, adds
 `w` exactly, and rounds both result endpoints outward on the unchanged grid.
 The bounded iteration count, operand guards and work callback remain in force.
 
+### Exact integer representation of the same adaptive sums
+
+The independent reference can evaluate these same midpoint sums with bounded
+integer arithmetic when the midpoint is dyadic and a sufficient operand-width
+proof applies. It retains its own adaptive degree, alternating-tail criterion,
+128-bit default outward grid and interval-width term. It does not call the
+production source trigonometric kernel or use its coefficients, fixed degree,
+rounding rule or approximation allowance. Inputs outside the sufficient integer
+domain continue through the original guarded Fraction recurrence.
+
+Write the exact midpoint as `m = n/d`, with `d = 2^e`, `|n| <= d`, and let
+`p = n^2`. For an included iteration `k >= 1`, the sine term magnitude is the
+cosine term magnitude multiplied by `|m|/(2k+1)`. Therefore the exact larger
+term used by the original stopping test is
+
+```
+tail_k = p^k / (d^(2k) * (2k)!).
+```
+
+It decreases with `k`. The new representation retains the **first** `k` for
+which `tail_k < 2^-(bits+8)`, including the strict comparison and inclusion of
+that term. Put `T = bits+8`, `a = bit_length(p)` and
+`f_k = bit_length((2k)!)`. Since `p < 2^a`, the integer inequality
+`T + (a-2e)*k < f_k` proves that this degree has passed the original test.
+The expression is monotone: `a-2e <= 1`, while successive factorial bit widths
+increase by more than one. Binary search locates a sufficient upper degree.
+The implementation then compares each preceding exact numerator and denominator
+until the first failing predecessor. Its comparisons shift only one side after
+cancelling the common power of two. A zero midpoint has both exact sums and
+tail `0, 1, 0`, the original result at the first iteration. No logarithm,
+floating estimate or altered stopping threshold supplies an expected value.
+
+For the selected degree, set `M = (2k+1)!` and `Q = M*d^(2k)`. Define the
+nonnegative integer coefficient pairs
+
+```
+a_j = M*d^(2(k-j)) / (2j+1)!,
+b_j = (2j+1)*a_j = M*d^(2(k-j)) / (2j)!.
+```
+
+Starting at `S_k=a_k`, `C_k=b_k`, the downward recurrence
+`S_j=a_j-p*S_(j+1)`, `C_j=b_j-p*C_(j+1)` gives the exact original partial
+Taylor sums `sin_sum=n*S_0/(d*Q)` and `cos_sum=C_0/Q`. The coefficients
+decrease rapidly enough that `p*a_(j+1) <= a_j` and
+`p*b_(j+1) <= b_j`, because `p <= d^2`. Downward induction therefore proves
+`0 <= S_j <= a_j` and `0 <= C_j <= b_j`. Every coefficient is at most `Q`.
+
+Choose `B = 2^bit_length(Q)`, strictly larger than `Q`, and store each pair as
+the integer `B*a_j+b_j = a_j*(B+2j+1)`. One integer recurrence
+`H_j=(B*a_j+b_j)-p*H_(j+1)` has the exact invariant
+`H_j=B*S_j+C_j`. The final nonnegative lane bounds imply
+`divmod(H_0,B)=(S_0,C_0)` exactly. Temporary carries during multiplication do
+not alter this integer identity. Fraction reduction reconstructs the same
+sine sum, cosine sum and current cosine tail as the original recurrence.
+The original exact addition of interval half-width, endpoint additions and
+subtractions, and outward grid operations then run unchanged. Consequently
+this path changes neither the exact interval endpoints nor the source-reader
+comparison tolerances.
+
+The fast-path preflight must cover arithmetic that the representation avoids,
+as well as the new allocations. Let `L=bits//5+11`, `N=2L+1` and
+`W=N*e+N*bit_length(N)+1`. All original terms and partial sums have magnitude
+at most one and reduced denominator dividing `d^N*N!`. Thus each numerator
+and denominator has at most `W` bits. The old Fraction multiplication and
+division prospective widths are at most `2W`, and the old addition bound,
+including its unreduced cross-products, is at most `2W+1`. This proves that
+an omitted original series operation cannot evade a previously enforced width
+failure. Original midpoint/square operations run before eligibility is checked;
+the original final error and grid preflights still run on the identical values.
+
+The integer path is eligible only for `1 <= L <= 64` and
+`max(2W+2e+5, W+bits+11) <= 32768`. This conservative bound covers factorial
+construction, denominator and coefficient shifts, both packed lanes, the
+prospective multiplication by `p`, subtraction, exact-power selection and
+threshold shifts. Each actual integer operation also checks its operand and
+prospective result widths before allocation, through the unchanged shared
+callback. Binary-search and exact comparison steps charge their own checks;
+exact powers use individually charged repeated squaring. No hidden operation
+allowance or larger integer domain is introduced.
+
+Only complete immutable factorial and coefficient tuples enter the existing
+256-entry reference arithmetic cache. Factorial keys include their last index;
+coefficient keys include the exact denominator exponent and selected degree.
+Both include the current operand cap. All original input and midpoint guards
+precede lookup, and the sufficient-domain proof is repeated for each call.
+Eviction changes performed work, not the represented sums or outputs. A
+cancelled incomplete table is not published, and the caller's exception is
+never caught or replaced.
+
+Authored checks compare cold and warm exact endpoints with the original
+charged recurrence, compare the selected sums and tail with independent
+direct powers/factorials, exercise odd/even stopping degrees and signed
+midpoints, and cover fallback, omitted intermediate overflow, lowered caps,
+bounded eviction and callback identity. Complete boundary and pose trees on
+four source histories are compared with the previous series. Their execution
+and artifact budget measurements are recorded separately; this derivation
+alone is not a passing release result.
+
 Using the actual current term replaces the previous global `1/(2k)!` tail;
 smaller reduced arguments need fewer exact terms. It changes no production
 source error allowance or destination tolerance. The authored check independently

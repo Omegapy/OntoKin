@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-21T18:33:45Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-21T19:18:00Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -44,21 +44,32 @@ local `569b67b0bdc6854cc069e6a00590e0f15267ae03`
 [draft PR #25](https://github.com/Omegapy/OntoKin/pull/25). Original branches,
 failed attempts and earlier evidence retain their identities.
 
-The current tested continuation is local `758987b70f76b879a4ab60f814215166215833d6`,
-tree `bda9690a4cef554000fa9c292e80b94f842b0173`. Its complete source run still
-passes **13/28**; P01 now uses **84,878** operations, P14 **94,568**, and P17
-**81,425**. The same 15 cases still exhaust the unchanged cap. All **45** latest
-focused checks pass with stable inputs, including exact independent boundary
-history equivalence, compiled mesh occurrence limits, incoming graph reuse,
-interpolation laws and complete recorded-byte comparisons. Earlier integrated
-64- and 26-method cohorts also passed. These are focused results; the complete
-regression must rerun on the changed implementation.
+Current integrated implementation is `7bfa47c5d6582d460ba61637d724e837e8a35ea0`,
+tree `33068412914a63b94aeb0698e480327498adaf0d`. Exact paired source polynomial
+evaluation, guarded independent orientation reuse and the unchanged adaptive
+reference series now use bounded integer arithmetic. The latest complete
+source execution on `39107f2` still passes **13/28**; P01 uses **84,389**
+operations, P14 **94,183**, and P17 **80,936**. The same 15 cases exhaust the
+unchanged cap. Integrated focused executions pass **63/63** at `26c1fe6` and
+**35/35** at `e1670da`; the independently reviewed reference-series worker
+passes **101/101** at `c68affc`. These are distinct identified cuts, not a fresh
+complete regression or final acceptance of the integrated implementation.
 
-The [recovery record](docs/engineering/reach-recovery-validation/README.md#recording-optimization-checkpoint-1833-utc)
-retains all three latest complete failed artifact runs, focused results, actual
-GLBs, profiler outputs and member hashes. Worker follow-ups target recording
-sampling dependency reuse and independent orientation proofs. The missing final
-release auditor/collector is being implemented separately; it has not passed.
+The fresh Agent execution on `39107f2` retrieves **3/10** artifacts; seven still
+exhaust the cap. Its live synchronized workspace store also lost already
+committed request rows, so the full protocol run fails. Exact LP04 replay on
+the same clean code succeeds with a `/tmp` live store. External file replacement
+is a documented inference, not a proved cause. Future live stores use `/tmp`;
+closed evidence is preserved afterward. No failed receipt is relabeled.
+
+The [recovery record](docs/engineering/reach-recovery-validation/README.md#recording-and-agent-checkpoint-1918-utc)
+preserves all new source/Agent failures, focused/profiler results and the store
+diagnosis in two verified archives containing 683 members. A recording-only
+rotation recurrence with explicit endpoint error bounds is being implemented
+in isolated branches; it has not executed. Separate release auditor/collector
+tests pass **49/49** at `6119dd2`; its actual empty audit correctly reports every
+role pending. Independent review, missing hostile producers and real final
+executions remain required.
 
 | Recovered evidence | Actual result and limit |
 | --- | --- |

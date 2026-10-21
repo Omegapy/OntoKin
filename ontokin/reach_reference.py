@@ -361,6 +361,147 @@ class _Arithmetic:
             return self.sub(self.neg(self.div(self.pi(), 2)), self.atan(self.div(x, y)))
         raise _Uncertain("Reference atan2 quadrant is unresolved")
 
+    def _series_integer(self, a, b, kind):
+        """One charged integer operation with a prospective allocation guard."""
+        self.tick()
+        an, bn = abs(a).bit_length(), abs(b).bit_length()
+        if kind == "shift":
+            extent = an + b
+        elif kind == "mul":
+            extent = an + bn
+        elif kind in ("add", "sub"):
+            extent = max(an, bn) + 1
+        elif kind == "div":
+            extent = max(an, bn)
+        else:
+            raise ValueError(kind)
+        if max(an, bn, extent) > MAX_OPERAND_BITS:
+            raise ReferenceError("resource", "Independent reference intermediate operand limit exceeded")
+        if kind == "shift":
+            return a << b
+        if kind == "mul":
+            return a * b
+        if kind == "add":
+            return a + b
+        if kind == "sub":
+            return a - b
+        return a // b
+
+    def _series_factorials(self, last):
+        key = ("series_factorials", MAX_OPERAND_BITS, last)
+        cached = self.lookup(key)
+        if cached is not None:
+            return cached
+        values = [1, 1]
+        for factor in range(2, last + 1):
+            values.append(self._series_integer(values[-1], factor, "mul"))
+        return self.remember(key, tuple(values))
+
+    def _series_coefficients(self, exponent, degree, factorials):
+        """Build both exact factorial polynomials in two immutable integer lanes."""
+        key = ("series_coefficients", MAX_OPERAND_BITS, exponent, degree)
+        cached = self.lookup(key)
+        if cached is not None:
+            return cached
+        common = factorials[2 * degree + 1]
+        denominator = self._series_integer(common, 2 * exponent * degree, "shift")
+        lane = self._series_integer(1, denominator.bit_length(), "shift")
+        coefficients = []
+        for index in range(degree + 1):
+            odd = 2 * index + 1
+            coefficient = (common if index == 0 else
+                           self._series_integer(common, factorials[odd], "div"))
+            if index != degree:
+                coefficient = self._series_integer(coefficient, 2 * exponent * (degree - index), "shift")
+            packed = self._series_integer(lane, odd, "add")
+            if coefficient != 1:
+                packed = self._series_integer(coefficient, packed, "mul")
+            coefficients.append(packed)
+        return self.remember(key, (tuple(coefficients), denominator, lane))
+
+    def _series_dyadic(self, middle, squared):
+        """Reproduce the adaptive Fraction series inside a proved integer domain.
+
+        This is an independent midpoint/alternating-tail calculation. The
+        production polynomial's degree, coefficients and error bound are not
+        used. Outside the sufficient bound below the original recurrence runs.
+        """
+        self.tick()
+        self.guard(middle, squared)
+        denominator = middle.denominator
+        limit = self.bits // 5 + 11
+        if denominator & (denominator - 1) or not 1 <= limit <= 64:
+            return None
+        exponent = denominator.bit_length() - 1
+        last = 2 * limit + 1
+        # Every old term and partial sum has magnitude <= 1 and a reduced
+        # denominator dividing (2L+1)! * d**(2L+1). Thus W bounds both reduced
+        # widths, and 2W+1 dominates every old prospective Fraction preflight.
+        # The extra 2e+5 covers packed multiply/subtract preflights; W+bits+11
+        # covers the threshold shift. All final error/grid guards still run.
+        width = last * exponent + last * last.bit_length() + 1
+        if max(2 * width + 2 * exponent + 5, width + self.bits + 11) > MAX_OPERAND_BITS:
+            return None
+        if not middle:
+            return F(0), F(1), F(0)
+        factorials = self._series_factorials(last)
+        power_base = squared.numerator
+        threshold_bits = self.bits + 8
+        growth = power_base.bit_length() - 2 * exponent
+
+        # p < 2**bit_length(p) gives a sufficient, monotone upper bound for
+        # the first accepted degree. Use only bit widths to locate it, then
+        # exact comparisons below recover the original first strict stop.
+        low, high = 1, limit
+        while low < high:
+            candidate = (low + high) // 2
+            self.tick()
+            if threshold_bits + growth * candidate < factorials[2 * candidate].bit_length():
+                high = candidate
+            else:
+                low = candidate + 1
+        degree = low
+        self.tick()
+        if threshold_bits + growth * degree >= factorials[2 * degree].bit_length():
+            return None
+
+        power, factor, remaining = 1, power_base, degree
+        while remaining:
+            if remaining & 1:
+                power = self._series_integer(power, factor, "mul")
+            remaining >>= 1
+            if remaining:
+                factor = self._series_integer(factor, factor, "mul")
+        while degree > 1:
+            previous = self._series_integer(power, power_base, "div")
+            shift = 2 * exponent * (degree - 1) - threshold_bits
+            if shift >= 0:
+                numerator = previous
+                bound = self._series_integer(factorials[2 * degree - 2], shift, "shift")
+            else:
+                numerator = self._series_integer(previous, -shift, "shift")
+                bound = factorials[2 * degree - 2]
+            self.tick()
+            if numerator >= bound:
+                break
+            power, degree = previous, degree - 1
+
+        coefficients, common_denominator, lane = self._series_coefficients(exponent, degree, factorials)
+        packed = coefficients[-1]
+        for coefficient in reversed(coefficients[:-1]):
+            packed = self._series_integer(coefficient, self._series_integer(packed, power_base, "mul"), "sub")
+        # For every partial Horner sum, both nonnegative lanes are no larger
+        # than their constant coefficient; at the end they are <= Q < lane.
+        # Consequently division extracts the two exact integer numerators.
+        self.tick()
+        sine_numerator, cosine_numerator = divmod(packed, lane)
+        sine_numerator = self._series_integer(middle.numerator, sine_numerator, "mul")
+        sine_denominator = self._series_integer(common_denominator, exponent, "shift")
+        tail_denominator = self._series_integer(factorials[2 * degree], 2 * exponent * degree, "shift")
+        return (self.exact(sine_numerator, sine_denominator, "div"),
+                self.exact(cosine_numerator, common_denominator, "div"),
+                self.exact(power, tail_denominator, "div"))
+
     def _series_sincos(self, value):
         """Exact midpoint Taylor sums, with interval width and alternating tails.
 
@@ -374,25 +515,29 @@ class _Arithmetic:
         middle = self.exact(self.exact(value.lo, value.hi, "add"), 2, "div")
         width = max(self.exact(middle, value.lo, "sub"), self.exact(value.hi, middle, "sub"))
         squared = self.exact(middle, middle, "mul")
-        sine, cosine = middle, F(1)
-        sine_term, cosine_term = middle, F(1)
-        threshold = F(1, 1 << (self.bits + 8))
-        for k in range(1, self.bits // 5 + 12):
-            sine_term = -self.exact(self.exact(sine_term, squared, "mul"), (2 * k) * (2 * k + 1), "div")
-            cosine_term = -self.exact(self.exact(cosine_term, squared, "mul"), (2 * k - 1) * (2 * k), "div")
-            sine, cosine = self.exact(sine, sine_term, "add"), self.exact(cosine, cosine_term, "add")
-            self.tick()
-            tail = max(abs(sine_term), abs(cosine_term))
-            if tail < threshold:
-                # For |middle| <= 1 each alternating series decreases in
-                # absolute term size. Its tail after the included term is no
-                # larger than the following term, hence no larger than this
-                # computed term. The half-width covers every original input
-                # by the global 1-Lipschitz bound of both sine and cosine.
-                error = self.exact(tail, width, "add")
-                return (self.grid(self.exact(sine, error, "sub"), self.exact(sine, error, "add")),
-                        self.grid(self.exact(cosine, error, "sub"), self.exact(cosine, error, "add")))
-        raise _Uncertain("Finite reference sine series did not converge")
+        selected = self._series_dyadic(middle, squared)
+        if selected is None:
+            sine, cosine = middle, F(1)
+            sine_term, cosine_term = middle, F(1)
+            threshold = F(1, 1 << (self.bits + 8))
+            for k in range(1, self.bits // 5 + 12):
+                sine_term = -self.exact(self.exact(sine_term, squared, "mul"), (2 * k) * (2 * k + 1), "div")
+                cosine_term = -self.exact(self.exact(cosine_term, squared, "mul"), (2 * k - 1) * (2 * k), "div")
+                sine, cosine = self.exact(sine, sine_term, "add"), self.exact(cosine, cosine_term, "add")
+                self.tick()
+                tail = max(abs(sine_term), abs(cosine_term))
+                if tail < threshold:
+                    selected = sine, cosine, tail
+                    break
+            else:
+                raise _Uncertain("Finite reference sine series did not converge")
+        sine, cosine, tail = selected
+        # For |middle| <= 1 each alternating series decreases in absolute
+        # term size. The common current tail bounds the remainder; half-width
+        # covers every input by the global 1-Lipschitz bound of both functions.
+        error = self.exact(tail, width, "add")
+        return (self.grid(self.exact(sine, error, "sub"), self.exact(sine, error, "add")),
+                self.grid(self.exact(cosine, error, "sub"), self.exact(cosine, error, "add")))
 
     def sincos(self, value):
         value = self.interval(value)

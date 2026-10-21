@@ -411,6 +411,12 @@ class ReachPoseOps:
                 denominator & (denominator-1)):
             raise ReachAdmissionError("reach_numeric","Source series argument is outside its proved grid and range.")
         sine_coefficients,cosine_coefficients=self._coefficients()
+        packed=self._packed_horner_sincos(value,sine_coefficients,cosine_coefficients)
+        if packed is not None:
+            return packed
+        return self._fraction_horner_sincos(value,sine_coefficients,cosine_coefficients)
+
+    def _fraction_horner_sincos(self,value,sine_coefficients,cosine_coefficients):
         # Exact 13-term recurrences stay below 2,600 prospective operand bits
         # on this grid. Only the two final projections incur rounding error.
         square=self._op(value,value,"mul")
@@ -419,6 +425,77 @@ class ReachPoseOps:
             self.work.charge("source_series_recurrence")
             sine=self._op(self._op(sine,square,"mul"),sine_coefficients[k],"add")
             cosine=self._op(self._op(cosine,square,"mul"),cosine_coefficients[k],"add")
+        sine=round_dyadic(self._op(value,sine,"mul"),BITS,work=self.work)
+        return sine,round_dyadic(cosine,BITS,work=self.work)
+
+    def _packed_horner_sincos(self,value,sine_coefficients,cosine_coefficients):
+        """Evaluate the same two rational polynomials in exact integer lanes.
+
+        For x=n/d, both factorial-scaled Horner numerators are nonnegative
+        on |x|<=1. A sufficiently wide base therefore separates them exactly,
+        including intermediate subtractions. This replaces two rational
+        multiply/add pairs with one integer multiply/subtract pair per step;
+        neither polynomial nor the final dyadic rounding is approximated.
+        """
+        self.work.charge("source_horner_packing_domain")
+        original_exponent=value.denominator.bit_length()-1
+        degree=_HORNER_TERMS-1
+        common=sine_coefficients[-1].denominator
+        # A single exact grid layout serves every admitted argument under the
+        # ordinary cap. Rebuilding tables for reduced binary64 denominators
+        # wastes the recurrence savings. Smaller caps retain their own layout.
+        full_digit_bits=common.bit_length()+2*BITS*degree+1
+        full_width=max(2*full_digit_bits+2*BITS+4,
+                       2*common.bit_length()+2*BITS*degree+BITS+BITS+16)
+        exponent=BITS if full_width<=self.work.max_operand_bits else original_exponent
+        scale_bits=2*exponent*degree
+        digit_bits=common.bit_length()+scale_bits+1
+        packed_width=2*digit_bits+2*exponent+4
+        # Also dominate the old Fraction operations' unreduced cross-products,
+        # final sine multiplication, and 96-bit rounding shifts. A lowered
+        # request limit retains the original arithmetic and rejection domain.
+        fraction_width=2*common.bit_length()+scale_bits+exponent+BITS+16
+        width=max(packed_width,fraction_width)
+        if width>self.work.max_operand_bits:
+            return None
+        self.work.guard_bits(width)
+        key=(METHOD,"packed_horner",_HORNER_TERMS,exponent,digit_bits,
+             self.work.max_operand_bits)
+        table=self.work.lookup(key)
+        if table is None:
+            self.work.charge("source_horner_scale_shift",2)
+            denominator=common << scale_bits
+            base=1 << digit_bits
+            coefficients=[]
+            for k,(sine,cosine) in enumerate(zip(sine_coefficients,cosine_coefficients)):
+                self.work.charge("source_horner_integer_coefficient",2)
+                a,b=common//sine.denominator,common//cosine.denominator
+                self.work.charge("source_horner_coefficient_pack",3)
+                coefficients.append(((a << digit_bits)+b) << (2*exponent*(degree-k)))
+            table=(denominator,base,tuple(coefficients))
+            self.work.remember(key,table)
+        denominator,base,coefficients=table
+        self.work.guard(value,denominator,base,*coefficients)
+        numerator=value.numerator
+        if exponent!=original_exponent:
+            self.work.guard_bits(numerator.bit_length()+exponent-original_exponent)
+            self.work.charge("source_horner_grid_shift")
+            numerator <<= exponent-original_exponent
+        self.work.charge("source_horner_argument_square")
+        numerator_square=numerator*numerator
+        total=coefficients[-1]
+        for coefficient in reversed(coefficients[:-1]):
+            self.work.charge("source_series_recurrence")
+            self.work.guard_bits(max(total.bit_length()+numerator_square.bit_length(),
+                                     coefficient.bit_length())+1)
+            self.work.charge("source_horner_integer_product")
+            product=total*numerator_square
+            self.work.charge("source_horner_integer_subtract")
+            total=coefficient-product
+        self.work.charge("source_horner_unpack")
+        sine_numerator,cosine_numerator=divmod(total,base)
+        self.work.charge("source_horner_fraction",2)
+        sine,cosine=F(sine_numerator,denominator),F(cosine_numerator,denominator)
         sine=round_dyadic(self._op(value,sine,"mul"),BITS,work=self.work)
         return sine,round_dyadic(cosine,BITS,work=self.work)
 
