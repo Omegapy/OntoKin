@@ -177,10 +177,28 @@ same limitation when called on supplied data.
 
 `execute_source_rate_audit(bundle, time=..., side=..., carriers=..., ...)`
 provides the fresh path. It compiles the supplied bundle, obtains an actual
-`ReachSimulator` snapshot, builds the independent reference through the requested
+selected-rate source observation, builds the independent reference through the requested
 time and side, and compares selected fields. It retains the exact compiler work object
 through all those stages. Its report says
 `observation_provenance: fresh_compile_and_source_snapshot_in_this_call`.
+It also identifies
+`source_snapshot_scope: selected_rates_with_complete_kinematic_finiteness`.
+The source observer runs the ordinary `ReachSimulator` boundary transactions,
+dynamic-extrema checks and staged validation. At the requested clock it resolves
+the complete kinematic graph. The source resolver validates position, orientation,
+velocity and angular velocity for every object before retaining a complete graph;
+the observer additionally exposes those four fields for every site. Immutable
+cached object projections need not be repeated. Any failed boundary,
+nonfinite public frame component, resource limit or cancellation still rejects
+the request, including failures on an unselected frame. Only the requested
+carrier rate fields are then copied into the observation packet.
+
+This explicit auxiliary output does not construct unrequested final geometry,
+material, action, force or reach-history records. Those complete source snapshots
+and their output limits continue to be checked by the unchanged ordinary source,
+Agent and recording APIs. A selected rate proof does not establish success of
+those broader outputs. Every required source boundary is still evaluated;
+omitting unrequested output does not skip source admission or transitions.
 It explicitly selects `mode="observation"` and records
 `reference_mode: observation`; a single rate audit does not request or certify
 the complete H06 recording-history projection.

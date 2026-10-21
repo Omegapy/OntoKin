@@ -950,6 +950,74 @@ class ReachReference:
             self.a.tick()
         return copy.deepcopy(state)
 
+    def _coordinate_boundary_plan(self, time):
+        """Identify writes before allocating a boundary's private state.
+
+        Coordinate lifecycle changes cannot alter object roots, modes, grips,
+        anchors, impulses or forces. All other transitions take the complete
+        copy path. The completion scan is the ordinary boundary scan, retained
+        here rather than repeated after allocation.
+        """
+        self.a.tick()
+        state = self._state
+        coordinate_only = not state.dynamic
+        completions, changed = [], set()
+        writes_coordinates = False
+        for path, active in state.actions.items():
+            self.a.tick()
+            if active.status == "running" and active.elapsed_at(time) == self.model.actions[path].duration:
+                completions.append(path)
+                changed.add(path)
+                writes_coordinates = True
+                if self.model.actions[path].kind not in {"reach_planar", "tween"}:
+                    coordinate_only = False
+        if (coordinate_only and self._event_index < len(self.model.events)
+                and self.model.events[self._event_index].time == time):
+            for event in self.model.events[self._event_index].events:
+                self.a.tick()
+                action = self.model.actions.get(event.target)
+                if (event.kind not in {"start", "pause", "resume", "stop"} or action is None
+                        or action.kind not in {"reach_planar", "tween"}):
+                    coordinate_only = False
+                    break
+                changed.add(event.target)
+                writes_coordinates |= event.kind == "stop"
+        return completions, coordinate_only, changed, writes_coordinates
+
+    def _copy_coordinate_state(self, state, changed, writes_coordinates):
+        """Copy the actual coordinate writes, retaining immutable prior roots."""
+        self.a.tick()
+        # Without dynamic objects there has been no release or force history:
+        # this language has no transition back from dynamic to prescribed.
+        # Preserve the original logical retained-state limit even when a
+        # boundary can share all or part of its predecessor's physical storage.
+        entries = (len(state.modes) * 11 + len(state.coordinates) + len(state.claims)
+                   + len(state.actions) * 9)
+        if entries * (len(self._times) + 1) > 100000:
+            raise ReferenceError("resource", "Independent reference retained-state limit exceeded")
+        if not changed:
+            return state
+        result = copy.copy(state)
+        result.actions = {}
+        for path, active in state.actions.items():
+            # A changed action gets a private complete record. Unchanged
+            # records are immutable until a later transition copies them.
+            for _ in range(9 if path in changed else 1):
+                self.a.tick()
+            result.actions[path] = copy.deepcopy(active) if path in changed else active
+        result.claims = {}
+        for key, owner in state.claims.items():
+            self.a.tick()
+            result.claims[key] = owner
+        if writes_coordinates:
+            for name in ("coordinates", "ideal_coordinates"):
+                values = {}
+                for key, value in getattr(state, name).items():
+                    self.a.tick()
+                    values[key] = value
+                setattr(result, name, values)
+        return result
+
     def _incoming(self, state):
         result = {}
         for path, joint in self.model.joints.items():
@@ -1158,7 +1226,7 @@ class ReachReference:
                 if self._history_weight > 100000:
                     raise ReferenceError("resource", "Independent complete H06 source histories exceed 100000 weighted records",
                                          budget="boundary_state_records", consumed=self._history_weight)
-            # Every transition below writes only the staged deep copy. The
+            # Every transition below writes only its private staged records. The
             # incoming state is the already retained immutable prior state;
             # copying it again repeats a whole source traversal and allocation
             # without creating a distinct semantic value. H06 still counts
@@ -1174,28 +1242,31 @@ class ReachReference:
                 self._after.append(None)
                 self._release_records[time] = ()
                 break
-            staged = self._copy_state(self._state)
+            completions, coordinate_only, changed, writes_coordinates = self._coordinate_boundary_plan(time)
+            staged = (self._copy_coordinate_state(before, changed, writes_coordinates)
+                      if coordinate_only else self._copy_state(before))
             releases = []
-            for path, active in staged.actions.items():
+            for path in completions:
                 self.a.tick()
-                if active.status == "running" and active.elapsed_at(time) == self.model.actions[path].duration:
-                    self._finish(path, time, staged, "completed")
-            for path, history in staged.forces.items():
-                for key in sorted(tuple(history.active)):
-                    self.a.tick()
-                    payload, start = history.active[key]
-                    if start + payload.duration == time:
-                        del history.active[key]
-                        history.completed += 1
-                        self._force_change(history, time, "completed", (payload, start))
+                self._finish(path, time, staged, "completed")
+            if not coordinate_only:
+                for path, history in staged.forces.items():
+                    for key in sorted(tuple(history.active)):
+                        self.a.tick()
+                        payload, start = history.active[key]
+                        if start + payload.duration == time:
+                            del history.active[key]
+                            history.completed += 1
+                            self._force_change(history, time, "completed", (payload, start))
             touched = set()
             if self._event_index < len(self.model.events) and self.model.events[self._event_index].time == time:
                 for index, event in enumerate(self.model.events[self._event_index].events):
                     self.a.tick()
                     self._event(event, index, time, staged, before, touched, releases)
                 self._event_index += 1
-            for path in staged.forces:
-                self._aggregate(path, time, staged)
+            if not coordinate_only:
+                for path in staged.forces:
+                    self._aggregate(path, time, staged)
             self._state = staged
             self._times.append(time)
             self._before.append(before)

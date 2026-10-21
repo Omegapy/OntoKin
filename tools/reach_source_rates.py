@@ -289,6 +289,61 @@ def observation_from_snapshot(model, snapshot, *, carriers, work):
             "time_seconds": snapshot.get("time_seconds"), "side": snapshot.get("side"), "carriers": records}
 
 
+def observe_source_rates(model, *, time, side, carriers, work):
+    """Execute all source transitions and inspect selected canonical rates.
+
+    The final output has its own explicit scope. It checks the complete current
+    kinematic graph for finite public components, then emits only the requested
+    rate fields. It does not construct unrequested geometry, action, or history
+    output and cannot stand in for a complete source snapshot or GLB recording.
+    Boundary validation, dynamic-extrema checks and all executed source
+    arithmetic still use the ordinary simulator and the original compiler
+    work object.
+    """
+    from ontokin.evaluator import time_text
+    from ontokin.reach_runtime import ReachSimulator
+
+    arithmetic = _Exact(work)
+    time = arithmetic.clock(time)
+    if type(side) is not str or side not in {"before", "after"}:
+        raise RateAuditError("side", "An exact before/after observation side is required")
+    if model.profile != PROFILE or time > model.duration:
+        raise RateAuditError("clock", "Selected source rates require a time within the reach scene")
+    if type(carriers) not in (list, tuple) or not 1 <= len(carriers) <= MAX_CARRIERS:
+        raise RateAuditError("carrier", "A nonempty bounded carrier list is required")
+    selected = set()
+    for carrier in carriers:
+        arithmetic.text(carrier)
+        if (carrier in selected or (carrier != "world" and
+                (not carrier.endswith(".frame") or
+                 carrier[:-6] not in model.objects and carrier[:-6] not in model.sites))):
+            raise RateAuditError("carrier", "Expected distinct canonical source carriers")
+        selected.add(carrier)
+
+    class RateObserver(ReachSimulator):
+        def snapshot(self, time, side):
+            objects, frames = self._kinematics(time, self.state)
+            records = {}
+            # The complete source resolver has already exposed every object's
+            # p/q/v/omega, including when it returns an immutable cached graph.
+            # Sites need their own public checks: an overflowing unselected
+            # site must not disappear merely because another frame was asked
+            # for. Avoid repeating the already completed object projection.
+            for carrier, pose in frames.items():
+                self._check()
+                checked_object = (carrier.endswith(".frame") and
+                                  objects.get(carrier[:-6]) is pose)
+                if not checked_object:
+                    pose.position, pose.orientation, pose.velocity, pose.omega
+                if carrier in selected:
+                    records[carrier] = {"velocity_m_per_s": list(pose.velocity),
+                                        "angular_velocity_rad_per_s": list(pose.omega)}
+            return {"time_seconds": time_text(time), "side": side, "frames": records}
+
+    snapshot = RateObserver(model, work=work).advance(time, side)
+    return observation_from_snapshot(model, snapshot, carriers=carriers, work=work)
+
+
 def _observation(value, arithmetic, *, frozen=False):
     keys = {"schema_version", "source", "time_seconds", "side", "carriers"}
     schema = FROZEN_SCHEMA if frozen else OBSERVATION_SCHEMA
@@ -433,8 +488,6 @@ def execute_source_rate_audit(bundle, *, time, side, carriers, frozen=None, budg
     reference unable to reconstruct that exact side is explicitly unresolved.
     """
     from ontokin.construction import compile_construction
-    from ontokin.reach_runtime import ReachSimulator
-
     compiler = compile_construction(bundle, budgets=budgets, check=check)
     compilation_operations = compiler.budget.operations
     work = compiler.reach_work
@@ -445,8 +498,8 @@ def execute_source_rate_audit(bundle, *, time, side, carriers, frozen=None, budg
     if compiler.model.program_revision != bundle.program_revision:
         raise RateAuditError("source_identity", "Fresh compiled program revision differs from its supplied bundle")
     before = _fingerprints(arithmetic)
-    snapshot = ReachSimulator(compiler.model, work=work).advance(exact_time, side)
-    observation = observation_from_snapshot(compiler.model, snapshot, carriers=carriers, work=work)
+    observation = observe_source_rates(compiler.model, time=exact_time, side=side,
+                                       carriers=carriers, work=work)
     identity, observed_time, observed_side, records = _observation(observation, arithmetic)
     if observed_time != exact_time or observed_side != side:
         raise RateAuditError("observation", "Fresh source sample returned another time or side")
@@ -471,6 +524,7 @@ def execute_source_rate_audit(bundle, *, time, side, carriers, frozen=None, budg
     if _fingerprints(arithmetic) != before:
         raise RateAuditError("unstable_inputs", "Identified inputs changed during source observation/reference/audit")
     report.update(observation_provenance="fresh_compile_and_source_snapshot_in_this_call",
+                  source_snapshot_scope="selected_rates_with_complete_kinematic_finiteness",
                   identified_inputs_stable_during_observation_and_reference=True,
                   compilation_preceded_hash_window=True,
                   compilation_request_operations=compilation_operations,

@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-21T15:47:00Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-21T15:57:00Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -48,7 +48,9 @@ failed attempts and earlier evidence retain their identities.
 | Original delivery blockers | All **seven cleared**, including P24's large action-history prefix and P17's two-second export. The identified 79-method checkpoint passed all 11 actual Agent-delivery and four recording-budget methods. |
 | Complete regression | Recovered `full-regression-002` passed **1,234/1,234** on CPython 3.12.14 at exact local `bbfdddd`, with stable inputs and no skips. Five evidence member hashes were independently checked during recovery. This is an earlier execution, not a new run on later changes. |
 | Documentation review | 106 narratives accounted for: 91 unchanged prior full-read records, four changed and 11 additional narratives fully read; all 15 foundational diagram hashes unchanged. |
-| Independent rates | Latest terminal P23 requests still exceed the original shared operation budget. The complete 362-request/724-field inventory and separate reviewed rate-criterion decision remain open. |
+| Independent rates | The three terminal P23 requests now pass at **99,829 / 99,862 / 99,896** operations on worker `c5aeeb1`, with stable inputs. All 22 rate methods and four new independent-state methods pass there. The complete 362-request/724-field inventory, integrated-cut repetition and separate reviewed rate-criterion decision remain open. |
+| Complete source artifact baseline | A fresh execution on `db929a0` produced **11/28** required recordings; **17 still exhaust 100,000 operations**. P24/P17 regressions remain fixed, but focused delivery tests did not cover this complete artifact corpus. Source identities remained stable. |
+| Validation environment | The six Python pins, Node 22.23.3, Three 0.180.0, glTF Validator 2.0.0-dev.3.10 and Playwright 1.56.1/Chromium 1194 were installed. The independent installed-byte audit matched 1,832 files against 15 exact downloaded archives. This is prerequisite evidence, not a native/browser pass. |
 
 The [delivery checkpoint](docs/engineering/reach-delivery-completion-2026-10-21.md)
 and [recovery record](docs/engineering/reach-recovery-validation/README.md)
@@ -58,6 +60,14 @@ is now durable in PR #27; the recovered full-regression raw files were not yet
 archived. Fresh complete verification is required on the integrated candidate.
 Later recovered independent Agent-auditor commits and rate work are not certified
 by that earlier 1,234-test result.
+
+The new [66-member continuation archive](docs/engineering/reach-recovery-validation/continuation-baseline-001.members.json)
+retains the complete failed source-artifact run, the three passing terminal
+rate probes, focused raw test logs and environment receipts. Every member hash
+and ZIP CRC was checked. Next engineering work removes repeated boundary-output,
+phase-bound and recording-sampling work without changing the original limits.
+The failing artifact cases are P02, P04, P05, P07–P09, P11, P13, P14, P16,
+P18–P20, P23 and L01–L03.
 
 Remaining acceptance is all **R01–R12/Q01–Q22** and mandatory roles under the
 [adopted release contract](docs/language-design/planar-reach-v0.1/release-contract.md):

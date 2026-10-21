@@ -607,3 +607,38 @@ partial diagnostic with six frozen coverage fields, not a complete inventory.
 The full 362-request inventory was not repeated because this prerequisite still
 failed. No earlier partial or complete result is relabeled as success at these
 changed bytes. Subsequent source arithmetic savings require a fresh probe.
+
+## Coordinate-only boundary storage and selected source rates
+
+The selected-rate observer now constructs only its explicitly requested final
+derivative fields. Ordinary source boundary transactions, dynamic-extrema checks
+and staged validation remain complete. The complete source resolver validates
+all object p/q/v/omega projections; the observer additionally validates every
+site projection, including unselected sites. It reuses already checked immutable
+object projections rather than exposing them a second time. This does not
+establish complete snapshot, Agent or recording output success; their full
+output-admission checks remain separate required evidence.
+
+The independent ledger identifies a boundary's actual writes before allocating
+its staged state. A boundary with no dynamic objects and only coordinate-action
+lifecycle transitions can change only action records, channel claims and, on
+completion or stop, coordinate values. It copies those mutable records while
+sharing the unchanged object roots, modes, grip inventory, and empty dynamic,
+force and impulse histories. An unchanged action record remains immutable until
+a later transition copies it. Every release, influence, root-action transition
+or dynamic boundary keeps the complete private-copy path. Completion and event
+scans remain charged to the original request work object.
+
+A boundary with no actual transition can retain its preceding state without a
+new allocation. Before and after observations still have distinct logical
+ledger entries, and time remains part of pose-query identity. Both the original
+retained-state bound and complete H06 weighted-history admission continue to
+count those logical entries. No cache capacity, source input, numerical equation,
+allowance or request limit changes. Interrupted staging cannot modify an earlier
+retained state, and all returned public records remain fresh projections.
+
+The targeted regressions compare shared ledgers against complete private copies
+through coordinate lifecycle changes, replacement, release and force behavior;
+check interruption after a coordinate completion; retain cancellation identity;
+and reject excessive logical no-op boundaries despite shared physical storage.
+Execution evidence is recorded on its exact source cut separately.

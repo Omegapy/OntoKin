@@ -41,8 +41,34 @@ narratives and 15 diagrams retain their exact hashes and earlier review
 provenance. No fresh image inspection of those old diagrams is claimed.
 
 The independent Agent auditor was recovered separately from the destination
-worker and is being integrated. Independent terminal P23 rates, the proposed
-rate criterion, complete requirement mapping/release auditor, current artifact
-corpora, native/browser/visual roles, compatibility and inherited checks remain
-open. [STATUS](../../../STATUS.md) records the current next action. No finite
-reach release or full OntoKin goal completion is claimed.
+worker and integrated. [STATUS](../../../STATUS.md) records the current next
+action. No finite reach release or full OntoKin goal completion is claimed.
+
+## Fresh continuation evidence
+
+`continuation-baseline-001.zip` retains 66 actual files, with exact lengths and
+SHA-256 values in [the member manifest](continuation-baseline-001.members.json).
+All member hashes and ZIP CRCs were checked after packaging. Its scopes remain
+separate:
+
+- `source-artifacts-001/`: the complete 28-case source artifact producer on
+  clean local `db929a0945bed0c5a6c0e59ae98939666881cca6`. Eleven recordings pass;
+  17 exhaust the unchanged 100,000-operation cap. Before/after inputs are
+  stable. Actual passing GLBs/export reports and every failed request remain
+  in the archive. This execution is a failed baseline, not acceptance.
+- `rate-terminal-003/`: all three formerly blocked P23 terminal requests on
+  worker `c5aeeb1e82223b793908859abd2980033894129c`, passing at 99,829, 99,862
+  and 99,896 operations. All six corresponding frozen fields are covered;
+  the complete 362-request inventory still requires execution on the final
+  integrated cut. Logs retain 22 passing rate methods and four passing
+  independent-state methods. Root integrated the same changes through
+  `380ce0e474572ea3bd1f294d8f3d414c6950e5d2`.
+- `environment/`: verified pinned dependency installation, its checker and
+  the exact installed-file manifest. The audit compared 1,832 files to 15
+  downloaded archives. No runtime, artifact, browser or release result is
+  implied by a dependency match.
+
+The narrow rate-criterion decision, complete requirement/probe mapping,
+source/Agent artifact corpora, native/browser/visual roles, CPython compatibility,
+inherited workflows and final independent release audit remain open. None of
+these preliminary scopes authorizes a merge into main.
