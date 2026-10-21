@@ -60,6 +60,9 @@ class ReachExecutionWork:
         self.callback_error: BaseException | None = None
         self._cache: OrderedDict[tuple, object] = OrderedDict()
         self._cache_operand_bits = max_operand_bits
+        # A callback may reenter the same bounded cache. This bookkeeping
+        # serial prevents an outer insertion from undoing that completed work.
+        self._cache_generation = 0
 
     def charge(self, kind="checkpoint", amount=1):
         if type(amount) is not int or amount < 0:
@@ -108,20 +111,28 @@ class ReachExecutionWork:
         self._sync_cache_operand_limit()
         if key not in self._cache:
             return None
+        operand_bits = self.max_operand_bits
         self.charge("cache_promote")
         # The promotion callback can change the domain after the first
         # synchronization. Never return its now-stale completed proof.
-        if self._sync_cache_operand_limit():
+        if self._sync_cache_operand_limit() or operand_bits != self.max_operand_bits:
+            return None
+        # A nested callback can have synchronized the domain already, or
+        # evicted this key without a domain change. Neither is a cache hit.
+        if key not in self._cache:
             return None
         self._cache.move_to_end(key)
+        self._cache_generation += 1
         return self._cache[key]
 
     def remember(self, key, value):
         operand_bits = self.max_operand_bits
+        generation = self._cache_generation
         self.charge("cache_insert")
         # A caller may return a proof completed before this callback, but it
         # cannot publish that proof as reusable under a different domain.
-        if self._sync_cache_operand_limit() or operand_bits != self.max_operand_bits:
+        if (self._sync_cache_operand_limit() or operand_bits != self.max_operand_bits
+                or generation != self._cache_generation):
             return
         present = key in self._cache
         # All required bookkeeping is precharged before changing values/order.
@@ -133,13 +144,15 @@ class ReachExecutionWork:
         # Promotion and eviction have callbacks of their own. A successful
         # reset discards this pending insertion; cancellation before the reset
         # still preserves the original values and order.
-        if self._sync_cache_operand_limit() or operand_bits != self.max_operand_bits:
+        if (self._sync_cache_operand_limit() or operand_bits != self.max_operand_bits
+                or generation != self._cache_generation):
             return
         if not present and len(self._cache) >= self.max_cache_entries:
             self._cache.popitem(last=False)
         self._cache[key] = value
         if present:
             self._cache.move_to_end(key)
+        self._cache_generation += 1
 
     def _sync_cache_operand_limit(self):
         # A completed proof under a wider cap cannot stand in for arithmetic
@@ -147,8 +160,12 @@ class ReachExecutionWork:
         # reusable results together; ordinary requests keep one fixed cap.
         if self._cache_operand_bits != self.max_operand_bits:
             self.charge("cache_operand_scope_reset")
-            self._cache.clear()
-            self._cache_operand_bits = self.max_operand_bits
+            # A nested callback may already have reset and populated the
+            # current domain. Preserve those independently completed entries.
+            if self._cache_operand_bits != self.max_operand_bits:
+                self._cache.clear()
+                self._cache_operand_bits = self.max_operand_bits
+                self._cache_generation += 1
             return True
         return False
 

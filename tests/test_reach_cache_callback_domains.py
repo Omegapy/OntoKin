@@ -166,6 +166,108 @@ class ReachCacheCallbackDomainTests(unittest.TestCase):
         self.assertEqual(work.operations, 8)
         self.assertEqual(work.operations, sum(work.counts.values()))
 
+    def test_reentrant_promotion_callback_can_reset_the_domain_before_outer_lookup_resumes(self):
+        work = ReachExecutionWork()
+        work.remember(("proof",), F(1 << 255))
+        calls = 0
+
+        def nested_lookup():
+            nonlocal calls
+            calls += 1
+            if calls == 2:
+                work.max_operand_bits = 128
+                self.assertIsNone(work.lookup(("absent",)))
+                work.remember(("proof",), F(1, 2))
+
+        work.external_check = nested_lookup
+        self.assertIsNone(work.lookup(("proof",)))
+        self.assertEqual(work._cache_operand_bits, 128)
+        self.assertEqual(tuple(work._cache.items()), ((("proof",), F(1, 2)),))
+        work.external_check = None
+        self.assertEqual(work.lookup(("proof",)), F(1, 2))
+
+    def test_reentrant_promotion_callback_can_evict_the_lookup_key(self):
+        work = ReachExecutionWork(max_cache_entries=1)
+        work.remember(("first",), F(1))
+        calls = 0
+
+        def nested_insert():
+            nonlocal calls
+            calls += 1
+            if calls == 2:
+                work.remember(("second",), F(2))
+
+        work.external_check = nested_insert
+        self.assertIsNone(work.lookup(("first",)))
+        self.assertEqual(tuple(work._cache.items()), ((("second",), F(2)),))
+
+    def test_reentrant_insert_replace_and_evict_preserve_nested_mutations_and_capacity(self):
+        for operation in ("insert", "replace", "evict"):
+            with self.subTest(operation=operation):
+                work = ReachExecutionWork(max_cache_entries=2)
+                work.remember(("first",), F(1))
+                work.remember(("second",), F(2))
+                calls = 0
+                reenter_at = 1 if operation == "insert" else 2
+                expected = None
+
+                def mutate_inside_callback():
+                    nonlocal calls, expected
+                    calls += 1
+                    if calls == reenter_at:
+                        if operation == "insert":
+                            work.remember(("third",), F(99))
+                        elif operation == "replace":
+                            work.remember(("third",), F(3))
+                        else:
+                            self.assertEqual(work.lookup(("first",)), F(1))
+                        expected = tuple(work._cache.items())
+
+                work.external_check = mutate_inside_callback
+                target = ("first",) if operation == "replace" else ("third",)
+                work.remember(target, F(100))
+                self.assertIsNotNone(expected)
+                self.assertEqual(tuple(work._cache.items()), expected)
+                self.assertLessEqual(len(work._cache), 2)
+                self.assertEqual(work.operations, sum(work.counts.values()))
+
+    def test_reentrant_remember_preserves_a_nested_proof_in_the_new_domain(self):
+        work = ReachExecutionWork(max_cache_entries=2)
+        work.remember(("first",), F(1 << 255))
+        work.remember(("second",), F(2))
+        calls = 0
+
+        def replace_in_narrow_domain():
+            nonlocal calls
+            calls += 1
+            if calls == 2:
+                work.max_operand_bits = 128
+                self.assertIsNone(work.lookup(("absent",)))
+                work.remember(("first",), F(1, 2))
+
+        work.external_check = replace_in_narrow_domain
+        work.remember(("first",), F(1 << 256))
+        self.assertEqual(work._cache_operand_bits, 128)
+        self.assertEqual(tuple(work._cache.items()), ((("first",), F(1, 2)),))
+
+    def test_reentrant_scope_reset_keeps_entries_already_rebuilt_in_the_current_domain(self):
+        work = ReachExecutionWork()
+        work.remember(("old",), F(1 << 255))
+        work.max_operand_bits = 128
+        calls = 0
+
+        def populate_during_reset():
+            nonlocal calls
+            calls += 1
+            if calls == 2:
+                self.assertIsNone(work.lookup(("absent",)))
+                work.remember(("fresh",), F(1, 2))
+
+        work.external_check = populate_during_reset
+        self.assertIsNone(work.lookup(("old",)))
+        self.assertEqual(work._cache_operand_bits, 128)
+        self.assertEqual(tuple(work._cache.items()), ((("fresh",), F(1, 2)),))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-21T19:44:00Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-21T22:35:00Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -44,23 +44,31 @@ local `569b67b0bdc6854cc069e6a00590e0f15267ae03`
 [draft PR #25](https://github.com/Omegapy/OntoKin/pull/25). Original branches,
 failed attempts and earlier evidence retain their identities.
 
-Current integrated implementation is `49b8858179cda2cf508e0e3ec8a3f965ad8b07b1`,
-tree `2023bc7f48b794141012f839c9ece2e112b784a0`. The separately identified
-recording sampler now uses phase-scoped bounded rotation recurrence, exact
-identity-product elision and explicit conservative endpoint excesses. The
-independent supplied-byte reader binds all six implementation inputs and rejects
-understated endpoint claims. Exact source and independent coordinate laws are
-reused only inside their guarded operand domains. Unused boundary projections
-can use a proved finiteness check; complete force histories retain exact output
-limits with the existing reach JSON accounting.
+Latest tested recording implementation is `eb6ffef2ed3bfd26bdce2ba364161ca9d712d86f`,
+tree `e1533682b8a9eed910690e32273c4de0f3c0278c`. The recovered boundary-pose
+reuse and repeated loft-geometry optimizations are integrated with guarded exact
+planar arithmetic, independent coordinate/rotation/topology reuse, translated
+rigid-mount phase reuse and bounded recording increments. Cache bookkeeping now
+rechecks callback-induced domain changes and reentrant mutation. The independent
+reader admits complete fixed-size interval vectors while retaining every operand
+and comparison guard. Source coordinates, geometry, histories, tolerances and
+all public resource limits are unchanged.
 
-The latest complete source execution on `99febf1` still passes **13/28**;
-P01 uses **77,912** operations, P14 **87,381**, and P17 **74,262**. The same
-15 cases exhaust the unchanged 100,000-operation cap. Recent focused runs
-check the new algorithms but retain the L02 0.75-second recording-prefix
-budget failure: latest **25 passed / one error**, no skips. The earlier
-identity-allowance assertion failure and its corrected rerun are preserved.
-No failed complete or focused run is represented as acceptance.
+The latest complete source run, finished **22:25:08 UTC**, passes **14/28** with
+stable before/after inputs. P13 is the new pass at **93,721** operations; P01
+uses **70,856**, P14 **80,412**, and P17 **67,293**. The remaining 14 are P02,
+P05, P07-P09, P11, P16, P18-P20, P23 and L01-L03; each reaches the attempted
+100,001st operation under the unchanged **100,000** limit. The earlier complete
+run at `d80497e` also passes 14/28. Both failed gates and all passing artifacts
+are preserved, not relabeled as release acceptance.
+
+Fresh focused executions pass **96/96** recovered arithmetic/reference methods
+at `709079a`, **21/21** phase methods at `e1c746e`, **31/31** cursor/cache methods
+at `7bca2b6`, and **9/9** interval-vector methods at `eb6ffef`. The separate
+46-method cache/sampler cohort at `f7a2370` records **45 passes / one error**:
+the unchanged L02 0.75-second export still exhausts the operation cap. Its 12
+cache-callback methods pass. Counts belong to their named cuts and overlap;
+they are not added together or substituted for a complete regression.
 
 The full Python regression on the preceding published arithmetic checkpoint
 `cce81ce` / remote `9414b0c` passed **1,374/1,374**, with no failures, errors or
@@ -74,15 +82,15 @@ the same clean code succeeds with a `/tmp` live store. External file replacement
 is a documented inference, not a proved cause. Future live stores use `/tmp`;
 closed evidence is preserved afterward. No failed receipt is relabeled.
 
-The [recovery record](docs/engineering/reach-recovery-validation/README.md#recording-recurrence-checkpoint-1944-utc)
-adds four verified archives with **227 members**, retaining the 1,374-test
-regression, every new focused attempt, stage observations and three complete
-28-case recording runs. Earlier archives preserve all source/Agent failures
-and the store diagnosis. Separate release auditor/collector tests pass
-**49/49** at `6119dd2`; its actual empty audit correctly reports every role
-pending. Current independent review, missing hostile producers and real final
-executions remain required. The next implementation work targets exact integer
-pose arithmetic and independent endpoint costs; all public limits stay fixed.
+The [latest recovery record](docs/engineering/reach-recovery-validation/README.md#recovered-recording-checkpoint-2235-utc)
+adds two verified archives with **177 members**, retaining both current complete
+source runs, every new focused attempt, observational profiles and exact drivers.
+The preceding four archives retain **227 members**, including the 1,374-test
+regression and earlier failed runs. Separate release auditor/collector tests pass
+**49/49** at `6119dd2`; its empty audit correctly reports every role pending.
+Profiles still identify P23 planning, P09/P16 sampling and other cases' independent
+endpoint/certificate checks as bottlenecks. Finish the 28 recordings before
+attempting the complete Agent, regression, destination and release gates.
 
 | Recovered evidence | Actual result and limit |
 | --- | --- |
@@ -121,8 +129,9 @@ and the 106-method focused run check this split, including complete GLB-byte
 identity against the earlier sampler on P01's full recording and selected
 pause/moving-carrier prefixes. Internal exact zero derivatives fix the newly
 observed P23 rate budget regression without weakening malformed-input guards.
-The 15 still-failing source artifact cases at `111ce5a` are P02, P05, P07–P09,
-P11, P13, P16, P18–P20, P23 and L01–L03. No finite release acceptance is claimed.
+The historical 15 failures at `111ce5a` are retained in their original evidence;
+the current run clears P13 and leaves the 14 cases listed above. No finite release
+acceptance is claimed.
 
 Remaining acceptance is all **R01–R12/Q01–Q22** and mandatory roles under the
 [adopted release contract](docs/language-design/planar-reach-v0.1/release-contract.md):
@@ -143,15 +152,16 @@ GOAL still requires richer typed algorithms/libraries and compatible replacement
 
 **No main integration lease is held by this continuation.** Main remains
 `2bb4588e121fcfe99b4d42c734b15b38362f3642`; the prior STATUS-only lease was
-released. Current coordinator `interactive-reach06-acceptance-20261021-1800-7of9`
+released. Current coordinator `interactive-reach06-recordings-20261021-2205-7of9`
 resumes the owner's explicit PR #27 handoff in a separate recovered checkout.
 This branch-only status update does not claim a main write or runtime merge.
 
-The actual PR #27 head was reconciled before publication; an expected-head,
-nonforce update from `623aea726788d36ce4e18a6d073a0093bc49d173` preserved the
-verified recovered tree. This continuation starts from verified local `569b67b` on
-`work/reach06-acceptance-20261021-1800-7of9`. Phase-bound and independent interval
-workers use separate branches and nonoverlapping files. The next gate remains
+The actual PR #27 head and continuation branch were verified at published
+`9a4857ec6d4825416f8cc816da2310d33b50ddab`, exactly local `709079a` tree
+`53ce9593de6e05b2a9b5011e6770070267a410d4`. This continuation uses
+`work/reach06-recordings-20261021-2205-7of9`; publication uses nonforce,
+expected-head updates. Sampler, independent-reader and phase-bound workers use
+separate branches and coordinated file ownership. The next gate remains
 all 28 recordings under the unchanged cap. Runtime/test/SQLite/workflow/archive execution remains
 serialized to keep source identities stable. Main integration requires complete
 acceptance and a fresh observed-head lease. Both workflows remain manual-only

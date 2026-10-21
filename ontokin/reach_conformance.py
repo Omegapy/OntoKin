@@ -16,6 +16,8 @@ from pathlib import Path
 import re
 import struct
 
+from .reach_reference import Interval as _ReferenceCell
+
 
 TARGET = "ontokin.glb/0.6"
 ARC_LIMIT = Fraction(0.7853981633974483)
@@ -205,10 +207,38 @@ class _Bounds:
         value = self.value(value)
         return _Cell(value, value)
 
+    def cells(self, values):
+        """Admit one bounded immutable interval vector before any reuse.
+
+        Both local cells and the independent reader's cells are frozen pairs
+        of exact rationals. Their complete 3/4-component domain can therefore
+        be checked at one cancellation checkpoint, without repeatedly decoding
+        each endpoint or retaining another cache. Each ordered component keeps
+        the same operand, cross-product and reversed-interval checks as cell().
+        Other supplied shapes and duck-typed cells keep its scalar path.
+        """
+        if (type(values) in (tuple, list) and len(values) in (3, 4)
+                and all(type(value) in (_Cell, _ReferenceCell)
+                        and type(value.lo) is Fraction and type(value.hi) is Fraction
+                        for value in values)):
+            endpoints = tuple((value.lo, value.hi) for value in values)
+            self.tick("independent_interval_vector_domain")
+            result = []
+            for low, high in endpoints:
+                self.bits(low.numerator.bit_length(), low.denominator.bit_length(),
+                          high.numerator.bit_length(), high.denominator.bit_length())
+                self.bits(low.numerator.bit_length() + high.denominator.bit_length(),
+                          high.numerator.bit_length() + low.denominator.bit_length())
+                if low > high:
+                    _error("OKE-E-INDEPENDENT-VALIDATION", "An independent reference returned a reversed enclosure.")
+                result.append(_Cell(low, high))
+            return tuple(result)
+        return tuple(self.cell(value) for value in values)
+
     def difference(self, first, last):
         if len(first) != len(last) or len(first) not in (3, 4):
             _error("OKE-E-CERTIFICATE", "An independent vector comparison has incompatible dimensions.")
-        first, last = tuple(self.cell(value) for value in first), tuple(self.cell(value) for value in last)
+        first, last = self.cells(first), self.cells(last)
         def calculate():
             result = []
             for a, b in zip(first, last):
@@ -1060,7 +1090,7 @@ def _recording_orientation_comparison(quaternion, expected, arithmetic, *, befor
     quaternion = _recording_vector(quaternion, 4, arithmetic)
     if type(expected) not in (tuple, list) or len(expected) != 4:
         _error("OKE-E-CERTIFICATE", "An independent orientation comparison requires four source cells.")
-    expected = tuple(arithmetic.cell(value) for value in expected)
+    expected = arithmetic.cells(expected)
     compared_position = False
     def compare():
         nonlocal compared_position

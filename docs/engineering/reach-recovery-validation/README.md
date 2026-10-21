@@ -358,3 +358,65 @@ certify the later sampler. All 28 source recordings, ten Agent artifacts,
 changed-cut regression/rates, compatibility, native/browser/visual validation,
 actual hostile probes and the final independent release audit remain required.
 Main is unchanged and no hosted job was dispatched or retried.
+
+## Recovered recording checkpoint, 22:35 UTC
+
+The next continuation recovered the remaining committed work from independent
+local branches, including boundary-pose reuse, repeated loft geometry, exact
+integer planar arithmetic, independent interval recurrence, live callback-domain
+checks and immutable reference topology. Source inputs and the original
+100,000-operation, 32,768-bit operand and 256-entry pure-cache limits are retained.
+The original 28-case corpus, complete object/geometry/history sets and comparison
+tolerances are unchanged. This is a development checkpoint; release acceptance
+remains incomplete.
+
+Published `9a4857ec6d4825416f8cc816da2310d33b50ddab` has exactly local `709079a`'s
+tree `53ce9593de6e05b2a9b5011e6770070267a410d4`. Both PR #27's head and
+`work/reach06-recordings-20261021-2205-7of9` were read back at that commit after
+nonforce expected-head publication. Main was read at unchanged
+`2bb4588e121fcfe99b4d42c734b15b38362f3642`. Subsequent local integration adds
+reentrant cache preservation, translated rigid-mount phase reuse, exact cursor
+increment reuse and bounded independent interval-vector admission, through
+`eb6ffef2ed3bfd26bdce2ba364161ca9d712d86f` / tree
+`e1533682b8a9eed910690e32273c4de0f3c0278c`.
+
+| Archive | Members | Bytes | SHA-256 |
+| --- | ---: | ---: | --- |
+| `recordings-recovered-008.zip` | 120 | 1,608,574 | `7e22c95949e6fad529a1a5e758778c53ae93198aacba2e798fa45ee7d7b4a832` |
+| `recording-checks-008.zip` | 57 | 1,231,720 | `521736c1c85a2749a2ed72adea0bed5e34a0081d23494e10cb064e1240b44f8e` |
+
+The adjacent member manifests retain all exact paths, lengths and SHA-256 values.
+Every member, archive membership set and ZIP CRC was verified against the actual
+retained bytes. The first packaging attempt found the earlier scratch copy of
+the focused driver unavailable. Its exact bytes were recovered from the already
+preserved `regression-focused-007.zip` and verified against the hash in every
+current focused report; the renamed recovered copy is included under `drivers/`.
+No test or result was reconstructed.
+
+| Executed scope | Source | Actual outcome |
+| --- | --- | --- |
+| Full source corpus, recovered 001 | `d80497e` | **14/28 passed**; P13 first passes at 98,352 operations. Remaining 14 hit the original cap. |
+| Full source corpus, recovered 002 | `eb6ffef` | **14/28 passed**; P01 70,856, P13 93,721, P14 80,412 and P17 67,293 operations. |
+| Arithmetic/reference focused 001 | `709079a` | **96/96 passed**. |
+| Cache/sampler focused 002 | `f7a2370` | **45 passed / one error** among 46; L02's unchanged 0.75-second export exhausts the cap. All 12 cache-callback methods pass. |
+| Rigid-mount phase focused 001 | `e1c746e` | **21/21 passed**. |
+| Exact cursor focused 001 | `7bca2b6` | **31/31 passed**. |
+| Independent interval-vector focused 001 | `eb6ffef` | **9/9 passed**, including an actual P01 complete GLB/report comparison against scalar admission. |
+
+All named runs retain stable before/after source identities and no skips. Focused
+inventories overlap and are not summed into a complete-regression claim. The
+prior **1,374/1,374** full regression remains tied to `cce81ce` / remote `9414b0c`;
+it does not certify this newer code. Actual failed source requests, diagnostics,
+logs, passing GLBs/export reports and the one focused error are all retained.
+
+The remaining full-source failures are P02, P05, P07-P09, P11, P16, P18-P20,
+P23 and L01-L03. Two fresh producer profiles and one independent-reader reuse
+profile retain their original callbacks and limits. They locate P23's failure
+in planning, P09/P16 in sampling and other failures in certification or the
+independent supplied-byte reader. No profile is a substitute acceptance role.
+
+The next step is to finish all 28 source recordings under the original limit.
+Only then repeat the ten actual Agent deliveries, complete integrated regression
+and independent rate/reference checks, the CPython matrix, native/browser/visual
+roles, hostile probes and the final release audits. PR #27 remains draft; no
+main integration lease or finite release completion is claimed.

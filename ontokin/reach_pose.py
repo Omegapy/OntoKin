@@ -777,24 +777,56 @@ class ReachPoseOps:
         separately includes the proved finite recurrence excess at endpoints.
         Eviction or the finite step ceiling starts again at the direct kernel.
         """
-        coordinate=rational(coordinate,self.work)
-        axis=self._vector(axis)
-        key=self._recording_cursor_key("axis",context,path,max_steps,axis)
-        previous=self.work.lookup(key)
-        if previous is None or previous[2]>=max_steps:
-            result=self.axis_rotation(axis,coordinate)
-            count=1
-        else:
-            last,rotation,count=previous
-            self.work.charge("recording_rotation_cursor_guard")
-            self.work.guard(last,*rotation.components,rotation.error_rad,count)
-            delta=self._op(coordinate,last,"sub")
-            result=(self.multiply(self.axis_rotation(axis,delta),rotation)
-                    if delta else rotation)
-            self.work.charge("recording_rotation_step")
-            count+=1
-        self.work.remember(key,(coordinate,result,count))
-        return result
+        original_axis,original_coordinate=axis,coordinate
+        while True:
+            cap=self.work.max_operand_bits
+            coordinate=rational(original_coordinate,self.work)
+            axis=self._vector(original_axis)
+            key=self._recording_cursor_key("axis",context,path,max_steps,axis)
+            previous=self.work.lookup(key)
+            if self.work.max_operand_bits!=cap:
+                continue
+            delta,increment=None,None
+            if previous is None or previous[2]>=max_steps:
+                result=self.axis_rotation(axis,coordinate)
+                count=1
+            else:
+                last,rotation,count,old_delta,old_increment=previous
+                self.work.charge("recording_rotation_cursor_guard")
+                self.work.guard(last,*rotation.components,rotation.error_rad,count)
+                delta=self._op(coordinate,last,"sub")
+                if delta:
+                    if delta==old_delta:
+                        self.work.charge("recording_increment_reuse")
+                        increment=old_increment
+                        self.work.guard(*increment.components,increment.error_rad)
+                    else:
+                        increment=self.axis_rotation(axis,delta)
+                    result=self._recording_product(increment,rotation)
+                else:
+                    result=rotation
+                    # A repeated query does not evict the last useful step.
+                    delta,increment=old_delta,old_increment
+                self.work.charge("recording_rotation_step")
+                count+=1
+            if self.work.max_operand_bits!=cap:
+                continue
+            self.work.remember(key,(coordinate,result,count,delta,increment))
+            if self.work.max_operand_bits==cap:
+                return result
+
+    def _recording_product(self,increment,rotation):
+        """Keep one-use recurrence products out of the shared bounded cache.
+
+        Both complete operands and the same Hamilton/grid/error operations
+        remain checked. Only the completed product's cache bookkeeping is
+        omitted; the owning cursor publishes its result after the step passes.
+        A narrower arithmetic domain retains the ordinary multiplication path.
+        """
+        if self.work.max_operand_bits!=MAX_OPERAND_BITS:
+            return self.multiply(increment,rotation)
+        first,second=self._rotation(increment),self._rotation(rotation)
+        return self._multiply_uncached(first,second)
 
     def _normalized_axis(self,axis):
         """The same immutable 96-bit axis reduction for every requested angle."""

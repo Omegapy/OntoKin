@@ -61,6 +61,15 @@ _COMPOSITION_FIELDS = tuple(name for name in _BOUND_FIELDS
 _CACHE_DOMAIN = "reach_source_phase/0.1"
 
 
+def _local_translation_independent(parent):
+    """A parent's exact zero angular bounds remove every offset derivative."""
+    return all(type(value) is F and not value for value in (
+        parent.angular_speed_upper_rad_per_s,
+        parent.angular_acceleration_upper_rad_per_s2,
+        parent.actual_angular_speed_upper_rad_per_s,
+        parent.angular_velocity_error_rad_per_s))
+
+
 class PhaseArithmetic:
     def __init__(self, work):
         self.work = work
@@ -243,32 +252,57 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None):
         # extent*2^-53 + path_offset*(rotation_error-EXPOSED_ROTATION_ERROR).
         # No sampled error or rounded arithmetic enters this factorization.
         work.charge("phase_composition_operand_guard")
-        work.guard(*(getattr(bound, field) for bound in (parent, local) for field in _BOUND_FIELDS))
-        key = (_CACHE_DOMAIN, work.max_operand_bits, "composition_recurrence",
+        operands = tuple(getattr(bound, field) for bound in (parent, local) for field in _BOUND_FIELDS)
+        work.guard(*operands)
+        local_translation = None
+        if _local_translation_independent(parent):
+            # When all four angular derivative bounds are exactly zero,
+            # neither local extent nor its position allowance contributes to
+            # any derivative equation below. Their only remaining effects are
+            # the exact uniform extent/path-offset position formula. Reuse
+            # the zero-translation recurrence across distinct rigid mounts;
+            # retain every other parent/local field in its original key.
+            work.charge("phase_local_translation_factor")
+            work.guard(*operands)
+            local_translation = (local.max_position_l1_m, local.path_offset_l1_m)
+            local = replace(local, max_position_l1_m=F(0), path_offset_l1_m=F(0), position_error_m=F(0))
+        kind = "composition_translation_recurrence" if local_translation is not None else "composition_recurrence"
+        key = (_CACHE_DOMAIN, work.max_operand_bits, kind,
                tuple(getattr(parent, field) for field in _COMPOSITION_FIELDS), local)
         cached = work.lookup(key)
-        location = (parent.max_position_l1_m, parent.path_offset_l1_m)
+        work.guard(*operands)
+        location = (parent.max_position_l1_m, parent.path_offset_l1_m, local_translation)
+
+        def checked(bound):
+            # A lookup, identity check, or insertion callback can narrow the
+            # live domain after the original operands/results were checked.
+            work.guard(*operands, *(getattr(bound, field) for field in _BOUND_FIELDS))
+            return bound
 
         def translated(base):
             work.charge("phase_composition_extent")
-            extent = a.add(parent.max_position_l1_m, base.max_position_l1_m)
-            offset = a.add(parent.path_offset_l1_m, base.path_offset_l1_m)
+            extent_delta, offset_delta = parent.max_position_l1_m, parent.path_offset_l1_m
+            if local_translation is not None:
+                local_extent, local_offset = local_translation
+                extent_delta = a.add(extent_delta, a.mul(F(2), local_extent))
+                offset_delta = a.add(offset_delta, local_offset, local_extent)
+            extent = a.add(extent_delta, base.max_position_l1_m)
+            offset = a.add(offset_delta, base.path_offset_l1_m)
             if compare(extent, F(0), work) < 0 or compare(offset, F(0), work) < 0:
                 raise ReachAdmissionError("reach_numeric", "Source uniform allowances must be nonnegative.")
             rotation = a.sub(base.rotation_error_rad, EXPOSED_ROTATION_ERROR)
             position_error = a.add(base.position_error_m,
-                a.mul(parent.max_position_l1_m, F(1, 1 << 53)),
-                a.mul(parent.path_offset_l1_m, rotation))
+                a.mul(extent_delta, F(1, 1 << 53)), a.mul(offset_delta, rotation))
             return replace(base, max_position_l1_m=extent, path_offset_l1_m=offset,
                            position_error_m=position_error)
 
         if cached is not None:
             work.charge("phase_composition_extent_identity")
             if location == cached[0]:
-                return cached[1]
+                return checked(cached[1])
             result = translated(cached[2])
             work.remember(key, (location, result, cached[2]))
-            return result
+            return checked(result)
         work.charge("phase_path_counts", 3)
         offset = local.max_position_l1_m
         ideal_offset = a.add(offset, local.position_error_m)
@@ -313,7 +347,7 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None):
         base = finish(max_position_l1_m=a.add(a.mul(F(2), offset), a.mul(F(4), VECTOR_ERROR)), **values)
         result = translated(base)
         work.remember(key, (location, result, base))
-        return result
+        return checked(result)
 
     def rotation_plan(omega, elapsed):
         plan = ops.spin_plan(omega, elapsed)
