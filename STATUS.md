@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-21T05:33:28Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-21T15:47:00Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -33,21 +33,41 @@ Earlier finite gates retain their original evidence:
 
 Both workflows remain manual-only with default-false hosted-job opt-in. No hosted job was dispatched or retried, and GitHub reported no run for the tested candidate, evidence head or resulting merge. Repository-wide Actions settings and automations were not changed. No unexecuted macOS, Blender or live-engine support is claimed.
 
-**Next: finish bounded GLB/0.6 recording and Agent delivery, then complete the reach release gates.** [OK-LANG-006/0.1.0](docs/language-design/planar-reach-v0.1/ADOPTION.md) is adopted on main; its runtime is **not integrated**. The continuation is published in [draft PR #27](https://github.com/Omegapy/OntoKin/pull/27), stacked on [draft PR #25](https://github.com/Omegapy/OntoKin/pull/25). [Issue #26](https://github.com/Omegapy/OntoKin/issues/26) records the current ownership and recovered handoff. Original branches and failures remain preserved.
+**Next: complete independent reach rate, delivery and release acceptance.**
+[OK-LANG-006/0.1.0](docs/language-design/planar-reach-v0.1/ADOPTION.md) is adopted
+on main; its runtime is **not integrated**. [Draft PR #27](https://github.com/Omegapy/OntoKin/pull/27)
+now preserves the complete recovered implementation in `c0ba9d97f806c9c96fb96c1168c925e658a6feff`,
+whose tree `93efbdf841eaed62861edef691885809ef212067` is exactly recovered local
+`bbfddddb8ecea939cb75b975250805a53cd3c6c5`. It remains stacked on
+[draft PR #25](https://github.com/Omegapy/OntoKin/pull/25). Original branches,
+failed attempts and earlier evidence retain their identities.
 
-The interrupted evidence publication is now complete. The [checkpoint](https://github.com/Omegapy/OntoKin/blob/7769d107b8dd63ed8e4f0d0f3901d24a1f088c9d/docs/engineering/reach-release-review/README.md), [complete documentation review](https://github.com/Omegapy/OntoKin/blob/7769d107b8dd63ed8e4f0d0f3901d24a1f088c9d/docs/engineering/reach-release-review/documentation-review.md) and [execution archive](https://github.com/Omegapy/OntoKin/blob/7769d107b8dd63ed8e4f0d0f3901d24a1f088c9d/docs/engineering/reach-release-review/execution-001.tar.xz) retain the actual prior source identities and raw results:
-
-| Preserved branch evidence | Actual result |
+| Recovered evidence | Actual result and limit |
 | --- | --- |
-| Documentation | 95 narrative documents and 15 diagrams reviewed; unchanged review inputs freshly reconciled. |
-| Frozen reach source corpus | 45/45 cases passed within the original 100,000-operation request budget, including P23's 32 arms. |
-| Complete Python suite | 1,103 passed; seven reach-delivery failures out of 1,110. |
-| Local verification plan | 10/11 stages passed; complete-suite stage blocked by those seven failures. |
-| Agent/0.5 compatibility | 106 tests, source workflow and independent audit passed. |
+| Full P01 recording | Three seconds at 2 fps, helpers disabled; first passed at **98,462** shared operations under the unchanged **100,000** cap. Independent supplied-byte checks covered 55 keys, 330 poses and 324 interval certificates. |
+| Original delivery blockers | All **seven cleared**, including P24's large action-history prefix and P17's two-second export. The identified 79-method checkpoint passed all 11 actual Agent-delivery and four recording-budget methods. |
+| Complete regression | Recovered `full-regression-002` passed **1,234/1,234** on CPython 3.12.14 at exact local `bbfdddd`, with stable inputs and no skips. Five evidence member hashes were independently checked during recovery. This is an earlier execution, not a new run on later changes. |
+| Documentation review | 106 narratives accounted for: 91 unchanged prior full-read records, four changed and 11 additional narratives fully read; all 15 foundational diagram hashes unchanged. |
+| Independent rates | Latest terminal P23 requests still exceed the original shared operation budget. The complete 362-request/724-field inventory and separate reviewed rate-criterion decision remain open. |
 
-Those historical results do not certify subsequent changed code. Published continuation `7769d107b8dd63ed8e4f0d0f3901d24a1f088c9d` has the exact tree of local `2bdbf6c73e2c4a3ead3b1e5d37027beecab3a978`. A separately identified P01 quarter-second development artifact first exported and passed the independent supplied-byte checker at **90,381 shared operations**, with the original 100,000 limit. The full recording and current delivery cohort remain under implementation; no complete reach acceptance is claimed. Prefix reuse, exact retry, cancellation/rollback, conservative certificate arithmetic and independent reference corrections are being verified on the continuation branch.
+The [delivery checkpoint](docs/engineering/reach-delivery-completion-2026-10-21.md)
+and [recovery record](docs/engineering/reach-recovery-validation/README.md)
+identify scope and evidence limits. The prior transient workspace became
+unavailable after its source and test results were inspected. The source tree
+is now durable in PR #27; the recovered full-regression raw files were not yet
+archived. Fresh complete verification is required on the integrated candidate.
+Later recovered independent Agent-auditor commits and rate work are not certified
+by that earlier 1,234-test result.
 
-The next acceptance gate is a successful full recording and all remaining actual Agent delivery tests without budget or frozen-input changes. Then complete independent reference/rate acceptance, all **28 source and ten Agent artifacts**, actual native/browser validation, compatibility and inherited roles, the complete **R01–R12/Q01–Q22** audit and resulting-main checks under the [release contract](docs/language-design/planar-reach-v0.1/release-contract.md). The direct-tool authoring comparison requires its own adopted preparation and measured unseen variants.
+Remaining acceptance is all **R01–R12/Q01–Q22** and mandatory roles under the
+[adopted release contract](docs/language-design/planar-reach-v0.1/release-contract.md):
+complete literal mappings before final execution, all 45 source cases,
+independent rate verification, all 42 fixed protocol steps and Q03/Q22 probes,
+**28 source and ten retrieved Agent artifacts**, actual native/browser checks,
+review of every required fresh capture, hostile inputs, CPython 3.11/3.12/3.13,
+inherited workflows, final independent audit and resulting-main checks. No
+budget, frozen input or tolerance is relaxed. The direct-tool authoring comparison
+requires its own adopted preparation and measured unseen variants.
 
 ## Remaining full-product scope
 
@@ -55,6 +75,16 @@ GOAL still requires richer typed algorithms/libraries and compatible replacement
 
 ## Integration and recovery
 
-**Main documentation lease released by this checkpoint.** Owner `interactive-reach06-delivery-finish-20261021-0330-7of9` acquired the STATUS-only lease at `2026-10-21T05:32:35Z` in `6e8702c281cb91f57a652cf750fed5ba33ac9402`, expiring at `2026-10-21T06:02:35Z`. The recovered checkpoint is now published. This nonforce expected-head update releases that lease and changes only STATUS; reach runtime and workflows remain unmerged. The [preceding status](https://github.com/Omegapy/OntoKin/blob/edf2412e5ea993b369e0204194921e4976504811/STATUS.md) preserves the prior adoption integration record.
+**No main integration lease is held by this continuation.** Main remains
+`2bb4588e121fcfe99b4d42c734b15b38362f3642`; the prior STATUS-only lease was
+released. Current coordinator `interactive-reach06-complete-20261021-bdfa-7of9`
+resumes the owner's explicit PR #27 handoff in a separate recovered checkout.
+This branch-only status update does not claim a main write or runtime merge.
 
-Implementation continues on `work/reach06-delivery-finish-20261021-0330-7of9` and its coordinated Agent, reference and destination worktrees. Main runtime integration requires a fresh verified lease and complete applicable acceptance. Actual runtime/Agent/SQLite/full-suite/workflow/archive executions retain exclusive executor windows; keep source hashes stable and preserve failed attempts. Reconcile uncertain writes against actual refs before retrying. No hosted execution was dispatched or retried.
+The actual PR #27 head was reconciled before publication; an expected-head,
+nonforce update from `623aea726788d36ce4e18a6d073a0093bc49d173` preserved the
+verified recovered tree. New rate, destination and acceptance workers use
+isolated branches. Runtime/test/SQLite/workflow/archive execution remains
+serialized to keep source identities stable. Main integration requires complete
+acceptance and a fresh observed-head lease. Both workflows remain manual-only
+with default-false opt-in; no hosted job was dispatched or retried.
