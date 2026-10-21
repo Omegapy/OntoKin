@@ -145,6 +145,9 @@ class _Bounds:
         value = self.value(value)
         if value < 0 or not 1 <= precision <= 2048:
             _error("OKE-E-CERTIFICATE", "An independent square-root operand or precision is invalid.")
+        if not value:
+            self.tick("independent_zero_root")
+            return _Cell(Fraction(0), Fraction(0))
         return self.reuse(("root", value, precision), lambda: self._root(value, precision))
 
     def _root(self, value, precision):
@@ -163,11 +166,32 @@ class _Bounds:
         return _Cell(Fraction(root, scale), Fraction(upper, scale))
 
     def norm(self, values):
+        if (type(values) in (tuple, list) and len(values) <= 4
+                and all(type(value) is Fraction for value in values)):
+            self.tick("independent_norm_domain")
+            total = Fraction(0)
+            for value in values:
+                self.bits(value.numerator.bit_length(), value.denominator.bit_length())
+                if value:
+                    squared = self.square(value)
+                    total = squared if not total else self.add(total, squared)
+            return self.root(total).hi
         return self.root(self.total(self.square(value) for value in values)).hi
 
     def cell(self, value):
+        if isinstance(value, _Cell) and type(value.lo) is Fraction and type(value.hi) is Fraction:
+            self.tick("independent_interval_domain")
+            self.bits(value.lo.numerator.bit_length(), value.lo.denominator.bit_length(),
+                      value.hi.numerator.bit_length(), value.hi.denominator.bit_length())
+            self.bits(value.lo.numerator.bit_length() + value.hi.denominator.bit_length(),
+                      value.hi.numerator.bit_length() + value.lo.denominator.bit_length())
+            if value.lo > value.hi:
+                _error("OKE-E-INDEPENDENT-VALIDATION", "An independent reference returned a reversed enclosure.")
+            return value
         if hasattr(value, "lo") and hasattr(value, "hi"):
             result = _Cell(self.value(value.lo), self.value(value.hi))
+            self.bits(result.lo.numerator.bit_length() + result.hi.denominator.bit_length(),
+                      result.hi.numerator.bit_length() + result.lo.denominator.bit_length())
             if result.lo > result.hi:
                 _error("OKE-E-INDEPENDENT-VALIDATION", "An independent reference returned a reversed enclosure.")
             return result
@@ -179,8 +203,12 @@ class _Bounds:
             _error("OKE-E-CERTIFICATE", "An independent vector comparison has incompatible dimensions.")
         first, last = tuple(self.cell(value) for value in first), tuple(self.cell(value) for value in last)
         def calculate():
-            result = [max(abs(self.sub(a.lo, b.hi)), abs(self.sub(a.hi, b.lo)))
-                      for a, b in zip(first, last)]
+            result = []
+            for a, b in zip(first, last):
+                if a.lo == a.hi and b.lo == b.hi:
+                    result.append(Fraction(0) if a.lo == b.lo else abs(self.sub(a.lo, b.lo)))
+                else:
+                    result.append(max(abs(self.sub(a.lo, b.hi)), abs(self.sub(a.hi, b.lo))))
             return self.norm(result)
         return self.reuse(("difference", first, last), calculate)
 
@@ -198,12 +226,19 @@ class _Bounds:
         return self.reuse(("normalize", values), lambda: self._normalize(values))
 
     def _normalize(self, values):
-        squared = self.total(self.square(value) for value in values)
+        squared = Fraction(0)
+        for value in values:
+            if value:
+                term = self.square(value)
+                squared = term if not squared else self.add(squared, term)
         length = self.root(squared)
         if length.lo <= 0:
             _error("OKE-E-QUATERNION", "A supplied quaternion cannot be normalized within the finite proof range.")
         result = []
         for value in values:
+            if not value:
+                result.append(_Cell(Fraction(0), Fraction(0)))
+                continue
             first, last = self.div(value, length.lo), self.div(value, length.hi)
             result.append(_Cell(min(first, last), max(first, last)))
         return tuple(result)
@@ -229,14 +264,26 @@ def rational_clock(record, *, work=None):
     """Read a reduced, nonnegative exact clock without float conversion."""
     if not isinstance(record, dict) or set(record) != {"numerator", "denominator"}:
         _error("OKE-E-CLOCK", "A recording clock must retain its exact rational identity.")
-    numerator = _integer(record["numerator"], work=work)
-    denominator = _integer(record["denominator"], work=work)
-    _tick(work, "independent_clock_reduction")
-    gcd = math.gcd(numerator, denominator)
-    _tick(work, "independent_clock_reduction_return")
-    if denominator <= 0 or gcd != 1:
-        _error("OKE-E-CLOCK", "A recording clock must be reduced with a positive denominator.")
-    return Fraction(numerator, denominator)
+    def calculate():
+        numerator = _integer(record["numerator"], work=work)
+        denominator = _integer(record["denominator"], work=work)
+        _tick(work, "independent_clock_reduction")
+        gcd = math.gcd(numerator, denominator)
+        _tick(work, "independent_clock_reduction_return")
+        if denominator <= 0 or gcd != 1:
+            _error("OKE-E-CLOCK", "A recording clock must be reduced with a positive denominator.")
+        return Fraction(numerator, denominator)
+    # Every row retains its own exact clock. Only a short, complete pair of
+    # immutable supplied strings can reuse their already successful parse and
+    # reduction. Longer clocks take the ordinary chunked, preguarded path.
+    # Charged lookup/promotion keeps the original cancellation callback.
+    texts = record["numerator"], record["denominator"]
+    if all(type(text) is str and len(text) <= 128 for text in texts):
+        arithmetic = _Bounds(work)
+        value = arithmetic.reuse(("rational_clock", *texts), calculate)
+        arithmetic.bits(value.numerator.bit_length(), value.denominator.bit_length())
+        return value
+    return calculate()
 
 
 def clock_cell_contains(value, bits, *, work=None):
@@ -469,7 +516,7 @@ def _geometry_bounds(decoded, model, options, *, work):
     called. Every repeated occurrence consumes the aggregate vertex allowance.
     """
     from .geometry import assembly_marker, box_mesh, joint_marker, sphere_mesh
-    from .scene import MAX_MESH_VERTICES, SurfaceMesh, build_surface_mesh, float32
+    from .scene import MAX_MESH_VERTICES, SurfaceMesh, _source_surface_mesh, float32
     arithmetic = _Bounds(work)
     result, meshes, remaining = {}, {}, MAX_MESH_VERTICES
     for index, node in enumerate(decoded.document["nodes"]):
@@ -487,7 +534,8 @@ def _geometry_bounds(decoded, model, options, *, work):
             if kind == "empty":
                 mesh = None
             elif kind in ("loft", "placed"):
-                mesh = build_surface_mesh(obj.geometry, max_vertices=remaining, check=work.tick)
+                mesh = _source_surface_mesh(obj.geometry, max_vertices=remaining,
+                                            work=work, namespace="reach_independent_source")
             elif kind == "box":
                 mesh = box_mesh(obj.geometry["size"])
             elif kind == "sphere":
@@ -629,6 +677,108 @@ def _verify_metadata(decoded, model, options, program, boundary_records, *, work
     return quantization
 
 
+def _plain_projection_leaf(actual, expected):
+    """Match the complete scalar type rule before a bounded native equality."""
+    kind = type(expected)
+    if kind is float:
+        return (math.isfinite(expected) and type(actual) in (int, float)
+                and (type(actual) is int or math.isfinite(actual)))
+    return kind in (str, int, bool, type(None)) and type(actual) is kind
+
+
+def _plain_projection_block(pairs):
+    """One bounded identity comparison, retaining every scalar type guard."""
+    return (all(_plain_projection_leaf(actual, expected) for actual, expected in pairs)
+            and tuple(actual for actual, _ in pairs) == tuple(expected for _, expected in pairs))
+
+
+def _plain_projection_tree(actual, expected):
+    """Compare a complete small identity subtree without recursive paths.
+
+    At most 64 container/leaf occurrences are visited. Every container shape and
+    scalar type is checked, then one native tuple comparison covers the scalar
+    values. Numerical enclosures, larger trees and mismatches take the ordinary
+    recursive path, preserving its detailed diagnostics and numerical policy.
+    The caller charges and polls before this bounded operation.
+    """
+    stack, first, last, entries = [(actual, expected)], [], [], 1
+    while stack:
+        observed, source = stack.pop()
+        if type(source) is dict:
+            if type(observed) is not dict or len(observed) != len(source):
+                return False
+            entries += len(source)
+            if entries > 64 or set(observed) != set(source):
+                return False
+            stack.extend((observed[key], value) for key, value in source.items())
+        elif type(source) in (list, tuple):
+            if type(observed) is not list or len(observed) != len(source):
+                return False
+            entries += len(source)
+            if entries > 64:
+                return False
+            stack.extend(zip(observed, source))
+        else:
+            if not _plain_projection_leaf(observed, source):
+                return False
+            first.append(observed)
+            last.append(source)
+    return tuple(first) == tuple(last)
+
+
+def _history_allowance(path, allowances):
+    labels = " ".join(str(value) for value in path)
+    impulse_fields = {
+        "lever_arm_world_m", "application_point_world_m", "angular_impulse_world_n_m_s",
+        "linear_velocity_before_world_m_per_s", "linear_velocity_after_world_m_per_s",
+        "angular_velocity_before_world_rad_per_s", "angular_velocity_after_world_rad_per_s",
+    }
+    source_impulse = (len(path) >= 2 and path[-2] in impulse_fields and "last_applications" in path)
+    if source_impulse:
+        # The ledger already encloses public rounding and dimensional propagation.
+        return Fraction(0), True
+    if "orientation" in labels or "angular" in labels or "omega" in labels:
+        return allowances["angular_velocity"] if "velocity" in labels or "omega" in labels else allowances["rotation"], False
+    if "velocity" in labels or "speed" in labels:
+        return allowances["velocity"], False
+    if any(label in labels for label in ("position", "residual", "world_target", "tip_pose")):
+        return allowances["position"], False
+    _error("OKE-E-INDEPENDENT-VALIDATION", "An independent numerical history leaf has no identified allowance.", details={"path": list(path)})
+
+
+def _history_vector_key(actual, expected, arithmetic):
+    """Guard every member before reusing one fixed numerical vector proof.
+
+    Raw binary64 ratios are bounded before hashing, including on cache hits.
+    Only the repeated Fraction construction and predicate evaluation are omitted.
+    Unsupported shapes/types retain the ordinary recursive validation path.
+    """
+    from .reach_reference import Interval
+    if len(expected) not in (3, 4) or not all(isinstance(value, Interval)
+            and type(value.lo) is Fraction and type(value.hi) is Fraction for value in expected):
+        return None
+    if not all(type(value) is int or type(value) is float and math.isfinite(value) for value in actual):
+        return None
+    result = []
+    for value, interval in zip(actual, expected):
+        numerator, denominator = (value, 1) if type(value) is int else value.as_integer_ratio()
+        arithmetic.bits(numerator.bit_length(), denominator.bit_length(),
+                        interval.lo.numerator.bit_length(), interval.lo.denominator.bit_length(),
+                        interval.hi.numerator.bit_length(), interval.hi.denominator.bit_length())
+        arithmetic.bits(interval.lo.numerator.bit_length() + interval.hi.denominator.bit_length(),
+                        interval.hi.numerator.bit_length() + interval.lo.denominator.bit_length())
+        if interval.lo > interval.hi:
+            _error("OKE-E-INDEPENDENT-VALIDATION", "An independent reference returned a reversed enclosure.")
+        result.append((numerator, denominator, interval.lo, interval.hi))
+    return tuple(result)
+
+
+def _exact_history_vector(key, *, sign=1):
+    """An exact point equality needs neither interval arithmetic nor a cache."""
+    return all(low == high and numerator == sign * low.numerator
+               and denominator == low.denominator for numerator, denominator, low, high in key)
+
+
 def _assert_projection(actual, expected, *, arithmetic, allowances, path=()):
     """Compare complete histories; interval leaves retain their units/meaning."""
     from .reach_reference import Interval
@@ -636,49 +786,83 @@ def _assert_projection(actual, expected, *, arithmetic, allowances, path=()):
     if isinstance(expected, Interval):
         if type(actual) not in (int, float):
             _error("OKE-E-BOUNDARY-HISTORY", "A numerical source history has a nonnumeric leaf.", details={"path": list(path)})
-        labels = " ".join(str(value) for value in path)
-        impulse_fields = {
-            "lever_arm_world_m", "application_point_world_m", "angular_impulse_world_n_m_s",
-            "linear_velocity_before_world_m_per_s", "linear_velocity_after_world_m_per_s",
-            "angular_velocity_before_world_rad_per_s", "angular_velocity_after_world_rad_per_s",
-        }
-        source_impulse = (len(path) >= 2 and path[-2] in impulse_fields and "last_applications" in path)
-        if source_impulse:
-            # The independent impulse ledger already encloses the controlled
-            # rotation, public rounding and every dimensional propagation.
-            # In particular, an angular impulse has units N m s, not radians.
-            allowance = Fraction(0)
-        elif "orientation" in labels or "angular" in labels or "omega" in labels:
-            allowance = allowances["angular_velocity"] if "velocity" in labels or "omega" in labels else allowances["rotation"]
-        elif "velocity" in labels or "speed" in labels:
-            allowance = allowances["velocity"]
-        elif any(label in labels for label in ("position", "residual", "world_target", "tip_pose")):
-            allowance = allowances["position"]
-        else:
-            _error("OKE-E-INDEPENDENT-VALIDATION", "An independent numerical history leaf has no identified allowance.", details={"path": list(path)})
+        allowance, source_impulse = _history_allowance(path, allowances)
         value = arithmetic.value(actual)
-        if not source_impulse:
-            rounding = arithmetic.add(arithmetic.mul(max(abs(expected.lo), abs(expected.hi)), Fraction(1, 1 << 53)), Fraction(1, 1 << 1075))
-            allowance = arithmetic.add(allowance, rounding)
-        if (arithmetic.compare(value, arithmetic.sub(expected.lo, allowance)) < 0
-                or arithmetic.compare(value, arithmetic.add(expected.hi, allowance)) > 0):
+        low = expected.lo if type(expected.lo) is Fraction else arithmetic.value(expected.lo)
+        high = expected.hi if type(expected.hi) is Fraction else arithmetic.value(expected.hi)
+        allowance = allowance if type(allowance) is Fraction else arithmetic.value(allowance)
+        arithmetic.bits(low.numerator.bit_length(), low.denominator.bit_length(),
+                        high.numerator.bit_length(), high.denominator.bit_length(),
+                        allowance.numerator.bit_length(), allowance.denominator.bit_length())
+        def within():
+            bound = allowance
+            if not source_impulse:
+                rounding = arithmetic.add(arithmetic.mul(max(abs(low), abs(high)), Fraction(1, 1 << 53)), Fraction(1, 1 << 1075))
+                bound = arithmetic.add(bound, rounding)
+            return (arithmetic.compare(value, arithmetic.sub(low, bound)) >= 0
+                    and arithmetic.compare(value, arithmetic.add(high, bound)) <= 0)
+        if not arithmetic.reuse(("history_interval", value, low, high, allowance, source_impulse), within):
             _error("OKE-E-BOUNDARY-HISTORY", "A recorded numerical state lies outside the independent source enclosure.", details={"path": list(path)})
     elif isinstance(expected, dict):
         if type(actual) is not dict or set(actual) != set(expected):
             _error("OKE-E-BOUNDARY-HISTORY", "A recorded source history omits or adds fields.", details={"path": list(path)})
+        if _plain_projection_tree(actual, expected):
+            return
+        # The scalar members of a fixed record form one identity block even
+        # when that record also contains numerical vectors or nested identities.
+        # Compare every scalar type/value before descending into the remaining
+        # fields; a failed block keeps the precise ordinary diagnostic path.
+        if len(expected) <= 64:
+            scalars = {key for key, value in expected.items() if type(value) in (str, int, float, bool, type(None))}
+            if _plain_projection_block([(actual[key], expected[key]) for key in scalars]):
+                for key, value in expected.items():
+                    if key not in scalars:
+                        _assert_projection(actual[key], value, arithmetic=arithmetic, allowances=allowances, path=(*path, key))
+                return
         for key, value in expected.items():
             _assert_projection(actual[key], value, arithmetic=arithmetic, allowances=allowances, path=(*path, key))
     elif isinstance(expected, (tuple, list)):
         if type(actual) is not list or len(actual) != len(expected):
             _error("OKE-E-BOUNDARY-HISTORY", "A recorded source history omits or reorders entries.", details={"path": list(path)})
+        if _plain_projection_tree(actual, expected):
+            return
         if path and path[-1] == "orientation_wxyz" and len(expected) == 4:
             # Quaternion sign is a representation choice, not physical state.
-            exact = [arithmetic.cell(value) for value in expected]
-            positive = arithmetic.difference(actual, exact)
-            negative = arithmetic.difference(actual, [_Cell(-value.hi, -value.lo) for value in exact])
-            if min(positive, negative) > allowances["rotation"]:
+            def compare_orientation():
+                exact = [arithmetic.cell(value) for value in expected]
+                positive = arithmetic.difference(actual, exact)
+                negative = arithmetic.difference(actual, [_Cell(-value.hi, -value.lo) for value in exact])
+                return min(positive, negative) <= allowances["rotation"]
+            key = _history_vector_key(actual, expected, arithmetic)
+            allowance = allowances["rotation"]
+            if type(allowance) is not Fraction:
+                allowance = arithmetic.value(allowance)
+            arithmetic.bits(allowance.numerator.bit_length(), allowance.denominator.bit_length())
+            if (key is not None and allowance >= 0 and
+                    (_exact_history_vector(key) or _exact_history_vector(key, sign=-1))):
+                return
+            valid = (compare_orientation() if key is None else
+                     arithmetic.reuse(("history_orientation", key, allowance), compare_orientation))
+            if not valid:
                 _error("OKE-E-BOUNDARY-HISTORY", "A recorded orientation differs from the independent source state.", details={"path": list(path)})
         else:
+            key = _history_vector_key(actual, expected, arithmetic)
+            if key is not None:
+                # This exact scalar predicate is independent of action identity.
+                # Resolve the dimensional policy before every lookup, including
+                # the impulse ledger's stricter no-extra-rounding rule.
+                allowance, source_impulse = _history_allowance((*path, 0), allowances)
+                if type(allowance) is not Fraction:
+                    allowance = arithmetic.value(allowance)
+                arithmetic.bits(allowance.numerator.bit_length(), allowance.denominator.bit_length())
+                if allowance >= 0 and _exact_history_vector(key):
+                    return
+                def compare_vector():
+                    for index, (first, last) in enumerate(zip(actual, expected)):
+                        _assert_projection(first, last, arithmetic=arithmetic, allowances=allowances, path=(*path, index))
+                    return True
+                arithmetic.reuse(("history_vector", key, allowance, source_impulse), compare_vector)
+                return
             for index, (first, last) in enumerate(zip(actual, expected)):
                 _assert_projection(first, last, arithmetic=arithmetic, allowances=allowances, path=(*path, index))
     else:
@@ -748,9 +932,11 @@ def _aligned_reference(quaternion, expected, arithmetic):
 
 def _key_comparisons(reference, geometry, tracks, time, index, arithmetic):
     result = {}
+    ideals = reference.recording_pose_enclosures(
+        tuple(item["frame"] for item in geometry.values()), time, side="after")
     for carrier, item in geometry.items():
         arithmetic.tick("independent_key_pose")
-        ideal = reference.recording_pose_enclosure(item["frame"], time, side="after")
+        ideal = ideals[item["frame"]]
         position, quaternion = tracks[carrier]["translation"][index], tracks[carrier]["rotation"][index]
         def compare():
             normalized = arithmetic.normalize(quaternion)

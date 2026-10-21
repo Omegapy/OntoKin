@@ -12,6 +12,9 @@ The documentation continues to require actual source meaning, complete geometry 
 
 | Tool | Concrete role | Limits of the result |
 | --- | --- | --- |
+| `tools/build_reach_source_artifacts.py` | Execute the 28 required source/export requests, or an explicit finite subset, with the compiler's existing shared 100,000-operation counter; preserve actual artifact bytes, settings, diagnostics and per-request results. | A source export pass does not establish native/browser or Agent acceptance. |
+| `tools/reach_delivery_inventory.py` | Name the frozen source/Agent inventories, complete or required prefix horizons, settings and bounded evidence descriptors. | Inventory membership and correct intake do not prove delivery or protocol behavior. |
+| `tools/verify_reach_destinations.py` | Sequentially prepare independent references, validate actual supplied source/Agent bytes, and optionally execute the prescribed browser selection on one exact clean committed cut. | Its completeness flags describe the executed corpus only; Agent audit, actual image review and release acceptance remain separate. |
 | `tools/verify_reach_native.mjs --plan` | Decode supplied actual GLB bytes and enumerate every retained key, eight distinct interiors per interval, and both source-boundary sides. | Does not generate source expectations or validate Agent transport. |
 | `tools/build_reach_native_reference.py` | Compile the exact source bundle, obtain independent `ReachReference` pose/site enclosures for that actual-byte schedule, add fixed fixture observations inside the prefix and phase neighbors, and copy identified inputs into a fresh directory. | Does not export, sample production poses, or establish the exporter request budget. Geometry-constructor reuse is disclosed. |
 | `tools/verify_reach_native.mjs --manifest` | Run actual Khronos validation and actual Three.js decoding/controlled playback, comparing full source geometry/PBR, every required carrier/site pose, and all world vertices. | The native component still requires independent source/certificate, Agent, browser and release audits. |
@@ -72,6 +75,40 @@ python3 -m unittest discover -s tests -p test_reach_native_reference_bridge.py -
 L01's intermediate image is paused between `.5` and `1.5` seconds, with a separate resumed moving check after `1.5`. L02 must be observed after `.5`, L03 after `2`, P16 after release at `2`, and P17 inside its successful prefix. All numerical observation times remain in the report even when no additional screenshot is retained.
 
 Predetermined caps remain `.001 m` position, `.001 rad` rotation, `1e-6 s` stored-clock error and `1e-5 m` local vertices; any tighter requested cap remains binding. Dense comparisons do not replace the independent continuous certificate. Khronos defaults to zero errors and zero warnings. Every material/geometry/motion corruption probe must start from an otherwise valid identified artifact and retain unrelated expected source content, with transport identities recomputed so that the intended numerical/geometric comparison actually rejects it.
+
+## Complete corpus orchestration
+
+The source producer makes one actual request per case. Its default settings are explicit **1 fps**, **helpers=false**, and the adopted default position, rotation and time caps. The requested frame rate is the initial recording schedule; adaptive keys still have to satisfy the unchanged continuous and supplied-byte numerical requirements. This choice changes neither the required horizons nor the source programs. It does not claim that every other supported request setting has passed.
+
+| Cases | Required export end |
+| --- | --- |
+| P01–P13, P15, P18–P23 and P25 | Full `3` seconds. |
+| P14 and P16 | Full `4` seconds. |
+| P17 | Successful `2`-second prefix; the separate full request must fail as specified. |
+| P26 | Full `60` seconds. |
+| L01 and L03 | Full `4` seconds. |
+| L02 | Full `2` seconds. |
+| Additional Agent L04 | Separate `0.25`-second recovery after the required reset and fresh run. |
+
+Use the same clean committed source cut for production, independent reference construction, native decoding and browser playback. The orchestration records all tracked repository file hashes and Git identities before and after execution, including failed runs. It rejects a producer from a different commit or tree; an explicit eligible-input equivalence audit is a separate route and is not inferred by this runner. All output paths below must be fresh directories outside the checkout; `$REACH_AGENT_REPORT` names the actual separately executed Agent producer report.
+
+```bash
+python3 tools/build_reach_source_artifacts.py --output-dir "$REACH_SOURCE_OUTPUT" --fps 1
+PLAYWRIGHT_BROWSERS_PATH=/absolute/verification-browser-cache python3 tools/verify_reach_destinations.py --producer-report "$REACH_SOURCE_OUTPUT/report.json" --output-dir "$REACH_SOURCE_DESTINATION" --node "$REACH_NODE" --browser
+PLAYWRIGHT_BROWSERS_PATH=/absolute/verification-browser-cache python3 tools/verify_reach_destinations.py --producer-report "$REACH_AGENT_REPORT" --output-dir "$REACH_AGENT_DESTINATION" --node "$REACH_NODE" --browser
+```
+
+The Agent input schema is `ontokin.reach-agent-delivery-workflow/0.1`. It supplies the exact `source_commit` and `source_tree`, and an ordered `deliveries` array. Each successful delivery identifies `case_id`, unchanged frozen repository-relative `source_files`, `program_revision`, explicit `options.end`, `options.fps`, `options.helpers=false`, actual `project_id`, `run_id` and `artifact_id`, and an `artifact` descriptor with normalized relative `path`, exact `sha256:` hash and byte count. The complete Agent producer must retain the linked requests, responses and retrieval records, including L04's reset and fresh-run identity. The destination wrapper checks the supplied bytes and source identity; the independent Agent audit checks the transport and transaction claims.
+
+The wrapper copies a producer report for provenance and records its original identity. Retain the complete original source or Agent producer directory as well: its artifact and exchange references are relative to that original directory. A copied report alone is not a self-contained Agent transport record. Native case directories separately contain the exact supplied artifact bytes, source units, independent references and plans used by the destination checks.
+
+Repeated `--case` options on either wrapper select a finite development probe. A subset does not set the corresponding complete-corpus flag. For example, selecting P01 still requires its complete `3`-second delivery; the earlier quarter-second component probe uses the lower-level commands above and cannot enter this mandatory corpus as full P01. The wrappers reject duplicate cases, unpromised P24/L04 source artifacts, changed program revisions, missing explicit frame rates, weaker tolerances and substituted artifact bytes. Their focused intake checks are:
+
+```bash
+python3 -m unittest discover -s tests -p test_reach_destination_inventory.py -v
+```
+
+These wrappers and intake checks are prepared for a subsequent granted execution window. Their addition does not claim an executed full-corpus pass. The separately published [first destination evidence](reach-first-destination-validation/README.md) remains a single old-basis P01 quarter-second component result; its artifact is not relabeled as current or full-duration evidence.
 
 ## Gates after component success
 

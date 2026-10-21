@@ -126,10 +126,12 @@ class ReachPoseOps:
         self.work.charge("pose_grid_check")
         values=tuple(values)
         self.work.guard(*values)
-        if all(value.denominator.bit_length()<=BITS+1 and
-               value.denominator & (value.denominator-1)==0 for value in values):
+        on_grid=tuple(value.denominator.bit_length()<=BITS+1 and
+                      value.denominator & (value.denominator-1)==0 for value in values)
+        if all(on_grid):
             return values
-        return tuple(round_dyadic(value,BITS,work=self.work) for value in values)
+        return tuple(value if ready else round_dyadic(value,BITS,work=self.work)
+                     for value,ready in zip(values,on_grid))
 
     def _l1(self,values):
         self.work.charge("pose_norm_bound",len(values))
@@ -144,7 +146,8 @@ class ReachPoseOps:
         self.work.charge("pose_add_zero_check")
         if not any(a): return b
         if not any(b): return a
-        return tuple(self._op(x,y,"add") for x,y in zip(a,b))
+        return tuple(y if not x else x if not y else self._op(x,y,"add")
+                     for x,y in zip(a,b))
 
     def scale(self,vector,factor):
         vector,factor=self._vector(vector),rational(factor,self.work)
@@ -217,16 +220,40 @@ class ReachPoseOps:
         self.work.remember(key,result)
         return result
 
+    def _power_two_scalar(self,value):
+        self.work.charge("quaternion_scalar_scale_check")
+        if type(value) is not F or not value:
+            return False
+        numerator,denominator=abs(value.numerator),value.denominator
+        return not (numerator & (numerator-1) or denominator & (denominator-1))
+
+    def _scaled_identity_product(self,components,error):
+        # Multiplication by a signed power of two is exactly undone by the
+        # ordinary scale/sign canonicalization. Reuse an already canonical
+        # grid tuple, or apply that same rescale to the unmultiplied operand.
+        self.work.charge("quaternion_identity_canonical_check")
+        if (isinstance(components,tuple) and all(type(value) is F for value in components) and
+                F(1,2)<=max(map(abs,components))<1 and next(value for value in components if value)>0):
+            self.work.charge("quaternion_identity_grid_check",4)
+            if all(value.denominator.bit_length()<=BITS+1 and
+                   value.denominator & (value.denominator-1)==0 for value in components):
+                return RotationValue(components,self._op(error,PRODUCT_ERROR,"add"))
+        return self._rescale(components,error)
+
     def _multiply_uncached(self,a,b):
         aw,ax,ay,az=a.components; bw,bx,by,bz=b.components
         mul=lambda x,y:self._op(x,y,"mul")
         self.work.charge("quaternion_sparse_check")
         error=self._op(a.error_rad,b.error_rad,"add")
-        # These branches compute the identical exact Hamilton product before
-        # the same rescale/grid operation, including non-power-of-two scales.
+        # A signed power-of-two scalar disappears under the same exact
+        # rescale/sign operation. Other scalar scales retain the full product.
         if not any((bx,by,bz)):
+            if all(type(value) is F for value in a.components) and self._power_two_scalar(bw):
+                return self._scaled_identity_product(a.components,error)
             return self._rescale(tuple(mul(value,bw) for value in a.components),error)
         if not any((ax,ay,az)):
+            if all(type(value) is F for value in b.components) and self._power_two_scalar(aw):
+                return self._scaled_identity_product(b.components,error)
             return self._rescale(tuple(mul(aw,value) for value in b.components),error)
         if not any((ax,ay,bx,by)):
             return self._rescale((self._op(mul(aw,bw),mul(az,bz),"sub"),F(0),F(0),
@@ -250,9 +277,43 @@ class ReachPoseOps:
         self.work.charge("rotation_sparse_check")
         if not any(vector): return ZERO
         if not any(q[1:]): return self._rounded_vector(vector)
+        active=tuple(index for index,value in enumerate(q[1:]) if value)
+        axis=(active[0] if len(active)==1 and all(type(value) is F for value in q) else None)
+        if axis is not None:
+            first,second=(axis+1)%3,(axis+2)%3
+            # A vector on the sole quaternion axis is fixed exactly. It still
+            # receives the same final grid projection as the full matrix path.
+            if not vector[first] and not vector[second]:
+                return self._rounded_vector(vector)
         result_key=(METHOD,"rotated_vector",q,vector)
         cached=self.work.lookup(result_key)
         if cached is not None: return cached
+        if axis is not None:
+            key=(METHOD,"axis_rotation_factors",q)
+            factors=self.work.lookup(key)
+            if factors is None:
+                w,z=q[0],q[axis+1]
+                w2,z2=self._op(w,w,"mul"),self._op(z,z,"mul")
+                denominator=self._op(w2,z2,"add")
+                diagonal=self._op(self._op(w2,z2,"sub"),denominator,"div")
+                cross=self._op(self._op(self._op(F(2),w,"mul"),z,"mul"),denominator,"div")
+                factors=(diagonal,cross)
+                self.work.remember(key,factors)
+            diagonal,cross=factors
+            u,v=vector[first],vector[second]
+            if not v:
+                out_u,out_v=self._op(diagonal,u,"mul"),self._op(cross,u,"mul")
+            elif not u:
+                self.work.charge("rotation_axis_sign")
+                out_u,out_v=-self._op(cross,v,"mul"),self._op(diagonal,v,"mul")
+            else:
+                out_u=self._op(self._op(diagonal,u,"mul"),self._op(cross,v,"mul"),"sub")
+                out_v=self._op(self._op(cross,u,"mul"),self._op(diagonal,v,"mul"),"add")
+            values=list(vector)
+            values[first],values[second]=out_u,out_v
+            result=self._rounded_vector(values)
+            self.work.remember(result_key,result)
+            return result
         key=(METHOD,"rotation_rows",q)
         rows=self.work.lookup(key)
         if rows is None:
@@ -266,8 +327,10 @@ class ReachPoseOps:
                         (pair(x,z,w,y,"sub"),pair(y,z,w,x,"add"),diagonal(1,2)))
             rows=tuple(tuple(self._op(v,denominator,"div") for v in row) for row in numerators)
             self.work.remember(key,rows)
-        result=self._rounded_vector(self._sum(self._op(a,b,"mul") for a,b in zip(row,vector))
-                                    for row in rows)
+        self.work.charge("rotation_vector_support")
+        support=tuple((index,value) for index,value in enumerate(vector) if value)
+        result=self._rounded_vector(self._sum(self._op(row[index],value,"mul")
+                                              for index,value in support if row[index]) for row in rows)
         self.work.remember(result_key,result)
         return result
 
@@ -399,14 +462,31 @@ class ReachPoseOps:
             result=RotationValue(UNIT)
             self.work.remember(key,result)
             return result
-        scaled,_,norm=self._scaled_axis(axis)
-        middle=self._op(self._op(norm[0],norm[1],"add"),F(2),"div")
-        unit=tuple(round_dyadic(self._op(v,middle,"div"),BITS,work=self.work) for v in scaled)
+        unit=self._normalized_axis(axis)
         sine,cosine=self.sincos(self._op(angle,F(2),"div"))
         values=(cosine,*(self._op(v,sine,"mul") for v in unit))
         result=self._rescale(values,AXIS_ERROR)
         self.work.remember(key,result)
         return result
+
+    def _normalized_axis(self,axis):
+        """The same immutable 96-bit axis reduction for every requested angle."""
+        axis=self._vector(axis)
+        key=(METHOD,"normalized_axis",axis)
+        cached=self.work.lookup(key)
+        if cached is not None: return cached
+        scaled,_,norm=self._scaled_axis(axis)
+        self.work.charge("pose_unit_axis_check")
+        if norm==(F(1),F(1)):
+            # A scaled vector has a component of magnitude one. A proved
+            # exact unit norm therefore makes its other components zero;
+            # division by one and grid rounding would preserve every bit.
+            unit=scaled
+        else:
+            middle=self._op(self._op(norm[0],norm[1],"add"),F(2),"div")
+            unit=self._rounded_vector(self._op(v,middle,"div") for v in scaled)
+        self.work.remember(key,unit)
+        return unit
 
     def spin_plan(self,omega,max_elapsed_s):
         omega=self._vector(omega); maximum_time=abs(rational(max_elapsed_s,self.work))
@@ -537,15 +617,36 @@ class ReachPoseOps:
                 # projection. Other inputs still take the validating helpers.
                 velocity=omega=ZERO
             else:
-                velocity=self._rounded_vector(self.add(self.add(parent.exact_velocity,
-                    self.cross(parent.exact_omega,offset)),self.rotate(parent.rotation,local.exact_velocity)))
-                omega=self._rounded_vector(self.add(parent.exact_omega,self.rotate(parent.rotation,local.exact_omega)))
+                self.work.charge("composition_derivative_zero_check")
+                if local.exact_velocity is ZERO:
+                    if offset is ZERO or parent.exact_omega is ZERO:
+                        linear=self._vector(parent.exact_velocity)
+                    else:
+                        linear=self.add(parent.exact_velocity,self.cross(parent.exact_omega,offset))
+                else:
+                    linear=self.add(self.add(parent.exact_velocity,self.cross(parent.exact_omega,offset)),
+                                    self.rotate(parent.rotation,local.exact_velocity))
+                angular=(self._vector(parent.exact_omega) if local.exact_omega is ZERO else
+                         self.add(parent.exact_omega,self.rotate(parent.rotation,local.exact_omega)))
+                # The omitted exact-zero terms cannot change the sum. Keep
+                # the ordinary final grid: a parent's rate may be off-grid.
+                velocity=self._rounded_vector(linear)
+                omega=self._rounded_vector(angular)
             offset_error=self._op(self._l1(local.exact_position),parent.angular_error_rad,"mul")
             offset_allowance=self._sum((offset_error,VECTOR_ERROR,VECTOR_ERROR))
         else:
             _,rotation,velocity,omega,offset_allowance=relative
-        position_error=self._op(self._op(parent.position_error_m,local.position_error_m,"add"),
-                                offset_allowance,"add")
+        parent_error,local_error=parent.position_error_m,local.position_error_m
+        # The complete charged operand guard above covers these private
+        # Fraction identities. Keep the actual allowance addition for every
+        # caller, including when relative composition arithmetic is cached.
+        if type(parent_error) is F and type(local_error) is F and not parent_error:
+            inherited_error=local_error
+        elif type(parent_error) is F and type(local_error) is F and not local_error:
+            inherited_error=parent_error
+        else:
+            inherited_error=self._op(parent_error,local_error,"add")
+        position_error=self._op(inherited_error,offset_allowance,"add")
         if relative is None:
             rotation=self.multiply(parent.rotation,local.rotation)
             self.work.remember(relative_key,(offset,rotation,velocity,omega,offset_allowance))
@@ -579,14 +680,29 @@ class ReachPoseOps:
         if rotation.frozen_projection is not None:
             self.work.charge("frozen_quaternion_projection")
             return rotation.frozen_projection
+        self.work.charge("quaternion_projection_operand_guard")
+        self.work.guard(*rotation.components)
         # Error allowances and pose identity do not affect this projection.
         key=(METHOD,"unit_projection",rotation.components)
         cached=self.work.lookup(key)
         if cached is not None: return cached
-        denominator=self._sum(self._op(v,v,"mul") for v in rotation.components)
+        self.work.charge("quaternion_projection_support")
+        # Exact zero terms do not change q dot q. Reuse each actual square in
+        # its output ratio, and start the nonempty exact sum at its first term.
+        squares=tuple(self._op(value,value,"mul") if value else F(0)
+                      for value in rotation.components)
+        nonzero=tuple(value for value in squares if value)
+        if not nonzero:
+            raise ZeroDivisionError("Exact zero divisor")
+        denominator=nonzero[0]
+        for value in nonzero[1:]: denominator=self._op(denominator,value,"add")
         result=[]
-        for value in rotation.components:
-            square=self._op(self._op(value,value,"mul"),denominator,"div")
+        for value,square in zip(rotation.components,squares):
+            if not value:
+                self.work.charge("known_zero_quaternion_projection")
+                result.append(0.0)
+                continue
+            square=self._op(square,denominator,"div")
             component=sqrt_rational_binary64(square,work=self.work)
             self.work.charge("quaternion_projection_sign")
             result.append(-component if value<0 and component else component)

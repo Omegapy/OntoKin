@@ -62,6 +62,16 @@ class PhaseArithmetic:
         return rational(value, self.work)
 
     def add(self, *values):
+        if 0 < len(values) <= 8 and all(type(value) is F for value in values):
+            self.work.charge("phase_sum_domain")
+            self.work.guard(*values)
+            nonzero = tuple(value for value in values if value)
+            if not nonzero:
+                return F(0)
+            result = nonzero[0]
+            for value in nonzero[1:]:
+                result = exact(result, value, "add", self.work)
+            return result
         result = F(0)
         for value in values:
             result = exact(result, value, "add", self.work)
@@ -71,6 +81,18 @@ class PhaseArithmetic:
         return exact(a, b, "sub", self.work)
 
     def mul(self, *values):
+        if 0 < len(values) <= 8 and all(type(value) is F for value in values):
+            self.work.charge("phase_product_domain")
+            self.work.guard(*values)
+            if not all(values):
+                return F(0)
+            factors = tuple(value for value in values if value != 1)
+            if not factors:
+                return F(1)
+            result = factors[0]
+            for value in factors[1:]:
+                result = exact(result, value, "mul", self.work)
+            return result
         result = F(1)
         for value in values:
             result = exact(result, value, "mul", self.work)

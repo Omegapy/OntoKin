@@ -928,7 +928,7 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach
             raise ValueError("A retained recording plan must match the model, request work and complete prefix.")
         plan = reach_plan
     recording_stage("geometry", work=work)
-    nodes = _nodes(model, options, check=work.tick)
+    nodes = _nodes(model, options, check=work.tick, work=work)
     if not nodes:
         _fail("OKE-E-EMPTY-SCENE", "Reach recording requires at least one actual object occurrence.", model=model, kind="unsupported")
     geometry = node_geometry_bounds(model, nodes, work=work)

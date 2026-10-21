@@ -86,6 +86,43 @@ class JSONTextReuseTests(unittest.TestCase):
                     if key[0] == "bounded_json_text_batch_v1":
                         self.assertLessEqual(len(key[1]), 64)
 
+    def test_bounded_native_block_counts_worst_case_escaping_and_unicode_exactly(self):
+        values = [["\u0000" * 128] * 64,
+                  [text * 128 for text in ("\"", "\\", "\n", "é", "中", "😀", "x", "\u001f")] * 8]
+        self.assertEqual(len(json.dumps(values[0], ensure_ascii=False,
+            separators=(",", ":")).encode("utf-8")), 49345)
+        for value in values:
+            with self.subTest(first=repr(value[0])[:20]):
+                work = ReachExecutionWork()
+                expected = measure_json(value)
+                for _ in range(2):
+                    self.assertEqual(measure_json(value, check=work.tick, work=work), expected)
+                self.assertEqual(work.counts["json_text_block_encode"], 1)
+                self.assertEqual(work.counts["json_text_block_encode_return"], 1)
+                with self.assertRaises(JSONLimitError):
+                    measure_json(value, max_bytes=expected["bytes"] - 1,
+                                 check=work.tick, work=work)
+                value[-1] = "\ud800" * 128
+                with self.assertRaises(ValueError):
+                    measure_json(value, check=work.tick, work=work)
+
+    def test_cancellation_brackets_native_encoding_and_never_publishes_partial_cache(self):
+        value = ["escaped\n" + str(index) for index in range(64)]
+        for stage in ("before", "after"):
+            interrupted = RuntimeError("cancel " + stage + " bounded native encoding")
+            def check():
+                reached = (work.counts.get("cache_lookup", 0) if stage == "before" else
+                           work.counts.get("json_text_block_encode", 0))
+                if reached:
+                    raise interrupted
+            work = ReachExecutionWork(check=check)
+            with self.subTest(stage=stage), patch("ontokin.json_limits.json.dumps", wraps=json.dumps) as encode:
+                with self.assertRaises(RuntimeError) as caught:
+                    measure_json(value, check=work.tick, work=work)
+                self.assertIs(caught.exception, interrupted)
+                self.assertEqual(encode.call_count, 0 if stage == "before" else 1)
+                self.assertEqual(work.record()["cache_entries"], 0)
+
     def test_cached_hits_keep_original_cancellation_and_request_budget(self):
         stopped = False
         interruption = RuntimeError("cancel this original request")

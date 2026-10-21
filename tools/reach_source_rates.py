@@ -414,6 +414,7 @@ def audit_source_rates(reference, observation, *, work, frozen=None):
             "scope": "selected_carriers_at_one_exact_source_time_and_side",
             "source": identity, "time": arithmetic.record(time), "side": side,
             "reference_end": arithmetic.record(reference.end), "reference_end_side": reference.end_side,
+            "reference_mode": reference.mode,
             "selected_observation": observed_digest,
             "frozen_measurement_input": frozen_digest, "input_hashes": before,
             "identified_inputs_stable_during_comparison": True,
@@ -451,7 +452,7 @@ def execute_source_rate_audit(bundle, *, time, side, carriers, frozen=None, budg
         raise RateAuditError("observation", "Fresh source sample returned another time or side")
     _frozen_records(frozen, identity, exact_time, side, records, arithmetic)
     try:
-        reference = build_reference(compiler.model, end=exact_time, end_side=side, work=work)
+        reference = build_reference(compiler.model, end=exact_time, end_side=side, mode="observation", work=work)
         report = audit_source_rates(reference, observation, work=work, frozen=frozen)
     except ReferenceError as error:
         if error is getattr(work, "callback_error", None) or error.code == "resource":
@@ -463,7 +464,7 @@ def execute_source_rate_audit(bundle, *, time, side, carriers, frozen=None, budg
                   "reason": "reference_unavailable", "reference_error": {"code": error.code, "message": str(error)},
                   "source": identity,
                   "time": arithmetic.record(exact_time), "side": side,
-                  "reference_end_side": side,
+                  "reference_end_side": side, "reference_mode": "observation",
                   "selected_observation": _json_hash(observation, arithmetic), "input_hashes": before,
                   "frozen_measurement_input": None if frozen is None else _json_hash(frozen, arithmetic),
                   "results": []}

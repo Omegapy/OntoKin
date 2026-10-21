@@ -108,3 +108,8 @@ passed: 29 preserved sources, 233 sections and 1,051 local links, with no
 failures. Its separate [execution receipt](documentation-verification.json) and
 [raw result](documentation-result.json) retain that later check without changing
 the archive.
+
+A later [bounded native text-block continuation](native-text-blocks.md) records
+the next cold-scan optimization, its exact allocation derivation, all accepted
+and rejected measurement identities, and the subsequent 31-test JSON result.
+It preserves the earlier evidence above and does not claim full delivery.

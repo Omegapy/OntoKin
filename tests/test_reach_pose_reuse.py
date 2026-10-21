@@ -5,7 +5,7 @@ import unittest
 from unittest.mock import patch
 
 from ontokin.reach_numeric import ReachAdmissionError, ReachExecutionWork
-from ontokin.reach_pose import PRODUCT_ERROR, PoseValue, ReachPoseOps, RotationValue
+from ontokin.reach_pose import PRODUCT_ERROR, ZERO, PoseValue, ReachPoseOps, RotationValue
 
 
 class ReachPoseReuseTests(unittest.TestCase):
@@ -286,6 +286,163 @@ class ReachPoseReuseTests(unittest.TestCase):
                 self.assertIs(raised.exception, marker)
                 self.assertIs(work.callback_error, marker)
                 self.assertEqual(tuple(work._cache.items()), before)
+
+    def test_zero_local_derivatives_preserve_independent_spatial_formulas_and_grid(self):
+        def grid(values):
+            return tuple(F(round(value * (1 << 96)), 1 << 96) for value in values)
+        def rotate(q, vector):
+            w, x, y, z = q
+            d = sum(value * value for value in q)
+            rows = ((d - 2*(y*y+z*z), 2*(x*y-w*z), 2*(x*z+w*y)),
+                    (2*(x*y+w*z), d - 2*(x*x+z*z), 2*(y*z-w*x)),
+                    (2*(x*z-w*y), 2*(y*z+w*x), d - 2*(x*x+y*y)))
+            return grid(tuple(sum(a*b for a, b in zip(row, vector)) / d for row in rows))
+        def cross(a, b):
+            return (a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0])
+        rotations = ((F(1), F(0), F(0), F(0)), (F(1, 3), F(-2, 7), F(1, 11), F(3, 13)))
+        rates = ((F(1, 3), F(3, 1 << 97), F(-1, 1 << 1074)),
+                 (F(0), F(-3, 1 << 97), F(2, 7)))
+        for q in rotations:
+            for position in (ZERO, (F(1, 3), F(-2, 5), F(7, 11))):
+                for parent_omega in (rates[1], ZERO):
+                    for local_velocity, local_omega in ((ZERO, ZERO), (ZERO, rates[0]), (rates[1], ZERO)):
+                        with self.subTest(q=q, position=position, local_velocity=local_velocity, local_omega=local_omega, parent_omega=parent_omega):
+                            ops = ReachPoseOps(ReachExecutionWork())
+                            parent = PoseValue((F(2), F(3), F(4)), RotationValue(q, F(1, 1024)),
+                                               rates[0], parent_omega, F(1, 4096), ops)
+                            local = PoseValue(position, RotationValue((F(1), F(0), F(1), F(0)), F(1, 2048)),
+                                              local_velocity, local_omega, F(1, 8192), ops)
+                            offset = rotate(q, position)
+                            inherited = cross(parent.exact_omega, offset)
+                            rotated_linear, rotated_angular = rotate(q, local_velocity), rotate(q, local_omega)
+                            expected_linear = grid(tuple(a+b+c for a, b, c in
+                                                         zip(parent.exact_velocity, inherited, rotated_linear)))
+                            expected_angular = grid(tuple(a+b for a, b in zip(parent.exact_omega, rotated_angular)))
+                            result = ops.compose(parent, local)
+                            self.assertEqual(result.exact_position, grid(tuple(a+b for a, b in zip(parent.exact_position, offset))))
+                            self.assertEqual(result.exact_velocity, expected_linear)
+                            self.assertEqual(result.exact_omega, expected_angular)
+                            self.assertEqual(result.position_error_m, F(3, 8192)
+                                             + sum(map(abs, position)) * F(1, 1024) + F(1, 1 << 95))
+                            self.assertEqual(result.rotation.error_rad, F(3, 2048) + PRODUCT_ERROR)
+                            self.assertEqual(ops.work.counts.get("composition_derivative_zero_check"), 1)
+
+    def test_zero_local_derivative_shortcuts_keep_dimension_domain_and_width_guards(self):
+        for field in ("velocity", "omega"):
+            for malformed in ((F(1), F(2)), (True, 0, 0), (F(1 << 512), F(0), F(0))):
+                with self.subTest(field=field, malformed=malformed):
+                    ops = ReachPoseOps(ReachExecutionWork(max_operand_bits=512))
+                    valid = ops.identity()
+                    parent = PoseValue(valid.exact_position, valid.rotation,
+                                       malformed if field == "velocity" else (F(1, 3), F(0), F(0)),
+                                       malformed if field == "omega" else (F(1, 7), F(0), F(0)), F(0), ops)
+                    with self.assertRaises(ReachAdmissionError):
+                        ops.compose(parent, valid)
+                    self.assertFalse(any("relative_composition" in key for key in ops.work._cache))
+
+    def test_zero_local_derivative_cancellation_precedes_relative_result_publication(self):
+        work = ReachExecutionWork()
+        ops = ReachPoseOps(work)
+        parent = ops.make(velocity=(F(1, 3), 0, 0), omega=(0, F(3, 1 << 97), 0))
+        local = ops.identity()
+        marker = RuntimeError("cancel reduced spatial derivatives")
+        def check():
+            if work.counts.get("composition_derivative_zero_check", 0):
+                raise marker
+        work.external_check = check
+        with self.assertRaises(RuntimeError) as raised:
+            ops.compose(parent, local)
+        self.assertIs(raised.exception, marker)
+        self.assertIs(work.callback_error, marker)
+        self.assertFalse(any("relative_composition" in key for key in work._cache))
+        self.assertEqual(work.counts.get("composition_derivative_zero_check"), 1)
+
+    def test_mixed_zero_components_preserve_exact_sums_and_final_grid_ties(self):
+        pairs = (
+            ((F(0), F(1, 3), F(3, 1 << 97)), (F(2, 7), F(0), F(-1, 1 << 97))),
+            ((F(-5, 11), F(0), F(1, 1 << 1075)), (F(5, 11), F(3, 1 << 97), F(0))),
+            ((F(0), F(-3, 1 << 97), F(7, 13)), (F(-1, 1 << 1075), F(0), F(0))),
+        )
+        for a, b in pairs:
+            with self.subTest(a=a, b=b):
+                ops = ReachPoseOps(ReachExecutionWork())
+                expected = tuple(x + y for x, y in zip(a, b))
+                with patch.object(ops, "_op", wraps=ops._op) as arithmetic:
+                    actual = ops.add(a, b)
+                self.assertEqual(actual, expected)
+                self.assertEqual(ops._rounded_vector(actual),
+                                 tuple(F(round(value * (1 << 96)), 1 << 96) for value in expected))
+                self.assertEqual(arithmetic.call_count, sum(bool(x) and bool(y) for x, y in zip(a, b)))
+                self.assertTrue(all(call.args[0] and call.args[1] and call.args[2] == "add"
+                                    for call in arithmetic.call_args_list))
+                self.assertEqual(ops.work.counts["pose_add_zero_check"], 1)
+
+    def test_mixed_zero_components_keep_public_vector_guards_and_cancellation(self):
+        for malformed in ((F(1), F(0)), (F(0), True, F(0)), (F(0), F(1 << 512), F(0))):
+            with self.subTest(malformed=malformed):
+                ops = ReachPoseOps(ReachExecutionWork(max_operand_bits=512))
+                with self.assertRaises(ReachAdmissionError):
+                    ops.add((F(1), F(0), F(0)), malformed)
+                self.assertNotIn("pose_add_zero_check", ops.work.counts)
+        work = ReachExecutionWork()
+        ops = ReachPoseOps(work)
+        marker = RuntimeError("cancel before mixed zero identity decision")
+        def check():
+            if work.counts.get("pose_vector_domain", 0) == 2:
+                raise marker
+        work.external_check = check
+        with self.assertRaises(RuntimeError) as raised:
+            ops.add((F(1), F(0), F(0)), (F(0), F(2), F(0)))
+        self.assertIs(raised.exception, marker)
+        self.assertIs(work.callback_error, marker)
+        self.assertNotIn("pose_add_zero_check", work.counts)
+
+    def test_warm_composition_zero_errors_keep_each_callers_exact_bound(self):
+        ops = ReachPoseOps(ReachExecutionWork())
+        rotation = RotationValue((F(1), F(0), F(0), F(0)), F(1, 1024))
+        local_position = (F(2), F(-3), F(4))
+        for parent_error, local_error in ((F(0), F(0)), (F(1, 7), F(0)),
+                                           (F(0), F(1, 11)), (F(1, 7), F(1, 11))):
+            with self.subTest(parent_error=parent_error, local_error=local_error):
+                parent = PoseValue((F(5), F(6), F(7)), rotation, ZERO, ZERO, parent_error, ops)
+                local = PoseValue(local_position, RotationValue((F(1), F(0), F(0), F(0))),
+                                  ZERO, ZERO, local_error, ops)
+                warm = ops.compose(parent, local)
+                translated = PoseValue((F(50), F(60), F(70)), rotation, ZERO, ZERO, parent_error, ops)
+                with patch.object(ops, "_op", wraps=ops._op) as arithmetic:
+                    result = ops.compose(translated, local)
+                expected = parent_error + local_error + F(9, 1024) + F(1, 1 << 95)
+                self.assertEqual(warm.position_error_m, expected)
+                self.assertEqual(result.position_error_m, expected)
+                self.assertEqual(result.exact_position, (F(52), F(57), F(74)))
+                self.assertEqual(result.exact_velocity, ZERO)
+                self.assertEqual(result.exact_omega, ZERO)
+                self.assertEqual(arithmetic.call_count, 4 + int(bool(parent_error) and bool(local_error)))
+                self.assertEqual(arithmetic.call_args_list[-1].args,
+                                 (parent_error + local_error, F(9, 1024) + F(1, 1 << 95), "add"))
+
+    def test_warm_zero_error_composition_keeps_width_guard_and_final_cancellation(self):
+        work = ReachExecutionWork(max_operand_bits=512)
+        ops = ReachPoseOps(work)
+        parent, local = ops.make((1, 2, 3)), ops.make((2, 0, 0))
+        ops.compose(parent, local)
+        for parent_error, local_error in ((F(1 << 512), F(0)), (F(0), F(1 << 512))):
+            with self.subTest(parent_error=parent_error, local_error=local_error):
+                changed_parent = PoseValue(parent.exact_position, parent.rotation, ZERO, ZERO, parent_error, ops)
+                changed_local = PoseValue(local.exact_position, local.rotation, ZERO, ZERO, local_error, ops)
+                with self.assertRaises(ReachAdmissionError) as raised:
+                    ops.compose(changed_parent, changed_local)
+                self.assertEqual(raised.exception.details["budget"], "numeric_operand_bits")
+        grids = work.counts["pose_grid_check"]
+        marker = RuntimeError("cancel final caller-specific offset allowance")
+        def check():
+            if work.counts.get("pose_grid_check", 0) > grids:
+                raise marker
+        work.external_check = check
+        with self.assertRaises(RuntimeError) as raised:
+            ops.compose(parent, local)
+        self.assertIs(raised.exception, marker)
+        self.assertIs(work.callback_error, marker)
 
 
 if __name__ == "__main__":

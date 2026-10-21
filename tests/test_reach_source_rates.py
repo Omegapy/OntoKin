@@ -219,6 +219,7 @@ class ReachSourceRateAuditTests(unittest.TestCase):
         report = execute_source_rate_audit(bundle("p01"), time=F(1, 4), side="after", carriers=[TIP])
         self.assertEqual(report["status"], "proved")
         self.assertEqual(report["observation_provenance"], "fresh_compile_and_source_snapshot_in_this_call")
+        self.assertEqual(report["reference_mode"], "observation")
         self.assertEqual(report["source"]["program_revision"], bundle("p01").program_revision)
         self.assertTrue(report["identified_inputs_stable_during_observation_and_reference"])
         self.assertTrue(report["compilation_preceded_hash_window"])
@@ -241,6 +242,7 @@ class ReachSourceRateAuditTests(unittest.TestCase):
         self.assertEqual(exact(report["time"]), F(1, 2))
         self.assertEqual(report["side"], "before")
         self.assertEqual(report["reference_end_side"], "before")
+        self.assertEqual(report["reference_mode"], "observation")
         self.assertEqual(len(report["results"]), 2)
         self.assertFalse(report["release_acceptance"])
 
@@ -250,8 +252,9 @@ class ReachSourceRateAuditTests(unittest.TestCase):
         def check():
             if armed:
                 raise interruption
-        def cancel_during_reference(model, *, end, end_side, work):
+        def cancel_during_reference(model, *, end, end_side, mode, work):
             nonlocal armed
+            self.assertEqual(mode, "observation")
             armed = True
             work.tick()
         with patch("tools.reach_source_rates.build_reference", side_effect=cancel_during_reference):

@@ -48,6 +48,13 @@ saved run stores the elapsed clock, proof cache or request counter.
 Numerical helpers charge every actual arithmetic constituent through that shared
 work context. The separately capped admission recurrence count never creates a
 second 100,000-operation allowance. Callback exceptions keep their original identity.
+Fixed phase sums/products of at most eight exact fractions first charge a
+domain check and guard every operand, including operands beside a zero factor.
+They then omit exact zero summands, unit factors, and the artificial initial
+zero/one accumulator. A zero product is returned only after every operand has
+passed its width guard. Every remaining arithmetic operation is charged as
+before; other input shapes retain the general guarded reduction. This changes
+no phase-bound value or tolerance.
 Ordinary scalar tweens in a 0.6 scene also use the guarded exact helpers. A narrow
 force-aggregation hook preserves the inherited order (exact force sum, canonical
 net force, exact gravity plus canonical net force divided by mass, canonical
@@ -87,6 +94,24 @@ root motion, attachment or dynamic anchors invalidate the corresponding input
 signature. Each lookup and insertion is charged, while arithmetic actually
 avoided by reuse is not invented as executed work. Cache capacity and all
 per-output occurrence counts remain unchanged.
+
+One complete reach-map projection may contain many named actions describing
+the same current physical chain. A transient map reuses only immutable
+physical operands for an identical ordered shoulder/elbow pair, base frame,
+tip and target coordinates. The map belongs to one exact state/time/side call
+and is discarded when that call ends; it never crosses an event boundary or
+another requested observation. Its capacity is at most the smaller of the
+128-action bound and the current request's cache capacity. Each lookup and
+insertion is charged and remains cancellable.
+
+Every action is still visited separately. Its own admission, lifecycle, elapsed
+clock, solution, claims, identity, source span, context and terminal history
+are projected freshly. Cached physical tuples become distinct mutable output
+lists, and every complete action projection passes the same repeated-value,
+byte and entry accounting. Pending actions sharing an active physical chain
+therefore retain pending/null admission fields while observing that chain's
+actual current motion. Reuse neither performs an unrequested admission nor
+substitutes one action's provenance or ownership for another's.
 
 ## Controlled poses and continuous ideal state
 

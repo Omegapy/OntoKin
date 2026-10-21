@@ -4,6 +4,7 @@ These focused probes do not substitute for the adopted actual-byte hostile
 artifacts, source/native/browser roles, or complete release acceptance.
 """
 from fractions import Fraction as F
+import copy
 import math
 from types import SimpleNamespace
 import unittest
@@ -16,6 +17,7 @@ from ontokin.reach_conformance import (
     _aligned_reference, _Cell,
 )
 from ontokin.reach_numeric import ReachAdmissionError, ReachExecutionWork
+from ontokin.reach_reference import Interval
 
 
 def ratio(value):
@@ -100,8 +102,48 @@ class ReachIndependentClockTests(unittest.TestCase):
                 (F(0), F(2)), F(2), time_tolerance=1e-6, work=ReachExecutionWork())
         self.assertEqual(failed.exception.diagnostic.details["export_code"], "OKE-E-CLOCK-ROUNDING")
 
+    def test_repeated_exact_clocks_keep_changed_values_guards_and_cancellation(self):
+        stopped = False
+        interruption = RuntimeError("original clock cancellation")
+        def check():
+            if stopped:
+                raise interruption
+        work = ReachExecutionWork(check=check)
+        record = ratio(F(7, 31))
+        self.assertEqual(rational_clock(record, work=work), F(7, 31))
+        self.assertEqual(rational_clock(dict(record), work=work), F(7, 31))
+        record["numerator"] = "8"
+        self.assertEqual(rational_clock(record, work=work), F(8, 31))
+        for numerator, denominator in (("08", "31"), ("8", "32"), ("8", "0"),
+                                       (True, "31"), ([], "31"), ("9" * 9866, "31")):
+            with self.subTest(numerator=numerator), self.assertRaises(OntoKinError):
+                rational_clock({"numerator": numerator, "denominator": denominator}, work=work)
+        with self.assertRaises(ReachAdmissionError):
+            rational_clock(ratio(F(1 << 80, 3)), work=ReachExecutionWork(max_operand_bits=64))
+        stopped = True
+        with self.assertRaises(RuntimeError) as caught:
+            rational_clock(ratio(F(7, 31)), work=work)
+        self.assertIs(caught.exception, interruption)
+
 
 class ReachIndependentBoundTests(unittest.TestCase):
+    def test_sparse_independent_arithmetic_keeps_exact_and_uncertain_zero_distinct(self):
+        work = ReachExecutionWork()
+        arithmetic = _Bounds(work)
+        self.assertEqual(arithmetic.norm([F(0), F(-3), F(4)]), F(5))
+        self.assertEqual(arithmetic.normalize((0., 0., 0., 2.)),
+                         (_Cell(F(0), F(0)),) * 3 + (_Cell(F(1), F(1)),))
+        self.assertEqual(arithmetic.difference((F(0), F(1), F(2)), (F(0), F(1), F(2))), F(0))
+        uncertain = (_Cell(F(-1), F(1)), _Cell(F(0), F(0)), _Cell(F(0), F(0)))
+        self.assertEqual(arithmetic.difference((F(0), F(0), F(0)), uncertain), F(1))
+        for invalid in (False, float("nan")):
+            with self.subTest(invalid=invalid), self.assertRaises(OntoKinError):
+                arithmetic.norm([invalid, F(0), F(0)])
+        with self.assertRaises(OntoKinError):
+            arithmetic.cell(_Cell(F(1), F(0)))
+        with self.assertRaises(ReachAdmissionError):
+            _Bounds(ReachExecutionWork(max_operand_bits=32)).norm([F(1, 1 << 40), F(0), F(0)])
+
     def test_reference_sign_choice_preserves_antipodes_and_ambiguous_upper_bounds(self):
         arithmetic = _Bounds(ReachExecutionWork())
         for raw in ((0., 0., .6, .8), (.5, -.5, .5, -.5)):
@@ -224,6 +266,155 @@ class ReachIndependentBoundTests(unittest.TestCase):
         for actual, expected in ((True, 1), (False, 0), (1., 1), (1, True), (0, False), (True, 1.)):
             with self.subTest(actual=actual, expected=expected), self.assertRaises(OntoKinError):
                 _assert_projection(actual, expected, arithmetic=_Bounds(ReachExecutionWork()), allowances={})
+
+    def test_history_reuse_checks_every_identity_value_and_original_cancellation(self):
+        allowance = {"position": F(1, 100), "rotation": F(1, 100),
+                     "velocity": F(1, 100), "angular_velocity": F(1, 100)}
+        expected = [{"identity": {"name": "reach-" + str(index), "count": 1, "active": False},
+                     "coordinates": [1, 2., "frame", None],
+                     "position_m": [Interval(F(1), F(1)), Interval(F(0), F(0)), Interval(F(0), F(0))]}
+                    for index in range(8)]
+        actual = [{"identity": dict(row["identity"]), "coordinates": list(row["coordinates"]),
+                   "position_m": [1., 0., 0.]} for row in expected]
+        stopped = False
+        interruption = RuntimeError("original history cancellation")
+        def check():
+            if stopped:
+                raise interruption
+        arithmetic = _Bounds(ReachExecutionWork(check=check))
+        for _ in range(2):
+            _assert_projection(actual, expected, arithmetic=arithmetic, allowances=allowance)
+        for field, value in (("active", 0), ("count", True), ("name", "other")):
+            changed = copy.deepcopy(actual)
+            changed[-1]["identity"][field] = value
+            with self.subTest(field=field), self.assertRaises(OntoKinError) as caught:
+                _assert_projection(changed, expected, arithmetic=arithmetic, allowances=allowance)
+            self.assertEqual(caught.exception.diagnostic.details["path"], [7, "identity", field])
+        changed = copy.deepcopy(actual)
+        changed[-1]["position_m"][0] = 2.
+        with self.assertRaises(OntoKinError):
+            _assert_projection(changed, expected, arithmetic=arithmetic, allowances=allowance)
+        tighter = {**allowance, "position": F(0)}
+        changed[-1]["position_m"][0] = 1.005
+        _assert_projection(changed, expected, arithmetic=arithmetic, allowances=allowance)
+        with self.assertRaises(OntoKinError):
+            _assert_projection(changed, expected, arithmetic=arithmetic, allowances=tighter)
+        stopped = True
+        with self.assertRaises(RuntimeError) as caught:
+            _assert_projection(actual, expected, arithmetic=arithmetic, allowances=allowance)
+        self.assertIs(caught.exception, interruption)
+
+    def test_history_vector_reuse_keeps_units_impulse_policy_and_late_members(self):
+        allowances = {"position": F(1, 100), "rotation": F(1, 100),
+                      "velocity": F(1, 1000), "angular_velocity": F(1, 10000)}
+        expected = [Interval(F(0), F(0))] * 3
+        arithmetic = _Bounds(ReachExecutionWork())
+        def check(actual, expected=expected, path=("position_m",), limits=allowances):
+            _assert_projection(actual, expected, arithmetic=arithmetic, allowances=limits, path=path)
+        for _ in range(2):
+            check([.005, 0., 0.])
+        for axis in range(3):
+            for invalid in (True, float("nan"), float("inf"), .02):
+                actual = [.005, 0., 0.]
+                actual[axis] = invalid
+                with self.subTest(axis=axis, value=invalid), self.assertRaises(OntoKinError):
+                    check(actual)
+        for path in (("velocity_m_per_s",), ("angular_velocity_rad_per_s",),
+                     ("last_applications", "application_point_world_m"), ("unknown_quantity",)):
+            with self.subTest(path=path), self.assertRaises(OntoKinError):
+                check([.005, 0., 0.], path=path)
+        changed = [*expected[:-1], Interval(F(1), F(1))]
+        with self.assertRaises(OntoKinError) as failed:
+            check([.005, 0., 0.], expected=changed)
+        self.assertEqual(failed.exception.diagnostic.details["path"], ["position_m", 2])
+        with self.assertRaises(OntoKinError):
+            check([.005, 0., 0.], limits={**allowances, "position": F(1, 1000)})
+        # A tiny binary64 still has a large exact denominator. A warm numerical
+        # proof does not bypass the caller's original operand cap.
+        small = _Bounds(ReachExecutionWork(max_operand_bits=64))
+        with self.assertRaises(ReachAdmissionError):
+            _assert_projection([0., 0., math.ldexp(1., -1074)], expected,
+                               arithmetic=small, allowances=allowances, path=("position_m",))
+
+    def test_nested_history_identity_blocks_check_complete_shapes_types_and_long_tail(self):
+        expected = {"chain": {"shoulder": {"path": "rig.shoulder", "element_id": ["module", "scene", "rig", "shoulder"]},
+                              "limits": {"closed": True, "angles": [-1., 1.]}, "count": 2},
+                    "source": {"line": 4, "column": 3, "span": [12, 36]}, "target": [1., 0., 0.]}
+        arithmetic = _Bounds(ReachExecutionWork())
+        def check(actual, source=expected):
+            _assert_projection(actual, source, arithmetic=arithmetic, allowances={}, path=("history",))
+        check(copy.deepcopy(expected))
+        mutations = [(("chain", "shoulder", "element_id", 3), "other"),
+                     (("chain", "limits", "closed"), 1), (("chain", "count"), 2.),
+                     (("source", "span", 1), 37), (("target", 2), True)]
+        for path, value in mutations:
+            changed = copy.deepcopy(expected)
+            cursor = changed
+            for part in path[:-1]:
+                cursor = cursor[part]
+            cursor[path[-1]] = value
+            with self.subTest(path=path), self.assertRaises(OntoKinError) as caught:
+                check(changed)
+            self.assertEqual(caught.exception.diagnostic.details["path"], ["history", *path])
+        for change in ("extra", "missing", "tuple"):
+            changed = copy.deepcopy(expected)
+            if change == "extra": changed["chain"]["limits"]["extra"] = False
+            elif change == "missing": del changed["chain"]["limits"]["closed"]
+            else: changed["chain"]["shoulder"]["element_id"] = tuple(changed["chain"]["shoulder"]["element_id"])
+            with self.subTest(change=change), self.assertRaises(OntoKinError):
+                check(changed)
+        long_expected = [copy.deepcopy(expected) for _ in range(70)]
+        long_actual = copy.deepcopy(long_expected)
+        check(long_actual, long_expected)
+        long_actual[-1]["source"]["span"][-1] = 37
+        with self.assertRaises(OntoKinError) as caught:
+            check(long_actual, long_expected)
+        self.assertEqual(caught.exception.diagnostic.details["path"], ["history", 69, "source", "span", 1])
+
+    def test_history_quaternion_reuse_preserves_norm_antipodes_and_original_cancel(self):
+        expected = [Interval(F(1), F(1)), *[Interval(F(0), F(0))] * 3]
+        allowances = {"rotation": F(1, 100)}
+        stopped = False
+        interruption = RuntimeError("original quaternion history cancellation")
+        def poll():
+            if stopped:
+                raise interruption
+        arithmetic = _Bounds(ReachExecutionWork(check=poll))
+        def check(actual, expected=expected, limits=allowances):
+            _assert_projection(actual, expected, arithmetic=arithmetic, allowances=limits,
+                               path=("tip_pose", "orientation_wxyz"))
+        for _ in range(2):
+            check([1., 0., 0., 0.])
+            check([-1., 0., 0., 0.])
+            check([1., .005, 0., 0.])
+        # Each changed component fits a scalar .01 tolerance, but the original
+        # Euclidean quaternion predicate rejects their combined error.
+        with self.assertRaises(OntoKinError):
+            check([1., .008, .008, 0.])
+        with self.assertRaises(OntoKinError):
+            check([1., .005, 0., 0.], limits={"rotation": F(1, 1000)})
+        for invalid in (True, float("nan"), float("inf"), 1.):
+            with self.subTest(value=invalid), self.assertRaises(OntoKinError):
+                check([1., 0., 0., invalid])
+        with self.assertRaises(OntoKinError):
+            check([1., 0., 0., 0.], expected=[expected[0], expected[1], expected[2], Interval(F(1), F(1))])
+        stopped = True
+        with self.assertRaises(RuntimeError) as caught:
+            check([1., 0., 0., 0.])
+        self.assertIs(caught.exception, interruption)
+
+    def test_history_interval_order_guards_cross_products_before_allocation(self):
+        low, high = F((1 << 40) + 2, (1 << 40) + 5), F((1 << 40) + 1, (1 << 40) + 3)
+        arithmetic = _Bounds(ReachExecutionWork(max_operand_bits=64))
+        expected = [Interval(low, high), Interval(F(0), F(0)), Interval(F(0), F(0))]
+        with patch.object(F, "__gt__", side_effect=AssertionError("forbidden interval cross product")):
+            with self.assertRaises(ReachAdmissionError):
+                _assert_projection([0., 0., 0.], expected, arithmetic=arithmetic,
+                                   allowances={"position": F(1)}, path=("position_m",))
+            with self.assertRaises(ReachAdmissionError):
+                arithmetic.cell(_Cell(low, high))
+            with self.assertRaises(ReachAdmissionError):
+                arithmetic.cell(expected[0])
 
     def test_every_dependent_bound_is_binding(self):
         record = algebra_record()

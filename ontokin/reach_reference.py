@@ -522,14 +522,16 @@ class ReferencePhase:
     path: tuple[str, ...]
 
 
-def build_reference(model, *, end, end_side="after", work=None, check=None):
+def build_reference(model, *, end, end_side="after", mode="recording", work=None, check=None):
     """Build a source-derived reference, sharing the caller's remaining work.
 
     ``work`` takes precedence over ``check`` to avoid charging the same request
     twice.  Supplying neither is an error: a verifier must not silently acquire
     another budget after compilation, source evaluation, or byte decoding.
+    Explicit ``mode="observation"`` reconstructs requested source state without
+    claiming complete H06 recording capacity; ``boundary_states`` is unavailable.
     """
-    return ReachReference(model, end=F(end), end_side=end_side, arithmetic=_Arithmetic(work, check))
+    return ReachReference(model, end=F(end), end_side=end_side, mode=mode, arithmetic=_Arithmetic(work, check))
 
 
 class _PoseArithmetic:
@@ -537,6 +539,12 @@ class _PoseArithmetic:
         self.a = arithmetic
 
     def vector(self, value):
+        if value is ZERO:
+            key = self._key("zero_vector")
+            cached = self.a.lookup(key)
+            if cached is not None:
+                return cached
+            return self.a.remember(key, tuple(self.a.point(x) for x in ZERO))
         return tuple(self.a.interval(x) for x in value)
 
     @staticmethod
@@ -692,6 +700,13 @@ class _PoseArithmetic:
         return PoseEnclosure(self.vector(position), self.vector(orientation) if normalized else self.quaternion(orientation),
                              self.vector(velocity), self.vector(omega))
 
+    def identity(self):
+        key = self._key("identity")
+        cached = self.a.lookup(key)
+        if cached is not None:
+            return cached
+        return self.a.remember(key, self.make())
+
     def constant(self, pose):
         key = self._key("constant", tuple(pose.position), tuple(pose.rotation))
         cached = self.a.lookup(key)
@@ -705,7 +720,15 @@ class _PoseArithmetic:
         if cached is not None:
             return cached
         offset = self.rotate(parent.orientation, local.position)
-        return self.a.remember(key, PoseEnclosure(self.add(parent.position, offset), self.multiply(parent.orientation, local.orientation),
+        position = self.add(parent.position, offset)
+        orientation = self.multiply(parent.orientation, local.orientation)
+        rates = (parent.velocity, parent.omega, local.velocity, local.omega)
+        if all(len(vector) == 3 and self._zero(vector) for vector in rates):
+            # Every cross-product and rotated rate in the spatial derivative
+            # equations is exactly zero, even for a nonunit raw quaternion.
+            # An interval merely containing zero never takes this path.
+            return self.a.remember(key, PoseEnclosure(position, orientation, parent.velocity, parent.omega))
+        return self.a.remember(key, PoseEnclosure(position, orientation,
                              self.add(self.add(parent.velocity, self.cross(parent.omega, offset)),
                                       self.rotate(parent.orientation, local.velocity)),
                              self.add(parent.omega, self.rotate(parent.orientation, local.omega))))
@@ -822,12 +845,12 @@ class ReachReference:
     returned source projections are fresh values, so consumer changes cannot
     alter later independent expectations.
     """
-    def __init__(self, model, *, end, arithmetic, end_side="after"):
+    def __init__(self, model, *, end, arithmetic, end_side="after", mode="recording"):
         if (model.profile != "planar-reach-0.1" or end < 0 or end > model.duration
-                or end_side not in ("before", "after")):
+                or end_side not in ("before", "after") or mode not in ("recording", "observation")):
             raise ReferenceError("unsupported", "Independent reference requires a valid planar reach prefix")
         self.a, self.p = arithmetic, _PoseArithmetic(arithmetic)
-        self.end, self.end_side = end, end_side
+        self.end, self.end_side, self.mode = end, end_side, mode
         self.model = copy.copy(model)
         for name in ("objects", "sites", "joints", "follows", "actions", "source_provenance"):
             collection = getattr(model, name)
@@ -846,20 +869,28 @@ class ReachReference:
         self._times, self._release_records = [], {}
         self._event_index = 0
         self._initialize()
-        self._reach_history_weight = self._maximum_reach_weight()
+        self._reach_history_weight = self._maximum_reach_weight() if mode == "recording" else None
         self._inherited_history_cache = {}
         self._history_weight = 0
-        self._geometry = tuple({"path": path, "element_id": list(obj.element_id), "owner": obj.owner,
-                                "geometry": _plain(obj.geometry, self.a), "appearance": list(obj.appearance),
-                                "physical": _plain(obj.physical, self.a), "placement": _plain(obj.placement, self.a)}
-                               for path, obj in self.model.objects.items())
+        self._geometry = self._capture_geometry() if mode == "recording" else None
         self._build()
         self.boundaries = tuple(self._times)
 
+    def _capture_geometry(self):
+        return tuple({"path": path, "element_id": list(obj.element_id), "owner": obj.owner,
+                      "geometry": _plain(obj.geometry, self.a), "appearance": list(obj.appearance),
+                      "physical": _plain(obj.physical, self.a), "placement": _plain(obj.placement, self.a)}
+                     for path, obj in self.model.objects.items())
+
+    def _geometry_values(self):
+        self.a.tick()
+        if self._geometry is None:
+            self._geometry = self._capture_geometry()
+        return self._geometry
+
     @property
     def geometry_expectations(self):
-        self.a.tick()
-        return copy.deepcopy(self._geometry)
+        return copy.deepcopy(self._geometry_values())
 
     def _initialize(self):
         state = self._state
@@ -999,7 +1030,7 @@ class ReachReference:
             if all(path in frames for path in targets):
                 return frames
         else:
-            frames = {"world": self.p.make()}
+            frames = {"world": self.p.identity()}
         incoming = self._incoming(state)
         visiting = set()
 
@@ -1064,20 +1095,39 @@ class ReachReference:
             raise ReferenceError("identity", "Unknown independent source carrier", carrier=carrier) from error
 
     def recording_pose_enclosure(self, carrier, time, side="after", *, ideal=True):
-        """Evaluate independent p/q only for the selected carrier ancestry.
+        """Return one independent recording pose through the bounded batch API."""
+        values = self.recording_pose_enclosures((carrier,), time, side, ideal=ideal)
+        return next(iter(values.values()))
+
+    def recording_pose_enclosures(self, carriers, time, side="after", *, ideal=True):
+        """Evaluate independent p/q once for the selected carrier ancestries.
 
         The p/q expressions are identical to full pose evaluation. Spatial
         derivatives do not enter those expressions. A separate cache namespace
         and a two-field return type prevent unused private zeros from becoming
-        source velocity or release-state evidence.
+        source velocity or release-state evidence. The returned fresh mapping
+        uses canonical carrier names and contains no unrequested ancestry rows.
         """
-        carrier = carrier if carrier == "world" or carrier.endswith(".frame") else carrier + ".frame"
-        state = self._state_at(F(time), side)
-        try:
-            value = self._pose_map(F(time), state, ideal=ideal, pose_only=True, selected=(carrier,))[carrier]
-        except KeyError as error:
-            raise ReferenceError("identity", "Unknown independent source carrier", carrier=carrier) from error
-        return RecordingPoseEnclosure(value.position, value.orientation)
+        self.a.tick()
+        if not isinstance(carriers, (tuple, list)):
+            raise ReferenceError("unsupported", "Recording carriers require a bounded list or tuple")
+        if len(carriers) > 1 + len(self.model.objects) + len(self.model.sites):
+            raise ReferenceError("resource", "Recording carrier selection exceeds the captured source inventory")
+        selected = []
+        for carrier in carriers:
+            self.a.tick()
+            if not isinstance(carrier, str):
+                raise ReferenceError("identity", "Unknown independent source carrier", carrier=carrier)
+            carrier = carrier if carrier == "world" or carrier.endswith(".frame") else carrier + ".frame"
+            stem = carrier.removesuffix(".frame")
+            if carrier != "world" and stem not in self.model.objects and stem not in self.model.sites:
+                raise ReferenceError("identity", "Unknown independent source carrier", carrier=carrier)
+            selected.append(carrier)
+        time = F(time)
+        state = self._state_at(time, side)
+        frames = self._pose_map(time, state, ideal=ideal, pose_only=True, selected=selected)
+        return {carrier: RecordingPoseEnclosure(frames[carrier].position, frames[carrier].orientation)
+                for carrier in selected}
 
     def _next(self, state, current):
         times = [self.end]
@@ -1101,12 +1151,13 @@ class ReachReference:
             if len(self._times) >= MAX_BOUNDARIES:
                 raise ReferenceError("resource", "Independent semantic boundary cap exceeded")
             incoming_only = time == self.end and self.end_side == "before"
-            weight = (1 + self._inherited_weight(time, "before") + self._reach_history_weight
-                      if incoming_only else self._boundary_weight(time))
-            self._history_weight += weight
-            if self._history_weight > 100000:
-                raise ReferenceError("resource", "Independent complete H06 source histories exceed 100000 weighted records",
-                                     budget="boundary_state_records", consumed=self._history_weight)
+            if self.mode == "recording":
+                weight = (1 + self._inherited_weight(time, "before") + self._reach_history_weight
+                          if incoming_only else self._boundary_weight(time))
+                self._history_weight += weight
+                if self._history_weight > 100000:
+                    raise ReferenceError("resource", "Independent complete H06 source histories exceed 100000 weighted records",
+                                         budget="boundary_state_records", consumed=self._history_weight)
             # Every transition below writes only the staged deep copy. The
             # incoming state is the already retained immutable prior state;
             # copying it again repeats a whole source traversal and allocation
@@ -1498,6 +1549,28 @@ class ReachReference:
         difference = tuple(self.a.sub(value, expected) for value, expected in zip(position, target))
         return self.a.remember(key, self.p.norm(difference))
 
+    def _world_target(self, base, target):
+        """Reuse only the immutable numerical operands of a world target."""
+        target = tuple(target)
+        key = self.p._key("world_target", base, target)
+        cached = self.a.lookup(key)
+        if cached is not None:
+            return cached
+        return self.a.remember(key, self.p.compose(base, self.p.make(target)))
+
+    def _joint_observation(self, path, time, state, observations):
+        """One sample's exact joint value and its public binary64 projection."""
+        self.a.tick()
+        cached = observations.get(path)
+        if cached is not None:
+            return cached
+        coordinate, rate = self._coordinate(path, time, state)
+        value = (coordinate, rate, float(coordinate), self.a.round64(rate))
+        if len(observations) < MAX_CACHE:
+            self.a.tick()
+            observations[path] = value
+        return value
+
     @staticmethod
     def _pose_record(pose):
         return {"position_m": list(pose.position), "orientation_wxyz": list(pose.orientation)}
@@ -1505,9 +1578,15 @@ class ReachReference:
     def sample(self, time, side="after"):
         time = F(time)
         state = self._state_at(time, side)
+        if self._reach_history_weight is None:
+            # Rate-only callers never request this complete reach projection.
+            # A later sample must still pass its original capacity guard before
+            # constructing any public sample rows.
+            self._reach_history_weight = self._maximum_reach_weight()
         frames, incoming = self._pose_map(time, state, ideal=False), self._incoming(state)
         objects = {}
-        geometry = {entry["path"]: entry for entry in self._geometry}
+        geometry = {entry["path"]: entry for entry in
+                    (self._geometry_values() if self._geometry is None else self._geometry)}
         for path, obj in self.model.objects.items():
             self.a.tick()
             pose, mode = frames[path + ".frame"], state.modes[path]
@@ -1538,7 +1617,7 @@ class ReachReference:
                 "geometry": copy.deepcopy(geometry[path]["geometry"]), "physical": copy.deepcopy(geometry[path]["physical"]),
                 "gravity_participation": gravity, "collision": obj.collision,
                 "impulses": copy.deepcopy(state.impulses[path]), "forces": self._forces(path, state)}
-        joints = {}
+        joints, joint_observations = {}, {}
         for path, joint in self.model.joints.items():
             self.a.tick()
             record = {"element_id": list(joint.element_id), "kind": joint.kind,
@@ -1546,8 +1625,8 @@ class ReachReference:
                 "parent_site": joint.parent, "child_site": joint.child,
                 "coupling": "externally_prescribed_no_load_solution"}
             if joint.kind in {"hinge", "slider"}:
-                coordinate, rate = self._coordinate(path, time, state)
-                record.update(coordinate=float(coordinate), coordinate_rate=self.a.round64(rate),
+                physical = self._joint_observation(path, time, state, joint_observations)
+                record.update(coordinate=physical[2], coordinate_rate=physical[3],
                     unit="rad" if joint.kind == "hinge" else "m", limits=list(joint.limits),
                     action=state.claims.get((path, "coordinate")))
             joints[path] = record
@@ -1559,10 +1638,13 @@ class ReachReference:
         total_mass = F(0)
         for obj in self.model.objects.values():
             total_mass = self.a.exact(total_mass, obj.mass, "add")
-        return {"time_seconds": _time_text(time), "side": side, "objects": objects, "joints": joints,
-                "actions": actions, "frames": frame_records, "scene_mass_kg": self.a.round64(total_mass),
-                "reaches": {path: self._reach(path, time, side, state, frames)
-                            for path, action in self.model.actions.items() if action.kind == "reach_planar"}}
+        result = {"time_seconds": _time_text(time), "side": side, "objects": objects, "joints": joints,
+                  "actions": actions, "frames": frame_records, "scene_mass_kg": self.a.round64(total_mass),
+                  "reaches": {path: self._reach(path, time, side, state, frames, joint_observations)
+                              for path, action in self.model.actions.items() if action.kind == "reach_planar"}}
+        if self.mode == "observation":
+            self._logical_entries(result)
+        return result
 
     def _force_record(self, path, force):
         payload, start = force
@@ -1583,14 +1665,15 @@ class ReachReference:
             "last_change_time_seconds": None if history.last_time is None else _time_text(history.last_time),
             "last_changes": [{"kind": kind, **self._force_record(path, force)} for kind, force in history.changes]}
 
-    def _reach(self, path, time, side, state, frames):
+    def _reach(self, path, time, side, state, frames, joint_observations):
         self.a.tick()
         action, active = self.model.actions[path], state.actions[path]
         payload = action.reach
-        physical = [self._coordinate(joint, time, state) for joint in (payload.shoulder, payload.elbow)]
+        physical = [self._joint_observation(joint, time, state, joint_observations)
+                    for joint in (payload.shoulder, payload.elbow)]
         coordinates = tuple(value[0] for value in physical)
         tip_base = self._base_tip(action, coordinates)
-        target_world = self.p.compose(frames[payload.base_frame], self.p.make(payload.target_m))
+        target_world = self._world_target(frames[payload.base_frame], payload.target_m)
         admitted = active.targets is not None
         own_rates = [0.0, 0.0]
         if active.status == "running":
@@ -1606,8 +1689,8 @@ class ReachReference:
             "start_time_seconds": _time_text(active.started) if admitted else None,
             "elapsed_seconds": _time_text(active.elapsed_at(time)) if admitted else None,
             "completion_time_seconds": None if completion is None else _time_text(completion),
-            "joint_coordinates_rad": [float(value[0]) for value in physical],
-            "joint_rates_rad_per_s": [self.a.round64(value[1]) for value in physical],
+            "joint_coordinates_rad": [value[2] for value in physical],
+            "joint_rates_rad_per_s": [value[3] for value in physical],
             "action_joint_rates_rad_per_s": own_rates,
             "claimed_joint_ids": [list(self.model.joints[joint].element_id) for joint in (payload.shoulder, payload.elbow)]
                 if active.status in {"running", "paused"} else [],
@@ -1624,13 +1707,38 @@ class ReachReference:
         return {"kind": "reach_planar", "element_id": list(action.element_id),
             "description_identity": list(payload.description_identity), "program_revision": self.model.program_revision,
             "accepted_program_revision": None, "candidate_only": None, "context_origin": "source_recording",
-            "source_location": _plain(payload.source_location, self.a), "channel": "joint_coordinates",
+            "source_location": self._source_location(payload.source_location), "channel": "joint_coordinates",
             "chain": {"shoulder": self._occurrence(payload.shoulder), "elbow": self._occurrence(payload.elbow),
                       "tip": self._occurrence(payload.tip), "base_frame": frame, "lengths_m": list(payload.lengths_m),
                       "closed_limits_rad": {"shoulder": list(payload.limits_rad[0]), "elbow": list(payload.limits_rad[1])}},
             "target": {"type": "Point3", "frame": copy.deepcopy(frame), "coordinates_m": list(payload.target_m)},
             "branch": payload.branch, "duration_seconds": _time_text(action.duration),
             "current": {"available": True, "reason": None, "value": current}}
+
+    def _source_location(self, value):
+        """Reuse one fixed immutable source projection, never a mutable row.
+
+        An action alias may share its frozen four-field source location with
+        many independently identified action occurrences. The complete scalar
+        values form the key in the existing bounded pure cache; all occurrences
+        still receive a fresh dictionary and retain their full H06 weight.
+        Other source-record shapes retain the ordinary recursive conversion.
+        """
+        names = ("source_id", "source_revision", "start_byte", "end_byte")
+        if (not is_dataclass(value)
+                or not getattr(type(value), "__dataclass_params__").frozen
+                or tuple(entry.name for entry in fields(value)) != names):
+            return _plain(value, self.a)
+        values = tuple(getattr(value, name) for name in names)
+        if tuple(type(item) for item in values) != (str, str, int, int):
+            return _plain(value, self.a)
+        self.a.guard(values[2], values[3])
+        key = ("source_location_projection", values)
+        cached = self.a.lookup(key)
+        if cached is None:
+            projected = _plain(value, self.a)
+            cached = self.a.remember(key, tuple(projected.items()))
+        return dict(cached)
 
     def _logical_entries(self, value):
         """Independent JSON logical count; every repeated occurrence counts.
@@ -1765,6 +1873,9 @@ class ReachReference:
     def boundary_states(self):
         # The full conservative H06 sum was checked before retaining each
         # state pair.  Projection allocation cannot precede that preflight.
+        if self.mode != "recording":
+            self.a.tick()
+            raise ReferenceError("unsupported", "Observation-only references cannot provide complete recording histories")
         if self.end_side != "after":
             raise ReferenceError("unsupported", "Complete recording histories require the final after-side")
         if self._history_weight > 100000:
@@ -1943,12 +2054,20 @@ class ReachReference:
             return _SourceBound(**values)
 
         def constant(pose, inverse=False):
+            key = ("source_bound_constant", self.a.bits, tuple(pose.position), inverse)
+            cached = self.a.lookup(key)
+            if cached is not None:
+                return cached
             extent = self._l1(pose.position)
-            return finish(extent=add(mul(2, extent), F(2, 1 << 96)) if inverse else extent,
-                          offset=extent if inverse else F(0), products=1, vectors=int(inverse))
+            return self.a.remember(key, finish(
+                extent=add(mul(2, extent), F(2, 1 << 96)) if inverse else extent,
+                offset=extent if inverse else F(0), products=1, vectors=int(inverse)))
 
         def compose(parent, local):
-            self.a.tick()
+            key = ("source_bound_compose", self.a.bits, parent, local)
+            cached = self.a.lookup(key)
+            if cached is not None:
+                return cached
             radius = local.extent
             ideal_radius = add(radius, local.position_error)
             speed = add(parent.speed, mul(parent.omega, ideal_radius), local.speed)
@@ -1966,7 +2085,7 @@ class ReachReference:
                 mul(parent.rotation_error, local.actual_speed), F(4, 1 << 96), rounding(mul(2, actual_speed)))
             omega_error = add(parent.omega_error, local.omega_error,
                 mul(parent.rotation_error, local.actual_omega), F(2, 1 << 96), rounding(mul(2, actual_omega)))
-            return finish(extent=add(parent.extent, mul(2, radius), F(4, 1 << 96)),
+            return self.a.remember(key, finish(extent=add(parent.extent, mul(2, radius), F(4, 1 << 96)),
                 offset=add(parent.offset, local.offset, radius), trig=parent.trig + local.trig,
                 products=parent.products + local.products + 1, vectors=parent.vectors + local.vectors + 2,
                 coordinate=add(parent.coordinate, local.coordinate),
@@ -1974,7 +2093,7 @@ class ReachReference:
                 anchor_rotation=add(parent.anchor_rotation, local.anchor_rotation),
                 velocity_error=velocity_error, omega_error=omega_error, speed=speed,
                 acceleration=acceleration, omega=omega, alpha=alpha,
-                actual_speed=actual_speed, actual_omega=actual_omega)
+                actual_speed=actual_speed, actual_omega=actual_omega))
 
         def root(path):
             actual_position, ideal_position = state.positions[path], state.ideal_positions[path]
@@ -2068,7 +2187,7 @@ class ReachReference:
 
     def _phase(self, carrier, start, end, state):
         root, _, joints, path = self._ancestry(carrier, state)
-        identity = self.p.make()
+        identity = self.p.identity()
         actual_root = identity if root is None else self._root_pose(root, start, state, ideal=False)
         ideal_root = identity if root is None else self._root_pose(root, start, state, ideal=True)
         acceleration = tuple(F(x) for x in ((state.forces[root].acceleration or self.model.gravity)

@@ -867,15 +867,33 @@ class ReachSimulator(ForceSimulator):
     def _pose_record(pose):
         return {"position_m": list(pose.position), "orientation_wxyz": list(pose.orientation)}
 
-    def _current(self, path, time, side, state):
-        action, runtime = self.model.actions[path], state.actions[path]
+    def _physical_observation(self, action, time, state):
+        """Return immutable physical values for one unchanged snapshot's inputs."""
         payload = action.reach
-        physical = [self._coordinate(joint, time, state) for joint in (payload.shoulder, payload.elbow)]
+        physical = tuple(self._coordinate(joint, time, state) for joint in (payload.shoulder, payload.elbow))
         _, frames = self._kinematics(time, state)
         base_tip = self._tip_base(action, time, state)
         target_world = self._world_target(payload, time, state, frames)
+        world_tip = frames[payload.tip + ".frame"]
+        return (physical, (base_tip.position, base_tip.orientation),
+                (world_tip.position, world_tip.orientation), target_world.position)
+
+    def _current(self, path, time, side, state, *, observation_cache=None):
+        action, runtime = self.model.actions[path], state.actions[path]
+        payload = action.reach
+        observation = None
+        key = (payload.shoulder, payload.elbow, payload.base_frame, payload.tip, payload.target_m)
+        if observation_cache is not None:
+            self.work.charge("source_physical_observation_lookup")
+            observation = observation_cache.get(key)
+        if observation is None:
+            observation = self._physical_observation(action, time, state)
+            if observation_cache is not None and len(observation_cache) < min(128, self.work.max_cache_entries):
+                self.work.charge("source_physical_observation_publish")
+                observation_cache[key] = observation
+        physical, base_tip, world_tip, target_world = observation
         admitted = runtime.solution is not None
-        residual = (rounded_sqrt(measured_residual_squared(base_tip.position, payload.target_m, work=self.work),
+        residual = (rounded_sqrt(measured_residual_squared(base_tip[0], payload.target_m, work=self.work),
                                  work=self.work) if admitted else None)
         completion = (runtime.running_since + action.duration - runtime.elapsed
                       if runtime.status == "running" else
@@ -898,21 +916,28 @@ class ReachSimulator(ForceSimulator):
             "claimed_joint_ids": [list(self.model.joints[joint].element_id)
                                   for joint in (payload.shoulder, payload.elbow)]
                                  if runtime.status in {"running", "paused"} else [],
-            "current_residual_m": residual, "tip_pose_base": self._pose_record(base_tip),
-            "tip_pose_world": self._pose_record(frames[payload.tip + ".frame"]),
-            "current_world_target_m": list(target_world.position),
+            "current_residual_m": residual,
+            "tip_pose_base": {"position_m": list(base_tip[0]), "orientation_wxyz": list(base_tip[1])},
+            "tip_pose_world": {"position_m": list(world_tip[0]), "orientation_wxyz": list(world_tip[1])},
+            "current_world_target_m": list(target_world),
             "terminal_result": copy.deepcopy(runtime.terminal),
         }
 
     def _reach_map(self, time, side, state):
         result = {}
+        # This bounded cache lives only during one unchanged state/time/side.
+        # Its tuples contain physical values, never action identity, lifecycle,
+        # claims, admission results or mutable output records. Every action is
+        # still visited, projected freshly and counted in the complete output.
+        observations = {}
         entries, byte_count = 1, 2
         for path, action in self.model.actions.items():
             self._check()
             if action.kind != "reach_planar":
                 continue
             projection = reach_projection(self.model, path, check=self._work_check,
-                context_kind=self.context_kind, current=self._current(path, time, side, state))
+                context_kind=self.context_kind,
+                current=self._current(path, time, side, state, observation_cache=observations))
             try:
                 key_size = measure_reach_json(path, check=self._work_check)["bytes"] + 2
                 measured = measure_reach_json(projection, max_entries=100000 - entries,

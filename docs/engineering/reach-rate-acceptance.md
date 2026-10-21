@@ -181,6 +181,9 @@ provides the fresh path. It compiles the supplied bundle, obtains an actual
 time and side, and compares selected fields. It retains the exact compiler work object
 through all those stages. Its report says
 `observation_provenance: fresh_compile_and_source_snapshot_in_this_call`.
+It explicitly selects `mode="observation"` and records
+`reference_mode: observation`; a single rate audit does not request or certify
+the complete H06 recording-history projection.
 Optional construction `budgets` and cancellation `check` are passed to the
 actual compiler; limits cannot be raised through this interface.
 
@@ -233,6 +236,25 @@ complete both-sided recording history required by the default `end_side="after"`
 mode. The fresh wrapper selects the requested side and records it as
 `reference_end_side`; a valid incoming observation at a failed boundary can
 therefore be audited without evaluating the unrequested outgoing transition.
+
+The independent reference also has an explicit `mode="observation"`. This mode
+executes every required source boundary and event through the requested end and
+side, with the same shared work, operand guards, bounded arithmetic caches and
+10,000-boundary internal state cap. It runs the complete single reach-map
+capacity preflight before any requested full `sample` projection and bounds the
+actual projection by the existing 100,000-entry/depth walker. Hypothetical reach
+projections and geometry expectation records are materialized only if their
+corresponding `sample` or `geometry_expectations` output is actually requested;
+their original admission and work guards run before output. It does not sum the projected before/after
+records across every retained boundary as if an entire GLB history had been
+requested. Its `boundary_states()` API always rejects with `unsupported`.
+
+The default `mode="recording"` and its unchanged conservative 100,000 weighted
+H06 record preflight continue to govern complete recording checks. This is an
+explicit correction to the scope of the rate-audit API, not a change to source
+admission, complete recording capacity, any arithmetic allowance or the proposed
+numerical acceptance rule. A source whose complete recording exceeds H06 may
+still admit one bounded source observation; the two claims are kept distinct.
 
 Any other independent inability to reconstruct the requested side remains
 `unresolved` with `reason: reference_unavailable` and the original reference

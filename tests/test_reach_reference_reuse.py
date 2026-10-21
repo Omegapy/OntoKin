@@ -1,13 +1,15 @@
 """Independent interval reuse retains exact meanings and shared work."""
 from fractions import Fraction as F
+from dataclasses import replace
 import math
 import unittest
 from unittest.mock import patch
 
 from ontokin.reach_reference import (
-    Interval, MAX_CACHE, MAX_OPERAND_BITS, ReachReference, ReferenceError, _Arithmetic, _PoseArithmetic, build_reference,
+    Interval, MAX_CACHE, MAX_OPERAND_BITS, ZERO, ReachReference, ReferenceError, _Arithmetic, _PoseArithmetic, build_reference,
 )
 from ontokin.construction import compile_construction
+from ontokin.model import ReachSourceLocation
 from reach_agent_support import source_case
 
 
@@ -44,6 +46,33 @@ class IndependentPoseReuseTests(unittest.TestCase):
         with self.assertRaises(ReferenceError):
             self.p.quaternion((0, 0, 0, 0))
 
+    def test_fixed_constants_share_only_bounded_immutable_charged_results(self):
+        zero, identity = self.p.vector(ZERO), self.p.identity()
+        self.assertEqual(identity.position, self.p.vector((0, 0, 0)))
+        self.assertEqual(identity.orientation, self.p.vector((1, 0, 0, 0)))
+        self.assertEqual(identity.velocity, zero)
+        self.assertEqual(identity.omega, zero)
+        before = self.work.operations
+        self.assertIs(self.p.vector(ZERO), zero)
+        self.assertIs(self.p.identity(), identity)
+        self.assertGreater(self.work.operations, before)
+        for index in range(MAX_CACHE + 1):
+            self.a.remember(("evict_fixed_constant", index), F(index))
+        self.assertEqual(len(self.a.cache), MAX_CACHE)
+        self.assertEqual(self.p.identity(), identity)
+        self.assertEqual(self.p.vector(ZERO), zero)
+        self.assertEqual(len(self.a.cache), MAX_CACHE)
+        # A different tuple takes ordinary numeric admission, even if its
+        # leading coordinates coincide with the fixed zero vector.
+        with self.assertRaises(ReferenceError):
+            self.p.vector((F(0), F(0), F(1 << MAX_OPERAND_BITS)))
+        marker = RuntimeError("cancel fixed independent constant")
+        self.work.cancel = marker
+        for query in (lambda: self.p.vector(ZERO), self.p.identity):
+            with self.assertRaises(RuntimeError) as caught:
+                query()
+            self.assertIs(caught.exception, marker)
+
     def test_cached_composition_charges_and_preserves_callback_identity(self):
         parent = self.p.make(position=(1, 2, 3), omega=(0, 0, 2))
         local = self.p.make(position=(3, 0, 0))
@@ -58,6 +87,28 @@ class IndependentPoseReuseTests(unittest.TestCase):
         with self.assertRaises(RuntimeError) as caught:
             self.p.compose(parent, local)
         self.assertIs(caught.exception, interruption)
+
+    def test_zero_rate_composition_omits_derivatives_but_keeps_uncertain_rates(self):
+        # q=(1,1,1,1)/2 maps (x,y,z) to (z,x,y), exactly.
+        parent = self.p.make(position=(1, 2, 3), orientation=(F(1, 2),) * 4)
+        local = self.p.make(position=(4, 5, 6))
+        with patch.object(self.p, "cross", side_effect=AssertionError("zero derivative was recomputed")), \
+             patch.object(self.p, "rotate", wraps=self.p.rotate) as rotate:
+            value = self.p.compose(parent, local)
+        self.assertEqual(rotate.call_count, 1)
+        self.assertEqual(value.position, self.p.vector((7, 6, 8)))
+        self.assertEqual(value.orientation, parent.orientation)
+        self.assertEqual(value.velocity, self.p.vector((0, 0, 0)))
+        self.assertEqual(value.omega, self.p.vector((0, 0, 0)))
+        uncertain = self.p.make(omega=(Interval(F(-1), F(1)), 0, 0))
+        moving = self.p.compose(parent, uncertain)
+        self.assertTrue(all(component.contains(expected) for component, expected in zip(moving.omega, (0, 1, 0))))
+        self.assertTrue(any(component.magnitude for component in moving.omega))
+        marker = RuntimeError("cancel repeated zero-rate composition")
+        self.work.cancel = marker
+        with self.assertRaises(RuntimeError) as caught:
+            self.p.compose(parent, local)
+        self.assertIs(caught.exception, marker)
 
     def test_equal_poses_share_pure_results_but_changed_rates_do_not(self):
         parent = self.p.make(omega=(0, 0, 2))
@@ -163,6 +214,40 @@ class IndependentTaylorTailTests(unittest.TestCase):
 
 
 class IndependentRecordingPoseTests(unittest.TestCase):
+    def test_reused_bound_algebra_matches_uncached_lifecycle_and_dynamic_rates(self):
+        original_lookup = _Arithmetic.lookup
+
+        def without_bound_reuse(arithmetic, key):
+            if key[0] in {"source_bound_constant", "source_bound_compose"}:
+                arithmetic.tick()
+                return None
+            return original_lookup(arithmetic, key)
+
+        def phases(name, end, carrier, queries):
+            compiler = compile_construction(source_case(name))
+            reference = build_reference(compiler.model, end=end, work=compiler.reach_work)
+            results = [reference.point_phase(carrier, time, side) for time, side in queries]
+            self.assertLessEqual(len(reference.a.cache), MAX_CACHE)
+            return results, compiler.reach_work.operations
+
+        cases = (("P01", F(3), "rig.arm.forearm.tip.frame",
+                  ((F(1), "after"), (F(2), "before"), (F(2), "after"))),
+                 ("P16", F(5, 2), "payload.frame",
+                  ((F(2), "before"), (F(2), "after"), (F(5, 2), "after"))))
+        for case in cases:
+            with self.subTest(case=case[0]):
+                reused, used = phases(*case)
+                with patch.object(_Arithmetic, "lookup", new=without_bound_reuse):
+                    uncached, previously_used = phases(*case)
+                self.assertEqual(reused, uncached)
+                self.assertLess(used, previously_used)
+                # The cache cannot turn a completed action or a released
+                # force-driven root into its incoming moving-arm bound.
+                if case[0] == "P01":
+                    self.assertGreater(reused[1].angular_speed, reused[2].angular_speed)
+                else:
+                    self.assertNotEqual(reused[0].acceleration, reused[1].acceleration)
+
     def test_sparse_basis_matches_complete_exact_folds_for_moving_and_dynamic_carriers(self):
         def old_sum(arithmetic, *values):
             result = F(0)
@@ -232,6 +317,43 @@ class IndependentRecordingPoseTests(unittest.TestCase):
             with self.subTest(carrier=carrier, side=side), self.assertRaises(ReferenceError):
                 reference.recording_pose_enclosure(carrier, F(1, 4), side)
 
+    def test_recording_batch_builds_one_graph_and_retains_individual_pose_meaning(self):
+        compiler = compile_construction(source_case("P01"))
+        reference = build_reference(compiler.model, end=F(1, 4), work=compiler.reach_work)
+        selected = ["rig", "rig.arm.forearm.tip.frame", "world"]
+        with patch.object(reference, "_incoming", wraps=reference._incoming) as incoming:
+            values = reference.recording_pose_enclosures(selected, F(1, 4))
+        self.assertEqual(incoming.call_count, 1)
+        self.assertEqual(set(values), {"rig.frame", "rig.arm.forearm.tip.frame", "world"})
+        for carrier, pose in values.items():
+            full = reference.pose_enclosure(carrier, F(1, 4))
+            self.assertEqual(pose, reference.recording_pose_enclosure(carrier, F(1, 4)))
+            self.assertEqual((pose.position, pose.orientation), (full.position, full.orientation))
+            self.assertFalse(hasattr(pose, "velocity"))
+            self.assertFalse(hasattr(pose, "omega"))
+        state = reference._state_at(F(1, 4), "after")
+        cached = reference._poses[(id(state), F(1, 4), True, True)][1]
+        self.assertNotIn("rig.tool.frame", cached)
+        values.clear()
+        repeated = reference.recording_pose_enclosures(selected, F(1, 4))
+        self.assertEqual(set(repeated), {"rig.frame", "rig.arm.forearm.tip.frame", "world"})
+
+    def test_recording_batch_bounds_selection_and_preserves_callback_and_side_guards(self):
+        compiler = compile_construction(source_case("P01"))
+        reference = build_reference(compiler.model, end=F(1, 4), work=compiler.reach_work)
+        for carriers, side in ((["missing"], "after"), ([None], "after"),
+                               (["world"], "left"), ("world", "after"),
+                               (["world"] * (2 + len(reference.model.objects) + len(reference.model.sites)), "after")):
+            with self.subTest(carriers=carriers, side=side), self.assertRaises(ReferenceError):
+                reference.recording_pose_enclosures(carriers, F(1, 4), side)
+        self.assertEqual(reference.recording_pose_enclosures([], F(1, 4)), {})
+        reference.recording_pose_enclosures(["world"], F(1, 4))
+        marker = RuntimeError("cancel cached independent batch")
+        with patch.object(reference.a, "check", side_effect=marker):
+            with self.assertRaises(RuntimeError) as caught:
+                reference.recording_pose_enclosures(["world"], F(1, 4))
+        self.assertIs(caught.exception, marker)
+
 
 class IndependentIncomingPrefixTests(unittest.TestCase):
     def test_incoming_state_reuse_does_not_mutate_previous_action_history(self):
@@ -288,6 +410,226 @@ class IndependentIncomingPrefixTests(unittest.TestCase):
             compiler = compile_construction(source_case("P01"))
             with self.subTest(side=side), self.assertRaises(ReferenceError):
                 build_reference(compiler.model, end=F(0), end_side=side, work=compiler.reach_work)
+
+
+class IndependentObservationReuseTests(unittest.TestCase):
+    def test_complete_p24_observations_match_recomputation_and_keep_action_identity(self):
+        def sample(recompute):
+            compiler = compile_construction(source_case("P24"))
+            reference = build_reference(compiler.model, end=F(1, 4), work=compiler.reach_work)
+            if recompute:
+                def coordinate(path, time, state, observations):
+                    value, rate = reference._coordinate(path, time, state)
+                    return value, rate, float(value), reference.a.round64(rate)
+                reference._joint_observation = coordinate
+                reference._world_target = lambda base, target: reference.p.compose(base, reference.p.make(target))
+            before = compiler.reach_work.operations
+            with patch.object(reference, "_coordinate", wraps=reference._coordinate) as coordinate:
+                value = reference.sample(F(1, 4))
+            return reference, value, compiler.reach_work.operations - before, coordinate.call_count
+
+        reference, reused, used, coordinate_count = sample(False)
+        _, original, recomputed, original_coordinate_count = sample(True)
+        self.assertEqual(reused, original)
+        self.assertLess(used, recomputed)
+        self.assertLess(coordinate_count, original_coordinate_count)
+        self.assertEqual(len(reused["reaches"]), 128)
+        active = reused["reaches"]["reach"]["current"]["value"]
+        pending = reused["reaches"]["pending_001"]["current"]["value"]
+        sibling = reused["reaches"]["pending_002"]["current"]["value"]
+        self.assertEqual(active["lifecycle"], "running")
+        self.assertEqual(pending["lifecycle"], "pending")
+        self.assertIsNone(pending["resolved_joint_targets_rad"])
+        self.assertNotEqual(active["claimed_joint_ids"], pending["claimed_joint_ids"])
+        self.assertEqual(active["joint_coordinates_rad"], pending["joint_coordinates_rad"])
+        self.assertEqual(active["joint_rates_rad_per_s"], pending["joint_rates_rad_per_s"])
+        pending["joint_coordinates_rad"][0] = 99
+        pending["tip_pose_world"]["position_m"][0] = 99
+        self.assertNotEqual(pending["joint_coordinates_rad"], sibling["joint_coordinates_rad"])
+        repeated = reference.sample(F(1, 4))["reaches"]["pending_001"]["current"]["value"]
+        self.assertEqual(repeated, original["reaches"]["pending_001"]["current"]["value"])
+        incoming = reference.sample(F(0), "before")["reaches"]["reach"]["current"]["value"]
+        self.assertEqual(incoming["lifecycle"], "pending")
+        self.assertNotEqual(incoming["joint_coordinates_rad"], active["joint_coordinates_rad"])
+
+    def test_observation_operands_remain_bounded_distinct_and_cancellable(self):
+        compiler = compile_construction(source_case("P01"))
+        reference = build_reference(compiler.model, end=F(1, 4), work=compiler.reach_work)
+        state = reference._state_at(F(1, 4), "after")
+        action = reference.model.actions["reach"]
+        observations = {("occupied", index): None for index in range(MAX_CACHE)}
+        first = reference._joint_observation(action.reach.elbow, F(1, 4), state, observations)
+        self.assertEqual(len(observations), MAX_CACHE)
+        earlier = reference._joint_observation(action.reach.elbow, F(0),
+            reference._state_at(F(0), "before"), {})
+        self.assertNotEqual(first, earlier)
+        base = reference.p.identity()
+        target = reference._world_target(base, (1, 2, 3))
+        self.assertIs(reference._world_target(base, (1, 2, 3)), target)
+        self.assertNotEqual(reference._world_target(base, (1, 2, 4)).position, target.position)
+        self.assertNotEqual(reference._world_target(reference.p.make((1, 0, 0)), (1, 2, 3)).position,
+                            target.position)
+        marker = RuntimeError("cancel reused independent observation")
+        with patch.object(reference.a, "check", side_effect=marker):
+            for query in (
+                lambda: reference._world_target(base, (1, 2, 3)),
+                lambda: reference._joint_observation(action.reach.elbow, F(1, 4), state,
+                                                     {action.reach.elbow: first}),
+            ):
+                with self.assertRaises(RuntimeError) as caught:
+                    query()
+                self.assertIs(caught.exception, marker)
+
+
+class IndependentDescriptionReuseTests(unittest.TestCase):
+    def test_p24_locations_keep_all_action_identities_fresh_rows_and_complete_weight(self):
+        from ontokin.reach_reference import _plain
+        compiler = compile_construction(source_case("P24"))
+        reference = build_reference(compiler.model, end=F(1, 4), work=compiler.reach_work)
+        original_weight = reference._reach_history_weight
+        descriptions = {path: reference._description(path, {"own_action": path})
+                        for path, action in reference.model.actions.items()
+                        if action.kind == "reach_planar"}
+        self.assertEqual(len(descriptions), 128)
+        self.assertEqual(len({tuple(value["element_id"]) for value in descriptions.values()}), 128)
+        for path, value in descriptions.items():
+            payload = reference.model.actions[path].reach
+            self.assertEqual(value["source_location"], _plain(payload.source_location, reference.a))
+            self.assertEqual(value["current"]["value"], {"own_action": path})
+        first = descriptions["reach"]["source_location"]
+        sibling = descriptions["pending_001"]["source_location"]
+        saved = dict(sibling)
+        first["start_byte"] = -1
+        self.assertEqual(sibling, saved)
+        self.assertEqual(reference._description("pending_001", {})["source_location"], saved)
+        with patch.object(reference, "_source_location", side_effect=lambda value: _plain(value, reference.a)):
+            self.assertEqual(reference._maximum_reach_weight(), original_weight)
+
+    def test_location_reuse_keeps_complete_keys_guards_fallbacks_cap_and_cancellation(self):
+        reference = object.__new__(ReachReference)
+        work = Work()
+        reference.a = _Arithmetic(work=work)
+        source = ReachSourceLocation("entry", "sha256:" + "1" * 64, 17, 29)
+        expected = {"source_id": source.source_id, "source_revision": source.source_revision,
+                    "start_byte": 17, "end_byte": 29}
+        self.assertEqual(reference._source_location(source), expected)
+        before = work.operations
+        with patch("ontokin.reach_reference._plain", side_effect=AssertionError("repeated traversal")):
+            self.assertEqual(reference._source_location(source), expected)
+        self.assertGreater(work.operations, before)
+        for name, value in (("source_id", "library"), ("source_revision", "sha256:" + "2" * 64),
+                            ("start_byte", 18), ("end_byte", 30)):
+            self.assertEqual(reference._source_location(replace(source, **{name: value})),
+                             {**expected, name: value})
+        with self.assertRaises(ReferenceError):
+            reference._source_location(replace(source, start_byte=1 << MAX_OPERAND_BITS))
+        # A frozen dataclass can still be given a mutable field by an invalid
+        # direct caller. It must use the original fresh recursive conversion.
+        mutable = replace(source, source_id=["entry"])
+        first = reference._source_location(mutable)
+        mutable.source_id.append("changed")
+        self.assertEqual(first["source_id"], ["entry"])
+        self.assertEqual(reference._source_location(mutable)["source_id"], ["entry", "changed"])
+        with self.assertRaises(ReferenceError):
+            reference._source_location(object())
+        for index in range(MAX_CACHE + 1):
+            reference.a.remember(("evict_location", index), index)
+        self.assertEqual(reference._source_location(source), expected)
+        self.assertEqual(len(reference.a.cache), MAX_CACHE)
+        marker = RuntimeError("cancel immutable source projection")
+        work.cancel = marker
+        with self.assertRaises(RuntimeError) as caught:
+            reference._source_location(source)
+        self.assertIs(caught.exception, marker)
+
+
+class IndependentObservationModeTests(unittest.TestCase):
+    def test_unrequested_projection_work_is_deferred_with_original_guards_on_demand(self):
+        compiler = compile_construction(source_case("P01"))
+        projection_error = ReferenceError("resource", "complete reach projection guard")
+        geometry_error = ReferenceError("unsupported", "captured geometry projection guard")
+        with patch.object(ReachReference, "_maximum_reach_weight", side_effect=projection_error), \
+             patch.object(ReachReference, "_capture_geometry", side_effect=geometry_error):
+            reference = build_reference(compiler.model, end=F(1, 4), mode="observation", work=compiler.reach_work)
+            pose = reference.pose_enclosure("rig.arm.forearm.tip.frame", F(1, 4))
+            phase = reference.point_phase("rig.arm.forearm.tip.frame", F(1, 4))
+            self.assertTrue(any(value.magnitude for value in pose.velocity))
+            self.assertGreater(phase.source_numeric_velocity_error, 0)
+            with self.assertRaises(ReferenceError) as caught:
+                reference.sample(F(1, 4))
+            self.assertIs(caught.exception, projection_error)
+            with self.assertRaises(ReferenceError) as caught:
+                reference.geometry_expectations
+            self.assertIs(caught.exception, geometry_error)
+            self.assertIsNone(reference._reach_history_weight)
+            self.assertIsNone(reference._geometry)
+        reference.sample(F(1, 4))
+        self.assertIsNotNone(reference._reach_history_weight)
+        returned = reference.geometry_expectations
+        returned[0]["geometry"].clear()
+        self.assertTrue(reference.geometry_expectations[0]["geometry"])
+
+    def test_p24_single_observation_does_not_claim_complete_recording_capacity(self):
+        compiler = compile_construction(source_case("P24"))
+        with self.assertRaises(ReferenceError) as caught:
+            build_reference(compiler.model, end=F(3), work=compiler.reach_work)
+        self.assertEqual(caught.exception.code, "resource")
+        self.assertEqual(caught.exception.details["budget"], "boundary_state_records")
+        self.assertGreater(caught.exception.details["consumed"], 100000)
+        compiler = compile_construction(source_case("P24"))
+        reference = build_reference(compiler.model, end=F(3), mode="observation", work=compiler.reach_work)
+        self.assertEqual(reference.mode, "observation")
+        self.assertEqual(reference.boundaries, (F(0), F(2), F(3)))
+        sample = reference.sample(F(3))
+        self.assertEqual(len(sample["reaches"]), 128)
+        self.assertEqual(sample["reaches"]["reach"]["current"]["value"]["lifecycle"], "completed")
+        self.assertEqual(sample["reaches"]["pending_127"]["current"]["value"]["lifecycle"], "pending")
+        self.assertEqual(len(reference._after), 3)
+        with self.assertRaises(ReferenceError) as caught:
+            reference.boundary_states()
+        self.assertEqual(caught.exception.code, "unsupported")
+        self.assertLessEqual(compiler.budget.operations, 100000)
+
+    def test_observation_and_recording_modes_preserve_full_release_and_force_equations(self):
+        results = []
+        for mode in ("recording", "observation"):
+            compiler = compile_construction(source_case("P16"))
+            reference = build_reference(compiler.model, end=F(3), mode=mode, work=compiler.reach_work)
+            results.append([(reference.pose_enclosure("payload.frame", time, side),
+                             reference.point_phase("payload.frame", time, side))
+                            for time, side in ((F(2), "before"), (F(2), "after"), (F(3), "after"))])
+        self.assertEqual(results[0], results[1])
+        self.assertNotEqual(results[1][0], results[1][-1])
+
+    def test_observation_mode_keeps_incoming_failures_state_cap_and_mode_admission(self):
+        compiler = compile_construction(source_case("L04"))
+        reference = build_reference(compiler.model, end=F(1, 2), end_side="before",
+                                    mode="observation", work=compiler.reach_work)
+        self.assertTrue(reference.sample(F(1, 2), "before")["reaches"])
+        for query in (
+            lambda: reference.sample(F(1, 2), "after"),
+            lambda: reference.recording_pose_enclosures(["world"], F(1, 2), "after"),
+            reference.boundary_states,
+        ):
+            with self.assertRaises(ReferenceError) as caught:
+                query()
+            self.assertEqual(caught.exception.code, "unsupported")
+        self.assertIsNone(reference._after[-1])
+        compiler = compile_construction(source_case("L04"))
+        with self.assertRaises(ReferenceError) as caught:
+            build_reference(compiler.model, end=F(1, 2), mode="observation", work=compiler.reach_work)
+        self.assertEqual(caught.exception.code, "source_admission")
+        compiler = compile_construction(source_case("P01"))
+        with patch("ontokin.reach_reference.MAX_BOUNDARIES", 1):
+            with self.assertRaises(ReferenceError) as caught:
+                build_reference(compiler.model, end=F(1, 4), mode="observation", work=compiler.reach_work)
+        self.assertEqual(caught.exception.code, "resource")
+        self.assertIn("boundary cap", str(caught.exception))
+        for mode in (None, "", "observations", True):
+            compiler = compile_construction(source_case("P01"))
+            with self.subTest(mode=mode), self.assertRaises(ReferenceError) as caught:
+                build_reference(compiler.model, end=F(0), mode=mode, work=compiler.reach_work)
+            self.assertEqual(caught.exception.code, "unsupported")
 
 
 if __name__ == "__main__":

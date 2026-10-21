@@ -23,6 +23,14 @@ callback. The independent reference and supplied-byte checker use separate key
 namespaces and independently derived answers, never writer certificates as
 their source oracle.
 
+The independent clock reader can reuse a successful canonical parse and GCD
+reduction for the complete numerator/denominator string pair, each at most 128
+characters. Every certificate still supplies and compares its own exact width.
+Changed or malformed strings have a different key and must pass the original
+canonicality, denominator and reduced-fraction checks. Longer strings retain
+the original bounded chunk parser. Cache hits retain the original callback and
+operand limit; the shared cache still holds at most 256 entries.
+
 The JSON preflight can reuse the encoded size of a bounded repeated object-key
 shape. Every value, occurrence, logical entry, nesting depth, cycle and total
 encoded-byte limit is still checked. Only the repeated Unicode scans of the
@@ -83,6 +91,34 @@ ideal orientation intervals. It selects one antipodal reference using the
 largest stored component's sign. Either representative gives an upper bound
 for physical orientation error; an ambiguous sign can only make that bound
 larger. No endpoint comparison is omitted.
+
+The reader's guarded fixed-dimension rational vectors also omit exact-zero
+squares, zero normalization components and identical point subtractions.
+Intervals that merely contain zero take the full outward calculation. The
+same decoded operands, width guards, positive normalization-domain check and
+per-request cancellation remain binding; no uncertain term is discarded.
+
+At each actual retained clock the reader requests the complete selected carrier
+set from the independent reference in one bounded graph pass. Shared ancestry
+and incoming topology are resolved once at that clock. Every actual carrier
+still receives its own source-to-stored endpoint comparison; unselected source
+subtrees are not constructed, and this pose-only interface cannot supply rate
+or release-state evidence.
+
+Complete source-history comparison can check a flat dictionary or list of at
+most 64 plain scalar leaves as one bounded native equality after checking
+every leaf's original scalar type rule. This avoids recursive dispatch and
+path construction for already exact identity blocks. A failed block takes the
+original recursive path, retaining the precise offending field. Dictionaries,
+lists, numeric intervals and every other structure still receive their full
+required shape/value checks; no record, occurrence or source identity is
+omitted.
+
+Repeated numerical history leaves can reuse only a guarded proof keyed by the
+complete actual rational value, independent lower/upper interval, applicable
+allowance and impulse-rounding policy. Changed observations, bounds or
+allowances require their own proof. The original request cache and callback
+remain in use, and failed comparisons still reject the current field.
 
 For unit endpoint chord error e at most one half, the corresponding S3 arc is
 at most 2e. The ideal path length is at most angular-speed times authored-width

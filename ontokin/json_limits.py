@@ -64,8 +64,22 @@ def measure_json(value, *, max_bytes=MAX_JSON_BYTES, max_entries=MAX_JSON_ENTRIE
                 pending.clear()
                 return
         before = size
-        for text in pending:
-            string_size(text)
+        if cacheable:
+            # This exact built-in list contains at most 64 exact strings, each
+            # at most 128 code points. The native JSON encoder performs the
+            # escaping/Unicode work for that bounded block once. Its largest
+            # compact UTF-8 result is 49,345 bytes (all six-byte escapes).
+            # Count the quoted strings, removing only the array punctuation.
+            # Invalid Unicode still fails UTF-8 encoding; caller cancellation
+            # and the original request budget bracket the native operation.
+            work.charge("json_text_block_encode")
+            encoded = json.dumps(pending, ensure_ascii=False, allow_nan=False,
+                                 separators=(",", ":")).encode("utf-8")
+            work.charge("json_text_block_encode_return")
+            add(len(encoded) - 2 - (len(pending) - 1))
+        else:
+            for text in pending:
+                string_size(text)
         if cacheable:
             work.remember(key, size - before)
         pending.clear()

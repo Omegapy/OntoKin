@@ -329,7 +329,9 @@ class ReachPoseTests(unittest.TestCase):
             result=tuple(grid(value*factor) for value in values)
             return tuple(-v for v in result) if next(v for v in result if v)<0 else result
         rotations=((F(1),F(0),F(0),F(0)),(F(3,4),F(0),F(0),F(0)),
-                   (F(1,3),F(0),F(0),F(2,7)),(F(3,5),F(2,11),F(-1,13),F(1,1<<1074)))
+                   (F(1,3),F(0),F(0),F(2,7)),(F(-1,3),F(2,7),F(0),F(0)),
+                   (F(1,3),F(0),F(-2,7),F(0)),(F(0),F(0),F(0),F(-2,7)),
+                   (F(3,5),F(2,11),F(-1,13),F(1,1<<1074)))
         for a in rotations:
             for b in rotations:
                 aw,ax,ay,az=a; bw,bx,by,bz=b
@@ -340,9 +342,230 @@ class ReachPoseTests(unittest.TestCase):
             rows=((denominator-2*(y*y+z*z),2*(x*y-w*z),2*(x*z+w*y)),
                   (2*(x*y+w*z),denominator-2*(x*x+z*z),2*(y*z-w*x)),
                   (2*(x*z-w*y),2*(y*z+w*x),denominator-2*(x*x+y*y)))
-            for vector in ((F(0),)*3,(F(1,1<<1074),F(1,3),F(-7,11))):
+            for vector in ((F(0),)*3,(F(1,1<<1074),F(1,3),F(-7,11)),
+                           (F(1,3),F(0),F(0)),(F(0),F(-7,11),F(0)),
+                           (F(0),F(0),F(1,1<<97)),(F(0),F(1,3),F(-7,11))):
                 expected=tuple(grid(sum(a*b for a,b in zip(row,vector))/denominator) for row in rows)
                 self.assertEqual(ops.rotate(RotationValue(a),vector),expected)
+
+    def test_scalar_products_preserve_independent_grid_sign_error_and_projection(self):
+        from ontokin.reach_pose import RotationValue
+        def expected(values):
+            maximum=max(map(abs,values))
+            # Independent exact normalization by a bounded sequence of powers
+            # of two also covers negative scales and nearest-even grid ties.
+            factor=F(1)
+            while maximum*factor>=1: factor/=2
+            while maximum*factor<F(1,2): factor*=2
+            result=tuple(F(round(value*factor*(1<<96)),1<<96) for value in values)
+            return tuple(-value for value in result) if next(v for v in result if v)<0 else result
+        rotations=((F(3,4),F(1,8),F(0),F(-1,4)),
+                   (F(-3,4),F(1,8),F(0),F(1,4)),
+                   (F(1),F(1,4),F(0),F(0)),
+                   (F(1,3),F(2,7),F(-3,11),F(0)),
+                   (F(1,2),F(1,1<<97),F(3,1<<97),F(-3,1<<97)),
+                   (F(0),F(-1,1<<111),F(0),F(0)))
+        scales=(F(1),F(-1),F(1,2),F(-1,2),F(1<<7),F(-1,1<<101),F(3,4),F(-7,3))
+        for components in rotations:
+            for scale in scales:
+                for reverse in (False,True):
+                    with self.subTest(components=components,scale=scale,reverse=reverse):
+                        ops=ReachPoseOps(ReachExecutionWork())
+                        rotation=RotationValue(components,F(1,1024),(1.0,0.0,0.0,0.0))
+                        scalar=RotationValue((scale,F(0),F(0),F(0)),F(1,2048))
+                        result=ops.multiply(scalar,rotation) if reverse else ops.multiply(rotation,scalar)
+                        self.assertEqual(result.components,expected(tuple(scale*v for v in components)))
+                        self.assertTrue(all(type(value) is F for value in result.components))
+                        self.assertEqual(result.error_rad,F(3,2048)+PRODUCT_ERROR)
+                        self.assertIsNone(result.frozen_projection)
+
+    def test_sparse_shortcuts_retain_operand_and_vector_admission(self):
+        from ontokin.reach_pose import RotationValue
+        valid=RotationValue((F(3,4),F(0),F(0),F(1,4)))
+        oversized=RotationValue((F(1<<512),F(0),F(0),F(0)))
+        for operation in ("multiply","rotate"):
+            with self.subTest(operation=operation):
+                ops=ReachPoseOps(ReachExecutionWork(max_operand_bits=512))
+                with self.assertRaises(ReachAdmissionError) as raised:
+                    if operation=="multiply": ops.multiply(valid,oversized)
+                    else: ops.rotate(oversized,(F(0),F(0),F(1)))
+                self.assertEqual(raised.exception.details["budget"],"numeric_operand_bits")
+                self.assertEqual(ops.work._cache,{})
+        for vector in ((F(0),F(0),F(1<<512)),(True,0,0),(0,0)):
+            with self.subTest(vector=vector):
+                ops=ReachPoseOps(ReachExecutionWork(max_operand_bits=512))
+                with self.assertRaises(ReachAdmissionError): ops.rotate(valid,vector)
+                self.assertEqual(ops.work._cache,{})
+
+    def test_sparse_shortcuts_cancel_before_successful_cache_publication(self):
+        from ontokin.reach_pose import RotationValue
+        for operation,checkpoint in (("multiply","quaternion_identity_canonical_check"),
+                                     ("fixed-axis","rotation_sparse_check"),
+                                     ("planar","rotation_sparse_check")):
+            with self.subTest(operation=operation):
+                work=ReachExecutionWork()
+                marker=RuntimeError("cancel sparse pose arithmetic")
+                def check():
+                    if work.counts.get(checkpoint,0): raise marker
+                work.external_check=check
+                ops=ReachPoseOps(work)
+                rotation=RotationValue((F(3,4),F(0),F(0),F(1,4)))
+                with self.assertRaises(RuntimeError) as raised:
+                    if operation=="multiply":
+                        ops.multiply(rotation,RotationValue((F(1,2),F(0),F(0),F(0))))
+                    else:
+                        vector=(F(0),F(0),F(1,3)) if operation=="fixed-axis" else (F(1,3),F(0),F(0))
+                        ops.rotate(rotation,vector)
+                self.assertIs(raised.exception,marker)
+                self.assertIs(work.callback_error,marker)
+                self.assertEqual(work.counts.get(checkpoint),1)
+                self.assertEqual(work._cache,{})
+
+    def test_sparse_unit_projection_has_independent_exact_binary64_rounding_cells(self):
+        from ontokin.reach_pose import RotationValue
+        rotations=((F(1),F(0),F(0),F(0)),(F(0),F(-3),F(0),F(4)),
+                   (F(1,3),F(2,7),F(0),F(0)),(F(-1),F(0),F(1),F(0)),
+                   (F(1),F(0),F(0),F(1,1<<1074)),
+                   (F(1),F(-3,1<<1075),F(0),F(0)),
+                   (F(1,2),F(1,3),F(-1,5),F(1,7)))
+        for values in rotations:
+            with self.subTest(values=values):
+                ops=ReachPoseOps(ReachExecutionWork())
+                rotation=RotationValue(values,F(1,1024))
+                actual=ops._unit_projection(rotation)
+                denominator=sum(value*value for value in values)
+                for source,component in zip(values,actual):
+                    self.assertTrue(math.isfinite(component))
+                    magnitude=abs(component)
+                    ratio=source*source/denominator
+                    # Square the exact neighboring-binary64 midpoints. This
+                    # independently proves nearest-even sqrt rounding without
+                    # a host sqrt or the production integer-sqrt algorithm.
+                    lower=(F(math.nextafter(magnitude,0.0))+F(magnitude))/2 if magnitude else F(0)
+                    upper=(F(magnitude)+F(math.nextafter(magnitude,math.inf)))/2
+                    if float_bits(magnitude)&1:
+                        self.assertGreater(ratio,lower*lower)
+                        self.assertLess(ratio,upper*upper)
+                    else:
+                        self.assertGreaterEqual(ratio,lower*lower)
+                        self.assertLessEqual(ratio,upper*upper)
+                    self.assertEqual(math.copysign(1.0,component),-1.0 if source<0 and magnitude else 1.0)
+                    if not source: self.assertEqual(float_bits(component),0)
+                self.assertEqual(rotation.error_rad,F(1,1024))
+                self.assertEqual(ops.work.counts.get("known_zero_quaternion_projection",0),
+                                 sum(not value for value in values))
+
+    def test_sparse_unit_projection_keeps_width_zero_and_materialized_guards(self):
+        from ontokin.reach_pose import RotationValue
+        work=ReachExecutionWork(max_operand_bits=512)
+        ops=ReachPoseOps(work)
+        oversized=RotationValue((F(1<<512),F(0),F(0),F(0)))
+        with self.assertRaises(ReachAdmissionError) as raised: ops._unit_projection(oversized)
+        self.assertEqual(raised.exception.details["budget"],"numeric_operand_bits")
+        self.assertEqual(work._cache,{})
+        with self.assertRaises(ZeroDivisionError): ops._unit_projection(RotationValue((F(0),)*4))
+        self.assertEqual(work._cache,{})
+        saved=(-0.0,0.0,0.0,1.0)
+        frozen=RotationValue((F(0),F(0),F(0),F(1)),frozen_projection=saved)
+        self.assertIs(ops._unit_projection(frozen),saved)
+        self.assertEqual(tuple(map(float_bits,saved)),(1<<63,0,0,0x3ff0000000000000))
+
+    def test_sparse_unit_projection_cancellation_cannot_publish_partial_components(self):
+        from ontokin.reach_pose import RotationValue
+        work=ReachExecutionWork()
+        ops=ReachPoseOps(work)
+        pose=ops.make(orientation=RotationValue((F(1,2),F(0),F(0),F(0))))
+        before=tuple(work._cache.items())
+        marker=RuntimeError("cancel zero quaternion component")
+        def check():
+            if work.counts.get("known_zero_quaternion_projection",0): raise marker
+        work.external_check=check
+        with self.assertRaises(RuntimeError) as raised: pose.orientation
+        self.assertIs(raised.exception,marker)
+        self.assertIs(work.callback_error,marker)
+        self.assertEqual(work.counts.get("known_zero_quaternion_projection"),1)
+        self.assertNotIn("orientation",pose._projection)
+        self.assertEqual(tuple(work._cache.items()),before)
+
+    def test_mixed_grid_vector_projects_only_components_that_change(self):
+        from ontokin.reach_numeric import round_dyadic
+        values=(F(0),F(1,3),F(1,8),F(3,1<<97),F(-3,1<<97),F(1,1<<96))
+        expected=tuple(F(round(value*(1<<96)),1<<96) for value in values)
+        ops=ReachPoseOps(ReachExecutionWork())
+        with patch("ontokin.reach_pose.round_dyadic",wraps=round_dyadic) as rounding:
+            actual=ops._rounded_vector(values)
+        self.assertEqual(actual,expected)
+        self.assertEqual([call.args[0] for call in rounding.call_args_list],
+                         [values[index] for index in (1,3,4)])
+        self.assertIs(actual[0],values[0])
+        self.assertIs(actual[2],values[2])
+        self.assertIs(actual[5],values[5])
+        limited=ReachPoseOps(ReachExecutionWork(max_operand_bits=512))
+        with self.assertRaises(ReachAdmissionError):
+            limited._rounded_vector((F(1<<512),F(1,3),F(0)))
+        self.assertEqual(limited.work.counts.get("dyadic_round",0),0)
+        marker=RuntimeError("cancel mixed grid projection")
+        def check(): raise marker
+        with self.assertRaises(RuntimeError) as raised:
+            ReachPoseOps(ReachExecutionWork(check=check))._rounded_vector(values)
+        self.assertIs(raised.exception,marker)
+
+    def test_normalized_axis_reuse_matches_independent_integer_sqrt_and_grid(self):
+        def grid(value): return F(round(value*(1<<96)),1<<96)
+        def normalized(axis):
+            maximum=max(map(abs,axis)); scaled=tuple(value/maximum for value in axis)
+            square=sum(value*value for value in scaled)
+            integer=math.isqrt((square.numerator<<192)//square.denominator)
+            lower=F(integer,1<<96)
+            upper=lower if lower*lower==square else lower+F(1,1<<96)
+            return tuple(grid(2*value/(lower+upper)) for value in scaled)
+        def rescale(values):
+            maximum=max(map(abs,values)); factor=F(1)
+            while maximum*factor>=1: factor/=2
+            while maximum*factor<F(1,2): factor*=2
+            result=tuple(grid(value*factor) for value in values)
+            return tuple(-value for value in result) if next(v for v in result if v)<0 else result
+        axes=((F(1),F(0),F(0)),(F(0),F(-7,11),F(0)),(F(0),F(0),F(1,1<<1074)),
+              (F(1,3),F(-2,7),F(5,11)),(F(1),F(1,1<<100),F(0)),(F(1),F(2),F(2)))
+        for axis in axes:
+            with self.subTest(axis=axis):
+                ops=ReachPoseOps(ReachExecutionWork())
+                expected=normalized(axis)
+                actual=ops._normalized_axis(axis)
+                self.assertEqual(actual,expected)
+                count=ops.work.operations
+                self.assertIs(ops._normalized_axis(axis),actual)
+                self.assertGreater(ops.work.operations,count)
+                self.assertLess(ops.work.operations-count,5)
+                for angle in (F(1,3),F(-2,7)):
+                    sine,cosine=ops.sincos(angle/2)
+                    result=ops.axis_rotation(axis,angle)
+                    self.assertEqual(result.components,rescale((cosine,*(value*sine for value in expected))))
+                    self.assertEqual(result.error_rad,AXIS_ERROR+PRODUCT_ERROR)
+                self.assertEqual(ops.work.counts.get("pose_unit_axis_check"),1)
+
+    def test_normalized_axis_cache_retains_admission_bounds_and_cancellation(self):
+        for axis in ((F(0),)*3,(F(1<<512),F(0),F(0)),(True,0,0),(0,1)):
+            for angle in (F(0),F(1,3)):
+                with self.subTest(axis=axis,angle=angle):
+                    ops=ReachPoseOps(ReachExecutionWork(max_operand_bits=512))
+                    with self.assertRaises(ReachAdmissionError): ops.axis_rotation(axis,angle)
+                    self.assertFalse(any("normalized_axis" in key for key in ops.work._cache))
+        work=ReachExecutionWork(max_cache_entries=1)
+        ops=ReachPoseOps(work)
+        for axis in ((1,0,0),(0,1,0),(0,0,1),(1,2,3)):
+            ops._normalized_axis(axis)
+            self.assertLessEqual(len(work._cache),1)
+        work=ReachExecutionWork()
+        marker=RuntimeError("cancel exact unit axis")
+        def check():
+            if work.counts.get("pose_unit_axis_check",0): raise marker
+        work.external_check=check
+        with self.assertRaises(RuntimeError) as raised:
+            ReachPoseOps(work).axis_rotation((0,0,1),F(1,3))
+        self.assertIs(raised.exception,marker)
+        self.assertIs(work.callback_error,marker)
+        self.assertFalse(any("normalized_axis" in key or "axis_rotation" in key for key in work._cache))
 
     def test_static_pose_reuse_is_bounded_and_still_checks_cancellation(self):
         marker=RuntimeError("cancel static cache hit"); cancelled=False

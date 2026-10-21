@@ -50,10 +50,13 @@ The source pose implementation additionally reuses immutable axis reductions,
 stationary poses, stationary compositions and constant inverse frames in that
 same bounded cache. Valid exact Fraction tuples are width-checked without a
 redundant numeric decode. Zero vectors and identity rotations skip operations
-whose exact results are already known. Sparse Hamilton products compute the
-same exact components as the dense formula before the same dyadic rounding;
-they do not assume a unit quaternion or a power-of-two identity scale. Grid
-rounding is omitted only when every component is already exactly on the grid.
+whose exact results are already known. Sparse Hamilton products preserve the
+dense formula's final exact rescale, sign and grid result. A scalar scale is
+removed only after proving it is a nonzero signed power of two; other scalar
+scales retain their exact products. No path assumes a unit quaternion. Grid
+rounding is omitted independently for each component already exactly on the
+grid, including exact zero; an off-grid sibling does not require rounding an
+unchanged grid value again. The complete input tuple retains its width guard.
 These paths retain the original canonical output bits and conservative error
 records while charging their actual checks and executed arithmetic. They do
 not reduce the IK counters, reset request work or promise that every scene
@@ -128,6 +131,20 @@ angle adds a factor below three in this range. Thus the conservative
 `2^-91` radians per import/product safely bounds the actual rounding error.
 Canonical sign selection changes no rotation. Inverse conjugation is exact.
 
+If either Hamilton operand is the exact scalar quaternion `(s,0,0,0)` with
+`s = +/-2^k`, its dense product is `s*q`. The power-of-two scale chosen from
+`max(abs(s*q))` cancels `abs(s)` exactly. Nearest-even rounding is odd under
+sign reversal, including ties, and the final canonical sign cancels `sign(s)`.
+Thus applying the same rescale to `q` gives identical grid components. A tuple
+is returned directly only after checking that all four components are exact
+Fractions on the 96-bit dyadic grid, its maximum is in `[1/2,1)`, and its first
+nonzero component is positive. Off-grid tuples, negative first components,
+and a maximum rounded to exactly one use the ordinary rescale. Both paths
+still add the incoming error allowances and the unchanged `2^-91` product
+allowance, clear any materialized public projection, check operand widths,
+and charge their actual canonical/grid checks. Non-power-of-two scalar
+quaternions keep the exact multiplication path.
+
 Every homogeneous rotation dot product and division is exact rational
 arithmetic, followed by one 96-bit dyadic rounding per output component.
 Its Euclidean vector perturbation is at most sqrt(3)rho < 2^-96 in the
@@ -136,11 +153,65 @@ the same bound. Private positions, orientations and derivatives survive
 through the whole parent-child chain; reading a public projection cannot
 change subsequent private composition.
 
+In spatial derivative composition, a canonical immutable zero local velocity
+has exactly zero rotated velocity. Omitting that term leaves the parent's
+velocity plus its angular-velocity cross the already computed world offset.
+If either that offset or the parent's angular velocity is the canonical zero
+tuple, this cross term is also exactly zero. A canonical zero local angular
+velocity similarly leaves only the parent's angular velocity. Shortened paths
+still validate the surviving parent vectors and apply the same final 96-bit
+grid projection: a non-dyadic parent rate or a value at a half-grid tie cannot
+be returned without that rounding. Noncanonical vectors use the original
+validating helpers. These reductions retain the complete operand width guard,
+position/rotation construction, cache identity, conservative position-error
+propagation and charged cancellation decision. No derivative-only shortcut
+changes the original position or rotation allowance.
+
+Axis normalization at the fixed 96-bit precision depends only on the exact
+axis, not the requested angle. Its immutable grid tuple is reused through the
+same bounded request cache after validating the current axis again; hits
+retain their cancellation and work checks. On a miss the existing scaled
+axis and outward square-root enclosure still determine the same midpoint,
+exact component divisions and nearest-even grid values. When that enclosure
+is exactly `[1,1]`, the scaled vector's norm is exactly one. Scaling by its
+largest component already makes at least one component have magnitude one,
+so every other component must be zero. The signed principal-axis tuple is
+already a 96-bit grid value and is the exact result of the omitted division
+by one and grid projection. Zero axes remain inadmissible, including at zero
+angle. The rotation's existing axis and product error allowances are
+unchanged, and no angle-dependent state or result from another request is
+reused.
+
+For an exact quaternion with one nonzero imaginary component, let that axis
+be `a`, and let `(u,v)` be the cyclically ordered transverse vector components
+`((a+1) mod 3, (a+2) mod 3)`. With scalar `w`, axial component `z`, and
+`d = w^2+z^2 > 0`, the dense homogeneous matrix reduces exactly to
+`(u,v) -> (A*u-B*v, B*u+A*v)`, where `A = (w^2-z^2)/d` and `B = 2*w*z/d`.
+The axial component is unchanged. This formula is valid for all three axes,
+either sign, and nonunit scales. The same final grid projection follows all
+executed exact products and sums; a vector already on the axis needs only
+that projection. General homogeneous matrix products can omit exact zero
+terms for the same reason. These reductions do not change pose-error
+propagation, source observations or the independent destination comparison.
+
 Public quaternion components are each rounded from the exact normalized
 private component `sign(q_i)*sqrt(q_i²/(q dot q))`. Integer square root plus
 an exact squared-midpoint comparison proves nearest-even binary64 extraction.
 No `math.sqrt`, `math.hypot`, `math.sin`, `math.cos`, libm accuracy assumption
 or machine-epsilon guess supplies the source proof.
+
+The projection checks all component widths before its bounded cache lookup.
+For each nonzero component it computes the exact square once, uses the
+nonzero squares to form the exact positive denominator, and reuses that
+component's square in the normalized ratio. Zero terms and the initial
+addition to zero are exact identities, so omitting them changes no rational
+operand passed to the correctly rounded square-root extractor. An exactly
+zero component gives canonical positive binary64 zero; this is also the old
+extractor/sign rule's result. Each such return still charges a cancellation
+checkpoint. The all-zero quaternion remains invalid, and a cancelled partial
+projection is never published to either cache. Materialized anchors retain
+their separately charged, already exposed bit pattern, including any signed
+zero. None of these exact reductions changes the exposed-rotation allowance.
 
 Each unit component has absolute binary64 error at most 2^-54. The vector
 error is at most 2^-53, and the resulting projective SO(3) error is safely
@@ -267,6 +338,14 @@ actual evaluated frame. `relative_point` uses the private base rotation and
 position to evaluate the actual tip in that base frame, avoiding a separate
 rounded world inverse.
 
+After both complete private three-vectors have been validated, the charged
+fixed-size vector zero check also identifies exact zero components in mixed
+vectors. The identities `0 + y = y` and `x + 0 = x` permit reusing that
+component's exact Fraction instead of performing an addition. Every pair of
+nonzero components still takes the guarded exact addition, and any subsequent
+grid projection is unchanged. This does not infer that an entire vector is
+zero from only one component or admit unchecked public inputs.
+
 When all four input derivative tuples are the immutable private `ZERO`, both
 derivative expressions above are exactly zero: a zero cross product and a
 rotated zero vector remain zero before and after every grid projection. The
@@ -302,6 +381,14 @@ angle. Using the private local position in the radius term is valid by
 writing the discrepancy as an orientation difference applied to that private
 vector plus the rotated local position error. Two vector-rounding stages
 account for offset rotation and final position addition.
+
+The full charged composition operand guard precedes each caller's position
+error calculation. When both private input errors are Fractions and either
+is exactly zero, their inherited sum is exactly the other input and needs no
+arithmetic operation. The final addition of the offset allowance remains
+guarded and charged even for a cached relative composition. Both nonzero
+errors retain their original exact addition. The resulting error bound,
+rounding allowances and its dependence on each caller are therefore identical.
 
 For complete continuous phases, `uniform_source_bounds` requires actual path
 counts, sum of whole-phase local offset L1 extents, coordinate-rounding

@@ -24,7 +24,9 @@ from .geometry import (SPHERE_RINGS, SPHERE_SEGMENTS, Mesh, assembly_marker,
                        box_mesh, joint_marker, sphere_mesh)
 from .model import SceneModel, Vec
 from .json_limits import JSONLimitError
-from .surface import RegionTriangles, SurfaceError
+from .surface import (LoftSection, SurfaceMaterial, RegionTriangles, SurfaceError,
+                      MAX_SECTIONS, MAX_MATERIALS,
+                      MAX_MESH_VERTICES as SURFACE_MAX_MESH_VERTICES)
 from .surface_runtime import materialize_surface
 from .values import bounded_data
 
@@ -198,6 +200,120 @@ def build_surface_mesh(geometry: dict[str, Any], *, max_vertices: int = MAX_MESH
         check()
     return SurfaceMesh("loft", tuple(positions), tuple(normals), mesh.regions,
                        mesh.section_keys, mesh.facets, mesh.caps)
+
+
+def _surface_recipe_snapshot(geometry, *, work):
+    """Freeze a bounded complete constructor input, or retain the ordinary path.
+
+    The first successful constructor validates this exact key. Later equal
+    inputs may reuse only its immutable mesh. Exact types and binary64 bits
+    prevent Boolean/numeric aliases, nonfinite values and signed-zero aliases.
+    Mutable or unusually shaped host values keep the original validation path.
+    Provenance is deliberately outside the pure constructor and still checked
+    separately for every source occurrence.
+    """
+    work.charge("source_surface_key")
+
+    def number(value):
+        if type(value) not in (int, float):
+            return None
+        try:
+            if not math.isfinite(value):
+                return None
+        except OverflowError:
+            return None
+        return ("float", struct.pack("!d", value)) if type(value) is float else ("int", value)
+
+    def vector(value, count):
+        if type(value) is not tuple or len(value) != count:
+            return None
+        keys = tuple(number(component) for component in value)
+        return keys if all(key is not None for key in keys) else None
+
+    def name(value):
+        return type(value) is str and 1 <= len(value) <= 64
+
+    if type(geometry) is not dict or type(geometry.get("kind")) is not str:
+        return None
+    kind = geometry["kind"]
+    if kind == "placed":
+        position, rotation = geometry.get("local_position"), geometry.get("local_rotation")
+        position_key, rotation_key = vector(position, 3), vector(rotation, 4)
+        if position_key is None or rotation_key is None:
+            return None
+        surface = geometry.get("surface")
+    elif kind == "loft":
+        surface, position_key, rotation_key = geometry, None, None
+    else:
+        return None
+    if (type(surface) is not dict or type(surface.get("kind")) is not str
+            or surface["kind"] != "loft"):
+        return None
+    sections, materials = surface.get("sections"), surface.get("materials")
+    facets, caps = surface.get("facets"), surface.get("caps")
+    if (type(sections) is not tuple or not 2 <= len(sections) <= MAX_SECTIONS
+            or type(materials) is not tuple or not 1 <= len(materials) <= MAX_MATERIALS
+            or type(facets) is not int or not 8 <= facets <= 64 or facets % 4
+            or type(caps) is not str or caps not in ("flat", "none")):
+        return None
+    section_keys, frozen_sections = [], []
+    for section in sections:
+        work.charge("source_surface_section_key")
+        if type(section) is not LoftSection:
+            return None
+        key, station, center, rx, ry, region = (section.key, section.station_m, section.center_m,
+                                              section.radius_x_m, section.radius_y_m, section.region)
+        numeric = number(station), vector(center, 3), number(rx), number(ry)
+        if not name(key) or not name(region) or any(value is None for value in numeric):
+            return None
+        section_keys.append((key, *numeric, region))
+        frozen_sections.append(LoftSection(key, station, center, rx, ry, region))
+    material_keys, frozen_materials = [], []
+    for material in materials:
+        work.charge("source_surface_material_key")
+        if type(material) is not SurfaceMaterial:
+            return None
+        key, rgba, metallic, roughness = (material.key, material.rgba,
+                                          material.metallic, material.roughness)
+        numeric = vector(rgba, 4), number(metallic), number(roughness)
+        if not name(key) or any(value is None for value in numeric):
+            return None
+        material_keys.append((key, *numeric))
+        frozen_materials.append(SurfaceMaterial(key, rgba, metallic, roughness))
+    frozen = {"kind": "loft", "sections": tuple(frozen_sections),
+              "materials": tuple(frozen_materials), "facets": facets, "caps": caps}
+    if kind == "placed":
+        frozen = {"kind": "placed", "surface": frozen,
+                  "local_position": position, "local_rotation": rotation}
+    key = (kind, tuple(section_keys), tuple(material_keys), facets, caps,
+           position_key, rotation_key)
+    return key, frozen
+
+
+def _source_surface_mesh(geometry, *, max_vertices, work, namespace):
+    """Reuse expected source construction within the original request cache.
+
+    Writer and independent reader supply distinct namespaces. Actual buffers,
+    identities, PBR/provenance, sites and repeated-vertex accounting never use
+    this cache. A reduced remaining allowance is checked on every cache hit.
+    """
+    snapshot = _surface_recipe_snapshot(geometry, work=work)
+    if snapshot is None:
+        return build_surface_mesh(geometry, max_vertices=max_vertices, check=work.tick)
+    if type(max_vertices) is not int or not 0 <= max_vertices <= SURFACE_MAX_MESH_VERTICES:
+        raise SurfaceError("OKL-E-RESOURCE", "Invalid remaining vertex budget.",
+                           details={"budget": max_vertices})
+    recipe_key, frozen = snapshot
+    key = ("source_surface_mesh", namespace, recipe_key)
+    cached = work.lookup(key)
+    if cached is not None:
+        if len(cached.positions) > max_vertices:
+            raise SurfaceError("OKL-E-RESOURCE", "Surface exceeds the remaining mesh vertex budget.",
+                               details={"required": len(cached.positions), "available": max_vertices})
+        return cached
+    mesh = build_surface_mesh(frozen, max_vertices=max_vertices, check=work.tick)
+    work.remember(key, mesh)
+    return mesh
 
 
 def surface_metadata(geometry: dict[str, Any], mesh: SurfaceMesh, *,
@@ -679,7 +795,7 @@ def _timeline(model: SceneModel, options: ExportOptions, end: Fraction,
 
 
 def _nodes(model: SceneModel, options: ExportOptions, *,
-           check: Callable[[], None] | None = None) -> list[BakedNode]:
+           check: Callable[[], None] | None = None, work=None) -> list[BakedNode]:
     nodes: list[BakedNode] = []
     meshes: dict[tuple, Mesh] = {}
     vertex_count = 0
@@ -726,7 +842,10 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
             return None
         if kind in ("loft", "placed") and native:
             try:
-                mesh = build_surface_mesh(geometry, max_vertices=MAX_MESH_VERTICES - vertex_count, check=check)
+                remaining = MAX_MESH_VERTICES - vertex_count
+                mesh = (build_surface_mesh(geometry, max_vertices=remaining, check=check)
+                        if work is None else _source_surface_mesh(geometry, max_vertices=remaining,
+                            work=work, namespace="reach_recording_source"))
             except SurfaceError as error:
                 raise OntoKinError(error.code, str(error), obj.span, phase="elaboration",
                                    category="resource_limit" if error.code == "OKL-E-RESOURCE" else "invalid",
