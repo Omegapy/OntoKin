@@ -6,6 +6,7 @@ from dataclasses import dataclass, field
 from fractions import Fraction
 from types import MappingProxyType
 
+from . import force_runtime as _force_runtime
 from .diagnostics import OntoKinError
 from .evaluator import (_ActionState, _DynamicInitial, _Kinematics, _NumericFault,
                         ZERO, _f, _round, time_text)
@@ -252,10 +253,16 @@ class ReachSimulator(ForceSimulator):
         if old is None or plan.max_elapsed_s > old.max_elapsed_s:
             self.work.remember(key, plan)
 
-    def _advance_orientation(self, initial, omega, elapsed):
+    def _advance_orientation(self, initial, omega, elapsed, *,
+                             recording_context=None, recording_path=None):
         plan = self.work.lookup(("reach_source_spin_phase", tuple(omega)))
         if plan is not None and abs(elapsed) > plan.max_elapsed_s:
             plan = None
+        if recording_context is not None:
+            from .scene import MAX_KEYFRAMES
+            return self.pose_ops.recording_advance_orientation(initial, omega, elapsed,
+                context=recording_context, path=recording_path, max_steps=MAX_KEYFRAMES,
+                phase_plan=plan)
         return self.pose_ops.advance_orientation(initial, omega, elapsed, phase_plan=plan)
 
     def phase_bounds(self, start, end, state=None):
@@ -361,16 +368,23 @@ class ReachSimulator(ForceSimulator):
                                arithmetic.mul(slope, runtime.elapsed_at(time)))
         return coordinate, slope if runtime.status == "running" else Fraction(0), ideal
 
-    def _dynamic_kinematics(self, path, time, state, *, pose_only=False):
+    def _dynamic_kinematics(self, path, time, state, *, pose_only=False,
+                            recording_context=None):
         self._check()
+        if recording_context is not None and not pose_only:
+            raise ValueError("A recording rotation cursor cannot provide source rates.")
         anchor = state.dynamic[path]
         initial = anchor.state
         elapsed = time - anchor.time
         acceleration = self._acceleration(path, state)
         rotation = initial.rotation if hasattr(initial, "rotation") else initial.orientation
+        position = self.pose_ops.parabolic(initial.position, initial.velocity, acceleration, elapsed)
+        orientation = self._advance_orientation(rotation, initial.omega, elapsed,
+            recording_context=recording_context, recording_path="dynamic:" + path)
+        if recording_context is not None:
+            return self.pose_ops.make_recording(position=position, orientation=orientation)
         return self.pose_ops.make(
-            position=self.pose_ops.parabolic(initial.position, initial.velocity, acceleration, elapsed),
-            orientation=self._advance_orientation(rotation, initial.omega, elapsed),
+            position=position, orientation=orientation,
             velocity=POSE_ZERO if pose_only else self.pose_ops.affine(initial.velocity, acceleration, elapsed),
             omega=POSE_ZERO if pose_only else initial.omega)
 
@@ -385,7 +399,12 @@ class ReachSimulator(ForceSimulator):
         self.work.charge("source_pose_time_key")
         return None if not state.dynamic and not state.claims else time
 
-    def recording_frames(self, time, state, selected_paths, *, moving_frames=None):
+    def _check_object_pose(self, pose):
+        """Validate every ordinary object's actual public components."""
+        pose.position, pose.orientation, pose.velocity, pose.omega
+
+    def recording_frames(self, time, state, selected_paths, *, moving_frames=None,
+                          recording_context=None):
         """Sample p/q from a validated phase without constructing unused rates.
 
         The recording planner must first validate the complete requested prefix
@@ -394,6 +413,9 @@ class ReachSimulator(ForceSimulator):
         private derivative-free graph cannot enter the full-kinematics cache.
         A phase movement classification only avoids caching changing nodes;
         current dependencies and exact local operands are still resolved.
+        An optional opaque phase context enables bounded angular recurrence
+        only for recording endpoints. Its numerical cursors belong to the
+        existing work cache; ordinary source poses and anchors remain direct.
         """
         selected = []
         seen = set()
@@ -409,7 +431,8 @@ class ReachSimulator(ForceSimulator):
                     selected.append(path)
             _, frames = self._resolve_kinematics(time, state, selected_frames=selected,
                                                pose_only=True, recording_only=True,
-                                               recording_moving_frames=moving_frames)
+                                               recording_moving_frames=moving_frames,
+                                               recording_context=recording_context)
             result = {}
             for path in selected:
                 self._check()
@@ -493,7 +516,8 @@ class ReachSimulator(ForceSimulator):
         return frozenset(path for path in selected_paths if frame(path))
 
     def _resolve_kinematics(self, time, state, *, selected_frames=None, pose_only=False,
-                            recording_only=False, recording_moving_frames=None):
+                            recording_only=False, recording_moving_frames=None,
+                            recording_context=None):
         """Resolve the actual pose graph without intermediate float exposure.
 
         This separate 0.6 path leaves every older profile's pose arithmetic
@@ -501,6 +525,8 @@ class ReachSimulator(ForceSimulator):
         """
         if recording_only and not pose_only:
             raise ValueError("A recording transform graph cannot provide full source kinematics.")
+        if recording_context is not None and not recording_only:
+            raise ValueError("A recording rotation cursor cannot enter full source kinematics.")
         # With neither a free trajectory nor a motion claim, all actual pose
         # operands belong to this current state rather than a clock.
         # Event/force transitions still invalidate the single complete graph.
@@ -510,7 +536,8 @@ class ReachSimulator(ForceSimulator):
             self._check()
             return cached[1], cached[2]
         ops = self.pose_ops
-        compose = ops.compose_recording if recording_only else ops.compose
+        compose = (ops.compose_recording_fast if recording_context is not None else
+                   ops.compose_recording if recording_only else ops.compose)
         incoming = self._incoming(state)
         objects, frames, resolving = {}, {"world": self._identity_pose}, set()
 
@@ -528,7 +555,13 @@ class ReachSimulator(ForceSimulator):
                     self.work.charge("recording_moving_pose")
                     return build()
             namespace = "recorded_transform" if recording_only else "recording"
-            return self._pose_slot((namespace, path) if pose_only else path, signature, build)
+            identity = (namespace, path) if pose_only else path
+            if recording_context is not None:
+                # An incremental rotation can differ privately from another
+                # pass's direct seed at the same coordinate. Reuse never
+                # carries that approximation across a fresh phase context.
+                identity = (*identity, recording_context)
+            return self._pose_slot(identity, signature, build)
 
         def frame(path):
             if path not in frames:
@@ -570,8 +603,14 @@ class ReachSimulator(ForceSimulator):
                     def connected():
                         relative = self._identity_pose
                         if joint.kind == "hinge":
-                            relative = (ops.hinge_recording(joint.axis, coordinate) if recording_only
-                                        else ops.hinge_pose(joint.axis, coordinate, slope))
+                            if recording_context is not None:
+                                from .scene import MAX_KEYFRAMES
+                                relative = ops.make_recording(orientation=ops.recording_axis_rotation(
+                                    joint.axis, coordinate, context=recording_context,
+                                    path="hinge:" + relation_path, max_steps=MAX_KEYFRAMES))
+                            else:
+                                relative = (ops.hinge_recording(joint.axis, coordinate) if recording_only
+                                            else ops.hinge_pose(joint.axis, coordinate, slope))
                         elif joint.kind == "slider":
                             position = ops.scale(joint.axis, Fraction(coordinate))
                             relative = (ops.make_recording(position=position) if recording_only
@@ -582,7 +621,8 @@ class ReachSimulator(ForceSimulator):
                     result = slot(path,
                         ("joint", parent, joint.kind, joint.axis, coordinate, slope, child_pose), connected)
             elif state.modes[path] == "dynamic":
-                result = self._dynamic_kinematics(path, time, state, pose_only=pose_only)
+                result = self._dynamic_kinematics(path, time, state, pose_only=pose_only,
+                                                recording_context=recording_context)
             else:
                 position = state.positions[path]
                 rotation = state.root_rotation_values.get(path, state.orientations[path])
@@ -600,7 +640,8 @@ class ReachSimulator(ForceSimulator):
                 if claimant is not None:
                     action, runtime = self.model.actions[claimant], state.actions[claimant]
                     rotation = self._advance_orientation(runtime.initial_rotation or runtime.initial,
-                                                         action.vector, runtime.elapsed_at(time))
+                        action.vector, runtime.elapsed_at(time), recording_context=recording_context,
+                        recording_path="prescribed:" + path)
                     if runtime.status == "running" and not pose_only:
                         omega = action.vector
                 result = slot(path, ("root", position, rotation, velocity, omega),
@@ -611,7 +652,7 @@ class ReachSimulator(ForceSimulator):
             # This is an explicit finiteness check; opaque internals continue
             # down the graph even after canonical components are cached.
             if not pose_only:
-                result.position, result.orientation, result.velocity, result.omega
+                self._check_object_pose(result)
             objects[path] = result
             frames[path + ".frame"] = result
             return result
@@ -755,6 +796,24 @@ class ReachSimulator(ForceSimulator):
             net = [a.add(value, a.number(delta)) for value, delta in zip(net, force.payload.force_world_n)]
         mass = a.number(self.model.objects[path].mass)
         return tuple(a.add(a.number(gravity), a.div(force, mass)) for gravity, force in zip(self.model.gravity, net))
+
+    def _bounded_projection(self, state):
+        """Count unchanged force histories with the existing reach JSON units."""
+        result = {}
+        entries = byte_count = 0
+        for path in state.forces:
+            self._check()
+            projection = self._projection(path, state)
+            try:
+                size = measure_reach_json(projection,
+                    max_entries=_force_runtime.MAX_OUTPUT_RECORDS - entries,
+                    max_bytes=_force_runtime.MAX_JSON_BYTES - byte_count, check=self.check)
+            except JSONLimitError as error:
+                raise _force_runtime._resource(self.model, error.details) from error
+            entries += size["entries"]
+            byte_count += size["bytes"]
+            result[path] = projection
+        return result
 
     def _force_components(self, path, state):
         """Preserve canonical net/acceleration order while charging every helper."""
@@ -1120,15 +1179,17 @@ class ReachSimulator(ForceSimulator):
 
         Recording preparation has already executed this exact boundary side.
         The complete graph still receives the public finiteness checks from a
-        source snapshot, including every unselected site. Only output that the
-        recording actually retains is allocated and serialized here; ordinary
+        source snapshot, including every unselected site. A guarded exact proof
+        may establish admissibility without constructing unused public tuples.
+        Only output that the recording actually retains is allocated and
+        serialized here; ordinary
         source snapshots keep their complete geometry, masses and frame maps.
         """
         poses, frames = self._kinematics(time, self.state)
         for path, pose in frames.items():
             self._check()
             if not (path.endswith(".frame") and poses.get(path[:-6]) is pose):
-                pose.position, pose.orientation, pose.velocity, pose.omega
+                self.pose_ops.ensure_finite(pose)
         incoming = self._incoming(self.state)
         forces = self._bounded_projection(self.state)
         objects = {}

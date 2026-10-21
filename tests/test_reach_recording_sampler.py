@@ -86,22 +86,30 @@ class ReachRecordingSamplerTests(unittest.TestCase):
 
     def test_transform_recording_preserves_complete_glb_bytes(self):
         original = ReachSimulator._resolve_kinematics
+        original_frames = ReachSimulator.recording_frames
         def full_pose_sampling(self, *args, **kwargs):
             kwargs["recording_only"] = False
             return original(self, *args, **kwargs)
+        def direct_sampling(self, *args, **kwargs):
+            # This test isolates the derivative-free transform optimization.
+            # The separate incremental recording algorithm has its own error
+            # proof and need not reproduce direct private quaternion bits.
+            kwargs["recording_context"] = None
+            return original_frames(self, *args, **kwargs)
         for case, end in (("P01", Q(3)), ("L01", Q(3, 4)), ("P16", Q(1, 4))):
             outputs = []
             for transforms in (False, True):
                 root = SUPPLEMENT if case.startswith("L") else DATA
                 built = compile_construction(load_file_manifest(root / (case.lower() + ".files.json")))
                 options = ExportOptions(end=end, fps=1, helpers=False)
-                if transforms:
-                    result = export_glb(built.model, options=options,
-                        target_contract="ontokin.glb/0.6", work=built.reach_work)
-                else:
-                    with patch.object(ReachSimulator, "_resolve_kinematics", full_pose_sampling):
+                with patch.object(ReachSimulator, "recording_frames", direct_sampling):
+                    if transforms:
                         result = export_glb(built.model, options=options,
                             target_contract="ontokin.glb/0.6", work=built.reach_work)
+                    else:
+                        with patch.object(ReachSimulator, "_resolve_kinematics", full_pose_sampling):
+                            result = export_glb(built.model, options=options,
+                                target_contract="ontokin.glb/0.6", work=built.reach_work)
                 self.assertEqual(result.report["validation"]["status"], "passed")
                 self.assertLessEqual(built.budget.operations, 100000)
                 outputs.append(result.data)

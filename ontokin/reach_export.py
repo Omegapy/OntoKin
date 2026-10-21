@@ -510,6 +510,12 @@ def reach_prefix_plan(model, end, *, work) -> ReachPrefixPlan:
     from .scene import MAX_KEYFRAMES
 
     class PlanningSimulator(ReachSimulator):
+        def _check_object_pose(self, pose):
+            # H06 retains authority/history rather than every object's p/q/v/w
+            # tuples. Prove unused fields admissible without allocating them;
+            # observations and release anchors still use their normal getters.
+            self.pose_ops.ensure_finite(pose)
+
         def snapshot(self, time, side):
             self._kinematics(time, self.state)
             return {}
@@ -641,6 +647,43 @@ def reach_timeline(model, options, plan, nodes, geometry_bounds, *, work):
 
 def _source_max(plan, selected, frame, field):
     return max((getattr(plan.phases[index].source[frame], field) for index in selected), default=Fraction(0))
+
+
+def _recording_endpoint_excess(bound, *, work):
+    """Cover bounded incremental rotations without changing source bounds.
+
+    Each sampled hinge/spin starts with the ordinary direct kernel. Every
+    subsequent cursor step contributes at most one axis-kernel error and two
+    product errors. A cache miss or the fixed cursor cap reseeds directly.
+    All ancestor angular errors can move a descendant origin by at most their
+    sum times the existing whole-path offset bound. The certificate's separate
+    radius-times-rotation term also covers every promised local point.
+    """
+    from .reach_pose import AXIS_ERROR, PRODUCT_ERROR
+    from .scene import MAX_KEYFRAMES
+
+    _charge(work, "recording_endpoint_recurrence_domain")
+    count, offset = bound.trig_count, bound.path_offset_l1_m
+    if type(count) is not int or count < 0 or type(offset) is not Fraction:
+        raise ValueError("Recording endpoint recurrence requires exact nonnegative source path bounds")
+    work.guard(count, offset, MAX_KEYFRAMES, AXIS_ERROR, PRODUCT_ERROR)
+    if _compare(offset, Fraction(0), work) < 0:
+        raise ValueError("Recording endpoint recurrence requires a nonnegative source path offset")
+
+    def calculate():
+        if not count:
+            return Fraction(0), Fraction(0)
+        extra_steps = _exact(Fraction(MAX_KEYFRAMES - 1), Fraction(count), "mul", work)
+        step_error = _exact(AXIS_ERROR, _exact(Fraction(2), PRODUCT_ERROR, "mul", work), "add", work)
+        rotation = _exact(extra_steps, step_error, "mul", work)
+        position = _exact(offset, rotation, "mul", work)
+        return position, rotation
+
+    # The operands are validated before a warm lookup. A narrowed arithmetic
+    # cap cannot reuse a result calculated under a larger allocation limit.
+    key = ("recording_endpoint_recurrence", getattr(work, "max_operand_bits", MAX_ARITHMETIC_BITS),
+           MAX_KEYFRAMES, count, offset)
+    return _reuse(work, key, calculate)
 
 
 def _carrier_ref(node):
@@ -817,6 +860,20 @@ def interval_certificates(model, options, plan, nodes, geometry_bounds, exact, t
                 p_error, q_error, p_magnitude = _endpoint_rounding(
                     tuple(node.translations[key_index]), tuple(node.rotations_xyzw[key_index]), model, work=work)
                 ep, eq, magnitude = max(ep, p_error), max(eq, q_error), max(magnitude, p_magnitude)
+            extra_position = extra_rotation = Fraction(0)
+            for phase_index in sorted(group["numeric_selected"]):
+                p_extra, q_extra = _recording_endpoint_excess(plan.phases[phase_index].source[frame], work=work)
+                if _compare(p_extra, extra_position, work) > 0:
+                    extra_position = p_extra
+                if _compare(q_extra, extra_rotation, work) > 0:
+                    extra_rotation = q_extra
+            # Rotation angle also bounds the coherently selected unit
+            # quaternion chord. The ordinary source nsp/nsr added below are
+            # unchanged; these extra terms belong to recorded endpoints.
+            # The final after-state has its own fresh context and direct seed,
+            # so it contributes no additional recurrence history.
+            ep = _exact(ep, extra_position, "add", work)
+            eq = _exact(eq, extra_rotation, "add", work)
             proof_width = group["width"] if bound.acceleration or bound.angular_speed else Fraction(0)
             proof_shift = group["shift"] if enclosing.speed or enclosing.angular_speed else Fraction(0)
             key = ("certificate_group", bound, enclosing, radius, vertex_error, nsp, nsr,
@@ -969,16 +1026,19 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach
     frame_paths = tuple(node.frame_path for node in nodes)
     previous_state = None
     moving_frames = frozenset()
+    recording_context = None
     for time in exact:
         _charge(work, "recording_sample")
         index = bisect_right(plan.boundaries, time) - 1
         state = plan.final_state if index >= len(plan.phase_states) else plan.phase_states[index]
         new_phase = state is not previous_state
         if new_phase:
+            _charge(work, "recording_phase_context")
+            recording_context = object()
             moving_frames = plan.simulator.recording_moving_frames(state, frame_paths)
         selected_frames = frame_paths if new_phase else tuple(path for path in frame_paths if path in moving_frames)
         frames = plan.simulator.recording_frames(time, state, selected_frames,
-                                                moving_frames=moving_frames)
+            moving_frames=moving_frames, recording_context=recording_context)
         for node in nodes:
             _charge(work, "recording_pose")
             if not new_phase and node.frame_path not in moving_frames:

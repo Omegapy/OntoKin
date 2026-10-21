@@ -7,7 +7,7 @@ files are `ontokin/reach_numeric.py`, `ontokin/reach_kinematics.py` and
 `ontokin/reach_pose.py`. The implementation's `source_numeric_basis` returns
 their actual SHA-256 input identities, an ordered combined implementation
 digest, this derivation's hash and the method identity
-`ontokin.source-pose-projective-dyadic/0.1`.
+`ontokin.source-pose-projective-dyadic/0.2`.
 
 ## Scope and request work
 
@@ -221,6 +221,87 @@ additional defect is not zero: it must separately bound
 `||M_naive(q)-R(q)|| <= 2*|q dot q-1|` and multiply by the relevant source and
 stored local radius. The proper-rotation source result does not waive that
 destination term.
+
+### Exact integer planar arithmetic
+
+The scalar/Z Hamilton product and each single-axis homogeneous rotation may
+use bounded common-denominator integers. This is an exact evaluation of the
+same rational formulas and the same final 96-bit nearest-even projection. It
+adds no approximation, changes no angular or position allowance, and does
+not reassociate a sequence of quaternion compositions. The general rational
+algorithm remains the fallback.
+
+The integer path admits only exact `Fraction` components on the existing
+2^-96 grid, quaternion components of magnitude at most one, and the full
+32,768-bit operand cap. A vector component, when expressed as an integer
+multiple of 2^-96, must have at most 256 bits. The ordinary public operand
+checks run before every cache lookup. A bounded charged domain check selects
+the integer algorithm; any other value, scale, grid or cap uses the original
+rational arithmetic and its original prospective-allocation checks.
+
+For a scalar/Z product, write the two nonzero component pairs as
+`(Aw,Az)/2^ea` and `(Bw,Bz)/2^eb`, with `ea,eb <= 96`. The exact Hamilton
+numerators are `W=Aw*Bw-Az*Bz` and `Z=Aw*Bz+Az*Bw`. They share denominator
+`2^(ea+eb)`. Let `L=bit_length(max(abs(W),abs(Z)))`. The old power-of-two
+rescaling sends the exact pair to `(W,Z)/2^L`: its scale cancels the shared
+input denominator exactly. Therefore the old final grid integers are exactly
+nearest-even of `(W,Z)/2^(L-96)` when `L>96`, the unchanged pair when `L=96`,
+or the exact left-shifted pair when `L<96`. The original canonical sign is
+applied after rounding. Negative halfway cases retain the same even parity.
+The result still adds both operand error allowances and one `PRODUCT_ERROR`;
+it clears the frozen projection just as the ordinary product does.
+
+For a single-axis quaternion, use one common dyadic denominator for its
+scalar and axial components and call the resulting integers `w,z`. That
+denominator cancels from all homogeneous rotation factors. Keep the exact
+integer triple `C=w*w-z*z`, `S=2*w*z`, `D=w*w+z*z`, where `D>0`. For the two
+perpendicular vector components `U/2^96,V/2^96`, the old unrounded outputs are
+`(C*U-S*V)/(D*2^96)` and `(S*U+C*V)/(D*2^96)`. Their final grid integers are
+therefore exactly nearest-even of `(C*U-S*V)/D` and `(S*U+C*V)/D`. The same
+cyclic axis order and exact-zero branches are retained. The axial component
+is already on the grid and is unchanged. The formula works for either sign,
+zero scalar component, and nonunit projective scales in the admitted domain.
+
+Every executed integer multiplication, addition, subtraction and left shift
+has a precharged cancellation checkpoint and a prospective width guard. Each
+nearest-even quotient uses the same bounded `divmod` and parity rule as the
+ordinary integer-rounding primitive. Its arguments already represent grid
+integers, so no separate 96-bit numerator shift is executed. Exact `Fraction`
+construction from the rounded integer and the fixed grid denominator is
+guarded within the rounding or canonical-result checkpoint. The domain,
+scale and sign steps are also charged. No arithmetic skipped by the exact
+algebra is charged as though it were still executed.
+
+Each admitted quaternion integer has at most 97 bits. Hamilton products and
+their sums need fewer than 196 bits, and the final grid integers need at most
+97 bits. The original rational Hamilton products, cross-denominator addition
+preflights, exact rescale and grid projection are all below 512 bits in this
+domain. For vector rotation, `C`, `S` and `D` have at most 194 bits, the scaled
+vector integers at most 256, the product/sum preflights at most 451, and the
+nearest-even quotient preflight at most 452. The old rational factors need
+at most 194 numerator/denominator bits, their vector products at most 450
+numerator and 291 denominator bits, their unreduced addition preflight at
+most 742 bits, and their final grid shift at most 548. These are all below
+1,024 bits and hence below the unchanged full cap. Thus the new algebra
+cannot admit an operand that the omitted old rational operations would have
+rejected within this domain. Error-allowance arithmetic is still performed
+by the original exact helper.
+
+The integer rotation factors replace the two rational factors in the same
+single bounded `axis_rotation_factors` LRU entry. Its tag prevents shape
+confusion. A later off-grid vector replaces that entry with the original
+rational representation, and later grid vectors may reuse that rational
+entry. There is no second per-quaternion slot, new cache, or retained numeric
+map. Product, factor, rotated-vector, raw-normalization and general-matrix
+keys include the method, complete numeric operands and originating cap. A
+callback that changes the cap before
+an integer operation causes the rational fallback; a change during lookup
+or publication restarts from the ordinary operand guards under the current
+cap. The restart retains the original inputs, so a small normalized quaternion
+cannot hide an oversized raw quaternion after its normalization cache narrows
+the cap. Every restart consumes the existing request budget. Callback exceptions
+propagate by identity, including an exception whose type matches the private
+fallback signal.
 
 ## Finite source trig and spin phase reduction
 
@@ -513,6 +594,185 @@ all whole-phase arguments from its actual analytical source path, including
 both sides of positive-width event neighbors and exact unrounded slopes.
 Unproved or disconnected ideal anchors must fail explicitly.
 
+## Finite recording-only rotation recurrence
+
+Version 0.2 adds a distinct sampled-transform algorithm. Complete source
+evaluation, exact canonical joint coordinates, release/boundary anchors,
+rates and the continuous source bounds above retain their direct evaluator.
+Only recording samples in one fixed source phase may use rotation increments.
+The implementation and derivation aggregate also identifies `reach_export.py`,
+which supplies the finite sampling context and endpoint error certificates.
+
+For a fixed axis a and the actual canonical binary64 joint angles c_i, the
+increment is the **exact rational difference** `d_i = c_i - c_(i-1)`.
+It is not a second rounded coordinate or a rounded approximation to the
+authored rate. Fixed-axis rotations obey
+`R(a,c_i) = R(a,d_i) R(a,c_(i-1))` exactly. The first sample uses the ordinary
+axis constructor. A following sample composes its ordinary increment rotation
+with the previous private quaternion, using the same guarded exact Hamilton
+product and projective grid projection as every other source composition.
+For a fixed world angular velocity, exact elapsed differences obey the same
+group law; a direct first orientation already includes its immutable initial
+orientation. Its original SpinPlan must certify each current elapsed value
+and every evaluated increment. Changed angular velocity, initial orientation
+or phase plan cannot reuse a different cursor.
+
+Let A = 2^-74 and P = 2^-91. One direct axis/spin constructor contributes at
+most A+P in rotation angle. Each subsequent increment and its composition
+contribute at most A+2P. Bi-invariance and the triangle inequality for proper
+rotation distance therefore bound j successive increments by
+`(j+1)*A + (2*j+1)*P`, plus any original initial-orientation allowance.
+The source bound already counts the direct seed and its ordinary surrounding
+products. With at most K samples per cursor, the additional angular error is
+at most `(K-1)*(A+2P)` per trigonometric occurrence. A zero increment has no
+additional error; counting it as a step is conservative. The implementation
+reseeds directly before a cursor would exceed K, where
+`1 <= K <= MAX_KEYFRAMES = 10000`. Cache eviction also reseeds directly and
+cannot enlarge this bound.
+
+For a complete source path, the recorded endpoint excess is
+
+```
+Delta_R = N_trig * (10000-1) * (2^-74 + 2*2^-91)
+Delta_P = L_total * Delta_R.
+```
+
+Every private sampled rotation remains a proper rotation, so the existing
+orientation-independent position extents, vector grid errors and public
+projection bounds remain valid. Applying the maximum additional angular error
+at every local offset bounds all descendant carrier-origin shifts by Delta_P.
+The final certificate separately multiplies its complete angular error by
+the promised landmark/vertex radius, covering local points as well as carrier
+origins. Unit-quaternion chord discrepancy is at most the corresponding
+rotation angle, so using Delta_R itself as the endpoint quaternion excess is
+conservative. No unit-quaternion or zero-radius assumption removes that term.
+
+The exporter takes maxima of these excesses over every phase admitted for the
+group's actual endpoints, including an adjacent after-state. It adds Delta_P
+and Delta_R to the measured binary64-to-binary32 endpoint errors **before**
+the existing direct-source allowances are added and before computing the
+stored-arc and interpolation certificates. All maxima, exact operations and
+outward projections retain their existing guards and charged work. The
+continuous `n_sp`/`n_sr` evaluator allowances and the quarter-allocation
+inequalities are unchanged. The independent reader evaluates every stored
+endpoint against its independently reconstructed ideal source pose and
+rejects an insufficient endpoint claim; it does not trust the producer's
+recurrence or path counts to establish that comparison.
+
+One fresh opaque context identifies each source phase in each baking pass.
+Cursor keys include this context, source path, complete axis or initial
+orientation/angular velocity/phase-plan operands, finite step ceiling and
+current operand cap. All cursor and increment values use the same existing
+256-entry request LRU; no separate numerical map or allowance is introduced.
+Every warm call rechecks input widths and cancellation. Spin calls recheck
+the complete current elapsed/omega/plan domain before reusing an increment.
+Only a fully computed value can replace a cursor. Cancellation leaves no
+successful recording or partially published arithmetic result.
+
+If a caller changes the operand cap on an existing work context, the next
+lookup/insertion first invalidates that context's complete LRU under a charged
+cancellation checkpoint. This includes nested direct-axis, sine/cosine and
+product results, whose original keys predate the recording cursor. Therefore
+an identical previously warmed angle cannot bypass a newly narrower domain.
+Cancellation before invalidation leaves the prior cache untouched. Normal
+fixed-cap requests retain the same lookup/insertion charge and capacity.
+
+## Recording identity products
+
+The separately identified recurring recording sampler may omit a Hamilton
+product when either actual projective quaternion is `(w,0,0,0)` with nonzero
+`w`. Its represented proper rotation is exactly the identity, independently
+of the sign and scale of `w`. The result keeps the other quaternion's exact
+components and any already materialized projection. It retains the **sum of
+both input angular error allowances**: an actual identity rotation can still
+have an uncertain ideal orientation. There is no new `PRODUCT_ERROR` because
+this path allocates no quaternion product or quaternion grid projection.
+The triangle inequality for the rotation metric proves the retained sum.
+
+Position arithmetic keeps its original exact terms and 96-bit projections.
+For a zero local translation, it projects the parent position directly; for
+an identity parent rotation it uses the projected local translation directly.
+These are the same values that the original rotation/addition helpers return.
+Other translations execute the ordinary guarded homogeneous rotation. When
+both rotations are nonidentity, the entire original composition executes.
+Thus the existing uniform vector and product error counts remain conservative;
+the endpoint recurrence excess and continuous source allowances are unchanged.
+
+The fast path checks both complete private positions, quaternions and angular
+allowances before elision, rejects a zero quaternion, and is limited to
+immutable values owned by the current request at the adopted 32,768-bit cap.
+Narrower caps, foreign ownership or other input representations execute the
+original guarded composition. Cancellation is checked before inspecting or
+publishing a result. No new numerical cache is introduced. Full source poses,
+their derivatives, anchors and the direct recording algorithm retain their
+original multiplication/projection sequence.
+
+## Finiteness of unused recording-boundary projections
+
+Complete recording-boundary validation still visits every source frame,
+including sites absent from the delivered scene. H06 retains its complete
+authority, force, impulse, joint, action and reach histories; it does not retain
+the public p/q/v/omega tuples of every unused site. `ensure_finite` can prove
+that the original projection of such a private pose succeeds without allocating
+those tuples. Required observations and release anchors still execute their
+ordinary projections, and ordinary complete source snapshots are unchanged.
+
+The fast proof applies only to an exact, locally owned `PoseValue`, its ordinary
+projection dictionary, exact three/four-component tuples of `Fraction` values,
+and the full 32,768-bit operand cap. A quaternion must be an exact
+`RotationValue`, nonzero, and have no frozen public projection. Each numerator
+and denominator has at most 512 bits. Components, current cap and cancellation
+are checked in the same position, orientation, velocity, omega order. A cap
+changed by the callback is observed before choosing the proof. Every shape,
+domain, frozen-value, narrowed-cap or width case outside these conditions uses
+the original field property. Existing actual projections retain the original
+`_expose` behavior. No result or new numeric cache is created by the proof.
+
+A nonzero vector component has absolute value between 2^-512 and 2^512. Its
+binary64 result is therefore finite and normal; the original exact exponent,
+significand division and rounding intermediates need fewer than 2,048 bits.
+Zero has the original canonical zero result. For quaternion normalization,
+each exact square has numerator and denominator widths at most 1,024 bits.
+An unreduced sum of four such positive fractions has a denominator width at
+most 4,096 bits and numerator width at most 4,098 bits; the stepwise addition
+preflight is at most 4,099 bits. The normalized square ratio has numerator
+width at most 5,120 bits and denominator width at most 5,122 bits. Every
+nonzero ratio lies in `(2^-2052, 1]`: the numerator component's square exceeds
+2^-1024, and the sum of at most four squares is less than 2^1026.
+
+Thus the original square-root extractor shifts by at most 2,148 bits, including
+its subnormal branch. Its allocation preflight is at most
+`5120 + 2148 + 4 = 7272` bits; the exponent and squared-midpoint preflights are
+also below 8,192 bits. All are below the unchanged 32,768-bit cap. The norm is
+strictly positive and every normalized component has magnitude at most one,
+so the public quaternion is finite. This proves admissibility of the original
+algorithm, rather than substituting an approximate overflow test. Values near
+binary64 overflow, exceptionally small values and larger exact denominators
+take the original algorithm. The proof changes neither public values nor any
+source, endpoint or interpolation allowance.
+
+The recording-prefix planner also uses this same proof at the complete graph's
+object-finiteness checkpoint. Its internal `PlanningSimulator` overrides only
+that checkpoint: every object and site is still resolved, every object is
+checked before entering the complete graph, and H06 retains the same boundary
+records. The ordinary `ReachSimulator` checkpoint still requests all four
+actual public fields in their original order. No caller-controlled flag,
+weaker input domain, new arithmetic or additional cache is introduced.
+
+Planning does not retain ordinary object p/q/v/omega tuples in its H06 output.
+It may therefore leave unrequested fields in an admissible `PoseValue` lazy.
+Reach observations still read their actual base/tip/target components;
+incoming release records, impulses and materialized trajectory anchors still
+request their actual p/q/v/omega values through the unchanged getters. These
+operations receive identical exact components and ordinary projections. The
+existing proof's field-by-field cancellation, current-cap check and fallback
+remain in force, including overflow, zero quaternions, foreign private values,
+frozen projections and lowered operand caps. A failure prevents the pending
+object graph from being published. Sampled recording transforms retain their
+separate derivative-free path. This removes only incidental public extraction
+from validated planning work; source observations, boundary admission, W,
+numeric allowances and all fixed resource limits keep their prior meanings.
+
 ## Identified implementation and derivation aggregates
 
 The source numerical basis identifies the complete controlled arithmetic and
@@ -524,6 +784,7 @@ implementation input list is:
 3. `ontokin/reach_pose.py`
 4. `ontokin/reach_phase.py`
 5. `ontokin/reach_runtime.py`
+6. `ontokin/reach_export.py`
 
 Its separately ordered derivation input list is:
 

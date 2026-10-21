@@ -24,7 +24,7 @@ MAX_CERTIFICATES = 100000
 MAX_OPERAND_BITS = 32768
 MAX_INTEGER_DIGITS = 9865
 CLOCK_CONVERSION = "binary32_rne_ties_to_even_from_exact_rational"
-SOURCE_METHOD = "ontokin.source-pose-projective-dyadic/0.1"
+SOURCE_METHOD = "ontokin.source-pose-projective-dyadic/0.2"
 DESTINATION_METHOD = ("Exact rational time and translation; integer RNE quaternion normalization; "
     "bounded normalized-chord approximation to short SLERP; separately bounded Three CPU matrix and vertex arithmetic.")
 
@@ -452,7 +452,7 @@ def verify_numeric_bases(quantization, *, work):
     """Resolve the two numerical claims to the actual bounded implementation."""
     root = Path(__file__).resolve().parents[1]
     names = ("ontokin/reach_numeric.py", "ontokin/reach_kinematics.py", "ontokin/reach_pose.py",
-             "ontokin/reach_phase.py", "ontokin/reach_runtime.py")
+             "ontokin/reach_phase.py", "ontokin/reach_runtime.py", "ontokin/reach_export.py")
     entries = [(name, _identified_digest(root / name, work=work)) for name in names]
     _tick(work, "independent_basis_aggregate")
     implementation = hashlib.sha256("".join(name + "\0" + digest + "\n" for name, digest in entries).encode("ascii")).hexdigest()
@@ -460,7 +460,7 @@ def verify_numeric_bases(quantization, *, work):
     derivations = [(name, _identified_digest(root / name, work=work)) for name in derivation_names]
     _tick(work, "independent_basis_aggregate")
     derivation = hashlib.sha256("".join(name + "\0" + digest + "\n" for name, digest in derivations).encode("ascii")).hexdigest()
-    source = {"name": "OntoKin controlled source poses", "version": "0.1",
+    source = {"name": "OntoKin controlled source poses", "version": "0.2",
         "implementation_sha256": "sha256:" + implementation, "method": SOURCE_METHOD,
         "derivation_sha256": "sha256:" + derivation}
     destination = {"name": "ontokin-controlled-three-recording", "version": "0.1.0",
@@ -473,7 +473,86 @@ def verify_numeric_bases(quantization, *, work):
         _error("OKE-E-DESTINATION-NUMERIC-BASIS", "The destination numerical bound does not identify the current controlled player and derivation.")
 
 
+@dataclass(frozen=True)
+class _VertexExtremaProof:
+    source_positions: tuple
+    stored_positions: tuple
+    radius: Fraction
+    vertex_error: Fraction
+
+
 def _vertex_extrema(source_positions, stored_positions, *, work):
+    """Reuse pure extrema only after checking this occurrence's actual vertices.
+
+    The source mesh is an immutable native float tuple retained by the proof.
+    Its identity therefore cannot be recycled while the proof is cached. The
+    supplied accessor is deliberately not an identity key: every warm use
+    compares all of its current entries with the independently proved single
+    binary32 conversion. Bounded blocks keep cancellation responsive without
+    repeating exact radius and error arithmetic for identical source meshes.
+    """
+    from .scene import MAX_MESH_VERTICES, float32
+
+    def direct():
+        return _vertex_extrema_uncached(source_positions, stored_positions, work=work)
+
+    # Small or non-native inputs keep the original complete scalar path. In
+    # particular no wider-cap proof substitutes for a narrowed operand domain.
+    if (type(source_positions) is not tuple or type(stored_positions) not in (tuple, list)
+            or not 128 <= len(source_positions) <= MAX_MESH_VERTICES
+            or len(source_positions) != len(stored_positions)
+            or work is None or not hasattr(work, "lookup") or not hasattr(work, "remember")
+            or getattr(work, "max_operand_bits", None) != MAX_OPERAND_BITS):
+        return direct()
+    cap = work.max_operand_bits
+    key = ("reach_independent_vertex_extrema_v1", cap, id(source_positions))
+    proof = work.lookup(key)
+    if work.max_operand_bits != cap:
+        return direct()
+    if isinstance(proof, _VertexExtremaProof) and proof.source_positions is source_positions:
+        for start in range(0, len(source_positions), 128):
+            _tick(work, "independent_geometry_reuse_block")
+            if work.max_operand_bits != cap:
+                return direct()
+            actual = stored_positions[start:start + 128]
+            expected = proof.stored_positions[start:start + 128]
+            if (len(actual) != len(expected)
+                    or any(type(row) is not tuple or len(row) != 3
+                           or any(type(value) is not float for value in row) for row in actual)
+                    or tuple(actual) != expected):
+                return direct()
+        _Bounds(work).bits(proof.radius.numerator.bit_length(), proof.radius.denominator.bit_length(),
+                           proof.vertex_error.numerator.bit_length(), proof.vertex_error.denominator.bit_length())
+        return proof.radius, proof.vertex_error
+
+    radius, vertex_error = direct()
+    if work.max_operand_bits != cap:
+        return direct()
+    snapshot = []
+    for start in range(0, len(source_positions), 128):
+        _tick(work, "independent_geometry_proof_block")
+        if work.max_operand_bits != cap:
+            return direct()
+        source = source_positions[start:start + 128]
+        actual = stored_positions[start:start + 128]
+        if (len(actual) != len(source)
+                or any(type(row) is not tuple or len(row) != 3
+                       or any(type(value) is not float for value in row) for row in (*source, *actual))):
+            return direct()
+        # A callback may have changed a mutable accessor since the scalar
+        # proof. Never bind that earlier proof to unchecked replacement bytes.
+        if any(tuple(float32(value) for value in point) != stored
+               for point, stored in zip(source, actual)):
+            return direct()
+        snapshot.extend(actual)
+    proof = _VertexExtremaProof(source_positions, tuple(snapshot), radius, vertex_error)
+    work.remember(key, proof)
+    if work.max_operand_bits != cap:
+        return direct()
+    return radius, vertex_error
+
+
+def _vertex_extrema_uncached(source_positions, stored_positions, *, work):
     """Find the same exact extrema without decoding every float as a rational.
 
     The actual source-to-binary32 comparison remains per vertex. On that
@@ -997,7 +1076,8 @@ def _recording_orientation_comparison(quaternion, expected, arithmetic, *, befor
     return result
 
 
-def _key_comparisons(reference, geometry, tracks, time, index, arithmetic, *, previous=None, previous_time=None):
+def _key_comparisons(reference, geometry, tracks, time, index, arithmetic, *, previous=None, previous_time=None,
+                     recording_context=None):
     result, pending, observed, candidates = {}, [], [], []
     for carrier, item in geometry.items():
         arithmetic.tick("independent_key_pose")
@@ -1022,7 +1102,8 @@ def _key_comparisons(reference, geometry, tracks, time, index, arithmetic, *, pr
         else:
             pending.append((carrier, item, position, quaternion))
     ideals = (reference.recording_pose_enclosures(
-        tuple(item["frame"] for _, item, _, _ in pending), time, side="after") if pending else {})
+        tuple(item["frame"] for _, item, _, _ in pending), time, side="after",
+        recording_context=recording_context) if pending else {})
     for carrier, item, position, quaternion in pending:
         ideal = ideals[item["frame"]]
         def compare():
@@ -1207,11 +1288,13 @@ def _verify_certificates(decoded, reference, geometry, tables, endpoint_phases, 
             _error("OKE-E-CERTIFICATE-COVERAGE", "A certificate duplicates or changes a source carrier identity.")
         rows[left, index] = record
     tracks = _tracks(decoded, geometry, work=work)
-    previous = _key_comparisons(reference, geometry, tracks, authored[0], 0, arithmetic)
+    recording_context = object()
+    previous = _key_comparisons(reference, geometry, tracks, authored[0], 0, arithmetic,
+                                recording_context=recording_context)
     batch = _CertificateBatch(arithmetic, options.position_tolerance_m, options.rotation_tolerance_rad)
     for key, (left, right) in enumerate(zip(authored, authored[1:])):
         following = _key_comparisons(reference, geometry, tracks, right, key + 1, arithmetic,
-                                     previous=previous, previous_time=left)
+                                     previous=previous, previous_time=left, recording_context=recording_context)
         stored_left, stored_right = arithmetic.value(times[key]), arithmetic.value(times[key + 1])
         width, stored_width = arithmetic.sub(right, left), arithmetic.sub(stored_right, stored_left)
         shift = max(abs(arithmetic.sub(left, stored_left)), abs(arithmetic.sub(right, stored_right)))

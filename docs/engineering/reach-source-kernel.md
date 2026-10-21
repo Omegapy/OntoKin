@@ -70,6 +70,16 @@ the finite 100,000-entry, 4 MiB and depth limits, and numerical arithmetic never
 uses this batching adapter. This does not waive any intermediate or final Agent
 logical-entry budget, including the adopted exact `N`/`N−1` publication probe.
 
+The source 0.6 force-history projection uses this same traversal adapter.
+Every object is still visited in the inherited order, each active/latest force
+record is freshly projected, and every repeated JSON value is measured against
+the same remaining cumulative entry and byte limits. Depth, scalar finiteness,
+container type, Unicode and cycle checks remain the original JSON walk. The
+inherited force diagnostic still translates an exceeded output bound. Only
+short-string traversal callbacks are grouped into the existing bounded batches;
+the object/force iteration checks and numerical force arithmetic are unchanged.
+Earlier source profiles continue to use their original force implementation.
+
 Complete source snapshots also pass through inherited `bounded_data` before
 publication. This expands internal geometry dataclasses into their complete
 JSON contents under the same recursive entry/byte/depth guards. It preserves

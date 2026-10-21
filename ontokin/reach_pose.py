@@ -14,12 +14,12 @@ from hashlib import sha256
 from pathlib import Path
 
 from .reach_numeric import (
-    PRECISIONS, DyadicContext, ReachAdmissionError, ReachExecutionWork,
+    MAX_OPERAND_BITS, PRECISIONS, DyadicContext, ReachAdmissionError, ReachExecutionWork,
     compare, exact, rational, round_binary64, round_dyadic,
     sqrt_rational_binary64,
 )
 
-METHOD = "ontokin.source-pose-projective-dyadic/0.1"
+METHOD = "ontokin.source-pose-projective-dyadic/0.2"
 BITS = 96
 RHO = F(1,1 << 97)
 VECTOR_ERROR = F(1,1 << 96)
@@ -29,8 +29,10 @@ AXIS_ERROR = F(1,1 << 74)
 EXPOSED_ROTATION_ERROR = F(1,1 << 50)
 ARGUMENT_ERROR = F(1,1 << 86)
 _HORNER_TERMS = 13
+MAX_RECORDING_ROTATION_STEPS = 10000
 ZERO = (F(0),F(0),F(0))
 UNIT = (F(1),F(0),F(0),F(0))
+_GRID_SCALE = 1 << BITS
 
 
 @dataclass(frozen=True)
@@ -39,6 +41,17 @@ class RotationValue:
     error_rad: F = F(0)
     # Only materialized event anchors preserve an already exposed quaternion.
     frozen_projection: tuple[float,float,float,float] | None = None
+
+
+@dataclass(frozen=True)
+class _IntegerAxisFactors:
+    diagonal: int
+    cross: int
+    denominator: int
+
+
+class _FractionPlanarFallback(Exception):
+    """A changed live cap requires the original Fraction path."""
 
 
 @dataclass(frozen=True)
@@ -197,7 +210,7 @@ class ReachPoseOps:
             self.work.guard(*value.components,value.error_rad)
             return value
         values=self._vector(value,4)
-        key=(METHOD,"constant_rotation",values)
+        key=(METHOD,"constant_rotation",values,self.work.max_operand_bits)
         cached=self.work.lookup(key)
         if cached is not None: return cached
         result=self._rescale(values,F(0))
@@ -229,22 +242,33 @@ class ReachPoseOps:
         return RotationValue(result,self._op(error,PRODUCT_ERROR,"add"))
 
     def multiply(self,a,b):
-        a,b=self._rotation(a),self._rotation(b)
-        # Error allowances do not enter the Hamilton product or its grid
-        # projection. Keep one immutable component result and one replaceable
-        # allowance/result for these exact guarded quaternion operands.
-        key=(METHOD,"rotation_product",a.components,b.components)
-        cached=self.work.lookup(key)
-        if cached is not None:
-            self.work.charge("rotation_product_error_identity")
-            if cached[:2]==(a.error_rad,b.error_rad): return cached[2]
-            error=self._op(self._op(a.error_rad,b.error_rad,"add"),PRODUCT_ERROR,"add")
-            result=RotationValue(cached[2].components,error)
+        original_a,original_b=a,b
+        while True:
+            cap=self.work.max_operand_bits
+            a,b=self._rotation(original_a),self._rotation(original_b)
+            if self.work.max_operand_bits!=cap:
+                continue
+            # Error allowances do not enter the Hamilton product or its grid
+            # projection. Keep one immutable component result and one
+            # replaceable allowance/result for these exact guarded operands.
+            key=(METHOD,"rotation_product",a.components,b.components,cap)
+            cached=self.work.lookup(key)
+            if self.work.max_operand_bits!=cap:
+                continue
+            if cached is not None:
+                self.work.charge("rotation_product_error_identity")
+                if self.work.max_operand_bits!=cap:
+                    continue
+                if cached[:2]==(a.error_rad,b.error_rad): return cached[2]
+                error=self._op(self._op(a.error_rad,b.error_rad,"add"),PRODUCT_ERROR,"add")
+                result=RotationValue(cached[2].components,error)
+            else:
+                result=self._multiply_uncached(a,b)
+            if self.work.max_operand_bits!=cap:
+                continue
             self.work.remember(key,(a.error_rad,b.error_rad,result))
-            return result
-        result=self._multiply_uncached(a,b)
-        self.work.remember(key,(a.error_rad,b.error_rad,result))
-        return result
+            if self.work.max_operand_bits==cap:
+                return result
 
     def _power_two_scalar(self,value):
         self.work.charge("quaternion_scalar_scale_check")
@@ -282,6 +306,9 @@ class ReachPoseOps:
                 return self._scaled_identity_product(b.components,error)
             return self._rescale(tuple(mul(aw,value) for value in b.components),error)
         if not any((ax,ay,bx,by)):
+            integer=self._integer_planar_product(a,b,error)
+            if integer is not None:
+                return integer
             return self._rescale((self._op(mul(aw,bw),mul(az,bz),"sub"),F(0),F(0),
                                   self._op(mul(aw,bz),mul(az,bw),"add")),error)
         self.work.charge("quaternion_signed_terms",6)
@@ -291,6 +318,140 @@ class ReachPoseOps:
                 self._sum((mul(aw,bz),mul(ax,by),-mul(ay,bx),mul(az,bw))))
         return self._rescale(values,error)
 
+    def _planar_step(self,kind):
+        self.work.charge(kind)
+        if self.work.max_operand_bits!=MAX_OPERAND_BITS:
+            raise _FractionPlanarFallback
+
+    def _planar_grid_domain(self,values,*,unit=False):
+        # The selecting helper precharges one bounded domain check. These
+        # values were also decoded and guarded by multiply/rotate already.
+        if any(type(value) is not F for value in values):
+            return False
+        self.work.guard(*values)
+        for value in values:
+            denominator=value.denominator
+            if denominator.bit_length()>BITS+1 or denominator & (denominator-1):
+                return False
+            if unit:
+                if abs(value.numerator)>denominator:
+                    return False
+            elif value.numerator.bit_length()+BITS-(denominator.bit_length()-1)>256:
+                return False
+        return True
+
+    def _planar_integer(self,value,exponent=BITS):
+        shift=exponent-(value.denominator.bit_length()-1)
+        if not value or not shift:
+            return value.numerator
+        return self._planar_operation(value.numerator,shift,"shift")
+
+    def _planar_operation(self,left,right,operation):
+        self._planar_step("planar_integer_"+operation)
+        self.work.guard(left,right)
+        a,b=left.bit_length(),right.bit_length()
+        width=(a+b if operation=="mul" else
+               a+right if operation=="shift" else max(a,b)+1)
+        self.work.guard_bits(width)
+        if operation=="mul": return left*right
+        if operation=="shift": return left << right
+        if operation=="sub": return left-right
+        return left+right
+
+    def _planar_quotient(self,numerator,denominator,*,as_fraction=False):
+        self._planar_step("planar_integer_round")
+        self.work.guard(numerator,denominator)
+        self.work.guard_bits(max(numerator.bit_length(),denominator.bit_length())+1)
+        quotient,remainder=divmod(numerator,denominator)
+        rounded=quotient+int(2*remainder>denominator or
+                             (2*remainder==denominator and quotient%2))
+        if as_fraction:
+            self.work.guard(rounded,_GRID_SCALE)
+            return F(rounded,_GRID_SCALE)
+        return rounded
+
+    def _integer_planar_product(self,a,b,error):
+        """The exact scalar/Z Hamilton product and its original scale/grid."""
+        if self.work.max_operand_bits!=MAX_OPERAND_BITS:
+            return None
+        try:
+            self._planar_step("planar_integer_domain")
+            first,last=(a.components[0],a.components[3]),(b.components[0],b.components[3])
+            if not self._planar_grid_domain(first+last,unit=True):
+                return None
+            # Each operand may use its own common dyadic denominator. The
+            # final projective normalization cancels both denominators.
+            ea=max(value.denominator.bit_length()-1 for value in first)
+            eb=max(value.denominator.bit_length()-1 for value in last)
+            aw,az=(self._planar_integer(value,ea) for value in first)
+            bw,bz=(self._planar_integer(value,eb) for value in last)
+            op=self._planar_operation
+            real=op(op(aw,bw,"mul"),op(az,bz,"mul"),"sub")
+            imag=op(op(aw,bz,"mul"),op(az,bw,"mul"),"add")
+            self._planar_step("planar_integer_scale")
+            maximum=max(abs(real),abs(imag))
+            if not maximum:
+                return None
+            shift=maximum.bit_length()-BITS
+            if shift>0:
+                denominator=op(1,shift,"shift")
+                real,imag=(self._planar_quotient(value,denominator) for value in (real,imag))
+            elif shift<0:
+                real,imag=(op(value,-shift,"shift") for value in (real,imag))
+            self._planar_step("planar_integer_sign")
+            if real<0 or (not real and imag<0):
+                real,imag=op(0,real,"sub"),op(0,imag,"sub")
+            self.work.guard(real,imag,_GRID_SCALE)
+            values=(F(real,_GRID_SCALE),ZERO[0],ZERO[0],F(imag,_GRID_SCALE))
+            allowance=self._op(error,PRODUCT_ERROR,"add")
+            if self.work.max_operand_bits!=MAX_OPERAND_BITS:
+                return None
+            return RotationValue(values,allowance)
+        except _FractionPlanarFallback as error:
+            if self.work.callback_error is error:
+                raise
+            return None
+
+    def _integer_axis_rotate(self,q,vector,axis,factors):
+        """Return the original rounded vector and one tagged factor record."""
+        if (self.work.max_operand_bits!=MAX_OPERAND_BITS or
+                (factors is not None and type(factors) is not _IntegerAxisFactors)):
+            return None
+        try:
+            self._planar_step("planar_integer_domain")
+            if (not self._planar_grid_domain((q[0],q[axis+1]),unit=True) or
+                    not self._planar_grid_domain(vector)):
+                return None
+            op=self._planar_operation
+            if factors is None:
+                pair=(q[0],q[axis+1])
+                exponent=max(value.denominator.bit_length()-1 for value in pair)
+                w,z=(self._planar_integer(value,exponent) for value in pair)
+                w2,z2=op(w,w,"mul"),op(z,z,"mul")
+                denominator=op(w2,z2,"add")
+                diagonal=op(w2,z2,"sub")
+                cross=op(op(w,z,"mul"),1,"shift")
+                factors=_IntegerAxisFactors(diagonal,cross,denominator)
+            self.work.guard(factors.diagonal,factors.cross,factors.denominator)
+            first,second=(axis+1)%3,(axis+2)%3
+            u,v=(self._planar_integer(vector[index]) for index in (first,second))
+            c,s,d=factors.diagonal,factors.cross,factors.denominator
+            if not v:
+                out_u,out_v=op(c,u,"mul"),op(s,u,"mul")
+            elif not u:
+                out_u,out_v=op(0,op(s,v,"mul"),"sub"),op(c,v,"mul")
+            else:
+                out_u=op(op(c,u,"mul"),op(s,v,"mul"),"sub")
+                out_v=op(op(s,u,"mul"),op(c,v,"mul"),"add")
+            values=list(vector)
+            values[first],values[second]=(self._planar_quotient(value,d,as_fraction=True)
+                                         for value in (out_u,out_v))
+            return tuple(values),factors
+        except _FractionPlanarFallback as error:
+            if self.work.callback_error is error:
+                raise
+            return None
+
     def inverse_rotation(self,value):
         value=self._rotation(value)
         self.work.charge("quaternion_conjugate",3)
@@ -298,7 +459,17 @@ class ReachPoseOps:
         return RotationValue((q[0],-q[1],-q[2],-q[3]),value.error_rad)
 
     def rotate(self,rotation,vector):
-        rotation,vector=self._rotation(rotation),self._vector(vector)
+        original_rotation,original_vector=rotation,vector
+        while True:
+            cap=self.work.max_operand_bits
+            rotation,vector=self._rotation(original_rotation),self._vector(original_vector)
+            if self.work.max_operand_bits!=cap:
+                continue
+            result=self._rotate_guarded(rotation,vector)
+            if self.work.max_operand_bits==cap:
+                return result
+
+    def _rotate_guarded(self,rotation,vector):
         q=rotation.components
         self.work.charge("rotation_sparse_check")
         if not any(vector): return ZERO
@@ -311,12 +482,28 @@ class ReachPoseOps:
             # receives the same final grid projection as the full matrix path.
             if not vector[first] and not vector[second]:
                 return self._rounded_vector(vector)
-        result_key=(METHOD,"rotated_vector",q,vector)
+        result_key=(METHOD,"rotated_vector",q,vector,self.work.max_operand_bits)
         cached=self.work.lookup(result_key)
         if cached is not None: return cached
         if axis is not None:
-            key=(METHOD,"axis_rotation_factors",q)
+            cap=self.work.max_operand_bits
+            key=(METHOD,"axis_rotation_factors",q,cap)
             factors=self.work.lookup(key)
+            integer=self._integer_axis_rotate(q,vector,axis,factors)
+            if integer is not None:
+                result,integer_factors=integer
+                if factors is None:
+                    self.work.remember(key,integer_factors)
+                if self.work.max_operand_bits==cap:
+                    self.work.remember(result_key,result)
+                    if self.work.max_operand_bits==cap:
+                        return result
+            # A non-grid vector keeps the original rational factors. Replace
+            # the same single entry; never retain two representations per q.
+            if type(factors) is _IntegerAxisFactors or self.work.max_operand_bits!=cap:
+                factors=None
+            key=(METHOD,"axis_rotation_factors",q,self.work.max_operand_bits)
+            result_key=(METHOD,"rotated_vector",q,vector,self.work.max_operand_bits)
             if factors is None:
                 w,z=q[0],q[axis+1]
                 w2,z2=self._op(w,w,"mul"),self._op(z,z,"mul")
@@ -340,7 +527,7 @@ class ReachPoseOps:
             result=self._rounded_vector(values)
             self.work.remember(result_key,result)
             return result
-        key=(METHOD,"rotation_rows",q)
+        key=(METHOD,"rotation_rows",q,self.work.max_operand_bits)
         rows=self.work.lookup(key)
         if rows is None:
             w,x,y,z=q; mul=lambda a,b:self._op(a,b,"mul")
@@ -572,6 +759,43 @@ class ReachPoseOps:
         self.work.remember(key,result)
         return result
 
+    def _recording_cursor_key(self,kind,context,path,max_steps,*operands):
+        """Identify one finite recording pass without another numerical cache."""
+        self.work.charge("recording_rotation_cursor_domain")
+        if (type(context) is not object or type(path) is not str or not path
+                or type(max_steps) is not int
+                or not 1<=max_steps<=MAX_RECORDING_ROTATION_STEPS):
+            raise ReachAdmissionError("reach_domain","A recording rotation needs a fresh context and bounded path cursor.")
+        self.work.guard(max_steps)
+        return (METHOD,"recording_rotation_cursor",kind,context,path,max_steps,
+                self.work.max_operand_bits,*operands)
+
+    def recording_axis_rotation(self,axis,coordinate,*,context,path,max_steps):
+        """Compose exact coordinate differences within one recorded phase.
+
+        The ordinary source evaluator is unchanged. The export certificate
+        separately includes the proved finite recurrence excess at endpoints.
+        Eviction or the finite step ceiling starts again at the direct kernel.
+        """
+        coordinate=rational(coordinate,self.work)
+        axis=self._vector(axis)
+        key=self._recording_cursor_key("axis",context,path,max_steps,axis)
+        previous=self.work.lookup(key)
+        if previous is None or previous[2]>=max_steps:
+            result=self.axis_rotation(axis,coordinate)
+            count=1
+        else:
+            last,rotation,count=previous
+            self.work.charge("recording_rotation_cursor_guard")
+            self.work.guard(last,*rotation.components,rotation.error_rad,count)
+            delta=self._op(coordinate,last,"sub")
+            result=(self.multiply(self.axis_rotation(axis,delta),rotation)
+                    if delta else rotation)
+            self.work.charge("recording_rotation_step")
+            count+=1
+        self.work.remember(key,(coordinate,result,count))
+        return result
+
     def _normalized_axis(self,axis):
         """The same immutable 96-bit axis reduction for every requested angle."""
         axis=self._vector(axis)
@@ -614,8 +838,7 @@ class ReachPoseOps:
                 self.work.remember(key,result); return result
         raise ReachAdmissionError("reach_numeric","Finite source spin phase reduction could not be certified.")
 
-    def spin_rotation(self,omega,elapsed,*,phase_plan=None):
-        elapsed=rational(elapsed,self.work)
+    def _checked_spin_plan(self,omega,elapsed,phase_plan):
         plan=phase_plan if phase_plan is not None else self.spin_plan(omega,abs(elapsed))
         if not isinstance(plan,SpinPlan) or compare(abs(elapsed),plan.max_elapsed_s,self.work)>0:
             raise ReachAdmissionError("reach_numeric","A source sample lies outside its proved spin phase.")
@@ -624,6 +847,11 @@ class ReachPoseOps:
         self.work.charge("spin_plan_identity",3)
         if supplied!=reconstructed:
             raise ReachAdmissionError("reach_numeric","A spin plan belongs to different angular velocity.")
+        return plan
+
+    def spin_rotation(self,omega,elapsed,*,phase_plan=None):
+        elapsed=rational(elapsed,self.work)
+        plan=self._checked_spin_plan(omega,elapsed,phase_plan)
         if not plan.maximum or not elapsed: return RotationValue(UNIT)
         factor=self._op(self._op(plan.maximum,elapsed,"mul"),F(2),"div")
         lo,hi=(self._op(factor,v,"mul") for v in plan.norm_bounds)
@@ -648,6 +876,47 @@ class ReachPoseOps:
         self.work.charge("orientation_stationary",3)
         if not any(omega) or not elapsed: return initial
         return self.multiply(self.spin_rotation(omega,elapsed,phase_plan=phase_plan),initial)
+
+    def recording_advance_orientation(self,initial,omega,elapsed,*,context,path,
+                                      max_steps,phase_plan=None):
+        """Record a fixed world angular velocity with bounded rotation steps."""
+        initial=self._rotation(initial); elapsed=rational(elapsed,self.work)
+        omega=self._vector(omega)
+        key=self._recording_cursor_key("spin",context,path,max_steps,initial,omega,phase_plan)
+        self.work.charge("orientation_stationary",3)
+        if not any(omega) or not elapsed: return initial
+        # Every warm request checks the full current elapsed/omega/plan domain.
+        # A cached increment is never authority for a different phase plan.
+        plan=self._checked_spin_plan(omega,elapsed,phase_plan)
+        previous=self.work.lookup(key)
+        delta=None
+        if previous is not None and previous[2]<max_steps:
+            last,rotation,count=previous
+            self.work.charge("recording_rotation_cursor_guard")
+            self.work.guard(last,*rotation.components,rotation.error_rad,count)
+            delta=self._op(elapsed,last,"sub")
+            if compare(abs(delta),plan.max_elapsed_s,self.work)>0:
+                delta=None
+        if delta is None:
+            result=self.advance_orientation(initial,omega,elapsed,phase_plan=plan)
+            count=1
+        else:
+            if delta:
+                increment_key=(METHOD,"recording_spin_increment",omega,plan,delta,
+                               self.work.max_operand_bits)
+                increment=self.work.lookup(increment_key)
+                if increment is None:
+                    increment=self.spin_rotation(omega,delta,phase_plan=plan)
+                    self.work.remember(increment_key,increment)
+                else:
+                    self.work.guard(*increment.components,increment.error_rad)
+                result=self.multiply(increment,rotation)
+            else:
+                result=rotation
+            self.work.charge("recording_rotation_step")
+            count+=1
+        self.work.remember(key,(elapsed,result,count))
+        return result
 
     def identity(self):
         self.work.charge("pose_identity")
@@ -724,6 +993,60 @@ class ReachPoseOps:
         if relative is None:
             rotation=self.multiply(parent_rotation,local_rotation)
             self.work.remember(key,(offset,rotation))
+        return RecordedTransform(position,rotation,self)
+
+    def compose_recording_fast(self,parent,local):
+        """Compose recorded transforms, eliding actual identity products.
+
+        This is a separately identified recording algorithm. The original
+        source and direct-recording equations keep their projection sequence.
+        An omitted quaternion projection introduces no product error, but both
+        operands' existing angular allowances still belong to the result.
+        """
+        if not isinstance(parent,(PoseValue,RecordedTransform)) or not isinstance(local,(PoseValue,RecordedTransform)):
+            raise TypeError("Recording composition requires private transform inputs")
+        self.work.charge("recording_identity_operand_guard")
+        # The fast path operates only on this request's immutable private
+        # domain. Less ordinary input shapes and narrower arithmetic domains
+        # retain the original checked composition and its preflights.
+        if (parent._ops is not self or local._ops is not self or
+                self.work.max_operand_bits != 32768):
+            return self.compose_recording(parent,local)
+        for value in (parent,local):
+            if (not isinstance(value.exact_position,tuple) or len(value.exact_position)!=3 or
+                    not all(type(part) is F for part in value.exact_position) or
+                    type(value.rotation) is not RotationValue or
+                    not isinstance(value.rotation.components,tuple) or len(value.rotation.components)!=4 or
+                    not all(type(part) is F for part in value.rotation.components) or
+                    type(value.rotation.error_rad) is not F):
+                return self.compose_recording(parent,local)
+            self.work.guard(*value.exact_position,*value.rotation.components,value.rotation.error_rad)
+            if not any(value.rotation.components):
+                raise ReachAdmissionError("reach_numeric","A zero quaternion cannot represent a rotation.")
+        parent_rotation,local_rotation=parent.rotation,local.rotation
+        parent_identity=not any(parent_rotation.components[1:])
+        local_identity=not any(local_rotation.components[1:])
+        if not parent_identity and not local_identity:
+            return self.compose_recording(parent,local)
+        self.work.charge("recording_identity_composition")
+        if not any(local.exact_position):
+            position=self._rounded_vector(parent.exact_position)
+        else:
+            offset=(self._rounded_vector(local.exact_position) if parent_identity else
+                    self.rotate(parent_rotation,local.exact_position))
+            position=self._rounded_vector(self._add_exact_vectors(parent.exact_position,offset))
+        unchanged=local_rotation if parent_identity else parent_rotation
+        other=parent_rotation if parent_identity else local_rotation
+        if not other.error_rad:
+            rotation=unchanged
+        else:
+            error=self._op(unchanged.error_rad,other.error_rad,"add")
+            rotation=RotationValue(unchanged.components,error,unchanged.frozen_projection)
+        # A cancellation callback may also narrow the work domain during a
+        # charged position operation. Re-establish the ordinary preflights in
+        # that domain before an unprojected quaternion can leave this helper.
+        if self.work.max_operand_bits != 32768:
+            return self.compose_recording(parent,local)
         return RecordedTransform(position,rotation,self)
 
     def compose(self,parent,local):
@@ -841,6 +1164,46 @@ class ReachPoseOps:
         point=world_point.exact_position if isinstance(world_point,PoseValue) else self._vector(world_point)
         difference=tuple(self._op(a,b,"sub") for a,b in zip(point,base.exact_position))
         return self.rotate(self.inverse_rotation(base.rotation),difference)
+
+    def ensure_finite(self,pose):
+        """Prove unused public fields admissible without materializing tuples.
+
+        This is only a finiteness check, never a source of public pose values.
+        Small exact operands under the full width cap admit every operation of
+        the original projection; every other case executes that projection.
+        The proof and explicit intermediate widths are in the numeric note.
+        """
+        if (type(pose) is not PoseValue or pose._ops is not self or
+                type(pose._projection) is not dict):
+            pose.position,pose.orientation,pose.velocity,pose.omega
+            return
+        for name,length in (("position",3),("orientation",4),("velocity",3),("omega",3)):
+            self.work.charge("pose_finiteness_field")
+            # _expose also returns an existing actual projection before any
+            # new numeric guards. Do not replace it with a different value.
+            if name in pose._projection:
+                continue
+            # Recheck after the callback: it may have narrowed this request.
+            if self.work.max_operand_bits!=MAX_OPERAND_BITS:
+                getattr(pose,name)
+                continue
+            if name=="orientation":
+                rotation=pose.rotation
+                if type(rotation) is not RotationValue or rotation.frozen_projection is not None:
+                    getattr(pose,name)
+                    continue
+                values=rotation.components
+            else:
+                values=getattr(pose,"exact_"+name)
+            if (type(values) is not tuple or len(values)!=length or
+                    any(type(value) is not F for value in values)):
+                getattr(pose,name)
+                continue
+            self.work.guard(*values)
+            small=all(max(value.numerator.bit_length(),value.denominator.bit_length())<=512
+                      for value in values)
+            if not small or (name=="orientation" and not any(values)):
+                getattr(pose,name)
 
     def _unit_projection(self,rotation):
         if rotation.frozen_projection is not None:
@@ -973,7 +1336,7 @@ def source_numeric_basis(*,work):
     if cached is not None: return cached
     root=Path(__file__).resolve().parent.parent
     implementation_names=("ontokin/reach_numeric.py","ontokin/reach_kinematics.py","ontokin/reach_pose.py",
-                          "ontokin/reach_phase.py","ontokin/reach_runtime.py")
+                          "ontokin/reach_phase.py","ontokin/reach_runtime.py","ontokin/reach_export.py")
     derivation_names=("docs/engineering/reach-numeric-kernel.md",
                       "docs/engineering/reach-source-kernel.md")
     names=implementation_names+derivation_names
@@ -1002,7 +1365,7 @@ def source_numeric_basis(*,work):
         return sha256("".join(name+"\0"+digest+"\n" for name,digest in values).encode("ascii")).hexdigest()
     implementation=aggregate(entries[:len(implementation_names)])
     derivation=aggregate(entries[len(implementation_names):])
-    result=SourceNumericBasis("OntoKin controlled source poses","0.1","sha256:"+implementation,
+    result=SourceNumericBasis("OntoKin controlled source poses","0.2","sha256:"+implementation,
         METHOD,"sha256:"+derivation,tuple(entries))
     work.remember(key,result)
     return result

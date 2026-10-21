@@ -740,3 +740,233 @@ through coordinate lifecycle changes, replacement, release and force behavior;
 check interruption after a coordinate completion; retain cancellation identity;
 and reject excessive logical no-op boundaries despite shared physical storage.
 Execution evidence is recorded on its exact source cut separately.
+
+## Exact affine coordinate law reuse
+
+For an active tween or one coordinate of a planar reach, the independent
+reference evaluates the exact slope `(target-initial)/duration`, then the
+coordinate `initial+slope*elapsed`. The slope depends only on the three exact
+canonical operands. It does not depend on the current clock, paused elapsed
+value, action owner, running status or whether a caller requests an ideal pose.
+An ideal initial coordinate and an actual initial coordinate share this law
+only when their exact decoded values are equal.
+
+The existing bounded independent arithmetic cache may retain that single
+immutable Fraction. Its key contains the complete initial/target/duration
+triple and the live independent operand cap. Every call still decodes and
+guards both endpoints, checks the original subtraction's prospective numerator
+and denominator widths, and decodes and guards a nonzero duration before lookup.
+For endpoint numerator/denominator bit lengths `(an,ad)` and `(bn,bd)`, that
+subtraction preflight is exactly `max(max(an+bd,bn+ad)+1, ad+bd)`. A miss performs
+the original exact subtraction and division, including the division's original
+prospective-width check. Changing the cap changes the key, so a previously
+successful quotient cannot suppress a newly failing division preflight.
+
+The current state's elapsed calculation, exact multiply/add, per-sample
+binary64 rounding and running-versus-zero returned rate remain fresh. The
+complete successful coordinate calculation precedes cache insertion; a failed
+projection or interrupted insertion supplies no newly published law. Lookup
+and insertion execute the current shared callback, and all actually performed
+exact operations retain their charges. A warm call replaces two repeated
+exact slope operations with one charged lookup; a cold call incurs the lookup
+and insertion as well as the original arithmetic. No separate map, state
+reference, numerical allowance or work-budget extension is introduced.
+
+This reuse retains the reference arithmetic's existing module-level operand
+domain. The separate question of applying a narrower optional request-work
+operand cap to every independent arithmetic operation requires its own scoped
+guard change; the tick-only work adapter remains supported. Actual execution
+results and any measured corpus benefit must be recorded separately.
+
+## Independent live operand domain
+
+The subsequent guard correction uses the effective limit
+`min(MAX_OPERAND_BITS, work.max_operand_bits)` when the supplied work object
+exposes a limit. A tick-only adapter, or a standalone bounded callback, keeps
+the independent module's fixed 32,768-bit domain. A supplied limit must be a
+positive integer; a larger value cannot enlarge the reader's fixed maximum.
+Before this correction, a work object limited to 64 bits could still ask the
+independent reader to add an 81-bit integer because its guards consulted only
+the module constant. The independent limit now follows the actual caller.
+
+The scalar input guards, exact Fraction prospective widths, all omitted
+interval-corner preflights, endpoint grids, square-root shifts, integer Taylor
+operations and the sufficient fast-series domain all read that effective
+limit. Precision and series denominators are checked before their shifts.
+Previously constructed intervals are admitted before exact zero/unit
+shortcuts; the quaternion identity and zero-vector paths likewise check every
+supplied quaternion endpoint. These checks add no scalar operation charge on
+the unchanged-cap path. A previously allocated endpoint grid is also checked
+before use under a narrower current limit.
+
+The existing 256-entry pure cache is cleared, with one current callback
+checkpoint, when its effective domain changes. Every numerical cache key
+additionally captures the effective cap at construction. Consequently a cap
+change during a callback cannot insert a just-completed broader proof into a
+narrower namespace. The outer pose, phase, source-basis and canonical-target
+caches reset together on their next access, also using a charged checkpoint;
+pose, phase and target calculations insert only if their starting cap is still
+current. Per-sample joint observations include the cap in their key. No new
+cache, allowance, callback reference or source-state reference is retained.
+The semantic event ledger remains the record of already executed source
+transitions; later arithmetic admits its stored values under the current cap.
+
+Focused checks cover actual lower input and intermediate limits, omitted
+corners, precision allocation, warm normalization/trigonometry/Taylor proofs,
+affine quotient reuse, all outer proof caches, cap changes during insertion,
+and cancellation before cache mutation. The fixed default-cap path retains
+the same numerical expressions, cache-hit decisions and charged operations;
+tick-only and explicit-default adapters are compared for exact values and
+operation totals. This section records the implementation and proof scope,
+not an executed regression or release result.
+
+The subsequent static review also checks the callback boundary inside scalar
+and vector zero/unit shortcuts. Interval conversion can precede a charged
+callback; that callback can narrow the cap before a shortcut returns an earlier
+operand. The helpers re-admit all retained endpoints after that checkpoint,
+and square-root/binary64 projections re-admit their actual input endpoints.
+A later vector-component conversion or conjugation cannot retain an earlier
+component that exceeds the now-current domain. These are width guards only;
+the fixed-cap path executes the same expressions and operation charges.
+
+The same rule applies when later component arithmetic invokes a callback:
+vector addition, scaling, cross products and complete pose construction admit
+all retained result endpoints in the final current domain. This includes an
+early component whose input operands fit a narrowed cap but whose previously
+completed exact product does not. Cache publication still uses its original
+cap-qualified key; the documented publication checkpoint cannot relabel a
+completed broader proof as a proof in the narrower domain.
+
+## Complete exact identity composition
+
+The independent reference can reuse an existing immutable `PoseEnclosure`
+when the other complete pose is the exact identity: all three position,
+velocity and angular-velocity components are point zero, and its four
+orientation components are the positive unit quaternion `(1, 0, 0, 0)`.
+An interval merely containing zero, a nonzero rate, a negative-unit
+representative or a partial pose does not satisfy this predicate. Both
+operands must have the original complete tuple shapes and exact
+`Interval`/`Fraction` members; other inputs retain the original helper path,
+including its coercion and error behavior.
+
+For identity on the left, rotation by its positive unit quaternion returns
+each unchanged local position/rate interval, and addition of point zero
+returns that same interval. Its angular velocity is zero, so the spatial
+cross term is exactly zero. Quaternion multiplication also returns the
+unchanged local orientation. For identity on the right, its position and
+rates rotate to exact zero even if the parent quaternion is not unit; the
+cross term with this zero offset is zero, and each parent position/rate
+interval and orientation remains unchanged. These reductions use the
+original helpers' existing exact zero/unit branches. They omit no outward
+grid rounding or nontrivial Fraction operation. Consequently all position,
+orientation, velocity and angular-velocity interval endpoints agree exactly
+with the full independent composition equations in both orders.
+
+The existing compose-cache lookup still supplies the current charged
+cancellation checkpoint. Before returning a reused pose, all 52 endpoints
+of both complete operands are admitted under the callback's current
+effective cap. None of the skipped zero/unit helper branches requires a
+larger intermediate domain. The shortcut creates no new numerical cache
+and stores no redundant result in the existing 256-entry cache. Nonidentity
+compositions execute the unchanged equations and charged operations; a
+fresh identity composition needs only its existing lookup charge. The
+100,000-operation, 32,768-bit and 256-entry maxima remain unchanged.
+
+Focused regressions compare the old independent composition equations with
+the shortcut for nondyadic and uncertain intervals, nonunit orientations,
+nonzero spatial derivatives, narrow caps, malformed shapes, callback
+cancellation and repeated identity edges. Additional source-derived
+comparisons cover P01, P16 and L02 independent recording poses and complete
+histories for their explicitly named prefixes. No executed test result or
+complete artifact acceptance is asserted by this implementation record.
+
+## Independent recording angle intervals
+
+The GLB reader now supplies one fresh opaque context to its retained-key
+comparison pass. Only that explicit context enables successive independent
+hinge-angle enclosures, and only for a currently nonzero source coordinate
+rate. Stationary hinges retain their direct angle cache across clocks.
+Ordinary source poses, observations, boundary states,
+phase bounds and calls to the recording API without a context continue to use
+the direct independent series. Recording pose-cache entries additionally
+include their context, so accumulated intervals cannot satisfy a direct source
+query. The reader never imports or calls a production rotation helper.
+
+The context supplied to a hinge includes the reader token, retained source
+state identity, source phase index, before/after side, joint path and complete
+axis intervals. The existing arithmetic cache key also includes precision and
+the effective operand cap. Each cursor stores only the preceding exact
+coordinate, exact clock, two sine/cosine intervals and a bounded step count.
+It retains no source-state object, callback, writer result or new numeric
+allowance. All entries compete in the same existing 256-entry LRU.
+
+For exact point coordinates `q0` and `q1`, the next half-angle difference is
+calculated by guarded exact operations as `d = (q1-q0)/2`. The independent
+128-bit grid encloses this difference before the independent `sincos` routine
+encloses `sin(d)` and `cos(d)`. If `S0` and `C0` enclose the preceding exact
+half-angle, ordinary outward interval operations calculate
+
+```
+S1 = S0*cos(d) + C0*sin(d)
+C1 = C0*cos(d) - S0*sin(d)
+```
+
+The real addition identities and interval inclusion establish the next exact
+half-angle enclosure by induction. Every endpoint rounding is outward. No
+unit-quaternion approximation, normalization of interval midpoints, assumed
+writer error or enlargement of a source allowance enters this argument. The
+existing independently normalized axis and pose-composition equations then
+propagate these intervals into the expected recording position/orientation.
+
+An update requires a strictly increasing clock within the exact context,
+`abs(d) <= 1/4`, and fewer than 64 preceding updates. Otherwise it seeds from
+the original direct independent series. A phase/side change, different reader
+pass, cache eviction or rewind therefore cannot continue an earlier cursor.
+Nonpoint coordinates, other precisions and narrower operand caps also use the
+direct path. Check-only or tick-only adapters without the shared work's
+callback-exception identity field likewise keep direct evaluation. An
+input-width condition proves in advance that both exact delta
+operations, its endpoint-grid shift and the clock comparison fit the current
+fixed domain. Larger operands retain the direct path instead of introducing a
+new intermediate-width rejection.
+
+These conditions give a finite enclosure bound without relying on a corpus
+angle or a source tolerance. A successful direct series has interval magnitude
+below three: its reduced input has magnitude at most one, its alternating
+partial sums have magnitude at most one, and its input-width, tail and grid
+errors add less than two. For `abs(d) <= 1/4`, the grid remains within that
+interval, and the resulting sine/cosine magnitudes sum to less than `3/2`.
+If `g = 2**-128`, each update has magnitude at most `3*M/2 + 3*g`, including
+the two product grids and final sum grid. Starting below three, 64 updates
+remain below `2**40`. Their dyadic endpoint products therefore remain far
+inside the unchanged 32,768-bit domain; every actual operation still executes
+its normal operand and prospective-width guards. A reset is a precision
+strategy, not an additional accepted error or a larger execution limit.
+
+On a uniform retained-clock spacing within an exact affine coordinate law,
+every `d` is the same reduced Fraction. Its complete grid endpoints form the
+existing independent `sincos` cache key, so the delta proof is reusable. The
+cursor lookup, both exact delta operations, delta grid, interval products and
+sums, and successful cursor publication all retain their actual charges and
+callback checks. A callback that changes the effective cap sends the call
+back through the direct current-domain proof. This includes a resource failure
+inside an extra recurrence operation: if its cap changed, the direct original
+path is retried, since the delta subtraction can have a larger prospective
+denominator than the direct half-angle division. A callback-thrown exception
+is identified by the shared work's recorded instance and always propagates
+unchanged. Fixed-cap resource failures also propagate unchanged.
+Publication keeps its original
+cap-qualified key and cannot create a cursor in a narrower namespace. The
+publication callback precedes mutation, so cancellation cannot advance it.
+
+The focused regressions cover finer independent enclosure containment through
+positive and negative increments, exact zero crossings, repeated delta reuse,
+the 64-step reset, changed contexts, rewinds, large jumps, eviction, nonpoint
+inputs, other precisions, large rational operands, live cap changes and
+cancellation identity, including narrowing during a 32,003-bit delta
+preflight whose original half-angle needs only 16,004 bits. Source-derived
+checks cover L02 ownership/side changes,
+unchanged complete source histories and direct pose results. A small actual
+GLB comparison checks fresh reader contexts and unchanged recording bytes.
+This section describes the implementation and its proof, not executed test
+results or completion of any recording or release gate.

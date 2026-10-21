@@ -59,6 +59,7 @@ class ReachExecutionWork:
         self.counts: dict[str, int] = {}
         self.callback_error: BaseException | None = None
         self._cache: OrderedDict[tuple, object] = OrderedDict()
+        self._cache_operand_bits = max_operand_bits
 
     def charge(self, kind="checkpoint", amount=1):
         if type(amount) is not int or amount < 0:
@@ -104,14 +105,24 @@ class ReachExecutionWork:
 
     def lookup(self, key):
         self.charge("cache_lookup")
+        self._sync_cache_operand_limit()
         if key not in self._cache:
             return None
         self.charge("cache_promote")
+        # The promotion callback can change the domain after the first
+        # synchronization. Never return its now-stale completed proof.
+        if self._sync_cache_operand_limit():
+            return None
         self._cache.move_to_end(key)
         return self._cache[key]
 
     def remember(self, key, value):
+        operand_bits = self.max_operand_bits
         self.charge("cache_insert")
+        # A caller may return a proof completed before this callback, but it
+        # cannot publish that proof as reusable under a different domain.
+        if self._sync_cache_operand_limit() or operand_bits != self.max_operand_bits:
+            return
         present = key in self._cache
         # All required bookkeeping is precharged before changing values/order.
         # A cancelled promotion or eviction leaves the previous cache intact.
@@ -119,10 +130,27 @@ class ReachExecutionWork:
             self.charge("cache_promote")
         elif len(self._cache) >= self.max_cache_entries:
             self.charge("cache_evict")
+        # Promotion and eviction have callbacks of their own. A successful
+        # reset discards this pending insertion; cancellation before the reset
+        # still preserves the original values and order.
+        if self._sync_cache_operand_limit() or operand_bits != self.max_operand_bits:
+            return
+        if not present and len(self._cache) >= self.max_cache_entries:
             self._cache.popitem(last=False)
         self._cache[key] = value
         if present:
             self._cache.move_to_end(key)
+
+    def _sync_cache_operand_limit(self):
+        # A completed proof under a wider cap cannot stand in for arithmetic
+        # that the current narrower domain would reject. Clear all nested
+        # reusable results together; ordinary requests keep one fixed cap.
+        if self._cache_operand_bits != self.max_operand_bits:
+            self.charge("cache_operand_scope_reset")
+            self._cache.clear()
+            self._cache_operand_bits = self.max_operand_bits
+            return True
+        return False
 
     def record(self):
         return {"operations": self.operations, "counts": dict(self.counts),

@@ -296,7 +296,7 @@ class ReachPoseTests(unittest.TestCase):
         basis=source_numeric_basis(work=work)
         self.assertEqual(tuple(name for name,_ in basis.inputs),(
             "ontokin/reach_numeric.py","ontokin/reach_kinematics.py","ontokin/reach_pose.py",
-            "ontokin/reach_phase.py","ontokin/reach_runtime.py",
+            "ontokin/reach_phase.py","ontokin/reach_runtime.py","ontokin/reach_export.py",
             "docs/engineering/reach-numeric-kernel.md","docs/engineering/reach-source-kernel.md"))
         self.assertEqual(set(basis.as_dict()),{"name","version","implementation","method","derivation"})
         before=work.operations

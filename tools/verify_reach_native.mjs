@@ -15,7 +15,7 @@ import {
 export const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SCHEMA = 'ontokin.reach-native-validation/0.1';
 const SOURCE_IMPLEMENTATION = ['ontokin/reach_numeric.py', 'ontokin/reach_kinematics.py',
-  'ontokin/reach_pose.py', 'ontokin/reach_phase.py', 'ontokin/reach_runtime.py'];
+  'ontokin/reach_pose.py', 'ontokin/reach_phase.py', 'ontokin/reach_runtime.py', 'ontokin/reach_export.py'];
 const SOURCE_DERIVATION = ['docs/engineering/reach-numeric-kernel.md', 'docs/engineering/reach-source-kernel.md'];
 const DESTINATION_IMPLEMENTATION = 'tools/reach_destination.mjs';
 const DESTINATION_DERIVATION = 'docs/engineering/reach-destination-numerics.md';
@@ -104,7 +104,9 @@ async function checkBasis(metadata, observed) {
   }
   const quantization = object(metadata.reach_quantization, 'Reach numerical basis');
   const source = object(quantization.source_numeric_bound_basis, 'Source numerical basis');
-  requireThat(digest(source.implementation_sha256) === await aggregate(SOURCE_IMPLEMENTATION) &&
+  requireThat(source.name === 'OntoKin controlled source poses' && source.version === '0.2' &&
+    source.method === 'ontokin.source-pose-projective-dyadic/0.2' &&
+    digest(source.implementation_sha256) === await aggregate(SOURCE_IMPLEMENTATION) &&
     digest(source.derivation_sha256) === await aggregate(SOURCE_DERIVATION),
     'source_basis', 'The artifact numerical basis does not identify the current source implementation and derivation.');
   const destination = object(quantization.destination_numeric_bound_basis, 'Destination numerical basis');

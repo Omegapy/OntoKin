@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-21T19:18:00Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-21T19:44:00Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -44,16 +44,28 @@ local `569b67b0bdc6854cc069e6a00590e0f15267ae03`
 [draft PR #25](https://github.com/Omegapy/OntoKin/pull/25). Original branches,
 failed attempts and earlier evidence retain their identities.
 
-Current integrated implementation is `7bfa47c5d6582d460ba61637d724e837e8a35ea0`,
-tree `33068412914a63b94aeb0698e480327498adaf0d`. Exact paired source polynomial
-evaluation, guarded independent orientation reuse and the unchanged adaptive
-reference series now use bounded integer arithmetic. The latest complete
-source execution on `39107f2` still passes **13/28**; P01 uses **84,389**
-operations, P14 **94,183**, and P17 **80,936**. The same 15 cases exhaust the
-unchanged cap. Integrated focused executions pass **63/63** at `26c1fe6` and
-**35/35** at `e1670da`; the independently reviewed reference-series worker
-passes **101/101** at `c68affc`. These are distinct identified cuts, not a fresh
-complete regression or final acceptance of the integrated implementation.
+Current integrated implementation is `49b8858179cda2cf508e0e3ec8a3f965ad8b07b1`,
+tree `2023bc7f48b794141012f839c9ece2e112b784a0`. The separately identified
+recording sampler now uses phase-scoped bounded rotation recurrence, exact
+identity-product elision and explicit conservative endpoint excesses. The
+independent supplied-byte reader binds all six implementation inputs and rejects
+understated endpoint claims. Exact source and independent coordinate laws are
+reused only inside their guarded operand domains. Unused boundary projections
+can use a proved finiteness check; complete force histories retain exact output
+limits with the existing reach JSON accounting.
+
+The latest complete source execution on `99febf1` still passes **13/28**;
+P01 uses **77,912** operations, P14 **87,381**, and P17 **74,262**. The same
+15 cases exhaust the unchanged 100,000-operation cap. Recent focused runs
+check the new algorithms but retain the L02 0.75-second recording-prefix
+budget failure: latest **25 passed / one error**, no skips. The earlier
+identity-allowance assertion failure and its corrected rerun are preserved.
+No failed complete or focused run is represented as acceptance.
+
+The full Python regression on the preceding published arithmetic checkpoint
+`cce81ce` / remote `9414b0c` passed **1,374/1,374**, with no failures, errors or
+skips and stable inputs. It finished at 19:26 UTC. The newer recording changes
+require their own complete regression after the recording gate is resolved.
 
 The fresh Agent execution on `39107f2` retrieves **3/10** artifacts; seven still
 exhaust the cap. Its live synchronized workspace store also lost already
@@ -62,14 +74,15 @@ the same clean code succeeds with a `/tmp` live store. External file replacement
 is a documented inference, not a proved cause. Future live stores use `/tmp`;
 closed evidence is preserved afterward. No failed receipt is relabeled.
 
-The [recovery record](docs/engineering/reach-recovery-validation/README.md#recording-and-agent-checkpoint-1918-utc)
-preserves all new source/Agent failures, focused/profiler results and the store
-diagnosis in two verified archives containing 683 members. A recording-only
-rotation recurrence with explicit endpoint error bounds is being implemented
-in isolated branches; it has not executed. Separate release auditor/collector
-tests pass **49/49** at `6119dd2`; its actual empty audit correctly reports every
-role pending. Independent review, missing hostile producers and real final
-executions remain required.
+The [recovery record](docs/engineering/reach-recovery-validation/README.md#recording-recurrence-checkpoint-1944-utc)
+adds four verified archives with **227 members**, retaining the 1,374-test
+regression, every new focused attempt, stage observations and three complete
+28-case recording runs. Earlier archives preserve all source/Agent failures
+and the store diagnosis. Separate release auditor/collector tests pass
+**49/49** at `6119dd2`; its actual empty audit correctly reports every role
+pending. Current independent review, missing hostile producers and real final
+executions remain required. The next implementation work targets exact integer
+pose arithmetic and independent endpoint costs; all public limits stay fixed.
 
 | Recovered evidence | Actual result and limit |
 | --- | --- |

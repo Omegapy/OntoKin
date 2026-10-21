@@ -34,7 +34,7 @@ ROOT = Path(__file__).resolve().parents[1]
 INPUT_GROUPS = {
     "source_numeric_implementation": (
         "ontokin/reach_numeric.py", "ontokin/reach_kinematics.py",
-        "ontokin/reach_pose.py", "ontokin/reach_phase.py", "ontokin/reach_runtime.py"),
+        "ontokin/reach_pose.py", "ontokin/reach_phase.py", "ontokin/reach_runtime.py", "ontokin/reach_export.py"),
     "source_numerical_derivation": (
         "docs/engineering/reach-numeric-kernel.md", "docs/engineering/reach-source-kernel.md"),
     "independent_source_reference": ("ontokin/reach_reference.py",),

@@ -75,16 +75,39 @@ class _Arithmetic:
         self.work = work
         self.check = work.tick if work is not None else check
         self.bits = bits
-        self.scale = 1 << bits
+        self.scale = self._dyadic_denominator(bits)
         self.cache = {}
+        self._cache_operand_limit = self.operand_limit
+
+    @property
+    def operand_limit(self):
+        """Honor a caller's narrower live domain without enlarging this reader."""
+        requested = getattr(self.work, "max_operand_bits", MAX_OPERAND_BITS)
+        if type(requested) is not int or requested < 1:
+            raise ReferenceError("resource", "Invalid independent reference operand limit")
+        return min(MAX_OPERAND_BITS, requested)
+
+    def _dyadic_denominator(self, exponent):
+        if exponent + 1 > self.operand_limit:
+            raise ReferenceError("resource", "Reference dyadic denominator exceeds operand limit")
+        return 1 << exponent
+
+    def _sync_cache_operand_limit(self):
+        if self._cache_operand_limit != self.operand_limit:
+            # Existing lookup/insertion charges cover their usual bounded
+            # bookkeeping. A changed domain additionally charges this reset.
+            self.tick()
+            self.cache.clear()
+            self._cache_operand_limit = self.operand_limit
 
     def tick(self):
         self.check()
 
     def guard(self, *values):
+        limit = self.operand_limit
         for value in values:
             value = F(value)
-            if max(abs(value.numerator).bit_length(), value.denominator.bit_length()) > MAX_OPERAND_BITS:
+            if max(abs(value.numerator).bit_length(), value.denominator.bit_length()) > limit:
                 raise ReferenceError("resource", "Independent reference operand limit exceeded")
 
     def exact(self, a, b, kind):
@@ -104,7 +127,7 @@ class _Arithmetic:
             extent, denominator = an + bd, ad + bn
         else:
             raise ValueError(kind)
-        if max(extent, denominator) > MAX_OPERAND_BITS:
+        if max(extent, denominator) > self.operand_limit:
             raise ReferenceError("resource", "Independent reference intermediate operand limit exceeded")
         return {"add": F.__add__, "sub": F.__sub__, "mul": F.__mul__, "div": F.__truediv__}[kind](a, b)
 
@@ -140,19 +163,23 @@ class _Arithmetic:
 
     def grid(self, low, high):
         self.tick()
-        self.guard(low, high)
-        if max(abs(low.numerator).bit_length(), abs(high.numerator).bit_length()) + self.bits > MAX_OPERAND_BITS:
+        self.guard(low, high, self.scale)
+        if max(abs(low.numerator).bit_length(), abs(high.numerator).bit_length()) + self.bits > self.operand_limit:
             raise ReferenceError("resource", "Reference endpoint grid exceeds operand limit")
         low_n = (low.numerator << self.bits) // low.denominator
         high_n = -((-high.numerator << self.bits) // high.denominator)
         return Interval(F(low_n, self.scale), F(high_n, self.scale))
 
     def interval(self, value):
-        return value if isinstance(value, Interval) else self.point(value)
+        if isinstance(value, Interval):
+            self.guard(value.lo, value.hi)
+            return value
+        return self.point(value)
 
     def add(self, a, b):
         a, b = self.interval(a), self.interval(b)
         self.tick()
+        self.guard(a.lo, a.hi, b.lo, b.hi)
         if a.lo == a.hi == 0:
             return b
         if b.lo == b.hi == 0:
@@ -185,12 +212,13 @@ class _Arithmetic:
         bn = max(abs(value.numerator).bit_length() for value in right)
         bd = max(value.denominator.bit_length() for value in right)
         extent = max(an + bn, ad + bd) if kind == "mul" else max(an + bd, ad + bn)
-        if extent > MAX_OPERAND_BITS:
+        if extent > self.operand_limit:
             raise ReferenceError("resource", "Independent reference intermediate operand limit exceeded")
 
     def mul(self, a, b):
         a, b = self.interval(a), self.interval(b)
         self.tick()
+        self.guard(a.lo, a.hi, b.lo, b.hi)
         if a.lo == a.hi == 0 or b.lo == b.hi == 0:
             return Interval(F(0), F(0))
         if a.lo == a.hi == 1:
@@ -231,6 +259,7 @@ class _Arithmetic:
         if b.lo <= 0 <= b.hi:
             raise _Uncertain("Reference interval divisor contains zero")
         self.tick()
+        self.guard(a.lo, a.hi, b.lo, b.hi)
         if a.lo == a.hi == 0:
             return a
         if b.lo == b.hi == 1:
@@ -261,7 +290,8 @@ class _Arithmetic:
         result = []
         for endpoint in ((value.lo,) if value.lo == value.hi else (value.lo, value.hi)):
             self.tick()
-            if abs(endpoint.numerator).bit_length() + 2 * self.bits > MAX_OPERAND_BITS:
+            self.guard(value.lo, value.hi, self.scale)
+            if abs(endpoint.numerator).bit_length() + 2 * self.bits > self.operand_limit:
                 raise ReferenceError("resource", "Reference radical operand limit exceeded")
             scaled = (endpoint.numerator << (2 * self.bits)) // endpoint.denominator
             root = math.isqrt(scaled)
@@ -278,6 +308,7 @@ class _Arithmetic:
 
     def remember(self, key, value):
         self.tick()
+        self._sync_cache_operand_limit()
         if key in self.cache:
             del self.cache[key]
         elif len(self.cache) >= MAX_CACHE:
@@ -288,6 +319,7 @@ class _Arithmetic:
     def lookup(self, key):
         """Reuse pure work within the same bounded independent context."""
         self.tick()
+        self._sync_cache_operand_limit()
         value = self.cache.get(key)
         if value is not None:
             # Dictionary insertion order supplies bounded least-recent use;
@@ -310,13 +342,13 @@ class _Arithmetic:
             total = self.exact(total, term, "add" if k % 2 == 0 else "sub")
             power = self.exact(power, square, "mul")
             following = self.exact(power, 2 * k + 3, "div")
-            if following < F(1, 1 << (self.bits + 8)):
+            if following < F(1, self._dyadic_denominator(self.bits + 8)):
                 other = self.exact(total, following, "sub" if k % 2 == 0 else "add")
                 return self.grid(min(total, other), max(total, other))
         raise _Uncertain("Finite reference atan series did not converge")
 
     def pi(self):
-        key = ("pi", self.bits)
+        key = ("pi", self.bits, self.operand_limit)
         cached = self.lookup(key)
         if cached is not None:
             return cached
@@ -371,11 +403,11 @@ class _Arithmetic:
             extent = an + bn
         elif kind in ("add", "sub"):
             extent = max(an, bn) + 1
-        elif kind == "div":
+        elif kind in ("div", "divmod"):
             extent = max(an, bn)
         else:
             raise ValueError(kind)
-        if max(an, bn, extent) > MAX_OPERAND_BITS:
+        if max(an, bn, extent) > self.operand_limit:
             raise ReferenceError("resource", "Independent reference intermediate operand limit exceeded")
         if kind == "shift":
             return a << b
@@ -385,10 +417,10 @@ class _Arithmetic:
             return a + b
         if kind == "sub":
             return a - b
-        return a // b
+        return divmod(a, b) if kind == "divmod" else a // b
 
     def _series_factorials(self, last):
-        key = ("series_factorials", MAX_OPERAND_BITS, last)
+        key = ("series_factorials", self.operand_limit, last)
         cached = self.lookup(key)
         if cached is not None:
             return cached
@@ -399,7 +431,7 @@ class _Arithmetic:
 
     def _series_coefficients(self, exponent, degree, factorials):
         """Build both exact factorial polynomials in two immutable integer lanes."""
-        key = ("series_coefficients", MAX_OPERAND_BITS, exponent, degree)
+        key = ("series_coefficients", self.operand_limit, exponent, degree)
         cached = self.lookup(key)
         if cached is not None:
             return cached
@@ -440,7 +472,7 @@ class _Arithmetic:
         # The extra 2e+5 covers packed multiply/subtract preflights; W+bits+11
         # covers the threshold shift. All final error/grid guards still run.
         width = last * exponent + last * last.bit_length() + 1
-        if max(2 * width + 2 * exponent + 5, width + self.bits + 11) > MAX_OPERAND_BITS:
+        if max(2 * width + 2 * exponent + 5, width + self.bits + 11) > self.operand_limit:
             return None
         if not middle:
             return F(0), F(1), F(0)
@@ -493,8 +525,7 @@ class _Arithmetic:
         # For every partial Horner sum, both nonnegative lanes are no larger
         # than their constant coefficient; at the end they are <= Q < lane.
         # Consequently division extracts the two exact integer numerators.
-        self.tick()
-        sine_numerator, cosine_numerator = divmod(packed, lane)
+        sine_numerator, cosine_numerator = self._series_integer(packed, lane, "divmod")
         sine_numerator = self._series_integer(middle.numerator, sine_numerator, "mul")
         sine_denominator = self._series_integer(common_denominator, exponent, "shift")
         tail_denominator = self._series_integer(factorials[2 * degree], 2 * exponent * degree, "shift")
@@ -519,7 +550,7 @@ class _Arithmetic:
         if selected is None:
             sine, cosine = middle, F(1)
             sine_term, cosine_term = middle, F(1)
-            threshold = F(1, 1 << (self.bits + 8))
+            threshold = F(1, self._dyadic_denominator(self.bits + 8))
             for k in range(1, self.bits // 5 + 12):
                 sine_term = -self.exact(self.exact(sine_term, squared, "mul"), (2 * k) * (2 * k + 1), "div")
                 cosine_term = -self.exact(self.exact(cosine_term, squared, "mul"), (2 * k - 1) * (2 * k), "div")
@@ -541,8 +572,9 @@ class _Arithmetic:
 
     def sincos(self, value):
         value = self.interval(value)
-        key = ("sincos", self.bits, value.lo, value.hi)
+        key = ("sincos", self.bits, self.operand_limit, value.lo, value.hi)
         cached = self.lookup(key)
+        self.guard(value.lo, value.hi)
         if cached is not None:
             return cached
         if value.lo == value.hi == 0:
@@ -551,6 +583,12 @@ class _Arithmetic:
         midpoint = self.exact(value.lo, value.hi, "add")
         quotient = self.exact(midpoint, self.exact(pi.lo, pi.hi, "add"), "div")
         self.tick()
+        self.guard(quotient)
+        # The fixed quadrant operation doubles the numerator and Fraction's
+        # nearest-even conversion may double a division remainder. Check the
+        # live domain after the callback, before either native allocation.
+        if max(abs(quotient.numerator).bit_length(), quotient.denominator.bit_length()) + 1 > self.operand_limit:
+            raise ReferenceError("resource", "Independent reference quadrant rounding exceeds operand limit")
         quadrant = round(quotient * 2)
         reduced = self.sub(value, self.mul(F(quadrant, 2), pi))
         sine, cosine = self._series_sincos(reduced)
@@ -562,6 +600,7 @@ class _Arithmetic:
         """Use monotonic correctly rounded Fraction conversion to prove one cell."""
         value = self.interval(value)
         self.tick()
+        self.guard(value.lo, value.hi)
         try:
             low, high = float(value.lo), float(value.hi)
         except OverflowError as error:
@@ -748,40 +787,51 @@ class _PoseArithmetic:
             if cached is not None:
                 return cached
             return self.a.remember(key, tuple(self.a.point(x) for x in ZERO))
-        return tuple(self.a.interval(x) for x in value)
+        result = tuple(self.a.interval(x) for x in value)
+        self.a.guard(*(endpoint for part in result for endpoint in (part.lo, part.hi)))
+        return result
 
     @staticmethod
     def _zero(vector):
         return all(value.lo == value.hi == 0 for value in vector)
 
     def _key(self, operation, *values):
-        return ("reference_pose", self.a.bits, operation, *values)
+        return ("reference_pose", self.a.bits, self.a.operand_limit, operation, *values)
 
     def add(self, left, right):
         left, right = self.vector(left), self.vector(right)
         self.a.tick()
+        self.a.guard(*(endpoint for vector in (left, right) for part in vector for endpoint in (part.lo, part.hi)))
         if self._zero(left):
             return right
         if self._zero(right):
             return left
-        return tuple(self.a.add(a, b) for a, b in zip(left, right))
+        result = tuple(self.a.add(a, b) for a, b in zip(left, right))
+        self.a.guard(*(endpoint for part in result for endpoint in (part.lo, part.hi)))
+        return result
 
     def scale(self, vector, scalar):
         vector, scalar = self.vector(vector), self.a.interval(scalar)
         self.a.tick()
+        self.a.guard(scalar.lo, scalar.hi, *(endpoint for part in vector for endpoint in (part.lo, part.hi)))
         if self._zero(vector) or scalar.lo == scalar.hi == 0:
             return (Interval(F(0), F(0)),) * len(vector)
         if scalar.lo == scalar.hi == 1:
             return vector
-        return tuple(self.a.mul(value, scalar) for value in vector)
+        result = tuple(self.a.mul(value, scalar) for value in vector)
+        self.a.guard(*(endpoint for part in result for endpoint in (part.lo, part.hi)))
+        return result
 
     def cross(self, a, b):
         a, b = self.vector(a), self.vector(b)
         self.a.tick()
+        self.a.guard(*(endpoint for vector in (a, b) for part in vector for endpoint in (part.lo, part.hi)))
         if self._zero(a) or self._zero(b):
             return (Interval(F(0), F(0)),) * 3
-        return tuple(self.a.sub(self.a.mul(a[j], b[k]), self.a.mul(a[k], b[j]))
-                     for j, k in ((1, 2), (2, 0), (0, 1)))
+        result = tuple(self.a.sub(self.a.mul(a[j], b[k]), self.a.mul(a[k], b[j]))
+                       for j, k in ((1, 2), (2, 0), (0, 1)))
+        self.a.guard(*(endpoint for part in result for endpoint in (part.lo, part.hi)))
+        return result
 
     def norm(self, vector):
         # Squaring the whole interval loses correlation at zero; endpoint
@@ -802,6 +852,7 @@ class _PoseArithmetic:
         values = self.vector(values)
         key = self._key("quaternion", values)
         cached = self.a.lookup(key)
+        self.a.guard(*(endpoint for part in values for endpoint in (part.lo, part.hi)))
         if cached is not None:
             return cached
         if len(values) == 4 and self._zero(values[1:]) and (values[0].lo > 0 or values[0].hi < 0):
@@ -815,6 +866,7 @@ class _PoseArithmetic:
     def multiply(self, left, right):
         a, b = left, right
         self.a.tick()
+        self.a.guard(*(endpoint for values in (a, b) for part in values for endpoint in (part.lo, part.hi)))
         if all(value.lo == value.hi == expected for value, expected in zip(a, UNIT)):
             return b
         if all(value.lo == value.hi == expected for value, expected in zip(b, UNIT)):
@@ -839,13 +891,17 @@ class _PoseArithmetic:
         ))
 
     def conjugate(self, q):
-        return (q[0], *(self.a.neg(x) for x in q[1:]))
+        self.a.guard(*(endpoint for part in q for endpoint in (part.lo, part.hi)))
+        result = (q[0], *(self.a.neg(x) for x in q[1:]))
+        self.a.guard(*(endpoint for part in result for endpoint in (part.lo, part.hi)))
+        return result
 
     def rotate(self, q, vector):
         # Quaternion-vector multiplication follows a different arithmetic
         # expression from the source implementation's homogeneous matrix rows.
         vector = self.vector(vector)
         self.a.tick()
+        self.a.guard(*(endpoint for values in (q, vector) for part in values for endpoint in (part.lo, part.hi)))
         if self._zero(vector):
             return vector
         if (len(q) == 4 and q[0].lo == q[0].hi and abs(q[0].lo) == 1
@@ -860,7 +916,6 @@ class _PoseArithmetic:
             # valid even for nonunit q: the Z component keeps w*w+z*z rather
             # than silently replacing it by one. No production rotation
             # matrix or homogeneous normalisation supplies this enclosure.
-            self.a.guard(*(endpoint for part in q for endpoint in (part.lo, part.hi)))
             factor_key = self._key("scalar_z_rotation_factors", tuple(q))
             factors = self.a.lookup(factor_key)
             if factors is None:
@@ -888,16 +943,102 @@ class _PoseArithmetic:
         sine, cosine = self.a.sincos(self.a.mul(norm, F(elapsed) / 2))
         return (cosine, *(self.a.mul(self.a.div(value, norm), sine) for value in values))
 
-    def hinge(self, axis, coordinate, rate, *, ideal=False):
+    def _recording_sincos(self, coordinate, *, context, clock):
+        """Enclose successive point angles without a production error model.
+
+        Only the explicit recording path supplies this cursor context. Its
+        values live in the existing bounded arithmetic cache; a missing entry,
+        changed phase/context, rewind or long run starts with the independent
+        direct series again. Full source observations never enter this path.
+        """
+        def direct():
+            return self.a.sincos(self.a.div(coordinate, 2))
+        limit = self.a.operand_limit
+        if (type(coordinate.lo) is not F or type(coordinate.hi) is not F or
+                coordinate.lo != coordinate.hi or self.a.bits != 128 or
+                limit != MAX_OPERAND_BITS or self.a.work is None or
+                not hasattr(self.a.work, "callback_error")):
+            return direct()
+        key = self._key("recording_sincos", context)
+        previous = self.a.lookup(key)
+        clock = F(clock)
+        self.a.guard(coordinate.lo, coordinate.hi, clock)
+        if self.a.operand_limit != limit:
+            return direct()
+        steps, advance = 0, False
+        if previous is not None:
+            old_clock, old_coordinate, old_sine, old_cosine, steps = previous
+            self.a.guard(old_clock, old_coordinate, old_sine.lo, old_sine.hi,
+                         old_cosine.lo, old_cosine.hi)
+            # This sufficient bound admits both exact delta preflights, the
+            # final endpoint shift and the clock comparison before allocating
+            # their products. Larger inputs retain the original direct path.
+            extent = max(max(abs(value.numerator).bit_length(), value.denominator.bit_length())
+                         for value in (coordinate.lo, old_coordinate, clock, old_clock))
+            advance = (extent <= (limit - self.a.bits - 4) // 2 and
+                       old_clock < clock and steps < 64)
+        if advance:
+            try:
+                delta = self.a.exact(self.a.exact(coordinate.lo, old_coordinate, "sub"), 2, "div")
+                if abs(delta) <= F(1, 4):
+                    sine, cosine = self.a.sincos(self.a.grid(delta, delta))
+                    result = (self.a.add(self.a.mul(old_sine, cosine), self.a.mul(old_cosine, sine)),
+                              self.a.sub(self.a.mul(old_cosine, cosine), self.a.mul(old_sine, sine)))
+                    steps += 1
+                else:
+                    advance = False
+            except ReferenceError as error:
+                # A narrowing callback can make this extra delta operation
+                # fail even when the original direct half-angle still fits.
+                # Only our own changed-domain admission failure may retry;
+                # the shared work's exact callback exception must escape.
+                if error.code != "resource" or self.a.work.callback_error is error:
+                    raise
+                try:
+                    changed = self.a.operand_limit != limit
+                except ReferenceError:
+                    raise error
+                if not changed:
+                    raise
+                return direct()
+        if not advance:
+            result, steps = direct(), 0
+        # A callback can narrow the domain during any component operation.
+        # Such a call must return to the direct current-domain proof, never
+        # publish an accumulated broader-domain enclosure under a new cap.
+        if self.a.operand_limit != limit:
+            return direct()
+        self.a.guard(*(endpoint for part in result for endpoint in (part.lo, part.hi)))
+        self.a.remember(key, (clock, coordinate.lo, *result, steps))
+        if self.a.operand_limit != limit:
+            return direct()
+        return result
+
+    def _normalized_axis(self, axis):
+        """Reuse the unchanged independent axis enclosure across hinge clocks."""
+        key = self._key("normalized_axis", axis)
+        value = self.a.lookup(key)
+        self.a.guard(*(endpoint for part in axis for endpoint in (part.lo, part.hi)))
+        if value is None:
+            norm = self.norm(axis)
+            value = tuple(self.a.div(part, norm) for part in axis)
+            self.a.guard(*(endpoint for part in value for endpoint in (part.lo, part.hi)))
+            self.a.remember(key, value)
+        self.a.guard(*(endpoint for part in value for endpoint in (part.lo, part.hi)))
+        return value
+
+    def hinge(self, axis, coordinate, rate, *, ideal=False, recording_context=None, recording_time=None):
         axis = self.vector(axis)
         coordinate, rate = self.a.interval(coordinate), self.a.interval(rate)
         key = self._key("hinge", axis, coordinate, rate, ideal)
+        if recording_context is not None:
+            key += (recording_context, recording_time)
         cached = self.a.lookup(key)
         if cached is not None:
             return cached
-        norm = self.norm(axis)
-        normalized_axis = tuple(self.a.div(value, norm) for value in axis)
-        sine, cosine = self.a.sincos(self.a.div(coordinate, 2))
+        normalized_axis = self._normalized_axis(axis)
+        sine, cosine = (self.a.sincos(self.a.div(coordinate, 2)) if recording_context is None else
+                        self._recording_sincos(coordinate, context=(recording_context, axis), clock=recording_time))
         rotation = (cosine, *(self.a.mul(value, sine) for value in normalized_axis))
         # The rotation's mathematical derivative uses a unit axis. The
         # inherited source inspection deliberately retains the canonical raw
@@ -906,8 +1047,11 @@ class _PoseArithmetic:
         return self.a.remember(key, self.make(orientation=rotation, omega=omega, normalized=True))
 
     def make(self, position=ZERO, orientation=UNIT, velocity=ZERO, omega=ZERO, *, normalized=False):
-        return PoseEnclosure(self.vector(position), self.vector(orientation) if normalized else self.quaternion(orientation),
-                             self.vector(velocity), self.vector(omega))
+        result = PoseEnclosure(self.vector(position), self.vector(orientation) if normalized else self.quaternion(orientation),
+                               self.vector(velocity), self.vector(omega))
+        self.a.guard(*(endpoint for values in (result.position, result.orientation, result.velocity, result.omega)
+                       for part in values for endpoint in (part.lo, part.hi)))
+        return result
 
     def identity(self):
         key = self._key("identity")
@@ -923,11 +1067,44 @@ class _PoseArithmetic:
             return cached
         return self.a.remember(key, self.make(pose.position, pose.rotation))
 
+    def _identity_composition(self, parent, local):
+        """Apply exact identity algebra after compose's charged lookup.
+
+        Every component is admitted in the callback's current domain. Other
+        shapes execute the original helpers, including their coercion/errors.
+        This returns an existing immutable pose, with no new proof cache.
+        """
+        vectors = []
+        for pose in (parent, local):
+            if type(pose) is not PoseEnclosure:
+                return None
+            for values, size in ((pose.position, 3), (pose.orientation, 4),
+                                 (pose.velocity, 3), (pose.omega, 3)):
+                if (type(values) is not tuple or len(values) != size or
+                        any(type(value) is not Interval or type(value.lo) is not F or type(value.hi) is not F
+                            for value in values)):
+                    return None
+                vectors.append(values)
+        def identity(pose):
+            return (self._zero(pose.position) and self._zero(pose.velocity) and self._zero(pose.omega) and
+                    all(value.lo == value.hi == expected for value, expected in zip(pose.orientation, UNIT)))
+        if identity(parent):
+            result = local
+        elif identity(local):
+            result = parent
+        else:
+            return None
+        self.a.guard(*(endpoint for values in vectors for value in values for endpoint in (value.lo, value.hi)))
+        return result
+
     def compose(self, parent, local):
         key = self._key("compose", parent, local)
         cached = self.a.lookup(key)
         if cached is not None:
             return cached
+        direct = self._identity_composition(parent, local)
+        if direct is not None:
+            return direct
         offset = self.rotate(parent.orientation, local.position)
         position = self.add(parent.position, offset)
         orientation = self.multiply(parent.orientation, local.orientation)
@@ -1076,7 +1253,9 @@ class ReachReference:
             arithmetic.tick()
             self.model.events.append(copy.deepcopy(block))
         self.model.events.sort(key=lambda block: block.time)
+        self._incoming_graph_identity = object()
         self._targets, self._poses, self._phase_cache, self._basis_cache = {}, {}, {}, {}
+        self._numeric_cache_limit = self.a.operand_limit
         self._state, self._records, self._before, self._after = _State(), [], [], []
         self._times, self._release_records = [], {}
         self._event_index = 0
@@ -1087,6 +1266,17 @@ class ReachReference:
         self._geometry = self._capture_geometry() if mode == "recording" else None
         self._build()
         self.boundaries = tuple(self._times)
+
+    def _sync_numeric_cache(self):
+        limit = self.a.operand_limit
+        if self._numeric_cache_limit != limit:
+            self.a.tick()
+            self._targets.clear()
+            self._poses.clear()
+            self._phase_cache.clear()
+            self._basis_cache.clear()
+            self._numeric_cache_limit = self.a.operand_limit
+        return self._numeric_cache_limit
 
     def _capture_geometry(self):
         return tuple({"path": path, "element_id": list(obj.element_id), "owner": obj.owner,
@@ -1231,15 +1421,29 @@ class ReachReference:
         return result
 
     def _incoming(self, state):
+        # Captured joints/follows never change. Only the current grip set
+        # selects relations, including while a boundary stages a release.
+        # Charge and capture that set, then share only the immutable relation
+        # map in the existing bounded cache. A private token isolates models
+        # even if two references intentionally share one arithmetic context.
+        grips = []
+        for path in state.grips:
+            self.a.tick()
+            grips.append(path)
+        grips = frozenset(grips)
+        key = ("incoming_graph", self._incoming_graph_identity, grips)
+        cached = self.a.lookup(key)
+        if cached is not None:
+            return cached
         result = {}
         for path, joint in self.model.joints.items():
             self.a.tick()
-            if joint.kind != "grip" or path in state.grips:
+            if joint.kind != "grip" or path in grips:
                 result[self.model.sites[joint.child].owner] = ("joint", path)
         for path, follow in self.model.follows.items():
             self.a.tick()
             result[follow.child] = ("follow", path)
-        return result
+        return self.a.remember(key, MappingProxyType(result))
 
     def _owner(self, frame):
         if frame == "world":
@@ -1260,10 +1464,30 @@ class ReachReference:
         start = active.ideal_initial if ideal else active.initial
         initial = F(start[index] if index is not None else start)
         target = F(active.targets[index] if index is not None else action.goal)
-        slope = self.a.exact(self.a.exact(target, initial, "sub"), action.duration, "div")
+        # Only the exact affine slope is constant. Decode and guard the source
+        # operands on every call; an equal law from another action or state
+        # may share this immutable scalar, never its clock or running status.
+        self.a.guard(initial, target)
+        an, ad = abs(target.numerator).bit_length(), target.denominator.bit_length()
+        bn, bd = abs(initial.numerator).bit_length(), initial.denominator.bit_length()
+        if max(max(an + bd, bn + ad) + 1, ad + bd) > self.a.operand_limit:
+            raise ReferenceError("resource", "Independent reference intermediate operand limit exceeded")
+        duration = F(action.duration)
+        self.a.guard(duration)
+        if not duration:
+            raise _Uncertain("Reference division includes zero")
+        key = ("coordinate_affine_law", self.a.operand_limit, initial, target, duration)
+        slope = self.a.lookup(key)
+        missing = slope is None
+        if missing:
+            slope = self.a.exact(self.a.exact(target, initial, "sub"), duration, "div")
         coordinate = self.a.exact(initial, self.a.exact(slope, active.elapsed_at(time), "mul"), "add")
         if not ideal:
             coordinate = F(self.a.round64(coordinate))
+        if missing:
+            # A failed coordinate projection or cancellation publishes no law
+            # from this sample. All reused values remain pure exact numbers.
+            self.a.remember(key, slope)
         return coordinate, slope if active.status == "running" else F(0)
 
     def _root_pose(self, path, time, state, *, ideal, pose_only=False):
@@ -1299,11 +1523,16 @@ class ReachReference:
                 omega = self.p.vector(action.vector)
         return PoseEnclosure(position, orientation, velocity, omega)
 
-    def _pose_map(self, time, state, *, ideal, pose_only=False, selected=None):
+    def _pose_map(self, time, state, *, ideal, pose_only=False, selected=None, recording_context=None):
+        if recording_context is not None and not (pose_only and ideal):
+            raise ValueError("Independent recording recurrence requires ideal recording poses")
         key = (id(state), time, ideal, pose_only)
+        if recording_context is not None:
+            key += (recording_context,)
         targets = (tuple(path + ".frame" for path in (*self.model.objects, *self.model.sites))
                    if selected is None else tuple(selected))
         self.a.tick()
+        limit = self._sync_numeric_cache()
         cached = self._poses.get(key)
         if cached is not None and cached[0] is state:
             frames = cached[1]
@@ -1336,10 +1565,16 @@ class ReachReference:
                         value = frame(joint.parent + ".frame")
                         if joint.kind in {"hinge", "slider"}:
                             coordinate, rate = self._coordinate(relation, time, state, ideal=ideal)
+                            angle_context = ((recording_context, relation)
+                                             if recording_context is not None and rate else None)
                             if pose_only:
                                 rate = F(0)
-                            motion = (self.p.hinge(joint.axis, coordinate, rate, ideal=ideal) if joint.kind == "hinge" else
-                                      self.p.make(self.p.scale(joint.axis, coordinate), velocity=self.p.scale(joint.axis, rate)))
+                            if joint.kind == "hinge":
+                                motion = self.p.hinge(joint.axis, coordinate, rate, ideal=ideal,
+                                    recording_context=angle_context,
+                                    recording_time=time if angle_context is not None else None)
+                            else:
+                                motion = self.p.make(self.p.scale(joint.axis, coordinate), velocity=self.p.scale(joint.axis, rate))
                             value = self.p.compose(value, motion)
                         value = self.p.compose(value, self.p.inverse(self.p.constant(self.model.sites[joint.child].pose)))
                 else:
@@ -1350,7 +1585,7 @@ class ReachReference:
 
         for path in targets:
             frame(path)
-        if len(self._poses) < MAX_CACHE:
+        if limit == self.a.operand_limit and len(self._poses) < MAX_CACHE:
             self._poses[key] = (state, frames)
         return frames
 
@@ -1477,20 +1712,29 @@ class ReachReference:
 
         return frozenset(carrier for carrier in selected if visit(carrier))
 
-    def recording_pose_enclosures(self, carriers, time, side="after", *, ideal=True):
+    def recording_pose_enclosures(self, carriers, time, side="after", *, ideal=True, recording_context=None):
         """Evaluate independent p/q once for the selected carrier ancestries.
 
-        The p/q expressions are identical to full pose evaluation. Spatial
-        derivatives do not enter those expressions. A separate cache namespace
-        and a two-field return type prevent unused private zeros from becoming
-        source velocity or release-state evidence. The returned fresh mapping
-        uses canonical carrier names and contains no unrequested ancestry rows.
+        The default p/q expressions are identical to full pose evaluation.
+        An explicit reader-owned context may instead accumulate independent
+        hinge intervals within a single source phase. Spatial derivatives do
+        not enter those expressions. Separate cache namespaces and a two-field
+        return type prevent unused private zeros or accumulated recording
+        intervals from becoming source velocity or release-state evidence.
+        The fresh mapping contains only canonical requested carrier names.
         """
         self.a.tick()
         selected = self._recording_carriers(carriers)
         time = F(time)
         state = self._state_at(time, side)
-        frames = self._pose_map(time, state, ideal=ideal, pose_only=True, selected=selected)
+        if recording_context is not None:
+            if type(recording_context) is not object or not ideal:
+                raise ValueError("Independent recording recurrence requires an opaque reader context and ideal poses")
+            phase = ((bisect_left(self.boundaries, time) - 1) if side == "before" else
+                     (bisect_right(self.boundaries, time) - 1))
+            recording_context = (recording_context, id(state), phase, side)
+        frames = self._pose_map(time, state, ideal=ideal, pose_only=True, selected=selected,
+                                recording_context=recording_context)
         return {carrier: RecordingPoseEnclosure(frames[carrier].position, frames[carrier].orientation)
                 for carrier in selected}
 
@@ -1665,9 +1909,14 @@ class ReachReference:
                 payload = action.reach
                 key = (tuple(payload.lengths_m), tuple(payload.target_m), payload.branch, tuple(payload.limits_rad))
                 self.a.tick()
+                limit = self._sync_numeric_cache()
                 if key not in self._targets:
-                    self._targets[key] = _canonical_targets(payload, self.a)
-                active.targets = self._targets[key]
+                    targets = _canonical_targets(payload, self.a)
+                    if limit == self.a.operand_limit:
+                        self._targets[key] = targets
+                else:
+                    targets = self._targets[key]
+                active.targets = targets
                 residual = self._residual(self._base_tip(action, active.targets).position, payload.target_m)
                 if residual.hi > F(1, 10**9):
                     raise ReferenceError("numeric", "Independent admitted targets fail their residual bound")
@@ -1929,14 +2178,15 @@ class ReachReference:
     def _joint_observation(self, path, time, state, observations):
         """One sample's exact joint value and its public binary64 projection."""
         self.a.tick()
-        cached = observations.get(path)
+        key = (self.a.operand_limit, path)
+        cached = observations.get(key)
         if cached is not None:
             return cached
         coordinate, rate = self._coordinate(path, time, state)
         value = (coordinate, rate, float(coordinate), self.a.round64(rate))
         if len(observations) < MAX_CACHE:
             self.a.tick()
-            observations[path] = value
+            observations[key] = value
         return value
 
     @staticmethod
@@ -2101,7 +2351,7 @@ class ReachReference:
         if tuple(type(item) for item in values) != (str, str, int, int):
             return _plain(value, self.a)
         self.a.guard(values[2], values[3])
-        key = ("source_location_projection", values)
+        key = ("source_location_projection", self.a.operand_limit, values)
         cached = self.a.lookup(key)
         if cached is None:
             projected = _plain(value, self.a)
@@ -2333,12 +2583,13 @@ class ReachReference:
         result = []
         for index, (left, right) in enumerate(zip(self.boundaries, self.boundaries[1:])):
             self.a.tick()
+            limit = self._sync_numeric_cache()
             if max(left, start) >= min(right, end):
                 continue
             key = (carrier, max(left, start), min(right, end), index)
             if key not in self._phase_cache:
                 value = self._phase(carrier, key[1], key[2], self._after[index])
-                if len(self._phase_cache) < MAX_CACHE:
+                if limit == self.a.operand_limit and len(self._phase_cache) < MAX_CACHE:
                     self._phase_cache[key] = value
             else:
                 value = self._phase_cache[key]
@@ -2352,13 +2603,14 @@ class ReachReference:
         the numerical basis for an inclusive endpoint or either boundary side.
         """
         self.a.tick()
+        limit = self._sync_numeric_cache()
         time = F(time)
         state = self._state_at(time, side)
         carrier = carrier if carrier == "world" or carrier.endswith(".frame") else carrier + ".frame"
         key = ("point", carrier, time, side)
         if key not in self._phase_cache:
             value = self._phase(carrier, time, time, state)
-            if len(self._phase_cache) < MAX_CACHE:
+            if limit == self.a.operand_limit and len(self._phase_cache) < MAX_CACHE:
                 self._phase_cache[key] = value
             return value
         return self._phase_cache[key]
@@ -2425,17 +2677,29 @@ class ReachReference:
         else:
             initial = target = F(state.coordinates[joint])
             ideal_initial = F(state.ideal_coordinates[joint])
-        op = self.a.exact
-        actual_slope = F(0) if active is None else op(op(target, initial, "sub"), action.duration, "div")
-        ideal_slope = F(0) if active is None else op(op(target, ideal_initial, "sub"), action.duration, "div")
+        duration = None if action is None else F(action.duration)
         elapsed = (F(0), F(0)) if active is None else (active.elapsed_at(start), active.elapsed_at(end))
-        actual = tuple(op(initial, op(actual_slope, time, "mul"), "add") for time in elapsed)
-        ideal = tuple(op(ideal_initial, op(ideal_slope, time, "mul"), "add") for time in elapsed)
-        error = max(abs(op(x, y, "sub")) for x, y in zip(actual, ideal))
-        if active is not None:
-            error = op(error, op(op(max(abs(x) for x in actual), F(1, 1 << 53), "mul"), F(3, 1 << 1075), "add"), "add")
-        if active is not None and active.status != "running":
-            actual_slope = ideal_slope = F(0)
+        self.a.guard(initial, target, ideal_initial, *elapsed, *((duration,) if duration is not None else ()))
+        # Phase callers repeat the same scalar law for a carrier's ancestry
+        # and its uniform basis. Equal cloned arms may share that pure law,
+        # but never a joint/action identity or a state/clock object.
+        key = ("coordinate_path_law", self.a.operand_limit, initial, target,
+               ideal_initial, duration, elapsed, active is not None,
+               active is not None and active.status == "running")
+        numbers = self.a.lookup(key)
+        if numbers is None:
+            op = self.a.exact
+            actual_slope = F(0) if active is None else op(op(target, initial, "sub"), duration, "div")
+            ideal_slope = F(0) if active is None else op(op(target, ideal_initial, "sub"), duration, "div")
+            actual = tuple(op(initial, op(actual_slope, time, "mul"), "add") for time in elapsed)
+            ideal = tuple(op(ideal_initial, op(ideal_slope, time, "mul"), "add") for time in elapsed)
+            error = max(abs(op(x, y, "sub")) for x, y in zip(actual, ideal))
+            if active is not None:
+                error = op(error, op(op(max(abs(x) for x in actual), F(1, 1 << 53), "mul"), F(3, 1 << 1075), "add"), "add")
+            if active is not None and active.status != "running":
+                actual_slope = ideal_slope = F(0)
+            numbers = self.a.remember(key, (actual_slope, ideal_slope, actual, ideal, error))
+        actual_slope, ideal_slope, actual, ideal, error = numbers
         return CoordinatePath(joint, owner, initial, target, elapsed[0], None if action is None else action.duration,
             ideal_slope, *actual, ideal_initial, *ideal, actual_slope, error)
 
@@ -2449,6 +2713,7 @@ class ReachReference:
         """
         key = (id(state), start, end)
         self.a.tick()
+        self._sync_numeric_cache()
         cached = self._basis_cache.get(key)
         if cached is None or cached[0] is not state:
             cache = {"world": _SourceBound()}
@@ -2475,7 +2740,7 @@ class ReachReference:
             return _SourceBound(**values)
 
         def constant(pose, inverse=False):
-            key = ("source_bound_constant", self.a.bits, tuple(pose.position), inverse)
+            key = ("source_bound_constant", self.a.bits, self.a.operand_limit, tuple(pose.position), inverse)
             cached = self.a.lookup(key)
             if cached is not None:
                 return cached
@@ -2523,7 +2788,7 @@ class ReachReference:
                 raise ReferenceError("numeric", "Independent source composition has a negative extent or offset")
             extent, offset = parent.extent, parent.offset
             relative = replace(parent, extent=F(0), offset=F(0), position_error=F(0))
-            key = ("source_bound_compose", self.a.bits, relative, local)
+            key = ("source_bound_compose", self.a.bits, self.a.operand_limit, relative, local)
             base = self.a.lookup(key)
             if base is None:
                 base = self.a.remember(key, relative_composition(relative, local))
