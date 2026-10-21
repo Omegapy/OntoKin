@@ -154,13 +154,50 @@ destination term.
 ## Finite source trig and spin phase reduction
 
 Source pose trigonometry has a separate purpose from IK target rounding: it
-needs a rigorously bounded uniform approximation. It uses 20-term sine and
+needs a rigorously bounded uniform approximation. It uses 13-term sine and
 cosine polynomials after certified pi/2 range reduction. Their coefficients
 are exact factorial rationals; the variable is rounded onto the 96-bit grid,
-and the square of that grid variable is kept exact. Each Horner multiply-add
-rounds once to the grid. The sine's final multiplication rounds once more.
-For |x| <= 1, previous Horner errors do not amplify, so 21rho is a safe common
-arithmetic allowance. The omitted Taylor tail is bounded by 1/40!.
+and the square of that grid variable is kept exact. Every Horner multiply-add
+and the sine's final multiplication are exact rational arithmetic. Each final
+sine/cosine value is rounded once to the 96-bit grid.
+
+The coefficients run from k=0 through k=12. The exact polynomials have degrees
+25 for sine and 24 for cosine. Their alternating terms decrease in absolute
+value on |x| <= 1, so the first omitted terms bound their respective tails by
+1/27! and 1/26!. Negative sine arguments have the same absolute bound by
+oddness; cosine is even. No coefficient is rounded before evaluation,
+including the highest coefficient that initializes Horner's rule.
+
+There are no intermediate arithmetic errors: the coefficients and all twelve
+Horner multiply-adds are exact, followed by one nearest-even grid projection
+per function. Thus **rho** is a common arithmetic allowance, and **1/26!** is
+a common truncation allowance. The exact polynomial and final grid projection
+depend only on the admitted argument, including after cache eviction or a
+different request history. Avoiding intermediate projections changes some
+private approximation bits within the unchanged published error allowance;
+fresh implementation and derivation hashes identify the executed algorithm.
+
+The helper explicitly admits only exact Fraction values x with |x| <= 1 and
+denominator 2^b, 0 <= b <= 96. Every coefficient denominator divides 25!, and
+25! < 2^84. A partial polynomial with m remaining powers of x² therefore has
+a denominator dividing `25! * 2^(2*b*m)`, m <= 12. Its absolute value is below
+two: the sum of the absolute cosine coefficients is less than
+`1 + sum(2^-k, k>=1) = 2`, and the sine coefficients are no larger. The
+largest inner denominator consequently has at most 2,388 bits and its
+numerator at most 2,389 bits. The completed sine denominator divides
+`25! * 2^2400`; the cosine denominator divides `24! * 2^2304`.
+
+The existing prospective guards run before every exact operation. Even using
+the full 84-bit factorial denominator for each add, the largest guarded
+cross-product bound is at most 2,474 bits. The final multiplication by x has
+prospective width at most 2,486 bits; its reduced result's numerator has at
+most 2,485 bits. Final 96-bit grid extraction, including the integer quotient
+guard, requires at most 2,582 bits. All are below 2,600 and the unchanged
+32,768-bit request maximum. A caller's smaller operand limit still applies to
+every executed intermediate. No enlarged limit or hidden fallback is used.
+Only completed grid results are retained in the bounded cache, and every
+executed recurrence, exact operation, final projection and coefficient
+construction continues to charge the same request and cancellation callback.
 
 Pi is enclosed with exact alternating sums in Machin's identity, with a
 fixed term count for each permitted precision, then outwardly projected to
@@ -172,10 +209,14 @@ grid representative. Restoration by permutation and sign changes is exact.
 Sine and cosine are 1-Lipschitz, and the exact rational inequality
 
 ```
-2^-86 + 21*2^-97 + 1/40! < 2^-80
+2^-86 + 2^-97 + 1/26! < 2^-80
 ```
 
-proves the stated component error for every admitted source angle.
+proves the stated component error for every admitted source angle. The direct
+|angle| <= 1 path has at most rho input-rounding error, already smaller than
+the common 2^-86 argument allowance. Rounding an input in [-1,1] to this grid
+cannot leave that interval because both endpoints are grid values. The
+separate exact target-admission series and its rounding proof are unchanged.
 
 An axis is scaled by its largest absolute component before its norm is
 bounded. Its scaled norm is in [1,sqrt(3)], so division cannot become
@@ -225,6 +266,18 @@ elapsed times. A release does not substitute the solver's endpoint for the
 actual evaluated frame. `relative_point` uses the private base rotation and
 position to evaluate the actual tip in that base frame, avoiding a separate
 rounded world inverse.
+
+When all four input derivative tuples are the immutable private `ZERO`, both
+derivative expressions above are exactly zero: a zero cross product and a
+rotated zero vector remain zero before and after every grid projection. The
+composition may therefore return that same exact zero tuple without executing
+the derivative-only helpers. This shortcut tests the identity of the private
+constant, not numerical equality of arbitrary tuples; other inputs retain the
+ordinary dimension and numeric-domain validation. The composition still guards
+every input operand, checks and charges its work, and computes the identical
+position, rotation and conservative error records. Pose-only recording uses
+these exact zero derivatives internally without exposing them as source rates;
+complete source evaluation continues to compute actual moving-frame rates.
 
 `materialize` deliberately freezes all four actual exposed state tuples at
 an event anchor. Its elapsed-zero successor returns those exact orientation

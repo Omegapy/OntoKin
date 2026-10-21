@@ -178,7 +178,7 @@ same limitation when called on supplied data.
 `execute_source_rate_audit(bundle, time=..., side=..., carriers=..., ...)`
 provides the fresh path. It compiles the supplied bundle, obtains an actual
 `ReachSimulator` snapshot, builds the independent reference through the requested
-time, and compares selected fields. It retains the exact compiler work object
+time and side, and compares selected fields. It retains the exact compiler work object
 through all those stages. Its report says
 `observation_provenance: fresh_compile_and_source_snapshot_in_this_call`.
 Optional construction `budgets` and cancellation `check` are passed to the
@@ -225,14 +225,20 @@ may record the audit as unavailable, with the actual failure evidence. Separatel
 bounded analysis of recorded observations is useful, but remains an asserted
 observation audit unless its execution provenance is independently established.
 
-There is also a specific reference limitation: `build_reference(end=t)` stages
-both sides of events through `t`. At a failed boundary, actual incoming source
-state can be valid while that reference construction fails on the outgoing
-transition. The fresh wrapper reports `unresolved` with
-`reason: reference_unavailable` and the original reference diagnostic. It retains
-the exact requested time/side and observed identity. It does not use an epsilon,
-skip the sample or assume that a later state succeeded. Ordinary invalid source
-execution and resource/cancellation failures still propagate as failures.
+The reference supports an explicit `end_side="before"` prefix. It captures the
+incoming state at the exact final clock without staging natural completions,
+force changes or authored statements at that clock. Its final after-state is
+unavailable, and all public attempts to observe it fail. It cannot supply the
+complete both-sided recording history required by the default `end_side="after"`
+mode. The fresh wrapper selects the requested side and records it as
+`reference_end_side`; a valid incoming observation at a failed boundary can
+therefore be audited without evaluating the unrequested outgoing transition.
+
+Any other independent inability to reconstruct the requested side remains
+`unresolved` with `reason: reference_unavailable` and the original reference
+diagnostic. The exact clock, side and observed identity are retained. Ordinary
+invalid source execution and resource/cancellation failures still propagate as
+failures; no epsilon, skipped sample or assumed later success is introduced.
 
 ## Input identities and reproducibility
 
@@ -271,7 +277,8 @@ subnormal cases. It also covers frozen measurement separation, malformed input,
 operand/work limits and callback identity. Source cases exercise actual source
 snapshots, block production expectation generators during independent reference
 comparison, detect a deliberately changed velocity, reject stale identities,
-record fresh provenance, and preserve the failed-boundary incoming-side gap.
+record fresh provenance, and audit the valid failed-boundary incoming side while
+rejecting every request for its unbuilt outgoing state.
 
 The authored tests are not execution evidence. Preparation and review must obey
 the repository's exclusive executor procedure; no concurrent source edits may

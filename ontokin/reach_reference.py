@@ -108,6 +108,30 @@ class _Arithmetic:
             raise ReferenceError("resource", "Independent reference intermediate operand limit exceeded")
         return {"add": F.__add__, "sub": F.__sub__, "mul": F.__mul__, "div": F.__truediv__}[kind](a, b)
 
+    def exact_sum(self, *values):
+        """Fold bounded exact scalars without allocating additions of zero."""
+        self.tick()
+        values = tuple(F(value) for value in values)
+        self.guard(*values)
+        result = F(0)
+        for value in values:
+            if value:
+                result = value if not result else self.exact(result, value, "add")
+        return result
+
+    def exact_product(self, *values):
+        """Guard every operand before omitting exact zero/identity products."""
+        self.tick()
+        values = tuple(F(value) for value in values)
+        self.guard(*values)
+        if any(not value for value in values):
+            return F(0)
+        result = F(1)
+        for value in values:
+            if value != 1:
+                result = value if result == 1 else self.exact(result, value, "mul")
+        return result
+
     def point(self, value):
         self.tick()
         value = F(value)
@@ -280,7 +304,7 @@ class _Arithmetic:
         raise _Uncertain("Reference atan2 quadrant is unresolved")
 
     def _series_sincos(self, value):
-        """Exact midpoint Taylor sums, with interval width and Lagrange tails.
+        """Exact midpoint Taylor sums, with interval width and alternating tails.
 
         Both functions are globally 1-Lipschitz.  Evaluating one exact rational
         midpoint and adding its half-width is a rigorous interval calculation
@@ -294,16 +318,20 @@ class _Arithmetic:
         squared = self.exact(middle, middle, "mul")
         sine, cosine = middle, F(1)
         sine_term, cosine_term = middle, F(1)
-        factorial = 1
+        threshold = F(1, 1 << (self.bits + 8))
         for k in range(1, self.bits // 5 + 12):
             sine_term = -self.exact(self.exact(sine_term, squared, "mul"), (2 * k) * (2 * k + 1), "div")
             cosine_term = -self.exact(self.exact(cosine_term, squared, "mul"), (2 * k - 1) * (2 * k), "div")
             sine, cosine = self.exact(sine, sine_term, "add"), self.exact(cosine, cosine_term, "add")
             self.tick()
-            factorial *= (2 * k - 1) * (2 * k)
-            if F(1, factorial) < F(1, 1 << (self.bits + 8)):
-                # Both following remainders are smaller than 1/(2k)! on this range.
-                error = self.exact(F(1, factorial), width, "add")
+            tail = max(abs(sine_term), abs(cosine_term))
+            if tail < threshold:
+                # For |middle| <= 1 each alternating series decreases in
+                # absolute term size. Its tail after the included term is no
+                # larger than the following term, hence no larger than this
+                # computed term. The half-width covers every original input
+                # by the global 1-Lipschitz bound of both sine and cosine.
+                error = self.exact(tail, width, "add")
                 return (self.grid(self.exact(sine, error, "sub"), self.exact(sine, error, "add")),
                         self.grid(self.exact(cosine, error, "sub"), self.exact(cosine, error, "add")))
         raise _Uncertain("Finite reference sine series did not converge")
@@ -494,14 +522,14 @@ class ReferencePhase:
     path: tuple[str, ...]
 
 
-def build_reference(model, *, end, work=None, check=None):
+def build_reference(model, *, end, end_side="after", work=None, check=None):
     """Build a source-derived reference, sharing the caller's remaining work.
 
     ``work`` takes precedence over ``check`` to avoid charging the same request
     twice.  Supplying neither is an error: a verifier must not silently acquire
     another budget after compilation, source evaluation, or byte decoding.
     """
-    return ReachReference(model, end=F(end), arithmetic=_Arithmetic(work, check))
+    return ReachReference(model, end=F(end), end_side=end_side, arithmetic=_Arithmetic(work, check))
 
 
 class _PoseArithmetic:
@@ -547,12 +575,17 @@ class _PoseArithmetic:
     def norm(self, vector):
         # Squaring the whole interval loses correlation at zero; endpoint
         # squares supply the exact nonnegative range of each component.
+        vector = self.vector(vector)
+        key = self._key("norm", vector)
+        cached = self.a.lookup(key)
+        if cached is not None:
+            return cached
         squares = []
-        for value in self.vector(vector):
+        for value in vector:
             low = 0 if value.lo <= 0 <= value.hi else min(abs(value.lo), abs(value.hi))
             squares.append(Interval(self.a.exact(low, low, "mul"),
                                     self.a.exact(value.magnitude, value.magnitude, "mul")))
-        return self.a.sqrt(self.a.total(squares))
+        return self.a.remember(key, self.a.sqrt(self.a.total(squares)))
 
     def quaternion(self, values):
         values = self.vector(values)
@@ -579,6 +612,14 @@ class _PoseArithmetic:
         cached = self.a.lookup(key)
         if cached is not None:
             return cached
+        if self._zero((a[1], a[2], b[1], b[2])):
+            # The exact Hamilton product of two world-Z representatives has
+            # only scalar/Z components. Omit the twelve products proved zero;
+            # interval-zero tests never treat an uncertain zero as exact.
+            zero = self.a.point(0)
+            return self.a.remember(key, (
+                self.a.sub(self.a.mul(a[0], b[0]), self.a.mul(a[3], b[3])), zero, zero,
+                self.a.add(self.a.mul(a[0], b[3]), self.a.mul(a[3], b[0]))))
         return self.a.remember(key, (
             self.a.sub(self.a.mul(a[0], b[0]), self.a.total(self.a.mul(a[i], b[i]) for i in (1, 2, 3))),
             self.a.total((self.a.mul(a[0], b[1]), self.a.mul(a[1], b[0]), self.a.mul(a[2], b[3]), self.a.neg(self.a.mul(a[3], b[2])))),
@@ -603,6 +644,19 @@ class _PoseArithmetic:
         cached = self.a.lookup(key)
         if cached is not None:
             return cached
+        if self._zero((q[1], q[2])):
+            # Expand q*(0,v)*conjugate(q) directly for scalar/Z q. This is
+            # valid even for nonunit q: the Z component keeps w*w+z*z rather
+            # than silently replacing it by one. No production rotation
+            # matrix or homogeneous normalisation supplies this enclosure.
+            ww, zz = self.a.mul(q[0], q[0]), self.a.mul(q[3], q[3])
+            diagonal = self.a.sub(ww, zz)
+            off_diagonal = self.a.mul(2, self.a.mul(q[0], q[3]))
+            x, y, z = vector
+            return self.a.remember(key, (
+                self.a.sub(self.a.mul(diagonal, x), self.a.mul(off_diagonal, y)),
+                self.a.add(self.a.mul(off_diagonal, x), self.a.mul(diagonal, y)),
+                self.a.mul(self.a.add(ww, zz), z)))
         pure = (self.a.point(0), *vector)
         result = self.multiply(self.multiply(q, pure), self.conjugate(q))[1:]
         return self.a.remember(key, result)
@@ -617,12 +671,22 @@ class _PoseArithmetic:
         sine, cosine = self.a.sincos(self.a.mul(norm, F(elapsed) / 2))
         return (cosine, *(self.a.mul(self.a.div(value, norm), sine) for value in values))
 
-    def hinge(self, axis, coordinate, rate):
+    def hinge(self, axis, coordinate, rate, *, ideal=False):
         axis = self.vector(axis)
+        coordinate, rate = self.a.interval(coordinate), self.a.interval(rate)
+        key = self._key("hinge", axis, coordinate, rate, ideal)
+        cached = self.a.lookup(key)
+        if cached is not None:
+            return cached
         norm = self.norm(axis)
+        normalized_axis = tuple(self.a.div(value, norm) for value in axis)
         sine, cosine = self.a.sincos(self.a.div(coordinate, 2))
-        rotation = (cosine, *(self.a.mul(self.a.div(v, norm), sine) for v in axis))
-        return self.make(orientation=rotation, omega=self.scale(axis, rate), normalized=True)
+        rotation = (cosine, *(self.a.mul(value, sine) for value in normalized_axis))
+        # The rotation's mathematical derivative uses a unit axis. The
+        # inherited source inspection deliberately retains the canonical raw
+        # axis, whose small norm defect is covered by the independent basis.
+        omega = self.scale(normalized_axis if ideal else axis, rate)
+        return self.a.remember(key, self.make(orientation=rotation, omega=omega, normalized=True))
 
     def make(self, position=ZERO, orientation=UNIT, velocity=ZERO, omega=ZERO, *, normalized=False):
         return PoseEnclosure(self.vector(position), self.vector(orientation) if normalized else self.quaternion(orientation),
@@ -758,11 +822,12 @@ class ReachReference:
     returned source projections are fresh values, so consumer changes cannot
     alter later independent expectations.
     """
-    def __init__(self, model, *, end, arithmetic):
-        if model.profile != "planar-reach-0.1" or end < 0 or end > model.duration:
+    def __init__(self, model, *, end, arithmetic, end_side="after"):
+        if (model.profile != "planar-reach-0.1" or end < 0 or end > model.duration
+                or end_side not in ("before", "after")):
             raise ReferenceError("unsupported", "Independent reference requires a valid planar reach prefix")
         self.a, self.p = arithmetic, _PoseArithmetic(arithmetic)
-        self.end = end
+        self.end, self.end_side = end, end_side
         self.model = copy.copy(model)
         for name in ("objects", "sites", "joints", "follows", "actions", "source_provenance"):
             collection = getattr(model, name)
@@ -962,7 +1027,7 @@ class ReachReference:
                             coordinate, rate = self._coordinate(relation, time, state, ideal=ideal)
                             if pose_only:
                                 rate = F(0)
-                            motion = (self.p.hinge(joint.axis, coordinate, rate) if joint.kind == "hinge" else
+                            motion = (self.p.hinge(joint.axis, coordinate, rate, ideal=ideal) if joint.kind == "hinge" else
                                       self.p.make(self.p.scale(joint.axis, coordinate), velocity=self.p.scale(joint.axis, rate)))
                             value = self.p.compose(value, motion)
                         value = self.p.compose(value, self.p.inverse(self.p.constant(self.model.sites[joint.child].pose)))
@@ -982,6 +1047,8 @@ class ReachReference:
         time = F(time)
         if side not in {"before", "after"} or not 0 <= time <= self.end:
             raise ReferenceError("unsupported", "Reference sample is outside its certified prefix")
+        if time == self.end and side == "after" and self.end_side == "before":
+            raise ReferenceError("unsupported", "The final after-side is outside this incoming-only reference")
         index = bisect_left(self.boundaries, time)
         if index < len(self.boundaries) and self.boundaries[index] == time:
             return (self._before if side == "before" else self._after)[index]
@@ -992,7 +1059,7 @@ class ReachReference:
         carrier = carrier if carrier == "world" or carrier.endswith(".frame") else carrier + ".frame"
         state = self._state_at(F(time), side)
         try:
-            return self._pose_map(F(time), state, ideal=ideal)[carrier]
+            return self._pose_map(F(time), state, ideal=ideal, selected=(carrier,))[carrier]
         except KeyError as error:
             raise ReferenceError("identity", "Unknown independent source carrier", carrier=carrier) from error
 
@@ -1033,11 +1100,29 @@ class ReachReference:
             self.a.tick()
             if len(self._times) >= MAX_BOUNDARIES:
                 raise ReferenceError("resource", "Independent semantic boundary cap exceeded")
-            self._history_weight += self._boundary_weight(time)
+            incoming_only = time == self.end and self.end_side == "before"
+            weight = (1 + self._inherited_weight(time, "before") + self._reach_history_weight
+                      if incoming_only else self._boundary_weight(time))
+            self._history_weight += weight
             if self._history_weight > 100000:
                 raise ReferenceError("resource", "Independent complete H06 source histories exceed 100000 weighted records",
                                      budget="boundary_state_records", consumed=self._history_weight)
-            before = self._copy_state(self._state)
+            # Every transition below writes only the staged deep copy. The
+            # incoming state is the already retained immutable prior state;
+            # copying it again repeats a whole source traversal and allocation
+            # without creating a distinct semantic value. H06 still counts
+            # each repeated before/after record separately.
+            before = self._state
+            if incoming_only:
+                # No natural completion, force change, authored event or
+                # staged validation belongs to the requested final side.
+                # Retain an explicit unavailable sentinel, never a fabricated
+                # after-state that a later query could mistake for evidence.
+                self._times.append(time)
+                self._before.append(before)
+                self._after.append(None)
+                self._release_records[time] = ()
+                break
             staged = self._copy_state(self._state)
             releases = []
             for path, active in staged.actions.items():
@@ -1217,13 +1302,36 @@ class ReachReference:
                                    for gravity, force in zip(self.model.gravity, sums))
         previous = history.acceleration or tuple(self.model.gravity)
         previous_ideal = history.ideal_acceleration or tuple(F(x) for x in self.model.gravity)
-        if acceleration != previous or ideal_acceleration != previous_ideal:
+        changed = history.last_time == time or history.acceleration is None
+        if changed or acceleration != previous or ideal_acceleration != previous_ideal:
             original = state.dynamic[path]
             actual, ideal = self._root_pose(path, time, state, ideal=False), self._root_pose(path, time, state, ideal=True)
+            # Capture the *old* phase before installing its new acceleration.
+            # Its point basis includes Ea*T and Ea*T^2/2 as well as incoming
+            # anchor errors; keeping only the original errors loses the force
+            # arithmetic discrepancy at every completion or replacement.
+            before = self._source_basis(path + ".frame", time, time, state)
+            position_error, rotation_error = before.position_error, before.rotation_error
+            velocity_error, omega_error = before.velocity_error, before.omega_error
+            if acceleration != previous:
+                # A changed canonical acceleration freezes the current public
+                # source tuple. The orientation then denotes that tuple's
+                # projective rotation, rather than an unnormalised unit q.
+                actual = PoseEnclosure(self._round_vector(actual.position),
+                    self.p.quaternion(self._expand_vector(ideal.orientation, rotation_error, rounded=True)),
+                    self._round_vector(actual.velocity), self._round_vector(actual.omega))
+            else:
+                # Equal canonical acceleration retains the private trajectory.
+                # Convert the old public-point error back to it using a proved
+                # binary64 publication bound. Source and proof clocks differ.
+                def publication(vector):
+                    return self.a.exact(self.a.exact(self._l1(vector), F(1, 1 << 53), "mul"),
+                                        F(3, 1 << 1075), "add")
+                position_error = self.a.exact(position_error, publication(actual.position), "add")
+                velocity_error = self.a.exact(velocity_error, publication(actual.velocity), "add")
+                rotation_error = self.a.exact(rotation_error, F(1, 1 << 50), "add")
             state.dynamic[path] = _Anchor(time, original.since, actual, ideal,
-                original.position_error + original.velocity_error * (time - original.time),
-                original.rotation_error + original.omega_error * (time - original.time),
-                original.velocity_error, original.omega_error,
+                position_error, rotation_error, velocity_error, omega_error,
                 time if acceleration != previous else (original.time if original.source_time is None else original.source_time))
         history.net, history.acceleration, history.ideal_acceleration = net, acceleration, ideal_acceleration
         self._poses.clear()
@@ -1277,7 +1385,8 @@ class ReachReference:
         bound = self._phase(child + ".frame", time, time, incoming)
         materialized = PoseEnclosure(
             self._expand_vector(actual.position, bound.source_numeric_position_error, rounded=True),
-            self._expand_vector(actual.orientation, bound.source_numeric_rotation_error, rounded=True),
+            self.p.quaternion(self._expand_vector(actual.orientation,
+                bound.source_numeric_rotation_error, rounded=True)),
             self._expand_vector(actual.velocity, bound.source_numeric_velocity_error, rounded=True),
             self._expand_vector(actual.omega, bound.source_numeric_angular_velocity_error, rounded=True))
         state.dynamic[child] = _Anchor(time, time, materialized, ideal,
@@ -1317,25 +1426,38 @@ class ReachReference:
         obj, payload = self.model.objects[event.target], event.impulse
         if payload is None:
             raise ReferenceError("source_admission", "Independent impulse has no source operands")
-        actual = self._root_pose(event.target, time, state, ideal=False)
         ideal = self._root_pose(event.target, time, state, ideal=True)
-        lever = self._round_vector(self.p.rotate(actual.orientation, payload.point_self_m))
-        point = self._round_vector(self.p.add(actual.position, lever))
-        angular = self._round_vector(self.p.cross(lever, self.p.vector(payload.impulse_world_n_s)))
-        velocity = self._round_vector(self.p.add(actual.velocity, self.p.scale(payload.impulse_world_n_s, F(1) / F(obj.mass))))
-        omega = self._round_vector(self.p.add(actual.omega, self.p.scale(angular, F(1) / F(obj.inertia))))
+        bound = self._phase(event.target + ".frame", time, time, state)
+        # These are source-output enclosures, in each field's physical units.
+        # A current controlled pose differs from the independent ideal pose
+        # even when the exact mathematical rotation would round identically.
+        # Propagate its proved errors before the impulse operations rather
+        # than adding an unrelated global position/angle tolerance afterward.
+        position = self._expand_vector(ideal.position, bound.source_numeric_position_error, rounded=True)
+        orientation = self._expand_vector(ideal.orientation, bound.source_numeric_rotation_error, rounded=True)
+        before_velocity = self._expand_vector(ideal.velocity, bound.source_numeric_velocity_error, rounded=True)
+        before_omega = self._expand_vector(ideal.omega, bound.source_numeric_angular_velocity_error, rounded=True)
         ideal_lever = self.p.rotate(ideal.orientation, payload.point_self_m)
-        ideal_velocity = self.p.add(ideal.velocity, self.p.scale(payload.impulse_world_n_s, F(1) / F(obj.mass)))
-        ideal_omega = self.p.add(ideal.omega, self.p.scale(self.p.cross(ideal_lever, self.p.vector(payload.impulse_world_n_s)), F(1) / F(obj.inertia)))
+        lever_error = self.a.exact(self.a.exact(bound.source_numeric_rotation_error,
+            self._l1(payload.point_self_m), "mul"), F(1, 1 << 96), "add")
+        lever = self._expand_vector(ideal_lever, lever_error, rounded=True)
+        point = self._round_vector(self.p.add(position, lever))
+        angular = self._round_vector(self.p.cross(lever, self.p.vector(payload.impulse_world_n_s)))
+        inverse_mass = self.a.exact(1, obj.mass, "div")
+        inverse_inertia = self.a.exact(1, obj.inertia, "div")
+        delta = self.p.scale(payload.impulse_world_n_s, inverse_mass)
+        velocity = self._round_vector(self.p.add(before_velocity, delta))
+        omega = self._round_vector(self.p.add(before_omega, self.p.scale(angular, inverse_inertia)))
+        ideal_velocity = self.p.add(ideal.velocity, delta)
+        ideal_omega = self.p.add(ideal.omega,
+            self.p.scale(self.p.cross(ideal_lever, self.p.vector(payload.impulse_world_n_s)), inverse_inertia))
         if any(payload.impulse_world_n_s):
             original = state.dynamic[event.target]
-            bound = self._phase(event.target + ".frame", time, time, state)
             state.dynamic[event.target] = _Anchor(time, original.since,
-                PoseEnclosure(self._round_vector(actual.position), self._round_vector(actual.orientation), velocity, omega),
+                PoseEnclosure(position, self.p.quaternion(orientation), velocity, omega),
                 PoseEnclosure(ideal.position, ideal.orientation, ideal_velocity, ideal_omega),
                 bound.source_numeric_position_error, bound.source_numeric_rotation_error,
-                bound.source_numeric_velocity_error + self._distance(velocity, ideal_velocity),
-                bound.source_numeric_angular_velocity_error + self._distance(omega, ideal_omega))
+                self._distance(velocity, ideal_velocity), self._distance(omega, ideal_omega))
             touched.add(("object", event.target))
         history = state.impulses[event.target]
         if history["last_application_time_seconds"] != _time_text(time):
@@ -1346,13 +1468,18 @@ class ReachReference:
             "source_location": dict(payload.source), "target_element_id": list(obj.element_id), "target_path": event.target,
             "impulse_world_n_s": list(payload.impulse_world_n_s), "application_point_self_m": list(payload.point_self_m),
             "lever_arm_world_m": list(lever), "application_point_world_m": list(point),
-            "angular_impulse_world_n_m_s": list(angular), "linear_velocity_before_world_m_per_s": list(actual.velocity),
-            "linear_velocity_after_world_m_per_s": list(velocity), "angular_velocity_before_world_rad_per_s": list(actual.omega),
+            "angular_impulse_world_n_m_s": list(angular), "linear_velocity_before_world_m_per_s": list(before_velocity),
+            "linear_velocity_after_world_m_per_s": list(velocity), "angular_velocity_before_world_rad_per_s": list(before_omega),
             "angular_velocity_after_world_rad_per_s": list(omega)})
         self._poses.clear()
         self._basis_cache.clear()
 
     def _base_tip(self, action, coordinates):
+        coordinates = tuple(coordinates)
+        key = self.p._key("base_tip", tuple(action.reach.lengths_m), coordinates)
+        cached = self.a.lookup(key)
+        if cached is not None:
+            return cached
         first, second = coordinates
         sine1, cosine1 = self.a.sincos(first)
         sine2, cosine2 = self.a.sincos(self.a.exact(first, second, "add"))
@@ -1360,11 +1487,16 @@ class ReachReference:
         position = (self.a.add(self.a.mul(a, cosine1), self.a.mul(b, cosine2)),
                     self.a.add(self.a.mul(a, sine1), self.a.mul(b, sine2)), self.a.point(0))
         rotation = self.p.hinge((0, 0, 1), self.a.exact(first, second, "add"), 0).orientation
-        return self.p.make(position, rotation, normalized=True)
+        return self.a.remember(key, self.p.make(position, rotation, normalized=True))
 
     def _residual(self, position, target):
+        position, target = tuple(position), tuple(target)
+        key = self.p._key("residual", position, target)
+        cached = self.a.lookup(key)
+        if cached is not None:
+            return cached
         difference = tuple(self.a.sub(value, expected) for value, expected in zip(position, target))
-        return self.p.norm(difference)
+        return self.a.remember(key, self.p.norm(difference))
 
     @staticmethod
     def _pose_record(pose):
@@ -1633,6 +1765,8 @@ class ReachReference:
     def boundary_states(self):
         # The full conservative H06 sum was checked before retaining each
         # state pair.  Projection allocation cannot precede that preflight.
+        if self.end_side != "after":
+            raise ReferenceError("unsupported", "Complete recording histories require the final after-side")
         if self._history_weight > 100000:
             raise ReferenceError("resource", "Independent boundary history preflight was exceeded")
         result, actual_weight = [], 0
@@ -1796,17 +1930,7 @@ class ReachReference:
         active_path = set()
         exact = self.a.exact
 
-        def add(*values):
-            total = F(0)
-            for value in values:
-                total = exact(total, value, "add")
-            return total
-
-        def mul(*values):
-            total = F(1)
-            for value in values:
-                total = exact(total, value, "mul")
-            return total
+        add, mul = self.a.exact_sum, self.a.exact_product
 
         def rounding(extent):
             return add(mul(extent, F(1, 1 << 53)), F(3, 1 << 1075))

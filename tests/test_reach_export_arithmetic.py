@@ -7,7 +7,9 @@ import unittest
 from ontokin.diagnostics import OntoKinError
 from ontokin.reach_export import (MotionBound, ReachPhase, complete_interval_bounds,
     controlled_destination_sample, destination_numeric_bounds, direct_binary32,
-    enclosing_phases, normalized_component, planning_inequalities, quaternion_arc_upper)
+    enclosing_phases, normalized_component, planning_inequalities, quaternion_arc_upper,
+    _endpoint_rounding, NORMALIZATION_ERROR)
+from ontokin.reach_numeric import ReachExecutionWork
 
 
 class ReachClockTests(unittest.TestCase):
@@ -45,6 +47,29 @@ class ReachClockTests(unittest.TestCase):
 
 
 class ReachDestinationArithmeticTests(unittest.TestCase):
+    def test_endpoint_l1_bounds_cover_exact_conversion_and_normalized_rotation(self):
+        from ontokin.reach_conformance import _Bounds
+        from ontokin.scene import float32
+        tiny = math.ldexp(1., -150)
+        positions = ((tiny, -3 * tiny, -0.), (.1, -1. - 2. ** -24, 2. ** 40))
+        quaternions = ((.6, .8, 0., 0.), (.5, -.5, .5, -.5), (.3, -.3, .3, -.3),
+                       (.1, 0., 0., 0.))
+        for position in positions:
+            for quaternion in quaternions:
+                with self.subTest(position=position, quaternion=quaternion):
+                    ep, eq, magnitude = _endpoint_rounding(position, quaternion, None, work=ReachExecutionWork())
+                    stored_p = tuple(float32(value) for value in position)
+                    stored_q = tuple(float32(value) for value in quaternion)
+                    squared = sum((Fraction(a) - Fraction(b)) ** 2 for a, b in zip(position, stored_p))
+                    self.assertGreaterEqual(ep * ep, squared)
+                    self.assertEqual(magnitude, sum(abs(Fraction(value)) for value in stored_p))
+                    independent = _Bounds()
+                    difference = independent.difference(independent.normalize(quaternion), independent.normalize(stored_q))
+                    self.assertGreaterEqual(eq, difference)
+                    self.assertGreaterEqual(eq, 2 * NORMALIZATION_ERROR)
+        with self.assertRaises(OntoKinError):
+            _endpoint_rounding((0., 0., 0.), (0., 0., 0., 0.), None, work=ReachExecutionWork())
+
     def test_normalization_rounds_extreme_finite_ratios(self):
         for component, norm in ((Fraction(3), Fraction(25)), (Fraction(-4), Fraction(25)),
                                 (Fraction(1, 1 << 1074), Fraction(1))):

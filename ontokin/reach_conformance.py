@@ -121,7 +121,12 @@ class _Bounds:
     def div(self, a, b): return self.op(a, b, "div")
 
     def compare(self, a, b):
-        a, b = self.value(a), self.value(b)
+        if not isinstance(a, Fraction):
+            a = self.value(a)
+        if not isinstance(b, Fraction):
+            b = self.value(b)
+        self.bits(a.numerator.bit_length(), a.denominator.bit_length(),
+                  b.numerator.bit_length(), b.denominator.bit_length())
         self.tick("independent_exact_compare")
         self.bits(a.numerator.bit_length() + b.denominator.bit_length(),
                   b.numerator.bit_length() + a.denominator.bit_length())
@@ -274,11 +279,21 @@ def check_complete_inequalities(record, *, position_tolerance, rotation_toleranc
     hs = rational_clock(record["h_stored_seconds"], work=work)
     if ha <= 0 or hs <= 0:
         _error("OKE-E-CERTIFICATE", "Every interval certificate requires positive authored and stored widths.", model=model)
-    arithmetic, quantities = _Bounds(work), {}
-    def q(name):
-        if name not in quantities:
-            quantities[name] = _quantity(record, name, work=work)
-        return quantities[name]
+    arithmetic = _Bounds(work)
+    quantities = tuple(_quantity(record, name, work=work) for name in _NUMERIC_CERTIFICATE_KEYS)
+    q = dict(zip(_NUMERIC_CERTIFICATE_KEYS, quantities))
+    position_tolerance, rotation_tolerance = arithmetic.value(position_tolerance), arithmetic.value(rotation_tolerance)
+    # Widths are irrelevant only when every coefficient using them is zero.
+    proof_ha = ha if q["angular_speed_bound_rad_per_s"] or q["carrier_acceleration_bound_m_per_s2"] else Fraction(0)
+    proof_hs = hs if q["enclosing_angular_speed_bound_rad_per_s"] or q["enclosing_carrier_acceleration_bound_m_per_s2"] else Fraction(0)
+    key = ("complete_inequalities", proof_ha, proof_hs, quantities, position_tolerance, rotation_tolerance)
+    return dict(arithmetic.reuse(key, lambda: tuple(_complete_inequality_values(
+        ha, hs, q, position_tolerance, rotation_tolerance, arithmetic, model).items())))
+
+
+def _complete_inequality_values(ha, hs, quantities, position_tolerance, rotation_tolerance, arithmetic, model):
+    """Pure exact algebra after all supplied fields and widths are decoded."""
+    q = quantities.__getitem__
     add, mul, div, square = arithmetic.add, arithmetic.mul, arithmetic.div, arithmetic.square
     def require(name, minimum):
         actual = q(name)
@@ -291,7 +306,6 @@ def check_complete_inequalities(record, *, position_tolerance, rotation_toleranc
     envelope_angular = q("enclosing_angular_speed_bound_rad_per_s")
     envelope_acceleration = q("enclosing_carrier_acceleration_bound_m_per_s2")
     speed, shift = q("enclosing_carrier_speed_bound_m_per_s"), q("max_endpoint_time_shift_s")
-    position_tolerance, rotation_tolerance = arithmetic.value(position_tolerance), arithmetic.value(rotation_tolerance)
     position_quarter, rotation_quarter = div(position_tolerance, 4), div(rotation_tolerance, 4)
     for width, a, w in ((ha, acceleration, angular), (hs, envelope_acceleration, envelope_angular)):
         angle, width_squared = mul(w, width), square(width)
@@ -405,6 +419,48 @@ def verify_numeric_bases(quantization, *, work):
         _error("OKE-E-DESTINATION-NUMERIC-BASIS", "The destination numerical bound does not identify the current controlled player and derivation.")
 
 
+def _vertex_extrema(source_positions, stored_positions, *, work):
+    """Find the same exact extrema without decoding every float as a rational.
+
+    The actual source-to-binary32 comparison remains per vertex. On that
+    admitted float path, source minus stored is exact in binary64: either the
+    stored value is zero, or the two same-sign magnitudes differ by at most a
+    factor of two. This also covers the first binary32 subnormal and ties.
+    Only the three maximum errors then need exact rational decoding.
+
+    Upward binary64 sums merely screen L1 candidates. Every possible new
+    maximum still receives the original exact rational sum; the incumbent is
+    rounded downward for screening, so neither rounding direction can hide a
+    larger radius. Non-float source inputs retain the exact fallback.
+    """
+    from .scene import float32
+    arithmetic = _Bounds(work)
+    radius, radius_floor = Fraction(0), 0.
+    float_errors, exact_errors = [0.] * 3, [Fraction(0)] * 3
+    for point, stored in zip(source_positions, stored_positions):
+        _tick(work, "independent_geometry_point")
+        if len(point) != 3 or len(stored) != 3 or tuple(float32(value) for value in point) != tuple(stored):
+            _error("OKE-E-GEOMETRY", "Every actual vertex must match the source's single binary32 conversion.")
+        if all(type(value) is float for value in point):
+            x, y, z = (abs(value) for value in point)
+            upper = math.nextafter(math.nextafter(x + y, math.inf) + z, math.inf)
+            if upper > radius_floor:
+                candidate = arithmetic.total(arithmetic.value(value) for value in (x, y, z))
+                if candidate > radius:
+                    radius = candidate
+                    radius_floor = math.nextafter(float(radius), -math.inf)
+            float_errors = [max(previous, abs(value - actual))
+                            for previous, value, actual in zip(float_errors, point, stored)]
+        else:
+            source = tuple(arithmetic.value(value) for value in point)
+            radius = max(radius, arithmetic.total(abs(value) for value in source))
+            radius_floor = math.nextafter(float(radius), -math.inf)
+            exact_errors = [max(previous, abs(arithmetic.sub(value, actual)))
+                            for previous, value, actual in zip(exact_errors, source, stored)]
+    errors = [max(exact, arithmetic.value(value)) for exact, value in zip(exact_errors, float_errors)]
+    return radius, arithmetic.norm(errors)
+
+
 def _geometry_bounds(decoded, model, options, *, work):
     """Reconstruct source occurrence vertices independently of baked motion.
 
@@ -488,28 +544,14 @@ def _geometry_bounds(decoded, model, options, *, work):
                     pbr = decoded.document["materials"][primitive["material"]].get("pbrMetallicRoughness", {})
                     if pbr != {"baseColorFactor": color, "metallicFactor": 0., "roughnessFactor": .7}:
                         _error("OKE-E-GEOMETRY", "Visual helper material must preserve its explicit role.")
-        radius_squared, error_squared = Fraction(0), Fraction(0)
-        for point, stored in zip(source_positions, stored_positions):
-            _tick(work, "independent_geometry_point")
-            if tuple(float32(value) for value in point) != stored:
-                _error("OKE-E-GEOMETRY", "Every actual vertex must match the source's single binary32 conversion.")
-            def moments():
-                source = tuple(arithmetic.value(value) for value in point)
-                return (arithmetic.total(arithmetic.square(value) for value in source),
-                        arithmetic.total(arithmetic.square(arithmetic.sub(value, actual))
-                                         for value, actual in zip(source, stored)))
-            point_radius, point_error = arithmetic.reuse(
-                ("geometry_point", tuple(point), tuple(stored)), moments)
-            radius_squared = max(radius_squared, point_radius)
-            error_squared = max(error_squared, point_error)
+        radius, vertex_error = _vertex_extrema(source_positions, stored_positions, work=work)
         if owner is not None:
             for site in model.sites.values():
                 if site.owner == owner:
-                    radius_squared = max(radius_squared, arithmetic.total(arithmetic.square(arithmetic.value(value))
-                                                                          for value in site.pose.position))
+                    radius = max(radius, arithmetic.total(abs(arithmetic.value(value))
+                                                          for value in site.pose.position))
         result[index] = {"identity": identity, "frame": frame,
-                         "radius": arithmetic.root(radius_squared).hi,
-                         "vertex_error": arithmetic.root(error_squared).hi}
+                         "radius": radius, "vertex_error": vertex_error}
     return result, meshes
 
 
@@ -527,6 +569,8 @@ _CERTIFICATE_KEYS = {"left_key_index", "right_key_index", "carrier", "source_pha
     "destination_numeric_position_bound_m", "destination_numeric_rotation_bound_rad",
     "unit_quaternion_difference_bound", "ideal_rotation_bound_rad", "ideal_position_bound_m",
     "carrier_position_bound_m", "total_position_bound_m", "total_rotation_bound_rad"}
+_NUMERIC_CERTIFICATE_KEYS = tuple(sorted(_CERTIFICATE_KEYS - {"left_key_index", "right_key_index", "carrier",
+    "source_phase_indices", "h_authored_seconds", "h_stored_seconds"}))
 
 
 def _verify_metadata(decoded, model, options, program, boundary_records, *, work):
@@ -593,7 +637,18 @@ def _assert_projection(actual, expected, *, arithmetic, allowances, path=()):
         if type(actual) not in (int, float):
             _error("OKE-E-BOUNDARY-HISTORY", "A numerical source history has a nonnumeric leaf.", details={"path": list(path)})
         labels = " ".join(str(value) for value in path)
-        if "orientation" in labels or "angular" in labels or "omega" in labels:
+        impulse_fields = {
+            "lever_arm_world_m", "application_point_world_m", "angular_impulse_world_n_m_s",
+            "linear_velocity_before_world_m_per_s", "linear_velocity_after_world_m_per_s",
+            "angular_velocity_before_world_rad_per_s", "angular_velocity_after_world_rad_per_s",
+        }
+        source_impulse = (len(path) >= 2 and path[-2] in impulse_fields and "last_applications" in path)
+        if source_impulse:
+            # The independent impulse ledger already encloses the controlled
+            # rotation, public rounding and every dimensional propagation.
+            # In particular, an angular impulse has units N m s, not radians.
+            allowance = Fraction(0)
+        elif "orientation" in labels or "angular" in labels or "omega" in labels:
             allowance = allowances["angular_velocity"] if "velocity" in labels or "omega" in labels else allowances["rotation"]
         elif "velocity" in labels or "speed" in labels:
             allowance = allowances["velocity"]
@@ -602,8 +657,9 @@ def _assert_projection(actual, expected, *, arithmetic, allowances, path=()):
         else:
             _error("OKE-E-INDEPENDENT-VALIDATION", "An independent numerical history leaf has no identified allowance.", details={"path": list(path)})
         value = arithmetic.value(actual)
-        rounding = arithmetic.add(arithmetic.mul(max(abs(expected.lo), abs(expected.hi)), Fraction(1, 1 << 53)), Fraction(1, 1 << 1075))
-        allowance = arithmetic.add(allowance, rounding)
+        if not source_impulse:
+            rounding = arithmetic.add(arithmetic.mul(max(abs(expected.lo), abs(expected.hi)), Fraction(1, 1 << 53)), Fraction(1, 1 << 1075))
+            allowance = arithmetic.add(allowance, rounding)
         if (arithmetic.compare(value, arithmetic.sub(expected.lo, allowance)) < 0
                 or arithmetic.compare(value, arithmetic.add(expected.hi, allowance)) > 0):
             _error("OKE-E-BOUNDARY-HISTORY", "A recorded numerical state lies outside the independent source enclosure.", details={"path": list(path)})
@@ -673,6 +729,23 @@ def _tracks(decoded, geometry, *, work):
     return result
 
 
+def _aligned_reference(quaternion, expected, arithmetic):
+    """Choose one antipodal representative; either gives a valid upper bound.
+
+    For the required small endpoint error, the largest stored component has a
+    decisive sign in the ideal interval. If that interval contains zero, keep
+    the positive representative: an ambiguous choice may reject an unproved
+    bound, but cannot understate physical rotation error. No second norm is
+    needed merely to select the smaller of two valid upper bounds.
+    """
+    arithmetic.tick("independent_quaternion_sign")
+    axis = max(range(4), key=lambda index: abs(quaternion[index]))
+    value, interval = quaternion[axis], expected[axis]
+    if value < 0 < interval.lo or value > 0 > interval.hi:
+        return tuple(_Cell(-value.hi, -value.lo) for value in expected)
+    return expected
+
+
 def _key_comparisons(reference, geometry, tracks, time, index, arithmetic):
     result = {}
     for carrier, item in geometry.items():
@@ -682,10 +755,9 @@ def _key_comparisons(reference, geometry, tracks, time, index, arithmetic):
         def compare():
             normalized = arithmetic.normalize(quaternion)
             expected = (ideal.orientation[1], ideal.orientation[2], ideal.orientation[3], ideal.orientation[0])
-            positive = arithmetic.difference(normalized, expected)
-            negative = arithmetic.difference(normalized, [_Cell(-value.hi, -value.lo) for value in expected])
+            expected = _aligned_reference(quaternion, expected, arithmetic)
             return (("position_error", arithmetic.difference(position, ideal.position)),
-                    ("quaternion_error", min(positive, negative)), ("normalized", normalized),
+                    ("quaternion_error", arithmetic.difference(normalized, expected)), ("normalized", normalized),
                     ("magnitude", arithmetic.total(abs(arithmetic.value(value)) for value in position)))
         result[carrier] = dict(arithmetic.reuse(("key_pose_comparison", tuple(position), tuple(quaternion),
                                                 ideal.position, ideal.orientation), compare))
@@ -697,6 +769,99 @@ def _arc_bound(first, last, arithmetic):
     if chord > Fraction(1, 2):
         _error("OKE-E-QUATERNION-LIFT", "The actual stored endpoints exceed the proved short-arc domain.")
     return arithmetic.div(chord, arithmetic.sub(1, arithmetic.div(arithmetic.square(chord), 4)))
+
+
+def _stored_arc(raw_first, raw_last, first, last, arithmetic):
+    """Independently check the lift and arc for these actual stored endpoints."""
+    def calculate():
+        dot = arithmetic.total(arithmetic.mul(a, b) for a, b in zip(raw_first, raw_last))
+        if dot < 0:
+            _error("OKE-E-QUATERNION-LIFT", "Actual stored endpoint signs do not form a coherent short-path lift.")
+        return _arc_bound(first, last, arithmetic)
+    return arithmetic.reuse(("stored_endpoint_arc", tuple(raw_first), tuple(raw_last), first, last), calculate)
+
+
+class _CertificateBatch:
+    """Check identical supplied quantities against every member's exact bounds.
+
+    This is bounded input aggregation, separate from the shared numeric cache:
+    at most 64 groups are retained and then discharged. Every actual row still
+    supplies its independently calculated minima, widths and magnitude. Taking
+    their maxima is equivalent for lower-bound comparisons and conservative
+    for the nonnegative complete inequalities. No writer group is consulted.
+    """
+    MAX_GROUPS = 64
+
+    def __init__(self, arithmetic, position_tolerance, rotation_tolerance):
+        self.arithmetic = arithmetic
+        self.position_tolerance = arithmetic.value(position_tolerance)
+        self.rotation_tolerance = arithmetic.value(rotation_tolerance)
+        self.groups = {}
+        self.max_position = self.max_rotation = Fraction(0)
+
+    def maximum(self, first, last):
+        # Equality of reduced fractions compares their integer components and
+        # does not need cross products. A changed value keeps guarded rational
+        # comparison and its original request/cancellation charge.
+        if first == last:
+            return first
+        return first if self.arithmetic.compare(first, last) >= 0 else last
+
+    def add(self, record, width, stored_width, minima, magnitude):
+        arithmetic = self.arithmetic
+        arithmetic.tick("independent_certificate_member")
+        if width <= 0 or stored_width <= 0:
+            _error("OKE-E-CERTIFICATE", "Every interval certificate requires positive authored and stored widths.")
+        values = []
+        for name in _NUMERIC_CERTIFICATE_KEYS:
+            value = record.get(name)
+            if type(value) not in (int, float) or (type(value) is float and not math.isfinite(value)) or value < 0:
+                _error("OKE-E-CERTIFICATE", "A certificate quantity must be a finite nonnegative number.",
+                       details={"quantity": name})
+            if type(value) is int:
+                arithmetic.bits(value.bit_length())
+            values.append(value)
+        key = tuple(values)
+        group = self.groups.get(key)
+        if group is None:
+            if len(self.groups) >= self.MAX_GROUPS:
+                self.flush()
+            arithmetic.tick("independent_certificate_group")
+            quantities = dict(zip(_NUMERIC_CERTIFICATE_KEYS, (arithmetic.value(value) for value in key)))
+            self.groups[key] = {"quantities": quantities, "minima": dict(minima),
+                                "width": width, "stored_width": stored_width, "magnitude": magnitude}
+        else:
+            group["width"] = self.maximum(group["width"], width)
+            group["stored_width"] = self.maximum(group["stored_width"], stored_width)
+            group["magnitude"] = self.maximum(group["magnitude"], magnitude)
+            for name, minimum in minima.items():
+                group["minima"][name] = self.maximum(group["minima"][name], minimum)
+
+    def flush(self):
+        arithmetic = self.arithmetic
+        for group in self.groups.values():
+            arithmetic.tick("independent_certificate_group_check")
+            quantities = group["quantities"]
+            def require(name, minimum):
+                actual = quantities[name]
+                if arithmetic.compare(actual, minimum) < 0:
+                    _error("OKE-E-CERTIFICATE", "A reported certificate quantity understates an independently derived bound.",
+                           details={"quantity": name})
+                return actual
+            for name, minimum in group["minima"].items():
+                require(name, minimum)
+            domain = arithmetic.total((group["magnitude"], quantities["landmark_radius_m"],
+                                       quantities["local_vertex_error_bound_m"]))
+            if domain > 1 << 400:
+                _error("OKE-E-DESTINATION-NUMERIC-BASIS", "The source and stored geometry exceed the identified destination's magnitude domain.")
+            require("destination_numeric_position_bound_m", arithmetic.div(arithmetic.add(domain, 1), 1 << 38))
+            require("destination_numeric_rotation_bound_rad", arithmetic.add(
+                arithmetic.square(quantities["stored_quaternion_arc_upper_rad"]), Fraction(1, 1 << 44)))
+            totals = _complete_inequality_values(group["width"], group["stored_width"], quantities,
+                self.position_tolerance, self.rotation_tolerance, arithmetic, None)
+            self.max_position = self.maximum(self.max_position, totals["position_bound_m"])
+            self.max_rotation = self.maximum(self.max_rotation, totals["rotation_bound_rad"])
+        self.groups.clear()
 
 
 def _verify_certificates(decoded, reference, geometry, tables, endpoint_phases, authored, times, quantization, options, *, work):
@@ -721,7 +886,7 @@ def _verify_certificates(decoded, reference, geometry, tables, endpoint_phases, 
         rows[left, index] = record
     tracks = _tracks(decoded, geometry, work=work)
     previous = _key_comparisons(reference, geometry, tracks, authored[0], 0, arithmetic)
-    max_position = max_rotation = Fraction(0)
+    batch = _CertificateBatch(arithmetic, options.position_tolerance_m, options.rotation_tolerance_rad)
     for key, (left, right) in enumerate(zip(authored, authored[1:])):
         following = _key_comparisons(reference, geometry, tracks, right, key + 1, arithmetic)
         stored_left, stored_right = arithmetic.value(times[key]), arithmetic.value(times[key + 1])
@@ -755,10 +920,7 @@ def _verify_certificates(decoded, reference, geometry, tables, endpoint_phases, 
                 source_rotation = max(source_rotation, final_phase.source_numeric_rotation_error)
             first, last = previous[carrier], following[carrier]
             raw_first, raw_last = tracks[carrier]["rotation"][key], tracks[carrier]["rotation"][key + 1]
-            dot = arithmetic.total(arithmetic.mul(a, b) for a, b in zip(raw_first, raw_last))
-            if dot < 0:
-                _error("OKE-E-QUATERNION-LIFT", "Actual stored endpoint signs do not form a coherent short-path lift.")
-            arc = _arc_bound(first["normalized"], last["normalized"], arithmetic)
+            arc = _stored_arc(raw_first, raw_last, first["normalized"], last["normalized"], arithmetic)
             minima = {"landmark_radius_m": item["radius"], "local_vertex_error_bound_m": item["vertex_error"],
                 "angular_speed_bound_rad_per_s": phase.angular_speed,
                 "carrier_acceleration_bound_m_per_s2": phase.acceleration,
@@ -770,20 +932,11 @@ def _verify_certificates(decoded, reference, geometry, tables, endpoint_phases, 
                 "max_endpoint_unit_quaternion_error": max(first["quaternion_error"], last["quaternion_error"]),
                 "stored_quaternion_arc_upper_rad": arc,
                 "source_numeric_position_bound_m": source_position, "source_numeric_rotation_bound_rad": source_rotation}
-            checked = {name: _requires_upper(record, name, minimum, work=work) for name, minimum in minima.items()}
             magnitude = max(first["magnitude"], last["magnitude"])
-            domain = arithmetic.total((magnitude, checked["landmark_radius_m"], checked["local_vertex_error_bound_m"]))
-            if domain > 1 << 400:
-                _error("OKE-E-DESTINATION-NUMERIC-BASIS", "The source and stored geometry exceed the identified destination's magnitude domain.")
-            _requires_upper(record, "destination_numeric_position_bound_m", arithmetic.div(arithmetic.add(domain, 1), 1 << 38), work=work)
-            _requires_upper(record, "destination_numeric_rotation_bound_rad",
-                arithmetic.add(arithmetic.square(checked["stored_quaternion_arc_upper_rad"]), Fraction(1, 1 << 44)), work=work)
-            totals = check_complete_inequalities(record, position_tolerance=options.position_tolerance_m,
-                rotation_tolerance=options.rotation_tolerance_rad, work=work)
-            max_position = max(max_position, totals["position_bound_m"])
-            max_rotation = max(max_rotation, totals["rotation_bound_rad"])
+            batch.add(record, width, stored_width, minima, magnitude)
         previous = following
-    return {"max_position_bound_m": max_position, "max_rotation_bound_rad": max_rotation,
+    batch.flush()
+    return {"max_position_bound_m": batch.max_position, "max_rotation_bound_rad": batch.max_rotation,
             "interval_certificates_checked": expected_count, "key_pose_comparisons": len(authored) * len(geometry)}
 
 
@@ -800,7 +953,7 @@ def validate_reach_export(data, model, *, options=None, check=None, work=None):
     if work is None:
         raise ValueError("Reach supplied-byte validation requires the existing request work context")
     checked_contract(model, TARGET)
-    decoded = read_glb(data, check=work.tick, target_contract=TARGET)
+    decoded = read_glb(data, check=work.tick, target_contract=TARGET, work=work)
     nodes = decoded.document["nodes"]
     metadata = decoded.document.get("extras", {}).get("ontokin", {})
     animation = decoded.document["animations"][0]

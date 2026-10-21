@@ -12,7 +12,8 @@ from unittest.mock import patch
 from ontokin.diagnostics import OntoKinError
 from ontokin.reach_conformance import (
     _Bounds, _integer, _assert_projection, check_complete_inequalities, clock_cell_contains,
-    rational_clock, verify_retained_clocks,
+    rational_clock, verify_retained_clocks, _vertex_extrema, _CertificateBatch, _stored_arc,
+    _aligned_reference, _Cell,
 )
 from ontokin.reach_numeric import ReachAdmissionError, ReachExecutionWork
 
@@ -101,6 +102,124 @@ class ReachIndependentClockTests(unittest.TestCase):
 
 
 class ReachIndependentBoundTests(unittest.TestCase):
+    def test_reference_sign_choice_preserves_antipodes_and_ambiguous_upper_bounds(self):
+        arithmetic = _Bounds(ReachExecutionWork())
+        for raw in ((0., 0., .6, .8), (.5, -.5, .5, -.5)):
+            expected = arithmetic.normalize(raw)
+            for sign in (-1, 1):
+                actual = tuple(sign * value for value in raw)
+                aligned = _aligned_reference(actual, expected, arithmetic)
+                self.assertEqual(aligned, expected if sign == 1 else tuple(_Cell(-v.hi, -v.lo) for v in expected))
+        uncertain = (_Cell(F(-1), F(1)),) * 4
+        self.assertIs(_aligned_reference((1., 0., 0., 0.), uncertain, arithmetic), uncertain)
+        # A wide/ambiguous source interval is still measured; choosing a sign
+        # cannot silently convert it into zero rotational error.
+        self.assertGreater(arithmetic.difference(arithmetic.normalize((1., 0., 0., 0.)), uncertain), F(1))
+
+    def test_certificate_batch_checks_later_member_minima_and_changed_payloads(self):
+        record, width = algebra_record(), F(1, 128)
+        for name in ("landmark_radius_m", "max_endpoint_time_shift_s", "max_endpoint_position_error_m",
+                     "max_endpoint_unit_quaternion_error", "stored_quaternion_arc_upper_rad",
+                     "source_numeric_position_bound_m", "source_numeric_rotation_bound_rad"):
+            with self.subTest(minimum=name):
+                batch = _CertificateBatch(_Bounds(ReachExecutionWork()), .001, .001)
+                batch.add(record, width, width, {name: F(record[name])}, F(0))
+                batch.add(dict(record), width, width, {name: F(record[name]) + F(1, 1 << 100)}, F(0))
+                with self.assertRaises(OntoKinError):
+                    batch.flush()
+        for name in ("unit_quaternion_difference_bound", "ideal_rotation_bound_rad", "ideal_position_bound_m",
+                     "total_rotation_bound_rad", "carrier_position_bound_m", "total_position_bound_m"):
+            with self.subTest(quantity=name):
+                batch = _CertificateBatch(_Bounds(ReachExecutionWork()), .001, .001)
+                batch.add(record, width, width, {}, F(0))
+                batch.add({**record, name: math.nextafter(record[name], 0.)}, width, width, {}, F(0))
+                with self.assertRaises(OntoKinError):
+                    batch.flush()
+
+    def test_certificate_batch_checks_maximum_widths_and_destination_magnitude(self):
+        record, width = algebra_record(), F(1, 128)
+        for authored, stored, magnitude in ((F(1), width, F(0)), (width, F(1), F(0)),
+                                            (width, width, F(1 << 401))):
+            with self.subTest(authored=authored, stored=stored, magnitude=magnitude):
+                batch = _CertificateBatch(_Bounds(ReachExecutionWork()), .001, .001)
+                batch.add(record, width, width, {}, F(0))
+                batch.add(record, authored, stored, {}, magnitude)
+                with self.assertRaises(OntoKinError):
+                    batch.flush()
+
+    def test_certificate_batch_is_bounded_and_keeps_complete_results(self):
+        record, width = algebra_record(), F(1, 128)
+        work = ReachExecutionWork()
+        batch = _CertificateBatch(_Bounds(work), .001, .001)
+        for index in range(70):
+            item = {**record, "max_endpoint_time_shift_s": record["max_endpoint_time_shift_s"] * index / 70}
+            batch.add(item, width, width, {}, F(0))
+            self.assertLessEqual(len(batch.groups), 64)
+        batch.flush()
+        self.assertEqual(batch.max_position, F(record["total_position_bound_m"]))
+        self.assertEqual(batch.max_rotation, F(record["total_rotation_bound_rad"]))
+        self.assertEqual(work.counts["independent_certificate_member"], 70)
+        self.assertEqual(work.counts["independent_certificate_group_check"], 70)
+        for invalid in (True, float("nan"), float("inf"), -1.):
+            with self.subTest(invalid=invalid), self.assertRaises(OntoKinError):
+                batch.add({**record, "landmark_radius_m": invalid}, width, width, {}, F(0))
+
+    def test_stored_arc_cache_cannot_hide_changed_endpoint_sign(self):
+        arithmetic = _Bounds(ReachExecutionWork())
+        first, last = (0., 0., 0., 1.), (0., 0., 0., -1.)
+        normalized = arithmetic.normalize(first)
+        _stored_arc(first, first, normalized, normalized, arithmetic)
+        with self.assertRaises(OntoKinError):
+            _stored_arc(first, last, normalized, arithmetic.normalize(last), arithmetic)
+
+    def test_geometry_extrema_preserve_exact_radius_and_conversion_errors(self):
+        from ontokin.geometry import sphere_mesh, box_mesh
+        from ontokin.scene import float32
+        tiny = math.ldexp(1., -150)
+        seam = math.ldexp(1., -126)
+        points = [
+            (0., -0., tiny), (-tiny, 3 * tiny, -3 * tiny),
+            (math.nextafter(tiny, 0.), math.nextafter(tiny, math.inf), -tiny),
+            (seam, math.nextafter(seam, 0.), math.nextafter(seam, math.inf)),
+            (1. + 2. ** -24, -1. - 2. ** -24, math.nextafter(1. + 2. ** -24, math.inf)),
+            (1., 2. ** -54, 2. ** -54), (1., 2. ** -53, 2. ** -54),
+            (F(1, 10), F(-1, 7), F(1, 3)),
+            *box_mesh((.1, 2., 3.)).positions, *sphere_mesh(.3).positions,
+        ]
+        stored = [tuple(float32(value) for value in point) for point in points]
+        expected_radius = max(sum((abs(F(value)) for value in point), F(0)) for point in points)
+        axis_errors = [max(abs(F(point[axis]) - F(actual[axis]))
+                           for point, actual in zip(points, stored)) for axis in range(3)]
+        work = ReachExecutionWork()
+        radius, error = _vertex_extrema(points, stored, work=work)
+        self.assertEqual(radius, expected_radius)
+        self.assertEqual(error, _Bounds().norm(axis_errors))
+        self.assertEqual(work.counts["independent_geometry_point"], len(points))
+
+    def test_geometry_radius_screen_cannot_hide_a_sub_ulp_larger_point(self):
+        from ontokin.scene import float32
+        points = [(1., 2. ** -54, 2. ** -54), (1., 2. ** -53, 2. ** -54)]
+        stored = [tuple(float32(value) for value in point) for point in points]
+        radius, _ = _vertex_extrema(points, stored, work=ReachExecutionWork())
+        self.assertEqual(radius, F(1) + F(3, 1 << 54))
+
+    def test_geometry_screen_retains_each_actual_vertex_and_cancellation_check(self):
+        points = [(1., 0., 0.)] + [(0., 0., 0.)] * 30
+        stored = list(points)
+        stored[-1] = (0., 0., .001)
+        with self.assertRaises(OntoKinError):
+            _vertex_extrema(points, stored, work=ReachExecutionWork())
+        checks = 0
+        interruption = RuntimeError("original geometry cancellation")
+        def check():
+            nonlocal checks
+            checks += 1
+            if checks == 20:
+                raise interruption
+        with self.assertRaises(RuntimeError) as caught:
+            _vertex_extrema(points, points, work=ReachExecutionWork(check=check))
+        self.assertIs(caught.exception, interruption)
+
     def test_immutable_counts_and_boolean_controls_preserve_their_types(self):
         for actual, expected in ((True, 1), (False, 0), (1., 1), (1, True), (0, False), (True, 1.)):
             with self.subTest(actual=actual, expected=expected), self.assertRaises(OntoKinError):

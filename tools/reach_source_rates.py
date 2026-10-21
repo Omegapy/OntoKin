@@ -413,7 +413,8 @@ def audit_source_rates(reference, observation, *, work, frozen=None):
             "observation_provenance": "supplied_identity_assertion",
             "scope": "selected_carriers_at_one_exact_source_time_and_side",
             "source": identity, "time": arithmetic.record(time), "side": side,
-            "reference_end": arithmetic.record(reference.end), "selected_observation": observed_digest,
+            "reference_end": arithmetic.record(reference.end), "reference_end_side": reference.end_side,
+            "selected_observation": observed_digest,
             "frozen_measurement_input": frozen_digest, "input_hashes": before,
             "identified_inputs_stable_during_comparison": True,
             "methods": {"reference_pose": "ReachReference.pose_enclosure(ideal=True)",
@@ -426,8 +427,9 @@ def execute_source_rate_audit(bundle, *, time, side, carriers, frozen=None, budg
     """Compile, observe and audit one fresh source request without a new budget.
 
     No source or independent-reference failure is turned into a successful
-    sample. A reference unable to reconstruct a valid incoming side, including
-    the before-side of a failed boundary, is explicitly unresolved.
+    sample. The independent prefix ends on the requested side, so an incoming
+    observation does not run a later unrequested boundary transaction. A
+    reference unable to reconstruct that exact side is explicitly unresolved.
     """
     from ontokin.construction import compile_construction
     from ontokin.reach_runtime import ReachSimulator
@@ -449,7 +451,7 @@ def execute_source_rate_audit(bundle, *, time, side, carriers, frozen=None, budg
         raise RateAuditError("observation", "Fresh source sample returned another time or side")
     _frozen_records(frozen, identity, exact_time, side, records, arithmetic)
     try:
-        reference = build_reference(compiler.model, end=exact_time, work=work)
+        reference = build_reference(compiler.model, end=exact_time, end_side=side, work=work)
         report = audit_source_rates(reference, observation, work=work, frozen=frozen)
     except ReferenceError as error:
         if error is getattr(work, "callback_error", None) or error.code == "resource":
@@ -461,6 +463,7 @@ def execute_source_rate_audit(bundle, *, time, side, carriers, frozen=None, budg
                   "reason": "reference_unavailable", "reference_error": {"code": error.code, "message": str(error)},
                   "source": identity,
                   "time": arithmetic.record(exact_time), "side": side,
+                  "reference_end_side": side,
                   "selected_observation": _json_hash(observation, arithmetic), "input_hashes": before,
                   "frozen_measurement_input": None if frozen is None else _json_hash(frozen, arithmetic),
                   "results": []}

@@ -28,6 +28,7 @@ TRIG_ERROR = F(1,1 << 80)
 AXIS_ERROR = F(1,1 << 74)
 EXPOSED_ROTATION_ERROR = F(1,1 << 50)
 ARGUMENT_ERROR = F(1,1 << 86)
+_HORNER_TERMS = 13
 ZERO = (F(0),F(0),F(0))
 UNIT = (F(1),F(0),F(0),F(0))
 
@@ -297,32 +298,40 @@ class ReachPoseOps:
         return result
 
     def _coefficients(self):
-        key=(METHOD,"horner_coefficients")
+        key=(METHOD,"horner_coefficients",_HORNER_TERMS)
         cached=self.work.lookup(key)
         if cached is not None: return cached
         factorials=[1]
-        for k in range(1,41):
+        for k in range(1,2*_HORNER_TERMS):
             self.work.charge("source_factorial")
             self.work.guard_bits(factorials[-1].bit_length()+k.bit_length())
             factorials.append(factorials[-1]*k)
-        self.work.charge("source_coefficients",40)
-        result=(tuple(F((-1)**k,factorials[2*k+1]) for k in range(20)),
-                tuple(F((-1)**k,factorials[2*k]) for k in range(20)))
+        self.work.charge("source_coefficients",2*_HORNER_TERMS)
+        result=(tuple(F((-1)**k,factorials[2*k+1]) for k in range(_HORNER_TERMS)),
+                tuple(F((-1)**k,factorials[2*k]) for k in range(_HORNER_TERMS)))
         self.work.remember(key,result)
         return result
 
     def _horner_sincos(self,value):
+        self.work.charge("source_series_grid_guard")
+        if type(value) is not F:
+            raise ReachAdmissionError("reach_numeric","Source series requires an exact dyadic grid argument.")
+        self.work.guard(value)
+        denominator=value.denominator
+        if (abs(value.numerator)>denominator or denominator.bit_length()>BITS+1 or
+                denominator & (denominator-1)):
+            raise ReachAdmissionError("reach_numeric","Source series argument is outside its proved grid and range.")
         sine_coefficients,cosine_coefficients=self._coefficients()
-        # Rounding x*x would add a coefficient-dependent error. Using the exact
-        # product keeps the simple 20-rho Horner bound in the derivation.
+        # Exact 13-term recurrences stay below 2,600 prospective operand bits
+        # on this grid. Only the two final projections incur rounding error.
         square=self._op(value,value,"mul")
         sine,cosine=sine_coefficients[-1],cosine_coefficients[-1]
-        for k in range(18,-1,-1):
+        for k in range(_HORNER_TERMS-2,-1,-1):
             self.work.charge("source_series_recurrence")
-            sine=round_dyadic(self._op(self._op(sine,square,"mul"),sine_coefficients[k],"add"),BITS,work=self.work)
-            cosine=round_dyadic(self._op(self._op(cosine,square,"mul"),cosine_coefficients[k],"add"),BITS,work=self.work)
+            sine=self._op(self._op(sine,square,"mul"),sine_coefficients[k],"add")
+            cosine=self._op(self._op(cosine,square,"mul"),cosine_coefficients[k],"add")
         sine=round_dyadic(self._op(value,sine,"mul"),BITS,work=self.work)
-        return sine,cosine
+        return sine,round_dyadic(cosine,BITS,work=self.work)
 
     def _reduced_sincos(self,lower,upper,pi):
         pi_mid=self._op(self._op(pi[0],pi[1],"add"),F(2),"div")
@@ -487,7 +496,10 @@ class ReachPoseOps:
         if not isinstance(parent,PoseValue) or not isinstance(local,PoseValue):
             raise TypeError("Controlled composition requires private PoseValue inputs")
         self.work.charge("composition_stationary_check")
-        stationary=not any((*parent.exact_velocity,*parent.exact_omega,*local.exact_velocity,*local.exact_omega))
+        canonical_zero_rates=(parent.exact_velocity is ZERO and parent.exact_omega is ZERO and
+                              local.exact_velocity is ZERO and local.exact_omega is ZERO)
+        stationary=canonical_zero_rates or not any((
+            *parent.exact_velocity,*parent.exact_omega,*local.exact_velocity,*local.exact_omega))
         # A translated scene produces many one-use whole-pose entries. Keep
         # the bounded cache for shared local arithmetic instead of displacing
         # it with each object's distinct world translation.
@@ -519,9 +531,15 @@ class ReachPoseOps:
         self.work.guard(*offset)
         position=self._rounded_vector(self._add_exact_vectors(parent_position,offset))
         if relative is None:
-            velocity=self._rounded_vector(self.add(self.add(parent.exact_velocity,
-                self.cross(parent.exact_omega,offset)),self.rotate(parent.rotation,local.exact_velocity)))
-            omega=self._rounded_vector(self.add(parent.exact_omega,self.rotate(parent.rotation,local.exact_omega)))
+            if canonical_zero_rates:
+                # The four immutable private zero tuples prove both spatial
+                # derivative expressions exactly zero, including every grid
+                # projection. Other inputs still take the validating helpers.
+                velocity=omega=ZERO
+            else:
+                velocity=self._rounded_vector(self.add(self.add(parent.exact_velocity,
+                    self.cross(parent.exact_omega,offset)),self.rotate(parent.rotation,local.exact_velocity)))
+                omega=self._rounded_vector(self.add(parent.exact_omega,self.rotate(parent.rotation,local.exact_omega)))
             offset_error=self._op(self._l1(local.exact_position),parent.angular_error_rad,"mul")
             offset_allowance=self._sum((offset_error,VECTOR_ERROR,VECTOR_ERROR))
         else:

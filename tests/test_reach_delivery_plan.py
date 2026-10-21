@@ -2,13 +2,15 @@
 from __future__ import annotations
 
 import copy
+from dataclasses import replace
 from fractions import Fraction
 import unittest
 from unittest.mock import patch
 
-from ontokin import program_runtime
+from ontokin import gltf, program_runtime
 from ontokin.reach_runtime import ReachSimulator
-from reach_agent_support import source_case
+from ontokin.scene import ExportOptions
+from reach_agent_support import TARGET, source_case
 
 
 class ReachDeliveryPlanTests(unittest.TestCase):
@@ -62,6 +64,30 @@ class ReachDeliveryPlanTests(unittest.TestCase):
         self.assertEqual(result["run_state"]["valid_until_seconds"], "0.5")
         self.assertEqual(result["run_state"]["valid_until_side"], "before")
         self.assertFalse(hasattr(compiler, "reach_delivery_plan"))
+
+    def test_foreign_model_work_endpoint_and_incomplete_plans_cannot_authorize_export(self):
+        source = source_case("P01")
+        compiler, result = program_runtime.prepare_delivery(source, until="0.25")
+        self.assertEqual(result["outcome"], "valid", result)
+        other = program_runtime.compile_program(source, profile=program_runtime.REACH_PROFILE)
+        plan = compiler.reach_delivery_plan
+        cases = [
+            ("model", other.model, compiler.reach_work, "0.25", plan),
+            ("work", compiler.model, other.reach_work, "0.25", plan),
+            ("endpoint", compiler.model, compiler.reach_work, "0.125", plan),
+            ("before-origin", compiler.model, compiler.reach_work, "0.25",
+             replace(plan, boundaries=(Fraction(1, 8), Fraction(1, 4)))),
+            ("missing-history", compiler.model, compiler.reach_work, "0.25",
+             replace(plan, boundary_records=plan.boundary_records[:-1])),
+            ("missing-anchor", compiler.model, compiler.reach_work, "0.25",
+             replace(plan, phase_states=())),
+        ]
+        for name, model, work, end, retained in cases:
+            with (self.subTest(name=name),
+                  patch.object(gltf, "_encode", side_effect=AssertionError("Invalid plans must fail before encoding.")),
+                  self.assertRaisesRegex(ValueError, "model, request work and complete prefix")):
+                gltf.export_glb(model, options=ExportOptions(end=end, helpers=False), target_contract=TARGET,
+                                work=work, reach_plan=retained)
 
 
 if __name__ == "__main__":

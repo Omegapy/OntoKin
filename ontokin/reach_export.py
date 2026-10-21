@@ -621,18 +621,65 @@ def _stored_vector(values, model):
     return tuple(float32(value, model) for value in values)
 
 
-def _certificate_quantities(model, positions, quaternions, bound, enclosing,
-                            radius, vertex_error, nsp, nsr, width, shift, *, work):
+def _endpoint_rounding(position, quaternion, model, *, work):
+    """Bound conversion of one actual source endpoint, with charged reuse."""
+    _charge(work, "recording_endpoint_domain")
+    if (len(position) != 3 or len(quaternion) != 4
+            or any(type(value) is not float or not math.isfinite(value)
+                   for value in (*position, *quaternion))):
+        raise ValueError("A recording endpoint requires finite binary64 pose components")
+    work.guard_bits(1075)
+    def calculate():
+        stored_p = _stored_vector(position, model)
+        stored_q = _stored_vector(quaternion, model)
+        if not any(stored_q):
+            _fail("OKE-E-QUATERNION", "A stored zero quaternion has no normalized interpretation.", model=model)
+        # A finite binary64 source minus its correctly rounded binary32 value
+        # is exact in binary64 (zero, or same-sign Sterbenz operands). L1 then
+        # bounds Euclidean error without repeated exact squares and roots.
+        ep = _sum((_rational(abs(a - b), work) for a, b in zip(position, stored_p)), work)
+        large_norm = max(abs(value) for value in quaternion) >= .5
+        if not large_norm:
+            q = _vector(quaternion, work, size=4)
+            squared = _sum((_exact(value, value, "mul", work) for value in q), work)
+            large_norm = squared >= Fraction(1, 4)
+        if large_norm:
+            # ||normalize(a)-normalize(b)|| <= 2||a-b||/||a||.
+            # The checked lower norm 1/2 gives a rational bound without
+            # computing either normalized endpoint or a floating square root.
+            eq = _exact(Fraction(4), _sum((_rational(abs(a - b), work)
+                        for a, b in zip(quaternion, stored_q)), work), "mul", work)
+        else:
+            eq = norm_upper((_exact(_rational(a, work), _rational(b, work), "sub", work)
+                             for a, b in zip(normalized_quaternion(q, work=work),
+                                             normalized_quaternion(stored_q, work=work))), work=work)
+        eq = _exact(eq, 2 * NORMALIZATION_ERROR, "add", work)
+        magnitude = _sum((_rational(abs(value), work) for value in stored_p), work)
+        return ep, eq, magnitude
+    return _reuse(work, ("endpoint_rounding", position, quaternion), calculate)
+
+
+def _certificate_quantities(model, bound, enclosing, radius, vertex_error,
+                            nsp, nsr, width, shift, ep, eq, magnitude, *, work):
     """Pure numerical fields; caller-specific identities and clocks stay fresh."""
-    p = tuple(_stored_vector(value, model) for value in positions)
-    q = tuple(_stored_vector(value, model) for value in quaternions)
-    magnitude = max(sum((abs(Fraction(value)) for value in point), Fraction(0)) for point in p)
-    ep = max(norm_upper((Fraction(stored) - Fraction(actual) for stored, actual in zip(value, positions[k])), work=work)
-             for value, k in zip(p, (0, 1))) + nsp
-    eq = max(norm_upper((Fraction(stored) - Fraction(actual) for stored, actual in zip(
-        normalized_quaternion(value, work=work), normalized_quaternion(quaternions[k], work=work))), work=work)
-             for value, k in zip(q, (0, 1))) + 2 * NORMALIZATION_ERROR + nsr
-    arc = quaternion_arc_upper(*q, work=work)
+    ep = _exact(ep, nsp, "add", work)
+    eq = _exact(eq, nsr, "add", work)
+    if eq > Fraction(1, 2):
+        _fail("OKE-E-NUMERIC-BOUND", "The endpoint comparison exceeds its proved local range.", model=model)
+    # The ideal S^3 path length is at most angular_speed * width / 2.
+    # Each endpoint's unit chord error e <= 1/2 has S^3 arc <= 2e;
+    # triangle inequality therefore adds at most 4e for both endpoints.
+    chord = _exact(_exact(_exact(bound.angular_speed, width, "mul", work), Fraction(2), "div", work),
+                   _exact(Fraction(4), eq, "mul", work), "add", work)
+    if chord > Fraction(1, 2):
+        _fail("OKE-E-ROTATION-ALIAS", "The endpoint chord exceeds the proved short-arc range.", model=model)
+    # The source path also bounds the endpoint chord. Apply the monotone
+    # rational chord-to-arc envelope used by the independent supplied-byte
+    # proof; merely bounding the true arc need not bound that outward envelope.
+    arc = _exact(chord, _exact(Fraction(1), _exact(_exact(chord, chord, "mul", work),
+                 Fraction(4), "div", work), "sub", work), "div", work)
+    if arc > ANGULAR_STEP:
+        _fail("OKE-E-ROTATION-ALIAS", "The stored quaternion arc exceeds pi/4.", model=model)
     ndp, ndr = destination_numeric_bounds(arc, magnitude, radius, vertex_error, work=work)
     quantities = {"landmark_radius_m": radius, "local_vertex_error_bound_m": vertex_error,
         "angular_speed_bound_rad_per_s": bound.angular_speed,
@@ -686,10 +733,17 @@ def _certificate_quantities(model, positions, quaternions, bound, enclosing,
 
 
 def interval_certificates(model, options, plan, nodes, geometry_bounds, exact, times, *, work):
-    """Produce a complete conservative row for every carrier/key pair."""
+    """Produce every row from conservative per-phase endpoint maxima.
+
+    Every actual endpoint contributes. A group only shares arithmetic when its
+    source phase and enclosing phase set agree. All coefficients are
+    nonnegative, so combining endpoint/width/error maxima remains conservative
+    even when those maxima occur in different rows. Coverage, identities and
+    exact authored/stored clocks remain per-row data.
+    """
     if (len(exact) - 1) * len(nodes) > MAX_CERTIFICATES:
         _fail("OKE-E-CERTIFICATE-BUDGET", "Complete interval certificate coverage exceeds its cap.", model=model, kind="resource")
-    result = []
+    intervals, groups = [], {}
     for index, (left, right) in enumerate(zip(exact, exact[1:])):
         _charge(work, "recording_interval")
         s0, s1 = Fraction(times[index]), Fraction(times[index + 1])
@@ -705,7 +759,53 @@ def interval_certificates(model, options, plan, nodes, geometry_bounds, exact, t
         if endpoint_index < len(plan.phases):
             numeric_selected.add(endpoint_index)
         shift = max(abs(s0 - left), abs(s1 - right))
-        for node, (radius, vertex_error) in zip(nodes, geometry_bounds):
+        group_key = (source_index, tuple(selected))
+        group = groups.setdefault(group_key, {"keys": set(), "width": Fraction(0),
+            "shift": Fraction(0), "numeric_selected": set()})
+        group["keys"].update((index, index + 1))
+        group["width"] = max(group["width"], right - left)
+        group["shift"] = max(group["shift"], shift)
+        group["numeric_selected"].update(numeric_selected)
+        intervals.append((index, group_key, s0, s1))
+    proofs = {}
+    for group_key, group in groups.items():
+        source_index, selected = group_key
+        phase = plan.phases[source_index]
+        for carrier, (node, (radius, vertex_error)) in enumerate(zip(nodes, geometry_bounds)):
+            _charge(work, "recording_certificate_group")
+            frame = node.frame_path
+            bound = phase.carriers[frame]
+            enclosing = MotionBound(max(plan.phases[i].carriers[frame].speed for i in selected),
+                                    max(plan.phases[i].carriers[frame].acceleration for i in selected),
+                                    max(plan.phases[i].carriers[frame].angular_speed for i in selected))
+            nsp = _source_max(plan, group["numeric_selected"], frame, "position_error_m")
+            nsr = _source_max(plan, group["numeric_selected"], frame, "rotation_error_rad")
+            ep = eq = magnitude = Fraction(0)
+            for key_index in sorted(group["keys"]):
+                p_error, q_error, p_magnitude = _endpoint_rounding(
+                    tuple(node.translations[key_index]), tuple(node.rotations_xyzw[key_index]), model, work=work)
+                ep, eq, magnitude = max(ep, p_error), max(eq, q_error), max(magnitude, p_magnitude)
+            proof_width = group["width"] if bound.acceleration or bound.angular_speed else Fraction(0)
+            proof_shift = group["shift"] if enclosing.speed or enclosing.angular_speed else Fraction(0)
+            key = ("certificate_group", bound, enclosing, radius, vertex_error, nsp, nsr,
+                   proof_width, proof_shift, ep, eq, magnitude)
+            quantities = dict(_reuse(work, key, lambda: _certificate_quantities(
+                model, bound, enclosing, radius, vertex_error, nsp, nsr, proof_width,
+                proof_shift, ep, eq, magnitude, work=work)))
+            quantities["max_endpoint_time_shift_s"] = upper_binary64(group["shift"], work=work, model=model)
+            if (Fraction(quantities["total_position_bound_m"]) > Fraction(options.position_tolerance_m)
+                    or Fraction(quantities["total_rotation_bound_rad"]) > Fraction(options.rotation_tolerance_rad)):
+                _fail("OKE-E-NUMERIC-BOUND", "Outward serialized bounds exceed the requested tolerance.", model=model,
+                      details={"carrier": node.name, "source_phase_index": source_index})
+            proofs[group_key, carrier] = quantities
+    result = []
+    for index, group_key, s0, s1 in intervals:
+        source_index, selected = group_key
+        phase = plan.phases[source_index]
+        left, right = exact[index], exact[index + 1]
+        authored_width = rational_record(right - left, work=work)
+        stored_width = rational_record(s1 - s0, work=work)
+        for carrier, (node, (radius, _)) in enumerate(zip(nodes, geometry_bounds)):
             _charge(work, "recording_certificate")
             frame = node.frame_path
             bound = phase.carriers[frame]
@@ -716,31 +816,10 @@ def interval_certificates(model, options, plan, nodes, geometry_bounds, exact, t
                                             options.rotation_tolerance_rad)
                        for width, candidate in ((right - left, bound), (s1 - s0, enclosing))):
                 _fail("OKE-E-POSITION-ALIAS", "Authored or stored key spacing exceeds the required quarter-allocation plan.", model=model)
-            nsp = _source_max(plan, numeric_selected, frame, "position_error_m")
-            nsr = _source_max(plan, numeric_selected, frame, "rotation_error_rad")
-            positions = tuple(tuple(node.translations[k]) for k in (index, index + 1))
-            quaternions = tuple(tuple(node.rotations_xyzw[k]) for k in (index, index + 1))
-            # Every new carrier/interval retains its checks and output row.
-            # With zero acceleration and angular rate, width has no numerical
-            # contribution; likewise a held carrier is invariant to clock shift.
-            proof_width = right - left if bound.acceleration or bound.angular_speed else Fraction(0)
-            proof_shift = shift if enclosing.speed or enclosing.angular_speed else Fraction(0)
-            for values in (*positions, *quaternions):
-                _vector(values, work, size=len(values))
-            key = ("certificate_quantities", positions, quaternions, bound, enclosing,
-                   radius, vertex_error, nsp, nsr, proof_width, proof_shift)
-            quantities = dict(_reuse(work, key, lambda: _certificate_quantities(
-                model, positions, quaternions, bound, enclosing, radius, vertex_error,
-                nsp, nsr, proof_width, proof_shift, work=work)))
-            quantities["max_endpoint_time_shift_s"] = upper_binary64(shift, work=work, model=model)
-            if (Fraction(quantities["total_position_bound_m"]) > Fraction(options.position_tolerance_m)
-                    or Fraction(quantities["total_rotation_bound_rad"]) > Fraction(options.rotation_tolerance_rad)):
-                _fail("OKE-E-NUMERIC-BOUND", "Outward serialized bounds exceed the requested tolerance.", model=model,
-                      details={"carrier": node.name, "left_key_index": index})
             result.append({"left_key_index": index, "right_key_index": index + 1,
                            "carrier": _carrier_ref(node), "source_phase_indices": list(selected),
-                           "h_authored_seconds": rational_record(right - left, work=work), "h_stored_seconds": rational_record(s1 - s0, work=work),
-                           **quantities})
+                           "h_authored_seconds": dict(authored_width), "h_stored_seconds": dict(stored_width),
+                           **proofs[group_key, carrier]})
     return result
 
 

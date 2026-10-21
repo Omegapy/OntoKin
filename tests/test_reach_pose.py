@@ -1,7 +1,9 @@
 """Independent enclosures and lifecycle-facing properties of source poses."""
 import copy
+from dataclasses import replace
 from fractions import Fraction as F
 import importlib.util
+import math
 from pathlib import Path
 import sys
 import unittest
@@ -10,7 +12,7 @@ from unittest.mock import patch
 from ontokin.reach_numeric import ReachAdmissionError,ReachExecutionWork,float_bits
 from ontokin.reach_pose import (
     ARGUMENT_ERROR,AXIS_ERROR,EXPOSED_ROTATION_ERROR,PRODUCT_ERROR,TRIG_ERROR,
-    VECTOR_ERROR,ReachPoseOps,source_numeric_basis,uniform_source_bounds,
+    VECTOR_ERROR,ZERO,ReachPoseOps,source_numeric_basis,uniform_source_bounds,
 )
 
 
@@ -40,8 +42,95 @@ class ReachPoseTests(unittest.TestCase):
 
     def test_horner_bound_is_exact_and_uniform(self):
         factorial=1
-        for k in range(1,41): factorial*=k
-        self.assertLess(ARGUMENT_ERROR+F(21,1<<97)+F(1,factorial),TRIG_ERROR)
+        for k in range(1,27): factorial*=k
+        self.assertLess(ARGUMENT_ERROR+F(1,1<<97)+F(1,factorial),TRIG_ERROR)
+
+    def test_horner_grid_errors_match_independent_exact_polynomial_sums(self):
+        ops=ReachPoseOps(ReachExecutionWork())
+        rho=F(1,1<<97)
+        points=(F(-1),F(-1)+2*rho,F(-3,4),F(-1,2),-2*rho,F(0),
+                2*rho,F(1,2),F(3,4),F(1)-2*rho,F(1))
+        for point in points:
+            with self.subTest(point=point):
+                sine,cosine=ops._horner_sincos(point)
+                # Independent direct powers/exact sums and Python's Fraction
+                # ties-to-even rounding, without the production recurrence.
+                exact_sine=sum((F((-1)**k,math.factorial(2*k+1))*point**(2*k+1)
+                                for k in range(13)),F(0))
+                exact_cosine=sum((F((-1)**k,math.factorial(2*k))*point**(2*k)
+                                  for k in range(13)),F(0))
+                self.assertEqual(sine,F(round(exact_sine*(1<<96)),1<<96))
+                self.assertEqual(cosine,F(round(exact_cosine*(1<<96)),1<<96))
+                self.assertLessEqual(abs(sine-exact_sine),rho)
+                self.assertLessEqual(abs(cosine-exact_cosine),rho)
+
+    def test_exact_horner_prospective_widths_stay_inside_the_proved_bound(self):
+        class ObservedWork(ReachExecutionWork):
+            def __init__(self):
+                super().__init__(max_operand_bits=2600)
+                self.largest_guard=0
+            def guard_bits(self,bits):
+                self.largest_guard=max(self.largest_guard,bits)
+                super().guard_bits(bits)
+        work=ObservedWork()
+        ops=ReachPoseOps(work)
+        for point in (F(1,1<<96),F(1)-F(1,1<<96),F(-1)+F(1,1<<96),F(-1),F(1)):
+            with self.subTest(point=point):
+                result=ops._horner_sincos(point)
+                self.assertTrue(all(value.denominator <= 1<<96 for value in result))
+        self.assertGreater(work.largest_guard,2000)
+        self.assertLessEqual(work.largest_guard,2582)
+        self.assertEqual(sum(work.counts.values()),work.operations)
+
+    def test_exact_horner_rejects_arguments_outside_its_proved_grid(self):
+        for point in (F(1,3),F(1,1<<97),F(2),F(-2),0.5):
+            with self.subTest(point=point):
+                work=ReachExecutionWork()
+                with self.assertRaises(ReachAdmissionError) as caught:
+                    ReachPoseOps(work)._horner_sincos(point)
+                self.assertEqual(caught.exception.reach_code,"reach_numeric")
+                self.assertNotIn("source_series_recurrence",work.counts)
+
+    def test_exact_horner_smaller_operand_budget_still_rejects_before_publication(self):
+        work=ReachExecutionWork(max_operand_bits=512)
+        with self.assertRaises(ReachAdmissionError) as caught:
+            ReachPoseOps(work).sincos(F(1,1<<96))
+        self.assertEqual(caught.exception.details["budget"],"numeric_operand_bits")
+        self.assertGreater(caught.exception.details["consumed"],512)
+        self.assertFalse(any(key[1]=="sincos" for key in work._cache))
+
+    def test_reduced_series_encloses_grid_ties_and_range_seams(self):
+        oracle=independent_oracle()
+        rho=F(1,1<<97)
+        points={rho,3*rho,F(1)-rho,F(1),F(1)+rho}
+        for quadrant in (1,2,3,4):
+            midpoint=F(math.pi)*quadrant/2
+            points.update((midpoint-rho,midpoint,midpoint+rho))
+        points.update(-point for point in tuple(points))
+        ops=ReachPoseOps(ReachExecutionWork())
+        for point in sorted(points):
+            with self.subTest(point=point):
+                actual=ops.sincos(point)
+                context=oracle.Context(192,oracle.Budget())
+                expected=context.sincos_point(point)
+                for value,enclosure in zip(actual,expected):
+                    self.assertLessEqual(value-TRIG_ERROR,enclosure.lo)
+                    self.assertGreaterEqual(value+TRIG_ERROR,enclosure.hi)
+
+    def test_horner_recurrences_remain_interruptible_without_cached_result(self):
+        marker=RuntimeError("cancel inside source Horner arithmetic")
+        def check():
+            if work.counts.get("source_series_recurrence",0)==5:
+                raise marker
+        work=ReachExecutionWork(check=check)
+        ops=ReachPoseOps(work)
+        with self.assertRaises(RuntimeError) as raised:
+            ops.sincos(F(1,3))
+        self.assertIs(raised.exception,marker)
+        self.assertIs(work.callback_error,marker)
+        self.assertEqual(work.counts["source_series_recurrence"],5)
+        self.assertEqual(sum(work.counts.values()),work.operations)
+        self.assertFalse(any(key[1]=="sincos" for key in work._cache))
 
     def test_projective_rotation_and_inverse_avoid_public_round_trip(self):
         ops=ReachPoseOps(ReachExecutionWork())
@@ -65,6 +154,78 @@ class ReachPoseTests(unittest.TestCase):
         end=ops.compose(hinge,ops.make((3,0,0)))
         self.assertEqual(end.velocity,(0.,1.,0.))
         self.assertEqual(hinge.omega,(0.,0.,float(rate)))
+
+    def test_known_zero_derivatives_preserve_pose_bits_errors_and_reduce_work(self):
+        results,costs={},{}
+        for canonical in (False,True):
+            work=ReachExecutionWork()
+            ops=ReachPoseOps(work)
+            rate=ZERO if canonical else tuple(F(0) for _ in range(3))
+            parent=ops.make((F(1,3),2,F(-3,7)),(1,2,-3,4),rate,rate)
+            local=ops.make((F(-2,5),F(3,11),F(7,13)),(2,-1,1,3),rate,rate)
+            parent=replace(parent,position_error_m=F(1,1000))
+            local=replace(local,position_error_m=F(1,2000))
+            before=work.operations
+            result=ops.compose(parent,local)
+            costs[canonical]=work.operations-before
+            results[canonical]=(result.exact_position,result.rotation,
+                result.exact_velocity,result.exact_omega,result.position_error_m,
+                *(tuple(map(float_bits,getattr(result,field)))
+                  for field in ("position","orientation","velocity","omega")))
+            self.assertEqual(result.exact_velocity,(F(0),)*3)
+            self.assertEqual(result.exact_omega,(F(0),)*3)
+            self.assertEqual(sum(work.counts.values()),work.operations)
+        self.assertEqual(results[True],results[False])
+        self.assertLess(costs[True],costs[False])
+
+    def test_complete_composition_keeps_moving_spatial_derivatives(self):
+        ops=ReachPoseOps(ReachExecutionWork())
+        # The parent is an exact quarter-turn about z. Its moving local frame
+        # therefore has independent, directly calculable spatial derivatives.
+        parent=ops.make((2,3,4),(1,0,0,1),(1,2,3),(0,0,2))
+        local=ops.make((F(1,4),F(-1,2),F(3,4)),(0,1,0,0),(3,-2,1),(4,5,-1))
+        result=ops.compose(parent,local)
+        self.assertEqual(result.exact_position,(F(5,2),F(13,4),F(19,4)))
+        self.assertEqual(result.exact_velocity,(F(5,2),F(6),F(4)))
+        self.assertEqual(result.exact_omega,(F(-5),F(4),F(1)))
+        self.assertEqual(result.rotation.components,(F(0),F(1,2),F(1,2),F(0)))
+        self.assertEqual(result.angular_error_rad,
+                         parent.angular_error_rad+local.angular_error_rad+PRODUCT_ERROR)
+        self.assertEqual(result.position_error_m,
+                         F(3,2)*parent.angular_error_rad+2*VECTOR_ERROR)
+
+    def test_zero_valued_invalid_derivatives_still_fail_input_validation(self):
+        for owner in ("parent","local"):
+            for field in ("exact_velocity","exact_omega"):
+                for malformed in ((False,False,False),(F(0),F(0))):
+                    with self.subTest(owner=owner,field=field,value=malformed):
+                        # A fresh work cache ensures this exercises admission
+                        # of the supplied malformed pose rather than a hit.
+                        ops=ReachPoseOps(ReachExecutionWork())
+                        parent=ops.make((1,2,3),(1,0,0,1))
+                        local=ops.make((F(1,4),F(1,2),F(3,4)))
+                        if owner=="parent": parent=replace(parent,**{field:malformed})
+                        else: local=replace(local,**{field:malformed})
+                        with self.assertRaises(ReachAdmissionError):
+                            ops.compose(parent,local)
+
+    def test_known_zero_composition_remains_interruptible_before_publication(self):
+        marker=RuntimeError("cancel zero-derivative composition")
+        active=False
+        def check():
+            if active and work.counts.get("composition_operand_guard",0):
+                raise marker
+        work=ReachExecutionWork(check=check)
+        ops=ReachPoseOps(work)
+        parent=ops.make((1,2,3),(1,0,0,1))
+        local=ops.make((F(1,4),F(1,2),F(3,4)))
+        active=True
+        with self.assertRaises(RuntimeError) as raised:
+            ops.compose(parent,local)
+        self.assertIs(raised.exception,marker)
+        self.assertIs(work.callback_error,marker)
+        self.assertFalse(any(key[1] in ("relative_composition","stationary_composition")
+                             for key in work._cache))
 
     def test_affine_and_parabolic_keep_exact_clock_until_public_boundary(self):
         ops=ReachPoseOps(ReachExecutionWork())

@@ -7,6 +7,7 @@ from functools import partial
 
 from .agent import AgentService
 from .agent_protocol import ProtocolError
+from .agent_runtime import _Interrupt
 from .agent_store import dumps
 from .bundle import load_bundle
 from .diagnostics import OntoKinError
@@ -261,9 +262,15 @@ class ProgramAgentService(AgentService):
         work = ({"work": compiler.reach_work,
                  "reach_plan": getattr(compiler, "reach_delivery_plan", None)}
                 if self._profile == program_runtime.REACH_PROFILE else {})
-        artifact = export_glb(compiler.model, options=ExportOptions(**task.request.get("options", {})),
-                              source_uri=task.source.entry.filename, source_sha256=task.source.entry.revision,
-                              target_contract=self._destination, check=delivery_check, **work)
+        try:
+            artifact = export_glb(compiler.model, options=ExportOptions(**task.request.get("options", {})),
+                                  source_uri=task.source.entry.filename, source_sha256=task.source.entry.revision,
+                                  target_contract=self._destination, check=delivery_check, **work)
+        except _Interrupt as interrupted:
+            # The retained compiler's budget still owns the service callback.
+            # Preserve its actual cancellation/resource error across the later
+            # exporter call, just as prepare_delivery does during evaluation.
+            raise interrupted.error
         check()
         sha = hashlib.sha256(artifact.data).hexdigest()
         artifact_id = "artifact:" + sha

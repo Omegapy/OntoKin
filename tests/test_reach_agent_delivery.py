@@ -242,6 +242,76 @@ class ReachAgentDeliveryTests(ReachAgentFixture, unittest.TestCase):
         after_bytes, _ = self.retrieve(prior, project="retained")
         self.assertEqual(after_bytes, prior_bytes)
 
+    def test_retained_work_budget_failure_discards_new_effects_and_preserves_prior_artifact(self):
+        program, _ = self.create()
+        options = {"end": "0.25", "fps": 2, "helpers": False}
+        entries = []
+        export = self.service._export
+
+        def observe_entry(task, check, **kwargs):
+            entries.append(check.operations)
+            return export(task, check, **kwargs)
+
+        with patch.object(self.service, "_export", side_effect=observe_entry):
+            prior = self.success(self.send("export", program_revision=program.program_revision,
+                                           destination=TARGET, options=options))
+        self.assertEqual(len(entries), 1)
+        # The real preparation count makes the next lower-budget request stop
+        # inside retained numerical work, after the ordinary _export entry
+        # check. No callback exception or arithmetic result is injected.
+        limit = entries[0] + 2
+        before = self.effects()
+        retained_run = copy.deepcopy(self.service.get_run("reach", prior["run_id"]))
+        retained_bytes, _ = self.retrieve(prior)
+        request = self.request("export", program_revision=program.program_revision,
+                               destination=TARGET, options=options, budgets={"max_operations": limit})
+        response = self.error(self.service.handle(request), "OKL-E-RESOURCE")
+        diagnostic = response["diagnostics"][-1]
+        self.assertEqual(diagnostic["details"]["budget"], "max_operations")
+        self.assertEqual(diagnostic["details"]["limit"], limit)
+        self.assertEqual(diagnostic["details"]["consumed"], limit + 1)
+        self.assertTrue(diagnostic["details"]["request_terminated"])
+        self.assertIsNone(response["protocol_error"])
+        self.assertIsNone(response["run_id"])
+        self.assertIsNone(response["result"]["run_state"])
+        self.assertEqual(self.effects(), before)
+        self.assertEqual(self.service.get_run("reach", prior["run_id"]), retained_run)
+        self.assertEqual(self.service.accepted_revision("reach"), program.program_revision)
+        self.assertEqual(self.service.handle(request), response)
+        after_bytes, _ = self.retrieve(prior)
+        self.assertEqual(after_bytes, retained_bytes)
+
+    def test_real_cancel_during_export_geometry_discards_checked_prefix(self):
+        program, _ = self.create()
+        request = self.request("export", program_revision=program.program_revision,
+                               destination=TARGET, options={"end": "0.25", "fps": 2, "helpers": False})
+        checks, stages = [], []
+        execute, stage = self.service._execute, reach_export.recording_stage
+
+        def observe_execute(task, check):
+            checks.append(check)
+            return execute(task, check)
+
+        def cancel_at_geometry(name, *, work=None, check=None):
+            stage(name, work=work, check=check)
+            if name == "geometry":
+                stages.append(name)
+                response = self.success(self.send("cancel", target_request_id=request["request_id"]))
+                self.assertEqual(response["result"]["disposition"], "cancellation_requested")
+                checks[-1].last_poll = 0
+
+        with (patch.object(self.service, "_execute", side_effect=observe_execute),
+              patch.object(reach_export, "recording_stage", side_effect=cancel_at_geometry)):
+            response = self.service.handle(request)
+        self.assertEqual(stages, ["geometry"])
+        self.assertEqual(response["status"], "cancelled", response)
+        self.assertIsNone(response["protocol_error"])
+        self.assertIsNone(response["run_id"])
+        self.assertIsNone(response["result"])
+        self.assertEqual(self.effects(), {"runs": 0, "artifacts": 0})
+        self.assertEqual(self.service.accepted_revision("reach"), program.program_revision)
+        self.assertEqual(self.service.handle(request), response)
+
     def test_final_delivery_envelope_guard_rolls_back_run_and_artifact(self):
         program, _ = self.create("P24")
         options = {"end": "0.25", "fps": 2, "helpers": False}

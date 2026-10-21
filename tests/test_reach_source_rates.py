@@ -234,13 +234,14 @@ class ReachSourceRateAuditTests(unittest.TestCase):
             self.assertTrue(group["inputs"])
             self.assertTrue(all(row["bytes"] > 0 for row in group["inputs"]))
 
-    def test_valid_incoming_failed_boundary_is_explicitly_reference_unavailable(self):
-        report = execute_source_rate_audit(bundle("l04"), time=F(1, 2), side="before", carriers=["world"])
-        self.assertEqual(report["status"], "unresolved")
-        self.assertEqual(report["reason"], "reference_unavailable")
-        self.assertEqual(report["reference_error"]["code"], "source_admission")
+    def test_valid_incoming_failed_boundary_is_independently_audited(self):
+        report = execute_source_rate_audit(bundle("l04"), time=F(1, 2), side="before", carriers=[TIP])
+        self.assertEqual(report["status"], "proved")
+        self.assertNotIn("reference_error", report)
         self.assertEqual(exact(report["time"]), F(1, 2))
         self.assertEqual(report["side"], "before")
+        self.assertEqual(report["reference_end_side"], "before")
+        self.assertEqual(len(report["results"]), 2)
         self.assertFalse(report["release_acceptance"])
 
     def test_fresh_wrapper_does_not_translate_reference_typed_cancellation(self):
@@ -249,7 +250,7 @@ class ReachSourceRateAuditTests(unittest.TestCase):
         def check():
             if armed:
                 raise interruption
-        def cancel_during_reference(model, *, end, work):
+        def cancel_during_reference(model, *, end, end_side, work):
             nonlocal armed
             armed = True
             work.tick()

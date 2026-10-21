@@ -128,7 +128,7 @@ class _BufferBuilder:
         return len(self.accessors) - 1
 
 
-def _encode(scene: BakedScene, *, check=None) -> tuple[bytes, float]:
+def _encode(scene: BakedScene, *, check=None, work=None) -> tuple[bytes, float]:
     builder = _BufferBuilder(check)
     nodes, meshes, materials, samplers, channels = [], [], [], [], []
     geometry_cache, mesh_cache, material_cache = {}, {}, {}
@@ -206,7 +206,7 @@ def _encode(scene: BakedScene, *, check=None) -> tuple[bytes, float]:
             samplers.append({"input": time_accessor, "output": output, "interpolation": "LINEAR"})
     if scene.contract == REACH_TARGET:
         from .reach_export import rational_record
-        exact_clocks = [rational_record(time) for time in scene.exact_times]
+        exact_clocks = [rational_record(time, work=work) for time in scene.exact_times]
     else:
         exact_clocks = [time_text(time) for time in scene.exact_times]
     document: dict[str, Any] = {
@@ -233,7 +233,7 @@ def _encode(scene: BakedScene, *, check=None) -> tuple[bytes, float]:
             "placement_policy": "baked_once_in_carrier_local_vertices_and_normals"}
     try:
         measure_json(document, max_bytes=max(0, MAX_GLB_BYTES - len(builder.binary) - 34),
-                     max_entries=MAX_GLB_BYTES, check=check)
+                     max_entries=MAX_GLB_BYTES, check=check, work=work)
     except JSONLimitError as error:
         export_error("OKE-E-GLB-BUDGET", "Encoded glTF JSON and binary exceed the GLB byte budget.",
                      kind="resource", details=error.details)
@@ -442,7 +442,7 @@ def _preflight_reach_expansion(document, *, check=None) -> None:
                      kind="resource", details={"max_interval_certificates": 100000})
 
 
-def read_glb(source: bytes | bytearray | str | Path, *, check=None, target_contract=None) -> DecodedGLB:
+def read_glb(source: bytes | bytearray | str | Path, *, check=None, target_contract=None, work=None) -> DecodedGLB:
     """Decode and structurally check the adapter's embedded, flat GLB subset."""
     if check:
         check()
@@ -476,7 +476,7 @@ def read_glb(source: bytes | bytearray | str | Path, *, check=None, target_contr
         except RecursionError:
             export_error("OKE-E-METADATA-BUDGET", "Supplied glTF JSON exceeds bounded parser nesting.", kind="resource")
         try:
-            measure_json(document, max_bytes=MAX_GLB_BYTES, max_entries=MAX_GLB_BYTES, check=check)
+            measure_json(document, max_bytes=MAX_GLB_BYTES, max_entries=MAX_GLB_BYTES, check=check, work=work)
         except JSONLimitError as error:
             export_error("OKE-E-METADATA-BUDGET", "Supplied glTF JSON exceeds bounded metadata materialization.",
                          kind="resource", details=error.details)
@@ -1028,7 +1028,7 @@ def _export_glb(model: SceneModel, *, options: ExportOptions | None = None,
     if target_contract == REACH_TARGET:
         from .reach_export import recording_stage
         recording_stage("encoding", work=work, check=check)
-    data, geometry_error = _encode(scene, check=check)
+    data, geometry_error = _encode(scene, check=check, work=work)
     if geometry_error > scene.options.position_tolerance_m:
         export_error("OKE-E-GEOMETRY-PRECISION", "Mesh vertex binary32 quantization exceeds the position tolerance.", model,
                      details={"max_geometry_quantization_error_m": geometry_error,
