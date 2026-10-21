@@ -68,7 +68,54 @@ separate:
   downloaded archives. No runtime, artifact, browser or release result is
   implied by a dependency match.
 
-The narrow rate-criterion decision, complete requirement/probe mapping,
-source/Agent artifact corpora, native/browser/visual roles, CPython compatibility,
-inherited workflows and final independent release audit remain open. None of
-these preliminary scopes authorizes a merge into main.
+The later archives below preserve subsequent executions. The narrow
+[rate criterion](../reach-rate-acceptance-v0.1.md) and
+[literal requirement/probe mapping](../../language-design/planar-reach-v0.1/conformance-local-v0.1.json)
+are now recorded; the criterion still requires a final applicability binding.
+Complete source/Agent artifact corpora, native/browser/visual roles, CPython
+compatibility, inherited workflows and the final independent release audit
+remain open. None of these preliminary scopes authorizes a merge into main.
+
+## Complete rate inventory and later failed artifact baselines
+
+| Archive | Members | Bytes | SHA-256 |
+| --- | ---: | ---: | --- |
+| `rate-inventory-001.zip` | 370 | 1,454,301 | `0979a4c2a98d69962c11ce9ef84ba890fca60ca7b8d2742ba115e77b9aee5d7f` |
+| `artifact-baselines-002.zip` | 625 | 4,402,868 | `690b7a5baa46f026c80a58077d930468d7c18a87cc028c866de08261393abf2e` |
+| `agent-auditor-python-matrix-001.zip` | 68 | 2,064,039 | `1aa2958bc80529f8ae60467a011b8f0fea2706dc2b57d01bf23cb1169257a7c4` |
+
+The adjacent `.members.json` files contain every member's exact byte count and
+SHA-256. Every member and ZIP CRC was checked before publication. These are raw
+execution archives, with their original separate source identities:
+
+- `rate-inventory-001.zip` preserves the complete 362-request/724-field
+  independent inventory on clean `9ebfec2f55ce75d38e1922eaac9393154faf7a27`.
+  All requests pass, source inputs remain stable, and the maximum is 98,745
+  operations. Terminal P23 requests use 98,678, 98,711 and 98,745. The raw logs
+  also retain 10 source-phase methods, 46 reference methods and 22 rate methods.
+  These results do not certify later source changes.
+- `artifact-baselines-002.zip` preserves full source runs 002 and 003, their
+  actual passing GLBs and failed requests, the actual Agent producer 001 store
+  and 182 exchanges, the initial tooling failure, and the bounded stage
+  profiler. Source run 002 at `f678262` and run 003 at `6a07eff` each pass 12 of
+  28 artifacts. P04 is the new pass; the other 16 still exhaust 100,000
+  operations. The Agent producer at `c087852` passes only L04, P01 and P17 of
+  ten required GLBs. All three producer runs retain stable inputs. The profiler
+  kept the original limits and identifies repeated phase and sampling work;
+  it is development evidence, not a release role.
+- `agent-auditor-python-matrix-001.zip` preserves the failed and passing
+  tooling cohorts, both diagnostic audits, and the original failed official
+  audit. The corrected `001fa57` auditor passes all 21 tooling methods. Its
+  diagnostic checks the older `c087852` producer's 182 exchanges, 617 complete
+  projections, 42 LP steps, ten LP02 evidence reads, Q03, Q22 and source
+  snapshots. It correctly rejects the incomplete retained-run inventory.
+  The report records both source cuts and explicitly grants no equivalence or
+  official protocol/delivery acceptance. A fresh same-cut execution is required.
+
+The last archive also preserves installation and byte-integrity receipts for
+exact CPython 3.11.17 and 3.13.16 and their separate six-package environments.
+All 9,433 runtime archive members and 266 package wheel members were verified;
+pip-generated files were separately inventoried. A failed proxy download is
+retained alongside the successful pinned download. No full test suite ran in
+these two environments during preparation. Their installation summary SHA-256
+is `d1336e6e3b65592949bce992db88d7c8d2f1357fd9f1de432b06b65b5070540d`.

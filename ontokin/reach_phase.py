@@ -6,7 +6,7 @@ All arithmetic consumes the simulator's existing bounded request work context.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from fractions import Fraction as F
 
 from .reach_numeric import ReachAdmissionError, compare, exact, rational
@@ -52,6 +52,12 @@ class PhaseBound:
     angular_acceleration_upper_rad_per_s2: F = F(0)
     actual_speed_upper_m_per_s: F = F(0)
     actual_angular_speed_upper_rad_per_s: F = F(0)
+
+
+_BOUND_FIELDS = tuple(PhaseBound.__dataclass_fields__)
+_COMPOSITION_FIELDS = tuple(name for name in _BOUND_FIELDS
+                            if name not in {"max_position_l1_m", "position_error_m"})
+_CACHE_DOMAIN = "reach_source_phase/0.1"
 
 
 class PhaseArithmetic:
@@ -127,30 +133,47 @@ def joint_phase(simulator, path, start, end, state):
     claimant = state.claims.get((path, "coordinate"))
     if claimant is None:
         actual = a.number(state.coordinates[path])
-        ideal = state.ideal_coordinates[path]
-        return JointPhase(actual, actual, ideal, ideal, F(0), F(0), a.absolute(a.sub(actual, ideal)))
+        ideal = a.number(state.ideal_coordinates[path])
+        simulator.work.charge("phase_joint_key")
+        key = (_CACHE_DOMAIN, simulator.work.max_operand_bits, "unclaimed_joint", actual, ideal)
+        cached = simulator.work.lookup(key)
+        if cached is not None:
+            return cached
+        result = JointPhase(actual, actual, ideal, ideal, F(0), F(0), a.absolute(a.sub(actual, ideal)))
+        simulator.work.remember(key, result)
+        return result
     action, runtime = simulator.model.actions[claimant], state.actions[claimant]
     if action.kind == "reach_planar":
         index = 0 if path == action.reach.shoulder else 1
         actual_initial = a.number(runtime.initial[index])
-        ideal_initial = runtime.ideal_initial[index]
+        ideal_initial = a.number(runtime.ideal_initial[index])
         target = a.number(runtime.solution.target_rad[index])
     else:
         actual_initial = a.number(runtime.initial)
-        ideal_initial = runtime.ideal_initial
+        ideal_initial = a.number(runtime.ideal_initial)
         target = a.number(action.goal)
-    actual_rate = a.div(a.sub(target, actual_initial), action.duration)
-    ideal_rate = a.div(a.sub(target, ideal_initial), action.duration)
-    actual = tuple(a.add(actual_initial, a.mul(actual_rate, runtime.elapsed_at(time))) for time in (start, end))
-    ideal = tuple(a.add(ideal_initial, a.mul(ideal_rate, runtime.elapsed_at(time))) for time in (start, end))
+    duration = a.number(action.duration)
+    elapsed = tuple(a.number(runtime.elapsed_at(time)) for time in (start, end))
+    simulator.work.charge("phase_joint_key")
+    key = (_CACHE_DOMAIN, simulator.work.max_operand_bits, "claimed_joint", action.kind,
+           actual_initial, ideal_initial, target, duration, elapsed, runtime.status)
+    cached = simulator.work.lookup(key)
+    if cached is not None:
+        return cached
+    actual_rate = a.div(a.sub(target, actual_initial), duration)
+    ideal_rate = a.div(a.sub(target, ideal_initial), duration)
+    actual = tuple(a.add(actual_initial, a.mul(actual_rate, time)) for time in elapsed)
+    ideal = tuple(a.add(ideal_initial, a.mul(ideal_rate, time)) for time in elapsed)
     error = a.maximum(*(a.absolute(a.sub(x, y)) for x, y in zip(actual, ideal)))
     extent = a.maximum(*(a.absolute(value) for value in actual))
     # The affine scalar is rounded once at exposure into the source hinge.
     # Its magnitude lies between these endpoints throughout this phase.
     error = a.add(error, a.rounding(extent))
     running = runtime.status == "running"
-    return JointPhase(*actual, *ideal, actual_rate if running else F(0),
-                      ideal_rate if running else F(0), error)
+    result = JointPhase(*actual, *ideal, actual_rate if running else F(0),
+                        ideal_rate if running else F(0), error)
+    simulator.work.remember(key, result)
+    return result
 
 
 def phase_bounds(simulator, start, end, state=None, *, selected_frames=None):
@@ -192,12 +215,52 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None):
         return PhaseBound(**values)
 
     def constant(pose, *, inverse=False):
-        extent = a.l1(pose.position)
-        return finish(max_position_l1_m=a.add(a.mul(F(2), extent), a.mul(F(2), VECTOR_ERROR)) if inverse else extent,
+        # Decode/guard every position component before a lookup. No mutable
+        # model record is retained; the key contains its complete local pose.
+        position = tuple(a.number(value) for value in pose.position)
+        work.charge("phase_constant_key")
+        if type(inverse) is not bool:
+            raise ValueError("A phase constant inverse selector must be boolean.")
+        key = (_CACHE_DOMAIN, work.max_operand_bits, "constant", position, pose.rotation, inverse)
+        cached = work.lookup(key)
+        if cached is not None:
+            return cached
+        extent = a.add(*(a.absolute(value) for value in position))
+        result = finish(max_position_l1_m=a.add(a.mul(F(2), extent), a.mul(F(2), VECTOR_ERROR)) if inverse else extent,
             path_offset_l1_m=extent if inverse else F(0), product_count=1,
             vector_round_count=int(inverse))
+        work.remember(key, result)
+        return result
 
     def compose(parent, local):
+        # The recurrence never reads the parent's position_error_m: it derives
+        # that allowance again from inherited anchor errors and path counts.
+        # Its max_position_l1_m appears only in the final extent. Keep all other
+        # parent fields and the complete local bound in one immutable key, with
+        # a single relative bound and replaceable extent/result. The uniform
+        # formula is exactly affine in extent: its only term is extent*2^-53.
+        # No sampled error or rounded arithmetic enters this factorization.
+        work.charge("phase_composition_operand_guard")
+        work.guard(*(getattr(bound, field) for bound in (parent, local) for field in _BOUND_FIELDS))
+        key = (_CACHE_DOMAIN, work.max_operand_bits, "composition_recurrence",
+               tuple(getattr(parent, field) for field in _COMPOSITION_FIELDS), local)
+        cached = work.lookup(key)
+
+        def translated(base):
+            work.charge("phase_composition_extent")
+            extent = a.add(parent.max_position_l1_m, base.max_position_l1_m)
+            if compare(extent, F(0), work) < 0:
+                raise ReachAdmissionError("reach_numeric", "Source uniform allowances must be nonnegative.")
+            position_error = a.add(base.position_error_m, a.mul(parent.max_position_l1_m, F(1, 1 << 53)))
+            return replace(base, max_position_l1_m=extent, position_error_m=position_error)
+
+        if cached is not None:
+            work.charge("phase_composition_extent_identity")
+            if parent.max_position_l1_m == cached[0]:
+                return cached[1]
+            result = translated(cached[2])
+            work.remember(key, (parent.max_position_l1_m, result, cached[2]))
+            return result
         work.charge("phase_path_counts", 3)
         offset = local.max_position_l1_m
         ideal_offset = a.add(offset, local.position_error_m)
@@ -227,7 +290,7 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None):
             local.angular_velocity_error_rad_per_s,
             a.mul(parent.rotation_error_rad, local.actual_angular_speed_upper_rad_per_s),
             a.mul(F(2), VECTOR_ERROR), a.rounding(a.mul(F(2), actual_omega)))
-        return finish(max_position_l1_m=a.add(parent.max_position_l1_m, a.mul(F(2), offset), a.mul(F(4), VECTOR_ERROR)),
+        values = dict(
             path_offset_l1_m=a.add(parent.path_offset_l1_m, local.path_offset_l1_m, offset),
             trig_count=parent.trig_count + local.trig_count,
             product_count=parent.product_count + local.product_count + 1,
@@ -239,6 +302,10 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None):
             carrier_speed_upper_m_per_s=speed, carrier_acceleration_upper_m_per_s2=acceleration,
             angular_speed_upper_rad_per_s=omega, angular_acceleration_upper_rad_per_s2=alpha,
             actual_speed_upper_m_per_s=actual_speed, actual_angular_speed_upper_rad_per_s=actual_omega)
+        base = finish(max_position_l1_m=a.add(a.mul(F(2), offset), a.mul(F(4), VECTOR_ERROR)), **values)
+        result = translated(base)
+        work.remember(key, (parent.max_position_l1_m, result, base))
+        return result
 
     def rotation_plan(omega, elapsed):
         plan = ops.spin_plan(omega, elapsed)

@@ -492,9 +492,9 @@ def reach_prefix_plan(model, end, *, work) -> ReachPrefixPlan:
             _fail("OKE-E-KEYFRAME-BUDGET", "Semantic boundaries exceed the recording key budget.", model=model, kind="resource")
         boundary_history_bound(model, [*times, time], horizon=end, check=work.tick)
         simulator.advance(time, "before")
-        before = ReachSimulator.snapshot(simulator, time, "before")
+        before = simulator.recording_boundary(time, "before")
         simulator.advance(time, "after")
-        after = ReachSimulator.snapshot(simulator, time, "after")
+        after = simulator.recording_boundary(time, "after")
         records.append(_boundary_record(time, before, after, simulator.incoming_releases_at(time)))
         times.append(time)
         if time == end:
@@ -935,13 +935,26 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach
     exact, times, retained = reach_timeline(model, options, plan, nodes, geometry, work=work)
     recording_stage("sampling", work=work)
     frame_paths = tuple(node.frame_path for node in nodes)
+    previous_state = None
+    moving_frames = frozenset()
     for time in exact:
         _charge(work, "recording_sample")
         index = bisect_right(plan.boundaries, time) - 1
         state = plan.final_state if index >= len(plan.phase_states) else plan.phase_states[index]
-        frames = plan.simulator.recording_frames(time, state, frame_paths)
+        new_phase = state is not previous_state
+        if new_phase:
+            moving_frames = plan.simulator.recording_moving_frames(state, frame_paths)
+        selected_frames = frame_paths if new_phase else tuple(path for path in frame_paths if path in moving_frames)
+        frames = plan.simulator.recording_frames(time, state, selected_frames)
         for node in nodes:
             _charge(work, "recording_pose")
+            if not new_phase and node.frame_path not in moving_frames:
+                # The complete source dependency law is constant in this
+                # phase. Copy the preceding retained immutable output, keeping
+                # every key, pose, quaternion lift and interval certificate.
+                node.translations.append(node.translations[-1])
+                node.rotations_xyzw.append(node.rotations_xyzw[-1])
+                continue
             pose = frames[node.frame_path]
             node.translations.append(tuple(pose.position))
             w, x, y, z = pose.orientation
@@ -950,6 +963,7 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach
                                             zip(node.rotations_xyzw[-1], quaternion)), Fraction(0)) < 0:
                 quaternion = tuple(-value for value in quaternion)
             node.rotations_xyzw.append(quaternion)
+        previous_state = state
     recording_stage("certification", work=work)
     certificates = interval_certificates(model, options, plan, nodes, geometry, exact, times, work=work)
     basis = source_numeric_basis(work=work)

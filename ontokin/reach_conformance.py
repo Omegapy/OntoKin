@@ -930,14 +930,53 @@ def _aligned_reference(quaternion, expected, arithmetic):
     return expected
 
 
-def _key_comparisons(reference, geometry, tracks, time, index, arithmetic):
-    result = {}
-    ideals = reference.recording_pose_enclosures(
-        tuple(item["frame"] for item in geometry.values()), time, side="after")
+def _same_recording_vector(first, last, size):
+    # Exact typed supplied values are required. In particular, bool/int equality
+    # cannot borrow a previously admitted floating-point endpoint comparison.
+    return (type(first) in (tuple, list) and type(last) in (tuple, list)
+            and len(first) == len(last) == size
+            and all(type(a) is type(b) and a == b for a, b in zip(first, last)))
+
+
+def _recording_vector(value, size, arithmetic):
+    if type(value) not in (tuple, list) or len(value) != size:
+        _error("OKE-E-CERTIFICATE", "A supplied recording endpoint has incompatible dimensions.")
+    for component in value:
+        if type(component) not in (int, float) or (type(component) is float and not math.isfinite(component)):
+            _error("OKE-E-CERTIFICATE", "A supplied recording endpoint must contain finite numbers.")
+        if type(component) is int:
+            arithmetic.bits(component.bit_length())
+    return tuple(value)
+
+
+def _key_comparisons(reference, geometry, tracks, time, index, arithmetic, *, previous=None, previous_time=None):
+    result, pending, observed, candidates = {}, [], [], []
     for carrier, item in geometry.items():
         arithmetic.tick("independent_key_pose")
+        position = _recording_vector(tracks[carrier]["translation"][index], 3, arithmetic)
+        quaternion = _recording_vector(tracks[carrier]["rotation"][index], 4, arithmetic)
+        same = (previous is not None
+                and _same_recording_vector(position, tracks[carrier]["translation"][index - 1], 3)
+                and _same_recording_vector(quaternion, tracks[carrier]["rotation"][index - 1], 4))
+        observed.append((carrier, item, position, quaternion, same))
+        if same:
+            candidates.append(item["frame"])
+    stationary = (reference.recording_stationary_frames(candidates, previous_time, time, side="after")
+                  if candidates else frozenset())
+    for carrier, item, position, quaternion, same in observed:
+        if same and item["frame"] in stationary:
+            # The existing preceding-endpoint map is required by the interval
+            # proof. Reuse its result only after independently proving unchanged
+            # source operands and checking these actual supplied buffer values.
+            # No additional numeric cache or history is retained.
+            arithmetic.tick("independent_stationary_key_comparison")
+            result[carrier] = dict(previous[carrier])
+        else:
+            pending.append((carrier, item, position, quaternion))
+    ideals = (reference.recording_pose_enclosures(
+        tuple(item["frame"] for _, item, _, _ in pending), time, side="after") if pending else {})
+    for carrier, item, position, quaternion in pending:
         ideal = ideals[item["frame"]]
-        position, quaternion = tracks[carrier]["translation"][index], tracks[carrier]["rotation"][index]
         def compare():
             normalized = arithmetic.normalize(quaternion)
             expected = (ideal.orientation[1], ideal.orientation[2], ideal.orientation[3], ideal.orientation[0])
@@ -1050,6 +1089,51 @@ class _CertificateBatch:
         self.groups.clear()
 
 
+class _IntervalCertificateClaims:
+    """Validate every supplied row against one interval's common source facts.
+
+    Only the last admitted immutable strings and phase-index tuple are retained.
+    They are bounded current-input proof state, not a numeric result cache. All
+    carriers share the independently checked boundary axis, but their numeric
+    phase bounds and endpoint comparisons remain separate and unconditional.
+    """
+    def __init__(self, boundaries, low, high, required, width, stored_width, work):
+        self.boundaries, self.low, self.high = boundaries, low, high
+        self.required, self.widths, self.work = frozenset(required), (width, stored_width), work
+        self.clocks, self.selected = (None, None), None
+
+    def check(self, record):
+        _tick(self.work, "independent_interval_claim")
+        selected = record["source_phase_indices"]
+        count = len(self.boundaries) - 1
+        if (type(selected) is not list or len(selected) > count
+                or any(type(value) is not int or not 0 <= value < count for value in selected)):
+            _error("OKE-E-PHASE-COVERAGE", "A certificate omits a positive-width source phase or names an unrelated phase.")
+        selected = tuple(selected)
+        if selected != self.selected:
+            _tick(self.work, "independent_interval_phase_claim")
+            if (len(selected) != len(set(selected)) or not self.required.issubset(selected)
+                    or any(max(self.low, self.boundaries[value]) > min(self.high, self.boundaries[value + 1])
+                           for value in selected)):
+                _error("OKE-E-PHASE-COVERAGE", "A certificate omits a positive-width source phase or names an unrelated phase.")
+            self.selected = selected
+        clocks = []
+        arithmetic = _Bounds(self.work)
+        for index, name in enumerate(("h_authored_seconds", "h_stored_seconds")):
+            width = self.widths[index]
+            arithmetic.bits(width.numerator.bit_length(), width.denominator.bit_length())
+            value = record[name]
+            texts = (tuple(value[key] for key in ("numerator", "denominator"))
+                     if type(value) is dict and set(value) == {"numerator", "denominator"} else None)
+            if (texts is None or not all(type(text) is str for text in texts)
+                    or texts != self.clocks[index]):
+                if rational_clock(value, work=self.work) != width:
+                    _error("OKE-E-CLOCK", "Certificate widths do not match actual retained clocks.")
+            clocks.append(texts)
+        self.clocks = tuple(clocks)
+        return selected
+
+
 def _verify_certificates(decoded, reference, geometry, tables, endpoint_phases, authored, times, quantization, options, *, work):
     arithmetic = _Bounds(work)
     certificates = quantization["interval_certificates"]
@@ -1074,7 +1158,8 @@ def _verify_certificates(decoded, reference, geometry, tables, endpoint_phases, 
     previous = _key_comparisons(reference, geometry, tracks, authored[0], 0, arithmetic)
     batch = _CertificateBatch(arithmetic, options.position_tolerance_m, options.rotation_tolerance_rad)
     for key, (left, right) in enumerate(zip(authored, authored[1:])):
-        following = _key_comparisons(reference, geometry, tracks, right, key + 1, arithmetic)
+        following = _key_comparisons(reference, geometry, tracks, right, key + 1, arithmetic,
+                                     previous=previous, previous_time=left)
         stored_left, stored_right = arithmetic.value(times[key]), arithmetic.value(times[key + 1])
         width, stored_width = arithmetic.sub(right, left), arithmetic.sub(stored_right, stored_left)
         shift = max(abs(arithmetic.sub(left, stored_left)), abs(arithmetic.sub(right, stored_right)))
@@ -1088,15 +1173,10 @@ def _verify_certificates(decoded, reference, geometry, tables, endpoint_phases, 
         numeric_selected = set(required)
         if endpoint_index < len(reference.boundaries) - 1:
             numeric_selected.add(endpoint_index)
+        claims = _IntervalCertificateClaims(reference.boundaries, low, high, required, width, stored_width, work)
         for carrier, item in geometry.items():
             record, phases = rows[key, carrier], tables[item["frame"]]
-            selected = record["source_phase_indices"]
-            if (type(selected) is not list or any(type(value) is not int or not 0 <= value < len(phases) for value in selected)
-                    or len(selected) != len(set(selected)) or not set(required).issubset(selected)
-                    or any(max(low, phases[value].start) > min(high, phases[value].end) for value in selected)):
-                _error("OKE-E-PHASE-COVERAGE", "A certificate omits a positive-width source phase or names an unrelated phase.")
-            if rational_clock(record["h_authored_seconds"], work=work) != width or rational_clock(record["h_stored_seconds"], work=work) != stored_width:
-                _error("OKE-E-CLOCK", "Certificate widths do not match actual retained clocks.")
+            selected = claims.check(record)
             phase = phases[source_index]
             source_position = max(phases[value].source_numeric_position_error for value in numeric_selected)
             source_rotation = max(phases[value].source_numeric_rotation_error for value in numeric_selected)

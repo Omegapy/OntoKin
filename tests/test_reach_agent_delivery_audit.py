@@ -10,7 +10,7 @@ import unittest
 
 from tools.audit_reach_agent_delivery import (DATA, MAX_DEPTH, MAX_ENVELOPE, PROTOCOL, TARGET,
     EvidenceError, Reader, Sources, canonical, decode, descriptor, envelope_bound,
-    frozen_request, joined_chunks, json_entries, resolve, retained_run, safe_path, sha)
+    complete_source_units, frozen_request, joined_chunks, json_entries, resolve, retained_run, safe_path, sha)
 
 
 def chunk_fixture():
@@ -164,6 +164,93 @@ class ReachAgentDeliveryAuditTests(unittest.TestCase):
         changed["patches"][0]["expected_text"] = "invented prior bytes"
         with self.assertRaises(EvidenceError):
             self.sources.candidate(changed)
+
+    def test_lp02_complete_source_reads_preserve_immutable_unit_identity(self):
+        document = json.loads((DATA / "draft2-supplements/protocol-cases.json").read_text())
+        lp02 = next(case for case in document["protocol_cases"] if case["id"] == "LP02")
+        for role, case_id in (("LP02.08", "P13"), ("LP02.09", "P20")):
+            step = next(item for item in lp02["steps"] if item["id"] == role)
+            expected = next(item["expected"]["exact_source_unit_identities"]
+                            for item in step["required_evidence_reads"]
+                            if "exact_source_unit_identities" in item["expected"])
+            program = self.sources.bundles[case_id]
+            units = {unit.source_id: unit for unit in program.units}
+            returned = [{"source_id": item["source_id"], "source_revision": item["source_revision"],
+                         "filename": item["filename"], "source": units[item["source_id"]].raw.decode("utf-8")}
+                        for item in expected]
+            self.assertEqual(list(complete_source_units(program, returned, expected)),
+                             [item["source_id"] for item in expected])
+            for mutation in ("bytes", "revision", "filename", "unknown", "duplicate", "missing", "reordered"):
+                changed = copy.deepcopy(returned)
+                if mutation in ("bytes", "revision", "filename", "unknown"):
+                    field = {"bytes": "source", "revision": "source_revision",
+                             "filename": "filename", "unknown": "source_id"}[mutation]
+                    changed[0][field] += "x"
+                elif mutation == "duplicate":
+                    changed.append(copy.deepcopy(changed[0]))
+                elif mutation == "missing":
+                    changed.pop()
+                else:
+                    changed.reverse()
+                with self.subTest(case=case_id, mutation=mutation), self.assertRaises(EvidenceError):
+                    complete_source_units(program, changed, expected)
+
+    def test_snapshot_action_summary_and_complete_reach_projection_are_distinct(self):
+        projection = copy.deepcopy(self.sources.cases["L04"]["samples"][0]["reaches"]["reach_a"])
+        calls = []
+
+        class ProjectionSchema:
+            def check(self, name, value):
+                if name == "agent-response":
+                    return  # This fixture tests traversal, not envelope schemas.
+                calls.append((name, copy.deepcopy(value)))
+                if name != "reach-projection" or set(value) != set(projection) or value.get("kind") != "reach_planar":
+                    raise EvidenceError("Not a complete source-bound reach projection")
+
+        reader = Reader.__new__(Reader)
+        reader.schemas, reader.sources, reader.projections = ProjectionSchema(), self.sources, 0
+        summary = {"kind": "reach_planar", "element_id": projection["element_id"],
+                   "target": projection["chain"]["shoulder"]["path"], "channel": "joint_coordinates",
+                   "status": "pending", "duration_seconds": "2", "local_elapsed_seconds": "0",
+                   "value_type": "AnglePair", "start_value": {"available": False, "value": None},
+                   "current_value": {"available": True, "value": [0.0, 0.0]},
+                   "target_value": {"available": False, "value": None, "reason": "action_has_not_started"}}
+        sample = {"time_seconds": "0", "side": "before", "objects": {}, "frames": {}, "joints": {},
+                  "actions": {"reach_a": summary}, "reaches": {"reach_a": projection}}
+        response = {"schema_version": PROTOCOL, "result": {"initial_state": sample}}
+        reader.recursive(response)
+        self.assertEqual(calls, [("reach-projection", projection)])
+        self.assertEqual(reader.projections, 1)
+        reader.recursive({"result": {"items": [{"actions": [projection]}]}})
+        self.assertEqual(reader.projections, 2)
+        reader.recursive({"schema_version": PROTOCOL,
+                          "result": {"run_state": {"last_valid_state": sample}}})
+        reader.recursive({"schema_version": PROTOCOL, "result": {"target": response}})
+        self.assertEqual(reader.projections, 4)
+        for mutation in ("missing-kind", "missing-source", "summary-in-reaches", "summary-in-inspect",
+                         "snapshot-shaped-decoy", "nonmap-frames"):
+            changed = copy.deepcopy(response)
+            state = changed["result"]["initial_state"]
+            if mutation == "missing-kind":
+                del state["reaches"]["reach_a"]["kind"]
+            elif mutation == "missing-source":
+                del state["reaches"]["reach_a"]["program_revision"]
+            elif mutation == "summary-in-reaches":
+                state["reaches"]["reach_a"] = summary
+            elif mutation == "summary-in-inspect":
+                changed = {"result": {"items": [{"actions": [summary]}]}}
+            elif mutation == "snapshot-shaped-decoy":
+                changed = {"schema_version": PROTOCOL, "result": {"unrelated": sample}}
+            else:
+                state["frames"] = []
+            with self.subTest(mutation=mutation), self.assertRaises(EvidenceError):
+                reader.recursive(changed)
+        # Discovery may carry schema descriptions with properties called
+        # actions/reaches. Those are not actual sampled projection records.
+        count = len(calls)
+        reader.recursive({"properties": {"actions": {"type": "object"},
+            "reaches": {"additionalProperties": {"$ref": "reach-projection.schema.json"}}}})
+        self.assertEqual(len(calls), count)
 
     def test_bindings_must_come_from_a_prior_actual_capture(self):
         with self.assertRaises(EvidenceError):

@@ -249,7 +249,9 @@ class Sources:
         require(not request.get("module_changes"), "Unexpected dependency edit in this fixed workflow")
         base = self.revisions.get(request["expected_program_revision"])
         require(base is not None, "Edit has no fixed immutable source base")
-        units, changes = dict(base.sources), {}
+        # Reconstruction needs immutable SourceUnit identities and metadata;
+        # base.sources exposes detached legacy parser Source objects instead.
+        units, changes = {unit.source_id: unit for unit in base.units}, {}
         for patch in request["patches"]:
             unit = units.get(patch["source_id"])
             require(unit is not None and unit.revision == patch["source_revision"], "Patch source revision differs")
@@ -289,6 +291,24 @@ def resolve(value, bindings, sources):
 
 def frozen_request(actual, template, bindings, sources):
     require(actual == resolve(template, bindings, sources), "Actual request differs from its frozen template")
+
+
+def complete_source_units(program, returned_units, expected_identities):
+    """Check complete reads against immutable units with their package identity."""
+    units = {unit.source_id: unit for unit in program.units}
+    identities, found = [], {}
+    require(type(returned_units) is list, "Complete source read is not a unit list")
+    for returned in returned_units:
+        source_id = returned["source_id"]
+        unit = units.get(source_id)
+        require(unit is not None and source_id not in found, "Unknown or repeated complete source unit")
+        require(returned["source"].encode("utf-8") == unit.raw and returned["filename"] == unit.filename
+                and returned["source_revision"] == unit.revision, "Complete source read changed bytes")
+        identities.append({"source_id": unit.source_id, "source_revision": unit.revision,
+                           "filename": unit.filename, "package_id": unit.package_id, "version": unit.version})
+        found[source_id] = returned
+    require(identities == expected_identities, "Complete source read omitted or reordered a unit")
+    return found
 
 
 def retained_run(record, final_state, final_version):
@@ -422,13 +442,16 @@ class Reader:
         self.used.add(role)
         return self.exchanges[role][:2]
 
-    def recursive(self, value):
+    def recursive(self, value, *, legacy_action=False, projection=False, response_path=None):
+        if projection:
+            require(type(value) is dict, "A complete reach projection must be an object")
         if type(value) is dict:
             if "implementation" in value:
                 require(value["implementation"] == self.implementation, "Mixed implementation in actual response")
             if value.get("schema_version") == PROTOCOL:
                 self.schemas.check("agent-response", value)
-            if value.get("kind") == "reach_planar":
+                response_path = ()
+            if projection or (value.get("kind") == "reach_planar" and not legacy_action):
                 self.schemas.check("reach-projection", value)
                 bundle = self.sources.revisions.get(value["program_revision"])
                 require(bundle is not None, "Projection identifies an unknown source program")
@@ -442,11 +465,29 @@ class Reader:
                 bundle = self.sources.revisions.get(value.get("program_revision"))
                 require(bundle is not None and value["source_manifest"] == bundle.manifest(),
                         "Returned source manifest differs from immutable bytes")
-            for item in value.values():
-                self.recursive(item)
+            snapshot = response_path in (("result", "initial_state"),
+                                         ("result", "run_state", "last_valid_state"))
+            if snapshot:
+                require(type(value.get("time_seconds")) is str and value.get("side") in ("before", "after")
+                        and all(type(value.get(key)) is dict for key in
+                                ("objects", "frames", "joints", "actions", "reaches")),
+                        "A complete source snapshot requires its clock and named state maps")
+            for key, item in value.items():
+                if snapshot and key in {"actions", "reaches"}:
+                    # The inherited actions[path] table has a generic action
+                    # summary; reaches[path] carries the complete 0.6 record.
+                    # Inspect actions[] remains a complete projection. Select
+                    # by the actual response path, never by omitted fields
+                    # that a malformed reach record could use to evade checks.
+                    for record in item.values():
+                        self.recursive(record, legacy_action=key == "actions", projection=key == "reaches")
+                else:
+                    path = None if response_path is None else response_path + (key,)
+                    self.recursive(item, response_path=path)
         elif type(value) is list:
             for item in value:
-                self.recursive(item)
+                path = None if response_path is None else response_path + ("*",)
+                self.recursive(item, response_path=path)
 
     def trace(self, rows):
         require(type(rows) is list and 0 < len(rows) <= 30000, "Invalid exchange inventory")
@@ -699,15 +740,7 @@ class Reader:
                     sibling[tuple(returned["element_id"])] = {"path": returned["path"], "identity": returned["identity"],
                         "value": value, **{key: returned["source"][key] for key in ("source_id", "source_revision", "definition_span")}}
                 else:
-                    identities = []
-                    for returned in result["source_units"]:
-                        unit = program.sources[returned["source_id"]]
-                        require(returned["source"].encode("utf-8") == unit.raw and returned["filename"] == unit.filename
-                                and returned["source_revision"] == unit.revision, "Complete source read changed bytes")
-                        identities.append({"source_id": unit.source_id, "source_revision": unit.revision,
-                                           "filename": unit.filename, "package_id": unit.package_id, "version": unit.version})
-                        source_units[unit.source_id] = returned
-                    require(identities == e["exact_source_unit_identities"], "Complete source read omitted or reordered a unit")
+                    source_units.update(complete_source_units(program, result["source_units"], e["exact_source_unit_identities"]))
             require(len(sibling) == len(source_units) == 4, "Missing four siblings or complete source closure")
             siblings.append(sibling)
             units.append({key: value for key, value in source_units.items() if key != "entry"})

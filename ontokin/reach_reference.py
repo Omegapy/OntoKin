@@ -1167,16 +1167,7 @@ class ReachReference:
         values = self.recording_pose_enclosures((carrier,), time, side, ideal=ideal)
         return next(iter(values.values()))
 
-    def recording_pose_enclosures(self, carriers, time, side="after", *, ideal=True):
-        """Evaluate independent p/q once for the selected carrier ancestries.
-
-        The p/q expressions are identical to full pose evaluation. Spatial
-        derivatives do not enter those expressions. A separate cache namespace
-        and a two-field return type prevent unused private zeros from becoming
-        source velocity or release-state evidence. The returned fresh mapping
-        uses canonical carrier names and contains no unrequested ancestry rows.
-        """
-        self.a.tick()
+    def _recording_carriers(self, carriers):
         if not isinstance(carriers, (tuple, list)):
             raise ReferenceError("unsupported", "Recording carriers require a bounded list or tuple")
         if len(carriers) > 1 + len(self.model.objects) + len(self.model.sites):
@@ -1191,6 +1182,100 @@ class ReachReference:
             if carrier != "world" and stem not in self.model.objects and stem not in self.model.sites:
                 raise ReferenceError("identity", "Unknown independent source carrier", carrier=carrier)
             selected.append(carrier)
+        return tuple(selected)
+
+    def recording_stationary_frames(self, carriers, first, last, side="after"):
+        """Prove unchanged actual and ideal pose operands within one state.
+
+        This is a source-graph proof, not a zero-rate observation or a numeric
+        cache. Every time-dependent local factor must be constant under both
+        source laws. A different retained endpoint state conservatively forces
+        fresh evaluation, including after completion, release and force events.
+        """
+        self.a.tick()
+        selected = self._recording_carriers(carriers)
+        first, last = F(first), F(last)
+        self.a.guard(first, last)
+        if first > last:
+            raise ReferenceError("unsupported", "Recording stationarity requires ordered source clocks")
+        state = self._state_at(last, side)
+        if self._state_at(first, side) is not state:
+            return frozenset()
+        incoming, known, visiting = self._incoming(state), {"world": True}, set()
+
+        def coordinate(path):
+            self.a.tick()
+            owner = state.claims.get((path, "coordinate"))
+            if owner is None:
+                return True
+            action, active = self.model.actions[owner], state.actions[owner]
+            if active.status != "running":
+                return True
+            if action.kind == "reach_planar":
+                index = (action.reach.shoulder, action.reach.elbow).index(path)
+                actual, ideal, target = active.initial[index], active.ideal_initial[index], active.targets[index]
+            else:
+                actual, ideal, target = active.initial, active.ideal_initial, action.goal
+            actual, ideal, target = F(actual), F(ideal), F(target)
+            self.a.guard(actual, ideal, target)
+            if actual == ideal == target:
+                self.a.guard(action.duration, active.elapsed_at(last))
+                return True
+            return False
+
+        def root(path):
+            self.a.tick()
+            if state.modes[path] == "dynamic":
+                # Dynamic anchors retain their ordinary full evaluation even
+                # when a point observation happens to have zero derivatives.
+                return False
+            for channel in ("translation", "orientation"):
+                self.a.tick()
+                owner = state.claims.get((path, channel))
+                if owner is not None and state.actions[owner].status == "running":
+                    if any(self.model.actions[owner].vector):
+                        return False
+                    self.a.guard(state.actions[owner].elapsed_at(last))
+            return True
+
+        def visit(frame):
+            self.a.tick()
+            if frame in known:
+                return known[frame]
+            if frame in visiting or len(visiting) > 128:
+                raise ReferenceError("unsupported", "Independent stationary frame graph is cyclic or too deep")
+            visiting.add(frame)
+            stem = frame.removesuffix(".frame")
+            if stem in self.model.sites:
+                value = visit(self.model.sites[stem].owner + ".frame")
+            elif stem in incoming:
+                kind, relation = incoming[stem]
+                if kind == "follow":
+                    value = visit(self.model.follows[relation].parent)
+                else:
+                    joint = self.model.joints[relation]
+                    value = visit(joint.parent + ".frame")
+                    if value and joint.kind in {"hinge", "slider"}:
+                        value = coordinate(relation)
+            else:
+                value = root(stem)
+            visiting.remove(frame)
+            known[frame] = value
+            return value
+
+        return frozenset(carrier for carrier in selected if visit(carrier))
+
+    def recording_pose_enclosures(self, carriers, time, side="after", *, ideal=True):
+        """Evaluate independent p/q once for the selected carrier ancestries.
+
+        The p/q expressions are identical to full pose evaluation. Spatial
+        derivatives do not enter those expressions. A separate cache namespace
+        and a two-field return type prevent unused private zeros from becoming
+        source velocity or release-state evidence. The returned fresh mapping
+        uses canonical carrier names and contains no unrequested ancestry rows.
+        """
+        self.a.tick()
+        selected = self._recording_carriers(carriers)
         time = F(time)
         state = self._state_at(time, side)
         frames = self._pose_map(time, state, ideal=ideal, pose_only=True, selected=selected)

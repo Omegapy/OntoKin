@@ -4,10 +4,13 @@ from __future__ import annotations
 from fractions import Fraction as Q
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
 from ontokin.bundle import load_file_manifest
 from ontokin.construction import compile_construction
 from ontokin.reach_runtime import ReachSimulator
+from ontokin.gltf import export_glb
+from ontokin.scene import ExportOptions
 
 
 DATA = Path(__file__).resolve().parents[1] / "docs/language-design/planar-reach-v0.1"
@@ -21,6 +24,57 @@ def simulator(case):
 
 
 class ReachRecordingSamplerTests(unittest.TestCase):
+    def test_constant_track_classification_follows_complete_actual_dependencies(self):
+        for case, start, end in (("P01", Q(0), Q(2)), ("P01", Q(2), Q(3)),
+                                  ("P05", Q(0), Q(2)), ("L01", Q(1, 2), Q(3, 2)),
+                                  ("L02", Q(1, 2), Q(3, 2)), ("P16", Q(2), Q(3))):
+            with self.subTest(case=case, start=start):
+                sim = simulator(case)
+                sim.advance(start, "after")
+                sim.phase_bounds(start, end)
+                paths = ("world", *(path + ".frame" for path in sim.model.objects),
+                         *(path + ".frame" for path in sim.model.sites))
+                moving = sim.recording_moving_frames(sim.state, paths)
+                first = sim.recording_frames(start, sim.state, paths)
+                last = sim.recording_frames((start + end) / 2, sim.state, paths)
+                self.assertNotIn("world", moving)
+                for path in paths:
+                    if path not in moving:
+                        self.assertEqual(first[path], last[path], path)
+                if case == "P05":
+                    self.assertEqual(moving, frozenset(path for path in paths if path != "world"))
+                if case == "P16":
+                    self.assertIn("payload.frame", moving)
+                if case == "P01" and start == 2:
+                    self.assertFalse(moving)
+        sim = simulator("P01")
+        with self.assertRaises(ValueError):
+            sim.recording_moving_frames(sim.state, ("invented.frame",))
+        marker = RuntimeError("cancel recording dependency walk")
+        with patch.object(sim.work, "external_check", side_effect=marker):
+            with self.assertRaises(RuntimeError) as caught:
+                sim.recording_moving_frames(sim.state, ("world",))
+        self.assertIs(caught.exception, marker)
+
+    def test_retained_constant_tracks_equal_fresh_sampling_at_every_key(self):
+        for case, end in (("P01", Q(3)), ("L01", Q(3, 4))):
+            outputs = []
+            for reuse in (False, True):
+                root = SUPPLEMENT if case.startswith("L") else DATA
+                built = compile_construction(load_file_manifest(root / (case.lower() + ".files.json")))
+                options = ExportOptions(end=end, fps=1, helpers=False)
+                if reuse:
+                    result = export_glb(built.model, options=options,
+                        target_contract="ontokin.glb/0.6", work=built.reach_work)
+                else:
+                    with patch.object(ReachSimulator, "recording_moving_frames",
+                                      lambda self, state, paths: frozenset(paths)):
+                        result = export_glb(built.model, options=options,
+                            target_contract="ontokin.glb/0.6", work=built.reach_work)
+                self.assertEqual(result.report["validation"]["status"], "passed")
+                outputs.append(result.data)
+            self.assertEqual(outputs[0], outputs[1], case)
+
     def assert_same_poses(self, sim, time, paths):
         # Both paths use the same already prepared whole-phase reduction plan.
         sim._invalidate()

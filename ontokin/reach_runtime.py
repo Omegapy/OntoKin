@@ -160,6 +160,7 @@ class ReachSimulator(ForceSimulator):
         self._derived_pose_cache = {}
         self._terminal_pose_context = None
         self._pending_releases = []
+        self._pending_reach_output = None
         self.incoming_releases = []
         self.incoming_release_time = None
         from .reach_pose import ReachPoseOps
@@ -197,6 +198,7 @@ class ReachSimulator(ForceSimulator):
             self._numeric_error(error)
 
     def _invalidate(self):
+        self._pending_reach_output = None
         self._pose_cache.clear()
         self._derived_pose_cache.clear()
 
@@ -410,6 +412,66 @@ class ReachSimulator(ForceSimulator):
             return result
         except ReachAdmissionError as error:
             self._numeric_error(error, time=time)
+
+    def recording_moving_frames(self, state, selected_paths):
+        """Identify tracks that may change inside one validated source phase.
+
+        This is a dependency walk over actual source laws, with no numerical
+        output cache. Paused/unclaimed coordinates and roots are constant until
+        the next boundary. Dynamic roots and every running claim conservatively
+        remain moving, including claims whose numeric rate happens to be zero.
+        The recording caller must derive this again whenever its state changes.
+        """
+        incoming = self._incoming(state)
+        objects, frames, resolving = {}, {"world": False}, set()
+
+        def running(path, component):
+            self._check()
+            claimant = state.claims.get((path, component))
+            return claimant is not None and state.actions[claimant].status == "running"
+
+        def frame(path):
+            self._check()
+            if not isinstance(path, str) or (path != "world" and (
+                    not path.endswith(".frame") or path[:-6] not in self.model.objects
+                    and path[:-6] not in self.model.sites)):
+                raise ValueError("A recording selector must name an actual source frame.")
+            if path not in frames:
+                stem = path[:-6]
+                frames[path] = (instance(stem) if stem in self.model.objects
+                                else instance(self.model.sites[stem].owner))
+            return frames[path]
+
+        def instance(path):
+            self._check()
+            if path in objects:
+                return objects[path]
+            if path in resolving:
+                raise reach_error("reach_chain", "The active reach pose graph contains a cycle.",
+                                  self.model.objects[path].span)
+            resolving.add(path)
+            if path in incoming:
+                kind, relation = incoming[path]
+                if kind == "follow":
+                    moving = frame(self.model.follows[relation].parent)
+                else:
+                    joint = self.model.joints[relation]
+                    inherited = frame(joint.parent + ".frame")
+                    coordinate = (running(relation, "coordinate")
+                                  if joint.kind in {"hinge", "slider"} else False)
+                    moving = inherited or coordinate
+            elif state.modes[path] == "dynamic":
+                moving = True
+            else:
+                translation = running(path, "translation")
+                orientation = running(path, "orientation")
+                moving = translation or orientation
+            resolving.remove(path)
+            objects[path] = moving
+            frames[path + ".frame"] = moving
+            return moving
+
+        return frozenset(path for path in selected_paths if frame(path))
 
     def _resolve_kinematics(self, time, state, *, selected_frames=None, pose_only=False):
         """Resolve the actual pose graph without intermediate float exposure.
@@ -855,13 +917,20 @@ class ReachSimulator(ForceSimulator):
         self._invalidate()
 
     def _validate_staged(self, time, staged, incoming):
+        # The complete after-side projection is required for admission. Its
+        # single pending output may be transferred to the immediate matching
+        # observer once, after every staged check succeeds. It is not retained
+        # as a reusable numerical result or exposed before the boundary commits.
+        self._pending_reach_output = None
         super()._validate_staged(time, staged, incoming)
-        self._reach_map(time, "after", staged)
+        projection = self._reach_map(time, "after", staged)
         try:
             measure_reach_json(self._pending_releases, check=self._work_check)
         except JSONLimitError as error:
             raise reach_error("reach_resource", "Complete incoming releases exceed the output bound.",
                               self.model.span, phase="evaluation", time=time, details=error.details) from error
+        self.work.charge("source_validated_reach_output_publish")
+        self._pending_reach_output = (staged, time, self.context_kind, projection)
 
     @staticmethod
     def _pose_record(pose):
@@ -924,6 +993,16 @@ class ReachSimulator(ForceSimulator):
         }
 
     def _reach_map(self, time, side, state):
+        pending = self._pending_reach_output
+        # Detach before even invoking the charged callback. A miss, cancelled
+        # transfer or failed observer can never leave a reusable mutable alias.
+        self._pending_reach_output = None
+        if pending is not None:
+            self.work.charge("source_validated_reach_output_check")
+            staged, validated_time, context_kind, projection = pending
+            if (state is staged and time == validated_time and side == "after"
+                    and self.context_kind == context_kind):
+                return projection
         result = {}
         # This bounded cache lives only during one unchanged state/time/side.
         # Its tuples contain physical values, never action identity, lifecycle,
@@ -985,20 +1064,91 @@ class ReachSimulator(ForceSimulator):
                 "incoming_linear_velocity_world_m_per_s": list(pose.velocity),
                 "incoming_angular_velocity_world_rad_per_s": list(pose.omega)}
 
-    def snapshot(self, time, side):
-        result = super().snapshot(time, side)
-        result["reaches"] = self._reach_map(time, side, self.state)
+    def recording_boundary(self, time, side):
+        """Project every promised H06 history without unused inspection output.
+
+        Recording preparation has already executed this exact boundary side.
+        The complete graph still receives the public finiteness checks from a
+        source snapshot, including every unselected site. Only output that the
+        recording actually retains is allocated and serialized here; ordinary
+        source snapshots keep their complete geometry, masses and frame maps.
+        """
+        poses, frames = self._kinematics(time, self.state)
+        for path, pose in frames.items():
+            self._check()
+            if not (path.endswith(".frame") and poses.get(path[:-6]) is pose):
+                pose.position, pose.orientation, pose.velocity, pose.omega
+        incoming = self._incoming(self.state)
+        forces = self._bounded_projection(self.state)
+        objects = {}
+        for path, obj in self.model.objects.items():
+            self._check()
+            mode = self.state.modes[path]
+            if path in incoming:
+                kind, relation = incoming[path]
+                authority = {"kind": kind, "relation": relation}
+            elif mode == "dynamic":
+                anchor = self.state.dynamic[path]
+                authority = {"kind": "free_sphere", "since_seconds": time_text(anchor.since),
+                             "trajectory_anchor_seconds": time_text(anchor.time)}
+            else:
+                authority = {"kind": mode,
+                             "translation_action": self.state.claims.get((path, "translation")),
+                             "orientation_action": self.state.claims.get((path, "orientation"))}
+            # Retain the ordinary source aggregate-finiteness check, even
+            # though no aggregate mass is part of the H06 boundary output.
+            _round(sum((_f(owned.mass) for owned in self.model.objects.values()
+                        if owned.path == path or owned.path.startswith(path + ".")), Fraction(0)))
+            history = self.state.impulses[path]
+            applications = []
+            for record in history.last_applications:
+                self._check()
+                applications.append(copy.deepcopy(record))
+            objects[path] = {"pose_authority": authority, "forces": forces[path],
+                "impulses": {"applied_count": history.applied_count,
+                    "last_application_time_seconds": (None if history.last_time is None else
+                                                        time_text(history.last_time)),
+                    "last_applications": applications}}
+        _round(sum((_f(obj.mass) for obj in self.model.objects.values()), Fraction(0)))
+        joints = {}
+        for path, joint in self.model.joints.items():
+            self._check()
+            record = {"element_id": list(joint.element_id), "kind": joint.kind,
+                "status": "inactive" if joint.kind == "grip" and path not in self.state.active_grips else "active",
+                "parent_site": joint.parent, "child_site": joint.child,
+                "coupling": "externally_prescribed_no_load_solution"}
+            if joint.kind in ("hinge", "slider"):
+                coordinate, rate = self._coordinate(path, time, self.state)
+                record.update(coordinate=coordinate, coordinate_rate=rate,
+                    unit="rad" if joint.kind == "hinge" else "m", limits=list(joint.limits),
+                    action=self.state.claims.get((path, "coordinate")))
+            joints[path] = record
+        actions = {}
+        for path, action in self.model.actions.items():
+            self._check()
+            actions[path] = {"element_id": list(action.element_id), "kind": action.kind,
+                "target": action.target, "status": self.state.actions[path].status,
+                "local_elapsed_seconds": time_text(self.state.actions[path].elapsed_at(time)),
+                "duration_seconds": time_text(action.duration)}
+        return self._snapshot_data({"time_seconds": time_text(time), "side": side,
+            "objects": objects, "joints": joints, "actions": actions,
+            "reaches": self._reach_map(time, side, self.state)}, time, side)
+
+    def _snapshot_data(self, result, time, side):
+        """Apply the unchanged complete JSON bounds to an actual output scope."""
         try:
-            # Inherited geometry retains immutable LoftSection dataclasses.
-            # Materialize their complete contents under the existing guarded
-            # converter before publishing a JSON source observation. This
-            # charges each repeated occurrence; no geometry field is omitted.
-            result = bounded_data(result, check=self._work_check)
+            return bounded_data(result, check=self._work_check)
         except JSONLimitError as error:
             raise reach_error("reach_resource", "The complete sampled source state exceeds its JSON bound.",
                               self.model.span, phase="inspection", time=time, side=side,
                               details=error.details, blocks=[]) from error
-        return result
+
+    def snapshot(self, time, side):
+        result = super().snapshot(time, side)
+        result["reaches"] = self._reach_map(time, side, self.state)
+        # Inherited geometry retains immutable LoftSection dataclasses.
+        # Materialize every occurrence before publishing the source snapshot.
+        return self._snapshot_data(result, time, side)
 
     def advance(self, time, side="after"):
         try:
