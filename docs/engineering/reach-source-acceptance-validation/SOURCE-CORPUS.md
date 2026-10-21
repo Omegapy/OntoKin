@@ -24,8 +24,9 @@ rollback checks retain one shared context across their incoming and outgoing
 sides. Separate prefix requests compile afresh and retain their own complete
 context.
 
-Expected values come from the frozen acceptance JSON. The production solver,
-sampler and exporter are never used to choose expected values. The checker
+Expected values come from the frozen acceptance JSON and its explicit retained
+transform equations. The production solver, sampler and exporter are never
+used to choose expected values. The checker
 uses a disclosed independent quaternion inverse to re-express the observed
 elbow world position in the observed base frame; that operation consumes only
 observed data and compares its result with the existing frozen base position.
@@ -33,6 +34,20 @@ Available source/request operation counters after completed construction and
 replay are preserved in the run observations. Early construction failures
 retain their actual diagnostics; a returned compiler counter is unavailable
 when construction never completes.
+
+Two additional expected transforms use only frozen inputs and the unchanged
+independent Decimal oracle's elementary sine/cosine functions. For each
+original case, the world target is the frozen world elbow plus the authored
+root rotation applied to `(target - frozen base-frame elbow)`. The retained
+author equation fixes the canonical base angle, root elapsed `min(t, 3)` and
+optional world-Z spin of `1/4 rad/s`. The frozen elbow anchors already include
+the authored mount and root translation; no production pose or new mount
+layout supplies an expected value. P16's explicit free-orientation rule is
+evaluated at three and four seconds by left-multiplying the frozen release
+quaternion by the world-Z rotation from its frozen angular velocity and exact
+elapsed time, followed by the inherited normalization/sign rule. Both original
+oracle and author-script hashes are checked. These additions keep the existing
+position and orientation bounds unchanged.
 
 ## Assertions and explicit limits
 
@@ -46,15 +61,24 @@ angle tolerance, computed with quaternion chord lengths to avoid cancellation
 in `acos` close to zero.
 
 Every actual sample checks the complete object, visible-object and action
-sets. L01–L04 compare the complete retained reach projections, including
-terminal records and changing physical ownership. Negative cases must fail
+sets. L01–L04 compare the complete retained reach projections, direct physical
+joint coordinates/rates, actual action status and actual joint action owners.
+Expected owners come from the frozen claimed-joint identities, including
+paused ownership and later replacement owners; terminal records stay latched.
+Negative cases must fail
 at the intended construction or admission phase with the adopted envelope,
 category and reach subcode. Admission failures preserve the incoming state,
 event position and claims. P17 and L04 also exercise successful short requests,
 exact later failed prefixes and whole-boundary rollback. P11 checks the other
 arm and head goal. P16 checks both incoming joint rates, exact saved-state
 transfer, own mass, world force, force completion and the frozen freed-payload
-positions at three and four seconds.
+positions and independently evaluated orientations at three and four seconds.
+P17 and L04 diagnostic times must equal their explicit frozen failure times;
+L04's failing element identity must match its explicitly named frozen action.
+The retained valid-prefix side is not treated as an instruction to choose a
+particular diagnostic side or primary byte-span granularity. Observed P17/L04
+diagnostic locations and sides remain available for separate review; no absent
+per-case span or side expectation is invented.
 
 The adopted input records do not state a separate acceptance tolerance for
 derived world linear/angular velocity. This cohort records finite values,

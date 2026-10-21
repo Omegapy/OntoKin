@@ -133,6 +133,15 @@ class _ReachRunState(_ForceRunState):
     ideal_accelerations: dict = field(default_factory=dict)
 
 
+@dataclass
+class _TerminalPoseContext:
+    time: Fraction
+    incoming_state: _ReachRunState
+    staged_state: _ReachRunState | None = None
+    frames: dict | None = None
+    tips: dict = field(default_factory=dict)
+
+
 @dataclass(frozen=True)
 class RecordingPose:
     """Only the actual canonical components consumed by a recorded key."""
@@ -149,6 +158,7 @@ class ReachSimulator(ForceSimulator):
         self._pose_cache = {}
         self._pair_cache = {}
         self._derived_pose_cache = {}
+        self._terminal_pose_context = None
         self._pending_releases = []
         self.incoming_releases = []
         self.incoming_release_time = None
@@ -198,6 +208,14 @@ class ReachSimulator(ForceSimulator):
         operands, so neither object-id reuse nor a changed claim can hit it.
         Every lookup/insertion remains a charged request operation.
         """
+        # A complete traversal cannot retain one slot per source node when
+        # the graph itself exceeds the cache. Such single-use entries evict
+        # reusable arithmetic without helping the next traversal. Keep the
+        # exact state/time graph cache and resolve every source node normally.
+        root_slot = bool(signature) and signature[0] == "root"
+        if len(self.model.objects) + len(self.model.sites) > self.work.max_cache_entries and not root_slot:
+            self.work.charge("source_pose_cache_bypass")
+            return build()
         key = ("reach_source_pose", self.model.program_revision, path)
         old = self.work.lookup(key)
         if old is not None and old[0] == signature:
@@ -354,7 +372,15 @@ class ReachSimulator(ForceSimulator):
             omega=ZERO if pose_only else initial.omega)
 
     def _kinematics(self, time, state):
-        return self._resolve_kinematics(time, state)
+        result = self._resolve_kinematics(time, state)
+        context = self._terminal_pose_context
+        if context is not None and context.incoming_state is state and context.time == time:
+            context.frames = result[1]
+        return result
+
+    def _pose_cache_time(self, time, state):
+        self.work.charge("source_pose_time_key")
+        return None if not state.dynamic and not state.claims else time
 
     def recording_frames(self, time, state, selected_paths):
         """Sample p/q from a validated phase without constructing unused rates.
@@ -391,7 +417,10 @@ class ReachSimulator(ForceSimulator):
         This separate 0.6 path leaves every older profile's pose arithmetic
         unchanged. Only public sample/anchor components materialize binary64.
         """
-        key = (id(state), time)
+        # With neither a free trajectory nor a motion claim, all actual pose
+        # operands belong to this current state rather than a clock.
+        # Event/force transitions still invalidate the single complete graph.
+        key = (id(state), self._pose_cache_time(time, state))
         cached = self._pose_cache.get(key) if not pose_only and selected_frames is None else None
         if cached is not None and cached[0] is state:
             self._check()
@@ -494,24 +523,51 @@ class ReachSimulator(ForceSimulator):
             self._pose_cache = {key: (state, objects, frames)}
         return objects, frames
 
-    def _tip_base(self, action, time, state):
+    def _tip_base(self, action, time, state, *, terminal=False):
         payload = action.reach
-        key = (id(state), time, "tip", payload.base_frame, payload.tip)
+        key = (id(state), self._pose_cache_time(time, state), "tip", payload.base_frame, payload.tip)
         self._check()
         if key in self._derived_pose_cache:
             return self._derived_pose_cache[key]
-        _, frames = self._kinematics(time, state)
+        context = self._terminal_pose_context
+        same_pose = (context is not None and context.time == time and
+                     context.staged_state is state and context.frames is not None)
+        tip_key = (payload.base_frame, payload.tip)
+        self.work.charge("source_terminal_pose_guard")
+        if same_pose and tip_key in context.tips:
+            result = context.tips[tip_key]
+            if len(self._derived_pose_cache) < 256:
+                self.work.charge("source_terminal_pose_publish")
+                self._derived_pose_cache[key] = result
+            return result
+        # A terminal record exposes only p/q along the complete dependency
+        # paths of its base and tip. Its unused rates need not be constructed.
+        # The boundary transaction still checks the complete incoming graph and
+        # the final staged graph. Partial maps never enter the full graph cache.
+        if same_pose:
+            # Natural reach latching preserves canonical p/q even when its
+            # incoming rates are nonzero. These frames are never reused as
+            # the staged full graph or as outgoing derivative values.
+            frames = context.frames
+        elif terminal:
+            _, frames = self._resolve_kinematics(time, state,
+                selected_frames=(payload.base_frame, payload.tip + ".frame"), pose_only=True)
+        else:
+            _, frames = self._kinematics(time, state)
         base, tip = frames[payload.base_frame], frames[payload.tip + ".frame"]
         def relative_pose():
             rotation = self.pose_ops.multiply(self.pose_ops.inverse_rotation(base.rotation), tip.rotation)
             return self.pose_ops.make(position=self.pose_ops.relative_point(base, tip), orientation=rotation)
         result = self._pose_slot(("tip_in_base", payload.base_frame, payload.tip), (base, tip), relative_pose)
+        if same_pose and len(context.tips) < 256:
+            self.work.charge("source_terminal_pose_remember")
+            context.tips[tip_key] = result
         if len(self._derived_pose_cache) < 256:
             self._derived_pose_cache[key] = result
         return result
 
     def _world_target(self, payload, time, state, frames):
-        key = (id(state), time, "target", payload.base_frame, payload.target_m)
+        key = (id(state), self._pose_cache_time(time, state), "target", payload.base_frame, payload.target_m)
         self._check()
         if key not in self._derived_pose_cache:
             base = frames[payload.base_frame]
@@ -609,6 +665,7 @@ class ReachSimulator(ForceSimulator):
         return net, acceleration
 
     def _event(self, event, time, state, incoming, dependencies, touched):
+        self._terminal_pose_context = None
         self._invalidate()
         action = self.model.actions.get(event.target)
         if event.kind not in {"start", "pause", "resume", "stop"} or action is None or action.kind != "reach_planar":
@@ -708,13 +765,23 @@ class ReachSimulator(ForceSimulator):
     def _latch(self, path, time, state, status):
         self._invalidate()
         action = self.model.actions[path]
+        context = self._terminal_pose_context
+        if context is not None:
+            self.work.charge("source_terminal_latch_guard")
+            runtime = state.actions[path]
+            if (action.kind != "reach_planar" or status != "completed" or
+                    runtime.status != "running" or runtime.elapsed_at(time) != action.duration or
+                    context.time != time or context.staged_state is not None and context.staged_state is not state):
+                self._terminal_pose_context = None
+            else:
+                context.staged_state = state
         if action.kind != "reach_planar":
             self._latch_ordinary(path, time, state, status)
             self._invalidate()
             return
         runtime, payload = state.actions[path], action.reach
         pair = self._pair(path, time, state)
-        tip = self._tip_base(action, time, state)
+        tip = self._tip_base(action, time, state, terminal=True)
         squared = measured_residual_squared(tip.position, payload.target_m, work=self.work)
         if status == "completed" and squared > Fraction(1, 10**18):
             raise reach_error("reach_numeric", "The measured terminal reach residual exceeds 1e-9 meters.",
@@ -736,12 +803,16 @@ class ReachSimulator(ForceSimulator):
     def _process_boundary(self, time):
         self._pending_releases = []
         self._invalidate()
+        self._terminal_pose_context = (None if self.state.dynamic else
+                                       _TerminalPoseContext(time, self.state))
         try:
             super()._process_boundary(time)
         except BaseException:
             self._pending_releases = []
             self._invalidate()
             raise
+        finally:
+            self._terminal_pose_context = None
         self.incoming_releases = self._pending_releases
         self.incoming_release_time = time
         self._pending_releases = []
@@ -757,6 +828,8 @@ class ReachSimulator(ForceSimulator):
         self._invalidate()
         changed = path in state.dynamic and (state.forces[path].last_time == time or
                                             state.forces[path].acceleration is None)
+        if changed:
+            self._terminal_pose_context = None
         original = state.dynamic.get(path)
         before = self._anchor_bound(path, time, state) if changed else None
         super()._aggregate(path, time, state)

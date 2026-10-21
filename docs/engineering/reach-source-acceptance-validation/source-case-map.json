@@ -13,7 +13,9 @@
     "docs/language-design/planar-reach-v0.1/draft2-supplements/acceptance.json": "sha256:4e671c66d462f85b7861e0f6e75f63c260d62249bb77ef9c763356e3dfa8e0bd",
     "docs/language-design/planar-reach-v0.1/profile-draft2.json": "sha256:5d9cf6474ccdc0dfa09c034c50aa63e3cce17e9a8de1d680a5d9932786a9b1e9",
     "docs/language-design/planar-reach-v0.1/ADOPTION.md": "sha256:ded24c5a10ebfb57e6578299845606f770283d5fc090145e2cc206f94f6a65fe",
-    "docs/language-design/planar-reach-v0.1/release-contract.md": "sha256:c7d7be836a9e6e4116c872d0a0f62e99b785d1d2a5a549915d129b86a5f00191"
+    "docs/language-design/planar-reach-v0.1/release-contract.md": "sha256:c7d7be836a9e6e4116c872d0a0f62e99b785d1d2a5a549915d129b86a5f00191",
+    "docs/language-design/planar-reach-v0.1/oracle.py": "sha256:a556ddc0f23958f62e035bfe997bc0fbbdc432b7899fab8021ebefd713e99c07",
+    "docs/language-design/planar-reach-v0.1/author_fixtures.py": "sha256:b2b54cdb65153f72efa168e7fa8c92e166f8bdc03098cd6e2e9e8a377f6c110f"
   },
   "comparisons": {
     "resolved_joint_targets_and_joint_coordinates": "exact binary64 including canonical zero/half-turn bits",
@@ -29,7 +31,8 @@
     "Visible object sets and nonempty source geometry are checked; independent full vertex/region/PBR comparison and destination geometry remain separate gates.",
     "P20 is evaluated from its frozen repaired source; atomic Agent edit authority/sibling preservation belongs to the separate LP02 workflow.",
     "Release record/state transfer and frozen payload positions are checked; no native/browser delivery or continuous-motion certificate is claimed.",
-    "Compatibility, hostile probes, all Agent operations, release audit and resulting-main verification remain separate."
+    "Compatibility, hostile probes, all Agent operations, release audit and resulting-main verification remain separate.",
+    "Diagnostic side and exact primary-span granularity are not inferred from valid_until_side; P17/L04 observed diagnostic locations and sides are retained for separate review."
   ],
   "cases": [
     {
@@ -55,7 +58,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -81,7 +85,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -107,7 +112,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -133,7 +139,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -161,7 +168,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -187,7 +195,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -213,7 +222,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -239,7 +249,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -265,7 +276,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -291,7 +303,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -320,7 +333,8 @@
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
         "measured_world_derivatives",
-        "independent_right_arm_and_head_goal"
+        "independent_right_arm_and_head_goal",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -346,7 +360,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -372,7 +387,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -398,7 +414,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -424,7 +441,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -457,7 +475,9 @@
         "both_incoming_joint_rates",
         "own_mass_and_world_force",
         "released_payload_positions_at_3_and_4_seconds",
-        "force_completion_history"
+        "force_completion_history",
+        "current_world_target_from_frozen_root_transform",
+        "independent_freed_payload_orientations_at_3_and_4_seconds"
       ]
     },
     {
@@ -487,7 +507,9 @@
         "measured_world_derivatives",
         "valid_short_prefix",
         "later_exact_failure",
-        "whole_boundary_rollback"
+        "whole_boundary_rollback",
+        "current_world_target_from_frozen_root_transform",
+        "exact_frozen_failure_diagnostic_time"
       ]
     },
     {
@@ -513,7 +535,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -539,7 +562,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -565,7 +589,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -591,7 +616,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -617,7 +643,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -674,7 +701,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -827,7 +855,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -853,7 +882,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -879,7 +909,8 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "current_world_target_from_frozen_root_transform"
       ]
     },
     {
@@ -1391,7 +1422,9 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "actual_action_lifecycle",
+        "actual_joint_action_owner"
       ]
     },
     {
@@ -1418,7 +1451,9 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "actual_action_lifecycle",
+        "actual_joint_action_owner"
       ]
     },
     {
@@ -1445,7 +1480,9 @@
         "exact_target_coordinate_and_joint_rate_bits",
         "lifecycle_and_claims",
         "derived_positions_and_orientations",
-        "measured_world_derivatives"
+        "measured_world_derivatives",
+        "actual_action_lifecycle",
+        "actual_joint_action_owner"
       ]
     },
     {
@@ -1476,8 +1513,18 @@
         "valid_short_prefix",
         "failed_handoff_prefix",
         "whole_boundary_rollback",
-        "prior_owner_and_pending_failed_action_retained"
+        "prior_owner_and_pending_failed_action_retained",
+        "actual_action_lifecycle",
+        "actual_joint_action_owner",
+        "exact_frozen_failure_diagnostic_time",
+        "frozen_failed_action_element_identity"
       ]
     }
-  ]
+  ],
+  "additional_assertion_authority": {
+    "original_world_target": "Frozen sample elbow_world + R(canonical authored root angle) * (frozen target - frozen elbow_base); author_fixtures.expected_for fixes root elapsed=min(t,3) and optional world-Z rate 1/4 rad/s. Elementary trigonometry uses unchanged independent oracle.py; source position bound remains 1e-9 m.",
+    "released_orientation": "P16 expected.release.free_orientation_rule: world-Z omega_z*(t-2) left-multiplied onto frozen orientation_at_release_wxyz, normalized/canonicalized, evaluated at t=3 and 4 with unchanged independent oracle.py. Existing orientation angle bound remains 2e-15 rad.",
+    "lifecycle_actual_owners": "Frozen complete reach projections provide action lifecycle and claimed_joint_ids; each observed joint action owner must match the sole frozen claiming action, or null when none claims it.",
+    "failure_context": "P17 full_horizon_failure.time and L04 failure.time_seconds fix exact diagnostic time. L04 failure.action_path plus its frozen projection fixes failing element_id. Primary span granularity and diagnostic side are recorded without new unstated assertions."
+  }
 }

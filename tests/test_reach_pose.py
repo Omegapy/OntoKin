@@ -189,7 +189,9 @@ class ReachPoseTests(unittest.TestCase):
             if cancelled: raise marker
         work=ReachExecutionWork(check=check,max_cache_entries=12)
         ops=ReachPoseOps(work)
-        first=ops.make((1,2,3)); second=ops.make((F(1,7),0,0))
+        # Whole-pose entries are admitted for shared local transforms; varying
+        # world translations use the separately tested relative-value cache.
+        first=ops.make((0,0,0)); second=ops.make((F(1,7),0,0))
         result=ops.compose(first,second)
         before=work.operations
         again=ops.compose(first,second)

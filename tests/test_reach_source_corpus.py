@@ -10,8 +10,10 @@ from __future__ import annotations
 from contextlib import contextmanager
 import copy
 from datetime import datetime, timezone
+from decimal import Decimal as D, localcontext
 from fractions import Fraction as Q
 import hashlib
+import importlib.util
 import json
 import math
 from pathlib import Path
@@ -91,6 +93,15 @@ class ReachSourceCorpusTests(unittest.TestCase):
             raise AssertionError("The original sample-side inventory changed.")
         if sum(len(c["samples"]) for c in LIFECYCLE["source_cases"]) != 51:
             raise AssertionError("The lifecycle sample-side inventory changed.")
+        # This frozen Decimal oracle is independent of production modules.
+        # Only its elementary trigonometry supplies the two explicit retained
+        # transform rules below; it does not read actual runtime results.
+        oracle_path = DATA / "oracle.py"
+        if _sha(oracle_path.read_bytes()) != ORIGINAL["oracle_sha256"]:
+            raise AssertionError("The frozen independent source oracle changed.")
+        specification = importlib.util.spec_from_file_location("_reach_source_corpus_oracle", oracle_path)
+        cls.oracle = importlib.util.module_from_spec(specification)
+        specification.loader.exec_module(cls.oracle)
 
     def setUp(self):
         self.case_id = next(row["case_id"] for row in CASE_MAP["cases"] if row["test_method"] == self._testMethodName)
@@ -257,10 +268,56 @@ class ReachSourceCorpusTests(unittest.TestCase):
             self._bits(joint["coordinate"], sample["joint_coordinates_rad"][index], trail + "." + name)
             self._bits(joint["coordinate_rate"], sample["joint_rates_rad_per_s"][index], trail + "." + name + "_rate")
         self._residual(value["current_residual_m"], sample["current_goal_residual_m"], trail + ".current_residual_m")
+        self._position(value["current_world_target_m"], self._world_target(sample), trail + ".current_world_target_m")
         terminal = value["terminal_result"]
         if terminal is not None and terminal["outcome"] == "satisfied":
             self.assertLessEqual(terminal["position_residual_m"], POSITION_TOLERANCE, trail)
         self._physical(compiler, snapshot, arm, sample, trail)
+
+    def _world_target(self, sample):
+        """Frozen world elbow + R(root angle) * (target - frozen base elbow).
+
+        author_fixtures.expected_for fixes root elapsed=min(t,3), the authored
+        base rotation and a world-Z rate of 1/4 rad/s when root_spin is true.
+        Both elbow anchors and the target are frozen inputs, not observations.
+        Reusing these anchors avoids introducing a second mount-layout oracle.
+        """
+        specification = CASES[self.case_id][1]["specification"]
+        angle = Q.from_float(self.oracle.P) * Q(specification["base_angle_deg"], 180)
+        if specification.get("root_spin"):
+            angle += min(_time(sample), Q(3)) / 4
+        # The retained author equation makes this root angle canonical binary64
+        # before its independent FK/transport calculation.
+        with localcontext() as context:
+            context.prec = self.oracle.PRECISION
+            canonical_angle = D.from_float(float(angle))
+            cosine, sine = self.oracle.cos(canonical_angle), self.oracle.sin(canonical_angle)
+            delta = [D.from_float(float(target)) - D.from_float(elbow)
+                     for target, elbow in zip(specification["target"], sample["elbow_position_base_m"])]
+            rotated = [cosine * delta[0] - sine * delta[1],
+                       sine * delta[0] + cosine * delta[1], delta[2]]
+            return [float(D.from_float(origin) + displacement)
+                    for origin, displacement in zip(sample["elbow_position_world_m"], rotated)]
+
+    def _released_orientation(self, release, endpoint):
+        """Apply the explicit frozen P16 world-Z free-orientation rule."""
+        self.assertEqual(release["free_orientation_rule"],
+            "world Z rotation omega_z*(t-2) left-multiplied onto orientation_at_release_wxyz; normalize/sign under inherited rules")
+        self._bits(release["constant_free_omega_world_rad_per_s"][:2], [0.0, 0.0], "P16.frozen_world_z_axis")
+        elapsed = Q(endpoint) - _time(release)
+        with localcontext() as context:
+            context.prec = self.oracle.PRECISION
+            half = (D.from_float(release["constant_free_omega_world_rad_per_s"][2])
+                    * D(elapsed.numerator) / D(elapsed.denominator) / 2)
+            cosine, sine = self.oracle.cos(half), self.oracle.sin(half)
+            w, x, y, z = map(D.from_float, release["orientation_at_release_wxyz"])
+            quaternion = [cosine * w - sine * z, cosine * x - sine * y,
+                          cosine * y + sine * x, cosine * z + sine * w]
+            norm = sum(value * value for value in quaternion).sqrt()
+            result = [float(value / norm) for value in quaternion]
+        if next(value for value in result if value != 0) < 0:
+            result = [-value for value in result]
+        return [0.0 if value == 0 else value for value in result]
 
     def _projection(self, actual, expected, trail=""):
         if trail.rsplit(".", 1)[-1] in {
@@ -296,12 +353,37 @@ class ReachSourceCorpusTests(unittest.TestCase):
         self.assertEqual(error.diagnostic.category, expected["category"])
         self.assertIn(error.diagnostic.phase, expected["envelope_phases"])
 
+    def _failure_context(self, error):
+        """Assert only context explicitly fixed for P17 and L04 failures."""
+        if self.case_id not in {"P17", "L04"}:
+            return
+        case = CASES[self.case_id][1]
+        if self.case_id == "P17":
+            failure = case["expected"]["full_horizon_failure"]
+            wanted_time = _time(failure)
+        else:
+            failure = case["failure"]
+            wanted_time = Q(failure["time_seconds"])
+            failed_action = case["samples"][0]["reaches"][failure["action_path"]]
+            self.assertEqual(error.diagnostic.element_id, failed_action["element_id"])
+        self.assertEqual(error.diagnostic.time, wanted_time)
+        node = error.diagnostic.node
+        # valid_until_side describes retained source state. It is not used to
+        # invent a particular diagnostic side or primary-span granularity.
+        self.record.setdefault("failure_contexts", []).append({
+            "time_seconds": str(error.diagnostic.time), "side": error.diagnostic.side,
+            "element_id": error.diagnostic.element_id,
+            "source_id": getattr(node, "source_id", None),
+            "start_byte": getattr(node, "start", None), "end_byte": getattr(node, "end", None),
+        })
+
     def _rollback(self, simulator, time, code):
         before = simulator.advance(time, "before")
         retained, index, boundaries = copy.deepcopy(simulator.state), simulator.event_index, list(simulator.boundaries)
         with self.assertRaises(OntoKinError) as caught:
             simulator.advance(time, "after")
         self._error(caught.exception, code)
+        self._failure_context(caught.exception)
         self.assertEqual(simulator.state, retained)
         self.assertEqual(simulator.event_index, index)
         self.assertEqual(simulator.boundaries, boundaries)
@@ -392,6 +474,8 @@ class ReachSourceCorpusTests(unittest.TestCase):
                     self._position(payload["position_m"], release[f"position_at_{endpoint}_seconds_m"], f"P16.payload@{endpoint}.position")
                     self._derivative(payload["velocity_m_per_s"], release[f"velocity_at_{endpoint}_seconds_m_per_s"], f"P16.payload@{endpoint}.velocity")
                     self._derivative(payload["angular_velocity_rad_per_s"], release["constant_free_omega_world_rad_per_s"], f"P16.payload@{endpoint}.omega")
+                    self._orientation(payload["orientation_wxyz"], self._released_orientation(release, endpoint),
+                                      f"P16.payload@{endpoint}.orientation")
                     self.assertEqual(payload["pose_authority"]["kind"], "free_sphere")
                     self.assertEqual(payload["forces"]["started_count"], 1)
                     self.assertEqual(payload["forces"]["completed_count"], 1)
@@ -408,6 +492,7 @@ class ReachSourceCorpusTests(unittest.TestCase):
             result = evaluate_prefix(compiler.model, full_time, work=compiler.reach_work)
             self.assertIsNotNone(result["failure"])
             self._error(result["failure"], code)
+            self._failure_context(result["failure"])
             self.assertEqual(Q(result["valid_until_seconds"]), failure_time)
             self.assertEqual(result["valid_until_side"], "before")
         with self._request(case, "failed handoff does not publish partial after-state") as (compiler, row):
@@ -432,6 +517,20 @@ class ReachSourceCorpusTests(unittest.TestCase):
                     self.assertEqual(snapshot["side"], sample["side"])
                     self._sets(compiler, snapshot, expected)
                     self._projection(snapshot["reaches"], sample["reaches"], f"{case}@{sample['time_seconds']}/{sample['side']}")
+                    expected_owners = {}
+                    joint_paths = set()
+                    for action_path, wanted_record in sample["reaches"].items():
+                        wanted_current = wanted_record["current"]["value"]
+                        self.assertEqual(snapshot["actions"][action_path]["status"], wanted_current["lifecycle"])
+                        for name in ("shoulder", "elbow"):
+                            wanted_joint = wanted_record["chain"][name]
+                            joint_paths.add(wanted_joint["path"])
+                            if wanted_joint["element_id"] in wanted_current["claimed_joint_ids"]:
+                                self.assertNotIn(wanted_joint["path"], expected_owners, "Frozen source has overlapping physical owners.")
+                                expected_owners[wanted_joint["path"]] = action_path
+                    for joint_path in joint_paths:
+                        self.assertEqual(snapshot["joints"][joint_path]["action"], expected_owners.get(joint_path),
+                                         f"{case}@{sample['time_seconds']}/{sample['side']}.{joint_path}.action")
                     # Frozen projections describe the current physical pair,
                     # even for pending/stopped actions while another action
                     # owns it. Check the independent joint-state output too.

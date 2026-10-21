@@ -136,6 +136,10 @@ class ReachPoseOps:
 
     def add(self,a,b):
         a,b=self._vector(a),self._vector(b)
+        return self._add_exact_vectors(a,b)
+
+    def _add_exact_vectors(self,a,b):
+        """Add already validated private three-vectors without decoding again."""
         self.work.charge("pose_add_zero_check")
         if not any(a): return b
         if not any(b): return a
@@ -202,6 +206,17 @@ class ReachPoseOps:
 
     def multiply(self,a,b):
         a,b=self._rotation(a),self._rotation(b)
+        # Different source objects can compose the same private rotations.
+        # The complete mathematical operands include their error allowances;
+        # materialized public projections do not enter the Hamilton product.
+        key=(METHOD,"rotation_product",a.components,b.components,a.error_rad,b.error_rad)
+        cached=self.work.lookup(key)
+        if cached is not None: return cached
+        result=self._multiply_uncached(a,b)
+        self.work.remember(key,result)
+        return result
+
+    def _multiply_uncached(self,a,b):
         aw,ax,ay,az=a.components; bw,bx,by,bz=b.components
         mul=lambda x,y:self._op(x,y,"mul")
         self.work.charge("quaternion_sparse_check")
@@ -234,6 +249,9 @@ class ReachPoseOps:
         self.work.charge("rotation_sparse_check")
         if not any(vector): return ZERO
         if not any(q[1:]): return self._rounded_vector(vector)
+        result_key=(METHOD,"rotated_vector",q,vector)
+        cached=self.work.lookup(result_key)
+        if cached is not None: return cached
         key=(METHOD,"rotation_rows",q)
         rows=self.work.lookup(key)
         if rows is None:
@@ -247,8 +265,10 @@ class ReachPoseOps:
                         (pair(x,z,w,y,"sub"),pair(y,z,w,x,"add"),diagonal(1,2)))
             rows=tuple(tuple(self._op(v,denominator,"div") for v in row) for row in numerators)
             self.work.remember(key,rows)
-        return self._rounded_vector(self._sum(self._op(a,b,"mul") for a,b in zip(row,vector))
+        result=self._rounded_vector(self._sum(self._op(a,b,"mul") for a,b in zip(row,vector))
                                     for row in rows)
+        self.work.remember(result_key,result)
+        return result
 
     def _pi(self,precision):
         key=(METHOD,"pi",precision)
@@ -452,28 +472,67 @@ class ReachPoseOps:
         return self.make(pose.position,pose.rotation)
 
     def hinge_pose(self,axis,coordinate,exact_rate):
-        return self.make(orientation=self.axis_rotation(axis,coordinate),omega=self.scale(axis,exact_rate))
+        axis=self._vector(axis)
+        coordinate,exact_rate=rational(coordinate,self.work),rational(exact_rate,self.work)
+        key=(METHOD,"hinge_pose",axis,coordinate,exact_rate)
+        cached=self.work.lookup(key)
+        if cached is not None:
+            rotation,omega=cached
+            return PoseValue(ZERO,rotation,ZERO,omega,F(0),self)
+        result=self.make(orientation=self.axis_rotation(axis,coordinate),omega=self.scale(axis,exact_rate))
+        self.work.remember(key,(result.rotation,result.exact_omega))
+        return result
 
     def compose(self,parent,local):
         if not isinstance(parent,PoseValue) or not isinstance(local,PoseValue):
             raise TypeError("Controlled composition requires private PoseValue inputs")
         self.work.charge("composition_stationary_check")
         stationary=not any((*parent.exact_velocity,*parent.exact_omega,*local.exact_velocity,*local.exact_omega))
+        # A translated scene produces many one-use whole-pose entries. Keep
+        # the bounded cache for shared local arithmetic instead of displacing
+        # it with each object's distinct world translation.
+        cache_stationary=stationary and not any(parent.exact_position)
         key=(METHOD,"stationary_composition",parent,local)
-        if stationary:
+        if cache_stationary:
             cached=self.work.lookup(key)
             if cached is not None: return cached
-        offset=self.rotate(parent.rotation,local.exact_position)
-        position=self._rounded_vector(self.add(parent.exact_position,offset))
-        velocity=self._rounded_vector(self.add(self.add(parent.exact_velocity,
-            self.cross(parent.exact_omega,offset)),self.rotate(parent.rotation,local.exact_velocity)))
-        omega=self._rounded_vector(self.add(parent.exact_omega,self.rotate(parent.rotation,local.exact_omega)))
-        position_error=self._sum((parent.position_error_m,local.position_error_m,
-            self._op(self._l1(local.exact_position),parent.angular_error_rad,"mul"),
-            VECTOR_ERROR,VECTOR_ERROR))
-        result=PoseValue(position,self.multiply(parent.rotation,local.rotation),velocity,omega,
-                         position_error,self)
-        if stationary: self.work.remember(key,result)
+        # Parent translation and position errors do not enter the rotation or
+        # derivative arithmetic. Project each caller's position and retain its
+        # own error calculation even when those common operations are reused.
+        relative_key=(METHOD,"relative_composition",parent.rotation,
+                      parent.exact_velocity,parent.exact_omega,local.exact_position,
+                      local.rotation,local.exact_velocity,local.exact_omega)
+        self.work.charge("composition_operand_guard")
+        parent_position=parent.exact_position
+        if not (isinstance(parent_position,tuple) and len(parent_position)==3 and
+                all(type(value) is F for value in parent_position)):
+            parent_position=self._vector(parent_position)
+        self.work.guard(*parent_position,*parent.rotation.components,parent.rotation.error_rad,
+            *parent.exact_velocity,*parent.exact_omega,parent.position_error_m,
+            *local.exact_position,*local.rotation.components,local.rotation.error_rad,
+            *local.exact_velocity,*local.exact_omega,local.position_error_m)
+        relative=self.work.lookup(relative_key)
+        offset=(self.rotate(parent.rotation,local.exact_position) if relative is None else relative[0])
+        # The precharged fixed-size composition guard also covers the bounded
+        # private offset retrieved or computed above. Both vector operands are
+        # now checked; the generic add helper would decode/check them again.
+        self.work.guard(*offset)
+        position=self._rounded_vector(self._add_exact_vectors(parent_position,offset))
+        if relative is None:
+            velocity=self._rounded_vector(self.add(self.add(parent.exact_velocity,
+                self.cross(parent.exact_omega,offset)),self.rotate(parent.rotation,local.exact_velocity)))
+            omega=self._rounded_vector(self.add(parent.exact_omega,self.rotate(parent.rotation,local.exact_omega)))
+            offset_error=self._op(self._l1(local.exact_position),parent.angular_error_rad,"mul")
+            offset_allowance=self._sum((offset_error,VECTOR_ERROR,VECTOR_ERROR))
+        else:
+            _,rotation,velocity,omega,offset_allowance=relative
+        position_error=self._op(self._op(parent.position_error_m,local.position_error_m,"add"),
+                                offset_allowance,"add")
+        if relative is None:
+            rotation=self.multiply(parent.rotation,local.rotation)
+            self.work.remember(relative_key,(offset,rotation,velocity,omega,offset_allowance))
+        result=PoseValue(position,rotation,velocity,omega,position_error,self)
+        if cache_stationary: self.work.remember(key,result)
         return result
 
     def inverse_pose(self,pose):
@@ -502,6 +561,10 @@ class ReachPoseOps:
         if rotation.frozen_projection is not None:
             self.work.charge("frozen_quaternion_projection")
             return rotation.frozen_projection
+        # Error allowances and pose identity do not affect this projection.
+        key=(METHOD,"unit_projection",rotation.components)
+        cached=self.work.lookup(key)
+        if cached is not None: return cached
         denominator=self._sum(self._op(v,v,"mul") for v in rotation.components)
         result=[]
         for value in rotation.components:
@@ -509,15 +572,32 @@ class ReachPoseOps:
             component=sqrt_rational_binary64(square,work=self.work)
             self.work.charge("quaternion_projection_sign")
             result.append(-component if value<0 and component else component)
-        return tuple(result)
+        result=tuple(result)
+        self.work.remember(key,result)
+        return result
 
     def _expose(self,pose,field_name):
         self.work.charge("pose_projection_lookup")
         if field_name not in pose._projection:
             value=(self._unit_projection(pose.rotation) if field_name=="orientation" else
-                   tuple(round_binary64(v,work=self.work) for v in getattr(pose,"exact_"+field_name)))
+                   self._vector_projection(getattr(pose,"exact_"+field_name)))
             pose._projection[field_name]=value
         return pose._projection[field_name]
+
+    def _vector_projection(self,values):
+        if values is ZERO:
+            self.work.charge("known_zero_vector_projection")
+            return (0.0,0.0,0.0)
+        self.work.charge("vector_projection_operand_guard")
+        self.work.guard(*values)
+        self.work.charge("vector_projection_zero_check")
+        if not any(values): return (0.0,0.0,0.0)
+        key=(METHOD,"vector_projection",values)
+        cached=self.work.lookup(key)
+        if cached is not None: return cached
+        result=tuple(round_binary64(value,work=self.work) for value in values)
+        self.work.remember(key,result)
+        return result
 
     def materialize(self,pose):
         """Freeze the actual exposed release anchor without normalization drift."""
