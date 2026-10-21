@@ -237,7 +237,7 @@ def _point(time: Fraction, side: str) -> tuple[Fraction, bool]:
     return time, side == "after"
 
 
-def _evaluate_compiled(source, compiler, budget, until, *, side="after", previous=None):
+def _evaluate_compiled(source, compiler, budget, until, *, side="after", previous=None, capture_observer=None):
     """Use the already compiled request context for a single source prefix."""
     achieved = "represented"
     diagnostics = [diagnostic_dict(d, source) for d in compiler.model.diagnostics]
@@ -255,7 +255,8 @@ def _evaluate_compiled(source, compiler, budget, until, *, side="after", previou
         if previous.get("status") == "failed":
             raise OntoKinError("OKL-E-SAMPLE", "A failed run is retained for diagnosis; reset to start a new run.",
                                compiler.program.scene, phase="inspection", blocks=[])
-    prefix = evaluate_prefix(compiler.model, endpoint, side=side, check=budget.tick, **_reach_work(compiler))
+    prefix = evaluate_prefix(compiler.model, endpoint, side=side, check=budget.tick,
+                             capture_observer=capture_observer, **_reach_work(compiler))
     run = _run_state(source, prefix, budget=budget, previous=previous)
     if run["last_valid_state"] is not None:
         achieved = "constructed"
@@ -268,9 +269,9 @@ def _evaluate_compiled(source, compiler, budget, until, *, side="after", previou
 def prepare_delivery(source, *, until=None, budgets=None, check=None, profile=REACH_PROFILE):
     """Return one transient compiler and prefix result for the 0.6 adapter.
 
-    The compiler owns the request's numerical work/cache; its model and work
-    pass to the exporter without re-compilation or a fresh operation allowance.
-    Neither the compiler nor the work object is placed in returned JSON.
+    The compiler owns the request's numerical work/cache and checked recording
+    plan; the exporter consumes those without replay or a fresh allowance.
+    None of these transient objects is placed in returned JSON.
     """
     compiler, achieved, diagnostics = None, None, []
     try:
@@ -279,7 +280,14 @@ def prepare_delivery(source, *, until=None, budgets=None, check=None, profile=RE
         achieved = "represented"
         diagnostics = [diagnostic_dict(d, source) for d in compiler.model.diagnostics]
         endpoint = compiler.model.duration if until is None else until
-        return compiler, _evaluate_compiled(source, compiler, budget, endpoint)
+        capture = None
+        if profile == REACH_PROFILE:
+            from .reach_delivery import ReachDeliveryCapture
+            capture = ReachDeliveryCapture(compiler.model, exact_time(endpoint), work=compiler.reach_work)
+        result = _evaluate_compiled(source, compiler, budget, endpoint, capture_observer=capture)
+        if capture is not None and result["outcome"] == "valid":
+            compiler.reach_delivery_plan = capture.finish()
+        return compiler, result
     except _Interrupt as exc:
         raise exc.error
     except OntoKinError as exc:

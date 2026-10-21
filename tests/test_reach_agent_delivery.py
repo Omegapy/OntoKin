@@ -1,8 +1,7 @@
-"""Actual delivery obligations; success requires the integrated GLB/0.6 adapter.
+"""Actual delivery obligations through the integrated GLB/0.6 adapter.
 
-These tests deliberately do not skip or replace delivery with a stub while the
-adapter is unavailable. Run this cohort after the root adapter is integrated;
-an earlier failed run is preparation evidence, never release acceptance.
+Every successful delivery builds, validates, commits and retrieves real bytes.
+Earlier failed runs remain preparation evidence rather than release acceptance.
 """
 from __future__ import annotations
 
@@ -12,18 +11,19 @@ import hashlib
 import unittest
 from unittest.mock import patch
 
-from ontokin import gltf, program_runtime
+from ontokin import gltf, program_runtime, reach_export
 from ontokin.json_limits import measure_json
 from test_export import DecodedGLB
 from reach_agent_support import TARGET, ReachAgentFixture, exact_patch, source_case
 
 
 class ReachAgentDeliveryTests(ReachAgentFixture, unittest.TestCase):
-    def retrieve(self, delivered):
+    def retrieve(self, delivered, *, project="reach"):
         result = delivered["result"]
         chunks, offset = [], 0
         while offset < result["total_bytes"]:
-            response = self.success(self.send("artifact", artifact_id=result["artifact_id"], offset=offset, max_bytes=32768))
+            response = self.success(self.send("artifact", project_id=project,
+                artifact_id=result["artifact_id"], offset=offset, max_bytes=32768))
             chunk = response["result"]
             self.assertEqual(chunk["offset"], offset)
             self.assertEqual(chunk["sha256"], result["sha256"])
@@ -118,9 +118,12 @@ class ReachAgentDeliveryTests(ReachAgentFixture, unittest.TestCase):
             compiled.append(compiler)
             return compiler
         def export_same(model, *args, **kwargs):
-            exported.append((model, kwargs.get("work")))
+            exported.append((model, kwargs.get("work"), kwargs.get("reach_plan")))
             return export(model, *args, **kwargs)
-        with patch.object(program_runtime, "_compile", side_effect=compile_once), patch.object(gltf, "export_glb", side_effect=export_same):
+        with (patch.object(program_runtime, "_compile", side_effect=compile_once),
+              patch.object(gltf, "export_glb", side_effect=export_same),
+              patch.object(reach_export, "reach_prefix_plan", side_effect=AssertionError(
+                  "Agent delivery must reuse its checked prefix, not replay it with another planner."))):
             self.success(self.send("export", program_revision=program.program_revision, destination=TARGET,
                                    options={"end": "0.25", "helpers": False}))
         self.assertEqual(len(compiled), 1)
@@ -128,6 +131,9 @@ class ReachAgentDeliveryTests(ReachAgentFixture, unittest.TestCase):
         self.assertIs(exported[0][0], compiled[0].model)
         self.assertIs(exported[0][1], compiled[0].reach_work)
         self.assertIsNotNone(exported[0][1])
+        self.assertIs(exported[0][2], compiled[0].reach_delivery_plan)
+        self.assertIs(exported[0][2].simulator.model, compiled[0].model)
+        self.assertIs(exported[0][2].simulator.work, compiled[0].reach_work)
 
     def test_generic_delivery_and_full_failed_horizon_never_claim_artifact(self):
         program, _ = self.create("L04")
@@ -175,6 +181,66 @@ class ReachAgentDeliveryTests(ReachAgentFixture, unittest.TestCase):
         self.assertEqual(response["accepted_program_revision"], old.program_revision)
         self.assertIsNone(response["result"])
         self.assertEqual(self.effects(), {"runs": 0, "artifacts": 0})
+
+    def test_q02_cancel_p23_during_actual_planning_preserves_source_and_prior_artifact(self):
+        # The preexisting artifact uses an independent project in this same
+        # store. The cancelled request itself uses the exact adopted P23
+        # source, without adding an unrelated source-edit budget obligation.
+        retained_program = source_case("P01")
+        self.success(self.send("create", project_id="retained", bundle=retained_program.to_payload(),
+            expected_program_revision=None, requested_level="constructed"))
+        prior = self.success(self.send("export", project_id="retained",
+            program_revision=retained_program.program_revision, destination=TARGET,
+            options={"end": "0.25", "fps": 2, "helpers": False}))
+        prior_bytes, _ = self.retrieve(prior, project="retained")
+        retained_effects = self.effects("retained")
+        retained_run = copy.deepcopy(self.service.get_run("retained", prior["run_id"]))
+
+        program, _ = self.create("P23")
+        request = self.request("export", program_revision=program.program_revision,
+            destination=TARGET, options={"end": "0.25", "fps": 2, "helpers": False})
+        execution, observed = {}, []
+        execute = self.service._execute
+        stage = reach_export.recording_stage
+
+        def observe_execution(task, check):
+            execution["check"] = check
+            return execute(task, check)
+
+        def cancel_inside_plan(name, *, work=None, check=None):
+            stage(name, work=work, check=check)
+            if name != "planning_phase" or observed:
+                return
+            running = self.success(self.send("status", target_request_id=request["request_id"]))
+            self.assertEqual(running["result"]["target_status"], "running")
+            self.assertEqual(self.service.accepted_revision("reach"), program.program_revision)
+            self.assertGreater(work.counts.get("recording_boundary_preflight", 0), 0)
+            observed.append({"stage": name, "work_operations": work.operations})
+            cancelled = self.success(self.send("cancel", target_request_id=request["request_id"]))
+            self.assertEqual(cancelled["result"]["disposition"], "cancellation_requested")
+            # Force the next ordinary cooperative checkpoint to poll the real
+            # durable cancellation flag. No exception or work result is faked.
+            execution["check"].last_poll = 0
+
+        with patch.object(self.service, "_execute", side_effect=observe_execution), \
+                patch.object(reach_export, "recording_stage", side_effect=cancel_inside_plan):
+            response = self.service.handle(request)
+        self.assertEqual(len(observed), 1, response)
+        self.assertGreater(observed[0]["work_operations"], 0)
+        self.assertEqual(response["status"], "cancelled", response)
+        self.assertIsNone(response["run_id"])
+        self.assertIsNone(response["result"])
+        terminal = self.success(self.send("status", target_request_id=request["request_id"]))
+        self.assertEqual(terminal["result"]["target"], response)
+        self.assertEqual(self.service.handle(request), response)
+        self.assertEqual(self.effects(), {"runs": 0, "artifacts": 0})
+        self.assertEqual(self.service.accepted_revision("reach"), program.program_revision)
+        self.assertEqual(self.service.read_program("reach", program.program_revision), program)
+        self.assertEqual(self.effects("retained"), retained_effects)
+        self.assertEqual(self.service.get_run("retained", prior["run_id"]), retained_run)
+        self.assertEqual(self.service.accepted_revision("retained"), retained_program.program_revision)
+        after_bytes, _ = self.retrieve(prior, project="retained")
+        self.assertEqual(after_bytes, prior_bytes)
 
     def test_final_delivery_envelope_guard_rolls_back_run_and_artifact(self):
         program, _ = self.create("P24")

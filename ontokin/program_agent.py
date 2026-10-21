@@ -108,8 +108,8 @@ class ProgramAgentService(AgentService):
     def _force_delivery(self, task, check):
         """Prepare a fresh requested-prefix run and its recorded artifact.
 
-        A GLB/0.5 end time authorizes only that prefix. In particular, a later
-        force completion or authored event cannot invalidate this request by
+        A GLB/0.5 or /0.6 end time authorizes only that prefix. A later
+        action completion or authored event cannot invalidate this request by
         being evaluated before export. Ordinary evaluated validation and all
         earlier Agent bindings retain their complete-horizon semantics.
         """
@@ -255,10 +255,12 @@ class ProgramAgentService(AgentService):
         if compiler is None:
             compiler = self._runtime.compile_program(task.source, budgets=task.request.get("budgets"), check=check)
         # Agent/0.2's frozen operation budget never counted internal GLB work.
-        # The separately selected Agent/0.3, /0.4 and /0.5 contracts add cooperative delivery
+        # The separately selected Agent/0.3 through /0.6 contracts add cooperative delivery
         # checks without retroactively rejecting formerly valid old requests.
         delivery_check = check if self._protocol.definition.bounded_delivery else None
-        work = {"work": compiler.reach_work} if self._profile == program_runtime.REACH_PROFILE else {}
+        work = ({"work": compiler.reach_work,
+                 "reach_plan": getattr(compiler, "reach_delivery_plan", None)}
+                if self._profile == program_runtime.REACH_PROFILE else {})
         artifact = export_glb(compiler.model, options=ExportOptions(**task.request.get("options", {})),
                               source_uri=task.source.entry.filename, source_sha256=task.source.entry.revision,
                               target_contract=self._destination, check=delivery_check, **work)

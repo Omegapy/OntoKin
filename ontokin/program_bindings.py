@@ -33,6 +33,6 @@ PROGRAM_BINDINGS = MappingProxyType({binding.protocol: binding for binding in (
                    "force-program-agent.sqlite3", "ontokin.force-program-agent-store/0.1", True, True),
     ProgramBinding("ontokin.agent/0.6", "0.6", "planar-reach-0.1", "ontokin.glb/0.6",
                    "planar-reach-program-agent.sqlite3", "ontokin.planar-reach-program-agent-store/0.1",
-                   True, True, delivery_available=False),
+                   True, True),
 )})
 PROFILE_BINDINGS = MappingProxyType({binding.profile: binding for binding in PROGRAM_BINDINGS.values()})

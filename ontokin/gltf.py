@@ -1021,10 +1021,10 @@ def _translate_reach_work_failure(error, work, model):
 
 def _export_glb(model: SceneModel, *, options: ExportOptions | None = None,
                 source_uri: str | None = None, source_sha256: str | None = None,
-                target_contract: str = TARGET_CONTRACT, check=None, work=None) -> ExportResult:
+                target_contract: str = TARGET_CONTRACT, check=None, work=None, reach_plan=None) -> ExportResult:
     """Produce verified GLB bytes and their report without writing any files."""
     scene = build_scene(model, options=options, source_uri=source_uri, source_sha256=source_sha256,
-                        target_contract=target_contract, check=check, work=work)
+                        target_contract=target_contract, check=check, work=work, reach_plan=reach_plan)
     if target_contract == REACH_TARGET:
         from .reach_export import recording_stage
         recording_stage("encoding", work=work, check=check)
@@ -1062,7 +1062,7 @@ def _export_glb(model: SceneModel, *, options: ExportOptions | None = None,
 
 def export_glb(model: SceneModel, *, options: ExportOptions | None = None,
                source_uri: str | None = None, source_sha256: str | None = None,
-               target_contract: str = TARGET_CONTRACT, check=None, work=None) -> ExportResult:
+               target_contract: str = TARGET_CONTRACT, check=None, work=None, reach_plan=None) -> ExportResult:
     """Produce verified bytes with an explicit profile and cooperative cancellation."""
     if target_contract == REACH_TARGET:
         from .reach_numeric import ReachExecutionWork
@@ -1071,7 +1071,7 @@ def export_glb(model: SceneModel, *, options: ExportOptions | None = None,
         check = work.tick
     try:
         return _export_glb(model, options=options, source_uri=source_uri, source_sha256=source_sha256,
-                           target_contract=target_contract, check=_guard_check(check), work=work)
+                           target_contract=target_contract, check=_guard_check(check), work=work, reach_plan=reach_plan)
     except _CallbackFailure as failure:
         if target_contract == REACH_TARGET:
             _translate_reach_work_failure(failure.error, work, model)

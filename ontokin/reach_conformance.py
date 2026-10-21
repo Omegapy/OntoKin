@@ -58,6 +58,17 @@ class _Bounds:
     def tick(self, kind="independent_bound_arithmetic"):
         _tick(self.work, kind)
 
+    def reuse(self, key, calculate):
+        """Cache only independently derived immutable arithmetic results."""
+        if self.work is None or not hasattr(self.work, "lookup") or not hasattr(self.work, "remember"):
+            return calculate()
+        key = ("reach_independent_bounds_v1", *key)
+        result = self.work.lookup(key)
+        if result is None:
+            result = calculate()
+            self.work.remember(key, result)
+        return result
+
     def bits(self, *sizes):
         if self.work is not None:
             self.work.guard_bits(max(sizes, default=0))
@@ -129,6 +140,9 @@ class _Bounds:
         value = self.value(value)
         if value < 0 or not 1 <= precision <= 2048:
             _error("OKE-E-CERTIFICATE", "An independent square-root operand or precision is invalid.")
+        return self.reuse(("root", value, precision), lambda: self._root(value, precision))
+
+    def _root(self, value, precision):
         self.bits(value.numerator.bit_length() + 2 * precision, 2 * precision + 1)
         self.tick("independent_sqrt_scale")
         numerator = value.numerator << (2 * precision)
@@ -158,11 +172,12 @@ class _Bounds:
     def difference(self, first, last):
         if len(first) != len(last) or len(first) not in (3, 4):
             _error("OKE-E-CERTIFICATE", "An independent vector comparison has incompatible dimensions.")
-        result = []
-        for a, b in zip(first, last):
-            a, b = self.cell(a), self.cell(b)
-            result.append(max(abs(self.sub(a.lo, b.hi)), abs(self.sub(a.hi, b.lo))))
-        return self.norm(result)
+        first, last = tuple(self.cell(value) for value in first), tuple(self.cell(value) for value in last)
+        def calculate():
+            result = [max(abs(self.sub(a.lo, b.hi)), abs(self.sub(a.hi, b.lo)))
+                      for a, b in zip(first, last)]
+            return self.norm(result)
+        return self.reuse(("difference", first, last), calculate)
 
     def normalize(self, values):
         if hasattr(values, "__len__") and len(values) != 4:
@@ -175,6 +190,9 @@ class _Bounds:
         values = tuple(components)
         if len(values) != 4:
             _error("OKE-E-QUATERNION", "A supplied quaternion must have four components.")
+        return self.reuse(("normalize", values), lambda: self._normalize(values))
+
+    def _normalize(self, values):
         squared = self.total(self.square(value) for value in values)
         length = self.root(squared)
         if length.lo <= 0:
@@ -473,12 +491,17 @@ def _geometry_bounds(decoded, model, options, *, work):
         radius_squared, error_squared = Fraction(0), Fraction(0)
         for point, stored in zip(source_positions, stored_positions):
             _tick(work, "independent_geometry_point")
-            source = tuple(arithmetic.value(value) for value in point)
             if tuple(float32(value) for value in point) != stored:
                 _error("OKE-E-GEOMETRY", "Every actual vertex must match the source's single binary32 conversion.")
-            radius_squared = max(radius_squared, arithmetic.total(arithmetic.square(value) for value in source))
-            error_squared = max(error_squared, arithmetic.total(arithmetic.square(arithmetic.sub(value, actual))
-                                                                for value, actual in zip(source, stored)))
+            def moments():
+                source = tuple(arithmetic.value(value) for value in point)
+                return (arithmetic.total(arithmetic.square(value) for value in source),
+                        arithmetic.total(arithmetic.square(arithmetic.sub(value, actual))
+                                         for value, actual in zip(source, stored)))
+            point_radius, point_error = arithmetic.reuse(
+                ("geometry_point", tuple(point), tuple(stored)), moments)
+            radius_squared = max(radius_squared, point_radius)
+            error_squared = max(error_squared, point_error)
         if owner is not None:
             for site in model.sites.values():
                 if site.owner == owner:
@@ -654,15 +677,18 @@ def _key_comparisons(reference, geometry, tracks, time, index, arithmetic):
     result = {}
     for carrier, item in geometry.items():
         arithmetic.tick("independent_key_pose")
-        ideal = reference.pose_enclosure(item["frame"], time, side="after")
+        ideal = reference.recording_pose_enclosure(item["frame"], time, side="after")
         position, quaternion = tracks[carrier]["translation"][index], tracks[carrier]["rotation"][index]
-        normalized = arithmetic.normalize(quaternion)
-        expected = (ideal.orientation[1], ideal.orientation[2], ideal.orientation[3], ideal.orientation[0])
-        positive = arithmetic.difference(normalized, expected)
-        negative = arithmetic.difference(normalized, [_Cell(-value.hi, -value.lo) for value in expected])
-        result[carrier] = {"position_error": arithmetic.difference(position, ideal.position),
-            "quaternion_error": min(positive, negative), "normalized": normalized,
-            "magnitude": arithmetic.total(abs(arithmetic.value(value)) for value in position)}
+        def compare():
+            normalized = arithmetic.normalize(quaternion)
+            expected = (ideal.orientation[1], ideal.orientation[2], ideal.orientation[3], ideal.orientation[0])
+            positive = arithmetic.difference(normalized, expected)
+            negative = arithmetic.difference(normalized, [_Cell(-value.hi, -value.lo) for value in expected])
+            return (("position_error", arithmetic.difference(position, ideal.position)),
+                    ("quaternion_error", min(positive, negative)), ("normalized", normalized),
+                    ("magnitude", arithmetic.total(abs(arithmetic.value(value)) for value in position)))
+        result[carrier] = dict(arithmetic.reuse(("key_pose_comparison", tuple(position), tuple(quaternion),
+                                                ideal.position, ideal.orientation), compare))
     return result
 
 

@@ -197,7 +197,21 @@ class _Arithmetic:
 
     def remember(self, key, value):
         self.tick()
-        if len(self.cache) < MAX_CACHE:
+        if key in self.cache:
+            del self.cache[key]
+        elif len(self.cache) >= MAX_CACHE:
+            del self.cache[next(iter(self.cache))]
+        self.cache[key] = value
+        return value
+
+    def lookup(self, key):
+        """Reuse pure work within the same bounded independent context."""
+        self.tick()
+        value = self.cache.get(key)
+        if value is not None:
+            # Dictionary insertion order supplies bounded least-recent use;
+            # no source state, allowance or external callback is cached.
+            del self.cache[key]
             self.cache[key] = value
         return value
 
@@ -222,11 +236,11 @@ class _Arithmetic:
 
     def pi(self):
         key = ("pi", self.bits)
-        self.tick()
-        if key not in self.cache:
-            self.remember(key, self.sub(self.mul(16, self._atan_small(F(1, 5))),
-                                       self.mul(4, self._atan_small(F(1, 239)))))
-        return self.cache[key]
+        cached = self.lookup(key)
+        if cached is not None:
+            return cached
+        return self.remember(key, self.sub(self.mul(16, self._atan_small(F(1, 5))),
+                                          self.mul(4, self._atan_small(F(1, 239)))))
 
     def _atan_point(self, value):
         if value < 0:
@@ -297,9 +311,9 @@ class _Arithmetic:
     def sincos(self, value):
         value = self.interval(value)
         key = ("sincos", self.bits, value.lo, value.hi)
-        self.tick()
-        if key in self.cache:
-            return self.cache[key]
+        cached = self.lookup(key)
+        if cached is not None:
+            return cached
         if value.lo == value.hi == 0:
             return self.point(0), self.point(1)
         pi = self.pi()
@@ -421,6 +435,13 @@ class PoseEnclosure:
 
 
 @dataclass(frozen=True)
+class RecordingPoseEnclosure:
+    """Position/orientation only; no uncomputed derivative is exposed."""
+    position: tuple[Interval, ...]
+    orientation: tuple[Interval, ...]
+
+
+@dataclass(frozen=True)
 class CoordinatePath:
     joint: str
     action: str | None
@@ -490,13 +511,36 @@ class _PoseArithmetic:
     def vector(self, value):
         return tuple(self.a.interval(x) for x in value)
 
+    @staticmethod
+    def _zero(vector):
+        return all(value.lo == value.hi == 0 for value in vector)
+
+    def _key(self, operation, *values):
+        return ("reference_pose", self.a.bits, operation, *values)
+
     def add(self, left, right):
+        left, right = self.vector(left), self.vector(right)
+        self.a.tick()
+        if self._zero(left):
+            return right
+        if self._zero(right):
+            return left
         return tuple(self.a.add(a, b) for a, b in zip(left, right))
 
     def scale(self, vector, scalar):
+        vector, scalar = self.vector(vector), self.a.interval(scalar)
+        self.a.tick()
+        if self._zero(vector) or scalar.lo == scalar.hi == 0:
+            return (Interval(F(0), F(0)),) * len(vector)
+        if scalar.lo == scalar.hi == 1:
+            return vector
         return tuple(self.a.mul(value, scalar) for value in vector)
 
     def cross(self, a, b):
+        a, b = self.vector(a), self.vector(b)
+        self.a.tick()
+        if self._zero(a) or self._zero(b):
+            return (Interval(F(0), F(0)),) * 3
         return tuple(self.a.sub(self.a.mul(a[j], b[k]), self.a.mul(a[k], b[j]))
                      for j, k in ((1, 2), (2, 0), (0, 1)))
 
@@ -512,10 +556,17 @@ class _PoseArithmetic:
 
     def quaternion(self, values):
         values = self.vector(values)
+        key = self._key("quaternion", values)
+        cached = self.a.lookup(key)
+        if cached is not None:
+            return cached
+        if len(values) == 4 and self._zero(values[1:]) and (values[0].lo > 0 or values[0].hi < 0):
+            sign = F(1) if values[0].lo > 0 else F(-1)
+            return self.a.remember(key, (Interval(sign, sign), *(Interval(F(0), F(0)),) * 3))
         denominator = self.norm(values)
         if denominator.lo <= 0:
             raise ReferenceError("numeric", "Independent quaternion normalization includes zero")
-        return tuple(self.a.div(value, denominator) for value in values)
+        return self.a.remember(key, tuple(self.a.div(value, denominator) for value in values))
 
     def multiply(self, left, right):
         a, b = left, right
@@ -524,12 +575,16 @@ class _PoseArithmetic:
             return b
         if all(value.lo == value.hi == expected for value, expected in zip(b, UNIT)):
             return a
-        return (
+        key = self._key("multiply", tuple(a), tuple(b))
+        cached = self.a.lookup(key)
+        if cached is not None:
+            return cached
+        return self.a.remember(key, (
             self.a.sub(self.a.mul(a[0], b[0]), self.a.total(self.a.mul(a[i], b[i]) for i in (1, 2, 3))),
             self.a.total((self.a.mul(a[0], b[1]), self.a.mul(a[1], b[0]), self.a.mul(a[2], b[3]), self.a.neg(self.a.mul(a[3], b[2])))),
             self.a.total((self.a.mul(a[0], b[2]), self.a.neg(self.a.mul(a[1], b[3])), self.a.mul(a[2], b[0]), self.a.mul(a[3], b[1]))),
             self.a.total((self.a.mul(a[0], b[3]), self.a.mul(a[1], b[2]), self.a.neg(self.a.mul(a[2], b[1])), self.a.mul(a[3], b[0]))),
-        )
+        ))
 
     def conjugate(self, q):
         return (q[0], *(self.a.neg(x) for x in q[1:]))
@@ -537,11 +592,20 @@ class _PoseArithmetic:
     def rotate(self, q, vector):
         # Quaternion-vector multiplication follows a different arithmetic
         # expression from the source implementation's homogeneous matrix rows.
+        vector = self.vector(vector)
         self.a.tick()
-        if all(value.lo == value.hi == expected for value, expected in zip(q, UNIT)):
-            return self.vector(vector)
-        pure = (self.a.point(0), *self.vector(vector))
-        return self.multiply(self.multiply(q, pure), self.conjugate(q))[1:]
+        if self._zero(vector):
+            return vector
+        if (len(q) == 4 and q[0].lo == q[0].hi and abs(q[0].lo) == 1
+                and self._zero(q[1:])):
+            return vector
+        key = self._key("rotate", tuple(q), vector)
+        cached = self.a.lookup(key)
+        if cached is not None:
+            return cached
+        pure = (self.a.point(0), *vector)
+        result = self.multiply(self.multiply(q, pure), self.conjugate(q))[1:]
+        return self.a.remember(key, result)
 
     def spin(self, omega, elapsed):
         values = self.vector(omega)
@@ -565,19 +629,31 @@ class _PoseArithmetic:
                              self.vector(velocity), self.vector(omega))
 
     def constant(self, pose):
-        return self.make(pose.position, pose.rotation)
+        key = self._key("constant", tuple(pose.position), tuple(pose.rotation))
+        cached = self.a.lookup(key)
+        if cached is not None:
+            return cached
+        return self.a.remember(key, self.make(pose.position, pose.rotation))
 
     def compose(self, parent, local):
+        key = self._key("compose", parent, local)
+        cached = self.a.lookup(key)
+        if cached is not None:
+            return cached
         offset = self.rotate(parent.orientation, local.position)
-        return PoseEnclosure(self.add(parent.position, offset), self.multiply(parent.orientation, local.orientation),
+        return self.a.remember(key, PoseEnclosure(self.add(parent.position, offset), self.multiply(parent.orientation, local.orientation),
                              self.add(self.add(parent.velocity, self.cross(parent.omega, offset)),
                                       self.rotate(parent.orientation, local.velocity)),
-                             self.add(parent.omega, self.rotate(parent.orientation, local.omega)))
+                             self.add(parent.omega, self.rotate(parent.orientation, local.omega))))
 
     def inverse(self, pose):
+        key = self._key("inverse", pose)
+        cached = self.a.lookup(key)
+        if cached is not None:
+            return cached
         orientation = self.conjugate(pose.orientation)
-        return self.make(self.rotate(orientation, tuple(self.a.neg(x) for x in pose.position)),
-                         orientation, normalized=True)
+        return self.a.remember(key, self.make(self.rotate(orientation, tuple(self.a.neg(x) for x in pose.position)),
+                                             orientation, normalized=True))
 
 
 @dataclass
@@ -814,7 +890,7 @@ class ReachReference:
             coordinate = F(self.a.round64(coordinate))
         return coordinate, slope if active.status == "running" else F(0)
 
-    def _root_pose(self, path, time, state, *, ideal):
+    def _root_pose(self, path, time, state, *, ideal, pose_only=False):
         if state.modes[path] == "dynamic":
             anchor = state.dynamic[path]
             saved = anchor.ideal if ideal else anchor.actual
@@ -824,6 +900,9 @@ class ReachReference:
             position = self.p.add(self.p.add(saved.position, self.p.scale(saved.velocity, dt)),
                                   self.p.scale(acceleration, dt * dt / 2))
             rotation = self.p.multiply(self.p.spin(saved.omega, dt), saved.orientation)
+            if pose_only:
+                zero = self.p.vector(ZERO)
+                return PoseEnclosure(position, rotation, zero, zero)
             return PoseEnclosure(position, rotation, self.p.add(saved.velocity, self.p.scale(acceleration, dt)), saved.omega)
         position = (state.ideal_positions if ideal else state.positions)[path]
         orientation = (state.ideal_orientations if ideal else state.orientations)[path]
@@ -833,24 +912,31 @@ class ReachReference:
             action, active = self.model.actions[move], state.actions[move]
             initial = active.ideal_initial if ideal else active.initial
             position = self.p.add(initial, self.p.scale(action.vector, active.elapsed_at(time)))
-            if active.status == "running":
+            if not pose_only and active.status == "running":
                 velocity = self.p.vector(action.vector)
         spin = state.claims.get((path, "orientation"))
         if spin is not None:
             action, active = self.model.actions[spin], state.actions[spin]
             initial = active.ideal_initial if ideal else active.initial
             orientation = self.p.multiply(self.p.spin(action.vector, active.elapsed_at(time)), initial)
-            if active.status == "running":
+            if not pose_only and active.status == "running":
                 omega = self.p.vector(action.vector)
         return PoseEnclosure(position, orientation, velocity, omega)
 
-    def _pose_map(self, time, state, *, ideal):
-        key = (id(state), time, ideal)
+    def _pose_map(self, time, state, *, ideal, pose_only=False, selected=None):
+        key = (id(state), time, ideal, pose_only)
+        targets = (tuple(path + ".frame" for path in (*self.model.objects, *self.model.sites))
+                   if selected is None else tuple(selected))
         self.a.tick()
-        if key in self._poses and self._poses[key][0] is state:
-            return self._poses[key][1]
+        cached = self._poses.get(key)
+        if cached is not None and cached[0] is state:
+            frames = cached[1]
+            if all(path in frames for path in targets):
+                return frames
+        else:
+            frames = {"world": self.p.make()}
         incoming = self._incoming(state)
-        frames, visiting = {"world": self.p.make()}, set()
+        visiting = set()
 
         def frame(path):
             self.a.tick()
@@ -874,20 +960,20 @@ class ReachReference:
                         value = frame(joint.parent + ".frame")
                         if joint.kind in {"hinge", "slider"}:
                             coordinate, rate = self._coordinate(relation, time, state, ideal=ideal)
+                            if pose_only:
+                                rate = F(0)
                             motion = (self.p.hinge(joint.axis, coordinate, rate) if joint.kind == "hinge" else
                                       self.p.make(self.p.scale(joint.axis, coordinate), velocity=self.p.scale(joint.axis, rate)))
                             value = self.p.compose(value, motion)
                         value = self.p.compose(value, self.p.inverse(self.p.constant(self.model.sites[joint.child].pose)))
                 else:
-                    value = self._root_pose(stem, time, state, ideal=ideal)
+                    value = self._root_pose(stem, time, state, ideal=ideal, pose_only=pose_only)
                 visiting.remove(stem)
             frames[path] = value
             return value
 
-        for path in self.model.objects:
-            frame(path + ".frame")
-        for path in self.model.sites:
-            frame(path + ".frame")
+        for path in targets:
+            frame(path)
         if len(self._poses) < MAX_CACHE:
             self._poses[key] = (state, frames)
         return frames
@@ -909,6 +995,22 @@ class ReachReference:
             return self._pose_map(F(time), state, ideal=ideal)[carrier]
         except KeyError as error:
             raise ReferenceError("identity", "Unknown independent source carrier", carrier=carrier) from error
+
+    def recording_pose_enclosure(self, carrier, time, side="after", *, ideal=True):
+        """Evaluate independent p/q only for the selected carrier ancestry.
+
+        The p/q expressions are identical to full pose evaluation. Spatial
+        derivatives do not enter those expressions. A separate cache namespace
+        and a two-field return type prevent unused private zeros from becoming
+        source velocity or release-state evidence.
+        """
+        carrier = carrier if carrier == "world" or carrier.endswith(".frame") else carrier + ".frame"
+        state = self._state_at(F(time), side)
+        try:
+            value = self._pose_map(F(time), state, ideal=ideal, pose_only=True, selected=(carrier,))[carrier]
+        except KeyError as error:
+            raise ReferenceError("identity", "Unknown independent source carrier", carrier=carrier) from error
+        return RecordingPoseEnclosure(value.position, value.orientation)
 
     def _next(self, state, current):
         times = [self.end]
@@ -1680,6 +1782,7 @@ class ReachReference:
         coordinates cannot disappear from a claimed whole-phase bound.
         """
         key = (id(state), start, end)
+        self.a.tick()
         cached = self._basis_cache.get(key)
         if cached is None or cached[0] is not state:
             cache = {"world": _SourceBound()}
@@ -1687,6 +1790,8 @@ class ReachReference:
                 self._basis_cache[key] = (state, cache)
         else:
             cache = cached[1]
+            if carrier in cache:
+                return cache[carrier]
         incoming = self._incoming(state)
         active_path = set()
         exact = self.a.exact

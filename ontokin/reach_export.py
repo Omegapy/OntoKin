@@ -56,6 +56,24 @@ def _arithmetic_work(work):
     return _LocalArithmeticWork() if work is None else work
 
 
+def _reuse(work, key, calculate):
+    """Reuse immutable arithmetic in the same bounded request cache.
+
+    Callers validate and bound every input before building a key. The shared
+    cache charges its lookup, promotion, insertion and eviction, including the
+    original cancellation callback. Standalone protocol implementations without
+    a cache still execute the same arithmetic directly.
+    """
+    if not hasattr(work, "lookup") or not hasattr(work, "remember"):
+        return calculate()
+    key = ("reach_recording_arithmetic_v1", *key)
+    result = work.lookup(key)
+    if result is None:
+        result = calculate()
+        work.remember(key, result)
+    return result
+
+
 def _charge(work=None, kind="recording_arithmetic"):
     if work is not None:
         work.charge(kind)
@@ -245,17 +263,19 @@ def upper_binary64(value, *, work=None, model=None) -> float:
     value = _rational(value, work)
     if value < 0:
         raise ValueError("A certificate upper bound cannot be negative")
-    try:
-        result = float(value)
-    except OverflowError:
-        result = math.inf
-    _charge(work, "recording_bound_float_return")
-    if math.isfinite(result) and _compare(_rational(result, work), value, work) < 0:
-        _charge(work, "recording_bound_nextafter")
-        result = math.nextafter(result, math.inf)
-    if not math.isfinite(result):
-        _fail("OKE-E-NUMERIC-BOUND", "A proved bound exceeds finite report precision.", model=model)
-    return result
+    def calculate():
+        try:
+            result = float(value)
+        except OverflowError:
+            result = math.inf
+        _charge(work, "recording_bound_float_return")
+        if math.isfinite(result) and _compare(_rational(result, work), value, work) < 0:
+            _charge(work, "recording_bound_nextafter")
+            result = math.nextafter(result, math.inf)
+        if not math.isfinite(result):
+            _fail("OKE-E-NUMERIC-BOUND", "A proved bound exceeds finite report precision.", model=model)
+        return result
+    return _reuse(work, ("upper_binary64", value), calculate)
 
 
 def sqrt_upper(value, *, work=None, bits=96) -> Fraction:
@@ -278,7 +298,8 @@ def sqrt_upper(value, *, work=None, bits=96) -> Fraction:
 def norm_upper(values, *, work=None) -> Fraction:
     work = _arithmetic_work(work)
     values = _vector(values, work)
-    return sqrt_upper(_sum((_exact(value, value, "mul", work) for value in values), work), work=work)
+    return _reuse(work, ("norm_upper", values), lambda: sqrt_upper(
+        _sum((_exact(value, value, "mul", work) for value in values), work), work=work))
 
 
 def normalized_component(component, squared_norm, *, work=None) -> float:
@@ -313,10 +334,12 @@ def normalized_component(component, squared_norm, *, work=None) -> float:
 def normalized_quaternion(values, *, work=None) -> tuple[float, ...]:
     work = _arithmetic_work(work)
     values = _vector(values, work, size=4)
-    squared = _sum((_exact(value, value, "mul", work) for value in values), work)
-    if not squared:
-        _fail("OKE-E-QUATERNION", "A zero quaternion has no normalized interpretation.")
-    return tuple(normalized_component(value, squared, work=work) for value in values)
+    def calculate():
+        squared = _sum((_exact(value, value, "mul", work) for value in values), work)
+        if not squared:
+            _fail("OKE-E-QUATERNION", "A zero quaternion has no normalized interpretation.")
+        return tuple(normalized_component(value, squared, work=work) for value in values)
+    return _reuse(work, ("normalized_quaternion", values), calculate)
 
 
 def quaternion_arc_upper(first, last, *, work=None) -> Fraction:
@@ -543,12 +566,13 @@ def reach_timeline(model, options, plan, nodes, geometry_bounds, *, work):
         steps = max(1, _ceil(width * Fraction(options.fps)))
         for node, (radius, _) in zip(nodes, geometry_bounds):
             bound = phase.carriers[node.frame_path]
-            # A stricter initial allocation leaves explicit room for the
-            # actual controlled destination approximation and endpoint terms.
+            # Meet the adopted quarter-allocation inequalities directly. The
+            # complete outward-rounded certificate below still checks source,
+            # destination, endpoint and clock errors against the full limits.
             curvature = bound.acceleration / 8 + radius * bound.angular_speed ** 2 / 4
             steps = max(steps, _ceil(width * bound.angular_speed / ANGULAR_STEP),
-                        _ceil_sqrt(width ** 2 * bound.angular_speed ** 2 * 4 / rotation_tolerance),
-                        _ceil_sqrt(width ** 2 * curvature * 16 / position_tolerance))
+                        _ceil_sqrt(width ** 2 * bound.angular_speed ** 2 / rotation_tolerance),
+                        _ceil_sqrt(width ** 2 * curvature * 4 / position_tolerance))
         count += steps
         if count > maximum:
             _fail("OKE-E-KEYFRAME-BUDGET", "The bounded motion requires too many retained recording keys.",
@@ -565,7 +589,7 @@ def reach_timeline(model, options, plan, nodes, geometry_bounds, *, work):
         stored, bits = direct_binary32(time, work=work, model=model)
         if abs(Fraction(stored) - time) > Fraction(options.time_tolerance_s):
             _fail("OKE-E-TIME-PRECISION", "An exact retained clock exceeds the requested binary32 time tolerance.", model=model)
-        item = {"authored_seconds": rational_record(time), "stored_seconds": stored,
+        item = {"authored_seconds": rational_record(time, work=work), "stored_seconds": stored,
                 "stored_binary32_bits": bits, "semantic_boundary": time in semantic}
         if retained and stored == retained[-1]["stored_seconds"]:
             if item["semantic_boundary"] and retained[-1]["semantic_boundary"]:
@@ -595,6 +619,70 @@ def _carrier_ref(node):
 def _stored_vector(values, model):
     from .scene import float32
     return tuple(float32(value, model) for value in values)
+
+
+def _certificate_quantities(model, positions, quaternions, bound, enclosing,
+                            radius, vertex_error, nsp, nsr, width, shift, *, work):
+    """Pure numerical fields; caller-specific identities and clocks stay fresh."""
+    p = tuple(_stored_vector(value, model) for value in positions)
+    q = tuple(_stored_vector(value, model) for value in quaternions)
+    magnitude = max(sum((abs(Fraction(value)) for value in point), Fraction(0)) for point in p)
+    ep = max(norm_upper((Fraction(stored) - Fraction(actual) for stored, actual in zip(value, positions[k])), work=work)
+             for value, k in zip(p, (0, 1))) + nsp
+    eq = max(norm_upper((Fraction(stored) - Fraction(actual) for stored, actual in zip(
+        normalized_quaternion(value, work=work), normalized_quaternion(quaternions[k], work=work))), work=work)
+             for value, k in zip(q, (0, 1))) + 2 * NORMALIZATION_ERROR + nsr
+    arc = quaternion_arc_upper(*q, work=work)
+    ndp, ndr = destination_numeric_bounds(arc, magnitude, radius, vertex_error, work=work)
+    quantities = {"landmark_radius_m": radius, "local_vertex_error_bound_m": vertex_error,
+        "angular_speed_bound_rad_per_s": bound.angular_speed,
+        "carrier_acceleration_bound_m_per_s2": bound.acceleration,
+        "enclosing_carrier_speed_bound_m_per_s": enclosing.speed,
+        "enclosing_carrier_acceleration_bound_m_per_s2": enclosing.acceleration,
+        "enclosing_angular_speed_bound_rad_per_s": enclosing.angular_speed,
+        "max_endpoint_time_shift_s": shift, "max_endpoint_position_error_m": ep,
+        "max_endpoint_unit_quaternion_error": eq, "stored_quaternion_arc_upper_rad": arc,
+        "source_numeric_position_bound_m": nsp, "source_numeric_rotation_bound_rad": nsr,
+        "destination_numeric_position_bound_m": ndp, "destination_numeric_rotation_bound_rad": ndr}
+    # A consumer must be able to check the inequalities using the
+    # reported upper bounds themselves. Round primitive quantities
+    # outward first, then propagate those rounded values through every
+    # dependent bound. Independently rounding the exact final sum can
+    # otherwise make the displayed certificate fail by one ulp.
+    quantities = {name: upper_binary64(value, work=work, model=model)
+                  for name, value in quantities.items()}
+    def q(name):
+        return Fraction(quantities[name])
+    ndp, ndr = destination_numeric_bounds(q("stored_quaternion_arc_upper_rad"), magnitude,
+        q("landmark_radius_m"), q("local_vertex_error_bound_m"), work=work)
+    quantities["destination_numeric_position_bound_m"] = upper_binary64(ndp, work=work, model=model)
+    quantities["destination_numeric_rotation_bound_rad"] = upper_binary64(ndr, work=work, model=model)
+    rounded_bound = MotionBound(bound.speed, q("carrier_acceleration_bound_m_per_s2"),
+                                q("angular_speed_bound_rad_per_s"))
+    rounded_enclosing = MotionBound(q("enclosing_carrier_speed_bound_m_per_s"),
+        q("enclosing_carrier_acceleration_bound_m_per_s2"), q("enclosing_angular_speed_bound_rad_per_s"))
+    rounded_totals = complete_interval_bounds(width=width, bound=rounded_bound,
+        enclosing=rounded_enclosing, radius=q("landmark_radius_m"),
+        vertex_error=q("local_vertex_error_bound_m"),
+        endpoint_position_error=q("max_endpoint_position_error_m"),
+        endpoint_quaternion_error=q("max_endpoint_unit_quaternion_error"),
+        stored_arc=q("stored_quaternion_arc_upper_rad"), time_shift=q("max_endpoint_time_shift_s"),
+        source_position_error=q("source_numeric_position_bound_m"),
+        source_rotation_error=q("source_numeric_rotation_bound_rad"),
+        destination_position_error=q("destination_numeric_position_bound_m"),
+        destination_rotation_error=q("destination_numeric_rotation_bound_rad"), work=work)
+    for name in ("unit_quaternion_difference_bound", "ideal_rotation_bound_rad", "ideal_position_bound_m",
+                 "carrier_position_bound_m"):
+        quantities[name] = upper_binary64(rounded_totals[name], work=work, model=model)
+    quantities["total_rotation_bound_rad"] = upper_binary64(
+        4 * q("unit_quaternion_difference_bound") + q("source_numeric_rotation_bound_rad")
+        + q("destination_numeric_rotation_bound_rad")
+        + q("enclosing_angular_speed_bound_rad_per_s") * q("max_endpoint_time_shift_s"),
+        work=work, model=model)
+    quantities["total_position_bound_m"] = upper_binary64(q("carrier_position_bound_m")
+        + q("landmark_radius_m") * q("total_rotation_bound_rad") + q("local_vertex_error_bound_m"),
+        work=work, model=model)
+    return tuple(quantities.items())
 
 
 def interval_certificates(model, options, plan, nodes, geometry_bounds, exact, times, *, work):
@@ -630,79 +718,28 @@ def interval_certificates(model, options, plan, nodes, geometry_bounds, exact, t
                 _fail("OKE-E-POSITION-ALIAS", "Authored or stored key spacing exceeds the required quarter-allocation plan.", model=model)
             nsp = _source_max(plan, numeric_selected, frame, "position_error_m")
             nsr = _source_max(plan, numeric_selected, frame, "rotation_error_rad")
-            p = [_stored_vector(node.translations[k], model) for k in (index, index + 1)]
-            q = [_stored_vector(node.rotations_xyzw[k], model) for k in (index, index + 1)]
-            magnitude = max(sum((abs(Fraction(value)) for value in point), Fraction(0)) for point in p)
-            ep = max(norm_upper((Fraction(stored) - Fraction(actual) for stored, actual in zip(value, node.translations[k])), work=work)
-                     for value, k in zip(p, (index, index + 1))) + nsp
-            eq = max(norm_upper((Fraction(stored) - Fraction(actual) for stored, actual in zip(
-                normalized_quaternion(value, work=work), normalized_quaternion(node.rotations_xyzw[k], work=work))), work=work)
-                     for value, k in zip(q, (index, index + 1))) + 2 * NORMALIZATION_ERROR + nsr
-            arc = quaternion_arc_upper(*q, work=work)
-            ndp, ndr = destination_numeric_bounds(arc, magnitude, radius, vertex_error, work=work)
-            totals = complete_interval_bounds(width=right - left, bound=bound, enclosing=enclosing,
-                radius=radius, vertex_error=vertex_error, endpoint_position_error=ep,
-                endpoint_quaternion_error=eq, stored_arc=arc, time_shift=shift,
-                source_position_error=nsp, source_rotation_error=nsr,
-                destination_position_error=ndp, destination_rotation_error=ndr)
-            if totals["total_position_bound_m"] > Fraction(options.position_tolerance_m) or totals["total_rotation_bound_rad"] > Fraction(options.rotation_tolerance_rad):
-                _fail("OKE-E-NUMERIC-BOUND", "The complete continuous recording bound exceeds the requested tolerance.", model=model,
-                      details={"carrier": node.name, "left_key_index": index,
-                               **{name: str(value) for name, value in totals.items()}})
-            quantities = {"landmark_radius_m": radius, "local_vertex_error_bound_m": vertex_error,
-                "angular_speed_bound_rad_per_s": bound.angular_speed,
-                "carrier_acceleration_bound_m_per_s2": bound.acceleration,
-                "enclosing_carrier_speed_bound_m_per_s": enclosing.speed,
-                "enclosing_carrier_acceleration_bound_m_per_s2": enclosing.acceleration,
-                "enclosing_angular_speed_bound_rad_per_s": enclosing.angular_speed,
-                "max_endpoint_time_shift_s": shift, "max_endpoint_position_error_m": ep,
-                "max_endpoint_unit_quaternion_error": eq, "stored_quaternion_arc_upper_rad": arc,
-                "source_numeric_position_bound_m": nsp, "source_numeric_rotation_bound_rad": nsr,
-                "destination_numeric_position_bound_m": ndp, "destination_numeric_rotation_bound_rad": ndr}
-            # A consumer must be able to check the inequalities using the
-            # reported upper bounds themselves. Round primitive quantities
-            # outward first, then propagate those rounded values through every
-            # dependent bound. Independently rounding the exact final sum can
-            # otherwise make the displayed certificate fail by one ulp.
-            quantities = {name: upper_binary64(value, work=work, model=model)
-                          for name, value in quantities.items()}
-            def q(name):
-                return Fraction(quantities[name])
-            ndp, ndr = destination_numeric_bounds(q("stored_quaternion_arc_upper_rad"), magnitude,
-                q("landmark_radius_m"), q("local_vertex_error_bound_m"), work=work)
-            quantities["destination_numeric_position_bound_m"] = upper_binary64(ndp, work=work, model=model)
-            quantities["destination_numeric_rotation_bound_rad"] = upper_binary64(ndr, work=work, model=model)
-            rounded_bound = MotionBound(bound.speed, q("carrier_acceleration_bound_m_per_s2"),
-                                        q("angular_speed_bound_rad_per_s"))
-            rounded_enclosing = MotionBound(q("enclosing_carrier_speed_bound_m_per_s"),
-                q("enclosing_carrier_acceleration_bound_m_per_s2"), q("enclosing_angular_speed_bound_rad_per_s"))
-            rounded_totals = complete_interval_bounds(width=right - left, bound=rounded_bound,
-                enclosing=rounded_enclosing, radius=q("landmark_radius_m"),
-                vertex_error=q("local_vertex_error_bound_m"),
-                endpoint_position_error=q("max_endpoint_position_error_m"),
-                endpoint_quaternion_error=q("max_endpoint_unit_quaternion_error"),
-                stored_arc=q("stored_quaternion_arc_upper_rad"), time_shift=q("max_endpoint_time_shift_s"),
-                source_position_error=q("source_numeric_position_bound_m"),
-                source_rotation_error=q("source_numeric_rotation_bound_rad"),
-                destination_position_error=q("destination_numeric_position_bound_m"),
-                destination_rotation_error=q("destination_numeric_rotation_bound_rad"))
-            for name in ("unit_quaternion_difference_bound", "ideal_rotation_bound_rad", "ideal_position_bound_m",
-                         "carrier_position_bound_m"):
-                quantities[name] = upper_binary64(rounded_totals[name], work=work, model=model)
-            quantities["total_rotation_bound_rad"] = upper_binary64(
-                4 * q("unit_quaternion_difference_bound") + q("source_numeric_rotation_bound_rad")
-                + q("destination_numeric_rotation_bound_rad")
-                + q("enclosing_angular_speed_bound_rad_per_s") * q("max_endpoint_time_shift_s"),
-                work=work, model=model)
-            quantities["total_position_bound_m"] = upper_binary64(q("carrier_position_bound_m")
-                + q("landmark_radius_m") * q("total_rotation_bound_rad") + q("local_vertex_error_bound_m"),
-                work=work, model=model)
-            if (q("total_position_bound_m") > Fraction(options.position_tolerance_m)
-                    or q("total_rotation_bound_rad") > Fraction(options.rotation_tolerance_rad)):
-                _fail("OKE-E-NUMERIC-BOUND", "Outward serialized bounds exceed the requested tolerance.", model=model)
+            positions = tuple(tuple(node.translations[k]) for k in (index, index + 1))
+            quaternions = tuple(tuple(node.rotations_xyzw[k]) for k in (index, index + 1))
+            # Every new carrier/interval retains its checks and output row.
+            # With zero acceleration and angular rate, width has no numerical
+            # contribution; likewise a held carrier is invariant to clock shift.
+            proof_width = right - left if bound.acceleration or bound.angular_speed else Fraction(0)
+            proof_shift = shift if enclosing.speed or enclosing.angular_speed else Fraction(0)
+            for values in (*positions, *quaternions):
+                _vector(values, work, size=len(values))
+            key = ("certificate_quantities", positions, quaternions, bound, enclosing,
+                   radius, vertex_error, nsp, nsr, proof_width, proof_shift)
+            quantities = dict(_reuse(work, key, lambda: _certificate_quantities(
+                model, positions, quaternions, bound, enclosing, radius, vertex_error,
+                nsp, nsr, proof_width, proof_shift, work=work)))
+            quantities["max_endpoint_time_shift_s"] = upper_binary64(shift, work=work, model=model)
+            if (Fraction(quantities["total_position_bound_m"]) > Fraction(options.position_tolerance_m)
+                    or Fraction(quantities["total_rotation_bound_rad"]) > Fraction(options.rotation_tolerance_rad)):
+                _fail("OKE-E-NUMERIC-BOUND", "Outward serialized bounds exceed the requested tolerance.", model=model,
+                      details={"carrier": node.name, "left_key_index": index})
             result.append({"left_key_index": index, "right_key_index": index + 1,
                            "carrier": _carrier_ref(node), "source_phase_indices": list(selected),
-                           "h_authored_seconds": rational_record(right - left), "h_stored_seconds": rational_record(s1 - s0),
+                           "h_authored_seconds": rational_record(right - left, work=work), "h_stored_seconds": rational_record(s1 - s0, work=work),
                            **quantities})
     return result
 
@@ -779,7 +816,7 @@ def destination_numeric_basis() -> dict[str, str]:
             "method": "Exact rational time and translation; integer RNE quaternion normalization; bounded normalized-chord approximation to short SLERP; separately bounded Three CPU matrix and vertex arithmetic."}
 
 
-def _build_reach_scene(model, *, options, source_uri, source_sha256, work):
+def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach_plan=None):
     from . import __version__
     from .evaluator import time_text
     from .reach_pose import source_numeric_basis
@@ -796,7 +833,21 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work):
     program = program_metadata(model, check=work.tick)
     if source_sha256 is not None and source_sha256 != program["sources"]["entry"]["source_revision"]:
         _fail("OKE-E-PROVENANCE", "The entry source hash must match the immutable program bundle.", model=model, kind="unsupported")
-    plan = reach_prefix_plan(model, end, work=work)
+    if reach_plan is None:
+        plan = reach_prefix_plan(model, end, work=work)
+    else:
+        _charge(work, "recording_plan_identity")
+        if (not isinstance(reach_plan, ReachPrefixPlan)
+                or reach_plan.simulator.model is not model
+                or reach_plan.simulator.work is not work
+                or not reach_plan.boundaries
+                or reach_plan.boundaries[0] != 0
+                or reach_plan.boundaries[-1] != end
+                or len(reach_plan.boundary_records) != len(reach_plan.boundaries)
+                or len(reach_plan.phases) != len(reach_plan.boundaries) - 1
+                or len(reach_plan.phase_states) != len(reach_plan.phases)):
+            raise ValueError("A retained recording plan must match the model, request work and complete prefix.")
+        plan = reach_plan
     recording_stage("geometry", work=work)
     nodes = _nodes(model, options, check=work.tick)
     if not nodes:
@@ -804,11 +855,12 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work):
     geometry = node_geometry_bounds(model, nodes, work=work)
     exact, times, retained = reach_timeline(model, options, plan, nodes, geometry, work=work)
     recording_stage("sampling", work=work)
+    frame_paths = tuple(node.frame_path for node in nodes)
     for time in exact:
         _charge(work, "recording_sample")
         index = bisect_right(plan.boundaries, time) - 1
         state = plan.final_state if index >= len(plan.phase_states) else plan.phase_states[index]
-        _, frames = plan.simulator._kinematics(time, state)
+        frames = plan.simulator.recording_frames(time, state, frame_paths)
         for node in nodes:
             _charge(work, "recording_pose")
             pose = frames[node.frame_path]
@@ -903,13 +955,13 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work):
 
 
 def build_reach_scene(model, *, options=None, source_uri=None, source_sha256=None,
-                      check=None, work=None):
+                      check=None, work=None, reach_plan=None):
     from .reach_numeric import ReachExecutionWork, ReachAdmissionError
     from .reach_source import reach_error
     work = work if work is not None else ReachExecutionWork(check=check)
     try:
         return _build_reach_scene(model, options=options, source_uri=source_uri,
-                                  source_sha256=source_sha256, work=work)
+                                  source_sha256=source_sha256, work=work, reach_plan=reach_plan)
     except ReachAdmissionError as error:
         if error is work.callback_error:
             raise

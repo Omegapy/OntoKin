@@ -1035,13 +1035,14 @@ def _build_scene(model: SceneModel, *, options: ExportOptions | None = None,
 def build_scene(model: SceneModel, *, options: ExportOptions | None = None,
                 source_uri: str | None = None, source_sha256: str | None = None,
                 target_contract: str = TARGET_CONTRACT,
-                check: Callable[[], None] | None = None, work=None) -> BakedScene:
+                check: Callable[[], None] | None = None, work=None, reach_plan=None) -> BakedScene:
     """Bake the explicit profile while preserving caller cancellation errors."""
     try:
         if target_contract == REACH_TARGET:
             from .reach_export import build_reach_scene
             return build_reach_scene(model, options=options, source_uri=source_uri,
-                                     source_sha256=source_sha256, check=_guard_check(check), work=work)
+                                     source_sha256=source_sha256, check=_guard_check(check), work=work,
+                                     reach_plan=reach_plan)
         return _build_scene(model, options=options, source_uri=source_uri, source_sha256=source_sha256,
                             target_contract=target_contract, check=_guard_check(check))
     except _ExportInterrupt as interrupted:

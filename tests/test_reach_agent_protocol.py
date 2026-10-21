@@ -74,8 +74,12 @@ class ReachAgentProtocolTests(unittest.TestCase):
         before = {profile: catalog(profile=profile) for profile in ("construction-0.1", "surface-0.1", "impulse-0.1", "force-0.1")}
         reach = catalog(profile=PROFILE)
         self.assertEqual(reach["agent_contract"], PROTOCOL)
+        self.assertEqual(reach["delivery_targets"], [TARGET])
+        self.assertEqual(reach["planned_delivery_targets"], [])
         self.assertFalse(reach["full_product_conformance_certified"])
         names = {item["name"]: item for item in reach["items"]}
+        self.assertEqual(names[TARGET]["availability"], "available_in_bounded_profile")
+        self.assertEqual(names[TARGET]["available_levels"], ["delivered"])
         self.assertEqual(names["reach_planar"]["kind"], "function")
         self.assertEqual(names["ReachBranch"]["kind"], "type")
         self.assertEqual(names[PROTOCOL]["store_filename"], "planar-reach-program-agent.sqlite3")

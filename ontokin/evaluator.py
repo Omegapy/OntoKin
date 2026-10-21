@@ -964,7 +964,7 @@ def evaluate(model: SceneModel, times: Iterable[Any] | None = None, *, side: str
 
 def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
                     check: Callable[[], None] | None = None, work=None,
-                    context_kind: str = "recorded_prefix") -> dict[str, Any]:
+                    context_kind: str = "recorded_prefix", capture_observer=None) -> dict[str, Any]:
     """Replay only through an exact endpoint, retaining the last checked state.
 
     Unlike evaluate(), this additive agent hook does not preflight future
@@ -972,6 +972,9 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
     between boundaries retains the last state actually checked. ``failure`` is
     an OntoKinError for the caller to bind to its immutable source and run.
     Wrap OntoKinError callback interruptions if they must propagate unchanged.
+    An internal recording observer may retain the checked source observations
+    and phase anchors from this same replay. It must preflight retention before
+    capture; Agent-only action fields never mutate those source observations.
     """
     check, work = _request_work(model, check, work)
     endpoint = exact_time(until)
@@ -987,13 +990,22 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
     failure = None
 
     def capture(time: Fraction, boundary_side: str) -> dict[str, Any]:
+        if capture_observer is not None:
+            capture_observer.before_capture(simulator, time, boundary_side)
         sample = simulator.advance(time, boundary_side)
+        source_sample = sample
+        if capture_observer is not None:
+            sample = dict(sample)
+            sample["actions"] = dict(sample["actions"])
         # These fields belong to the prefix adapter; legacy samples stay intact.
         for path, action in model.actions.items():
             if check is not None:
                 check()
             runtime = simulator.state.actions[path]
             record = sample["actions"][path]
+            if capture_observer is not None:
+                record = dict(record)
+                sample["actions"][path] = record
             if action.kind == "reach_planar":
                 value = sample["reaches"][path]["current"]["value"]
                 resolved = value["resolved_joint_targets_rad"]
@@ -1028,6 +1040,8 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
                         reason = "target_exceeds_finite_range"
             record["target_value"] = {"available": reason is None, "value": target, "reason": reason}
             record["value_type"] = {"move": "Point3", "spin": "Rotation", "tween": "Quantity"}[action.kind]
+        if capture_observer is not None:
+            capture_observer.after_capture(simulator, time, boundary_side, source_sample)
         return sample
 
     try:
@@ -1041,9 +1055,16 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
             boundary = simulator._next_boundary()
             if boundary is None or boundary > endpoint or (boundary == endpoint and side == "before"):
                 break
-            last = capture(boundary, "before")
+            if (capture_observer is None or last["time_seconds"] != time_text(boundary)
+                    or last["side"] != "before"):
+                last = capture(boundary, "before")
             last = capture(boundary, "after")
         if last["time_seconds"] != time_text(endpoint) or last["side"] != side:
+            # A non-event recording endpoint still needs two actual source
+            # observations. Do not relabel its after-state as a before-state.
+            if (capture_observer is not None and side == "after"
+                    and (last["time_seconds"] != time_text(endpoint) or last["side"] != "before")):
+                last = capture(endpoint, "before")
             last = capture(endpoint, side)
         if check is not None:
             check()
