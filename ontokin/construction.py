@@ -146,6 +146,36 @@ class InitializerBinding:
     origin_path: str
 
 
+def _materialize_reach_surface(recipe, *, max_vertices, work, check):
+    """Reuse immutable loft construction, retaining each occurrence's limit.
+
+    The complete typed recipe snapshot is shared with the source exporter;
+    this namespace retains unplaced triangles and never supplies reader proof.
+    Each caller receives its own placement value and provenance.
+    """
+    from .scene import _surface_recipe_snapshot
+    from .surface import MAX_MESH_VERTICES
+
+    snapshot = _surface_recipe_snapshot(recipe, work=work)
+    if snapshot is None:
+        return materialize_surface(recipe, max_vertices=max_vertices, check=check)
+    if type(max_vertices) is not int or not 0 <= max_vertices <= MAX_MESH_VERTICES:
+        raise SurfaceError("OKL-E-RESOURCE", "Invalid remaining vertex budget.",
+                           details={"budget": max_vertices})
+    recipe_key, frozen = snapshot
+    key = ("reach_constructed_surface", recipe_key)
+    cached = work.lookup(key)
+    if cached is None:
+        mesh, placement = materialize_surface(frozen, max_vertices=max_vertices, check=check)
+        cached = mesh, placement.position, placement.rotation
+        work.remember(key, cached)
+    mesh, position, rotation = cached
+    if len(mesh.positions) > max_vertices:
+        raise SurfaceError("OKL-E-RESOURCE", "Surface exceeds the remaining mesh vertex budget.",
+                           details={"required": len(mesh.positions), "available": max_vertices})
+    return mesh, Pose("self", position, rotation)
+
+
 class ConstructionCompiler(Validator):
     """A source-aware compiler and inspectable, revision-bound elaboration index.
 
@@ -1028,9 +1058,14 @@ class ConstructionCompiler(Validator):
             location = Node("span", surface["start"], surface["end"],
                             source_id=surface["source_id"])
             try:
-                mesh, local_pose = materialize_surface(
-                    recipe, max_vertices=remaining_vertices,
-                    check=lambda: self.budget.tick(location))
+                if self.reach_work is None:
+                    mesh, local_pose = materialize_surface(
+                        recipe, max_vertices=remaining_vertices,
+                        check=lambda: self.budget.tick(location))
+                else:
+                    mesh, local_pose = _materialize_reach_surface(
+                        recipe, max_vertices=remaining_vertices, work=self.reach_work,
+                        check=lambda: self.budget.tick(location))
             except SurfaceError as error:
                 fail(error.code, str(error), location, details=error.details)
             remaining_vertices -= len(mesh.positions)

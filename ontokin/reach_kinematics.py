@@ -152,16 +152,30 @@ def sample_pair(start_rad,target_rad,duration_s,elapsed_s,*,running,work: ReachE
     work.charge("pair_clock_domain")
     if duration<=0 or not 0<=elapsed<=duration or type(running) is not bool:
         raise ReachAdmissionError("reach_numeric", "Invalid reach interpolation clock or state.")
-    values=[]; rates=[]; exact_values=[]; slopes=[]
-    for start,target in zip(start_rad,target_rad):
-        initial,goal=rational(start,work),rational(target,work)
-        slope=exact(exact(goal,initial,"sub",work),duration,"div",work)
+    # Decode and guard every actual input before looking up a pure law. The
+    # elapsed clock remains independently checked on every call, while slopes
+    # and published rates depend only on these immutable law operands.
+    operands=tuple((rational(start,work),rational(target,work))
+                   for start,target in zip(start_rad,target_rad))
+    key=("reach_pair_law_v1",work.max_operand_bits,duration,operands,running)
+    law=work.lookup(key)
+    values=[]; rates=[]; exact_values=[]; exact_slopes=[]
+    for index,(initial,goal) in enumerate(operands):
+        slope=(exact(exact(goal,initial,"sub",work),duration,"div",work)
+               if law is None else law[0][index])
         value=goal if elapsed==duration else exact(initial,exact(slope,elapsed,"mul",work),"add",work)
         exact_values.append(value)
-        slopes.append(slope if running else F(0))
+        exact_slopes.append(slope)
         values.append(round_binary64(value,work=work))
-        rates.append(round_binary64(slope,work=work) if running else 0.0)
-    return PairSample(tuple(values),tuple(rates),tuple(exact_values),tuple(slopes))
+        # Keep the original cold-path arithmetic order. A paused law can
+        # have an unrepresentable derivative and a valid coordinate, so
+        # never round an unused paused derivative eagerly.
+        rates.append((round_binary64(slope,work=work) if running else 0.0)
+                     if law is None else law[1][index])
+    exact_slopes,rates=tuple(exact_slopes),tuple(rates)
+    if law is None:
+        work.remember(key,(exact_slopes,rates))
+    return PairSample(tuple(values),rates,tuple(exact_values),exact_slopes if running else (F(0),F(0)))
 
 
 def measured_residual_squared(actual_end_base_m,target_base_m,*,work: ReachExecutionWork):

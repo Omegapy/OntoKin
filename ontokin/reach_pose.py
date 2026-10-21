@@ -604,6 +604,14 @@ class ReachPoseOps:
         self.work.remember(key,(result.rotation,result.exact_omega))
         return result
 
+    def make_recording(self,position=ZERO,orientation=UNIT):
+        """Construct only the validated transform used by recorded sampling."""
+        return RecordedTransform(self._vector(position),self._rotation(orientation),self)
+
+    def hinge_recording(self,axis,coordinate):
+        """Keep the ordinary exact hinge rotation without unused zero rates."""
+        return RecordedTransform(ZERO,self.axis_rotation(axis,coordinate),self)
+
     def compose_recording(self,parent,local):
         """Execute the unchanged p/q equations for an already validated phase.
 
@@ -622,10 +630,23 @@ class ReachPoseOps:
             self.work.guard(*value)
             positions.append(value)
         parent_position,local_position=positions
-        offset=self.rotate(parent.rotation,local_position)
+        # These guards ran through rotate/multiply before reuse was added and
+        # must also precede a hit. The complete rotations include their error
+        # recurrence and any materialized source projection, not just p/q bits.
+        parent_rotation=self._rotation(parent.rotation)
+        local_rotation=self._rotation(local.rotation)
+        key=(METHOD,"recording_relative",self.work.max_operand_bits,
+             parent_rotation,local_position,local_rotation)
+        relative=self.work.lookup(key)
+        if relative is None:
+            offset=self.rotate(parent_rotation,local_position)
+        else:
+            offset,rotation=relative
         self.work.guard(*offset)
         position=self._rounded_vector(self._add_exact_vectors(parent_position,offset))
-        rotation=self.multiply(parent.rotation,local.rotation)
+        if relative is None:
+            rotation=self.multiply(parent_rotation,local_rotation)
+            self.work.remember(key,(offset,rotation))
         return RecordedTransform(position,rotation,self)
 
     def compose(self,parent,local):

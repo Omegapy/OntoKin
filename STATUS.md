@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-21T18:00:27Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-21T18:33:45Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -37,12 +37,28 @@ Both workflows remain manual-only with default-false hosted-job opt-in. No hoste
 [OK-LANG-006/0.1.0](docs/language-design/planar-reach-v0.1/ADOPTION.md) is adopted
 on main; its runtime is **not integrated**. [Draft PR #27](https://github.com/Omegapy/OntoKin/pull/27)
 preserves the recovered implementation and subsequent continuation checkpoints.
-Published head `c9004fcd8c97e27806359bcc3b7a6fb020892f7a` has exactly the tree of
+Recovered published baseline `c9004fcd8c97e27806359bcc3b7a6fb020892f7a` has exactly the tree of
 local `569b67b0bdc6854cc069e6a00590e0f15267ae03`
 (`a2ae5f49ec51aa9f4e79bb4c554e0fb358b1c441`). Its runtime implementation is
 `111ce5a3ff4014b7a8256558188ae13174d3246f`. The PR remains stacked on
 [draft PR #25](https://github.com/Omegapy/OntoKin/pull/25). Original branches,
 failed attempts and earlier evidence retain their identities.
+
+The current tested continuation is local `758987b70f76b879a4ab60f814215166215833d6`,
+tree `bda9690a4cef554000fa9c292e80b94f842b0173`. Its complete source run still
+passes **13/28**; P01 now uses **84,878** operations, P14 **94,568**, and P17
+**81,425**. The same 15 cases still exhaust the unchanged cap. All **45** latest
+focused checks pass with stable inputs, including exact independent boundary
+history equivalence, compiled mesh occurrence limits, incoming graph reuse,
+interpolation laws and complete recorded-byte comparisons. Earlier integrated
+64- and 26-method cohorts also passed. These are focused results; the complete
+regression must rerun on the changed implementation.
+
+The [recovery record](docs/engineering/reach-recovery-validation/README.md#recording-optimization-checkpoint-1833-utc)
+retains all three latest complete failed artifact runs, focused results, actual
+GLBs, profiler outputs and member hashes. Worker follow-ups target recording
+sampling dependency reuse and independent orientation proofs. The missing final
+release auditor/collector is being implemented separately; it has not passed.
 
 | Recovered evidence | Actual result and limit |
 | --- | --- |
@@ -60,12 +76,12 @@ The [delivery checkpoint](docs/engineering/reach-delivery-completion-2026-10-21.
 and [recovery record](docs/engineering/reach-recovery-validation/README.md)
 identify scope and evidence limits. The prior transient workspace became
 unavailable after its source and test results were inspected. The source tree
-is now durable in PR #27; the recovered full-regression raw files were not yet
-archived. Fresh complete verification is required on the integrated candidate.
+is now durable in PR #27; the subsequently recovered 1,301-test raw files are archived. Fresh complete
+verification is required on the changed integrated candidate.
 Later recovered independent Agent-auditor commits and rate work are not certified
 by that earlier 1,234-test result.
 
-Six exact-hash archives in the [recovery record](docs/engineering/reach-recovery-validation/README.md)
+The exact-hash archives in the [recovery record](docs/engineering/reach-recovery-validation/README.md)
 retain every completed failed artifact baseline, passing rate inventory, Agent
 raw exchanges, focused logs, environment receipts, partial native/browser
 execution, the actual visual review, and the fresh complete-suite failure.

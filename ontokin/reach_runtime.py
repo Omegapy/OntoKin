@@ -420,8 +420,9 @@ class ReachSimulator(ForceSimulator):
 
         This is a dependency walk over actual source laws, with no numerical
         output cache. Paused/unclaimed coordinates and roots are constant until
-        the next boundary. Dynamic roots and every running claim conservatively
-        remain moving, including claims whose numeric rate happens to be zero.
+        the next boundary. A running affine law with identical exact endpoints
+        or a zero move/spin vector is also constant. Dynamic roots remain
+        conservatively moving even when an instantaneous rate is zero.
         The recording caller must derive this again whenever its state changes.
         """
         incoming = self._incoming(state)
@@ -430,7 +431,20 @@ class ReachSimulator(ForceSimulator):
         def running(path, component):
             self._check()
             claimant = state.claims.get((path, component))
-            return claimant is not None and state.actions[claimant].status == "running"
+            if claimant is None or state.actions[claimant].status != "running":
+                return False
+            action, runtime = self.model.actions[claimant], state.actions[claimant]
+            self.work.charge("recording_constant_law_check")
+            if component == "coordinate":
+                arithmetic = PhaseArithmetic(self.work)
+                if action.kind == "reach_planar":
+                    index = 0 if path == action.reach.shoulder else 1
+                    initial = arithmetic.number(runtime.initial[index])
+                    target = arithmetic.number(runtime.solution.target_rad[index])
+                else:
+                    initial, target = arithmetic.number(runtime.initial), arithmetic.number(action.goal)
+                return initial != target
+            return any(self.pose_ops._vector(action.vector))
 
         def frame(path):
             self._check()
@@ -540,10 +554,13 @@ class ReachSimulator(ForceSimulator):
                     def connected():
                         relative = self._identity_pose
                         if joint.kind == "hinge":
-                            relative = ops.hinge_pose(joint.axis, coordinate, slope)
+                            relative = (ops.hinge_recording(joint.axis, coordinate) if recording_only
+                                        else ops.hinge_pose(joint.axis, coordinate, slope))
                         elif joint.kind == "slider":
-                            relative = ops.make(position=ops.scale(joint.axis, Fraction(coordinate)),
-                                                velocity=ops.scale(joint.axis, slope))
+                            position = ops.scale(joint.axis, Fraction(coordinate))
+                            relative = (ops.make_recording(position=position) if recording_only
+                                        else ops.make(position=position,
+                                                      velocity=ops.scale(joint.axis, slope)))
                         return compose(compose(parent, relative),
                                        self._constant_pose(child_pose, inverse=True))
                     result = slot(path,
@@ -571,7 +588,9 @@ class ReachSimulator(ForceSimulator):
                     if runtime.status == "running" and not pose_only:
                         omega = action.vector
                 result = slot(path, ("root", position, rotation, velocity, omega),
-                    lambda: ops.make(position=position, orientation=rotation, velocity=velocity, omega=omega))
+                    lambda: (ops.make_recording(position=position, orientation=rotation) if recording_only
+                             else ops.make(position=position, orientation=rotation,
+                                           velocity=velocity, omega=omega)))
             resolving.remove(path)
             # This is an explicit finiteness check; opaque internals continue
             # down the graph even after canonical components are cached.
@@ -873,7 +892,14 @@ class ReachSimulator(ForceSimulator):
 
     def _process_boundary(self, time):
         self._pending_releases = []
-        self._invalidate()
+        # The incoming state is unchanged until the inherited transaction has
+        # deep-copied it. Keep the single complete graph already checked by an
+        # immediate before-side observation: _resolve_kinematics still requires
+        # its exact state identity and applicable clock. All staged mutations
+        # below keep their own invalidation, and failure discards every graph.
+        # Mutable output and derived observations are never carried forward.
+        self._pending_reach_output = None
+        self._derived_pose_cache.clear()
         self._terminal_pose_context = (None if self.state.dynamic else
                                        _TerminalPoseContext(time, self.state))
         try:

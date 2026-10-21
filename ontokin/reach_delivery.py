@@ -83,7 +83,7 @@ class ReachDeliveryCapture:
             reach_export._fail("OKE-E-PHASE-COVERAGE", "The validated prefix did not advance to a later boundary.",
                                model=self.model)
         reach_export.recording_stage("planning_phase", work=self.work)
-        source = simulator.phase_bounds(time, stop)["frames"]
+        source = reach_export.recording_phase_bounds(simulator, time, stop)
         carriers = {path: reach_export.MotionBound(value.carrier_speed_upper_m_per_s,
                                                   value.carrier_acceleration_upper_m_per_s2,
                                                   value.angular_speed_upper_rad_per_s)

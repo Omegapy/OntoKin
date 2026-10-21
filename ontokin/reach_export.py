@@ -467,6 +467,38 @@ def _boundary_record(time, before, after, incoming):
     return result
 
 
+def recording_phase_bounds(simulator, start, end):
+    """Prove every deliverable carrier and its complete source dependencies.
+
+    A carrier certificate includes every local vertex/site through its geometry
+    radius. An unused site's separate world-frame bound is not another delivered
+    carrier. Include every object and every possible joint-parent helper even
+    after release, so the same retained plan supports either helper setting.
+    Complete source boundary evaluation remains outside this narrower proof map.
+    """
+    from .reach_numeric import ReachAdmissionError
+    from .reach_phase import phase_bounds
+
+    try:
+        selected, seen = [], set()
+        for path in simulator.model.objects:
+            _charge(simulator.work, "recording_phase_frame")
+            frame = path + ".frame"
+            selected.append(frame)
+            seen.add(frame)
+        for joint in simulator.model.joints.values():
+            _charge(simulator.work, "recording_phase_frame")
+            frame = joint.parent + ".frame"
+            if frame not in seen:
+                selected.append(frame)
+                seen.add(frame)
+        # The ordinary exact phase traversal still follows all required
+        # site/ownership/joint paths and prepares every root's spin plan.
+        return phase_bounds(simulator, start, end, selected_frames=selected)["frames"]
+    except ReachAdmissionError as error:
+        simulator._numeric_error(error, time=Fraction(start))
+
+
 def reach_prefix_plan(model, end, *, work) -> ReachPrefixPlan:
     """Validate the requested prefix once and retain bounded phase anchors.
 
@@ -504,7 +536,7 @@ def reach_prefix_plan(model, end, *, work) -> ReachPrefixPlan:
         if stop <= time:
             _fail("OKE-E-PHASE-COVERAGE", "The validated prefix did not advance to a later boundary.", model=model)
         recording_stage("planning_phase", work=work)
-        source = simulator.phase_bounds(time, stop)["frames"]
+        source = recording_phase_bounds(simulator, time, stop)
         carriers = {path: MotionBound(value.carrier_speed_upper_m_per_s,
                                      value.carrier_acceleration_upper_m_per_s2,
                                      value.angular_speed_upper_rad_per_s)

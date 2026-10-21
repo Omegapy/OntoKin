@@ -192,3 +192,55 @@ Its actual source is local `569b67b0bdc6854cc069e6a00590e0f15267ae03`, tree
 previous STATUS publication; no outcome was reconstructed. This is complete
 regression evidence for that identified tree, not a pass of the 28-artifact
 recording gate, the other Python versions or the complete reach release.
+
+## Recording optimization checkpoint, 18:33 UTC
+
+This checkpoint preserves tested continuation `758987b70f76b879a4ab60f814215166215833d6`,
+tree `bda9690a4cef554000fa9c292e80b94f842b0173`, and all preceding attempts.
+No operation, operand, cache, output, fixture or tolerance limit changed.
+
+| Archive | Members | Bytes | SHA-256 |
+| --- | ---: | ---: | --- |
+| `recording-optimization-005.zip` | 174 | 2,188,112 | `fb67484e5cb161f47607071120eb652558536dd79e088048bcc56eac697f5874` |
+| `optimization-focused-005.zip` | 106 | 2,416,587 | `f86efa68f39544afd5c4d247a702d12903c65819e57dfcf3a3c8bffd3dfd4588` |
+
+The adjacent [recording member manifest](recording-optimization-005.members.json)
+and [focused member manifest](optimization-focused-005.members.json) record every
+original byte length and SHA-256. Every ZIP CRC and member hash was verified
+against the original files after packaging. Original source identities and
+separate run settings remain in each report.
+
+- Integrated source runs 001 at `e75c502`, 002 at `082850c` and 003 at `758987b`
+  each complete all 28 requests with stable inputs, and each passes **13/28**.
+  The 15 remaining budget failures are P02, P05, P07, P08, P09, P11, P13, P16,
+  P18, P19, P20, P23, L01, L02 and L03. P01 work decreases from 87,796 to
+  85,902 to **84,878**. The latest P14 uses **94,568** and P17 **81,425**.
+  Passing artifact bytes, reports and every failing traceback are retained.
+- Integrated focused run 001 passes **64/64**, run 002 passes **26/26**, and
+  run 004 passes **45/45**, all with stable inputs and zero skipped tests.
+  Run 003 is a retained invocation failure: a nonexistent module name stopped
+  inventory setup before any test ran. Run 004 corrects that module name.
+- Separate clean worker results preserve phase reuse **14/14**, phase-frame
+  selection **26/26**, independent interval arithmetic **107/107**, pair-law
+  reuse **97/97**, and incoming boundary graph reuse **19/19**. Their actual
+  source commits, reports and raw logs remain distinct from integrated runs.
+- The two P23 profiles use the original construction cap. Incoming graph reuse
+  eliminates an identical 6,752-operation graph traversal at the first boundary.
+  The net first-phase starting cost improves by 4,397 because other cache
+  traffic changes; the first phase then completes at 96,992 on worker `88741fa`.
+  The full P23 recording still fails during the next boundary. No increased-cap
+  execution is used to imply acceptance.
+
+Implementation reuses complete guarded interpolation laws, exact relative
+recording transforms, provably constant running laws, local phase bounds and
+immutable compiled lofts. Source boundary staging invalidates the incoming
+pose graph before any mutation. The independent reader derives exactly the
+promised boundary histories without constructing discarded full-inspection
+rows; its public complete sample method remains unchanged. Focused tests check
+malformed warm-cache operands, changed inputs, per-occurrence limits,
+cooperative cancellation, rollback and exact output equivalence.
+
+All ten Agent artifacts, complete changed-cut regression and rates, the Python
+compatibility matrix, full native/browser/visual roles, complete hostile-input
+coverage and final independent release audit remain required. Main is unchanged;
+these failed full recording runs cannot justify a merge or a release claim.

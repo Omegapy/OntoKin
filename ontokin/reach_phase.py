@@ -55,6 +55,7 @@ class PhaseBound:
 
 
 _BOUND_FIELDS = tuple(PhaseBound.__dataclass_fields__)
+_JOINT_PHASE_FIELDS = tuple(JointPhase.__dataclass_fields__)
 _COMPOSITION_FIELDS = tuple(name for name in _BOUND_FIELDS
                             if name not in {"max_position_l1_m", "path_offset_l1_m", "position_error_m"})
 _CACHE_DOMAIN = "reach_source_phase/0.1"
@@ -318,6 +319,44 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None):
         plan = ops.spin_plan(omega, elapsed)
         simulator._register_spin_plan(omega, plan)
 
+    def joint_local(joint, scalar):
+        # Different joints may have identical numerical laws. Their own
+        # authority/clock lookup has already produced this exact JointPhase;
+        # only the pure local-bound equations are shared. Decode the complete
+        # axis and guard every scalar before a cache hit can return a result.
+        axis = tuple(a.number(value) for value in joint.axis)
+        work.charge("phase_joint_bound_key")
+        values = tuple(getattr(scalar, name) for name in _JOINT_PHASE_FIELDS)
+        if any(type(value) is not F for value in values):
+            raise ReachAdmissionError("reach_numeric", "A local joint bound requires exact phase operands.")
+        work.guard(*values)
+        key = (_CACHE_DOMAIN, work.max_operand_bits, "joint_local", joint.kind, axis, scalar)
+        cached = work.lookup(key)
+        if cached is not None:
+            return cached
+        axis_size = a.add(*(a.absolute(value) for value in axis))
+        rate_error = a.absolute(a.sub(scalar.actual_slope, scalar.ideal_slope))
+        if joint.kind == "hinge":
+            # |norm(axis)-1| <= |norm(axis)^2-1|, without a host sqrt or an
+            # assumption that the canonical source axis has exact unit length.
+            norm_defect = a.absolute(a.sub(a.add(*(a.mul(x, x) for x in axis)), F(1)))
+            omega_error = a.add(a.mul(axis_size, rate_error),
+                a.mul(norm_defect, a.absolute(scalar.ideal_slope)))
+            result = finish(trig_count=1, product_count=1,
+                coordinate_angle_error_rad=scalar.coordinate_error,
+                angular_velocity_error_rad_per_s=omega_error,
+                angular_speed_upper_rad_per_s=a.absolute(scalar.ideal_slope),
+                actual_angular_speed_upper_rad_per_s=a.mul(axis_size, a.absolute(scalar.actual_slope)))
+        else:
+            extent = a.mul(axis_size, a.maximum(a.absolute(scalar.actual_start), a.absolute(scalar.actual_end)))
+            result = finish(max_position_l1_m=extent, product_count=1,
+                anchor_position_error_m=a.mul(axis_size, scalar.coordinate_error),
+                velocity_error_m_per_s=a.mul(axis_size, rate_error),
+                carrier_speed_upper_m_per_s=a.mul(axis_size, a.absolute(scalar.ideal_slope)),
+                actual_speed_upper_m_per_s=a.mul(axis_size, a.absolute(scalar.actual_slope)))
+        work.remember(key, result)
+        return result
+
     def root(path):
         actual_position = tuple(a.number(value) for value in state.positions[path])
         ideal_position = state.ideal_positions[path]
@@ -405,28 +444,7 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None):
                 if joint.kind in {"hinge", "slider"}:
                     if relation not in joints:
                         joints[relation] = joint_phase(simulator, relation, start, end, state)
-                    scalar = joints[relation]
-                    axis = tuple(a.number(value) for value in joint.axis)
-                    axis_size = a.l1(axis)
-                    rate_error = a.absolute(a.sub(scalar.actual_slope, scalar.ideal_slope))
-                    if joint.kind == "hinge":
-                        # |norm(axis)-1| <= |norm(axis)^2-1|, without a
-                        # host sqrt or an assumption that canonical axes are unit.
-                        norm_defect = a.absolute(a.sub(a.add(*(a.mul(x, x) for x in axis)), F(1)))
-                        omega_error = a.add(a.mul(axis_size, rate_error),
-                            a.mul(norm_defect, a.absolute(scalar.ideal_slope)))
-                        local = finish(trig_count=1, product_count=1,
-                            coordinate_angle_error_rad=scalar.coordinate_error,
-                            angular_velocity_error_rad_per_s=omega_error,
-                            angular_speed_upper_rad_per_s=a.absolute(scalar.ideal_slope),
-                            actual_angular_speed_upper_rad_per_s=a.mul(axis_size, a.absolute(scalar.actual_slope)))
-                    else:
-                        extent = a.mul(axis_size, a.maximum(a.absolute(scalar.actual_start), a.absolute(scalar.actual_end)))
-                        local = finish(max_position_l1_m=extent, product_count=1,
-                            anchor_position_error_m=a.mul(axis_size, scalar.coordinate_error),
-                            velocity_error_m_per_s=a.mul(axis_size, rate_error),
-                            carrier_speed_upper_m_per_s=a.mul(axis_size, a.absolute(scalar.ideal_slope)),
-                            actual_speed_upper_m_per_s=a.mul(axis_size, a.absolute(scalar.actual_slope)))
+                    local = joint_local(joint, joints[relation])
                 result = compose(compose(frame(joint.parent + ".frame"), local),
                                  constant(model.sites[joint.child].pose, inverse=True))
         elif state.modes[path] == "dynamic":

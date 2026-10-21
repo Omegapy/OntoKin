@@ -157,6 +157,9 @@ class _Arithmetic:
             return b
         if b.lo == b.hi == 0:
             return a
+        if a.lo == a.hi and b.lo == b.hi:
+            value = self.exact(a.lo, b.lo, "add")
+            return self.grid(value, value)
         return self.grid(self.exact(a.lo, b.lo, "add"), self.exact(a.hi, b.hi, "add"))
 
     def neg(self, a):
@@ -166,6 +169,24 @@ class _Arithmetic:
 
     def sub(self, a, b):
         return self.add(a, self.neg(b))
+
+    def _corner_domain(self, a, b, kind):
+        """Retain all four old corner operand limits before selecting extrema.
+
+        Sign monotonicity can omit interior products or quotients. It cannot
+        let an omitted endpoint evade the original finite operand domain.
+        These maxima are exactly the largest bit extents of the four old
+        scalar preflights, with no integer product allocated here.
+        """
+        left, right = tuple(map(F, (a.lo, a.hi))), tuple(map(F, (b.lo, b.hi)))
+        self.guard(*left, *right)
+        an = max(abs(value.numerator).bit_length() for value in left)
+        ad = max(value.denominator.bit_length() for value in left)
+        bn = max(abs(value.numerator).bit_length() for value in right)
+        bd = max(value.denominator.bit_length() for value in right)
+        extent = max(an + bn, ad + bd) if kind == "mul" else max(an + bd, ad + bn)
+        if extent > MAX_OPERAND_BITS:
+            raise ReferenceError("resource", "Independent reference intermediate operand limit exceeded")
 
     def mul(self, a, b):
         a, b = self.interval(a), self.interval(b)
@@ -179,8 +200,31 @@ class _Arithmetic:
         if a.lo == a.hi and b.lo == b.hi:
             value = self.exact(a.lo, b.lo, "mul")
             return self.grid(value, value)
-        products = [self.exact(x, y, "mul") for x in (a.lo, a.hi) for y in (b.lo, b.hi)]
-        return self.grid(min(products), max(products))
+        self._corner_domain(a, b, "mul")
+        if a.lo >= 0:
+            if b.lo >= 0:
+                pairs = ((a.lo, b.lo), (a.hi, b.hi))
+            elif b.hi <= 0:
+                pairs = ((a.hi, b.lo), (a.lo, b.hi))
+            else:
+                pairs = ((a.hi, b.lo), (a.hi, b.hi))
+        elif a.hi <= 0:
+            if b.lo >= 0:
+                pairs = ((a.lo, b.hi), (a.hi, b.lo))
+            elif b.hi <= 0:
+                pairs = ((a.hi, b.hi), (a.lo, b.lo))
+            else:
+                pairs = ((a.lo, b.hi), (a.lo, b.lo))
+        elif b.lo >= 0:
+            pairs = ((a.lo, b.hi), (a.hi, b.hi))
+        elif b.hi <= 0:
+            pairs = ((a.hi, b.lo), (a.lo, b.lo))
+        else:
+            # Both intervals straddle zero: all four corners can determine
+            # an extreme, so keep their complete original calculation.
+            products = [self.exact(x, y, "mul") for x in (a.lo, a.hi) for y in (b.lo, b.hi)]
+            return self.grid(min(products), max(products))
+        return self.grid(*(self.exact(x, y, "mul") for x, y in pairs))
 
     def div(self, a, b):
         a, b = self.interval(a), self.interval(b)
@@ -194,15 +238,28 @@ class _Arithmetic:
         if a.lo == a.hi and b.lo == b.hi:
             value = self.exact(a.lo, b.lo, "div")
             return self.grid(value, value)
-        quotients = [self.exact(x, y, "div") for x in (a.lo, a.hi) for y in (b.lo, b.hi)]
-        return self.grid(min(quotients), max(quotients))
+        self._corner_domain(a, b, "div")
+        if b.lo > 0:
+            if a.lo >= 0:
+                pairs = ((a.lo, b.hi), (a.hi, b.lo))
+            elif a.hi <= 0:
+                pairs = ((a.lo, b.lo), (a.hi, b.hi))
+            else:
+                pairs = ((a.lo, b.lo), (a.hi, b.lo))
+        elif a.lo >= 0:
+            pairs = ((a.hi, b.hi), (a.lo, b.lo))
+        elif a.hi <= 0:
+            pairs = ((a.hi, b.lo), (a.lo, b.hi))
+        else:
+            pairs = ((a.hi, b.hi), (a.lo, b.hi))
+        return self.grid(*(self.exact(x, y, "div") for x, y in pairs))
 
     def sqrt(self, value):
         value = self.interval(value)
         if value.lo < 0:
             raise _Uncertain("Reference radical is not certified nonnegative")
         result = []
-        for endpoint in (value.lo, value.hi):
+        for endpoint in ((value.lo,) if value.lo == value.hi else (value.lo, value.hi)):
             self.tick()
             if abs(endpoint.numerator).bit_length() + 2 * self.bits > MAX_OPERAND_BITS:
                 raise ReferenceError("resource", "Reference radical operand limit exceeded")
@@ -211,7 +268,7 @@ class _Arithmetic:
             low = F(root, self.scale)
             high = low if self.exact(low, low, "mul") == endpoint else F(root + 1, self.scale)
             result.append((low, high))
-        return Interval(result[0][0], result[1][1])
+        return Interval(result[0][0], result[-1][1])
 
     def total(self, values):
         result = self.point(0)
@@ -278,7 +335,8 @@ class _Arithmetic:
 
     def atan(self, value):
         value = self.interval(value)
-        low, high = self._atan_point(value.lo), self._atan_point(value.hi)
+        low = self._atan_point(value.lo)
+        high = low if value.lo == value.hi else self._atan_point(value.hi)
         return Interval(low.lo, high.hi)
 
     def atan2(self, y, x):
@@ -2035,6 +2093,63 @@ class ReachReference:
         return (2 + self._inherited_weight(time, "before") + self._inherited_weight(time, "after")
                 + 2 * self._reach_history_weight + self._release_weight(time))
 
+    def _boundary_projection(self, time, side):
+        """Build exactly the independent source history promised at a boundary.
+
+        Complete object inspection also constructs geometry, aggregate masses
+        and all spatial derivatives. None is a field of this projection. The
+        full event ledger has already established release/impulse anchors;
+        retained-key poses and per-carrier phase bounds are checked separately.
+        Reach observations need base/tip p/q plus actual joint observations,
+        so their independent p/q path does not evaluate discarded derivatives.
+        """
+        self.a.tick()
+        state = self._state_at(time, side)
+        incoming = self._incoming(state)
+        selected = {}
+        for action in self.model.actions.values():
+            self.a.tick()
+            if action.kind == "reach_planar":
+                selected[action.reach.base_frame] = None
+                selected[action.reach.tip + ".frame"] = None
+        frames = self._pose_map(time, state, ideal=False, pose_only=True, selected=tuple(selected))
+        authorities, impulses, forces = {}, {}, {}
+        for path in self.model.objects:
+            self.a.tick()
+            if path in incoming:
+                kind, relation = incoming[path]
+                authority = {"kind": kind, "relation": relation}
+            elif state.modes[path] == "dynamic":
+                anchor = state.dynamic[path]
+                authority = {"kind": "free_sphere", "since_seconds": _time_text(anchor.since),
+                             "trajectory_anchor_seconds": _time_text(anchor.time if anchor.source_time is None else anchor.source_time)}
+            else:
+                authority = {"kind": state.modes[path], "translation_action": state.claims.get((path, "translation")),
+                             "orientation_action": state.claims.get((path, "orientation"))}
+            authorities[path] = authority
+            impulses[path] = copy.deepcopy(state.impulses[path])
+            forces[path] = self._forces(path, state)
+        joints, joint_observations = {}, {}
+        for path, joint in self.model.joints.items():
+            self.a.tick()
+            record = {"element_id": list(joint.element_id), "kind": joint.kind,
+                "status": "inactive" if joint.kind == "grip" and path not in state.grips else "active",
+                "parent_site": joint.parent, "child_site": joint.child,
+                "coupling": "externally_prescribed_no_load_solution"}
+            if joint.kind in {"hinge", "slider"}:
+                physical = self._joint_observation(path, time, state, joint_observations)
+                record.update(coordinate=physical[2], coordinate_rate=physical[3],
+                    unit="rad" if joint.kind == "hinge" else "m", limits=list(joint.limits),
+                    action=state.claims.get((path, "coordinate")))
+            joints[path] = record
+        actions = {path: {"element_id": list(action.element_id), "kind": action.kind, "target": action.target,
+                         "status": state.actions[path].status, "local_elapsed_seconds": _time_text(state.actions[path].elapsed_at(time)),
+                         "duration_seconds": _time_text(action.duration)} for path, action in self.model.actions.items()}
+        reaches = {path: self._reach(path, time, side, state, frames, joint_observations)
+                   for path, action in self.model.actions.items() if action.kind == "reach_planar"}
+        return {"joint_states": joints, "action_states": actions, "pose_authorities": authorities,
+                "impulse_states": impulses, "force_states": forces, "reach_states": reaches}
+
     def boundary_states(self):
         # The full conservative H06 sum was checked before retaining each
         # state pair.  Projection allocation cannot precede that preflight.
@@ -2050,14 +2165,10 @@ class ReachReference:
             self.a.tick()
             record = {"source_seconds": _time_text(time), "incoming_releases": copy.deepcopy(list(self._release_records[time]))}
             for side in ("before", "after"):
-                sample = self.sample(time, side)
-                record["joint_states_" + side] = sample["joints"]
-                record["action_states_" + side] = sample["actions"]
-                record["pose_authorities_" + side] = {path: value["pose_authority"] for path, value in sample["objects"].items()}
-                record["impulse_states_" + side] = {path: value["impulses"] for path, value in sample["objects"].items()}
-                record["force_states_" + side] = {path: value["forces"] for path, value in sample["objects"].items()}
-                record["reach_states_" + side] = sample["reaches"]
-                actual_weight += self._inherited_weight(time, side) + self._logical_entries(sample["reaches"])
+                projection = self._boundary_projection(time, side)
+                for name, value in projection.items():
+                    record[name + "_" + side] = value
+                actual_weight += self._inherited_weight(time, side) + self._logical_entries(projection["reach_states"])
             actual_weight += 2 + self._logical_entries(record["incoming_releases"])
             if actual_weight > self._history_weight or actual_weight > 100000:
                 raise ReferenceError("resource", "Independent actual H06 history exceeds its preflight bound")
