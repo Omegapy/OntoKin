@@ -16,7 +16,7 @@ from __future__ import annotations
 
 from bisect import bisect_left, bisect_right
 import copy
-from dataclasses import dataclass, field, fields, is_dataclass
+from dataclasses import dataclass, field, fields, is_dataclass, replace
 from fractions import Fraction as F
 import math
 import struct
@@ -657,14 +657,20 @@ class _PoseArithmetic:
             # valid even for nonunit q: the Z component keeps w*w+z*z rather
             # than silently replacing it by one. No production rotation
             # matrix or homogeneous normalisation supplies this enclosure.
-            ww, zz = self.a.mul(q[0], q[0]), self.a.mul(q[3], q[3])
-            diagonal = self.a.sub(ww, zz)
-            off_diagonal = self.a.mul(2, self.a.mul(q[0], q[3]))
+            self.a.guard(*(endpoint for part in q for endpoint in (part.lo, part.hi)))
+            factor_key = self._key("scalar_z_rotation_factors", tuple(q))
+            factors = self.a.lookup(factor_key)
+            if factors is None:
+                ww, zz = self.a.mul(q[0], q[0]), self.a.mul(q[3], q[3])
+                factors = (self.a.sub(ww, zz), self.a.mul(2, self.a.mul(q[0], q[3])),
+                           self.a.add(ww, zz))
+                self.a.remember(factor_key, factors)
+            diagonal, off_diagonal, axis_scale = factors
             x, y, z = vector
             return self.a.remember(key, (
                 self.a.sub(self.a.mul(diagonal, x), self.a.mul(off_diagonal, y)),
                 self.a.add(self.a.mul(off_diagonal, x), self.a.mul(diagonal, y)),
-                self.a.mul(self.a.add(ww, zz), z)))
+                self.a.mul(axis_scale, z)))
         pure = (self.a.point(0), *vector)
         result = self.multiply(self.multiply(q, pure), self.conjugate(q))[1:]
         return self.a.remember(key, result)
@@ -822,6 +828,9 @@ class _SourceBound:
     alpha: F = F(0)
     actual_speed: F = F(0)
     actual_omega: F = F(0)
+
+
+_SOURCE_BOUND_FIELDS = tuple(_SourceBound.__dataclass_fields__)
 
 
 def _plain(value, arithmetic):
@@ -2219,11 +2228,7 @@ class ReachReference:
                 extent=add(mul(2, extent), F(2, 1 << 96)) if inverse else extent,
                 offset=extent if inverse else F(0), products=1, vectors=int(inverse)))
 
-        def compose(parent, local):
-            key = ("source_bound_compose", self.a.bits, parent, local)
-            cached = self.a.lookup(key)
-            if cached is not None:
-                return cached
+        def relative_composition(parent, local):
             radius = local.extent
             ideal_radius = add(radius, local.position_error)
             speed = add(parent.speed, mul(parent.omega, ideal_radius), local.speed)
@@ -2241,7 +2246,7 @@ class ReachReference:
                 mul(parent.rotation_error, local.actual_speed), F(4, 1 << 96), rounding(mul(2, actual_speed)))
             omega_error = add(parent.omega_error, local.omega_error,
                 mul(parent.rotation_error, local.actual_omega), F(2, 1 << 96), rounding(mul(2, actual_omega)))
-            return self.a.remember(key, finish(extent=add(parent.extent, mul(2, radius), F(4, 1 << 96)),
+            return finish(extent=add(mul(2, radius), F(4, 1 << 96)),
                 offset=add(parent.offset, local.offset, radius), trig=parent.trig + local.trig,
                 products=parent.products + local.products + 1, vectors=parent.vectors + local.vectors + 2,
                 coordinate=add(parent.coordinate, local.coordinate),
@@ -2249,7 +2254,40 @@ class ReachReference:
                 anchor_rotation=add(parent.anchor_rotation, local.anchor_rotation),
                 velocity_error=velocity_error, omega_error=omega_error, speed=speed,
                 acceleration=acceleration, omega=omega, alpha=alpha,
-                actual_speed=actual_speed, actual_omega=actual_omega))
+                actual_speed=actual_speed, actual_omega=actual_omega)
+
+        def compose(parent, local):
+            # Parent extent and accumulated offset affect only the final
+            # position allowance. Parent position_error is not an operand of
+            # this recurrence; every other parent field and the complete local
+            # bound remain in the key, including local extent/offset/error.
+            self.a.tick()
+            self.a.guard(*(getattr(bound, name) for bound in (parent, local) for name in _SOURCE_BOUND_FIELDS))
+            if any(value < 0 for value in (parent.extent, local.extent, parent.offset, local.offset)):
+                raise ReferenceError("numeric", "Independent source composition has a negative extent or offset")
+            extent, offset = parent.extent, parent.offset
+            relative = replace(parent, extent=F(0), offset=F(0), position_error=F(0))
+            key = ("source_bound_compose", self.a.bits, relative, local)
+            base = self.a.lookup(key)
+            if base is None:
+                base = self.a.remember(key, relative_composition(relative, local))
+            if not extent and not offset:
+                return base
+            total_extent, total_offset = add(extent, base.extent), add(offset, base.offset)
+            if total_extent < 0 or total_offset < 0:
+                raise ReferenceError("numeric", "Independent source composition has a negative extent or offset")
+            correction = mul(extent, F(1, 1 << 53))
+            if offset:
+                # finish adds its exposed quaternion allowance only after
+                # forming position. Its pre-exposure rotation also contains
+                # the local coordinate, trig, product and anchor terms.
+                rotation = exact(base.rotation_error, F(1, 1 << 50), "sub")
+                correction = add(correction, mul(offset, rotation))
+            # finish is affine in both final extent and accumulated offset.
+            # These charged exact corrections restore the original Fraction
+            # result, with no change to source allowances or enclosures.
+            return replace(base, extent=total_extent, offset=total_offset,
+                           position_error=add(base.position_error, correction))
 
         def root(path):
             actual_position, ideal_position = state.positions[path], state.ideal_positions[path]

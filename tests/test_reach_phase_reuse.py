@@ -28,6 +28,36 @@ def uncached_phases(work):
 
 
 class ReachPhaseReuseTests(unittest.TestCase):
+    def test_translated_mount_offsets_use_the_complete_composed_rotation_allowance(self):
+        # Rack mounts are local translations, so both inherited path-offset
+        # and world-extent terms differ while the exact derivative laws match.
+        for anchor_rotation in (F(0), F(1, 1 << 45)):
+            with self.subTest(anchor_rotation=anchor_rotation):
+                sim = simulator(source("P23"))
+                sim.advance(F(0), "after")
+                sim.state.root_rotation_errors["rig"] = anchor_rotation
+                paths = tuple(path + ".frame" for path in sim.model.objects
+                              if '["first"]' in path or '["part-01"]' in path)
+                actual = phase_bounds(sim, F(0), F(2), selected_frames=paths)
+                compared = 0
+                for path, first in actual["frames"].items():
+                    if '["first"]' not in path:
+                        continue
+                    other = path.replace('["first"]', '["part-01"]')
+                    if other not in actual["frames"]:
+                        continue
+                    second = actual["frames"][other]
+                    self.assertEqual(second.max_position_l1_m - first.max_position_l1_m, F(1, 2))
+                    self.assertEqual(second.path_offset_l1_m - first.path_offset_l1_m, F(1, 4))
+                    expected_delta = (F(1, 1 << 54)
+                                      + F(1, 4) * (first.rotation_error_rad - EXPOSED_ROTATION_ERROR))
+                    self.assertEqual(second.position_error_m - first.position_error_m, expected_delta)
+                    self.assertEqual(replace(second, max_position_l1_m=first.max_position_l1_m,
+                        path_offset_l1_m=first.path_offset_l1_m, position_error_m=first.position_error_m), first)
+                    compared += 1
+                self.assertGreaterEqual(compared, 5)
+                self.assertLessEqual(len(sim.work._cache), 256)
+
     def test_translated_recurrence_preserves_original_uniform_formula_exactly(self):
         sim = simulator(source("P01"))
         sim.advance(F(0), "after")

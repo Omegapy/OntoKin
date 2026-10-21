@@ -7,7 +7,7 @@ from unittest.mock import patch
 
 from ontokin.construction import compile_construction
 from ontokin.diagnostics import OntoKinError
-from ontokin.reach_conformance import _Bounds, _IntervalCertificateClaims, _key_comparisons, rational_clock
+from ontokin.reach_conformance import _Bounds, _IntervalCertificateClaims, _key_comparisons, _recording_vector, rational_clock
 from ontokin.reach_numeric import ReachAdmissionError, ReachExecutionWork
 from ontokin.reach_reference import MAX_CACHE, MAX_OPERAND_BITS, ReferenceError, build_reference
 from reach_agent_support import source_case
@@ -83,6 +83,17 @@ class IndependentRecordingStationarityTests(unittest.TestCase):
 
 
 class IndependentRecordingEndpointReuseTests(unittest.TestCase):
+    def test_finite_float_endpoint_guard_honors_a_narrower_request_limit(self):
+        work = ReachExecutionWork()
+        arithmetic = _Bounds(work)
+        point = (0., 1., float(F(1, 1 << 100)))
+        self.assertEqual(_recording_vector(point, 3, arithmetic), point)
+        work.max_operand_bits = 64
+        self.assertEqual(_recording_vector((0., 1., 2.), 3, arithmetic), (0., 1., 2.))
+        with self.assertRaises(ReachAdmissionError):
+            _recording_vector(point, 3, arithmetic)
+        self.assertGreater(work.counts["independent_bound_decode"], 0)
+
     def endpoint_run(self, reuse):
         reference, work = reference_case("P01", F(3))
         carriers = tuple(path + ".frame" for path in reference.model.objects)

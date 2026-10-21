@@ -99,6 +99,26 @@ class PoseValue:
     def angular_error_rad(self): return self.rotation.error_rad
 
 
+@dataclass(frozen=True)
+class RecordedTransform:
+    """Actual p/q only; deliberately not a pose or a point-error certificate.
+
+    The recording planner has separately validated the complete source phase.
+    This value cannot supply derivative or position-error fields to full source
+    composition, release anchors, or point-bound construction.
+    """
+    exact_position: tuple[F,F,F]
+    rotation: RotationValue
+    _ops: ReachPoseOps = field(repr=False,compare=False)
+    _projection: dict = field(default_factory=dict,repr=False,compare=False)
+
+    @property
+    def position(self): return self._ops._expose(self,"position")
+
+    @property
+    def orientation(self): return self._ops._expose(self,"orientation")
+
+
 class ReachPoseOps:
     """One request's deterministic pose helpers and auditable error bounds."""
     def __init__(self,work: ReachExecutionWork):
@@ -210,14 +230,20 @@ class ReachPoseOps:
 
     def multiply(self,a,b):
         a,b=self._rotation(a),self._rotation(b)
-        # Different source objects can compose the same private rotations.
-        # The complete mathematical operands include their error allowances;
-        # materialized public projections do not enter the Hamilton product.
-        key=(METHOD,"rotation_product",a.components,b.components,a.error_rad,b.error_rad)
+        # Error allowances do not enter the Hamilton product or its grid
+        # projection. Keep one immutable component result and one replaceable
+        # allowance/result for these exact guarded quaternion operands.
+        key=(METHOD,"rotation_product",a.components,b.components)
         cached=self.work.lookup(key)
-        if cached is not None: return cached
+        if cached is not None:
+            self.work.charge("rotation_product_error_identity")
+            if cached[:2]==(a.error_rad,b.error_rad): return cached[2]
+            error=self._op(self._op(a.error_rad,b.error_rad,"add"),PRODUCT_ERROR,"add")
+            result=RotationValue(cached[2].components,error)
+            self.work.remember(key,(a.error_rad,b.error_rad,result))
+            return result
         result=self._multiply_uncached(a,b)
-        self.work.remember(key,result)
+        self.work.remember(key,(a.error_rad,b.error_rad,result))
         return result
 
     def _power_two_scalar(self,value):
@@ -529,8 +555,14 @@ class ReachPoseOps:
         if pair is None:
             raise ReachAdmissionError("reach_numeric","A proved spin phase did not enclose its sample.")
         sine,cosine=pair
-        middle=self._op(self._op(plan.norm_bounds[0],plan.norm_bounds[1],"add"),F(2),"div")
-        unit=tuple(round_dyadic(self._op(v,middle,"div"),BITS,work=self.work) for v in plan.scaled_omega)
+        self.work.charge("spin_unit_operand_guard")
+        self.work.guard(*plan.scaled_omega,*plan.norm_bounds)
+        unit_key=(METHOD,"spin_unit_axis",plan.scaled_omega,plan.norm_bounds,BITS)
+        unit=self.work.lookup(unit_key)
+        if unit is None:
+            middle=self._op(self._op(plan.norm_bounds[0],plan.norm_bounds[1],"add"),F(2),"div")
+            unit=tuple(round_dyadic(self._op(v,middle,"div"),BITS,work=self.work) for v in plan.scaled_omega)
+            self.work.remember(unit_key,unit)
         return self._rescale((cosine,*(self._op(v,sine,"mul") for v in unit)),AXIS_ERROR)
 
     def advance_orientation(self,initial,omega,elapsed,*,phase_plan=None):
@@ -572,12 +604,47 @@ class ReachPoseOps:
         self.work.remember(key,(result.rotation,result.exact_omega))
         return result
 
+    def compose_recording(self,parent,local):
+        """Execute the unchanged p/q equations for an already validated phase.
+
+        Spatial rates and the sampled position allowance never enter either
+        equation. Whole-phase allowances are derived before this sampler runs;
+        the distinct result type cannot be mistaken for those omitted values.
+        Quaternion products retain their original exact error recurrence.
+        """
+        if not isinstance(parent,(PoseValue,RecordedTransform)) or not isinstance(local,(PoseValue,RecordedTransform)):
+            raise TypeError("Recording composition requires private transform inputs")
+        self.work.charge("recording_transform_operand_guard")
+        positions=[]
+        for value in (parent.exact_position,local.exact_position):
+            if not (isinstance(value,tuple) and len(value)==3 and all(type(part) is F for part in value)):
+                value=self._vector(value)
+            self.work.guard(*value)
+            positions.append(value)
+        parent_position,local_position=positions
+        offset=self.rotate(parent.rotation,local_position)
+        self.work.guard(*offset)
+        position=self._rounded_vector(self._add_exact_vectors(parent_position,offset))
+        rotation=self.multiply(parent.rotation,local.rotation)
+        return RecordedTransform(position,rotation,self)
+
     def compose(self,parent,local):
         if not isinstance(parent,PoseValue) or not isinstance(local,PoseValue):
             raise TypeError("Controlled composition requires private PoseValue inputs")
         self.work.charge("composition_stationary_check")
         canonical_zero_rates=(parent.exact_velocity is ZERO and parent.exact_omega is ZERO and
                               local.exact_velocity is ZERO and local.exact_omega is ZERO)
+        if not canonical_zero_rates:
+            # Value equality alone cannot establish the private vector domain:
+            # booleans compare equal to zero, and a short zero tuple has no
+            # nonzero component. Validate these shapes/types before any cache
+            # lookup or derivative shortcut can hide the ordinary rejection.
+            self.work.charge("composition_rate_domains",4)
+            for rates in (parent.exact_velocity,parent.exact_omega,
+                          local.exact_velocity,local.exact_omega):
+                if not (isinstance(rates,tuple) and len(rates)==3 and
+                        all(type(value) is F for value in rates)):
+                    self._vector(rates)
         stationary=canonical_zero_rates or not any((
             *parent.exact_velocity,*parent.exact_omega,*local.exact_velocity,*local.exact_omega))
         # A translated scene produces many one-use whole-pose entries. Keep
@@ -611,10 +678,11 @@ class ReachPoseOps:
         self.work.guard(*offset)
         position=self._rounded_vector(self._add_exact_vectors(parent_position,offset))
         if relative is None:
-            if canonical_zero_rates:
-                # The four immutable private zero tuples prove both spatial
-                # derivative expressions exactly zero, including every grid
-                # projection. Other inputs still take the validating helpers.
+            if stationary:
+                # The complete operand guard and earlier zero-value check
+                # prove both spatial derivatives exactly zero, including every
+                # grid projection. Equivalent private zero tuples need not have
+                # the same Python object identity to establish that equation.
                 velocity=omega=ZERO
             else:
                 self.work.charge("composition_derivative_zero_check")

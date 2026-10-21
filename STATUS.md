@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-21T16:34:00Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-21T17:09:00Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -36,9 +36,10 @@ Both workflows remain manual-only with default-false hosted-job opt-in. No hoste
 **Next: complete independent reach rate, delivery and release acceptance.**
 [OK-LANG-006/0.1.0](docs/language-design/planar-reach-v0.1/ADOPTION.md) is adopted
 on main; its runtime is **not integrated**. [Draft PR #27](https://github.com/Omegapy/OntoKin/pull/27)
-now preserves the complete recovered implementation in `c0ba9d97f806c9c96fb96c1168c925e658a6feff`,
-whose tree `93efbdf841eaed62861edef691885809ef212067` is exactly recovered local
-`bbfddddb8ecea939cb75b975250805a53cd3c6c5`. It remains stacked on
+preserves the recovered implementation and subsequent continuation checkpoints.
+Published head `97a1ba2ccad4e7bc0cf0f65df73cc981b5d84b88` has exactly the tree of
+local `cd49118514385eb02c35670ee95bf6a667ab8327`; the newer measured implementation
+is local `111ce5a3ff4014b7a8256558188ae13174d3246f`. The PR remains stacked on
 [draft PR #25](https://github.com/Omegapy/OntoKin/pull/25). Original branches,
 failed attempts and earlier evidence retain their identities.
 
@@ -46,11 +47,12 @@ failed attempts and earlier evidence retain their identities.
 | --- | --- |
 | Full P01 recording | Three seconds at 2 fps, helpers disabled; first passed at **98,462** shared operations under the unchanged **100,000** cap. Independent supplied-byte checks covered 55 keys, 330 poses and 324 interval certificates. |
 | Original delivery blockers | All **seven cleared**, including P24's large action-history prefix and P17's two-second export. The identified 79-method checkpoint passed all 11 actual Agent-delivery and four recording-budget methods. |
-| Complete regression | Recovered `full-regression-002` passed **1,234/1,234** on CPython 3.12.14 at exact local `bbfdddd`, with stable inputs and no skips. Five evidence member hashes were independently checked during recovery. This is an earlier execution, not a new run on later changes. |
+| Complete regression | Fresh `reach-regression-002` on clean `ae0b7bc` ran **1,297** methods on CPython 3.12.14: **1,296 passed**, one P23 terminal-rate method exceeded the original budget; no skips, stable inputs. The corrected private-zero handling subsequently passed all three terminal subcases within a **106/106** focused run at `02437d3`. A complete corrected-cut rerun is still required. The older recovered 1,234/1,234 result remains historical. |
 | Documentation review | 106 narratives accounted for: 91 unchanged prior full-read records, four changed and 11 additional narratives fully read; all 15 foundational diagram hashes unchanged. |
-| Independent rates | The complete **362-request / 724-field** inventory passes on clean worker `9ebfec2`, with stable inputs and maximum **98,745** shared operations. The three P23 terminal requests use 98,678 / 98,711 / 98,745. The reviewed narrow rate criterion is recorded separately; its final applicability binding and integrated-cut repetition remain required. |
-| Complete source artifact baseline | Fresh full runs progressed from **11/28** on `db929a0` to **12/28** on `6a07eff`. P04 now passes; **16 still exhaust 100,000 operations**. P24/P17 regressions remain fixed, but focused delivery tests did not cover this complete artifact corpus. Every recorded run retained stable source identities. |
+| Independent rates | The complete **362-request / 724-field** inventory passes on clean worker `b3ff6e8`, with stable inputs and maximum **98,796** shared operations. The three P23 terminal requests use 98,729 / 98,762 / 98,796. Later source changes have only targeted P23 confirmation; final applicability binding and complete integrated-cut repetition remain required. |
+| Complete source artifact baseline | Fresh full runs progressed from **11/28** to **13/28** on clean `111ce5a`; P14 is the newest pass at **99,696** operations. P01 at 1 fps uses 88,336 operations and P17's complete two-second export uses **84,171**. **15 still exhaust 100,000 operations**. Every completed producer run retained stable source identities. The full corpus remains a failed gate. |
 | Actual Agent artifact baseline | Clean producer `c087852` retrieves **3/10** required GLBs: L04, P01 and P17. P11, P13, P20, P16 and L01–L03 exhaust the unchanged cap. Corrected reader `001fa57` diagnostically checks all 182 exchanges, 617 projections, 42 LP steps, ten LP02 source reads, Q03 and Q22. The differing producer/reader cuts and missing retained runs prevent an official audit pass. |
+| Actual native/browser component | Actual P01 and P17 GLBs from clean `cd49118` pass the independent native destination checks. The P01 browser run passes after the local subprocess permission restriction was resolved; all three actual front/side/intermediate PNGs were opened and reviewed. This is partial evidence on that earlier source cut, not the complete 38-artifact / 54-capture role. |
 | Validation environment | The six Python pins, Node 22.23.3, Three 0.180.0, glTF Validator 2.0.0-dev.3.10 and Playwright 1.56.1/Chromium 1194 were installed. The independent installed-byte audit matched 1,832 files against 15 exact downloaded archives. Separate CPython 3.11.17 and 3.13.16 environments are also installed with all runtime/package members checked against exact upstream archives. These are prerequisite results, not compatibility, native or browser passes. |
 
 The [delivery checkpoint](docs/engineering/reach-delivery-completion-2026-10-21.md)
@@ -62,17 +64,24 @@ archived. Fresh complete verification is required on the integrated candidate.
 Later recovered independent Agent-auditor commits and rate work are not certified
 by that earlier 1,234-test result.
 
-Four exact-hash archives in the [recovery record](docs/engineering/reach-recovery-validation/README.md)
-retain the failed artifact runs, complete passing rate inventory, Agent raw
-exchanges, focused test logs and environment receipts. Every member hash and ZIP
-CRC was checked. Production candidate `9c6a7c5` removes repeated validated
-boundary output, factors exact source-phase bounds by translation, and reuses
-retained constant tracks inside each validated phase. Independent static
-review confirms the pending-output and exact phase algebra changes; focused
-runtime checks of the integrated candidate are pending at this checkpoint.
-The 16 failing source artifact cases at `6a07eff` are P02, P05, P07–P09, P11,
-P13, P14, P16, P18–P20, P23 and L01–L03. No new candidate is accepted by these
-earlier executions.
+Five exact-hash archives in the [recovery record](docs/engineering/reach-recovery-validation/README.md)
+retain every completed failed artifact baseline, passing rate inventory, Agent
+raw exchanges, focused logs, environment receipts, partial native/browser
+execution, the actual visual review, and the fresh complete-suite failure.
+The interrupted first suite attempt and malformed focused-driver invocation are
+also retained without reconstructed outcomes. Every archive member hash and ZIP
+CRC was checked.
+
+The integrated implementation reuses exact phase offsets, quaternion operands,
+and independently derived interval factors. The recording sampler now carries
+only actual p/q in a distinct immutable transform type; whole-phase bounds and
+complete source boundary evaluation remain unchanged. Independent static review
+and the 106-method focused run check this split, including complete GLB-byte
+identity against the earlier sampler on P01's full recording and selected
+pause/moving-carrier prefixes. Internal exact zero derivatives fix the newly
+observed P23 rate budget regression without weakening malformed-input guards.
+The 15 still-failing source artifact cases at `111ce5a` are P02, P05, P07–P09,
+P11, P13, P16, P18–P20, P23 and L01–L03. No finite release acceptance is claimed.
 
 Remaining acceptance is all **R01–R12/Q01–Q22** and mandatory roles under the
 [adopted release contract](docs/language-design/planar-reach-v0.1/release-contract.md):

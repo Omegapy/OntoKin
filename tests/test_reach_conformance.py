@@ -127,6 +127,38 @@ class ReachIndependentClockTests(unittest.TestCase):
 
 
 class ReachIndependentBoundTests(unittest.TestCase):
+    def test_exact_reference_endpoints_are_guarded_without_redecoding(self):
+        work = ReachExecutionWork()
+        arithmetic = _Bounds(work)
+        value = Interval(F(-7, 31), F(11, 47))
+        with patch.object(arithmetic, "value", side_effect=AssertionError("redundant rational decode")):
+            actual = arithmetic.cell(value)
+        self.assertEqual(actual, _Cell(value.lo, value.hi))
+        self.assertIsNot(actual, value)
+        self.assertEqual(work.counts["independent_interval_domain"], 1)
+        # A supplied object with float/int endpoints still takes the complete
+        # original decoder; exact-type rationals are the only shortcut domain.
+        with patch.object(arithmetic, "value", wraps=arithmetic.value) as decode:
+            self.assertEqual(arithmetic.cell(SimpleNamespace(lo=-.5, hi=1)), _Cell(F(-1, 2), F(1)))
+        self.assertEqual(decode.call_count, 2)
+        for low, high in ((F(1), F(0)), (False, F(0)), (float("nan"), 1)):
+            with self.subTest(low=low, high=high), self.assertRaises(OntoKinError):
+                arithmetic.cell(SimpleNamespace(lo=low, hi=high))
+
+    def test_exact_reference_endpoint_guard_keeps_cancellation_and_narrow_caps(self):
+        work = ReachExecutionWork(max_operand_bits=64)
+        arithmetic = _Bounds(work)
+        for low, high in ((F(1 << 70), F(1 << 71)),
+                          (F(1, (1 << 40) - 1), F(1 << 30))):
+            with self.subTest(low=low, high=high), self.assertRaises(ReachAdmissionError):
+                arithmetic.cell(Interval(low, high))
+        marker = RuntimeError("cancel independent interval domain")
+        with patch.object(work, "external_check", side_effect=marker):
+            with self.assertRaises(RuntimeError) as caught:
+                arithmetic.cell(Interval(F(0), F(1)))
+        self.assertIs(caught.exception, marker)
+        self.assertIs(work.callback_error, marker)
+
     def test_sparse_independent_arithmetic_keeps_exact_and_uncertain_zero_distinct(self):
         work = ReachExecutionWork()
         arithmetic = _Bounds(work)

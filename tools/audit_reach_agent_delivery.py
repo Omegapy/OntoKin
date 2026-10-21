@@ -414,8 +414,21 @@ def joined_chunks(exchanges, retrieval, export_request, export_response):
 
 
 class Reader:
-    def __init__(self, directory, *, schemas=None, sources=None):
+    def __init__(self, directory, *, schemas=None, sources=None, input_cut_validator=None):
+        """Read actual evidence, with strict source-cut binding by default.
+
+        A release auditor may supply a trusted Python callable after reviewing
+        input equivalence. It receives the raw decoded before/after snapshots
+        and producer record, must independently validate their complete Git
+        and byte inventories, and must return None or raise. This hook is not
+        an evidence flag or a command-line waiver. Clean immutable snapshots,
+        the producer's recorded cut, implementation bytes and the auditor's
+        own source stability remain mandatory in either mode.
+        """
+        require(input_cut_validator is None or callable(input_cut_validator),
+                "An input-cut validator must be a trusted callable")
         self.root = Path(directory).resolve()
+        self.input_cut_validator = input_cut_validator
         self.schemas, self.sources = schemas or Schemas(), sources or Sources()
         self.files, self.exchanges, self.used = {}, {}, set()
         self.bindings, self.heads, self.accepted, self.ledger = {}, {}, set(), {}
@@ -1143,7 +1156,17 @@ class Reader:
     def input_cut(self):
         before, after = self.read("inputs-before.json"), self.read("inputs-after.json")
         require(before == after, "Producer tracked inputs changed during execution")
+        recorded = before.get("git", {})
+        require(recorded.get("status") == "" and self.record["source_commit"] == recorded.get("commit")
+                and self.record["source_tree"] == recorded.get("tree"),
+                "Producer cut must name its clean immutable input snapshot")
         identity = source_identity()
+        validator = getattr(self, "input_cut_validator", None)
+        if validator is not None:
+            require(validator(before, after, self.record) is None,
+                    "An input-cut validator must validate evidence and return None, not a pass flag")
+            self.source_cut = identity
+            return
         require(before["git"] == {**identity, "status": ""}
                 and self.record["source_commit"] == identity["commit"] and self.record["source_tree"] == identity["tree"],
                 "Producer and auditor source cuts differ; an explicit input-equivalence audit is required")

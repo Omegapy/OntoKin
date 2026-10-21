@@ -18,6 +18,7 @@ from .reach_projection import (occurrence, reach_projection, reach_record_bound,
                                measure_reach_json)
 from .reach_source import reach_error
 from .reach_phase import AnchorError, PhaseArithmetic, joint_phase, phase_bounds
+from .reach_pose import ZERO as POSE_ZERO
 from .values import bounded_data
 
 
@@ -370,8 +371,8 @@ class ReachSimulator(ForceSimulator):
         return self.pose_ops.make(
             position=self.pose_ops.parabolic(initial.position, initial.velocity, acceleration, elapsed),
             orientation=self._advance_orientation(rotation, initial.omega, elapsed),
-            velocity=ZERO if pose_only else self.pose_ops.affine(initial.velocity, acceleration, elapsed),
-            omega=ZERO if pose_only else initial.omega)
+            velocity=POSE_ZERO if pose_only else self.pose_ops.affine(initial.velocity, acceleration, elapsed),
+            omega=POSE_ZERO if pose_only else initial.omega)
 
     def _kinematics(self, time, state):
         result = self._resolve_kinematics(time, state)
@@ -404,7 +405,8 @@ class ReachSimulator(ForceSimulator):
                 if path not in seen:
                     seen.add(path)
                     selected.append(path)
-            _, frames = self._resolve_kinematics(time, state, selected_frames=selected, pose_only=True)
+            _, frames = self._resolve_kinematics(time, state, selected_frames=selected,
+                                               pose_only=True, recording_only=True)
             result = {}
             for path in selected:
                 self._check()
@@ -473,12 +475,14 @@ class ReachSimulator(ForceSimulator):
 
         return frozenset(path for path in selected_paths if frame(path))
 
-    def _resolve_kinematics(self, time, state, *, selected_frames=None, pose_only=False):
+    def _resolve_kinematics(self, time, state, *, selected_frames=None, pose_only=False, recording_only=False):
         """Resolve the actual pose graph without intermediate float exposure.
 
         This separate 0.6 path leaves every older profile's pose arithmetic
         unchanged. Only public sample/anchor components materialize binary64.
         """
+        if recording_only and not pose_only:
+            raise ValueError("A recording transform graph cannot provide full source kinematics.")
         # With neither a free trajectory nor a motion claim, all actual pose
         # operands belong to this current state rather than a clock.
         # Event/force transitions still invalidate the single complete graph.
@@ -488,11 +492,13 @@ class ReachSimulator(ForceSimulator):
             self._check()
             return cached[1], cached[2]
         ops = self.pose_ops
+        compose = ops.compose_recording if recording_only else ops.compose
         incoming = self._incoming(state)
         objects, frames, resolving = {}, {"world": self._identity_pose}, set()
 
         def slot(path, signature, build):
-            return self._pose_slot(("recording", path) if pose_only else path, signature, build)
+            namespace = "recorded_transform" if recording_only else "recording"
+            return self._pose_slot((namespace, path) if pose_only else path, signature, build)
 
         def frame(path):
             if path not in frames:
@@ -503,7 +509,7 @@ class ReachSimulator(ForceSimulator):
                     site = self.model.sites[stem]
                     owner = instance(site.owner)
                     frames[path] = slot(path, (owner, site.pose),
-                        lambda: ops.compose(owner, self._constant_pose(site.pose)))
+                        lambda: compose(owner, self._constant_pose(site.pose)))
             return frames[path]
 
         def instance(path):
@@ -520,7 +526,7 @@ class ReachSimulator(ForceSimulator):
                     follow = self.model.follows[relation_path]
                     parent = frame(follow.parent)
                     result = slot(path, ("follow", parent, follow.offset),
-                        lambda: ops.compose(parent, self._constant_pose(follow.offset)))
+                        lambda: compose(parent, self._constant_pose(follow.offset)))
                 else:
                     joint = self.model.joints[relation_path]
                     parent = frame(joint.parent + ".frame")
@@ -538,8 +544,8 @@ class ReachSimulator(ForceSimulator):
                         elif joint.kind == "slider":
                             relative = ops.make(position=ops.scale(joint.axis, Fraction(coordinate)),
                                                 velocity=ops.scale(joint.axis, slope))
-                        return ops.compose(ops.compose(parent, relative),
-                                           self._constant_pose(child_pose, inverse=True))
+                        return compose(compose(parent, relative),
+                                       self._constant_pose(child_pose, inverse=True))
                     result = slot(path,
                         ("joint", parent, joint.kind, joint.axis, coordinate, slope, child_pose), connected)
             elif state.modes[path] == "dynamic":
@@ -547,7 +553,10 @@ class ReachSimulator(ForceSimulator):
             else:
                 position = state.positions[path]
                 rotation = state.root_rotation_values.get(path, state.orientations[path])
-                velocity, omega = ZERO, ZERO
+                # These are exact private derivative operands. The inherited
+                # evaluator's binary64 ZERO would needlessly decode a fresh
+                # tuple and repeat its domain checks down every composition.
+                velocity, omega = POSE_ZERO, POSE_ZERO
                 claimant = state.claims.get((path, "translation"))
                 if claimant is not None:
                     action, runtime = self.model.actions[claimant], state.actions[claimant]

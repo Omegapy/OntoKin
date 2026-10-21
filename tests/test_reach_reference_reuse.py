@@ -154,6 +154,46 @@ class IndependentPoseReuseTests(unittest.TestCase):
         self.assertTrue(all(value.contains(expected) for value, expected in zip(rotated, (0, 0, 2))))
         self.assertFalse(all(value.lo == value.hi for value in rotated))
 
+    def test_planar_rotation_factors_retain_exact_enclosures_for_distinct_vectors(self):
+        for orientation in ((2, 0, 0, 1), (F(3, 7), 0, 0, F(2, 11)),
+                (Interval(F(1), F(1) + F(1, 1 << 130)), 0, 0,
+                 Interval(F(1, 2), F(1, 2) + F(1, 1 << 130)))):
+            q = self.p.vector(orientation)
+            self.p.rotate(q, (1, 2, 3))
+            cold_work = Work()
+            cold = _PoseArithmetic(_Arithmetic(work=cold_work))
+            cold_q, vector = cold.vector(orientation), (F(4, 7), F(-3, 11), 5)
+            before = cold_work.operations
+            expected = cold.rotate(cold_q, vector)
+            complete_cost = cold_work.operations - before
+            before = self.work.operations
+            actual = self.p.rotate(q, vector)
+            reused_cost = self.work.operations - before
+            with self.subTest(orientation=orientation):
+                self.assertEqual(actual, expected)
+                self.assertGreater(reused_cost, 0)
+                self.assertLess(reused_cost, complete_cost)
+        self.assertLessEqual(len(self.a.cache), MAX_CACHE)
+
+    def test_planar_rotation_factor_reuse_keeps_changed_inputs_guards_and_eviction(self):
+        q = self.p.vector((2, 0, 0, 1))
+        expected = self.p.rotate(q, (3, 4, 5))
+        changed = self.p.rotate(self.p.vector((2, 0, 0, -1)), (3, 4, 5))
+        self.assertNotEqual(changed, expected)
+        for index in range(MAX_CACHE + 1):
+            self.a.remember(("evict_planar_factors", index), F(index))
+        self.assertEqual(self.p.rotate(q, (3, 4, 5)), expected)
+        self.assertLessEqual(len(self.a.cache), MAX_CACHE)
+        huge = F(1 << MAX_OPERAND_BITS)
+        invalid = (q[0], q[1], q[2], Interval(huge, huge))
+        with self.assertRaises(ReferenceError):
+            self.p.rotate(invalid, (3, 4, 5))
+        marker = RuntimeError("cancel independent planar factor reuse")
+        self.work.cancel = marker
+        with self.assertRaises(RuntimeError) as caught:
+            self.p.rotate(q, (4, 5, 6))
+        self.assertIs(caught.exception, marker)
+
     def test_saturated_cache_recomputes_pi_without_allocating_extra_capacity(self):
         expected = self.a.pi()
         for index in range(MAX_CACHE + 1):

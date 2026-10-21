@@ -10,7 +10,7 @@ from dataclasses import dataclass, replace
 from fractions import Fraction as F
 
 from .reach_numeric import ReachAdmissionError, compare, exact, rational
-from .reach_pose import VECTOR_ERROR, uniform_source_bounds
+from .reach_pose import EXPOSED_ROTATION_ERROR, VECTOR_ERROR, uniform_source_bounds
 
 
 @dataclass(frozen=True)
@@ -56,7 +56,7 @@ class PhaseBound:
 
 _BOUND_FIELDS = tuple(PhaseBound.__dataclass_fields__)
 _COMPOSITION_FIELDS = tuple(name for name in _BOUND_FIELDS
-                            if name not in {"max_position_l1_m", "position_error_m"})
+                            if name not in {"max_position_l1_m", "path_offset_l1_m", "position_error_m"})
 _CACHE_DOMAIN = "reach_source_phase/0.1"
 
 
@@ -235,31 +235,38 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None):
     def compose(parent, local):
         # The recurrence never reads the parent's position_error_m: it derives
         # that allowance again from inherited anchor errors and path counts.
-        # Its max_position_l1_m appears only in the final extent. Keep all other
-        # parent fields and the complete local bound in one immutable key, with
-        # a single relative bound and replaceable extent/result. The uniform
-        # formula is exactly affine in extent: its only term is extent*2^-53.
+        # Its extent and path offset appear only in the final uniform position
+        # formula. Keep all other parent fields and the complete local bound in
+        # one immutable key, with a single relative bound and replaceable
+        # extent/offset/result. The exact formula is affine in these two values:
+        # extent*2^-53 + path_offset*(rotation_error-EXPOSED_ROTATION_ERROR).
         # No sampled error or rounded arithmetic enters this factorization.
         work.charge("phase_composition_operand_guard")
         work.guard(*(getattr(bound, field) for bound in (parent, local) for field in _BOUND_FIELDS))
         key = (_CACHE_DOMAIN, work.max_operand_bits, "composition_recurrence",
                tuple(getattr(parent, field) for field in _COMPOSITION_FIELDS), local)
         cached = work.lookup(key)
+        location = (parent.max_position_l1_m, parent.path_offset_l1_m)
 
         def translated(base):
             work.charge("phase_composition_extent")
             extent = a.add(parent.max_position_l1_m, base.max_position_l1_m)
-            if compare(extent, F(0), work) < 0:
+            offset = a.add(parent.path_offset_l1_m, base.path_offset_l1_m)
+            if compare(extent, F(0), work) < 0 or compare(offset, F(0), work) < 0:
                 raise ReachAdmissionError("reach_numeric", "Source uniform allowances must be nonnegative.")
-            position_error = a.add(base.position_error_m, a.mul(parent.max_position_l1_m, F(1, 1 << 53)))
-            return replace(base, max_position_l1_m=extent, position_error_m=position_error)
+            rotation = a.sub(base.rotation_error_rad, EXPOSED_ROTATION_ERROR)
+            position_error = a.add(base.position_error_m,
+                a.mul(parent.max_position_l1_m, F(1, 1 << 53)),
+                a.mul(parent.path_offset_l1_m, rotation))
+            return replace(base, max_position_l1_m=extent, path_offset_l1_m=offset,
+                           position_error_m=position_error)
 
         if cached is not None:
             work.charge("phase_composition_extent_identity")
-            if parent.max_position_l1_m == cached[0]:
+            if location == cached[0]:
                 return cached[1]
             result = translated(cached[2])
-            work.remember(key, (parent.max_position_l1_m, result, cached[2]))
+            work.remember(key, (location, result, cached[2]))
             return result
         work.charge("phase_path_counts", 3)
         offset = local.max_position_l1_m
@@ -291,7 +298,7 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None):
             a.mul(parent.rotation_error_rad, local.actual_angular_speed_upper_rad_per_s),
             a.mul(F(2), VECTOR_ERROR), a.rounding(a.mul(F(2), actual_omega)))
         values = dict(
-            path_offset_l1_m=a.add(parent.path_offset_l1_m, local.path_offset_l1_m, offset),
+            path_offset_l1_m=a.add(local.path_offset_l1_m, offset),
             trig_count=parent.trig_count + local.trig_count,
             product_count=parent.product_count + local.product_count + 1,
             vector_round_count=parent.vector_round_count + local.vector_round_count + 2,
@@ -304,7 +311,7 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None):
             actual_speed_upper_m_per_s=actual_speed, actual_angular_speed_upper_rad_per_s=actual_omega)
         base = finish(max_position_l1_m=a.add(a.mul(F(2), offset), a.mul(F(4), VECTOR_ERROR)), **values)
         result = translated(base)
-        work.remember(key, (parent.max_position_l1_m, result, base))
+        work.remember(key, (location, result, base))
         return result
 
     def rotation_plan(omega, elapsed):

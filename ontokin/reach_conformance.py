@@ -179,17 +179,21 @@ class _Bounds:
         return self.root(self.total(self.square(value) for value in values)).hi
 
     def cell(self, value):
-        if isinstance(value, _Cell) and type(value.lo) is Fraction and type(value.hi) is Fraction:
-            self.tick("independent_interval_domain")
-            self.bits(value.lo.numerator.bit_length(), value.lo.denominator.bit_length(),
-                      value.hi.numerator.bit_length(), value.hi.denominator.bit_length())
-            self.bits(value.lo.numerator.bit_length() + value.hi.denominator.bit_length(),
-                      value.hi.numerator.bit_length() + value.lo.denominator.bit_length())
-            if value.lo > value.hi:
-                _error("OKE-E-INDEPENDENT-VALIDATION", "An independent reference returned a reversed enclosure.")
-            return value
         if hasattr(value, "lo") and hasattr(value, "hi"):
-            result = _Cell(self.value(value.lo), self.value(value.hi))
+            low, high = value.lo, value.hi
+            if type(low) is Fraction and type(high) is Fraction:
+                # Independent reference intervals already contain immutable
+                # exact rationals. Guard them directly before comparison;
+                # no repeated Fraction construction/decoding is necessary.
+                self.tick("independent_interval_domain")
+                self.bits(low.numerator.bit_length(), low.denominator.bit_length(),
+                          high.numerator.bit_length(), high.denominator.bit_length())
+                self.bits(low.numerator.bit_length() + high.denominator.bit_length(),
+                          high.numerator.bit_length() + low.denominator.bit_length())
+                if low > high:
+                    _error("OKE-E-INDEPENDENT-VALIDATION", "An independent reference returned a reversed enclosure.")
+                return value if isinstance(value, _Cell) else _Cell(low, high)
+            result = _Cell(self.value(low), self.value(high))
             self.bits(result.lo.numerator.bit_length() + result.hi.denominator.bit_length(),
                       result.hi.numerator.bit_length() + result.lo.denominator.bit_length())
             if result.lo > result.hi:
@@ -941,11 +945,21 @@ def _same_recording_vector(first, last, size):
 def _recording_vector(value, size, arithmetic):
     if type(value) not in (tuple, list) or len(value) != size:
         _error("OKE-E-CERTIFICATE", "A supplied recording endpoint has incompatible dimensions.")
+    wide = arithmetic.work is None or getattr(arithmetic.work, "max_operand_bits", MAX_OPERAND_BITS) >= 1075
+    if wide:
+        # A finite binary64's reduced numerator needs at most 1024 bits and
+        # its denominator at most 1075. This proves the fixed operand domain
+        # without allocating the same exact ratio again on every reuse hit.
+        arithmetic.bits(1075)
     for component in value:
         if type(component) not in (int, float) or (type(component) is float and not math.isfinite(component)):
             _error("OKE-E-CERTIFICATE", "A supplied recording endpoint must contain finite numbers.")
         if type(component) is int:
             arithmetic.bits(component.bit_length())
+        elif not wide:
+            # Lower request limits need the actual exact numerator/denominator
+            # check, through the ordinary charged decoder, before any reuse.
+            arithmetic.value(component)
     return tuple(value)
 
 

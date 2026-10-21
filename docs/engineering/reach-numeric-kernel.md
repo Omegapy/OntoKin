@@ -346,17 +346,34 @@ nonzero components still takes the guarded exact addition, and any subsequent
 grid projection is unchanged. This does not infer that an entire vector is
 zero from only one component or admit unchecked public inputs.
 
-When all four input derivative tuples are the immutable private `ZERO`, both
+When all four input derivative tuples are validated exact zero vectors, both
 derivative expressions above are exactly zero: a zero cross product and a
 rotated zero vector remain zero before and after every grid projection. The
 composition may therefore return that same exact zero tuple without executing
-the derivative-only helpers. This shortcut tests the identity of the private
-constant, not numerical equality of arbitrary tuples; other inputs retain the
-ordinary dimension and numeric-domain validation. The composition still guards
+the derivative-only helpers. The immutable private `ZERO` establishes this
+directly. Other tuples first receive charged dimension and numeric-domain
+checks before any cache lookup; numerical equality alone cannot admit boolean
+components or a short zero tuple. The composition still guards
 every input operand, checks and charges its work, and computes the identical
 position, rotation and conservative error records. Pose-only recording uses
 these exact zero derivatives internally without exposing them as source rates;
 complete source evaluation continues to compute actual moving-frame rates.
+
+After the recording planner has validated the complete source prefix and
+derived every whole-phase bound, key sampling needs only actual position and
+orientation. Its separate `RecordedTransform` type retains exact position,
+the private `RotationValue`, and their canonical projections. Composition
+executes the same homogeneous rotation of the local offset, exact parent
+translation addition, final 96-bit grid projection, and quaternion product
+(including the original rotation-error recurrence). Spatial derivatives and
+the sampled position-error recurrence do not enter either p/q equation, so
+this path does not construct them. The result deliberately has no derivative
+or position-error fields and is rejected by full source pose composition.
+It occupies a separate recording slot namespace and cannot enter the complete
+kinematics cache. Complete boundary validation, terminal observations, release
+anchors, whole-phase error formulas, every retained key, and independent
+supplied-byte verification continue to use their existing paths and bounds.
+This is an omission of unused sampled calculations, not a zero-error claim.
 
 `materialize` deliberately freezes all four actual exposed state tuples at
 an event anchor. Its elapsed-zero successor returns those exact orientation

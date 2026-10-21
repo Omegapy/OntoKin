@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from tools.audit_reach_agent_delivery import (DATA, MAX_DEPTH, MAX_ENVELOPE, PROTOCOL, TARGET,
     EvidenceError, Reader, Sources, canonical, decode, descriptor, envelope_bound,
@@ -307,6 +308,52 @@ class ReachAgentDeliveryAuditTests(unittest.TestCase):
             (root / "linked.json").symlink_to(root / "receipt.json")
             with self.assertRaises(EvidenceError):
                 safe_path(root, "linked.json")
+
+    def test_input_cut_default_remains_strict_and_trusted_validator_sees_full_records(self):
+        actual = {"commit": "a" * 40, "tree": "b" * 40}
+        recorded = {"commit": "c" * 40, "tree": "d" * 40, "status": ""}
+        before = {"git": recorded, "files": [{"path": "sentinel", "sha256": "sha256:" + "e" * 64, "bytes": 9}]}
+        producer = {"source_commit": recorded["commit"], "source_tree": recorded["tree"]}
+        reader = object.__new__(Reader)
+        reader.record = producer
+        reader.read = lambda name: copy.deepcopy(before)
+        with patch("tools.audit_reach_agent_delivery.source_identity", return_value=actual):
+            with self.assertRaisesRegex(EvidenceError, "source cuts differ"):
+                reader.input_cut()
+            calls = []
+            reader.input_cut_validator = lambda old, new, report: calls.append((old, new, report))
+            reader.input_cut()
+            self.assertEqual(calls, [(before, before, producer)])
+            self.assertEqual(reader.source_cut, actual)
+            reader.input_cut_validator = lambda *args: True
+            with self.assertRaisesRegex(EvidenceError, "not a pass flag"):
+                reader.input_cut()
+            def rejected(*args):
+                raise EvidenceError("Git blobs differ")
+            reader.input_cut_validator = rejected
+            with self.assertRaisesRegex(EvidenceError, "Git blobs differ"):
+                reader.input_cut()
+
+    def test_input_cut_injection_cannot_skip_clean_stable_producer_identity(self):
+        before = {"git": {"commit": "a" * 40, "tree": "b" * 40, "status": ""}, "files": []}
+        for mutation in ("dirty", "changed", "wrong-commit", "wrong-tree"):
+            old, new = copy.deepcopy(before), copy.deepcopy(before)
+            reader = object.__new__(Reader)
+            reader.record = {"source_commit": "a" * 40, "source_tree": "b" * 40}
+            if mutation == "dirty":
+                old["git"]["status"] = new["git"]["status"] = " M tracked"
+            elif mutation == "changed":
+                new["files"] = [{"path": "new"}]
+            elif mutation == "wrong-commit":
+                reader.record["source_commit"] = "c" * 40
+            else:
+                reader.record["source_tree"] = "d" * 40
+            calls = []
+            reader.input_cut_validator = lambda *args: calls.append(args)
+            reader.read = lambda name: old if name == "inputs-before.json" else new
+            with self.subTest(mutation=mutation), self.assertRaises(EvidenceError):
+                reader.input_cut()
+            self.assertEqual(calls, [])
 
 
 if __name__ == "__main__":

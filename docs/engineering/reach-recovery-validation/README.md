@@ -119,3 +119,57 @@ pip-generated files were separately inventoried. A failed proxy download is
 retained alongside the successful pinned download. No full test suite ran in
 these two environments during preparation. Their installation summary SHA-256
 is `d1336e6e3b65592949bce992db88d7c8d2f1357fd9f1de432b06b65b5070540d`.
+
+## Integrated numerical and destination checkpoint, 17:09 UTC
+
+`continuation-verification-003.zip` preserves **634 actual files**, 6,262,132
+compressed bytes, SHA-256
+`183bc92edbe46f0e163ec3bfa4ffc12a7641f1e685b4800f9c0496e67711b8fa`.
+The adjacent [member manifest](continuation-verification-003.members.json)
+records every exact member length and SHA-256; every member and ZIP CRC was
+verified against the retained originals after packaging. Its distinct scopes
+are not combined into a release pass:
+
+- Source producers 004 and 005 pass 12 of 28 cases at `cd49118` and `ae0b7bc`.
+  Producer 006 at `111ce5a` passes **13 of 28**, including the new P14 pass at
+  **99,696** operations. P01 at 1 fps uses 88,336 and the complete P17 two-second
+  export uses 84,171. All other required failed requests remain present with
+  their actual diagnostics and unchanged 100,000-operation cap. Before/after
+  inputs match for all three complete executions.
+- Focused execution 005 passes 36 methods at `cd49118`. Attempt 006 fails during
+  inventory setup because the invocation named a nonexistent test module; no
+  executed test outcome is inferred. Attempt 007 executes 136 methods, with
+  134 passes and two failures identifying zero-vector domain/cost regressions.
+  Corrected attempt 008 passes all **137** methods at `ae0b7bc`.
+- Complete CPython 3.12.14 execution `reach-regression-002` runs all **1,297**
+  discovered methods at `ae0b7bc`: **1,296 pass**, one method errors in its three
+  P23 terminal-rate subcases under the shared operation cap, with zero skips
+  and stable inputs. Actual exit code 1 is retained. The first attempt lost
+  its execution session before a final report; only its actual initial files
+  and a separately labeled interruption observation are retained. No result
+  or exit code was reconstructed for that incomplete attempt.
+- Focused execution 009 passes **106/106** methods at `02437d3`, including the
+  corrected terminal P23 rate subcases, independent scalar/Z rotation-factor
+  checks, transform-only sampler isolation, and complete actual GLB-byte
+  equality against the prior sampler for P01's full three seconds, L01's
+  0.75-second pause prefix, and P16's 0.25-second moving-carrier prefix. The
+  integrated `111ce5a` adds an explicit offset operand guard. A complete-suite
+  rerun on the corrected integrated cut remains required.
+- Native destination execution on the actual P01 and P17 artifacts from
+  `cd49118` passes both cases. The outer first destination attempt fails only
+  when its browser stage encounters the local `spawnSync git EPERM` restriction.
+  The separately retained permitted browser retry passes P01, including actual
+  native/browser readbacks, seeking/playback checks and three PNG captures.
+  The actual visual review reopens all three images and records their exact
+  cameras, source/artifact identities and concrete visibility limits. The side
+  image has expected foreshortening/overlap; no visible clipping was observed.
+  This partial earlier-cut evidence cannot close the complete browser role.
+- The second complete rate inventory on clean worker `b3ff6e8` passes all
+  **362 requests / 724 fields**, with stable inputs and a maximum of **98,796**
+  operations. Its three terminal P23 requests use 98,729 / 98,762 / 98,796.
+  Later source changes require their own complete integrated inventory and
+  current reviewed criterion applicability binding.
+
+The bounded source-stage profiler and translated P23 phase comparison are also
+retained as development diagnostics. They do not grant acceptance or relax any
+budget, operand width, cache capacity, tolerance, frozen fixture or expectation.

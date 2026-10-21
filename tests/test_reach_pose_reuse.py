@@ -2,6 +2,7 @@
 from fractions import Fraction as F
 import math
 import unittest
+from dataclasses import replace
 from unittest.mock import patch
 
 from ontokin.reach_numeric import ReachAdmissionError, ReachExecutionWork
@@ -9,6 +10,58 @@ from ontokin.reach_pose import PRODUCT_ERROR, ZERO, PoseValue, ReachPoseOps, Rot
 
 
 class ReachPoseReuseTests(unittest.TestCase):
+    def test_zero_rate_domain_checks_precede_warm_composition_reuse(self):
+        for parent_position in (ZERO, (F(1), F(2), F(3))):
+            for owner in ("parent", "local"):
+                for field in ("exact_velocity", "exact_omega"):
+                    for invalid in ((False, False, False), (F(0), F(0))):
+                        with self.subTest(position=parent_position, owner=owner,
+                                          field=field, invalid=invalid):
+                            ops = ReachPoseOps(ReachExecutionWork())
+                            parent, local = ops.make(parent_position), ops.make((4, 5, 6))
+                            ops.compose(parent, local)
+                            if owner == "parent":
+                                parent = replace(parent, **{field: invalid})
+                            else:
+                                local = replace(local, **{field: invalid})
+                            with self.assertRaises(ReachAdmissionError):
+                                ops.compose(parent, local)
+
+    def test_equal_zero_rate_values_need_no_identity_alias_to_prove_stationarity(self):
+        ops = ReachPoseOps(ReachExecutionWork())
+        first, second = ops.make((1, 2, 3)), ops.make((4, 5, 6))
+        zeros = lambda: tuple(F(0) for _ in range(3))
+        first = replace(first, exact_velocity=zeros(), exact_omega=zeros())
+        second = replace(second, exact_velocity=zeros(), exact_omega=zeros())
+        self.assertIsNot(first.exact_velocity, ZERO)
+        with patch.object(ops, "cross", side_effect=AssertionError("recomputed proved zero rates")):
+            result = ops.compose(first, second)
+        self.assertEqual(result.exact_position, (F(5), F(7), F(9)))
+        self.assertEqual(result.exact_velocity, ZERO)
+        self.assertEqual(result.exact_omega, ZERO)
+        moving = replace(first, exact_omega=(F(0), F(0), F(2)))
+        self.assertEqual(ops.compose(moving, second).exact_velocity, (F(-10), F(8), F(0)))
+
+    def test_reused_spin_axis_preserves_complete_plan_operands_and_guards(self):
+        warm = ReachPoseOps(ReachExecutionWork())
+        plan = warm.spin_plan((1, 2, 3), F(10))
+        warm.spin_rotation((1, 2, 3), F(1, 7), phase_plan=plan)
+        for elapsed in (F(2, 7), F(-3, 7)):
+            cold = ReachPoseOps(ReachExecutionWork())
+            expected = cold.spin_rotation((1, 2, 3), elapsed, phase_plan=plan)
+            actual = warm.spin_rotation((1, 2, 3), elapsed, phase_plan=plan)
+            self.assertEqual(actual, expected)
+        with self.assertRaises(ReachAdmissionError):
+            warm.spin_rotation((1, 2, 4), F(1, 7), phase_plan=plan)
+        with self.assertRaises(ReachAdmissionError):
+            warm.spin_rotation((1, 2, 3), F(11), phase_plan=plan)
+        marker = RuntimeError("cancel warm source spin")
+        with patch.object(warm.work, "external_check", side_effect=marker):
+            with self.assertRaises(RuntimeError) as caught:
+                warm.spin_rotation((1, 2, 3), F(1, 7), phase_plan=plan)
+        self.assertIs(caught.exception, marker)
+        self.assertIs(warm.work.callback_error, marker)
+
     def test_translated_moving_assemblies_reuse_rates_but_keep_distinct_positions(self):
         work = ReachExecutionWork()
         ops = ReachPoseOps(work)
@@ -212,7 +265,8 @@ class ReachPoseReuseTests(unittest.TestCase):
         self.assertGreater(work.operations, before)
         reverse = ops.multiply(b, a)
         self.assertEqual(reverse.components, (F(1, 2), F(1, 2), F(1, 2), F(-1, 2)))
-        changed_error = ops.multiply(RotationValue(a.components, F(1, 512)), b)
+        with patch.object(ops, "_multiply_uncached", side_effect=AssertionError("recomputed identical components")):
+            changed_error = ops.multiply(RotationValue(a.components, F(1, 512)), b)
         self.assertEqual(changed_error.components, product.components)
         self.assertEqual(changed_error.error_rad, F(5, 2048) + PRODUCT_ERROR)
 
