@@ -173,3 +173,22 @@ are not combined into a release pass:
 The bounded source-stage profiler and translated P23 phase comparison are also
 retained as development diagnostics. They do not grant acceptance or relax any
 budget, operand width, cache capacity, tolerance, frozen fixture or expectation.
+
+## Recovered completion after the previous checkpoint
+
+`recovered-regression-004.zip` preserves the actual completed
+`reach-regression-003` and its exit/log files. It contains 8 files,
+198,549 compressed bytes, SHA-256
+`a380ace439c980f58a689e5c322731e3a22836fd7ba0da6554c0ec34f86351d6`. The adjacent
+[member manifest](recovered-regression-004.members.json) records each exact
+member identity. All member lengths, SHA-256 values and ZIP CRCs were verified.
+
+The run completed at `2026-10-21T17:16:59Z` on CPython 3.12.14: all
+**1,301/1,301** unique named tests passed, with no skips, loader errors, fixture
+errors or unexpected records. The before/after input manifests match exactly.
+Its actual source is local `569b67b0bdc6854cc069e6a00590e0f15267ae03`, tree
+`a2ae5f49ec51aa9f4e79bb4c554e0fb358b1c441`, confirmed identical to GitHub
+`c9004fcd8c97e27806359bcc3b7a6fb020892f7a`. The process finished after the
+previous STATUS publication; no outcome was reconstructed. This is complete
+regression evidence for that identified tree, not a pass of the 28-artifact
+recording gate, the other Python versions or the complete reach release.

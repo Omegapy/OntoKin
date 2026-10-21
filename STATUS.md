@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-21T17:09:00Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-21T18:00:27Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -37,9 +37,10 @@ Both workflows remain manual-only with default-false hosted-job opt-in. No hoste
 [OK-LANG-006/0.1.0](docs/language-design/planar-reach-v0.1/ADOPTION.md) is adopted
 on main; its runtime is **not integrated**. [Draft PR #27](https://github.com/Omegapy/OntoKin/pull/27)
 preserves the recovered implementation and subsequent continuation checkpoints.
-Published head `97a1ba2ccad4e7bc0cf0f65df73cc981b5d84b88` has exactly the tree of
-local `cd49118514385eb02c35670ee95bf6a667ab8327`; the newer measured implementation
-is local `111ce5a3ff4014b7a8256558188ae13174d3246f`. The PR remains stacked on
+Published head `c9004fcd8c97e27806359bcc3b7a6fb020892f7a` has exactly the tree of
+local `569b67b0bdc6854cc069e6a00590e0f15267ae03`
+(`a2ae5f49ec51aa9f4e79bb4c554e0fb358b1c441`). Its runtime implementation is
+`111ce5a3ff4014b7a8256558188ae13174d3246f`. The PR remains stacked on
 [draft PR #25](https://github.com/Omegapy/OntoKin/pull/25). Original branches,
 failed attempts and earlier evidence retain their identities.
 
@@ -47,7 +48,7 @@ failed attempts and earlier evidence retain their identities.
 | --- | --- |
 | Full P01 recording | Three seconds at 2 fps, helpers disabled; first passed at **98,462** shared operations under the unchanged **100,000** cap. Independent supplied-byte checks covered 55 keys, 330 poses and 324 interval certificates. |
 | Original delivery blockers | All **seven cleared**, including P24's large action-history prefix and P17's two-second export. The identified 79-method checkpoint passed all 11 actual Agent-delivery and four recording-budget methods. |
-| Complete regression | Fresh `reach-regression-002` on clean `ae0b7bc` ran **1,297** methods on CPython 3.12.14: **1,296 passed**, one P23 terminal-rate method exceeded the original budget; no skips, stable inputs. The corrected private-zero handling subsequently passed all three terminal subcases within a **106/106** focused run at `02437d3`. A complete corrected-cut rerun is still required. The older recovered 1,234/1,234 result remains historical. |
+| Complete regression | Recovered completed `reach-regression-003` passes **1,301/1,301** unique methods on CPython 3.12.14, zero skips/errors, with stable inputs. Actual source `569b67b` is tree-identical to published `c9004fc`. All raw results and exit status are now archived and hash-verified. Later changed code requires a fresh run. |
 | Documentation review | 106 narratives accounted for: 91 unchanged prior full-read records, four changed and 11 additional narratives fully read; all 15 foundational diagram hashes unchanged. |
 | Independent rates | The complete **362-request / 724-field** inventory passes on clean worker `b3ff6e8`, with stable inputs and maximum **98,796** shared operations. The three P23 terminal requests use 98,729 / 98,762 / 98,796. Later source changes have only targeted P23 confirmation; final applicability binding and complete integrated-cut repetition remain required. |
 | Complete source artifact baseline | Fresh full runs progressed from **11/28** to **13/28** on clean `111ce5a`; P14 is the newest pass at **99,696** operations. P01 at 1 fps uses 88,336 operations and P17's complete two-second export uses **84,171**. **15 still exhaust 100,000 operations**. Every completed producer run retained stable source identities. The full corpus remains a failed gate. |
@@ -64,7 +65,7 @@ archived. Fresh complete verification is required on the integrated candidate.
 Later recovered independent Agent-auditor commits and rate work are not certified
 by that earlier 1,234-test result.
 
-Five exact-hash archives in the [recovery record](docs/engineering/reach-recovery-validation/README.md)
+Six exact-hash archives in the [recovery record](docs/engineering/reach-recovery-validation/README.md)
 retain every completed failed artifact baseline, passing rate inventory, Agent
 raw exchanges, focused logs, environment receipts, partial native/browser
 execution, the actual visual review, and the fresh complete-suite failure.
@@ -102,14 +103,16 @@ GOAL still requires richer typed algorithms/libraries and compatible replacement
 
 **No main integration lease is held by this continuation.** Main remains
 `2bb4588e121fcfe99b4d42c734b15b38362f3642`; the prior STATUS-only lease was
-released. Current coordinator `interactive-reach06-complete-20261021-bdfa-7of9`
+released. Current coordinator `interactive-reach06-acceptance-20261021-1800-7of9`
 resumes the owner's explicit PR #27 handoff in a separate recovered checkout.
 This branch-only status update does not claim a main write or runtime merge.
 
 The actual PR #27 head was reconciled before publication; an expected-head,
 nonforce update from `623aea726788d36ce4e18a6d073a0093bc49d173` preserved the
-verified recovered tree. New rate, destination and acceptance workers use
-isolated branches. Runtime/test/SQLite/workflow/archive execution remains
+verified recovered tree. This continuation starts from verified local `569b67b` on
+`work/reach06-acceptance-20261021-1800-7of9`. Phase-bound and independent interval
+workers use separate branches and nonoverlapping files. The next gate remains
+all 28 recordings under the unchanged cap. Runtime/test/SQLite/workflow/archive execution remains
 serialized to keep source identities stable. Main integration requires complete
 acceptance and a fresh observed-head lease. Both workflows remain manual-only
 with default-false opt-in; no hosted job was dispatched or retried.
