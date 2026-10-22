@@ -9,7 +9,7 @@ from dataclasses import dataclass, replace
 from fractions import Fraction as F
 
 from .reach_numeric import (
-    PRECISIONS, PI64_BITS, SIGN, ReachAdmissionError, ReachExecutionWork,
+    MAX_OPERAND_BITS, PRECISIONS, PI64_BITS, SIGN, ReachAdmissionError, ReachExecutionWork,
     DyadicContext, _Refine, bits_float, bits_fraction, certify_rounding,
     compare, exact, float_bits, rational, round_binary64,
     sqrt_rational_binary64,
@@ -176,6 +176,66 @@ def sample_pair(start_rad,target_rad,duration_s,elapsed_s,*,running,work: ReachE
     if law is None:
         work.remember(key,(exact_slopes,rates))
     return PairSample(tuple(values),rates,tuple(exact_values),exact_slopes if running else (F(0),F(0)))
+
+
+def recording_pair(start_rad,target_rad,duration_s,elapsed_s,*,running,work: ReachExecutionWork):
+    """Sample the same affine law with one bounded decoded-input record.
+
+    A recording repeatedly supplies the same immutable canonical endpoints.
+    Its exact clock and current finite operand domains are still admitted on
+    every call; no source claim or state is implied by this numerical reuse.
+    Narrowed operand limits execute the original scalar preflight sequence.
+    """
+    if len(start_rad)!=2 or len(target_rad)!=2:
+        raise ReachAdmissionError("reach_domain","A reach has exactly two coordinates.")
+    while True:
+        cap=work.max_operand_bits
+        if cap!=MAX_OPERAND_BITS:
+            return sample_pair(start_rad,target_rad,duration_s,elapsed_s,running=running,work=work)
+        duration,elapsed=rational(duration_s,work),rational(elapsed_s,work)
+        work.charge("pair_clock_domain")
+        if duration<=0 or not 0<=elapsed<=duration or type(running) is not bool:
+            raise ReachAdmissionError("reach_numeric","Invalid reach interpolation clock or state.")
+        work.charge("recording_pair_operand_domain")
+        original=tuple(zip(start_rad,target_rad))
+        if any(type(value) not in (int,float,F) for pair in original for value in pair):
+            return sample_pair(start_rad,target_rad,duration_s,elapsed_s,running=running,work=work)
+        for pair in original:
+            for value in pair:
+                if type(value) is float:
+                    if float_bits(value)&0x7FF0000000000000==0x7FF0000000000000:
+                        raise ReachAdmissionError("reach_domain","A reach operand must be finite.")
+                else:
+                    work.guard(value)
+        if work.max_operand_bits!=cap:
+            continue
+        key=("recording_pair_law_v1",cap,duration,
+             tuple(tuple((type(value),value) for value in pair) for pair in original),running)
+        law=work.lookup(key)
+        if work.max_operand_bits!=cap:
+            continue
+        operands=(tuple((rational(start,work),rational(target,work)) for start,target in original)
+                  if law is None else law[0])
+        work.guard(*(value for pair in operands for value in pair))
+        values=[]; rates=[]; exact_values=[]; exact_slopes=[]
+        for index,(initial,goal) in enumerate(operands):
+            slope=(exact(exact(goal,initial,"sub",work),duration,"div",work)
+                   if law is None else law[1][index])
+            work.guard(slope)
+            value=goal if elapsed==duration else exact(initial,exact(slope,elapsed,"mul",work),"add",work)
+            exact_values.append(value)
+            exact_slopes.append(slope)
+            values.append(round_binary64(value,work=work))
+            rates.append((round_binary64(slope,work=work) if running else 0.0)
+                         if law is None else law[2][index])
+        if work.max_operand_bits!=cap:
+            continue
+        exact_slopes,rates=tuple(exact_slopes),tuple(rates)
+        if law is None:
+            work.remember(key,(operands,exact_slopes,rates))
+        if work.max_operand_bits==cap:
+            return PairSample(tuple(values),rates,tuple(exact_values),
+                              exact_slopes if running else (F(0),F(0)))
 
 
 def measured_residual_squared(actual_end_base_m,target_base_m,*,work: ReachExecutionWork):

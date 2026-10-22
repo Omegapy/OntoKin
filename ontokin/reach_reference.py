@@ -1258,6 +1258,15 @@ class _SourceBound:
 _SOURCE_BOUND_FIELDS = tuple(_SourceBound.__dataclass_fields__)
 
 
+@dataclass(frozen=True)
+class _AxialDerivative:
+    """Ideal translational bounds and one constant body-frame angular rate."""
+    speed: F
+    acceleration: F
+    axis: int | None
+    rate: F
+
+
 def _plain(value, arithmetic):
     arithmetic.tick()
     if value is None or isinstance(value, (str, bool, int, float, F, Interval)):
@@ -2945,6 +2954,149 @@ class ReachReference:
 
         return visit(carrier)
 
+    def _axis_transport(self, rotation, axis):
+        """Prove a fixed source rotation preserves or reverses one axis.
+
+        Exact zero patterns survive quaternion normalization. This proof also
+        accepts independent intervals only when the required zeros are exact
+        and at least one remaining component excludes zero. No approximate
+        angle, sampled orientation or production phase value is an input.
+        """
+        self.a.tick()
+        if type(rotation) not in (tuple, list) or len(rotation) != 4:
+            return None
+        values = tuple(self.a.interval(value) for value in rotation)
+        self.a.guard(*(endpoint for value in values for endpoint in (value.lo, value.hi)))
+        zero = tuple(value.lo == value.hi == 0 for value in values)
+        if not any(value.lo > 0 or value.hi < 0 for value in values):
+            return None
+        if all(zero[index + 1] for index in range(3) if index != axis):
+            return 1
+        if zero[0] and zero[axis + 1]:
+            return -1
+        return None
+
+    def _axial_derivatives(self, carrier, start, end, state):
+        """Independently tighten ideal derivatives for proved coaxial paths.
+
+        A constant angular vector in a body's coordinates is constant in the
+        world too: d(Rw)/dt = R(w cross w) = 0. Parallel hinge rates can thus be
+        added with their signs before taking a norm. Fixed attachments carry
+        that vector through their exact axis-preserving/reversing rotations.
+
+        The existing generic source basis, including every actual derivative
+        and numeric error recurrence, remains untouched. This separate walk
+        uses source offsets' L1 norms as bounds on their ideal Euclidean radii.
+        Unsupported rotations, noncoaxial hinges and dynamic roots return no
+        refinement. Its temporary graph map belongs to this one bounded walk;
+        no additional retained numeric cache or production oracle is used.
+        """
+        incoming, found, visiting = self._incoming(state), {}, set()
+        add, mul, exact = self.a.exact_sum, self.a.exact_product, self.a.exact
+
+        def admit(value):
+            if value is not None:
+                self.a.guard(value.speed, value.acceleration, value.rate)
+            return value
+
+        def attached(parent, pose):
+            self.a.tick()
+            if parent is None:
+                return None
+            admit(parent)
+            # The inverse attachment has the same Euclidean offset norm and
+            # the same sign on a preserved/reversed axis as the forward pose.
+            radius = self._l1(pose.position)
+            sign = 1 if not parent.rate else self._axis_transport(pose.rotation, parent.axis)
+            if sign is None:
+                return None
+            admit(parent)
+            speed = add(parent.speed, mul(abs(parent.rate), radius))
+            acceleration = add(parent.acceleration, mul(parent.rate, parent.rate, radius))
+            rate = parent.rate if sign == 1 else exact(F(0), parent.rate, "sub")
+            return _AxialDerivative(speed, acceleration, parent.axis if rate else None, rate)
+
+        def root(path):
+            if state.modes[path] == "dynamic":
+                return None
+            basis = self._source_basis(path + ".frame", start, end, state)
+            self.a.guard(basis.speed, basis.acceleration)
+            action_path = state.claims.get((path, "orientation"))
+            if action_path is None or state.actions[action_path].status != "running":
+                return _AxialDerivative(basis.speed, basis.acceleration, None, F(0))
+            action, active = self.model.actions[action_path], state.actions[action_path]
+            vector = tuple(F(value) for value in action.vector)
+            self.a.guard(*vector, active.rotation_error)
+            nonzero = tuple(index for index, value in enumerate(vector) if value)
+            if not nonzero:
+                return _AxialDerivative(basis.speed, basis.acceleration, None, F(0))
+            if len(nonzero) != 1 or active.rotation_error:
+                return None
+            axis = nonzero[0]
+            sign = self._axis_transport(active.ideal_initial, axis)
+            if sign is None:
+                return None
+            self.a.guard(*vector, basis.speed, basis.acceleration, active.rotation_error)
+            rate = vector[axis] if sign == 1 else exact(F(0), vector[axis], "sub")
+            return _AxialDerivative(basis.speed, basis.acceleration, axis, rate)
+
+        def joint_motion(parent, relation):
+            joint = self.model.joints[relation]
+            if parent is None or joint.kind not in {"hinge", "slider"}:
+                return parent
+            scalar = self._joint_path(relation, start, end, state)
+            axis = tuple(F(value) for value in joint.axis)
+            self.a.guard(*axis, scalar.slope, scalar.ideal_start, scalar.ideal_end)
+            admit(parent)
+            if joint.kind == "slider":
+                size = self._l1(axis)
+                radius = mul(size, max(abs(scalar.ideal_start), abs(scalar.ideal_end)))
+                local_speed = mul(size, abs(scalar.slope))
+                omega = abs(parent.rate)
+                return _AxialDerivative(
+                    add(parent.speed, mul(omega, radius), local_speed),
+                    add(parent.acceleration, mul(omega, omega, radius), mul(F(2), omega, local_speed)),
+                    parent.axis, parent.rate)
+            nonzero = tuple(index for index, value in enumerate(axis) if value)
+            if len(nonzero) != 1 or abs(axis[nonzero[0]]) != 1:
+                return None
+            direction = nonzero[0]
+            if parent.rate and parent.axis != direction:
+                return None
+            local_rate = scalar.slope if axis[direction] == 1 else exact(F(0), scalar.slope, "sub")
+            rate = add(parent.rate, local_rate)
+            return _AxialDerivative(parent.speed, parent.acceleration, direction if rate else None, rate)
+
+        def visit(frame):
+            self.a.tick()
+            if frame in found:
+                return admit(found[frame])
+            if frame in visiting or len(visiting) > 128:
+                raise ReferenceError("unsupported", "Independent axial derivative graph is cyclic or too deep")
+            visiting.add(frame)
+            stem = frame.removesuffix(".frame")
+            if frame == "world":
+                value = _AxialDerivative(F(0), F(0), None, F(0))
+            elif stem in self.model.sites:
+                site = self.model.sites[stem]
+                value = attached(visit(site.owner + ".frame"), site.pose)
+            elif stem in incoming:
+                kind, relation = incoming[stem]
+                if kind == "follow":
+                    follow = self.model.follows[relation]
+                    value = attached(visit(follow.parent), follow.offset)
+                else:
+                    joint = self.model.joints[relation]
+                    value = attached(joint_motion(visit(joint.parent + ".frame"), relation),
+                                     self.model.sites[joint.child].pose)
+            else:
+                value = root(stem)
+            visiting.remove(frame)
+            found[frame] = admit(value)
+            return value
+
+        return visit(carrier)
+
     def _phase(self, carrier, start, end, state):
         root, _, joints, path = self._ancestry(carrier, state)
         identity = self.p.identity()
@@ -2953,13 +3105,19 @@ class ReachReference:
         acceleration = tuple(F(x) for x in ((state.forces[root].acceleration or self.model.gravity)
                              if root is not None and state.modes[root] == "dynamic" else ZERO))
         basis = self._source_basis(carrier, start, end, state)
+        # A single constant angular contribution already has the same generic
+        # norm and zero angular acceleration. Only compositions with a generic
+        # cross contribution need this additional independent source proof.
+        axial = self._axial_derivatives(carrier, start, end, state) if basis.alpha else None
         coordinates = tuple(self._joint_path(joint, start, end, state) for joint in joints)
         anchor_velocity = self._distance(actual_root.velocity, ideal_root.velocity)
         anchor_omega = self._distance(actual_root.omega, ideal_root.omega)
         if root is not None and state.modes[root] == "dynamic":
             anchor_velocity = max(anchor_velocity, state.dynamic[root].velocity_error)
             anchor_omega = max(anchor_omega, state.dynamic[root].omega_error)
-        return ReferencePhase(start, end, carrier, basis.speed, basis.acceleration, basis.omega, coordinates,
+        speed, acceleration_bound, angular_speed = (basis.speed, basis.acceleration, basis.omega) if axial is None else (
+            axial.speed, axial.acceleration, abs(axial.rate))
+        return ReferencePhase(start, end, carrier, speed, acceleration_bound, angular_speed, coordinates,
             actual_root.position, actual_root.velocity, acceleration, actual_root.orientation, actual_root.omega,
             ideal_root.position, ideal_root.velocity, ideal_root.orientation, ideal_root.omega,
             basis.offset, basis.extent, basis.anchor_position, basis.anchor_rotation, anchor_velocity, anchor_omega,

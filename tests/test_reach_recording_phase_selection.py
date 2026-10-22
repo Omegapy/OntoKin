@@ -13,8 +13,11 @@ from ontokin.scene import ExportOptions, _nodes
 from reach_agent_support import source_case
 
 
-def all_frame_bounds(simulator, start, end):
-    return simulator.phase_bounds(start, end)["frames"]
+def all_frame_bounds(simulator, start, end, *, recording_proof=False):
+    from ontokin.reach_phase import phase_bounds
+    result = phase_bounds(simulator, start, end, recording_proof=recording_proof)
+    return ((result["frames"], result["recording_angular_proof"]) if recording_proof
+            else result["frames"])
 
 
 class ReachRecordingPhaseSelectionTests(unittest.TestCase):

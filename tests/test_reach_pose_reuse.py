@@ -299,7 +299,11 @@ class ReachPoseReuseTests(unittest.TestCase):
         b = RotationValue((F(1), F(0), F(1), F(0)))
         first = ops.multiply(a, b)
         for i in range(1, 10):
-            ops.rotate(b, (F(i), F(2), F(3)))
+            # A one-axis factor entry retains its last vector result. Vary
+            # the actual quaternion too so this still forces distinct keys
+            # past the unchanged two-entry capacity.
+            varying = RotationValue((F(1), F(0), F(i, 16), F(0)))
+            ops.rotate(varying, (F(i), F(2), F(3)))
             self.assertLessEqual(work.record()["cache_entries"], 2)
         self.assertEqual(ops.multiply(a, b), first)
         self.assertGreater(work.counts.get("cache_evict", 0), 0)

@@ -427,6 +427,7 @@ class ReachPhase:
     end: Fraction
     carriers: dict[str, MotionBound]
     source: dict[str, Any] | None = None
+    recording_angular_proof: Any = None
 
 
 @dataclass
@@ -467,7 +468,7 @@ def _boundary_record(time, before, after, incoming):
     return result
 
 
-def recording_phase_bounds(simulator, start, end):
+def recording_phase_bounds(simulator, start, end, *, recording_proof=False):
     """Prove every deliverable carrier and its complete source dependencies.
 
     A carrier certificate includes every local vertex/site through its geometry
@@ -494,7 +495,10 @@ def recording_phase_bounds(simulator, start, end):
                 seen.add(frame)
         # The ordinary exact phase traversal still follows all required
         # site/ownership/joint paths and prepares every root's spin plan.
-        return phase_bounds(simulator, start, end, selected_frames=selected)["frames"]
+        result = phase_bounds(simulator, start, end, selected_frames=selected,
+                              recording_proof=recording_proof)
+        return ((result["frames"], result["recording_angular_proof"]) if recording_proof
+                else result["frames"])
     except ReachAdmissionError as error:
         simulator._numeric_error(error, time=Fraction(start))
 
@@ -543,12 +547,12 @@ def reach_prefix_plan(model, end, *, work) -> ReachPrefixPlan:
         if stop <= time:
             _fail("OKE-E-PHASE-COVERAGE", "The validated prefix did not advance to a later boundary.", model=model)
         recording_stage("planning_phase", work=work)
-        source = recording_phase_bounds(simulator, time, stop)
+        source, angular_proof = recording_phase_bounds(simulator, time, stop, recording_proof=True)
         carriers = {path: MotionBound(value.carrier_speed_upper_m_per_s,
                                      value.carrier_acceleration_upper_m_per_s2,
                                      value.angular_speed_upper_rad_per_s)
                     for path, value in source.items()}
-        phases.append(ReachPhase(time, stop, carriers, source))
+        phases.append(ReachPhase(time, stop, carriers, source, angular_proof))
         states.append(copy.deepcopy(simulator.state))
         time = stop
     return ReachPrefixPlan(tuple(times), tuple(phases), tuple(states), copy.deepcopy(simulator.state),
@@ -1090,8 +1094,11 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach
             recording_context = object()
             moving_frames = plan.simulator.recording_moving_frames(state, frame_paths)
         selected_frames = frame_paths if new_phase else tuple(path for path in frame_paths if path in moving_frames)
+        angular_proof = (plan.phases[index].recording_angular_proof
+                         if index < len(plan.phases) else None)
         frames = plan.simulator.recording_frames(time, state, selected_frames,
-            moving_frames=moving_frames, recording_context=recording_context)
+            moving_frames=moving_frames, recording_context=recording_context,
+            recording_angular_proof=angular_proof)
         for node in nodes:
             _charge(work, "recording_pose")
             if not new_phase and node.frame_path not in moving_frames:

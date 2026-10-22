@@ -153,6 +153,15 @@ The October 17, 2026 reorganization preserved the six substantive records that e
 
 The [October 22 recording checkpoint](engineering/reach-recording-validation-2026-10-22/README.md) preserves current measured costs, exact source identities, all failed attempts and the next unmet recording gate.
 
+The [coaxial phase derivation](engineering/reach-coaxial-phase-bounds.md) proves
+the signed ideal derivative refinement. The [carrier rotation derivation](engineering/reach-carrier-rotation-cursors.md)
+binds the optional recording cursor to those source laws and the existing
+finite endpoint allowance. Both complete derivations participate in the
+recording's identified numerical basis; execution results remain separate.
+The [independent endpoint and arc derivation](engineering/reach-independent-endpoint-bounds.md)
+checks supplied bytes with sufficient exact bounds and retains the original
+normalization and norm calculations when those bounds cannot prove a claim.
+
 The [recorded delivery checkpoints](engineering/reach-delivery-implementation.md)
 and [independent reader implementation](engineering/reach-independent-validation.md)
 describe branch work and its remaining execution obligations. Implementation

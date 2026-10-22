@@ -99,10 +99,12 @@ class ReachRecordingRecurrenceTests(unittest.TestCase):
         all_contexts, outputs = [], []
         for _ in range(2):
             observed = []
-            def sample(sim, time, state, paths, *, moving_frames=None, recording_context=None):
+            def sample(sim, time, state, paths, *, moving_frames=None, recording_context=None,
+                       recording_angular_proof=None):
                 observed.append((state, recording_context, time))
                 return original(sim, time, state, paths, moving_frames=moving_frames,
-                                recording_context=recording_context)
+                                recording_context=recording_context,
+                                recording_angular_proof=recording_angular_proof)
             compiler = compile_construction(source_case("L02"))
             with patch.object(ReachSimulator, "recording_frames", sample):
                 result = export_glb(compiler.model, options=ExportOptions(end=F(3, 4), fps=1, helpers=False),

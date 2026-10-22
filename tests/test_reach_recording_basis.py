@@ -19,6 +19,8 @@ SOURCE_INPUTS = (
 DERIVATION_INPUTS = (
     "docs/engineering/reach-numeric-kernel.md",
     "docs/engineering/reach-source-kernel.md",
+    "docs/engineering/reach-coaxial-phase-bounds.md",
+    "docs/engineering/reach-carrier-rotation-cursors.md",
 )
 
 
@@ -60,7 +62,7 @@ class ReachRecordingBasisTests(unittest.TestCase):
     def test_versioned_basis_identifies_the_complete_recording_implementation(self):
         work = ReachExecutionWork()
         reach_conformance.verify_numeric_bases(current_basis(), work=work)
-        self.assertEqual(work.counts["independent_basis_open"], 10)
+        self.assertEqual(work.counts["independent_basis_open"], 12)
         self.assertEqual(work.max_operations, 100000)
         self.assertLessEqual(work.operations, 100000)
 

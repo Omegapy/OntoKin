@@ -418,8 +418,12 @@ class Validator:
     def field(self, path: str, name: str, node: Any = None) -> Value:
         instance = self.instances[path]
         member = instance.cls.members.get(name)
-        typ = self.parse_type(member.node.type) if member else FIELD_TYPES[name]
         def compute() -> Value:
+            # A completed guarded binding already retains its checked type.
+            # Resolve the declaration only when constructing that binding;
+            # every later read still passes through guarded() for dependency,
+            # generated-shape and request-budget checks.
+            typ = self.parse_type(member.node.type) if member else FIELD_TYPES[name]
             if name in instance.overrides:
                 bound = instance.overrides[name]
                 expression, ctx = bound.expression, bound.context

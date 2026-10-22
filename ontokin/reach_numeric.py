@@ -387,6 +387,18 @@ class DyadicContext:
         if width is not None:
             self.work.guard_bits(width)
         self.work.charge("interval_constituent", units)
+        # A constituent checkpoint can narrow the live domain. Admission of
+        # the original complete operand/preflight set must still hold before
+        # any integer allocation, including when a monotone corner is omitted.
+        self.work.guard(*values)
+        if width is not None:
+            self.work.guard_bits(width)
+
+    @staticmethod
+    def _canonical_cells(*values):
+        return all(type(value) is Interval and type(value.lo) is int
+                   and type(value.hi) is int and value.lo <= value.hi
+                   for value in values)
 
     def bounds(self, value):
         self.work.charge("interval_extract", 2)
@@ -412,12 +424,62 @@ class DyadicContext:
 
     def mul(self, a, b):
         width=max(abs(a.lo).bit_length(),abs(a.hi).bit_length())+max(abs(b.lo).bit_length(),abs(b.hi).bit_length())+1
+        if self._canonical_cells(a, b):
+            if a.lo == a.hi == 0 or b.lo == b.hi == 0:
+                self._op(a.lo,a.hi,b.lo,b.hi,width=width,units=0)
+                return Interval(0, 0)
+            if a.lo == a.hi == self.scale or b.lo == b.hi == self.scale:
+                self._op(a.lo,a.hi,b.lo,b.hi,width=width,units=0)
+                return b if a.lo == a.hi == self.scale else a
+            if a.lo == a.hi and b.lo == b.hi:
+                self._op(a.lo,a.hi,b.lo,b.hi,width=width,units=3)
+                product = a.lo*b.lo
+                return Interval(product//self.scale, -((-product)//self.scale))
+            if a.lo >= 0:
+                pairs = (((a.lo,b.lo),(a.hi,b.hi)) if b.lo >= 0 else
+                         ((a.hi,b.lo),(a.lo,b.hi)) if b.hi <= 0 else
+                         ((a.hi,b.lo),(a.hi,b.hi)))
+            elif a.hi <= 0:
+                pairs = (((a.lo,b.hi),(a.hi,b.lo)) if b.lo >= 0 else
+                         ((a.hi,b.hi),(a.lo,b.lo)) if b.hi <= 0 else
+                         ((a.lo,b.hi),(a.lo,b.lo)))
+            elif b.lo >= 0:
+                pairs = ((a.lo,b.hi),(a.hi,b.hi))
+            elif b.hi <= 0:
+                pairs = ((a.hi,b.lo),(a.lo,b.lo))
+            else:
+                pairs = None
+            if pairs is not None:
+                # Monotonicity fixes the exact two extremal products. The
+                # original four-corner width guard still precedes both of them.
+                self._op(a.lo,a.hi,b.lo,b.hi,width=width,units=4)
+                (x,y),(z,w) = pairs
+                low, high = x*y, z*w
+                return Interval(low//self.scale, -((-high)//self.scale))
         self._op(a.lo,a.hi,b.lo,b.hi,width=width,units=8)
         products=(a.lo*b.lo,a.lo*b.hi,a.hi*b.lo,a.hi*b.hi)
         return Interval(min(products)//self.scale,-((-max(products))//self.scale))
 
     def div(self, a, b):
-        self._op(a.lo,a.hi,b.lo,b.hi,width=max(abs(a.lo).bit_length(),abs(a.hi).bit_length())+self.p+1,units=8)
+        width=max(abs(a.lo).bit_length(),abs(a.hi).bit_length())+self.p+1
+        if self._canonical_cells(a, b) and not b.lo <= 0 <= b.hi:
+            if a.lo == a.hi == 0 or b.lo == b.hi == self.scale:
+                self._op(a.lo,a.hi,b.lo,b.hi,width=width,units=0)
+                return a
+            if b.lo > 0:
+                pairs = (((a.lo,b.hi),(a.hi,b.lo)) if a.lo >= 0 else
+                         ((a.lo,b.lo),(a.hi,b.hi)) if a.hi <= 0 else
+                         ((a.lo,b.lo),(a.hi,b.lo)))
+            else:
+                pairs = (((a.hi,b.hi),(a.lo,b.lo)) if a.lo >= 0 else
+                         ((a.hi,b.lo),(a.lo,b.hi)) if a.hi <= 0 else
+                         ((a.hi,b.hi),(a.lo,b.hi)))
+            self._op(a.lo,a.hi,b.lo,b.hi,width=width,units=4)
+            (x,y),(z,w) = pairs
+            # Python's integer floor division already has the correct sign
+            # for a negative denominator; -floor(-q) supplies the upper end.
+            return Interval((x*self.scale)//y, -((-(z*self.scale))//w))
+        self._op(a.lo,a.hi,b.lo,b.hi,width=width,units=8)
         if b.lo<=0<=b.hi:
             raise _Refine("Interval denominator contains zero")
         lower=[]; upper=[]
@@ -429,7 +491,21 @@ class DyadicContext:
         return Interval(min(lower),max(upper))
 
     def square(self, a):
-        self._op(a.lo,a.hi,width=2*max(abs(a.lo).bit_length(),abs(a.hi).bit_length())+1,units=4)
+        width=2*max(abs(a.lo).bit_length(),abs(a.hi).bit_length())+1
+        if self._canonical_cells(a):
+            if a.lo == a.hi == 0:
+                self._op(a.lo,a.hi,width=width,units=0)
+                return Interval(0, 0)
+            if a.lo <= 0 <= a.hi:
+                self._op(a.lo,a.hi,width=width,units=2)
+                largest = max(abs(a.lo), abs(a.hi))
+                upper = largest*largest
+                return Interval(0, -((-upper)//self.scale))
+            if a.lo == a.hi:
+                self._op(a.lo,a.hi,width=width,units=3)
+                value = a.lo*a.lo
+                return Interval(value//self.scale, -((-value)//self.scale))
+        self._op(a.lo,a.hi,width=width,units=4)
         lower=0 if a.lo<=0<=a.hi else min(a.lo*a.lo,a.hi*a.hi)
         upper=max(a.lo*a.lo,a.hi*a.hi)
         return Interval(lower//self.scale,-((-upper)//self.scale))

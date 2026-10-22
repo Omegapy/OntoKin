@@ -39,6 +39,12 @@ MAX_KEYED_ENTRIES = 256
 MAX_OWNERSHIP_DEPTH = 64
 MAX_PATH_BYTES = 32768
 MAX_JSON_BYTES = 4 * 1024 * 1024
+# Only constructors with immutable, context-free value payloads are eligible.
+# Names still resolve in their actual lexical context; a shadowing local
+# disables the fold. Geometry, source references, actions and surface recipes
+# deliberately retain their ordinary occurrence/provenance paths.
+_CONSTANT_CALLS = frozenset({"real", "abs", "min", "max", "near", "sqrt", "sin", "cos",
+    "vec3", "vector", "point", "quat", "axis_angle", "range", "rgba"})
 LIMITS = {"max_objects": 1000, "max_operations": 100000,
           "max_result_items": 1000, "max_elapsed_ms": 30000,
           "max_value_entries": 100000}
@@ -221,6 +227,9 @@ class ConstructionCompiler(Validator):
         self._tainted_values: dict[int, Value] = {}
         self._lexical_self_origins: dict[int, tuple[Value, str]] = {}
         self._expression_depth = 0
+        # A syntax classification, like the resolved-type index, not a value
+        # cache. Values share the request's existing 256-entry bounded LRU.
+        self._constant_syntax: dict[int, tuple[frozenset[str] | None, int]] = {}
         self._type_depth = 0
         self.model.program_revision = self.bundle.program_revision
         self.model.source_manifest = self.bundle.manifest()
@@ -241,6 +250,12 @@ class ConstructionCompiler(Validator):
         if member is None:
             return tuple(self._class_symbols[class_id].element_id)
         declared = self.effective(class_id).members[member]
+        return self._member_definition_id(declared)
+
+    def _member_definition_id(self, declared: Member) -> tuple[str, ...]:
+        # Member access and tree expansion already resolved this exact member.
+        # Re-entering effective() would repeat a class lookup for every field
+        # read and every generated occurrence without adding binding evidence.
         return tuple(self._class_symbols[declared.declaring].element_id) + (declared.node.key,)
 
     def _resolve(self, node: Any, name: str, kind: str | None = None):
@@ -727,7 +742,7 @@ class ConstructionCompiler(Validator):
             member = cls.members.get(name)
             if member is not None:
                 self.access(member, ctx, node)
-                self.bindings[id(node)] = self.definition_id(cls.name, name)
+                self.bindings[id(node)] = self._member_definition_id(member)
                 if member.node.kind == "parts":
                     typ = Type("Keyed", element=Type("Ref", name=self.class_reference(member.node)))
                     if actual is None:
@@ -779,12 +794,67 @@ class ConstructionCompiler(Validator):
                       self.index_value(result, Value(STRING, step.value), node, ctx))
         return result
 
+    def _constant_names(self, node: Any, depth: int = 0) -> frozenset[str] | None:
+        """Classify a sealed source subtree without reading occurrence state.
+
+        Linked source nodes live for the whole compiler and are never edited
+        during construction. Each first classification is charged; nesting is
+        bounded independently of whether the subtree will produce a cache hit.
+        The names returned must remain unshadowed in the current context.
+        Retain the subtree height too: a value warmed in a shallow call must
+        not bypass the same expression nesting limit in a deeper occurrence.
+        """
+        if id(node) in self._constant_syntax:
+            return self._constant_syntax[id(node)][0]
+        self.budget.tick(node)
+        if depth >= 128:
+            return None
+        kind = node.kind
+        children = ()
+        height = 1
+        if kind in {"number", "string", "bool"}:
+            result = frozenset()
+        elif kind == "name" and node.name in _CONSTANT_CALLS | {"world"}:
+            result = frozenset({node.name})
+        elif kind == "unary":
+            children = (node.value,)
+            result = frozenset()
+        elif kind == "binary":
+            children = (node.left, node.right)
+            result = frozenset()
+        elif kind == "call" and node.callee.kind == "name" and node.callee.name in _CONSTANT_CALLS:
+            children = (node.callee, *node.args)
+            result = frozenset()
+        else:
+            result = None
+        for child in children:
+            names = self._constant_names(child, depth + 1)
+            if names is None:
+                result = None
+                break
+            result = result | names
+            height = max(height, 1 + self._constant_syntax[id(child)][1])
+        self._constant_syntax[id(node)] = result, height
+        return result
+
     def expression(self, node: Any, ctx: Context) -> Value:
         self.budget.tick(node)
         self._expression_depth += 1
         try:
             if self._expression_depth > 128:
                 fail("OKL-E-RESOURCE", "Pure expression/call nesting exceeds bounded construction work.", node, phase="support")
+            constant_names = (self._constant_names(node) if self.reach_work is not None
+                              and node.kind in {"call", "binary"} else None)
+            constant_key = None
+            if (constant_names is not None and constant_names.isdisjoint(ctx.locals)
+                    and self._expression_depth + self._constant_syntax[id(node)][1] - 1 <= 128):
+                constant_key = ("construction_constant", id(node), ctx.abstract)
+                cached = self.reach_work.lookup(constant_key)
+                if (cached is not None and constant_names.isdisjoint(ctx.locals)
+                        and constant_key[-1] == ctx.abstract):
+                    # A binding can attach its own dependency/taint route to a
+                    # wrapper. Never return the retained wrapper to that code.
+                    return Value(cached.type, cached.value, cached.frame, cached.hint)
             if node.kind == "keyed":
                 element = self.parse_type(node.element_type)
                 self._keyed_leaf(element, node)
@@ -815,7 +885,11 @@ class ConstructionCompiler(Validator):
                 value = self.expression(node.target, ctx)
                 index = self.expression(node.index, ctx)
                 return self.index_value(value, index, node, ctx)
-            return super().expression(node, ctx)
+            result = super().expression(node, ctx)
+            if (constant_key is not None and constant_names.isdisjoint(ctx.locals)
+                    and constant_key[-1] == ctx.abstract):
+                self.reach_work.remember(constant_key, result)
+            return result
         finally:
             self._expression_depth -= 1
 
@@ -940,7 +1014,7 @@ class ConstructionCompiler(Validator):
             scope = Context(path, cls.name, member.declaring)
             member_path = path + "." + member_name
             member_id = ids + (child.key,)
-            definition_id = self.definition_id(cls.name, member_name)
+            definition_id = self._member_definition_id(member)
             child_steps = steps + (PathStep("member", member_name, child.start, child.end),)
             if child.kind == "part":
                 forwarded = self._forwards[path].get((("member", member_name),), [])

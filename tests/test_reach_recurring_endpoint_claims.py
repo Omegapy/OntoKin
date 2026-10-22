@@ -36,7 +36,18 @@ class ReachRecurringEndpointClaimTests(unittest.TestCase):
             # No producer endpoint bound is used as an expected value.
             observed.append((deepcopy(record), dict(minima)))
             return add(batch, record, width, stored_width, minima, magnitude)
-        with patch.object(reach_conformance._CertificateBatch, "add", observe):
+        def exact_orientation(quaternion, expected, limit, arithmetic, *, before_error=None):
+            return reach_conformance._recording_orientation_comparison(
+                quaternion, expected, arithmetic, before_error=before_error)
+        def exact_position(actual, expected, limit, arithmetic):
+            return arithmetic.difference(actual, expected)
+        # A sufficient L1 bound may be looser than the direct norm: lowering
+        # that optional bound alone can still leave a valid claim. Derive this
+        # hostile threshold from the original exact comparison. The forged
+        # bytes below still pass through the ordinary sufficient/fallback reader.
+        with patch.object(reach_conformance._CertificateBatch, "add", observe), \
+             patch.object(reach_conformance, "_recording_orientation_bound", exact_orientation), \
+             patch.object(reach_conformance, "_recording_position_bound", exact_position):
             result = export_glb(built.model, options=options,
                                 target_contract="ontokin.glb/0.6", work=built.reach_work)
         self.assertEqual(result.report["validation"]["status"], "passed")

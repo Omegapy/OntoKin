@@ -6,11 +6,13 @@ All arithmetic consumes the simulator's existing bounded request work context.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, field, replace
 from fractions import Fraction as F
+from math import isfinite
+from types import MappingProxyType
 
 from .reach_numeric import ReachAdmissionError, compare, exact, rational
-from .reach_pose import EXPOSED_ROTATION_ERROR, VECTOR_ERROR, uniform_source_bounds
+from .reach_pose import EXPOSED_ROTATION_ERROR, VECTOR_ERROR, RotationValue, uniform_source_bounds
 
 
 @dataclass(frozen=True)
@@ -59,6 +61,227 @@ _JOINT_PHASE_FIELDS = tuple(JointPhase.__dataclass_fields__)
 _COMPOSITION_FIELDS = tuple(name for name in _BOUND_FIELDS
                             if name not in {"max_position_l1_m", "path_offset_l1_m", "position_error_m"})
 _CACHE_DOMAIN = "reach_source_phase/0.1"
+
+
+@dataclass(frozen=True)
+class _AxialRate:
+    """Exact constant body angular velocity on one Cartesian basis axis."""
+    axis: int | None
+    value: F
+
+
+_ZERO_AXIAL_RATE = _AxialRate(None, F(0))
+
+
+@dataclass(frozen=True)
+class RecordingAngularFrame:
+    """One optional recording law, bound to immutable typed local operands."""
+    rate: _AxialRate
+    parent: str | None
+    witness: tuple
+    trig_count: int
+    token: object = field(default_factory=object, compare=False, repr=False)
+
+
+@dataclass(frozen=True)
+class RecordingAngularProof:
+    start: F
+    end: F
+    program_revision: str
+    frames: MappingProxyType
+
+
+class _RecordingWitnessUnavailable(Exception):
+    pass
+
+
+def current_recording_angular_witness(model, state, kind, path, *, work):
+    """Snapshot one fixed-size source law for both proof and cursor checking.
+
+    No state/model identity substitutes for these current inputs. Numeric
+    values retain their concrete types and binary64 signs; each nested vector
+    has a fixed maximum of four components. This helper supplies no numeric
+    result or source authority and creates no cache. Unsupported mutable shapes
+    make the optional proof unavailable, leaving ordinary evaluation in place.
+    """
+    work.charge("recording_angular_witness_guard")
+    if (work.max_operand_bits < 1075 or type(kind) is not str or type(path) is not str
+            or kind not in {"world", "root", "site", "follow", "joint"}):
+        return None
+    work.guard_bits(1075)
+
+    def freeze(value, depth=0):
+        if depth > 2:
+            raise _RecordingWitnessUnavailable
+        if value is None:
+            return ("none",)
+        if type(value) is str:
+            return ("string", value)
+        if type(value) is float:
+            if not isfinite(value):
+                raise _RecordingWitnessUnavailable
+            return ("binary64", value.hex())
+        if type(value) is F:
+            work.guard(value)
+            return ("rational", value.numerator, value.denominator)
+        if type(value) is int:
+            work.guard(value)
+            return ("integer", value)
+        if type(value) is tuple and len(value) <= 4:
+            return ("tuple", tuple(freeze(part, depth + 1) for part in value))
+        if type(value) is RotationValue:
+            if type(value.error_rad) is not F:
+                raise _RecordingWitnessUnavailable
+            return ("private_rotation", vector(value.components, 4), freeze(value.error_rad, depth + 1),
+                    None if value.frozen_projection is None else vector(value.frozen_projection, 4))
+        raise _RecordingWitnessUnavailable
+
+    def vector(value, size):
+        if type(value) is not tuple or len(value) != size:
+            raise _RecordingWitnessUnavailable
+        if any(type(part) not in (float, int, F) for part in value):
+            raise _RecordingWitnessUnavailable
+        return freeze(value)
+
+    def pose(value):
+        return vector(value.position, 3), vector(value.rotation, 4)
+
+    def law(claimant):
+        if claimant is None:
+            return None
+        action, active = model.actions[claimant], state.actions[claimant]
+        reach = ((action.reach.shoulder, action.reach.elbow)
+                 if action.kind == "reach_planar" else None)
+        solution = active.solution.target_rad if active.solution is not None else None
+        return (freeze(claimant), freeze(action.kind), freeze(action.target), freeze(action.duration),
+                freeze(action.vector), freeze(action.goal), freeze(reach), freeze(active.status),
+                freeze(active.initial), freeze(active.ideal_initial), freeze(solution),
+                freeze(active.elapsed), freeze(active.running_since),
+                freeze(active.ideal_rotation_error), freeze(active.initial_rotation))
+
+    try:
+        if kind == "world":
+            return (None, ("world",)) if path == "world" else None
+        if kind == "root":
+            if state.modes[path] == "dynamic":
+                return None
+            witness = (kind, path, freeze(state.modes[path]), vector(state.positions[path], 3),
+                       vector(state.ideal_positions[path], 3), vector(state.orientations[path], 4),
+                       freeze(state.root_rotation_values.get(path)),
+                       freeze(state.root_rotation_errors.get(path, F(0))),
+                       law(state.claims.get((path, "orientation"))),
+                       law(state.claims.get((path, "translation"))))
+            return None, witness
+        if kind == "site":
+            site = model.sites[path]
+            return site.owner + ".frame", (kind, path, freeze(site.owner), pose(site.pose))
+        if kind == "follow":
+            follow = model.follows[path]
+            return follow.parent, (kind, path, freeze(follow.parent), freeze(follow.child), pose(follow.offset))
+        joint = model.joints[path]
+        child = model.sites[joint.child]
+        moving = joint.kind in {"hinge", "slider"}
+        witness = (kind, path, freeze(joint.kind), freeze(joint.parent), freeze(joint.child),
+                   freeze(joint.axis), freeze(joint.limits), freeze(child.owner), pose(child.pose),
+                   law(state.claims.get((path, "coordinate"))) if moving else None,
+                   freeze(state.coordinates[path]) if moving else None,
+                   freeze(state.ideal_coordinates[path]) if moving else None)
+        return joint.parent + ".frame", witness
+    except (_RecordingWitnessUnavailable, KeyError, AttributeError):
+        return None
+
+
+def _single_axis(vector, work, *, unit=False):
+    """Recognize a canonical binary64 axis without approximate comparisons."""
+    work.charge("phase_axial_axis_guard")
+    # The optional proof can fall back when a lowered live domain does not
+    # admit every possible canonical binary64 component. Existing phase
+    # arithmetic still applies its exact per-operand admission checks.
+    if work.max_operand_bits < 1075:
+        return None
+    if (type(vector) is not tuple or len(vector) != 3
+            or any(type(value) is not float or not isfinite(value) for value in vector)):
+        return None
+    work.guard_bits(1075)
+    axes = tuple(index for index, value in enumerate(vector) if value)
+    if len(axes) != 1 or unit and vector[axes[0]] not in (-1.0, 1.0):
+        return None
+    return axes[0]
+
+
+def _transport_axial_rate(rate, rotation, work):
+    """Transport through a fixed quaternion that preserves or reverses its axis.
+
+    Both the forward and inverse rotations have the same sign on this
+    one-dimensional invariant subspace. No quaternion normalization, products,
+    trigonometry, or sampled orientation is needed for these exact zero patterns.
+    """
+    work.charge("phase_axial_transport_guard")
+    if rate is None:
+        return None
+    work.guard(rate.value)
+    if not rate.value:
+        return _ZERO_AXIAL_RATE
+    if work.max_operand_bits < 1075:
+        return None
+    if (type(rotation) is not tuple or len(rotation) != 4
+            or any(type(value) is not float or not isfinite(value) for value in rotation)
+            or not any(rotation)):
+        return None
+    work.guard_bits(1075)
+    component = rate.axis + 1  # Canonical quaternion order is w,x,y,z.
+    other = tuple(rotation[index] for index in range(1, 4) if index != component)
+    if not any(other):
+        return rate
+    if not rotation[0] and not rotation[component]:
+        work.charge("phase_axial_reverse")
+        work.guard(rate.value)
+        return _AxialRate(rate.axis, -rate.value)
+    return None
+
+
+def _hinge_axial_rate(parent, axis, slope, work):
+    """Add signed affine hinge rates only in a proved common body axis."""
+    work.charge("phase_axial_hinge_guard")
+    work.guard(slope)
+    if parent is None:
+        return None
+    work.guard(parent.value)
+    if not parent.value and not slope:
+        return _ZERO_AXIAL_RATE
+    component = _single_axis(axis, work, unit=True)
+    if component is None or parent.value and parent.axis != component:
+        return None
+    # The unit-axis sign selection is a charged bounded classification. The
+    # subsequent exact addition retains the ordinary intermediate-width guard.
+    work.charge("phase_axial_hinge_sign")
+    work.guard(slope, parent.value)
+    value = PhaseArithmetic(work).add(parent.value, -slope if axis[component] < 0 else slope)
+    return _AxialRate(component, value) if value else _ZERO_AXIAL_RATE
+
+
+def _root_axial_rate(action, runtime, work):
+    work.charge("phase_axial_root_guard")
+    if (type(runtime.ideal_rotation_error) is not F or runtime.ideal_rotation_error
+            or runtime.initial_rotation is not None):
+        return None
+    component = _single_axis(action.vector, work)
+    if component is None:
+        return None
+    value = rational(action.vector[component], work)
+    # A root spin is world-fixed. Its initial inverse rotation gives the
+    # constant body vector; the eligible axis has the same forward/inverse sign.
+    return _transport_axial_rate(_AxialRate(component, value), runtime.initial, work)
+
+
+def _tighten_angular(bound, rate, work):
+    if rate is None:
+        return bound
+    work.charge("phase_axial_derivative_guard")
+    work.guard(rate.value, bound.angular_speed_upper_rad_per_s,
+               bound.angular_acceleration_upper_rad_per_s2)
+    return replace(bound, angular_speed_upper_rad_per_s=abs(rate.value),
+                   angular_acceleration_upper_rad_per_s2=F(0))
 
 
 def _local_translation_independent(parent):
@@ -186,19 +409,23 @@ def joint_phase(simulator, path, start, end, state):
     return result
 
 
-def phase_bounds(simulator, start, end, state=None, *, selected_frames=None):
+def phase_bounds(simulator, start, end, state=None, *, selected_frames=None, recording_proof=False):
     """Return uniform bounds on one continuous closed source phase.
 
     The state governs the entire interval; the caller splits at all source and
     natural boundaries. The public result contains immutable bound records and
     exact scalar joint descriptors, never mutable solver/work objects.
     ``selected_frames`` is an internal anchor-proof optimization.
+    ``recording_proof`` retains optional immutable angular laws for a separately
+    bounded recording cursor; ordinary callers receive no extra result fields.
     """
     start, end = F(start), F(end)
     state = simulator.state if state is None else state
     if not 0 <= start <= end <= simulator.model.duration:
         raise ValueError("A source phase must be an ordered interval within the scene.")
     model, work, ops = simulator.model, simulator.work, simulator.pose_ops
+    if type(recording_proof) is not bool:
+        raise ValueError("A recording proof selector must be boolean.")
     a = PhaseArithmetic(work)
     for block in model.events:
         work.charge("phase_boundary_check")
@@ -215,6 +442,32 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None):
                 raise ValueError("A uniform phase cannot cross a force completion.")
     incoming = simulator._incoming(state)
     objects, frames, joints, resolving = {}, {"world": PhaseBound()}, {}, set()
+    # This phase-local proof state follows the same bounded source traversal.
+    # It is neither a sampled pose map nor an additional numerical-result cache.
+    axial_rates = {"world": _ZERO_AXIAL_RATE}
+    angular_frames = {}
+    proof_revision = model.program_revision if recording_proof else None
+    if recording_proof:
+        work.charge("phase_recording_proof_domain")
+        angular_frames["world"] = RecordingAngularFrame(_ZERO_AXIAL_RATE, None, ("world",), 0)
+
+    def witness(kind, path):
+        return (current_recording_angular_witness(model, state, kind, path, work=work)
+                if recording_proof else None)
+
+    def retain_angular(frame, rate, bound, original, kind, path):
+        if not recording_proof or rate is None or original is None:
+            return
+        parent, operands = original
+        if parent is not None and parent not in angular_frames:
+            return
+        work.charge("phase_recording_proof_publish")
+        # Check once more after the publication callback. A partial phase or a
+        # changed local law cannot authorize a cursor through an old signature.
+        if witness(kind, path) != original:
+            return
+        work.guard(rate.value, bound.trig_count)
+        angular_frames[frame] = RecordingAngularFrame(rate, parent, operands, bound.trig_count)
 
     def finish(**values):
         inputs = {name: values.get(name, 0 if name.endswith("count") else F(0)) for name in (
@@ -242,7 +495,7 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None):
         work.remember(key, result)
         return result
 
-    def compose(parent, local):
+    def compose(parent, local, *, axial_rate=None):
         # The recurrence never reads the parent's position_error_m: it derives
         # that allowance again from inherited anchor errors and path counts.
         # Its extent and path offset appear only in the final uniform position
@@ -276,6 +529,9 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None):
         def checked(bound):
             # A lookup, identity check, or insertion callback can narrow the
             # live domain after the original operands/results were checked.
+            # The cached recurrence is unchanged. Only its ideal derivatives
+            # are tightened after a fresh topology proof for this source node.
+            bound = _tighten_angular(bound, axial_rate, work)
             work.guard(*operands, *(getattr(bound, field) for field in _BOUND_FIELDS))
             return bound
 
@@ -397,6 +653,7 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None):
         extent = a.l1(actual_position)
         position_error = a.l1(tuple(a.sub(x, y) for x, y in zip(actual_position, ideal_position)))
         speed = omega = F(0)
+        axial_rate = _ZERO_AXIAL_RATE
         rotation_error = state.root_rotation_errors.get(path, F(0))
         trig, products = 0, 1
         claimant = state.claims.get((path, "translation"))
@@ -415,10 +672,13 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None):
             if any(action.vector) and elapsed:
                 trig, products = 1, 3
             omega = a.l1(action.vector) if runtime.status == "running" else F(0)
-        return finish(max_position_l1_m=extent, trig_count=trig, product_count=products,
+            if runtime.status == "running":
+                axial_rate = _root_axial_rate(action, runtime, work)
+        bound = finish(max_position_l1_m=extent, trig_count=trig, product_count=products,
             anchor_position_error_m=position_error, anchor_rotation_error_rad=rotation_error,
             carrier_speed_upper_m_per_s=speed, angular_speed_upper_rad_per_s=omega,
             actual_speed_upper_m_per_s=speed, actual_angular_speed_upper_rad_per_s=omega)
+        return bound, axial_rate
 
     def dynamic(path):
         anchor, error = state.dynamic[path], state.dynamic_errors.get(path, AnchorError())
@@ -457,7 +717,12 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None):
                 frames[path] = instance(stem)
             else:
                 site = model.sites[stem]
-                frames[path] = compose(instance(site.owner), constant(site.pose))
+                original = witness("site", stem)
+                parent = instance(site.owner)
+                rate = _transport_axial_rate(axial_rates[site.owner + ".frame"], site.pose.rotation, work)
+                frames[path] = compose(parent, constant(site.pose), axial_rate=rate)
+                axial_rates[path] = rate
+                retain_angular(path, rate, frames[path], original, "site", stem)
         return frames[path]
 
     def instance(path):
@@ -469,9 +734,13 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None):
         resolving.add(path)
         if path in incoming:
             kind, relation = incoming[path]
+            witness_kind, witness_path = ("follow" if kind == "follow" else "joint"), relation
+            original = witness(witness_kind, witness_path)
             if kind == "follow":
                 follow = model.follows[relation]
-                result = compose(frame(follow.parent), constant(follow.offset))
+                parent = frame(follow.parent)
+                rate = _transport_axial_rate(axial_rates[follow.parent], follow.offset.rotation, work)
+                result = compose(parent, constant(follow.offset), axial_rate=rate)
             else:
                 joint = model.joints[relation]
                 local = PhaseBound()
@@ -479,15 +748,28 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None):
                     if relation not in joints:
                         joints[relation] = joint_phase(simulator, relation, start, end, state)
                     local = joint_local(joint, joints[relation])
-                result = compose(compose(frame(joint.parent + ".frame"), local),
-                                 constant(model.sites[joint.child].pose, inverse=True))
+                parent = frame(joint.parent + ".frame")
+                rate = axial_rates[joint.parent + ".frame"]
+                if joint.kind == "hinge":
+                    rate = _hinge_axial_rate(rate, joint.axis, joints[relation].ideal_slope, work)
+                joint_bound = compose(parent, local, axial_rate=rate)
+                child_pose = model.sites[joint.child].pose
+                rate = _transport_axial_rate(rate, child_pose.rotation, work)
+                result = compose(joint_bound, constant(child_pose, inverse=True), axial_rate=rate)
         elif state.modes[path] == "dynamic":
             result = dynamic(path)
+            rate = None
+            original = None
+            witness_kind, witness_path = "root", path
         else:
-            result = root(path)
+            witness_kind, witness_path = "root", path
+            original = witness(witness_kind, witness_path)
+            result, rate = root(path)
         resolving.remove(path)
         objects[path] = result
         frames[path + ".frame"] = result
+        axial_rates[path + ".frame"] = rate
+        retain_angular(path + ".frame", rate, result, original, witness_kind, witness_path)
         return result
 
     if selected_frames is None:
@@ -498,4 +780,10 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None):
     else:
         for path in selected_frames:
             frame(path)
-    return {"objects": objects, "frames": frames, "joints": joints}
+    result = {"objects": objects, "frames": frames, "joints": joints}
+    if recording_proof:
+        work.charge("phase_recording_proof_return")
+        work.guard(start, end)
+        result["recording_angular_proof"] = RecordingAngularProof(
+            start, end, proof_revision, MappingProxyType(angular_frames))
+    return result

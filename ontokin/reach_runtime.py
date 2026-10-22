@@ -13,7 +13,7 @@ from .evaluator import (_ActionState, _DynamicInitial, _Kinematics, _NumericFaul
 from .force_runtime import ForceSimulator, _ForceRunState
 from .json_limits import JSONLimitError, measure_json
 from .reach_kinematics import (admit_planar, measured_residual_squared,
-                               rounded_sqrt, sample_pair)
+                               recording_pair, rounded_sqrt, sample_pair)
 from .reach_numeric import ReachAdmissionError, ReachExecutionWork, compare, exact, round_binary64
 from .reach_projection import (occurrence, reach_projection, reach_record_bound,
                                measure_reach_json)
@@ -231,6 +231,12 @@ class RecordingPose:
     orientation: tuple[float, float, float, float]
 
 
+@dataclass(frozen=True)
+class _WorldTargetPoint:
+    """The observed target point; no unused frame or derivative claim."""
+    position: tuple[float, float, float]
+
+
 class ReachSimulator(ForceSimulator):
     """One exact clock and two claims per reach, with no partial admission."""
 
@@ -299,6 +305,10 @@ class ReachSimulator(ForceSimulator):
         root_slot = bool(signature) and signature[0] == "root"
         if len(self.model.objects) + len(self.model.sites) > self.work.max_cache_entries and not root_slot:
             self.work.charge("source_pose_cache_bypass")
+            if type(path) is str:
+                translated = self._translated_source_slot(signature, build)
+                if translated is not None:
+                    return translated
             return build()
         key = ("reach_source_pose", self.model.program_revision, path)
         old = self.work.lookup(key)
@@ -307,6 +317,151 @@ class ReachSimulator(ForceSimulator):
         result = build()
         self.work.remember(key, (signature, result))
         return result
+
+    def _translated_source_slot(self, signature, build):
+        """Reuse an unchanged full source node under an even grid translation.
+
+        This is a pure numerical slot shared by source occurrences. Topology,
+        claims, current coordinates, and each public output are still resolved
+        by the caller. Recording-only tuples and relative-tip transforms do
+        not enter this helper.
+        """
+        from math import isfinite
+        from .model import Pose
+        from .reach_numeric import MAX_OPERAND_BITS
+        from .reach_pose import BITS, PoseValue, RotationValue
+
+        self.work.charge("source_relative_pose_domain")
+        cap = self.work.max_operand_bits
+        if cap != MAX_OPERAND_BITS:
+            return None
+        if len(signature) == 3 and signature[0] == "follow":
+            kind, parent, local = signature
+            extra = ()
+        elif len(signature) == 7 and signature[0] == "joint":
+            _, parent, joint_kind, axis, coordinate, slope, local = signature
+            if joint_kind not in {"hinge", "slider", "rigid", "grip"}:
+                return None
+            if not (type(axis) is tuple and len(axis) == 3 and
+                    all(type(value) is float and isfinite(value) for value in axis)):
+                return None
+            if joint_kind in {"hinge", "slider"}:
+                if not (type(coordinate) is float and isfinite(coordinate) and type(slope) is Fraction):
+                    return None
+                self.work.guard(slope)
+            elif coordinate is not None or slope is not None:
+                return None
+            kind, extra = "joint", (joint_kind, axis, coordinate, slope)
+        elif len(signature) == 2 and type(signature[0]) is PoseValue:
+            kind, (parent, local), extra = "site", signature, ()
+        else:
+            return None
+        # These are the complete numerical operands read by the original
+        # builders. Strict types prevent equal booleans/malformed vectors
+        # from borrowing a proof for ordinary canonical source values.
+        if not (type(parent) is PoseValue and parent._ops is self.pose_ops and
+                type(parent.rotation) is RotationValue and
+                type(local) is Pose and type(local.position) is tuple and len(local.position) == 3 and
+                type(local.rotation) is tuple and len(local.rotation) == 4 and
+                all(type(value) is float and isfinite(value) for value in (*local.position, *local.rotation))):
+            return None
+        vectors = (parent.exact_position, parent.exact_velocity, parent.exact_omega, parent.rotation.components)
+        if not all(type(values) is tuple and len(values) == length and
+                   all(type(value) is Fraction for value in values)
+                   for values, length in zip(vectors, (3, 3, 3, 4))):
+            return None
+        if type(parent.position_error_m) is not Fraction or type(parent.rotation.error_rad) is not Fraction:
+            return None
+        frozen = parent.rotation.frozen_projection
+        if frozen is not None and not (type(frozen) is tuple and len(frozen) == 4 and
+                                      all(type(value) is float and isfinite(value) for value in frozen)):
+            return None
+        operands = (*parent.exact_position, *parent.exact_velocity, *parent.exact_omega,
+                    *parent.rotation.components, parent.position_error_m, parent.rotation.error_rad)
+        self.work.guard(*operands)
+        # Nearest/even rounding commutes with an EVEN integer grid shift.
+        # Keeping the low grid bit is necessary at exact halfway values.
+        # Larger/ungrounded operands keep the ordinary source build, avoiding
+        # new prospective subtraction widths near the arithmetic ceiling.
+        if any(value.denominator & (value.denominator - 1) or
+               value.denominator.bit_length() > BITS + 1 or
+               abs(value.numerator).bit_length() > MAX_OPERAND_BITS // 4
+               for value in parent.exact_position):
+            return None
+        parity = tuple(value.numerator & 1 if value.denominator.bit_length() == BITS + 1 else 0
+                       for value in parent.exact_position)
+        if max(parent.position_error_m.numerator.bit_length(),
+               parent.position_error_m.denominator.bit_length()) > MAX_OPERAND_BITS // 4:
+            return None
+        # The inherited position allowance also enters each composition only
+        # additively. Distinct translated mounts may have different such
+        # allowances despite sharing every actual rotation/rate calculation.
+        parent_shape = (parity, parent.rotation, parent.exact_velocity, parent.exact_omega)
+        key = ("reach_source_translated_node", cap, kind, parent_shape,
+               extra, local.position, local.rotation)
+        cached = self.work.lookup(key)
+        if self.work.max_operand_bits != cap:
+            return None
+        self.work.guard(*operands)
+        if cached is None:
+            result = build()
+            if self.work.max_operand_bits != cap:
+                return None
+            if type(result) is not PoseValue:
+                return result
+            if any(max(value.numerator.bit_length(), value.denominator.bit_length()) > MAX_OPERAND_BITS // 4
+                   for value in (*result.exact_position, result.position_error_m)):
+                return result
+            try:
+                position_offset = tuple(Fraction(0) if value == origin else
+                    exact(value, origin, "sub", self.work)
+                    for value, origin in zip(result.exact_position, parent.exact_position))
+                error_offset = (Fraction(0) if result.position_error_m == parent.position_error_m else
+                    exact(result.position_error_m, parent.position_error_m, "sub", self.work))
+            except ReachAdmissionError as error:
+                if (error is self.work.callback_error or self.work.max_operand_bits == cap or
+                        error.details.get("budget") != "numeric_operand_bits"):
+                    raise
+                return None
+            if self.work.max_operand_bits != cap:
+                return None
+            self.work.remember(key, (parent.exact_position, parent.position_error_m,
+                                     position_offset, error_offset, result))
+            if self.work.max_operand_bits != cap:
+                return None
+            self.work.guard(*operands, *result.exact_position, *result.exact_velocity, *result.exact_omega,
+                            *result.rotation.components, result.position_error_m, result.rotation.error_rad)
+            return result
+        origin, inherited_error, position_offset, error_offset, result = cached
+        self.work.charge("source_relative_pose_reuse")
+        if self.work.max_operand_bits != cap:
+            return None
+        self.work.guard(*origin, inherited_error, *position_offset, error_offset,
+                        *result.exact_position, *result.exact_velocity, *result.exact_omega,
+                        *result.rotation.components, result.position_error_m, result.rotation.error_rad)
+        if parent.exact_position == origin and parent.position_error_m == inherited_error:
+            return result
+        try:
+            translated = tuple(value if current == previous else
+                current if not offset else offset if not current else exact(current, offset, "add", self.work)
+                for value, current, previous, offset in
+                zip(result.exact_position, parent.exact_position, origin, position_offset))
+            position_error = (result.position_error_m if parent.position_error_m == inherited_error else
+                parent.position_error_m if not error_offset else error_offset if not parent.position_error_m else
+                exact(parent.position_error_m, error_offset, "add", self.work))
+        except ReachAdmissionError as error:
+            if (error is self.work.callback_error or self.work.max_operand_bits == cap or
+                    error.details.get("budget") != "numeric_operand_bits"):
+                raise
+            return None
+        if self.work.max_operand_bits != cap:
+            return None
+        self.work.guard(*translated, position_error)
+        # Position is occurrence-specific. All other immutable projections
+        # belong to the same exact rotation and spatial rates in this key.
+        projection = {name: value for name, value in result._projection.items() if name != "position"}
+        return PoseValue(translated, result.rotation, result.exact_velocity, result.exact_omega,
+                         position_error, self.pose_ops, projection)
 
     def _constant_pose(self, value, *, inverse=False):
         key = ("reach_source_constant_pose", inverse, value.position, value.rotation)
@@ -399,19 +554,22 @@ class ReachSimulator(ForceSimulator):
         except ReachAdmissionError as error:
             self._numeric_error(error, action=action, time=time)
 
-    def _pair(self, path, time, state):
+    def _pair(self, path, time, state, *, recording=False):
         runtime, action = state.actions[path], self.model.actions[path]
         self._check()
         key = (runtime.initial, runtime.solution.target_rad, self.model.actions[path].duration,
                runtime.elapsed_at(time), runtime.status == "running")
+        if recording:
+            key = ("recording", self.work.max_operand_bits, *key)
         if key not in self._pair_cache:
             if len(self._pair_cache) >= 256:
                 self._pair_cache.clear()
-            self._pair_cache[key] = sample_pair(runtime.initial, runtime.solution.target_rad,
+            sampler = recording_pair if recording else sample_pair
+            self._pair_cache[key] = sampler(runtime.initial, runtime.solution.target_rad,
                 action.duration, runtime.elapsed_at(time), running=runtime.status == "running", work=self.work)
         return self._pair_cache[key]
 
-    def _coordinate(self, path, time, state):
+    def _coordinate(self, path, time, state, *, recording=False):
         claimant = state.claims.get((path, "coordinate"))
         if claimant is None:
             return state.coordinates[path], 0.0
@@ -428,7 +586,7 @@ class ReachSimulator(ForceSimulator):
                     if runtime.status == "running" else 0.0)
             return value, rate
         index = 0 if path == action.reach.shoulder else 1
-        pair = self._pair(claimant, time, state)
+        pair = self._pair(claimant, time, state, recording=recording)
         return pair.coordinates_rad[index], pair.rates_rad_s[index]
 
     def _exact_coordinate(self, path, time, state):
@@ -484,7 +642,7 @@ class ReachSimulator(ForceSimulator):
         pose.position, pose.orientation, pose.velocity, pose.omega
 
     def recording_frames(self, time, state, selected_paths, *, moving_frames=None,
-                          recording_context=None):
+                          recording_context=None, recording_angular_proof=None):
         """Sample p/q from a validated phase without constructing unused rates.
 
         The recording planner must first validate the complete requested prefix
@@ -496,6 +654,8 @@ class ReachSimulator(ForceSimulator):
         An optional opaque phase context enables bounded angular recurrence
         only for recording endpoints. Its numerical cursors belong to the
         existing work cache; ordinary source poses and anchors remain direct.
+        An optional immutable angular proof permits complete carrier cursors
+        only after this traversal checks its current chained source witnesses.
         """
         selected = []
         seen = set()
@@ -512,7 +672,8 @@ class ReachSimulator(ForceSimulator):
             _, frames = self._resolve_kinematics(time, state, selected_frames=selected,
                                                pose_only=True, recording_only=True,
                                                recording_moving_frames=moving_frames,
-                                               recording_context=recording_context)
+                                               recording_context=recording_context,
+                                               recording_angular_proof=recording_angular_proof)
             result = {}
             for path in selected:
                 self._check()
@@ -604,7 +765,8 @@ class ReachSimulator(ForceSimulator):
         incoming graph already used. If no claims or dynamics remain, every
         derivative is exactly zero; position, rotation, and their private
         allowances follow the identical arithmetic DAG. Rebuild the complete
-        outgoing maps with fresh zero rates, never with incoming projections.
+        outgoing maps with fresh zero rates and no incoming rate projections.
+        Already exposed p/q may retain their same-operand, same-domain receipt.
 
         This is one boundary's retained graph, not another numerical cache.
         All source identities and exact final coordinates are checked again;
@@ -612,6 +774,7 @@ class ReachSimulator(ForceSimulator):
         """
         from .reach_numeric import MAX_OPERAND_BITS
         from .reach_pose import PoseValue, RotationValue
+        from math import isfinite
 
         context = self._terminal_pose_context
         work = self.work
@@ -702,6 +865,26 @@ class ReachSimulator(ForceSimulator):
                        pose.position_error_m, pose.rotation.error_rad)
             value = PoseValue(pose.exact_position, pose.rotation, POSE_ZERO, POSE_ZERO,
                               pose.position_error_m, self.pose_ops)
+            if (type(pose._projection) is dict and type(pose._projection_domains) is dict
+                    and any(name in pose._projection for name in ("position", "orientation"))):
+                work.charge("source_terminal_static_projections")
+                if not valid_context():
+                    return None
+                # Copy only an existing immutable p/q exposure whose ordinary
+                # _expose receipt names these identical private operands. The
+                # new rates and their projections always start independently.
+                # Re-read both plain maps after the cancellation checkpoint.
+                if type(pose._projection) is dict and type(pose._projection_domains) is dict:
+                    for name, length in (("position", 3), ("orientation", 4)):
+                        operand = pose.exact_position if name == "position" else pose.rotation
+                        domain = pose._projection_domains.get(name)
+                        exposed = pose._projection.get(name)
+                        if (type(domain) is tuple and len(domain) == 2
+                                and type(domain[0]) is int and domain[0] == work.max_operand_bits
+                                and domain[1] is operand and type(exposed) is tuple and len(exposed) == length
+                                and all(type(part) is float and isfinite(part) for part in exposed)):
+                            value._projection[name] = exposed
+                            value._projection_domains[name] = domain
             if path == "world":
                 frames[path] = self._identity_pose
                 self.pose_ops.ensure_finite(frames[path])
@@ -732,7 +915,7 @@ class ReachSimulator(ForceSimulator):
 
     def _resolve_kinematics(self, time, state, *, selected_frames=None, pose_only=False,
                             recording_only=False, recording_moving_frames=None,
-                            recording_context=None):
+                            recording_context=None, recording_angular_proof=None):
         """Resolve the actual pose graph without intermediate float exposure.
 
         This separate 0.6 path leaves every older profile's pose arithmetic
@@ -763,6 +946,57 @@ class ReachSimulator(ForceSimulator):
                    ops.compose_recording if recording_only else ops.compose)
         incoming = self._incoming(state)
         objects, frames, resolving = {}, {"world": self._identity_pose}, set()
+        angular_proof = None
+        valid_angular_frames = set()
+        if recording_angular_proof is not None:
+            from .reach_numeric import rational
+            from .reach_phase import (_AxialRate, RecordingAngularFrame, RecordingAngularProof,
+                                      current_recording_angular_witness)
+            self.work.charge("recording_body_proof_domain")
+            if (recording_context is None or
+                    type(recording_angular_proof) is not RecordingAngularProof):
+                raise ValueError("A carrier rotation proof belongs to a recorded phase.")
+            proof = recording_angular_proof
+            if (self.work.max_operand_bits == 32768 and
+                    proof.program_revision == self.model.program_revision and
+                    type(proof.frames) is MappingProxyType and
+                    type(proof.start) is Fraction and type(proof.end) is Fraction):
+                proof_time = rational(time, self.work)
+                self.work.guard(proof.start, proof.end)
+                if (compare(proof.start, proof_time, self.work) <= 0 and
+                        compare(proof_time, proof.end, self.work) <= 0):
+                    angular_proof = proof
+
+        def angular_frame(frame_path, kind, source_path):
+            """Validate one current law and its already visited parent proof.
+
+            This set stores only structural validity for the current graph
+            traversal. Numeric cursor state remains in the shared bounded LRU.
+            A changed source operand, authority or topology uses the ordinary
+            sampler; neither state identity nor a prior-clock pose is proof.
+            """
+            if angular_proof is None:
+                return None
+            self.work.charge("recording_body_witness")
+            record = angular_proof.frames.get(frame_path)
+            if (self.work.max_operand_bits != 32768 or
+                    type(record) is not RecordingAngularFrame or
+                    type(record.trig_count) is not int or record.trig_count < 0 or
+                    type(record.rate) is not _AxialRate or
+                    type(record.rate.value) is not Fraction or
+                    (record.rate.value and not record.trig_count) or
+                    (record.parent is not None and record.parent not in valid_angular_frames)):
+                return None
+            self.work.guard(record.rate.value, record.trig_count)
+            current = current_recording_angular_witness(
+                self.model, state, kind, source_path, work=self.work)
+            if (self.work.max_operand_bits != 32768 or
+                    current != (record.parent, record.witness)):
+                return None
+            valid_angular_frames.add(frame_path)
+            return record
+
+        angular_frame("world", "world", "world")
 
         def slot(path, signature, build, *, owner=None):
             if recording_only and recording_moving_frames is not None:
@@ -796,6 +1030,7 @@ class ReachSimulator(ForceSimulator):
                     owner = instance(site.owner)
                     frames[path] = slot(path, (owner, site.pose),
                         lambda: compose(owner, self._constant_pose(site.pose)), owner=site.owner)
+                    angular_frame(path, "site", stem)
             return frames[path]
 
         def instance(path):
@@ -813,16 +1048,26 @@ class ReachSimulator(ForceSimulator):
                     parent = frame(follow.parent)
                     result = slot(path, ("follow", parent, follow.offset),
                         lambda: compose(parent, self._constant_pose(follow.offset)))
+                    angular_frame(path + ".frame", "follow", relation_path)
                 else:
                     joint = self.model.joints[relation_path]
                     parent = frame(joint.parent + ".frame")
+                    child_pose = self.model.sites[joint.child].pose
+                    record = angular_frame(path + ".frame", "joint", relation_path)
+                    body_cursor = False
+                    if record is not None and joint.kind == "hinge":
+                        child_position = ops._recording_vector(child_pose.position)
+                        self.work.charge("recording_body_child_origin")
+                        body_cursor = (not any(child_position) and
+                                       self.work.max_operand_bits == 32768)
                     coordinate, slope = None, None
-                    if joint.kind in {"hinge", "slider"}:
+                    if joint.kind in {"hinge", "slider"} and not body_cursor:
                         if pose_only:
-                            coordinate, slope = self._coordinate(relation_path, time, state)[0], Fraction(0)
+                            coordinate = self._coordinate(relation_path, time, state,
+                                recording=recording_context is not None)[0]
+                            slope = Fraction(0)
                         else:
                             coordinate, slope, _ = self._exact_coordinate(relation_path, time, state)
-                    child_pose = self.model.sites[joint.child].pose
                     def connected():
                         relative = self._identity_pose
                         if joint.kind == "hinge":
@@ -841,8 +1086,31 @@ class ReachSimulator(ForceSimulator):
                                                       velocity=ops.scale(joint.axis, slope)))
                         return compose(compose(parent, relative),
                                        self._constant_pose(child_pose, inverse=True))
-                    result = slot(path,
-                        ("joint", parent, joint.kind, joint.axis, coordinate, slope, child_pose), connected)
+                    if body_cursor:
+                        from .scene import MAX_KEYFRAMES
+                        def direct_seed():
+                            # Disabling the context at this separate graph's
+                            # root disables every ancestor cursor as well. Its
+                            # private q has no public quaternion projection.
+                            _, direct_frames = self._resolve_kinematics(time, state,
+                                selected_frames=(path + ".frame",), pose_only=True,
+                                recording_only=True)
+                            return direct_frames[path + ".frame"].rotation
+                        rotation = ops.recording_body_orientation(direct_seed,
+                            record.rate.axis, record.rate.value, time,
+                            phase_start=angular_proof.start, phase_end=angular_proof.end,
+                            context=recording_context, path="carrier:" + path,
+                            proof_token=record.token, max_steps=MAX_KEYFRAMES)
+                        # With a zero child-site offset, the hinge and inverse
+                        # child-site rotations do not move the parent's origin.
+                        # Repeated identical 96-bit grid projections are
+                        # idempotent; retain the original final position grid.
+                        result = ops.make_recording(
+                            position=ops._rounded_vector(parent.exact_position),
+                            orientation=rotation)
+                    else:
+                        result = slot(path,
+                            ("joint", parent, joint.kind, joint.axis, coordinate, slope, child_pose), connected)
             elif state.modes[path] == "dynamic":
                 result = self._dynamic_kinematics(path, time, state, pose_only=pose_only,
                                                 recording_context=recording_context)
@@ -856,7 +1124,8 @@ class ReachSimulator(ForceSimulator):
                 claimant = state.claims.get((path, "translation"))
                 if claimant is not None:
                     action, runtime = self.model.actions[claimant], state.actions[claimant]
-                    position = ops.affine(runtime.initial, action.vector, runtime.elapsed_at(time))
+                    affine = ops.recording_affine if recording_context is not None else ops.affine
+                    position = affine(runtime.initial, action.vector, runtime.elapsed_at(time))
                     if runtime.status == "running" and not pose_only:
                         velocity = action.vector
                 claimant = state.claims.get((path, "orientation"))
@@ -871,6 +1140,7 @@ class ReachSimulator(ForceSimulator):
                     lambda: (ops.make_recording(position=position, orientation=rotation) if recording_only
                              else ops.make(position=position, orientation=rotation,
                                            velocity=velocity, omega=omega)))
+                angular_frame(path + ".frame", "root", path)
             resolving.remove(path)
             # This is an explicit finiteness check; opaque internals continue
             # down the graph even after canonical components are cached.
@@ -894,59 +1164,129 @@ class ReachSimulator(ForceSimulator):
         return objects, frames
 
     def _tip_base(self, action, time, state, *, terminal=False):
+        from .reach_pose import PoseValue, RotationValue
+
         payload = action.reach
-        key = (id(state), self._pose_cache_time(time, state), "tip", payload.base_frame, payload.tip)
-        self._check()
-        if key in self._derived_pose_cache:
-            return self._derived_pose_cache[key]
-        context = self._terminal_pose_context
-        same_pose = (context is not None and context.time == time and
-                     context.staged_state is state and context.frames is not None)
-        tip_key = (payload.base_frame, payload.tip)
-        self.work.charge("source_terminal_pose_guard")
-        if same_pose and tip_key in context.tips:
-            result = context.tips[tip_key]
+        ops = self.pose_ops
+        while True:
+            cap = self.work.max_operand_bits
+            self._check()
+            if self.work.max_operand_bits != cap:
+                continue
+            key = (id(state), self._pose_cache_time(time, state), "tip", payload.base_frame, payload.tip, cap)
+            if key in self._derived_pose_cache:
+                return self._derived_pose_cache[key]
+            context = self._terminal_pose_context
+            same_pose = (context is not None and context.time == time and
+                         context.staged_state is state and context.frames is not None)
+            tip_key = (payload.base_frame, payload.tip, cap)
+            self.work.charge("source_terminal_pose_guard")
+            if self.work.max_operand_bits != cap:
+                continue
+            if same_pose and tip_key in context.tips:
+                result = context.tips[tip_key]
+                if len(self._derived_pose_cache) < 256:
+                    self.work.charge("source_terminal_pose_publish")
+                    if self.work.max_operand_bits != cap:
+                        continue
+                    self._derived_pose_cache[key] = result
+                return result
+            # A terminal record exposes only p/q along the complete dependency
+            # paths of its base and tip. Its unused rates need not be constructed.
+            # The boundary transaction still checks the complete incoming graph and
+            # the final staged graph. Partial maps never enter the full graph cache.
+            if same_pose:
+                # Natural reach latching preserves canonical p/q even when its
+                # incoming rates are nonzero. These frames are never reused as
+                # the staged full graph or as outgoing derivative values.
+                frames = context.frames
+            elif terminal:
+                _, frames = self._resolve_kinematics(time, state,
+                    selected_frames=(payload.base_frame, payload.tip + ".frame"), pose_only=True)
+            else:
+                _, frames = self._kinematics(time, state)
+            base, tip = frames[payload.base_frame], frames[payload.tip + ".frame"]
+            self.work.charge("source_relative_pose_operands")
+            private = all(type(value) is PoseValue and type(value.exact_position) is tuple
+                          and len(value.exact_position) == 3
+                          and all(type(part) is Fraction for part in value.exact_position)
+                          and type(value.rotation) is RotationValue
+                          and type(value.rotation.components) is tuple and len(value.rotation.components) == 4
+                          and all(type(part) is Fraction for part in value.rotation.components)
+                          and type(value.rotation.error_rad) is Fraction for value in (base, tip))
+            if private:
+                self.work.guard(*base.exact_position, *tip.exact_position,
+                    *base.rotation.components, base.rotation.error_rad,
+                    *tip.rotation.components, tip.rotation.error_rad)
+                difference = tuple(exact(a, b, "sub", self.work)
+                                   for a, b in zip(tip.exact_position, base.exact_position))
+                if self.work.max_operand_bits != cap:
+                    continue
+                # World translation cancels before rotation. Repeated independent
+                # arms can share this exact arithmetic without sharing identities,
+                # lifecycle state, observations or a larger numerical cache.
+                numeric_key = ("reach_relative_tip_pose", cap, difference, base.rotation, tip.rotation)
+                result = self.work.lookup(numeric_key)
+                if self.work.max_operand_bits != cap:
+                    continue
+                if result is None:
+                    inverse = ops.inverse_rotation(base.rotation)
+                    rotation = ops.multiply(inverse, tip.rotation)
+                    result = ops.make(position=ops.rotate(inverse, difference), orientation=rotation)
+                    if self.work.max_operand_bits != cap:
+                        continue
+                    self.work.remember(numeric_key, result)
+            else:
+                # Unrecognized private shapes retain the ordinary helper's
+                # coercion/domain behavior and cannot borrow a pure result.
+                rotation = ops.multiply(ops.inverse_rotation(base.rotation), tip.rotation)
+                result = ops.make(position=ops.relative_point(base, tip), orientation=rotation)
+            if self.work.max_operand_bits != cap:
+                continue
+            if same_pose and len(context.tips) < 256:
+                self.work.charge("source_terminal_pose_remember")
+                if self.work.max_operand_bits != cap:
+                    continue
+                context.tips[tip_key] = result
             if len(self._derived_pose_cache) < 256:
-                self.work.charge("source_terminal_pose_publish")
                 self._derived_pose_cache[key] = result
             return result
-        # A terminal record exposes only p/q along the complete dependency
-        # paths of its base and tip. Its unused rates need not be constructed.
-        # The boundary transaction still checks the complete incoming graph and
-        # the final staged graph. Partial maps never enter the full graph cache.
-        if same_pose:
-            # Natural reach latching preserves canonical p/q even when its
-            # incoming rates are nonzero. These frames are never reused as
-            # the staged full graph or as outgoing derivative values.
-            frames = context.frames
-        elif terminal:
-            _, frames = self._resolve_kinematics(time, state,
-                selected_frames=(payload.base_frame, payload.tip + ".frame"), pose_only=True)
-        else:
-            _, frames = self._kinematics(time, state)
-        base, tip = frames[payload.base_frame], frames[payload.tip + ".frame"]
-        def relative_pose():
-            rotation = self.pose_ops.multiply(self.pose_ops.inverse_rotation(base.rotation), tip.rotation)
-            return self.pose_ops.make(position=self.pose_ops.relative_point(base, tip), orientation=rotation)
-        result = self._pose_slot(("tip_in_base", payload.base_frame, payload.tip), (base, tip), relative_pose)
-        if same_pose and len(context.tips) < 256:
-            self.work.charge("source_terminal_pose_remember")
-            context.tips[tip_key] = result
-        if len(self._derived_pose_cache) < 256:
-            self._derived_pose_cache[key] = result
-        return result
 
     def _world_target(self, payload, time, state, frames):
-        key = (id(state), self._pose_cache_time(time, state), "target", payload.base_frame, payload.target_m)
-        self._check()
-        if key not in self._derived_pose_cache:
+        # The public reach observation consumes only this canonical point.
+        # Its position uses exactly compose's rotate/add/grid/projection path;
+        # target orientation, velocity and their allowances are never required.
+        from .reach_pose import RotationValue
+
+        ops = self.pose_ops
+        while True:
+            cap = self.work.max_operand_bits
+            self._check()
             base = frames[payload.base_frame]
-            result = self._pose_slot(("target_in_world", payload.base_frame, payload.target_m), (base,),
-                lambda: self.pose_ops.compose(base, self.pose_ops.make(position=payload.target_m)))
-            if len(self._derived_pose_cache) >= 256:
+            position, target = ops._vector(base.exact_position), ops._vector(payload.target_m)
+            rotation = ops._rotation(base.rotation)
+            self.work.charge("source_world_target_rotation")
+            if not (type(rotation) is RotationValue and type(rotation.components) is tuple
+                    and len(rotation.components) == 4
+                    and all(type(value) is Fraction for value in rotation.components)
+                    and any(rotation.components) and type(rotation.error_rad) is Fraction):
+                raise ReachAdmissionError("reach_numeric", "An observed target requires a private source rotation.")
+            self.work.guard(*rotation.components, rotation.error_rad)
+            if self.work.max_operand_bits != cap:
+                continue
+            key = ("reach_world_target_point", cap, position, rotation, target)
+            result = self.work.lookup(key)
+            if self.work.max_operand_bits != cap:
+                continue
+            if result is None:
+                offset = ops.rotate(rotation, target)
+                actual = ops._rounded_vector(ops._add_exact_vectors(position, offset))
+                result = _WorldTargetPoint(ops._vector_projection(actual))
+                if self.work.max_operand_bits != cap:
+                    continue
+                self.work.remember(key, result)
+            if self.work.max_operand_bits == cap:
                 return result
-            self._derived_pose_cache[key] = result
-        return self._derived_pose_cache[key]
 
     def _latch_ordinary(self, path, time, state, status):
         action, runtime = self.model.actions[path], state.actions[path]

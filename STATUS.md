@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-22T04:40:12Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-22T05:35:38Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -44,41 +44,44 @@ local `569b67b0bdc6854cc069e6a00590e0f15267ae03`
 [draft PR #25](https://github.com/Omegapy/OntoKin/pull/25). Original branches,
 failed attempts and earlier evidence retain their identities.
 
-Latest tested recording implementation is `b325986cf363648e4c5643424584ac2eb32097d9`,
-tree `e8cbd75f0f8c17e998cc4c3d8482fc0aaf0505ef`. The actual published baseline
+Latest tested recording implementation is `1bd2e4e7f5fb21a18db3e09f8f1d9e05b443d9df`,
+tree `7f88f4862d2b3b6a7d6d919665ca8a4a86ab38e3`. The actual published baseline
 was newer than the supplied handoff: `215efd6c99d2e42ca54ddbd9d898dd99fa678418`.
-Its complete 1,309-file tree was recovered and verified before development.
+Its complete 1,309-file tree was recovered and verified before development;
+checkpoint 001 was published as `ad6169f65b4aef6569d5237351ab0f28722075b0`.
 
 The [October 22 checkpoint](docs/engineering/reach-recording-validation-2026-10-22/README.md)
-records incremental history preflight, guarded residual/spin reuse, component
-endpoint proofs, locality-preserving endpoint traversal, independent exact-grid
-and zero-work reductions, callback-domain corrections, and a proved natural
-static terminal graph reuse with fresh outgoing zero rates. Frozen source,
-expected results, quarter-allocation inequalities, tolerances and all public
-resource limits remain unchanged.
+records construction/planning reuse, exact coaxial derivative bounds, guarded
+carrier cursors, relative observations and terminal projection reuse, exact
+interval-corner arithmetic and independent sufficient endpoint/arc proofs.
+Frozen source, expected results, trajectories, quarter-allocation inequalities,
+tolerances and all public resource limits remain unchanged.
 
-The latest complete source run, finished **04:34:53 UTC**, passes **14/28** with
-stable before/after tracked inputs and the unchanged **100,000** shared limit.
-P01 uses **68,458**, P13 **92,266**, P14 **77,666**, and P17 **64,989** operations.
-P02, P05, P07-P09, P11, P16, P18-P20, P23 and L01-L03 still fail on the attempted
-100,001st operation. Both fresh complete runs and all failure receipts are retained.
+The latest complete source run, finished **05:34:19 UTC**, passes **16/28** with
+stable tracked inputs under the unchanged **100,000** shared limit. P02 and P19
+now pass. P01 uses **65,176**, P13 **92,240**, P14 **74,824**, P17 **61,507** and
+P19 **70,347** operations. **P05, P07-P09, P11, P16, P18, P20, P23 and L01-L03**
+still fail on the attempted 100,001st operation. All six complete runs and their
+failure receipts are retained across two verified archives.
 
-The identified combined cohort at `e48186e` records **245 passes / one error**
-from 246 methods: the known L02 0.75-second export budget failure. The newer
-endpoint/terminal cohort at `b325986` passes **47/47**, with no failures, errors
-or skips and stable inputs. A preceding invocation with two nonexistent module
-names is retained as a failed run. These overlapping focused results are not a
-complete regression. The earlier **1,374/1,374** full regression at local
-`cce81ce` / remote `9414b0c` does not verify the current code.
+The current combined cohort passes **98/98**, with no failures/errors/skips and
+stable inputs. Interval/source verification at `d6e3662` passed **60/60**,
+including all **45 source cases**. Earlier stale basis assertions, constant-depth
+and performance regressions, subsequent fixes and all raw failures remain
+preserved. These overlapping focused results are not a complete regression.
+The earlier **1,374/1,374** full regression does not verify current code.
 
-A verified **217-member** archive preserves all new combined and worker runs,
-profiles, exact source patch, local commit records and drivers. P23 compilation
-alone uses **31,952** shared operations; its remaining failure is still in
-planning. P09/P16/L03 sampling and other cases' certificate/independent checks
-remain bottlenecks. Complete the recordings before Agent, regression and
-release execution. The separate release-auditor implementation previously
-reported at `6119dd2` is absent from the published tree and retained archives;
-its old 49-test result is evidence, not recovered runnable tooling.
+Checkpoint 002's **688-member** archive preserves these runs, profiles and exact
+source changes. Two initially truncated containers were rebuilt under a fully
+paused filesystem window; every persisted member was rechecked, and the failed
+container identities remain separately recorded. P23 compilation fell from **31,952 to 26,373** shared operations;
+planning and P09/P16/L03 sampling/certification remain bottlenecks. A later
+reconciliation found **21 clean older unpublished checkouts**, correcting the
+initial availability report. Their changed source bytes are preserved; selected
+changes have been freshly ported and tested. All **six exact original auditor
+files** were recovered by SHA-256 match at `d5c9183`; current review/integration
+and execution remain pending. Their historical 49-test result is not current
+acceptance. Complete the recordings before Agent, regression and release roles.
 
 The historical rows below retain their original cuts and limits.
 

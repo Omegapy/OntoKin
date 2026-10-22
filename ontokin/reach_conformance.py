@@ -54,14 +54,23 @@ class _Bounds:
     helpers. Native integer operations are bounded before allocation and
     cancellation is polled on both sides of integer square root and reduction.
     """
-    def __init__(self, work=None):
+    def __init__(self, work=None, *, cache_intermediates=True):
         self.work = work
+        self.cache_intermediates = cache_intermediates
 
     def tick(self, kind="independent_bound_arithmetic"):
         _tick(self.work, kind)
 
     def reuse(self, key, calculate):
         """Cache only independently derived immutable arithmetic results."""
+        if not self.cache_intermediates and key[0] in {
+                "root", "difference", "normalize", "key_pose_comparison"}:
+            # Sequential certificate checking already retains the previous
+            # endpoint and shares complete orientation/arc proofs across
+            # carriers. Their nested one-shot scalars need no second cache
+            # lookup, insertion, promotion or eviction. Calculate them afresh;
+            # the arithmetic and all current operand/cancellation checks run.
+            return calculate()
         if self.work is None or not hasattr(self.work, "lookup") or not hasattr(self.work, "remember"):
             return calculate()
         # A successful proof also establishes its intermediate operand domain.
@@ -185,16 +194,22 @@ class _Bounds:
         return self.reuse(("root", value, precision), lambda: self._root(value, precision))
 
     def _root(self, value, precision):
-        self.bits(value.numerator.bit_length() + 2 * precision, 2 * precision + 1)
         self.tick("independent_sqrt_scale")
+        self.bits(value.numerator.bit_length(), value.denominator.bit_length(),
+                  value.numerator.bit_length() + 2 * precision, 2 * precision + 1)
         numerator = value.numerator << (2 * precision)
         self.tick("independent_sqrt_divide")
+        self.bits(numerator.bit_length(), value.denominator.bit_length())
         integer = numerator // value.denominator
         self.tick("independent_sqrt_enter")
+        self.bits(integer.bit_length())
         root = math.isqrt(integer)
         self.tick("independent_sqrt_return")
         self.bits(2 * root.bit_length() + value.denominator.bit_length(), root.bit_length() + 1)
         self.tick("independent_sqrt_exactness")
+        self.bits(numerator.bit_length(), value.denominator.bit_length(),
+                  2 * root.bit_length() + value.denominator.bit_length(), root.bit_length() + 1,
+                  precision + 1)
         upper = root + int(root * root * value.denominator != numerator)
         scale = 1 << precision
         return _Cell(Fraction(root, scale), Fraction(upper, scale))
@@ -519,7 +534,9 @@ def verify_numeric_bases(quantization, *, work):
     entries = [(name, _identified_digest(root / name, work=work)) for name in names]
     _tick(work, "independent_basis_aggregate")
     implementation = hashlib.sha256("".join(name + "\0" + digest + "\n" for name, digest in entries).encode("ascii")).hexdigest()
-    derivation_names = ("docs/engineering/reach-numeric-kernel.md", "docs/engineering/reach-source-kernel.md")
+    derivation_names = ("docs/engineering/reach-numeric-kernel.md", "docs/engineering/reach-source-kernel.md",
+                        "docs/engineering/reach-coaxial-phase-bounds.md",
+                        "docs/engineering/reach-carrier-rotation-cursors.md")
     derivations = [(name, _identified_digest(root / name, work=work)) for name in derivation_names]
     _tick(work, "independent_basis_aggregate")
     derivation = hashlib.sha256("".join(name + "\0" + digest + "\n" for name, digest in derivations).encode("ascii")).hexdigest()
@@ -1072,6 +1089,11 @@ def _aligned_reference(quaternion, expected, arithmetic):
     needed merely to select the smaller of two valid upper bounds.
     """
     arithmetic.tick("independent_quaternion_sign")
+    # The sign checkpoint can narrow the live domain after source-cell
+    # admission. Check it before native Fraction comparisons or antipodal
+    # negations, including on the optional sufficient-bound path.
+    quaternion = _recording_vector(quaternion, 4, arithmetic)
+    arithmetic._cache_operand_domain(tuple(expected))
     axis = max(range(4), key=lambda index: abs(quaternion[index]))
     value, interval = quaternion[axis], expected[axis]
     if value < 0 < interval.lo or value > 0 > interval.hi:
@@ -1139,49 +1161,176 @@ def _recording_orientation_comparison(quaternion, expected, arithmetic, *, befor
     return result
 
 
+def _bound_domain(arithmetic):
+    return getattr(arithmetic.work, "max_operand_bits", MAX_OPERAND_BITS)
+
+
+def _small_proof_values(values):
+    # This is metadata of already admitted exact values, not a new arithmetic
+    # operation. The deliberately small sufficient-proof domain also fits every
+    # intermediate of the original normalization/difference proof at the full
+    # 32,768-bit limit. Narrower live limits always keep that original path.
+    return all(type(value) is Fraction and value.numerator.bit_length() <= 256
+               and value.denominator.bit_length() <= 256 for value in values)
+
+
+def _optional_endpoint_l1(actual, expected, arithmetic):
+    """An optional exact L1 enclosure, never a replacement on insufficiency."""
+    arithmetic.tick("independent_sufficient_endpoint_domain")
+    if len(actual) != len(expected) or len(actual) not in (3, 4):
+        _error("OKE-E-CERTIFICATE", "An independent vector comparison has incompatible dimensions.")
+    if _bound_domain(arithmetic) != MAX_OPERAND_BITS:
+        return None
+    actual = tuple(arithmetic.value(value) for value in actual)
+    expected = arithmetic.cells(expected)
+    if (_bound_domain(arithmetic) != MAX_OPERAND_BITS
+            or not _small_proof_values((*actual, *(value for cell in expected for value in (cell.lo, cell.hi))))):
+        return None
+    result = Fraction(0)
+    for value, cell in zip(actual, expected):
+        if cell.lo == cell.hi:
+            error = Fraction(0) if value == cell.lo else abs(arithmetic.sub(value, cell.lo))
+        else:
+            first, last = abs(arithmetic.sub(value, cell.lo)), abs(arithmetic.sub(value, cell.hi))
+            error = first if arithmetic.compare(first, last) >= 0 else last
+        if error:
+            result = arithmetic.add(result, error) if result else error
+    return result
+
+
+def _recording_orientation_bound(quaternion, expected, limit, arithmetic, *, before_error=None):
+    """Prove the actual endpoint claim without normalization when sufficient.
+
+    The expected cells come from the independent ideal rigid-pose reference;
+    its true enclosed quaternion is unit, including source event transfers.
+    For that q and nonzero raw x, the reverse triangle inequality gives
+    ||x/||x||-q|| <= |1-||x||||+||x-q|| <= 2||x-q|| <= 2 L1.
+    A bound at most 1/2 also proves ||x|| >= 3/4, so a zero or near-zero raw
+    quaternion cannot enter this shortcut. The source interval need not consist
+    solely of unit points. See reach-independent-endpoint-bounds.md.
+
+    The supplied claim is only a threshold for this independently computed
+    bound. A tighter claim retains the original normalization and norm proof.
+    """
+    if _bound_domain(arithmetic) == MAX_OPERAND_BITS:
+        arithmetic.tick("independent_sufficient_orientation_domain")
+        quaternion = _recording_vector(quaternion, 4, arithmetic)
+        if type(expected) not in (tuple, list) or len(expected) != 4:
+            _error("OKE-E-CERTIFICATE", "An independent orientation comparison requires four source cells.")
+        expected = arithmetic.cells(expected)
+        def calculate():
+            aligned = _aligned_reference(quaternion, expected, arithmetic)
+            distance = _optional_endpoint_l1(quaternion, aligned, arithmetic)
+            return () if distance is None else (arithmetic.mul(2, distance),)
+        candidate = arithmetic.reuse(("recording_orientation_sufficient_bound", quaternion, expected), calculate)
+        if (candidate and _bound_domain(arithmetic) == MAX_OPERAND_BITS
+                and arithmetic.compare(candidate[0], Fraction(1, 2)) <= 0
+                and arithmetic.compare(candidate[0], limit) <= 0):
+            if before_error is not None:
+                before_error()
+            # A position callback or cache callback can narrow the live cap.
+            # It cannot make this shortcut stand in for a narrower root proof.
+            if _bound_domain(arithmetic) == MAX_OPERAND_BITS:
+                return None, candidate[0]
+    return _recording_orientation_comparison(quaternion, expected, arithmetic, before_error=before_error)
+
+
+def _recording_position_bound(position, expected, limit, arithmetic):
+    bound = _optional_endpoint_l1(position, expected, arithmetic)
+    if (bound is not None and _bound_domain(arithmetic) == MAX_OPERAND_BITS
+            and arithmetic.compare(bound, limit) <= 0
+            and _bound_domain(arithmetic) == MAX_OPERAND_BITS):
+        return bound
+    return arithmetic.difference(position, expected)
+
+
+def _endpoint_claim_limits(rows, carrier, index, arithmetic):
+    """Admit both actual adjacent-row claims; retain only their current minimum."""
+    arithmetic.tick("independent_endpoint_claims")
+    records = tuple(rows[key, carrier] for key in (index - 1, index) if (key, carrier) in rows)
+    limits = []
+    for name in ("max_endpoint_position_error_m", "max_endpoint_unit_quaternion_error"):
+        values = []
+        for record in records:
+            value = record[name]
+            if type(value) not in (int, float) or (type(value) is float and not math.isfinite(value)) or value < 0:
+                _error("OKE-E-CERTIFICATE", "A certificate quantity must be a finite nonnegative number.",
+                       details={"quantity": name})
+            if type(value) is int:
+                arithmetic.bits(value.bit_length())
+            values.append(value)
+        # Full certificate coverage was already established. An isolated key
+        # with no positive-width intervals has no claim to use as a shortcut.
+        if not values:
+            return None
+        first = values[0]
+        if len(values) == 2 and values[1] != first and arithmetic.compare(values[1], first) < 0:
+            first = values[1]
+        limits.append(first)
+    return tuple(limits)
+
+
 def _key_comparisons(reference, geometry, tracks, time, index, arithmetic, *, previous=None, previous_time=None,
-                     recording_context=None):
+                     recording_context=None, endpoint_rows=None):
     result, pending, observed, candidates = {}, [], [], []
     for carrier, item in geometry.items():
         arithmetic.tick("independent_key_pose")
         position = _recording_vector(tracks[carrier]["translation"][index], 3, arithmetic)
         quaternion = _recording_vector(tracks[carrier]["rotation"][index], 4, arithmetic)
+        limits = (_endpoint_claim_limits(endpoint_rows, carrier, index, arithmetic)
+                  if endpoint_rows is not None else None)
         same = (previous is not None
+                and previous[carrier].get("_proof_cap") == _bound_domain(arithmetic)
                 and _same_recording_vector(position, tracks[carrier]["translation"][index - 1], 3)
                 and _same_recording_vector(quaternion, tracks[carrier]["rotation"][index - 1], 4))
-        observed.append((carrier, item, position, quaternion, same))
+        observed.append((carrier, item, position, quaternion, same, limits))
         if same:
             candidates.append(item["frame"])
     stationary = (reference.recording_stationary_frames(candidates, previous_time, time, side="after")
                   if candidates else frozenset())
-    for carrier, item, position, quaternion, same in observed:
+    for carrier, item, position, quaternion, same, limits in observed:
         if same and item["frame"] in stationary:
             # The existing preceding-endpoint map is required by the interval
             # proof. Reuse its result only after independently proving unchanged
             # source operands and checking these actual supplied buffer values.
             # No additional numeric cache or history is retained.
             arithmetic.tick("independent_stationary_key_comparison")
-            result[carrier] = dict(previous[carrier])
-        else:
-            pending.append((carrier, item, position, quaternion))
+            if (previous[carrier].get("_proof_cap") == _bound_domain(arithmetic)
+                    and (limits is None or (
+                        arithmetic.compare(previous[carrier]["position_error"], limits[0]) <= 0
+                        and arithmetic.compare(previous[carrier]["quaternion_error"], limits[1]) <= 0))
+                    and previous[carrier].get("_proof_cap") == _bound_domain(arithmetic)):
+                result[carrier] = dict(previous[carrier])
+                continue
+        pending.append((carrier, item, position, quaternion, limits))
     ideals = (reference.recording_pose_enclosures(
-        tuple(item["frame"] for _, item, _, _ in pending), time, side="after",
+        tuple(item["frame"] for _, item, _, _, _ in pending), time, side="after",
         recording_context=recording_context) if pending else {})
-    for carrier, item, position, quaternion in pending:
+    for carrier, item, position, quaternion, limits in pending:
         ideal = ideals[item["frame"]]
         def compare():
+            admitted_cap = _bound_domain(arithmetic)
             expected = (ideal.orientation[1], ideal.orientation[2], ideal.orientation[3], ideal.orientation[0])
             position_error = None
             def compare_position():
                 nonlocal position_error
-                position_error = arithmetic.difference(position, ideal.position)
-            normalized, quaternion_error = _recording_orientation_comparison(
-                quaternion, expected, arithmetic, before_error=compare_position)
+                position_error = (arithmetic.difference(position, ideal.position) if limits is None
+                                  else _recording_position_bound(position, ideal.position, limits[0], arithmetic))
+            if limits is None:
+                normalized, quaternion_error = _recording_orientation_comparison(
+                    quaternion, expected, arithmetic, before_error=compare_position)
+            else:
+                normalized, quaternion_error = _recording_orientation_bound(
+                    quaternion, expected, limits[1], arithmetic, before_error=compare_position)
+            magnitude = arithmetic.total(abs(arithmetic.value(value)) for value in position)
+            cap = admitted_cap if admitted_cap == _bound_domain(arithmetic) else None
             return (("position_error", position_error),
                     ("quaternion_error", quaternion_error), ("normalized", normalized),
-                    ("magnitude", arithmetic.total(abs(arithmetic.value(value)) for value in position)))
+                    ("magnitude", magnitude), ("_proof_cap", cap),
+                    ("_quaternion_operand", quaternion),
+                    ("_normalized_cap", cap if normalized is not None else None))
         result[carrier] = dict(arithmetic.reuse(("key_pose_comparison", tuple(position), tuple(quaternion),
-                                                ideal.position, ideal.orientation), compare))
+                                                ideal.position, ideal.orientation, limits), compare))
     return result
 
 
@@ -1200,6 +1349,72 @@ def _stored_arc(raw_first, raw_last, first, last, arithmetic):
             _error("OKE-E-QUATERNION-LIFT", "Actual stored endpoint signs do not form a coherent short-path lift.")
         return _arc_bound(first, last, arithmetic)
     return arithmetic.reuse(("stored_endpoint_arc", tuple(raw_first), tuple(raw_last), first, last), calculate)
+
+
+def _certified_stored_arc(raw_first, raw_last, first, last, angular_speed, width, limit, arithmetic,
+                          *, source_path_valid=True):
+    """A sufficient arc proof from independent endpoints and source path length.
+
+    Exact normalization preserves raw dot-product sign. With a nonnegative dot,
+    the stored lift is the short quaternion-sphere lift. The independent ideal
+    physical angular-speed bound W gives source arc at most W*h/2. Each proved
+    endpoint unit-chord error e <= 1/2 contributes at most 2e in that metric.
+    Thus c=W*h/2+2*(e0+e1) bounds the stored chord, and for c<=1/2 the monotone
+    envelope c/(1-c*c/4) bounds its actual short arc. No writer bound is used.
+    The caller admits this source path only when both endpoints use the same
+    retained phase. An outgoing semantic-boundary endpoint instead obtains the
+    original normalized-cell proof, as does any insufficient result.
+    """
+    arithmetic.tick("independent_sufficient_arc_domain")
+    raw_first = _recording_vector(raw_first, 4, arithmetic)
+    raw_last = _recording_vector(raw_last, 4, arithmetic)
+    errors = (first["quaternion_error"], last["quaternion_error"])
+    source = (angular_speed, width, *errors)
+    arithmetic._cache_operand_domain(source)
+    if (_bound_domain(arithmetic) == MAX_OPERAND_BITS
+            and _same_recording_vector(raw_first, raw_last, 4)
+            and first.get("_proof_cap") == last.get("_proof_cap") == MAX_OPERAND_BITS
+            and _same_recording_vector(raw_first, first.get("_quaternion_operand"), 4)
+            and _same_recording_vector(raw_last, last.get("_quaternion_operand"), 4)):
+        # Each completed current-domain endpoint proof already established
+        # that this exact raw operand has a valid nonzero normalization.
+        # Identical raw operands denote the identical normalized quaternion,
+        # whose literal lift has positive dot and exactly zero arc. This
+        # statement needs no source path, including at an outgoing boundary.
+        return Fraction(0)
+    if (source_path_valid and _bound_domain(arithmetic) == MAX_OPERAND_BITS and _small_proof_values(source)
+            and all(value >= 0 for value in source)):
+        def calculate():
+            if _bound_domain(arithmetic) != MAX_OPERAND_BITS:
+                return ()
+            a = tuple(arithmetic.value(value) for value in raw_first)
+            b = tuple(arithmetic.value(value) for value in raw_last)
+            if not _small_proof_values((*a, *b)):
+                return ()
+            dot = arithmetic.total(arithmetic.mul(x, y) for x, y in zip(a, b) if x and y)
+            if dot < 0:
+                _error("OKE-E-QUATERNION-LIFT", "Actual stored endpoint signs do not form a coherent short-path lift.")
+            if any(arithmetic.compare(error, Fraction(1, 2)) > 0 for error in errors):
+                return ()
+            chord = arithmetic.add(arithmetic.div(arithmetic.mul(angular_speed, width), 2),
+                                   arithmetic.mul(2, arithmetic.add(*errors)))
+            if arithmetic.compare(chord, Fraction(1, 2)) > 0:
+                return ()
+            return (arithmetic.div(chord, arithmetic.sub(1, arithmetic.div(arithmetic.square(chord), 4))),)
+        candidate = arithmetic.reuse(("stored_endpoint_sufficient_arc", raw_first, raw_last, *source), calculate)
+        if (candidate and _bound_domain(arithmetic) == MAX_OPERAND_BITS
+                and arithmetic.compare(candidate[0], limit) <= 0
+                and _bound_domain(arithmetic) == MAX_OPERAND_BITS):
+            return candidate[0]
+    normalized = []
+    for raw, endpoint in ((raw_first, first), (raw_last, last)):
+        if endpoint["normalized"] is None or endpoint.get("_normalized_cap") != _bound_domain(arithmetic):
+            admitted_cap = _bound_domain(arithmetic)
+            value = arithmetic.normalize(raw)
+            endpoint["normalized"] = value
+            endpoint["_normalized_cap"] = admitted_cap if admitted_cap == _bound_domain(arithmetic) else None
+        normalized.append(endpoint["normalized"])
+    return _stored_arc(raw_first, raw_last, *normalized, arithmetic)
 
 
 class _CertificateBatch:
@@ -1331,7 +1546,7 @@ class _IntervalCertificateClaims:
 
 
 def _verify_certificates(decoded, reference, geometry, tables, endpoint_phases, authored, times, quantization, options, *, work):
-    arithmetic = _Bounds(work)
+    arithmetic = _Bounds(work, cache_intermediates=False)
     certificates = quantization["interval_certificates"]
     expected_count = (len(authored) - 1) * len(geometry)
     if type(certificates) is not list or len(certificates) != expected_count or expected_count > MAX_CERTIFICATES:
@@ -1353,11 +1568,12 @@ def _verify_certificates(decoded, reference, geometry, tables, endpoint_phases, 
     tracks = _tracks(decoded, geometry, work=work)
     recording_context = object()
     previous = _key_comparisons(reference, geometry, tracks, authored[0], 0, arithmetic,
-                                recording_context=recording_context)
+                                recording_context=recording_context, endpoint_rows=rows)
     batch = _CertificateBatch(arithmetic, options.position_tolerance_m, options.rotation_tolerance_rad)
     for key, (left, right) in enumerate(zip(authored, authored[1:])):
         following = _key_comparisons(reference, geometry, tracks, right, key + 1, arithmetic,
-                                     previous=previous, previous_time=left, recording_context=recording_context)
+                                     previous=previous, previous_time=left, recording_context=recording_context,
+                                     endpoint_rows=rows)
         stored_left, stored_right = arithmetic.value(times[key]), arithmetic.value(times[key + 1])
         width, stored_width = arithmetic.sub(right, left), arithmetic.sub(stored_right, stored_left)
         shift = max(abs(arithmetic.sub(left, stored_left)), abs(arithmetic.sub(right, stored_right)))
@@ -1384,7 +1600,9 @@ def _verify_certificates(decoded, reference, geometry, tables, endpoint_phases, 
                 source_rotation = max(source_rotation, final_phase.source_numeric_rotation_error)
             first, last = previous[carrier], following[carrier]
             raw_first, raw_last = tracks[carrier]["rotation"][key], tracks[carrier]["rotation"][key + 1]
-            arc = _stored_arc(raw_first, raw_last, first["normalized"], last["normalized"], arithmetic)
+            arc = _certified_stored_arc(raw_first, raw_last, first, last, phase.angular_speed, width,
+                                       record["stored_quaternion_arc_upper_rad"], arithmetic,
+                                       source_path_valid=right < reference.boundaries[source_index + 1])
             minima = {"landmark_radius_m": item["radius"], "local_vertex_error_bound_m": item["vertex_error"],
                 "angular_speed_bound_rad_per_s": phase.angular_speed,
                 "carrier_acceleration_bound_m_per_s2": phase.acceleration,

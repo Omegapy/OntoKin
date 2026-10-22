@@ -95,6 +95,7 @@ class ReachRecordingSamplerTests(unittest.TestCase):
             # The separate incremental recording algorithm has its own error
             # proof and need not reproduce direct private quaternion bits.
             kwargs["recording_context"] = None
+            kwargs["recording_angular_proof"] = None
             return original_frames(self, *args, **kwargs)
         for case, end in (("P01", Q(3)), ("L01", Q(3, 4)), ("P16", Q(1, 4))):
             outputs = []

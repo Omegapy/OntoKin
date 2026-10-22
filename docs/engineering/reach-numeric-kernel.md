@@ -39,6 +39,31 @@ deadline or operand-width failure is `reach_resource`. Failure to certify
 after the five finite precision passes is `reach_numeric`. These are distinct
 from exact geometry, frame, singularity and limit outcomes.
 
+For canonical integer endpoint cells, sign monotonicity selects the same
+product and quotient extrema as evaluating all four corners. If at least one
+product interval does not cross zero, only its two extremal products and two
+outward divisions are computed. Two point cells require one product. A divisor
+interval that excludes zero likewise requires only the two extremal scaled
+quotients, with integer floor for the lower bound and negative floor of the
+negative ratio for the upper bound, including negative denominators. Products
+of two cells that both cross zero retain the original four-corner calculation.
+Exact zero and scale-one identities omit all unchanged scalar arithmetic.
+Squaring a cell containing zero requires only the largest endpoint square and
+its upward division. These are exact replacements of the original outward
+integer cells; they introduce no narrower assumed error or changed tolerance.
+
+Every call retains its interval-operation charge and the original complete
+input and prospective-width guard, including the widths of omitted corners.
+Thus an exact zero cannot make an oversized sibling admissible. Constituent
+charges cover the arithmetic actually performed: four for two selected
+products or scaled quotients and their outward divisions, three for one point
+product and both divisions, and two for a single upper square and division.
+The ordinary interval charge covers the bounded endpoint/sign selection.
+All constituent callbacks run before allocation, and the complete original
+operand/width guard is repeated afterward to enforce a changed live cap.
+Callback exceptions retain their exact identity. No cache is added, and the
+per-admission interval/series counters and request limits are unchanged.
+
 Caches are request-local, bounded to 256 entries, and may stop inserting when
 full. Hits still check cancellation and consume lookup work. An IK hit rechecks
 the current closed limits; topology, modes and claims always remain the
@@ -790,6 +815,8 @@ Its separately ordered derivation input list is:
 
 1. `docs/engineering/reach-numeric-kernel.md`
 2. `docs/engineering/reach-source-kernel.md`
+3. `docs/engineering/reach-coaxial-phase-bounds.md`
+4. `docs/engineering/reach-carrier-rotation-cursors.md`
 
 For each input, compute the lowercase hexadecimal SHA-256 of its exact bytes.
 For each list separately, concatenate the ASCII records
@@ -804,6 +831,49 @@ The independent supplied-byte reader reconstructs the two lists and aggregates
 without calling the writer's identity helper. The execution procedure must
 preserve these exact input bytes throughout one request; a request-local cache
 does not authorize changing code or derivations during execution.
+
+## Exact source composition across translated occurrences
+
+The full source resolver may reuse a completed site, follow or joint
+composition when two independently resolved occurrences differ only in their
+parent translation and inherited position allowance. This recovery follows
+the implementation retained at `e454547bf654a8d1e3402e6f054335fcb26229f0`;
+the current continuation additionally requires the parent pose to belong to
+the same request's pose arithmetic. It does not reuse recording-only graphs
+or source identities, claims, lifecycle results, histories or output records.
+
+Let `R` be nearest-even rounding to the private 96-bit dyadic grid. For every
+integer `m`, `R(x + 2*m*2^-96) = R(x) + 2*m*2^-96`, including exact halfway
+inputs. A rounded source composition contains its parent's translation only
+as an additive position term. A joint's two compositions preserve that same
+equivariance. The cache therefore retains each parent coordinate's low grid
+bit, as well as the complete parent rotation (including its error and frozen
+projection), spatial rates, joint axis/coordinate/slope and local placement.
+Equal keys establish an even grid translation in every coordinate. Values
+outside the 96-bit dyadic grid keep the ordinary composition path.
+
+The completed result's exact difference from its parent position is retained.
+A new occurrence adds that difference to its own current parent position;
+orientation, velocity and angular velocity remain those of the same original
+equations. The inherited position allowance enters composition additively too,
+so its completed difference is retained and added to the occurrence's actual
+allowance. This factors a term of the existing bound and changes no bound.
+Only already materialized orientation/rate projections may be copied; each
+occurrence's position and all public finiteness checks remain current.
+
+This optional path applies only to full source graphs larger than the existing
+cache capacity and only at the unchanged 32,768-bit operand cap. Complete
+typed operands are freshly admitted before access. The 8,192-bit margins on
+retained and translated coordinates/allowances keep the additional exact
+subtractions and additions within that full cap. A callback that changes the
+cap before or after building, publishing or reconstructing an entry abandons
+the optional result and executes the original current-domain path. Caller
+exceptions propagate unchanged. Entries share the same request-local bounded
+256-entry LRU; the complete topology is still traversed and all 32 P23 arms
+keep distinct physical state and source records. The differential, halfway,
+changed-input, cap and cancellation checks are in
+`tests/test_reach_source_translation.py`; execution evidence is recorded
+separately.
 
 ## Verification and remaining scope
 
