@@ -2,7 +2,7 @@
 
 This is a development checkpoint, not release acceptance. The immediate gate
 remains all 28 source recordings under the unchanged shared 100,000-operation
-budget. The latest complete run passes **19/28**; all nine remaining cases
+budget. The latest complete run passes **20/28**; all eight remaining cases
 still fail on the attempted 100,001st operation. No result is inferred for an
 unexecuted release role.
 
@@ -66,7 +66,60 @@ unchanged. Differential tests compare exact private values and complete GLB
 bytes. Three stale independent-reader test doubles were updated to accept the
 already existing `recording_context` argument; their assertions are unchanged.
 
-## Latest checkpoint 005: complete source admission and repeated calculations
+## Latest checkpoint 006: freshly verified 20/28 and 597 focused tests
+
+The reported newer unpublished 20/28 checkout was not available in this workspace
+or the inspected GitHub branches. The actual starting PR #27 head was
+`afe4a40cd990e2262ffd634fcd550a952db0ffc2`. All 1,397 files and the complete Git tree were
+reconstructed and checked against their published identities. A fresh unchanged
+baseline reproduced **19/28**. This checkpoint establishes its own fresh result;
+it does not relabel the unavailable earlier 463-test run.
+
+The integrated source is `52a1e6c10f22074c51e96d3289a0b10c10bc1b21`, tree
+`a5ae8aeef10094d10699373df656fbf4c97974da`. The complete source run finished
+**2026-10-22T23:21:11.378310+00:00**, with **20/28** passes and stable
+tracked inputs under the unchanged **100,000** shared operation limit. **L02 now
+passes at 99,102 operations**. P05, P09, P11, P16, P20, P23, L01 and L03 still
+stop at the attempted 100,001st operation.
+
+The same source passed **597/597 focused correctness tests**, zero failures,
+errors or skips, in **93.854 seconds**, with stable inputs.
+These are the selected recording, phase, independent-reader, reference,
+orientation-proof, export and certificate tests. This is not a complete regression.
+
+The changes share complete immutable exact orientation seeds in the existing
+bounded cache, omit repeated equal actual/ideal phase calculations, reuse
+freshly admitted constant independent parent poses and position comparisons,
+omit exact zero-slope coordinate arithmetic, and compute destination certificate
+bounds once from their actual reported operands. Source identities, source and
+callback checks, narrowed-cap fallbacks, original cancellation errors, independent
+proof authority, frozen fixtures, tolerances and public budgets remain mandatory.
+
+[checkpoint-006.zip](checkpoint-006.zip) retains **193 raw members**,
+**5,829,537 bytes**, SHA-256
+`884a4abd98e4d5357c906d039c5ac877d6e8660d79c9b84ed711b468fbad3da7`. Its
+[manifest](checkpoint-006.manifest.json) identifies both complete source runs,
+all scoped results including the still-failing isolated P23 probes, baseline
+profiles, reproduction drivers, exact source patch and raw commit objects.
+All **78 GLB/report members** match their producer hashes; archive
+CRC and all member identities were checked. The
+[machine-readable checkpoint](checkpoint-006.json) records the exact scope.
+Earlier archives retain their original bytes and outcomes.
+
+Coordinator `interactive-reach06-finish-20261022-1900-7of9` uses
+`work/reach06-finish-20261022-1900-7of9`, with branch ownership recorded in issue
+#26. Execution and archive windows remain serialized. Publication is authorized
+to the existing draft PR #27 using an expected-head, nonforce update. Main remains
+`2bb4588e121fcfe99b4d42c734b15b38362f3642`. No main lease or hosted job is claimed.
+
+P23 still repeats native relative-pose work for its 32 identical chains. P16
+now progresses farther through certificate construction. P11 reaches independent
+geometry, and the other five failures reach independent certificate/reference
+verification. Continue those reductions, then rerun all 28. Agent delivery,
+full current regression and compatibility, independent verification, native and
+browser roles and final release audits remain pending. **Do not merge.**
+
+## Preserved checkpoint 005: complete source admission and repeated calculations
 
 The latest tested source is `c011531992998d634ea9e2cf44e8eed8e9bddd40`, tree
 `ef25230c3d2f64afa52d4911cd887fca9ce710e5`. Full source011 finished **2026-10-22

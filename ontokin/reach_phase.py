@@ -503,6 +503,22 @@ class PhaseArithmetic:
         return self.add(self.mul(magnitude, F(1, 1 << 53)), F(3, 1 << 1075))
 
 
+def _same_joint_phase_law(actual_initial, ideal_initial, work):
+    """Recognize identical decoded affine inputs without another numeric cache.
+
+    Target, duration and elapsed clocks are already shared by both equations.
+    Reusing their rate and endpoints needs exact initial-value equality. The
+    original discrepancy arithmetic and its prospective-width checks remain.
+    Narrowed domains retain the ordinary independent calculation order.
+    """
+    work.charge("phase_equal_joint_law")
+    if (work.max_operand_bits != MAX_OPERAND_BITS or
+            type(actual_initial) is not F or type(ideal_initial) is not F):
+        return False
+    work.guard(actual_initial, ideal_initial)
+    return actual_initial == ideal_initial
+
+
 def joint_phase(simulator, path, start, end, state):
     """Exact affine endpoints and slopes; continuous ideal starts are retained."""
     a = PhaseArithmetic(simulator.work)
@@ -559,10 +575,16 @@ def joint_phase(simulator, path, start, end, state):
         return cached
     if native_key is not None:
         actual_initial, ideal_initial, target, duration, *elapsed = (a.number(value) for value in raw)
+    same_law = (native_key is not None and
+                _same_joint_phase_law(actual_initial, ideal_initial, simulator.work))
     actual_rate = a.div(a.sub(target, actual_initial), duration)
-    ideal_rate = a.div(a.sub(target, ideal_initial), duration)
+    if same_law and simulator.work.max_operand_bits != key[1]:
+        return joint_phase(simulator, path, start, end, state)
+    ideal_rate = actual_rate if same_law else a.div(a.sub(target, ideal_initial), duration)
     actual = tuple(a.add(actual_initial, a.mul(actual_rate, time)) for time in elapsed)
-    ideal = tuple(a.add(ideal_initial, a.mul(ideal_rate, time)) for time in elapsed)
+    if same_law and simulator.work.max_operand_bits != key[1]:
+        return joint_phase(simulator, path, start, end, state)
+    ideal = actual if same_law else tuple(a.add(ideal_initial, a.mul(ideal_rate, time)) for time in elapsed)
     error = a.maximum(*(a.absolute(a.sub(x, y)) for x, y in zip(actual, ideal)))
     extent = a.maximum(*(a.absolute(value) for value in actual))
     # The affine scalar is rounded once at exposure into the source hinge.

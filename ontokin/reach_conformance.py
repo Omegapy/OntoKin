@@ -1380,6 +1380,41 @@ def _endpoint_claim_limits(rows, carrier, index, arithmetic):
     return tuple(limits)
 
 
+def _previous_position_comparison(previous, position, expected, limit, arithmetic):
+    """Reuse an unchanged position proof in the required preceding-key map.
+
+    A changing orientation does not change a position error or the supplied
+    position's magnitude. The independent source cells are evaluated afresh
+    before this helper runs. Only their exact complete equality, the actual
+    typed buffer values, the same claim and the same live domain admit reuse.
+    This retains no additional cache or source-state shortcut.
+    """
+    if previous is None:
+        return None
+    receipt = previous.get("_position_receipt")
+    if (type(receipt) is not tuple or len(receipt) != 3
+            or not _same_recording_vector(position, receipt[0], 3)
+            or type(limit) is not type(receipt[2]) or limit != receipt[2]
+            or previous.get("_proof_cap") != _bound_domain(arithmetic)):
+        return None
+    # A source cell containing zero is not an exact zero, and coercive
+    # bool/int or foreign-cell equality cannot borrow an admitted proof.
+    if (type(expected) not in (tuple, list) or len(expected) != 3
+            or any(type(cell) not in (_Cell, _ReferenceCell)
+                   or type(cell.lo) is not Fraction or type(cell.hi) is not Fraction
+                   for cell in expected)
+            or tuple((cell.lo, cell.hi) for cell in expected) != receipt[1]):
+        return None
+    arithmetic.tick("independent_position_key_reuse")
+    position = _recording_vector(position, 3, arithmetic)
+    arithmetic.cells(expected)
+    if previous.get("_proof_cap") != _bound_domain(arithmetic):
+        return None
+    values = previous["position_error"], previous["magnitude"]
+    arithmetic._cache_operand_domain(values)
+    return values
+
+
 def _key_comparisons(reference, geometry, tracks, time, index, arithmetic, *, previous=None, previous_time=None,
                      recording_context=None, endpoint_rows=None):
     result, pending, observed, candidates = {}, [], [], []
@@ -1428,9 +1463,15 @@ def _key_comparisons(reference, geometry, tracks, time, index, arithmetic, *, pr
         def compare():
             admitted_cap = _bound_domain(arithmetic)
             expected = (ideal.orientation[1], ideal.orientation[2], ideal.orientation[3], ideal.orientation[0])
-            position_error = None
+            position_error = magnitude = None
             def compare_position():
-                nonlocal position_error
+                nonlocal position_error, magnitude
+                reused = _previous_position_comparison(
+                    None if previous is None else previous[carrier], position, ideal.position,
+                    None if limits is None else limits[0], arithmetic)
+                if reused is not None:
+                    position_error, magnitude = reused
+                    return
                 position_error = (arithmetic.difference(position, ideal.position) if limits is None
                                   else _recording_position_bound(position, ideal.position, limits[0], arithmetic))
             if limits is None:
@@ -1439,11 +1480,14 @@ def _key_comparisons(reference, geometry, tracks, time, index, arithmetic, *, pr
             else:
                 normalized, quaternion_error = _recording_orientation_bound(
                     quaternion, expected, limits[1], arithmetic, before_error=compare_position)
-            magnitude = arithmetic.total(abs(arithmetic.value(value)) for value in position)
+            if magnitude is None:
+                magnitude = arithmetic.total(abs(arithmetic.value(value)) for value in position)
             cap = admitted_cap if admitted_cap == _bound_domain(arithmetic) else None
             return (("position_error", position_error),
                     ("quaternion_error", quaternion_error), ("normalized", normalized),
                     ("magnitude", magnitude), ("_proof_cap", cap),
+                    ("_position_receipt", (position, tuple((cell.lo, cell.hi) for cell in ideal.position),
+                                           None if limits is None else limits[0])),
                     ("_quaternion_operand", quaternion),
                     ("_normalized_cap", cap if normalized is not None else None))
         result[carrier] = dict(arithmetic.reuse(("key_pose_comparison", tuple(position), tuple(quaternion),

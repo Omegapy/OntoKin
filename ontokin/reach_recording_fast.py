@@ -13,6 +13,7 @@ from dataclasses import dataclass
 from fractions import Fraction as F
 import math
 import struct
+from types import MappingProxyType
 
 from .reach_numeric import MAX_OPERAND_BITS, ReachAdmissionError, compare, rational, round_binary64
 from .reach_pose import (AXIS_ERROR, PRODUCT_ERROR, MAX_RECORDING_ROTATION_STEPS,
@@ -121,22 +122,129 @@ def _checked_compare(left, right, work):
     return result
 
 
+def _captured_recording_seed_key(proof, frame, time, work):
+    """Describe a complete immutable direct calculation, without its result.
+
+    Names and outer translations are absent only where the existing ordered
+    orientation recipe proves that they cannot enter the source calculation.
+    The temporary map contains structural recipes, never retained poses. The
+    actual completed rotation belongs to the ordinary bounded work cache.
+    """
+    from .reach_phase import (RecordingAngularFrame, RecordingAngularProof,
+                              _recording_orientation_recipe)
+
+    if (work.max_operand_bits != MAX_OPERAND_BITS
+            or type(proof) is not RecordingAngularProof
+            or type(proof.frames) is not MappingProxyType
+            or type(proof.start) is not F or type(proof.end) is not F
+            or type(frame) is not str or type(time) is not F):
+        return None
+    recipes, visiting = {}, set()
+
+    def immutable_witness(value):
+        # Frozen witnesses use only exact tuple/int/string/None nodes. Do not
+        # let Python's bool/int/float equality alias an invalid frozen operand
+        # to a previously admitted integer. Unsupported shapes keep the direct
+        # decoder and its original error rather than acquiring cache authority.
+        pending, count = [(value, 0)], 0
+        while pending:
+            current, depth = pending.pop()
+            if count % 32 == 0:
+                work.charge("recording_body_seed_witness_block")
+            count += 1
+            if count > 512 or depth > 8:
+                return False
+            if type(current) is tuple:
+                if len(current) > 32:
+                    return False
+                pending.extend((part, depth + 1) for part in current)
+            elif current is not None and type(current) not in (int, str):
+                return False
+        return True
+
+    def recipe(path):
+        if path in recipes:
+            return recipes[path]
+        if path in visiting:
+            return None
+        record = proof.frames.get(path)
+        if (type(record) is not RecordingAngularFrame
+                or not immutable_witness(record.witness)):
+            return None
+        if (record.witness and record.witness[0] == "root"
+                and len(record.witness) == 10 and record.witness[8] is not None):
+            # A prescribed root spin also consumes a separately admitted
+            # source spin-phase plan from the work cache. Its precision and
+            # horizon are not supplied by this witness, so retain the direct
+            # calculation rather than treating the witness as a complete key.
+            return None
+        visiting.add(path)
+        try:
+            parent = recipe(record.parent) if record.parent is not None else None
+            result = _recording_orientation_recipe(record, parent, work=work)
+        finally:
+            visiting.remove(path)
+        recipes[path] = result
+        return result
+
+    complete = recipe(frame)
+    if complete is None or work.max_operand_bits != MAX_OPERAND_BITS:
+        return None
+    return ("recording_captured_direct_seed_v1", MAX_OPERAND_BITS,
+            proof.start, proof.end, time, complete)
+
+
 def captured_recording_orientation(source_ops, proof, frame, time):
     """Evaluate a direct private orientation from an admitted frozen witness.
 
     The caller has checked the current complete witness chain. A seed must use
     those same operands even if a work callback temporarily changes the live
-    source. Only source quaternion/coordinate kernels run here; neither unused
-    positions nor any ancestor recording cursor are evaluated.
+    source. Identical complete calculations may reuse their private exact seed
+    in the existing bounded cache. The caller must still admit its live source
+    after every cache callback before publishing a body cursor. Only source
+    quaternion/coordinate kernels run here; neither unused positions nor any
+    ancestor recording cursor are evaluated.
     """
-    from .reach_kinematics import sample_pair
-    from .reach_phase import RecordingAngularFrame, RecordingAngularProof
+    from .reach_phase import RecordingAngularProof
 
     work = source_ops.work
     work.charge("recording_body_seed_domain")
     if type(proof) is not RecordingAngularProof or type(time) is not F:
         raise ReachAdmissionError("reach_domain", "A direct carrier seed needs its captured phase and clock.")
     work.guard(time)
+    while True:
+        cap = work.max_operand_bits
+        key = _captured_recording_seed_key(proof, frame, time, work)
+        if work.max_operand_bits != cap:
+            continue
+        if key is not None:
+            value = work.lookup(key)
+            if work.max_operand_bits != cap:
+                continue
+            if value is not None:
+                work.guard(*value.components, value.error_rad)
+                return value
+        try:
+            value = _captured_recording_orientation_direct(source_ops, proof, frame, time)
+        except ReachAdmissionError as error:
+            if (work.max_operand_bits != cap and error is not work.callback_error
+                    and error.details.get("budget") == "numeric_operand_bits"):
+                continue
+            raise
+        if work.max_operand_bits != cap:
+            continue
+        if key is not None:
+            work.remember(key, value)
+        if work.max_operand_bits == cap:
+            return value
+
+
+def _captured_recording_orientation_direct(source_ops, proof, frame, time):
+    """Original complete source calculation for one captured private seed."""
+    from .reach_kinematics import recording_pair
+    from .reach_phase import RecordingAngularFrame
+
+    work = source_ops.work
 
     def thaw(value):
         if type(value) is not tuple or not value:
@@ -178,8 +286,8 @@ def captured_recording_orientation(source_ops, proof, frame, time):
         kind, start, duration = thaw(law[1]), thaw(law[8]), thaw(law[3])
         clock = elapsed(law)
         if kind == "reach_planar":
-            pair = sample_pair(start, thaw(law[10]), duration, clock,
-                               running=thaw(law[7]) == "running", work=work)
+            pair = recording_pair(start, thaw(law[10]), duration, clock,
+                                  running=thaw(law[7]) == "running", work=work)
             shoulder, elbow = thaw(law[6])
             if witness[1] not in (shoulder, elbow):
                 raise ReachAdmissionError("reach_domain", "A captured reach does not own this carrier.")

@@ -1062,7 +1062,6 @@ def _certificate_quantities(model, bound, enclosing, radius, vertex_error,
                  Fraction(4), "div", work), "sub", work), "div", work)
     if arc > ANGULAR_STEP:
         _fail("OKE-E-ROTATION-ALIAS", "The stored quaternion arc exceeds pi/4.", model=model)
-    ndp, ndr = destination_numeric_bounds(arc, magnitude, radius, vertex_error, work=work)
     quantities = {"landmark_radius_m": radius, "local_vertex_error_bound_m": vertex_error,
         "angular_speed_bound_rad_per_s": bound.angular_speed,
         "carrier_acceleration_bound_m_per_s2": bound.acceleration,
@@ -1071,8 +1070,7 @@ def _certificate_quantities(model, bound, enclosing, radius, vertex_error,
         "enclosing_angular_speed_bound_rad_per_s": enclosing.angular_speed,
         "max_endpoint_time_shift_s": shift, "max_endpoint_position_error_m": ep,
         "max_endpoint_unit_quaternion_error": eq, "stored_quaternion_arc_upper_rad": arc,
-        "source_numeric_position_bound_m": nsp, "source_numeric_rotation_bound_rad": nsr,
-        "destination_numeric_position_bound_m": ndp, "destination_numeric_rotation_bound_rad": ndr}
+        "source_numeric_position_bound_m": nsp, "source_numeric_rotation_bound_rad": nsr}
     # A consumer must be able to check the inequalities using the
     # reported upper bounds themselves. Round primitive quantities
     # outward first, then propagate those rounded values through every
@@ -1082,6 +1080,9 @@ def _certificate_quantities(model, bound, enclosing, radius, vertex_error,
                   for name, value in quantities.items()}
     def q(name):
         return Fraction(quantities[name])
+    # Destination bounds depend on the exposed outward-rounded primitives.
+    # Computing them from the preceding exact values would be discarded here;
+    # this one calculation validates and bounds the actual reported operands.
     ndp, ndr = destination_numeric_bounds(q("stored_quaternion_arc_upper_rad"), magnitude,
         q("landmark_radius_m"), q("local_vertex_error_bound_m"), work=work)
     quantities["destination_numeric_position_bound_m"] = upper_binary64(ndp, work=work, model=model)

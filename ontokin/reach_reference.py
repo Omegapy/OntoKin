@@ -1793,6 +1793,21 @@ class ReachReference:
         self.a.guard(duration)
         if not duration:
             raise _Uncertain("Reference division includes zero")
+        if initial == target:
+            # The affine law is exactly constant. Preserve the original
+            # subtraction preflight above, zero/duration division domain,
+            # zero*elapsed domain and initial+zero domain before omitting
+            # their numeric operations. The observed clock and final binary64
+            # projection remain current; no source value or clock is cached.
+            if max(duration.denominator.bit_length(), 1 + abs(duration.numerator).bit_length()) > self.a.operand_limit:
+                raise ReferenceError("resource", "Independent reference intermediate operand limit exceeded")
+            elapsed = F(active.elapsed_at(time))
+            self.a.guard(elapsed)
+            if max(abs(elapsed.numerator).bit_length(), 1 + elapsed.denominator.bit_length(),
+                   max(an + 1, ad) + 1, ad + 1) > self.a.operand_limit:
+                raise ReferenceError("resource", "Independent reference intermediate operand limit exceeded")
+            coordinate = initial if ideal else F(self.a.round64(initial))
+            return coordinate, F(0)
         key = ("coordinate_affine_law", self.a.operand_limit, initial, target, duration)
         slope = self.a.lookup(key)
         missing = slope is None
@@ -2091,6 +2106,19 @@ class ReachReference:
                 self.a.remember(key, slope)
         self.a.guard(initial, slope, elapsed, since)
         def direct(clock):
+            if not slope and self._recording_body_domain():
+                self.a.tick()
+                values = tuple(F(value) for value in (initial, elapsed, since, clock))
+                self.a.guard(*values)
+                if (self._recording_body_domain() and
+                        all(max(abs(value.numerator).bit_length(), value.denominator.bit_length()) <= 1024
+                            for value in values)):
+                    # Even with unrelated denominators, the original elapsed
+                    # subtraction/sum and zero affine products fit below 4099
+                    # bits on this sufficient domain. The result is initial.
+                    # Current source receipts are still admitted atomically by
+                    # the enclosing body proof after its final callback.
+                    return initial
             active_elapsed = (self.a.exact_sum(elapsed, self.a.exact(clock, since, "sub"))
                               if status == "running" else elapsed)
             return self.a.exact(initial, self.a.exact(slope, active_elapsed, "mul"), "add")
@@ -2266,12 +2294,13 @@ class ReachReference:
                         used_body = False
                         if body_recording and joint.kind == "hinge" and body is not None:
                             body = self._recording_hinge_body(body, relation, state, path=path)
-                            if (body is not None and body.moving and body.zero_origin
+                            if (body is not None and body.zero_origin
                                     and self._recording_body_domain()):
                                 identical = self._recording_identity_parent(value, body)
                                 if identical is not None:
                                     value = identical
-                                else:
+                                    used_body = True
+                                elif body.moving:
                                     rotation = self.p._recording_body_orientation(
                                         lambda: body.direct(time), axis=body.axis, rate=body.rate, witness=body.witness,
                                         context=(recording_context, path), clock=time, shared=shared_recording,
@@ -2280,7 +2309,7 @@ class ReachReference:
                                     self.a.guard(*(endpoint for vector in (value.position, rotation)
                                                    for cell in vector for endpoint in (cell.lo, cell.hi)))
                                     value = PoseEnclosure(value.position, rotation, value.velocity, value.omega)
-                                used_body = True
+                                    used_body = True
                         if joint.kind in {"hinge", "slider"} and not used_body:
                             coordinate, rate = self._coordinate(relation, time, state, ideal=ideal)
                             angle_context = ((recording_context, relation)

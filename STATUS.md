@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-22T15:01:33.757392+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-22T23:22:47.966643+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -44,51 +44,41 @@ local `569b67b0bdc6854cc069e6a00590e0f15267ae03`
 [draft PR #25](https://github.com/Omegapy/OntoKin/pull/25). Original branches,
 failed attempts and earlier evidence retain their identities.
 
-Latest tested recording implementation is `c011531992998d634ea9e2cf44e8eed8e9bddd40`,
-tree `ef25230c3d2f64afa52d4911cd887fca9ce710e5`. The actual starting published
-baseline was `215efd6c99d2e42ca54ddbd9d898dd99fa678418`, newer than the supplied
-handoff; its complete 1,309-file tree was verified. Previous verified publication
-`a564527f64a4e76d3e8e96c849fdb642a0d260eb` preserves checkpoint 004 and its exact
-local tree. The [October 22 checkpoint](docs/engineering/reach-recording-validation-2026-10-22/README.md)
-now also includes complete canonical planning receipts, exact native root
-translations, complete immutable source seeds, atomic source admission before
-cursor publication, graph-local identical orientation reuse, independent
-world-orientation and identity-carrier enclosures, and integer clock cells.
+Latest tested recording implementation is `52a1e6c10f22074c51e96d3289a0b10c10bc1b21`,
+tree `a5ae8aeef10094d10699373df656fbf4c97974da`. The actual starting published
+baseline was `afe4a40cd990e2262ffd634fcd550a952db0ffc2`; its complete 1,397-file tree was
+reconstructed and verified. The supplied newer unpublished 20/28 checkout was
+unavailable. Its reported 463-test result is not claimed for this source.
 
-The latest full source run finished **14:55:48 UTC** with **19/28** passes
-and stable inputs under the unchanged **100,000** shared limit. **P05, P09,
-P11, P16, P20, P23, L01, L02 and L03** stop at the attempted 100,001st operation.
-The preceding run on `4351c07` reached **20/28**, including L02 at **99,572**;
-stronger source/cursor admission and later changes put L02 over budget again.
-That earlier 20/28 result is not the current acceptance result. Both complete
-runs and every intervening focused failure are preserved without relabeling.
+The [October 22 checkpoint](docs/engineering/reach-recording-validation-2026-10-22/README.md)
+now includes a freshly executed **20/28** full source run, finished
+**2026-10-22T23:21:11.378310+00:00**, with stable inputs and the original
+**100,000-operation** limit. **L02 passes at 99,102 operations**. Remaining
+failures are **P05, P09, P11, P16, P20, P23, L01 and L03**, each stopped at the
+attempted 100,001st operation. The unchanged published baseline reproduced
+19/28; both fresh complete runs retain their exact identities.
 
-The latest combined planning/sampling/reader cohort is **268/268** on
-`c011531`, with zero failures/errors/skips, stable inputs and an actual duration
-of **40.404 seconds**. It includes exact sample/GLB comparisons, current source
-and cache admission, cancellation, narrowed caps, original failure identity,
-and the strict body-sampling cost test that had exposed a regression. Earlier
-**243/243** on `4351c07` and **112/112** on `e0d6018` retain their own identities.
-These overlapping cohorts are not a complete regression. The earlier
-**1,374/1,374** complete Python result does not verify the current implementation.
+The same integrated source passed **597/597 focused tests** in
+**93.854 seconds**, with zero failures/errors/skips and stable tracked
+inputs. Exact seed reuse, equal phase laws, constant independent parent/position
+proofs, zero-slope coordinates and single-pass certificate bounds remove actual
+duplicate calculations. Current source, callback, cap and cache checks remain;
+independent proof authority, trajectories, tolerances and frozen inputs are unchanged.
+This focused run does not replace complete regression or compatibility.
 
-Checkpoint 005 retains **272 raw members**: both complete source runs,
-focused passes and failures, profiles, exact source patch/raw commits and
-publication 004's receipt. The archive was assembled with worker filesystem
-activity paused, and every member hash and ZIP CRC was checked. All previous
-archives and the recovered original source/auditor files remain unchanged.
+Checkpoint 006 preserves **193 raw members**, including both complete source
+runs, scoped passes and failures, profiles, reproduction drivers, exact source
+patch and raw commit objects. All 78 GLB/report member hashes and every archive
+member hash and ZIP CRC were checked. Earlier checkpoint outcomes and archives
+retain their original identity. The previous full regression and delivery evidence
+does not verify this changed implementation.
 
-Current profiles place P23 at **80,984** shared operations when sampling
-begins; repeated exact boundary seeds then exhaust the remaining budget.
-P16 reaches certification at **92,841**, about **5,200** operations earlier
-than the preceding profiled cut. P11 reaches independent geometry; the other
-six failures reach independent certificate checks. Reduce actual repeated
-planning, seed, sampling and verification calculations while preserving all
-source/callback/cache checks, then rerun all 28 before Agent and release roles.
-
-The recovered **21 clean older unpublished checkouts**, **183** changed source
-blobs and all **six exact original auditor files** remain preserved. Old results
-are historical; current auditor review, integration and execution remain pending.
+The immediate target is **28/28**. P23 still needs repeated native relative-pose
+reductions; P16 still reaches the limit during certification; P11 reaches
+independent geometry and the other five failures reach independent verification.
+All ten Agent artifacts, current complete regression/compatibility, independent
+rates, native/browser checks, visual review, inherited roles and release audits
+remain pending. PR #27 stays draft; **do not merge** until every mandatory gate passes.
 
 The historical rows below retain their original cuts and limits.
 
@@ -140,10 +130,10 @@ GOAL still requires richer typed algorithms/libraries and compatible replacement
 
 **No main integration lease is held by this continuation.** Main remains
 `2bb4588e121fcfe99b4d42c734b15b38362f3642`; the prior lease is released.
-Coordinator `interactive-reach06-complete-20261022-0410-7of9` uses
-`work/reach06-complete-20261022-0410-7of9`, starting from observed PR #27 head
-`215efd6c99d2e42ca54ddbd9d898dd99fa678418`. Separate planning, sampling and
-independent-reader branches have coordinated file ownership. This branch-only
+Coordinator `interactive-reach06-finish-20261022-1900-7of9` uses
+`work/reach06-finish-20261022-1900-7of9`, starting from observed PR #27 head
+`afe4a40cd990e2262ffd634fcd550a952db0ffc2`. Separate sampling, independent-reader and
+phase/geometry workers have coordinated file ownership in issue #26. This branch-only
 status update claims no main write or runtime integration. Publication uses
 nonforce expected-head checks. Runtime/test/SQLite/workflow/archive execution
 is serialized. Main integration requires complete acceptance and a fresh
