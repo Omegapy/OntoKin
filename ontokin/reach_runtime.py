@@ -460,8 +460,10 @@ class ReachSimulator(ForceSimulator):
         # Position is occurrence-specific. All other immutable projections
         # belong to the same exact rotation and spatial rates in this key.
         projection = {name: value for name, value in result._projection.items() if name != "position"}
-        return PoseValue(translated, result.rotation, result.exact_velocity, result.exact_omega,
-                         position_error, self.pose_ops, projection)
+        occurrence = PoseValue(translated, result.rotation, result.exact_velocity, result.exact_omega,
+                               position_error, self.pose_ops, projection)
+        self.pose_ops._carry_finite_proof(result, occurrence)
+        return occurrence
 
     def _constant_pose(self, value, *, inverse=False):
         key = ("reach_source_constant_pose", inverse, value.position, value.rotation)
@@ -1386,15 +1388,44 @@ class ReachSimulator(ForceSimulator):
 
     def _bounded_projection(self, state):
         """Count unchanged force histories with the existing reach JSON units."""
+        def empty_history(value):
+            # Share only the completed measurement of this exact plain shape.
+            # Distinct zero/count encodings and all other histories retain the
+            # ordinary complete walker and its diagnostic ordering.
+            if type(value) is not dict or tuple(value) != (
+                    "active", "net_force_world_n", "acceleration_world_m_per_s2",
+                    "started_count", "completed_count", "last_change_time_seconds", "last_changes"):
+                return False
+            net = value["net_force_world_n"]
+            return (type(value["active"]) is list and not value["active"]
+                and type(value["last_changes"]) is list and not value["last_changes"]
+                and type(net) is list and len(net) == 3
+                and all(type(component) is float and component.hex() == "0x0.0p+0" for component in net)
+                and value["acceleration_world_m_per_s2"] is None
+                and type(value["started_count"]) is int and value["started_count"] == 0
+                and type(value["completed_count"]) is int and value["completed_count"] == 0
+                and value["last_change_time_seconds"] is None)
+
         result = {}
         entries = byte_count = 0
+        empty_size = None
         for path in state.forces:
             self._check()
             projection = self._projection(path, state)
+            remaining_entries = _force_runtime.MAX_OUTPUT_RECORDS - entries
+            remaining_bytes = _force_runtime.MAX_JSON_BYTES - byte_count
             try:
-                size = measure_reach_json(projection,
-                    max_entries=_force_runtime.MAX_OUTPUT_RECORDS - entries,
-                    max_bytes=_force_runtime.MAX_JSON_BYTES - byte_count, check=self.check)
+                if (empty_size is not None and empty_history(projection)
+                        and empty_size["entries"] <= remaining_entries
+                        and empty_size["bytes"] <= remaining_bytes):
+                    size = empty_size
+                else:
+                    # A possible overflow still uses the original walker so
+                    # the first failing entry/byte and consumed count match.
+                    size = measure_reach_json(projection, max_entries=remaining_entries,
+                        max_bytes=remaining_bytes, check=self.check)
+                    if empty_history(projection):
+                        empty_size = size
             except JSONLimitError as error:
                 raise _force_runtime._resource(self.model, error.details) from error
             entries += size["entries"]
@@ -1761,7 +1792,7 @@ class ReachSimulator(ForceSimulator):
                 "incoming_linear_velocity_world_m_per_s": list(pose.velocity),
                 "incoming_angular_velocity_world_rad_per_s": list(pose.omega)}
 
-    def recording_boundary(self, time, side):
+    def recording_boundary(self, time, side, *, _reuse=None):
         """Project every promised H06 history without unused inspection output.
 
         Recording preparation has already executed this exact boundary side.
@@ -1809,6 +1840,16 @@ class ReachSimulator(ForceSimulator):
                                                         time_text(history.last_time)),
                     "last_applications": applications}}
         _round(sum((_f(obj.mass) for obj in self.model.objects.values()), Fraction(0)))
+        if _reuse is not None and side == "after" and _reuse[0].owner is self:
+            # The complete graph, force/impulse histories and aggregate-mass
+            # checks above remain fresh. Only unchanged endpoint joint/action/
+            # reach projection may transfer, with complete after output bounds.
+            result = _reuse[0].after(_reuse[1], time, objects=objects)
+            if result is not None:
+                return result
+            # A callback may change actual source/state or live limits during
+            # receipt validation or output copying. Rebuild under those inputs.
+            return self.recording_boundary(time, side)
         joints = {}
         for path, joint in self.model.joints.items():
             self._check()

@@ -89,6 +89,26 @@ class ReachForceProjectionTests(unittest.TestCase):
         self.assertLess(used[1], used[0])
         self.assertEqual(sim.work.max_operations, 100000)
 
+    def test_empty_measurement_does_not_conflate_other_zero_or_count_encodings(self):
+        sim = simulator()
+        paths = list(sim.state.forces)
+        sim.state.forces[paths[0]].net = (-0.0, 0.0, 0.0)
+        sim.state.forces[paths[1]].net = (0, 0, 0)
+        sim.state.forces[paths[2]].started_count = False
+        expected = inherited(sim)
+        sizes = [measure_json(value) for value in expected.values()]
+        entries, byte_count = sum(value["entries"] for value in sizes), sum(value["bytes"] for value in sizes)
+        with patch.object(force_runtime, "MAX_OUTPUT_RECORDS", entries), \
+                patch.object(force_runtime, "MAX_JSON_BYTES", byte_count):
+            self.assertEqual(sim._bounded_projection(sim.state), expected)
+        errors = []
+        with patch.object(force_runtime, "MAX_JSON_BYTES", byte_count - 1):
+            for ordinary in (True, False):
+                with self.assertRaises(OntoKinError) as caught:
+                    inherited(sim) if ordinary else sim._bounded_projection(sim.state)
+                errors.append(caught.exception.diagnostic.details)
+        self.assertEqual(errors[0], errors[1])
+
     def test_partial_batch_cancellation_retains_identity_and_private_state(self):
         sim = simulator()
         before = deepcopy(sim.state.forces)

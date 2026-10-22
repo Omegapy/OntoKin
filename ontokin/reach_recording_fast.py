@@ -16,7 +16,7 @@ import struct
 
 from .reach_numeric import MAX_OPERAND_BITS, ReachAdmissionError, compare, rational, round_binary64
 from .reach_pose import (AXIS_ERROR, PRODUCT_ERROR, MAX_RECORDING_ROTATION_STEPS,
-                         PoseValue, RecordedTransform, ReachPoseOps, RotationValue, ZERO, UNIT)
+                         PoseValue, RecordedTransform, ReachPoseOps, RotationValue, SpinPlan, ZERO, UNIT)
 
 METHOD = "ontokin.recording-planar-binary64-enclosures/0.5"
 MAX_FLOAT_DEPTH = 64
@@ -104,6 +104,7 @@ class _BallisticLaw:
     acceleration: tuple[float, float, float]
     horizon: F
     extent: F
+    proved_extent: F
 
 
 def _checked_compare(left, right, work):
@@ -280,8 +281,8 @@ class Binary64RecordingOps(ReachPoseOps):
         self.affine_coordinates = affine_coordinates
         self.dynamic_phase = dynamic_phase
         self.dynamic_bounds = dynamic_bounds
-        # This per-graph index contains only completed root extents. It is
-        # discarded after the current sampler call, never retained as a cache.
+        # This per-graph index refers to completed bounded-cache root laws.
+        # It is discarded after the sampler call, never retained as a cache.
         self.dynamic_extents = {}
 
     def _domain(self):
@@ -454,8 +455,12 @@ class Binary64RecordingOps(ReachPoseOps):
         self._immutable_scalar_domain(clocks, small=True)
         clocks = tuple(value if type(value) is F else rational(value, self.work) for value in clocks)
         self._immutable_scalar_domain(clocks, small=True)
-        elapsed = (self.source_ops._op(clocks[0],
-            self.source_ops._op(clocks[1], clocks[2], "sub"), "add") if running else clocks[0])
+        if running:
+            offset = (clocks[1] if not clocks[2] else
+                      self.source_ops._op(clocks[1], clocks[2], "sub"))
+            elapsed = offset if not clocks[0] else self.source_ops._op(clocks[0], offset, "add")
+        else:
+            elapsed = clocks[0]
         self._immutable_scalar_domain((elapsed,), small=True)
         if elapsed.numerator < 0 or _checked_compare(elapsed, law.duration, self.work) > 0:
             raise ReachAdmissionError("reach_numeric", "Invalid recording affine clock.")
@@ -536,7 +541,7 @@ class Binary64RecordingOps(ReachPoseOps):
         return result
 
     def _ballistic_law(self, position, velocity, acceleration, *, anchor_time,
-                       phase_interval, root_extent, context, path):
+                       phase_interval, root_extent, context, path, scene_duration=None):
         """Prove one actual immutable root law against its whole-phase extent."""
         self.work.charge("recording_ballistic_law_domain")
         self._require_domain()
@@ -544,11 +549,10 @@ class Binary64RecordingOps(ReachPoseOps):
                 or len(phase_interval) != 2 or any(type(value) is not F for value in phase_interval)
                 or type(context) is not object or type(path) is not str):
             raise _UnsupportedPlanar("A native ballistic law needs exact phase and anchor clocks.")
-        self._immutable_scalar_domain((anchor_time, *phase_interval), small=True)
-        if (anchor_time.numerator < 0
-                or _checked_compare(anchor_time, phase_interval[0], self.work) > 0
-                or _checked_compare(phase_interval[0], phase_interval[1], self.work) > 0):
-            raise _UnsupportedPlanar("A native ballistic phase must follow its actual anchor.")
+        if scene_duration is not None and type(scene_duration) is not F:
+            raise _UnsupportedPlanar("A native ballistic scene duration must be exact.")
+        clocks = (anchor_time, *phase_interval, *((scene_duration,) if scene_duration is not None else ()))
+        self._immutable_scalar_domain(clocks, small=True)
         vectors = (position, velocity, acceleration)
         if any(type(vector) is not tuple or len(vector) != 3 or
                any(type(value) is not float or not math.isfinite(value)
@@ -560,11 +564,19 @@ class Binary64RecordingOps(ReachPoseOps):
             raise _UnsupportedPlanar("A native ballistic law needs its actual source extent.")
         self.work.guard(root_extent)
         key = (METHOD, "ballistic_law", self.work.max_operand_bits, context, path,
-               anchor_time, phase_interval, root_extent, *vectors)
+               anchor_time, phase_interval, scene_duration, root_extent,
+               *(struct.pack("<ddd", *vector) for vector in vectors))
         previous = self.work.lookup(key)
         self._require_domain()
         if previous is not None:
             return previous
+        # The completed law certifies these immutable clock relations as well
+        # as its coefficients and extent. A warm key has the identical exact
+        # clocks under the same live cap, so no rational ordering is repeated.
+        if (anchor_time.numerator < 0
+                or any(_checked_compare(left, right, self.work) > 0
+                       for left, right in zip(clocks, clocks[1:]))):
+            raise _UnsupportedPlanar("A native ballistic phase must follow its anchor within the scene.")
         horizon = self.source_ops._op(phase_interval[1], anchor_time, "sub")
         self._immutable_scalar_domain((horizon,), small=True)
         if horizon.numerator < 0 or _checked_compare(horizon, _MAX_BALLISTIC_ELAPSED, self.work) > 0:
@@ -577,7 +589,7 @@ class Binary64RecordingOps(ReachPoseOps):
         from .reach_numeric import compare
         if compare(extent, root_extent, self.work) > 0:
             raise _UnsupportedPlanar("A native ballistic law is outside its actual whole-phase extent.")
-        result = _BallisticLaw(*vectors, horizon, extent)
+        result = _BallisticLaw(*vectors, horizon, extent, root_extent)
         self.work.remember(key, result)
         self._require_domain()
         return result
@@ -631,30 +643,27 @@ class Binary64RecordingOps(ReachPoseOps):
         self.work.charge("recording_dynamic_clock_domain")
         self._require_domain()
         self._immutable_scalar_domain((*phase, anchor.time, time, duration), small=True)
-        ordered_clocks = (anchor.time, phase[0], time, phase[1], duration)
-        if (anchor.time.numerator < 0 or
-                any(_checked_compare(left, right, self.work) > 0 for left, right in
-                    zip(ordered_clocks, ordered_clocks[1:]))):
+        if (_checked_compare(phase[0], time, self.work) > 0
+                or _checked_compare(time, phase[1], self.work) > 0):
             raise _UnsupportedPlanar("A native dynamic sample does not belong to its actual source phase.")
         elapsed = self.source_ops._op(time, anchor.time, "sub")
         self._immutable_scalar_domain((elapsed,), small=True)
-        if elapsed and (_checked_compare(elapsed, _MIN_BALLISTIC_ELAPSED, self.work) < 0 or
-                        _checked_compare(elapsed, _MAX_BALLISTIC_ELAPSED, self.work) > 0):
-            raise _UnsupportedPlanar("A native dynamic elapsed clock exceeds its proved domain.")
         initial = anchor.state
         root_bound = self.dynamic_bounds.get(path + ".frame") if self.dynamic_bounds is not None else None
         if root_bound is None:
             raise _UnsupportedPlanar("A native dynamic root is missing its actual source bound.")
         law = self._ballistic_law(initial.position, initial.velocity, simulator._acceleration(path, state),
             anchor_time=anchor.time, phase_interval=phase, root_extent=root_bound.max_position_l1_m,
-            context=context, path=path)
+            context=context, path=path, scene_duration=duration)
+        # This helper checks the current elapsed range before evaluating any
+        # native arithmetic; the caller does not repeat those comparisons.
         position, zeros = self._ballistic_position(law, elapsed)
         rotation = initial.rotation if hasattr(initial, "rotation") else initial.orientation
         orientation = simulator._advance_orientation(rotation, initial.omega, elapsed,
             recording_context=context, recording_path=METHOD + ":dynamic:" + path, recording_pose_ops=self)
         self._rotation_domain(orientation)
         self._require_domain()
-        self.dynamic_extents[path] = law.extent
+        self.dynamic_extents[path] = law
         return _FloatPose(position, orientation, zeros, 0)
 
     def _product(self, a, b):
@@ -727,7 +736,8 @@ class Binary64RecordingOps(ReachPoseOps):
         affine = type(coordinate) is _AffineCoordinate
         if not affine:
             coordinate = rational(coordinate, self.work)
-        axis = self.source_ops._vector(axis)
+        axis = self.source_ops._recording_vector(axis)
+        self._require_domain()
         if axis[0] or axis[1] or not axis[2]:
             raise _UnsupportedPlanar("Only a nonzero scalar/Z hinge is planar.")
         if affine:
@@ -773,13 +783,34 @@ class Binary64RecordingOps(ReachPoseOps):
             raise _UnsupportedPlanar("The recording arithmetic domain changed.")
         return result
 
+    def _reusable_spin_plan(self, plan):
+        """Admit every immutable field before a cursor can retain its proof.
+
+        A completed cursor already passed the ordinary exact reconstruction
+        of this same omega and plan. The key contains all plan fields; no
+        separate identity-result table or unchecked object-identity hit exists.
+        """
+        if (type(plan) is not SpinPlan or type(plan.scaled_omega) is not tuple
+                or len(plan.scaled_omega) != 3 or type(plan.norm_bounds) is not tuple
+                or len(plan.norm_bounds) != 2 or type(plan.pi_bounds) is not tuple
+                or len(plan.pi_bounds) != 2 or type(plan.precision_bits) is not int):
+            return False
+        values = (*plan.scaled_omega, plan.maximum, *plan.norm_bounds,
+                  *plan.pi_bounds, plan.max_elapsed_s, plan.argument_error_rad)
+        if any(type(value) is not F for value in values):
+            return False
+        self.work.guard(*values, plan.precision_bits)
+        self._require_domain()
+        return True
+
     def recording_advance_orientation(self, initial, omega, elapsed, *, context, path,
                                       max_steps, phase_plan=None):
         """Reuse checked scalar/Z spin increments without source pose derivatives."""
         self._domain()
         initial = self.source_ops._rotation(initial)
         elapsed = rational(elapsed, self.work)
-        omega = self.source_ops._vector(omega)
+        omega = self.source_ops._recording_vector(omega)
+        self._require_domain()
         if initial.components[1] or initial.components[2] or omega[0] or omega[1]:
             raise _UnsupportedPlanar("Only a complete scalar/Z prescribed spin is planar.")
         key = self._recording_cursor_key("certified_binary64_spin", context, path, max_steps,
@@ -789,10 +820,24 @@ class Binary64RecordingOps(ReachPoseOps):
             # The original recurrence returns the identical source initial
             # value on this branch, independently of all earlier cursor keys.
             return self._project_rotation(initial)
-        # Retain the ordinary absolute elapsed / omega / plan checks before
-        # inspecting a cached cursor or a previously controlled increment.
-        plan = self.source_ops._checked_spin_plan(omega, elapsed, phase_plan)
-        previous = self.work.lookup(key)
+        self._require_domain()
+        if self._reusable_spin_plan(phase_plan):
+            previous = self.work.lookup(key)
+            self._require_domain()
+            if previous is None:
+                plan = self.source_ops._checked_spin_plan(omega, elapsed, phase_plan)
+            else:
+                # The current absolute clock is new even when omega and every
+                # immutable plan field have their completed cursor proof.
+                if _checked_compare(abs(elapsed), phase_plan.max_elapsed_s, self.work) > 0:
+                    raise ReachAdmissionError("reach_numeric",
+                        "A source sample lies outside its proved spin phase.")
+                plan = phase_plan
+        else:
+            # Unplanned or unusual inputs retain the original full admission.
+            plan = self.source_ops._checked_spin_plan(omega, elapsed, phase_plan)
+            previous = self.work.lookup(key)
+        self._require_domain()
         delta, increment = None, None
         step_limit = min(max_steps, MAX_FLOAT_ROTATION_STEPS)
         if previous is not None and previous[2] < step_limit:
@@ -1115,13 +1160,20 @@ def _sample_planar_frames(simulator, time, state, selected_paths, *, context,
             dynamic = dynamic_roots is not None and path in dynamic_roots
             if dynamic:
                 root = dynamic_roots[path]
-                extent = ops.dynamic_extents.get(root)
+                law = ops.dynamic_extents.get(root)
                 simulator.work.charge("recording_dynamic_path_extent")
                 ops._require_domain()
-                if type(extent) is not F or type(bound.max_position_l1_m) is not F:
+                if (type(law) is not _BallisticLaw or type(law.extent) is not F
+                        or type(law.proved_extent) is not F or type(bound.max_position_l1_m) is not F):
                     raise _UnsupportedPlanar("A dynamic path is missing its completed root extent.")
-                from .reach_numeric import compare
-                if compare(extent, bound.max_position_l1_m, simulator.work) > 0:
+                extent, bound_extent = law.extent, bound.max_position_l1_m
+                simulator.work.guard(extent, law.proved_extent, bound_extent)
+                # Exact Fraction equality compares canonical integer fields.
+                # The law has already completed this identical prospective
+                # comparison under the same cap. Different descendant bounds
+                # still perform their own guarded rational comparison.
+                if (bound_extent != law.proved_extent
+                        and _checked_compare(extent, bound_extent, simulator.work) > 0):
                     raise _UnsupportedPlanar("A dynamic descendant does not enclose its root's ballistic extent.")
                 ops._require_domain()
             excess = recording_float_excess(bound, work=simulator.work,

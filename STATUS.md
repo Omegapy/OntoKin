@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-22T06:03:55Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-22T06:33:00Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -44,47 +44,46 @@ local `569b67b0bdc6854cc069e6a00590e0f15267ae03`
 [draft PR #25](https://github.com/Omegapy/OntoKin/pull/25). Original branches,
 failed attempts and earlier evidence retain their identities.
 
-Latest complete recording implementation is `5f7f503ab3727c4b78bc4b01ceb6472dc8c02473`,
-tree `f6479c0f1da00b787eeed0fbb6667de2df7574d1`. Subsequent test-only checkpoint
-`763b0804af794d6ea79f812302eccaaf3f8ee698` exercises the exact and native
-samplers against independently measured forged endpoint-error claims. The
-actual starting published baseline was `215efd6c99d2e42ca54ddbd9d898dd99fa678418`,
-newer than the supplied handoff; its complete 1,309-file tree was verified.
-Prior verified publication `c7d3e5e78f583c4a07fc8652dbe737c72356646d` retains
-checkpoint 002 and its exact local tree.
+Latest complete recording implementation is `d1d947aedc4dfded55cd983b12063d0a29e65719`,
+tree `70d5fea2d451620187f2eb731e5bc7fd62d7c8aa`. The actual starting published
+baseline was `215efd6c99d2e42ca54ddbd9d898dd99fa678418`, newer than the supplied
+handoff; its complete 1,309-file tree was verified. Previous verified publication
+`764e404b7c664af1fe3cfa3e45d0c9f722649d23` preserves checkpoint 003 and its exact
+local tree. The [October 22 checkpoint](docs/engineering/reach-recording-validation-2026-10-22/README.md)
+now includes exact deferred phase locations, bounded planning reuse, complete
+finite-pose receipts/families, native vector/spin/ballistic reuse, repeated clock
+digits and an independently derived stored-lift sign proof. The complete source
+numerical identity includes the new phase and planning derivations.
 
-The [October 22 checkpoint](docs/engineering/reach-recording-validation-2026-10-22/README.md)
-now includes native planar interior sampling with explicit certified endpoint
-allowances, exact affine and dynamic motion guards, native phase operand/template
-reuse, independent fused/shared interval rotations and completed stationary
-endpoint-limit receipts. Native code and its derivation are included in the
-complete numerical identity. Frozen source/expected results, source trajectories,
-quarter-allocation inequalities, tolerances and every public limit are unchanged.
+The latest endpoint reduction admits every actual pose and stored component,
+then forms conservative exact sums from coordinate maxima once per group. Pose,
+geometry and clock bytes are preserved; certificate bounds may be larger but
+must pass the original tolerances and independent supplied-byte checks. Current
+domains, changed inputs, cancellation, rollback and all public limits remain
+checked. No frozen source/expected result or acceptance inequality was relaxed.
 
-The latest complete source run, finished **05:52:52 UTC**, passes **19/28** with
-stable tracked inputs under the unchanged **100,000** shared limit. **P07
-(94,833), P08 (94,845) and P18 (95,782)** now pass. The nine remaining failures
-are **P05, P09, P11, P16, P20, P23, L01, L02 and L03**; each stops at the
-attempted 100,001st operation. All seven complete runs retain their actual
-failures and artifacts across three verified archives.
+The latest complete source run finished **06:30:51 UTC** with **19/28** passes
+and stable inputs under the unchanged **100,000** shared limit. P07 uses
+**87,996**, P08 **88,008**, and P18 **89,400** operations. **P05, P09, P11,
+P16, P20, P23, L01, L02 and L03** still stop at the attempted 100,001st operation.
+All nine complete source runs preserve their actual failures and artifacts.
+All 76 GLB/report files from the latest two runs match their producer receipts.
 
-Current focused cohorts pass **67/67** native sampling, **241/241** combined
-sampling/source/reader methods, and **232/232** independent reader methods;
-all have zero failures/errors/skips and stable inputs. A separately identified
-phase/lifecycle cohort passed **72/72**. The recovered exact-sampler tests retain
-their original assertions; both samplers reject insufficient endpoint claims.
-Earlier test-harness failures and corrections are separately preserved. These
-inventories overlap and are not a complete regression. The earlier
-**1,374/1,374** complete regression does not verify current code.
+Current executed cohorts: **212/212** combined planning/sampling/reader methods
+on `89dbe6e`, then **31/31** endpoint/cursor/claim/basis methods on `d1d947a`.
+Both have zero failures/errors/skips and stable inputs. Earlier identified
+67/67, 241/241, 232/232 and 72/72 cohorts remain preserved. These overlapping
+inventories are not a complete regression. The earlier **1,374/1,374** complete
+regression does not verify current code.
 
-Checkpoint 003's **136-member** archive retains the new runs, profiles, source
-patch and publication receipt; all persisted hashes and ZIP CRCs were rechecked
-under a fully paused filesystem window. Checkpoint 002's **688-member** archive
-and its two recorded failed containers remain unchanged. P23 construction fell
-from **31,952 to 26,373** operations; both phase bounds now complete, but its final
-boundary observation still exhausts the budget. P16's native sampling and the
-other cases' independent verification remain the main costs. Complete all
-recordings before Agent, regression and release acceptance.
+Checkpoint 004's **180-member** archive retains both new full runs, focused
+results, profiles, source patch and publication 003 receipt. Persisted hashes
+and ZIP CRCs were rechecked while worker filesystem activity was paused; all
+prior archives and recorded failed containers remain unchanged. P23 now finishes
+planning and reaches sampling: construction costs **26,373**, followed by
+**64,626** prefix-planning operations. P16 reaches certification after sampling;
+the other seven failures reach independent verification. Finish all 28 before
+Agent, complete regression and release acceptance.
 
 The recovered **21 clean older unpublished checkouts**, **183** changed source
 blobs and all **six exact original auditor files** remain preserved. Old results

@@ -158,6 +158,12 @@ the signed ideal derivative refinement. The [carrier rotation derivation](engine
 binds the optional recording cursor to those source laws and the existing
 finite endpoint allowance. Both complete derivations participate in the
 recording's identified numerical basis; execution results remain separate.
+The [deferred phase-location derivation](engineering/reach-deferred-phase-locations.md)
+proves exact reuse of outer translations through repeated phase paths; its
+complete text is also part of that identified basis.
+The [planning-reuse derivation](engineering/reach-planning-reuse.md) binds
+structural selection, empty-history measurement and unchanged endpoint
+projections to fresh source, state, ownership and output-limit checks.
 The [independent endpoint and arc derivation](engineering/reach-independent-endpoint-bounds.md)
 checks supplied bytes with sufficient exact bounds and retains the original
 normalization and norm calculations when those bounds cannot prove a claim.

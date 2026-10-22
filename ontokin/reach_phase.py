@@ -60,7 +60,35 @@ _BOUND_FIELDS = tuple(PhaseBound.__dataclass_fields__)
 _JOINT_PHASE_FIELDS = tuple(JointPhase.__dataclass_fields__)
 _COMPOSITION_FIELDS = tuple(name for name in _BOUND_FIELDS
                             if name not in {"max_position_l1_m", "path_offset_l1_m", "position_error_m"})
+_LOCATION_FIELDS = ("max_position_l1_m", "path_offset_l1_m", "position_error_m", "rotation_error_rad")
 _CACHE_DOMAIN = "reach_source_phase/0.1"
+
+
+@dataclass(frozen=True)
+class _PhaseLocation:
+    """One phase graph's exact outer location before public materialization."""
+    relative: PhaseBound
+    extent: F
+    offset: F
+
+
+class _PhaseLocationDomainChanged(Exception):
+    pass
+
+
+def _defer_phase_locations(model, work):
+    return (work.max_operand_bits == MAX_OPERAND_BITS and
+            len(model.objects) + len(model.sites) > work.max_cache_entries)
+
+
+def _small_phase_location_operands(*values):
+    # The final location equations use at most five rational products or sums.
+    # A constituent width of at most 1/16 of the fixed full domain admits all
+    # original prospective spatial intermediates before reduction. Derivative
+    # fields do not enter these equations and retain their ordinary guards.
+    return all(type(value) in (F, int) and
+               max(abs(value.numerator).bit_length(), value.denominator.bit_length()) <= MAX_OPERAND_BITS // 16
+               for value in values)
 
 
 def _native_phase_key(kind, values, extra, work):
@@ -525,6 +553,8 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None, rec
         # changed local law cannot authorize a cursor through an old signature.
         if witness(kind, path) != original:
             return
+        if type(bound) is _PhaseLocation:
+            bound = bound.relative
         work.guard(rate.value, bound.trig_count)
         angular_frames[frame] = RecordingAngularFrame(rate, parent, operands, bound.trig_count)
 
@@ -592,7 +622,7 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None, rec
         work.guard(*(getattr(result, field) for field in _BOUND_FIELDS))
         return result
 
-    def compose(parent, local, *, axial_rate=None):
+    def compose_relative(parent, local, *, axial_rate=None, placement_operands=()):
         # The recurrence never reads the parent's position_error_m: it derives
         # that allowance again from inherited anchor errors and path counts.
         # Its extent and path offset appear only in the final uniform position
@@ -603,7 +633,13 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None, rec
         # No sampled error or rounded arithmetic enters this factorization.
         work.charge("phase_composition_operand_guard")
         operands = tuple(getattr(bound, field) for bound in (parent, local) for field in _BOUND_FIELDS)
-        work.guard(*operands)
+
+        def guard_operands(*values):
+            if placement_operands and work.max_operand_bits != MAX_OPERAND_BITS:
+                raise _PhaseLocationDomainChanged()
+            work.guard(*operands, *placement_operands, *values)
+
+        guard_operands()
         local_translation = None
         if _local_translation_independent(parent):
             # When all four angular derivative bounds are exactly zero,
@@ -613,14 +649,14 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None, rec
             # the zero-translation recurrence across distinct rigid mounts;
             # retain every other parent/local field in its original key.
             work.charge("phase_local_translation_factor")
-            work.guard(*operands)
+            guard_operands()
             local_translation = (local.max_position_l1_m, local.path_offset_l1_m)
             local = replace(local, max_position_l1_m=F(0), path_offset_l1_m=F(0), position_error_m=F(0))
         kind = "composition_translation_recurrence" if local_translation is not None else "composition_recurrence"
         key = (_CACHE_DOMAIN, work.max_operand_bits, kind,
                tuple(getattr(parent, field) for field in _COMPOSITION_FIELDS), local)
         cached = work.lookup(key)
-        work.guard(*operands)
+        guard_operands()
         location = (parent.max_position_l1_m, parent.path_offset_l1_m, local_translation)
 
         def checked(bound):
@@ -629,7 +665,7 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None, rec
             # The cached recurrence is unchanged. Only its ideal derivatives
             # are tightened after a fresh topology proof for this source node.
             bound = _tighten_angular(bound, axial_rate, work)
-            work.guard(*operands, *(getattr(bound, field) for field in _BOUND_FIELDS))
+            guard_operands(*(getattr(bound, field) for field in _BOUND_FIELDS))
             return bound
 
         def translated(base):
@@ -701,6 +737,70 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None, rec
         result = translated(base)
         work.remember(key, (location, result, base))
         return checked(result)
+
+    def materialize(location):
+        if type(location) is not _PhaseLocation:
+            return location
+        work.charge("phase_location_materialize")
+        base, extent_delta, offset_delta = location.relative, location.extent, location.offset
+        operands = (*(getattr(base, field) for field in _BOUND_FIELDS), extent_delta, offset_delta)
+        work.guard(*operands)
+        extent = a.add(base.max_position_l1_m, extent_delta)
+        offset = a.add(base.path_offset_l1_m, offset_delta)
+        rotation = a.sub(base.rotation_error_rad, EXPOSED_ROTATION_ERROR)
+        position_error = a.add(base.position_error_m,
+            a.mul(extent_delta, F(1, 1 << 53)), a.mul(offset_delta, rotation))
+        result = replace(base, max_position_l1_m=extent, path_offset_l1_m=offset,
+                         position_error_m=position_error)
+        work.guard(*operands, *(getattr(result, field) for field in _BOUND_FIELDS))
+        return result
+
+    def compose(parent, local, *, axial_rate=None):
+        """Carry exact outer location through repeated relative recurrences.
+
+        Parent extent, path offset and position error do not enter any local
+        derivative equation. Keep these offsets separate on a large repeated
+        graph until an ordinary PhaseBound is returned. Every source identity
+        and local law is still visited; no deferred value escapes this call.
+        """
+        if not _defer_phase_locations(model, work):
+            return compose_relative(materialize(parent), materialize(local), axial_rate=axial_rate)
+        local = materialize(local)
+        original_local = local
+        if type(parent) is _PhaseLocation:
+            relative, extent, offset = parent.relative, parent.extent, parent.offset
+        else:
+            relative, extent, offset = parent, F(0), F(0)
+        operands = (*(getattr(bound, field) for bound in (relative, local) for field in _BOUND_FIELDS),
+                    extent, offset)
+        work.charge("phase_location_domain")
+        work.guard(*operands)
+        spatial = (*(getattr(bound, field) for bound in (relative, local) for field in _LOCATION_FIELDS),
+                   extent, offset)
+        if work.max_operand_bits != MAX_OPERAND_BITS or not _small_phase_location_operands(*spatial):
+            return compose_relative(materialize(parent), local, axial_rate=axial_rate)
+        if _local_translation_independent(relative):
+            # The existing eager factorization proves these local spatial
+            # fields affect only final uniform location. Add them once at the
+            # mount, then carry the same exact two values down its whole path.
+            extent = a.add(extent, a.mul(F(2), local.max_position_l1_m))
+            offset = a.add(offset, local.path_offset_l1_m, local.max_position_l1_m)
+            local = replace(local, max_position_l1_m=F(0), path_offset_l1_m=F(0), position_error_m=F(0))
+        try:
+            result = compose_relative(relative, local, axial_rate=axial_rate, placement_operands=operands)
+        except _PhaseLocationDomainChanged as error:
+            if error is work.callback_error:
+                raise
+            # A cached relative result is not a proof for the occurrence's
+            # larger complete location under a newly narrowed operand cap.
+            return compose_relative(materialize(parent), original_local, axial_rate=axial_rate)
+        values = (*(getattr(result, field) for field in _BOUND_FIELDS), extent, offset)
+        work.guard(*operands, *values)
+        placed = _PhaseLocation(result, extent, offset)
+        spatial = (*(getattr(result, field) for field in _LOCATION_FIELDS), extent, offset)
+        if work.max_operand_bits != MAX_OPERAND_BITS or not _small_phase_location_operands(*spatial):
+            return materialize(placed)
+        return placed if extent or offset else result
 
     def rotation_plan(omega, elapsed):
         plan = ops.spin_plan(omega, elapsed)
@@ -891,6 +991,14 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None, rec
     else:
         for path in selected_frames:
             frame(path)
+    # Matching object/frame entries keep the same ordinary immutable record.
+    # Materialize each existing node once; this is not another numerical cache.
+    for path, value in objects.items():
+        if type(value) is _PhaseLocation:
+            objects[path] = frames[path + ".frame"] = materialize(value)
+    for path, value in frames.items():
+        if type(value) is _PhaseLocation:
+            frames[path] = materialize(value)
     result = {"objects": objects, "frames": frames, "joints": joints}
     if recording_proof:
         work.charge("phase_recording_proof_return")

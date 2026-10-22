@@ -33,6 +33,8 @@ MAX_RECORDING_ROTATION_STEPS = 10000
 ZERO = (F(0),F(0),F(0))
 UNIT = (F(1),F(0),F(0),F(0))
 _GRID_SCALE = 1 << BITS
+_FINITE_FIELDS = (("position",3),("orientation",4),("velocity",3),("omega",3))
+_FINITE_PROOF_BUSY = object()
 
 
 @dataclass(frozen=True)
@@ -41,6 +43,20 @@ class RotationValue:
     error_rad: F = F(0)
     # Only materialized event anchors preserve an already exposed quaternion.
     frozen_projection: tuple[float,float,float,float] | None = None
+
+
+@dataclass(frozen=True)
+class _PoseFinitenessProof:
+    owner: object
+    cap: int
+    fields: tuple
+
+
+@dataclass
+class _PoseFinitenessFamily:
+    """One completed record shared by already-retained translated poses."""
+    owner: object
+    proof: _PoseFinitenessProof | None = None
 
 
 @dataclass(frozen=True)
@@ -94,6 +110,12 @@ class PoseValue:
     _ops: ReachPoseOps = field(repr=False,compare=False)
     _projection: dict = field(default_factory=dict,repr=False,compare=False)
     _projection_domains: dict = field(default_factory=dict,repr=False,compare=False)
+    # A completed proof belongs to this retained source pose. It contains only
+    # immutable operand fingerprints, never computed public projection tuples.
+    # replace() starts cold; a translated source occurrence may explicitly
+    # carry the proof and must then match each unchanged field before reuse.
+    _finite_proof: object = field(default=None,init=False,repr=False,compare=False)
+    _finite_family: object = field(default=None,init=False,repr=False,compare=False)
 
     def __deepcopy__(self,memo):
         # Arithmetic state is immutable; the memoized projections do not alter
@@ -1395,33 +1417,140 @@ class ReachPoseOps:
                 type(pose._projection) is not dict):
             pose.position,pose.orientation,pose.velocity,pose.omega
             return
-        for name,length in (("position",3),("orientation",4),("velocity",3),("omega",3)):
-            self.work.charge("pose_finiteness_field")
-            # _expose also returns an existing actual projection before any
-            # new numeric guards. Do not replace it with a different value.
-            if name in pose._projection:
-                continue
-            # Recheck after the callback: it may have narrowed this request.
-            if self.work.max_operand_bits!=MAX_OPERAND_BITS:
-                getattr(pose,name)
-                continue
-            if name=="orientation":
-                rotation=pose.rotation
-                if type(rotation) is not RotationValue or rotation.frozen_projection is not None:
-                    getattr(pose,name)
+        own=pose._finite_proof
+        family=pose._finite_family
+        if (own is _FINITE_PROOF_BUSY or
+                own is not None and not self._valid_finite_proof(own) or
+                family is not None and not self._valid_finite_family(family)):
+            # An interrupted/reentrant or malformed private memo cannot supply
+            # any proof. Preserve the original four ordered field checks.
+            self._ensure_finite_fields(pose)
+            return
+        previous=own if own is not None else family.proof if family is not None else None
+        retained=own
+        object.__setattr__(pose,"_finite_proof",_FINITE_PROOF_BUSY)
+        try:
+            self.work.charge("pose_finiteness_proof")
+            if (self.work.max_operand_bits!=MAX_OPERAND_BITS or
+                    pose._finite_proof is not _FINITE_PROOF_BUSY or
+                    pose._finite_family is not None and not self._valid_finite_family(pose._finite_family)):
+                self._ensure_finite_fields(pose)
+                return
+            signature=self._finite_signature(pose)
+            completed=[]
+            for index,(name,length) in enumerate(_FINITE_FIELDS):
+                matched=(previous is not None and signature[index] is not None and
+                         signature[index] is previous.fields[index])
+                if previous is not None and (matched or name in pose._projection):
+                    completed.append(signature[index] if matched else None)
                     continue
-                values=rotation.components
-            else:
-                values=getattr(pose,"exact_"+name)
-            if (type(values) is not tuple or len(values)!=length or
-                    any(type(value) is not F for value in values)):
+                proved=self._ensure_finite_field(pose,name,length)
+                if (self.work.max_operand_bits!=MAX_OPERAND_BITS or
+                        pose._finite_proof is not _FINITE_PROOF_BUSY or
+                        pose._finite_family is not None and not self._valid_finite_family(pose._finite_family) or
+                        any(current is not original for current, original in
+                            zip(self._finite_signature(pose), signature))):
+                    # A later callback may invalidate even an earlier reused
+                    # field. Replay all original checks under the live domain.
+                    self._ensure_finite_fields(pose)
+                    return
+                completed.append(signature[index] if proved else None)
+            retained=_PoseFinitenessProof(self,MAX_OPERAND_BITS,tuple(completed))
+            if self._valid_finite_family(pose._finite_family):
+                # Sibling sites may have been built before their first check.
+                # Publish only this completed immutable operand proof, never
+                # a source pose, public tuple or partially proved field set.
+                pose._finite_family.proof=retained
+        finally:
+            if pose._finite_proof is _FINITE_PROOF_BUSY:
+                object.__setattr__(pose,"_finite_proof",retained)
+
+    @staticmethod
+    def _finite_payload(name,payload):
+        if name=="orientation":
+            if (type(payload) is not RotationValue or payload.frozen_projection is not None or
+                    type(payload.error_rad) is not F):
+                return None
+            values=payload.components
+            length=4
+        else:
+            values=payload
+            length=3
+        if (type(values) is not tuple or len(values)!=length or
+                any(type(value) is not F for value in values) or
+                any(max(value.numerator.bit_length(),value.denominator.bit_length())>512
+                    for value in values)):
+            return None
+        if name=="orientation" and not any(values):
+            return None
+        return payload
+
+    def _finite_signature(self,pose):
+        return tuple(self._finite_payload(name,pose.rotation if name=="orientation" else
+                     getattr(pose,"exact_"+name)) for name,_ in _FINITE_FIELDS)
+
+    def _valid_finite_proof(self,proof):
+        return (type(proof) is _PoseFinitenessProof and proof.owner is self and
+                type(proof.cap) is int and proof.cap==MAX_OPERAND_BITS and
+                type(proof.fields) is tuple and len(proof.fields)==len(_FINITE_FIELDS) and
+                all(value is None or self._finite_payload(name,value) is not None
+                    for (name,_),value in zip(_FINITE_FIELDS,proof.fields)))
+
+    def _carry_finite_proof(self,source,target):
+        """Carry completed immutable proof state; the next check matches fields."""
+        if not (type(source) is PoseValue and type(target) is PoseValue and
+                source._ops is self and target._ops is self):
+            return
+        proof=source._finite_proof
+        if proof is not None and not self._valid_finite_proof(proof):
+            return
+        family=source._finite_family
+        if family is None:
+            family=_PoseFinitenessFamily(self,proof)
+            object.__setattr__(source,"_finite_family",family)
+        elif not self._valid_finite_family(family):
+            return
+        if proof is not None:
+            object.__setattr__(target,"_finite_proof",source._finite_proof)
+        object.__setattr__(target,"_finite_family",family)
+
+    def _valid_finite_family(self,family):
+        return (type(family) is _PoseFinitenessFamily and family.owner is self and
+                (family.proof is None or self._valid_finite_proof(family.proof)))
+
+    def _ensure_finite_fields(self,pose):
+        for name,length in _FINITE_FIELDS:
+            self._ensure_finite_field(pose,name,length)
+
+    def _ensure_finite_field(self,pose,name,length):
+        self.work.charge("pose_finiteness_field")
+        # Preserve the existing finiteness check's treatment of an actual
+        # projection. Such a tuple is never a proof of the private operands;
+        # an actual _expose request retains its separate current-domain checks.
+        if name in pose._projection:
+            return False
+        if self.work.max_operand_bits!=MAX_OPERAND_BITS:
+            getattr(pose,name)
+            return False
+        if name=="orientation":
+            rotation=pose.rotation
+            if type(rotation) is not RotationValue or rotation.frozen_projection is not None:
                 getattr(pose,name)
-                continue
-            self.work.guard(*values)
-            small=all(max(value.numerator.bit_length(),value.denominator.bit_length())<=512
-                      for value in values)
-            if not small or (name=="orientation" and not any(values)):
-                getattr(pose,name)
+                return False
+            values=rotation.components
+        else:
+            values=getattr(pose,"exact_"+name)
+        if (type(values) is not tuple or len(values)!=length or
+                any(type(value) is not F for value in values)):
+            getattr(pose,name)
+            return False
+        self.work.guard(*values)
+        small=all(max(value.numerator.bit_length(),value.denominator.bit_length())<=512
+                  for value in values)
+        if not small or (name=="orientation" and not any(values)):
+            getattr(pose,name)
+            return False
+        return True
 
     def _unit_projection(self,rotation):
         while True:
@@ -1623,7 +1752,9 @@ def source_numeric_basis(*,work):
                       "docs/engineering/reach-source-kernel.md",
                       "docs/engineering/reach-coaxial-phase-bounds.md",
                       "docs/engineering/reach-carrier-rotation-cursors.md",
-                      "docs/engineering/reach-recording-certified-planar.md")
+                      "docs/engineering/reach-recording-certified-planar.md",
+                      "docs/engineering/reach-deferred-phase-locations.md",
+                      "docs/engineering/reach-planning-reuse.md")
     names=implementation_names+derivation_names
     entries=[]
     for name in names:

@@ -222,6 +222,36 @@ def rational_record(value, *, work=None) -> dict[str, str]:
     return {"numerator": decimal(value.numerator), "denominator": decimal(value.denominator)}
 
 
+def _interval_clock_record(value, *, work):
+    """Reuse completed decimal digits for repeated exact interval widths.
+
+    Authored keys keep their ordinary single-use serialization. Widths recur
+    throughout one phase, so their immutable digit pair can use the same
+    bounded request cache as other completed pure calculations. Each row gets
+    a fresh dictionary and the original decoder/guard still runs on every use.
+    """
+    if not hasattr(work, "lookup") or not hasattr(work, "remember"):
+        return rational_record(value, work=work)
+    while True:
+        exact = _rational(value, work)
+        if exact < 0:
+            raise ValueError("A recording clock must be nonnegative")
+        cap = work.max_operand_bits
+        key = ("reach_interval_clock_digits_v1", cap, exact)
+        digits = work.lookup(key)
+        if work.max_operand_bits != cap:
+            continue
+        if digits is None:
+            record = rational_record(exact, work=work)
+            digits = (record["numerator"], record["denominator"])
+            if work.max_operand_bits != cap:
+                continue
+            work.remember(key, digits)
+            if work.max_operand_bits != cap:
+                continue
+        return {"numerator": digits[0], "denominator": digits[1]}
+
+
 def direct_binary32(value, *, work=None, model=None) -> tuple[float, str]:
     """Round a nonnegative exact clock directly to binary32, including ties.
 
@@ -468,6 +498,240 @@ def _boundary_record(time, before, after, incoming):
     return result
 
 
+class _PrefixFrameSelection:
+    """One prefix's structural carrier list without numerical memoization."""
+
+    def __init__(self):
+        self.owner = self.inputs = self.frames = None
+
+    def selected(self, simulator):
+        model, work = simulator.model, simulator.work
+        # Reuse construction and deduplication of the same ordered identities.
+        # The phase walk below still checks every actual source occurrence.
+        if self.owner is not None and self.owner[0] is model and self.owner[1] is work:
+            _charge(work, "recording_phase_selection_reuse")
+            model, work = simulator.model, simulator.work
+            inputs = (tuple(model.objects), tuple(joint.parent for joint in model.joints.values()))
+            if (inputs == self.inputs and self.owner[0] is simulator.model
+                    and self.owner[1] is simulator.work):
+                return self.frames
+        selected, seen, parents, objects = [], set(), [], []
+        for path in model.objects:
+            _charge(work, "recording_phase_frame")
+            objects.append(path)
+            frame = path + ".frame"
+            selected.append(frame)
+            seen.add(frame)
+        for joint in model.joints.values():
+            _charge(work, "recording_phase_frame")
+            parents.append(joint.parent)
+            frame = joint.parent + ".frame"
+            if frame not in seen:
+                selected.append(frame)
+                seen.add(frame)
+        inputs = (tuple(objects), tuple(parents))
+        # A cold construction also contains callbacks. Do not publish a mixed
+        # selection if one of them changed an earlier identity or either owner.
+        if (model is not simulator.model or work is not simulator.work
+                or inputs != (tuple(model.objects), tuple(joint.parent for joint in model.joints.values()))):
+            return self.selected(simulator)
+        self.owner, self.inputs, self.frames = (model, work), inputs, tuple(selected)
+        return self.frames
+
+
+def _boundary_state_contents(state, *, work=None):
+    """Bounded exact operands for an already validated static endpoint.
+
+    Only known plain records are eligible. The final callback-free comparison
+    detects mutation of an earlier field by a later checkpoint callback.
+    """
+    from .evaluator import _ImpulseState
+    from .force_runtime import _ActiveForce, _ForceState
+    from .model import ForcePayload, ReachPayload, ReachSourceLocation
+    from .reach_kinematics import PlanarSolution
+    from .reach_phase import AnchorError
+    from .reach_pose import RotationValue
+    from .reach_runtime import _ReachActionState, _ReachRunState
+
+    records = (_ReachRunState, _ReachActionState, _ImpulseState, _ForceState,
+               _ActiveForce, ForcePayload, PlanarSolution, RotationValue, AnchorError,
+               ReachPayload, ReachSourceLocation)
+    visited, active = 0, set()
+
+    class Ineligible(Exception):
+        pass
+
+    def freeze(value, depth=0):
+        nonlocal visited
+        visited += 1
+        if visited > 16384 or depth > 32:
+            raise Ineligible
+        if work is not None and visited % 128 == 1:
+            _charge(work, "recording_boundary_state_block")
+            if work.max_operand_bits != MAX_ARITHMETIC_BITS:
+                # A later callback cannot restore a domain and thereby hide
+                # the fact that this receipt crossed a narrowed domain.
+                raise Ineligible
+        kind = type(value)
+        if value is None or kind in (str, bool):
+            if kind is str and len(value) > 4096:
+                raise Ineligible
+            return kind, value
+        if kind is int:
+            if value.bit_length() > MAX_ARITHMETIC_BITS:
+                raise Ineligible
+            return kind, value
+        if kind is float:
+            if not math.isfinite(value):
+                raise Ineligible
+            return kind, struct.pack(">d", value)
+        if kind is Fraction:
+            if max(value.numerator.bit_length(), value.denominator.bit_length()) > MAX_ARITHMETIC_BITS:
+                raise Ineligible
+            return kind, value.numerator, value.denominator
+        if kind in records:
+            return kind, freeze(vars(value), depth + 1)
+        if kind not in (dict, list, tuple, set) or len(value) > 16384 - visited:
+            raise Ineligible
+        if id(value) in active:
+            raise Ineligible
+        active.add(id(value))
+        try:
+            if kind is dict:
+                return kind, tuple((freeze(key, depth + 1), freeze(child, depth + 1))
+                                   for key, child in tuple(value.items()))
+            if kind is set:
+                if any(type(item) is not str for item in value):
+                    raise Ineligible
+                values = sorted(value)
+            else:
+                values = tuple(value)
+            return kind, tuple(freeze(item, depth + 1) for item in values)
+        finally:
+            active.remove(id(value))
+
+    try:
+        return freeze(state)
+    except Ineligible:
+        return None
+
+
+def _boundary_projection_model(model, *, work=None):
+    """Bind every source operand and identity used by retained projections."""
+    from .model import ActionModel, FollowModel, JointModel, ObjectModel, Pose, SceneModel, SiteModel
+
+    if type(model) is not SceneModel:
+        return None
+    collections = ((model.objects, ObjectModel), (model.sites, SiteModel),
+                   (model.joints, JointModel), (model.follows, FollowModel), (model.actions, ActionModel))
+    if (any(type(values) is not dict or len(values) > 4096 for values, _ in collections)
+            or sum(len(values) for values, _ in collections) > 4096):
+        return None
+    if any(type(value) is not kind for values, kind in collections for value in values.values()):
+        return None
+    if (any(type(obj.physical) is not dict for obj in model.objects.values())
+            or any(type(site.pose) is not Pose for site in model.sites.values())
+            or any(type(follow.offset) is not Pose for follow in model.follows.values())):
+        return None
+
+    def pose(value):
+        return value.frame, value.position, value.rotation
+
+    values = (
+        model.module_name, model.module_key, model.scene_name, model.scene_key, model.profile,
+        model.program_revision, model.duration, model.gravity, model.source_provenance,
+        tuple((path, obj.path, obj.owner, obj.element_id, obj.mass) for path, obj in model.objects.items()),
+        tuple((path, site.path, site.element_id, site.owner, pose(site.pose))
+              for path, site in model.sites.items()),
+        tuple((path, joint.path, joint.element_id, joint.kind, joint.parent, joint.child,
+               joint.axis, joint.limits, joint.initial) for path, joint in model.joints.items()),
+        tuple((path, follow.path, follow.parent, follow.child, pose(follow.offset))
+              for path, follow in model.follows.items()),
+        tuple((path, action.path, action.element_id, action.kind, action.target,
+               action.duration, action.vector, action.goal, action.reach) for path, action in model.actions.items()))
+    return _boundary_state_contents(values, work=work)
+
+
+class _UnchangedBoundaryProjection:
+    """One private before output, reusable only across no actual transition."""
+
+    @staticmethod
+    def owners(simulator):
+        return (simulator.model, simulator.work, simulator.pose_ops, simulator.pose_ops.work,
+                simulator.state, simulator.check, simulator.work.external_check)
+
+    @staticmethod
+    def scope(simulator):
+        from . import force_runtime
+        return (simulator.context_kind, simulator.work.max_operand_bits, force_runtime.MAX_OUTPUT_RECORDS,
+                force_runtime.MAX_JSON_BYTES, simulator.event_index, simulator.zero_pending,
+                simulator.last_boundary, tuple(simulator.boundaries))
+
+    @classmethod
+    def capture(cls, simulator):
+        from .reach_runtime import _ReachRunState
+
+        if (type(simulator.state) is not _ReachRunState or simulator.state.dynamic
+                or simulator._pending_reach_output is not None
+                or simulator.work.max_operand_bits != MAX_ARITHMETIC_BITS):
+            return None
+        result = cls()
+        result.owner = simulator
+        result.bindings = cls.owners(simulator)
+        result.domain = cls.scope(simulator)
+        result.contents = _boundary_state_contents(simulator.state, work=simulator.work)
+        if result.contents is None:
+            return None
+        result.source = _boundary_projection_model(simulator.model, work=simulator.work)
+        if result.source is None or not result.matches(check=False):
+            return None
+        return result
+
+    def matches(self, *, check):
+        from .reach_runtime import _ReachRunState
+
+        simulator = self.owner
+        if (type(simulator.state) is not _ReachRunState
+                or any(old is not current for old, current in zip(self.bindings, self.owners(simulator)))
+                or self.domain != self.scope(simulator) or simulator.state.dynamic
+                or simulator._pending_reach_output is not None):
+            return False
+        contents = _boundary_state_contents(simulator.state, work=simulator.work if check else None)
+        if contents is None:
+            return False
+        source = _boundary_projection_model(simulator.model, work=simulator.work if check else None)
+        # No callback occurs between the final reads and comparisons. A later
+        # checkpoint cannot hide mutation of an already visited source field.
+        return (contents == self.contents and source == self.source and self.domain == self.scope(simulator)
+                and all(old is current for old, current in zip(self.bindings, self.owners(simulator)))
+                and (not check or (contents == _boundary_state_contents(simulator.state)
+                    and source == _boundary_projection_model(simulator.model))))
+
+    def after(self, before, time, *, objects):
+        from .evaluator import time_text
+
+        simulator = self.owner
+        _charge(simulator.work, "recording_boundary_projection_guard")
+        if (type(before) is not dict or before.get("side") != "before"
+                or before.get("time_seconds") != time_text(time) or not self.matches(check=True)):
+            return None
+        # The full after materializer copies and counts every occurrence.
+        # Retain the freshly checked object/force/impulse histories supplied by
+        # recording_boundary; only unchanged joint/action/reach work is shared.
+        reaches = {}
+        for path, projection in before["reaches"].items():
+            _charge(simulator.work, "recording_boundary_side")
+            current = projection["current"]
+            if current["available"]:
+                value = current["value"]
+                observation = {**value["observation"], "side": "after"}
+                current = {**current, "value": {**value, "observation": observation}}
+            reaches[path] = {**projection, "current": current}
+        result = simulator._snapshot_data({**before, "side": "after", "objects": objects,
+                                           "reaches": reaches}, time, "after")
+        return result if self.matches(check=True) else None
+
+
 def recording_phase_bounds(simulator, start, end, *, recording_proof=False):
     """Prove every deliverable carrier and its complete source dependencies.
 
@@ -481,18 +745,10 @@ def recording_phase_bounds(simulator, start, end, *, recording_proof=False):
     from .reach_phase import phase_bounds
 
     try:
-        selected, seen = [], set()
-        for path in simulator.model.objects:
-            _charge(simulator.work, "recording_phase_frame")
-            frame = path + ".frame"
-            selected.append(frame)
-            seen.add(frame)
-        for joint in simulator.model.joints.values():
-            _charge(simulator.work, "recording_phase_frame")
-            frame = joint.parent + ".frame"
-            if frame not in seen:
-                selected.append(frame)
-                seen.add(frame)
+        selector = getattr(simulator, "_recording_frame_selection", None)
+        if selector is None:
+            selector = _PrefixFrameSelection()
+        selected = selector.selected(simulator)
         # The ordinary exact phase traversal still follows all required
         # site/ownership/joint paths and prepares every root's spin plan.
         result = phase_bounds(simulator, start, end, selected_frames=selected,
@@ -526,24 +782,34 @@ def reach_prefix_plan(model, end, *, work) -> ReachPrefixPlan:
 
     recording_stage("planning", work=work)
     simulator = PlanningSimulator(model, work=work)
+    simulator._recording_frame_selection = _PrefixFrameSelection()
     history = _BoundaryHistoryPreflight(model, horizon=end, check=work.tick)
     times, phases, states, records = [], [], [], []
     time = Fraction(0)
+    endpoint_without_transition = False
     while True:
         _charge(work, "recording_boundary_preflight")
         if len(times) >= MAX_KEYFRAMES:
             _fail("OKE-E-KEYFRAME-BUDGET", "Semantic boundaries exceed the recording key budget.", model=model, kind="resource")
         history.append(time)
         simulator.advance(time, "before")
+        reuse = (_UnchangedBoundaryProjection.capture(simulator)
+                 if endpoint_without_transition else None)
         before = simulator.recording_boundary(time, "before")
+        if reuse is not None and not reuse.matches(check=False):
+            reuse = None
         simulator.advance(time, "after")
-        after = simulator.recording_boundary(time, "after")
+        if reuse is None:
+            after = simulator.recording_boundary(time, "after")
+        else:
+            after = simulator.recording_boundary(time, "after", _reuse=(reuse, before))
         records.append(_boundary_record(time, before, after, simulator.incoming_releases_at(time)))
         times.append(time)
         if time == end:
             break
         following = simulator._next_boundary()
         stop = end if following is None or following > end else following
+        endpoint_without_transition = following is None or following > end
         if stop <= time:
             _fail("OKE-E-PHASE-COVERAGE", "The validated prefix did not advance to a later boundary.", model=model)
         recording_stage("planning_phase", work=work)
@@ -848,7 +1114,79 @@ def _certificate_quantities(model, bound, enclosing, radius, vertex_error,
     return tuple(quantities.items())
 
 
-def _endpoint_group_maxima(nodes, keys, model, *, work):
+class _EndpointReductionFallback(Exception):
+    """A changed arithmetic domain abandons an incomplete group reduction."""
+
+
+class _EndpointReductionWork:
+    """Check the live full domain after every real reduction checkpoint."""
+
+    def __init__(self, work):
+        self.work = work
+        self.fallback = _EndpointReductionFallback()
+
+    def charge(self, kind):
+        self.work.charge(kind)
+        if getattr(self.work, "max_operand_bits", MAX_ARITHMETIC_BITS) != MAX_ARITHMETIC_BITS:
+            raise self.fallback
+
+    def guard(self, *values):
+        self.work.guard(*values)
+
+    def guard_bits(self, width):
+        self.work.guard_bits(width)
+
+
+def _endpoint_group_axes(nodes, keys, model, *, work):
+    """Reduce actual component maxima before doing exact L1 arithmetic.
+
+    This is bounded output-reduction state, not another numerical cache. A
+    complete occurrence is admitted before its seven stored components are
+    converted. Small-norm quaternions and changed/narrow domains replay the
+    original complete endpoint reduction, retaining all attempted work.
+    """
+    if getattr(work, "max_operand_bits", MAX_ARITHMETIC_BITS) != MAX_ARITHMETIC_BITS:
+        return None
+    scope = _EndpointReductionWork(work)
+    # Position residuals, quaternion residuals, stored position magnitudes.
+    maxima = [[0.0] * 10 for _ in nodes]
+    try:
+        for key_index in sorted(keys):
+            for node, retained in zip(nodes, maxima):
+                scope.charge("recording_endpoint_group_domain")
+                position = tuple(node.translations[key_index])
+                quaternion = tuple(node.rotations_xyzw[key_index])
+                if (len(position) != 3 or len(quaternion) != 4
+                        or any(type(value) is not float or not math.isfinite(value)
+                               for value in (*position, *quaternion))):
+                    raise ValueError("A recording endpoint requires finite binary64 pose components")
+                scope.guard_bits(1075)
+                stored_position = _stored_vector(position, model)
+                stored_quaternion = _stored_vector(quaternion, model)
+                if not any(stored_quaternion):
+                    _fail("OKE-E-QUATERNION", "A stored zero quaternion has no normalized interpretation.", model=model)
+                if max(abs(value) for value in quaternion) < .5:
+                    return None
+                for axis, (value, stored) in enumerate(zip(position, stored_position)):
+                    retained[axis] = max(retained[axis], abs(value - stored))
+                    retained[axis + 7] = max(retained[axis + 7], abs(stored))
+                for axis, (value, stored) in enumerate(zip(quaternion, stored_quaternion)):
+                    retained[axis + 3] = max(retained[axis + 3], abs(value - stored))
+        result = []
+        for retained in maxima:
+            position = _endpoint_l1(tuple(retained[:3]), work=scope)
+            quaternion = _exact(Fraction(4), _endpoint_l1(tuple(retained[3:7]), work=scope), "mul", scope)
+            quaternion = _exact(quaternion, 2 * NORMALIZATION_ERROR, "add", scope)
+            magnitude = _endpoint_l1(tuple(retained[7:]), work=scope)
+            result.append((position, quaternion, magnitude))
+        return tuple(result)
+    except _EndpointReductionFallback as error:
+        if error is not scope.fallback or getattr(work, "callback_error", None) is error:
+            raise
+        return None
+
+
+def _endpoint_group_maxima_exact(nodes, keys, model, *, work):
     """Visit adjacent carriers together while retaining each actual endpoint.
 
     Rigidly related carriers frequently share a quaternion at the same key.
@@ -865,6 +1203,16 @@ def _endpoint_group_maxima(nodes, keys, model, *, work):
             for axis, value in enumerate(values):
                 retained[axis] = max(retained[axis], value)
     return tuple(tuple(values) for values in maxima)
+
+
+def _endpoint_group_maxima(nodes, keys, model, *, work):
+    """Cover every endpoint with a completed component or ordinary reduction."""
+    keys = tuple(keys)
+    if not keys:
+        return _endpoint_group_maxima_exact(nodes, keys, model, work=work)
+    result = _endpoint_group_axes(nodes, keys, model, work=work)
+    return (_endpoint_group_maxima_exact(nodes, keys, model, work=work)
+            if result is None else result)
 
 
 def interval_certificates(model, options, plan, nodes, geometry_bounds, exact, times, *, work,
@@ -957,8 +1305,8 @@ def interval_certificates(model, options, plan, nodes, geometry_bounds, exact, t
         source_index, selected = group_key
         phase = plan.phases[source_index]
         left, right = exact[index], exact[index + 1]
-        authored_width = rational_record(right - left, work=work)
-        stored_width = rational_record(s1 - s0, work=work)
+        authored_width = _interval_clock_record(right - left, work=work)
+        stored_width = _interval_clock_record(s1 - s0, work=work)
         for carrier, (node, (radius, _)) in enumerate(zip(nodes, geometry_bounds)):
             _charge(work, "recording_certificate")
             frame = node.frame_path

@@ -130,6 +130,53 @@ bounded candidate sequence.
 
 ## Exact affine interior coordinates
 
+### Reusing completed source and phase proofs
+
+Fixed hinge axes and root angular velocities use the existing shared exact
+vector decoder. Each use still admits the actual shape, finite scalar types
+and live operand cap. A hit reuses only the identical binary64-to-rational
+conversion; the source vector, normalization, controlled kernel and candidate
+bits remain unchanged.
+
+A successful spin cursor has already completed the ordinary reconstruction
+`omega = scaled_omega * maximum` for its supplied `SpinPlan`. Its existing
+bounded-cache key includes the actual omega, every immutable plan field,
+initial rotation, recording context, path, step ceiling and operand cap. A
+warm cursor with the same fully typed exact plan can reuse that reconstruction
+proof. Every current plan field is guarded again, and the new absolute elapsed
+clock still performs its own prospective-guarded comparison with the plan's
+horizon. An absent cursor, changed plan or velocity, or a call without a
+supplied exact plan retains the ordinary complete admission. A new direct seed
+or changed angular increment also retains its ordinary controlled kernel.
+No separate identity-result cache is introduced.
+
+The existing cached ballistic law similarly retains the completed ordering
+of its exact anchor, phase start/end and optional scene-duration clocks. Those
+clocks, every coefficient's actual binary64 bits, root extent, context and path
+all enter its key. Signed zeros remain distinct because the native Horner
+result can retain their signs after underflow. Each call checks the fresh
+operands and live cap before reuse. The current sample still checks both phase
+endpoints; the ballistic-position helper checks the current elapsed domain
+before any native arithmetic. A caller need not perform those same elapsed
+comparisons a second time.
+
+The completed ballistic law also retains the exact bound against which its
+root extent was proved. A dynamic descendant presenting that identical
+canonical Fraction reuses the already completed comparison under the unchanged
+full cap. Equality here compares normalized integer fields, with no rational
+cross-products. A different descendant bound performs its own charged,
+prospective-guarded comparison. The existing per-graph root index holds only
+references to those completed laws and is discarded after the sampler call;
+all retained results remain in the same 256-entry cache.
+
+These changes omit only exact arithmetic or decoding whose complete result is
+already proved, or the explicit zero identities below. Every helper that runs
+keeps its original charge and callback. Cancellation before cursor publication
+retains the previous completed cursor; a successful operand-cap change clears
+the wider-domain cache and disallows a native return. The candidate arithmetic,
+127-key reseed ceiling, strict stored-cell diagnostic and all enclosure
+equations are unchanged.
+
 For a claimed hinge, let `a0` be the actual initial scalar, `i0` the separately
 retained ideal initial scalar, `g` the canonical target, `d>0` the duration and
 `e` the current exact elapsed clock. The unchanged source equations are
@@ -172,6 +219,11 @@ clock. Their subtraction and addition are guarded and charged before execution.
 The resulting elapsed clock must remain in `[0,d]`. A paused action uses its
 retained elapsed value without reading unused running-clock operands. Resume
 and changed ownership therefore cannot inherit a previous request's clock.
+When an admitted exact running-since clock is zero, the difference is the
+current clock itself; when the admitted elapsed base is zero, the subsequent
+sum is that difference itself. Those identities perform no scalar arithmetic.
+The same 1,024-bit input and resulting-clock restrictions below prove that the
+original omitted subtraction/addition preflights fit the full live domain.
 
 For two cursor clocks, the rotation increment is exactly `s*(e_new-e_old)`.
 The sum of these increments telescopes to `a(e_new)-a(e_seed)`, also for

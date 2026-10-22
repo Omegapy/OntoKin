@@ -39,7 +39,9 @@ INPUT_GROUPS = {
     "source_numerical_derivation": (
         "docs/engineering/reach-numeric-kernel.md", "docs/engineering/reach-source-kernel.md",
         "docs/engineering/reach-coaxial-phase-bounds.md", "docs/engineering/reach-carrier-rotation-cursors.md",
-        "docs/engineering/reach-recording-certified-planar.md"),
+        "docs/engineering/reach-recording-certified-planar.md",
+        "docs/engineering/reach-deferred-phase-locations.md",
+        "docs/engineering/reach-planning-reuse.md"),
     "independent_source_reference": ("ontokin/reach_reference.py",),
     "proposed_rate_audit": (
         "tools/reach_source_rates.py", "docs/engineering/reach-rate-acceptance.md"),

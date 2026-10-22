@@ -102,14 +102,42 @@ stored arc uses the original normalized-endpoint calculation, without assuming
 continuity between independently retained anchors. No interval crossing an
 unretained source boundary is admitted.
 
-The checker independently computes the exact dot product of the two actual
-raw stored quaternions. Normalization divides by positive norms and preserves
-that sign. A negative dot is rejected, so the literal supplied lift must agree
-with the short spherical lift. Zero dot is not assumed to mean zero arc: it
+The checker independently establishes the exact dot-product sign of the two
+actual raw stored quaternions. Normalization divides by positive norms and
+preserves that sign. A negative dot is rejected, so the literal supplied lift
+must agree with the short spherical lift. Zero dot is not assumed to mean zero arc: it
 has spherical distance pi/2, and therefore cannot satisfy a sound `c <= 1/2`
 proof. When the sufficient proof cannot establish the local range, the original
 normalized endpoint calculation remains responsible for accepting or rejecting
 it.
+
+When all nonzero coordinate products have the same sign, that sign follows
+from the signs of the actual operands, without forming any product or sum.
+Zero coordinates, including either signed zero, contribute exactly zero; no
+overlapping nonzero coordinates therefore prove an exact zero dot. Mixed
+product signs retain the original exact dot calculation, including possible
+exact cancellation. This sign proof changes neither the independent endpoint
+nonzero proofs nor the source-path inequality. In particular, a zero dot does
+not establish a zero arc.
+
+The optional sign proof is restricted to exact finite binary64 components,
+each zero or with magnitude in `[2^-200, 2^128]`. A nonzero binary64 in this
+range has at most 53 significand bits. Below one, its reduced denominator is
+at most `2^252`, because the smallest admitted exponent is -200; above one,
+its reduced numerator is at most `2^128`. Thus every exact reduced numerator
+has at most 129 bits and every denominator at most 253 bits. This proves the
+same 256-bit input domain required by the existing sufficient arc, without
+allocating and decoding eight exact ratios. Larger and smaller finite values,
+integer components and other types retain the existing admission and exact
+fallback behavior.
+
+Both raw vectors still pass fresh `_recording_vector` admission before any
+sign proof or complete-arc cache reuse. The fixed-size sign proof has its own
+charged cancellation checkpoint and immediately checks the live full operand
+cap afterward. A narrowed cap retains the original arithmetic and lazy
+normalization checks. Callback exceptions propagate unchanged. The sign
+classification retains no additional cache entry; complete arc reuse and all
+subsequent source/error scalar guards remain unchanged.
 
 The actual chord is no greater than its arc and hence no greater than `c`.
 For `0 <= c <= 1/2`, the increasing rational chord-to-arc envelope gives
@@ -172,6 +200,7 @@ created before both comparisons succeed, no caller-owned previous entry is
 mutated, and no additional cache or retained history is introduced.
 
 Focused tests are in
-[`test_reach_independent_sufficient_bounds.py`](../../tests/test_reach_independent_sufficient_bounds.py).
+[`test_reach_independent_sufficient_bounds.py`](../../tests/test_reach_independent_sufficient_bounds.py)
+and [`test_reach_stored_lift_signs.py`](../../tests/test_reach_stored_lift_signs.py).
 Full source, hostile-byte, cancellation, rollback, destination and release
 acceptance still require their separately executed evidence.

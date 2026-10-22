@@ -25,6 +25,8 @@ MAX_KEYS = 10000
 MAX_CERTIFICATES = 100000
 MAX_OPERAND_BITS = 32768
 MAX_INTEGER_DIGITS = 9865
+_LIFT_SIGN_COMPONENT_MIN = float.fromhex("0x1p-200")
+_LIFT_SIGN_COMPONENT_MAX = float.fromhex("0x1p+128")
 CLOCK_CONVERSION = "binary32_rne_ties_to_even_from_exact_rational"
 SOURCE_METHOD = "ontokin.source-pose-projective-dyadic/0.2"
 DESTINATION_METHOD = ("Exact rational time and translation; integer RNE quaternion normalization; "
@@ -538,7 +540,9 @@ def verify_numeric_bases(quantization, *, work):
     derivation_names = ("docs/engineering/reach-numeric-kernel.md", "docs/engineering/reach-source-kernel.md",
                         "docs/engineering/reach-coaxial-phase-bounds.md",
                         "docs/engineering/reach-carrier-rotation-cursors.md",
-                        "docs/engineering/reach-recording-certified-planar.md")
+                        "docs/engineering/reach-recording-certified-planar.md",
+                        "docs/engineering/reach-deferred-phase-locations.md",
+                        "docs/engineering/reach-planning-reuse.md")
     derivations = [(name, _identified_digest(root / name, work=work)) for name in derivation_names]
     _tick(work, "independent_basis_aggregate")
     derivation = hashlib.sha256("".join(name + "\0" + digest + "\n" for name, digest in derivations).encode("ascii")).hexdigest()
@@ -1176,6 +1180,36 @@ def _small_proof_values(values):
                and value.denominator.bit_length() <= 256 for value in values)
 
 
+def _recording_uniform_lift_sign(first, last, arithmetic):
+    """Prove a uniform exact raw-dot sign without decoding or multiplying.
+
+    The caller has freshly admitted both actual recording vectors. This
+    additional charged check establishes the sufficient proof's smaller
+    exact-ratio domain after its own cancellation callback. Nonzero binary64
+    values in [2**-200, 2**128] have at most 129 numerator bits and 253
+    denominator bits, so the original 256-bit preflight would succeed.
+    Mixed product signs and all other domains retain the exact dot proof.
+    """
+    arithmetic.tick("independent_stored_lift_sign")
+    if _bound_domain(arithmetic) != MAX_OPERAND_BITS:
+        return None
+    if type(first) is not tuple or type(last) is not tuple or len(first) != 4 or len(last) != 4:
+        return None
+    for component in (*first, *last):
+        if (type(component) is not float or not math.isfinite(component)
+                or (component and not _LIFT_SIGN_COMPONENT_MIN <= abs(component) <= _LIFT_SIGN_COMPONENT_MAX)):
+            return None
+    relation = 0
+    for a, b in zip(first, last):
+        if a == 0 or b == 0:
+            continue
+        sign = 1 if (a < 0) == (b < 0) else -1
+        if relation and sign != relation:
+            return None
+        relation = sign
+    return relation
+
+
 def _optional_endpoint_l1(actual, expected, arithmetic):
     """An optional exact L1 enclosure, never a replacement on insufficiency."""
     arithmetic.tick("independent_sufficient_endpoint_domain")
@@ -1396,11 +1430,13 @@ def _certified_stored_arc(raw_first, raw_last, first, last, angular_speed, width
         def calculate():
             if _bound_domain(arithmetic) != MAX_OPERAND_BITS:
                 return ()
-            a = tuple(arithmetic.value(value) for value in raw_first)
-            b = tuple(arithmetic.value(value) for value in raw_last)
-            if not _small_proof_values((*a, *b)):
-                return ()
-            dot = arithmetic.total(arithmetic.mul(x, y) for x, y in zip(a, b) if x and y)
+            dot = _recording_uniform_lift_sign(raw_first, raw_last, arithmetic)
+            if dot is None:
+                a = tuple(arithmetic.value(value) for value in raw_first)
+                b = tuple(arithmetic.value(value) for value in raw_last)
+                if not _small_proof_values((*a, *b)):
+                    return ()
+                dot = arithmetic.total(arithmetic.mul(x, y) for x, y in zip(a, b) if x and y)
             if dot < 0:
                 _error("OKE-E-QUATERNION-LIFT", "Actual stored endpoint signs do not form a coherent short-path lift.")
             if any(arithmetic.compare(error, Fraction(1, 2)) > 0 for error in errors):

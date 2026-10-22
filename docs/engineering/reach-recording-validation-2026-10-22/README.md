@@ -66,7 +66,62 @@ unchanged. Differential tests compare exact private values and complete GLB
 bytes. Three stale independent-reader test doubles were updated to accept the
 already existing `recording_context` argument; their assertions are unchanged.
 
-## Latest checkpoint 003: certified native recording and independent verification
+## Latest checkpoint 004: planning, finite-pose receipts and endpoint reductions
+
+The complete source run identifies `d1d947aedc4dfded55cd983b12063d0a29e65719`,
+tree `70d5fea2d451620187f2eb731e5bc7fd62d7c8aa`. It passes **19/28**, with
+stable inputs, and finished **2026-10-22 06:30:51 UTC**. P07 now uses **87,996**,
+P08 **88,008**, and P18 **89,400** shared operations. The same nine cases remain
+incomplete: **P05, P09, P11, P16, P20, P23, L01, L02 and L03**, each stopped at
+the attempted shared operation **100,001**. No allowance was raised.
+
+The implementation adds exact deferred phase locations, guarded prefix-frame
+selection and unchanged-final-boundary projection reuse, complete immutable
+finite-pose receipts and translated pose families, exact repeated interval
+clock digits, native spin/vector/ballistic proof reuse, and a separately
+derived uniform stored-lift sign test. Complete phase/planning derivations
+are part of the source numerical identity.
+
+The latest endpoint reduction freshly checks every actual seven-component
+pose and its stored binary32 representation, then forms exact L1 sums from
+component maxima once per group and carrier. This preserves all stored pose,
+geometry and clock bytes; its conservative numerical certificate fields can
+be larger. The original tolerances, quarter-allocation checks and independent
+supplied-byte checks remain mandatory. Unsupported quaternion shapes and
+changed or narrowed domains replay the original complete group. Cancellation,
+rollback, changed operands and the existing 256-entry cache remain checked.
+
+| Executed cohort | Exact source | Result |
+| --- | --- | --- |
+| Combined planning/sampling/reader 012 | `89dbe6e2100a08e919e3f52715d09b796fd7a4d4` | **212/212**, zero failures/errors/skips; stable inputs. |
+| Endpoint/cursor/claim/basis 013 | `d1d947aedc4dfded55cd983b12063d0a29e65719` | **31/31**, zero failures/errors/skips; stable inputs. |
+| Complete source 008 | `89dbe6e` | **19/28**, stable inputs. |
+| Complete source 009 | `d1d947a` | **19/28**, stable inputs. |
+
+The cohorts overlap and do not replace a complete regression. All **76**
+GLB/report files from source008/009 match their producer receipts. The earlier
+1,374-test complete regression still does not verify current code.
+
+[checkpoint-004.zip](checkpoint-004.zip) retains **180** members,
+**2,865,970** bytes, SHA-256
+`7ae4274e8d26d5733789500e5c283a7e384cdf520647c80943786bb8c1db33ae`.
+Its [manifest](checkpoint-004.manifest.json) identifies raw runs, profiles,
+before/after inputs, drivers, publication003 receipt, exact source patch from
+local checkpoint003 and raw commits. Every persisted member hash and ZIP CRC
+was verified again in a separate call with worker filesystem activity paused.
+The [machine-readable checkpoint](checkpoint-004.json) retains complete case
+and cohort identities. All prior archives remain unchanged.
+
+P23 now finishes planning and reaches sampling. Construction is still **26,373**
+shared operations; its prefix plan costs **64,626** more. The next useful targets
+are phase bounds, graph construction and boundary processing. P16 completes
+sampling and fails during certification; the remaining seven failures are in
+independent verification. A profile attempt collided with an existing output
+directory and executed no source request; its failure log is preserved. The
+subsequent uniquely named P23 profile completed with stable inputs and retains
+the original budget failure. Full release roles remain pending until 28/28.
+
+## Preserved checkpoint 003: certified native recording and independent verification
 
 The complete source run identifies `5f7f503ab3727c4b78bc4b01ceb6472dc8c02473`,
 tree `f6479c0f1da00b787eeed0fbb6667de2df7574d1`. It passes **19/28** and finished

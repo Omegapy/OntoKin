@@ -751,7 +751,9 @@ are checked in the same position, orientation, velocity, omega order. A cap
 changed by the callback is observed before choosing the proof. Every shape,
 domain, frozen-value, narrowed-cap or width case outside these conditions uses
 the original field property. Existing actual projections retain the original
-`_expose` behavior. No result or new numeric cache is created by the proof.
+`_expose` behavior. The proof creates no computed public result or additional
+request value cache. A completed proof may be retained on its existing source
+pose as described below.
 
 A nonzero vector component has absolute value between 2^-512 and 2^512. Its
 binary64 result is therefore finite and normal; the original exact exponent,
@@ -782,7 +784,7 @@ that checkpoint: every object and site is still resolved, every object is
 checked before entering the complete graph, and H06 retains the same boundary
 records. The ordinary `ReachSimulator` checkpoint still requests all four
 actual public fields in their original order. No caller-controlled flag,
-weaker input domain, new arithmetic or additional cache is introduced.
+weaker input domain or new arithmetic is introduced.
 
 Planning does not retain ordinary object p/q/v/omega tuples in its H06 output.
 It may therefore leave unrequested fields in an admissible `PoseValue` lazy.
@@ -797,6 +799,67 @@ object graph from being published. Sampled recording transforms retain their
 separate derivative-free path. This removes only incidental public extraction
 from validated planning work; source observations, boundary admission, W,
 numeric allowances and all fixed resource limits keep their prior meanings.
+
+### Reusing a completed source-pose finiteness proof
+
+Each retained `PoseValue` can retain one private, comparison-independent proof
+record alongside its existing projection state. The record contains its request
+owner, the full operand cap and immutable fingerprints of the fields proved by
+the 512-bit argument above. It contains no computed p/q/v/omega tuple, does not
+add an entry to the request arithmetic cache, and cannot keep a pose alive after
+that pose is released. The actual projection dictionary and getters are unchanged.
+
+A repeated check first executes one charged cancellation checkpoint, then checks
+the live cap and every current field fingerprint. Only unchanged exact immutable
+tuples, or the complete unchanged immutable `RotationValue`, can reuse a proof.
+Matching uses object identity after the typed bounded fingerprint admission;
+it does not introduce exact rational equality on an unused rotation allowance.
+An existing actual projection still follows the original finiteness-check semantics; merely
+finding such a tuple never proves its private operands. Clearing that projection
+therefore restores the original field check unless an independent private proof
+was completed. Frozen or mutable private values and larger operands continue to
+use the original projection.
+
+An exactly translated source occurrence may carry this completed record. Its
+changed position is checked in the original field order; unchanged orientation
+and spatial-rate proofs can be reused. `dataclasses.replace` starts with no
+proof. If a later field callback narrows the operand cap, all original fields
+are checked again under the live cap, including fields reused earlier in the
+call. Malformed or reentrant proof state uses the original ordered checks.
+Publication occurs only after all fields succeed; cancellation and failure
+retain the earlier completed record without publishing a partial proof. These
+records memoize admission of the original exact projection algorithms, so they
+do not change public bits, error allowances, or the complete set of observed
+source occurrences.
+
+Translated sites can be constructed before any of their public finiteness
+checks. Those already-retained poses may share a single private metadata cell,
+which points to one completed immutable proof record and never to another pose
+or to a public value. The first successful check publishes that record; later
+siblings still compare their complete current fingerprints and check changed
+positions. Each pose also retains its own completed proof. This is one slot per
+existing translation family, not a new request-wide map or a list of historical
+values. Cancellation cannot publish a partial own or shared record, and a live
+cap change replays all fields even when an earlier field used a sibling's proof.
+
+### Reusing exact interval clock digits
+
+Authored clocks retain the original guarded decimal serialization. Repeated
+authored/stored interval widths may reuse a completed pair of immutable decimal
+strings in the existing bounded request cache. Every invocation still performs
+the original exact operand decode, nonnegative check and live width guard; the
+cache key includes that exact fraction and its current operand cap. Every
+certificate receives a fresh dictionary, so modifying an output row cannot
+alter a later result. No new cache or capacity is added.
+
+A cold entry executes the original chunked conversion and publishes only its
+completed numerator/denominator strings. Cache lookup, promotion, insertion and
+eviction retain their original charges and cancellation callbacks. A callback
+that changes the operand cap restarts admission before returning or publishing
+digits. Caller exceptions retain their identity. Reusing already completed
+digits changes no exact clock, serialized byte, common accessor or independent
+clock obligation. The focused checks are in
+`tests/test_reach_clock_record_reuse.py`; execution evidence remains separate.
 
 ## Identified implementation and derivation aggregates
 
@@ -819,6 +882,8 @@ Its separately ordered derivation input list is:
 3. `docs/engineering/reach-coaxial-phase-bounds.md`
 4. `docs/engineering/reach-carrier-rotation-cursors.md`
 5. `docs/engineering/reach-recording-certified-planar.md`
+6. `docs/engineering/reach-deferred-phase-locations.md`
+7. `docs/engineering/reach-planning-reuse.md`
 
 For each input, compute the lowercase hexadecimal SHA-256 of its exact bytes.
 For each list separately, concatenate the ASCII records
@@ -876,6 +941,59 @@ keep distinct physical state and source records. The differential, halfway,
 changed-input, cap and cancellation checks are in
 `tests/test_reach_source_translation.py`; execution evidence is recorded
 separately.
+
+## Component reduction of actual recording endpoints
+
+The endpoint certificate may reduce component errors across one already
+defined source/enclosing-phase group before forming its exact L1 bounds. Every
+actual endpoint is still freshly admitted as three finite binary64 position
+components and four finite binary64 quaternion components. Each is converted
+through the ordinary binary32 writer, and every stored quaternion must remain
+nonzero. This changes no stored pose, clock, geometry or source trajectory.
+
+For component `j` and retained endpoint `k`, let `a[k,j]` be its actual source
+binary64 value and `b[k,j]` its correctly rounded stored binary32 value. The
+subtraction `a[k,j] - b[k,j]` is exact in binary64: either the stored value is
+zero, or same-sign nonzero operands satisfy the Sterbenz range (including the
+boundary half-way cases). A subnormal difference remains an exact multiple
+of the binary64 minimum subnormal. Define `D[j] = max_k |a[k,j]-b[k,j]|` and,
+for positions, `B[j] = max_k |b[k,j]|`. Both reductions compare finite
+nonnegative binary64 values exactly. Consequently every endpoint's position
+conversion L1 error is at most `sum_j D[j]`, and its stored-position L1
+magnitude is at most `sum_j B[j]`. Form these sums as exact rationals once per
+output carrier and group. Maxima may occur at different keys; this only makes
+the bound larger and cannot exclude an actual endpoint.
+
+For this reduction, every actual source quaternion must have some component
+of magnitude at least one half. Its Euclidean norm is therefore at least one
+half, so the existing normalized-vector comparison gives a unit-quaternion
+chord error at most `4 * sum_j D[j]`, plus the same two normalization allowances
+as the original calculation. A quaternion lacking that sufficient component
+test replays the original complete group, including its exact norm proof and
+normalization fallback. The original group reduction also remains active for
+empty groups and every narrowed arithmetic domain.
+
+The optimized scan runs only at the unchanged 32,768-bit cap. All ordinary
+binary64 decodes fit 1,075 bits, and sums of at most four such nonnegative
+components have fewer than 2,101 numerator bits and at most 1,075 denominator
+bits; the original prospective exact-operation guards fit comfortably below
+the full cap. A scope checks that full cap immediately after every actual
+request checkpoint, including final exact sums. A changed cap abandons the
+incomplete reduction and replays the original group under the current domain,
+retaining attempted work. Caller exceptions propagate by identity, including
+an exception of the private fallback class. No partial reduction is published.
+
+The ten component maxima per output carrier are bounded reduction state, just
+as the original three completed endpoint maxima were. They are neither a
+cross-group lookup table nor an additional retained numerical cache. All
+existing cache limits remain unchanged. Group membership, every endpoint,
+every interval row, quarter-allocation checks and final original position and
+rotation tolerances remain mandatory. The separately implemented supplied-byte
+reader still verifies the emitted bounds against its own source reconstruction
+and the actual stored values. `tests/test_reach_endpoint_reduction.py` covers
+exact component identities, subnormals, changed data/domains, original fallback,
+callback identity, cache preservation and actual artifact equivalence; executed
+results belong to a subsequent identified checkpoint.
 
 ## Verification and remaining scope
 
