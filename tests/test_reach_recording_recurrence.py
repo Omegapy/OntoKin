@@ -4,7 +4,7 @@ from fractions import Fraction as F
 import unittest
 from unittest.mock import patch
 
-from ontokin import reach_export
+from ontokin import reach_export, reach_recording_fast
 from ontokin.construction import compile_construction
 from ontokin.gltf import export_glb, read_glb
 from ontokin.reach_numeric import ReachAdmissionError, ReachExecutionWork
@@ -96,6 +96,7 @@ class ReachRecordingRecurrenceTests(unittest.TestCase):
 
     def test_actual_recording_has_fresh_context_per_claim_phase_and_per_bake(self):
         original = ReachSimulator.recording_frames
+        original_bounded = reach_recording_fast.sample_bounded_frames
         all_contexts, outputs = [], []
         for _ in range(2):
             observed = []
@@ -105,13 +106,21 @@ class ReachRecordingRecurrenceTests(unittest.TestCase):
                 return original(sim, time, state, paths, moving_frames=moving_frames,
                                 recording_context=recording_context,
                                 recording_angular_proof=recording_angular_proof)
+            def bounded(sim, time, state, paths, *, context, moving_frames, phase_bounds,
+                        phase_interval=None, recording_angular_proof=None):
+                observed.append((state, context, time))
+                return original_bounded(sim, time, state, paths, context=context,
+                    moving_frames=moving_frames, phase_bounds=phase_bounds,
+                    phase_interval=phase_interval, recording_angular_proof=recording_angular_proof)
             compiler = compile_construction(source_case("L02"))
-            with patch.object(ReachSimulator, "recording_frames", sample):
+            with patch.object(ReachSimulator, "recording_frames", sample), \
+                    patch.object(reach_recording_fast, "sample_bounded_frames", bounded):
                 result = export_glb(compiler.model, options=ExportOptions(end=F(3, 4), fps=1, helpers=False),
                     target_contract="ontokin.glb/0.6", work=compiler.reach_work)
             self.assertEqual(result.report["validation"]["status"], "passed")
             self.assertLessEqual(compiler.budget.operations, 100000)
-            self.assertGreater(compiler.reach_work.counts.get("recording_rotation_step", 0), 0)
+            self.assertGreater(sum(compiler.reach_work.counts.get(kind, 0) for kind in
+                ("recording_rotation_step", "recording_float_rotation_step")), 0)
             per_state = {}
             for state, context, time in observed:
                 self.assertIs(type(context), object)

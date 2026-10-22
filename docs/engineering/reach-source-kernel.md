@@ -170,6 +170,45 @@ same canonical quaternion without an extra normalization of its elapsed-zero
 public bits. All ideal state lives inside the staged boundary transaction, so a
 failed admission also rolls back these proof inputs.
 
+### Reusing completed phase operands
+
+Each occurrence still resolves its own incoming relation, coordinate claimant,
+action status, initial values, canonical target and exact elapsed clocks. The
+completed pure `JointPhase` or local `PhaseBound` may then be shared under a key
+containing all of its numerical inputs. Under the ordinary 32,768-bit domain,
+strict immutable integer, Fraction and finite binary64 operands can identify
+that completed result before repeating their scalar decoding. Every input is
+checked for its current type, finiteness and width before lookup; every returned
+field is guarded again. At most sixteen scalar operands enter one such key.
+All finite binary64 decoding uses at most 1,075 prospective bits. Narrower
+domains and unusual operands follow the original scalar decoder. A callback
+that changes the domain during lookup or publication forces that ordinary path;
+an interrupted callback retains its original exception.
+
+Translated constant poses can also share the completed zero-extent bound. For
+constant input extent `m`, the normal position allowance is the base allowance
+plus `m*2^-53`. An inverse constant has `M = 2*m + 2*e`, `L = m`, and its
+position allowance is the inverse zero-extent base plus
+`m*(2^-91 + 2^-52)`. These are algebraic substitutions in the uniform equations
+below; every other bound field is identical. This factorization requires the
+ordinary operand cap and an exact extent of at most 2,048 bits. The extent and
+fixed allowances leave room for every prospective operation in the original
+constant proof. Larger extents and narrowed domains use those original equations.
+
+Completed operands and the two constant templates use the same existing
+256-entry request LRU as all other numerical reuse. There is no occurrence
+cache, persistent proof state or additional capacity. Complete object, frame and
+joint maps, source identities, admission decisions and event histories retain
+their original meanings. This removes repeated decoding and fixed constant
+arithmetic without changing a bound, tolerance or operation limit. Signed
+coaxial derivative proofs and optional recording-law witnesses execute normally
+after the same generic local bounds have been obtained.
+
+This implementation recovers the independent native-operand and constant-template
+part of `9d31ea4369f7d003a255a905aa74f442818119ed`. Its older deferred-location
+representation is not required by these equations. Historical verification of
+that other source revision does not establish verification of this port.
+
 ## Uniform path counts and extents
 
 All quantities below are exact Fractions. `e = 2^-96` is one private vector
@@ -331,22 +370,29 @@ and visual acceptance still require their actual release execution evidence.
 
 ## Recording samples after complete prefix validation
 
-`recording_frames(time, state, selected_paths)` consumes an already validated
-phase state and its previously derived uniform bounds. It returns immutable
-records containing only canonical `position` and `orientation` tuples. It does
-not advance events, materialize action histories, or claim that partial output
-is a complete source observation. Full prefix replay, complete boundary records
-and the complete uniform proof remain required before the recording sampler.
+The direct `recording_frames(time, state, selected_paths)` path, with neither
+an optional `recording_context` nor alternate `recording_pose_ops`, consumes an
+already validated phase state and its previously derived uniform bounds. It
+returns immutable records containing only canonical `position` and
+`orientation` tuples. The canonical bit-identity claim in this section applies
+only to that direct path. Recurring and bounded native recording paths return
+private recording endpoints with their separately derived endpoint allowances;
+they do not imply identical canonical source bits or an earlier recorder's
+binary32 accessors. No recording path advances events, materializes action
+histories, or substitutes partial output for a complete source observation.
+Full prefix replay, complete boundary records and the complete uniform proof
+remain required before any recording sampler.
 
-The sampler shares the full resolver's topology and controlled position/rotation
+The direct sampler shares the full resolver's topology and controlled position/rotation
 expressions. Position and rotation are algebraically independent of the spatial
 derivative components. Its private intermediate derivative vectors are therefore
 zero, allowing the existing exact-zero arithmetic paths to avoid unused cross
 products, rotations and final derivative projections. Those private zeros are
 never returned as source velocities. The selected frame ancestry alone is
 resolved, and only selected final p/q tuples are exposed. Given the same source
-state and reduction plan, the canonical position and quaternion bits match the
-complete resolver. Frozen event anchors remain their original tuples.
+state and reduction plan, this direct path's canonical position and quaternion
+bits match the complete resolver. Frozen event anchors remain their original
+tuples.
 
 Recording pose slots have a distinct cache namespace, so a derivative-free value
 cannot replace a complete lifecycle pose. Both namespaces and immutable topology
@@ -355,3 +401,18 @@ program revision and active grip set: only grip activity can change this
 profile's relation graph. Each key/lookup remains charged, and a changed release
 state cannot hit the earlier topology. A full source observation still resolves
 and checks every required object, frame, derivative and lifecycle field.
+
+The optional production implementation
+`ontokin.recording-planar-binary64-enclosures/0.5` uses bounded native planar
+interiors after the first ordinary key of each phase. The
+[complete candidate derivation](reach-recording-certified-planar.md) covers
+its exact affine laws, native complex products, supported dynamic roots,
+structural zeros and complete-phase fallback. Its explicit `P` and `16Q`
+recording allowances are added to endpoint certificate terms; the actual
+binary32 conversion remains a separate term. Source `Sp`/`Sq`, canonical
+coordinates and rates, quarter-allocation inequalities, caller tolerances,
+the 100,000-operation limit and the shared 256-entry cache remain unchanged.
+The supplied-byte reader independently derives source poses and verifies the
+actual delivered endpoints and interval bounds. No native helper supplies
+expected values to that reader. The implementation and derivation both belong
+to the complete numerical-basis hash closure.

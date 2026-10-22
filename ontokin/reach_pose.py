@@ -1617,11 +1617,13 @@ def source_numeric_basis(*,work):
     if cached is not None: return cached
     root=Path(__file__).resolve().parent.parent
     implementation_names=("ontokin/reach_numeric.py","ontokin/reach_kinematics.py","ontokin/reach_pose.py",
-                          "ontokin/reach_phase.py","ontokin/reach_runtime.py","ontokin/reach_export.py")
+                          "ontokin/reach_phase.py","ontokin/reach_runtime.py","ontokin/reach_export.py",
+                          "ontokin/reach_recording_fast.py")
     derivation_names=("docs/engineering/reach-numeric-kernel.md",
                       "docs/engineering/reach-source-kernel.md",
                       "docs/engineering/reach-coaxial-phase-bounds.md",
-                      "docs/engineering/reach-carrier-rotation-cursors.md")
+                      "docs/engineering/reach-carrier-rotation-cursors.md",
+                      "docs/engineering/reach-recording-certified-planar.md")
     names=implementation_names+derivation_names
     entries=[]
     for name in names:

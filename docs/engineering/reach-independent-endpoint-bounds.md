@@ -160,6 +160,17 @@ current adjacent claims. A tighter claim or changed domain recomputes the
 proof. Lazy normalized cells carry their own cap. Callback exceptions propagate
 unchanged; no partially completed sufficient proof is returned or published.
 
+After a stationary endpoint has successfully compared both errors with its
+actual adjacent-row limits, the same preceding-endpoint entry may retain those
+two typed limits as a completed comparison receipt. A later endpoint still
+admits every adjacent row, checks the actual stored operands and independently
+establishes source stationarity. When the proof cap and both typed limits are
+unchanged, the receipt proves the same two inequalities without repeating
+their rational cross products. Changed or tighter limits perform both ordinary
+comparisons again; a changed cap requires a new endpoint proof. No receipt is
+created before both comparisons succeed, no caller-owned previous entry is
+mutated, and no additional cache or retained history is introduced.
+
 Focused tests are in
 [`test_reach_independent_sufficient_bounds.py`](../../tests/test_reach_independent_sufficient_bounds.py).
 Full source, hostile-byte, cancellation, rollback, destination and release

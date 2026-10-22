@@ -1,6 +1,7 @@
 """Actual recorded endpoints retain independent stored-to-ideal obligations."""
 from copy import deepcopy
 from fractions import Fraction as F
+from functools import partial
 import json
 import math
 import struct
@@ -10,7 +11,7 @@ from unittest.mock import patch
 from ontokin.construction import compile_construction
 from ontokin.diagnostics import OntoKinError
 from ontokin.gltf import export_glb, read_glb
-from ontokin import reach_conformance
+from ontokin import reach_conformance, reach_export
 from ontokin.reach_numeric import ReachExecutionWork
 from ontokin.scene import ExportOptions
 from reach_agent_support import source_case
@@ -27,6 +28,12 @@ def replace_document(document, binary):
 
 class ReachRecurringEndpointClaimTests(unittest.TestCase):
     def test_actual_recurrence_cannot_understate_independently_measured_endpoint_errors(self):
+        self._assert_endpoint_claims(allow_fast=False)
+
+    def test_native_recurrence_cannot_understate_independently_measured_endpoint_errors(self):
+        self._assert_endpoint_claims(allow_fast=True)
+
+    def _assert_endpoint_claims(self, *, allow_fast):
         built = compile_construction(source_case("P01"))
         options = ExportOptions(end=F(1, 4), fps=60, helpers=False)
         observed = []
@@ -47,11 +54,15 @@ class ReachRecurringEndpointClaimTests(unittest.TestCase):
         # bytes below still pass through the ordinary sufficient/fallback reader.
         with patch.object(reach_conformance._CertificateBatch, "add", observe), \
              patch.object(reach_conformance, "_recording_orientation_bound", exact_orientation), \
-             patch.object(reach_conformance, "_recording_position_bound", exact_position):
+             patch.object(reach_conformance, "_recording_position_bound", exact_position), \
+             patch.object(reach_export, "_sample_recording_nodes", partial(
+                 reach_export._sample_recording_nodes, allow_fast=allow_fast)):
             result = export_glb(built.model, options=options,
                                 target_contract="ontokin.glb/0.6", work=built.reach_work)
         self.assertEqual(result.report["validation"]["status"], "passed")
-        self.assertGreater(built.reach_work.counts.get("recording_rotation_step", 0), 0)
+        counter = ("recording_fast_endpoint_allowance" if allow_fast
+                   else "recording_rotation_step")
+        self.assertGreater(built.reach_work.counts.get(counter, 0), 0)
         self.assertLessEqual(built.reach_work.operations, 100000)
         self.assertEqual(built.reach_work.max_operations, 100000)
         decoded = read_glb(result.data, target_contract="ontokin.glb/0.6")

@@ -3,10 +3,12 @@ from __future__ import annotations
 
 from dataclasses import replace
 from fractions import Fraction as Q
+from functools import partial
 from pathlib import Path
 import unittest
 from unittest.mock import patch
 
+from ontokin import reach_export
 from ontokin.bundle import load_file_manifest
 from ontokin.construction import compile_construction
 from ontokin.reach_runtime import ReachSimulator
@@ -87,6 +89,7 @@ class ReachRecordingSamplerTests(unittest.TestCase):
     def test_transform_recording_preserves_complete_glb_bytes(self):
         original = ReachSimulator._resolve_kinematics
         original_frames = ReachSimulator.recording_frames
+        original_sampling = reach_export._sample_recording_nodes
         def full_pose_sampling(self, *args, **kwargs):
             kwargs["recording_only"] = False
             return original(self, *args, **kwargs)
@@ -103,7 +106,9 @@ class ReachRecordingSamplerTests(unittest.TestCase):
                 root = SUPPLEMENT if case.startswith("L") else DATA
                 built = compile_construction(load_file_manifest(root / (case.lower() + ".files.json")))
                 options = ExportOptions(end=end, fps=1, helpers=False)
-                with patch.object(ReachSimulator, "recording_frames", direct_sampling):
+                with patch.object(ReachSimulator, "recording_frames", direct_sampling), \
+                        patch.object(reach_export, "_sample_recording_nodes",
+                                     partial(original_sampling, allow_fast=False)):
                     if transforms:
                         result = export_glb(built.model, options=options,
                             target_contract="ontokin.glb/0.6", work=built.reach_work)
@@ -149,20 +154,26 @@ class ReachRecordingSamplerTests(unittest.TestCase):
         self.assertIs(caught.exception, marker)
 
     def test_retained_constant_tracks_equal_fresh_sampling_at_every_key(self):
+        original_sampling = reach_export._sample_recording_nodes
         for case, end in (("P01", Q(3)), ("L01", Q(3, 4))):
             outputs = []
             for reuse in (False, True):
                 root = SUPPLEMENT if case.startswith("L") else DATA
                 built = compile_construction(load_file_manifest(root / (case.lower() + ".files.json")))
                 options = ExportOptions(end=end, fps=1, helpers=False)
-                if reuse:
-                    result = export_glb(built.model, options=options,
-                        target_contract="ontokin.glb/0.6", work=built.reach_work)
-                else:
-                    with patch.object(ReachSimulator, "recording_moving_frames",
-                                      lambda self, state, paths: frozenset(paths)):
+                # Isolate exact stationary-track reuse. The native algorithm
+                # has separately certified endpoint allowances; its tests
+                # cover retained and recomputed actual stored components.
+                with patch.object(reach_export, "_sample_recording_nodes",
+                                  partial(original_sampling, allow_fast=False)):
+                    if reuse:
                         result = export_glb(built.model, options=options,
                             target_contract="ontokin.glb/0.6", work=built.reach_work)
+                    else:
+                        with patch.object(ReachSimulator, "recording_moving_frames",
+                                          lambda self, state, paths: frozenset(paths)):
+                            result = export_glb(built.model, options=options,
+                                target_contract="ontokin.glb/0.6", work=built.reach_work)
                 self.assertEqual(result.report["validation"]["status"], "passed")
                 outputs.append(result.data)
             self.assertEqual(outputs[0], outputs[1], case)

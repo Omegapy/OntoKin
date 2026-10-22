@@ -810,6 +810,7 @@ implementation input list is:
 4. `ontokin/reach_phase.py`
 5. `ontokin/reach_runtime.py`
 6. `ontokin/reach_export.py`
+7. `ontokin/reach_recording_fast.py`
 
 Its separately ordered derivation input list is:
 
@@ -817,6 +818,7 @@ Its separately ordered derivation input list is:
 2. `docs/engineering/reach-source-kernel.md`
 3. `docs/engineering/reach-coaxial-phase-bounds.md`
 4. `docs/engineering/reach-carrier-rotation-cursors.md`
+5. `docs/engineering/reach-recording-certified-planar.md`
 
 For each input, compute the lowercase hexadecimal SHA-256 of its exact bytes.
 For each list separately, concatenate the ASCII records

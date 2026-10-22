@@ -489,13 +489,18 @@ class ReachSimulator(ForceSimulator):
             self.work.remember(key, plan)
 
     def _advance_orientation(self, initial, omega, elapsed, *,
-                             recording_context=None, recording_path=None):
+                             recording_context=None, recording_path=None,
+                             recording_pose_ops=None):
+        ops = self.pose_ops if recording_pose_ops is None else recording_pose_ops
+        if recording_pose_ops is not None and (recording_context is None
+                or getattr(ops, "source_ops", None) is not self.pose_ops or ops.work is not self.work):
+            raise ValueError("Alternate spin recording requires this source's recording-only work context.")
         plan = self.work.lookup(("reach_source_spin_phase", tuple(omega)))
         if plan is not None and abs(elapsed) > plan.max_elapsed_s:
             plan = None
         if recording_context is not None:
             from .scene import MAX_KEYFRAMES
-            return self.pose_ops.recording_advance_orientation(initial, omega, elapsed,
+            return ops.recording_advance_orientation(initial, omega, elapsed,
                 context=recording_context, path=recording_path, max_steps=MAX_KEYFRAMES,
                 phase_plan=plan)
         return self.pose_ops.advance_orientation(initial, omega, elapsed, phase_plan=plan)
@@ -642,7 +647,8 @@ class ReachSimulator(ForceSimulator):
         pose.position, pose.orientation, pose.velocity, pose.omega
 
     def recording_frames(self, time, state, selected_paths, *, moving_frames=None,
-                          recording_context=None, recording_angular_proof=None):
+                          recording_context=None, recording_angular_proof=None,
+                          recording_pose_ops=None):
         """Sample p/q from a validated phase without constructing unused rates.
 
         The recording planner must first validate the complete requested prefix
@@ -673,7 +679,8 @@ class ReachSimulator(ForceSimulator):
                                                pose_only=True, recording_only=True,
                                                recording_moving_frames=moving_frames,
                                                recording_context=recording_context,
-                                               recording_angular_proof=recording_angular_proof)
+                                               recording_angular_proof=recording_angular_proof,
+                                               recording_pose_ops=recording_pose_ops)
             result = {}
             for path in selected:
                 self._check()
@@ -915,7 +922,8 @@ class ReachSimulator(ForceSimulator):
 
     def _resolve_kinematics(self, time, state, *, selected_frames=None, pose_only=False,
                             recording_only=False, recording_moving_frames=None,
-                            recording_context=None, recording_angular_proof=None):
+                            recording_context=None, recording_angular_proof=None,
+                            recording_pose_ops=None):
         """Resolve the actual pose graph without intermediate float exposure.
 
         This separate 0.6 path leaves every older profile's pose arithmetic
@@ -925,6 +933,10 @@ class ReachSimulator(ForceSimulator):
             raise ValueError("A recording transform graph cannot provide full source kinematics.")
         if recording_context is not None and not recording_only:
             raise ValueError("A recording rotation cursor cannot enter full source kinematics.")
+        if recording_pose_ops is not None and (not recording_only or recording_context is None
+                or getattr(recording_pose_ops, "source_ops", None) is not self.pose_ops
+                or recording_pose_ops.work is not self.work or recording_angular_proof is not None):
+            raise ValueError("Alternate recording arithmetic requires this source's recording-only work context.")
         # With neither a free trajectory nor a motion claim, all actual pose
         # operands belong to this current state rather than a clock.
         # Event/force transitions still invalidate the single complete graph.
@@ -941,9 +953,13 @@ class ReachSimulator(ForceSimulator):
                 objects, frames = terminal
                 self._pose_cache = {key: (state, objects, frames)}
                 return objects, frames
-        ops = self.pose_ops
+        ops = self.pose_ops if recording_pose_ops is None else recording_pose_ops
         compose = (ops.compose_recording_fast if recording_context is not None else
                    ops.compose_recording if recording_only else ops.compose)
+        def constant_pose(pose, *, inverse=False):
+            if recording_pose_ops is not None:
+                return ops.recording_constant_pose(pose, inverse=inverse, build=self._constant_pose)
+            return self._constant_pose(pose, inverse=inverse)
         incoming = self._incoming(state)
         objects, frames, resolving = {}, {"world": self._identity_pose}, set()
         angular_proof = None
@@ -1012,6 +1028,8 @@ class ReachSimulator(ForceSimulator):
                     self.work.charge("recording_moving_pose")
                     return build()
             namespace = "recorded_transform" if recording_only else "recording"
+            if recording_pose_ops is not None:
+                namespace = recording_pose_ops.recording_namespace
             identity = (namespace, path) if pose_only else path
             if recording_context is not None:
                 # An incremental rotation can differ privately from another
@@ -1029,7 +1047,7 @@ class ReachSimulator(ForceSimulator):
                     site = self.model.sites[stem]
                     owner = instance(site.owner)
                     frames[path] = slot(path, (owner, site.pose),
-                        lambda: compose(owner, self._constant_pose(site.pose)), owner=site.owner)
+                        lambda: compose(owner, constant_pose(site.pose)), owner=site.owner)
                     angular_frame(path, "site", stem)
             return frames[path]
 
@@ -1047,7 +1065,7 @@ class ReachSimulator(ForceSimulator):
                     follow = self.model.follows[relation_path]
                     parent = frame(follow.parent)
                     result = slot(path, ("follow", parent, follow.offset),
-                        lambda: compose(parent, self._constant_pose(follow.offset)))
+                        lambda: compose(parent, constant_pose(follow.offset)))
                     angular_frame(path + ".frame", "follow", relation_path)
                 else:
                     joint = self.model.joints[relation_path]
@@ -1063,8 +1081,10 @@ class ReachSimulator(ForceSimulator):
                     coordinate, slope = None, None
                     if joint.kind in {"hinge", "slider"} and not body_cursor:
                         if pose_only:
-                            coordinate = self._coordinate(relation_path, time, state,
-                                recording=recording_context is not None)[0]
+                            coordinate = (ops.recording_coordinate(self, relation_path, time, state)
+                                if recording_pose_ops is not None and joint.kind == "hinge" else
+                                self._coordinate(relation_path, time, state,
+                                    recording=recording_context is not None)[0])
                             slope = Fraction(0)
                         else:
                             coordinate, slope, _ = self._exact_coordinate(relation_path, time, state)
@@ -1085,7 +1105,7 @@ class ReachSimulator(ForceSimulator):
                                         else ops.make(position=position,
                                                       velocity=ops.scale(joint.axis, slope)))
                         return compose(compose(parent, relative),
-                                       self._constant_pose(child_pose, inverse=True))
+                                       constant_pose(child_pose, inverse=True))
                     if body_cursor:
                         from .scene import MAX_KEYFRAMES
                         def direct_seed():
@@ -1112,8 +1132,10 @@ class ReachSimulator(ForceSimulator):
                         result = slot(path,
                             ("joint", parent, joint.kind, joint.axis, coordinate, slope, child_pose), connected)
             elif state.modes[path] == "dynamic":
-                result = self._dynamic_kinematics(path, time, state, pose_only=pose_only,
-                                                recording_context=recording_context)
+                result = (ops.recording_dynamic_pose(self, path, time, state, context=recording_context)
+                    if recording_pose_ops is not None else
+                    self._dynamic_kinematics(path, time, state, pose_only=pose_only,
+                                             recording_context=recording_context))
             else:
                 position = state.positions[path]
                 rotation = state.root_rotation_values.get(path, state.orientations[path])
@@ -1133,7 +1155,9 @@ class ReachSimulator(ForceSimulator):
                     action, runtime = self.model.actions[claimant], state.actions[claimant]
                     rotation = self._advance_orientation(runtime.initial_rotation or runtime.initial,
                         action.vector, runtime.elapsed_at(time), recording_context=recording_context,
-                        recording_path="prescribed:" + path)
+                        recording_path=("prescribed:" + path if recording_pose_ops is None else
+                                        recording_pose_ops.recording_namespace + ":prescribed:" + path),
+                        recording_pose_ops=recording_pose_ops)
                     if runtime.status == "running" and not pose_only:
                         omega = action.vector
                 result = slot(path, ("root", position, rotation, velocity, omega),

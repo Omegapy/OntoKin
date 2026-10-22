@@ -986,7 +986,124 @@ class _PoseArithmetic:
         sine, cosine = self.a.sincos(self.a.mul(norm, F(elapsed) / 2))
         return (cosine, *(self.a.mul(self.a.div(value, norm), sine) for value in values))
 
-    def _recording_sincos(self, coordinate, *, context, clock):
+    def _recording_rotate_sincos(self, old_sine, old_cosine, sine, cosine, *, shared=False):
+        """Round one independent complex interval update only at its outputs.
+
+        Exact product extrema are added/subtracted before the two outward
+        grids. Omitting the four intermediate grids gives a contained valid
+        enclosure, without a producer value, floating operation or slack.
+        A small complete dyadic domain proves every original preflight.
+        """
+        def direct():
+            return (self.a.add(self.a.mul(old_sine, cosine), self.a.mul(old_cosine, sine)),
+                    self.a.sub(self.a.mul(old_cosine, cosine), self.a.mul(old_sine, sine)))
+
+        values = (old_sine, old_cosine, sine, cosine)
+        requested = getattr(self.a.work, "max_operand_bits", MAX_OPERAND_BITS)
+        if (type(requested) is not int or requested < MAX_OPERAND_BITS or self.a.bits != 128
+                or self.a.work is None or not hasattr(self.a.work, "callback_error")
+                or any(type(value) is not Interval or type(value.lo) is not F or type(value.hi) is not F
+                       for value in values)):
+            return direct()
+        # Prove widths before lattice arithmetic, ordering or product selection.
+        # Products need <=262/258 numerator/denominator bits; the largest
+        # prospective sum/grid width is <=649. The original rounded path
+        # and all comparison cross-products fit this same <1024-bit domain.
+        if any(value.numerator.bit_length() > 131 or value.denominator.bit_length() > 129
+               for cell in values for value in (cell.lo, cell.hi)):
+            return direct()
+        if any(value.denominator > self.a.scale or value.denominator & (value.denominator - 1)
+               for cell in values for value in (cell.lo, cell.hi)):
+            return direct()
+        if any(value.lo > value.hi or value.lo == value.hi and value.lo in (F(-1), F(0), F(1))
+               for value in values):
+            # The ordinary zero/unit shortcuts are already less work.
+            return direct()
+        cap = self.a.operand_limit
+
+        def product(a, b):
+            if a.lo == a.hi and b.lo == b.hi:
+                value = self.a.exact(a.lo, b.lo, "mul")
+                return (value, value) if self.a.operand_limit == cap else None
+            if a.lo >= 0:
+                pairs = (((a.lo, b.lo), (a.hi, b.hi)) if b.lo >= 0 else
+                         ((a.hi, b.lo), (a.lo, b.hi)) if b.hi <= 0 else
+                         ((a.hi, b.lo), (a.hi, b.hi)))
+            elif a.hi <= 0:
+                pairs = (((a.lo, b.hi), (a.hi, b.lo)) if b.lo >= 0 else
+                         ((a.hi, b.hi), (a.lo, b.lo)) if b.hi <= 0 else
+                         ((a.lo, b.hi), (a.lo, b.lo)))
+            elif b.lo >= 0:
+                pairs = ((a.lo, b.hi), (a.hi, b.hi))
+            elif b.hi <= 0:
+                pairs = ((a.hi, b.lo), (a.lo, b.lo))
+            else:
+                pairs = tuple((x, y) for x in (a.lo, a.hi) for y in (b.lo, b.hi))
+            endpoints = []
+            for x, y in pairs:
+                endpoints.append(self.a.exact(x, y, "mul"))
+                if self.a.operand_limit != cap:
+                    return None
+            return (min(endpoints), max(endpoints)) if len(endpoints) == 4 else tuple(endpoints)
+
+        def calculate():
+            self.a.tick()
+            self.a.guard(*(value for cell in values for value in (cell.lo, cell.hi)))
+            if self.a.operand_limit != cap:
+                return None
+            if shared:
+                # The exact interval update depends only on its four cells.
+                # Broad recording batches may share that completed arithmetic
+                # while each source path keeps its own phase/clock cursor.
+                key = self._key("recording_interval_rotation", *values)
+                cached = self.a.lookup(key)
+                if self.a.operand_limit != cap:
+                    return None
+                if cached is not None:
+                    self.a.guard(*(endpoint for cell in cached for endpoint in (cell.lo, cell.hi)))
+                    return cached
+            result = []
+            for first, second, operation in ((old_sine, old_cosine, "add"),
+                                             (old_cosine, old_sine, "sub")):
+                left = product(first, cosine)
+                if left is None:
+                    return None
+                right = product(second, sine)
+                if right is None:
+                    return None
+                low = self.a.exact(left[0], right[0 if operation == "add" else 1], operation)
+                if self.a.operand_limit != cap:
+                    return None
+                high = self.a.exact(left[1], right[1 if operation == "add" else 0], operation)
+                if self.a.operand_limit != cap:
+                    return None
+                result.append(self.a.grid(low, high))
+                if self.a.operand_limit != cap:
+                    return None
+            result = tuple(result)
+            if shared:
+                result = self.a.remember(key, result)
+                if self.a.operand_limit != cap:
+                    return None
+            return result
+
+        try:
+            result = calculate()
+        except ReferenceError as error:
+            if error.code != "resource" or error is getattr(self.a.work, "callback_error", None):
+                raise
+            try:
+                changed = self.a.operand_limit != cap
+            except ReferenceError:
+                raise error
+            if not changed:
+                raise
+            result = None
+        # The original fallback is outside the added calculation's handler;
+        # its own failure can never be retried into a later broader domain.
+        return direct() if result is None else result
+
+    def _recording_sincos(self, coordinate, *, context, clock, shared=False):
         """Enclose successive point angles without a production error model.
 
         Only the explicit recording path supplies this cursor context. Its
@@ -1024,10 +1141,7 @@ class _PoseArithmetic:
             try:
                 delta = self.a.exact(self.a.exact(coordinate.lo, old_coordinate, "sub"), 2, "div")
                 if abs(delta) <= F(1, 4):
-                    sine, cosine = self.a.sincos(self.a.grid(delta, delta))
-                    result = (self.a.add(self.a.mul(old_sine, cosine), self.a.mul(old_cosine, sine)),
-                              self.a.sub(self.a.mul(old_cosine, cosine), self.a.mul(old_sine, sine)))
-                    steps += 1
+                    delta_cell = self.a.grid(delta, delta)
                 else:
                     advance = False
             except ReferenceError as error:
@@ -1044,6 +1158,14 @@ class _PoseArithmetic:
                 if not changed:
                     raise
                 return direct()
+            if advance:
+                # Only added delta construction belongs to the retry above.
+                # A direct trigonometric or interval fallback failure keeps
+                # its identity even if a later callback would widen the cap.
+                sine, cosine = self.a.sincos(delta_cell)
+                result = (self._recording_rotate_sincos(old_sine, old_cosine, sine, cosine, shared=True)
+                          if shared else self._recording_rotate_sincos(old_sine, old_cosine, sine, cosine))
+                steps += 1
         if not advance:
             result, steps = direct(), 0
         # A callback can narrow the domain during any component operation.
@@ -1070,7 +1192,8 @@ class _PoseArithmetic:
         self.a.guard(*(endpoint for part in value for endpoint in (part.lo, part.hi)))
         return value
 
-    def hinge(self, axis, coordinate, rate, *, ideal=False, recording_context=None, recording_time=None):
+    def hinge(self, axis, coordinate, rate, *, ideal=False, recording_context=None, recording_time=None,
+              shared_recording=False):
         axis = self.vector(axis)
         coordinate, rate = self.a.interval(coordinate), self.a.interval(rate)
         key = self._key("hinge", axis, coordinate, rate, ideal)
@@ -1082,8 +1205,12 @@ class _PoseArithmetic:
         if cached is not None:
             return cached
         normalized_axis = self._normalized_axis(axis)
-        sine, cosine = (self.a.sincos(self.a.div(coordinate, 2)) if recording_context is None else
-                        self._recording_sincos(coordinate, context=(recording_context, axis), clock=recording_time))
+        if recording_context is None:
+            sine, cosine = self.a.sincos(self.a.div(coordinate, 2))
+        else:
+            context = (recording_context, axis)
+            sine, cosine = (self._recording_sincos(coordinate, context=context, clock=recording_time, shared=True)
+                            if shared_recording else self._recording_sincos(coordinate, context=context, clock=recording_time))
         rotation = (cosine, *(self.a.mul(value, sine) for value in normalized_axis))
         # The rotation's mathematical derivative uses a unit axis. The
         # inherited source inspection deliberately retains the canonical raw
@@ -1585,6 +1712,9 @@ class ReachReference:
             key += (recording_context,)
         targets = (tuple(path + ".frame" for path in (*self.model.objects, *self.model.sites))
                    if selected is None else tuple(selected))
+        # Equal independent curves can share a completed interval update in
+        # broad batches while retaining each path's own context and clock.
+        shared_recording = recording_context is not None and len(targets) > 16
         self.a.tick()
         limit = self._sync_numeric_cache()
         cached = self._poses.get(key)
@@ -1626,7 +1756,8 @@ class ReachReference:
                             if joint.kind == "hinge":
                                 motion = self.p.hinge(joint.axis, coordinate, rate, ideal=ideal,
                                     recording_context=angle_context,
-                                    recording_time=time if angle_context is not None else None)
+                                    recording_time=time if angle_context is not None else None,
+                                    shared_recording=shared_recording)
                             else:
                                 motion = self.p.make(self.p.scale(joint.axis, coordinate), velocity=self.p.scale(joint.axis, rate))
                             value = self.p.compose(value, motion)

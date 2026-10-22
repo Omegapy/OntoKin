@@ -867,7 +867,8 @@ def _endpoint_group_maxima(nodes, keys, model, *, work):
     return tuple(tuple(values) for values in maxima)
 
 
-def interval_certificates(model, options, plan, nodes, geometry_bounds, exact, times, *, work):
+def interval_certificates(model, options, plan, nodes, geometry_bounds, exact, times, *, work,
+                          recording_excess=None):
     """Produce every row from conservative per-phase endpoint maxima.
 
     Every actual endpoint contributes. A group only shares arithmetic when its
@@ -920,6 +921,13 @@ def interval_certificates(model, options, plan, nodes, geometry_bounds, exact, t
             extra_position = extra_rotation = Fraction(0)
             for phase_index in sorted(group["numeric_selected"]):
                 p_extra, q_extra = _recording_endpoint_excess(plan.phases[phase_index].source[frame], work=work)
+                if recording_excess is not None:
+                    float_position, float_rotation = recording_excess.get(phase_index, {}).get(
+                        frame, (Fraction(0), Fraction(0)))
+                    if float_position:
+                        p_extra = _exact(p_extra, float_position, "add", work)
+                    if float_rotation:
+                        q_extra = _exact(q_extra, float_rotation, "add", work)
                 if _compare(p_extra, extra_position, work) > 0:
                     extra_position = p_extra
                 if _compare(q_extra, extra_rotation, work) > 0:
@@ -1041,6 +1049,180 @@ def destination_numeric_basis() -> dict[str, str]:
             "method": "Exact rational time and translation; integer RNE quaternion normalization; bounded normalized-chord approximation to short SLERP; separately bounded Three CPU matrix and vertex arithmetic."}
 
 
+def _recording_lift_relation(left, right, *, work, require_margin=False):
+    """Return the exact dot sign and, when requested, its strict cell margin.
+
+    Same-sign nonzero component pairs prove a sign without forming products.
+    A pair whose two magnitudes are at least one half also proves magnitude
+    at least one quarter. Mixed signs, a smaller optional margin, and narrowed
+    operand domains retain all original exact products and additions.
+    """
+    _charge(work, "recording_hemisphere_domain")
+    if (getattr(work, "max_operand_bits", MAX_ARITHMETIC_BITS) == MAX_ARITHMETIC_BITS
+            and type(left) is tuple and type(right) is tuple and len(left) == len(right) == 4
+            and all(type(value) is float and math.isfinite(value) for value in (*left, *right))):
+        positive = negative = large_pair = False
+        for a, b in zip(left, right):
+            if a and b:
+                if (a < 0) == (b < 0):
+                    positive = True
+                else:
+                    negative = True
+                large_pair = large_pair or ((a >= 0.5 or a <= -0.5) and
+                                             (b >= 0.5 or b <= -0.5))
+        if not (positive and negative) and (not require_margin or large_pair or not (positive or negative)):
+            return int(positive) - int(negative), large_pair
+    a, b = _vector(left, work, size=4), _vector(right, work, size=4)
+    dot = _sum((_exact(x, y, "mul", work) for x, y in zip(a, b)), work)
+    sign = _compare(dot, Fraction(0), work)
+    separated = (not require_margin or
+                 _compare(abs(dot), Fraction(1, 1 << 16), work) > 0)
+    return sign, separated
+
+
+def _sample_recording_nodes(plan, nodes, exact, *, work, allow_fast=True,
+                            require_same_cells=False):
+    """Retain bounded samples and restart unsupported phases exactly.
+
+    The first key in every phase and the final after-state use the original
+    controlled recording graph. Each faster interior value carries its own
+    proved additional endpoint error in the ordinary supplied-byte certificate.
+    The optional strict-cell diagnostic additionally requires original stored
+    bits and replays ambiguous phases. Unsupported phases always retain the
+    original algorithm, with all attempted work still charged.
+    """
+    from .reach_recording_fast import (RecordingRoundingAmbiguity,
+                                       sample_bounded_frames, sample_certified_frames)
+
+    sample_fast = sample_certified_frames if require_same_cells else sample_bounded_frames
+
+    frame_paths = tuple(node.frame_path for node in nodes)
+    previous_state = None
+    moving_frames = frozenset()
+    recording_context = None
+    exact_phases = set()
+    recording_excess = {}
+    key_index = 0
+    phase_start_key = 0
+    accelerated = False
+    while key_index < len(exact):
+        time = exact[key_index]
+        _charge(work, "recording_sample")
+        index = bisect_right(plan.boundaries, time) - 1
+        state = plan.final_state if index >= len(plan.phase_states) else plan.phase_states[index]
+        new_phase = state is not previous_state
+        if new_phase:
+            _charge(work, "recording_phase_context")
+            recording_context = object()
+            moving_frames = plan.simulator.recording_moving_frames(state, frame_paths)
+            phase_start_key = key_index
+        selected_frames = frame_paths if new_phase else tuple(path for path in frame_paths if path in moving_frames)
+        angular_proof = (plan.phases[index].recording_angular_proof
+                         if index < len(plan.phases) else None)
+        if (allow_fast and not new_phase and selected_frames
+                and index < len(plan.phases) and index not in exact_phases):
+            try:
+                result = sample_fast(plan.simulator, time, state, selected_frames,
+                    context=recording_context, moving_frames=moving_frames,
+                    phase_bounds=plan.phases[index].source,
+                    phase_interval=(plan.boundaries[index], plan.boundaries[index + 1]),
+                    recording_angular_proof=angular_proof)
+            except RecordingRoundingAmbiguity as error:
+                if work.callback_error is error:
+                    raise
+                _charge(work, "recording_fast_phase_restart")
+                # Samples are private until the whole bake and independent
+                # supplied-byte check pass. Discard every candidate key from
+                # this phase, including unchanged tracks, before rebuilding.
+                exact_phases.add(index)
+                recording_excess.pop(index, None)
+                for node in nodes:
+                    _charge(work, "recording_fast_phase_truncate")
+                    del node.translations[phase_start_key:]
+                    del node.rotations_xyzw[phase_start_key:]
+                previous_state = None
+                key_index = phase_start_key
+                continue
+            frames = result.frames
+            for frame, excess in result.excess_by_frame.items():
+                _charge(work, "recording_fast_endpoint_allowance")
+                if frame not in selected_frames:
+                    raise ValueError("A recording allowance must belong to a selected source frame")
+                position, rotation = excess.position_m, excess.rotation_rad
+                if type(position) is not Fraction or type(rotation) is not Fraction:
+                    raise ValueError("Recording endpoint allowances must be exact fractions")
+                work.guard(position, rotation)
+                if position < 0 or rotation < 0:
+                    raise ValueError("Recording endpoint allowances must be nonnegative")
+                previous = recording_excess.setdefault(index, {}).get(frame, (Fraction(0), Fraction(0)))
+                # Complete exact values have already passed the live width
+                # guard. Identical enclosure values need no cross-product
+                # ordering; a changed value still takes the exact comparison.
+                if position != previous[0]:
+                    position = position if _compare(position, previous[0], work) > 0 else previous[0]
+                if rotation != previous[1]:
+                    rotation = rotation if _compare(rotation, previous[1], work) > 0 else previous[1]
+                work.guard(position, rotation)
+                recording_excess[index][frame] = (position, rotation)
+                accelerated = accelerated or bool(position or rotation)
+        else:
+            frames = plan.simulator.recording_frames(time, state, selected_frames,
+                moving_frames=moving_frames, recording_context=recording_context,
+                recording_angular_proof=angular_proof)
+        restart_all = False
+        for node in nodes:
+            _charge(work, "recording_pose")
+            if not new_phase and node.frame_path not in moving_frames:
+                node.translations.append(node.translations[-1])
+                node.rotations_xyzw.append(node.rotations_xyzw[-1])
+                continue
+            pose = frames[node.frame_path]
+            node.translations.append(tuple(pose.position))
+            w, x, y, z = pose.orientation
+            quaternion = (x, y, z, w)
+            if node.rotations_xyzw:
+                strict_lift = accelerated and allow_fast and require_same_cells
+                sign, separated = _recording_lift_relation(node.rotations_xyzw[-1], quaternion,
+                    work=work, require_margin=strict_lift)
+                if strict_lift:
+                    _charge(work, "recording_fast_lift_guard")
+                    # Equal binary32 cells for components of magnitude <=2
+                    # give a binary64 component difference at most 2^-22.
+                    # The two four-component dot products therefore differ
+                    # by less than 2^-17. A strict 2^-16 margin proves the
+                    # original sampler chooses this same hemisphere lift.
+                    if not separated:
+                        _charge(work, "recording_fast_lift_restart")
+                        # An adjacent key may belong to the preceding phase.
+                        # Replay the whole bake exactly to cover that boundary
+                        # as well; previous attempted work remains consumed.
+                        allow_fast = accelerated = False
+                        recording_excess.clear()
+                        for previous_node in nodes:
+                            _charge(work, "recording_fast_phase_truncate")
+                            previous_node.translations.clear()
+                            previous_node.rotations_xyzw.clear()
+                        previous_state = None
+                        key_index = 0
+                        restart_all = True
+                        break
+                if sign < 0:
+                    lifted = []
+                    for value in quaternion:
+                        _charge(work, "recording_hemisphere_negate")
+                        if getattr(work, "max_operand_bits", MAX_ARITHMETIC_BITS) != MAX_ARITHMETIC_BITS:
+                            _rational(value, work)
+                        lifted.append(-value)
+                    quaternion = tuple(lifted)
+            node.rotations_xyzw.append(quaternion)
+        if restart_all:
+            continue
+        previous_state = state
+        key_index += 1
+    return recording_excess
+
+
+
 def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach_plan=None):
     from . import __version__
     from .evaluator import time_text
@@ -1080,45 +1262,10 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach
     geometry = node_geometry_bounds(model, nodes, work=work)
     exact, times, retained = reach_timeline(model, options, plan, nodes, geometry, work=work)
     recording_stage("sampling", work=work)
-    frame_paths = tuple(node.frame_path for node in nodes)
-    previous_state = None
-    moving_frames = frozenset()
-    recording_context = None
-    for time in exact:
-        _charge(work, "recording_sample")
-        index = bisect_right(plan.boundaries, time) - 1
-        state = plan.final_state if index >= len(plan.phase_states) else plan.phase_states[index]
-        new_phase = state is not previous_state
-        if new_phase:
-            _charge(work, "recording_phase_context")
-            recording_context = object()
-            moving_frames = plan.simulator.recording_moving_frames(state, frame_paths)
-        selected_frames = frame_paths if new_phase else tuple(path for path in frame_paths if path in moving_frames)
-        angular_proof = (plan.phases[index].recording_angular_proof
-                         if index < len(plan.phases) else None)
-        frames = plan.simulator.recording_frames(time, state, selected_frames,
-            moving_frames=moving_frames, recording_context=recording_context,
-            recording_angular_proof=angular_proof)
-        for node in nodes:
-            _charge(work, "recording_pose")
-            if not new_phase and node.frame_path not in moving_frames:
-                # The complete source dependency law is constant in this
-                # phase. Copy the preceding retained immutable output, keeping
-                # every key, pose, quaternion lift and interval certificate.
-                node.translations.append(node.translations[-1])
-                node.rotations_xyzw.append(node.rotations_xyzw[-1])
-                continue
-            pose = frames[node.frame_path]
-            node.translations.append(tuple(pose.position))
-            w, x, y, z = pose.orientation
-            quaternion = (x, y, z, w)
-            if node.rotations_xyzw and sum((Fraction(a) * Fraction(b) for a, b in
-                                            zip(node.rotations_xyzw[-1], quaternion)), Fraction(0)) < 0:
-                quaternion = tuple(-value for value in quaternion)
-            node.rotations_xyzw.append(quaternion)
-        previous_state = state
+    recording_excess = _sample_recording_nodes(plan, nodes, exact, work=work)
     recording_stage("certification", work=work)
-    certificates = interval_certificates(model, options, plan, nodes, geometry, exact, times, work=work)
+    certificates = interval_certificates(model, options, plan, nodes, geometry, exact, times, work=work,
+                                        recording_excess=recording_excess)
     basis = source_numeric_basis(work=work)
     source_basis = {"name": basis.name, "version": basis.version,
                     "implementation_sha256": basis.implementation, "method": basis.method,

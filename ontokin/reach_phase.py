@@ -11,7 +11,7 @@ from fractions import Fraction as F
 from math import isfinite
 from types import MappingProxyType
 
-from .reach_numeric import ReachAdmissionError, compare, exact, rational
+from .reach_numeric import MAX_OPERAND_BITS, ReachAdmissionError, compare, exact, rational
 from .reach_pose import EXPOSED_ROTATION_ERROR, VECTOR_ERROR, RotationValue, uniform_source_bounds
 
 
@@ -61,6 +61,39 @@ _JOINT_PHASE_FIELDS = tuple(JointPhase.__dataclass_fields__)
 _COMPOSITION_FIELDS = tuple(name for name in _BOUND_FIELDS
                             if name not in {"max_position_l1_m", "path_offset_l1_m", "position_error_m"})
 _CACHE_DOMAIN = "reach_source_phase/0.1"
+
+
+def _native_phase_key(kind, values, extra, work):
+    """Identify immutable canonical operands before repeating their decode.
+
+    The full domain admits every finite binary64 decode (at most 1,075
+    prospective bits). Exact operands are individually guarded on every call.
+    Narrower or unusual inputs retain the ordinary scalar decoder.
+    """
+    if (work.max_operand_bits != MAX_OPERAND_BITS or type(values) is not tuple
+            or len(values) > 16 or any(type(value) not in (float, int, F) for value in values)):
+        return None
+    work.charge("phase_native_operand_key")
+    if work.max_operand_bits != MAX_OPERAND_BITS:
+        return None
+    for value in values:
+        if type(value) is float:
+            if not isfinite(value):
+                return None
+            work.guard_bits(1075)
+        else:
+            work.guard(value)
+    # Keep native operands distinct from the ordinary decoded key. Their pure
+    # results use the same bounded request LRU as every other numeric proof.
+    return (_CACHE_DOMAIN, work.max_operand_bits, kind, ("native_operands", extra), values)
+
+
+def _small_constant_extent(value):
+    # The constant template has only a fixed allowance and affine extent
+    # products/sums. At most 1/16 of the full width for this exact extent leaves
+    # room for every original prospective operation, before rational reduction.
+    return (type(value) is F and max(abs(value.numerator).bit_length(),
+                                   value.denominator.bit_length()) <= MAX_OPERAND_BITS // 16)
 
 
 @dataclass(frozen=True)
@@ -365,34 +398,57 @@ def joint_phase(simulator, path, start, end, state):
     a = PhaseArithmetic(simulator.work)
     claimant = state.claims.get((path, "coordinate"))
     if claimant is None:
-        actual = a.number(state.coordinates[path])
-        ideal = a.number(state.ideal_coordinates[path])
-        simulator.work.charge("phase_joint_key")
-        key = (_CACHE_DOMAIN, simulator.work.max_operand_bits, "unclaimed_joint", actual, ideal)
+        raw = (state.coordinates[path], state.ideal_coordinates[path])
+        native_key = _native_phase_key("unclaimed_joint", raw, (), simulator.work)
+        if native_key is None:
+            actual, ideal = (a.number(value) for value in raw)
+            simulator.work.charge("phase_joint_key")
+            key = (_CACHE_DOMAIN, simulator.work.max_operand_bits, "unclaimed_joint", actual, ideal)
+        else:
+            key = native_key
         cached = simulator.work.lookup(key)
+        if native_key is not None and simulator.work.max_operand_bits != key[1]:
+            return joint_phase(simulator, path, start, end, state)
         if cached is not None:
+            simulator.work.guard(*(getattr(cached, field) for field in _JOINT_PHASE_FIELDS))
             return cached
+        if native_key is not None:
+            actual, ideal = (a.number(value) for value in raw)
         result = JointPhase(actual, actual, ideal, ideal, F(0), F(0), a.absolute(a.sub(actual, ideal)))
         simulator.work.remember(key, result)
+        if native_key is not None and simulator.work.max_operand_bits != key[1]:
+            return joint_phase(simulator, path, start, end, state)
+        simulator.work.guard(*(getattr(result, field) for field in _JOINT_PHASE_FIELDS))
         return result
     action, runtime = simulator.model.actions[claimant], state.actions[claimant]
     if action.kind == "reach_planar":
         index = 0 if path == action.reach.shoulder else 1
-        actual_initial = a.number(runtime.initial[index])
-        ideal_initial = a.number(runtime.ideal_initial[index])
-        target = a.number(runtime.solution.target_rad[index])
+        actual_initial = runtime.initial[index]
+        ideal_initial = runtime.ideal_initial[index]
+        target = runtime.solution.target_rad[index]
     else:
-        actual_initial = a.number(runtime.initial)
-        ideal_initial = a.number(runtime.ideal_initial)
-        target = a.number(action.goal)
-    duration = a.number(action.duration)
-    elapsed = tuple(a.number(runtime.elapsed_at(time)) for time in (start, end))
-    simulator.work.charge("phase_joint_key")
-    key = (_CACHE_DOMAIN, simulator.work.max_operand_bits, "claimed_joint", action.kind,
-           actual_initial, ideal_initial, target, duration, elapsed, runtime.status)
+        actual_initial = runtime.initial
+        ideal_initial = runtime.ideal_initial
+        target = action.goal
+    raw = (actual_initial, ideal_initial, target, action.duration,
+           *(runtime.elapsed_at(time) for time in (start, end)))
+    native_key = _native_phase_key("claimed_joint", raw, (action.kind, runtime.status), simulator.work)
+    if native_key is None:
+        actual_initial, ideal_initial, target, duration, *elapsed = (a.number(value) for value in raw)
+        elapsed = tuple(elapsed)
+        simulator.work.charge("phase_joint_key")
+        key = (_CACHE_DOMAIN, simulator.work.max_operand_bits, "claimed_joint", action.kind,
+               actual_initial, ideal_initial, target, duration, elapsed, runtime.status)
+    else:
+        key = native_key
     cached = simulator.work.lookup(key)
+    if native_key is not None and simulator.work.max_operand_bits != key[1]:
+        return joint_phase(simulator, path, start, end, state)
     if cached is not None:
+        simulator.work.guard(*(getattr(cached, field) for field in _JOINT_PHASE_FIELDS))
         return cached
+    if native_key is not None:
+        actual_initial, ideal_initial, target, duration, *elapsed = (a.number(value) for value in raw)
     actual_rate = a.div(a.sub(target, actual_initial), duration)
     ideal_rate = a.div(a.sub(target, ideal_initial), duration)
     actual = tuple(a.add(actual_initial, a.mul(actual_rate, time)) for time in elapsed)
@@ -406,6 +462,9 @@ def joint_phase(simulator, path, start, end, state):
     result = JointPhase(*actual, *ideal, actual_rate if running else F(0),
                         ideal_rate if running else F(0), error)
     simulator.work.remember(key, result)
+    if native_key is not None and simulator.work.max_operand_bits != key[1]:
+        return joint_phase(simulator, path, start, end, state)
+    simulator.work.guard(*(getattr(result, field) for field in _JOINT_PHASE_FIELDS))
     return result
 
 
@@ -478,21 +537,59 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None, rec
         return PhaseBound(**values)
 
     def constant(pose, *, inverse=False):
-        # Decode/guard every position component before a lookup. No mutable
-        # model record is retained; the key contains its complete local pose.
-        position = tuple(a.number(value) for value in pose.position)
-        work.charge("phase_constant_key")
         if type(inverse) is not bool:
             raise ValueError("A phase constant inverse selector must be boolean.")
-        key = (_CACHE_DOMAIN, work.max_operand_bits, "constant", position, pose.rotation, inverse)
+        native_key = _native_phase_key("constant", pose.position, (pose.rotation, inverse), work)
+        if native_key is None:
+            position = tuple(a.number(value) for value in pose.position)
+            work.charge("phase_constant_key")
+            key = (_CACHE_DOMAIN, work.max_operand_bits, "constant", position, pose.rotation, inverse)
+        else:
+            key = native_key
         cached = work.lookup(key)
+        if native_key is not None and work.max_operand_bits != key[1]:
+            return constant(pose, inverse=inverse)
         if cached is not None:
+            work.guard(*(getattr(cached, field) for field in _BOUND_FIELDS))
             return cached
+        if native_key is not None:
+            position = tuple(a.number(value) for value in pose.position)
         extent = a.add(*(a.absolute(value) for value in position))
-        result = finish(max_position_l1_m=a.add(a.mul(F(2), extent), a.mul(F(2), VECTOR_ERROR)) if inverse else extent,
-            path_offset_l1_m=extent if inverse else F(0), product_count=1,
-            vector_round_count=int(inverse))
+        if (native_key is not None and work.max_operand_bits == MAX_OPERAND_BITS
+                and _small_constant_extent(extent)):
+            # Only extent varies among these exact constant bounds. Factor the
+            # original affine position formula, retaining every other field of
+            # its zero-extent result. Wider operands keep the original formula.
+            work.charge("phase_constant_extent_domain")
+            if work.max_operand_bits != key[1]:
+                return constant(pose, inverse=inverse)
+            template_key = (_CACHE_DOMAIN, work.max_operand_bits, "constant_extent_template", inverse)
+            template = work.lookup(template_key)
+            if work.max_operand_bits != key[1]:
+                return constant(pose, inverse=inverse)
+            if template is None:
+                base = finish(max_position_l1_m=a.mul(F(2), VECTOR_ERROR) if inverse else F(0),
+                              product_count=1, vector_round_count=int(inverse))
+                coefficient = (a.add(a.sub(base.rotation_error_rad, EXPOSED_ROTATION_ERROR), F(1, 1 << 52))
+                               if inverse else F(1, 1 << 53))
+                template = (base, coefficient)
+                work.remember(template_key, template)
+            if work.max_operand_bits != key[1]:
+                return constant(pose, inverse=inverse)
+            base, coefficient = template
+            work.guard(*(getattr(base, field) for field in _BOUND_FIELDS), coefficient, extent)
+            result = replace(base,
+                max_position_l1_m=a.add(base.max_position_l1_m, a.mul(F(2), extent)) if inverse else extent,
+                path_offset_l1_m=extent if inverse else F(0),
+                position_error_m=a.add(base.position_error_m, a.mul(extent, coefficient)))
+        else:
+            result = finish(max_position_l1_m=a.add(a.mul(F(2), extent), a.mul(F(2), VECTOR_ERROR)) if inverse else extent,
+                path_offset_l1_m=extent if inverse else F(0), product_count=1,
+                vector_round_count=int(inverse))
         work.remember(key, result)
+        if native_key is not None and work.max_operand_bits != key[1]:
+            return constant(pose, inverse=inverse)
+        work.guard(*(getattr(result, field) for field in _BOUND_FIELDS))
         return result
 
     def compose(parent, local, *, axial_rate=None):
@@ -614,16 +711,27 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None, rec
         # authority/clock lookup has already produced this exact JointPhase;
         # only the pure local-bound equations are shared. Decode the complete
         # axis and guard every scalar before a cache hit can return a result.
-        axis = tuple(a.number(value) for value in joint.axis)
-        work.charge("phase_joint_bound_key")
         values = tuple(getattr(scalar, name) for name in _JOINT_PHASE_FIELDS)
+        native_key = (_native_phase_key("joint_local", (*joint.axis, *values),
+                                       (joint.kind, scalar), work)
+                      if type(joint.axis) is tuple and len(joint.axis) == 3
+                      and all(type(value) is F for value in values) else None)
+        if native_key is None:
+            axis = tuple(a.number(value) for value in joint.axis)
+            work.charge("phase_joint_bound_key")
         if any(type(value) is not F for value in values):
             raise ReachAdmissionError("reach_numeric", "A local joint bound requires exact phase operands.")
         work.guard(*values)
-        key = (_CACHE_DOMAIN, work.max_operand_bits, "joint_local", joint.kind, axis, scalar)
+        key = (native_key if native_key is not None else
+               (_CACHE_DOMAIN, work.max_operand_bits, "joint_local", joint.kind, axis, scalar))
         cached = work.lookup(key)
+        if native_key is not None and work.max_operand_bits != key[1]:
+            return joint_local(joint, scalar)
         if cached is not None:
+            work.guard(*(getattr(cached, field) for field in _BOUND_FIELDS))
             return cached
+        if native_key is not None:
+            axis = tuple(a.number(value) for value in joint.axis)
         axis_size = a.add(*(a.absolute(value) for value in axis))
         rate_error = a.absolute(a.sub(scalar.actual_slope, scalar.ideal_slope))
         if joint.kind == "hinge":
@@ -645,6 +753,9 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None, rec
                 carrier_speed_upper_m_per_s=a.mul(axis_size, a.absolute(scalar.ideal_slope)),
                 actual_speed_upper_m_per_s=a.mul(axis_size, a.absolute(scalar.actual_slope)))
         work.remember(key, result)
+        if native_key is not None and work.max_operand_bits != key[1]:
+            return joint_local(joint, scalar)
+        work.guard(*(getattr(result, field) for field in _BOUND_FIELDS))
         return result
 
     def root(path):

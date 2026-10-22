@@ -2,7 +2,7 @@
 
 This is a development checkpoint, not release acceptance. The immediate gate
 remains all 28 source recordings under the unchanged shared 100,000-operation
-budget. The latest complete run passes **16/28**; all twelve remaining cases
+budget. The latest complete run passes **19/28**; all nine remaining cases
 still fail on the attempted 100,001st operation. No result is inferred for an
 unexecuted release role.
 
@@ -66,7 +66,67 @@ unchanged. Differential tests compare exact private values and complete GLB
 bytes. Three stale independent-reader test doubles were updated to accept the
 already existing `recording_context` argument; their assertions are unchanged.
 
-## Latest implementation and executed results
+## Latest checkpoint 003: certified native recording and independent verification
+
+The complete source run identifies `5f7f503ab3727c4b78bc4b01ceb6472dc8c02473`,
+tree `f6479c0f1da00b787eeed0fbb6667de2df7574d1`. It passes **19/28** and finished
+**2026-10-22 05:52:52 UTC** with stable tracked inputs. P07 **94,833**, P08
+**94,845** and P18 **95,782** now pass. The remaining **P05, P09, P11, P16,
+P20, P23, L01, L02 and L03** stop at the attempted shared operation **100,001**.
+
+Additional implementation work:
+
+- Bounded native planar interior sampling retains exact first/boundary samples
+  and supplies explicit conservative position/quaternion endpoint allowances.
+  Production stored float32 values may differ from the exact sampler; they
+  must satisfy the unchanged independent supplied-byte checks and tolerances.
+  The separate strict-cell path proves byte equality when requested.
+- Exact private affine hinge laws, bounded dynamic Horner motion and strict
+  finite quaternion guards admit only the derived domain. Unsupported domains
+  replay the whole phase with the original sampler and retain attempted work.
+  Lowered limits, changed operands, cancellation and rollback remain checked.
+- Complete native implementation and derivation hashes are bound into the
+  source numerical identity and independent rate input inventory.
+- Exact native phase operand keys and constant error templates reduce repeated
+  decoding. Independently derived fused interval rotations round only their
+  combined extrema; bounded shared proofs preserve each clock/context seed.
+- Stationary endpoints retain a completed limit comparison only for freshly
+  admitted identical values, typed equal limits and the current operand cap.
+
+| Executed cohort | Exact source | Result |
+| --- | --- | --- |
+| Native sampling 005 | `5f7f503` | **67/67**, zero failures/errors/skips; stable inputs. |
+| Combined sampling/source/reader 004 | `5f7f503` | **241/241**, zero failures/errors/skips; stable inputs. |
+| Independent reader 011 | `763b0804af794d6ea79f812302eccaaf3f8ee698` | **232/232**, zero failures/errors/skips; stable inputs. |
+| Phase/lifecycle 006 | Worker `68adba26352e87f8cbcbc26bacff7005efa7d6bf` | **72/72**, zero failures/errors/skips; stable inputs. |
+
+Only `tests/test_reach_recurring_endpoint_claims.py` changed between the full
+source run and reader 011. The original exact recurrence test is retained and
+an additional native test proves both samplers reject independently measured
+understatements of position and quaternion endpoint errors. The old exact
+recurrence/body-cursor tests explicitly select their intended exact path.
+Initial native cache invalidation, two exact-path harness assertions and reader
+010's stale exact-path counter all remain visible with their subsequent fixes.
+The source-artifact integrity script initially mishandled the `sha256:` prefix;
+its corrected receipt confirms all **38** GLB/report files match. Both receipts
+are retained; this was a comparison-script error, not artifact corruption.
+
+[checkpoint-003.zip](checkpoint-003.zip) retains **136** members, **2,729,636**
+bytes, SHA-256 `fc00cf5b71a1cee191bfe6ddc2610ac82eafc2ceab3e00dd596ed29669e18c02`.
+Its [manifest](checkpoint-003.manifest.json) identifies all raw runs, failures,
+profiles, before/after inputs, drivers, publication-002 receipt, exact patch
+from local checkpoint 002 and raw commits. Every persisted member hash and ZIP
+CRC was rechecked in a separate call while all worker filesystem activity was
+paused. The [machine-readable checkpoint](checkpoint-003.json) records complete
+case counts and exact cohort identities. Earlier archives remain unchanged.
+
+P23 now completes both phase bounds but fails in its final boundary observation.
+P16 uses the native path without a phase restart; repeated vector, root rotation,
+enclosure and dynamic extent work still dominates sampling. P09 and L03 reach
+independent verification. These profiles guide the next work without changing
+any work allowance or acceptance threshold.
+
+## Preserved checkpoint 002 implementation and executed results
 
 The latest complete recording run and combined cohort identify implementation
 `1bd2e4e7f5fb21a18db3e09f8f1d9e05b443d9df`, tree `7f88f4862d2b3b6a7d6d919665ca8a4a86ab38e3`.
@@ -101,7 +161,7 @@ Further changes after checkpoint 001:
 | Combined focused 009 | Same `1bd2e4e` | **98/98**, no failures, errors or skips; stable inputs. Includes source observations, complete carrier cursor, basis identity, independent endpoint/arc checks, terminal paths/projections, cancellation, rollback, limits and construction reuse. |
 | Interval/source focused 001 | `d6e3662` | **60/60**, including all **45 source cases**, no failures, errors or skips; stable inputs. |
 
-The twelve remaining cases are **P05, P07, P08, P09, P11, P16, P18,
+The twelve remaining cases at checkpoint 002 were **P05, P07, P08, P09, P11, P16, P18,
 P20, P23, L01, L02 and L03**. Every failure stops at the attempted **100,001st**
 shared operation. Producer receipts retain all passing artifacts and failures.
 
@@ -163,7 +223,7 @@ SHA-256 `87e0d55adbc993d800cff8282dc68c9d94116a7ca6cc817d0a553cfd38cf0b95`.
 The latest complete-source command was:
 
 ```bash
-/tmp/ontokin-verify312/bin/python tools/build_reach_source_artifacts.py --output-dir /tmp/ontokin-combined-source-006
+/tmp/ontokin-verify312/bin/python tools/build_reach_source_artifacts.py --output-dir /tmp/ontokin-native-5f7f503-source-007
 ```
 
 All new execution used CPython 3.12.14 on Linux and the six exact verification
@@ -175,15 +235,15 @@ static work proceeds on isolated worker branches.
 Profiles are diagnostic. `ReachExecutionWork.operations` excludes preceding
 construction charges; the complete inherited compiler counter and final
 producer receipt include them. P23 compilation now costs 26,373 shared
-operations. Its remaining planning failure and P09/P16/L03 sampling and
-independent certification costs still require optimization. No new work
+operations. Its final boundary observation and P16 sampling costs still require
+optimization; most other remaining failures occur in independent verification. No new work
 allowance is introduced by exporting.
 
 ## Next work and unmet release gates
 
-Complete the twelve recordings. Recovered exact phase operand/template reuse,
-certified native sampling and independent fused/shared rotation arithmetic are
-under review on worker branches; they are outside this tested checkpoint.
+Complete the nine recordings. Next isolate deferred exact phase-location work,
+repeated native sampling proofs and independent stored-lift sign verification.
+These further optimizations are outside the tested checkpoint.
 Preserve exact source behavior, cache bounds, cancellation, rollback and every
 original acceptance inequality while reducing performed work.
 

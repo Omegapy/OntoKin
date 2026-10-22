@@ -2,11 +2,13 @@
 from contextlib import ExitStack
 from dataclasses import replace
 from fractions import Fraction as F
+from functools import partial
 import random
 import unittest
 from unittest.mock import patch
 
 from ontokin.construction import compile_construction
+from ontokin import reach_export
 from ontokin.gltf import export_glb
 from ontokin.reach_numeric import ReachAdmissionError, ReachExecutionWork
 from ontokin.reach_pose import (BITS, METHOD, PRODUCT_ERROR, ZERO, ReachPoseOps,
@@ -278,8 +280,13 @@ class ReachIntegerPlanarTests(unittest.TestCase):
 
     def test_actual_recurrence_recording_remains_byte_identical(self):
         outputs = []
+        original_sampling = reach_export._sample_recording_nodes
         for enabled in (False, True):
             with ExitStack() as stack:
+                # Compare the exact recurrence with and without its integer
+                # factorization; the native algorithm has separate bounds.
+                stack.enter_context(patch.object(reach_export, "_sample_recording_nodes",
+                    partial(original_sampling, allow_fast=False)))
                 if not enabled:
                     stack.enter_context(patch.object(ReachPoseOps, "_integer_planar_product", return_value=None))
                     stack.enter_context(patch.object(ReachPoseOps, "_integer_axis_rotate", return_value=None))

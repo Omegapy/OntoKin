@@ -161,6 +161,14 @@ recording's identified numerical basis; execution results remain separate.
 The [independent endpoint and arc derivation](engineering/reach-independent-endpoint-bounds.md)
 checks supplied bytes with sufficient exact bounds and retains the original
 normalization and norm calculations when those bounds cannot prove a claim.
+The [bounded native recording derivation](engineering/reach-recording-certified-planar.md)
+proves additional endpoint allowances for its optional planar and dynamic
+interior samples; its complete implementation and derivation are identified
+in the producer's numerical basis. The independent reader's
+[fused interval rotation](engineering/reach-reference-fused-recording-proof.md)
+and [shared completed arithmetic](engineering/reach-reference-shared-recording-proof.md)
+derivations keep source reconstruction and supplied-byte checks separate from
+the producer. Their identities are retained in the complete execution inputs.
 
 The [recorded delivery checkpoints](engineering/reach-delivery-implementation.md)
 and [independent reader implementation](engineering/reach-independent-validation.md)

@@ -15,12 +15,14 @@ SOURCE_INPUTS = (
     "ontokin/reach_numeric.py", "ontokin/reach_kinematics.py",
     "ontokin/reach_pose.py", "ontokin/reach_phase.py",
     "ontokin/reach_runtime.py", "ontokin/reach_export.py",
+    "ontokin/reach_recording_fast.py",
 )
 DERIVATION_INPUTS = (
     "docs/engineering/reach-numeric-kernel.md",
     "docs/engineering/reach-source-kernel.md",
     "docs/engineering/reach-coaxial-phase-bounds.md",
     "docs/engineering/reach-carrier-rotation-cursors.md",
+    "docs/engineering/reach-recording-certified-planar.md",
 )
 
 
@@ -62,7 +64,7 @@ class ReachRecordingBasisTests(unittest.TestCase):
     def test_versioned_basis_identifies_the_complete_recording_implementation(self):
         work = ReachExecutionWork()
         reach_conformance.verify_numeric_bases(current_basis(), work=work)
-        self.assertEqual(work.counts["independent_basis_open"], 12)
+        self.assertEqual(work.counts["independent_basis_open"], 14)
         self.assertEqual(work.max_operations, 100000)
         self.assertLessEqual(work.operations, 100000)
 
@@ -90,7 +92,7 @@ class ReachRecordingBasisTests(unittest.TestCase):
         with patch.object(reach_conformance, "_identified_digest", side_effect=read):
             self.reject_source(basis)
 
-    def test_rate_fingerprints_use_the_same_six_exact_source_inputs(self):
+    def test_rate_fingerprints_use_the_same_complete_exact_source_inputs(self):
         work = ReachExecutionWork()
         groups = reach_source_rates._fingerprints(reach_source_rates._Exact(work))
         source = groups["source_numeric_implementation"]

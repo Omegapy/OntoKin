@@ -2,11 +2,13 @@
 from copy import deepcopy
 from dataclasses import replace
 from fractions import Fraction as F
+from functools import partial
 from types import MappingProxyType
 import unittest
 from unittest.mock import patch
 
 from ontokin.construction import compile_construction
+from ontokin import reach_export
 from ontokin.gltf import export_glb, read_glb
 from ontokin.reach_conformance import validate_reach_export
 from ontokin.reach_numeric import ReachAdmissionError, ReachExecutionWork, float_bits
@@ -285,11 +287,16 @@ class ReachRecordingBodyCursorTests(unittest.TestCase):
         self.assertIs(sim._pose_cache, source_cache)
 
     def test_complete_glbs_pass_independent_analytic_byte_checks_with_writer_disabled(self):
+        original_sampling = reach_export._sample_recording_nodes
         for case, end in (("P01", F(3)), ("P09", F(1, 4)), ("P16", F(1, 4))):
             built = compile_construction(source_case(case))
             options = ExportOptions(end=end, fps=1, helpers=False)
-            result = export_glb(built.model, options=options,
-                target_contract="ontokin.glb/0.6", work=built.reach_work)
+            # Exercise the complete exact carrier cursor, whose independent
+            # analytic claim is separate from the native sampler's enclosure.
+            with patch.object(reach_export, "_sample_recording_nodes",
+                              partial(original_sampling, allow_fast=False)):
+                result = export_glb(built.model, options=options,
+                    target_contract="ontokin.glb/0.6", work=built.reach_work)
             self.assertEqual(result.report["validation"]["status"], "passed")
             self.assertGreater(built.reach_work.counts.get("recording_body_direct_seed", 0), 0)
             self.assertGreater(built.reach_work.counts.get("recording_rotation_step", 0), 0)

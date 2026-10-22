@@ -530,13 +530,15 @@ def verify_numeric_bases(quantization, *, work):
     """Resolve the two numerical claims to the actual bounded implementation."""
     root = Path(__file__).resolve().parents[1]
     names = ("ontokin/reach_numeric.py", "ontokin/reach_kinematics.py", "ontokin/reach_pose.py",
-             "ontokin/reach_phase.py", "ontokin/reach_runtime.py", "ontokin/reach_export.py")
+             "ontokin/reach_phase.py", "ontokin/reach_runtime.py", "ontokin/reach_export.py",
+             "ontokin/reach_recording_fast.py")
     entries = [(name, _identified_digest(root / name, work=work)) for name in names]
     _tick(work, "independent_basis_aggregate")
     implementation = hashlib.sha256("".join(name + "\0" + digest + "\n" for name, digest in entries).encode("ascii")).hexdigest()
     derivation_names = ("docs/engineering/reach-numeric-kernel.md", "docs/engineering/reach-source-kernel.md",
                         "docs/engineering/reach-coaxial-phase-bounds.md",
-                        "docs/engineering/reach-carrier-rotation-cursors.md")
+                        "docs/engineering/reach-carrier-rotation-cursors.md",
+                        "docs/engineering/reach-recording-certified-planar.md")
     derivations = [(name, _identified_digest(root / name, work=work)) for name in derivation_names]
     _tick(work, "independent_basis_aggregate")
     derivation = hashlib.sha256("".join(name + "\0" + digest + "\n" for name, digest in derivations).encode("ascii")).hexdigest()
@@ -1295,12 +1297,19 @@ def _key_comparisons(reference, geometry, tracks, time, index, arithmetic, *, pr
             # source operands and checking these actual supplied buffer values.
             # No additional numeric cache or history is retained.
             arithmetic.tick("independent_stationary_key_comparison")
+            receipt = previous[carrier].get("_endpoint_limit_receipt")
             if (previous[carrier].get("_proof_cap") == _bound_domain(arithmetic)
-                    and (limits is None or (
+                    and (limits is None or _same_recording_vector(limits, receipt, 2) or (
                         arithmetic.compare(previous[carrier]["position_error"], limits[0]) <= 0
                         and arithmetic.compare(previous[carrier]["quaternion_error"], limits[1]) <= 0))
                     and previous[carrier].get("_proof_cap") == _bound_domain(arithmetic)):
                 result[carrier] = dict(previous[carrier])
+                if limits is not None:
+                    # These same inequalities have succeeded in this domain.
+                    # Retain their actual typed thresholds only in the already
+                    # required preceding-endpoint map. Fresh row admission and
+                    # source stationarity still run at every later endpoint.
+                    result[carrier]["_endpoint_limit_receipt"] = limits
                 continue
         pending.append((carrier, item, position, quaternion, limits))
     ideals = (reference.recording_pose_enclosures(
