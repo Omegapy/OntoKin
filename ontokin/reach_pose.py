@@ -912,43 +912,54 @@ class ReachPoseOps:
     def recording_advance_orientation(self,initial,omega,elapsed,*,context,path,
                                       max_steps,phase_plan=None):
         """Record a fixed world angular velocity with bounded rotation steps."""
-        initial=self._rotation(initial); elapsed=rational(elapsed,self.work)
-        omega=self._vector(omega)
-        key=self._recording_cursor_key("spin",context,path,max_steps,initial,omega,phase_plan)
-        self.work.charge("orientation_stationary",3)
-        if not any(omega) or not elapsed: return initial
-        # Every warm request checks the full current elapsed/omega/plan domain.
-        # A cached increment is never authority for a different phase plan.
-        plan=self._checked_spin_plan(omega,elapsed,phase_plan)
-        previous=self.work.lookup(key)
-        delta=None
-        if previous is not None and previous[2]<max_steps:
-            last,rotation,count=previous
-            self.work.charge("recording_rotation_cursor_guard")
-            self.work.guard(last,*rotation.components,rotation.error_rad,count)
-            delta=self._op(elapsed,last,"sub")
-            if compare(abs(delta),plan.max_elapsed_s,self.work)>0:
-                delta=None
-        if delta is None:
-            result=self.advance_orientation(initial,omega,elapsed,phase_plan=plan)
-            count=1
-        else:
-            if delta:
-                increment_key=(METHOD,"recording_spin_increment",omega,plan,delta,
-                               self.work.max_operand_bits)
-                increment=self.work.lookup(increment_key)
-                if increment is None:
-                    increment=self.spin_rotation(omega,delta,phase_plan=plan)
-                    self.work.remember(increment_key,increment)
-                else:
-                    self.work.guard(*increment.components,increment.error_rad)
-                result=self.multiply(increment,rotation)
+        original_initial,original_omega,original_elapsed=initial,omega,elapsed
+        while True:
+            cap=self.work.max_operand_bits
+            initial=self._rotation(original_initial)
+            elapsed=rational(original_elapsed,self.work)
+            omega=self._vector(original_omega)
+            key=self._recording_cursor_key("spin",context,path,max_steps,initial,omega,phase_plan)
+            self.work.charge("orientation_stationary",3)
+            if self.work.max_operand_bits!=cap:
+                continue
+            if not any(omega) or not elapsed: return initial
+            # Every warm request checks the current clock, velocity and plan.
+            # A saved increment proves only the same exact delta and plan.
+            plan=self._checked_spin_plan(omega,elapsed,phase_plan)
+            previous=self.work.lookup(key)
+            if self.work.max_operand_bits!=cap:
+                continue
+            delta,increment,increment_plan=None,None,plan
+            if previous is not None and previous[2]<max_steps:
+                last,rotation,count,old_delta,old_increment,old_plan=previous
+                self.work.charge("recording_rotation_cursor_guard")
+                self.work.guard(last,*rotation.components,rotation.error_rad,count)
+                delta=self._op(elapsed,last,"sub")
+                if compare(abs(delta),plan.max_elapsed_s,self.work)>0:
+                    delta=None
+            if delta is None:
+                result=self.advance_orientation(initial,omega,elapsed,phase_plan=plan)
+                count=1
             else:
-                result=rotation
-            self.work.charge("recording_rotation_step")
-            count+=1
-        self.work.remember(key,(elapsed,result,count))
-        return result
+                if delta:
+                    if delta==old_delta and plan==old_plan:
+                        self.work.charge("recording_spin_increment_reuse")
+                        increment=old_increment
+                        self.work.guard(*increment.components,increment.error_rad)
+                    else:
+                        increment=self.spin_rotation(omega,delta,phase_plan=plan)
+                    result=self._recording_product(increment,rotation)
+                else:
+                    result=rotation
+                    delta,increment=old_delta,old_increment
+                    increment_plan=old_plan
+                self.work.charge("recording_rotation_step")
+                count+=1
+            if self.work.max_operand_bits!=cap:
+                continue
+            self.work.remember(key,(elapsed,result,count,delta,increment,increment_plan))
+            if self.work.max_operand_bits==cap:
+                return result
 
     def identity(self):
         self.work.charge("pose_identity")

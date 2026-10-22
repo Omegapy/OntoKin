@@ -181,11 +181,31 @@ def sample_pair(start_rad,target_rad,duration_s,elapsed_s,*,running,work: ReachE
 def measured_residual_squared(actual_end_base_m,target_base_m,*,work: ReachExecutionWork):
     if len(actual_end_base_m)!=3 or len(target_base_m)!=3:
         raise ReachAdmissionError("reach_domain", "A residual requires two three-dimensional positions.")
-    result=F(0)
-    for actual,target in zip(actual_end_base_m,target_base_m):
-        delta=exact(rational(actual,work),rational(target,work),"sub",work)
-        result=exact(result,exact(delta,delta,"mul",work),"add",work)
-    return result
+    # Separate source occurrences may have identical measured local positions.
+    # Reuse only their completed scalar calculation; every new occurrence still
+    # decodes and bounds its actual inputs before consulting the shared cache.
+    while True:
+        cap=work.max_operand_bits
+        operands=tuple((rational(actual,work),rational(target,work))
+                       for actual,target in zip(actual_end_base_m,target_base_m))
+        if work.max_operand_bits!=cap:
+            continue
+        key=(METHOD,"measured_residual_squared",cap,operands)
+        result=work.lookup(key)
+        if work.max_operand_bits!=cap:
+            continue
+        if result is None:
+            result=F(0)
+            for actual,target in operands:
+                delta=exact(actual,target,"sub",work)
+                result=exact(result,exact(delta,delta,"mul",work),"add",work)
+            if work.max_operand_bits!=cap:
+                continue
+            work.remember(key,result)
+        work.charge("residual_result_guard")
+        work.guard(result)
+        if work.max_operand_bits==cap:
+            return result
 
 
 def rounded_sqrt(value,*,work):

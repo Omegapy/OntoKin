@@ -25,7 +25,7 @@ def comparison_inputs():
     orientation = (point(F(1, 2)),) * 4
     poses = {"first.frame": SimpleNamespace(position=tuple(map(point, (1, 2, 3))), orientation=orientation),
              "second.frame": SimpleNamespace(position=tuple(map(point, (8, 9, 10))), orientation=orientation)}
-    reference = SimpleNamespace(recording_pose_enclosures=lambda carriers, time, side:
+    reference = SimpleNamespace(recording_pose_enclosures=lambda carriers, time, side, recording_context=None:
                                 {frame: poses[frame] for frame in carriers})
     geometry = {0: {"frame": "first.frame"}, 1: {"frame": "second.frame"}}
     tracks = {0: {"translation": [(1., 2., 3.)], "rotation": [(.5,) * 4]},

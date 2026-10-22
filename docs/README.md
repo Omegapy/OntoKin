@@ -151,6 +151,8 @@ The October 17, 2026 reorganization preserved the six substantive records that e
 
 ## Reach delivery implementation work
 
+The [October 22 recording checkpoint](engineering/reach-recording-validation-2026-10-22/README.md) preserves current measured costs, exact source identities, all failed attempts and the next unmet recording gate.
+
 The [recorded delivery checkpoints](engineering/reach-delivery-implementation.md)
 and [independent reader implementation](engineering/reach-independent-validation.md)
 describe branch work and its remaining execution obligations. Implementation

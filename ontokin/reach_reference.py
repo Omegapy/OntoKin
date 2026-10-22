@@ -163,12 +163,26 @@ class _Arithmetic:
 
     def grid(self, low, high):
         self.tick()
-        self.guard(low, high, self.scale)
-        if max(abs(low.numerator).bit_length(), abs(high.numerator).bit_length()) + self.bits > self.operand_limit:
-            raise ReferenceError("resource", "Reference endpoint grid exceeds operand limit")
+        self._grid_domain(low, high)
         low_n = (low.numerator << self.bits) // low.denominator
         high_n = -((-high.numerator << self.bits) // high.denominator)
         return Interval(F(low_n, self.scale), F(high_n, self.scale))
+
+    def _grid_domain(self, low, high):
+        self.guard(low, high, self.scale)
+        if max(abs(low.numerator).bit_length(), abs(high.numerator).bit_length()) + self.bits > self.operand_limit:
+            raise ReferenceError("resource", "Reference endpoint grid exceeds operand limit")
+
+    def _sum_enclosure(self, low, high):
+        # Exact sums/differences of grid-aligned dyadics already have the same
+        # outward endpoints. Omit both shifts, divisions and Fraction rebuilds;
+        # retain the former grid's finite domain even for these avoided shifts.
+        self.guard(low, high, self.scale)
+        if all(value.denominator <= self.scale and
+               not value.denominator & (value.denominator - 1) for value in (low, high)):
+            self._grid_domain(low, high)
+            return Interval(low, high)
+        return self.grid(low, high)
 
     def interval(self, value):
         if isinstance(value, Interval):
@@ -186,8 +200,8 @@ class _Arithmetic:
             return a
         if a.lo == a.hi and b.lo == b.hi:
             value = self.exact(a.lo, b.lo, "add")
-            return self.grid(value, value)
-        return self.grid(self.exact(a.lo, b.lo, "add"), self.exact(a.hi, b.hi, "add"))
+            return self._sum_enclosure(value, value)
+        return self._sum_enclosure(self.exact(a.lo, b.lo, "add"), self.exact(a.hi, b.hi, "add"))
 
     def neg(self, a):
         self.tick()
@@ -195,7 +209,17 @@ class _Arithmetic:
         return Interval(-a.hi, -a.lo)
 
     def sub(self, a, b):
-        return self.add(a, self.neg(b))
+        a, b = self.interval(a), self.interval(b)
+        self.tick()
+        self.guard(a.lo, a.hi, b.lo, b.hi)
+        if b.lo == b.hi == 0:
+            return a
+        if a.lo == a.hi == 0:
+            return Interval(-b.hi, -b.lo)
+        if a.lo == a.hi and b.lo == b.hi:
+            value = self.exact(a.lo, b.lo, "sub")
+            return self._sum_enclosure(value, value)
+        return self._sum_enclosure(self.exact(a.lo, b.hi, "sub"), self.exact(a.hi, b.lo, "sub"))
 
     def _corner_domain(self, a, b, kind):
         """Retain all four old corner operand limits before selecting extrema.
@@ -839,6 +863,7 @@ class _PoseArithmetic:
         vector = self.vector(vector)
         key = self._key("norm", vector)
         cached = self.a.lookup(key)
+        self.a.guard(*(endpoint for part in vector for endpoint in (part.lo, part.hi)))
         if cached is not None:
             return cached
         squares = []
@@ -873,6 +898,7 @@ class _PoseArithmetic:
             return a
         key = self._key("multiply", tuple(a), tuple(b))
         cached = self.a.lookup(key)
+        self.a.guard(*(endpoint for values in (a, b) for part in values for endpoint in (part.lo, part.hi)))
         if cached is not None:
             return cached
         if self._zero((a[1], a[2], b[1], b[2])):
@@ -909,6 +935,7 @@ class _PoseArithmetic:
             return vector
         key = self._key("rotate", tuple(q), vector)
         cached = self.a.lookup(key)
+        self.a.guard(*(endpoint for values in (q, vector) for part in values for endpoint in (part.lo, part.hi)))
         if cached is not None:
             return cached
         if self._zero((q[1], q[2])):
@@ -925,6 +952,22 @@ class _PoseArithmetic:
                 self.a.remember(factor_key, factors)
             diagonal, off_diagonal, axis_scale = factors
             x, y, z = vector
+            self.a.guard(*(endpoint for values in (q, vector, factors)
+                           for part in values for endpoint in (part.lo, part.hi)))
+            if z.lo == z.hi == 0 and y.lo == y.hi == 0:
+                # An X-axis offset needs only the first two independently
+                # derived Hamilton factors. Omit all products/sums of zero;
+                # a unit offset can reuse the factors without any scaling.
+                result = ((diagonal, off_diagonal, z) if x.lo == x.hi == 1 else
+                          (self.a.mul(diagonal, x), self.a.mul(off_diagonal, x), z))
+                self.a.guard(*(endpoint for part in result for endpoint in (part.lo, part.hi)))
+                return self.a.remember(key, result)
+            if z.lo == z.hi == 0 and x.lo == x.hi == 0:
+                first, second = ((off_diagonal, diagonal) if y.lo == y.hi == 1 else
+                                 (self.a.mul(off_diagonal, y), self.a.mul(diagonal, y)))
+                result = (self.a.neg(first), second, z)
+                self.a.guard(*(endpoint for part in result for endpoint in (part.lo, part.hi)))
+                return self.a.remember(key, result)
             return self.a.remember(key, (
                 self.a.sub(self.a.mul(diagonal, x), self.a.mul(off_diagonal, y)),
                 self.a.add(self.a.mul(off_diagonal, x), self.a.mul(diagonal, y)),
@@ -1034,6 +1077,8 @@ class _PoseArithmetic:
         if recording_context is not None:
             key += (recording_context, recording_time)
         cached = self.a.lookup(key)
+        self.a.guard(coordinate.lo, coordinate.hi, rate.lo, rate.hi,
+                     *(endpoint for part in axis for endpoint in (part.lo, part.hi)))
         if cached is not None:
             return cached
         normalized_axis = self._normalized_axis(axis)

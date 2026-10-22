@@ -506,7 +506,7 @@ def reach_prefix_plan(model, end, *, work) -> ReachPrefixPlan:
     boundary-history forecast passes; immutable numeric cache values stay owned
     by this same request. Baking later reads these validated phases directly.
     """
-    from .reach_runtime import ReachSimulator, boundary_history_bound
+    from .reach_runtime import ReachSimulator, _BoundaryHistoryPreflight
     from .scene import MAX_KEYFRAMES
 
     class PlanningSimulator(ReachSimulator):
@@ -522,13 +522,14 @@ def reach_prefix_plan(model, end, *, work) -> ReachPrefixPlan:
 
     recording_stage("planning", work=work)
     simulator = PlanningSimulator(model, work=work)
+    history = _BoundaryHistoryPreflight(model, horizon=end, check=work.tick)
     times, phases, states, records = [], [], [], []
     time = Fraction(0)
     while True:
         _charge(work, "recording_boundary_preflight")
         if len(times) >= MAX_KEYFRAMES:
             _fail("OKE-E-KEYFRAME-BUDGET", "Semantic boundaries exceed the recording key budget.", model=model, kind="resource")
-        boundary_history_bound(model, [*times, time], horizon=end, check=work.tick)
+        history.append(time)
         simulator.advance(time, "before")
         before = simulator.recording_boundary(time, "before")
         simulator.advance(time, "after")
@@ -696,6 +697,59 @@ def _stored_vector(values, model):
     return tuple(float32(value, model) for value in values)
 
 
+def _endpoint_l1(values, *, work):
+    """Sum a fixed nonnegative binary64 vector without decoding exact zeros.
+
+    These are actual conversion differences or stored component magnitudes.
+    All components are checked before the sparse sum; omitted zero decodes and
+    additions allocate no rational intermediate and do not affect its value.
+    """
+    _charge(work, "recording_endpoint_sum_domain")
+    if (type(values) is not tuple or len(values) not in (3, 4)
+            or any(type(value) is not float or not math.isfinite(value) or value < 0
+                   for value in values)):
+        raise ValueError("Endpoint magnitudes require a fixed finite nonnegative vector")
+    work.guard_bits(1075)
+    result = Fraction(0)
+    for value in values:
+        if value:
+            term = _rational(value, work)
+            result = _exact(result, term, "add", work) if result else term
+    return result
+
+
+def _position_rounding(position, model, *, work):
+    def calculate():
+        work.guard_bits(1075)
+        stored = _stored_vector(position, model)
+        error = _endpoint_l1(tuple(abs(a - b) for a, b in zip(position, stored)), work=work)
+        magnitude = _endpoint_l1(tuple(abs(value) for value in stored), work=work)
+        return error, magnitude
+    return _reuse(work, ("endpoint_position_rounding", position), calculate)
+
+
+def _quaternion_rounding(quaternion, model, *, work):
+    def calculate():
+        work.guard_bits(1075)
+        stored = _stored_vector(quaternion, model)
+        if not any(stored):
+            _fail("OKE-E-QUATERNION", "A stored zero quaternion has no normalized interpretation.", model=model)
+        large_norm = max(abs(value) for value in quaternion) >= .5
+        if not large_norm:
+            q = _vector(quaternion, work, size=4)
+            squared = _sum((_exact(value, value, "mul", work) for value in q), work)
+            large_norm = squared >= Fraction(1, 4)
+        if large_norm:
+            error = _exact(Fraction(4), _endpoint_l1(
+                tuple(abs(a - b) for a, b in zip(quaternion, stored)), work=work), "mul", work)
+        else:
+            error = norm_upper((_exact(_rational(a, work), _rational(b, work), "sub", work)
+                for a, b in zip(normalized_quaternion(q, work=work),
+                                normalized_quaternion(stored, work=work))), work=work)
+        return _exact(error, 2 * NORMALIZATION_ERROR, "add", work)
+    return _reuse(work, ("endpoint_quaternion_rounding", quaternion), calculate)
+
+
 def _endpoint_rounding(position, quaternion, model, *, work):
     """Bound conversion of one actual source endpoint, with charged reuse."""
     _charge(work, "recording_endpoint_domain")
@@ -705,31 +759,14 @@ def _endpoint_rounding(position, quaternion, model, *, work):
         raise ValueError("A recording endpoint requires finite binary64 pose components")
     work.guard_bits(1075)
     def calculate():
-        stored_p = _stored_vector(position, model)
-        stored_q = _stored_vector(quaternion, model)
-        if not any(stored_q):
-            _fail("OKE-E-QUATERNION", "A stored zero quaternion has no normalized interpretation.", model=model)
         # A finite binary64 source minus its correctly rounded binary32 value
         # is exact in binary64 (zero, or same-sign Sterbenz operands). L1 then
         # bounds Euclidean error without repeated exact squares and roots.
-        ep = _sum((_rational(abs(a - b), work) for a, b in zip(position, stored_p)), work)
-        large_norm = max(abs(value) for value in quaternion) >= .5
-        if not large_norm:
-            q = _vector(quaternion, work, size=4)
-            squared = _sum((_exact(value, value, "mul", work) for value in q), work)
-            large_norm = squared >= Fraction(1, 4)
-        if large_norm:
-            # ||normalize(a)-normalize(b)|| <= 2||a-b||/||a||.
-            # The checked lower norm 1/2 gives a rational bound without
-            # computing either normalized endpoint or a floating square root.
-            eq = _exact(Fraction(4), _sum((_rational(abs(a - b), work)
-                        for a, b in zip(quaternion, stored_q)), work), "mul", work)
-        else:
-            eq = norm_upper((_exact(_rational(a, work), _rational(b, work), "sub", work)
-                             for a, b in zip(normalized_quaternion(q, work=work),
-                                             normalized_quaternion(stored_q, work=work))), work=work)
-        eq = _exact(eq, 2 * NORMALIZATION_ERROR, "add", work)
-        magnitude = _sum((_rational(abs(value), work) for value in stored_p), work)
+        # Position and rotation conversions are independent pure functions.
+        # Sharing one across translated/rigid carriers retains the actual
+        # endpoint tuple and every independently checked output occurrence.
+        ep, magnitude = _position_rounding(position, model, work=work)
+        eq = _quaternion_rounding(quaternion, model, work=work)
         return ep, eq, magnitude
     return _reuse(work, ("endpoint_rounding", position, quaternion), calculate)
 
@@ -807,6 +844,25 @@ def _certificate_quantities(model, bound, enclosing, radius, vertex_error,
     return tuple(quantities.items())
 
 
+def _endpoint_group_maxima(nodes, keys, model, *, work):
+    """Visit adjacent carriers together while retaining each actual endpoint.
+
+    Rigidly related carriers frequently share a quaternion at the same key.
+    A carrier-major traversal can evict that conversion before the next
+    carrier reaches the same key. Key-major traversal keeps the existing
+    bounded numerical cache useful; only the three required maxima per
+    output carrier are retained outside it.
+    """
+    maxima = [[Fraction(0), Fraction(0), Fraction(0)] for _ in nodes]
+    for key_index in sorted(keys):
+        for node, retained in zip(nodes, maxima):
+            values = _endpoint_rounding(tuple(node.translations[key_index]),
+                tuple(node.rotations_xyzw[key_index]), model, work=work)
+            for axis, value in enumerate(values):
+                retained[axis] = max(retained[axis], value)
+    return tuple(tuple(values) for values in maxima)
+
+
 def interval_certificates(model, options, plan, nodes, geometry_bounds, exact, times, *, work):
     """Produce every row from conservative per-phase endpoint maxima.
 
@@ -846,6 +902,7 @@ def interval_certificates(model, options, plan, nodes, geometry_bounds, exact, t
     for group_key, group in groups.items():
         source_index, selected = group_key
         phase = plan.phases[source_index]
+        endpoint_maxima = _endpoint_group_maxima(nodes, group["keys"], model, work=work)
         for carrier, (node, (radius, vertex_error)) in enumerate(zip(nodes, geometry_bounds)):
             _charge(work, "recording_certificate_group")
             frame = node.frame_path
@@ -855,11 +912,7 @@ def interval_certificates(model, options, plan, nodes, geometry_bounds, exact, t
                                     max(plan.phases[i].carriers[frame].angular_speed for i in selected))
             nsp = _source_max(plan, group["numeric_selected"], frame, "position_error_m")
             nsr = _source_max(plan, group["numeric_selected"], frame, "rotation_error_rad")
-            ep = eq = magnitude = Fraction(0)
-            for key_index in sorted(group["keys"]):
-                p_error, q_error, p_magnitude = _endpoint_rounding(
-                    tuple(node.translations[key_index]), tuple(node.rotations_xyzw[key_index]), model, work=work)
-                ep, eq, magnitude = max(ep, p_error), max(eq, q_error), max(magnitude, p_magnitude)
+            ep, eq, magnitude = endpoint_maxima[carrier]
             extra_position = extra_rotation = Fraction(0)
             for phase_index in sorted(group["numeric_selected"]):
                 p_extra, q_extra = _recording_endpoint_excess(plan.phases[phase_index].source[frame], work=work)

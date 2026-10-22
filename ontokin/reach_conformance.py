@@ -67,12 +67,41 @@ class _Bounds:
         # A successful proof also establishes its intermediate operand domain.
         # A later narrower request limit must re-establish that domain, even
         # when the exact external values still fit and compare equal.
-        key = ("reach_independent_bounds_v1", getattr(self.work, "max_operand_bits", MAX_OPERAND_BITS), *key)
+        admitted_limit = getattr(self.work, "max_operand_bits", MAX_OPERAND_BITS)
+        key = ("reach_independent_bounds_v1", admitted_limit, *key)
         result = self.work.lookup(key)
         if result is None:
+            if getattr(self.work, "max_operand_bits", MAX_OPERAND_BITS) != admitted_limit:
+                # The charged lookup can narrow the live domain after callers
+                # decoded these operands. A miss may then take an exact-zero
+                # shortcut and never perform another scalar operation on them.
+                # Re-admit every immutable numeric key member before that proof;
+                # the old-domain key cannot certify a new-domain cache hit.
+                self.tick("independent_cache_miss_domain")
+                self._cache_operand_domain(key[2:])
             result = calculate()
             self.work.remember(key, result)
         return result
+
+    def _cache_operand_domain(self, value):
+        """Recheck the bounded numeric shapes used by this reader's own keys."""
+        if type(value) is Fraction:
+            self.bits(value.numerator.bit_length(), value.denominator.bit_length())
+        elif type(value) is int:
+            self.bits(value.bit_length())
+        elif type(value) is float:
+            if not math.isfinite(value):
+                _error("OKE-E-CERTIFICATE", "An independent arithmetic operand must be finite.")
+            exact = Fraction(value)
+            self.bits(exact.numerator.bit_length(), exact.denominator.bit_length())
+        elif type(value) in (_Cell, _ReferenceCell):
+            self._cache_operand_domain(value.lo)
+            self._cache_operand_domain(value.hi)
+            self.bits(value.lo.numerator.bit_length() + value.hi.denominator.bit_length(),
+                      value.hi.numerator.bit_length() + value.lo.denominator.bit_length())
+        elif type(value) is tuple:
+            for member in value:
+                self._cache_operand_domain(member)
 
     def bits(self, *sizes):
         if self.work is not None:
@@ -180,6 +209,10 @@ class _Bounds:
                 if value:
                     squared = self.square(value)
                     total = squared if not total else self.add(total, squared)
+            if not total:
+                # The guarded sparse fold already proves the exact zero norm;
+                # no radical, projection or repeated zero decode is required.
+                return Fraction(0)
             return self.root(total).hi
         return self.root(self.total(self.square(value) for value in values)).hi
 

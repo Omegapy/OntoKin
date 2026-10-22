@@ -14,9 +14,12 @@ class ReachDeliveryCapture:
     """Internal evaluate_prefix observer with preflight before every retention."""
 
     def __init__(self, model, end, *, work):
+        from .reach_runtime import _BoundaryHistoryPreflight
+
         self.model = model
         self.end = Fraction(end)
         self.work = work
+        self.history = _BoundaryHistoryPreflight(model, horizon=self.end, check=work.tick)
         self.times = []
         self.phases = []
         self.states = []
@@ -35,7 +38,6 @@ class ReachDeliveryCapture:
 
     def _before_capture(self, simulator, time, side):
         from . import reach_export
-        from .reach_runtime import boundary_history_bound
         from .scene import MAX_KEYFRAMES
 
         if simulator.model is not self.model or simulator.work is not self.work:
@@ -51,7 +53,7 @@ class ReachDeliveryCapture:
         if len(self.times) >= MAX_KEYFRAMES:
             reach_export._fail("OKE-E-KEYFRAME-BUDGET", "Semantic boundaries exceed the recording key budget.",
                                model=self.model, kind="resource")
-        boundary_history_bound(self.model, [*self.times, time], horizon=self.end, check=self.work.tick)
+        self.history.append(time)
         self.times.append(time)
 
     def after_capture(self, simulator, time, side, sample):

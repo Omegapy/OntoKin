@@ -25,16 +25,7 @@ from .values import bounded_data
 
 def _incoming_release_bound(model, time, *, check=None):
     """Count topology-permitted contributor identities without admitting events."""
-    parents = {}
-    for path, joint in model.joints.items():
-        if check is not None:
-            check()
-        parents[model.sites[joint.child].owner] = (
-            ("joint", path), model.sites[joint.parent].owner)
-    for path, follow in model.follows.items():
-        if check is not None:
-            check()
-        parents[follow.child] = (("follow", path), model.frame_owner(follow.parent))
+    parents = None
     total = 1  # The array itself is retained even with no releases.
     for block in model.events:
         if check is not None:
@@ -46,6 +37,20 @@ def _incoming_release_bound(model, time, *, check=None):
                 check()
             if event.kind != "release":
                 continue
+            if parents is None:
+                # Most boundaries have no release. Their retained empty array
+                # still has weight one, but no contributor graph is needed.
+                # Build it once, only when an actual source release needs it.
+                parents = {}
+                for path, joint in model.joints.items():
+                    if check is not None:
+                        check()
+                    parents[model.sites[joint.child].owner] = (
+                        ("joint", path), model.sites[joint.parent].owner)
+                for path, follow in model.follows.items():
+                    if check is not None:
+                        check()
+                    parents[follow.child] = (("follow", path), model.frame_owner(follow.parent))
             joint = model.joints[event.target]
             child = model.sites[joint.child].owner
             cursor, dependencies, visited = child, set(), set()
@@ -81,6 +86,37 @@ def _incoming_release_bound(model, time, *, check=None):
     return total
 
 
+def _boundary_history_endpoint(model, horizon, side):
+    endpoint = model.duration if horizon is None else Fraction(horizon)
+    if side not in {"before", "after"} or not 0 <= endpoint <= model.duration:
+        raise ValueError("The history horizon must be a valid exact source prefix.")
+    return endpoint
+
+
+def _boundary_history_weight(model, time, endpoint, side, check):
+    """One complete H06 row, independent of previously retained rows."""
+    from .evaluator import _records_per_sample
+
+    if not 0 <= time <= endpoint:
+        raise ValueError("A retained boundary lies outside the requested prefix.")
+    dropped = len(model.objects) + len(model.sites) + 1
+    last_side = "before" if time == endpoint and side == "before" else "after"
+    before = _records_per_sample(model, check=check, horizon=time, side="before") - dropped
+    after = _records_per_sample(model, check=check, horizon=time, side=last_side) - dropped
+    incoming = 1 if last_side == "before" else _incoming_release_bound(model, time, check=check)
+    return 2 + before + after + incoming
+
+
+def _check_boundary_history_total(model, total, time):
+    from .evaluator import MAX_OUTPUT_RECORDS
+
+    if total > MAX_OUTPUT_RECORDS:
+        raise reach_error("reach_resource", "Complete retained reach boundaries exceed the state-record budget.",
+            model.span, phase="inspection", blocks=[], details={"budget": "boundary_state_records",
+                "limit": MAX_OUTPUT_RECORDS, "consumed": total,
+                "through_seconds": time_text(time)})
+
+
 def boundary_history_bound(model, boundary_times, *, horizon=None, side="after", check=None):
     """Preflight the adopted complete H06 history before retaining all sides.
 
@@ -89,29 +125,73 @@ def boundary_history_bound(model, boundary_times, *, horizon=None, side="after",
     future event. Both sides use the inherited conservative nested-history
     weights, and every repeated reach/source identity counts at each occurrence.
     """
-    from .evaluator import MAX_OUTPUT_RECORDS, _records_per_sample
-    endpoint = model.duration if horizon is None else Fraction(horizon)
-    if side not in {"before", "after"} or not 0 <= endpoint <= model.duration:
-        raise ValueError("The history horizon must be a valid exact source prefix.")
-    dropped = len(model.objects) + len(model.sites) + 1
+    endpoint = _boundary_history_endpoint(model, horizon, side)
     total = 0
     for value in boundary_times:
         if check is not None:
             check()
         time = Fraction(value)
-        if not 0 <= time <= endpoint:
-            raise ValueError("A retained boundary lies outside the requested prefix.")
-        last_side = "before" if time == endpoint and side == "before" else "after"
-        before = _records_per_sample(model, check=check, horizon=time, side="before") - dropped
-        after = _records_per_sample(model, check=check, horizon=time, side=last_side) - dropped
-        incoming = 1 if last_side == "before" else _incoming_release_bound(model, time, check=check)
-        total += 2 + before + after + incoming
-        if total > MAX_OUTPUT_RECORDS:
-            raise reach_error("reach_resource", "Complete retained reach boundaries exceed the state-record budget.",
-                model.span, phase="inspection", blocks=[], details={"budget": "boundary_state_records",
-                    "limit": MAX_OUTPUT_RECORDS, "consumed": total,
-                    "through_seconds": time_text(time)})
+        total += _boundary_history_weight(model, time, endpoint, side, check)
+        _check_boundary_history_total(model, total, time)
     return total
+
+
+class _BoundaryHistoryPreflight:
+    """Append complete exact history weights within one immutable source plan.
+
+    The planner discovers increasing boundaries. A completed row's forecast
+    depends only on its source model, exact clock and fixed endpoint/side; a
+    later boundary cannot change it. Keep the sum rather than reconstructing
+    all earlier forecasts. No output occurrence is removed from that sum, and
+    no source or numerical result is cached across plans.
+    """
+
+    def __init__(self, model, *, horizon=None, side="after", check=None):
+        self.model = model
+        self.endpoint = _boundary_history_endpoint(model, horizon, side)
+        self.side = side
+        self.check = check
+        self._model = model
+        self._endpoint = self.endpoint
+        self._side = side
+        self._program_revision = model.program_revision
+        self._duration = model.duration
+        self.total = 0
+        self.last_time = None
+        self._active = False
+
+    def _check_context(self):
+        if (self.model is not self._model
+                or self.model.program_revision != self._program_revision
+                or self.model.duration != self._duration
+                or self.endpoint != self._endpoint or self.side != self._side):
+            raise ValueError("A history preflight cannot change its source or endpoint context.")
+        _boundary_history_endpoint(self.model, self.endpoint, self.side)
+
+    def append(self, value):
+        if self._active:
+            raise ValueError("A history preflight cannot be reentered while appending a boundary.")
+        self._active = True
+        try:
+            if self.check is not None:
+                self.check()
+            self._check_context()
+            time = Fraction(value)
+            if self.last_time is not None and time <= self.last_time:
+                raise ValueError("Recording history boundaries must increase strictly.")
+            weight = _boundary_history_weight(self.model, time, self.endpoint, self.side, self.check)
+            total = self.total + weight
+            # Charge/check the new accumulation before publishing either
+            # field. Cancellation or a lowered limit leaves the prior prefix
+            # intact; a callback cannot replace its source context unnoticed.
+            if self.check is not None:
+                self.check()
+            self._check_context()
+            _check_boundary_history_total(self.model, total, time)
+            self.total, self.last_time = total, time
+            return total
+        finally:
+            self._active = False
 
 
 @dataclass
@@ -515,6 +595,141 @@ class ReachSimulator(ForceSimulator):
 
         return frozenset(path for path in selected_paths if frame(path))
 
+    def _terminal_static_kinematics(self, time, state):
+        """Reuse unchanged complete p/q after a natural-only static handoff.
+
+        The transaction context survives only natural reach completions: every
+        source event, ordinary latch, and changed dynamic aggregation clears
+        it. A completed reach latches the same canonical coordinates that the
+        incoming graph already used. If no claims or dynamics remain, every
+        derivative is exactly zero; position, rotation, and their private
+        allowances follow the identical arithmetic DAG. Rebuild the complete
+        outgoing maps with fresh zero rates, never with incoming projections.
+
+        This is one boundary's retained graph, not another numerical cache.
+        All source identities and exact final coordinates are checked again;
+        narrowed operand domains use the ordinary resolver instead.
+        """
+        from .reach_numeric import MAX_OPERAND_BITS
+        from .reach_pose import PoseValue, RotationValue
+
+        context = self._terminal_pose_context
+        work = self.work
+        work.charge("source_terminal_static_context")
+
+        def valid_context():
+            return (work.max_operand_bits == MAX_OPERAND_BITS
+                and context is self._terminal_pose_context and context is not None
+                and context.time == time and context.staged_state is state
+                and context.incoming_state is not state
+                and not state.claims and not state.dynamic
+                and not context.incoming_state.dynamic
+                and type(context.frames) is dict
+                and len(context.frames) == len(self.model.objects) + len(self.model.sites) + 1
+                and state.active_grips == context.incoming_state.active_grips)
+
+        if not valid_context():
+            return None
+        before = context.incoming_state
+        incoming = self._incoming(state)
+
+        def same_scalar(left, right):
+            return (type(left) is type(right) and
+                (left.hex() == right.hex() if type(left) is float else left == right))
+
+        def same_vector(left, right, length):
+            return (type(left) is type(right) is tuple and len(left) == len(right) == length
+                and all(same_scalar(a, b) for a, b in zip(left, right)))
+
+        def same_rotation(left, right):
+            if left is None or right is None:
+                return left is right
+            return (type(left) is type(right) is RotationValue
+                and same_vector(left.components, right.components, 4)
+                and same_scalar(left.error_rad, right.error_rad)
+                and (left.frozen_projection is right.frozen_projection is None
+                    or same_vector(left.frozen_projection, right.frozen_projection, 4)))
+
+        # Roots are the only objects whose stored p/q enter this static graph.
+        # Connected objects still resolve through the unchanged finite topology.
+        roots = {}
+        for path in self.model.objects:
+            work.charge("source_terminal_static_root_guard")
+            if path in incoming:
+                continue
+            saved = (before.modes[path], before.positions[path], before.orientations[path],
+                     before.root_rotation_values.get(path))
+            if (state.modes[path] != saved[0]
+                    or not same_vector(state.positions[path], saved[1], 3)
+                    or not same_vector(state.orientations[path], saved[2], 4)
+                    or not same_rotation(state.root_rotation_values.get(path), saved[3])):
+                return None
+            roots[path] = saved
+        for channel, claimant in before.claims.items():
+            work.charge("source_terminal_static_claim_guard")
+            action, runtime = self.model.actions[claimant], before.actions[claimant]
+            if (action.kind != "reach_planar" or channel[1] != "coordinate"
+                    or channel[0] not in (action.reach.shoulder, action.reach.elbow)
+                    or runtime.status != "running" or runtime.elapsed_at(time) != action.duration
+                    or state.actions[claimant].status != "completed"):
+                return None
+        coordinates = {}
+        for path, joint in self.model.joints.items():
+            work.charge("source_terminal_static_coordinate_guard")
+            if joint.kind in {"hinge", "slider"}:
+                value = self._coordinate(path, time, before)[0]
+                if not same_scalar(state.coordinates[path], value):
+                    return None
+                coordinates[path] = value
+
+        objects, frames = {}, {}
+        for path, pose in context.frames.items():
+            work.charge("source_terminal_static_node")
+            if not valid_context():
+                return None
+            if (type(pose) is not PoseValue or pose._ops is not self.pose_ops
+                    or type(pose.rotation) is not RotationValue
+                    or type(pose.position_error_m) is not Fraction
+                    or type(pose.rotation.error_rad) is not Fraction):
+                return None
+            vectors = (pose.exact_position, pose.rotation.components,
+                       pose.exact_velocity, pose.exact_omega)
+            if any(type(vector) is not tuple or len(vector) != length
+                    or any(type(value) is not Fraction for value in vector)
+                    for vector, length in zip(vectors, (3, 4, 3, 3))):
+                return None
+            work.guard(*(value for vector in vectors for value in vector),
+                       pose.position_error_m, pose.rotation.error_rad)
+            value = PoseValue(pose.exact_position, pose.rotation, POSE_ZERO, POSE_ZERO,
+                              pose.position_error_m, self.pose_ops)
+            if path == "world":
+                frames[path] = self._identity_pose
+                self.pose_ops.ensure_finite(frames[path])
+            elif path.endswith(".frame") and path[:-6] in self.model.objects:
+                self._check_object_pose(value)
+                objects[path[:-6]] = frames[path] = value
+            elif path.endswith(".frame") and path[:-6] in self.model.sites:
+                self.pose_ops.ensure_finite(value)
+                frames[path] = value
+            else:
+                return None
+
+        # Precharge the final source checks, then inspect their actual values
+        # without another callback between those checks and publication. A
+        # cancelled callback or changed live domain cannot publish a prefix.
+        work.charge("source_terminal_static_final_guard", len(roots) + len(coordinates) + 1)
+        if not valid_context() or len(objects) != len(self.model.objects):
+            return None
+        for path, saved in roots.items():
+            if (state.modes[path] != saved[0]
+                    or not same_vector(state.positions[path], saved[1], 3)
+                    or not same_vector(state.orientations[path], saved[2], 4)
+                    or not same_rotation(state.root_rotation_values.get(path), saved[3])):
+                return None
+        if any(not same_scalar(state.coordinates[path], value) for path, value in coordinates.items()):
+            return None
+        return objects, frames
+
     def _resolve_kinematics(self, time, state, *, selected_frames=None, pose_only=False,
                             recording_only=False, recording_moving_frames=None,
                             recording_context=None):
@@ -535,6 +750,14 @@ class ReachSimulator(ForceSimulator):
         if cached is not None and cached[0] is state:
             self._check()
             return cached[1], cached[2]
+        context = self._terminal_pose_context
+        if (not pose_only and selected_frames is None and context is not None
+                and context.staged_state is state):
+            terminal = self._terminal_static_kinematics(time, state)
+            if terminal is not None:
+                objects, frames = terminal
+                self._pose_cache = {key: (state, objects, frames)}
+                return objects, frames
         ops = self.pose_ops
         compose = (ops.compose_recording_fast if recording_context is not None else
                    ops.compose_recording if recording_only else ops.compose)
