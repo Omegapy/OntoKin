@@ -11,6 +11,7 @@ from fractions import Fraction as F
 from math import isfinite
 from types import MappingProxyType
 
+from .model import Pose
 from .reach_numeric import MAX_OPERAND_BITS, ReachAdmissionError, compare, exact, rational
 from .reach_pose import EXPOSED_ROTATION_ERROR, VECTOR_ERROR, RotationValue, uniform_source_bounds
 
@@ -91,6 +92,19 @@ def _small_phase_location_operands(*values):
                for value in values)
 
 
+def _reuse_phase_nodes(model, work):
+    return _defer_phase_locations(model, work)
+
+
+def _native_node_vector(values, length):
+    # A finite binary64 in this interval has at most 117 denominator bits and
+    # 65 numerator bits. No decoding or numerical result is produced here.
+    return (type(values) is tuple and len(values) == length and
+            all(type(value) is float and isfinite(value) and
+                (value == 0.0 or 2.0 ** -64 <= abs(value) <= 2.0 ** 64)
+                for value in values))
+
+
 def _native_phase_key(kind, values, extra, work):
     """Identify immutable canonical operands before repeating their decode.
 
@@ -156,6 +170,69 @@ class _RecordingWitnessUnavailable(Exception):
     pass
 
 
+def _recording_orientation_recipe(record, parent, *, work):
+    """Identify a freshly witnessed complete orientation law in one graph.
+
+    This is a structural description, not a numerical result or a persistent
+    cache. The caller admits the complete current source before using another
+    required graph pose with this recipe. Only identity names and translations
+    absent from the ordered orientation calculation are removed.
+    """
+    work.charge("recording_orientation_recipe")
+    if (work.max_operand_bits != MAX_OPERAND_BITS
+            or type(record) is not RecordingAngularFrame
+            or type(record.rate) is not _AxialRate
+            or type(record.rate.value) is not F
+            or type(record.trig_count) is not int or record.trig_count < 0
+            or record.parent is not None and parent is None
+            or type(record.witness) is not tuple):
+        return None
+    work.guard(record.rate.value, record.trig_count)
+    witness = record.witness
+    try:
+        kind = witness[0]
+        if kind == "world" and witness == ("world",) and record.parent is None:
+            local = (kind,)
+        elif kind == "root" and len(witness) == 10 and record.parent is None:
+            # Keep the private rotation, its public fallback, anchor error,
+            # mode and entire orientation claim. Translation is independent.
+            local = (kind, witness[2], *witness[5:9])
+        elif kind in {"site", "follow"} and record.parent is not None:
+            local = (kind, parent, witness[-1][1])
+        elif kind == "joint" and len(witness) == 12 and record.parent is not None:
+            law = witness[9]
+            if law is None:
+                coordinate = ("constant", witness[10], witness[11])
+            else:
+                if type(law) is not tuple or len(law) != 15:
+                    return None
+                selector = None
+                if law[1] == ("string", "reach_planar"):
+                    reach = law[6]
+                    if (type(reach) is not tuple or len(reach) != 2 or reach[0] != "tuple"
+                            or type(reach[1]) is not tuple or len(reach[1]) != 2):
+                        return None
+                    owners = tuple(part == ("string", witness[1]) for part in reach[1])
+                    if owners not in ((True, False), (False, True)):
+                        return None
+                    selector = 0 if owners[0] else 1
+                elif law[1] != ("string", "tween"):
+                    return None
+                # The claimant and target paths identify authority, which is
+                # freshly checked separately. The selected pair index and all
+                # numerical inputs of the captured source law stay in the key.
+                coordinate = (law[1], law[3:6], law[7:], selector,
+                              witness[10], witness[11])
+            local = (kind, parent, witness[2], witness[5], witness[6],
+                     witness[8][1], coordinate)
+        else:
+            return None
+    except (IndexError, TypeError):
+        return None
+    return ("complete_recording_orientation", record.rate.axis,
+            record.rate.value, record.trig_count, local)
+
+
 def current_recording_angular_witness(model, state, kind, path, *, work):
     """Snapshot one fixed-size source law for both proof and cursor checking.
 
@@ -166,6 +243,11 @@ def current_recording_angular_witness(model, state, kind, path, *, work):
     make the optional proof unavailable, leaving ordinary evaluation in place.
     """
     work.charge("recording_angular_witness_guard")
+    return _current_recording_angular_witness(model, state, kind, path, work=work)
+
+
+def _current_recording_angular_witness(model, state, kind, path, *, work):
+    """Read one source witness without callbacks after its admission charge."""
     if (work.max_operand_bits < 1075 or type(kind) is not str or type(path) is not str
             or kind not in {"world", "root", "site", "follow", "joint"}):
         return None
@@ -806,38 +888,161 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None, rec
         plan = ops.spin_plan(omega, elapsed)
         simulator._register_spin_plan(omega, plan)
 
-    def joint_local(joint, scalar):
+    def node_bound(parent, local_pose, kind, rates, build, *, axis=None, scalar=None):
+        """Reuse one complete pure node DAG after its source law is resolved.
+
+        Source traversal, joint claims/clocks, signed axis transport and fresh
+        recording witnesses stay outside this helper. Only constant/local
+        bound construction and the one/two compositions are omitted on a hit.
+        The existing affine location invariant removes an outer translation
+        from the key, while retaining every relative parent field.
+        """
+        def ordinary():
+            return build(parent)[-1]
+
+        if not _reuse_phase_nodes(model, work):
+            return ordinary()
+        work.charge("phase_node_operand_guard")
+        if not _reuse_phase_nodes(model, work):
+            return ordinary()
+        if type(parent) is _PhaseLocation:
+            relative, extent, offset = parent.relative, parent.extent, parent.offset
+        else:
+            relative, extent, offset = parent, F(0), F(0)
+        if (type(relative) is not PhaseBound or type(local_pose) is not Pose or
+                not _native_node_vector(local_pose.position, 3) or
+                not _native_node_vector(local_pose.rotation, 4) or
+                not any(local_pose.rotation)):
+            return ordinary()
+        values = tuple(getattr(relative, field) for field in _BOUND_FIELDS)
+        if (any(type(value) is not (int if field.endswith("count") else F)
+                for field, value in zip(_BOUND_FIELDS, values)) or
+                not _small_phase_location_operands(
+                    *(getattr(relative, field) for field in _LOCATION_FIELDS), extent, offset)):
+            return ordinary()
+        if kind not in {"fixed", "hinge", "slider", "rigid", "grip"}:
+            return ordinary()
+        if kind in {"hinge", "slider"}:
+            if (not _native_node_vector(axis, 3) or type(scalar) is not JointPhase):
+                return ordinary()
+            scalar_values = tuple(getattr(scalar, field) for field in _JOINT_PHASE_FIELDS)
+            if any(type(value) is not F for value in scalar_values):
+                return ordinary()
+        elif axis is not None or scalar is not None:
+            return ordinary()
+        else:
+            scalar_values = ()
+        if type(rates) is not tuple or len(rates) != (1 if kind == "fixed" else 2):
+            return ordinary()
+        for rate in rates:
+            if rate is not None and (type(rate) is not _AxialRate or type(rate.value) is not F or
+                    rate.axis is not None and (type(rate.axis) is not int or not 0 <= rate.axis < 3)):
+                return ordinary()
+        rate_values = tuple(rate.value for rate in rates if rate is not None)
+        operands = (*values, extent, offset, *scalar_values, *rate_values)
+        work.guard(*operands)
+        # Every omitted binary64 decode is admitted by the full width domain.
+        # Cache equality never lets a bool, malformed vector or narrow operand
+        # borrow the result of an ordinary canonical source occurrence.
+        work.guard_bits(1075)
+        if kind == "fixed" and _local_translation_independent(relative) and any(local_pose.position):
+            # Such a mount creates a new outer location. The existing affine
+            # helper already handles it exactly; this narrower template only
+            # carries an unchanged inherited location through a whole node.
+            return ordinary()
+        key = (_CACHE_DOMAIN, MAX_OPERAND_BITS, "source_node", kind, relative,
+               local_pose.position, local_pose.rotation, axis, scalar, rates)
+        cached = work.lookup(key)
+        if not _reuse_phase_nodes(model, work):
+            return ordinary()
+        work.guard(*operands)
+
+        def checked_shape(bounds):
+            # Every intermediate must preserve an unchanged outer location.
+            # A new local affine term or a wide intermediate keeps the full
+            # ordinary DAG; its outcome cannot certify this narrower template.
+            if type(bounds) is not tuple or len(bounds) != (1 if kind == "fixed" else 2):
+                return False
+            for bound in bounds:
+                if type(bound) is not PhaseBound:
+                    return False
+                fields = tuple(getattr(bound, field) for field in _BOUND_FIELDS)
+                if (any(type(value) is not (int if field.endswith("count") else F)
+                        for field, value in zip(_BOUND_FIELDS, fields)) or
+                        not _small_phase_location_operands(
+                            *(getattr(bound, field) for field in _LOCATION_FIELDS))):
+                    return False
+                work.guard(*fields)
+            return True
+
+        try:
+            if cached is None:
+                # Only the two outer affine terms are removed. In particular
+                # the parent's actual/numeric derivatives and complete local
+                # pose/scalar operands enter the original equations unchanged.
+                bounds = build(relative)
+                if not _reuse_phase_nodes(model, work):
+                    return ordinary()
+                if not checked_shape(bounds):
+                    return bounds[-1] if not extent and not offset else ordinary()
+                work.remember(key, bounds)
+                if not _reuse_phase_nodes(model, work):
+                    return ordinary()
+            else:
+                work.charge("phase_node_reuse")
+                if not _reuse_phase_nodes(model, work):
+                    return ordinary()
+                bounds = cached
+                if not checked_shape(bounds):
+                    return ordinary()
+        except ReachAdmissionError as error:
+            if (error is work.callback_error or work.max_operand_bits == MAX_OPERAND_BITS or
+                    error.details.get("budget") != "numeric_operand_bits"):
+                raise
+            return ordinary()
+        if not _reuse_phase_nodes(model, work):
+            return ordinary()
+        bound = bounds[-1]
+        work.guard(*operands, *(getattr(bound, field) for field in _BOUND_FIELDS),
+                   extent, offset)
+        if not extent and not offset:
+            return bound
+        # No sum is needed: the template proves both outer terms pass through
+        # every omitted composition unchanged. Final ordinary materialization
+        # remains in the same graph traversal and uses the complete bound.
+        return _PhaseLocation(bound, extent, offset)
+
+    def joint_local(kind, axis, scalar):
         # Different joints may have identical numerical laws. Their own
         # authority/clock lookup has already produced this exact JointPhase;
         # only the pure local-bound equations are shared. Decode the complete
         # axis and guard every scalar before a cache hit can return a result.
         values = tuple(getattr(scalar, name) for name in _JOINT_PHASE_FIELDS)
-        native_key = (_native_phase_key("joint_local", (*joint.axis, *values),
-                                       (joint.kind, scalar), work)
-                      if type(joint.axis) is tuple and len(joint.axis) == 3
+        native_key = (_native_phase_key("joint_local", (*axis, *values), (kind, scalar), work)
+                      if type(axis) is tuple and len(axis) == 3
                       and all(type(value) is F for value in values) else None)
         if native_key is None:
-            axis = tuple(a.number(value) for value in joint.axis)
+            decoded_axis = tuple(a.number(value) for value in axis)
             work.charge("phase_joint_bound_key")
         if any(type(value) is not F for value in values):
             raise ReachAdmissionError("reach_numeric", "A local joint bound requires exact phase operands.")
         work.guard(*values)
         key = (native_key if native_key is not None else
-               (_CACHE_DOMAIN, work.max_operand_bits, "joint_local", joint.kind, axis, scalar))
+               (_CACHE_DOMAIN, work.max_operand_bits, "joint_local", kind, decoded_axis, scalar))
         cached = work.lookup(key)
         if native_key is not None and work.max_operand_bits != key[1]:
-            return joint_local(joint, scalar)
+            return joint_local(kind, axis, scalar)
         if cached is not None:
             work.guard(*(getattr(cached, field) for field in _BOUND_FIELDS))
             return cached
         if native_key is not None:
-            axis = tuple(a.number(value) for value in joint.axis)
-        axis_size = a.add(*(a.absolute(value) for value in axis))
+            decoded_axis = tuple(a.number(value) for value in axis)
+        axis_size = a.add(*(a.absolute(value) for value in decoded_axis))
         rate_error = a.absolute(a.sub(scalar.actual_slope, scalar.ideal_slope))
-        if joint.kind == "hinge":
+        if kind == "hinge":
             # |norm(axis)-1| <= |norm(axis)^2-1|, without a host sqrt or an
             # assumption that the canonical source axis has exact unit length.
-            norm_defect = a.absolute(a.sub(a.add(*(a.mul(x, x) for x in axis)), F(1)))
+            norm_defect = a.absolute(a.sub(a.add(*(a.mul(x, x) for x in decoded_axis)), F(1)))
             omega_error = a.add(a.mul(axis_size, rate_error),
                 a.mul(norm_defect, a.absolute(scalar.ideal_slope)))
             result = finish(trig_count=1, product_count=1,
@@ -854,7 +1059,7 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None, rec
                 actual_speed_upper_m_per_s=a.mul(axis_size, a.absolute(scalar.actual_slope)))
         work.remember(key, result)
         if native_key is not None and work.max_operand_bits != key[1]:
-            return joint_local(joint, scalar)
+            return joint_local(kind, axis, scalar)
         work.guard(*(getattr(result, field) for field in _BOUND_FIELDS))
         return result
 
@@ -930,8 +1135,10 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None, rec
                 site = model.sites[stem]
                 original = witness("site", stem)
                 parent = instance(site.owner)
-                rate = _transport_axial_rate(axial_rates[site.owner + ".frame"], site.pose.rotation, work)
-                frames[path] = compose(parent, constant(site.pose), axial_rate=rate)
+                local_pose = site.pose
+                rate = _transport_axial_rate(axial_rates[site.owner + ".frame"], local_pose.rotation, work)
+                frames[path] = node_bound(parent, local_pose, "fixed", (rate,),
+                    lambda value: (compose(value, constant(local_pose), axial_rate=rate),))
                 axial_rates[path] = rate
                 retain_angular(path, rate, frames[path], original, "site", stem)
         return frames[path]
@@ -950,23 +1157,43 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None, rec
             if kind == "follow":
                 follow = model.follows[relation]
                 parent = frame(follow.parent)
-                rate = _transport_axial_rate(axial_rates[follow.parent], follow.offset.rotation, work)
-                result = compose(parent, constant(follow.offset), axial_rate=rate)
+                local_pose = follow.offset
+                rate = _transport_axial_rate(axial_rates[follow.parent], local_pose.rotation, work)
+                result = node_bound(parent, local_pose, "fixed", (rate,),
+                    lambda value: (compose(value, constant(local_pose), axial_rate=rate),))
             else:
                 joint = model.joints[relation]
-                local = PhaseBound()
+                scalar = None
                 if joint.kind in {"hinge", "slider"}:
                     if relation not in joints:
                         joints[relation] = joint_phase(simulator, relation, start, end, state)
-                    local = joint_local(joint, joints[relation])
-                parent = frame(joint.parent + ".frame")
-                rate = axial_rates[joint.parent + ".frame"]
-                if joint.kind == "hinge":
-                    rate = _hinge_axial_rate(rate, joint.axis, joints[relation].ideal_slope, work)
-                joint_bound = compose(parent, local, axial_rate=rate)
-                child_pose = model.sites[joint.child].pose
-                rate = _transport_axial_rate(rate, child_pose.rotation, work)
-                result = compose(joint_bound, constant(child_pose, inverse=True), axial_rate=rate)
+                    scalar = joints[relation]
+                if not _reuse_phase_nodes(model, work):
+                    # Preserve the original eager order outside the optional
+                    # full-domain large-graph template path.
+                    local = joint_local(joint.kind, joint.axis, scalar) if scalar is not None else PhaseBound()
+                    parent = frame(joint.parent + ".frame")
+                    joint_rate = axial_rates[joint.parent + ".frame"]
+                    if joint.kind == "hinge":
+                        joint_rate = _hinge_axial_rate(joint_rate, joint.axis, scalar.ideal_slope, work)
+                    joint_bound = compose(parent, local, axial_rate=joint_rate)
+                    child_pose = model.sites[joint.child].pose
+                    rate = _transport_axial_rate(joint_rate, child_pose.rotation, work)
+                    result = compose(joint_bound, constant(child_pose, inverse=True), axial_rate=rate)
+                else:
+                    parent = frame(joint.parent + ".frame")
+                    joint_rate = axial_rates[joint.parent + ".frame"]
+                    joint_kind, joint_axis = joint.kind, joint.axis
+                    if joint_kind == "hinge":
+                        joint_rate = _hinge_axial_rate(joint_rate, joint_axis, scalar.ideal_slope, work)
+                    child_pose = model.sites[joint.child].pose
+                    rate = _transport_axial_rate(joint_rate, child_pose.rotation, work)
+                    def connected(value):
+                        local = joint_local(joint_kind, joint_axis, scalar) if scalar is not None else PhaseBound()
+                        joint_bound = compose(value, local, axial_rate=joint_rate)
+                        return joint_bound, compose(joint_bound, constant(child_pose, inverse=True), axial_rate=rate)
+                    result = node_bound(parent, child_pose, joint_kind, (joint_rate, rate), connected,
+                        axis=joint_axis if scalar is not None else None, scalar=scalar)
         elif state.modes[path] == "dynamic":
             result = dynamic(path)
             rate = None

@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-22T06:33:00Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-22T15:01:33.757392+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -44,46 +44,47 @@ local `569b67b0bdc6854cc069e6a00590e0f15267ae03`
 [draft PR #25](https://github.com/Omegapy/OntoKin/pull/25). Original branches,
 failed attempts and earlier evidence retain their identities.
 
-Latest complete recording implementation is `d1d947aedc4dfded55cd983b12063d0a29e65719`,
-tree `70d5fea2d451620187f2eb731e5bc7fd62d7c8aa`. The actual starting published
+Latest tested recording implementation is `c011531992998d634ea9e2cf44e8eed8e9bddd40`,
+tree `ef25230c3d2f64afa52d4911cd887fca9ce710e5`. The actual starting published
 baseline was `215efd6c99d2e42ca54ddbd9d898dd99fa678418`, newer than the supplied
 handoff; its complete 1,309-file tree was verified. Previous verified publication
-`764e404b7c664af1fe3cfa3e45d0c9f722649d23` preserves checkpoint 003 and its exact
+`a564527f64a4e76d3e8e96c849fdb642a0d260eb` preserves checkpoint 004 and its exact
 local tree. The [October 22 checkpoint](docs/engineering/reach-recording-validation-2026-10-22/README.md)
-now includes exact deferred phase locations, bounded planning reuse, complete
-finite-pose receipts/families, native vector/spin/ballistic reuse, repeated clock
-digits and an independently derived stored-lift sign proof. The complete source
-numerical identity includes the new phase and planning derivations.
+now also includes complete canonical planning receipts, exact native root
+translations, complete immutable source seeds, atomic source admission before
+cursor publication, graph-local identical orientation reuse, independent
+world-orientation and identity-carrier enclosures, and integer clock cells.
 
-The latest endpoint reduction admits every actual pose and stored component,
-then forms conservative exact sums from coordinate maxima once per group. Pose,
-geometry and clock bytes are preserved; certificate bounds may be larger but
-must pass the original tolerances and independent supplied-byte checks. Current
-domains, changed inputs, cancellation, rollback and all public limits remain
-checked. No frozen source/expected result or acceptance inequality was relaxed.
+The latest full source run finished **14:55:48 UTC** with **19/28** passes
+and stable inputs under the unchanged **100,000** shared limit. **P05, P09,
+P11, P16, P20, P23, L01, L02 and L03** stop at the attempted 100,001st operation.
+The preceding run on `4351c07` reached **20/28**, including L02 at **99,572**;
+stronger source/cursor admission and later changes put L02 over budget again.
+That earlier 20/28 result is not the current acceptance result. Both complete
+runs and every intervening focused failure are preserved without relabeling.
 
-The latest complete source run finished **06:30:51 UTC** with **19/28** passes
-and stable inputs under the unchanged **100,000** shared limit. P07 uses
-**87,996**, P08 **88,008**, and P18 **89,400** operations. **P05, P09, P11,
-P16, P20, P23, L01, L02 and L03** still stop at the attempted 100,001st operation.
-All nine complete source runs preserve their actual failures and artifacts.
-All 76 GLB/report files from the latest two runs match their producer receipts.
+The latest combined planning/sampling/reader cohort is **268/268** on
+`c011531`, with zero failures/errors/skips, stable inputs and an actual duration
+of **40.404 seconds**. It includes exact sample/GLB comparisons, current source
+and cache admission, cancellation, narrowed caps, original failure identity,
+and the strict body-sampling cost test that had exposed a regression. Earlier
+**243/243** on `4351c07` and **112/112** on `e0d6018` retain their own identities.
+These overlapping cohorts are not a complete regression. The earlier
+**1,374/1,374** complete Python result does not verify the current implementation.
 
-Current executed cohorts: **212/212** combined planning/sampling/reader methods
-on `89dbe6e`, then **31/31** endpoint/cursor/claim/basis methods on `d1d947a`.
-Both have zero failures/errors/skips and stable inputs. Earlier identified
-67/67, 241/241, 232/232 and 72/72 cohorts remain preserved. These overlapping
-inventories are not a complete regression. The earlier **1,374/1,374** complete
-regression does not verify current code.
+Checkpoint 005 retains **272 raw members**: both complete source runs,
+focused passes and failures, profiles, exact source patch/raw commits and
+publication 004's receipt. The archive was assembled with worker filesystem
+activity paused, and every member hash and ZIP CRC was checked. All previous
+archives and the recovered original source/auditor files remain unchanged.
 
-Checkpoint 004's **180-member** archive retains both new full runs, focused
-results, profiles, source patch and publication 003 receipt. Persisted hashes
-and ZIP CRCs were rechecked while worker filesystem activity was paused; all
-prior archives and recorded failed containers remain unchanged. P23 now finishes
-planning and reaches sampling: construction costs **26,373**, followed by
-**64,626** prefix-planning operations. P16 reaches certification after sampling;
-the other seven failures reach independent verification. Finish all 28 before
-Agent, complete regression and release acceptance.
+Current profiles place P23 at **80,984** shared operations when sampling
+begins; repeated exact boundary seeds then exhaust the remaining budget.
+P16 reaches certification at **92,841**, about **5,200** operations earlier
+than the preceding profiled cut. P11 reaches independent geometry; the other
+six failures reach independent certificate checks. Reduce actual repeated
+planning, seed, sampling and verification calculations while preserving all
+source/callback/cache checks, then rerun all 28 before Agent and release roles.
 
 The recovered **21 clean older unpublished checkouts**, **183** changed source
 blobs and all **six exact original auditor files** remain preserved. Old results

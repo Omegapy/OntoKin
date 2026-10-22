@@ -125,7 +125,7 @@ class ReachExecutionWork:
         self._cache_generation += 1
         return self._cache[key]
 
-    def remember(self, key, value):
+    def remember(self, key, value, *, admission=None):
         operand_bits = self.max_operand_bits
         generation = self._cache_generation
         self.charge("cache_insert")
@@ -133,7 +133,7 @@ class ReachExecutionWork:
         # cannot publish that proof as reusable under a different domain.
         if (self._sync_cache_operand_limit() or operand_bits != self.max_operand_bits
                 or generation != self._cache_generation):
-            return
+            return False if admission is not None else None
         present = key in self._cache
         # All required bookkeeping is precharged before changing values/order.
         # A cancelled promotion or eviction leaves the previous cache intact.
@@ -146,13 +146,23 @@ class ReachExecutionWork:
         # still preserves the original values and order.
         if (self._sync_cache_operand_limit() or operand_bits != self.max_operand_bits
                 or generation != self._cache_generation):
-            return
+            return False if admission is not None else None
+        # Optional source receipts are precharged by their caller. Their final
+        # callback-free comparison runs after every insertion/promotion/eviction
+        # callback and before any value or order changes. A defensive recheck
+        # also protects against an admission hook that reenters this cache.
+        if admission is not None:
+            if admission() is not True:
+                return False
+            if operand_bits != self.max_operand_bits or generation != self._cache_generation:
+                return False
         if not present and len(self._cache) >= self.max_cache_entries:
             self._cache.popitem(last=False)
         self._cache[key] = value
         if present:
             self._cache.move_to_end(key)
         self._cache_generation += 1
+        return True if admission is not None else None
 
     def _sync_cache_operand_limit(self):
         # A completed proof under a wider cap cannot stand in for arithmetic

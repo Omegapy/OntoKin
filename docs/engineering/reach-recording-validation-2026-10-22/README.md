@@ -66,7 +66,76 @@ unchanged. Differential tests compare exact private values and complete GLB
 bytes. Three stale independent-reader test doubles were updated to accept the
 already existing `recording_context` argument; their assertions are unchanged.
 
-## Latest checkpoint 004: planning, finite-pose receipts and endpoint reductions
+## Latest checkpoint 005: complete source admission and repeated calculations
+
+The latest tested source is `c011531992998d634ea9e2cf44e8eed8e9bddd40`, tree
+`ef25230c3d2f64afa52d4911cd887fca9ce710e5`. Full source011 finished **2026-10-22
+14:55:48 UTC**, with stable inputs and **19/28** passes under the unchanged
+shared 100,000-operation budget. P05, P09, P11, P16, P20, P23, L01, L02 and L03
+all stop at the attempted 100,001st operation. Source010 on `4351c07` had
+passed **20/28**, with L02 at 99,572, before stronger source admission and
+subsequent changes put L02 over the cap again. The current result is 19/28.
+
+This checkpoint adds complete canonical inverse-kinematics receipts with all
+four actual limits and current-call work, typed world-target decode reuse,
+complete finite-pose proofs, and native identity/zero-origin projections.
+Exact root translation retains the original rational equation and binary64
+projection while omitting one-use cache entries. Native graph sharing binds
+the complete ordered numeric orientation law at the same clock; every receiver
+still admits its entire actual source ancestry. Direct carrier seeds consume
+captured immutable source operands. Final cache publication rechecks the
+complete current source after every cache callback and before any value or
+order mutation. Original source/admission errors retain their identity.
+
+Independent verification now has immutable world-orientation recipes,
+root-spin recurrence, exact identity-carrier enclosure reuse, exact repeated
+vertex witnesses and integer binary32 clock-cell checks. The producer's
+numerical implementation/proof basis and the independent execution-input
+closure retain their separate identities. Frozen fixtures, trajectories,
+tolerances, every public limit and mandatory source/callback checks remain.
+
+| Executed cohort | Exact source | Result |
+| --- | --- | --- |
+| Combined 014 | `e0d601848eeeba7012d30528b6d445a4ecd4c7ca` | **112/112**, stable inputs. |
+| Combined 015 | `8eaef97df68c2a27df2bb8105ea0727ddc24d4c8` | **243 tests, 8 failures, 9 errors**, stable; retained. |
+| Combined 016 | `4351c07c82f7df227bd3a4d820633c17e38ac22e` | **243/243**, stable inputs. |
+| Native 017 | `1711a0a7574725952acdf60fcbc6947b536177e7` | **159 tests, 4 failures**, stable; retained. |
+| Combined 018 | `c011531992998d634ea9e2cf44e8eed8e9bddd40` | **268/268**, zero failures/errors/skips; stable, 40.404 seconds. |
+| Complete source010 | `4351c07` | **20/28**, stable inputs. |
+| Complete source011 | `c011531` | **19/28**, stable inputs; current result. |
+
+The 017 failures included a real native-body cost regression and three test
+fixture mismatches. The final 268-method run retains the original strict
+cost assertion and now passes it. The two old cached-leaf cases use a
+nonidentity leaf to exercise their intended retained cache path; new identity
+leaf tests separately cover current source, budget, cap and cancellation.
+Other legacy spies explicitly exercise their original fallback paths, while
+new tests cover the replacement paths. No expected physical result, adopted
+acceptance threshold or operation limit was weakened.
+
+[checkpoint-005.zip](checkpoint-005.zip) retains **272** raw members,
+**5,190,924** bytes, SHA-256
+`6ecc3544abf7f4e8a35c0ef69e2470f48073448a08703699913a9d1ef95c2f7c`.
+The [manifest](checkpoint-005.manifest.json) identifies both full runs,
+focused successes and failures, budget-limited profiles, reproduction drivers,
+publication004 receipt, source patch from `cb93a45` and raw commit objects.
+Assembly and two complete CRC/member-hash verifications used paused worker
+filesystem windows. All **78** GLB/report files from the two full runs match
+their producer receipts. The documentation preservation/navigation check
+passed; its [raw log](checkpoint-005-docs.txt) is retained.
+[checkpoint-005.json](checkpoint-005.json) records the
+individual outcomes and current gate status. Earlier archives are unchanged.
+
+P23 begins sampling at **80,984** shared operations and then exhausts its
+budget on repeated exact boundary seeds. P16 reaches certification at
+**92,841**; P11 reaches independent geometry; the other six failures reach
+independent certificate checks. Subsequent seed and independent interval
+reductions are work in progress. All ten Agent artifacts, complete current
+regression/compatibility, independent rates, native/browser checks, visual
+review, inherited roles and R01–R12/Q01–Q22 acceptance remain unexecuted for
+this cut. PR #27 remains draft; main is unchanged; do not merge.
+
+## Preserved checkpoint 004: planning, finite-pose receipts and endpoint reductions
 
 The complete source run identifies `d1d947aedc4dfded55cd983b12063d0a29e65719`,
 tree `70d5fea2d451620187f2eb731e5bc7fd62d7c8aa`. It passes **19/28**, with

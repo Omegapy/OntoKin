@@ -909,7 +909,8 @@ class ReachPoseOps:
         return self._multiply_uncached(first,second)
 
     def recording_body_orientation(self,seed_builder,axis,rate,time,*,phase_start,
-                                   phase_end,context,path,proof_token,max_steps):
+                                   phase_end,context,path,proof_token,max_steps,
+                                   source_admission=None,source_records=0):
         """Advance one proved complete carrier orientation in body coordinates.
 
         The caller has freshly checked the immutable phase's chained source-law
@@ -919,20 +920,40 @@ class ReachPoseOps:
         increment. This recording-only approximation uses the existing finite
         endpoint allowance; it never changes a source coordinate or anchor.
         """
+        source_failure=None
+        def direct_seed():
+            nonlocal source_failure
+            try:
+                return seed_builder()
+            except ReachAdmissionError as error:
+                source_failure=error
+                raise
+        def current_source():
+            nonlocal source_failure
+            try:
+                return source_admission()
+            except ReachAdmissionError as error:
+                source_failure=error
+                raise
         while True:
             cap=self.work.max_operand_bits
             try:
-                return self._recording_body_orientation(seed_builder,axis,rate,time,
+                return self._recording_body_orientation(
+                    direct_seed if callable(seed_builder) else seed_builder,axis,rate,time,
                     phase_start=phase_start,phase_end=phase_end,context=context,
-                    path=path,proof_token=proof_token,max_steps=max_steps)
+                    path=path,proof_token=proof_token,max_steps=max_steps,
+                    source_admission=current_source if callable(source_admission) else source_admission,
+                    source_records=source_records)
             except ReachAdmissionError as error:
-                if (self.work.max_operand_bits!=cap and error is not self.work.callback_error
+                if (error is not source_failure and self.work.max_operand_bits!=cap
+                        and error is not self.work.callback_error
                         and error.details.get("budget")=="numeric_operand_bits"):
                     continue
                 raise
 
     def _recording_body_orientation(self,seed_builder,axis,rate,time,*,phase_start,
-                                    phase_end,context,path,proof_token,max_steps):
+                                    phase_end,context,path,proof_token,max_steps,
+                                    source_admission=None,source_records=0):
         original_rate,original_time=rate,time
         original_start,original_end=phase_start,phase_end
         while True:
@@ -944,7 +965,10 @@ class ReachPoseOps:
             self.work.charge("recording_body_phase_guard")
             if (type(proof_token) is not object or not callable(seed_builder)
                     or (axis is not None and (type(axis) is not int or not 0<=axis<3))
-                    or (axis is None and rate)):
+                    or (axis is None and rate)
+                    or type(source_records) is not int or source_records<0
+                    or source_admission is not None and not callable(source_admission)
+                    or source_admission is None and source_records):
                 raise ReachAdmissionError("reach_domain","A carrier cursor needs a proved Cartesian body law.")
             if (compare(phase_start,time,self.work)>0
                     or compare(time,phase_end,self.work)>0):
@@ -988,9 +1012,23 @@ class ReachPoseOps:
                 count+=1
             if self.work.max_operand_bits!=cap:
                 continue
+            admitted=False
+            def admit():
+                nonlocal admitted
+                if source_admission() is not True:
+                    raise ReachAdmissionError("reach_domain","The current carrier source was not admitted.")
+                admitted=True
+                return True
+            if source_admission is not None:
+                self.work.charge("recording_angular_witness_guard",source_records)
+                if self.work.max_operand_bits!=cap:
+                    continue
             if cap==MAX_OPERAND_BITS:
-                self.work.remember(key,(time,result,count,delta,increment))
+                self.work.remember(key,(time,result,count,delta,increment),
+                                   admission=admit if source_admission is not None else None)
             if self.work.max_operand_bits==cap:
+                if source_admission is not None and not admitted:
+                    admit()
                 return result
 
     def _normalized_axis(self,axis):
@@ -1438,7 +1476,13 @@ class ReachPoseOps:
                 return
             signature=self._finite_signature(pose)
             completed=[]
-            for index,(name,length) in enumerate(_FINITE_FIELDS):
+            if self._complete_finite_signature(signature):
+                # The freshly read signature already proves all four private
+                # fields in the full cap. Repeating each field's identical
+                # shape/width predicate cannot strengthen this same proof.
+                # No callback occurs between this bounded read and publication.
+                completed=list(signature)
+            for index,(name,length) in enumerate(() if completed else _FINITE_FIELDS):
                 matched=(previous is not None and signature[index] is not None and
                          signature[index] is previous.fields[index])
                 if previous is not None and (matched or name in pose._projection):
@@ -1488,6 +1532,11 @@ class ReachPoseOps:
     def _finite_signature(self,pose):
         return tuple(self._finite_payload(name,pose.rotation if name=="orientation" else
                      getattr(pose,"exact_"+name)) for name,_ in _FINITE_FIELDS)
+
+    @staticmethod
+    def _complete_finite_signature(signature):
+        """The existing small-domain theorem holds for every current field."""
+        return all(payload is not None for payload in signature)
 
     def _valid_finite_proof(self,proof):
         return (type(proof) is _PoseFinitenessProof and proof.owner is self and

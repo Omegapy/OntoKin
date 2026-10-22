@@ -21,6 +21,11 @@ def expose(ops, pose):
 
 
 class ReachProjectionFinitenessTests(unittest.TestCase):
+    def setUp(self):
+        # This cohort targets the original four ordered field proofs; the
+        # complete current-signature proof is covered in its separate cohort.
+        self.enterContext(patch.object(ReachPoseOps, "_complete_finite_signature", return_value=False))
+
     def test_mixed_denominators_and_full_small_domain_need_no_public_allocation(self):
         largest = (1 << 512) - 1
         quaternions = (UNIT, (F(0), F(-1), F(0), F(0)),

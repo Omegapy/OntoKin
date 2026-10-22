@@ -208,6 +208,9 @@ class IndependentRecordingContextTests(unittest.TestCase):
     def test_stationary_source_hinges_keep_their_direct_cache_across_clocks(self):
         compiler = compile_construction(source_case("P01"))
         reference = build_reference(compiler.model, end=F(1, 2), work=compiler.reach_work)
+        # Observe the local hinge recurrence itself. Complete carrier cursors
+        # have their own direct seeds and are covered by the world tests.
+        self.enterContext(patch.object(reference, "_recording_body_domain", return_value=False))
         context = object()
         with patch.object(reference.p, "hinge", wraps=reference.p.hinge) as hinge:
             for time in (F(1, 8), F(1, 4), F(3, 8)):
@@ -223,6 +226,9 @@ class IndependentRecordingContextTests(unittest.TestCase):
     def test_source_phase_side_and_pass_isolation_leave_full_source_evidence_direct(self):
         compiler = compile_construction(source_case("L02"))
         reference = build_reference(compiler.model, end=F(3, 4), work=compiler.reach_work)
+        # Keep this spy on the local angle cursor across every phase and pass;
+        # the independently proved complete-body path has separate coverage.
+        self.enterContext(patch.object(reference, "_recording_body_domain", return_value=False))
         carriers, context = ("rig.arm.forearm.tip.frame",), object()
         histories = reference.boundary_states()
         observed = []

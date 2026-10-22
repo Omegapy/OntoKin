@@ -16,6 +16,12 @@ from reach_agent_support import source_case
 
 
 class ReachFinitenessReuseTests(unittest.TestCase):
+    def setUp(self):
+        # Exercise the retained individual-field receipt layer. The complete
+        # current-signature path has its own boundary/callback tests and would
+        # otherwise remove the field checkpoints under inspection here.
+        self.enterContext(patch.object(ReachPoseOps, "_complete_finite_signature", return_value=False))
+
     def test_completed_proof_reuses_one_charged_checkpoint_without_public_tuples(self):
         work=ReachExecutionWork()
         ops=ReachPoseOps(work)

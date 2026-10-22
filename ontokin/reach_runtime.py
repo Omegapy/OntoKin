@@ -237,6 +237,16 @@ class _WorldTargetPoint:
     position: tuple[float, float, float]
 
 
+@dataclass(frozen=True)
+class _WorldTargetComponents:
+    """One exact rotated target and its last complete translated projection."""
+    offset: tuple[Fraction, Fraction, Fraction]
+    position: tuple[Fraction, Fraction, Fraction]
+    rounded: tuple[Fraction, Fraction, Fraction]
+    point: _WorldTargetPoint
+    target: tuple[Fraction, Fraction, Fraction] | None = None
+
+
 class ReachSimulator(ForceSimulator):
     """One exact clock and two claims per reach, with no partial admission."""
 
@@ -937,7 +947,9 @@ class ReachSimulator(ForceSimulator):
             raise ValueError("A recording rotation cursor cannot enter full source kinematics.")
         if recording_pose_ops is not None and (not recording_only or recording_context is None
                 or getattr(recording_pose_ops, "source_ops", None) is not self.pose_ops
-                or recording_pose_ops.work is not self.work or recording_angular_proof is not None):
+                or recording_pose_ops.work is not self.work
+                or recording_angular_proof is not None and
+                   getattr(recording_pose_ops, "recording_body_cursors", False) is not True):
             raise ValueError("Alternate recording arithmetic requires this source's recording-only work context.")
         # With neither a free trajectory nor a motion claim, all actual pose
         # operands belong to this current state rather than a clock.
@@ -966,10 +978,18 @@ class ReachSimulator(ForceSimulator):
         objects, frames, resolving = {}, {"world": self._identity_pose}, set()
         angular_proof = None
         valid_angular_frames = set()
+        resolving_angular_frames = set()
+        angular_receipts = {}
+        orientation_recipes, shared_orientation_frames = {}, {}
+        share_orientations = (recording_pose_ops is not None
+            and getattr(ops, "share_arithmetic", False) is True)
+        source_model, source_state, source_root_state = self.model, state, self.state
         if recording_angular_proof is not None:
             from .reach_numeric import rational
             from .reach_phase import (_AxialRate, RecordingAngularFrame, RecordingAngularProof,
-                                      current_recording_angular_witness)
+                                      current_recording_angular_witness,
+                                      _current_recording_angular_witness,
+                                      _recording_orientation_recipe)
             self.work.charge("recording_body_proof_domain")
             if (recording_context is None or
                     type(recording_angular_proof) is not RecordingAngularProof):
@@ -995,6 +1015,10 @@ class ReachSimulator(ForceSimulator):
             """
             if angular_proof is None:
                 return None
+            if frame_path in valid_angular_frames:
+                return angular_proof.frames[frame_path]
+            if frame_path in resolving_angular_frames:
+                return None
             self.work.charge("recording_body_witness")
             record = angular_proof.frames.get(frame_path)
             if (self.work.max_operand_bits != 32768 or
@@ -1002,8 +1026,7 @@ class ReachSimulator(ForceSimulator):
                     type(record.trig_count) is not int or record.trig_count < 0 or
                     type(record.rate) is not _AxialRate or
                     type(record.rate.value) is not Fraction or
-                    (record.rate.value and not record.trig_count) or
-                    (record.parent is not None and record.parent not in valid_angular_frames)):
+                    (record.rate.value and not record.trig_count)):
                 return None
             self.work.guard(record.rate.value, record.trig_count)
             current = current_recording_angular_witness(
@@ -1011,10 +1034,40 @@ class ReachSimulator(ForceSimulator):
             if (self.work.max_operand_bits != 32768 or
                     current != (record.parent, record.witness)):
                 return None
+            if record.parent is not None and record.parent not in valid_angular_frames:
+                resolving_angular_frames.add(frame_path)
+                try:
+                    parent_record = ensure_angular_frame(record.parent)
+                finally:
+                    resolving_angular_frames.remove(frame_path)
+                if parent_record is None or self.work.max_operand_bits != 32768:
+                    return None
             valid_angular_frames.add(frame_path)
+            angular_receipts[frame_path] = (kind, source_path, record,
+                angular_receipts.get(record.parent) if record.parent is not None else None)
+            if share_orientations:
+                recipe = _recording_orientation_recipe(record,
+                    orientation_recipes.get(record.parent), work=self.work)
+                if recipe is not None:
+                    orientation_recipes[frame_path] = recipe
             return record
 
-        angular_frame("world", "world", "world")
+        def ensure_angular_frame(frame_path):
+            # Only a candidate complete carrier needs these witnesses. Walk
+            # its actual current ancestry; unrelated selected leaves do not
+            # produce or reuse a body cursor and need no optional proof.
+            if frame_path == "world":
+                return angular_frame(frame_path, "world", "world")
+            if type(frame_path) is not str or not frame_path.endswith(".frame"):
+                return None
+            stem = frame_path.removesuffix(".frame")
+            if stem in self.model.objects:
+                relation = incoming.get(stem)
+                return (angular_frame(frame_path, "root", stem) if relation is None else
+                        angular_frame(frame_path, relation[0], relation[1]))
+            if stem in self.model.sites:
+                return angular_frame(frame_path, "site", stem)
+            return None
 
         def slot(path, signature, build, *, owner=None):
             if recording_only and recording_moving_frames is not None:
@@ -1050,7 +1103,6 @@ class ReachSimulator(ForceSimulator):
                     owner = instance(site.owner)
                     frames[path] = slot(path, (owner, site.pose),
                         lambda: compose(owner, constant_pose(site.pose)), owner=site.owner)
-                    angular_frame(path, "site", stem)
             return frames[path]
 
         def instance(path):
@@ -1068,18 +1120,25 @@ class ReachSimulator(ForceSimulator):
                     parent = frame(follow.parent)
                     result = slot(path, ("follow", parent, follow.offset),
                         lambda: compose(parent, constant_pose(follow.offset)))
-                    angular_frame(path + ".frame", "follow", relation_path)
                 else:
                     joint = self.model.joints[relation_path]
                     parent = frame(joint.parent + ".frame")
                     child_pose = self.model.sites[joint.child].pose
-                    record = angular_frame(path + ".frame", "joint", relation_path)
+                    eligible_body = (joint.kind == "hinge" and
+                        (recording_pose_ops is None or ops.recording_body_hinges is None
+                         or relation_path in ops.recording_body_hinges))
+                    record = ensure_angular_frame(path + ".frame") if eligible_body else None
                     body_cursor = False
-                    if record is not None and joint.kind == "hinge":
-                        child_position = ops._recording_vector(child_pose.position)
-                        self.work.charge("recording_body_child_origin")
-                        body_cursor = (not any(child_position) and
-                                       self.work.max_operand_bits == 32768)
+                    if record is not None:
+                        native_zero = (ops.recording_zero_child_origin(child_pose.position)
+                            if recording_pose_ops is not None else None)
+                        if native_zero is None:
+                            child_position = ops._recording_vector(child_pose.position)
+                            self.work.charge("recording_body_child_origin")
+                            body_cursor = (not any(child_position) and
+                                           self.work.max_operand_bits == 32768)
+                        else:
+                            body_cursor = native_zero
                     coordinate, slope = None, None
                     if joint.kind in {"hinge", "slider"} and not body_cursor:
                         if pose_only:
@@ -1110,26 +1169,71 @@ class ReachSimulator(ForceSimulator):
                                        constant_pose(child_pose, inverse=True))
                     if body_cursor:
                         from .scene import MAX_KEYFRAMES
+                        receipt = angular_receipts[path + ".frame"]
+                        source_records = 0
+                        current_receipt = receipt
+                        while current_receipt is not None:
+                            source_records += 1
+                            current_receipt = current_receipt[3]
+                        def source_admission():
+                            # Each record's check is precharged by the cursor.
+                            # This entire final read has no callback between
+                            # an ancestor comparison and cache publication.
+                            if (self.model is not source_model or self.state is not source_root_state
+                                    or state is not source_state
+                                    or self.model.program_revision != angular_proof.program_revision):
+                                raise ReachAdmissionError("reach_domain", "The carrier source context changed during sampling.")
+                            current_receipt = receipt
+                            while current_receipt is not None:
+                                kind, source_path, expected, current_receipt = current_receipt
+                                current = _current_recording_angular_witness(
+                                    source_model, source_state, kind, source_path, work=self.work)
+                                if current != (expected.parent, expected.witness):
+                                    raise ReachAdmissionError("reach_domain", "The carrier source witness changed during sampling.")
+                            return True
                         def direct_seed():
-                            # Disabling the context at this separate graph's
-                            # root disables every ancestor cursor as well. Its
-                            # private q has no public quaternion projection.
-                            _, direct_frames = self._resolve_kinematics(time, state,
-                                selected_frames=(path + ".frame",), pose_only=True,
-                                recording_only=True)
-                            return direct_frames[path + ".frame"].rotation
-                        rotation = ops.recording_body_orientation(direct_seed,
-                            record.rate.axis, record.rate.value, time,
-                            phase_start=angular_proof.start, phase_end=angular_proof.end,
-                            context=recording_context, path="carrier:" + path,
-                            proof_token=record.token, max_steps=MAX_KEYFRAMES)
+                            # The exact source kernels consume the same frozen
+                            # operands as this admitted body proof. A callback
+                            # cannot substitute a temporary live-source value
+                            # into a seed published under the old proof token.
+                            from .reach_recording_fast import captured_recording_orientation
+                            return captured_recording_orientation(
+                                self.pose_ops, angular_proof, path + ".frame", time)
+                        recipe = orientation_recipes.get(path + ".frame")
+                        if recipe is not None:
+                            recipe = (angular_proof.start, angular_proof.end, recipe)
+                        representative = (shared_orientation_frames.get(recipe)
+                            if recipe is not None else None)
+                        if representative is None:
+                            rotation = ops.recording_body_orientation(direct_seed,
+                                record.rate.axis, record.rate.value, time,
+                                phase_start=angular_proof.start, phase_end=angular_proof.end,
+                                context=recording_context, path="carrier:" + path,
+                                proof_token=record.token, max_steps=MAX_KEYFRAMES,
+                                source_admission=source_admission, source_records=source_records)
+                        else:
+                            # This index refers only to an already required
+                            # pose in this same graph/clock/phase. No second
+                            # numerical cache or cursor is retained. Equality
+                            # binds the complete frozen orientation law, not
+                            # an exposed quaternion or instantaneous rate.
+                            self.work.charge("recording_body_shared_orientation")
+                            ops._require_domain()
+                            rotation = frames[representative].rotation
+                            self.work.charge("recording_angular_witness_guard", source_records)
+                            ops._require_domain()
+                            source_admission()
+                            ops._rotation_domain(rotation)
                         # With a zero child-site offset, the hinge and inverse
                         # child-site rotations do not move the parent's origin.
                         # Repeated identical 96-bit grid projections are
                         # idempotent; retain the original final position grid.
-                        result = ops.make_recording(
-                            position=ops._rounded_vector(parent.exact_position),
-                            orientation=rotation)
+                        result = (ops.recording_parent_origin(parent, rotation)
+                            if recording_pose_ops is not None else ops.make_recording(
+                                position=ops._rounded_vector(parent.exact_position),
+                                orientation=rotation))
+                        if recipe is not None:
+                            shared_orientation_frames.setdefault(recipe, path + ".frame")
                     else:
                         result = slot(path,
                             ("joint", parent, joint.kind, joint.axis, coordinate, slope, child_pose), connected)
@@ -1166,7 +1270,6 @@ class ReachSimulator(ForceSimulator):
                     lambda: (ops.make_recording(position=position, orientation=rotation) if recording_only
                              else ops.make(position=position, orientation=rotation,
                                            velocity=velocity, omega=omega)))
-                angular_frame(path + ".frame", "root", path)
             resolving.remove(path)
             # This is an explicit finiteness check; opaque internals continue
             # down the graph even after canonical components are cached.
@@ -1283,13 +1386,28 @@ class ReachSimulator(ForceSimulator):
         # Its position uses exactly compose's rotate/add/grid/projection path;
         # target orientation, velocity and their allowances are never required.
         from .reach_pose import RotationValue
+        from .reach_numeric import MAX_OPERAND_BITS, float_bits, rational
 
         ops = self.pose_ops
         while True:
             cap = self.work.max_operand_bits
             self._check()
             base = frames[payload.base_frame]
-            position, target = ops._vector(base.exact_position), ops._vector(payload.target_m)
+            position = ops._vector(base.exact_position)
+            raw_target = payload.target_m
+            native_target = None
+            if (cap == MAX_OPERAND_BITS and type(raw_target) is tuple and len(raw_target) == 3
+                    and all(type(value) is float for value in raw_target)):
+                # Retain the ordinary bounded vector admission. The actual
+                # immutable bit patterns identify already completed decodes.
+                self.work.charge("pose_vector_domain")
+                if self.work.max_operand_bits != cap:
+                    continue
+                encoded = tuple(float_bits(value) for value in raw_target)
+                if all(bits & 0x7FF0000000000000 != 0x7FF0000000000000 for bits in encoded):
+                    self.work.guard_bits(1075)
+                    native_target = ("canonical_binary64", encoded)
+            target = None if native_target is not None else ops._vector(raw_target)
             rotation = ops._rotation(base.rotation)
             self.work.charge("source_world_target_rotation")
             if not (type(rotation) is RotationValue and type(rotation.components) is tuple
@@ -1299,6 +1417,62 @@ class ReachSimulator(ForceSimulator):
                 raise ReachAdmissionError("reach_numeric", "An observed target requires a private source rotation.")
             self.work.guard(*rotation.components, rotation.error_rad)
             if self.work.max_operand_bits != cap:
+                continue
+            if cap == MAX_OPERAND_BITS:
+                # An outer translation changes only the corresponding scalar
+                # additions and projections. Retain one complete last point
+                # with the shared rotation/target in the existing numeric LRU.
+                # Every unchanged component has identical original operands;
+                # changed components use the original exact add/grid kernels.
+                key = ("reach_world_target_point", cap, "translated_components", rotation,
+                       native_target if native_target is not None else target)
+                saved = self.work.lookup(key)
+                if self.work.max_operand_bits != cap:
+                    continue
+                if native_target is not None:
+                    if (type(saved) is _WorldTargetComponents and type(saved.target) is tuple
+                            and len(saved.target) == 3 and all(type(value) is Fraction for value in saved.target)):
+                        target = saved.target
+                    else:
+                        # The dimensions/types were admitted above. These are
+                        # precisely the ordinary _vector scalar decodes.
+                        target = tuple(rational(value, self.work) for value in raw_target)
+                        saved = None
+                    if self.work.max_operand_bits != cap:
+                        continue
+                if type(saved) is _WorldTargetComponents:
+                    self.work.charge("source_world_target_components")
+                    if self.work.max_operand_bits != cap:
+                        continue
+                    self.work.guard(*position, *target, *rotation.components, rotation.error_rad,
+                                    *saved.offset, *saved.position, *saved.rounded)
+                    if self.work.max_operand_bits != cap:
+                        continue
+                    if position == saved.position:
+                        return saved.point
+                    actual, projected = list(saved.rounded), list(saved.point.position)
+                    for index, (previous, current, delta) in enumerate(zip(saved.position, position, saved.offset)):
+                        if previous == current:
+                            continue
+                        summed = (delta if not current else current if not delta
+                                  else exact(current, delta, "add", self.work))
+                        actual[index] = ops._rounded_vector((summed,))[0]
+                        if actual[index] != saved.rounded[index]:
+                            projected[index] = round_binary64(actual[index], work=self.work)
+                    result = _WorldTargetPoint(tuple(projected))
+                    replacement = _WorldTargetComponents(saved.offset, position, tuple(actual), result, target)
+                else:
+                    offset = ops.rotate(rotation, target)
+                    actual = ops._rounded_vector(ops._add_exact_vectors(position, offset))
+                    result = _WorldTargetPoint(ops._vector_projection(actual))
+                    replacement = _WorldTargetComponents(offset, position, actual, result, target)
+                if self.work.max_operand_bits != cap:
+                    continue
+                self.work.guard(*position, *target, *rotation.components, rotation.error_rad,
+                                *replacement.offset, *replacement.rounded)
+                self.work.remember(key, replacement)
+                if self.work.max_operand_bits == cap:
+                    return result
                 continue
             key = ("reach_world_target_point", cap, position, rotation, target)
             result = self.work.lookup(key)

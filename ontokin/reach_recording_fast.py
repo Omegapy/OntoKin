@@ -98,6 +98,12 @@ class _AffineCoordinate:
 
 
 @dataclass(frozen=True)
+class _ExactAffinePosition:
+    """One current exact source position, not a native approximate law."""
+    values: tuple[F, F, F]
+
+
+@dataclass(frozen=True)
 class _BallisticLaw:
     position: tuple[float, float, float]
     velocity: tuple[float, float, float]
@@ -113,6 +119,121 @@ def _checked_compare(left, right, work):
     if work.max_operand_bits != MAX_OPERAND_BITS:
         raise _UnsupportedPlanar("The recording arithmetic domain changed.")
     return result
+
+
+def captured_recording_orientation(source_ops, proof, frame, time):
+    """Evaluate a direct private orientation from an admitted frozen witness.
+
+    The caller has checked the current complete witness chain. A seed must use
+    those same operands even if a work callback temporarily changes the live
+    source. Only source quaternion/coordinate kernels run here; neither unused
+    positions nor any ancestor recording cursor are evaluated.
+    """
+    from .reach_kinematics import sample_pair
+    from .reach_phase import RecordingAngularFrame, RecordingAngularProof
+
+    work = source_ops.work
+    work.charge("recording_body_seed_domain")
+    if type(proof) is not RecordingAngularProof or type(time) is not F:
+        raise ReachAdmissionError("reach_domain", "A direct carrier seed needs its captured phase and clock.")
+    work.guard(time)
+
+    def thaw(value):
+        if type(value) is not tuple or not value:
+            raise ReachAdmissionError("reach_domain", "A carrier seed operand is not a frozen source value.")
+        kind = value[0]
+        if kind == "none" and len(value) == 1:
+            return None
+        if kind == "string" and len(value) == 2 and type(value[1]) is str:
+            return value[1]
+        if kind == "tuple" and len(value) == 2 and type(value[1]) is tuple and len(value[1]) <= 4:
+            return tuple(thaw(part) for part in value[1])
+        if kind == "private_rotation" and len(value) == 4:
+            return RotationValue(thaw(value[1]), thaw(value[2]),
+                frozen_projection=None if value[3] is None else thaw(value[3]))
+        work.charge("recording_body_seed_decode")
+        if kind == "binary64" and len(value) == 2 and type(value[1]) is str and len(value[1]) <= 32:
+            result = float.fromhex(value[1])
+            if math.isfinite(result):
+                return result
+        elif kind == "integer" and len(value) == 2 and type(value[1]) is int:
+            work.guard(value[1])
+            return value[1]
+        elif (kind == "rational" and len(value) == 3
+                and type(value[1]) is int and type(value[2]) is int and value[2] > 0):
+            work.guard(value[1], value[2])
+            return F(value[1], value[2])
+        raise ReachAdmissionError("reach_domain", "A direct carrier seed has an invalid captured operand.")
+
+    def elapsed(law):
+        saved, since = thaw(law[11]), thaw(law[12])
+        if thaw(law[7]) != "running":
+            return saved
+        return source_ops._op(saved, source_ops._op(time, since, "sub"), "add")
+
+    def coordinate(witness):
+        law = witness[9]
+        if law is None:
+            return thaw(witness[10])
+        kind, start, duration = thaw(law[1]), thaw(law[8]), thaw(law[3])
+        clock = elapsed(law)
+        if kind == "reach_planar":
+            pair = sample_pair(start, thaw(law[10]), duration, clock,
+                               running=thaw(law[7]) == "running", work=work)
+            shoulder, elbow = thaw(law[6])
+            if witness[1] not in (shoulder, elbow):
+                raise ReachAdmissionError("reach_domain", "A captured reach does not own this carrier.")
+            return pair.coordinates_rad[0 if witness[1] == shoulder else 1]
+        if kind != "tween":
+            raise ReachAdmissionError("reach_domain", "A captured hinge has an unsupported coordinate law.")
+        target = thaw(law[5])
+        initial, goal = rational(start, work), rational(target, work)
+        difference = source_ops._op(goal, initial, "sub")
+        if clock == duration:
+            return target
+        value = source_ops._op(initial, source_ops._op(
+            source_ops._op(difference, clock, "mul"), duration, "div"), "add")
+        return round_binary64(value, work=work)
+
+    visiting = set()
+    def rotation(path):
+        work.charge("recording_body_seed_frame")
+        record = proof.frames.get(path)
+        if type(record) is not RecordingAngularFrame or path in visiting:
+            raise ReachAdmissionError("reach_domain", "A captured carrier seed needs a complete acyclic ancestry.")
+        visiting.add(path)
+        witness = record.witness
+        kind = witness[0]
+        if kind == "world":
+            value = RotationValue(UNIT)
+        elif kind == "root":
+            law = witness[8]
+            if law is None:
+                value = source_ops._rotation(thaw(witness[6]) or thaw(witness[5]))
+            else:
+                initial = thaw(law[14]) or thaw(law[8])
+                omega, clock = thaw(law[4]), elapsed(law)
+                plan = work.lookup(("reach_source_spin_phase", tuple(omega)))
+                if plan is not None and compare(abs(clock), plan.max_elapsed_s, work) > 0:
+                    plan = None
+                value = source_ops.advance_orientation(initial, omega, clock, phase_plan=plan)
+        elif kind in {"site", "follow"}:
+            parent = rotation(record.parent)
+            local = source_ops._rotation(thaw(witness[-1][1]))
+            value = source_ops.multiply(parent, local)
+        elif kind == "joint":
+            parent = rotation(record.parent)
+            local = (source_ops.axis_rotation(thaw(witness[5]), coordinate(witness))
+                     if thaw(witness[2]) == "hinge" else RotationValue(UNIT))
+            parent = source_ops.multiply(parent, local)
+            child = source_ops.inverse_rotation(source_ops._rotation(thaw(witness[8][1])))
+            value = source_ops.multiply(parent, child)
+        else:
+            raise ReachAdmissionError("reach_domain", "A direct carrier seed has an unsupported captured frame.")
+        visiting.remove(path)
+        return value
+
+    return rotation(frame)
 
 
 def recording_float_excess(bound, *, work, include_cell_radii=True, dynamic=False):
@@ -272,7 +393,9 @@ class Binary64RecordingOps(ReachPoseOps):
 
     def __init__(self, source_ops, *, constant_hinges=frozenset(), constant_hinge_check=None,
                  share_arithmetic=False, affine_coordinates=False, dynamic_phase=None,
-                 dynamic_bounds=None):
+                 dynamic_bounds=None, body_cursors=False):
+        if type(body_cursors) is not bool:
+            raise ValueError("The native carrier cursor selector must be boolean.")
         super().__init__(source_ops.work)
         self.source_ops = source_ops
         self.constant_hinges = constant_hinges
@@ -281,6 +404,13 @@ class Binary64RecordingOps(ReachPoseOps):
         self.affine_coordinates = affine_coordinates
         self.dynamic_phase = dynamic_phase
         self.dynamic_bounds = dynamic_bounds
+        # Only the production sampler opts into complete carrier recurrence.
+        # The strict stored-cell diagnostic retains its original local factors.
+        self.recording_body_cursors = body_cursors
+        # A production graph supplies only its currently varying local hinges.
+        # This one-traversal structural selector is not a numerical proof or
+        # retained cache; explicit low-level callers may leave it unrestricted.
+        self.recording_body_hinges = None
         # This per-graph index refers to completed bounded-cache root laws.
         # It is discarded after the sampler call, never retained as a cache.
         self.dynamic_extents = {}
@@ -530,6 +660,9 @@ class Binary64RecordingOps(ReachPoseOps):
             raise _UnsupportedPlanar("A recording leaf must have complete source pose operands.")
         position, rotation = pose.position, pose.rotation
         self._immutable_scalar_domain((*position, *rotation))
+        direct = self._direct_identity_source_leaf(position, rotation, inverse)
+        if direct is not None:
+            return direct
         key = (METHOD, "source_leaf", self.work.max_operand_bits, position, rotation, inverse)
         old = self.work.lookup(key)
         self._require_domain()
@@ -539,6 +672,24 @@ class Binary64RecordingOps(ReachPoseOps):
         self.work.remember(key, result)
         self._require_domain()
         return result
+
+    def _direct_identity_source_leaf(self, position, rotation, inverse):
+        """Project an already binary64 translation and literal unit rotation.
+
+        The ordinary source constructor decodes these exact finite floats and
+        projects them back to the same floats. Its only changed zero bits are
+        canonical positive zeros. A nonzero inverse translation still needs
+        the original source rotation/grid calculation and stays on that path.
+        """
+        if (any(type(value) is not float for value in (*position, *rotation))
+                or rotation != (1.0, 0.0, 0.0, 0.0)
+                or any(abs(value) > _MAX_POSITION for value in position)
+                or inverse and any(position)):
+            return None
+        self._require_domain()
+        zeros = tuple(value == 0.0 for value in position)
+        result = tuple(0.0 if zero else value for value, zero in zip(position, zeros))
+        return _FloatPose(result, _FloatRotation(1.0, 0.0, False, True), zeros, 0)
 
     def _ballistic_law(self, position, velocity, acceleration, *, anchor_time,
                        phase_interval, root_extent, context, path, scene_duration=None):
@@ -783,6 +934,141 @@ class Binary64RecordingOps(ReachPoseOps):
             raise _UnsupportedPlanar("The recording arithmetic domain changed.")
         return result
 
+    def recording_body_orientation(self, seed_builder, axis, rate, time, *, phase_start,
+                                   phase_end, context, path, proof_token, max_steps,
+                                   source_admission=None, source_records=0):
+        """Advance a freshly witnessed complete scalar/Z carrier orientation.
+
+        A seed is the ordinary private complete-world source rotation, with
+        every ancestor recording cursor disabled. The source phase proof gives
+        its exact ideal body rate; native arithmetic contributes only the
+        existing finite cursor enclosure. No parent's approximate orientation
+        or exposed quaternion can seed this independent recurrence.
+        """
+        self._domain()
+        if (self.recording_body_cursors is not True or type(proof_token) is not object
+                or not callable(seed_builder)
+                or axis is not None and (type(axis) is not int or axis != 2)
+                or type(source_records) is not int or source_records < 0
+                or source_admission is not None and not callable(source_admission)
+                or source_admission is None and source_records):
+            raise _UnsupportedPlanar("A native carrier needs an enabled scalar/Z body proof.")
+        values = (rate, time, phase_start, phase_end)
+        self._immutable_scalar_domain(values)
+        rate, time, phase_start, phase_end = (
+            value if type(value) is F else rational(value, self.work) for value in values)
+        self._require_domain()
+        if axis is None and rate:
+            raise _UnsupportedPlanar("A nonzero carrier rate needs its proved Cartesian axis.")
+        if (_checked_compare(phase_start, time, self.work) > 0
+                or _checked_compare(time, phase_end, self.work) > 0):
+            raise ReachAdmissionError("reach_domain", "A carrier cursor lies outside its proved phase.")
+        key = self._recording_cursor_key("certified_binary64_body", context, path, max_steps,
+                                        proof_token, phase_start, phase_end, axis, rate)
+        self._require_domain()
+        previous = self.work.lookup(key)
+        self._require_domain()
+        step_limit = min(max_steps, MAX_FLOAT_ROTATION_STEPS)
+        delta = increment = None
+        if previous is None or previous[2] >= step_limit:
+            self.work.charge("recording_float_body_direct_seed")
+            self._require_domain()
+            rotation = seed_builder()
+            self._require_domain()
+            if type(rotation) is not RotationValue:
+                raise _UnsupportedPlanar("A native carrier seed must be a private complete rotation.")
+            # Even an exact interior zero does not establish a structural zero
+            # in another history-dependent recording recurrence.
+            result = self._project_rotation(rotation, structural=False)
+            count = 1
+        else:
+            last, rotation, count, old_delta, old_increment = previous
+            self.work.charge("recording_float_cursor_guard")
+            self._require_domain()
+            self.work.guard(last, count)
+            self._rotation_domain(rotation)
+            if rate and time != last:
+                delta = self.source_ops._op(time, last, "sub")
+                self._require_domain()
+                if delta == old_delta:
+                    self.work.charge("recording_float_body_increment_reuse")
+                    self._require_domain()
+                    increment = old_increment
+                    self._rotation_domain(increment)
+                else:
+                    angle = self.source_ops._op(rate, delta, "mul")
+                    increment = self._axis_rotation((F(0), F(0), F(1)), angle, structural=False)
+                # A body rate postmultiplies the complete orientation. The
+                # prescribed root-spin cursor instead has a world left factor.
+                result = self._product(rotation, increment)
+            else:
+                result = rotation
+                delta, increment = old_delta, old_increment
+            self.work.charge("recording_float_rotation_step")
+            self._require_domain()
+            count += 1
+        self._require_domain()
+        admitted = False
+        def admit():
+            nonlocal admitted
+            self._require_domain()
+            if source_admission() is not True:
+                raise ReachAdmissionError("reach_domain", "The current carrier source was not admitted.")
+            admitted = True
+            return True
+        if source_admission is not None:
+            self.work.charge("recording_angular_witness_guard", source_records)
+            self._require_domain()
+        self.work.remember(key, (time, result, count, delta, increment),
+                           admission=admit if source_admission is not None else None)
+        self._require_domain()
+        # A reentrant cache callback can decline publication. The current
+        # returned value still needs its precharged source admission once.
+        if source_admission is not None and not admitted:
+            admit()
+        return result
+
+    def recording_zero_child_origin(self, position):
+        """Admit a literal native zero offset without constructing its rationals.
+
+        None leaves the complete ordinary child-vector path in place. Only
+        immutable canonical binary64 zeros can skip that numerical decoding;
+        the caller's source receipt still binds the actual current child pose.
+        """
+        if (self.work.max_operand_bits != MAX_OPERAND_BITS or type(position) is not tuple
+                or len(position) != 3
+                or any(type(value) is not float or value != 0.0 for value in position)):
+            return None
+        # Both binary64 zero signs decode to the same exact Fraction zero.
+        # All operands are immutable and their ordinary preflights fit the
+        # full domain; the existing origin checkpoint checks cancellation and
+        # the live cap before the caller uses that result.
+        self.work.charge("recording_body_child_origin")
+        return self.work.max_operand_bits == MAX_OPERAND_BITS
+
+    def recording_parent_origin(self, parent, rotation):
+        """Preserve the native origin of a proved zero-child-offset hinge.
+
+        The two omitted joint compositions both have zero local translation.
+        Their depth still counts toward the unchanged native topology ceiling;
+        no compound approximate local origin enters the position recurrence.
+        """
+        self._domain()
+        if self.recording_body_cursors is not True:
+            raise _UnsupportedPlanar("A native parent origin requires its complete carrier proof.")
+        parent = self._pose(parent)
+        if (type(parent.depth) is not int or not 0 <= parent.depth <= MAX_FLOAT_DEPTH - 2
+                or type(parent.position) is not tuple or len(parent.position) != 3
+                or any(type(value) is not float or not math.isfinite(value)
+                       or abs(value) > _MAX_POSITION for value in parent.position)
+                or type(parent.zeros) is not tuple or len(parent.zeros) != 3
+                or any(type(zero) is not bool for zero in parent.zeros)):
+            raise _UnsupportedPlanar("A native carrier origin left its finite composition domain.")
+        self._rotation_domain(parent.rotation)
+        self._rotation_domain(rotation)
+        self._require_domain()
+        return _FloatPose(parent.position, rotation, parent.zeros, parent.depth + 2)
+
     def _reusable_spin_plan(self, plan):
         """Admit every immutable field before a cursor can retain its proof.
 
@@ -873,9 +1159,81 @@ class Binary64RecordingOps(ReachPoseOps):
         self._require_domain()
         return result
 
+    def recording_affine(self, initial, rate, elapsed):
+        """Evaluate exact root translation without retaining one-use projections.
+
+        This changes neither the equation nor binary64 exposure. The fixed
+        small domain proves every omitted zero-product prospective guard fits
+        the full cap. All other operands retain the ordinary exact helper.
+        """
+        self.work.charge("recording_affine_source_domain")
+        if (self.work.max_operand_bits != MAX_OPERAND_BITS
+                or type(initial) is not tuple or len(initial) != 3
+                or type(rate) is not tuple or len(rate) != 3
+                or type(elapsed) is not F):
+            return self.source_ops.recording_affine(initial, rate, elapsed)
+        values = (*initial, *rate, elapsed)
+        for value in values:
+            if type(value) is float:
+                if not math.isfinite(value):
+                    return self.source_ops.recording_affine(initial, rate, elapsed)
+            elif type(value) not in (int, F) or max(
+                    value.numerator.bit_length(), value.denominator.bit_length()) > 2048:
+                return self.source_ops.recording_affine(initial, rate, elapsed)
+        # Finite binary64 decoding needs at most 1075 bits. Every other input
+        # above has at most 2048; exact products and sums need at most 6145.
+        self.work.guard_bits(6145)
+        key = (METHOD, "exact_affine_source_vectors", self.work.max_operand_bits,
+               tuple((type(value), value.hex() if type(value) is float else value)
+                     for value in (*initial, *rate)))
+        decoded = self.work.lookup(key)
+        self._require_domain()
+        if decoded is None:
+            decoded = (self.source_ops._vector(initial), self.source_ops._vector(rate))
+            self._require_domain()
+            self.work.remember(key, decoded)
+            self._require_domain()
+        initial, rate = decoded
+        self.work.guard(*initial, *rate, elapsed)
+        self.work.charge("pose_scale_identity_check")
+        self._require_domain()
+        if not elapsed or not any(rate):
+            scaled = ZERO
+        elif elapsed == 1:
+            scaled = rate
+        else:
+            scaled = tuple(self.source_ops._op(value, elapsed, "mul") if value else F(0)
+                           for value in rate)
+        self._require_domain()
+        self.work.charge("pose_add_zero_check")
+        self._require_domain()
+        if not any(initial):
+            result = scaled
+        elif not any(scaled):
+            result = initial
+        else:
+            result = tuple(y if not x else x if not y else self.source_ops._op(x, y, "add")
+                           for x, y in zip(initial, scaled))
+        self._require_domain()
+        return _ExactAffinePosition(result)
+
     def make_recording(self, position=ZERO, orientation=UNIT):
         self._domain()
-        if position is ZERO:
+        if type(position) is _ExactAffinePosition:
+            self.work.charge("recording_affine_position_guard")
+            self._require_domain()
+            exact_position = position.values
+            if (type(exact_position) is not tuple or len(exact_position) != 3
+                    or any(type(value) is not F for value in exact_position)):
+                raise _UnsupportedPlanar("An exact affine position needs three private rational components.")
+            self.work.guard(*exact_position)
+            # This tuple is a newly evaluated exact point. Its zero components
+            # have the canonical positive-zero image without a rounding call;
+            # every nonzero component uses the original exact projection.
+            result = tuple(round_binary64(value, work=self.work) if value else 0.0
+                           for value in exact_position)
+            self._require_domain()
+        elif position is ZERO:
             # The private immutable default is exactly three Fraction zeros.
             # The full native domain guard above proves their exact binary64
             # image; no vector conversion or numerical projection is executed.
@@ -965,7 +1323,7 @@ class Binary64RecordingOps(ReachPoseOps):
         return _FloatPose(position, rotation, zeros, parent.depth + 1)
 
 
-def _planar_paths(simulator, state, selected, *, dynamic_roots=None):
+def _planar_paths(simulator, state, selected, *, dynamic_roots=None, varying_hinges=None):
     """Classify complete dependency paths; unsupported paths stay original."""
     incoming = simulator._incoming(state)
     objects, frames, resolving = {}, {"world": True}, set()
@@ -1007,6 +1365,9 @@ def _planar_paths(simulator, state, selected, *, dynamic_roots=None):
                          and planar_rotation(simulator.model.sites[joint.child].pose.rotation)
                          and (joint.kind != "hinge" or (not joint.axis[0] and not joint.axis[1] and bool(joint.axis[2]))))
                 root = frame_roots[joint.parent + ".frame"]
+                if (value and varying_hinges is not None and joint.kind == "hinge"
+                        and not _constant_hinge(simulator, state, "hinge:" + relation)):
+                    varying_hinges.add(relation)
         elif state.modes[path] == "dynamic":
             value = False
             if dynamic_roots is not None:
@@ -1132,10 +1493,15 @@ def _sample_planar_frames(simulator, time, state, selected_paths, *, context,
         constant_hinge_check=lambda path: _constant_hinge(simulator, state, path),
         share_arithmetic=len(selected) > 16, affine_coordinates=not require_same_cells,
         dynamic_phase=phase_interval if dynamic_roots is not None else None,
-        dynamic_bounds=phase_bounds if dynamic_roots is not None else None)
+        dynamic_bounds=phase_bounds if dynamic_roots is not None else None,
+        body_cursors=not require_same_cells and recording_angular_proof is not None)
     try:
         ops._domain()
-        supported_set = _planar_paths(simulator, state, selected, dynamic_roots=dynamic_roots)
+        varying_hinges = set() if ops.recording_body_cursors else None
+        supported_set = _planar_paths(simulator, state, selected, dynamic_roots=dynamic_roots,
+                                      varying_hinges=varying_hinges)
+        ops.recording_body_hinges = frozenset(varying_hinges or ())
+        ops.recording_body_cursors = ops.recording_body_cursors and bool(ops.recording_body_hinges)
         supported = tuple(path for path in selected if path in supported_set)
         ordinary = tuple(path for path in selected if path not in supported_set)
         frames = (simulator.recording_frames(time, state, ordinary, moving_frames=moving_frames,
@@ -1147,7 +1513,8 @@ def _sample_planar_frames(simulator, time, state, selected_paths, *, context,
         # public recording_frames interface are not changed by this helper.
         _, private = simulator._resolve_kinematics(time, state, selected_frames=tuple(supported),
             pose_only=True, recording_only=True, recording_moving_frames=moving_frames,
-            recording_context=context, recording_pose_ops=ops)
+            recording_context=context, recording_pose_ops=ops,
+            recording_angular_proof=recording_angular_proof if ops.recording_body_cursors else None)
         from .reach_runtime import RecordingPose
         candidates = []
         for path in supported:

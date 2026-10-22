@@ -171,10 +171,17 @@ The [bounded native recording derivation](engineering/reach-recording-certified-
 proves additional endpoint allowances for its optional planar and dynamic
 interior samples; its complete implementation and derivation are identified
 in the producer's numerical basis. The independent reader's
-[fused interval rotation](engineering/reach-reference-fused-recording-proof.md)
-and [shared completed arithmetic](engineering/reach-reference-shared-recording-proof.md)
+[fused interval rotation](engineering/reach-reference-fused-recording-proof.md),
+[shared completed arithmetic](engineering/reach-reference-shared-recording-proof.md)
+and [complete carrier and root recurrence](engineering/reach-reference-world-recording-proof.md)
 derivations keep source reconstruction and supplied-byte checks separate from
 the producer. Their identities are retained in the complete execution inputs.
+The [independent clock-cell derivation](engineering/reach-independent-clock-cells.md)
+checks the same exact binary32 rounding cells on a bounded integer grid, with
+the original rational calculation retained for other operand domains.
+The [independent identity-carrier derivation](engineering/reach-reference-identity-carriers.md)
+reuses a parent enclosure only after proving an exact identity relative
+transform and admitting the complete current source ancestry.
 
 The [recorded delivery checkpoints](engineering/reach-delivery-implementation.md)
 and [independent reader implementation](engineering/reach-independent-validation.md)

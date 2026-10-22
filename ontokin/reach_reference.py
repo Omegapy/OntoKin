@@ -330,9 +330,11 @@ class _Arithmetic:
             result = self.add(result, value)
         return result
 
-    def remember(self, key, value):
+    def remember(self, key, value, *, admission=None):
         self.tick()
         self._sync_cache_operand_limit()
+        if admission is not None and admission() is False:
+            return value
         if key in self.cache:
             del self.cache[key]
         elif len(self.cache) >= MAX_CACHE:
@@ -1179,6 +1181,119 @@ class _PoseArithmetic:
             return direct()
         return result
 
+    def _recording_body_orientation(self, direct, *, axis, rate, witness, context, clock, shared=False,
+                                    source_admission=None, source_records=0):
+        """Advance an independently proved constant body-axis orientation.
+
+        The caller supplies only its own ideal source proof and a context-free
+        independent seed. Two complex interval products are exactly the right
+        Hamilton product by the Cartesian increment. No production quaternion,
+        derivative, numeric allowance or sampled agreement enters this proof.
+        """
+        def direct_result():
+            result = direct()
+            if source_admission is not None:
+                for _ in range(source_records):
+                    self.a.tick()
+                source_admission()
+                self.a.guard(*(endpoint for cell in result for endpoint in (cell.lo, cell.hi)))
+            return result
+
+        limit = self.a.operand_limit
+        if (self.a.bits != 128 or limit != MAX_OPERAND_BITS or self.a.work is None
+                or not hasattr(self.a.work, "callback_error") or type(rate) is not F
+                or axis not in (0, 1, 2) or type(axis) is not int or type(witness) is not tuple):
+            return direct_result()
+        key = self._key("recording_body_orientation", context)
+        previous = self.a.lookup(key)
+        clock = F(clock)
+        self.a.guard(rate, clock)
+        if self.a.operand_limit != limit:
+            return direct_result()
+        # The optional delta has at most 3076-bit prospective operands on this
+        # sufficient domain. Other clocks/rates keep the ordinary source path.
+        if any(max(abs(value.numerator).bit_length(), value.denominator.bit_length()) > 1024
+               for value in (rate, clock)):
+            return direct_result()
+        steps, advance = 0, False
+        if previous is not None:
+            old_witness, old_axis, old_rate, old_clock, old_rotation, steps = previous
+            self.a.guard(old_rate, old_clock,
+                         *(endpoint for cell in old_rotation for endpoint in (cell.lo, cell.hi)))
+            advance = (old_witness == witness and old_axis == axis and old_rate == rate and
+                       old_clock < clock and steps < 64 and
+                       all(max(abs(value.numerator).bit_length(), value.denominator.bit_length()) <= 1024
+                           for value in (old_clock, *(endpoint for cell in old_rotation
+                                                       for endpoint in (cell.lo, cell.hi)))))
+        if advance:
+            if rate:
+                try:
+                    elapsed = self.a.exact(clock, old_clock, "sub")
+                    delta = self.a.exact(self.a.exact(rate, elapsed, "mul"), 2, "div")
+                    if self.a.operand_limit != limit:
+                        advance = False
+                    elif abs(delta) <= F(1, 4):
+                        delta_cell = self.a.grid(delta, delta)
+                    else:
+                        advance = False
+                except ReferenceError as error:
+                    if error.code != "resource" or self.a.work.callback_error is error:
+                        raise
+                    try:
+                        changed = self.a.operand_limit != limit
+                    except ReferenceError:
+                        raise error
+                    if not changed:
+                        raise
+                    advance = False
+                if self.a.operand_limit != limit:
+                    return direct_result()
+                if advance:
+                    # Keep all original transcendental and interval fallback
+                    # failures outside the added delta's retry handler.
+                    sine, cosine = self.a.sincos(delta_cell)
+                    result = list(old_rotation)
+                    for first, second in (((1, 0), (2, 3)), ((2, 0), (3, 1)),
+                                          ((3, 0), (1, 2)))[axis]:
+                        if self.a.operand_limit != limit:
+                            return direct_result()
+                        self.a.guard(sine.lo, sine.hi, cosine.lo, cosine.hi,
+                                     *(endpoint for index in (first, second)
+                                       for endpoint in (old_rotation[index].lo, old_rotation[index].hi)))
+                        if self._zero((old_rotation[first], old_rotation[second])):
+                            continue
+                        result[first], result[second] = self._recording_rotate_sincos(
+                            old_rotation[first], old_rotation[second], sine, cosine, shared=shared)
+                    result = tuple(result)
+            else:
+                # Nonzero source contributions may cancel exactly. The
+                # complete ideal world quaternion is then constant.
+                result = old_rotation
+            if advance:
+                steps += 1
+        if not advance:
+            result, steps = direct(), 0
+        if self.a.operand_limit != limit:
+            return direct_result()
+        self.a.guard(*(endpoint for cell in result for endpoint in (cell.lo, cell.hi)))
+        # Charge each bounded source-record recheck before the atomic final
+        # admission. The hook runs after the insertion's own callback, with
+        # no later callback before mutation, so a changed source never
+        # publishes a mismatched witness/seed pair.
+        for _ in range(source_records):
+            self.a.tick()
+        def admit():
+            if self.a.operand_limit != limit:
+                return False
+            if source_admission is not None:
+                source_admission()
+            self.a.guard(*(endpoint for cell in result for endpoint in (cell.lo, cell.hi)))
+            return True
+        self.a.remember(key, (witness, axis, rate, clock, result, steps), admission=admit)
+        if self.a.operand_limit != limit:
+            return direct_result()
+        return result
+
     def _normalized_axis(self, axis):
         """Reuse the unchanged independent axis enclosure across hinge clocks."""
         key = self._key("normalized_axis", axis)
@@ -1392,6 +1507,27 @@ class _AxialDerivative:
     acceleration: F
     axis: int | None
     rate: F
+
+
+@dataclass(frozen=True)
+class _RecordingBodyRate:
+    """A source-derived constant body rate and its fresh ancestry witness."""
+    axis: int | None
+    rate: F
+    moving: bool
+    witness: tuple
+    path: str
+    direct: object
+    receipts: tuple
+    zero_origin: bool = False
+    identity_relative: bool = False
+
+
+@dataclass(frozen=True)
+class _RecordingSourceReceipt:
+    """An ephemeral getter plus the immutable source operands it admitted."""
+    read: object
+    values: tuple
 
 
 def _plain(value, arithmetic):
@@ -1671,6 +1807,19 @@ class ReachReference:
             self.a.remember(key, slope)
         return coordinate, slope if active.status == "running" else F(0)
 
+    def _prescribed_root_translation(self, path, time, state, *, ideal, pose_only):
+        """The unchanged prescribed translation, independent of root orientation."""
+        position = (state.ideal_positions if ideal else state.positions)[path]
+        velocity, omega = self.p.vector(ZERO), self.p.vector(ZERO)
+        move = state.claims.get((path, "translation"))
+        if move is not None:
+            action, active = self.model.actions[move], state.actions[move]
+            initial = active.ideal_initial if ideal else active.initial
+            position = self.p.add(initial, self.p.scale(action.vector, active.elapsed_at(time)))
+            if not pose_only and active.status == "running":
+                velocity = self.p.vector(action.vector)
+        return position, velocity, omega
+
     def _root_pose(self, path, time, state, *, ideal, pose_only=False):
         if state.modes[path] == "dynamic":
             anchor = state.dynamic[path]
@@ -1685,16 +1834,9 @@ class ReachReference:
                 zero = self.p.vector(ZERO)
                 return PoseEnclosure(position, rotation, zero, zero)
             return PoseEnclosure(position, rotation, self.p.add(saved.velocity, self.p.scale(acceleration, dt)), saved.omega)
-        position = (state.ideal_positions if ideal else state.positions)[path]
         orientation = (state.ideal_orientations if ideal else state.orientations)[path]
-        velocity, omega = self.p.vector(ZERO), self.p.vector(ZERO)
-        move = state.claims.get((path, "translation"))
-        if move is not None:
-            action, active = self.model.actions[move], state.actions[move]
-            initial = active.ideal_initial if ideal else active.initial
-            position = self.p.add(initial, self.p.scale(action.vector, active.elapsed_at(time)))
-            if not pose_only and active.status == "running":
-                velocity = self.p.vector(action.vector)
+        position, velocity, omega = self._prescribed_root_translation(
+            path, time, state, ideal=ideal, pose_only=pose_only)
         spin = state.claims.get((path, "orientation"))
         if spin is not None:
             action, active = self.model.actions[spin], state.actions[spin]
@@ -1704,9 +1846,369 @@ class ReachReference:
                 omega = self.p.vector(action.vector)
         return PoseEnclosure(position, orientation, velocity, omega)
 
-    def _pose_map(self, time, state, *, ideal, pose_only=False, selected=None, recording_context=None):
+    def _recording_body_domain(self):
+        return (self.a.bits == 128 and self.a.operand_limit == MAX_OPERAND_BITS and
+                self.a.work is not None and hasattr(self.a.work, "callback_error"))
+
+    def _recording_source_witness(self, *values):
+        """Admit one bounded source record without retaining a second cache.
+
+        Only immutable, small, typed source leaves enter a cursor receipt.
+        This is a fresh structural admission, not an arithmetic result. Every
+        subsequent exact rate/delta operation still uses charged arithmetic.
+        """
+        # Callers charge BEFORE capturing this immutable tuple. This helper
+        # itself must not introduce a callback between capture and admission.
+        if len(values) > 16:
+            return None
+
+        def admitted(value, depth=0):
+            if value is None or type(value) is str:
+                return True
+            if type(value) is F:
+                return max(abs(value.numerator).bit_length(), value.denominator.bit_length()) <= 1024
+            if type(value) is int:
+                return abs(value).bit_length() <= 1024
+            if type(value) is float:
+                return math.isfinite(value)
+            if type(value) is Interval:
+                return (type(value.lo) is F and type(value.hi) is F and
+                        admitted(value.lo, depth) and admitted(value.hi, depth))
+            return (type(value) is tuple and depth < 3 and len(value) <= 8 and
+                    all(admitted(item, depth + 1) for item in value))
+
+        return values if all(admitted(value) for value in values) else None
+
+    def _recording_admit_receipts(self, receipts):
+        """Recheck captured operands after the last callback, without a new one."""
+        def guard(value):
+            if type(value) is F:
+                self.a.guard(value)
+            elif type(value) is int:
+                self.a.guard(F(value))
+            elif type(value) is float and self.a.operand_limit < 1075:
+                self.a.guard(F(value))
+            elif type(value) is Interval:
+                self.a.guard(value.lo, value.hi)
+            elif type(value) is tuple:
+                for part in value:
+                    guard(part)
+
+        for receipt in receipts:
+            try:
+                current = receipt.read()
+            except (KeyError, AttributeError, IndexError) as error:
+                raise ReferenceError("identity", "Independent source changed during recording proof") from error
+            if self._recording_source_witness(*current) is None:
+                raise ReferenceError("identity", "Independent source changed during recording proof")
+            guard(current)
+            guard(receipt.values)
+            if current != receipt.values:
+                raise ReferenceError("identity", "Independent source changed during recording proof")
+
+    def _recording_capture(self, read):
+        self.a.tick()
+        if not self._recording_body_domain():
+            return None
+        values = read()
+        witness = self._recording_source_witness(*values)
+        return None if witness is None else _RecordingSourceReceipt(read, witness)
+
+    def _recording_proof_narrowed(self, error):
+        """Only an added proof's own changed-domain refusal may fall back."""
+        if error.code != "resource" or self.a.work.callback_error is error:
+            return False
+        try:
+            return self.a.operand_limit != MAX_OPERAND_BITS
+        except ReferenceError:
+            return False
+
+    def _recording_root_body(self, path, state):
+        def read():
+            action_path = state.claims.get((path, "orientation"))
+            head = ("root", path, state.modes[path], state.ideal_orientations[path], action_path)
+            if action_path is None:
+                return head
+            action, active = self.model.actions[action_path], state.actions[action_path]
+            return (*head, action.kind, action.vector, active.ideal_initial, active.status,
+                    active.elapsed, active.since, active.rotation_error)
+        receipt = self._recording_capture(read)
+        if receipt is None or receipt.values[2] == "dynamic":
+            return None
+        witness = receipt.values
+        if witness[4] is None:
+            orientation = witness[3]
+            def direct(clock):
+                self.a.tick()
+                self.a.guard(*(endpoint for cell in orientation for endpoint in (cell.lo, cell.hi)))
+                return orientation
+            return _RecordingBodyRate(None, F(0), False, witness, path + ".frame", direct, (receipt,))
+        kind, raw_vector, initial, status, elapsed, since, rotation_error = witness[5:]
+        if kind != "spin" or type(raw_vector) is not tuple or len(raw_vector) != 3:
+            return None
+        def direct(clock):
+            active_elapsed = (self.a.exact_sum(elapsed, self.a.exact(clock, since, "sub"))
+                              if status == "running" else elapsed)
+            return self.p.multiply(self.p.spin(raw_vector, active_elapsed), initial)
+        if status != "running":
+            return _RecordingBodyRate(None, F(0), False, witness, path + ".frame", direct, (receipt,))
+        try:
+            vector = tuple(F(value) for value in raw_vector)
+            self.a.guard(*vector, rotation_error)
+            nonzero = tuple(index for index, value in enumerate(vector) if value)
+            if not nonzero:
+                return _RecordingBodyRate(None, F(0), False, witness, path + ".frame", direct, (receipt,))
+            if len(nonzero) != 1 or rotation_error:
+                return None
+            axis = nonzero[0]
+            if max(abs(vector[axis].numerator).bit_length(), vector[axis].denominator.bit_length()) > 1024:
+                return None
+            sign = self._axis_transport(initial, axis)
+            if sign is None or not self._recording_body_domain():
+                return None
+            rate = vector[axis] if sign == 1 else self.a.exact(F(0), vector[axis], "sub")
+        except ReferenceError as error:
+            if not self._recording_proof_narrowed(error):
+                raise
+            return None
+        return (_RecordingBodyRate(axis, rate, bool(rate), witness, path + ".frame", direct, (receipt,))
+                if self._recording_body_domain() else None)
+
+    def _recording_fixed_sign(self, rotation, axis):
+        if (type(rotation) is tuple and len(rotation) == 4 and
+                all(type(part) in (int, float, F) for part in rotation)):
+            zero = tuple(part == 0 for part in rotation)
+            return (1 if not all(zero) and all(zero[index + 1] for index in range(3) if index != axis)
+                    else -1 if not all(zero) and zero[0] and zero[axis + 1] else None)
+        return self._axis_transport(rotation, axis)
+
+    def _recording_fixed_orientation(self, parent, rotation, *, inverse=False):
+        """Omit a fixed positive scalar quaternion's exact identity product."""
+        self.a.tick()
+        if (type(rotation) is tuple and len(rotation) == 4 and
+                all(type(part) in (int, float, F) for part in rotation) and
+                all(type(part) is not float or math.isfinite(part) for part in rotation)):
+            self.a.guard(*rotation,
+                         *(endpoint for cell in parent for endpoint in (cell.lo, cell.hi)))
+            if rotation[0] > 0 and all(part == 0 for part in rotation[1:]):
+                # Independent quaternion normalization maps this exact raw
+                # operand to +1. Its conjugate is also +1; neither operation
+                # nor a Hamilton product needs to be constructed.
+                return parent
+        fixed = self.p.quaternion(rotation)
+        if inverse:
+            fixed = self.p.conjugate(fixed)
+        return self.p.multiply(parent, fixed)
+
+    def _recording_attached_body(self, parent, attachment, *, path):
+        if parent is None:
+            return None
+        kind, relation = attachment
+        def read():
+            if kind == "site":
+                site = self.model.sites[relation]
+                return (kind, relation, site.owner + ".frame", site.pose.position, site.pose.rotation)
+            if kind == "follow":
+                follow = self.model.follows[relation]
+                return (kind, relation, follow.parent, follow.offset.position, follow.offset.rotation,
+                        follow.child + ".frame")
+            joint = self.model.joints[relation]
+            child = self.model.sites[joint.child]
+            pose = child.pose
+            return (kind, relation, joint.parent + ".frame", pose.position, pose.rotation,
+                    joint.kind, joint.child, child.owner + ".frame")
+        receipt = self._recording_capture(read)
+        if receipt is None:
+            return None
+        values = receipt.values
+        if (values[2] != parent.path or (kind == "follow" and values[5] != path) or
+                (kind == "static_joint" and (values[5] not in {"slider", "fixed", "grip"} or values[7] != path))):
+            return None
+        rotation = values[4]
+        def direct(clock):
+            return self._recording_fixed_orientation(parent.direct(clock), rotation,
+                                                      inverse=kind == "static_joint")
+        try:
+            self.a.guard(parent.rate)
+            sign = 1 if not parent.rate else self._recording_fixed_sign(rotation, parent.axis)
+            if sign is None or not self._recording_body_domain():
+                return None
+            rate = parent.rate if sign == 1 else self.a.exact(F(0), parent.rate, "sub")
+        except ReferenceError as error:
+            if not self._recording_proof_narrowed(error):
+                raise
+            return None
+        return (_RecordingBodyRate(parent.axis, rate, parent.moving, (parent.witness, values),
+                                   path, direct, (*parent.receipts, receipt))
+                if self._recording_body_domain() else None)
+
+    def _recording_coordinate_recipe(self, relation, state):
+        def read():
+            owner = state.claims.get((relation, "coordinate"))
+            if owner is None:
+                return relation, None, state.ideal_coordinates[relation]
+            action, active = self.model.actions[owner], state.actions[owner]
+            axes = ((action.reach.shoulder, action.reach.elbow) if action.kind == "reach_planar" else None)
+            return (relation, owner, action.kind, action.target, axes, action.duration, action.goal,
+                    active.ideal_initial, active.targets, active.status, active.elapsed, active.since)
+        receipt = self._recording_capture(read)
+        if receipt is None:
+            return None
+        values = receipt.values
+        if values[1] is None:
+            initial = F(values[2])
+            def direct(clock):
+                self.a.guard(initial)
+                return initial
+            return F(0), direct, receipt
+        _, _, kind, _, axes, duration, goal, start, targets, status, elapsed, since = values
+        if kind not in {"reach_planar", "tween"}:
+            return None
+        index = axes.index(relation) if kind == "reach_planar" else None
+        initial = F(start[index] if index is not None else start)
+        target = F(targets[index] if index is not None else goal)
+        self.a.guard(initial, target)
+        # Preserve the original affine law's subtraction preflight, including
+        # on a hit. Its immutable numeric cache is shared, not its source clock.
+        an, ad = abs(target.numerator).bit_length(), target.denominator.bit_length()
+        bn, bd = abs(initial.numerator).bit_length(), initial.denominator.bit_length()
+        if max(max(an + bd, bn + ad) + 1, ad + bd) > self.a.operand_limit:
+            raise ReferenceError("resource", "Independent reference intermediate operand limit exceeded")
+        duration = F(duration)
+        self.a.guard(duration)
+        if not duration:
+            raise _Uncertain("Reference division includes zero")
+        if initial == target:
+            # Admission above still checks both the original subtraction
+            # preflight and nonzero duration. The exact slope is then zero,
+            # so there is no subtraction/division or numeric lookup to perform.
+            slope = F(0)
+        else:
+            key = ("coordinate_affine_law", self.a.operand_limit, initial, target, duration)
+            slope = self.a.lookup(key)
+            if slope is None:
+                slope = self.a.exact(self.a.exact(target, initial, "sub"), duration, "div")
+                self.a.remember(key, slope)
+        self.a.guard(initial, slope, elapsed, since)
+        def direct(clock):
+            active_elapsed = (self.a.exact_sum(elapsed, self.a.exact(clock, since, "sub"))
+                              if status == "running" else elapsed)
+            return self.a.exact(initial, self.a.exact(slope, active_elapsed, "mul"), "add")
+        return slope if status == "running" else F(0), direct, receipt
+
+    def _recording_hinge_body(self, parent, relation, state, *, path):
+        if parent is None:
+            return None
+        def read():
+            joint = self.model.joints[relation]
+            child = self.model.sites[joint.child]
+            return (joint.path, joint.kind, joint.parent, joint.child, joint.axis,
+                    child.owner + ".frame", child.pose.position, child.pose.rotation)
+        receipt = self._recording_capture(read)
+        if receipt is None:
+            return None
+        values = receipt.values
+        _, kind, parent_site, _, raw_axis, child_path, position, rotation = values
+        if (kind != "hinge" or parent_site + ".frame" != parent.path or child_path != path
+                or type(raw_axis) is not tuple or len(raw_axis) != 3):
+            return None
+        nonzero = tuple(index for index, value in enumerate(raw_axis) if value)
+        if len(nonzero) != 1 or abs(raw_axis[nonzero[0]]) != 1:
+            return None
+        axis = nonzero[0]
+        if parent.rate and parent.axis != axis:
+            return None
+        # This recipe uses the original affine subtraction/division kernels.
+        # Their failures must escape; only arithmetic introduced for the
+        # optional body-rate combination belongs in its changed-cap fallback.
+        coordinate = self._recording_coordinate_recipe(relation, state)
+        if coordinate is None or not self._recording_body_domain():
+            return None
+        rate, coordinate_at, coordinate_receipt = coordinate
+        try:
+            self.a.guard(rate, parent.rate)
+            if any(max(abs(value.numerator).bit_length(), value.denominator.bit_length()) > 1024
+                   for value in (rate, parent.rate)):
+                return None
+            local_rate = rate if not rate or raw_axis[axis] == 1 else self.a.exact(F(0), rate, "sub")
+            combined = (local_rate if not parent.rate else parent.rate if not local_rate else
+                        self.a.exact(parent.rate, local_rate, "add"))
+            if not self._recording_body_domain():
+                return None
+            sign = 1 if not combined else self._recording_fixed_sign(rotation, axis)
+            if sign is None or not self._recording_body_domain():
+                return None
+            if sign == -1:
+                combined = self.a.exact(F(0), combined, "sub")
+        except ReferenceError as error:
+            if not self._recording_proof_narrowed(error):
+                raise
+            return None
+        if (not self._recording_body_domain() or
+                max(abs(combined.numerator).bit_length(), combined.denominator.bit_length()) > 1024):
+            return None
+        def direct(clock):
+            local = self.p.hinge(raw_axis, coordinate_at(clock), F(0), ideal=True).orientation
+            result = self.p.multiply(parent.direct(clock), local)
+            return self._recording_fixed_orientation(result, rotation, inverse=True)
+        zero_origin = (type(position) is tuple and len(position) == 3 and
+                       all(type(part) in (int, float, F) and part == 0 for part in position))
+        law = coordinate_receipt.values
+        if law[1] is None:
+            zero_coordinate = law[2] == 0
+        else:
+            # The captured recipe already admitted these exact source values,
+            # its original affine preflight and the nonzero duration. Requiring
+            # BOTH endpoints to be zero proves the whole local angle is zero,
+            # including a paused law; a zero sampled slope alone does not.
+            index = law[4].index(relation) if law[2] == "reach_planar" else None
+            start = law[7][index] if index is not None else law[7]
+            target = law[8][index] if index is not None else law[6]
+            zero_coordinate = start == target == 0
+        identity_relative = (zero_origin and zero_coordinate and
+            type(rotation) is tuple and len(rotation) == 4 and
+            all(type(part) in (int, float, F) for part in rotation) and
+            all(type(part) is not float or math.isfinite(part) for part in rotation) and
+            rotation[0] > 0 and all(part == 0 for part in rotation[1:]))
+        return _RecordingBodyRate(axis, combined, parent.moving or bool(rate),
+                                  (parent.witness, values, coordinate_receipt.values), path, direct,
+                                  (*parent.receipts, receipt, coordinate_receipt), zero_origin, identity_relative)
+
+    def _recording_identity_parent(self, parent, body):
+        """Reuse an admitted complete pose through an exact identity hinge.
+
+        The source recipe remains unchanged for direct or narrow-domain
+        fallback. This full-domain path only omits a second world trajectory
+        whose complete relative transform has been proved exactly +identity.
+        No source receipt, numeric cache or exposed field is borrowed implicitly.
+        """
+        if not body.identity_relative or not self._recording_body_domain():
+            return None
+        if type(parent) is not PoseEnclosure:
+            return None
+        vectors = (parent.position, parent.orientation, parent.velocity, parent.omega)
+        if any(type(values) is not tuple or len(values) != size or
+               any(type(cell) is not Interval or type(cell.lo) is not F or type(cell.hi) is not F
+                   for cell in values) for values, size in zip(vectors, (3, 4, 3, 3))):
+            return None
+        # All current ancestry checks remain charged, even though there is no
+        # new cursor to look up or publish. After their last callback the full
+        # receipt chain and every returned field are admitted without another
+        # callback. A changed domain takes the original immutable seed path.
+        for _ in body.receipts:
+            self.a.tick()
+            if not self._recording_body_domain():
+                return None
+        self._recording_admit_receipts(body.receipts)
+        self.a.guard(*(endpoint for values in vectors for cell in values for endpoint in (cell.lo, cell.hi)))
+        return parent
+
+    def _pose_map(self, time, state, *, ideal, pose_only=False, selected=None, recording_context=None,
+                  recording_seed=False):
         if recording_context is not None and not (pose_only and ideal):
             raise ValueError("Independent recording recurrence requires ideal recording poses")
+        if recording_seed and (recording_context is not None or not (pose_only and ideal)):
+            raise ValueError("Independent recording seeds require context-free ideal recording poses")
         key = (id(state), time, ideal, pose_only)
         if recording_context is not None:
             key += (recording_context,)
@@ -1717,7 +2219,11 @@ class ReachReference:
         shared_recording = recording_context is not None and len(targets) > 16
         self.a.tick()
         limit = self._sync_numeric_cache()
-        cached = self._poses.get(key)
+        body_recording = recording_context is not None and self._recording_body_domain()
+        # Recording walks re-admit their actual source witnesses. In
+        # particular, a prior complete frame map must not bypass a changed
+        # action/attachment receipt at the same explicit recording clock.
+        cached = self._poses.get(key) if not (body_recording or recording_seed) else None
         if cached is not None and cached[0] is state:
             frames = cached[1]
             if all(path in frames for path in targets):
@@ -1726,6 +2232,8 @@ class ReachReference:
             frames = {"world": self.p.identity()}
         incoming = self._incoming(state)
         visiting = set()
+        body_rates = {"world": _RecordingBodyRate(None, F(0), False, ("world",), "world",
+                                                 lambda clock: self.p.identity().orientation, ())}
 
         def frame(path):
             self.a.tick()
@@ -1735,6 +2243,9 @@ class ReachReference:
             if stem in self.model.sites:
                 site = self.model.sites[stem]
                 value = self.p.compose(frame(site.owner + ".frame"), self.p.constant(site.pose))
+                if body_recording:
+                    body_rates[path] = self._recording_attached_body(
+                        body_rates.get(site.owner + ".frame"), ("site", stem), path=path)
             else:
                 if stem in visiting or len(visiting) > 128:
                     raise ReferenceError("unsupported", "Independent source frame graph is cyclic or too deep")
@@ -1744,10 +2255,33 @@ class ReachReference:
                     if kind == "follow":
                         follow = self.model.follows[relation]
                         value = self.p.compose(frame(follow.parent), self.p.constant(follow.offset))
+                        if body_recording:
+                            body_rates[path] = self._recording_attached_body(
+                                body_rates.get(follow.parent), ("follow", relation), path=path)
                     else:
                         joint = self.model.joints[relation]
                         value = frame(joint.parent + ".frame")
-                        if joint.kind in {"hinge", "slider"}:
+                        body = body_rates.get(joint.parent + ".frame")
+                        child_pose = self.model.sites[joint.child].pose
+                        used_body = False
+                        if body_recording and joint.kind == "hinge" and body is not None:
+                            body = self._recording_hinge_body(body, relation, state, path=path)
+                            if (body is not None and body.moving and body.zero_origin
+                                    and self._recording_body_domain()):
+                                identical = self._recording_identity_parent(value, body)
+                                if identical is not None:
+                                    value = identical
+                                else:
+                                    rotation = self.p._recording_body_orientation(
+                                        lambda: body.direct(time), axis=body.axis, rate=body.rate, witness=body.witness,
+                                        context=(recording_context, path), clock=time, shared=shared_recording,
+                                        source_admission=lambda: self._recording_admit_receipts(body.receipts),
+                                        source_records=len(body.receipts))
+                                    self.a.guard(*(endpoint for vector in (value.position, rotation)
+                                                   for cell in vector for endpoint in (cell.lo, cell.hi)))
+                                    value = PoseEnclosure(value.position, rotation, value.velocity, value.omega)
+                                used_body = True
+                        if joint.kind in {"hinge", "slider"} and not used_body:
                             coordinate, rate = self._coordinate(relation, time, state, ideal=ideal)
                             angle_context = ((recording_context, relation)
                                              if recording_context is not None and rate else None)
@@ -1758,19 +2292,46 @@ class ReachReference:
                                     recording_context=angle_context,
                                     recording_time=time if angle_context is not None else None,
                                     shared_recording=shared_recording)
-                            else:
+                            elif joint.kind == "slider":
                                 motion = self.p.make(self.p.scale(joint.axis, coordinate), velocity=self.p.scale(joint.axis, rate))
                             value = self.p.compose(value, motion)
-                        value = self.p.compose(value, self.p.inverse(self.p.constant(self.model.sites[joint.child].pose)))
+                        if not used_body:
+                            value = self.p.compose(value, self.p.inverse(self.p.constant(child_pose)))
+                        if body_recording:
+                            body_rates[path] = (body if joint.kind == "hinge" else
+                                self._recording_attached_body(body, ("static_joint", relation), path=path))
                 else:
-                    value = self._root_pose(stem, time, state, ideal=ideal, pose_only=pose_only)
+                    body = self._recording_root_body(stem, state) if body_recording else None
+                    if body_recording:
+                        body_rates[path] = body
+                    if body is not None and body.moving and self._recording_body_domain():
+                        # Prescribed world translation has no orientation
+                        # operand. Evaluate it first, then the captured root
+                        # orientation so its final receipt admission follows
+                        # all translation callbacks and precedes publication.
+                        position, velocity, omega = self._prescribed_root_translation(
+                            stem, time, state, ideal=ideal, pose_only=pose_only)
+                        rotation = self.p._recording_body_orientation(
+                            lambda: body.direct(time), axis=body.axis, rate=body.rate, witness=body.witness,
+                            context=(recording_context, path), clock=time, shared=shared_recording,
+                            source_admission=lambda: self._recording_admit_receipts(body.receipts),
+                            source_records=len(body.receipts))
+                        value = PoseEnclosure(position, rotation, velocity, omega)
+                    else:
+                        value = self._root_pose(stem, time, state, ideal=ideal, pose_only=pose_only)
                 visiting.remove(stem)
+            if body_recording:
+                # Added source-proof callbacks may change the live domain
+                # after the ordinary pose was computed, even on a fallback.
+                self.a.guard(*(endpoint for vector in (value.position, value.orientation,
+                                                       value.velocity, value.omega)
+                               for cell in vector for endpoint in (cell.lo, cell.hi)))
             frames[path] = value
             return value
 
         for path in targets:
             frame(path)
-        if limit == self.a.operand_limit and len(self._poses) < MAX_CACHE:
+        if not (body_recording or recording_seed) and limit == self.a.operand_limit and len(self._poses) < MAX_CACHE:
             self._poses[key] = (state, frames)
         return frames
 

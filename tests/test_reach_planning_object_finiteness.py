@@ -143,6 +143,9 @@ class PlanningObjectFinitenessTests(unittest.TestCase):
                 self.assertEqual(outcomes[0], outcomes[1])
 
     def test_each_planner_object_field_preserves_cancellation_identity_and_live_cap(self):
+        # Explicitly select the retained field layer whose four callbacks this
+        # test interrupts. Complete-signature cancellation has its own test.
+        self.enterContext(patch.object(ReachPoseOps, "_complete_finite_signature", return_value=False))
         for cancel_at in (1, 2, 3, 4):
             simulator = self.simulator(planning=True)
             pose = private_pose(simulator.pose_ops)

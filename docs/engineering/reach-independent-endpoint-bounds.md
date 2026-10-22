@@ -204,3 +204,32 @@ Focused tests are in
 and [`test_reach_stored_lift_signs.py`](../../tests/test_reach_stored_lift_signs.py).
 Full source, hostile-byte, cancellation, rollback, destination and release
 acceptance still require their separately executed evidence.
+
+## Attaining-point witness for independent geometry
+
+The independent source-geometry walk computes the exact maximum of each
+vertex's L1 radius. Its existing outward binary64 screening never excludes a
+possible new maximum. A repeated vertex with the same ordered absolute
+binary64 coordinates as a point attaining the current maximum has exactly
+that same rational sum. The walk may therefore retain the three immutable
+coordinates of one attaining point alongside its already retained maximum,
+and omit only the repeated rational decodes and additions for an equal tuple.
+This also applies when the maximum is zero or two distinct ordered tuples
+attain the same maximum; the most recently proved attaining tuple can replace
+the previous witness without changing the maximum.
+
+Every vertex still consumes its original `independent_geometry_point`
+checkpoint and undergoes the complete source-to-stored binary32 comparison.
+Every component still participates in the vertex-error maxima. Changed source
+coordinates, component order, or stored values cannot use this equality to
+omit those checks. The witness applies only after that checkpoint, at the
+original full operand cap; narrowing keeps the original exact scalar sum and
+its guards. Finite binary64 ratios and the three-term original rational sum
+fit that full domain. No cache, numeric allowance, certificate quantity,
+vertex limit, output byte or source occurrence is added or changed.
+
+The dedicated tests in
+[`test_reach_geometry_maximum_witness.py`](../../tests/test_reach_geometry_maximum_witness.py)
+compare the exact original extrema and actual charged arithmetic, including
+new maxima, supplied-byte mutations, current-domain narrowing and original
+cancellation identity. Execution results are recorded separately.

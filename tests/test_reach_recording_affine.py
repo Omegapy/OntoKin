@@ -184,7 +184,9 @@ class ReachRecordingAffineTests(unittest.TestCase):
                     law = native._affine_law(F(0), F(1), F(2), running=True)
                     coordinate = _AffineCoordinate(law, F(1, 3), True)
                     args = dict(context=object(), path="hinge:joint", max_steps=10000)
-                    pose = Pose(position=(0.25, 0.0, 0.0))
+                    # A nonidentity rotation exercises the retained leaf cache;
+                    # direct identity leaves have their own checkpoint tests.
+                    pose = Pose(position=(0.25, 0.0, 0.0), rotation=(1.0, 0.0, 0.0, 0.25))
                     build = lambda value, inverse=False: native.source_ops.constant_pose(value)
                     native.recording_constant_pose(pose, build=build)
                     native.recording_axis_rotation((0, 0, 1), coordinate, **args)

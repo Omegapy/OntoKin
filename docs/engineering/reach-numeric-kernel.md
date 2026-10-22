@@ -65,11 +65,13 @@ Callback exceptions retain their exact identity. No cache is added, and the
 per-admission interval/series counters and request limits are unchanged.
 
 Caches are request-local, bounded to 256 entries, and may stop inserting when
-full. Hits still check cancellation and consume lookup work. An IK hit rechecks
-the current closed limits; topology, modes and claims always remain the
-caller's fresh responsibility. Cached counters describe the current lookup,
-not the historical solve. Actual source/Agent tests and execution logs must
-identify their code revision separately from this derivation.
+full. Hits still check cancellation and consume lookup work. An IK hit freshly
+checks the current closed limits: the geometry-only proof compares its targets
+against those limits, while the complete proof described below admits all four
+actual limit bit patterns as part of its key. Topology, modes and claims always
+remain the caller's fresh responsibility. Cached counters describe the current
+lookup, not the historical solve. Actual source/Agent tests and execution logs
+must identify their code revision separately from this derivation.
 
 The source pose implementation additionally reuses immutable axis reductions,
 stationary poses, stationary compositions and constant inverse frames in that
@@ -802,6 +804,34 @@ numeric allowances and all fixed resource limits keep their prior meanings.
 
 ### Reusing a completed source-pose finiteness proof
 
+The current complete signature is itself a sufficient proof when all four
+fields pass the strict small-domain predicates above. At the original full
+operand cap, the single `pose_finiteness_proof` checkpoint precedes the read
+of all four actual immutable payloads. If every payload has the required
+exact type/shape, every component has at most 512 numerator/denominator bits,
+and the private quaternion is nonzero and has no frozen projection, the
+existing uniform theorem already proves every omitted projection operation
+admissible. Repeating those same per-field predicates adds no information.
+The complete receipt can therefore be constructed directly from that current
+signature, without allocating any public tuple or executing exact arithmetic.
+
+This is one bounded predicate over the fixed four-field pose, with no
+callback between its current operand read and publication. It uses no old
+numeric equality or caller-provided projected values as evidence. Invalid
+own/shared receipt metadata still takes the original ordered path before
+this decision. Any unsupported field, mutable payload, frozen quaternion,
+larger operand or narrowed cap retains the existing individual-field path,
+including its original guards and failure order. The single callback remains
+cancellable and can narrow the cap or change the payload before it is read;
+such changes are checked in the current domain. Interruption cannot publish
+a partial own or family receipt. No cache or limit changes.
+
+[`test_reach_complete_finiteness.py`](../../tests/test_reach_complete_finiteness.py)
+compares original binary64 projections and complete P23 boundary/phase
+records, current caps, changed fields and exact cancellation identity. The
+older receipt/family tests also exercise their retained individual-field
+path separately; their layer-specific assertions are unchanged.
+
 Each retained `PoseValue` can retain one private, comparison-independent proof
 record alongside its existing projection state. The record contains its request
 owner, the full operand cap and immutable fingerprints of the fields proved by
@@ -994,6 +1024,86 @@ and the actual stored values. `tests/test_reach_endpoint_reduction.py` covers
 exact component identities, subnormals, changed data/domains, original fallback,
 callback identity, cache preservation and actual artifact equivalence; executed
 results belong to a subsequent identified checkpoint.
+
+## Complete canonical admission and observed-target input reuse
+
+The pure planar helper may retain a completed admission under all nine actual
+binary64 inputs: two link lengths, three target coordinates and both closed
+limit pairs. The key also contains the branch, proof method and the unchanged
+32,768-bit operand cap. Only exact immutable tuple containers, exact finite
+binary64 scalar objects and the ordinary branch strings use this additional
+receipt. The source transaction still checks the current action, topology,
+motion modes, both claims, active-count limit and initial coordinates before
+calling the numeric helper. The receipt contains no source or run authority.
+
+The existing admission-entry callback precedes all input reads. Each of the
+nine current scalar bit patterns then has its own charged admission check,
+followed immediately by the current full-cap check. All finite binary64
+decodes have prospective width at most 1,075 bits, so that unchanged domain
+admits the original decodes without constructing their Fractions again. Exact
+bit identity also implies identity of their original canonical rational values;
+signed zeros deliberately receive distinct raw keys even though the ordinary
+numeric result canonicalizes zero. Matching both complete limit pairs proves
+that the already completed closed-limit comparisons still have precisely the
+same operands. A different limit takes the retained geometry-only path, which
+performs the ordinary comparisons and preserves their diagnostic ordering.
+
+The cached result includes the same canonical target bits, coordinate
+enclosures, residual upper bound, precision and numerical method as the
+original successful proof. Its old counters never stand in for current work.
+Every returned `PlanarSolution.work` is rebuilt after the current call's actual
+arithmetic and cache publication; its local `operations` plus the initial
+admission unit equals that call's shared operation delta. A complete warm hit
+executes nine input checks, a lookup and a promotion, in addition to the entry
+unit. It performs no Fraction decode, canonical round trip, repeated limit
+comparison or proof series. These omitted computations are genuinely avoided;
+all executed operations retain their own charges.
+
+The complete receipt shares the existing 256-entry request LRU with the
+geometry-only solver proof and pose results. There is no second numerical
+cache or larger capacity. Current narrower caps, mutable containers, scalar
+subclasses, noncanonical inputs and nonfinite values retain the original
+numeric path. A cap change at an input or lookup callback prevents the wider
+receipt from returning; the ordinary current-domain calculation supplies any
+failure. At publication, the work cache rechecks its cap and generation after
+all callbacks and declines a changed-domain insertion. As with its existing
+bookkeeping contract, a caller may receive a proof completed before that
+publication callback, but it cannot become a reusable proof for the new
+domain. No arithmetic exception is caught and retried, so a failing original
+operation retains its exact exception even if external code then widens the
+cap. Cancellation leaves source admission and its whole boundary uncommitted.
+
+The observed-target helper applies the same finite-input argument to one
+immutable three-float target. It keeps the original charged vector-domain
+admission, including current dimension, exact scalar type and finiteness
+checks. Its existing translated-component cache key receives the actual three
+binary64 bit patterns in a distinct typed namespace. The already bounded
+entry also retains the exact decoded target alongside its rotated offset and
+last projected point. On a miss, the three original scalar decodes execute;
+on a hit, their immutable completed values are width-checked with all current
+rotation, position and retained component operands. Six scalar decode charges
+are avoided because those three rational/bitfield conversions are not repeated.
+The fresh vector admission, cache access, rotation guard, exact translation,
+grid rounding and binary64 projection keep their existing accounting.
+
+The target optimization applies only at the full operand cap and to exact
+immutable native tuples. Narrower domains and foreign or mutable targets use
+the original vector helper. A complete native key cannot collide with a
+decoded-vector key, including through Python's Boolean/integer equality.
+Replacing a payload's target field after its local immutable tuple was
+captured cannot poison a numerical entry: both the key and its exact result
+derive solely from that same captured tuple, with no payload identity in the
+key. A later call freshly captures the then-current target. Missing older
+decoded-target receipts replay the original scalar conversions. The cache
+still retains only one last translated point per actual rotation/target pair,
+and all current-domain, cancellation and publication guards remain active.
+
+`tests/test_reach_complete_admission.py` covers complete operand binding,
+original error precedence, actual counters, narrowed domains, exception
+identity, bounded capacity and source-boundary rollback.
+`tests/test_reach_world_target_input_reuse.py` compares canonical point bits,
+raw signed-zero keys, original fallback, callback reads and partial-publication
+safety. Executed results are recorded separately from this derivation.
 
 ## Verification and remaining scope
 

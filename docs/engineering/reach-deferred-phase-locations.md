@@ -114,3 +114,81 @@ wide operands, cap changes during recurrence and materialization, and original
 cancellation with a fresh retry. Relevant phase, lifecycle and numeric-domain
 cohorts and a fresh unchanged-budget P23 recording are still required before
 claiming current execution results.
+
+## Complete pure source-node templates
+
+The optional large-graph path can reuse a complete numerical node after the
+ordinary source traversal resolves its current parent and local law. A fixed
+site/follow node contains its constant bound and one composition. A connected
+joint node contains its complete `JointPhase`, local joint bound, first
+composition, inverse child-site constant bound and second composition. The
+template retains the one or two ordinary intermediate `PhaseBound` records in
+one entry of the existing bounded numeric LRU.
+
+This is reuse of the entire pure calculation, rather than repeated calls to the
+separate constant, local-joint and composition caches. A hit omits those calls
+and their calculations. It does not combine source identities, motion claims,
+source nodes or current recording witnesses. Every actual arithmetic operation
+that remains, every cache lookup/promotion/insertion, and the fresh node operand
+check retains its ordinary charge. The 100,000-operation request cap and
+256-entry maximum cache are unchanged.
+
+The template key contains all eighteen fields of the relative parent bound,
+the complete native local position and quaternion, the node kind, the complete
+axis, all seven exact `JointPhase` values when applicable, and both signed axial
+descriptors for the pre/post child-site compositions. Fixed nodes retain their
+one transported descriptor. Source frame names and `Pose.frame` do not enter
+these pure equations; their real topology, source witnesses and authority are
+resolved afresh outside the helper. Source numbers keep strict concrete types,
+so boolean values cannot reuse a floating-point or exact-fraction result.
+
+Only a native immutable `Pose` with finite binary64 components in the conservative
+range `2^-64 <= abs(component) <= 2^64`, or exact zero, is eligible. Axes use the
+same bounded native-vector predicate. This bound limits each native component's
+exact denominator to at most 117 bits and numerator to at most 65 bits. The
+existing full-domain binary64 decode admission is guarded afresh even though a
+warm template does not perform the omitted decodes. Noncanonical shapes, wider
+native values and narrower live numeric domains run the original node builder.
+
+The outer affine location may be removed from a template key only when every
+intermediate establishes that it passes through unchanged. To establish this,
+the cold template executes the original node builder on the complete relative
+parent and retains each intermediate. Every intermediate must be an ordinary
+`PhaseBound`, with its `M`, `L`, `P` and `R` inside the existing 2,048-bit location
+domain. A newly factored local translation would instead yield `_PhaseLocation`;
+such a node keeps the ordinary builder. A wide intermediate also keeps that
+builder, even if a later final value becomes small again.
+
+Consequently, for each admitted intermediate `C` and inherited outer terms
+`(E,O)`, the original deferred composition performs exactly the same relative
+calculation and carries exactly `(E,O)` to the next node. It cannot take a wider
+materialization branch in the middle: the complete original outer terms and
+every retained intermediate are checked against the same existing eligibility
+predicate. The final result is therefore `C` with the unchanged outer terms,
+and its ordinary final graph materialization remains the affine formula proved
+above. No new sum, approximation, reduced error allowance or sampling claim is
+introduced by the template.
+
+Native local pose and joint kind/axis values are captured as immutable operands
+for the numerical builder. A callback that replaces mutable source-model fields
+cannot store a calculation for the replacement under the earlier operand key.
+Fresh recording witness validation still rejects a descriptor whose source law
+changed during the phase traversal. Cache reuse does not supply that witness or
+any source authority. Every returned map and recording token remains fresh.
+
+The full numeric cap and complete parent/source/retained operands are checked
+before and after lookup/publication. If a callback narrows the cap, the original
+complete parent is supplied to the original builder; a small relative template
+cannot hide its larger world location. Callback exceptions retain their original
+identity, and interrupted publication cannot create a completed template. Small
+graphs and ordinary narrowed-domain joint calculations retain the original eager
+order.
+
+`tests/test_reach_phase_node_reuse.py` requires complete eager/template equality
+for both P23 phases, moving and released sources, all eighteen bound fields,
+fresh recording witnesses/tokens, complete P23 prefixes, and an actual small GLB
+byte comparison. Its hostile checks cover changed parent/local/axis/scalar
+inputs, callback source replacement, boolean and wide operands, cap changes at
+lookup/publication, cancellation and cache eviction down to one entry. These are
+verification obligations; execution results and exact revisions are recorded
+separately from this derivation.

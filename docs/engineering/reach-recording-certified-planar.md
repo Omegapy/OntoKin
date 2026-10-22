@@ -46,9 +46,12 @@ cursor in [the carrier derivation](reach-carrier-rotation-cursors.md). Every
 such carrier seeds from a direct private complete orientation, and its excess
 above the same uniform source path remains at most the `G` below. Therefore
 the comparison through the common ideal path, including both `Sp`/`Sq` terms,
-applies unchanged. Native graphs do not accept the carrier proof or its
-approximate private operands. Unsupported complete paths use the ordinary
-sampler with its current angular proof; a whole-phase replay has a fresh context.
+applies unchanged. The production native graph may separately opt into the
+complete scalar/Z carrier recurrence proved below. It accepts the phase's
+fresh source-law witnesses, never an ordinary cursor's approximate private
+operand. Unsupported complete paths use the ordinary sampler with its current
+angular proof; a whole-phase replay has a fresh context. The strict stored-cell
+diagnostic keeps the preceding native local-factor algorithm.
 
 Every actual rational ordering in the affine, dynamic and enclosure gates uses
 the charged exact comparison helper and its prospective operand guards. A
@@ -272,6 +275,260 @@ the original direct initial orientation. A moving absolute seed or increment
 does not infer a baseline structural zero from an interior cancellation.
 Full source states, derivatives, anchors and ordinary recording paths continue
 to use their existing arithmetic.
+
+## Exact affine root positions
+
+A prescribed root translation continues to evaluate the exact source equation
+`p_i = initial_i + rate_i*elapsed`. The native graph can retain the completed
+exact decoding of the two immutable three-component source vectors in the
+existing 256-entry LRU. Its key contains every actual component's concrete
+type and value, including binary64 zero signs, and the current operand cap.
+The current elapsed clock is admitted on every call and never substitutes a
+previous sample's position. Mutable vectors, malformed operands, unusually
+large exact values and non-Fraction clocks retain the ordinary source helper.
+
+The optional path requires the full 32,768-bit cap. Every original exact
+numerator and denominator has at most 2,048 bits; any finite binary64 operand
+needs at most 1,075 bits after exact decoding. An exact `rate_i*elapsed`
+therefore has a prospective multiplication width of at most 4,096 bits. Its
+sum with `initial_i` has numerator width at most 6,145 and denominator width
+at most 6,144. These bounds also cover the original multiplication by an exact
+zero component. Omitting that product cannot hide a prospective operand-limit
+refusal in this admitted domain. Nonzero multiplications and additions use
+the unchanged charged source exact-arithmetic helper. The ordinary whole-vector
+zero and unit-scale decisions retain their admission charges.
+
+The exact equation finishes at the original call site, before root orientation
+work. A private immutable wrapper carries only that current exact result to
+native pose construction. Every nonzero component then uses the unchanged
+round-to-nearest-even binary64 kernel. An exact zero has the same canonical
+positive-zero image without executing the rounding kernel. Nonzero subnormal
+values, midpoint ties, cancellation, and finite-exposure refusal therefore
+retain their original results. No intermediate position projection or completed
+per-clock vector projection is added to a cache. Existing complete-pose slots
+still use the current immutable position as part of their complete signature.
+
+The current cap is checked after each cache callback, identity admission and
+actual arithmetic/projection sequence. An original exact-kernel exception is
+never translated or retried. A cancelled projection cannot publish a partial
+position; already completed immutable source-vector decoding can remain in
+the same shared bounded cache. For identical current source operands, this
+position path preserves every exposed position bit. It changes no source
+position equation, rounding allowance or certificate inequality; the other
+recording recurrences retain their separate existing bounds.
+
+`tests/test_reach_recording_exact_affine_position.py` compares exact values and
+binary64 bits for rational and binary64 laws, zero/unit clocks, cancellation
+and subnormal ties. It exercises actual moving-source graph samples, mutable
+and large-input fallbacks, invalid inputs, exposure overflow, changed operands,
+LRU eviction, live cap changes, cancellation, original exception identity and
+actual work reduction. Executed evidence must identify the tested revision;
+the test definitions alone do not establish a passed recording or release gate.
+
+## Native complete carrier recurrence
+
+The production native graph can replace the local hinge recurrence and its
+two world compositions at a hinge whose child-site translation is exactly
+zero. The optional `RecordingAngularProof` must identify an exact constant
+ideal body rate about Z, or an exact zero rate, for that complete carrier.
+Its program revision, closed phase clocks, typed local source witness and
+already checked parent witness are checked during the current graph traversal.
+The same actual source coordinates, claims, initial and ideal values, durations,
+axis, child pose, root laws and topology remain inputs to this proof. An absent
+or changed witness retains the native local-factor path. Other alternate
+recording arithmetic cannot acquire this capability implicitly; native carrier
+cursors require a separate explicit opt-in, disabled for the strict diagnostic.
+
+For an actual immutable tuple of three binary64 zeros, the native graph can
+admit the zero child origin directly at the existing charged origin checkpoint.
+Both zero signs decode to exact rational zero, so all ordinary decoding and
+prospective operand checks fit the unchanged full domain. This omits the
+otherwise redundant source-vector decoding and cache lookup. A callback-induced
+cap change makes the cursor ineligible; the final atomic source admission still
+checks the complete current child pose. Every nonzero, noncanonical or narrowed
+input keeps the original exact vector path. No small-offset threshold is used.
+`tests/test_reach_recording_child_origin.py` covers actual graph equality and
+work avoidance, both zero signs, subnormal nonzero offsets, malformed operands,
+lowered caps, cancellation, and the unchanged shared operation limit.
+
+Production additionally selects only hinges whose actual current local
+coordinate law varies. The existing complete-ancestry classification reads the
+current claimant, running status, initial coordinate and target for each hinge;
+an absent/nonrunning claim or equal endpoints retains its local factor. A
+moving parent does not make a constant local hinge eligible. When none of the
+classified native hinges varies, the graph omits the optional carrier proof
+walk entirely. The selected relation names form a temporary structural set for
+this one graph, never a retained numeric table. This is solely a choice between
+two independently bounded algorithms: every selected hinge still passes the
+complete fresh chained witness, clock, child-origin and arithmetic-domain
+checks. A completion or release rebuilds the selection from its current state.
+
+Before either exact or native complete-carrier publication, each ancestor's
+current-source comparison is precharged. The final cache admission then reads
+the complete actual witness chain without callbacks, after all insertion,
+promotion, eviction and operand-scope callbacks and before changing any cache
+value or order. It also binds the actual model and root-state identities.
+Persistent source changes cannot publish a cursor for the captured old curve;
+an original source-kernel or admission refusal keeps its original exception
+identity even if the operand cap changes. The shared cache remains bounded at
+256 entries. This admission follows the mechanism proved in
+[the carrier derivation](reach-carrier-rotation-cursors.md) and adds no
+numerical allowance.
+
+### Independent direct seeds and native arithmetic
+
+For each eligible complete ideal orientation, the phase proof establishes
+
+```
+Q_ideal(t) = Q_ideal(s) * Rz(r*(t-s)).
+```
+
+The native cursor's seed at `s` comes from an ordinary private complete-world
+`RotationValue`, evaluated from the admitted immutable witness chain by the
+same direct source coordinate/quaternion kernels. This orientation-only recipe
+omits unused source positions and never rereads a mutable action or attachment
+during seed arithmetic. A temporary callback mutation therefore cannot poison
+the completed cursor under its preceding proof token. Neither a parent native
+cursor, an ordinary local recurrence nor an exposed quaternion can supply this
+seed. Its private rotation is then projected
+to binary64 by the existing correctly rounded unit projection, with structural
+zero claims disabled. Every later nonzero step postmultiplies by the controlled
+axis kernel at the exact signed increment `r*(t-last)`. Repeated exact clock
+differences reuse that already completed increment; zero rates and repeated
+clocks require no new increment. Reversed clocks use their actual negative
+difference. No host trigonometric operation or normalization is introduced.
+
+The direct seed counts as one of at most 127 samples. Before sample 128, after
+eviction, or under a fresh phase/proof token, the cursor independently reseeds
+from the current direct private source graph. At most 126 binary64 complex
+products can therefore follow any seed. The native seed projection contributes
+at most `2u`; each controlled increment and its projection contribute at most
+`3u`. The existing complex-product induction below consequently bounds this
+one cursor's native discrepancy from its unit reference by `2^-41`. Source
+kernel errors inside the complete direct seed are accounted for separately by
+the source bound; they are not treated as native arithmetic errors.
+
+Every hinge contributes one existing source trig count, even for a zero ideal
+rate. Replacing that hinge's local native factor by one complete native cursor
+does not add a second factor at that hinge. Each still-used ancestor root spin
+or local hinge factor also has its own existing trig contribution. Consequently
+there are at most `T` native cursor errors along any source path, including the
+prefixes whose orientations rotate intermediate offsets. A complete cursor's
+seed projection belongs to its `2^-41` term. Ordinary constant projections and
+remaining leaf products retain their existing `C+1` allocation. This preserves
+the same `E`, `P` and `Q`; it does not enlarge any source count or allowance.
+
+### Private prefix errors and positions
+
+Write the existing uniform private angular recurrence as
+
+```
+R_private = anchor_rotation_error + coordinate_angle_error
+            + T*AXIS_ERROR + C*PRODUCT_ERROR.
+```
+
+All its terms are nonnegative and accumulate along a source dependency path.
+The bound for any prefix is thus at most that for its descendant. A direct
+private seed at any clock in the continuous phase has angular error at most
+its prefix `R_private` from that prefix's independently defined ideal
+orientation. Right multiplication by a unit ideal increment preserves that
+error. Different ancestors may seed at different clocks: each has its own
+uniform source bound, and no ancestor cursor seeds a descendant cursor. A
+reseed replaces, rather than adds to, a preceding seed's error.
+
+At each unchanged fixed/site/follow offset, this private source angular error
+contributes at most the offset's L1 length times the corresponding prefix
+`R_private`. Their sum is at most `L*R_private`, the term already present in
+`Sp`. The native seed projection and recurrence add the separate `3E*L` term.
+The public quaternion allowance `2^-50` is added only after the source position
+recurrence; it is never fed back into this position argument. In particular,
+the newly projected native seed spends its projection error in `E`, not in
+that public bonus. Ordinary leaf/source position errors and native position
+rounding keep the other existing terms of `Sp` and `P`.
+
+A zero child-site offset leaves the carrier origin exactly at its independently
+computed parent-site origin. The two omitted native joint compositions both
+have zero local translation, so their native position arithmetic is an exact
+identity. The carrier retains that parent's current native position and zero
+flags, while its depth increases by two as before. The unchanged ceiling of
+64 source leaf compositions still applies. Nonzero child-site translations
+retain the existing compositions. No approximate compound local origin enters
+the right side of the position recurrence.
+
+### Cache extent, live domains and verification
+
+The cursor keeps only one complete clock/rotation/count and one repeated
+increment in the existing shared 256-entry LRU. Its key includes the native
+algorithm selector, phase context, carrier path, opaque frame-proof token,
+phase endpoints, exact body rate, axis, step ceiling and live operand cap.
+Every current scalar, quaternion, parent position and depth is admitted before
+reuse; the current phase and graph witnesses remain fresh. Each actual scalar
+operation, native constituent, lookup and publication retains its work charge.
+A callback-induced cap change disallows a native return or publication and
+requests the ordinary phase path. Callback exceptions retain their identity;
+cancellation cannot replace a completed cursor with a partial result or mutate
+the authoritative source state. No new per-frame numeric table is retained.
+
+`tests/test_reach_recording_native_body.py` covers independent interval
+comparisons, reseeds and reversed/repeated clocks, changed cursor identities,
+fresh witnesses and child offsets, exact source-seed ancestry, live caps and
+cancellation, source-state preservation, the separate strict diagnostic, and
+complete short GLBs checked by the independent reader with writer sampling
+disabled. Test results belong to separately identified executed revisions.
+
+### Same-clock aliases of complete orientation laws
+
+In a broad native recording graph, repeated translated assemblies can have
+identical complete orientation laws. A temporary structural index may refer
+to an already required current graph frame with the same law. It stores a
+frame path, not another numerical result, and is discarded at the end of that
+single graph resolution. The persistent numerical cache and its 256-entry
+limit are unchanged. The strict stored-cell diagnostic does not enter this
+path.
+
+The equality key retains the ordered root, site, follow and joint recipe.
+Root mode, public and private initial rotation, private projection, anchor
+error and full orientation claim remain operands. Each fixed step retains
+its actual typed quaternion. A joint retains its kind, signed axis, both
+limits, inverse child quaternion, current actual and ideal coordinate, and
+all numerical action fields: duration, vector/goal, status, actual and ideal
+initial values, target solution, saved elapsed time, running clock, initial
+private rotation and its error. A reach's shoulder/elbow paths become its
+proved selected pair index; that index remains in the key. The key also
+contains every frame's signed body rate and trig count, and the index binds
+the closed phase interval. Only identity names and translations absent from
+the ordered orientation calculation are omitted. Unknown recipe shapes use
+the existing independent carrier cursor.
+
+Equal recipes therefore describe the same direct source quaternion kernels
+and ideal orientation at every clock in this phase, including their source
+error operands. The donor's immutable native rotation is already a result
+at this exact clock in this graph. Its seed clock and finite recurrence
+history may differ from a receiver's earlier cursor. The existing uniform
+source allowance and maximum 126-product native recurrence bound cover that
+history independently of its seed clock. No new approximation allowance is
+introduced, and no donor value is installed in a receiver's persistent cursor
+with unrelated step metadata. Its structural-zero flags remain those of the
+complete native recurrence, whose seed disables structural-zero inference.
+The receiver preserves its own current parent origin and composition depth.
+
+Before reuse, the receiver charges its complete ancestry comparison, admits
+the full live cap after the final callback, and reads every current source
+witness without callbacks. It then checks the actual immutable rotation's
+types, finiteness, magnitude and Boolean zero fields. Changed authority,
+topology, law, source state or program identity cannot substitute a stale
+curve. Cancellation and source refusal occur before any receiver cursor
+publication; this path has no such publication. Optional initial witness
+construction is now lazy: only a candidate carrier and its actual complete
+ancestry are visited. An unrelated selected leaf has no body proof to use,
+so its omitted witness construction provides no numerical credit or proof.
+The final complete ancestry admission is retained for every receiver.
+
+`tests/test_reach_recording_graph_sharing.py` covers equality and separation
+of the full numeric recipes, selected pair indices, ordered fixed rotations,
+current cap and cancellation, actual repeated-arm samples and work, lazy
+ancestry scope, final callback source mutations, cache order and the separate
+strict diagnostic. These definitions do not claim an executed release result.
 
 ## Bounded dynamic-root interiors
 
@@ -610,3 +867,51 @@ Consequently the diagnostic's stored position and quaternion accessor values
 remain the original values. Production instead retains the explicit endpoint
 enclosures and independent stored-byte acceptance described above. Its exact
 rational bounds do not need auxiliary float radii for cell comparisons.
+
+## Direct projection of literal identity source leaves
+
+The native `recording_constant_pose` can construct a source leaf directly
+when all seven source components are actual finite binary64 values, the
+rotation is exactly `(1,0,0,0)`, and each translation magnitude is at most
+the existing `2^500` native position limit. The original domain checkpoint,
+complete tuple-shape checks, inverse-selector check and current operand
+admissions still precede this path. It requires the full 32,768-bit domain.
+An inverse leaf is eligible only when all three source position values are
+zero; every nonzero inverse retains the original rotated 96-bit projection.
+
+For a forward leaf, the ordinary constructor first decodes each finite
+binary64 translation into its exact rational value, then applies the source
+binary64 projection to that same value. The result is therefore the original
+binary64 value. An exact zero is canonically positive, including an authored
+negative zero. There is no intervening translation-grid rounding in the
+ordinary forward-leaf constructor. Its literal identity quaternion remains
+the exact unit quaternion through private source normalization and public
+projection, with structural flags `zero_w=False` and `zero_z=True`.
+The zero-translation inverse has the same exact position and rotation.
+Their result is a depth-zero native leaf with precisely these existing bits
+and structural zero flags.
+
+Every finite input rational representation fits 1,075 bits. At these literal
+identity operands the original quaternion, zero-inverse and projection
+preflights fit the full domain. The shortcut therefore cannot avoid an
+original numeric-domain failure within its admitted range. Other source
+types, rotations, excessive positions and nonzero inverses retain the
+literal existing cached calculation and its failures.
+
+This direct result executes no numerical conversion, rational reconstruction,
+grid rounding, source transform construction, cache lookup or cache promotion.
+Those omitted operations are consequently not charged. The original native
+domain checkpoint remains charged and cancellable. Its callback completes
+before the actual source tuples are captured; no callback occurs between
+that fresh capture and returning the closed-form transform. There is no new
+retained receipt or cache entry, and existing cache values and order are left
+untouched. Narrowing the cap or cancelling at that checkpoint retains the
+original refusal or exact callback exception.
+
+[`test_reach_recording_identity_leaves.py`](../../tests/test_reach_recording_identity_leaves.py)
+compares the retained cached path's actual bits for ordinary, subnormal,
+signed-zero and maximum eligible positions, plus inverse and unsupported
+operands. It also checks current-source mutation, cancellation, cache
+preservation, the shared operation limit, and actual GLB byte/independent
+validation equality. Execution evidence identifies the tested revision
+separately; this derivation does not assert an unexecuted recording pass.

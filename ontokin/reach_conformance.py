@@ -373,6 +373,68 @@ def rational_clock(record, *, work=None):
     return calculate()
 
 
+def _integer_clock_cell_contains(value, bits, arithmetic):
+    """Compare a small exact clock with the same cell on a common grid.
+
+    Every nonnegative binary32 value is an integer N times 2^-149. Its
+    midpoint numerators are therefore sums of adjacent N values at 2^-150.
+    This replaces rational midpoint division/reduction with bounded bitfield
+    decoding; both additions and both exact comparisons remain charged.
+    """
+    def full_domain():
+        return getattr(arithmetic.work, "max_operand_bits", MAX_OPERAND_BITS) == MAX_OPERAND_BITS
+
+    numerator, denominator = value.numerator, value.denominator
+    if (not full_domain() or
+            max(numerator.bit_length(), denominator.bit_length()) > 1024):
+        return None
+
+    # Decoding a binary32 bitfield has a fixed maximum integer width. This
+    # replaces the original uncharged struct/Fraction neighbor conversion.
+    # The outer clock-cell admission remains the decoding checkpoint.
+    arithmetic.bits(278)
+    def scaled(integer):
+        exponent, trailing = integer >> 23, integer & 0x7fffff
+        return trailing if not exponent else ((1 << 23) | trailing) << (exponent - 1)
+
+    center = scaled(bits)
+    if bits == 0:
+        lower = 0
+    else:
+        previous = scaled(bits - 1)
+        arithmetic.tick("independent_exact_add")
+        if not full_domain():
+            return None
+        arithmetic.bits(previous.bit_length(), center.bit_length(),
+                        max(previous.bit_length(), center.bit_length()) + 1)
+        lower = previous + center
+    higher = 1 << 277 if bits == 0x7f7fffff else scaled(bits + 1)
+    arithmetic.tick("independent_exact_add")
+    if not full_domain():
+        return None
+    arithmetic.bits(center.bit_length(), higher.bit_length(),
+                    max(center.bit_length(), higher.bit_length()) + 1)
+    upper = center + higher
+
+    arithmetic.tick("independent_exact_compare")
+    if not full_domain():
+        return None
+    arithmetic.bits(numerator.bit_length() + 151,
+                    denominator.bit_length() + lower.bit_length())
+    scaled_value = numerator << 150
+    lower_product = denominator * lower
+    left = (scaled_value > lower_product) - (scaled_value < lower_product)
+    arithmetic.tick("independent_exact_compare")
+    if not full_domain():
+        return None
+    arithmetic.bits(scaled_value.bit_length(),
+                    denominator.bit_length() + upper.bit_length())
+    upper_product = denominator * upper
+    right = (scaled_value > upper_product) - (scaled_value < upper_product)
+    even = not bits & 1
+    return ((left > 0 or even and left == 0) and (right < 0 or even and right == 0))
+
+
 def clock_cell_contains(value, bits, *, work=None):
     """Check RNE by exact adjacent-cell midpoints, independently of the writer."""
     _tick(work, "independent_clock_cell")
@@ -380,6 +442,9 @@ def clock_cell_contains(value, bits, *, work=None):
     value = arithmetic.value(value)
     if type(bits) is not int or not 0 <= bits <= 0x7f7fffff or value < 0:
         return False
+    integer_result = _integer_clock_cell_contains(value, bits, arithmetic)
+    if integer_result is not None:
+        return integer_result
     def decoded(integer):
         return Fraction(struct.unpack("<f", struct.pack("<I", integer))[0])
     center = decoded(bits)
@@ -654,7 +719,7 @@ def _vertex_extrema_uncached(source_positions, stored_positions, *, work):
     """
     from .scene import float32
     arithmetic = _Bounds(work)
-    radius, radius_floor = Fraction(0), 0.
+    radius, radius_floor, radius_components = Fraction(0), 0., None
     float_errors, exact_errors = [0.] * 3, [Fraction(0)] * 3
     for point, stored in zip(source_positions, stored_positions):
         _tick(work, "independent_geometry_point")
@@ -663,11 +728,20 @@ def _vertex_extrema_uncached(source_positions, stored_positions, *, work):
         if all(type(value) is float for value in point):
             x, y, z = (abs(value) for value in point)
             upper = math.nextafter(math.nextafter(x + y, math.inf) + z, math.inf)
-            if upper > radius_floor:
+            # The current maximum already proves the exact L1 sum of these
+            # same three finite float operands. Keep its attaining point as
+            # a bounded witness, not another numeric cache. Every actual
+            # vertex conversion and error maximum still executes above/below.
+            # Narrowed domains retain the original scalar admission path.
+            repeated_maximum = (_bound_domain(arithmetic) == MAX_OPERAND_BITS
+                                and (x, y, z) == radius_components)
+            if upper > radius_floor and not repeated_maximum:
                 candidate = arithmetic.total(arithmetic.value(value) for value in (x, y, z))
                 if candidate > radius:
                     radius = candidate
                     radius_floor = math.nextafter(float(radius), -math.inf)
+                if candidate == radius:
+                    radius_components = (x, y, z)
             float_errors = [max(previous, abs(value - actual))
                             for previous, value, actual in zip(float_errors, point, stored)]
         else:

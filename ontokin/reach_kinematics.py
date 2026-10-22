@@ -60,6 +60,28 @@ def _limits(targets, limits, work):
                                       limits_rad=[float(bounds[0]),float(bounds[1])])
 
 
+def _complete_admission_key(lengths, target, branch, limits, operands, meter):
+    """Admit one immutable canonical input tuple for a complete pure proof."""
+    work=meter.parent
+    if (work.max_operand_bits!=MAX_OPERAND_BITS or type(branch) is not str or
+        any(type(value) is not tuple for value in (lengths,target,limits,*limits)) or
+        any(type(value) is not float for value in operands)):
+        return None
+    encoded=[]
+    for value in operands:
+        meter.charge("planar_admission_input")
+        if work.max_operand_bits!=MAX_OPERAND_BITS:
+            return None
+        # The ordinary finite binary64 decode needs at most 1,075 bits.
+        # No Fraction or canonical rounding is repeated to identify its input.
+        work.guard_bits(1075)
+        bits=float_bits(value)
+        if bits & 0x7FF0000000000000 == 0x7FF0000000000000:
+            return None
+        encoded.append(bits)
+    return (METHOD,"complete_admission",MAX_OPERAND_BITS,tuple(encoded),branch)
+
+
 def admit_planar(lengths_m, target_base_m, branch, limits_rad, *, work: ReachExecutionWork):
     """Prove canonical targets, then limits, then their real forward residual.
 
@@ -78,6 +100,24 @@ def admit_planar(lengths_m, target_base_m, branch, limits_rad, *, work: ReachExe
     operands=(*lengths_m,*target_base_m,*(v for row in limits_rad for v in row))
     if any(isinstance(v,bool) or not isinstance(v,(int,float)) for v in operands):
         raise ReachAdmissionError("reach_domain", "Planar geometry requires canonical binary64 operands.")
+    complete_key=_complete_admission_key(lengths_m,target_base_m,branch,limits_rad,operands,meter)
+    if complete_key is not None:
+        completed=work.lookup(complete_key)
+        if work.max_operand_bits!=MAX_OPERAND_BITS:
+            complete_key=None
+        elif type(completed) is PlanarSolution:
+            # All four actual limit values are part of this freshly admitted
+            # key. The older geometry-only proof below still checks limits.
+            return replace(completed,work=tuple(meter.record().items()))
+
+    def finish(result):
+        if complete_key is not None and work.max_operand_bits==MAX_OPERAND_BITS:
+            work.remember(complete_key,result,
+                          admission=lambda: work.max_operand_bits==MAX_OPERAND_BITS)
+        # Include every operation actually performed by this call, including
+        # its completed cache publication. Historical solve work is not reused.
+        return replace(result,work=tuple(meter.record().items()))
+
     values=tuple(rational(v,meter) for v in operands)
     a,b,x,y,z=values[:5]
     limits=(values[5:7],values[7:9])
@@ -93,7 +133,7 @@ def admit_planar(lengths_m, target_base_m, branch, limits_rad, *, work: ReachExe
     cached=work.lookup(key)
     if cached is not None:
         _limits(tuple(bits_fraction(v,meter) for v in cached.target_bits),limits,meter)
-        return replace(cached,work=tuple(meter.record().items()))
+        return finish(cached)
     op=lambda lhs,rhs,kind: exact(lhs,rhs,kind,meter)
     r2=op(op(x,x,"mul"),op(y,y,"mul"),"add")
     difference,total=op(a,b,"sub"),op(a,b,"add")
@@ -138,7 +178,7 @@ def admit_planar(lengths_m, target_base_m, branch, limits_rad, *, work: ReachExe
                 precision,METHOD,tuple(meter.record().items()),
                 (context.bounds(shoulder),context.bounds(elbow)))
             work.remember(key,result)
-            return result
+            return finish(result)
         except _Refine:
             continue
     raise ReachAdmissionError("reach_numeric", "Five finite precision passes could not prove the requested solution.",

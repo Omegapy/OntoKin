@@ -416,3 +416,53 @@ The supplied-byte reader independently derives source poses and verifies the
 actual delivered endpoints and interval bounds. No native helper supplies
 expected values to that reader. The implementation and derivation both belong
 to the complete numerical-basis hash closure.
+
+## Exact translated target components
+
+A public reach observation consumes the world position of its target, without
+an additional target orientation or derivative. For exact private base position
+`p`, projective base rotation `q`, and source target `t`, the existing controlled
+point expression is
+
+```
+d = rotate96(q, t)
+u[i] = grid96(p[i] + d[i])
+point[i] = binary64(u[i]).
+```
+
+All additions, rotations and projections above retain the original kernels and
+zero shortcuts. The components of the final translation are independent. Under
+the full unchanged operand domain, `_world_target` may retain one immutable
+entry for the complete exact rotation and target. The entry contains `d`, its
+last complete input position, all three rounded values, and the last complete
+public point. A changed translation reuses only components whose original
+position operand is equal. Each changed component executes the original exact
+addition and 96-bit grid operation. If that rounded value is itself unchanged,
+its binary64 projection is also unchanged; otherwise the original binary64
+rounding kernel executes. This proves bit identity component by component,
+including canonical zero, without a translation approximation or error term.
+
+The current complete position, target, quaternion components and rotation
+allowance are admitted before lookup. The rotation allowance remains in the
+key, even though it does not affect the point's numeric value. Every retained
+exact operand is guarded in the current domain. A callback that narrows the
+domain causes the original complete point path to execute; an old, unused
+translation cannot itself make that narrower invocation fail. Smaller initial
+domains always retain the original point implementation. Publication occurs
+only after all changed components complete, so cancellation cannot replace the
+last complete point with a partial tuple. The original boundary transaction
+still owns all source-state changes and rollback.
+
+The entry occupies the existing bounded request LRU, replacing its own last
+complete point as translations change. It is not a source-state receipt, and
+does not reuse an occurrence, claim, action history, or boundary projection.
+No additional cache, budget, tolerance, phase bound or operation discount is
+introduced. Each lookup, component admission, remaining arithmetic operation
+and publication remains charged by the shared request counter.
+
+`tests/test_reach_world_target_components.py` specifies exact comparison with
+the original kernels across translated planar and oblique rotations, unchanged
+grid cells, changed target and rotation operands, narrowing callbacks,
+cancellation and finite-cache eviction. The complete relative-observation and
+boundary rollback cohorts remain applicable. Actual execution results must be
+recorded separately at the tested revision.

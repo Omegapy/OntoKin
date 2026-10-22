@@ -36,11 +36,15 @@ class ReachPhaseLocalReuseTests(unittest.TestCase):
             paths = tuple(path + ".frame" for path in sim.model.objects
                           if '["first"]' in path or '["part-01"]' in path)
             before = sim.work.operations
-            if reuse:
-                result = reach_phase.phase_bounds(sim, F(0), F(2), selected_frames=paths)
-            else:
-                with recompute_local_bounds(sim.work):
+            # Complete-node reuse can omit the local helper in either mode.
+            # Isolate this local-cache comparison while retaining its strict
+            # exact-result and work-reduction assertions.
+            with patch.object(reach_phase, "_reuse_phase_nodes", return_value=False):
+                if reuse:
                     result = reach_phase.phase_bounds(sim, F(0), F(2), selected_frames=paths)
+                else:
+                    with recompute_local_bounds(sim.work):
+                        result = reach_phase.phase_bounds(sim, F(0), F(2), selected_frames=paths)
             outputs.append(result)
             costs.append(sim.work.operations - before)
             self.assertLessEqual(len(sim.work._cache), 256)

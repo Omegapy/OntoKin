@@ -16,6 +16,11 @@ from reach_agent_support import source_case
 
 
 class ReachFinitenessFamilyTests(unittest.TestCase):
+    def setUp(self):
+        # Keep the individual-field path selected so shared-family receipts,
+        # their work saving and their late callbacks are actually exercised.
+        self.enterContext(patch.object(ReachPoseOps, "_complete_finite_signature", return_value=False))
+
     def test_sites_built_before_the_first_check_share_only_unchanged_field_proofs(self):
         sim=numerical_simulator()
         initial=sim.pose_ops.make()
