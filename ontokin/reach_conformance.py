@@ -15,8 +15,10 @@ import math
 from pathlib import Path
 import re
 import struct
+from types import MethodType
 
 from .reach_reference import Interval as _ReferenceCell
+from .reach_numeric import ReachExecutionWork as _CertificateWork
 
 
 TARGET = "ontokin.glb/0.6"
@@ -2092,23 +2094,350 @@ def _certified_stored_arc(raw_first, raw_last, first, last, angular_speed, width
     return _stored_arc(raw_first, raw_last, *normalized, arithmetic)
 
 
+def _certificate_fraction_fields(value, *, bits=2048):
+    """A small native field receipt, without rational arithmetic or callbacks."""
+    if type(value) is not Fraction:
+        return None
+    numerator, denominator = value.numerator, value.denominator
+    if (type(numerator) is not int or type(denominator) is not int or denominator <= 0
+            or numerator.bit_length() > bits or denominator.bit_length() > bits):
+        return None
+    return numerator, denominator
+
+
+def _certificate_raw_fields(record):
+    if type(record) is not dict:
+        return None
+    fields = []
+    for name in _NUMERIC_CERTIFICATE_KEYS:
+        value = record.get(name)
+        if type(value) is int and 0 <= value and value.bit_length() <= 2048:
+            fields.append((int, value))
+        elif type(value) is float and math.isfinite(value) and value >= 0:
+            # Typed binary64 bits also distinguish an altered signed zero.
+            fields.append((float, struct.pack(">d", value)))
+        else:
+            return None
+    return tuple(fields)
+
+
+def _certificate_native_dispatch(batch):
+    """Only the original finite comparison/decode dispatch admits omission."""
+    arithmetic = batch.arithmetic
+    if type(batch) is not _CertificateBatch or type(arithmetic) is not _Bounds or _tick is not _CERTIFICATE_TICK:
+        return False
+    dispatches = ((arithmetic, _CERTIFICATE_BOUNDS_DISPATCH),
+                  (batch, (("maximum", _CERTIFICATE_MAXIMUM),)))
+    owner = arithmetic.work
+    if owner is not None:
+        if type(owner) is not _CertificateWork:
+            return False
+        dispatches += ((owner, _CERTIFICATE_WORK_DISPATCH),)
+    for target, entries in dispatches:
+        for name, original in entries:
+            method = getattr(target, name, None)
+            if type(method) is not MethodType or method.__self__ is not target or method.__func__ is not original:
+                return False
+    return True
+
+
+class _CertificateMember:
+    """One charged row's native operands; discarded when add() returns.
+
+    The optional proof reads saved native integer fields. Each remaining exact
+    maximum has one original comparison callback, followed immediately by a
+    check of its actual operands and this row. No callback is replaced, and
+    an original callback/resource exception escapes before these checks.
+    """
+    def __init__(self, batch, record, widths, minima, magnitude):
+        self.batch, self.arithmetic = batch, batch.arithmetic
+        self.owner, self.owner_type = self.arithmetic.work, type(self.arithmetic.work)
+        self.external = getattr(self.owner, "external_check", None)
+        self.record, self.raw = record, _certificate_raw_fields(record)
+        self.minima, self.names = minima, tuple(minima)
+        self.values = (*widths, magnitude, *(minima[name] for name in self.names))
+        self.fields = tuple(_certificate_fraction_fields(value) for value in self.values)
+        self.enabled = (type(_bound_domain(self.arithmetic)) is int
+                        and _bound_domain(self.arithmetic) == MAX_OPERAND_BITS)
+        self.thresholds = None
+
+    @classmethod
+    def capture(cls, batch, record, width, stored_width, minima, magnitude):
+        if (not _certificate_native_dispatch(batch) or type(minima) is not dict
+                or len(minima) > len(_NUMERIC_CERTIFICATE_KEYS)
+                or any(type(name) is not str or name not in _NUMERIC_CERTIFICATE_KEYS for name in minima)):
+            return None
+        member = cls(batch, record, (width, stored_width), minima, magnitude)
+        return member if member.raw is not None and all(field is not None for field in member.fields) else None
+
+    def current(self):
+        if (self.batch.arithmetic is not self.arithmetic
+                or self.arithmetic.work is not self.owner or type(self.owner) is not self.owner_type
+                or getattr(self.owner, "external_check", None) is not self.external
+                or _certificate_raw_fields(self.record) != self.raw
+                or type(self.minima) is not dict or len(self.minima) != len(self.names)
+                or tuple(self.minima) != self.names
+                or any(self.minima[name] is not value for name, value in zip(self.names, self.values[3:]))
+                or any(_certificate_fraction_fields(value) != fields
+                       for value, fields in zip(self.values, self.fields))):
+            _error("OKE-E-INDEPENDENT-VALIDATION", "A certificate member operand or arithmetic owner changed.")
+        self.enabled = (self.enabled and type(_bound_domain(self.arithmetic)) is int
+                        and _bound_domain(self.arithmetic) == MAX_OPERAND_BITS
+                        and _certificate_native_dispatch(self.batch))
+        if self.thresholds is not None:
+            self.enabled = self.thresholds.current(self.arithmetic) and self.enabled
+        return self.enabled
+
+    def checked(self, operation, *args):
+        result = operation(*args)
+        self.current()
+        return result
+
+    def maximum(self, first, last):
+        fields = (_certificate_fraction_fields(first), _certificate_fraction_fields(last))
+        result = self.batch.maximum(first, last)
+        self.current()
+        if (all(value is not None for value in fields)
+                and (_certificate_fraction_fields(first), _certificate_fraction_fields(last)) != fields):
+            _error("OKE-E-INDEPENDENT-VALIDATION", "An exact certificate maximum operand changed.")
+        return result
+
+
+class _CertificateThresholdRestart(Exception):
+    """An inconclusive optional continuation needs the complete exact reader."""
+
+
+class _CertificateThresholds:
+    """Sealed reported quantities inside one existing bounded input group.
+
+    These are receipts for already decoded fields, not independent minima or
+    another result cache. Every sufficient inequality is proved anew from the
+    current member. Only the non-discharged minima need an exact maximum.
+    """
+    def __init__(self, batch, group, restart):
+        arithmetic = batch.arithmetic
+        self.batch = batch
+        self.arithmetic = arithmetic
+        self.restart = restart
+        self.group = group
+        quantities = group["quantities"]
+        self.quantities = quantities
+        self.values = tuple(quantities[name] for name in _NUMERIC_CERTIFICATE_KEYS)
+        self.fields = tuple(_certificate_fraction_fields(value) for value in self.values)
+        self.owner, self.owner_type = arithmetic.work, type(arithmetic.work)
+        self.external = getattr(self.owner, "external_check", None)
+        self.used = False
+        self.enabled = True
+        self.domains = {}
+        self.minima = group["minima"]
+        self.minimum_fields = {name: (value, _certificate_fraction_fields(value, bits=MAX_OPERAND_BITS))
+                               for name, value in self.minima.items()}
+        self.extent_fields = {name: (group[name], _certificate_fraction_fields(group[name], bits=MAX_OPERAND_BITS))
+                              for name in ("width", "stored_width", "magnitude")}
+
+    def current(self, arithmetic):
+        if (arithmetic is not self.arithmetic
+                or self.batch.arithmetic is not self.arithmetic
+                or arithmetic.work is not self.owner or type(self.owner) is not self.owner_type
+                or getattr(self.owner, "external_check", None) is not self.external
+                or self.group.get("quantities") is not self.quantities
+                or self.group.get("minima") is not self.minima
+                or type(self.minima) is not dict or len(self.minima) != len(self.minimum_fields)
+                or any(self.minima.get(name) is not value
+                       or _certificate_fraction_fields(value, bits=MAX_OPERAND_BITS) != fields
+                       for name, (value, fields) in self.minimum_fields.items())
+                or any(self.group.get(name) is not value
+                       or _certificate_fraction_fields(value, bits=MAX_OPERAND_BITS) != fields
+                       for name, (value, fields) in self.extent_fields.items())
+                or type(self.quantities) is not dict
+                or len(self.quantities) != len(_NUMERIC_CERTIFICATE_KEYS)
+                or tuple(self.quantities) != _NUMERIC_CERTIFICATE_KEYS
+                or any(self.quantities[name] is not value
+                       for name, value in zip(_NUMERIC_CERTIFICATE_KEYS, self.values))
+                or any(_certificate_fraction_fields(value) != fields
+                       for value, fields in zip(self.values, self.fields))):
+            _error("OKE-E-INDEPENDENT-VALIDATION", "A reported certificate threshold or its owner changed.")
+        self.enabled = self.enabled and _certificate_native_dispatch(self.batch)
+        if not self.enabled and self.used:
+            self.restart()
+        return self.enabled
+
+    def sufficient(self, name, first, last, arithmetic, member):
+        if not member.current():
+            return False
+        previous, fresh = _certificate_fraction_fields(first), _certificate_fraction_fields(last)
+        actual = self.quantities[name]
+        claim = _certificate_fraction_fields(actual)
+        if previous is None or fresh is None or claim is None:
+            return False
+        an, ad = previous
+        bn, bd = fresh
+        qn, qd = claim
+        if an < 0 or bn < 0 or qn <= 0 or qd.bit_count() != 1:
+            return False
+        # The omitted old/fresh maximum must fit its complete original
+        # prospective comparison domain, not merely each scalar separately.
+        # Admit the direct fresh/claim comparison too. All domains are smaller
+        # than the unchanged 32,768-bit cap; narrower requests keep the exact
+        # path. guard_bits itself does not replace a cancellation checkpoint.
+        arithmetic.bits(an.bit_length(), ad.bit_length(), bn.bit_length(), bd.bit_length(),
+                        qn.bit_length(), qd.bit_length(), an.bit_length() + bd.bit_length(),
+                        bn.bit_length() + ad.bit_length(), qn.bit_length() + bd.bit_length(),
+                        bn.bit_length() + qd.bit_length())
+        if (not member.current() or _certificate_fraction_fields(first) != previous
+                or _certificate_fraction_fields(last) != fresh
+                or _certificate_fraction_fields(actual) != claim):
+            return False
+        # q is a positive exact binary64/integer decode. Its denominator is a
+        # power of two, so q >= 2**(bits(qn)-bits(qd)). For positive m,
+        # m < 2**(bits(bn)-bits(bd)+1). Comparing exponents proves m < q
+        # without allocating either power or any rational cross product.
+        proved = not bn or bn.bit_length() - bd.bit_length() + 1 <= qn.bit_length() - qd.bit_length()
+        if proved:
+            if name not in self.domains:
+                self.domains[name] = (0, 1, 0, 1)
+                self.observe_continuation(name, first)
+            self.observe_continuation(name, last)
+        self.used = self.used or proved
+        return proved
+
+    def admit_continuation(self, name, value, arithmetic, *, will_compare=True,
+                           compared=False, equality_shortcut=True):
+        """Retain every discarded operand's possible future comparison width.
+
+        The original running maximum is either the retained exact maximum or
+        one previously discharged member. An envelope of native field widths
+        covers every such member without retaining its numeric value. This
+        check also runs on wider/unsupported incoming members and at flush.
+        Lower widths establish definite original failures; an inconclusive
+        upper envelope requests complete exact replay on the same work.
+        """
+        if name not in self.domains:
+            return
+        self.current(arithmetic)
+        if (type(value) is not Fraction or type(value.numerator) is not int
+                or type(value.denominator) is not int or value.denominator <= 0):
+            self.restart()
+        numerator, denominator = value.numerator.bit_length(), value.denominator.bit_length()
+        low_n, low_d, high_n, high_d = self.domains[name]
+        limit = _bound_domain(arithmetic)
+        if type(limit) is not int:
+            self.restart()
+        limit = min(limit, MAX_OPERAND_BITS)
+        upper = max(numerator, denominator, high_n, high_d, high_n + denominator,
+                    numerator + high_d)
+        if upper <= limit:
+            return
+        # maximum() skips all guards for exact equality. Width metadata can
+        # exclude equality, but cannot establish a different actual value
+        # when both fields lie inside its envelope. Replay those cases; flush
+        # always compares and therefore has no equality exception.
+        equality_possible = (equality_shortcut and value.numerator > 0
+                             and low_n <= numerator <= high_n and low_d <= denominator <= high_d)
+        lower_fields = max(numerator, denominator, low_n, low_d)
+        lower_products = max(low_n + denominator, numerator + low_d)
+        if equality_possible or max(lower_fields, lower_products) <= limit:
+            self.restart()
+        # A definite original scalar failure precedes its callback. A
+        # prospective product failure follows that callback, which must keep
+        # its exception identity and opportunity to change the live domain.
+        if compared:
+            arithmetic.bits(low_n + denominator, numerator + low_d)
+        else:
+            arithmetic.bits(numerator, denominator, low_n, low_d)
+            self.current(arithmetic)
+            if not will_compare:
+                self.restart()
+
+    def observe_continuation(self, name, value):
+        if name not in self.domains or value.numerator <= 0:
+            return
+        numerator, denominator = value.numerator.bit_length(), value.denominator.bit_length()
+        low_n, low_d, high_n, high_d = self.domains[name]
+        # Once a positive value occurs, zero cannot be an original maximum.
+        # This makes a single discarded positive maximum's width obligation
+        # exact without retaining its numeric value or another result cache.
+        if not high_n:
+            self.domains[name] = (numerator, denominator, numerator, denominator)
+        else:
+            self.domains[name] = (min(low_n, numerator), min(low_d, denominator),
+                                  max(high_n, numerator), max(high_d, denominator))
+
+    def retain(self, name, value):
+        self.minimum_fields[name] = (value, _certificate_fraction_fields(value, bits=MAX_OPERAND_BITS))
+
+    def retain_extent(self, name, value):
+        self.extent_fields[name] = (value, _certificate_fraction_fields(value, bits=MAX_OPERAND_BITS))
+
+    def copied_quantities(self, arithmetic):
+        self.current(arithmetic)
+        # Detach the complete algebra from mutable Fraction aliases held in
+        # the group. The retained integer receipts still bind final admission
+        # to the originally decoded actual reported quantities.
+        return dict(zip(_NUMERIC_CERTIFICATE_KEYS,
+                        (Fraction(numerator, denominator) for numerator, denominator in self.fields)))
+
+    def copied_extents(self, arithmetic):
+        self.current(arithmetic)
+        result = {}
+        for name, (_, fields) in self.extent_fields.items():
+            if fields is None:
+                self.restart()
+            result[name] = Fraction(*fields)
+        return result
+
+
 class _CertificateBatch:
     """Check identical supplied quantities against every member's exact bounds.
 
     This is bounded input aggregation, separate from the shared numeric cache:
     at most 64 groups are retained and then discharged. Every actual row still
-    supplies its independently calculated minima, widths and magnitude. Taking
-    their maxima is equivalent for lower-bound comparisons and conservative
-    for the nonnegative complete inequalities. No writer group is consulted.
+    supplies its independently calculated minima, widths and magnitude. A
+    sufficient proof can discharge a fresh minimum against the actual reported
+    quantity; the remaining minima retain their exact maxima. Width, stored
+    width and magnitude always retain exact maxima for the complete nonlinear
+    inequalities. No writer group is consulted.
     """
     MAX_GROUPS = 64
 
-    def __init__(self, arithmetic, position_tolerance, rotation_tolerance):
+    def __init__(self, arithmetic, position_tolerance, rotation_tolerance, *, thresholds=True):
         self.arithmetic = arithmetic
         self.position_tolerance = arithmetic.value(position_tolerance)
+        position_fields = _certificate_fraction_fields(self.position_tolerance, bits=MAX_OPERAND_BITS)
         self.rotation_tolerance = arithmetic.value(rotation_tolerance)
         self.groups = {}
         self.max_position = self.max_rotation = Fraction(0)
+        self.thresholds_enabled = thresholds
+        self.restart = _CertificateThresholdRestart("A certificate continuation needs exact maxima.")
+        self.restart_requested = False
+        self._threshold_arithmetic = arithmetic
+        self._threshold_work = arithmetic.work
+        self._threshold_external = getattr(arithmetic.work, "external_check", None)
+        self._threshold_tolerances = (self.position_tolerance, self.rotation_tolerance)
+        self._threshold_tolerance_fields = (position_fields,
+            _certificate_fraction_fields(self.rotation_tolerance, bits=MAX_OPERAND_BITS))
+
+    def _restart_thresholds(self):
+        self.restart_requested = True
+        raise self.restart
+
+    def _prepare_exact_replay(self):
+        # Keep actual instance dispatch and the already decoded tolerances.
+        # Replacing these owners during replay could hide a changed-operation
+        # exception or silently recapture different mutable option inputs.
+        if (self.arithmetic is not self._threshold_arithmetic
+                or self.arithmetic.work is not self._threshold_work
+                or getattr(self._threshold_work, "external_check", None) is not self._threshold_external
+                or self.position_tolerance is not self._threshold_tolerances[0]
+                or self.rotation_tolerance is not self._threshold_tolerances[1]
+                or any(_certificate_fraction_fields(value, bits=MAX_OPERAND_BITS) != fields
+                       for value, fields in zip(self._threshold_tolerances, self._threshold_tolerance_fields))):
+            _error("OKE-E-INDEPENDENT-VALIDATION", "A certificate replay owner or admitted tolerance changed.")
+        for value in self._threshold_tolerances:
+            self.arithmetic.bits(value.numerator.bit_length(), value.denominator.bit_length())
+        self.groups.clear()
+        self.max_position = self.max_rotation = Fraction(0)
+        self.thresholds_enabled = self.restart_requested = False
 
     def maximum(self, first, last):
         # Equality of reduced fractions compares their integer components and
@@ -2120,7 +2449,11 @@ class _CertificateBatch:
 
     def add(self, record, width, stored_width, minima, magnitude):
         arithmetic = self.arithmetic
+        member = (_CertificateMember.capture(self, record, width, stored_width, minima, magnitude)
+                  if self.thresholds_enabled else None)
         arithmetic.tick("independent_certificate_member")
+        if member is not None:
+            member.current()
         if width <= 0 or stored_width <= 0:
             _error("OKE-E-CERTIFICATE", "Every interval certificate requires positive authored and stored widths.")
         values = []
@@ -2138,41 +2471,98 @@ class _CertificateBatch:
             if len(self.groups) >= self.MAX_GROUPS:
                 self.flush()
             arithmetic.tick("independent_certificate_group")
-            quantities = dict(zip(_NUMERIC_CERTIFICATE_KEYS, (arithmetic.value(value) for value in key)))
-            self.groups[key] = {"quantities": quantities, "minima": dict(minima),
-                                "width": width, "stored_width": stored_width, "magnitude": magnitude}
+            if member is not None:
+                member.current()
+            quantities = dict(zip(_NUMERIC_CERTIFICATE_KEYS,
+                                  (member.checked(arithmetic.value, value) if member is not None
+                                   else arithmetic.value(value) for value in key)))
+            group = {"quantities": quantities, "minima": dict(minima),
+                     "width": width, "stored_width": stored_width, "magnitude": magnitude}
+            if member is not None and member.enabled:
+                thresholds = _CertificateThresholds(self, group, self._restart_thresholds)
+                if all(fields is not None for fields in thresholds.fields):
+                    group["thresholds"] = thresholds
+            self.groups[key] = group
         else:
-            group["width"] = self.maximum(group["width"], width)
-            group["stored_width"] = self.maximum(group["stored_width"], stored_width)
-            group["magnitude"] = self.maximum(group["magnitude"], magnitude)
+            thresholds = group.get("thresholds")
+            if thresholds is not None and group["quantities"] is not thresholds.quantities:
+                _error("OKE-E-INDEPENDENT-VALIDATION", "A certificate group's reported quantities changed.")
+            if thresholds is not None:
+                thresholds.current(arithmetic)
+            if member is not None:
+                member.thresholds = thresholds
+                member.current()
+            maximum = member.maximum if member is not None else self.maximum
+            for name, fresh in (("width", width), ("stored_width", stored_width), ("magnitude", magnitude)):
+                group[name] = maximum(group[name], fresh)
+                if thresholds is not None:
+                    thresholds.retain_extent(name, group[name])
             for name, minimum in minima.items():
-                group["minima"][name] = self.maximum(group["minima"][name], minimum)
+                previous = group["minima"][name]
+                different = previous != minimum
+                if thresholds is not None:
+                    thresholds.admit_continuation(name, minimum, arithmetic, will_compare=different)
+                if (thresholds is not None and member is not None and different
+                        and thresholds.sufficient(name, previous, minimum, arithmetic, member)):
+                    continue
+                value = maximum(previous, minimum)
+                if thresholds is not None:
+                    thresholds.admit_continuation(name, minimum, arithmetic,
+                                                  will_compare=different, compared=different)
+                    thresholds.observe_continuation(name, minimum)
+                group["minima"][name] = value
+                if thresholds is not None:
+                    thresholds.retain(name, value)
 
     def flush(self):
         arithmetic = self.arithmetic
         for group in self.groups.values():
             arithmetic.tick("independent_certificate_group_check")
-            quantities = group["quantities"]
+            thresholds = group.get("thresholds")
+            if thresholds is not None and group["quantities"] is not thresholds.quantities:
+                _error("OKE-E-INDEPENDENT-VALIDATION", "A certificate group's reported quantities changed.")
+            if thresholds is not None:
+                thresholds.current(arithmetic)
+            quantities = (thresholds.copied_quantities(arithmetic) if thresholds is not None and thresholds.used
+                          else group["quantities"])
+            extents = thresholds.copied_extents(arithmetic) if thresholds is not None and thresholds.used else group
             def require(name, minimum):
                 actual = quantities[name]
-                if arithmetic.compare(actual, minimum) < 0:
+                if thresholds is not None:
+                    thresholds.admit_continuation(name, actual, arithmetic, equality_shortcut=False)
+                relation = arithmetic.compare(actual, minimum)
+                if thresholds is not None:
+                    thresholds.current(arithmetic)
+                    thresholds.admit_continuation(name, actual, arithmetic,
+                                                  compared=True, equality_shortcut=False)
+                if relation < 0:
                     _error("OKE-E-CERTIFICATE", "A reported certificate quantity understates an independently derived bound.",
                            details={"quantity": name})
                 return actual
             for name, minimum in group["minima"].items():
                 require(name, minimum)
-            domain = arithmetic.total((group["magnitude"], quantities["landmark_radius_m"],
+            domain = arithmetic.total((extents["magnitude"], quantities["landmark_radius_m"],
                                        quantities["local_vertex_error_bound_m"]))
             if domain > 1 << 400:
                 _error("OKE-E-DESTINATION-NUMERIC-BASIS", "The source and stored geometry exceed the identified destination's magnitude domain.")
             require("destination_numeric_position_bound_m", arithmetic.div(arithmetic.add(domain, 1), 1 << 38))
             require("destination_numeric_rotation_bound_rad", arithmetic.add(
                 arithmetic.square(quantities["stored_quaternion_arc_upper_rad"]), Fraction(1, 1 << 44)))
-            totals = _complete_inequality_values(group["width"], group["stored_width"], quantities,
+            totals = _complete_inequality_values(extents["width"], extents["stored_width"], quantities,
                 self.position_tolerance, self.rotation_tolerance, arithmetic, None)
+            if thresholds is not None:
+                thresholds.current(arithmetic)
             self.max_position = self.maximum(self.max_position, totals["position_bound_m"])
             self.max_rotation = self.maximum(self.max_rotation, totals["rotation_bound_rad"])
         self.groups.clear()
+
+
+_CERTIFICATE_TICK = _tick
+_CERTIFICATE_BOUNDS_DISPATCH = tuple((name, getattr(_Bounds, name))
+                                   for name in ("compare", "bits", "value", "tick"))
+_CERTIFICATE_WORK_DISPATCH = tuple((name, getattr(_CertificateWork, name))
+                                 for name in ("charge", "guard_bits"))
+_CERTIFICATE_MAXIMUM = _CertificateBatch.maximum
 
 
 class _IntervalCertificateClaims:
@@ -2242,13 +2632,19 @@ def _verify_certificates(decoded, reference, geometry, tables, endpoint_phases, 
         rows[left, index] = record
     tracks = _tracks(decoded, geometry, work=work)
 
-    def compare_certificates(recording_context, source_batch=None):
+    threshold_batch = None
+
+    def compare_certificates(recording_context, source_batch=None, *, thresholds=True, replay_batch=None):
+        nonlocal threshold_batch
         # A replay recreates every endpoint/comparison/certificate accumulator
         # on the same request work. It never resets or replaces the allowance.
-        arithmetic = _Bounds(work, cache_intermediates=False)
+        arithmetic = replay_batch.arithmetic if replay_batch is not None else _Bounds(work, cache_intermediates=False)
         previous = _key_comparisons(reference, geometry, tracks, authored[0], 0, arithmetic,
                                     recording_context=recording_context, endpoint_rows=rows)
-        batch = _CertificateBatch(arithmetic, options.position_tolerance_m, options.rotation_tolerance_rad)
+        batch = (replay_batch if replay_batch is not None else
+                 _CertificateBatch(arithmetic, options.position_tolerance_m, options.rotation_tolerance_rad,
+                                   thresholds=thresholds))
+        threshold_batch = batch
         for key, (left, right) in enumerate(zip(authored, authored[1:])):
             following = _key_comparisons(reference, geometry, tracks, right, key + 1, arithmetic,
                                          previous=previous, previous_time=left, recording_context=recording_context,
@@ -2303,20 +2699,61 @@ def _verify_certificates(decoded, reference, geometry, tables, endpoint_phases, 
                 "interval_certificates_checked": expected_count, "key_pose_comparisons": len(authored) * len(geometry)}
 
     from .reach_reference_plan import _SourceBatchRestart
-    recording_context, source_batch = object(), None
-    try:
-        with reference.recording_source_batch(recording_context) as source_batch:
-            result = compare_certificates(recording_context, source_batch)
-            if finalize is not None:
-                result = finalize(result)
-        return result
-    except _SourceBatchRestart as error:
-        # A caller can raise any exception from its callback, even this
-        # private type. Only our exact final-admission signal permits replay.
-        if source_batch is None or source_batch.restart is not error:
-            raise
-        result = compare_certificates(object())
-        return finalize(result) if finalize is not None else result
+    recording_context, source_batch, replay_batch = object(), None, None
+    source_batch_enabled, thresholds_enabled = True, True
+    while True:
+        threshold_batch = None
+        try:
+            if source_batch_enabled:
+                with reference.recording_source_batch(recording_context) as source_batch:
+                    try:
+                        result = compare_certificates(recording_context, source_batch,
+                                                      thresholds=thresholds_enabled, replay_batch=replay_batch)
+                    except _CertificateThresholdRestart as error:
+                        if (source_batch is not None and threshold_batch is not None
+                                and threshold_batch.restart_requested
+                                and threshold_batch.restart is error
+                                and getattr(work, "callback_error", None) is not error):
+                            # Do not recapture a changed source as the basis
+                            # of the exact replay. Admit the original receipt
+                            # ledger before this provisional batch is dropped.
+                            source_batch.prepare_admission()
+                            source_batch.admit()
+                        raise
+                    if finalize is not None:
+                        result = finalize(result)
+                return result
+            result = compare_certificates(recording_context, thresholds=thresholds_enabled,
+                                          replay_batch=replay_batch)
+            return finalize(result) if finalize is not None else result
+        except _SourceBatchRestart as error:
+            # A caller can raise any exception, including a private type.
+            # Only this exact final-admission signal permits source replay.
+            if (not source_batch_enabled or source_batch is None
+                    or source_batch.restart is not error
+                    or getattr(work, "callback_error", None) is error):
+                raise
+            if (threshold_batch is not None
+                    and (threshold_batch.restart_requested or replay_batch is threshold_batch)):
+                # Final source admission can report its own narrower-domain
+                # restart while discharging a requested threshold replay.
+                thresholds_enabled = False
+                threshold_batch._prepare_exact_replay()
+                replay_batch = threshold_batch
+            source_batch_enabled = False
+            recording_context = object()
+        except _CertificateThresholdRestart as error:
+            # A distinct, actually requested signal belongs to this batch.
+            # Rebuild all accumulators with exact maxima, retaining the same
+            # work, callbacks, operand/cache caps and final source admission.
+            if (not thresholds_enabled or threshold_batch is None
+                    or not threshold_batch.restart_requested or threshold_batch.restart is not error
+                    or getattr(work, "callback_error", None) is error):
+                raise
+            thresholds_enabled = False
+            threshold_batch._prepare_exact_replay()
+            replay_batch = threshold_batch
+            recording_context = object()
 
 
 def validate_reach_export(data, model, *, options=None, check=None, work=None):
