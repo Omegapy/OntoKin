@@ -38,6 +38,7 @@ MAX_OFFLINE_CHECKS = 100000000
 MAX_OFFLINE_SECONDS = 900
 ORACLE_INPUTS = (
     "tools/build_reach_native_reference.py", "ontokin/reach_reference.py",
+    "ontokin/reach_reference_plan.py",
     "ontokin/bundle.py", "ontokin/construction.py", "ontokin/linker.py",
     "ontokin/geometry.py", "ontokin/scene.py", "ontokin/surface.py",
     "docs/language-design/planar-reach-v0.1/acceptance.json",

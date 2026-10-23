@@ -35,7 +35,7 @@ INPUT_GROUPS = {
     "source_numeric_implementation": (
         "ontokin/reach_numeric.py", "ontokin/reach_kinematics.py",
         "ontokin/reach_pose.py", "ontokin/reach_phase.py", "ontokin/reach_runtime.py", "ontokin/reach_export.py",
-        "ontokin/reach_recording_fast.py"),
+        "ontokin/reach_recording_fast.py", "ontokin/reach_recording_capture.py"),
     "source_numerical_derivation": (
         "docs/engineering/reach-numeric-kernel.md", "docs/engineering/reach-source-kernel.md",
         "docs/engineering/reach-coaxial-phase-bounds.md", "docs/engineering/reach-carrier-rotation-cursors.md",

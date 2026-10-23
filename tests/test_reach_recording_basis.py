@@ -15,7 +15,7 @@ SOURCE_INPUTS = (
     "ontokin/reach_numeric.py", "ontokin/reach_kinematics.py",
     "ontokin/reach_pose.py", "ontokin/reach_phase.py",
     "ontokin/reach_runtime.py", "ontokin/reach_export.py",
-    "ontokin/reach_recording_fast.py",
+    "ontokin/reach_recording_fast.py", "ontokin/reach_recording_capture.py",
 )
 DERIVATION_INPUTS = (
     "docs/engineering/reach-numeric-kernel.md",
@@ -66,7 +66,7 @@ class ReachRecordingBasisTests(unittest.TestCase):
     def test_versioned_basis_identifies_the_complete_recording_implementation(self):
         work = ReachExecutionWork()
         reach_conformance.verify_numeric_bases(current_basis(), work=work)
-        self.assertEqual(work.counts["independent_basis_open"], 16)
+        self.assertEqual(work.counts["independent_basis_open"], 17)
         self.assertEqual(work.max_operations, 100000)
         self.assertLessEqual(work.operations, 100000)
 
@@ -81,8 +81,24 @@ class ReachRecordingBasisTests(unittest.TestCase):
 
     def test_old_five_file_hash_cannot_omit_recording_endpoint_certification(self):
         basis = current_basis()
+        basis["source_numeric_bound_basis"]["implementation_sha256"] = aggregate(
+            tuple(name for name in SOURCE_INPUTS if name != "ontokin/reach_recording_fast.py"))
+        self.reject_source(basis)
+
+    def test_basis_cannot_omit_the_captured_source_formulas(self):
+        basis = current_basis()
         basis["source_numeric_bound_basis"]["implementation_sha256"] = aggregate(SOURCE_INPUTS[:-1])
         self.reject_source(basis)
+
+    def test_changed_capture_bytes_invalidate_an_otherwise_current_basis(self):
+        basis = current_basis()
+        original = reach_conformance._identified_digest
+        changed = hashlib.sha256((ROOT / "ontokin/reach_recording_capture.py").read_bytes() + b"\n").hexdigest()
+        def read(path, *, work):
+            actual = original(path, work=work)
+            return changed if path == ROOT / "ontokin/reach_recording_capture.py" else actual
+        with patch.object(reach_conformance, "_identified_digest", side_effect=read):
+            self.reject_source(basis)
 
     def test_changed_exporter_bytes_invalidate_an_otherwise_current_basis(self):
         basis = current_basis()

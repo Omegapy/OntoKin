@@ -637,7 +637,7 @@ def verify_numeric_bases(quantization, *, work):
     root = Path(__file__).resolve().parents[1]
     names = ("ontokin/reach_numeric.py", "ontokin/reach_kinematics.py", "ontokin/reach_pose.py",
              "ontokin/reach_phase.py", "ontokin/reach_runtime.py", "ontokin/reach_export.py",
-             "ontokin/reach_recording_fast.py")
+             "ontokin/reach_recording_fast.py", "ontokin/reach_recording_capture.py")
     entries = [(name, _identified_digest(root / name, work=work)) for name in names]
     _tick(work, "independent_basis_aggregate")
     implementation = hashlib.sha256("".join(name + "\0" + digest + "\n" for name, digest in entries).encode("ascii")).hexdigest()
@@ -1349,7 +1349,49 @@ def _recording_uniform_lift_sign(first, last, arithmetic):
     return relation
 
 
-def _optional_endpoint_l1(actual, expected, arithmetic):
+class _PositionOperands:
+    """One endpoint's completed coordinate decodes, discarded after its proof.
+
+    Only the two existing position helpers receive this view. Each has already
+    polled its own domain checkpoint and admits the current stored coordinates
+    before requesting a decode. All arithmetic, interval admission and cache
+    operations still belong to the original independent reader. This is not a
+    retained endpoint proof or another request cache.
+    """
+    def __init__(self, arithmetic, position):
+        self.arithmetic = arithmetic
+        self.owner = arithmetic.work
+        self.position = tuple(position)
+        self.exact = (None,) * len(self.position)
+
+    def __getattr__(self, name):
+        return getattr(self.arithmetic, name)
+
+    def value(self, value):
+        indices = ()
+        if (len(self.position) == 3 and type(value) in (int, float)
+                and self.arithmetic.work is self.owner
+                and _bound_domain(self) == MAX_OPERAND_BITS):
+            indices = tuple(index for index, raw in enumerate(self.position)
+                            if type(raw) is type(value) and raw == value)
+            for index in indices:
+                if self.exact[index] is not None:
+                    result = self.exact[index]
+                    self.arithmetic._cache_operand_domain(result)
+                    return result
+        result = self.arithmetic.value(value)
+        if (indices and self.arithmetic.work is self.owner
+                and _bound_domain(self) == MAX_OPERAND_BITS
+                and _small_proof_values((result,))):
+            # Publication occurs only after the real decoder and its callback
+            # complete successfully. A nested callback cannot publish a partial
+            # ratio, and narrower/wider values keep their ordinary decoder.
+            self.exact = tuple(result if index in indices else previous
+                               for index, previous in enumerate(self.exact))
+        return result
+
+
+def _optional_endpoint_l1(actual, expected, arithmetic, *, admitted_cells=False):
     """An optional exact L1 enclosure, never a replacement on insufficiency."""
     arithmetic.tick("independent_sufficient_endpoint_domain")
     if len(actual) != len(expected) or len(actual) not in (3, 4):
@@ -1361,7 +1403,19 @@ def _optional_endpoint_l1(actual, expected, arithmetic):
     # foreign zero-like values keep their original scalar rejection path.
     actual = tuple(Fraction(0) if type(value) in (int, float, Fraction) and value == 0
                    else arithmetic.value(value) for value in actual)
-    expected = arithmetic.cells(expected)
+    if (admitted_cells and type(expected) is tuple
+            and all(type(cell) is _Cell and type(cell.lo) is Fraction
+                    and type(cell.hi) is Fraction for cell in expected)):
+        # The caller already converted these frozen exact cells. Its result
+        # survives no unchecked callback: the endpoint checkpoint and scalar
+        # decoders above are followed by the full current width/order guards.
+        # No new cells or redundant vector-admission checkpoint are necessary.
+        arithmetic._cache_operand_domain(expected)
+        for cell in expected:
+            if cell.lo > cell.hi:
+                _error("OKE-E-INDEPENDENT-VALIDATION", "An independent reference returned a reversed enclosure.")
+    else:
+        expected = arithmetic.cells(expected)
     if (_bound_domain(arithmetic) != MAX_OPERAND_BITS
             or not _small_proof_values((*actual, *(value for cell in expected for value in (cell.lo, cell.hi))))):
         return None
@@ -1399,13 +1453,23 @@ def _recording_orientation_bound(quaternion, expected, limit, arithmetic, *, bef
         expected = arithmetic.cells(expected)
         def calculate_bound():
             aligned = _aligned_reference(quaternion, expected, arithmetic)
-            distance = _optional_endpoint_l1(quaternion, aligned, arithmetic)
+            distance = _optional_endpoint_l1(quaternion, aligned, arithmetic, admitted_cells=True)
             return () if distance is None else (arithmetic.mul(2, distance),)
         def sufficient(candidate):
-            return (candidate and _bound_domain(arithmetic) == MAX_OPERAND_BITS
-                    and arithmetic.compare(candidate[0], Fraction(1, 2)) <= 0
-                    and _bound_domain(arithmetic) == MAX_OPERAND_BITS
-                    and arithmetic.compare(candidate[0], limit) <= 0
+            if not candidate or _bound_domain(arithmetic) != MAX_OPERAND_BITS:
+                return False
+            # For these native finite thresholds E <= limit already implies
+            # E <= 1/2. No rational arithmetic or conversion is performed by
+            # this bounded classification. The actual supplied threshold is
+            # still decoded/guarded by the ordinary comparison below. Foreign,
+            # nonfinite, large and exact-Fraction claims keep the old order.
+            small_claim = (type(limit) is int and limit == 0 or
+                           type(limit) is float and math.isfinite(limit) and 0 <= limit <= .5)
+            if not small_claim:
+                if (arithmetic.compare(candidate[0], Fraction(1, 2)) > 0
+                        or _bound_domain(arithmetic) != MAX_OPERAND_BITS):
+                    return False
+            return (arithmetic.compare(candidate[0], limit) <= 0
                     and _bound_domain(arithmetic) == MAX_OPERAND_BITS)
         if type(limit) in (int, float, Fraction):
             # Translated siblings often have the same complete orientation
@@ -1594,6 +1658,7 @@ def _key_comparisons(reference, geometry, tracks, time, index, arithmetic, *, pr
             admitted_cap = _bound_domain(arithmetic)
             expected = (ideal.orientation[1], ideal.orientation[2], ideal.orientation[3], ideal.orientation[0])
             position_error = magnitude = None
+            position_arithmetic = _PositionOperands(arithmetic, position)
             def compare_position():
                 nonlocal position_error, magnitude
                 reused = _previous_position_comparison(
@@ -1603,7 +1668,7 @@ def _key_comparisons(reference, geometry, tracks, time, index, arithmetic, *, pr
                     position_error, magnitude = reused
                     return
                 position_error = (arithmetic.difference(position, ideal.position) if limits is None
-                                  else _recording_position_bound(position, ideal.position, limits[0], arithmetic))
+                                  else _recording_position_bound(position, ideal.position, limits[0], position_arithmetic))
             if limits is None:
                 normalized, quaternion_error = _recording_orientation_comparison(
                     quaternion, expected, arithmetic, before_error=compare_position)
@@ -1611,7 +1676,7 @@ def _key_comparisons(reference, geometry, tracks, time, index, arithmetic, *, pr
                 normalized, quaternion_error = _recording_orientation_bound(
                     quaternion, expected, limits[1], arithmetic, before_error=compare_position)
             if magnitude is None:
-                magnitude = _recording_position_magnitude(position, arithmetic)
+                magnitude = _recording_position_magnitude(position, position_arithmetic)
             cap = admitted_cap if admitted_cap == _bound_domain(arithmetic) else None
             return (("position_error", position_error),
                     ("quaternion_error", quaternion_error), ("normalized", normalized),
