@@ -884,6 +884,15 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
                 if len(local_axes) > 1 or any(axis != 2 for axis in local_axes) and not cartesian:
                     return None
                 axes.update(local_axes)
+                if (kind in {"site", "follow"} and len(local.position) == 3
+                        and all(type(value) is float and isfinite(value)
+                                for value in (*local.position, *local.rotation))):
+                    # Freeze eligible and ordinary forward leaves before any
+                    # parent/cursor callback. Eligibility is later checked
+                    # against this record's original typed source witness.
+                    # A live nonidentity leaf cannot transiently become one.
+                    local = Pose(frame=local.frame, position=local.position, rotation=local.rotation)
+                    operands = (local,)
                 if (kind == "joint" and (joint.kind in {"rigid", "grip"}
                         or joint.kind == "hinge" and law is None)
                         and len(local.position) == 3
@@ -1144,8 +1153,10 @@ def _sample_graph(graph, time, ops, context, publication, *, parents=None):
             parent = constant(node.record.parent)
             if node.kind in {"site", "follow"}:
                 local = node.operands[0]
-                build = lambda base=parent: ops.compose_recording_fast(base,
-                    ops.recording_constant_pose(local, build=source_constant))
+                def build(base=parent):
+                    direct = ops.recording_forward_translation(base, local, node.record)
+                    return (direct if direct is not None else ops.compose_recording_fast(base,
+                        ops.recording_constant_pose(local, build=source_constant)))
                 signature = ((parent, local) if node.kind == "site" else ("follow", parent, local))
             else:
                 kind, axis, local, law, coordinate = node.operands
@@ -1282,8 +1293,10 @@ def _sample_chain_graph(graph, time, ops, context, publication, constants):
             else:
                 if node.kind in {"site", "follow"}:
                     local = node.operands[0]
-                    build = lambda: ops.compose_recording_fast(parent,
-                        ops.recording_constant_pose(local, build=source_constant))
+                    def build():
+                        direct = ops.recording_forward_translation(parent, local, node.record)
+                        return (direct if direct is not None else ops.compose_recording_fast(parent,
+                            ops.recording_constant_pose(local, build=source_constant)))
                     signature = ((parent, local) if node.kind == "site"
                                  else ("follow", parent, local))
                 else:

@@ -15,7 +15,10 @@ import math
 import struct
 from types import MappingProxyType
 
-from .reach_numeric import MAX_OPERAND_BITS, ReachAdmissionError, compare, rational, round_binary64
+from .model import Pose
+from .reach_numeric import (MAX_OPERAND_BITS, ReachAdmissionError, ReachExecutionWork,
+                            compare, rational, round_binary64)
+from .reach_phase import RecordingAngularFrame
 from .reach_pose import (AXIS_ERROR, PRODUCT_ERROR, MAX_RECORDING_ROTATION_STEPS,
                          PoseValue, RecordedTransform, ReachPoseOps, RotationValue, SpinPlan, ZERO, UNIT)
 
@@ -96,6 +99,82 @@ def _cartesian_axis(values):
         return None
     indices = tuple(index for index, value in enumerate(values) if value)
     return indices[0] if len(indices) == 1 else None
+
+
+def _forward_source_inputs(local, record):
+    """Match a copied native forward leaf to its complete typed source record."""
+    if (type(local) is not Pose or type(record) is not RecordingAngularFrame
+            or type(local.frame) is not str
+            or type(local.position) is not tuple or len(local.position) != 3
+            or type(local.rotation) is not tuple or len(local.rotation) != 4
+            or any(type(value) is not float or not math.isfinite(value)
+                   for value in (*local.position, *local.rotation))
+            or any(abs(value) > _MAX_POSITION for value in local.position)
+            or local.rotation != (1.0, 0.0, 0.0, 0.0)):
+        return None
+    witness = record.witness
+    if (type(witness) is not tuple or len(witness) not in (4, 5)
+            or type(witness[0]) is not str or type(witness[1]) is not str
+            or (witness[0], len(witness)) not in (("site", 4), ("follow", 5))
+            or any(type(value) is not tuple or len(value) != 2
+                   or any(type(part) is not str for part in value)
+                   or value[0] != "string" for value in witness[2:-1])):
+        return None
+    pose = witness[-1]
+    if type(pose) is not tuple or len(pose) != 2:
+        return None
+    for source, values in zip(pose, (local.position, local.rotation)):
+        if (type(source) is not tuple or len(source) != 2
+                or type(source[0]) is not str or source[0] != "tuple"
+                or type(source[1]) is not tuple or len(source[1]) != len(values)
+                or any(type(leaf) is not tuple or len(leaf) != 2
+                       or any(type(part) is not str for part in leaf)
+                       or leaf != ("binary64", value.hex())
+                       for leaf, value in zip(source[1], values))):
+            return None
+    return local.position, local.rotation, local.frame, witness
+
+
+def _forward_parent_inputs(parent, cartesian):
+    if (type(parent) is not _FloatPose or type(parent.depth) is not int
+            or not 0 <= parent.depth < MAX_FLOAT_DEPTH
+            or type(parent.position) is not tuple or len(parent.position) != 3
+            or any(type(value) is not float or not math.isfinite(value)
+                   or abs(value) > _MAX_POSITION for value in parent.position)
+            or type(parent.zeros) is not tuple or len(parent.zeros) != 3
+            or any(type(value) is not bool for value in parent.zeros)):
+        return None
+    rotation = parent.rotation
+    if (type(rotation) is not _FloatRotation
+            or any(type(value) is not float or not math.isfinite(value) or abs(value) > 2
+                   for value in (rotation.w, rotation.z))
+            or type(rotation.zero_w) is not bool or type(rotation.zero_z) is not bool
+            or type(rotation.axis) is not int or rotation.axis not in (0, 1, 2)
+            or rotation.axis != 2 and cartesian is not True):
+        return None
+    fields = rotation.w, rotation.z, rotation.zero_w, rotation.zero_z, rotation.axis
+    return (parent.position, rotation, parent.zeros, parent.depth, fields,
+            struct.pack("<dd??B", *fields))
+
+
+def _forward_owners(ops):
+    """Admit only original storage and the helpers whose identities are omitted."""
+    if (type(ops) is not Binary64RecordingOps
+            or any(vars(kind).get(name, _FORWARD_ABSENT) is not saved
+                   for kind, fields in _FORWARD_CLASSES for name, saved in fields)):
+        return None
+    own = object.__getattribute__(ops, "__dict__")
+    if type(own) is not dict or any(name in own for name in _FORWARD_OPS_METHODS):
+        return None
+    source, work = own.get("source_ops"), own.get("work")
+    if type(source) is not ReachPoseOps or type(work) is not ReachExecutionWork:
+        return None
+    source_own = object.__getattribute__(source, "__dict__")
+    work_own = object.__getattribute__(work, "__dict__")
+    if (type(source_own) is not dict or source_own.get("work") is not work
+            or type(work_own) is not dict or any(name in work_own for name in _FORWARD_WORK_METHODS)):
+        return None
+    return source, work
 
 
 @dataclass(frozen=True)
@@ -1810,6 +1889,83 @@ class Binary64RecordingOps(ReachPoseOps):
         self._require_domain()
         return result
 
+    def recording_forward_translation(self, parent, local, record):
+        """Place a captured literal translation with the original native order.
+
+        The ordinary source leaf projects these finite binary64 values back to
+        themselves, canonicalizing zeros. Its quaternion is literal +identity,
+        so the following product performs no numerical arithmetic. Only this
+        copied forward site/follow shape may omit those two generic entries;
+        inverse leaves and the existing shared-arithmetic path stay ordinary.
+        """
+        owners = _forward_owners(self)
+        if owners is None:
+            return None
+        source, work = owners
+        if (self.share_arithmetic is not False or work._source_after_charge is not None
+                or type(work.max_operand_bits) is not int or work.max_operand_bits != MAX_OPERAND_BITS):
+            return None
+        captured = _forward_source_inputs(local, record)
+        admitted = _forward_parent_inputs(parent, self.recording_cartesian_axes)
+        if captured is None or admitted is None:
+            return None
+        local_position, local_rotation, local_frame, witness = captured
+        position, rotation, zeros, depth, rotation_fields, rotation_seal = admitted
+        cartesian = (self.recording_cartesian_axes, self._recording_cartesian_selector,
+                     self._recording_cartesian_dispatch)
+        # No mutable parent/leaf wrapper enters arithmetic after the first
+        # callback. Native float leaves themselves are immutable. Live owners
+        # are still checked after every actual operation and before return.
+        copied_rotation = _FloatRotation(*rotation_fields)
+        local_zeros = tuple(value == 0.0 for value in local_position)
+        copied_local = tuple(0.0 if zero else value
+                             for value, zero in zip(local_position, local_zeros))
+
+        def current():
+            now = _forward_owners(self)
+            if (now is None or now[0] is not source or now[1] is not work
+                    or self.share_arithmetic is not False
+                    or type(work.max_operand_bits) is not int or work.max_operand_bits != MAX_OPERAND_BITS
+                    or work._source_after_charge is not current
+                    or self.recording_cartesian_axes is not cartesian[0]
+                    or self._recording_cartesian_selector is not cartesian[1]
+                    or self._recording_cartesian_dispatch is not cartesian[2]
+                    or local.position is not local_position or local.rotation is not local_rotation
+                    or local.frame is not local_frame or record.witness is not witness):
+                raise _UnsupportedPlanar("The captured forward translation owner or source changed.")
+            actual = _forward_parent_inputs(parent, cartesian[0])
+            if (actual is None or actual[0] is not position or actual[1] is not rotation
+                    or actual[2] is not zeros or actual[3] != depth or actual[5] != rotation_seal):
+                raise _UnsupportedPlanar("The captured forward translation parent changed.")
+
+        work._source_after_charge = current
+        try:
+            self._domain()
+            if all(local_zeros):
+                result_position, result_zeros = position, zeros
+            else:
+                if copied_rotation.zero_z and copied_rotation.w == 1.0:
+                    offset, offset_zeros = copied_local, local_zeros
+                else:
+                    offset, offset_zeros = self._rotated_offset(copied_rotation, copied_local, local_zeros)
+                result_position = tuple(b if az else a if bz else self._native(a, b, "add")
+                    for a, b, az, bz in zip(position, offset, zeros, offset_zeros))
+                result_zeros = tuple(a and b for a, b in zip(zeros, offset_zeros))
+                result_position = tuple(0.0 if zero else value
+                    for value, zero in zip(result_position, result_zeros))
+            # _product tests the left identity first. Preserve its canonical
+            # right rotation, including axis/zero flags, even for an X/Y parent.
+            result_rotation = (_FloatRotation(1.0, 0.0, False, True)
+                if (copied_rotation.w, copied_rotation.z) == (1.0, 0.0) and copied_rotation.zero_z
+                else rotation)
+            current()
+            self._require_domain()
+            return _FloatPose(result_position, result_rotation, result_zeros, depth + 1)
+        finally:
+            # A callback or nested operation owns any foreign replacement.
+            if work._source_after_charge is current:
+                work._source_after_charge = None
+
     def compose_recording_fast(self, parent, local):
         self._domain()
         parent = self._pose(parent)
@@ -1859,6 +2015,24 @@ class Binary64RecordingOps(ReachPoseOps):
             position = tuple(0.0 if zero else value for value, zero in zip(position, zeros))
         rotation = self._product(parent.rotation, local.rotation)
         return _FloatPose(position, rotation, zeros, parent.depth + 1)
+
+
+_FORWARD_ABSENT = object()
+_FORWARD_STORAGE = ("__getattribute__", "__getattr__", "__setattr__", "__delattr__", "__dict__")
+_FORWARD_OPS_METHODS = ("_domain", "_require_domain", "_native", "_rotation_domain", "_pose",
+    "_rotated_offset", "_product", "_immutable_scalar_domain", "recording_constant_pose",
+    "_direct_identity_source_leaf", "compose_recording_fast")
+_FORWARD_WORK_METHODS = ("charge", "guard", "guard_bits", "resource")
+_FORWARD_CLASSES = tuple((kind, tuple((name, vars(kind).get(name, _FORWARD_ABSENT))
+    for name in dict.fromkeys((*_FORWARD_STORAGE, *fields)))) for kind, fields in (
+        (Binary64RecordingOps, (*_FORWARD_OPS_METHODS, "work", "source_ops", "share_arithmetic",
+            "recording_cartesian_axes", "_recording_cartesian_selector", "_recording_cartesian_dispatch")),
+        (ReachPoseOps, ("work",)),
+        (ReachExecutionWork, (*_FORWARD_WORK_METHODS, "max_operand_bits", "_source_after_charge")),
+        (Pose, ("position", "rotation", "frame")),
+        (_FloatPose, ("position", "rotation", "zeros", "depth")),
+        (_FloatRotation, ("w", "z", "zero_w", "zero_z", "axis")),
+        (RecordingAngularFrame, ("witness",))))
 
 
 def _planar_paths(simulator, state, selected, *, dynamic_roots=None, varying_hinges=None):
@@ -2138,10 +2312,14 @@ class _BoundedCapturedPhase:
         self.phase = phase
 
     def _run(self, method, *args):
+        work = self.phase.ops.work
         try:
             return method(*args)
         except _UnsupportedPlanar as error:
-            if self.phase.ops.work.callback_error is error:
+            if work.callback_error is error:
+                raise
+            current = self.phase.ops.work
+            if type(current) is ReachExecutionWork and current.callback_error is error:
                 raise
             raise RecordingRoundingAmbiguity(None, reason=str(error)) from error
 
