@@ -32,12 +32,8 @@ _STATIC_RECORDING_STORAGE = tuple((name, vars(_StaticRecordingOps).get(name, _ST
     for name in ("__getattribute__", "__getattr__", "__setattr__", "__delattr__", "__dict__", "work"))
 
 
-def _share_static_recording_rotations(state, ops):
-    """Admit only clock-independent native recording operands.
-
-    This predicate enables a structural index into the current traversal's
-    already required poses. It creates no numerical cache or source proof.
-    """
+def _native_recording_rotation_domain(state, ops):
+    """Admit the native storage/dispatch shared by the optional indices."""
     if type(state) is not _ReachRunState or type(ops) is not _StaticRecordingOps:
         return False
     namespace = vars(_StaticRecordingOps)
@@ -50,10 +46,34 @@ def _share_static_recording_rotations(state, ops):
     if type(own) is not dict or "work" not in own or any(name in own for name, _ in _STATIC_RECORDING_DISPATCH):
         return False
     work = own["work"]
-    return (type(state.claims) is dict and not state.claims
+    return (type(state.claims) is dict
         and type(state.dynamic) is dict and not state.dynamic
         and type(work.max_operand_bits) is int and work.max_operand_bits == 32768
         and type(work.max_cache_entries) is int and 1 <= work.max_cache_entries <= 256)
+
+
+def _share_static_recording_rotations(state, ops):
+    """Admit only clock-independent native recording operands.
+
+    This predicate enables a structural index into the current traversal's
+    already required poses. It creates no numerical cache or source proof.
+    """
+    return _native_recording_rotation_domain(state, ops) and not state.claims
+
+
+def _share_claimed_recording_seeds(state, ops):
+    """Index repeated exact seeds only for a sufficiently large joint graph.
+
+    Each body's ordinary cursor still owns its lookup, recurrence and update.
+    This merely supplies a cold cursor's exact seed from an earlier required
+    pose at this same clock. Small graphs retain their existing bookkeeping.
+    Root motion and dynamics retain their separate source-plan admission.
+    """
+    return (_native_recording_rotation_domain(state, ops) and 16 <= len(state.claims) <= 256
+        and all(type(key) is tuple and len(key) == 2
+                and type(key[0]) is str and type(key[1]) is str
+                and key[1] == "coordinate" and type(owner) is str
+                for key, owner in state.claims.items()))
 
 
 def _incoming_release_bound(model, time, *, check=None):
@@ -1041,20 +1061,23 @@ class ReachSimulator(ForceSimulator):
                         compare(proof_time, proof.end, self.work) <= 0):
                     angular_proof = proof
 
-        # Exact static recording poses can share a completed complete-body
-        # rotation in this SAME traversal. Their full source proofs and world
-        # origins still belong to each actual occurrence. Moving/native cursor
-        # sharing keeps its existing separately admitted path below.
-        share_static = (recording_only and type(recording_context) is object and type(time) is Fraction
+        # Exact recording poses can identify equal complete-body source seeds
+        # in this SAME traversal. A claimed coordinate still uses its ordinary
+        # body cursor; only a cold seed can borrow another required exact pose.
+        # Static poses keep their separately admitted whole-cursor sharing.
+        # Full source proofs and world origins belong to each actual occurrence.
+        exact_sharing_domain = (recording_only and type(recording_context) is object and type(time) is Fraction
             and recording_pose_ops is None and angular_proof is not None
             and type(angular_proof) is RecordingAngularProof
             and type(angular_proof.frames) is MappingProxyType
-            and len(angular_proof.frames) <= 4096
-            and _share_static_recording_rotations(state, ops))
-        static_valid = share_static
+            and len(angular_proof.frames) <= 4096)
+        share_static = exact_sharing_domain and _share_static_recording_rotations(state, ops)
+        share_seed = exact_sharing_domain and _share_claimed_recording_seeds(state, ops)
+        share_exact = share_static or share_seed
+        static_valid = share_exact
         static_work, static_check = self.work, self.check
         static_external_check, static_capacity = self.work.external_check, self.work.max_cache_entries
-        static_proof_frames = angular_proof.frames if share_static else None
+        static_proof_frames = angular_proof.frames if share_exact else None
         static_revision = self.model.program_revision
 
         def fraction_receipt(value):
@@ -1064,15 +1087,16 @@ class ReachSimulator(ForceSimulator):
                 return value.numerator, value.denominator
             return None
 
-        static_clocks = (None if not share_static else
+        static_clocks = (None if not share_exact else
             (fraction_receipt(angular_proof.start), fraction_receipt(angular_proof.end)))
-        static_time = fraction_receipt(time) if share_static else None
+        static_time = fraction_receipt(time) if share_exact else None
 
         def static_context():
             nonlocal static_valid
             if not static_valid:
                 return False
-            valid = (_share_static_recording_rotations(state, ops)
+            valid = ((_share_static_recording_rotations(state, ops) if share_static
+                      else _share_claimed_recording_seeds(state, ops))
                 and self.model is source_model and self.state is source_root_state
                 and state is source_state and self.pose_ops is ops and self.work is static_work
                 and ops.work is static_work and self.check is static_check
@@ -1117,7 +1141,8 @@ class ReachSimulator(ForceSimulator):
                 and static_proof_frames.get(frame) is record and type(record.parent) is type(parent)
                 and record.parent == parent
                 and record.witness is witness and record.rate is rate and rate.value is number
-                and rate.axis is axis and fraction_receipt(number) == pair == (0, 1)
+                and rate.axis is axis and fraction_receipt(number) == pair
+                and (share_seed or pair == (0, 1))
                 and type(record.trig_count) is int and record.trig_count == count
                 and record.token is token)
 
@@ -1126,7 +1151,9 @@ class ReachSimulator(ForceSimulator):
                     or type(record.rate) is not _AxialRate
                     or type(record.rate.axis) not in (int, type(None))
                     or record.rate.axis not in (None, 0, 1, 2)
-                    or fraction_receipt(record.rate.value) != (0, 1)
+                    or fraction_receipt(record.rate.value) is None
+                    or (not share_seed and fraction_receipt(record.rate.value) != (0, 1))
+                    or (record.rate.axis is None and record.rate.value)
                     or type(record.token) is not object):
                 return None
             parent = orientation_recipes.get(record.parent)
@@ -1137,7 +1164,13 @@ class ReachSimulator(ForceSimulator):
                 fraction_receipt(record.rate.value), record.trig_count, record.token)
             if not same_typed_witness((record.parent, record.witness), current):
                 return None
-            frozen = RecordingAngularFrame(_AxialRate(saved[8], Fraction(saved[7])),
+            if (share_seed and kind == "root"
+                    and (len(record.witness) != 10 or record.witness[8] is not None)):
+                # A root spin also consumes an independently selected source
+                # spin plan. Its precision/horizon is not a complete input of
+                # this structural recipe, so it cannot supply a shared seed.
+                return None
+            frozen = RecordingAngularFrame(_AxialRate(saved[8], Fraction(*saved[9])),
                 saved[4], saved[5], saved[10], saved[11])
             recipe = _recording_orientation_recipe(frozen,
                 None if parent is None else parent[0], work=static_work)
@@ -1146,7 +1179,7 @@ class ReachSimulator(ForceSimulator):
                         work=static_work) != (saved[4], saved[5])):
                 return None
             # The structural key never retains a mutable Fraction wrapper.
-            # Every zero rate has the same admitted native integer pair.
+            # Each rate has an admitted native numerator/denominator pair.
             return (recipe[:2] + (saved[9],) + recipe[3:]), saved
 
         def static_rotation_receipt(rotation):
@@ -1253,6 +1286,36 @@ class ReachSimulator(ForceSimulator):
                 static_revision, MappingProxyType(records))
             return proof, Fraction(*static_time)
 
+        def claimed_shared_seed(representative, frame):
+            """Copy one proved cold seed without bypassing the target cursor."""
+            from .reach_pose import RecordedTransform, RotationValue
+
+            nonlocal static_valid
+            saved_frame, saved_pose, saved_rotation, fingerprint = representative
+
+            def unchanged():
+                nonlocal static_valid
+                valid = (static_context() and frames.get(saved_frame) is saved_pose
+                    and type(saved_pose) is RecordedTransform and saved_pose._ops is ops
+                    and saved_pose.rotation is saved_rotation
+                    and static_rotation_receipt(saved_rotation) == fingerprint)
+                if not valid:
+                    static_valid = False
+                return valid
+
+            if not unchanged() or not static_chain(frame):
+                return None
+            # Detach before the callback. The unchanged target cursor retains
+            # its original complete source guards and final source admission.
+            parts, _ = fingerprint
+            rotation = RotationValue(tuple(Fraction(*part) for part in parts[:4]),
+                Fraction(*parts[4]), saved_rotation.frozen_projection)
+            static_work.charge("recording_claimed_shared_seed")
+            if not unchanged() or not static_chain(frame):
+                return None
+            static_work.guard(*rotation.components, rotation.error_rad)
+            return rotation, unchanged
+
         def angular_frame(frame_path, kind, source_path):
             """Validate one current law and its already visited parent proof.
 
@@ -1293,7 +1356,7 @@ class ReachSimulator(ForceSimulator):
             valid_angular_frames.add(frame_path)
             angular_receipts[frame_path] = (kind, source_path, record,
                 angular_receipts.get(record.parent) if record.parent is not None else None)
-            if share_static:
+            if share_exact:
                 entry = static_recipe(frame_path, kind, source_path, record, current)
                 if entry is not None:
                     orientation_recipes[frame_path] = entry
@@ -1457,14 +1520,25 @@ class ReachSimulator(ForceSimulator):
                                     raise ReachAdmissionError("reach_domain", "The carrier source witness changed during sampling.")
                             return True
                         static_seed_fingerprint = None
+                        shared_seed_receipt = None
                         def direct_seed():
-                            nonlocal static_seed_fingerprint
+                            nonlocal static_seed_fingerprint, shared_seed_receipt
                             # The exact source kernels consume the same frozen
                             # operands as this admitted body proof. A callback
                             # cannot substitute a temporary live-source value
                             # into a seed published under the old proof token.
                             from .reach_recording_fast import captured_recording_orientation
-                            inputs = static_seed_inputs(path + ".frame") if share_static else None
+                            if share_seed:
+                                # A cap retry may call this builder again.
+                                # Only this successful invocation owns a receipt.
+                                static_seed_fingerprint = shared_seed_receipt = None
+                            if share_seed and representative is not None:
+                                borrowed = claimed_shared_seed(representative, path + ".frame")
+                                if borrowed is not None:
+                                    result, shared_seed_receipt = borrowed
+                                    static_seed_fingerprint = static_rotation_receipt(result)
+                                    return result
+                            inputs = static_seed_inputs(path + ".frame") if share_exact else None
                             proof, clock = inputs if inputs is not None else (angular_proof, time)
                             result = captured_recording_orientation(
                                 self.pose_ops, proof, path + ".frame", clock)
@@ -1472,10 +1546,10 @@ class ReachSimulator(ForceSimulator):
                                 static_seed_fingerprint = static_rotation_receipt(result)
                             return result
                         recipe = orientation_recipes.get(path + ".frame")
-                        if share_static and recipe is not None:
+                        if share_exact and recipe is not None:
                             recipe = recipe[0]
                         if recipe is not None:
-                            recipe = ((*static_clocks, recipe) if share_static else
+                            recipe = ((*static_clocks, recipe) if share_exact else
                                       (angular_proof.start, angular_proof.end, recipe))
                         representative = (shared_orientation_frames.get(recipe)
                             if recipe is not None else None)
@@ -1483,14 +1557,14 @@ class ReachSimulator(ForceSimulator):
                             source_records, MAX_KEYFRAMES)
                             if share_static and representative is not None else None)
                         rotation = None if shared_rotation is None else shared_rotation[0]
-                        if representative is None or share_static and rotation is None:
+                        if representative is None or share_exact and rotation is None:
                             rotation = ops.recording_body_orientation(direct_seed,
                                 record.rate.axis, record.rate.value, time,
                                 phase_start=angular_proof.start, phase_end=angular_proof.end,
                                 context=recording_context, path="carrier:" + path,
                                 proof_token=record.token, max_steps=MAX_KEYFRAMES,
                                 source_admission=source_admission, source_records=source_records)
-                        elif not share_static:
+                        elif not share_exact:
                             # This index refers only to an already required
                             # pose in this same graph/clock/phase. No second
                             # numerical cache or cursor is retained. Equality
@@ -1503,7 +1577,7 @@ class ReachSimulator(ForceSimulator):
                             ops._require_domain()
                             source_admission()
                             ops._rotation_domain(rotation)
-                        fingerprint = static_rotation_receipt(rotation) if share_static else None
+                        fingerprint = static_rotation_receipt(rotation) if share_exact else None
                         # With a zero child-site offset, the hinge and inverse
                         # child-site rotations do not move the parent's origin.
                         # Repeated identical 96-bit grid projections are
@@ -1512,7 +1586,17 @@ class ReachSimulator(ForceSimulator):
                             if recording_pose_ops is not None else ops.make_recording(
                                 position=ops._rounded_vector(parent.exact_position),
                                 orientation=rotation))
-                        if shared_rotation is not None and (not shared_rotation[1]()
+                        if (shared_seed_receipt is not None
+                                and static_rotation_receipt(result.rotation) != static_seed_fingerprint):
+                            # The target's ordinary cursor already owns this
+                            # copied seed. A later origin callback can reach
+                            # that cache entry; never replay a corrupted warm
+                            # value or publish it as the actual graph pose.
+                            raise ReachAdmissionError("reach_domain",
+                                "The borrowed carrier seed changed during sampling.")
+                        borrowed_receipt = (shared_rotation[1] if shared_rotation is not None
+                                            else shared_seed_receipt)
+                        if borrowed_receipt is not None and (not borrowed_receipt()
                                 or not static_chain(path + ".frame")):
                             # The original origin/grid/exposure checkpoints
                             # follow source admission. Recheck the borrowed
@@ -1528,7 +1612,7 @@ class ReachSimulator(ForceSimulator):
                                 position=ops._rounded_vector(parent.exact_position), orientation=rotation)
                             fingerprint = None
                         if recipe is not None:
-                            if share_static:
+                            if share_exact:
                                 if (static_context() and fingerprint is not None
                                         and (shared_rotation is not None or static_seed_fingerprint == fingerprint)
                                         and static_rotation_receipt(result.rotation) == fingerprint
