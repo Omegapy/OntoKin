@@ -13,7 +13,7 @@ import math
 
 from .reach_reference import (
     MAX_BOUNDARIES, MAX_CACHE, MAX_OPERAND_BITS, Interval, PoseEnclosure, ReferenceError, ZERO,
-    _Action, _RecordingBodyRate,
+    _Action, _Arithmetic, _PoseArithmetic, _RecordingBodyRate,
 )
 
 
@@ -25,6 +25,7 @@ MAX_CURSORS = 32
 MAX_BATCH_PLANS = 16
 MAX_BATCH_RECEIPTS = 1024
 _SOURCE_MAPS = ("objects", "sites", "joints", "follows", "actions")
+_PARTITION_TICK = _Arithmetic.tick
 
 
 def _owners(reference):
@@ -111,7 +112,8 @@ class _SourceBatch:
             if previous is not plan and type(plan.centered) is tuple:
                 if (previous.state is not plan.state or previous.nodes is not plan.nodes
                         or previous.receipts is not plan.receipts or previous.owners is not plan.owners
-                        or previous.context != plan.context or previous.targets != plan.targets):
+                        or previous.context != plan.context or previous.targets != plan.targets
+                        or previous.remaining != plan.remaining):
                     raise ReferenceError("identity", "Independent source plan identity changed")
                 # An already registered ordinary plan may acquire a private
                 # source-only centered recipe. Its stronger final signature
@@ -360,6 +362,7 @@ class _Plan:
     nodes: tuple
     receipts: tuple
     owners: tuple
+    remaining: tuple = ()
     cache_identity: object = field(default_factory=object, compare=False)
     centered: object = field(default=None, compare=False)
 
@@ -525,7 +528,84 @@ class _Plan:
         return frames
 
 
-def _build(reference, state, targets, context, *, source_stationarity=False):
+@dataclass(frozen=True)
+class _PartitionedPlan:
+    """A source-only split whose dynamic ancestry still uses the full walker.
+
+    No completed frame table crosses the split. The ordinary remainder runs
+    first in its own fresh map; only then may the existing interval plan run.
+    A declined plan leaves that ordinary work in place for complete fallback.
+    """
+    plan: _Plan
+    batch: _SourceBatch
+    clock: F
+    clock_fields: tuple
+
+    def evaluate_remaining(self, reference, frame, frames):
+        plan, batch, a = self.plan, self.batch, reference.a
+        plan.admit_owners(reference)
+        batch.admit_owners()
+        if (type(a) is not _Arithmetic or type(reference.p) is not _PoseArithmetic
+                or a._recording_after_tick is not None or batch.depth != 0
+                or batch.current_plan is not None or not batch.matches(plan.context)
+                or not batch.contains(plan) or not reference._recording_body_domain()
+                or getattr(a.tick, "__func__", None) is not _PARTITION_TICK
+                or getattr(a.tick, "__self__", None) is not a
+                or type(a.bits) is not int or a.bits != 128
+                or type(a.scale) is not int or a.scale != 1 << 128):
+            return None
+        valid = True
+
+        def observed():
+            nonlocal valid
+            plan.admit_owners(reference)
+            batch.admit_owners()
+            clock = self.clock
+            if (a._recording_after_tick is not observed or batch.depth != 1
+                    or batch.current_plan is not None and batch.current_plan is not plan
+                    or batch.plans.get(plan.cache_identity, (None,))[0] is not plan
+                    or getattr(a.tick, "__func__", None) is not _PARTITION_TICK
+                    or getattr(a.tick, "__self__", None) is not a
+                    or type(clock) is not F or type(clock.numerator) is not int
+                    or type(clock.denominator) is not int
+                    or (clock.numerator, clock.denominator) != self.clock_fields):
+                raise ReferenceError("identity", "Independent source partition owner or clock changed")
+            if (type(a.bits) is not int or a.bits != 128
+                    or type(a.scale) is not int or a.scale != 1 << 128):
+                raise ReferenceError("identity", "Independent source partition precision changed")
+            # Latch narrowing even if a later original callback restores it.
+            # Do not preempt an original arithmetic operation's prospective
+            # resource guard or its caller's exception with optional fallback.
+            valid = valid and a.operand_limit == MAX_OPERAND_BITS
+
+        a._recording_after_tick = observed
+        batch.depth += 1
+        try:
+            observed()
+            for path in plan.remaining:
+                frame(path)
+            observed()
+            if not valid:
+                return None
+            # The captured graph partitions complete root ancestries. A live
+            # route that traversed a prescribed node cannot silently borrow
+            # or overwrite an independently planned parent.
+            if any(node.path in frames for node in plan.nodes):
+                raise ReferenceError("identity", "Independent source partition ancestry changed")
+            batch.check_cursors()
+            batch.current_plan = plan
+            result = plan.evaluate(reference, self.clock, batch) if plan.nodes else {}
+            observed()
+            return result if valid else None
+        finally:
+            if a._recording_after_tick is observed:
+                a._recording_after_tick = None
+            if batch.current_plan is plan:
+                batch.current_plan = None
+            batch.depth -= 1
+
+
+def _build(reference, state, targets, context, *, source_stationarity=False, partition=False):
     """Capture a bounded native graph in the original first-visit order."""
     model, a = reference.model, reference.a
     owners = _owners(reference)
@@ -652,7 +732,8 @@ def _build(reference, state, targets, context, *, source_stationarity=False):
     def visit(path):
         if path in bodies:
             return True
-        if path in visiting or len(nodes) + len(visiting) >= MAX_NODES:
+        # Ordinary remainder markers consume the same node bound as recipes.
+        if path in visiting or len(bodies) - 1 + len(visiting) >= MAX_NODES:
             return False
         a.tick()
         visiting.add(path)
@@ -661,6 +742,16 @@ def _build(reference, state, targets, context, *, source_stationarity=False):
             parent = model.sites[stem].owner + ".frame"
             if not visit(parent):
                 return False
+            if bodies[parent] is None:
+                def read(stem=stem):
+                    return ("partition_dynamic_site", stem, model.sites[stem].owner + ".frame")
+                route = reference._recording_capture(read)
+                if route is None or route.values[2] != parent:
+                    return False
+                add_receipts((route,))
+                bodies[path] = None
+                visiting.remove(path)
+                return True
             body = reference._recording_attached_body(bodies[parent], ("site", stem), path=path)
             if body is None:
                 return False
@@ -672,6 +763,12 @@ def _build(reference, state, targets, context, *, source_stationarity=False):
             parent = graph.values[2] if kind == "follow" else graph.values[2] + ".frame"
             if not visit(parent):
                 return False
+            if bodies[parent] is None:
+                # Its complete relation receipt is retained below, including
+                # inactive/unused edges. Only evaluation stays ordinary.
+                bodies[path] = None
+                visiting.remove(path)
+                return True
             if kind == "follow":
                 body = reference._recording_attached_body(bodies[parent], (kind, relation), path=path)
                 if body is None or body.receipts[-1].values != graph.values:
@@ -697,6 +794,16 @@ def _build(reference, state, targets, context, *, source_stationarity=False):
                              body, relation, graph.values[4])
             used_relations.add((kind, relation))
         else:
+            if partition and type(state.modes.get(stem)) is str and state.modes[stem] == "dynamic":
+                def read(stem=stem):
+                    return ("partition_dynamic_root", stem, int(stem in model.objects), state.modes[stem])
+                route = reference._recording_capture(read)
+                if route is None or not route.values[2] or route.values[3] != "dynamic":
+                    return False
+                add_receipts((route,))
+                bodies[path] = None
+                visiting.remove(path)
+                return True
             def read(stem=stem):
                 claim = state.claims.get((stem, "translation"))
                 head = ("prescribed_root_translation", stem, int(stem in model.objects), state.modes[stem],
@@ -748,19 +855,27 @@ def _build(reference, state, targets, context, *, source_stationarity=False):
             for node in nodes) > MAX_CURSORS or
             not reference._recording_body_domain()):
         return None
-    return _Plan(state, context, targets, tuple(nodes), tuple(receipts), owners)
+    remaining = tuple(path for path in targets if bodies[path] is None)
+    return _Plan(state, context, targets, tuple(nodes), tuple(receipts), owners, remaining)
 
 
 def _phase_poses(reference, time, state, targets, context, batch=None, *, centered=False):
     """Return the optional plan's fresh frames, or the original-walk sentinel."""
-    # Reject unimplemented dynamic root laws before capturing any recipes.
-    # These bounded metadata predicates share the caller's entry admission;
-    # no numeric operation or source-result read is hidden behind them.
+    # A complete outer reader can plan prescribed ancestries independently
+    # of released roots. Context-free, nested and centered requests retain
+    # their original dynamic-source fallback.
     if (len(targets) > MAX_TARGETS or len(reference.model.objects) > 64 or
             len(reference.model.joints) > 32 or len(state.claims) > 128 or
             len(state.modes) > 64 or
-            any(mode == "dynamic" for mode in state.modes.values()) or
             max(abs(time.numerator).bit_length(), time.denominator.bit_length()) > 1024):
+        return None
+    dynamic = any(mode == "dynamic" for mode in state.modes.values())
+    partition = dynamic and not centered and batch is not None
+    if dynamic and (not partition or reference.a._recording_after_tick is not None
+                    or any(type(mode) is not str for mode in state.modes.values())
+                    or any(type(path) is not str for path in targets)
+                    or type(time) is not F or type(time.numerator) is not int
+                    or type(time.denominator) is not int or time.denominator <= 0):
         return None
     plan = reference._recording_phase_plan
     if (plan is None or plan.state is not state or plan.context != context or
@@ -768,7 +883,8 @@ def _phase_poses(reference, time, state, targets, context, batch=None, *, center
         reference._recording_phase_plan = None
         if not reference._recording_body_domain():
             return None
-        plan = _build(reference, state, targets, context, source_stationarity=batch is not None)
+        plan = _build(reference, state, targets, context,
+                      source_stationarity=batch is not None, partition=partition)
         if plan is None:
             return None
     if centered:
@@ -796,6 +912,11 @@ def _phase_poses(reference, time, state, targets, context, batch=None, *, center
     adopted = batch if batch is not None and batch.register(plan, time) else None
     if centered and adopted is None:
         return None
+    if plan.remaining:
+        if adopted is None:
+            return None
+        reference._recording_phase_plan = plan
+        return _PartitionedPlan(plan, adopted, time, (time.numerator, time.denominator))
     if adopted is None:
         result = plan.evaluate(reference, time)
         if batch is not None and result is not None:
@@ -876,6 +997,7 @@ def recording_stationary_frames(reference, carriers, first, last, side):
                 or candidate.context != plan.context):
             continue
         flags = {node.path: node.source_stationary for node in candidate.nodes}
+        flags.update((path, False) for path in candidate.remaining)
         flags["world"] = True
         if all(carrier in flags and flags[carrier] is not None for carrier in selected):
             candidate.admit_owners(reference)

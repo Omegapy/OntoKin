@@ -308,8 +308,16 @@ class IndependentSourceBatchTests(unittest.TestCase):
                 with scope as batch:
                     outcomes.append(reference.recording_pose_enclosures(carriers, time, recording_context=context))
                     if batch is not None:
-                        self.assertFalse(batch.plans)
-                        self.assertFalse(batch.cursors)
+                        if case == "P16":
+                            plan = reference._recording_phase_plan
+                            self.assertTrue(batch.plans)
+                            self.assertEqual(plan.remaining, ("payload.frame",))
+                            self.assertNotIn("payload.frame", {node.path for node in plan.nodes})
+                            self.assertTrue(all(key[4] != "payload.frame" for key in reference.a.cache
+                                                if key[:1] == ("reference_recording_stationary_pose",)))
+                        else:
+                            self.assertFalse(batch.plans)
+                            self.assertFalse(batch.cursors)
             with self.subTest(case=case):
                 self.assertEqual(outcomes[0], outcomes[1])
 

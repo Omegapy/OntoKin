@@ -2957,10 +2957,13 @@ class ReachReference:
         self.a.tick()
         limit = self._sync_numeric_cache()
         body_recording = recording_context is not None and self._recording_body_domain()
+        partition = None
         if body_recording:
-            from .reach_reference_plan import recording_phase_poses
+            from .reach_reference_plan import _PartitionedPlan, recording_phase_poses
             planned = recording_phase_poses(self, time, state, targets, recording_context)
-            if planned is not None:
+            if type(planned) is _PartitionedPlan:
+                partition = planned
+            elif planned is not None:
                 return planned
         # Recording walks re-admit their actual source witnesses. In
         # particular, a prior complete frame map must not bypass a changed
@@ -3097,8 +3100,15 @@ class ReachReference:
             frames[path] = value
             return value
 
-        for path in targets:
-            frame(path)
+        planned = partition.evaluate_remaining(self, frame, frames) if partition is not None else None
+        if planned is not None:
+            frames.update(planned)
+        else:
+            # A declined partial plan keeps the dynamic frames already
+            # evaluated by this same original walker and finishes its missing
+            # targets on the same work. No partial map is a complete result.
+            for path in targets:
+                frame(path)
         if not (body_recording or recording_seed) and limit == self.a.operand_limit and len(self._poses) < MAX_CACHE:
             self._poses[key] = (state, frames)
         batch = self._recording_batch
