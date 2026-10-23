@@ -1,9 +1,9 @@
 """Preflight JSON by encoded bytes and logical entries before materializing it.
 
 Repeated immutable values count on every occurrence. The walk retains an
-iterator and at most 64 short string references per nesting level and rejects
-cycles; it never expands shared graphs. Only exact built-in containers are
-accepted, matching the scalar type checks. Custom containers can expose
+iterator per nesting level and at most 64 short string references across the
+whole traversal and rejects cycles; it never expands shared graphs. Only exact
+built-in containers are accepted, matching the scalar type checks. Custom containers can expose
 different values to preflight and serialization.
 """
 from __future__ import annotations
@@ -43,8 +43,10 @@ def measure_json(value, *, max_bytes=MAX_JSON_BYTES, max_entries=MAX_JSON_ENTRIE
     """Count the exact compact ensure_ascii=False JSON encoding without building it."""
     size = entries = ticks = 0
     active = set()
-    stack = [(iter((value,)), None, 0, [])]
-    text_reuse = (work is not None and hasattr(work, "lookup") and hasattr(work, "remember"))
+    stack = [(iter((value,)), None, 0)]
+    pending = []
+    # Keep the existing work-owner admission for bounded text operations.
+    text_blocks = (work is not None and hasattr(work, "lookup") and hasattr(work, "remember"))
 
     def add(n):
         nonlocal size
@@ -64,14 +66,17 @@ def measure_json(value, *, max_bytes=MAX_JSON_BYTES, max_entries=MAX_JSON_ENTRIE
                 check()
 
     def flush_text(pending):
-        # A repeated certificate includes short field names, rational clock
-        # strings and carrier identities. Reuse their Unicode/escape scans as
-        # one bounded immutable sequence, not a trusted container or its values.
+        # A certificate includes short field names, rational clock strings and
+        # carrier identities. Check their actual bytes as one bounded immutable
+        # sequence, not a trusted container or its values.
         # Every string was exact-type/length checked before entering this list;
         # every logical value, number, container/depth and cycle still takes the
-        # ordinary walk below. All cache bookkeeping stays on the same work.
-        cacheable = text_reuse and len(pending) >= 5
-        if cacheable:
+        # ordinary walk below. A fresh native escape scan costs the same three
+        # checkpoints as a cache hit, while misses also insert and often evict.
+        # These traversal-wide groups include changing clock strings, so avoid
+        # retaining their sizes or displacing the request's numeric entries.
+        batched = text_blocks and len(pending) >= 5
+        if batched:
             work.charge("json_text_batch_domain")
             literal_size = _literal_text_size(pending)
             if literal_size is not None:
@@ -83,14 +88,7 @@ def measure_json(value, *, max_bytes=MAX_JSON_BYTES, max_entries=MAX_JSON_ENTRIE
                 add(literal_size)
                 pending.clear()
                 return
-            key = ("bounded_json_text_batch_v1", tuple(pending))
-            cached = work.lookup(key)
-            if cached is not None:
-                add(cached)
-                pending.clear()
-                return
-        before = size
-        if cacheable:
+        if batched:
             # This exact built-in list contains at most 64 exact strings, each
             # at most 128 code points. The native JSON encoder performs the
             # escaping/Unicode work for that bounded block once. Its largest
@@ -106,12 +104,10 @@ def measure_json(value, *, max_bytes=MAX_JSON_BYTES, max_entries=MAX_JSON_ENTRIE
         else:
             for text in pending:
                 string_size(text)
-        if cacheable:
-            work.remember(key, size - before)
         pending.clear()
 
     def text_size(text, pending):
-        if text_reuse and len(text) <= 128:
+        if text_blocks and len(text) <= 128:
             pending.append(text)
             if len(pending) == 64:
                 flush_text(pending)
@@ -120,21 +116,14 @@ def measure_json(value, *, max_bytes=MAX_JSON_BYTES, max_entries=MAX_JSON_ENTRIE
             string_size(text)
 
     while stack:
-        iterator, container, depth, pending = stack[-1]
+        iterator, container, depth = stack[-1]
         try:
             item = next(iterator)
         except StopIteration:
             stack.pop()
             if container is not None:
                 active.remove(container)
-            if stack:
-                parent_text = stack[-1][3]
-                if len(parent_text) + len(pending) > 64:
-                    flush_text(parent_text)
-                parent_text.extend(pending)
-                if len(parent_text) == 64:
-                    flush_text(parent_text)
-            else:
+            if not stack:
                 flush_text(pending)
             continue
         entries += 1
@@ -164,18 +153,17 @@ def measure_json(value, *, max_bytes=MAX_JSON_BYTES, max_entries=MAX_JSON_ENTRIE
             if depth >= max_depth:
                 raise JSONLimitError("json_depth", max_depth, depth + 1)
             add(2 + max(0, len(item) - 1))
-            child_text = []
             if type(item) is dict:
                 for name in item:
                     if type(name) is not str:
                         raise ValueError("JSON object keys must be strings.")
-                    text_size(name, child_text)
+                    text_size(name, pending)
                     add(1)
                 iterator = iter(item.values())
             else:
                 iterator = iter(item)
             active.add(id(item))
-            stack.append((iterator, id(item), depth + 1, child_text))
+            stack.append((iterator, id(item), depth + 1))
         else:
             raise ValueError(f"Unsupported JSON value type: {type(item).__name__}.")
     return {"bytes": size, "entries": entries}

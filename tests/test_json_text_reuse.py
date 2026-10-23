@@ -82,9 +82,7 @@ class JSONTextReuseTests(unittest.TestCase):
                 expected = measure_json(value)
                 for _ in range(2):
                     self.assertEqual(measure_json(value, check=work.tick, work=work), expected)
-                for key in work._cache:
-                    if key[0] == "bounded_json_text_batch_v1":
-                        self.assertLessEqual(len(key[1]), 64)
+                self.assertEqual(work._cache, {})
 
     def test_bounded_native_block_counts_worst_case_escaping_and_unicode_exactly(self):
         values = [["\u0000" * 128] * 64,
@@ -97,8 +95,10 @@ class JSONTextReuseTests(unittest.TestCase):
                 expected = measure_json(value)
                 for _ in range(2):
                     self.assertEqual(measure_json(value, check=work.tick, work=work), expected)
-                self.assertEqual(work.counts["json_text_block_encode"], 1)
-                self.assertEqual(work.counts["json_text_block_encode_return"], 1)
+                # Every occurrence now uses the same bounded native encoder;
+                # the former size-cache hit did not save charged operations.
+                self.assertEqual(work.counts["json_text_block_encode"], 2)
+                self.assertEqual(work.counts["json_text_block_encode_return"], 2)
                 with self.assertRaises(JSONLimitError):
                     measure_json(value, max_bytes=expected["bytes"] - 1,
                                  check=work.tick, work=work)
@@ -108,20 +108,26 @@ class JSONTextReuseTests(unittest.TestCase):
 
     def test_cancellation_brackets_native_encoding_and_never_publishes_partial_cache(self):
         value = ["escaped\n" + str(index) for index in range(64)]
-        for stage in ("before", "after"):
-            interrupted = RuntimeError("cancel " + stage + " bounded native encoding")
-            def check():
-                reached = (work.counts.get("cache_lookup", 0) if stage == "before" else
-                           work.counts.get("json_text_block_encode", 0))
-                if reached:
-                    raise interrupted
-            work = ReachExecutionWork(check=check)
-            with self.subTest(stage=stage), patch("ontokin.json_limits.json.dumps", wraps=json.dumps) as encode:
+        for stage, calls in (("json_text_batch_domain", 0),
+                             ("json_text_block_encode", 0),
+                             ("json_text_block_encode_return", 1)):
+            interrupted = RuntimeError("cancel " + stage)
+            work = ReachExecutionWork()
+            work.remember(("original_numeric",), Fraction(3, 7))
+            before = tuple(work._cache.items())
+            original = work.charge
+            def charged(kind="checkpoint", amount=1):
+                if kind == stage:
+                    work.external_check = lambda: (_ for _ in ()).throw(interrupted)
+                return original(kind, amount)
+            with self.subTest(stage=stage), patch.object(work, "charge", charged), \
+                    patch("ontokin.json_limits.json.dumps", wraps=json.dumps) as encode:
                 with self.assertRaises(RuntimeError) as caught:
                     measure_json(value, check=work.tick, work=work)
                 self.assertIs(caught.exception, interrupted)
-                self.assertEqual(encode.call_count, 0 if stage == "before" else 1)
-                self.assertEqual(work.record()["cache_entries"], 0)
+                self.assertIs(work.callback_error, interrupted)
+                self.assertEqual(encode.call_count, calls)
+                self.assertEqual(tuple(work._cache.items()), before)
 
     def test_cached_hits_keep_original_cancellation_and_request_budget(self):
         stopped = False
