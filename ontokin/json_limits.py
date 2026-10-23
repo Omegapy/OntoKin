@@ -10,10 +10,26 @@ from __future__ import annotations
 
 import json
 import math
+import re
 
 MAX_JSON_BYTES = 4 * 1024 * 1024
 MAX_JSON_ENTRIES = 100000
 MAX_JSON_DEPTH = 128
+_ASCII_ESCAPES = re.compile(r'[\x00-\x1f"\\]')
+
+
+def _literal_text_size(pending):
+    """Size one bounded block whose ASCII characters need no JSON escaping.
+
+    The caller retains at most 64 exact strings of at most 128 code points.
+    Concatenation allocates at most 8,192 characters. ASCII without a control,
+    quote or backslash contributes exactly its length plus two quotes per
+    occurrence. Every other block keeps the ordinary Unicode/escape proof.
+    """
+    text = "".join(pending)
+    if text.isascii() and _ASCII_ESCAPES.search(text) is None:
+        return len(text) + 2 * len(pending)
+    return None
 
 
 class JSONLimitError(ValueError):
@@ -57,6 +73,16 @@ def measure_json(value, *, max_bytes=MAX_JSON_BYTES, max_entries=MAX_JSON_ENTRIE
         cacheable = text_reuse and len(pending) >= 5
         if cacheable:
             work.charge("json_text_batch_domain")
+            literal_size = _literal_text_size(pending)
+            if literal_size is not None:
+                # Admit these actual current string bytes directly. Keeping a
+                # cache entry for their length would cost more bookkeeping and
+                # displace numeric work used by the same request. The bounded
+                # native scan remains bracketed by the original work context.
+                work.charge("json_text_literal_return")
+                add(literal_size)
+                pending.clear()
+                return
             key = ("bounded_json_text_batch_v1", tuple(pending))
             cached = work.lookup(key)
             if cached is not None:

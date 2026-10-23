@@ -46,6 +46,8 @@ MAX_JSON_BYTES = 4 * 1024 * 1024
 # deliberately retain their ordinary occurrence/provenance paths.
 _CONSTANT_CALLS = frozenset({"real", "abs", "min", "max", "near", "sqrt", "sin", "cos",
     "vec3", "vector", "point", "quat", "axis_angle", "range", "rgba"})
+_IMMUTABLE_SURFACE_CALLS = frozenset({"loft_section", "surface_material"})
+_PARAMETER_CALLS = _CONSTANT_CALLS | _IMMUTABLE_SURFACE_CALLS
 LIMITS = {"max_objects": 1000, "max_operations": 100000,
           "max_result_items": 1000, "max_elapsed_ms": 30000,
           "max_value_entries": 100000}
@@ -854,9 +856,13 @@ class ConstructionCompiler(Validator):
         if depth >= 128:
             return None
         kind, children, reads, names, height = node.kind, (), (), frozenset(), 1
+        # A successful sealed constant subtree has no occurrence reads. Its
+        # names still participate in every occurrence's shadowing guard. This
+        # also keeps an inner constant-cache hit from hiding a planned read.
+        constants = self._constant_names(node) if kind in {"call", "binary"} else None
         if kind in {"number", "string", "bool"}:
             pass
-        elif kind == "name" and node.name in _CONSTANT_CALLS | {"world"}:
+        elif kind == "name" and node.name in _PARAMETER_CALLS | {"world"}:
             reads, names = (("name", node),), frozenset({node.name})
         elif kind == "member" and node.target.kind == "name" and node.target.name == "self":
             reads, names, height = (("parameter", node),), frozenset({"self"}), 2
@@ -864,8 +870,20 @@ class ConstructionCompiler(Validator):
             children = (node.value,)
         elif kind == "binary" and node.op not in {"and", "or"}:
             children = (node.left, node.right)
-        elif kind == "call" and node.callee.kind == "name" and node.callee.name in _CONSTANT_CALLS:
+        elif kind == "call" and node.callee.kind == "name" and node.callee.name in _PARAMETER_CALLS:
             children = (node.callee, *node.args)
+        elif (kind == "keyed" and depth == 0 and node.element_type.name in SURFACE_TYPES
+                and not optional(node.element_type, "args", [])
+                and len(node.entries) <= MAX_KEYED_ENTRIES):
+            for entry in node.entries:
+                plan = self._parameter_plan(entry.value, depth + 1)
+                if plan is None:
+                    self._parameter_syntax[id(node)] = node, None
+                    return None
+                child_reads, child_names, child_height = plan
+                reads += (("keyed_entry", entry),) + child_reads
+                names |= child_names
+                height = max(height, 1 + child_height)
         else:
             self._parameter_syntax[id(node)] = node, None
             return None
@@ -878,7 +896,10 @@ class ConstructionCompiler(Validator):
             reads += child_reads
             names |= child_names
             height = max(height, 1 + child_height)
-        result = reads, names, height
+        # Classify every child before dropping constant-only reads, so even
+        # an entirely constant conditional/short-circuit expression remains
+        # outside this parameter-result optimization.
+        result = (() if constants is not None else reads), names, height
         self._parameter_syntax[id(node)] = node, result
         return result
 
@@ -891,7 +912,7 @@ class ConstructionCompiler(Validator):
         if value.frame is not None or value.hint is not None:
             return None
         if name:
-            if (typ == Type("BuiltinCallable") and type(payload) is str and payload in _CONSTANT_CALLS
+            if (typ == Type("BuiltinCallable") and type(payload) is str and payload in _PARAMETER_CALLS
                     or typ == Type("FrameRef") and type(payload) is str and payload == "world"):
                 return typ, payload
             return None
@@ -915,14 +936,48 @@ class ConstructionCompiler(Validator):
         if type(value) is Value:
             if cls._parameter_value_key(value) is not None:
                 return True
+            if (type(value.type) is Type and value.type.kind == "Keyed"
+                    and value.type.element in {Type(name) for name in SURFACE_TYPES}
+                    and value.type.dimension is None and value.type.name is None
+                    and value.frame is None and value.hint is None):
+                payload = value.value
+                return (type(payload) is KeyedValue and type(payload.entries) is tuple
+                        and len(payload.entries) <= MAX_KEYED_ENTRIES
+                        and all(type(entry) is tuple and len(entry) == 2
+                                and type(entry[0]) is str and type(entry[1]) is Value
+                                and entry[1].type == value.type.element
+                                and cls._parameter_result_immutable(entry[1])
+                                for entry in payload.entries))
             if (type(value.type) is not Type or value.type.kind not in
-                    {"Vec3", "Vector3", "Point3", "Rotation", "Color", "Range"}
+                    {"Vec3", "Vector3", "Point3", "Rotation", "Color", "Range", *SURFACE_TYPES}
                     or value.frame not in (None, "world") or value.hint is not None):
                 return False
             return cls._parameter_result_immutable(value.value)
         if type(value) is tuple:
             return all(cls._parameter_result_immutable(item) for item in value)
-        return type(value) is float and math.isfinite(value)
+        return type(value) is str or type(value) is float and math.isfinite(value)
+
+    @classmethod
+    def _parameter_copy(cls, value):
+        """Detach all wrappers while sharing only immutable scalar leaves."""
+        if type(value) is Value:
+            return Value(value.type, cls._parameter_copy(value.value), value.frame, value.hint)
+        if type(value) is KeyedValue:
+            return KeyedValue(tuple((key, cls._parameter_copy(item)) for key, item in value.entries))
+        if type(value) is tuple:
+            return tuple(cls._parameter_copy(item) for item in value)
+        return value
+
+    def _capture_parameter_event(self, kind, node, key):
+        capture = self._parameter_capture
+        if capture is None or capture[2] is None or id(node) not in capture[0]:
+            return
+        reads, seen = capture[1], capture[2]
+        if (len(seen) == len(reads) or reads[len(seen)][0] != kind or reads[len(seen)][1] is not node
+                or key is None):
+            capture[2] = None
+        else:
+            seen.append(key)
 
     def _capture_parameter_read(self, node, result):
         capture = self._parameter_capture
@@ -934,15 +989,17 @@ class ConstructionCompiler(Validator):
             return
         kind = reads[len(seen)][0]
         key = self._parameter_value_key(result, name=kind == "name")
-        if key is None:
-            capture[2] = None
-        else:
-            seen.append(key)
+        self._capture_parameter_event(kind, node, key)
 
-    def _parameter_context(self, ctx, reads, names):
+    def _parameter_context(self, ctx, reads, names, node=None):
         if (ctx.abstract or ctx.self_path is None or not names.isdisjoint(ctx.locals)
                 or ctx.self_path not in self.instances):
             return None
+        if node is not None and node.kind == "keyed":
+            entries = tuple(read for kind, read in reads if kind == "keyed_entry")
+            if (len(entries) != len(node.entries)
+                    or any(planned is not current for planned, current in zip(entries, node.entries))):
+                return None
         instance = self.instances[ctx.self_path]
         for kind, read in reads:
             if kind == "parameter":
@@ -953,7 +1010,13 @@ class ConstructionCompiler(Validator):
 
     def _parameter_replay(self, ctx, reads, expected):
         for (kind, read), wanted in zip(reads, expected):
-            if kind == "name":
+            if kind == "keyed_entry":
+                self.budget.tick(read)
+                self.key(read, read.key)
+                if type(read.key) is not str or read.key != wanted:
+                    return False
+                continue
+            elif kind == "name":
                 value = self.name(read.name, ctx, read)
             else:
                 target = self.name("self", ctx, read.target)
@@ -963,6 +1026,34 @@ class ConstructionCompiler(Validator):
                 # following this changed read may fail before reaching them.
                 return False
         return True
+
+    def _keyed_expression(self, node, ctx):
+        element = self.parse_type(node.element_type)
+        self._keyed_leaf(element, node)
+        if len(node.entries) > MAX_KEYED_ENTRIES:
+            fail("OKL-E-RESOURCE", "Keyed input exceeds 256 entries.", node, phase="support",
+                 details={"budget": "keyed_entries", "limit": MAX_KEYED_ENTRIES,
+                          "consumed": len(node.entries)})
+        keys, entries, origins = set(), [], {}
+        for entry in node.entries:
+            self.budget.tick(entry)
+            self.key(entry, entry.key)
+            if entry.key in keys:
+                fail("OKL-E-ID", f"Keyed literal duplicates stable key '{entry.key}'.", entry, phase="binding")
+            keys.add(entry.key)
+            self._capture_parameter_event("keyed_entry", entry, entry.key)
+            val = self.expect(self.expression(entry.value, ctx), element, entry.value)
+            if not ctx.abstract:
+                entries.append((entry.key, val))
+                origins[entry.key] = entry
+        if ctx.abstract:
+            return Value(Type("Keyed", element=element))
+        payload = KeyedValue(tuple(sorted(entries, key=lambda item: item[0])))
+        result = Value(Type("Keyed", element=element), payload)
+        self.budget.charge_value(result, node)
+        self._keyed_origins[id(payload)] = origins
+        self._keyed_payloads[id(payload)] = payload
+        return result
 
     def expression(self, node: Any, ctx: Context) -> Value:
         self.budget.tick(node)
@@ -984,56 +1075,47 @@ class ConstructionCompiler(Validator):
                     return Value(cached.type, cached.value, cached.frame, cached.hint)
             parameter_key = parameter_plan = parameter_context = capture = None
             if (self.reach_work is not None and constant_names is None and not ctx.abstract
-                    and self._parameter_capture is None and node.kind in {"call", "binary"}):
+                    and self._parameter_capture is None and node.kind in {"call", "binary", "keyed"}):
                 parameter_plan = self._parameter_plan(node)
                 if parameter_plan is not None:
                     reads, names, height = parameter_plan
-                    if (any(kind == "parameter" for kind, _ in reads)
+                    surface_value = (node.kind == "keyed" or node.kind == "call"
+                                     and node.callee.kind == "name"
+                                     and node.callee.name in _IMMUTABLE_SURFACE_CALLS)
+                    if ((surface_value or any(kind == "parameter" for kind, _ in reads))
                             and self._expression_depth + height - 1 <= 128):
-                        parameter_context = self._parameter_context(ctx, reads, names)
+                        parameter_context = self._parameter_context(ctx, reads, names, node)
                     if parameter_context is not None:
                         parameter_key = ("construction_parameters", id(node))
                         cached = self.reach_work.lookup(parameter_key)
+                        keyed_type = None
+                        if cached is not None and cached[0] is node and node.kind == "keyed":
+                            element = self.parse_type(node.element_type)
+                            self._keyed_leaf(element, node)
+                            keyed_type = Type("Keyed", element=element)
                         if (cached is not None and cached[0] is node
-                                and self._parameter_context(ctx, reads, names) == parameter_context
+                                and (node.kind != "keyed" or keyed_type == cached[2].type)
+                                and self._parameter_context(ctx, reads, names, node) == parameter_context
                                 and self._parameter_replay(ctx, reads, cached[1])
-                                and self._parameter_context(ctx, reads, names) == parameter_context):
-                            value = cached[2]
-                            return Value(value.type, value.value, value.frame, value.hint)
+                                and self._parameter_context(ctx, reads, names, node) == parameter_context):
+                            value = self._parameter_copy(cached[2])
+                            if node.kind == "keyed":
+                                self.budget.charge_value(value, node)
+                                self._keyed_origins[id(value.value)] = {
+                                    entry.key: entry for entry in node.entries}
+                                self._keyed_payloads[id(value.value)] = value.value
+                            return value
                         capture = [{id(read) for _, read in reads}, reads, []]
                         self._parameter_capture = capture
-            if node.kind == "keyed":
-                element = self.parse_type(node.element_type)
-                self._keyed_leaf(element, node)
-                if len(node.entries) > MAX_KEYED_ENTRIES:
-                    fail("OKL-E-RESOURCE", "Keyed input exceeds 256 entries.", node, phase="support",
-                         details={"budget": "keyed_entries", "limit": MAX_KEYED_ENTRIES,
-                                  "consumed": len(node.entries)})
-                keys, entries, origins = set(), [], {}
-                for entry in node.entries:
-                    self.budget.tick(entry)
-                    self.key(entry, entry.key)
-                    if entry.key in keys:
-                        fail("OKL-E-ID", f"Keyed literal duplicates stable key '{entry.key}'.", entry, phase="binding")
-                    keys.add(entry.key)
-                    val = self.expect(self.expression(entry.value, ctx), element, entry.value)
-                    if not ctx.abstract:
-                        entries.append((entry.key, val))
-                        origins[entry.key] = entry
-                if ctx.abstract:
-                    return Value(Type("Keyed", element=element))
-                payload = KeyedValue(tuple(sorted(entries, key=lambda item: item[0])))
-                result = Value(Type("Keyed", element=element), payload)
-                self.budget.charge_value(result, node)
-                self._keyed_origins[id(payload)] = origins
-                self._keyed_payloads[id(payload)] = payload
-                return result
-            if node.kind == "index":
-                value = self.expression(node.target, ctx)
-                index = self.expression(node.index, ctx)
-                return self.index_value(value, index, node, ctx)
             try:
-                result = super().expression(node, ctx)
+                if node.kind == "keyed":
+                    result = self._keyed_expression(node, ctx)
+                elif node.kind == "index":
+                    value = self.expression(node.target, ctx)
+                    index = self.expression(node.index, ctx)
+                    result = self.index_value(value, index, node, ctx)
+                else:
+                    result = super().expression(node, ctx)
             finally:
                 if capture is not None:
                     self._parameter_capture = None
@@ -1043,10 +1125,10 @@ class ConstructionCompiler(Validator):
                 self.reach_work.remember(constant_key, result)
             if (capture is not None and capture[2] is not None and len(capture[2]) == len(reads)
                     and self._parameter_result_immutable(result)
-                    and self._parameter_context(ctx, reads, names) == parameter_context):
-                value = Value(result.type, result.value, result.frame, result.hint)
+                    and self._parameter_context(ctx, reads, names, node) == parameter_context):
+                value = self._parameter_copy(result)
                 self.reach_work.remember(parameter_key, (node, tuple(capture[2]), value),
-                    admission=lambda: self._parameter_context(ctx, reads, names) == parameter_context)
+                    admission=lambda: self._parameter_context(ctx, reads, names, node) == parameter_context)
             return result
         finally:
             self._expression_depth -= 1
