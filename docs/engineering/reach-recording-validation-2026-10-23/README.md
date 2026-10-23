@@ -1,5 +1,12 @@
 # Reach recording continuation, October 23, 2026
 
+## Checkpoint 015: exact source recovery and evidence gap
+
+The October 23 continuation recovered the exact published source `f8e0bb3e4a13bf9c83180d21e22e9a2c71e20153`, tree `47668cc123bd38897c558043a6680bac5b24a973`. All 1,531 materialized files and every Git tree object match their published identities. The 37 historical binary omissions remain explicitly inventoried. [Checkpoint 015](checkpoint-015.json), its [manifest](checkpoint-015-manifest.json) and [recovery archive](checkpoint-015.zip) preserve source/branch/PR observations, recovery scripts and receipts, and the restored prior run018 report. This is a recovery checkpoint, not new execution or release acceptance.
+
+The f8 commit reports 100/100 static tests, 126/126 release-cell tests and 23/28 recordings. Raw later runs 019–022 and their focused logs were not published before the prior workspace disappeared; they are not reconstructed from summaries. Checkpoint 014 remains the latest recovered full raw recording evidence. Fresh execution on f8 will receive new identities. The implemented release-cell correction already includes PlanningSimulator method admission and retained source owners; the earlier STATUS description of that candidate is superseded. All 100,000-operation limits, frozen sources, sampling, tolerances and mandatory gates remain unchanged. PR #27 stays draft and unmerged.
+
+
 ## Checkpoint014: verified integration,23/28
 
 The latest complete original source GLB/0.6 run remains **23/28** under the

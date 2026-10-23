@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-23T17:47:14+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-23T19:34:33.193217+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -44,60 +44,13 @@ local `569b67b0bdc6854cc069e6a00590e0f15267ae03`
 [draft PR #25](https://github.com/Omegapy/OntoKin/pull/25). Original branches,
 failed attempts and earlier evidence retain their identities.
 
-Latest published continuation implementation is
-`eea0ddf76d7012242734feb3af17d5a0a5ae62a2`, with exactly the tested local
-`04e694adeec45ab2540cca32664a4233fe727bdf` tree
-`8365fe1c9c6b701d37a9ae165be82dc61a95f1a7`.
-The [October 23 recording checkpoint](docs/engineering/reach-recording-validation-2026-10-23/README.md)
-retains a fresh **23/28** complete source run with stable materialized inputs.
-**P05 passes at 96,132 operations**. **P09, P11, P16, P23 and L03** still reach
-the unchanged **100,000-operation** limit. P20 uses **86,364**, L01 **83,951**,
-and L02 **77,079**. Complete original runs017 and018 follow each source integration.
+Latest published continuation source is `f8e0bb3e4a13bf9c83180d21e22e9a2c71e20153`, exact tree `47668cc123bd38897c558043a6680bac5b24a973`. [Checkpoint 015](docs/engineering/reach-recording-validation-2026-10-23/checkpoint-015.json) preserves exact source recovery, current GitHub observations and the later raw-evidence gap. All 1,531 materialized files match Git identities;37 historical binary archives remain unmaterialized. This does not establish release input closure.
 
-The Cartesian producer cohort passes **197/197** and the independent native
-composition worker cohort passes **172/172**, each with a complete text log,
-zero failures/errors/skips and stable inputs at its identified source cut.
-The previous 51-, 33-, 48-method integrated cohorts and separate worker runs
-retain their original evidence. Counts are not summed or represented as a
-complete current regression inventory.
+Checkpoint 014 retains the latest recovered raw original suite: **23/28**, with **P09, P11, P16, P23 and L03** exceeding the unchanged **100,000-operation** cap. The f8 source commit reports later 100/100 static and 126/126 release integration tests and full runs 021/022 at 23/28. Their raw logs and the other post-checkpoint 014 results are unavailable in this fresh workspace and were not found in the published tree. Those recorded claims are separate from newly executed evidence; fresh current-source repetition is next.
 
-Checkpoint014 preserves **366 new raw members** in **12 recoverable parts**;
-its manifest refers to **1,965 unchanged prior members** through checkpoint013.
-All member hashes, ZIP CRCs and the joined-part identity passed. Earlier archives,
-source cuts, failed tests, incomplete older logs, complete structured results,
-diagnostics and exact local-to-published tree mappings remain visible. The
-development driver binds its own bytes and requires a complete unittest footer.
-[Checkpoint009](docs/engineering/reach-recording-validation-2026-10-22/README.md)
-and its 234- and earlier 686-method cohorts retain their original evidence.
+The integrated code now contains independent child-origin/Cartesian calculations, repeated static rotation sharing, and the release-cell correction including PlanningSimulator inherited-method admission and strong source owners. The prior description of these as unintegrated is stale. P16 remains a budget blocker; no unresolved certificate failure is inferred from the old description.
 
-All runtime, test, tool, fixture and specification files were recovered and
-verified. **37 historical binary evidence archives/parts were not materialized**;
-the exact omissions and original Git blob identities are disclosed in each
-execution inventory and preserved in the tree. These development runs do
-**not** establish release input closure or complete release acceptance.
-
-New integrated work adds native Cartesian capture for consistent single-axis
-ancestry, including P11's exact nonzero axial child origin, and one complete
-independent native-composition admission in place of repeated structural work
-and one-use cache entries. Paired original P09/L03 observers measure16 fewer
-operations per eligible steady key while retaining complete ordinary counters
-and diagnostics. All actual nonzero scalar operations, source receipts, original
-inputs, tolerances, public caps and the256-entry cache maximum remain unchanged.
-
-Unintegrated P16 release-cell arithmetic, transition and admission cohorts pass
-17 methods, but the actual short export still fails an independent certificate
-minimum. A read-only observer proves its exact-type gate excludes the exporter's
-PlanningSimulator; a bounded source-method receipt is under review. No complete
-P16 correction is claimed. The separate static-final-bound candidate passes45
-related methods, but original P23 reaches the cap before its final-point payoff.
-Exact repeated static body-seed reuse and independent Cartesian offset/body-origin
-work remain under development. Earlier rejected candidates remain rejected.
-
-The immediate target remains **28/28**, followed by Agent delivery, complete
-current regression/compatibility, independent rates, native/browser and visual
-checks, inherited/hostile roles and every R01–R12/Q01–Q22 release gate.
-PR #27 remains draft; **do not merge** until all mandatory acceptance passes.
-The complete language and GOAL remain open.
+The immediate target remains **28/28**. Then complete Agent delivery, full current regression and Python compatibility, independent rates/native/browser/visual checks, inherited and hostile roles, and every R01–R12/Q01–Q22 gate. **PR #27 remains draft and must not merge until all mandatory acceptance gates pass.** The complete language and GOAL remain open.
 
 The historical rows below retain their original cuts and limits.
 
@@ -149,10 +102,10 @@ GOAL still requires richer typed algorithms/libraries and compatible replacement
 
 **No main integration lease is held by this continuation.** Main remains
 `2bb4588e121fcfe99b4d42c734b15b38362f3642`; the prior lease is released.
-Coordinator `interactive-reach06-recordings-20261023-7of9-e619` uses
-`work/reach06-recordings-20261023-7of9-e619`, starting from checkpoint009
-`6cf8c525429076ce37efd4ecea95fd01f83365ea`. Isolated captured-root, independent
-reference and construction workers have bounded file ownership in issue #26.
+Coordinator `interactive-reach06-recordings-20261023-7of9-3be6` uses
+`work/reach06-recordings-20261023-7of9-3be6`, starting from observed
+`f8e0bb3e4a13bf9c83180d21e22e9a2c71e20153`. The new bounded recovery scope
+is recorded in Issue #26; previous branches retain their identities.
 This branch-only update claims no main write or runtime integration. Publication
 uses nonforce expected-head checks. Runtime/test/SQLite/workflow/archive
 execution is serialized. Main integration requires complete acceptance and a
