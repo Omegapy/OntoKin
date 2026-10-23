@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-23T14:51:15.595431+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-23T15:28:45.287455+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -48,14 +48,18 @@ Latest published continuation implementation is `5eb68c69e30578237886703f8e7e1ee
 with exactly the tested local `c416eef6d269015f67c5bcd309cf627338e50ea3` tree
 `8f1ff92aa1d7557030a638e980f73da35260471e`.
 The [October 23 recording checkpoint](docs/engineering/reach-recording-validation-2026-10-23/README.md)
-retains a fresh **22/28** complete source run and **227/227 selected correctness
-methods**, with stable materialized inputs and no test failures, errors or skips.
+retains a fresh **22/28** complete source run with stable materialized inputs.
+The identified integrated reference, endpoint and numerical-identity cohorts
+passed **137/137**, **85/85** and **60/60** respectively, without failures,
+errors or skips; these are separate source cuts, not one regression inventory.
 **P05, P09, P11, P16, P23 and L03** still reach the unchanged **100,000-operation**
-limit. P20 uses **96,131**, L01 **95,836**, and L02 **88,157** operations.
+limit. P20 uses **95,435**, L01 **92,793**, and L02 **85,593** operations.
 
-Checkpoint010 preserves **238 raw members**, including failed development
-attempts, actual logs/method IDs, artifacts, traces and source identities. All
-member hashes, archive part identities and ZIP CRCs passed. The earlier
+Checkpoint011 preserves **484 new raw members** in 14 recoverable parts;
+checkpoint010's **238 members** retain their original identities. These include
+failed attempts, actual logs/method IDs, artifacts, traces, rejected candidates
+and source identities. All member hashes, archive part identities and ZIP CRCs
+passed. The earlier
 [checkpoint009](docs/engineering/reach-recording-validation-2026-10-22/README.md)
 and its 234- and earlier 686-method cohorts retain their original evidence.
 
@@ -65,11 +69,13 @@ the exact omissions and original Git blob identities are disclosed in every
 execution inventory and remain preserved in the tree. These development runs
 do **not** establish release input closure or complete release acceptance.
 
-Captured prescribed roots, sufficient independent history bounds, selective
-independent arithmetic reuse and guarded parameter-formula reuse preserve the
-checked behavior. Dynamic roots, bounded independent phase planning and
-surface-value reuse remain follow-up candidates. No fixture, tolerance,
-operation maximum or 256-entry cache maximum changed.
+Captured prescribed/dynamic roots, independent source-formula plans, endpoint
+operand reuse, literal JSON blocks and guarded scalar/surface construction
+preserve the checked behavior. The numerical implementation identity now also
+binds the executed capture helper. Broader source-template and phase-node
+cache candidates were rejected after measured regressions. Mixed P11 sampling
+and phase-wide independent receipts remain unverified follow-up candidates.
+No fixture, tolerance, operation maximum or 256-entry cache maximum changed.
 
 The immediate target remains **28/28**, followed by Agent delivery, complete
 current regression/compatibility, independent rates, native/browser and visual
