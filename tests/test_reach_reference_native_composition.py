@@ -84,8 +84,6 @@ class IndependentNativeCompositionTests(unittest.TestCase):
         cases = [(128, 32767, parent, local), (64, 32768, parent, local),
                  (256, 32768, parent, local),
                  (128, 32768, parent, replace(local, orientation=parent.orientation)),
-                 (128, 32768, parent, replace(local, position=(point(1), point(1), point(0)))),
-                 (128, 32768, parent, replace(local, position=(point(1), point(0), point(1)))),
                  (128, 32768, replace(parent, position=(point(F(1, 3)), *parent.position[1:])), local),
                  (128, 32768, replace(parent, velocity=(point(1), *parent.velocity[1:])), local),
                  (128, 32768, replace(parent, position=list(parent.position)), local)]

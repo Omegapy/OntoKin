@@ -1032,7 +1032,7 @@ class _PoseArithmetic:
         return (cosine, *(self.a.mul(self.a.div(value, norm), sine) for value in values))
 
     def _recording_rotate(self, q, vector, *, _composition_admission=None):
-        """Enclose an axis offset with one final grid per Hamilton factor.
+        """Enclose Cartesian offsets with one final grid per Hamilton factor.
 
         Recording poses need containment, so the exact square/product ranges
         can be combined before outward rounding. The ordinary pose operation
@@ -1064,9 +1064,13 @@ class _PoseArithmetic:
         if any(value.denominator > self.a.scale or value.denominator & (value.denominator - 1)
                for cell in cells for value in (cell.lo, cell.hi)):
             return direct()
-        if (not self._zero((q[1], q[2], vector[2])) or self._zero(vector)
+        if (self._zero(vector)
                 or q[0].lo == q[0].hi and abs(q[0].lo) == 1 and self._zero(q[1:])):
             return direct()
+        if (not self._zero((q[1], q[2], vector[2]))
+                or not (self._zero((vector[0],)) or self._zero((vector[1],)))):
+            result = self._recording_cartesian_rotate(q, vector, _composition_admission)
+            return direct() if result is None else result
         x, y, z = vector
         if y.lo == y.hi == 0:
             axis, scale = 0, x
@@ -1189,6 +1193,212 @@ class _PoseArithmetic:
         # Keep the original calculation's own failure outside the retry
         # handler, including when a later callback could broaden its domain.
         return direct() if result is None else result
+
+    def _recording_cartesian_rotate(self, q, vector, composition_admission):
+        """Expand one Cartesian Hamilton rotation in a proper cyclic basis.
+
+        The caller has admitted seven small native dyadic cells. A scalar
+        quaternion plus at most one nonzero Cartesian component admits the
+        exact factors w*w-s*s, 2*w*s and w*w+s*s; the last factor remains in
+        the axial coordinate, including for nonunit input. This is separate
+        from the preceding Z/single-offset path so its cells and operation
+        order remain unchanged. No producer arithmetic supplies this proof.
+        """
+        axes = tuple(index for index in (1, 2, 3) if not self._zero((q[index],)))
+        if len(axes) > 1:
+            return None
+        axis = axes[0] - 1 if axes else 2
+        order = ((axis + 1) % 3, (axis + 2) % 3, axis)
+        x, y, z = (vector[index] for index in order)
+        a = self.a
+        if (type(self) is not _PoseArithmetic or type(a) is not _Arithmetic
+                or type(a.bits) is not int or type(a.scale) is not int
+                or a.bits != 128 or a.scale != 1 << 128
+                or any(cell.lo > cell.hi for cell in (*q, *vector))):
+            return None
+        work, check, external = a.work, a.check, getattr(a.work, "external_check", None)
+        work_kind = type(work)
+        bits, scale = a.bits, a.scale
+        cells = (*q, *vector)
+        endpoints = tuple(value for cell in cells for value in (cell.lo, cell.hi))
+        if any(type(value.numerator) is not int or type(value.denominator) is not int
+               or value.denominator <= 0 for value in endpoints):
+            return None
+        receipts = tuple((cell, cell.lo, cell.hi, cell.lo.numerator, cell.lo.denominator,
+                          cell.hi.numerator, cell.hi.denominator) for cell in cells)
+        invalidated = False
+
+        class ChangedDomain(Exception):
+            pass
+
+        def current():
+            nonlocal invalidated
+            if (type(self) is not _PoseArithmetic or type(a) is not _Arithmetic
+                    or type(work) is not work_kind or self.a is not a or a.work is not work or a.check is not check
+                    or getattr(work, "external_check", None) is not external):
+                raise ReferenceError("identity", "Independent Cartesian rotation owner changed")
+            for cell, low, high, ln, ld, hn, hd in receipts:
+                if (type(cell) is not Interval or type(low) is not F or type(high) is not F
+                        or cell.lo is not low or cell.hi is not high
+                        or type(low.numerator) is not int or type(low.denominator) is not int
+                        or type(high.numerator) is not int or type(high.denominator) is not int
+                        or (low.numerator, low.denominator, high.numerator, high.denominator) != (ln, ld, hn, hd)):
+                    raise ReferenceError("identity", "Independent Cartesian rotation operand changed")
+            if composition_admission is not None and not composition_admission():
+                invalidated = True
+            invalidated = invalidated or not (type(a.bits) is int and type(a.scale) is int
+                                               and a.bits == bits and a.scale == scale
+                                               and a.operand_limit == MAX_OPERAND_BITS)
+            if not invalidated:
+                a.guard(*endpoints)
+            return not invalidated
+
+        def checked(operation, *args):
+            result = operation(*args)
+            if not current():
+                raise ChangedDomain()
+            return result
+
+        def square(cell):
+            first = checked(a.exact, cell.lo, cell.lo, "mul")
+            if cell.lo == cell.hi:
+                return first, first
+            last = checked(a.exact, cell.hi, cell.hi, "mul")
+            return (F(0) if cell.lo <= 0 <= cell.hi else min(first, last)), max(first, last)
+
+        def product(left, right):
+            if left.lo == left.hi and right.lo == right.hi:
+                value = checked(a.exact, left.lo, right.lo, "mul")
+                return value, value
+            # Preserve the ordinary four-corner finite preflight before
+            # omitting products which sign monotonicity proves interior.
+            a._corner_domain(left, right, "mul")
+            if left.lo >= 0:
+                pairs = (((left.lo, right.lo), (left.hi, right.hi)) if right.lo >= 0 else
+                         ((left.hi, right.lo), (left.lo, right.hi)) if right.hi <= 0 else
+                         ((left.hi, right.lo), (left.hi, right.hi)))
+            elif left.hi <= 0:
+                pairs = (((left.lo, right.hi), (left.hi, right.lo)) if right.lo >= 0 else
+                         ((left.hi, right.hi), (left.lo, right.lo)) if right.hi <= 0 else
+                         ((left.lo, right.hi), (left.lo, right.lo)))
+            elif right.lo >= 0:
+                pairs = ((left.lo, right.hi), (left.hi, right.hi))
+            elif right.hi <= 0:
+                pairs = ((left.hi, right.lo), (left.lo, right.lo))
+            else:
+                pairs = tuple((first, last) for first in (left.lo, left.hi)
+                              for last in (right.lo, right.hi))
+            values = tuple(checked(a.exact, first, last, "mul") for first, last in pairs)
+            return min(values), max(values)
+
+        def multiplied(left, right):
+            # Spell the native mul kernel's callback boundaries explicitly:
+            # a mutating callback cannot wait until a later scalar callback
+            # to restore an input before its receipt is checked.
+            checked(a.tick)
+            a.guard(left.lo, left.hi, right.lo, right.hi)
+            if left.lo == left.hi == 0:
+                return left
+            if right.lo == right.hi == 0:
+                return right
+            if left.lo == left.hi == 1:
+                return right
+            if right.lo == right.hi == 1:
+                return left
+            low, high = product(left, right)
+            return checked(a.grid, low, high)
+
+        def combined(left, right, subtract=False):
+            checked(a.tick)
+            a.guard(left.lo, left.hi, right.lo, right.hi)
+            if right.lo == right.hi == 0:
+                return left
+            if left.lo == left.hi == 0:
+                return Interval(-right.hi, -right.lo) if subtract else right
+            kind = "sub" if subtract else "add"
+            if left.lo == left.hi and right.lo == right.hi:
+                value = checked(a.exact, left.lo, right.lo, kind)
+                return checked(a._sum_enclosure, value, value)
+            low = checked(a.exact, left.lo, right.hi if subtract else right.lo, kind)
+            high = checked(a.exact, left.hi, right.lo if subtract else right.hi, kind)
+            return checked(a._sum_enclosure, low, high)
+
+        def calculate():
+            if not current():
+                return None
+            if composition_admission is None:
+                checked(a.tick)
+                key = self._key("recording_cartesian_rotation", q, vector)
+                # These are exactly lookup's two callback boundaries and
+                # original LRU semantics, with a source receipt between them.
+                checked(a.tick)
+                checked(a._sync_cache_operand_limit)
+                cached = a.cache.get(key)
+                if cached is not None:
+                    del a.cache[key]
+                    a.cache[key] = cached
+                    a.guard(*(value for cell in cached for value in (cell.lo, cell.hi)))
+                    return cached
+            ww, ss = square(q[0]), square(q[axis + 1])
+            planar = not self._zero((x, y))
+            if planar:
+                low = checked(a.exact, ww[0], ss[1], "sub")
+                high = checked(a.exact, ww[1], ss[0], "sub")
+                diagonal = checked(a.grid, low, high)
+                ws = product(q[0], q[axis + 1])
+                low = checked(a.exact, ws[0], 2, "mul")
+                high = checked(a.exact, ws[1], 2, "mul")
+                off_diagonal = checked(a.grid, low, high)
+                if self._zero((y,)):
+                    first, second = ((diagonal, off_diagonal) if x.lo == x.hi == 1 else
+                                     (multiplied(diagonal, x), multiplied(off_diagonal, x)))
+                elif self._zero((x,)):
+                    second, first = ((diagonal, off_diagonal) if y.lo == y.hi == 1 else
+                                     (multiplied(diagonal, y), multiplied(off_diagonal, y)))
+                    first = checked(a.neg, first)
+                else:
+                    first = combined(multiplied(diagonal, x), multiplied(off_diagonal, y), True)
+                    second = combined(multiplied(off_diagonal, x), multiplied(diagonal, y))
+            else:
+                first, second = x, y
+            if self._zero((z,)):
+                third = z
+            else:
+                low = checked(a.exact, ww[0], ss[0], "add")
+                high = checked(a.exact, ww[1], ss[1], "add")
+                axis_scale = checked(a.grid, low, high)
+                third = axis_scale if z.lo == z.hi == 1 else multiplied(axis_scale, z)
+            result = [None] * 3
+            for index, value in zip(order, (first, second, third)):
+                result[index] = value
+            result = tuple(result)
+            a.guard(*(value for cell in result for value in (cell.lo, cell.hi)))
+            if composition_admission is None:
+                # Keep remember's charge, synchronization and fixed-size LRU
+                # while admitting immediately after each external callback.
+                checked(a.tick)
+                checked(a._sync_cache_operand_limit)
+                if key in a.cache:
+                    del a.cache[key]
+                elif len(a.cache) >= MAX_CACHE:
+                    del a.cache[next(iter(a.cache))]
+                a.cache[key] = result
+            return result if current() else None
+
+        try:
+            return calculate()
+        except ChangedDomain:
+            return None
+        except ReferenceError as error:
+            if error.code != "resource" or error is getattr(work, "callback_error", None):
+                raise
+            try:
+                changed = not current()
+            except ReferenceError:
+                raise error
+            if not changed:
+                raise
+            return None
 
     def _recording_rotate_sincos(self, old_sine, old_cosine, sine, cosine, *, shared=False):
         """Round one independent complex interval update only at its outputs.
@@ -1745,8 +1955,10 @@ class _PoseArithmetic:
         A fresh receipt binds all their cells and the arithmetic owners after
         every remaining callback. Only the adjacent rotation admission, its
         one-use memo entry, and repeated zero/identity addition/product
-        admissions are omitted. All nonzero scalar operations and grids are
-        the original kernels in their original order.
+        admissions are omitted. The preceding scalar/Z single-offset path
+        retains every nonzero scalar operation and grid in its original
+        order. Other Cartesian placements use the separately enclosed
+        Hamilton factors, with this same complete composition receipt.
         """
         a = self.a
         if type(parent) is not PoseEnclosure or type(local) is not PoseEnclosure:
@@ -1769,8 +1981,7 @@ class _PoseArithmetic:
                        for cell in (*q, *vector) for value in (cell.lo, cell.hi))
                 or any(value.denominator > a.scale or value.denominator & (value.denominator - 1)
                        for cell in (*q, *vector, *parent.position) for value in (cell.lo, cell.hi))
-                or not self._zero((q[1], q[2], vector[2])) or self._zero(vector)
-                or not (self._zero((vector[0],)) or self._zero((vector[1],)))
+                or sum(not self._zero((cell,)) for cell in q[1:]) > 1 or self._zero(vector)
                 or (q[0].lo == q[0].hi and abs(q[0].lo) == 1 and self._zero(q[1:]))):
             return None
         work, check, external = a.work, a.check, getattr(a.work, "external_check", None)
@@ -1781,13 +1992,15 @@ class _PoseArithmetic:
 
         def admit():
             nonlocal invalidated
-            if (self.a is not a or a.work is not work or a.check is not check
+            if (type(parent) is not PoseEnclosure or type(local) is not PoseEnclosure
+                    or self.a is not a or a.work is not work or a.check is not check
                     or getattr(work, "external_check", None) is not external
                     or any(getattr(pose, name) is not saved for (pose, name), saved in
                            zip(((pose, name) for pose in (parent, local) for name in attributes), vectors))):
                 raise ReferenceError("identity", "Independent sequential composition owner changed")
             for cell, low, high, ln, ld, hn, hd in receipts:
-                if (cell.lo is not low or cell.hi is not high
+                if (type(cell) is not Interval or type(low) is not F or type(high) is not F
+                        or cell.lo is not low or cell.hi is not high
                         or type(low.numerator) is not int or type(low.denominator) is not int
                         or type(high.numerator) is not int or type(high.denominator) is not int
                         or (low.numerator, low.denominator, high.numerator, high.denominator) != (ln, ld, hn, hd)):

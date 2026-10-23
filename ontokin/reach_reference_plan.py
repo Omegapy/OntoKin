@@ -9,6 +9,7 @@ its final callback-free admission. All cursor values use the existing cache.
 """
 from dataclasses import dataclass, field, replace
 from fractions import Fraction as F
+import math
 
 from .reach_reference import (
     MAX_BOUNDARIES, MAX_CACHE, MAX_OPERAND_BITS, Interval, PoseEnclosure, ReferenceError, ZERO,
@@ -243,6 +244,22 @@ class _LocalPose:
     rotation: tuple
 
 
+def _identity_child_origin(node):
+    """A copied native translation whose inverse rotation is exactly identity.
+
+    The enclosing source batch still admits every actual ancestry record.
+    This predicate substitutes no position or interval value: the original
+    inverse child pose must be composed after the complete body orientation.
+    """
+    local = node.local
+    return (type(local) is _LocalPose
+            and type(local.position) is tuple and len(local.position) == 3
+            and type(local.rotation) is tuple and len(local.rotation) == 4
+            and all(type(value) is float and math.isfinite(value)
+                    for value in (*local.position, *local.rotation))
+            and local.rotation == (1.0, 0.0, 0.0, 0.0))
+
+
 @dataclass(frozen=True)
 class _RootTranslation:
     """The original prescribed position equation with captured operands."""
@@ -420,7 +437,15 @@ class _Plan:
             else:
                 value, body = frames[node.parent], node.body
                 used_body = False
-                if node.kind == "hinge" and body.zero_origin and reference._recording_body_domain():
+                # A complete reader batch may advance the already proved
+                # body orientation through an identity-rotated child site.
+                # Its nonzero inverse translation remains a separate original
+                # composition. Direct inspection and ordinary walkers retain
+                # their preceding cells and local-angle cursor behavior.
+                child_origin = (batch is not None and node.kind == "hinge"
+                                and not body.zero_origin and _identity_child_origin(node))
+                if (node.kind == "hinge" and (body.zero_origin or child_origin)
+                        and reference._recording_body_domain()):
                     identical = reference._recording_identity_parent(value, body)
                     if identical is not None:
                         value, used_body = identical, True
@@ -433,6 +458,8 @@ class _Plan:
                         a.guard(*(endpoint for vector in (value.position, rotation)
                                   for cell in vector for endpoint in (cell.lo, cell.hi)))
                         value = PoseEnclosure(value.position, rotation, value.velocity, value.omega)
+                        if child_origin:
+                            value = compose(value, p.inverse(p.constant(node.local)), moving)
                         used_body = True
                 if not used_body:
                     if node.kind == "hinge":
@@ -443,9 +470,9 @@ class _Plan:
                                          recording_time=time if angle_context is not None else None,
                                          shared_recording=shared, pending=pending)
                         value = compose(value, motion, moving)
-                    # In particular, a nonzero child origin or a Y-axis
-                    # head retains both ordinary local compositions. A body
-                    # orientation recipe never replaces its position proof.
+                    # Unsupported child rotations and ordinary requests keep
+                    # both local compositions. A body orientation recipe never
+                    # replaces its position proof.
                     value = compose(value, p.inverse(p.constant(node.local)), moving)
             guard(value)
             if stationary_key is not None:

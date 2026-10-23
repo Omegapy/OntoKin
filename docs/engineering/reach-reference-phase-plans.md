@@ -319,7 +319,6 @@ source-batch rejection, forced eviction/reseeding, and complete original-source
 prefix bytes and validation reports. Full original settings and the remaining
 release gates must be executed and reported separately.
 
-
 ### Identified native composition execution
 
 Candidate `cbb2582141862a1d2e7e76b55690ff0e24fa6c89` passes172/172 combined
@@ -331,3 +330,10 @@ run018 remains23/28; P05 uses96,132, L01 uses83,951 and L02 uses77,079.
 [Checkpoint014](reach-recording-validation-2026-10-23/checkpoint-014.json)
 retains the exact source cuts, failed earlier attempts and raw results. These
 measurements do not establish complete current regression or release acceptance.
+
+The separately derived [Cartesian recording extension](reach-reference-cartesian-recording.md)
+admits arbitrary small native dyadic offsets for a scalar/X, scalar/Y or
+scalar/Z parent in this recording-only composition. It retains the preceding
+Z single-offset path and adds an explicit axial factor rather than assuming
+an interval quaternion is exactly unit. Its measured evidence and the source
+plan's translated-child-origin integration are separate obligations.

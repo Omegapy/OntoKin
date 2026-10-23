@@ -35,6 +35,14 @@ def prefix(case="P09"):
 
 
 class IndependentSourceBatchTests(unittest.TestCase):
+    def setUp(self):
+        # Keep the original cell-identity, angle-cursor and callback cohort
+        # exercising the legacy fallback. The independently validated nonzero
+        # child-origin path has its own explicit containment/receipt cohort.
+        context = patch("ontokin.reach_reference_plan._identity_child_origin", return_value=False)
+        context.start()
+        self.addCleanup(context.stop)
+
     def test_complete_source_batches_reduce_work_and_retain_exact_cells(self):
         for case in ("P05", "P09", "P11", "L03"):
             outcomes = []

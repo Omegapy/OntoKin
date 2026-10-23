@@ -82,9 +82,8 @@ class IndependentRecordingAxisTests(unittest.TestCase):
         q, vector = quaternion(), offset()
         cases = [(128, 32767, q, vector), (64, 32768, q, vector), (256, 32768, q, vector),
                  (128, 32768, tuple(point(x) for x in (1, 0, 0, 0)), vector),
-                 (128, 32768, q, offset(2)), (128, 32768, q, tuple(point(0) for _ in range(3))),
+                 (128, 32768, q, tuple(point(0) for _ in range(3))),
                  (128, 32768, (q[0], point(F(1, 4)), q[2], q[3]), vector),
-                 (128, 32768, q, (point(1), point(1), point(0))),
                  (128, 32768, quaternion(point(F(1, 3))), vector),
                  (128, 32768, list(q), vector), (128, 32768, q, list(vector)),
                  (128, 32768, quaternion(Interval(False, False)), vector)]
