@@ -194,7 +194,7 @@ def _captured_recording_seed_key(proof, frame, time, work):
             proof.start, proof.end, time, complete)
 
 
-def captured_recording_orientation(source_ops, proof, frame, time):
+def captured_recording_orientation(source_ops, proof, frame, time, *, spin_plans=None):
     """Evaluate a direct private orientation from an admitted frozen witness.
 
     The caller has checked the current complete witness chain. A seed must use
@@ -226,7 +226,9 @@ def captured_recording_orientation(source_ops, proof, frame, time):
                 return value
         # The direct source kernel owns its refusals. Only successful work may
         # be replayed after a callback changes the operand cap.
-        value = _captured_recording_orientation_direct(source_ops, proof, frame, time)
+        value = (_captured_recording_orientation_direct(source_ops, proof, frame, time)
+                 if spin_plans is None else _captured_recording_orientation_direct(
+                     source_ops, proof, frame, time, spin_plans=spin_plans))
         if work.max_operand_bits != cap:
             continue
         if key is not None:
@@ -235,7 +237,7 @@ def captured_recording_orientation(source_ops, proof, frame, time):
             return value
 
 
-def _captured_recording_orientation_direct(source_ops, proof, frame, time):
+def _captured_recording_orientation_direct(source_ops, proof, frame, time, *, spin_plans=None):
     """Original complete source calculation for one captured private seed."""
     from .reach_kinematics import recording_pair
     from .reach_phase import RecordingAngularFrame
@@ -317,7 +319,8 @@ def _captured_recording_orientation_direct(source_ops, proof, frame, time):
             else:
                 initial = thaw(law[14]) or thaw(law[8])
                 omega, clock = thaw(law[4]), elapsed(law)
-                plan = work.lookup(("reach_source_spin_phase", tuple(omega)))
+                plan = (work.lookup(("reach_source_spin_phase", tuple(omega))) if spin_plans is None
+                        else spin_plans.get(path))
                 if plan is not None and compare(abs(clock), plan.max_elapsed_s, work) > 0:
                     plan = None
                 value = source_ops.advance_orientation(initial, omega, clock, phase_plan=plan)
@@ -1325,10 +1328,14 @@ class Binary64RecordingOps(ReachPoseOps):
         return True
 
     def recording_advance_orientation(self, initial, omega, elapsed, *, context, path,
-                                      max_steps, phase_plan=None):
+                                      max_steps, phase_plan=None, stage_cursor=None, read_cursor=None):
         """Reuse checked scalar/Z spin increments without source pose derivatives."""
         self._domain()
+        if (stage_cursor is not None and not callable(stage_cursor)
+                or read_cursor is not None and (not callable(read_cursor) or stage_cursor is None)):
+            raise _UnsupportedPlanar("A private spin cursor needs a complete staging owner.")
         raw_initial, raw_omega, raw_plan = initial, omega, phase_plan
+        lookup = self.work.lookup if read_cursor is None else read_cursor
 
         def scalar_key(value):
             # This is a callback-free admission of immutable native inputs,
@@ -1406,7 +1413,7 @@ class Binary64RecordingOps(ReachPoseOps):
             key = self._recording_cursor_key("certified_binary64_spin", context, path, max_steps,
                                             "immutable_operands_v1", inputs)
             self._require_domain()
-            previous = self.work.lookup(key)
+            previous = lookup(key)
             self._require_domain()
             if immutable_inputs() != inputs:
                 raise _UnsupportedPlanar("The current spin operands changed during admission.")
@@ -1444,7 +1451,7 @@ class Binary64RecordingOps(ReachPoseOps):
                 return self._project_rotation(initial)
             self._require_domain()
             if self._reusable_spin_plan(phase_plan):
-                previous = self.work.lookup(key)
+                previous = lookup(key)
                 self._require_domain()
                 if previous is None:
                     plan = self.source_ops._checked_spin_plan(omega, elapsed, phase_plan)
@@ -1455,7 +1462,7 @@ class Binary64RecordingOps(ReachPoseOps):
                     plan = phase_plan
             else:
                 plan = self.source_ops._checked_spin_plan(omega, elapsed, phase_plan)
-                previous = self.work.lookup(key)
+                previous = lookup(key)
         self._require_domain()
         delta, increment = None, None
         step_limit = min(max_steps, MAX_FLOAT_ROTATION_STEPS)
@@ -1513,6 +1520,12 @@ class Binary64RecordingOps(ReachPoseOps):
 
         if inputs is not None:
             value += initial, omega
+        if stage_cursor is not None:
+            if inputs is not None:
+                admit()
+            stage_cursor(key, previous, value)
+            self._require_domain()
+            return result
         self.work.remember(key, value, admission=admit if inputs is not None else None)
         self._require_domain()
         if inputs is not None and not admitted:

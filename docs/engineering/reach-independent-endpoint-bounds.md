@@ -205,6 +205,28 @@ and [`test_reach_stored_lift_signs.py`](../../tests/test_reach_stored_lift_signs
 Full source, hostile-byte, cancellation, rollback, destination and release
 acceptance still require their separately executed evidence.
 
+## Raw source-history orientation comparison
+
+Source-history quaternions use the existing raw-value comparison. For one
+independently reconstructed interval quaternion, select either antipodal sign
+and bound each component's absolute difference from the supplied value. The
+sum of those four exact bounds is at least their Euclidean norm. A sum no
+greater than the current rotation allowance therefore proves the original
+orientation condition. This proof does not normalize the supplied quaternion,
+borrow the producer's error estimate, or increase the allowance. A wrong
+magnitude cannot be hidden by normalization.
+
+This sufficient proof uses the same admitted small rational domain as the
+endpoint L1 calculation, with a small exact allowance and the full operand cap.
+It retains all executed scalar charges, current-cell and supplied-value guards,
+and callback identity. Insufficient bounds, wider allowances, malformed cells
+and narrower live caps retain the original pair of antipodal norm calculations.
+The existing complete history key retains every raw value, independent cell,
+allowance and operand cap; no new cache is introduced. Dedicated cases in
+[`test_reach_history_orientation_bounds.py`](../../tests/test_reach_history_orientation_bounds.py)
+exercise sign, raw magnitude, tighter allowances, fallback, malformed inputs,
+domain changes and cancellation. Measured execution remains separate evidence.
+
 ## Attaining-point witness for independent geometry
 
 The independent source-geometry walk computes the exact maximum of each

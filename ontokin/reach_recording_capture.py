@@ -14,7 +14,7 @@ from types import MappingProxyType
 
 from .model import Pose
 from .reach_numeric import MAX_OPERAND_BITS, ReachAdmissionError, rational
-from .reach_pose import RotationValue
+from .reach_pose import RotationValue, SpinPlan
 from .reach_phase import (PhaseBound, RecordingAngularFrame, RecordingAngularProof, _AxialRate,
                           _current_recording_angular_witness,
                           current_recording_angular_witness, _recording_orientation_recipe)
@@ -28,6 +28,21 @@ class _CoordinateInputs:
     elapsed: F
     running_since: F
     running: bool
+
+
+@dataclass(frozen=True)
+class _RootLaw:
+    initial: object
+    vector: tuple
+    elapsed: F
+    running_since: F
+    running: bool
+
+
+@dataclass(frozen=True)
+class _SpinInputs:
+    original: SpinPlan
+    copied: SpinPlan
 
 
 @dataclass(frozen=True)
@@ -57,6 +72,7 @@ class _Graph:
     topology_sizes: tuple
     active_grips: frozenset
     static_carriers: bool
+    spin_plans: MappingProxyType
 
 
 def _identity(table, path, value):
@@ -127,9 +143,62 @@ def _coordinate_inputs(model, state, path):
                              active.running_since, active.status == "running"), None
 
 
+def _root_law(model, state, path, channel):
+    claimant = state.claims.get((path, channel))
+    if claimant is None:
+        return None
+    action, active = model.actions[claimant], state.actions[claimant]
+    if (action.kind != ("move" if channel == "translation" else "spin")
+            or action.target != path or active.status not in {"running", "paused"}
+            or type(active.elapsed) is not F or type(active.running_since) is not F):
+        raise TypeError("A captured root needs an admitted move or spin law.")
+    initial = ((active.initial_rotation or active.initial)
+               if channel == "orientation" else active.initial)
+    if type(initial) is RotationValue:
+        initial = RotationValue(initial.components, initial.error_rad, initial.frozen_projection)
+    return _RootLaw(initial, action.vector, active.elapsed, active.running_since,
+                    active.status == "running")
+
+
+def _spin_inputs(law, ops):
+    if law is None or not any(law.vector):
+        return None
+    plan = ops.work.lookup(("reach_source_spin_phase", law.vector))
+    ops._require_domain()
+    if not ops._reusable_spin_plan(plan):
+        raise TypeError("A captured spin needs its complete source phase plan.")
+    copied = SpinPlan(plan.scaled_omega, plan.maximum, plan.norm_bounds,
+        plan.pi_bounds, plan.max_elapsed_s, plan.precision_bits, plan.argument_error_rad)
+    return _SpinInputs(plan, copied)
+
+
+def _elapsed(law, time, ops):
+    if not law.running:
+        ops.work.guard(law.elapsed)
+        return law.elapsed
+    op = ops.source_ops._op
+    return op(law.elapsed, op(time, law.running_since, "sub"), "add")
+
+
+def _root_pose(node, time, ops, context, publication):
+    from .reach_recording_fast import METHOD
+    from .scene import MAX_KEYFRAMES
+
+    position, rotation, move, spin, plan = node.operands
+    if move is not None:
+        position = ops.recording_affine(move.initial, move.vector, _elapsed(move, time, ops))
+    if spin is not None:
+        rotation = ops.recording_advance_orientation(spin.initial, spin.vector,
+            _elapsed(spin, time, ops), context=context,
+            path=METHOD + ":prescribed:" + node.path, max_steps=MAX_KEYFRAMES,
+            phase_plan=None if plan is None else plan.copied,
+            stage_cursor=publication.stage, read_cursor=getattr(publication, "read_cursor", None))
+    return ops.make_recording(position=position, orientation=rotation)
+
+
 def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
              maximum_nodes=None):
-    """Capture static roots and complete planar dependencies from frozen operands."""
+    """Capture prescribed roots and complete planar dependencies from frozen operands."""
     model, work, root_state = simulator.model, simulator.work, simulator.state
     sizes = (len(model.objects), len(model.sites), len(model.joints), len(model.follows))
     grip_count = len(state.active_grips)
@@ -197,14 +266,28 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
             if kind == "world":
                 operands = ()
             elif kind == "root":
-                if (state.modes[path] == "dynamic" or state.claims.get((path, "translation"))
-                        is not None or state.claims.get((path, "orientation")) is not None):
+                if state.modes[path] == "dynamic":
                     return None
-                operands = (state.positions[path],
-                            state.root_rotation_values.get(path, state.orientations[path]))
-                components = (operands[1].components if type(operands[1]) is RotationValue else operands[1])
+                move = _root_law(model, state, path, "translation")
+                spin = _root_law(model, state, path, "orientation")
+                position = state.positions[path]
+                rotation = state.root_rotation_values.get(path, state.orientations[path])
+                if type(rotation) is RotationValue:
+                    rotation = RotationValue(rotation.components, rotation.error_rad, rotation.frozen_projection)
+                components = rotation.components if type(rotation) is RotationValue else rotation
                 if components[1] or components[2]:
                     return None
+                if spin is not None:
+                    initial = spin.initial.components if type(spin.initial) is RotationValue else spin.initial
+                    if initial[1] or initial[2] or spin.vector[0] or spin.vector[1]:
+                        return None
+                local_constant = not any(law is not None and law.running and any(law.vector)
+                                         for law in (move, spin))
+                # Source operands above are captured before this cache callback.
+                # Every later calculation uses the copied plan and laws; final
+                # admission still compares the complete current source witness.
+                plan = _spin_inputs(spin, ops)
+                operands = (position, rotation, move, spin, plan)
             elif kind == "site":
                 site = model.sites[path]
                 identities += (_identity("sites", path, site),)
@@ -282,7 +365,9 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
                                           MappingProxyType({path: node.record for path, node in nodes.items()}))
     return _Graph(model, state, root_state, proof, captured_proof, selected,
                   MappingProxyType(nodes), tuple(row for row in topology if row[:2] not in used_edges),
-                  sizes, active_grips, static_carriers)
+                  sizes, active_grips, static_carriers,
+                  MappingProxyType({node.frame: node.operands[4].copied
+                      for node in nodes.values() if node.kind == "root" and node.operands[4] is not None}))
 
 
 class _Publication:
@@ -322,6 +407,12 @@ class _Publication:
                             work=work) != (node.record.parent, node.record.witness)):
                     valid = False
                     break
+                if node.kind == "root" and node.operands[4] is not None:
+                    plan = node.operands[4]
+                    if (not self.ops._reusable_spin_plan(plan.original)
+                            or plan.original != plan.copied):
+                        valid = False
+                        break
         if valid:
             try:
                 for row in graph.topology_extra:
@@ -425,7 +516,7 @@ def _sample_graph(graph, time, ops, context, publication, *, parents=None):
         if node.kind == "world":
             value = ops.make_recording()
         elif node.kind == "root":
-            value = ops.make_recording(position=node.operands[0], orientation=node.operands[1])
+            value = _root_pose(node, time, ops, context, publication)
         else:
             parent = constant(node.record.parent)
             if node.kind in {"site", "follow"}:
@@ -480,7 +571,7 @@ def _sample_graph(graph, time, ops, context, publication, *, parents=None):
         representative = shared.get(node.recipe)
         if representative is None:
             rotation = ops.recording_body_orientation(lambda: captured_recording_orientation(
-                ops.source_ops, graph.proof, frame, time), node.record.rate.axis,
+                ops.source_ops, graph.proof, frame, time, spin_plans=graph.spin_plans), node.record.rate.axis,
                 node.record.rate.value, time, phase_start=graph.proof.start, phase_end=graph.proof.end,
                 context=context, path="carrier:" + frame[:-6], proof_token=node.record.token,
                 max_steps=MAX_KEYFRAMES, stage_cursor=publication.stage,
@@ -522,14 +613,14 @@ def _sample_chain_graph(graph, time, ops, context, publication, constants):
         elif node.kind == "world":
             value = ops.make_recording()
         elif node.kind == "root":
-            value = ops.make_recording(position=node.operands[0], orientation=node.operands[1])
+            value = _root_pose(node, time, ops, context, publication)
         else:
             parent = resolve(node.record.parent)
             if node.kind == "joint" and not node.local_constant:
                 representative = shared.get(node.recipe)
                 if representative is None:
                     rotation = ops.recording_body_orientation(lambda: captured_recording_orientation(
-                        ops.source_ops, graph.proof, frame, time), node.record.rate.axis,
+                        ops.source_ops, graph.proof, frame, time, spin_plans=graph.spin_plans), node.record.rate.axis,
                         node.record.rate.value, time, phase_start=graph.proof.start,
                         phase_end=graph.proof.end, context=context, path="carrier:" + frame[:-6],
                         proof_token=node.record.token, max_steps=MAX_KEYFRAMES,

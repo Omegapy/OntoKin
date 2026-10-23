@@ -1064,6 +1064,29 @@ def _exact_history_vector(key, *, sign=1):
                and denominator == low.denominator for numerator, denominator, low, high in key)
 
 
+def _history_orientation_sufficient(actual, expected, allowance, arithmetic):
+    """Prove a raw history quaternion comparison with an exact L1 bound.
+
+    Histories compare raw quaternion values and allow either antipodal sign.
+    For either chosen sign, the Euclidean norm is at most the sum of the
+    componentwise maximum absolute differences. No unit normalization or
+    producer error estimate enters this proof. An insufficient bound, a
+    narrower operand domain or unsupported cells retain both original norms.
+    """
+    if (_bound_domain(arithmetic) != MAX_OPERAND_BITS
+            or not _small_proof_values((allowance,)) or allowance < 0):
+        return False
+    arithmetic.tick("independent_history_orientation_domain")
+    if _bound_domain(arithmetic) != MAX_OPERAND_BITS:
+        return False
+    exact = arithmetic.cells(expected)
+    aligned = _aligned_reference(actual, exact, arithmetic)
+    bound = _optional_endpoint_l1(actual, aligned, arithmetic)
+    return (bound is not None and _bound_domain(arithmetic) == MAX_OPERAND_BITS
+            and arithmetic.compare(bound, allowance) <= 0
+            and _bound_domain(arithmetic) == MAX_OPERAND_BITS)
+
+
 def _assert_projection(actual, expected, *, arithmetic, allowances, path=()):
     """Compare complete histories; interval leaves retain their units/meaning."""
     from .reach_reference import Interval
@@ -1114,6 +1137,9 @@ def _assert_projection(actual, expected, *, arithmetic, allowances, path=()):
         if path and path[-1] == "orientation_wxyz" and len(expected) == 4:
             # Quaternion sign is a representation choice, not physical state.
             def compare_orientation():
+                if key is not None and _history_orientation_sufficient(
+                        actual, expected, allowance, arithmetic):
+                    return True
                 exact = [arithmetic.cell(value) for value in expected]
                 positive = arithmetic.difference(actual, exact)
                 negative = arithmetic.difference(actual, [_Cell(-value.hi, -value.lo) for value in exact])

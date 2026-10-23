@@ -1599,6 +1599,78 @@ class _PoseArithmetic:
                                       self.rotate(parent.orientation, local.velocity)),
                              self.add(parent.omega, self.rotate(parent.orientation, local.omega))))
 
+    def _recording_sequential_domain(self, *vectors):
+        """Admit immutable small cells before omitting per-result memoization."""
+        return (self.a.bits == 128 and self.a.operand_limit == MAX_OPERAND_BITS and
+                self.a.work is not None and hasattr(self.a.work, "callback_error") and
+                all(type(values) is tuple and
+                    all(type(cell) is Interval and type(cell.lo) is F and type(cell.hi) is F and
+                        all(max(abs(value.numerator).bit_length(), value.denominator.bit_length()) <= 256
+                            for value in (cell.lo, cell.hi)) for cell in values)
+                    for values in vectors))
+
+    def _recording_sequential_multiply(self, left, right):
+        """Use the same scalar/Z Hamilton cells without a one-use cache entry.
+
+        Small recording walks advance these operands at each clock. Retaining
+        their completed products displaces the useful body cursors. Every
+        performed scalar operation keeps the ordinary kernel and guard; only
+        the unused lookup/insertion and a fresh exact-zero cell are omitted.
+        """
+        if (not self._recording_sequential_domain(left, right) or
+                len(left) != 4 or len(right) != 4 or
+                not self._zero((left[1], left[2], right[1], right[2]))):
+            return self.multiply(left, right)
+        self.a.tick()
+        self.a.guard(*(endpoint for values in (left, right) for cell in values
+                       for endpoint in (cell.lo, cell.hi)))
+        if self.a.operand_limit != MAX_OPERAND_BITS:
+            return self.multiply(left, right)
+        if all(cell.lo == cell.hi == expected for cell, expected in zip(left, UNIT)):
+            return right
+        if all(cell.lo == cell.hi == expected for cell, expected in zip(right, UNIT)):
+            return left
+        zero = left[1]
+        result = (
+            self.a.sub(self.a.mul(left[0], right[0]), self.a.mul(left[3], right[3])), zero, zero,
+            self.a.add(self.a.mul(left[0], right[3]), self.a.mul(left[3], right[0])))
+        self.a.guard(*(endpoint for cell in result for endpoint in (cell.lo, cell.hi)))
+        # A changed cap replays the original expression. Its failures are not
+        # caught and cannot be retried after a later broadening callback.
+        return (result if self.a.operand_limit == MAX_OPERAND_BITS else
+                self.multiply(left, right))
+
+    def _recording_sequential_compose(self, parent, local, *, recording=False):
+        """Keep exact pose composition while declining one-use pose entries."""
+        if type(parent) is not PoseEnclosure or type(local) is not PoseEnclosure:
+            return self.compose(parent, local, recording=recording)
+        vectors = tuple(values for pose in (parent, local) for values in
+                        (pose.position, pose.orientation, pose.velocity, pose.omega))
+        if (not self._recording_sequential_domain(*vectors) or
+                any(len(values) != size for values, size in zip(vectors, (3, 4, 3, 3) * 2)) or
+                not all(self._zero(values) for values in
+                        (parent.velocity, parent.omega, local.velocity, local.omega))):
+            return self.compose(parent, local, recording=recording)
+        # This admission replaces compose's cache lookup. There is no new
+        # retained pose, cache capacity, source state, or cursor authority.
+        self.a.tick()
+        self.a.guard(*(endpoint for values in vectors for cell in values
+                       for endpoint in (cell.lo, cell.hi)))
+        if self.a.operand_limit != MAX_OPERAND_BITS:
+            return self.compose(parent, local, recording=recording)
+        direct = self._identity_composition(parent, local)
+        if direct is not None:
+            return direct
+        offset = (self._recording_rotate(parent.orientation, local.position) if recording else
+                  self.rotate(parent.orientation, local.position))
+        position = self.add(parent.position, offset)
+        orientation = self._recording_sequential_multiply(parent.orientation, local.orientation)
+        result = PoseEnclosure(position, orientation, parent.velocity, parent.omega)
+        self.a.guard(*(endpoint for values in (result.position, result.orientation, result.velocity, result.omega)
+                       for cell in values for endpoint in (cell.lo, cell.hi)))
+        return (result if self.a.operand_limit == MAX_OPERAND_BITS else
+                self.compose(parent, local, recording=recording))
+
     def inverse(self, pose):
         key = self._key("inverse", pose)
         cached = self.a.lookup(key)
@@ -2466,6 +2538,8 @@ class ReachReference:
             # context-free walks and their independently supplied oracles.
             # Only an actually advanced recording lineage selects the
             # optional narrower offset enclosure.
+            if advanced and recording_context is not None and not shared_recording:
+                return self.p._recording_sequential_compose(parent, local, recording=advanced)
             if advanced:
                 return self.p.compose(parent, local, recording=True)
             return self.p.compose(parent, local)

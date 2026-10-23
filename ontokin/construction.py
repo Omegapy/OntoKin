@@ -12,6 +12,7 @@ from __future__ import annotations
 from dataclasses import dataclass, fields, is_dataclass, replace
 from fractions import Fraction
 import json
+import math
 import time
 from typing import Any, Callable as Check
 
@@ -230,6 +231,8 @@ class ConstructionCompiler(Validator):
         # A syntax classification, like the resolved-type index, not a value
         # cache. Values share the request's existing 256-entry bounded LRU.
         self._constant_syntax: dict[int, tuple[frozenset[str] | None, int]] = {}
+        self._parameter_syntax: dict[int, tuple[Any, tuple | None]] = {}
+        self._parameter_capture = None
         self._type_depth = 0
         self.model.program_revision = self.bundle.program_revision
         self.model.source_manifest = self.bundle.manifest()
@@ -837,6 +840,130 @@ class ConstructionCompiler(Validator):
         self._constant_syntax[id(node)] = result, height
         return result
 
+    def _parameter_plan(self, node: Any, depth: int = 0):
+        """Find ordered reads in a sealed, non-short-circuit pure expression.
+
+        The plan contains syntax only. Each successful value remains in the
+        existing request LRU, and every occurrence replays its own ordinary
+        member/dependency/access guards before using that value.
+        """
+        prior = self._parameter_syntax.get(id(node))
+        if prior is not None and prior[0] is node:
+            return prior[1]
+        self.budget.tick(node)
+        if depth >= 128:
+            return None
+        kind, children, reads, names, height = node.kind, (), (), frozenset(), 1
+        if kind in {"number", "string", "bool"}:
+            pass
+        elif kind == "name" and node.name in _CONSTANT_CALLS | {"world"}:
+            reads, names = (("name", node),), frozenset({node.name})
+        elif kind == "member" and node.target.kind == "name" and node.target.name == "self":
+            reads, names, height = (("parameter", node),), frozenset({"self"}), 2
+        elif kind == "unary":
+            children = (node.value,)
+        elif kind == "binary" and node.op not in {"and", "or"}:
+            children = (node.left, node.right)
+        elif kind == "call" and node.callee.kind == "name" and node.callee.name in _CONSTANT_CALLS:
+            children = (node.callee, *node.args)
+        else:
+            self._parameter_syntax[id(node)] = node, None
+            return None
+        for child in children:
+            plan = self._parameter_plan(child, depth + 1)
+            if plan is None:
+                self._parameter_syntax[id(node)] = node, None
+                return None
+            child_reads, child_names, child_height = plan
+            reads += child_reads
+            names |= child_names
+            height = max(height, 1 + child_height)
+        result = reads, names, height
+        self._parameter_syntax[id(node)] = node, result
+        return result
+
+    @staticmethod
+    def _parameter_value_key(value: Value, *, name=False):
+        """Exact native scalar identity; no numeric coercion or mutable data."""
+        if type(value) is not Value or type(value.type) is not Type:
+            return None
+        typ, payload = value.type, value.value
+        if value.frame is not None or value.hint is not None:
+            return None
+        if name:
+            if (typ == Type("BuiltinCallable") and type(payload) is str and payload in _CONSTANT_CALLS
+                    or typ == Type("FrameRef") and type(payload) is str and payload == "world"):
+                return typ, payload
+            return None
+        if typ.kind == "Quantity":
+            if (type(typ.dimension) is not tuple or len(typ.dimension) != 4
+                    or any(type(x) is not int for x in typ.dimension)):
+                return None
+        elif typ not in {INT, Type("Real"), BOOL, STRING}:
+            return None
+        if typ.element is not None or typ.name is not None:
+            return None
+        if typ.kind in {"Real", "Quantity"}:
+            if type(payload) is not float or not math.isfinite(payload):
+                return None
+            return typ, payload.hex()
+        expected = {"Int": int, "Bool": bool, "String": str}[typ.kind]
+        return (typ, payload) if type(payload) is expected else None
+
+    @classmethod
+    def _parameter_result_immutable(cls, value):
+        if type(value) is Value:
+            if cls._parameter_value_key(value) is not None:
+                return True
+            if (type(value.type) is not Type or value.type.kind not in
+                    {"Vec3", "Vector3", "Point3", "Rotation", "Color", "Range"}
+                    or value.frame not in (None, "world") or value.hint is not None):
+                return False
+            return cls._parameter_result_immutable(value.value)
+        if type(value) is tuple:
+            return all(cls._parameter_result_immutable(item) for item in value)
+        return type(value) is float and math.isfinite(value)
+
+    def _capture_parameter_read(self, node, result):
+        capture = self._parameter_capture
+        if capture is None or capture[2] is None or id(node) not in capture[0]:
+            return
+        reads, seen = capture[1], capture[2]
+        if len(seen) == len(reads) or reads[len(seen)][1] is not node:
+            capture[2] = None
+            return
+        kind = reads[len(seen)][0]
+        key = self._parameter_value_key(result, name=kind == "name")
+        if key is None:
+            capture[2] = None
+        else:
+            seen.append(key)
+
+    def _parameter_context(self, ctx, reads, names):
+        if (ctx.abstract or ctx.self_path is None or not names.isdisjoint(ctx.locals)
+                or ctx.self_path not in self.instances):
+            return None
+        instance = self.instances[ctx.self_path]
+        for kind, read in reads:
+            if kind == "parameter":
+                member = instance.cls.members.get(read.name)
+                if member is None or member.node.kind != "param":
+                    return None
+        return ctx.self_path, ctx.self_type, ctx.lexical_class, ctx.abstract, id(instance), id(instance.cls)
+
+    def _parameter_replay(self, ctx, reads, expected):
+        for (kind, read), wanted in zip(reads, expected):
+            if kind == "name":
+                value = self.name(read.name, ctx, read)
+            else:
+                target = self.name("self", ctx, read.target)
+                value = self.member(target, read.name, ctx, read)
+            if self._parameter_value_key(value, name=kind == "name") != wanted:
+                # Do not inspect later parameters: the ordinary arithmetic
+                # following this changed read may fail before reaching them.
+                return False
+        return True
+
     def expression(self, node: Any, ctx: Context) -> Value:
         self.budget.tick(node)
         self._expression_depth += 1
@@ -855,6 +982,26 @@ class ConstructionCompiler(Validator):
                     # A binding can attach its own dependency/taint route to a
                     # wrapper. Never return the retained wrapper to that code.
                     return Value(cached.type, cached.value, cached.frame, cached.hint)
+            parameter_key = parameter_plan = parameter_context = capture = None
+            if (self.reach_work is not None and constant_names is None and not ctx.abstract
+                    and self._parameter_capture is None and node.kind in {"call", "binary"}):
+                parameter_plan = self._parameter_plan(node)
+                if parameter_plan is not None:
+                    reads, names, height = parameter_plan
+                    if (any(kind == "parameter" for kind, _ in reads)
+                            and self._expression_depth + height - 1 <= 128):
+                        parameter_context = self._parameter_context(ctx, reads, names)
+                    if parameter_context is not None:
+                        parameter_key = ("construction_parameters", id(node))
+                        cached = self.reach_work.lookup(parameter_key)
+                        if (cached is not None and cached[0] is node
+                                and self._parameter_context(ctx, reads, names) == parameter_context
+                                and self._parameter_replay(ctx, reads, cached[1])
+                                and self._parameter_context(ctx, reads, names) == parameter_context):
+                            value = cached[2]
+                            return Value(value.type, value.value, value.frame, value.hint)
+                        capture = [{id(read) for _, read in reads}, reads, []]
+                        self._parameter_capture = capture
             if node.kind == "keyed":
                 element = self.parse_type(node.element_type)
                 self._keyed_leaf(element, node)
@@ -885,10 +1032,21 @@ class ConstructionCompiler(Validator):
                 value = self.expression(node.target, ctx)
                 index = self.expression(node.index, ctx)
                 return self.index_value(value, index, node, ctx)
-            result = super().expression(node, ctx)
+            try:
+                result = super().expression(node, ctx)
+            finally:
+                if capture is not None:
+                    self._parameter_capture = None
+            self._capture_parameter_read(node, result)
             if (constant_key is not None and constant_names.isdisjoint(ctx.locals)
                     and constant_key[-1] == ctx.abstract):
                 self.reach_work.remember(constant_key, result)
+            if (capture is not None and capture[2] is not None and len(capture[2]) == len(reads)
+                    and self._parameter_result_immutable(result)
+                    and self._parameter_context(ctx, reads, names) == parameter_context):
+                value = Value(result.type, result.value, result.frame, result.hint)
+                self.reach_work.remember(parameter_key, (node, tuple(capture[2]), value),
+                    admission=lambda: self._parameter_context(ctx, reads, names) == parameter_context)
             return result
         finally:
             self._expression_depth -= 1
