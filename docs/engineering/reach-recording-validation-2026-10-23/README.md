@@ -1,5 +1,88 @@
 # Reach recording continuation, October 23, 2026
 
+## Checkpoint014: verified integration,23/28
+
+The latest complete original source GLB/0.6 run remains **23/28** under the
+unchanged **100,000-operation** cap. **P05=96,132**, **P20=86,364**,
+**L01=83,951**, and **L02=77,079**. **P09, P11, P16, P23 and L03** still stop
+at100,001. No passing recording was lost.
+
+Published source
+[`eea0ddf76d7012242734feb3af17d5a0a5ae62a2`](https://github.com/Omegapy/OntoKin/commit/eea0ddf76d7012242734feb3af17d5a0a5ae62a2)
+has exactly the tested local `04e694adeec45ab2540cca32664a4233fe727bdf` tree
+`8365fe1c9c6b701d37a9ae165be82dc61a95f1a7`. Both the coordinator branch
+and PR27 head were conditionally updated and read back at that published SHA.
+PR27 is open, draft and unmerged; main remains
+`2bb4588e121fcfe99b4d42c734b15b38362f3642`. No hosted job was dispatched.
+
+### Changes and actual verification
+
+| Scope | Executed result | Complete original suite |
+| --- | --- | --- |
+| Native Cartesian capture, exact axial child origin, fixed source dispatch | 197/197 focused methods at `ade8500` | run017:23/28 |
+| Independent native composition admission and omitted one-use offset entries | 172/172 worker methods at `cbb2582` | integrated run018:23/28 |
+
+The Cartesian path retains nonzero head/neck/eye origins and proper cyclic
+coordinate ordering. The independent composition path retains the original
+nonzero arithmetic and complete callback/operand receipts. Paired P09/L03
+observers preserve unprofiled counters/diagnostics and measure16 fewer
+operations per eligible steady key. All public caps, source inputs, sampling
+settings, numerical precision, tolerances and cache capacity remain unchanged.
+
+The first broad Cartesian attempt had193 passing methods and six subcase
+errors in197 methods: an explicitly disabled mode retained a dispatch guard.
+The corrected197-method run passes. Earlier failed native-composition harness
+and differential-control attempts remain separately preserved. Cohort totals
+are not added into a complete current regression claim.
+
+### Unintegrated work and remaining failures
+
+The static-final-bound candidate `f2fb560` passes25 dedicated and45 combined
+methods after a diagnostic identified valid2,151-bit derivative fields. The
+optional result metadata domain is4,096 bits; clocks remain2,048 and arithmetic
+remains32,768. Original P23 still reaches100,001 before the final-point payoff.
+Its earlier failed23-method run and exact field-width diagnostic are retained.
+
+The first release-cell attempt `dff2ac1` exceeded the unchanged operand cap
+while propagating exact metadata fractions. Reviewed follow-up `463e2c9`
+uses rigorous upward256-bit metadata rounding and passes5 arithmetic,6
+transition and6 admission methods. Its actual short P16 export still fails
+a position certificate minimum. The exact observer records46,946 operations,
+one understated final payload row, and no transfer capture/publication charges:
+the proof's exact-type gate excludes the exporter PlanningSimulator. A bounded
+inherited-method receipt is under review. The rejected201,368-byte GLB and
+every diagnostic field are archived. Original full P16 has not been claimed
+to pass.
+
+Next scopes are exact repeated static body seeds for P23, independent Cartesian
+offset/body-origin calculations for P11, and remaining repeated endpoint and
+certificate work for P09/L03. The separate center/radius derivation at
+`130acdd` has no numerical implementation. No projected savings are passes.
+
+### Recoverable evidence
+
+The [checkpoint014 record](checkpoint-014.json) lists all28 outcomes and
+source-bound cohorts. Its [manifest](checkpoint-014-manifest.json) binds
+**366 new members**, **12 parts**, **10,006,467 bytes**, ZIP SHA-256
+`cf77cf02385d5bbaf8585963b55495555424025476a3bf097293f5d83ff60643`.
+Member hashes, ZIP CRCs and the complete part join passed. Its **1,965 unchanged
+prior references** resolve through [checkpoint013](checkpoint-013-manifest.json)
+and earlier manifests. All completed failures and successful raw reports remain
+separate; no missing text was reconstructed.
+
+The [documentation check](checkpoint-014-docs.txt) is preserved separately.
+The37 unmaterialized historical archive files/parts remain disclosed with their
+original Git blob identities; release input closure remainsfalse. This
+checkpoint does not establish complete regression, compatibility, Agent
+delivery, native/browser/visual verification or R01–R12/Q01–Q22 acceptance.
+Do not merge PR27 until every mandatory gate passes.
+
+## Retained checkpoint013 narrative
+
+The following text is the original checkpoint013 record. Its references to
+“latest” and its operation counts apply to that historical source cut.
+
+
 Checkpoint **013** continues [012](checkpoint-012.json), [011](checkpoint-011.json),
 [010](checkpoint-010.json) and [009](../reach-recording-validation-2026-10-22/README.md).
 The latest complete source GLB/0.6 run passes **23/28** under the unchanged

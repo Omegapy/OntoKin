@@ -318,3 +318,16 @@ cancellation and cap behavior, restored caps, wrapper/owner changes, reentry,
 source-batch rejection, forced eviction/reseeding, and complete original-source
 prefix bytes and validation reports. Full original settings and the remaining
 release gates must be executed and reported separately.
+
+
+### Identified native composition execution
+
+Candidate `cbb2582141862a1d2e7e76b55690ff0e24fa6c89` passes172/172 combined
+methods with a complete log and stable inputs. Paired original P09/L03 observers
+retain identical complete work records and diagnostics to unprofiled execution
+and measure16 fewer operations per eligible steady key. Both original requests
+still reach100,001. After integration with Cartesian producer capture, complete
+run018 remains23/28; P05 uses96,132, L01 uses83,951 and L02 uses77,079.
+[Checkpoint014](reach-recording-validation-2026-10-23/checkpoint-014.json)
+retains the exact source cuts, failed earlier attempts and raw results. These
+measurements do not establish complete current regression or release acceptance.

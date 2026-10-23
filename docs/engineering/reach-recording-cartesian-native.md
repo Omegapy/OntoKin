@@ -9,9 +9,12 @@ authoritative. The motivating original request is P11, whose Y-axis head and
 eye frames previously used ordinary per-key graph traversal while its Z-axis
 arm branches used captured native arithmetic.
 
-Initial candidate status: **implemented, not yet executed or accepted**. The
-published checkpoint013 remains 23/28. No operation saving or additional full
-recording pass is claimed here before an identified execution record exists.
+Identified candidate `ade8500bbf2dfd2fc8ff5cd7bed529686faccc3f` passes
+**197/197** native/captured regression methods with a complete log and stable
+inputs. Original P11 still reaches100,001 during independent site rotation.
+Complete original run017 after integration remains23/28. Checkpoint014 retains
+this result, the earlier22/22 dedicated cohort and the failed broad attempt;
+no additional full recording pass or release acceptance is claimed.
 
 ## Exact relationship to the existing kernel
 
