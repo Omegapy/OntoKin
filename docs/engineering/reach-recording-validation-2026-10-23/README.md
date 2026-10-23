@@ -1,5 +1,31 @@
 # Reach recording continuation, October 23, 2026
 
+## Checkpoint 022: certificate and partition integrations, measured remaining work
+
+The [checkpoint](checkpoint-022.json) and [archive manifest](checkpoint-022-manifest.json) preserve **259 new evidence members** in **7 parts**, including every produced artifact/report, complete focused logs, before/after input receipts, exact Git cuts and patches, accepted diagnostics and failed attempts. The ordered parts reconstruct **5,740,170 bytes**, SHA-256 `c216c0e88eca519dad303c57cbbdee2d5e21673f8611413d122861694b0f3576`. Every member hash, ZIP CRC and ordered join was verified.
+
+Published source `21c1368176117076f0bfebeb33fec9fd7f0d5f66`, tree `58956f83039632a2f19f67a137930032128a7adf`, passes **168/168** related methods and its complete original suite remains **23/28**. The preceding certificate source `5224a84e` passes **206/206** and a separate complete original suite also remains **23/28**. P09, P11, P16, P23 and L03 fail at 100,001 under the unchanged 100,000-operation cap. Latest P05 uses 94,193; P20 80,952; L01 79,468; L02 73,577. Separate focused cohorts do not imply a complete regression total.
+
+[Certificate thresholds](../reach-certificate-thresholds.md) retain every fresh independent minimum and exact width/magnitude, continuation-width envelopes, original finite-bound and callback order, source/dispatch receipts and owned exact replay on the same work. [Prescribed/dynamic partitioning](../reach-reference-partitioned-plans.md) retains the full ordered target set, ordinary dynamic ancestry, complete global source receipts and same-map fallback. All existing target, node, cursor, plan, receipt and cache bounds remain. Its 32-key original P16 comparison preserves exact cells at **13,484 → 12,663 operations**; a separate early-release variant preserves complete bytes and report at **70,171 → 70,017**. That variant is not the original full P16 gate, which currently fails before endpoint comparisons.
+
+The partition's first 19-method run recorded 17 passed methods, two failed controls and one secondary test error. Its test-only repair distinguishes the consumed clock from a detached caller Fraction, and permits the ordinary dynamic root's required source receipt. Corrected worker executions pass 19/19 and 112/112. The original numerical oracles, positive-saving gates and limits remain unchanged. A preliminary cwd refusal ran neither the driver nor project code; its limitation is recorded separately.
+
+The final static-proof selector `7c8da8d` remains unintegrated after 15/16 focused methods: original P23 final-frame bits match, but complete focused cost rises **5,395 → 5,418**. Its failed positive-saving gate is retained. The forward-translation review cuts `cb5ac079` and corrected `18fb7957` are preserved as **unexecuted**. Independent review found and corrected callback identity handling when the work owner changes. The corrected 19-method cohort and positive-saving tests remain pending. Final static sample transfer remains separate source work.
+
+The accepted coarse request observer reproduces all five exact original failures on `21c13681`, without changing source, callback owners, operation/elapsed limits or diagnostics. Global request/work, producer/reader scopes and nested attribution reconcile with no overflow or open frames. JSON invocation counts are completely aggregated; their individual rows are deliberately omitted. The earlier observer's 4,096-row inventory was exceeded by JSON calls while its application outcome matched; that diagnostic attempt is preserved as non-neutral. A different earlier fine observer reached the original elapsed cap and is also excluded from accepted performance claims.
+
+| Original case | Construction | Production and encoding through failure | Independent reader through failure |
+| --- | ---: | ---: | ---: |
+| P09 | 4,403 | 44,176 | 51,422 |
+| P11 | 7,391 | 54,329 | 38,281 |
+| P16 | 4,644 | 83,359 | 11,998 |
+| P23 | 21,697 | 78,304 | 0 |
+| L03 | 4,499 | 51,190 | 44,312 |
+
+Each row sums to the original 100,001-operation refusal. These are observed partial costs, not completed-recording totals. Recursive inclusive counts must not be added as exclusive work. P16 and P23 require substantial production savings; the other requests also retain independent endpoint/certificate work. The raw reports retain finer stage and parent relationships.
+
+GitHub shows 63 branches, unchanged main `2bb4588e`, open draft PRs #27/#28, and zero Actions runs for the source. No hosted job was dispatched or retried, no main lease was acquired, and neither PR was merged. Prior raw runs 019–022 and 37 historical archive omissions remain disclosed. All source fixtures, horizons, fps, tolerances, numeric/cache maxima and mandatory Agent, compatibility, independent/native/browser/visual, hostile/inherited and R/Q gates remain unchanged. Release input closure and release acceptance are incomplete.
+
 ## Checkpoint 021: source routing and preserved certificate correction
 
 The [checkpoint](checkpoint-021.json) and [archive manifest](checkpoint-021-manifest.json) preserve **299 new evidence members**, including every produced GLB and report, complete focused logs, input manifests, exact Git commits and patches, two neutral construction observations and unsuccessful attempts. The eight parts reconstruct **7,131,079 bytes**, SHA-256 `ce99224c7c0c1418f09253623a9d8fd98334c795c41a60827c2d01b9348e4f06`; every member hash, ZIP CRC and ordered part join passed.
