@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-23T02:25:13.980839+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-23T14:51:15.595431+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -44,35 +44,38 @@ local `569b67b0bdc6854cc069e6a00590e0f15267ae03`
 [draft PR #25](https://github.com/Omegapy/OntoKin/pull/25). Original branches,
 failed attempts and earlier evidence retain their identities.
 
-Latest tested recording implementation is `462e923d45d79f32699ace86eddf76f1158a1f82`,
-tree `77d8b610efc4bb261cb2846c60a4a24350d98a83`. Recovered local checkpoint `e4f51db` is
-published at `b1d102a5391721b3e420277526696aca65b11ea5` with its exact tree.
-Published checkpoint008 is verified at `25960271dc35fb6391f314a96ba0c6cef61bc162`.
-The newer implementation and results below form checkpoint009.
+Latest published continuation implementation is `5eb68c69e30578237886703f8e7e1eed9d860a76`,
+with exactly the tested local `c416eef6d269015f67c5bcd309cf627338e50ea3` tree
+`8f1ff92aa1d7557030a638e980f73da35260471e`.
+The [October 23 recording checkpoint](docs/engineering/reach-recording-validation-2026-10-23/README.md)
+retains a fresh **22/28** complete source run and **227/227 selected correctness
+methods**, with stable materialized inputs and no test failures, errors or skips.
+**P05, P09, P11, P16, P23 and L03** still reach the unchanged **100,000-operation**
+limit. P20 uses **96,131**, L01 **95,836**, and L02 **88,157** operations.
 
-The [recording checkpoint](docs/engineering/reach-recording-validation-2026-10-22/README.md)
-retains a fresh **22/28** complete source run, finished **2026-10-23T02:23:04.492290+00:00**,
-with stable inputs and the unchanged **100,000-operation** limit. **P20 now passes
-at 96,182 operations; L01 passes at 96,330.** L02 uses **88,524**.
-Remaining failures: **P05, P09, P11, P16, P23, L03**.
+Checkpoint010 preserves **238 raw members**, including failed development
+attempts, actual logs/method IDs, artifacts, traces and source identities. All
+member hashes, archive part identities and ZIP CRCs passed. The earlier
+[checkpoint009](docs/engineering/reach-recording-validation-2026-10-22/README.md)
+and its 234- and earlier 686-method cohorts retain their original evidence.
 
-The same source passes **234/234 focused methods**, with no failures,
-errors or skips, complete logs/method IDs and stable inputs. This selected cohort
-does not replace full regression or compatibility. Historical cohorts retain their
-own source identities. Checkpoint009 preserves **288 raw members**;
-all **84 artifact/report hashes**, member identities and ZIP CRC passed.
+All runtime, test, tool, fixture and specification files were recovered and
+verified. **37 historical binary evidence archives/parts were not materialized**;
+the exact omissions and original Git blob identities are disclosed in every
+execution inventory and remain preserved in the tree. These development runs
+do **not** establish release input closure or complete release acceptance.
 
-Captured phase streams support static and varying-parent planar chains while
-retaining native composition order and final source/claim/cursor admission.
-Complete graph finiteness and independent orientation bounds reuse completed work;
-intrinsic exact coefficients avoid repeated decoding. Every actual arithmetic
-operation and live operand/cancellation guard remains. No frozen input, tolerance,
-100,000-operation limit or 256-entry cache limit changes.
+Captured prescribed roots, sufficient independent history bounds, selective
+independent arithmetic reuse and guarded parameter-formula reuse preserve the
+checked behavior. Dynamic roots, bounded independent phase planning and
+surface-value reuse remain follow-up candidates. No fixture, tolerance,
+operation maximum or 256-entry cache maximum changed.
 
-The immediate target remains **28/28**, followed by Agent delivery, full current
-regression/compatibility, independent rates, native/browser and visual checks,
-inherited/hostile roles and release audits. PR #27 remains draft; **do not merge**
-until every mandatory gate passes. The complete language and GOAL remain open.
+The immediate target remains **28/28**, followed by Agent delivery, complete
+current regression/compatibility, independent rates, native/browser and visual
+checks, inherited/hostile roles and every R01–R12/Q01–Q22 release gate.
+PR #27 remains draft; **do not merge** until all mandatory acceptance passes.
+The complete language and GOAL remain open.
 
 The historical rows below retain their original cuts and limits.
 
@@ -124,12 +127,12 @@ GOAL still requires richer typed algorithms/libraries and compatible replacement
 
 **No main integration lease is held by this continuation.** Main remains
 `2bb4588e121fcfe99b4d42c734b15b38362f3642`; the prior lease is released.
-Coordinator `interactive-reach06-finish-20261022-1900-7of9` uses
-`work/reach06-finish-20261022-1900-7of9`, starting from observed PR #27 head
-`afe4a40cd990e2262ffd634fcd550a952db0ffc2`. Separate sampling, independent-reader and
-phase/geometry workers have coordinated file ownership in issue #26. This branch-only
-status update claims no main write or runtime integration. Publication uses
-nonforce expected-head checks. Runtime/test/SQLite/workflow/archive execution
-is serialized. Main integration requires complete acceptance and a fresh
-observed-head lease. Both workflows remain manual-only with default-false
+Coordinator `interactive-reach06-recordings-20261023-7of9-e619` uses
+`work/reach06-recordings-20261023-7of9-e619`, starting from checkpoint009
+`6cf8c525429076ce37efd4ecea95fd01f83365ea`. Isolated captured-root, independent
+reference and construction workers have bounded file ownership in issue #26.
+This branch-only update claims no main write or runtime integration. Publication
+uses nonforce expected-head checks. Runtime/test/SQLite/workflow/archive
+execution is serialized. Main integration requires complete acceptance and a
+fresh observed-head lease. Both workflows remain manual-only with default-false
 opt-in; no hosted job was dispatched or retried.
