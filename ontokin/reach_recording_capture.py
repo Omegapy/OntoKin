@@ -78,6 +78,7 @@ class _Node:
     recipe: tuple
     static_recipe: tuple | None
     local_constant: bool
+    identity_child: bool = False
 
 
 @dataclass(frozen=True)
@@ -94,6 +95,40 @@ class _Graph:
     active_grips: frozenset
     static_carriers: bool
     spin_plans: MappingProxyType
+
+
+def _identity_child_witness(record):
+    """Recognize a fixed source identity from its already captured literals.
+
+    No live Pose is consulted while sampling. The complete native joint
+    witness, including its current source owners, is admitted again before
+    any private phase cursor is published.
+    """
+    witness = record.witness
+    if (type(witness) is not tuple or len(witness) != 12
+            or type(witness[0]) is not str or witness[0] != "joint"
+            or type(witness[2]) is not tuple or len(witness[2]) != 2
+            or any(type(value) is not str for value in witness[2])
+            or witness[2] not in (("string", "rigid"), ("string", "grip"))
+            or any(value is not None for value in witness[9:])
+            or type(witness[8]) is not tuple or len(witness[8]) != 2):
+        return False
+    position, rotation = witness[8]
+    if (type(position) is not tuple or len(position) != 2
+            or type(position[0]) is not str or position[0] != "tuple"
+            or type(position[1]) is not tuple or len(position[1]) != 3
+            or type(rotation) is not tuple or len(rotation) != 2
+            or type(rotation[0]) is not str or rotation[0] != "tuple"
+            or type(rotation[1]) is not tuple or len(rotation[1]) != 4):
+        return False
+    if any(type(value) is not tuple or len(value) != 2
+           or any(type(part) is not str for part in value)
+           for value in (*position[1], *rotation[1])):
+        return False
+    zeros = (("binary64", "0x0.0p+0"), ("binary64", "-0x0.0p+0"))
+    return (all(value in zeros for value in position[1])
+            and rotation[1][0] == ("binary64", "0x1.0000000000000p+0")
+            and all(value in zeros for value in rotation[1][1:]))
 
 
 @dataclass(frozen=True)
@@ -748,6 +783,7 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
                 return None
             # No callback occurs between the witness comparison and binding
             # these immutable inputs. Later arithmetic never reads live fields.
+            identity_child = kind == "joint" and _identity_child_witness(record)
             local_constant = True
             axes = set() if record.rate.axis is None else {record.rate.axis}
             if kind == "world":
@@ -817,6 +853,15 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
                 if len(local_axes) > 1 or any(axis != 2 for axis in local_axes) and not cartesian:
                     return None
                 axes.update(local_axes)
+                if (kind == "joint" and joint.kind in {"rigid", "grip"}
+                        and len(local.position) == 3
+                        and all(type(value) is float and isfinite(value)
+                                for value in (*local.position, *local.rotation))):
+                    # Detach both eligible and ordinary native fixed children.
+                    # A transient source edit cannot change their captured
+                    # operands or promote a nonidentity child during sampling.
+                    frozen = Pose(frame=local.frame, position=local.position, rotation=local.rotation)
+                    operands = (*operands[:2], frozen, *operands[3:])
                 if kind == "joint" and not local_constant:
                     zero_child = (len(local.position) == 3 and all(
                         type(value) is float and value == 0.0 for value in local.position))
@@ -857,8 +902,11 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
         constant = local_constant and (parent is None or parent.constant)
         static_recipe = ((record.witness, parent.static_recipe if parent else None)
                          if constant else None)
+        # This selector is source metadata only. Derive it from the immutable
+        # witness captured before callbacks, never a later live child pose.
+        # An originally nonidentity child cannot become eligible transiently.
         node = _Node(frame, kind, path, record, identities, operands, constant,
-                     recipe, static_recipe, local_constant)
+                     recipe, static_recipe, local_constant, identity_child)
         nodes[frame] = node
         ancestry_axes[frame] = frozenset(axes)
         return node
@@ -1068,11 +1116,12 @@ def _sample_graph(graph, time, ops, context, publication, *, parents=None):
                         coordinate = ops.recording_affine_coordinate(law.initial, law.target, law.duration,
                             law.elapsed, law.running_since, clock, running=law.running)
                 def build(base=parent):
-                    relative = ops.make_recording()
                     if kind == "hinge":
                         rotation = ops.recording_axis_rotation(axis, coordinate, context=context,
                             path="hinge:" + node.path, max_steps=MAX_KEYFRAMES)
                         relative = ops.make_recording(orientation=rotation)
+                    else:
+                        relative = ops.make_recording()
                     return ops.compose_recording_fast(ops.compose_recording_fast(base, relative),
                         ops.recording_constant_pose(local, inverse=True, build=source_constant))
                 signature = ("joint", parent, kind, axis, coordinate, F(0) if kind == "hinge" else None, local)
@@ -1180,6 +1229,11 @@ def _sample_chain_graph(graph, time, ops, context, publication, constants):
                 else:
                     value = ops.recording_parent_origin(parent, rotation)
                 shared.setdefault(node.recipe, frame)
+            elif node.identity_child:
+                # Both joint placements are exact zero/+identity. The existing
+                # helper retains the complete native parent admission and
+                # depth+2 without constructing two unused identity poses.
+                value = ops.recording_parent_origin(parent, parent.rotation)
             else:
                 if node.kind in {"site", "follow"}:
                     local = node.operands[0]
@@ -1193,11 +1247,12 @@ def _sample_chain_graph(graph, time, ops, context, publication, constants):
                         coordinate = ops.recording_affine_coordinate(law.initial, law.target, law.duration,
                             law.elapsed, law.running_since, time, running=law.running)
                     def build():
-                        relative = ops.make_recording()
                         if kind == "hinge":
                             rotation = ops.recording_axis_rotation(axis, coordinate, context=context,
                                 path="hinge:" + node.path, max_steps=MAX_KEYFRAMES)
                             relative = ops.make_recording(orientation=rotation)
+                        else:
+                            relative = ops.make_recording()
                         return ops.compose_recording_fast(ops.compose_recording_fast(parent, relative),
                             ops.recording_constant_pose(local, inverse=True, build=source_constant))
                     signature = ("joint", parent, kind, axis, coordinate,
