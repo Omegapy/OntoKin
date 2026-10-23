@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-22T23:22:47.966643+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-23T00:19:09.503286+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -44,41 +44,45 @@ local `569b67b0bdc6854cc069e6a00590e0f15267ae03`
 [draft PR #25](https://github.com/Omegapy/OntoKin/pull/25). Original branches,
 failed attempts and earlier evidence retain their identities.
 
-Latest tested recording implementation is `52a1e6c10f22074c51e96d3289a0b10c10bc1b21`,
-tree `a5ae8aeef10094d10699373df656fbf4c97974da`. The actual starting published
-baseline was `afe4a40cd990e2262ffd634fcd550a952db0ffc2`; its complete 1,397-file tree was
-reconstructed and verified. The supplied newer unpublished 20/28 checkout was
-unavailable. Its reported 463-test result is not claimed for this source.
+Latest tested recording implementation is `63113dffd06ee879c3beeaaa52e22a74c813c6f5`,
+tree `6f9df822639746327c101ea12da15e959a184eea`. Published checkpoint 006 is verified at
+`db745fbd5744624103da1d8c6cf076a719d456a4`; the newer source and evidence below form checkpoint 007.
+The originally reported unpublished 20/28 checkout was unavailable; the fresh
+reconstruction and both measured baselines retain their separate identities.
 
-The [October 22 checkpoint](docs/engineering/reach-recording-validation-2026-10-22/README.md)
-now includes a freshly executed **20/28** full source run, finished
-**2026-10-22T23:21:11.378310+00:00**, with stable inputs and the original
-**100,000-operation** limit. **L02 passes at 99,102 operations**. Remaining
-failures are **P05, P09, P11, P16, P20, P23, L01 and L03**, each stopped at the
-attempted 100,001st operation. The unchanged published baseline reproduced
-19/28; both fresh complete runs retain their exact identities.
+The [recording checkpoint](docs/engineering/reach-recording-validation-2026-10-22/README.md)
+retains a fresh **20/28** full source run, finished **2026-10-23T00:16:23.915776+00:00**,
+with stable inputs and the unchanged **100,000-operation** limit. **L02 uses
+93,980 operations**. **P05, P09, P11, P16, P20, P23, L01 and L03** still stop at
+100,001. P16 now reaches GLB encoding; P20 reaches the final independent group
+checks; P11 reaches independent phase tables; P23 remains in sampling. The
+other four failures remain in independent verification.
 
-The same integrated source passed **597/597 focused tests** in
-**93.854 seconds**, with zero failures/errors/skips and stable tracked
-inputs. Exact seed reuse, equal phase laws, constant independent parent/position
-proofs, zero-slope coordinates and single-pass certificate bounds remove actual
-duplicate calculations. Current source, callback, cap and cache checks remain;
-independent proof authority, trajectories, tolerances and frozen inputs are unchanged.
-This focused run does not replace complete regression or compatibility.
+The same integrated source passes **686/686 focused tests**, zero failures,
+errors or skips, in **92.287 seconds**, with complete raw logs,
+method IDs and stable tracked inputs. This is a selected correctness cohort,
+not complete regression or compatibility. The preceding composition-interface
+error and earlier scoped failures are preserved and were corrected without
+changing existing acceptance expectations.
 
-Checkpoint 006 preserves **193 raw members**, including both complete source
-runs, scoped passes and failures, profiles, reproduction drivers, exact source
-patch and raw commit objects. All 78 GLB/report member hashes and every archive
-member hash and ZIP CRC were checked. Earlier checkpoint outcomes and archives
-retain their original identity. The previous full regression and delivery evidence
-does not verify this changed implementation.
+Checkpoint 007 preserves **473 raw members**: three complete source runs,
+focused outcomes, profiles, reproduction drivers, exact patches and raw commits.
+All **120 GLB/report hashes**, archive member hashes and ZIP CRC passed.
+The first spin run's truncated log and the geometry preflight rejection retain
+explicit limitations; the complete spin rerun passed 261/261 on the same source.
+Earlier archives retain their original bytes and meaning.
 
-The immediate target is **28/28**. P23 still needs repeated native relative-pose
-reductions; P16 still reaches the limit during certification; P11 reaches
-independent geometry and the other five failures reach independent verification.
-All ten Agent artifacts, current complete regression/compatibility, independent
-rates, native/browser checks, visual review, inherited roles and release audits
-remain pending. PR #27 stays draft; **do not merge** until every mandatory gate passes.
+Complete immutable spin/relative operands, atomic cache publication, source
+geometry reuse and independent sparse/arc/recording arithmetic remove actual
+duplicate work. Current source/cap/callback checks, independent proof authority,
+the 256-entry cache, frozen inputs, tolerances and budgets remain unchanged.
+
+The immediate target is **28/28**. Continue P23 captured source sampling and
+repeated residual work, P16's remaining total cost, and independent reference
+verification. All ten Agent artifacts, full current regression/compatibility,
+independent rates, native/browser checks, visual review, inherited/hostile roles
+and release audits remain pending. PR #27 stays draft; **do not merge** until
+every mandatory acceptance gate passes. Full GOAL remains open.
 
 The historical rows below retain their original cuts and limits.
 

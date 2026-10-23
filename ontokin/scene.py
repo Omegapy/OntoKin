@@ -185,15 +185,45 @@ def build_surface_mesh(geometry: dict[str, Any], *, max_vertices: int = MAX_MESH
     mesh, placement = materialize_surface(geometry, max_vertices=max_vertices, check=check)
     positions: list[Vec] = []
     normals: list[Vec] = []
-    for position, normal in zip(mesh.positions, mesh.normals):
-        if check is not None:
+    # Adjacent triangles retain their ring-point tuples, and each flat face
+    # retains one normal for all three corners. Keep only three preceding
+    # point witnesses and the last normal; equal numeric values are not keys.
+    # The native immutable inputs make their already-placed results exact,
+    # including signed zero. This state is local to this materialization, so
+    # independent readers still reconstruct their own source geometry.
+    native_placement = (
+        type(placement.position) is tuple and len(placement.position) == 3
+        and type(placement.rotation) is tuple and len(placement.rotation) == 4
+        and all(type(value) is float for value in (*placement.position, *placement.rotation)))
+    point_witnesses: list[tuple[Vec, Vec]] = []
+    normal_witness = None
+    for index, (position, normal) in enumerate(zip(mesh.positions, mesh.normals)):
+        transformed = next((value for original, value in point_witnesses
+                            if position is original), None)
+        transformed_normal = (normal_witness[1] if normal_witness is not None
+                              and normal is normal_witness[0] else None)
+        new_position, new_normal = transformed is None, transformed_normal is None
+        # A checkpoint precedes every new calculation. Even an unusual run of
+        # entirely repeated corners remains cancellable in bounded blocks.
+        if check is not None and (new_position or new_normal or index % 64 == 0):
             check()
-        rotated = _rotate(placement.rotation, position)
-        transformed = tuple(a + b for a, b in zip(rotated, placement.position))
-        transformed_normal = _rotate(placement.rotation, normal)
-        if not all(math.isfinite(value) for value in (*transformed, *transformed_normal)):
+        if new_position:
+            rotated = _rotate(placement.rotation, position)
+            transformed = tuple(a + b for a, b in zip(rotated, placement.position))
+        if new_normal:
+            transformed_normal = _rotate(placement.rotation, normal)
+        if ((new_position or new_normal)
+                and not all(math.isfinite(value) for value in (*transformed, *transformed_normal))):
             raise SurfaceError("OKL-E-SURFACE-NUMERIC",
                                "Local visual placement produced a nonfinite surface coordinate.")
+        if (new_position and native_placement and type(position) is tuple and len(position) == 3
+                and all(type(value) is float for value in position)):
+            if len(point_witnesses) == 3:
+                point_witnesses.pop(0)
+            point_witnesses.append((position, transformed))
+        if (new_normal and native_placement and type(normal) is tuple and len(normal) == 3
+                and all(type(value) is float for value in normal)):
+            normal_witness = normal, transformed_normal
         positions.append(transformed)
         normals.append(transformed_normal)
     if check is not None:
@@ -314,6 +344,76 @@ def _source_surface_mesh(geometry, *, max_vertices, work, namespace):
     mesh = build_surface_mesh(frozen, max_vertices=max_vertices, check=work.tick)
     work.remember(key, mesh)
     return mesh
+
+
+def _source_primitive_snapshot(geometry):
+    """Capture only complete native constructor inputs without numeric aliases."""
+    def number(value):
+        if type(value) not in (int, float):
+            return None
+        try:
+            if not math.isfinite(value):
+                return None
+        except OverflowError:
+            return None
+        return ("float", struct.pack("!d", value)) if type(value) is float else ("int", value)
+
+    if type(geometry) is not dict or type(geometry.get("kind")) is not str:
+        return None
+    kind = geometry["kind"]
+    if kind == "sphere":
+        radius = geometry.get("radius")
+        key = number(radius)
+        return None if key is None else ((kind, key), radius)
+    if kind == "box":
+        size = geometry.get("size")
+        if type(size) is not tuple or len(size) != 3:
+            return None
+        key = tuple(number(value) for value in size)
+        return None if any(value is None for value in key) else ((kind, key), size)
+    return None
+
+
+def _source_primitive_mesh(geometry, *, work, namespace):
+    """Reuse immutable native geometry within one source-construction role.
+
+    Only current exact constructor inputs can reuse a mesh. The caller still
+    accounts every occurrence's vertices and verifies its actual supplied
+    buffers, material and provenance. Independent and writer roles never
+    share this proof namespace or a vertex-extrema proof.
+    """
+    def construct(kind, value):
+        if kind == "box":
+            return box_mesh(value)
+        if kind == "sphere":
+            return sphere_mesh(value)
+        raise ValueError("Expected native box or sphere geometry.")
+
+    while True:
+        work.charge("source_primitive_key")
+        snapshot = _source_primitive_snapshot(geometry)
+        if snapshot is None:
+            kind = geometry["kind"]
+            return construct(kind, geometry["size" if kind == "box" else "radius"])
+        recipe_key, value = snapshot
+        key = ("source_primitive_mesh", namespace, recipe_key)
+
+        def current():
+            latest = _source_primitive_snapshot(geometry)
+            return latest is not None and latest[0] == recipe_key
+
+        cached = work.lookup(key)
+        if not current():
+            continue
+        if cached is not None:
+            return cached
+        mesh = construct(recipe_key[0], value)
+        # Insertion/promotion/eviction can call back into the current source.
+        # A changed recipe is retried under the same remaining work budget;
+        # the stale mesh is neither returned nor admitted to the cache.
+        work.remember(key, mesh, admission=current)
+        if current():
+            return mesh
 
 
 def surface_metadata(geometry: dict[str, Any], mesh: SurfaceMesh, *,

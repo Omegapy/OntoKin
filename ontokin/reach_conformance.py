@@ -178,9 +178,41 @@ class _Bounds:
         return (a > b) - (a < b)
 
     def total(self, values):
+        def direct():
+            result = Fraction(0)
+            for value in values:
+                result = self.add(result, value)
+            return result
+
+        # A bounded tuple of native immutable scalars can omit actual additions
+        # of zero. At most sixteen 256-bit fractions have <4101-bit prospective
+        # fold operands, including every omitted original zero addition. Other
+        # shapes and narrower domains retain the complete original fold.
+        if (type(values) is not tuple or not 1 <= len(values) <= 16
+                or type(_bound_domain(self)) is not int or _bound_domain(self) != MAX_OPERAND_BITS
+                or not _small_proof_values(values)):
+            return direct()
+        self.tick("independent_total_domain")
+        self._cache_operand_domain(values)
+        if _bound_domain(self) != MAX_OPERAND_BITS:
+            # This added callback must not allow an original first-add width
+            # failure to disappear into a later broadening callback.
+            first = values[0]
+            self.bits(max(first.denominator.bit_length(), first.numerator.bit_length() + 1) + 1,
+                      1 + first.denominator.bit_length())
+            return direct()
         result = Fraction(0)
         for value in values:
-            result = self.add(result, value)
+            if not value:
+                continue
+            if not result:
+                result = value
+            else:
+                result = self.add(result, value)
+                if _bound_domain(self) != MAX_OPERAND_BITS:
+                    self._cache_operand_domain(values)
+                    return direct()
+        self.bits(result.numerator.bit_length(), result.denominator.bit_length())
         return result
 
     def square(self, value):
@@ -761,8 +793,9 @@ def _geometry_bounds(decoded, model, options, *, work):
     contract. No reach writer, pose sampler, timeline or certificate routine is
     called. Every repeated occurrence consumes the aggregate vertex allowance.
     """
-    from .geometry import assembly_marker, box_mesh, joint_marker, sphere_mesh
-    from .scene import MAX_MESH_VERTICES, SurfaceMesh, _source_surface_mesh, float32
+    from .geometry import assembly_marker, joint_marker
+    from .scene import (MAX_MESH_VERTICES, SurfaceMesh, _source_primitive_mesh,
+                        _source_surface_mesh, float32)
     arithmetic = _Bounds(work)
     result, meshes, remaining = {}, {}, MAX_MESH_VERTICES
     for index, node in enumerate(decoded.document["nodes"]):
@@ -782,10 +815,9 @@ def _geometry_bounds(decoded, model, options, *, work):
             elif kind in ("loft", "placed"):
                 mesh = _source_surface_mesh(obj.geometry, max_vertices=remaining,
                                             work=work, namespace="reach_independent_source")
-            elif kind == "box":
-                mesh = box_mesh(obj.geometry["size"])
-            elif kind == "sphere":
-                mesh = sphere_mesh(obj.geometry["radius"])
+            elif kind in ("box", "sphere"):
+                mesh = _source_primitive_mesh(obj.geometry, work=work,
+                                              namespace="reach_independent_source")
             else:
                 _error("OKE-E-GEOMETRY", "The source geometry is outside the identified recorded contract.", kind="unsupported")
         elif metadata.get("kind") == "visual_helper" and options.helpers:
@@ -1291,7 +1323,11 @@ def _optional_endpoint_l1(actual, expected, arithmetic):
         _error("OKE-E-CERTIFICATE", "An independent vector comparison has incompatible dimensions.")
     if _bound_domain(arithmetic) != MAX_OPERAND_BITS:
         return None
-    actual = tuple(arithmetic.value(value) for value in actual)
+    # Exact typed zeros need no new Fraction decoding. The enclosing domain
+    # checkpoint and the following complete interval admission still execute;
+    # foreign zero-like values keep their original scalar rejection path.
+    actual = tuple(Fraction(0) if type(value) in (int, float, Fraction) and value == 0
+                   else arithmetic.value(value) for value in actual)
     expected = arithmetic.cells(expected)
     if (_bound_domain(arithmetic) != MAX_OPERAND_BITS
             or not _small_proof_values((*actual, *(value for cell in expected for value in (cell.lo, cell.hi))))):
@@ -1415,6 +1451,36 @@ def _previous_position_comparison(previous, position, expected, limit, arithmeti
     return values
 
 
+def _recording_position_magnitude(position, arithmetic):
+    """Sum current supplied magnitudes without decoding or adding exact zeros.
+
+    Three finite binary64 operands and integers of at most 1,024 bits keep
+    every original zero-addition and partial-sum preflight below 3,228 bits.
+    Only that sufficient domain at the full cap may omit those operations;
+    larger integers and any narrower live cap retain the original fold.
+    """
+    def direct():
+        return arithmetic.total(abs(arithmetic.value(value)) for value in position)
+    if _bound_domain(arithmetic) != MAX_OPERAND_BITS:
+        return direct()
+    arithmetic.tick("independent_position_magnitude")
+    position = _recording_vector(position, 3, arithmetic)
+    if (_bound_domain(arithmetic) != MAX_OPERAND_BITS
+            or any(type(value) is int and value.bit_length() > 1024 for value in position)):
+        return direct()
+    result = Fraction(0)
+    for value in position:
+        if not value:
+            continue
+        term = abs(arithmetic.value(value))
+        if _bound_domain(arithmetic) != MAX_OPERAND_BITS:
+            return direct()
+        result = arithmetic.add(result, term) if result else term
+        if _bound_domain(arithmetic) != MAX_OPERAND_BITS:
+            return direct()
+    return result
+
+
 def _key_comparisons(reference, geometry, tracks, time, index, arithmetic, *, previous=None, previous_time=None,
                      recording_context=None, endpoint_rows=None):
     result, pending, observed, candidates = {}, [], [], []
@@ -1481,7 +1547,7 @@ def _key_comparisons(reference, geometry, tracks, time, index, arithmetic, *, pr
                 normalized, quaternion_error = _recording_orientation_bound(
                     quaternion, expected, limits[1], arithmetic, before_error=compare_position)
             if magnitude is None:
-                magnitude = arithmetic.total(abs(arithmetic.value(value)) for value in position)
+                magnitude = _recording_position_magnitude(position, arithmetic)
             cap = admitted_cap if admitted_cap == _bound_domain(arithmetic) else None
             return (("position_error", position_error),
                     ("quaternion_error", quaternion_error), ("normalized", normalized),
@@ -1510,6 +1576,57 @@ def _stored_arc(raw_first, raw_last, first, last, arithmetic):
             _error("OKE-E-QUATERNION-LIFT", "Actual stored endpoint signs do not form a coherent short-path lift.")
         return _arc_bound(first, last, arithmetic)
     return arithmetic.reuse(("stored_endpoint_arc", tuple(raw_first), tuple(raw_last), first, last), calculate)
+
+
+def _source_arc_endpoints_current(raw_first, raw_last, first, last):
+    return (first.get("_proof_cap") == last.get("_proof_cap") == MAX_OPERAND_BITS
+            and _same_recording_vector(raw_first, first.get("_quaternion_operand"), 4)
+            and _same_recording_vector(raw_last, last.get("_quaternion_operand"), 4))
+
+
+def _previous_source_arc(raw_first, raw_last, first, last, source, limit, arithmetic):
+    """Reuse one completed source-arc inequality from the preceding endpoint.
+
+    The old proof uses the same independent speed and interval width and an
+    independently computed endpoint-error sum. Fresh actual raw vectors still
+    need a nonnegative lift; the new error sum must not exceed the old one.
+    The old nonnegative chord at most 1/2 implies its error sum is at most
+    1/4, so nonnegative current errors also meet the original individual 1/2
+    precondition. No source state or writer bound establishes those facts,
+    and no further cache or history is retained.
+    """
+    receipt = first.get("_source_arc_receipt")
+    if (type(receipt) is not tuple or len(receipt) != 5
+            or any(type(value) is not Fraction for value in receipt[:4])
+            or source[:2] != receipt[:2]
+            or not _source_arc_endpoints_current(raw_first, raw_last, first, last)):
+        return None
+    arithmetic.tick("independent_source_arc_reuse")
+    if _bound_domain(arithmetic) != MAX_OPERAND_BITS:
+        return None
+    raw_first = _recording_vector(raw_first, 4, arithmetic)
+    raw_last = _recording_vector(raw_last, 4, arithmetic)
+    arithmetic._cache_operand_domain((source, receipt))
+    if _bound_domain(arithmetic) != MAX_OPERAND_BITS:
+        return None
+    dot = _recording_uniform_lift_sign(raw_first, raw_last, arithmetic)
+    # Ambiguous signs and other scalar domains keep the exact dot proof in
+    # the ordinary calculation below. No lift result is inherited across keys.
+    if dot is None:
+        return None
+    if dot < 0:
+        _error("OKE-E-QUATERNION-LIFT", "Actual stored endpoint signs do not form a coherent short-path lift.")
+    total_error = arithmetic.add(*source[2:])
+    if (_bound_domain(arithmetic) != MAX_OPERAND_BITS
+            or arithmetic.compare(total_error, receipt[2]) > 0
+            or _bound_domain(arithmetic) != MAX_OPERAND_BITS):
+        return None
+    if not (type(limit) is type(receipt[4]) and limit == receipt[4]):
+        if arithmetic.compare(receipt[3], limit) > 0:
+            return None
+    if _bound_domain(arithmetic) != MAX_OPERAND_BITS:
+        return None
+    return (*receipt[:4], limit)
 
 
 def _certified_stored_arc(raw_first, raw_last, first, last, angular_speed, width, limit, arithmetic,
@@ -1545,6 +1662,10 @@ def _certified_stored_arc(raw_first, raw_last, first, last, angular_speed, width
         return Fraction(0)
     if (source_path_valid and _bound_domain(arithmetic) == MAX_OPERAND_BITS and _small_proof_values(source)
             and all(value >= 0 for value in source)):
+        receipt = _previous_source_arc(raw_first, raw_last, first, last, source, limit, arithmetic)
+        if receipt is not None:
+            last["_source_arc_receipt"] = receipt
+            return receipt[3]
         def calculate():
             if _bound_domain(arithmetic) != MAX_OPERAND_BITS:
                 return ()
@@ -1559,15 +1680,22 @@ def _certified_stored_arc(raw_first, raw_last, first, last, angular_speed, width
                 _error("OKE-E-QUATERNION-LIFT", "Actual stored endpoint signs do not form a coherent short-path lift.")
             if any(arithmetic.compare(error, Fraction(1, 2)) > 0 for error in errors):
                 return ()
-            chord = arithmetic.add(arithmetic.div(arithmetic.mul(angular_speed, width), 2),
-                                   arithmetic.mul(2, arithmetic.add(*errors)))
+            source_chord = arithmetic.div(arithmetic.mul(angular_speed, width), 2)
+            total_error = arithmetic.add(*errors)
+            chord = arithmetic.add(source_chord, arithmetic.mul(2, total_error))
             if arithmetic.compare(chord, Fraction(1, 2)) > 0:
                 return ()
-            return (arithmetic.div(chord, arithmetic.sub(1, arithmetic.div(arithmetic.square(chord), 4))),)
+            return (arithmetic.div(chord, arithmetic.sub(1, arithmetic.div(arithmetic.square(chord), 4))),
+                    total_error)
         candidate = arithmetic.reuse(("stored_endpoint_sufficient_arc", raw_first, raw_last, *source), calculate)
         if (candidate and _bound_domain(arithmetic) == MAX_OPERAND_BITS
                 and arithmetic.compare(candidate[0], limit) <= 0
                 and _bound_domain(arithmetic) == MAX_OPERAND_BITS):
+            if _source_arc_endpoints_current(raw_first, raw_last, first, last):
+                # The completed nonnegative chord <= 1/2 already proves
+                # candidate[1] <= 1/4. No additional scalar inequality is
+                # needed to retain that independent error envelope.
+                last["_source_arc_receipt"] = (angular_speed, width, candidate[1], candidate[0], limit)
             return candidate[0]
     normalized = []
     for raw, endpoint in ((raw_first, first), (raw_last, last)):

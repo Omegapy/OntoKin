@@ -164,6 +164,76 @@ class ReachExecutionWork:
         self._cache_generation += 1
         return True if admission is not None else None
 
+    def remember_batch(self, entries, *, admission):
+        """Publish a bounded group only after every callback and one receipt.
+
+        Pending entries are already completed immutable calculations, not a
+        second retained cache. Only keys are copied for prospective LRU order;
+        each insertion, promotion and eviction keeps its existing unit charge.
+        Cancellation, rejection, or reentrant cache work publishes no prefix.
+        """
+        if (type(entries) is not tuple or not callable(admission)
+                or type(self.max_cache_entries) is not int
+                or not 1 <= self.max_cache_entries <= 256
+                or type(self.max_operand_bits) is not int
+                or not 1 <= self.max_operand_bits <= MAX_OPERAND_BITS
+                or len(entries) > self.max_cache_entries
+                or any(type(entry) is not tuple or len(entry) != 2
+                       or type(entry[0]) is not tuple for entry in entries)):
+            raise ValueError("A cache publication batch must fit its current bounded cache.")
+        operand_bits = self.max_operand_bits
+        generation = self._cache_generation
+        capacity = self.max_cache_entries
+        self.charge("cache_batch_domain")
+
+        def unchanged():
+            return (not self._sync_cache_operand_limit()
+                    and type(self.max_operand_bits) is int
+                    and type(self.max_cache_entries) is int
+                    and operand_bits == self.max_operand_bits
+                    and generation == self._cache_generation
+                    and capacity == self.max_cache_entries
+                    and len(self._cache) <= capacity)
+
+        if not unchanged():
+            return False
+        # This transient ordering contains no numeric results. The real cache
+        # remains untouched until the complete final admission has succeeded.
+        order = OrderedDict.fromkeys(self._cache)
+        for key, _ in entries:
+            self.charge("cache_insert")
+            if not unchanged():
+                return False
+            present = key in order
+            if present:
+                self.charge("cache_promote")
+            elif len(order) >= capacity:
+                self.charge("cache_evict")
+            if not unchanged():
+                return False
+            if not present and len(order) >= capacity:
+                order.popitem(last=False)
+            order[key] = None
+            if present:
+                order.move_to_end(key)
+        if admission() is not True:
+            return False
+        # Admission is normally callback-free. A defensive check also keeps a
+        # caller-supplied reentrant hook from undoing its own completed work.
+        if (type(self.max_operand_bits) is not int or type(self.max_cache_entries) is not int
+                or operand_bits != self.max_operand_bits or generation != self._cache_generation
+                or capacity != self.max_cache_entries or len(self._cache) > capacity):
+            return False
+        for key, value in entries:
+            present = key in self._cache
+            if not present and len(self._cache) >= capacity:
+                self._cache.popitem(last=False)
+            self._cache[key] = value
+            if present:
+                self._cache.move_to_end(key)
+            self._cache_generation += 1
+        return True
+
     def _sync_cache_operand_limit(self):
         # A completed proof under a wider cap cannot stand in for arithmetic
         # that the current narrower domain would reject. Clear all nested

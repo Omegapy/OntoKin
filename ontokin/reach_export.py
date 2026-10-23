@@ -293,6 +293,11 @@ def upper_binary64(value, *, work=None, model=None) -> float:
     value = _rational(value, work)
     if value < 0:
         raise ValueError("A certificate upper bound cannot be negative")
+    if not value and getattr(work, "max_operand_bits", MAX_ARITHMETIC_BITS) == MAX_ARITHMETIC_BITS:
+        # The freshly admitted exact zero already has the canonical finite
+        # binary64 image. No conversion, ordering or cache operation is needed.
+        # Narrow domains retain the complete original conversion preflights.
+        return 0.0
     def calculate():
         try:
             result = float(value)

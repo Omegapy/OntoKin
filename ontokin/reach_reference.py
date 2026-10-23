@@ -988,6 +988,158 @@ class _PoseArithmetic:
         sine, cosine = self.a.sincos(self.a.mul(norm, F(elapsed) / 2))
         return (cosine, *(self.a.mul(self.a.div(value, norm), sine) for value in values))
 
+    def _recording_rotate(self, q, vector):
+        """Enclose an axis offset with one final grid per Hamilton factor.
+
+        Recording poses need containment, so the exact square/product ranges
+        can be combined before outward rounding. The ordinary pose operation
+        retains its original cells. This path admits only small, native dyadic
+        cells; that complete domain proves every omitted intermediate grid
+        and the original corner preflights without trusting a producer pose.
+        """
+        def direct():
+            return self.rotate(q, vector)
+
+        requested = getattr(self.a.work, "max_operand_bits", MAX_OPERAND_BITS)
+        if (type(requested) is not int or requested < MAX_OPERAND_BITS or self.a.bits != 128
+                or self.a.work is None or not hasattr(self.a.work, "callback_error")
+                or type(q) is not tuple or len(q) != 4 or type(vector) is not tuple or len(vector) != 3
+                or any(type(cell) is not Interval or type(cell.lo) is not F or type(cell.hi) is not F
+                       for cells in (q, vector) for cell in cells)):
+            return direct()
+        cells = (*q, *vector)
+        # At most 131/129 bits at input, 262/258 at a product, 521/516
+        # at a prospective difference and 649 after the final grid shift.
+        # Original rounded factors and their possible axis scaling fit the
+        # same <1024-bit envelope. Check sizes before ordering or arithmetic.
+        if any(value.numerator.bit_length() > 131 or value.denominator.bit_length() > 129
+               for cell in cells for value in (cell.lo, cell.hi)):
+            return direct()
+        if any(value.denominator > self.a.scale or value.denominator & (value.denominator - 1)
+               for cell in cells for value in (cell.lo, cell.hi)):
+            return direct()
+        if (not self._zero((q[1], q[2], vector[2])) or self._zero(vector)
+                or q[0].lo == q[0].hi and abs(q[0].lo) == 1 and self._zero(q[1:])):
+            return direct()
+        x, y, z = vector
+        if y.lo == y.hi == 0:
+            axis, scale = 0, x
+        elif x.lo == x.hi == 0:
+            axis, scale = 1, y
+        else:
+            return direct()
+        cap = self.a.operand_limit
+
+        def current():
+            return self.a.operand_limit == cap
+
+        def square(cell):
+            if cell.lo == cell.hi:
+                value = self.a.exact(cell.lo, cell.lo, "mul")
+                return (value, value) if current() else None
+            first = self.a.exact(cell.lo, cell.lo, "mul")
+            if not current():
+                return None
+            last = self.a.exact(cell.hi, cell.hi, "mul")
+            if not current():
+                return None
+            return ((F(0) if cell.lo <= 0 <= cell.hi else min(first, last)), max(first, last))
+
+        def product(left, right):
+            if left.lo == left.hi and right.lo == right.hi:
+                value = self.a.exact(left.lo, right.lo, "mul")
+                return (value, value) if current() else None
+            if left.lo >= 0:
+                pairs = (((left.lo, right.lo), (left.hi, right.hi)) if right.lo >= 0 else
+                         ((left.hi, right.lo), (left.lo, right.hi)) if right.hi <= 0 else
+                         ((left.hi, right.lo), (left.hi, right.hi)))
+            elif left.hi <= 0:
+                pairs = (((left.lo, right.hi), (left.hi, right.lo)) if right.lo >= 0 else
+                         ((left.hi, right.hi), (left.lo, right.lo)) if right.hi <= 0 else
+                         ((left.lo, right.hi), (left.lo, right.lo)))
+            elif right.lo >= 0:
+                pairs = ((left.lo, right.hi), (left.hi, right.hi))
+            elif right.hi <= 0:
+                pairs = ((left.hi, right.lo), (left.lo, right.lo))
+            else:
+                pairs = tuple((a, b) for a in (left.lo, left.hi) for b in (right.lo, right.hi))
+            values = []
+            for a, b in pairs:
+                values.append(self.a.exact(a, b, "mul"))
+                if not current():
+                    return None
+            return min(values), max(values)
+
+        def calculate():
+            self.a.tick()
+            self.a.guard(*(value for cell in cells for value in (cell.lo, cell.hi)))
+            if not current():
+                return None
+            key = self._key("recording_axis_rotation", q, vector)
+            cached = self.a.lookup(key)
+            if not current():
+                return None
+            if cached is not None:
+                self.a.guard(*(value for cell in cached for value in (cell.lo, cell.hi)))
+                return cached
+            ww, zz = square(q[0]), None
+            if ww is not None:
+                zz = square(q[3])
+            if zz is None:
+                return None
+            low = self.a.exact(ww[0], zz[1], "sub")
+            if not current():
+                return None
+            high = self.a.exact(ww[1], zz[0], "sub")
+            if not current():
+                return None
+            diagonal = self.a.grid(low, high)
+            if not current():
+                return None
+            wz = product(q[0], q[3])
+            if wz is None:
+                return None
+            low = self.a.exact(wz[0], 2, "mul")
+            if not current():
+                return None
+            high = self.a.exact(wz[1], 2, "mul")
+            if not current():
+                return None
+            off_diagonal = self.a.grid(low, high)
+            if not current():
+                return None
+            if not scale.lo == scale.hi == 1:
+                diagonal = self.a.mul(diagonal, scale)
+                if not current():
+                    return None
+                off_diagonal = self.a.mul(off_diagonal, scale)
+                if not current():
+                    return None
+            if axis:
+                off_diagonal = self.a.neg(off_diagonal)
+                if not current():
+                    return None
+            result = (diagonal, off_diagonal, z) if not axis else (off_diagonal, diagonal, z)
+            self.a.guard(*(value for cell in result for value in (cell.lo, cell.hi)))
+            self.a.remember(key, result, admission=current)
+            return result if current() else None
+
+        try:
+            result = calculate()
+        except ReferenceError as error:
+            if error.code != "resource" or error is getattr(self.a.work, "callback_error", None):
+                raise
+            try:
+                changed = not current()
+            except ReferenceError:
+                raise error
+            if not changed:
+                raise
+            result = None
+        # Keep the original calculation's own failure outside the retry
+        # handler, including when a later callback could broaden its domain.
+        return direct() if result is None else result
+
     def _recording_rotate_sincos(self, old_sine, old_cosine, sine, cosine, *, shared=False):
         """Round one independent complex interval update only at its outputs.
 
@@ -1182,7 +1334,7 @@ class _PoseArithmetic:
         return result
 
     def _recording_body_orientation(self, direct, *, axis, rate, witness, context, clock, shared=False,
-                                    source_admission=None, source_records=0):
+                                    source_admission=None, source_records=0, return_advance=False):
         """Advance an independently proved constant body-axis orientation.
 
         The caller supplies only its own ideal source proof and a context-free
@@ -1197,7 +1349,7 @@ class _PoseArithmetic:
                     self.a.tick()
                 source_admission()
                 self.a.guard(*(endpoint for cell in result for endpoint in (cell.lo, cell.hi)))
-            return result
+            return (result, False) if return_advance else result
 
         limit = self.a.operand_limit
         if (self.a.bits != 128 or limit != MAX_OPERAND_BITS or self.a.work is None
@@ -1292,7 +1444,7 @@ class _PoseArithmetic:
         self.a.remember(key, (witness, axis, rate, clock, result, steps), admission=admit)
         if self.a.operand_limit != limit:
             return direct_result()
-        return result
+        return (result, advance) if return_advance else result
 
     def _normalized_axis(self, axis):
         """Reuse the unchanged independent axis enclosure across hinge clocks."""
@@ -1384,15 +1536,16 @@ class _PoseArithmetic:
         self.a.guard(*(endpoint for values in vectors for value in values for endpoint in (value.lo, value.hi)))
         return result
 
-    def compose(self, parent, local):
-        key = self._key("compose", parent, local)
+    def compose(self, parent, local, *, recording=False):
+        key = self._key("recording_compose" if recording else "compose", parent, local)
         cached = self.a.lookup(key)
         if cached is not None:
             return cached
         direct = self._identity_composition(parent, local)
         if direct is not None:
             return direct
-        offset = self.rotate(parent.orientation, local.position)
+        offset = (self._recording_rotate(parent.orientation, local.position) if recording else
+                  self.rotate(parent.orientation, local.position))
         position = self.add(parent.position, offset)
         orientation = self.multiply(parent.orientation, local.orientation)
         rates = (parent.velocity, parent.omega, local.velocity, local.omega)
@@ -2260,17 +2413,34 @@ class ReachReference:
             frames = {"world": self.p.identity()}
         incoming = self._incoming(state)
         visiting = set()
+        # Only a lineage actually advanced by a world recording cursor may
+        # use narrower composition cells. Cold seeds and ordinary/unsupported
+        # graphs retain their exact original cells. This per-walk set stores
+        # path flags only; every pose remains in the existing frame map.
+        advanced_frames = set()
         body_rates = {"world": _RecordingBodyRate(None, F(0), False, ("world",), "world",
                                                  lambda clock: self.p.identity().orientation, ())}
+
+        def compose(parent, local, advanced):
+            # Preserve the ordinary two-operand composition interface for
+            # context-free walks and their independently supplied oracles.
+            # Only an actually advanced recording lineage selects the
+            # optional narrower offset enclosure.
+            if advanced:
+                return self.p.compose(parent, local, recording=True)
+            return self.p.compose(parent, local)
 
         def frame(path):
             self.a.tick()
             if path in frames:
                 return frames[path]
+            advanced = False
             stem = path.removesuffix(".frame")
             if stem in self.model.sites:
                 site = self.model.sites[stem]
-                value = self.p.compose(frame(site.owner + ".frame"), self.p.constant(site.pose))
+                parent = frame(site.owner + ".frame")
+                advanced = site.owner + ".frame" in advanced_frames
+                value = compose(parent, self.p.constant(site.pose), advanced)
                 if body_recording:
                     body_rates[path] = self._recording_attached_body(
                         body_rates.get(site.owner + ".frame"), ("site", stem), path=path)
@@ -2282,13 +2452,16 @@ class ReachReference:
                     kind, relation = incoming[stem]
                     if kind == "follow":
                         follow = self.model.follows[relation]
-                        value = self.p.compose(frame(follow.parent), self.p.constant(follow.offset))
+                        parent = frame(follow.parent)
+                        advanced = follow.parent in advanced_frames
+                        value = compose(parent, self.p.constant(follow.offset), advanced)
                         if body_recording:
                             body_rates[path] = self._recording_attached_body(
                                 body_rates.get(follow.parent), ("follow", relation), path=path)
                     else:
                         joint = self.model.joints[relation]
                         value = frame(joint.parent + ".frame")
+                        advanced = joint.parent + ".frame" in advanced_frames
                         body = body_rates.get(joint.parent + ".frame")
                         child_pose = self.model.sites[joint.child].pose
                         used_body = False
@@ -2301,11 +2474,12 @@ class ReachReference:
                                     value = identical
                                     used_body = True
                                 elif body.moving:
-                                    rotation = self.p._recording_body_orientation(
+                                    rotation, rotation_advanced = self.p._recording_body_orientation(
                                         lambda: body.direct(time), axis=body.axis, rate=body.rate, witness=body.witness,
                                         context=(recording_context, path), clock=time, shared=shared_recording,
                                         source_admission=lambda: self._recording_admit_receipts(body.receipts),
-                                        source_records=len(body.receipts))
+                                        source_records=len(body.receipts), return_advance=True)
+                                    advanced = advanced or rotation_advanced
                                     self.a.guard(*(endpoint for vector in (value.position, rotation)
                                                    for cell in vector for endpoint in (cell.lo, cell.hi)))
                                     value = PoseEnclosure(value.position, rotation, value.velocity, value.omega)
@@ -2323,9 +2497,9 @@ class ReachReference:
                                     shared_recording=shared_recording)
                             elif joint.kind == "slider":
                                 motion = self.p.make(self.p.scale(joint.axis, coordinate), velocity=self.p.scale(joint.axis, rate))
-                            value = self.p.compose(value, motion)
+                            value = compose(value, motion, advanced)
                         if not used_body:
-                            value = self.p.compose(value, self.p.inverse(self.p.constant(child_pose)))
+                            value = compose(value, self.p.inverse(self.p.constant(child_pose)), advanced)
                         if body_recording:
                             body_rates[path] = (body if joint.kind == "hinge" else
                                 self._recording_attached_body(body, ("static_joint", relation), path=path))
@@ -2340,11 +2514,11 @@ class ReachReference:
                         # all translation callbacks and precedes publication.
                         position, velocity, omega = self._prescribed_root_translation(
                             stem, time, state, ideal=ideal, pose_only=pose_only)
-                        rotation = self.p._recording_body_orientation(
+                        rotation, advanced = self.p._recording_body_orientation(
                             lambda: body.direct(time), axis=body.axis, rate=body.rate, witness=body.witness,
                             context=(recording_context, path), clock=time, shared=shared_recording,
                             source_admission=lambda: self._recording_admit_receipts(body.receipts),
-                            source_records=len(body.receipts))
+                            source_records=len(body.receipts), return_advance=True)
                         value = PoseEnclosure(position, rotation, velocity, omega)
                     else:
                         value = self._root_pose(stem, time, state, ideal=ideal, pose_only=pose_only)
@@ -2355,6 +2529,8 @@ class ReachReference:
                 self.a.guard(*(endpoint for vector in (value.position, value.orientation,
                                                        value.velocity, value.omega)
                                for cell in vector for endpoint in (cell.lo, cell.hi)))
+            if advanced:
+                advanced_frames.add(path)
             frames[path] = value
             return value
 

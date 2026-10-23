@@ -10,6 +10,10 @@ The current direction begins with exterior 3D models and short animations. Those
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
 
+### Current development checkpoint: recorded planar reach
+
+The explicit source `0.6` / `planar-reach-0.1`, Agent/0.6 and recorded GLB/0.6 milestone remains under development in [draft PR #27](https://github.com/Omegapy/OntoKin/pull/27). The [latest identified recording checkpoint](docs/engineering/reach-recording-validation-2026-10-22/README.md) passes **20 of 28 source recordings** within the unchanged **100,000-operation** request limit and **686 focused correctness tests**. Eight recordings and the remaining mandatory release roles are still open. These results do not establish complete regression, release acceptance or the full OntoKin goal. The immediate target is all 28 recordings, followed by Agent delivery, complete regression, independent verification and release audits.
+
 ## Export native exterior surfaces
 
 The [OK-LANG-003 surface contract](docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md) defines typed keyed sections, material regions and rigid local placement. Its pinned studio source now compiles through the native language and produces two actual animated, multi-material meshes:

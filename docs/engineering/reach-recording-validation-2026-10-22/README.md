@@ -66,7 +66,67 @@ unchanged. Differential tests compare exact private values and complete GLB
 bytes. Three stale independent-reader test doubles were updated to accept the
 already existing `recording_context` argument; their assertions are unchanged.
 
-## Latest checkpoint 006: freshly verified 20/28 and 597 focused tests
+## Latest checkpoint 007: 686 focused tests; source gate remains 20/28
+
+The tested source is `63113dffd06ee879c3beeaaa52e22a74c813c6f5`, tree
+`6f9df822639746327c101ea12da15e959a184eea`. Its complete source run finished
+**2026-10-23T00:16:23.915776+00:00**, with stable tracked inputs and the original
+**100,000-operation** request budget. It still passes **20/28**: P05, P09,
+P11, P16, P20, P23, L01 and L03 each stop at operation 100,001. **L02 uses
+93,980 operations**, down from checkpoint 006's 99,102. This is progress in
+work cost, not a completed source gate.
+
+The same source passes **686/686 focused methods**, zero failures, errors or
+skips, in **92.287 seconds**. The complete raw log,
+started/passed method IDs, interpreter/platform and before/after tracked
+inventories are preserved. The preceding 682-method run had one ordinary
+composition-interface error; the original test remains unchanged, and the
+corrected run includes it. Earlier axis and geometry failures remain visible.
+
+Changes since the verified published checkpoint `db745fbd5744624103da1d8c6cf076a719d456a4`:
+
+- Reuse complete immutable spin operands and constant native relative transforms
+  in the existing bounded numerical cache; atomic cursor batches retain final
+  current-source admission and each actual cache-operation charge.
+- Reuse independently constructed native primitives and immutable placed surfaces
+  while checking every actual occurrence and retaining the role separation.
+- Omit proved exact-zero endpoint/total work, reuse independently proved preceding
+  arc envelopes, and fuse scalar/Z recording offset arithmetic before outward
+  rounding. Ordinary source observations, cold seeds and unsupported graphs keep
+  their original cells and interface.
+
+P16 now completes certification and reaches GLB exact-clock encoding. P20
+completes all endpoint rows and stops in the final independent certificate-group
+checks. P11 reaches independent phase tables. P23 still exhausts its request
+during sampling after about 80,872 operations of preparation on the preceding
+profiled cut; its repeated source preparation and sampling need further work.
+P05, P09, L01 and L03 remain independent-verification failures.
+
+[checkpoint-007.zip](checkpoint-007.zip) preserves **473 members**,
+**9,941,379 bytes**, SHA-256
+`b59d52dcdb2e3eda5f52c58e9403fcddc93b5ea652ef142467a65b3a02be5483`. The
+[manifest](checkpoint-007.manifest.json) identifies three complete source runs,
+the focused passes and failures, diagnostic profiles, reproduction drivers,
+exact source patches and raw commit objects. All **120 GLB/report
+identities**, every archive member and ZIP CRC were checked. Earlier archives
+are unchanged. The [machine-readable checkpoint](checkpoint-007.json) retains
+the precise scope and limitations.
+
+The first spin run reported 261 passes but its raw log was truncated. That
+report/log remains unchanged and is explicitly limited. A fresh 261-method
+run on the same source has a complete atomically written log and method IDs.
+An earlier geometry preflight rejected an unidentified untracked temporary ZIP
+before executing tests; its path, size and hash are preserved. No responsible
+environment component is established for either observation.
+
+The immediate target remains **28/28**, followed by all ten Agent artifacts,
+full current regression and compatibility, independent rates, native/browser
+checks, fresh capture review, inherited/hostile gates and release audits.
+PR #27 remains draft and **must not merge** before every mandatory acceptance
+gate passes. Main stays `2bb4588e121fcfe99b4d42c734b15b38362f3642`.
+No main integration lease is claimed and no hosted job was dispatched.
+
+## Preserved checkpoint 006: freshly verified 20/28 and 597 focused tests
 
 The reported newer unpublished 20/28 checkout was not available in this workspace
 or the inspected GitHub branches. The actual starting PR #27 head was

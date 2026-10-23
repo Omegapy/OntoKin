@@ -1070,6 +1070,12 @@ class ReachSimulator(ForceSimulator):
             return None
 
         def slot(path, signature, build, *, owner=None):
+            if recording_pose_ops is not None:
+                from .scene import MAX_KEYFRAMES
+                relative = ops.recording_relative_pose(signature, build,
+                    context=recording_context, path=path, max_steps=MAX_KEYFRAMES)
+                if relative is not None:
+                    return relative
             if recording_only and recording_moving_frames is not None:
                 # Changing nodes already have same-clock sharing in objects /
                 # frames below. Their previous-clock path slot is otherwise a
@@ -1102,7 +1108,7 @@ class ReachSimulator(ForceSimulator):
                     site = self.model.sites[stem]
                     owner = instance(site.owner)
                     frames[path] = slot(path, (owner, site.pose),
-                        lambda: compose(owner, constant_pose(site.pose)), owner=site.owner)
+                        lambda base=owner: compose(base, constant_pose(site.pose)), owner=site.owner)
             return frames[path]
 
         def instance(path):
@@ -1119,7 +1125,7 @@ class ReachSimulator(ForceSimulator):
                     follow = self.model.follows[relation_path]
                     parent = frame(follow.parent)
                     result = slot(path, ("follow", parent, follow.offset),
-                        lambda: compose(parent, constant_pose(follow.offset)))
+                        lambda base=parent: compose(base, constant_pose(follow.offset)))
                 else:
                     joint = self.model.joints[relation_path]
                     parent = frame(joint.parent + ".frame")
@@ -1149,7 +1155,7 @@ class ReachSimulator(ForceSimulator):
                             slope = Fraction(0)
                         else:
                             coordinate, slope, _ = self._exact_coordinate(relation_path, time, state)
-                    def connected():
+                    def connected(base=parent):
                         relative = self._identity_pose
                         if joint.kind == "hinge":
                             if recording_context is not None:
@@ -1165,7 +1171,7 @@ class ReachSimulator(ForceSimulator):
                             relative = (ops.make_recording(position=position) if recording_only
                                         else ops.make(position=position,
                                                       velocity=ops.scale(joint.axis, slope)))
-                        return compose(compose(parent, relative),
+                        return compose(compose(base, relative),
                                        constant_pose(child_pose, inverse=True))
                     if body_cursor:
                         from .scene import MAX_KEYFRAMES

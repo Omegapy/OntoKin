@@ -705,7 +705,8 @@ class Binary64RecordingOps(ReachPoseOps):
         self._require_domain()
         return _AffineCoordinate(law, elapsed, running)
 
-    def _affine_axis_rotation(self, axis, coordinate, *, context, path, max_steps):
+    def _affine_operand_domain(self, coordinate):
+        """Admit the complete current clock even for a constant affine law."""
         law, elapsed, running = coordinate.law, coordinate.elapsed, coordinate.running
         self.work.charge("recording_affine_operand_guard")
         self._require_domain()
@@ -718,8 +719,19 @@ class Binary64RecordingOps(ReachPoseOps):
         if (law.duration.numerator <= 0 or elapsed.numerator < 0
                 or _checked_compare(elapsed, law.duration, self.work) > 0):
             raise ReachAdmissionError("reach_numeric", "Invalid recording affine clock or duration.")
+        self._require_domain()
+        return law, elapsed, running
+
+    def _affine_axis_rotation(self, axis, coordinate, *, context, path, max_steps):
+        law, elapsed, running = self._affine_operand_domain(coordinate)
         key = self._recording_cursor_key("bounded_affine_axis", context, path, max_steps,
                                          axis, law, running)
+        if not law.slope and law.initial == law.target:
+            # Every seed and every zero increment has the identical private
+            # value. No path/history-dependent recurrence is executed here;
+            # the complete current clock, cursor domain and live cap above
+            # remain mandatory. Keep the affine path's conservative zero bits.
+            return self._axis_rotation(axis, law.initial, structural=False)
         previous = self.work.lookup(key)
         self._require_domain()
         step_limit = min(max_steps, MAX_FLOAT_ROTATION_STEPS)
@@ -1177,6 +1189,107 @@ class Binary64RecordingOps(ReachPoseOps):
         self._require_domain()
         return _FloatPose(parent.position, rotation, parent.zeros, parent.depth + 2)
 
+    def recording_relative_pose(self, signature, build, *, context, path, max_steps):
+        """Reuse one complete local calculation under a fresh world origin.
+
+        A site/follow has one translated composition. A rigid joint, or a
+        hinge with an actually constant affine law, has a zero-translation
+        first composition and one translated child inverse. For these shapes
+        the original native algorithm adds the world origin exactly once per
+        nonzero component. Evaluate the same ordered local operations at an
+        exact zero origin, then repeat that original addition for the current
+        occurrence. In particular, never subtract two rounded world positions
+        or combine successive translations into a newly rounded offset.
+
+        This is a pure immutable numerical result in the existing bounded
+        work cache. The caller still resolves current topology, claims and
+        coordinates, and completes every carrier's live source admission.
+        Unsupported shapes retain their original builder and path cursors.
+        """
+        from .model import Pose
+
+        if not self.share_arithmetic:
+            return None
+        affine = None
+        if len(signature) == 3 and signature[0] == "follow":
+            kind, parent, local = signature
+            extra, depth = (), 1
+        elif len(signature) == 2 and type(signature[0]) is _FloatPose:
+            kind, (parent, local), extra, depth = "site", signature, (), 1
+        elif len(signature) == 7 and signature[0] == "joint":
+            _, parent, joint_kind, axis, coordinate, slope, local = signature
+            if joint_kind == "hinge":
+                if (type(coordinate) is not _AffineCoordinate
+                        or type(coordinate.law) is not _AffineLaw
+                        or coordinate.law.slope or coordinate.law.initial != coordinate.law.target):
+                    return None
+                if (type(axis) is not tuple or len(axis) != 3
+                        or any(type(value) is not float or not math.isfinite(value) for value in axis)
+                        or axis[0] or axis[1] or not axis[2]):
+                    return None
+                affine = coordinate
+                # A constant law is independent of its admitted elapsed time;
+                # retain every other exact operand and actual axis zero bits.
+                extra = (joint_kind, struct.pack("<ddd", *axis), coordinate.law, coordinate.running)
+            elif joint_kind in {"rigid", "grip"} and coordinate is None and slope is None:
+                extra = (joint_kind,)
+            else:
+                return None
+            kind, depth = "joint", 2
+        else:
+            return None
+        if not (type(parent) is _FloatPose and type(parent.depth) is int
+                and 0 <= parent.depth <= MAX_FLOAT_DEPTH - depth
+                and type(parent.position) is tuple and len(parent.position) == 3
+                and all(type(value) is float and math.isfinite(value)
+                        and abs(value) <= _MAX_POSITION for value in parent.position)
+                and type(parent.zeros) is tuple and len(parent.zeros) == 3
+                and all(type(value) is bool for value in parent.zeros)
+                and type(local) is Pose and type(local.position) is tuple and len(local.position) == 3
+                and type(local.rotation) is tuple and len(local.rotation) == 4
+                and all(type(value) is float and math.isfinite(value)
+                        for value in (*local.position, *local.rotation))):
+            return None
+        self.work.charge("recording_relative_pose_domain")
+        self._require_domain()
+        self._rotation_domain(parent.rotation)
+        self._immutable_scalar_domain((*local.position, *local.rotation))
+        if affine is not None:
+            self._affine_operand_domain(affine)
+            self._recording_cursor_key("bounded_affine_relative", context, path, max_steps)
+            self._require_domain()
+        key = (METHOD, "native_relative_pose", self.work.max_operand_bits, kind,
+               self._rotation_bits(parent.rotation), parent.depth, extra,
+               struct.pack("<ddd", *local.position), struct.pack("<dddd", *local.rotation))
+        relative = self.work.lookup(key)
+        self._require_domain()
+        if relative is None:
+            origin = _FloatPose((0.0, 0.0, 0.0), parent.rotation,
+                                (True, True, True), parent.depth)
+            relative = build(origin)
+            self._require_domain()
+            # The recognized builders return only complete native leaves.
+            # Keep the original path if a future builder changes that shape.
+            if (type(relative) is not _FloatPose or relative.depth != parent.depth + depth
+                    or type(relative.position) is not tuple or len(relative.position) != 3
+                    or any(type(value) is not float or not math.isfinite(value)
+                           for value in relative.position)
+                    or type(relative.zeros) is not tuple or len(relative.zeros) != 3
+                    or any(type(value) is not bool for value in relative.zeros)):
+                return None
+            self._rotation_domain(relative.rotation)
+            self.work.remember(key, relative)
+            self._require_domain()
+        if all(relative.zeros):
+            position, zeros = parent.position, parent.zeros
+        else:
+            position = tuple(b if az else a if bz else self._native(a, b, "add")
+                for a, b, az, bz in zip(parent.position, relative.position, parent.zeros, relative.zeros))
+            zeros = tuple(a and b for a, b in zip(parent.zeros, relative.zeros))
+            position = tuple(0.0 if zero else value for value, zero in zip(position, zeros))
+        self._require_domain()
+        return _FloatPose(position, relative.rotation, zeros, relative.depth)
+
     def _reusable_spin_plan(self, plan):
         """Admit every immutable field before a cursor can retain its proof.
 
@@ -1201,47 +1314,157 @@ class Binary64RecordingOps(ReachPoseOps):
                                       max_steps, phase_plan=None):
         """Reuse checked scalar/Z spin increments without source pose derivatives."""
         self._domain()
-        initial = self.source_ops._rotation(initial)
-        elapsed = rational(elapsed, self.work)
-        omega = self.source_ops._recording_vector(omega)
-        self._require_domain()
-        if initial.components[1] or initial.components[2] or omega[0] or omega[1]:
-            raise _UnsupportedPlanar("Only a complete scalar/Z prescribed spin is planar.")
-        key = self._recording_cursor_key("certified_binary64_spin", context, path, max_steps,
-                                        initial, omega, phase_plan)
-        self.work.charge("orientation_stationary", 3)
-        if not any(omega) or not elapsed:
-            # The original recurrence returns the identical source initial
-            # value on this branch, independently of all earlier cursor keys.
-            return self._project_rotation(initial)
-        self._require_domain()
-        if self._reusable_spin_plan(phase_plan):
+        raw_initial, raw_omega, raw_plan = initial, omega, phase_plan
+
+        def scalar_key(value):
+            # This is a callback-free admission of immutable native inputs,
+            # not another exact decode. Invalid/unusual values keep the old
+            # path, including its diagnostics and original normalization.
+            if type(value) is float:
+                if not math.isfinite(value):
+                    return None
+                return "binary64", struct.pack("!d", value)
+            if type(value) in (int, F):
+                if max(value.numerator.bit_length(), value.denominator.bit_length()) > MAX_OPERAND_BITS:
+                    return None
+                return ("integer" if type(value) is int else "rational"), value
+            return None
+
+        def immutable_inputs():
+            if type(raw_omega) is not tuple or len(raw_omega) != 3:
+                return None
+            omega_key = tuple(scalar_key(value) for value in raw_omega)
+            if (any(value is None for value in omega_key) or raw_omega[0] or raw_omega[1]
+                    or not raw_omega[2]):
+                return None
+            if type(raw_initial) is RotationValue:
+                values, error, projection = (raw_initial.components, raw_initial.error_rad,
+                                              raw_initial.frozen_projection)
+                if (type(values) is not tuple or len(values) != 4
+                        or any(type(value) is not F for value in values) or type(error) is not F
+                        or scalar_key(error) is None):
+                    return None
+                if projection is None:
+                    projection_key = None
+                elif (type(projection) is tuple and len(projection) == 4
+                        and all(type(value) is float and math.isfinite(value) for value in projection)):
+                    projection_key = tuple(struct.pack("!d", value) for value in projection)
+                else:
+                    return None
+                initial_key = "private", values, error, projection_key
+            elif type(raw_initial) is tuple and len(raw_initial) == 4:
+                values = raw_initial
+                initial_key = "public", tuple(scalar_key(value) for value in values)
+            else:
+                return None
+            if (any(scalar_key(value) is None for value in values)
+                    or values[1] or values[2] or not (values[0] or values[3])):
+                return None
+            plan = raw_plan
+            if (type(plan) is not SpinPlan or type(plan.scaled_omega) is not tuple
+                    or len(plan.scaled_omega) != 3 or type(plan.norm_bounds) is not tuple
+                    or len(plan.norm_bounds) != 2 or type(plan.pi_bounds) is not tuple
+                    or len(plan.pi_bounds) != 2 or type(plan.precision_bits) is not int
+                    or plan.precision_bits.bit_length() > MAX_OPERAND_BITS):
+                return None
+            fields = (*plan.scaled_omega, plan.maximum, *plan.norm_bounds,
+                      *plan.pi_bounds, plan.max_elapsed_s, plan.argument_error_rad)
+            if any(type(value) is not F or scalar_key(value) is None for value in fields):
+                return None
+            return initial_key, omega_key, fields, plan.precision_bits
+
+        # A completed moving cursor can carry its original normalization and
+        # velocity decoding. All fields remain in this one bounded-cache key;
+        # no identity-only receipt or second table is introduced. Zero clocks,
+        # stationary laws and unusual inputs retain the original path below.
+        inputs = (immutable_inputs() if type(elapsed) is F and elapsed
+                  and scalar_key(elapsed) is not None else None)
+        if inputs is not None and not self._reusable_spin_plan(phase_plan):
+            inputs = None
+        if inputs is not None:
+            captured_initial = (RotationValue(raw_initial.components, raw_initial.error_rad,
+                                              raw_initial.frozen_projection)
+                                if type(raw_initial) is RotationValue else raw_initial)
+            captured_plan = SpinPlan(raw_plan.scaled_omega, raw_plan.maximum,
+                raw_plan.norm_bounds, raw_plan.pi_bounds, raw_plan.max_elapsed_s,
+                raw_plan.precision_bits, raw_plan.argument_error_rad)
+            elapsed = rational(elapsed, self.work)
+            key = self._recording_cursor_key("certified_binary64_spin", context, path, max_steps,
+                                            "immutable_operands_v1", inputs)
+            self._require_domain()
             previous = self.work.lookup(key)
             self._require_domain()
+            if immutable_inputs() != inputs:
+                raise _UnsupportedPlanar("The current spin operands changed during admission.")
             if previous is None:
-                plan = self.source_ops._checked_spin_plan(omega, elapsed, phase_plan)
+                initial = self.source_ops._rotation(captured_initial)
+                omega = self.source_ops._recording_vector(raw_omega)
+                self._require_domain()
+                if initial.components[1] or initial.components[2] or omega[0] or omega[1]:
+                    raise _UnsupportedPlanar("Only a complete scalar/Z prescribed spin is planar.")
+                self.work.charge("orientation_stationary", 3)
+                self._require_domain()
+                plan = self.source_ops._checked_spin_plan(omega, elapsed, captured_plan)
             else:
-                # The current absolute clock is new even when omega and every
-                # immutable plan field have their completed cursor proof.
-                if _checked_compare(abs(elapsed), phase_plan.max_elapsed_s, self.work) > 0:
+                initial, omega = previous[5:]
+                plan = captured_plan
+                # Only normalization, fixed velocity decoding and the proved
+                # nonstationary law are reused. Every new exact clock still
+                # receives its own complete absolute-horizon comparison.
+                if _checked_compare(abs(elapsed), plan.max_elapsed_s, self.work) > 0:
                     raise ReachAdmissionError("reach_numeric",
                         "A source sample lies outside its proved spin phase.")
-                plan = phase_plan
         else:
-            # Unplanned or unusual inputs retain the original full admission.
-            plan = self.source_ops._checked_spin_plan(omega, elapsed, phase_plan)
-            previous = self.work.lookup(key)
+            initial = self.source_ops._rotation(initial)
+            elapsed = rational(elapsed, self.work)
+            omega = self.source_ops._recording_vector(omega)
+            self._require_domain()
+            if initial.components[1] or initial.components[2] or omega[0] or omega[1]:
+                raise _UnsupportedPlanar("Only a complete scalar/Z prescribed spin is planar.")
+            key = self._recording_cursor_key("certified_binary64_spin", context, path, max_steps,
+                                            initial, omega, phase_plan)
+            self.work.charge("orientation_stationary", 3)
+            if not any(omega) or not elapsed:
+                # This branch returns the original initial rotation even if
+                # an unrelated supplied phase plan would not be admissible.
+                return self._project_rotation(initial)
+            self._require_domain()
+            if self._reusable_spin_plan(phase_plan):
+                previous = self.work.lookup(key)
+                self._require_domain()
+                if previous is None:
+                    plan = self.source_ops._checked_spin_plan(omega, elapsed, phase_plan)
+                else:
+                    if _checked_compare(abs(elapsed), phase_plan.max_elapsed_s, self.work) > 0:
+                        raise ReachAdmissionError("reach_numeric",
+                            "A source sample lies outside its proved spin phase.")
+                    plan = phase_plan
+            else:
+                plan = self.source_ops._checked_spin_plan(omega, elapsed, phase_plan)
+                previous = self.work.lookup(key)
         self._require_domain()
         delta, increment = None, None
         step_limit = min(max_steps, MAX_FLOAT_ROTATION_STEPS)
         if previous is not None and previous[2] < step_limit:
-            last, rotation, count, old_delta, old_increment = previous
+            last, rotation, count, old_delta, old_increment = previous[:5]
             self.work.charge("recording_float_cursor_guard")
             self.work.guard(last, count)
             self._rotation_domain(rotation)
             delta = self.source_ops._op(elapsed, last, "sub")
-            from .reach_numeric import compare
-            if compare(abs(delta), plan.max_elapsed_s, self.work) > 0:
+            self._require_domain()
+            # Both clocks of this exact moving-law cursor were separately
+            # admitted to [-H,H]. In the same half interval their difference
+            # is also within H; opposite signs retain the original comparison.
+            same_half = (inputs is not None and plan.max_elapsed_s.numerator >= 0
+                         and (elapsed.numerator < 0) == (last.numerator < 0))
+            if same_half:
+                # The ordering is implied, but its prospective cross-products
+                # must still fit the original exact-comparison domain. Two
+                # separately admissible clocks can have unlike denominators.
+                self.work.guard_bits(max(
+                    delta.numerator.bit_length() + plan.max_elapsed_s.denominator.bit_length(),
+                    plan.max_elapsed_s.numerator.bit_length() + delta.denominator.bit_length()))
+            elif compare(abs(delta), plan.max_elapsed_s, self.work) > 0:
                 delta = None
         if delta is None:
             result = self._project_rotation(self.source_ops.advance_orientation(
@@ -1263,8 +1486,23 @@ class Binary64RecordingOps(ReachPoseOps):
             self._require_domain()
             count += 1
         self._require_domain()
-        self.work.remember(key, (elapsed, result, count, delta, increment))
+        value = elapsed, result, count, delta, increment
+        admitted = False
+
+        def admit():
+            nonlocal admitted
+            self._require_domain()
+            if immutable_inputs() != inputs:
+                raise _UnsupportedPlanar("The current spin operands changed before publication.")
+            admitted = True
+            return True
+
+        if inputs is not None:
+            value += initial, omega
+        self.work.remember(key, value, admission=admit if inputs is not None else None)
         self._require_domain()
+        if inputs is not None and not admitted:
+            admit()
         return result
 
     def recording_affine(self, initial, rate, elapsed):
