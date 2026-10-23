@@ -1445,7 +1445,8 @@ def _sample_recording_nodes(plan, nodes, exact, *, work, allow_fast=True,
     bits and replays ambiguous phases. Unsupported phases always retain the
     original algorithm, with all attempted work still charged.
     """
-    from .reach_recording_fast import (RecordingRoundingAmbiguity,
+    from bisect import bisect_left
+    from .reach_recording_fast import (RecordingRoundingAmbiguity, begin_bounded_phase,
                                        sample_bounded_frames, sample_certified_frames)
 
     sample_fast = sample_certified_frames if require_same_cells else sample_bounded_frames
@@ -1459,6 +1460,8 @@ def _sample_recording_nodes(plan, nodes, exact, *, work, allow_fast=True,
     key_index = 0
     phase_start_key = 0
     accelerated = False
+    captured_phase = None
+    captured_phase_stop = 0
     while key_index < len(exact):
         time = exact[key_index]
         _charge(work, "recording_sample")
@@ -1470,17 +1473,26 @@ def _sample_recording_nodes(plan, nodes, exact, *, work, allow_fast=True,
             recording_context = object()
             moving_frames = plan.simulator.recording_moving_frames(state, frame_paths)
             phase_start_key = key_index
+            captured_phase = None
         selected_frames = frame_paths if new_phase else tuple(path for path in frame_paths if path in moving_frames)
         angular_proof = (plan.phases[index].recording_angular_proof
                          if index < len(plan.phases) else None)
         if (allow_fast and not new_phase and selected_frames
                 and index < len(plan.phases) and index not in exact_phases):
             try:
-                result = sample_fast(plan.simulator, time, state, selected_frames,
-                    context=recording_context, moving_frames=moving_frames,
-                    phase_bounds=plan.phases[index].source,
-                    phase_interval=(plan.boundaries[index], plan.boundaries[index + 1]),
-                    recording_angular_proof=angular_proof)
+                if not require_same_cells and key_index == phase_start_key + 1:
+                    captured_phase_stop = bisect_left(exact, plan.boundaries[index + 1])
+                    captured_phase = begin_bounded_phase(plan.simulator,
+                        tuple(exact[key_index:captured_phase_stop]), state, selected_frames,
+                        context=recording_context, phase_bounds=plan.phases[index].source,
+                        phase_interval=(plan.boundaries[index], plan.boundaries[index + 1]),
+                        recording_angular_proof=angular_proof)
+                result = (captured_phase.sample(time) if captured_phase is not None else
+                    sample_fast(plan.simulator, time, state, selected_frames,
+                        context=recording_context, moving_frames=moving_frames,
+                        phase_bounds=plan.phases[index].source,
+                        phase_interval=(plan.boundaries[index], plan.boundaries[index + 1]),
+                        recording_angular_proof=angular_proof))
             except RecordingRoundingAmbiguity as error:
                 if work.callback_error is error:
                     raise
@@ -1495,10 +1507,16 @@ def _sample_recording_nodes(plan, nodes, exact, *, work, allow_fast=True,
                     del node.translations[phase_start_key:]
                     del node.rotations_xyzw[phase_start_key:]
                 previous_state = None
+                captured_phase = None
                 key_index = phase_start_key
                 continue
             frames = result.frames
-            for frame, excess in result.excess_by_frame.items():
+            # A captured phase has one immutable bound per actual frame. Its
+            # complete source and bound receipt follows every pose callback;
+            # later keys require no repeated identical maximum calculation.
+            allowances = (result.excess_by_frame.items()
+                if captured_phase is None or key_index == phase_start_key + 1 else ())
+            for frame, excess in allowances:
                 _charge(work, "recording_fast_endpoint_allowance")
                 if frame not in selected_frames:
                     raise ValueError("A recording allowance must belong to a selected source frame")
@@ -1571,6 +1589,27 @@ def _sample_recording_nodes(plan, nodes, exact, *, work, allow_fast=True,
             node.rotations_xyzw.append(quaternion)
         if restart_all:
             continue
+        if captured_phase is not None and key_index + 1 == captured_phase_stop:
+            try:
+                # The output arrays are still private. Admit every actual
+                # source and fixed bound after the last pose/hemisphere
+                # callback, then publish the complete cursor group together.
+                captured_phase.finish()
+            except RecordingRoundingAmbiguity as error:
+                if work.callback_error is error:
+                    raise
+                _charge(work, "recording_fast_phase_restart")
+                exact_phases.add(index)
+                recording_excess.pop(index, None)
+                for node in nodes:
+                    _charge(work, "recording_fast_phase_truncate")
+                    del node.translations[phase_start_key:]
+                    del node.rotations_xyzw[phase_start_key:]
+                previous_state = None
+                captured_phase = None
+                key_index = phase_start_key
+                continue
+            captured_phase = None
         previous_state = state
         key_index += 1
     return recording_excess

@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-23T02:00:50.912030+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-23T02:25:13.980839+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -44,38 +44,35 @@ local `569b67b0bdc6854cc069e6a00590e0f15267ae03`
 [draft PR #25](https://github.com/Omegapy/OntoKin/pull/25). Original branches,
 failed attempts and earlier evidence retain their identities.
 
-Latest tested recording implementation is `4d5cae370aff239e632f05f94f7bbeb99aa145ff`,
-tree `b042008cfd0911348b1665de6d49bea2a769b2ee`. Recovered local checkpoint `e4f51db` is
-published and verified at `b1d102a5391721b3e420277526696aca65b11ea5` with its exact tree and full evidence.
-The newer implementation and results below form checkpoint 008.
+Latest tested recording implementation is `462e923d45d79f32699ace86eddf76f1158a1f82`,
+tree `77d8b610efc4bb261cb2846c60a4a24350d98a83`. Recovered local checkpoint `e4f51db` is
+published at `b1d102a5391721b3e420277526696aca65b11ea5` with its exact tree.
+Published checkpoint008 is verified at `25960271dc35fb6391f314a96ba0c6cef61bc162`.
+The newer implementation and results below form checkpoint009.
 
 The [recording checkpoint](docs/engineering/reach-recording-validation-2026-10-22/README.md)
-retains a fresh **20/28** complete source run, finished **2026-10-23T01:59:33.979602+00:00**,
-with stable inputs and the unchanged **100,000-operation** limit. L02 uses
-**94,169 operations**. Remaining failures: **P05, P09, P11, P16, P20, P23, L01, L03**.
+retains a fresh **22/28** complete source run, finished **2026-10-23T02:23:04.492290+00:00**,
+with stable inputs and the unchanged **100,000-operation** limit. **P20 now passes
+at 96,182 operations; L01 passes at 96,330.** L02 uses **88,524**.
+Remaining failures: **P05, P09, P11, P16, P23, L03**.
 
-The same source passes **159/159 focused methods**, with no
-failures, errors or skips, complete raw logs and stable tracked inputs. This is
-a selected correctness cohort, not full regression or compatibility. The recovered
-686-method result remains separately identified historical evidence.
+The same source passes **234/234 focused methods**, with no failures,
+errors or skips, complete logs/method IDs and stable inputs. This selected cohort
+does not replace full regression or compatibility. Historical cohorts retain their
+own source identities. Checkpoint009 preserves **288 raw members**;
+all **84 artifact/report hashes**, member identities and ZIP CRC passed.
 
-Checkpoint 008 preserves **233 raw members**, including both current full
-source runs, focused passes and failures, diagnostic profiles and exact source.
-All **80 artifact/report hashes**, member identities and ZIP CRC passed.
-Earlier evidence and unexplained temporary-file observations retain their limits.
+Captured phase streams support static and varying-parent planar chains while
+retaining native composition order and final source/claim/cursor admission.
+Complete graph finiteness and independent orientation bounds reuse completed work;
+intrinsic exact coefficients avoid repeated decoding. Every actual arithmetic
+operation and live operand/cancellation guard remains. No frozen input, tolerance,
+100,000-operation limit or 256-entry cache limit changes.
 
-Captured source sampling, independent phase roots, residual/square-root reuse,
-exact angular increments and completed orientation claims remove duplicate work.
-Immutable source snapshots and original error propagation correct two callback
-edge cases. Source admissions, numeric/cancellation checks, the 256-entry cache,
-frozen fixtures, tolerances and all public limits remain unchanged.
-
-The immediate target remains **28/28**. Continue complete-phase sampling and
-boundary-graph finiteness reuse, then remaining independent verification costs.
-Agent delivery, full regression/compatibility, independent rates, native/browser
-checks, visual review, inherited/hostile roles and release audits remain pending.
-PR #27 remains draft; **do not merge** until every mandatory gate passes.
-The complete language and all GOAL domains remain in progress.
+The immediate target remains **28/28**, followed by Agent delivery, full current
+regression/compatibility, independent rates, native/browser and visual checks,
+inherited/hostile roles and release audits. PR #27 remains draft; **do not merge**
+until every mandatory gate passes. The complete language and GOAL remain open.
 
 The historical rows below retain their original cuts and limits.
 

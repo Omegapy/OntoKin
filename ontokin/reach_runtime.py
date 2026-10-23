@@ -254,6 +254,7 @@ class ReachSimulator(ForceSimulator):
         self.work = work if work is not None else ReachExecutionWork(check=check)
         self.context_kind = "recorded_prefix"
         self._pose_cache = {}
+        self._recording_graph_finiteness = None
         self._pair_cache = {}
         self._derived_pose_cache = {}
         self._terminal_pose_context = None
@@ -298,6 +299,7 @@ class ReachSimulator(ForceSimulator):
     def _invalidate(self):
         self._pending_reach_output = None
         self._pose_cache.clear()
+        self._recording_graph_finiteness = None
         self._derived_pose_cache.clear()
 
     def _pose_slot(self, path, signature, build):
@@ -1991,10 +1993,27 @@ class ReachSimulator(ForceSimulator):
         source snapshots keep their complete geometry, masses and frame maps.
         """
         poses, frames = self._kinematics(time, self.state)
-        for path, pose in frames.items():
-            self._check()
-            if not (path.endswith(".frame") and poses.get(path[:-6]) is pose):
-                self.pose_ops.ensure_finite(pose)
+        from .reach_recording_finite import _RecordingGraphFiniteness
+        receipt = self._recording_graph_finiteness
+        try:
+            admitted = (type(receipt) is _RecordingGraphFiniteness
+                        and receipt.matches(self, poses, frames))
+        except ReachAdmissionError as error:
+            self._recording_graph_finiteness = None
+            self._numeric_error(error)
+        except BaseException:
+            self._recording_graph_finiteness = None
+            raise
+        if not admitted:
+            self._recording_graph_finiteness = None
+            candidate = _RecordingGraphFiniteness.begin(self, poses, frames)
+            for path, pose in frames.items():
+                self._check()
+                if not (path.endswith(".frame") and poses.get(path[:-6]) is pose):
+                    self.pose_ops.ensure_finite(pose)
+                if candidate is not None:
+                    candidate.append(path, pose)
+            self._recording_graph_finiteness = None if candidate is None else candidate.complete()
         incoming = self._incoming(self.state)
         forces = self._bounded_projection(self.state)
         objects = {}

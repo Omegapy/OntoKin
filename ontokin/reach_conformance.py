@@ -21,6 +21,9 @@ from .reach_reference import Interval as _ReferenceCell
 
 TARGET = "ontokin.glb/0.6"
 ARC_LIMIT = Fraction(0.7853981633974483)
+_CERTIFICATE_FOUR = Fraction(4)
+_CERTIFICATE_EIGHT = Fraction(8)
+_CERTIFICATE_THIRTY_TWO = Fraction(32)
 MAX_KEYS = 10000
 MAX_CERTIFICATES = 100000
 MAX_OPERAND_BITS = 32768
@@ -526,6 +529,10 @@ def _complete_inequality_values(ha, hs, quantities, position_tolerance, rotation
     """Pure exact algebra after all supplied fields and widths are decoded."""
     q = quantities.__getitem__
     add, mul, div, square = arithmetic.add, arithmetic.mul, arithmetic.div, arithmetic.square
+    # These intrinsic rational coefficients need no repeated external-value
+    # decoding. Every actual operation still charges and guards both operands,
+    # including the coefficient, immediately after its cancellation callback.
+    four, eight, thirty_two = _CERTIFICATE_FOUR, _CERTIFICATE_EIGHT, _CERTIFICATE_THIRTY_TWO
     def require(name, minimum):
         actual = q(name)
         if arithmetic.compare(actual, minimum) < 0:
@@ -537,10 +544,10 @@ def _complete_inequality_values(ha, hs, quantities, position_tolerance, rotation
     envelope_angular = q("enclosing_angular_speed_bound_rad_per_s")
     envelope_acceleration = q("enclosing_carrier_acceleration_bound_m_per_s2")
     speed, shift = q("enclosing_carrier_speed_bound_m_per_s"), q("max_endpoint_time_shift_s")
-    position_quarter, rotation_quarter = div(position_tolerance, 4), div(rotation_tolerance, 4)
+    position_quarter, rotation_quarter = div(position_tolerance, four), div(rotation_tolerance, four)
     for width, a, w in ((ha, acceleration, angular), (hs, envelope_acceleration, envelope_angular)):
         angle, width_squared = mul(w, width), square(width)
-        rotation, chord = div(square(angle), 4), div(mul(a, width_squared), 8)
+        rotation, chord = div(square(angle), four), div(mul(a, width_squared), eight)
         if (arithmetic.compare(angle, ARC_LIMIT) > 0 or arithmetic.compare(rotation, rotation_quarter) > 0
                 or arithmetic.compare(add(chord, mul(radius, rotation)), position_quarter) > 0):
             _error("OKE-E-CERTIFICATE", "The supplied key interval violates the mandatory quarter-allocation plan.", model=model)
@@ -549,13 +556,13 @@ def _complete_inequality_values(ha, hs, quantities, position_tolerance, rotation
         _error("OKE-E-CERTIFICATE", "The supplied stored quaternion arc exceeds the proved local range.", model=model)
     angular_width_squared, width_squared = square(mul(angular, ha)), square(ha)
     difference = require("unit_quaternion_difference_bound", arithmetic.total((
-        q("max_endpoint_unit_quaternion_error"), div(angular_width_squared, 32), div(square(arc), 8))))
+        q("max_endpoint_unit_quaternion_error"), div(angular_width_squared, thirty_two), div(square(arc), eight))))
     if difference > Fraction(1, 2):
         _error("OKE-E-CERTIFICATE", "The supplied quaternion comparison exceeds its proved local range.", model=model)
-    require("ideal_rotation_bound_rad", div(angular_width_squared, 4))
-    chord = div(mul(acceleration, width_squared), 8)
+    require("ideal_rotation_bound_rad", div(angular_width_squared, four))
+    chord = div(mul(acceleration, width_squared), eight)
     require("ideal_position_bound_m", chord)
-    rotation = require("total_rotation_bound_rad", arithmetic.total((mul(4, difference),
+    rotation = require("total_rotation_bound_rad", arithmetic.total((mul(four, difference),
         q("source_numeric_rotation_bound_rad"), q("destination_numeric_rotation_bound_rad"),
         mul(envelope_angular, shift))))
     carrier = require("carrier_position_bound_m", arithmetic.total((q("max_endpoint_position_error_m"),
@@ -1376,18 +1383,26 @@ def _recording_orientation_bound(quaternion, expected, limit, arithmetic, *, bef
                     and _bound_domain(arithmetic) == MAX_OPERAND_BITS)
         if type(limit) in (int, float, Fraction):
             # Translated siblings often have the same complete orientation
-            # operands and the same actual endpoint claim. Retain the already
-            # completed two inequalities with that typed threshold in the
-            # existing bounded cache, instead of recalculating them after each
-            # lookup. All actual raw components and independent source cells
-            # have just been admitted. No position proof or writer bound is
-            # inherited, and a changed threshold has a different complete key.
+            # operands. Keep one threshold-independent bound and, when its
+            # first claim succeeds, that exact typed threshold in the same
+            # existing cache entry. Equal claims reuse the completed pair of
+            # inequalities; changed claims compare against the same bound.
+            # No position proof or writer bound is inherited. The threshold
+            # is first admitted by compare(), before it can enter a receipt;
+            # no supplied threshold is hashed before scalar admission.
+            calculated, proved = False, False
             def calculate_claim():
+                nonlocal calculated, proved
+                calculated = True
                 candidate = calculate_bound()
-                return candidate if sufficient(candidate) else ()
+                proved = bool(sufficient(candidate))
+                return (*candidate, type(limit).__name__, limit) if proved else candidate
             candidate = arithmetic.reuse(("recording_orientation_sufficient_claim", quaternion,
-                expected, type(limit).__name__, limit), calculate_claim)
-            admitted = bool(candidate) and _bound_domain(arithmetic) == MAX_OPERAND_BITS
+                                         expected), calculate_claim)
+            same_claim = (len(candidate) == 3 and candidate[1] == type(limit).__name__
+                          and type(candidate[2]) is type(limit) and candidate[2] == limit)
+            admitted = (bool(candidate) and _bound_domain(arithmetic) == MAX_OPERAND_BITS
+                        and (same_claim or (proved if calculated else sufficient(candidate))))
         else:
             # Foreign values retain their original charged scalar decoder and
             # rejection path; coercive equality cannot borrow a native claim.

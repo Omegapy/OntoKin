@@ -2,7 +2,7 @@
 
 This is a development checkpoint, not release acceptance. The immediate gate
 remains all 28 source recordings under the unchanged shared 100,000-operation
-budget. The latest complete run passes **20/28**; the remaining cases
+budget. The latest complete run passes **22/28**; the remaining cases
 still fail on the attempted 100,001st operation. No result is inferred for an
 unexecuted release role.
 
@@ -66,7 +66,42 @@ unchanged. Differential tests compare exact private values and complete GLB
 bytes. Three stale independent-reader test doubles were updated to accept the
 already existing `recording_context` argument; their assertions are unchanged.
 
-## Latest checkpoint 008: 159 focused tests; 20/28 source recordings
+## Latest checkpoint 009: 234 focused tests; 22/28 source recordings
+
+Tested implementation `462e923d45d79f32699ace86eddf76f1158a1f82`, tree `77d8b610efc4bb261cb2846c60a4a24350d98a83`,
+passes **22/28** source recordings at the unchanged **100,000-operation** limit.
+The complete run finished **2026-10-23T02:23:04.492290+00:00** with stable tracked inputs.
+P20 now passes at **96,182 operations** and L01 at **96,330**;
+L02 uses **88,524**. Remaining failures: **P05, P09, P11, P16, P23, L03**.
+
+The same source passes **234/234 focused methods**, no failures,
+errors or skips, in **71.447 seconds**. Complete raw logs,
+executed method IDs, environment and before/after input inventories are preserved.
+This is selected correctness coverage; full regression and compatibility are pending.
+
+Complete captured phase streams now cover static and varying-parent scalar/Z
+chains, retain native composition order, and publish bounded cursors only after
+final source/topology/claim admission. Other changes reuse complete graph finiteness
+proofs, preserve orientation bounds across changed claims, and avoid repeated
+intrinsic coefficient decoding while retaining every actual arithmetic guard.
+Frozen inputs, trajectories, tolerances and public work/cache limits are unchanged.
+
+[checkpoint-009.zip](checkpoint-009.zip) contains **288 raw members**,
+**5,529,854 bytes**, SHA-256 `a30c124d88a8ba564b3cb6a1aa5ae00c3ad11e1e42ff7f6329ca48962cb50161`.
+Its [manifest](checkpoint-009.manifest.json) and [checkpoint](checkpoint-009.json)
+identify exact source, every run and limitations. All **84 artifact/report
+hashes**, archive members and ZIP CRC passed. Earlier evidence is unchanged.
+The new coefficient test's setup failure, earlier selection typo and checkpoint008
+working-file observation retain their separate evidence and precise limits.
+
+The next gate remains **28/28**. Continue the six budget failures, then execute
+Agent delivery, full regression/compatibility, independent verification,
+destination/browser/visual checks, inherited/hostile roles and complete release audits.
+**Do not merge.** PR #27 remains draft; main is unchanged at
+`2bb4588e121fcfe99b4d42c734b15b38362f3642`. No main lease or hosted job is claimed.
+The complete GOAL remains open. Runtime, tests and archive creation stay serialized.
+
+## Preserved checkpoint 008: 159 focused tests; 20/28 source recordings
 
 The recovered local checkpoint `e4f51dbdb9ac9447a453e1a79f36e363108bd9af`
 was published and read back at `b1d102a5391721b3e420277526696aca65b11ea5`. Its entire tree is exactly

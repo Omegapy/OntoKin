@@ -1058,7 +1058,8 @@ class Binary64RecordingOps(ReachPoseOps):
 
     def recording_body_orientation(self, seed_builder, axis, rate, time, *, phase_start,
                                    phase_end, context, path, proof_token, max_steps,
-                                   source_admission=None, source_records=0, stage_cursor=None):
+                                   source_admission=None, source_records=0, stage_cursor=None,
+                                   read_cursor=None):
         """Advance a freshly witnessed complete scalar/Z carrier orientation.
 
         A seed is the ordinary private complete-world source rotation, with
@@ -1075,7 +1076,9 @@ class Binary64RecordingOps(ReachPoseOps):
                 or source_admission is not None and not callable(source_admission)
                 or source_admission is None and source_records
                 or stage_cursor is not None and (not callable(stage_cursor)
-                    or source_admission is not None or source_records)):
+                    or source_admission is not None or source_records)
+                or read_cursor is not None and (not callable(read_cursor)
+                    or stage_cursor is None)):
             raise _UnsupportedPlanar("A native carrier needs an enabled scalar/Z body proof.")
         values = (rate, time, phase_start, phase_end)
         self._immutable_scalar_domain(values)
@@ -1090,7 +1093,7 @@ class Binary64RecordingOps(ReachPoseOps):
         key = self._recording_cursor_key("certified_binary64_body", context, path, max_steps,
                                         proof_token, phase_start, phase_end, axis, rate)
         self._require_domain()
-        previous = self.work.lookup(key)
+        previous = self.work.lookup(key) if read_cursor is None else read_cursor(key)
         self._require_domain()
         step_limit = min(max_steps, MAX_FLOAT_ROTATION_STEPS)
         delta = increment = None
@@ -1945,6 +1948,52 @@ def _sample_planar_frames(simulator, time, state, selected_paths, *, context,
         if finish_capture is not None:
             finish_capture()
         return CertifiedRecordingFrames(frames, excesses)
+    except _UnsupportedPlanar as error:
+        if simulator.work.callback_error is error:
+            raise
+        raise RecordingRoundingAmbiguity(None, reason=str(error)) from error
+
+
+class _BoundedCapturedPhase:
+    """Keep optional native fallback and original callback identity at the boundary."""
+    def __init__(self, phase):
+        self.phase = phase
+
+    def _run(self, method, *args):
+        try:
+            return method(*args)
+        except _UnsupportedPlanar as error:
+            if self.phase.ops.work.callback_error is error:
+                raise
+            raise RecordingRoundingAmbiguity(None, reason=str(error)) from error
+
+    def sample(self, time):
+        return self._run(self.phase.sample, time)
+
+    def finish(self):
+        return self._run(self.phase.finish)
+
+
+def begin_bounded_phase(simulator, times, state, selected_paths, *, context,
+                        phase_bounds, phase_interval, recording_angular_proof):
+    """Open a private finite phase stream; unsupported graphs retain scalar sampling.
+
+    The caller consumes every exact key using the existing pose-output loop,
+    then finishes after its final output callback. No source-bound cursor is
+    published before that complete phase receipt. Strict-cell diagnostics do
+    not call this optional production path.
+    """
+    if recording_angular_proof is None or len(times) < 2:
+        return None
+    ops = Binary64RecordingOps(simulator.pose_ops, share_arithmetic=len(selected_paths) > 16,
+        affine_coordinates=True, body_cursors=True)
+    try:
+        ops._domain()
+        from .reach_recording_capture import begin_captured_phase
+        phase = begin_captured_phase(simulator, times, state, tuple(selected_paths),
+            recording_angular_proof, ops, context, phase_bounds=phase_bounds,
+            phase_interval=phase_interval)
+        return _BoundedCapturedPhase(phase) if phase is not None else None
     except _UnsupportedPlanar as error:
         if simulator.work.callback_error is error:
             raise

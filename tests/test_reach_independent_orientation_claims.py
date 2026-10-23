@@ -144,14 +144,46 @@ class IndependentOrientationClaimTests(unittest.TestCase):
         self.assertIs(work.callback_error, marker)
         self.assertEqual(work._cache, saved)
 
-    def test_distinct_claims_share_only_the_existing_bounded_cache(self):
+    def test_changed_thresholds_reuse_the_bound_without_multiplying_cache_entries(self):
         work = Work(max_cache_entries=2)
         arithmetic = reader._Bounds(work)
         expected = reader._recording_orientation_bound(RAW, SOURCE, 1e-5, reader._Bounds(Work()))
-        for claim in (1e-5, 2e-5, 3e-5, 1e-5):
-            self.assertEqual(reader._recording_orientation_bound(RAW, SOURCE, claim, arithmetic), expected)
+        reader._recording_orientation_bound(RAW, SOURCE, 1e-5, arithmetic)
+        with patch.object(reader, "_optional_endpoint_l1", side_effect=AssertionError("repeated bound")):
+            for claim in (2e-5, 3e-5, 1e-5):
+                self.assertEqual(reader._recording_orientation_bound(RAW, SOURCE, claim, arithmetic), expected)
+                self.assertEqual(len(work._cache), 1)
+
+    def test_distinct_orientation_operands_keep_the_existing_cache_limit(self):
+        work = Work(max_cache_entries=2)
+        arithmetic = reader._Bounds(work)
+        for delta in (0, 2. ** -24, 2. ** -23, 0):
+            raw = (*RAW[:3], RAW[3] + delta)
+            expected = reader._recording_orientation_bound(raw, SOURCE, 1e-5, reader._Bounds(Work()))
+            self.assertEqual(reader._recording_orientation_bound(raw, SOURCE, 1e-5, arithmetic), expected)
             self.assertLessEqual(len(work._cache), 2)
         self.assertGreater(work.counts.get("cache_evict", 0), 0)
+
+    def test_first_tight_claim_cannot_reject_a_later_sufficient_threshold(self):
+        work = Work()
+        arithmetic = reader._Bounds(work)
+        first = reader._recording_orientation_bound(RAW, SOURCE, 0., arithmetic)
+        self.assertIsNotNone(first[0])
+        with patch.object(reader, "_optional_endpoint_l1", side_effect=AssertionError("repeated bound")):
+            second = reader._recording_orientation_bound(RAW, SOURCE, 1e-5, arithmetic)
+        fresh = reader._recording_orientation_bound(RAW, SOURCE, 1e-5, reader._Bounds(Work()))
+        self.assertEqual(second, fresh)
+        self.assertIsNone(second[0])
+
+    def test_nonfinite_or_oversized_threshold_keeps_scalar_rejection(self):
+        for warm in (False, True):
+            for limit in (float("nan"), float("inf"), 1 << 32768, F(1 << 32768)):
+                arithmetic = reader._Bounds(Work())
+                if warm:
+                    reader._recording_orientation_bound(RAW, SOURCE, 1e-5, arithmetic)
+                with self.subTest(warm=warm, limit_type=type(limit)), \
+                        self.assertRaises((OntoKinError, ReachAdmissionError)):
+                    reader._recording_orientation_bound(RAW, SOURCE, limit, arithmetic)
 
     def test_translated_siblings_keep_exact_independent_endpoint_results(self):
         def run(reuse):
