@@ -235,6 +235,9 @@ class ConstructionCompiler(Validator):
         self._constant_syntax: dict[int, tuple[frozenset[str] | None, int]] = {}
         self._parameter_syntax: dict[int, tuple[Any, tuple | None]] = {}
         self._parameter_capture = None
+        # Bounded source-only routes. No occurrence values or computed poses
+        # live here; those retain their existing owners and numeric LRU.
+        self._assignment_syntax: dict[int, tuple] = {}
         self._type_depth = 0
         self.model.program_revision = self.bundle.program_revision
         self.model.source_manifest = self.bundle.manifest()
@@ -1341,10 +1344,75 @@ class ConstructionCompiler(Validator):
                                 declaration_id=collection["definition_id"])
         self._collection_state[path] = "done"
 
+    @staticmethod
+    def _assignment_shape(node, required):
+        """Seal at most eight native field routes without evaluating values."""
+        from .syntax import Node
+        from .syntax02 import PathStep
+        if (type(node) is not Node or type(node.data) is not dict or type(node.kind) is not str
+                or "assignments" in node.__dict__
+                or type(required) is not set or not 1 <= len(required) <= 8
+                or any(type(name) is not str or len(name) > 128 for name in required)):
+            return None
+        assignments = node.data.get("assignments")
+        if type(assignments) is not list or not 1 <= len(assignments) <= 8:
+            return None
+        rows, owners = [], [node, node.data, assignments]
+        for assignment in assignments:
+            if (type(assignment) is not Node or type(assignment.data) is not dict
+                    or "path" in assignment.__dict__):
+                return None
+            path = assignment.data.get("path")
+            if type(path) not in (tuple, list) or len(path) != 1:
+                return None
+            step = path[0]
+            if (type(step) is not PathStep or type(step.kind) is not str
+                    or type(step.value) is not str or len(step.value) > 128):
+                return None
+            rows.append((id(assignment), id(assignment.data), id(path), id(step), step.kind, step.value))
+            owners.extend((assignment, assignment.data, path, step))
+        return ((id(node), id(node.data), node.kind, id(assignments), tuple(sorted(required)), tuple(rows)),
+                tuple(owners))
+
     def assignments(self, node: Any, required: set[str]) -> dict[str, Any]:
+        # Sealed routing can avoid repeated path normalization, duplicate-name
+        # checks and required-field set construction. Each occurrence still
+        # evaluates every original expression in its own lexical context.
+        shape = self._assignment_shape(node, required) if self.reach_work is not None else None
+        cached = self._assignment_syntax.get(id(node)) if shape is not None else None
+        if cached is not None and cached[0] == shape[0]:
+            # This is the first ordinary assignment checkpoint, at its original
+            # source span. Retain its live iterator before invoking the caller:
+            # if a callback changes routing, the original validation resumes
+            # with this already-charged first row and its actual iterator.
+            remaining = iter(node.assignments)
+            first = next(remaining)
+            self.budget.tick(first)
+            current = self._assignment_shape(node, required)
+            if current is not None and current[0] == cached[0]:
+                return dict(cached[1])
+            self._assignment_syntax.pop(id(node), None)
+            return self._assignment_fields(node, required, remaining, first=first)
+        result = self._assignment_fields(node, required, iter(node.assignments))
+        if shape is not None and len(self._assignment_syntax) < 64:
+            current = self._assignment_shape(node, required)
+            if current is not None and current[0] == shape[0]:
+                # Keep original owners alive so an object-id cannot be reused
+                # as an unrelated warm source route. Expressions are not read.
+                self._assignment_syntax[id(node)] = shape[0], tuple(result.items()), shape[1]
+        return result
+
+    def _assignment_fields(self, node, required, remaining, *, first=None):
+        def rows():
+            if first is not None:
+                yield first, True
+            for assignment in remaining:
+                yield assignment, False
+
         result = {}
-        for assignment in node.assignments:
-            self.budget.tick(assignment)
+        for assignment, charged in rows():
+            if not charged:
+                self.budget.tick(assignment)
             steps = _steps(assignment.path)
             if len(steps) != 1 or steps[0].kind != "member" or steps[0].value not in required:
                 fail("OKL-E-NAME", f"Allowed {node.kind} fields are {', '.join(sorted(required))}.", assignment, phase="binding")
