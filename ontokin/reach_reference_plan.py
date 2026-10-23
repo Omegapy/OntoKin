@@ -107,6 +107,16 @@ class _SourceBatch:
         if self.prepared or not self.reference._recording_body_domain():
             return False
         if self.contains(plan):
+            previous, time = self.plans[plan.cache_identity]
+            if previous is not plan and type(plan.centered) is tuple:
+                if (previous.state is not plan.state or previous.nodes is not plan.nodes
+                        or previous.receipts is not plan.receipts or previous.owners is not plan.owners
+                        or previous.context != plan.context or previous.targets != plan.targets):
+                    raise ReferenceError("identity", "Independent source plan identity changed")
+                # An already registered ordinary plan may acquire a private
+                # source-only centered recipe. Its stronger final signature
+                # admission must accompany later compact endpoint results.
+                self.plans[plan.cache_identity] = (plan, time)
             return True
         fresh = [receipt for receipt in plan.receipts if id(receipt) not in self.seen_receipts]
         if len(self.plans) >= MAX_BATCH_PLANS or len(self.receipts) + len(fresh) > MAX_BATCH_RECEIPTS:
@@ -186,6 +196,9 @@ class _SourceBatch:
                 raise ReferenceError("identity", "Independent source batch state binding changed") from error
             if current is not plan.state:
                 raise ReferenceError("identity", "Independent source batch state binding changed")
+            if type(plan.centered) is tuple:
+                from .reach_reference_center import admit_source
+                admit_source(plan, reference)
         # Identity rejection must not be relabeled as an optional domain
         # restart when the same callback also changes the operand allowance.
         for receipt in self.receipts:
@@ -208,7 +221,13 @@ class _SourceBatch:
         # its second bounded source read cannot invoke a caller callback.
         reference._recording_admit_receipts(self.receipts)
         for key, value in self.cursors.items():
-            if key[3] == "recording_body_orientation":
+            if key[0] == "reference_centered_stationary_pose":
+                from .reach_reference_center import guard_pose
+                guard_pose(self.a, value)
+            elif key[3] == "recording_center_body_orientation":
+                from .reach_reference_center import guard_cursor
+                guard_cursor(self.a, value)
+            elif key[3] == "recording_body_orientation":
                 _, _, rate, clock, rotation, increment, steps = value
                 self.a.guard(rate, clock, steps, *(endpoint for cell in rotation
                                                    for endpoint in (cell.lo, cell.hi)),
@@ -342,6 +361,7 @@ class _Plan:
     receipts: tuple
     owners: tuple
     cache_identity: object = field(default_factory=object, compare=False)
+    centered: object = field(default=None, compare=False)
 
     def owned_by(self, reference):
         try:
@@ -731,7 +751,7 @@ def _build(reference, state, targets, context, *, source_stationarity=False):
     return _Plan(state, context, targets, tuple(nodes), tuple(receipts), owners)
 
 
-def _phase_poses(reference, time, state, targets, context, batch=None):
+def _phase_poses(reference, time, state, targets, context, batch=None, *, centered=False):
     """Return the optional plan's fresh frames, or the original-walk sentinel."""
     # Reject unimplemented dynamic root laws before capturing any recipes.
     # These bounded metadata predicates share the caller's entry admission;
@@ -751,7 +771,31 @@ def _phase_poses(reference, time, state, targets, context, batch=None):
         plan = _build(reference, state, targets, context, source_stationarity=batch is not None)
         if plan is None:
             return None
+    if centered:
+        if batch is None:
+            return None
+        from .reach_reference_center import _ChangedDomain, evaluate, prepare
+        try:
+            plan = prepare(plan, reference, batch)
+        except _ChangedDomain:
+            return None
+        except ReferenceError as error:
+            if (error.code != "resource" or error is getattr(reference.a.work, "callback_error", None)
+                    or reference._recording_body_domain()):
+                raise
+            return None
+        plan.admit_owners(reference)
+        if not reference._recording_body_domain():
+            return None
+        # This is a captured source recipe, not a completed numeric pose.
+        # Retain an unsupported recipe too so ordinary same-work fallback
+        # does not recapture an unchanged complete source graph.
+        reference._recording_phase_plan = plan
+        if type(plan.centered) is not tuple:
+            return None
     adopted = batch if batch is not None and batch.register(plan, time) else None
+    if centered and adopted is None:
+        return None
     if adopted is None:
         result = plan.evaluate(reference, time)
         if batch is not None and result is not None:
@@ -760,7 +804,8 @@ def _phase_poses(reference, time, state, targets, context, batch=None):
         adopted.check_cursors()
         adopted.current_plan = plan
         try:
-            result = plan.evaluate(reference, time, adopted)
+            result = (evaluate(plan, reference, time, adopted) if centered else
+                      plan.evaluate(reference, time, adopted))
         finally:
             adopted.current_plan = None
     if result is not None:
@@ -779,6 +824,19 @@ def recording_phase_poses(reference, time, state, targets, context):
         # pending publication and ledger must not overwrite its fresh cursor.
         return _phase_poses(reference, time, state, targets, context,
                             batch if batch.depth == 1 else None)
+    finally:
+        batch.depth -= 1
+
+
+def recording_centered_poses(reference, time, state, targets, context):
+    """Keep compact results private to an outer complete source batch."""
+    batch = reference._recording_batch
+    if batch is None or not batch.matches(context) or batch.depth:
+        return None
+    batch.admit_owners()
+    batch.depth += 1
+    try:
+        return _phase_poses(reference, time, state, targets, context, batch, centered=True)
     finally:
         batch.depth -= 1
 

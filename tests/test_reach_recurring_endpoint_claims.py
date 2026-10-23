@@ -13,6 +13,7 @@ from ontokin.diagnostics import OntoKinError
 from ontokin.gltf import export_glb, read_glb
 from ontokin import reach_conformance, reach_export
 from ontokin.reach_numeric import ReachExecutionWork
+from ontokin.reach_reference import ReachReference
 from ontokin.scene import ExportOptions
 from reach_agent_support import source_case
 
@@ -53,6 +54,7 @@ class ReachRecurringEndpointClaimTests(unittest.TestCase):
         # hostile threshold from the original exact comparison. The forged
         # bytes below still pass through the ordinary sufficient/fallback reader.
         with patch.object(reach_conformance._CertificateBatch, "add", observe), \
+             patch.object(ReachReference, "_recording_centered_poses", return_value=None), \
              patch.object(reach_conformance, "_recording_orientation_bound", exact_orientation), \
              patch.object(reach_conformance, "_recording_position_bound", exact_position), \
              patch.object(reach_export, "_sample_recording_nodes", partial(

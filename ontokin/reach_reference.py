@@ -78,6 +78,10 @@ class _Arithmetic:
         self.scale = self._dyadic_denominator(bits)
         self.cache = {}
         self._cache_operand_limit = self.operand_limit
+        # The private centered reader may observe the original callback
+        # boundary while an inherited multi-operation oracle is running.
+        # This hook never replaces the caller's check or adds a work charge.
+        self._recording_after_tick = None
 
     @property
     def operand_limit(self):
@@ -101,7 +105,10 @@ class _Arithmetic:
             self._cache_operand_limit = self.operand_limit
 
     def tick(self):
+        observer = self._recording_after_tick
         self.check()
+        if observer is not None:
+            observer()
 
     def guard(self, *values):
         limit = self.operand_limit
@@ -2177,6 +2184,43 @@ class _RecordingSourceReceipt:
     """An ephemeral getter plus the immutable source operands it admitted."""
     read: object
     values: tuple
+    signature: tuple | None = field(default=None, compare=False)
+
+
+def _recording_source_signature(value, _depth=-1):
+    """Snapshot native source integer fields without retaining numeric poses."""
+    kind = type(value)
+    if kind is F:
+        if (type(value.numerator) is not int or type(value.denominator) is not int
+                or value.denominator <= 0):
+            raise ReferenceError("identity", "Independent source rational changed")
+        return ("fraction", value.numerator, value.denominator)
+    if kind is Interval:
+        if type(value.lo) is not F or type(value.hi) is not F:
+            raise ReferenceError("identity", "Independent source interval changed")
+        return ("interval", _recording_source_signature(value.lo, _depth),
+                _recording_source_signature(value.hi, _depth))
+    if kind is tuple:
+        if _depth >= 3 or len(value) > (16 if _depth == -1 else 8):
+            raise ReferenceError("identity", "Independent source signature exceeds its bounded shape")
+        return ("tuple", tuple(_recording_source_signature(item, _depth + 1) for item in value))
+    if kind is float:
+        return ("float", value.hex())
+    if value is None or kind in (str, int):
+        return (kind.__name__, value)
+    raise ReferenceError("identity", "Independent source signature has a foreign shape")
+
+
+def _recording_source_copy(value):
+    """Detach admitted bounded source leaves before later work callbacks."""
+    kind = type(value)
+    if kind is F:
+        return F(value.numerator, value.denominator)
+    if kind is Interval:
+        return Interval(_recording_source_copy(value.lo), _recording_source_copy(value.hi))
+    if kind is tuple:
+        return tuple(_recording_source_copy(item) for item in value)
+    return value
 
 
 def _plain(value, arithmetic):
@@ -2583,7 +2627,10 @@ class ReachReference:
             return None
         values = read()
         witness = self._recording_source_witness(*values)
-        return None if witness is None else _RecordingSourceReceipt(read, witness)
+        if witness is None:
+            return None
+        signature = _recording_source_signature(witness)
+        return _RecordingSourceReceipt(read, _recording_source_copy(witness), signature)
 
     def _recording_proof_narrowed(self, error):
         """Only an added proof's own changed-domain refusal may fall back."""
@@ -3199,6 +3246,36 @@ class ReachReference:
         """
         from .reach_reference_plan import _SourceBatch
         return _SourceBatch(self, recording_context)
+
+    def _recording_centered_poses(self, carriers, time, side="after", *, recording_context=None):
+        """Private centers for one complete reader's sufficient endpoint proof.
+
+        This never changes the public interval observation contract. A missing
+        result requires the caller to obtain ordinary independent intervals on
+        the same work. Only an active complete source batch may receive the
+        distinct center-plus-radius records.
+        """
+        batch = self._recording_batch
+        if (type(recording_context) is not object or batch is None
+                or not batch.active or batch.prepared or batch.depth
+                or not self._recording_body_domain()):
+            return None
+        time = F(time)
+        state = self._state_at(time, side)
+        if any(mode == "dynamic" for mode in state.modes.values()):
+            return None
+        phase = ((bisect_left(self.boundaries, time) - 1) if side == "before" else
+                 (bisect_right(self.boundaries, time) - 1))
+        context = (recording_context, id(state), phase, side)
+        if not batch.matches(context):
+            return None
+        self.a.tick()
+        selected = self._recording_carriers(carriers)
+        self.a.tick()
+        self._sync_numeric_cache()
+        from .reach_reference_plan import recording_centered_poses
+        frames = recording_centered_poses(self, time, state, selected, context)
+        return None if frames is None else {carrier: frames[carrier] for carrier in selected}
 
     def recording_pose_enclosures(self, carriers, time, side="after", *, ideal=True, recording_context=None):
         """Evaluate independent p/q once for the selected carrier ancestries.

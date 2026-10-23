@@ -271,7 +271,10 @@ class IndependentRecordingContextTests(unittest.TestCase):
                 return original(reference, carriers, time, side, ideal=ideal,
                                 recording_context=recording_context if use_recurrence else None)
             compiler = compile_construction(source_case("P01"))
-            with patch.object(ReachReference, "recording_pose_enclosures", new=capture):
+            # Exercise the retained public interval recurrence itself; the
+            # private centered reader has separate context/containment tests.
+            with patch.object(ReachReference, "recording_pose_enclosures", new=capture), \
+                    patch.object(ReachReference, "_recording_centered_poses", return_value=None):
                 result = export_glb(compiler.model,
                     options=ExportOptions(end=F(1, 4), fps=1, helpers=False),
                     target_contract="ontokin.glb/0.6", work=compiler.reach_work)

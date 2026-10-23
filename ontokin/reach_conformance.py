@@ -1666,6 +1666,188 @@ def _recording_position_magnitude(position, arithmetic):
     return result
 
 
+class _CenteredEndpointDomain(Exception):
+    """A compact sufficient proof needs the ordinary current-domain path."""
+
+
+def _recording_centered_comparison(ideal, position, quaternion, limits, arithmetic, *,
+                                   previous=None, completed=()):
+    """Compare actual supplied values to a private center AND its radius.
+
+    Only completed sufficient inequalities return a proof. The caller obtains
+    ordinary independent intervals on this same work if either inequality is
+    insufficient or this optional full-cap domain changes. No center is
+    normalized or treated as an exact source observation.
+    """
+    from .reach_reference import _recording_source_signature
+    from .reach_reference_center import _CenteredPose, _integers, _native
+
+    if (limits is None or type(ideal) is not _CenteredPose
+            or type(arithmetic) is not _Bounds or _bound_domain(arithmetic) != MAX_OPERAND_BITS):
+        return None
+    fields = (ideal.position, ideal.orientation, ideal.position_radius, ideal.orientation_radius, ideal.axis)
+    if (type(ideal.position) is not tuple or len(ideal.position) != 3
+            or type(ideal.orientation) is not tuple or len(ideal.orientation) != 4
+            or any(not _native(value) for value in ideal.position)
+            or any(not _native(value, magnitude=2) for value in ideal.orientation)
+            or not _native(ideal.position_radius, magnitude=1)
+            or not _native(ideal.orientation_radius, magnitude=1)
+            or _integers(fields) != ideal.seal
+            or not 0 <= ideal.position_radius <= Fraction(1, 1 << 94)
+            or not 0 <= ideal.orientation_radius <= Fraction(1, 1 << 104)):
+        _error("OKE-E-INDEPENDENT-VALIDATION", "A private centered reference proof changed.")
+    owner, owner_kind = arithmetic.work, type(arithmetic.work)
+    external = getattr(owner, "external_check", None)
+    saved_seal = ideal.seal
+    live = (*ideal.position, *ideal.orientation, ideal.position_radius, ideal.orientation_radius)
+    integers = tuple((value.numerator, value.denominator) for value in live)
+    # Fraction copies are made from saved native integer fields before any
+    # callback. A mutate-and-restore callback cannot redirect point arithmetic
+    # through an alias to the center, its radius or the preceding proof.
+    values = tuple(Fraction(numerator, denominator) for numerator, denominator in integers)
+    source_position, source_rotation = values[:3], values[3:7]
+    position_radius, rotation_radius = values[7:]
+    invalidated = False
+
+    def current():
+        nonlocal invalidated
+        observed = (ideal.position, ideal.orientation, ideal.position_radius, ideal.orientation_radius, ideal.axis)
+        if (type(ideal) is not _CenteredPose or ideal.seal is not saved_seal
+                or any(observed[index] is not fields[index] for index in range(4))
+                or type(observed[4]) is not type(fields[4]) or observed[4] != fields[4]
+                or any(type(value) is not Fraction or type(value.numerator) is not int
+                       or type(value.denominator) is not int
+                       or (value.numerator, value.denominator) != saved
+                       for value, saved in zip(live, integers))
+                or arithmetic.work is not owner or type(owner) is not owner_kind
+                or getattr(owner, "external_check", None) is not external):
+            _error("OKE-E-INDEPENDENT-VALIDATION", "A private centered endpoint operand or owner changed.")
+        invalidated = invalidated or _bound_domain(arithmetic) != MAX_OPERAND_BITS
+        return not invalidated
+
+    def checked(operation, *args):
+        result = operation(*args)
+        if not current():
+            raise _CenteredEndpointDomain()
+        return result
+
+    def l1(actual, expected, decoder):
+        distance = Fraction(0)
+        for raw, point in zip(actual, expected):
+            value = (Fraction(0) if raw == 0 else checked(decoder.value, raw))
+            if not _small_proof_values((value, point)):
+                raise _CenteredEndpointDomain()
+            error = Fraction(0) if value == point else abs(checked(arithmetic.sub, value, point))
+            if error:
+                distance = error if not distance else checked(arithmetic.add, distance, error)
+        return distance
+
+    def compare_claim(value, claim):
+        # A raw claim decode and the following native comparison have
+        # separate original callbacks. Check both before the next can restore
+        # a narrowed domain or changed operand owner.
+        if type(claim) is not Fraction:
+            claim = checked(arithmetic.value, claim)
+        return checked(arithmetic.compare, value, claim)
+
+    def sealed(payload):
+        return payload, _recording_source_signature(payload)
+
+    def reused(proof, actual, center, radius, limit):
+        if type(proof) is not tuple or len(proof) != 2:
+            return None
+        payload, signature = proof
+        if (type(payload) is not tuple or len(payload) != 7
+                or _recording_source_signature(payload) != signature
+                or not _same_recording_vector(actual, payload[0], len(actual))
+                or center != payload[1] or radius != payload[2]
+                or type(limit) is not type(payload[3]) or limit != payload[3]
+                or payload[6] != MAX_OPERAND_BITS
+                or type(payload[4]) is not Fraction
+                or payload[5] is not None and type(payload[5]) is not Fraction):
+            return None
+        result = (Fraction(payload[4].numerator, payload[4].denominator),
+                  None if payload[5] is None else Fraction(payload[5].numerator, payload[5].denominator))
+        checked(arithmetic.tick, "independent_centered_endpoint_reuse")
+        arithmetic._cache_operand_domain(payload)
+        if _recording_source_signature(payload) != signature:
+            _error("OKE-E-INDEPENDENT-VALIDATION", "A completed centered endpoint proof changed.")
+        if not current():
+            raise _CenteredEndpointDomain()
+        return result
+
+    try:
+        checked(arithmetic.tick, "independent_centered_endpoint_domain")
+        position = _recording_vector(position, 3, arithmetic)
+        quaternion = _recording_vector(quaternion, 4, arithmetic)
+        arithmetic._cache_operand_domain(values)
+        if not current():
+            raise _CenteredEndpointDomain()
+        position_arithmetic = _PositionOperands(arithmetic, position)
+        position_error = magnitude = None
+        if previous is not None:
+            value = reused(previous.get("_centered_position_proof"), position,
+                           source_position, position_radius, limits[0])
+            if value is not None:
+                position_error, magnitude = value
+        if position_error is None:
+            position_error = l1(position, source_position, position_arithmetic)
+            if position_radius:
+                position_error = checked(arithmetic.add, position_error, position_radius)
+            if compare_claim(position_error, limits[0]) > 0:
+                return None
+
+        # Either antipodal representative gives a valid Euclidean bound. The
+        # radius does not change when choosing the center's representative.
+        expected = (source_rotation[1], source_rotation[2], source_rotation[3], source_rotation[0])
+        checked(arithmetic.tick, "independent_centered_quaternion_sign")
+        axis = max(range(4), key=lambda index: abs(quaternion[index]))
+        if quaternion[axis] < 0 < expected[axis] or quaternion[axis] > 0 > expected[axis]:
+            expected = tuple(-value for value in expected)
+        quaternion_error = None
+        for result in completed:
+            value = reused(result.get("_centered_orientation_proof"), quaternion,
+                           expected, rotation_radius, limits[1])
+            if value is not None:
+                quaternion_error = value[0]
+                break
+        if quaternion_error is None:
+            distance = l1(quaternion, expected, arithmetic)
+            if rotation_radius:
+                distance = checked(arithmetic.add, distance, rotation_radius)
+            quaternion_error = checked(arithmetic.mul, Fraction(2), distance)
+            # A claim no larger than 1/2 establishes both inequalities with
+            # one actual threshold comparison, as in the interval shortcut.
+            small = (type(limits[1]) is int and limits[1] == 0 or
+                     type(limits[1]) is float and math.isfinite(limits[1]) and 0 <= limits[1] <= .5)
+            if not small and checked(arithmetic.compare, quaternion_error, Fraction(1, 2)) > 0:
+                return None
+            if compare_claim(quaternion_error, limits[1]) > 0:
+                return None
+        if magnitude is None:
+            # The source/actual vectors already passed their complete native
+            # admission. Keep every remaining magnitude callback visible to
+            # this proof's live receipt, including reused coordinate decodes.
+            checked(arithmetic.tick, "independent_position_magnitude")
+            magnitude = Fraction(0)
+            for raw in position:
+                if raw:
+                    term = abs(checked(position_arithmetic.value, raw))
+                    magnitude = term if not magnitude else checked(arithmetic.add, magnitude, term)
+        if not current():
+            return None
+        return {"position_error": position_error, "quaternion_error": quaternion_error,
+                "normalized": None, "magnitude": magnitude, "_proof_cap": MAX_OPERAND_BITS,
+                "_quaternion_operand": quaternion, "_normalized_cap": None,
+                "_endpoint_limit_receipt": limits,
+                "_centered_position_proof": sealed((position, source_position, position_radius,
+                                                     limits[0], position_error, magnitude, MAX_OPERAND_BITS)),
+                "_centered_orientation_proof": sealed((quaternion, expected, rotation_radius,
+                                                        limits[1], quaternion_error, None, MAX_OPERAND_BITS))}
+    except _CenteredEndpointDomain:
+        return None
+
+
 def _key_comparisons(reference, geometry, tracks, time, index, arithmetic, *, previous=None, previous_time=None,
                      recording_context=None, endpoint_rows=None):
     result, pending, observed, candidates = {}, [], [], []
@@ -1706,6 +1888,22 @@ def _key_comparisons(reference, geometry, tracks, time, index, arithmetic, *, pr
                     result[carrier]["_endpoint_limit_receipt"] = limits
                 continue
         pending.append((carrier, item, position, quaternion, limits))
+    centered_reader = getattr(reference, "_recording_centered_poses", None)
+    centered = (centered_reader(tuple(item["frame"] for _, item, _, _, _ in pending), time,
+                               side="after", recording_context=recording_context)
+                if pending and callable(centered_reader) and all(limits is not None for *_, limits in pending)
+                else None)
+    if centered is not None:
+        remaining = []
+        for carrier, item, position, quaternion, limits in pending:
+            comparison = _recording_centered_comparison(
+                centered[item["frame"]], position, quaternion, limits, arithmetic,
+                previous=None if previous is None else previous[carrier], completed=tuple(result.values()))
+            if comparison is None:
+                remaining.append((carrier, item, position, quaternion, limits))
+            else:
+                result[carrier] = comparison
+        pending = remaining
     ideals = (reference.recording_pose_enclosures(
         tuple(item["frame"] for _, item, _, _, _ in pending), time, side="after",
         recording_context=recording_context) if pending else {})

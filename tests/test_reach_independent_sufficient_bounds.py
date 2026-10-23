@@ -12,6 +12,7 @@ from ontokin.construction import compile_construction
 from ontokin.diagnostics import OntoKinError
 from ontokin.gltf import export_glb, read_glb
 from ontokin.reach_numeric import ReachAdmissionError, ReachExecutionWork as Work
+from ontokin.reach_reference import ReachReference
 from ontokin.scene import ExportOptions
 from reach_agent_support import source_case
 from test_reach_recurring_endpoint_claims import replace_document
@@ -40,6 +41,9 @@ def original_norm_proofs():
             *, source_path_valid=True):
         return reader._stored_arc(raw_first, raw_last, first["normalized"], last["normalized"], arithmetic)
     with ExitStack() as stack:
+        # This control deliberately requests complete interval normalization.
+        # The current sufficient/fallback checker runs outside this context.
+        stack.enter_context(patch.object(ReachReference, "_recording_centered_poses", return_value=None))
         stack.enter_context(patch.object(reader, "_recording_orientation_bound", orientation))
         stack.enter_context(patch.object(reader, "_recording_position_bound", position))
         stack.enter_context(patch.object(reader, "_certified_stored_arc", arc))

@@ -8,7 +8,7 @@ from unittest.mock import patch
 from ontokin.construction import compile_construction
 from ontokin.gltf import export_glb
 from ontokin.reach_numeric import ReachExecutionWork
-from ontokin.reach_reference import Interval, MAX_CACHE, ReferenceError, _Arithmetic, _PoseArithmetic
+from ontokin.reach_reference import Interval, MAX_CACHE, ReachReference, ReferenceError, _Arithmetic, _PoseArithmetic
 from ontokin.scene import ExportOptions
 from reach_agent_support import source_case
 
@@ -200,7 +200,9 @@ class IndependentFusedRecordingTests(unittest.TestCase):
                 compiler = compile_construction(source_case(case))
                 context = (nullcontext() if optimized else
                            patch.object(_PoseArithmetic, "_recording_rotate_sincos", new=direct))
-                with context:
+                # Isolate the two retained interval kernels. A private
+                # centered endpoint may otherwise bypass both measurements.
+                with context, patch.object(ReachReference, "_recording_centered_poses", return_value=None):
                     result = export_glb(compiler.model,
                         options=ExportOptions(end=F(1, 4), fps=4, helpers=False),
                         target_contract="ontokin.glb/0.6", work=compiler.reach_work)
