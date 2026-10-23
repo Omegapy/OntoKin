@@ -915,3 +915,82 @@ operands. It also checks current-source mutation, cancellation, cache
 preservation, the shared operation limit, and actual GLB byte/independent
 validation equality. Execution evidence identifies the tested revision
 separately; this derivation does not assert an unexecuted recording pass.
+
+## Captured prescribed and free-root phases
+
+The optional complete-phase sampler can retain immutable source inputs for
+prescribed moving roots and actual selected free dynamic roots. It admits a
+finite, strictly ordered sequence of interior exact clocks and the current
+full 32,768-bit domain with the existing 256-entry cache. Source boundaries
+still use the ordinary recorder. The captured graph contains source operands
+and receipts; completed arithmetic remains in the existing work cache. A
+phase retains only its required working constants and its latest private
+cursor for each complete recipe, with the same 256-entry ceiling. All keys
+must be consumed and all ordinary output callbacks must complete before that
+cursor group can be published.
+
+A prescribed root retains its complete current move/spin law and angular
+source witness, including initial values, active claimant, status, exact
+elapsed/running clocks, duration and ideal inputs. Its translation evaluates
+the existing exact affine helper and binary64 projection. Its orientation
+uses the existing scalar/Z spin helper and its complete copied source plan.
+Spin increments multiply on the world side, and the existing 127-sample
+native reseed ceiling is unchanged. A captured child body seed reads that
+same copied source plan and the complete frozen angular lineage. Every source
+plan field is admitted and compared again at publication; neither a temporary
+law change nor a temporary plan mutation enters later numeric calculations.
+
+Dynamic roots have no `RecordingAngularFrame`. Capturing one does not invent
+an angular witness, rate proof or body-cursor token. The root must be an actual
+selected free object with no incoming relation or prescribed claim. Its
+separate receipt binds the actual anchor and force-history identities, exact
+anchor and release clocks, complete private/native anchor operands and saved
+public projections, scene duration and gravity, effective acceleration and
+net force, active/latest force rows, anchor errors, error clock, ideal
+acceleration and mass. Force rows retain their source target, activation,
+key, vector, duration and sequence index; their original objects remain bound
+as well. The finite row counts are checked and precharged before capture and
+again before final admission. Dynamic descendants and unsupported rotations,
+spins, anchors or history shapes keep the ordinary complete sampler.
+
+A private anchor copy is assembled without intervening callbacks. Its public
+position, velocity and omega are projected once by the original source
+helpers, preserving materialized public bits. Only those actual source
+operand tuples and the private initial rotation remain in the immutable
+graph. This temporary projection object is discarded; no additional retained
+projection cache is introduced. Later callbacks cannot replace a live anchor
+field inside the captured calculation.
+
+Each dynamic key evaluates the unchanged exact elapsed subtraction, original
+ballistic law/extent proof and native `p0+t*(v0+a*t/2)` operation order. Its
+current exact clock keeps the original small-operand admission and elapsed
+horizon comparisons. The phase preflight already proves each key lies between
+the same fixed endpoints. Every endpoint, anchor, duration and current clock
+has at most 1,024 operand bits in this optional domain, so the omitted repeated
+phase-membership cross-products fit the unchanged 32,768-bit cap. The existing
+world-left spin recurrence consumes the copied anchor rotation, omega and
+source plan. No actual ballistic product, addition, rounding, spin increment
+or reseed is omitted from operation accounting.
+
+The selected free root uses its actual whole-phase extent and the existing
+dynamic `2^-47*(M+L+1)` position allowance. The complete source `Sp`, `Sq`,
+path counts and offsets remain in the frozen allowance inputs. Each identical
+phase allowance is computed once and retained only by that phase's existing
+output stream; its source-bound object and every consumed field are checked
+at completion. No tolerance or error expression changes.
+
+Final source admission follows every publication callback and precedes the
+atomic cache update without another callback. It compares the complete current
+source fields, identities, topology, claims, plans, bounds and live domain.
+Persistent changes reject the entire pending cursor group. Temporary changes
+that are restored cannot affect calculations because those calculations use
+only copied operands. Cancellation preserves the original exception and
+publishes no partial group. A newer reentrant completion is retained rather
+than overwritten by an older private group.
+
+`tests/test_reach_recording_captured_roots.py` and
+`tests/test_reach_recording_captured_dynamic.py` compare native bits and exact
+allowances with ordinary scalar sampling, including both P16 release/force
+phases, native reseeding, source mutations, unsupported descendants and
+atomic callback failures. These are verification obligations; identified
+execution evidence establishes which checks and full recordings have passed.

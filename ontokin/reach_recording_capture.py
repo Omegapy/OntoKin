@@ -10,12 +10,13 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from fractions import Fraction as F
+from math import isfinite
 from types import MappingProxyType
 
 from .model import Pose
 from .reach_numeric import MAX_OPERAND_BITS, ReachAdmissionError, rational
-from .reach_pose import RotationValue, SpinPlan
-from .reach_phase import (PhaseBound, RecordingAngularFrame, RecordingAngularProof, _AxialRate,
+from .reach_pose import PoseValue, RotationValue, SpinPlan
+from .reach_phase import (AnchorError, PhaseBound, RecordingAngularFrame, RecordingAngularProof, _AxialRate,
                           _current_recording_angular_witness,
                           current_recording_angular_witness, _recording_orientation_recipe)
 
@@ -46,11 +47,31 @@ class _SpinInputs:
 
 
 @dataclass(frozen=True)
+class _DynamicReceipt:
+    identities: tuple
+    witness: tuple
+    force_sizes: tuple
+
+
+@dataclass(frozen=True)
+class _DynamicInputs:
+    receipt: _DynamicReceipt
+    anchor_time: F
+    duration: F
+    position: tuple
+    velocity: tuple
+    rotation: object
+    omega: tuple
+    acceleration: tuple
+    spin: _SpinInputs | None
+
+
+@dataclass(frozen=True)
 class _Node:
     frame: str
     kind: str
     path: str
-    record: RecordingAngularFrame
+    record: RecordingAngularFrame | None
     identities: tuple
     operands: tuple
     constant: bool
@@ -196,6 +217,160 @@ def _root_pose(node, time, ops, context, publication):
     return ops.make_recording(position=position, orientation=rotation)
 
 
+def _dynamic_source(simulator, state, path, ops, force_sizes, *, copy_initial=False):
+    """Snapshot actual dynamic inputs without callbacks or angular authority.
+
+    Only fixed-size numeric fields and the precharged bounded force rows are
+    read. Projection caches are copied before any projection callback; their
+    canonical values are checked by the original source helper on that copy.
+    The complete live snapshot is compared again before cursor publication.
+    """
+    from .evaluator import _DynamicInitial, _Kinematics
+    from .force_runtime import _ActiveForce, _ForceState
+    from .model import ForcePayload
+
+    work, model = ops.work, simulator.model
+
+    def freeze(value):
+        if value is None or type(value) is str:
+            return (type(value), value)
+        if type(value) is float and isfinite(value):
+            work.guard_bits(1075)
+            return (float, value.hex())
+        if type(value) in (F, int):
+            work.guard(value)
+            return (type(value), value.numerator, value.denominator)
+        raise TypeError("A captured dynamic input needs a canonical scalar.")
+
+    def vector(value, size):
+        if type(value) is not tuple or len(value) != size:
+            raise TypeError("A captured dynamic vector must be immutable and fixed-size.")
+        return tuple(freeze(part) for part in value)
+
+    def rotation(value):
+        if type(value) is not RotationValue or type(value.error_rad) is not F:
+            raise TypeError("A captured dynamic private rotation must be immutable.")
+        return (vector(value.components, 4), freeze(value.error_rad),
+                None if value.frozen_projection is None else vector(value.frozen_projection, 4))
+
+    if (state.modes[path] != "dynamic"
+            or state.claims.get((path, "translation")) is not None
+            or state.claims.get((path, "orientation")) is not None):
+        raise TypeError("A captured dynamic root must be free of prescribed claims.")
+    anchor, history = state.dynamic[path], state.forces[path]
+    if (type(anchor) is not _DynamicInitial or type(anchor.time) is not F
+            or type(anchor.since) is not F or type(model.duration) is not F
+            or type(history) is not _ForceState or type(history.active) is not dict
+            or type(history.last_changes) is not list
+            or (len(history.active), len(history.last_changes)) != force_sizes):
+        raise TypeError("A captured dynamic root needs its actual bounded source history.")
+    initial, error = anchor.state, state.dynamic_errors.get(path)
+    if error is not None and type(error) is not AnchorError:
+        raise TypeError("A captured dynamic root needs its actual source anchor errors.")
+    identities = [anchor, initial, history, error]
+    fields = ("position", "orientation", "velocity", "omega")
+    if type(initial) is PoseValue:
+        if initial._ops is not ops.source_ops or type(initial._projection) is not dict:
+            raise TypeError("A captured dynamic anchor belongs to this source arithmetic.")
+        values = (initial.exact_position, initial.rotation, initial.exact_velocity,
+                  initial.exact_omega, initial.position_error_m)
+        projections = dict(initial._projection)
+        if len(projections) > 4 or set(projections) - set(fields):
+            raise TypeError("A captured dynamic anchor has only its public projection fields.")
+        projected = tuple((field, vector(projections[field], 4 if field == "orientation" else 3))
+                          for field in fields if field in projections)
+        initial_witness = ("private", vector(values[0], 3), rotation(values[1]),
+            vector(values[2], 3), vector(values[3], 3), freeze(values[4]), projected)
+        if copy_initial:
+            value = values[1]
+            initial = PoseValue(values[0], RotationValue(value.components, value.error_rad,
+                value.frozen_projection), values[2], values[3], values[4], ops.source_ops, projections)
+    elif type(initial) is _Kinematics:
+        values = tuple(getattr(initial, field) for field in fields)
+        initial_witness = ("native", *(vector(value, 4 if index == 1 else 3)
+                                      for index, value in enumerate(values)))
+        if copy_initial:
+            initial = _Kinematics(*values)
+    else:
+        raise TypeError("An unsupported dynamic anchor retains ordinary sampling.")
+
+    def force(value):
+        if type(value) is not _ActiveForce or type(value.payload) is not ForcePayload:
+            raise TypeError("A captured force row must be an actual source activation.")
+        identities.extend((value, value.payload))
+        payload = value.payload
+        return (freeze(value.target), freeze(value.activation), freeze(payload.key),
+                vector(payload.force_world_n, 3), freeze(payload.duration), freeze(payload.sequence_index))
+
+    active = tuple((freeze(key), force(value)) for key, value in history.active.items())
+    changes = []
+    for row in history.last_changes:
+        if type(row) is not tuple or len(row) != 2:
+            raise TypeError("A captured force change must retain its actual source row.")
+        changes.append((freeze(row[0]), force(row[1])))
+    acceleration = model.gravity if history.acceleration is None else history.acceleration
+    error_values = error if error is not None else AnchorError()
+    witness = (freeze(model.duration), vector(model.gravity, 3), freeze(state.modes[path]),
+        freeze(anchor.time), freeze(anchor.since), initial_witness,
+        vector(history.net, 3), None if history.acceleration is None else vector(history.acceleration, 3),
+        freeze(history.started_count), freeze(history.completed_count), freeze(history.last_time),
+        active, tuple(changes), tuple(freeze(getattr(error_values, field)) for field in (
+            "position_m", "rotation_rad", "velocity_m_per_s", "angular_velocity_rad_per_s")),
+        freeze(state.dynamic_error_times[path]), vector(state.ideal_accelerations[path], 3),
+        freeze(model.objects[path].mass))
+    receipt = _DynamicReceipt(tuple(identities), witness, force_sizes)
+    return receipt, initial, anchor.time, model.duration, acceleration
+
+
+def _dynamic_inputs(simulator, state, path, ops):
+    history = state.forces[path]
+    sizes = (len(history.active), len(history.last_changes))
+    if sum(sizes) > ops.work.max_cache_entries:
+        raise TypeError("An oversized dynamic source history retains ordinary sampling.")
+    ops.work.charge("recording_captured_dynamic_input", sum(sizes) + 1)
+    ops._require_domain()
+    receipt, initial, anchor_time, duration, acceleration = _dynamic_source(
+        simulator, state, path, ops, sizes, copy_initial=True)
+    # No live source field is read below. These public anchor values are the
+    # same operands used by recording_dynamic_pose, projected once from the
+    # copied materialized anchor with its original source arithmetic.
+    position, velocity, omega = initial.position, initial.velocity, initial.omega
+    rotation = initial.rotation if type(initial) is PoseValue else initial.orientation
+    components = rotation.components if type(rotation) is RotationValue else rotation
+    if components[1] or components[2] or omega[0] or omega[1]:
+        raise TypeError("A captured dynamic root requires scalar/Z rotation and spin.")
+    spin = _spin_inputs(_RootLaw(rotation, omega, F(0), anchor_time, True), ops)
+    return _DynamicInputs(receipt, anchor_time, duration, position, velocity,
+                          rotation, omega, acceleration, spin)
+
+
+def _dynamic_pose(node, time, ops, context, publication, phase):
+    from .reach_recording_fast import METHOD, _FloatPose
+    from .scene import MAX_KEYFRAMES
+
+    inputs = node.operands[0]
+    ops.work.charge("recording_dynamic_clock_domain")
+    ops._require_domain()
+    ops._immutable_scalar_domain((time,), small=True)
+    elapsed = ops.source_ops._op(time, inputs.anchor_time, "sub")
+    # Exact ordering was proved by the complete phase clock preflight. The
+    # original ballistic helper retains the anchor/horizon/extent proof and
+    # the actual elapsed clock's small domain before each native operation.
+    law = ops._ballistic_law(inputs.position, inputs.velocity, inputs.acceleration,
+        anchor_time=inputs.anchor_time, phase_interval=phase,
+        root_extent=publication.bound_inputs[node.frame][3], context=context,
+        path=node.path, scene_duration=inputs.duration)
+    position, zeros = ops._ballistic_position(law, elapsed)
+    orientation = ops.recording_advance_orientation(inputs.rotation, inputs.omega, elapsed,
+        context=context, path=METHOD + ":dynamic:" + node.path, max_steps=MAX_KEYFRAMES,
+        phase_plan=None if inputs.spin is None else inputs.spin.copied,
+        stage_cursor=publication.stage, read_cursor=publication.read_cursor)
+    ops._rotation_domain(orientation)
+    ops._require_domain()
+    ops.dynamic_extents[node.path] = law
+    return _FloatPose(position, orientation, zeros, 0)
+
+
 def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
              maximum_nodes=None):
     """Capture prescribed roots and complete planar dependencies from frozen operands."""
@@ -234,6 +409,23 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
         # externally supplied backing map. Already captured records survive a
         # temporary mutation of the caller's MappingProxyType backing dict.
         record = proof.frames.get(frame)
+        try:
+            stem = frame[:-6] if frame.endswith(".frame") else None
+            if (varying_parents and stem in model.objects and stem not in incoming
+                    and state.modes[stem] == "dynamic"):
+                # The phase angular proof deliberately has no dynamic lineage.
+                # Only an actual selected free root gets a separate complete
+                # anchor receipt; no descendant can use it as a body proof.
+                if frame not in selected or record is not None:
+                    return None
+                identities = (_identity("objects", stem, model.objects[stem]),)
+                inputs = _dynamic_inputs(simulator, state, stem, ops)
+                node = _Node(frame, "dynamic", stem, None, identities, (inputs,),
+                             False, (), None, False)
+                nodes[frame] = node
+                return node
+        except (KeyError, AttributeError, TypeError, IndexError):
+            return None
         if (type(record) is not RecordingAngularFrame or type(record.rate) is not _AxialRate
                 or type(record.rate.value) is not F or type(record.trig_count) is not int
                 or record.trig_count < 0
@@ -335,7 +527,8 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
             parent = visit(record.parent) if record.parent is not None else None
         finally:
             visiting.remove(frame)
-        if record.parent is not None and (parent is None or not parent.constant and not varying_parents):
+        if record.parent is not None and (parent is None or parent.kind == "dynamic"
+                or not parent.constant and not varying_parents):
             return None
         recipe = _recording_orientation_recipe(record, parent.recipe if parent else None, work=work)
         ops._require_domain()
@@ -362,7 +555,7 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
             if not varying_parents:
                 return None
     captured_proof = RecordingAngularProof(proof.start, proof.end, proof.program_revision,
-                                          MappingProxyType({path: node.record for path, node in nodes.items()}))
+        MappingProxyType({path: node.record for path, node in nodes.items() if node.record is not None}))
     return _Graph(model, state, root_state, proof, captured_proof, selected,
                   MappingProxyType(nodes), tuple(row for row in topology if row[:2] not in used_edges),
                   sizes, active_grips, static_carriers,
@@ -402,13 +595,29 @@ class _Publication:
         if valid:
             for node in graph.nodes.values():
                 if (proof.frames.get(node.frame) is not node.record
-                        or not all(_same_identity(model, item) for item in node.identities)
-                        or _current_recording_angular_witness(model, state, node.kind, node.path,
-                            work=work) != (node.record.parent, node.record.witness)):
+                        or not all(_same_identity(model, item) for item in node.identities)):
                     valid = False
                     break
-                if node.kind == "root" and node.operands[4] is not None:
-                    plan = node.operands[4]
+                plan = None
+                if node.kind == "dynamic":
+                    expected = node.operands[0].receipt
+                    try:
+                        current = _dynamic_source(simulator, state, node.path, self.ops,
+                                                  expected.force_sizes)[0]
+                        valid = (current.witness == expected.witness
+                            and len(current.identities) == len(expected.identities)
+                            and all(a is b for a, b in zip(current.identities, expected.identities)))
+                    except (KeyError, AttributeError, TypeError, IndexError):
+                        valid = False
+                    plan = node.operands[0].spin
+                else:
+                    valid = (_current_recording_angular_witness(model, state, node.kind, node.path,
+                        work=work) == (node.record.parent, node.record.witness))
+                    if node.kind == "root":
+                        plan = node.operands[4]
+                if not valid:
+                    break
+                if plan is not None:
                     if (not self.ops._reusable_spin_plan(plan.original)
                             or plan.original != plan.copied):
                         valid = False
@@ -431,6 +640,10 @@ class _Publication:
         # One charge per actual complete record, plus every otherwise unused
         # topology edge. There is no repeated common-ancestor comparison.
         work.charge("recording_angular_witness_guard", len(self.graph.nodes))
+        dynamic_rows = sum(sum(node.operands[0].receipt.force_sizes) + 1
+                           for node in self.graph.nodes.values() if node.kind == "dynamic")
+        if dynamic_rows:
+            work.charge("recording_captured_dynamic_guard", dynamic_rows)
         work.charge("recording_captured_topology_guard", len(self.graph.topology_extra)
                     + len(self.graph.active_grips) + 1)
         self.ops._require_domain()
@@ -614,6 +827,9 @@ def _sample_chain_graph(graph, time, ops, context, publication, constants):
             value = ops.make_recording()
         elif node.kind == "root":
             value = _root_pose(node, time, ops, context, publication)
+        elif node.kind == "dynamic":
+            value = _dynamic_pose(node, time, ops, context, publication,
+                                  (graph.proof.start, graph.proof.end))
         else:
             parent = resolve(node.record.parent)
             if node.kind == "joint" and not node.local_constant:
@@ -688,6 +904,7 @@ class _PhasePublication(_Publication):
     def __init__(self, simulator, graph, ops, bounds, records):
         super().__init__(simulator, graph, ops)
         self.bounds, self.bound_records = bounds, records
+        self.bound_inputs = MappingProxyType({path: inputs for path, _, inputs in records})
         self.indices = {}
 
     def _capacity(self):
@@ -760,7 +977,8 @@ class _CapturedPhase:
         self.excesses = None
 
     def sample(self, time):
-        from .reach_recording_fast import CertifiedRecordingFrames, recording_float_excess
+        from .reach_recording_fast import (CertifiedRecordingFrames, _BallisticLaw,
+                                           _UnsupportedPlanar, recording_float_excess)
         from .reach_runtime import RecordingPose
 
         if (self.finished or self.active or self.index >= len(self.times)
@@ -782,10 +1000,20 @@ class _CapturedPhase:
                 self.simulator._check()
                 self.ops._require_domain()
                 value = private[path]
+                node = self.graph.nodes[path]
+                dynamic = node.kind == "dynamic"
+                if dynamic:
+                    self.ops.work.charge("recording_dynamic_path_extent")
+                    self.ops._require_domain()
+                    law = self.ops.dynamic_extents.get(node.path)
+                    if (type(law) is not _BallisticLaw or type(law.proved_extent) is not F
+                            or law.proved_extent != inputs[3]):
+                        raise _UnsupportedPlanar("A captured free root needs its actual proved source extent.")
+                    self.ops.work.guard(law.extent, law.proved_extent)
                 if excesses is not None:
                     bound = PhaseBound(**dict(zip(_EXCESS_FIELDS, inputs)))
                     excesses[path] = recording_float_excess(bound, work=self.ops.work,
-                                                            include_cell_radii=False)
+                        include_cell_radii=False, dynamic=dynamic)
                     self.ops._require_domain()
                 frames[path] = RecordingPose(value.position, value.orientation)
             if excesses is not None:

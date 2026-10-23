@@ -1999,7 +1999,8 @@ def begin_bounded_phase(simulator, times, state, selected_paths, *, context,
     if recording_angular_proof is None or len(times) < 2:
         return None
     ops = Binary64RecordingOps(simulator.pose_ops, share_arithmetic=len(selected_paths) > 16,
-        affine_coordinates=True, body_cursors=True)
+        affine_coordinates=True, body_cursors=True,
+        dynamic_phase=phase_interval, dynamic_bounds=phase_bounds)
     try:
         ops._domain()
         from .reach_recording_capture import begin_captured_phase
