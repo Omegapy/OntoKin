@@ -33,6 +33,18 @@ def ordinary_paths(paths):
 
 
 class ReachRecordingCapturedMixedTests(unittest.TestCase):
+    def setUp(self):
+        # P11 can now use the optional complete Cartesian capture. Keep this
+        # earlier cohort exercising its ordinary/Y + captured/Z fallback,
+        # including all source-receipt and observer guarantees of that path.
+        original = fast.Binary64RecordingOps.__init__
+        def planar_only(instance, *args, **kwargs):
+            kwargs["cartesian_axes"] = False
+            original(instance, *args, **kwargs)
+        context = patch.object(fast.Binary64RecordingOps, "__init__", planar_only)
+        context.start()
+        self.addCleanup(context.stop)
+
     def test_actual_p11_cold_and_warm_bits_cells_bounds_order_and_operations(self):
         times = tuple(F(index, 16) for index in range(1, 32))
         outcomes = []

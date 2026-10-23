@@ -68,6 +68,10 @@ class _FloatRotation:
     z: float
     zero_w: bool
     zero_z: bool
+    # ``z`` is the axial component in the legacy two-component recurrence.
+    # A proper cyclic coordinate permutation places it on X, Y or Z without
+    # changing any native arithmetic or its existing error enclosure.
+    axis: int = 2
 
 
 @dataclass(frozen=True)
@@ -79,7 +83,19 @@ class _FloatPose:
 
     @property
     def orientation(self):
-        return (self.rotation.w, 0.0, 0.0, self.rotation.z)
+        vector = [0.0, 0.0, 0.0]
+        vector[self.rotation.axis] = self.rotation.z
+        return (self.rotation.w, *vector)
+
+
+def _cartesian_axis(values):
+    """Identify one exact nonzero native component, without normalizing it."""
+    if (type(values) is not tuple or len(values) != 3
+            or any(type(value) not in (int, float, F)
+                   or type(value) is float and not math.isfinite(value) for value in values)):
+        return None
+    indices = tuple(index for index, value in enumerate(values) if value)
+    return indices[0] if len(indices) == 1 else None
 
 
 @dataclass(frozen=True)
@@ -500,9 +516,9 @@ class Binary64RecordingOps(ReachPoseOps):
 
     def __init__(self, source_ops, *, constant_hinges=frozenset(), constant_hinge_check=None,
                  share_arithmetic=False, affine_coordinates=False, dynamic_phase=None,
-                 dynamic_bounds=None, body_cursors=False):
-        if type(body_cursors) is not bool:
-            raise ValueError("The native carrier cursor selector must be boolean.")
+                 dynamic_bounds=None, body_cursors=False, cartesian_axes=False):
+        if type(body_cursors) is not bool or type(cartesian_axes) is not bool:
+            raise ValueError("The native carrier cursor and Cartesian selectors must be boolean.")
         super().__init__(source_ops.work)
         self.source_ops = source_ops
         self.constant_hinges = constant_hinges
@@ -514,6 +530,9 @@ class Binary64RecordingOps(ReachPoseOps):
         # Only the production sampler opts into complete carrier recurrence.
         # The strict stored-cell diagnostic retains its original local factors.
         self.recording_body_cursors = body_cursors
+        self.recording_cartesian_axes = cartesian_axes
+        self._recording_cartesian_selector = cartesian_axes
+        self._recording_cartesian_dispatch = None
         # A production graph supplies only its currently varying local hinges.
         # This one-traversal structural selector is not a numerical proof or
         # retained cache; explicit low-level callers may leave it unrestricted.
@@ -530,6 +549,13 @@ class Binary64RecordingOps(ReachPoseOps):
         """Recheck after the last callback without charging another callback."""
         if self.work.max_operand_bits != MAX_OPERAND_BITS:
             raise _UnsupportedPlanar("The recording arithmetic domain changed.")
+        if self.recording_cartesian_axes is not self._recording_cartesian_selector:
+            raise _UnsupportedPlanar("The recording Cartesian selector changed.")
+        if self._recording_cartesian_dispatch is not None:
+            simulator, kind, methods = self._recording_cartesian_dispatch
+            if (type(simulator) is not kind or any(name in simulator.__dict__
+                    or getattr(kind, name, None) is not method for name, method in methods)):
+                raise _UnsupportedPlanar("The captured Cartesian source dispatch changed.")
 
     def _native(self, a, b, kind):
         self.work.charge("recording_float_" + kind)
@@ -542,30 +568,39 @@ class Binary64RecordingOps(ReachPoseOps):
     def _rotation_domain(self, value):
         if (type(value) is not _FloatRotation or any(type(v) is not float or not math.isfinite(v)
                 or abs(v) > 2 for v in (value.w, value.z))
-                or type(value.zero_w) is not bool or type(value.zero_z) is not bool):
+                or type(value.zero_w) is not bool or type(value.zero_z) is not bool
+                or type(value.axis) is not int or value.axis not in (0, 1, 2)
+                or value.axis != 2 and self.recording_cartesian_axes is not True):
             raise _UnsupportedPlanar("A native planar rotation left its proved domain.")
 
     @staticmethod
     def _rotation_bits(value):
         # Numerical equality coalesces signed zeros. Include their actual bits
         # so a pure arithmetic hit has exactly the same binary64 operands.
-        return struct.pack("<dd??", value.w, value.z, value.zero_w, value.zero_z)
+        return struct.pack("<dd??B", value.w, value.z, value.zero_w, value.zero_z, value.axis)
 
-    def _project_rotation(self, rotation, *, structural=True):
+    def _project_rotation(self, rotation, *, structural=True, axis_hint=None):
         rotation = self.source_ops._rotation(rotation)
         if (type(rotation.components) is not tuple or len(rotation.components) != 4
                 or any(type(v) is not F for v in rotation.components)):
             raise _UnsupportedPlanar("A recorded rotation needs four private exact components.")
-        if rotation.components[1] or rotation.components[2]:
-            raise _UnsupportedPlanar("A recorded rotation is not planar.")
+        nonzero = tuple(index for index, value in enumerate(rotation.components[1:]) if value)
+        if (len(nonzero) > 1 or axis_hint is not None and
+                (type(axis_hint) is not int or axis_hint not in (0, 1, 2))):
+            raise _UnsupportedPlanar("A recorded rotation needs one Cartesian axis.")
+        axis = nonzero[0] if nonzero else 2 if axis_hint is None else axis_hint
+        if (axis_hint is not None and axis != axis_hint
+                or axis != 2 and self.recording_cartesian_axes is not True):
+            raise _UnsupportedPlanar("A recorded rotation left its admitted Cartesian axis.")
         projection = self.source_ops._unit_projection(rotation)
         self._require_domain()
         if (type(projection) is not tuple or len(projection) != 4
                 or any(type(v) is not float or not math.isfinite(v) for v in projection)):
             raise _UnsupportedPlanar("A projected recorded rotation must have four finite binary64 components.")
-        w, x, y, z = projection
-        if x != 0.0 or y != 0.0 or any(v == 0.0 and math.copysign(1.0, v) < 0 for v in projection):
-            raise _UnsupportedPlanar("The projected recorded rotation is not scalar/Z with canonical zeros.")
+        w, z = projection[0], projection[axis + 1]
+        if (any(value != 0.0 for index, value in enumerate(projection[1:]) if index != axis)
+                or any(v == 0.0 and math.copysign(1.0, v) < 0 for v in projection)):
+            raise _UnsupportedPlanar("The projected rotation needs one Cartesian axis and canonical zeros.")
         if not (w > 0.0 or w == 0.0 and z > 0.0):
             raise _UnsupportedPlanar("The projected recorded rotation needs a canonical planar lift.")
         if rotation.frozen_projection is not None:
@@ -583,7 +618,7 @@ class Binary64RecordingOps(ReachPoseOps):
             self._require_domain()
             op = self.source_ops._op
             norm = op(op(decoded[0], decoded[0], "mul"),
-                      op(decoded[3], decoded[3], "mul"), "add")
+                      op(decoded[axis + 1], decoded[axis + 1], "mul"), "add")
             defect = abs(op(norm, F(1), "sub"))
             self._require_domain()
             # A correctly rounded unit projection has squared-norm defect
@@ -592,11 +627,12 @@ class Binary64RecordingOps(ReachPoseOps):
             self._require_domain()
             if outside:
                 raise _UnsupportedPlanar("The frozen source projection is outside its unit-rounding envelope.")
-        result = _FloatRotation(w, z, False, False)
+        result = _FloatRotation(w, z, False, False, axis)
         self._rotation_domain(result)
         return _FloatRotation(w, z,
             structural and not rotation.components[0] and w == 0.0 and math.copysign(1.0, w) > 0,
-            structural and not rotation.components[3] and z == 0.0 and math.copysign(1.0, z) > 0)
+            structural and not rotation.components[axis + 1] and z == 0.0 and math.copysign(1.0, z) > 0,
+            axis)
 
     def _axis_rotation(self, axis, coordinate, *, structural=True):
         """Reuse one completed controlled kernel and native unit projection.
@@ -607,6 +643,9 @@ class Binary64RecordingOps(ReachPoseOps):
         """
         self._require_domain()
         self.work.guard(*axis, coordinate)
+        index = _cartesian_axis(axis)
+        if index is None or index != 2 and self.recording_cartesian_axes is not True:
+            raise _UnsupportedPlanar("A native axis projection needs an admitted Cartesian axis.")
         key = (METHOD, "axis_projection", self.work.max_operand_bits,
                axis, coordinate, structural)
         old = self.work.lookup(key)
@@ -614,7 +653,7 @@ class Binary64RecordingOps(ReachPoseOps):
         if old is not None:
             return old
         result = self._project_rotation(self.source_ops.axis_rotation(axis, coordinate),
-                                        structural=structural)
+                                        structural=structural, axis_hint=index)
         self.work.remember(key, result)
         self._require_domain()
         return result
@@ -788,7 +827,8 @@ class Binary64RecordingOps(ReachPoseOps):
         direct = self._direct_identity_source_leaf(position, rotation, inverse)
         if direct is not None:
             return direct
-        key = (METHOD, "source_leaf", self.work.max_operand_bits, position, rotation, inverse)
+        key = (METHOD, "source_leaf", self.work.max_operand_bits,
+               self.recording_cartesian_axes, position, rotation, inverse)
         old = self.work.lookup(key)
         self._require_domain()
         if old is not None:
@@ -950,6 +990,8 @@ class Binary64RecordingOps(ReachPoseOps):
             return b
         if (b.w, b.z) == (1.0, 0.0) and b.zero_z:
             return a
+        if a.axis != b.axis:
+            raise _UnsupportedPlanar("Native rotation products require the same Cartesian axis.")
         key = None
         if self.share_arithmetic:
             key = (METHOD, "native_product", self.work.max_operand_bits,
@@ -967,7 +1009,8 @@ class Binary64RecordingOps(ReachPoseOps):
             real, imag = -real, -imag
         zero_w = (a.zero_w or b.zero_w) and (a.zero_z or b.zero_z)
         zero_z = (a.zero_w or b.zero_z) and (a.zero_z or b.zero_w)
-        result = _FloatRotation(0.0 if zero_w else real, 0.0 if zero_z else imag, zero_w, zero_z)
+        result = _FloatRotation(0.0 if zero_w else real, 0.0 if zero_z else imag,
+                                zero_w, zero_z, a.axis)
         if key is not None:
             self.work.remember(key, result)
             self._require_domain()
@@ -975,6 +1018,9 @@ class Binary64RecordingOps(ReachPoseOps):
 
     def _rotated_offset(self, rotation, position, zeros):
         """Reuse only the complete pure local arithmetic, never world origins."""
+        if (type(rotation.axis) is not int or rotation.axis not in (0, 1, 2)
+                or rotation.axis != 2 and self.recording_cartesian_axes is not True):
+            raise _UnsupportedPlanar("A native offset needs its admitted Cartesian axis.")
         key = None
         if self.share_arithmetic:
             key = (METHOD, "native_offset", self.work.max_operand_bits,
@@ -985,28 +1031,36 @@ class Binary64RecordingOps(ReachPoseOps):
                 return old
         op = self._native
         w, z = rotation.w, rotation.z
-        x, y, zz = position
+        # (u, v, axis) is a proper cyclic permutation. Preserve the exact Z
+        # operation order, including sign/zero and positive-unit shortcuts.
+        axis = rotation.axis
+        u, v = (axis + 1) % 3, (axis + 2) % 3
+        x, y, zz = position[u], position[v], position[axis]
+        local_zeros = zeros[u], zeros[v], zeros[axis]
         c = op(op(w, w, "mul"), op(z, z, "mul"), "sub")
         s = op(op(w, z, "mul"), 2.0, "mul")
         cross_zero = rotation.zero_w or rotation.zero_z
-        if zeros[1]:
+        if local_zeros[1]:
             # Native multiplication by positive one preserves every finite
             # binary64 bit, including signed zeros and subnormals. The coefficients
             # have just passed their original finite/domain callbacks. Foreign
             # scalar types retain both ordinary arithmetic calls.
             unit = type(x) is float and x == 1.0 and type(c) is float and type(s) is float
             offset = ((c, s, zz) if unit else (op(c, x, "mul"), op(s, x, "mul"), zz))
-            offset_zeros = (zeros[0], zeros[0] or cross_zero, zeros[2])
-        elif zeros[0]:
+            offset_zeros = (local_zeros[0], local_zeros[0] or cross_zero, local_zeros[2])
+        elif local_zeros[0]:
             self.work.charge("recording_float_sign")
             self._require_domain()
             unit = type(y) is float and y == 1.0 and type(c) is float and type(s) is float
             offset = ((-s, c, zz) if unit else (op(-s, y, "mul"), op(c, y, "mul"), zz))
-            offset_zeros = (zeros[1] or cross_zero, zeros[1], zeros[2])
+            offset_zeros = (local_zeros[1] or cross_zero, local_zeros[1], local_zeros[2])
         else:
             offset = (op(op(c, x, "mul"), op(s, y, "mul"), "sub"),
                       op(op(s, x, "mul"), op(c, y, "mul"), "add"), zz)
-            offset_zeros = (False, False, zeros[2])
+            offset_zeros = (False, False, local_zeros[2])
+        order = (u, v, axis)
+        offset = tuple(offset[order.index(index)] for index in range(3))
+        offset_zeros = tuple(offset_zeros[order.index(index)] for index in range(3))
         result = offset, offset_zeros
         if key is not None:
             self.work.remember(key, result)
@@ -1020,8 +1074,9 @@ class Binary64RecordingOps(ReachPoseOps):
             coordinate = rational(coordinate, self.work)
         axis = self.source_ops._recording_vector(axis)
         self._require_domain()
-        if axis[0] or axis[1] or not axis[2]:
-            raise _UnsupportedPlanar("Only a nonzero scalar/Z hinge is planar.")
+        index = _cartesian_axis(axis)
+        if index is None or index != 2 and self.recording_cartesian_axes is not True:
+            raise _UnsupportedPlanar("A native hinge needs an admitted nonzero Cartesian axis.")
         if affine:
             return self._affine_axis_rotation(axis, coordinate, context=context,
                                               path=path, max_steps=max_steps)
@@ -1080,7 +1135,8 @@ class Binary64RecordingOps(ReachPoseOps):
         self._domain()
         if (self.recording_body_cursors is not True or type(proof_token) is not object
                 or not callable(seed_builder)
-                or axis is not None and (type(axis) is not int or axis != 2)
+                or axis is not None and (type(axis) is not int or axis not in (0, 1, 2)
+                    or axis != 2 and self.recording_cartesian_axes is not True)
                 or type(source_records) is not int or source_records < 0
                 or source_admission is not None and not callable(source_admission)
                 or source_admission is None and source_records
@@ -1115,7 +1171,7 @@ class Binary64RecordingOps(ReachPoseOps):
                 raise _UnsupportedPlanar("A native carrier seed must be a private complete rotation.")
             # Even an exact interior zero does not establish a structural zero
             # in another history-dependent recording recurrence.
-            result = self._project_rotation(rotation, structural=False)
+            result = self._project_rotation(rotation, structural=False, axis_hint=axis)
             count = 1
         else:
             last, rotation, count, old_delta, old_increment = previous
@@ -1133,7 +1189,8 @@ class Binary64RecordingOps(ReachPoseOps):
                     self._rotation_domain(increment)
                 else:
                     angle = self.source_ops._op(rate, delta, "mul")
-                    increment = self._axis_rotation((F(0), F(0), F(1)), angle, structural=False)
+                    unit = tuple(F(1) if index == axis else F(0) for index in range(3))
+                    increment = self._axis_rotation(unit, angle, structural=False)
                 # A body rate postmultiplies the complete orientation. The
                 # prescribed root-spin cursor instead has a world left factor.
                 result = self._product(rotation, increment)
@@ -1248,7 +1305,8 @@ class Binary64RecordingOps(ReachPoseOps):
                     return None
                 if (type(axis) is not tuple or len(axis) != 3
                         or any(type(value) is not float or not math.isfinite(value) for value in axis)
-                        or axis[0] or axis[1] or not axis[2]):
+                        or _cartesian_axis(axis) is None
+                        or _cartesian_axis(axis) != 2 and self.recording_cartesian_axes is not True):
                     return None
                 affine = coordinate
                 # A constant law is independent of its admitted elapsed time;
@@ -1282,7 +1340,7 @@ class Binary64RecordingOps(ReachPoseOps):
             self._recording_cursor_key("bounded_affine_relative", context, path, max_steps)
             self._require_domain()
         key = (METHOD, "native_relative_pose", self.work.max_operand_bits, kind,
-               self._rotation_bits(parent.rotation), parent.depth, extra,
+               self.recording_cartesian_axes, self._rotation_bits(parent.rotation), parent.depth, extra,
                struct.pack("<ddd", *local.position), struct.pack("<dddd", *local.rotation))
         relative = self.work.lookup(key)
         self._require_domain()
@@ -1640,7 +1698,7 @@ class Binary64RecordingOps(ReachPoseOps):
         self._domain()
         self.work.guard(*value.exact_position, *value.rotation.components, value.rotation.error_rad)
         key = (METHOD, "constant_projection", self.work.max_operand_bits,
-               value.exact_position, value.rotation)
+               self.recording_cartesian_axes, value.exact_position, value.rotation)
         old = self.work.lookup(key)
         if old is not None:
             self._require_domain()
@@ -2004,9 +2062,19 @@ def begin_bounded_phase(simulator, times, state, selected_paths, *, context,
     """
     if recording_angular_proof is None or len(times) < 2:
         return None
+    from .reach_runtime import ReachSimulator
+    # Newly captured Cartesian paths previously dispatched through ordinary
+    # sampling. Preserve that dispatch for custom simulators and observers;
+    # the established Z-only capture/fallback keeps its previous behavior.
+    methods = tuple((name, getattr(ReachSimulator, name))
+                    for name in ("_incoming", "_resolve_kinematics", "recording_frames"))
+    cartesian = (isinstance(simulator, ReachSimulator) and all(name not in simulator.__dict__
+                 and getattr(type(simulator), name, None) is method for name, method in methods))
     ops = Binary64RecordingOps(simulator.pose_ops, share_arithmetic=len(selected_paths) > 16,
-        affine_coordinates=True, body_cursors=True,
+        affine_coordinates=True, body_cursors=True, cartesian_axes=cartesian,
         dynamic_phase=phase_interval, dynamic_bounds=phase_bounds)
+    if ops.recording_cartesian_axes:
+        ops._recording_cartesian_dispatch = simulator, type(simulator), methods
     try:
         ops._domain()
         from .reach_recording_capture import begin_captured_phase, begin_mixed_captured_phase

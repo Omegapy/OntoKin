@@ -253,3 +253,68 @@ reseeding. Full-to-pruned request sequences and actual multi-key prefixes
 exercise selection of an earlier registered plan, including changed source,
 ownership, context and registration. Results must be recorded from the identified committed candidate;
 the existence of these tests is not a passing recording or release claim.
+
+## A complete native admission for sequential axis placements
+
+Small moving recording graphs already avoid retaining each composed pose and
+quaternion product. Their scalar/Z axis-offset calculation still performed a
+second adjacent structural admission, inserted a normally one-use rotated
+offset into the numeric LRU, and then admitted the same native endpoints again
+for vector addition, each scalar addition, and an exact identity quaternion
+product. These are separate structural checkpoints, rather than distinct
+nonzero arithmetic expressions.
+
+The optional native composition keeps the existing sequential-compose entry
+checkpoint and guards both complete poses. Its domain has exact native pose,
+tuple, interval, Fraction and integer records; zero derivatives; an exactly
+positive scalar local quaternion; a scalar/Z parent quaternion; and one
+nonzero Cartesian X or Y local offset with zero Z. The axis quaternion and
+offset endpoints have the existing 131/129-bit size limits and are aligned to
+the original 128-bit grid. The parent translation is also grid aligned. Other
+shapes, precisions, wider cells, uncertain zeros, nonidentity local rotations,
+and narrower operand domains retain the preceding complete expression.
+
+A bounded local receipt records the eight vector identities, their 26 cells,
+the exact integer endpoint operands, and the arithmetic/work/callback owners.
+It retains no source object or value after the one composition returns. Each
+remaining arithmetic callback is followed by the complete receipt admission.
+Owner, pose-field, interval-wrapper or Fraction-operand replacement rejects
+the attempted composition. A cap or precision change invalidates the optional
+proof permanently for that call, even if a later callback restores it. The
+preceding expression then executes on the same work context; no budget or
+numeric cache is reset to authorize the optimization. Original callback and
+arithmetic exceptions are not caught by the composition helper.
+
+For the rotated offset, this receipt replaces the adjacent entry checkpoint
+and both lookup/publication checkpoints for the one-use axis result. Every
+actual square, selected product, endpoint difference, factor-of-two product,
+optional axis scale or negation, and final interval grid remains in its
+original order. Ordinary `_recording_rotate` callers keep their original
+lookup and publication behavior. Body and angle cursor lookups/publications,
+the 256-entry cache limit, and the 64-step direct reseed ceiling are unchanged.
+
+The position expression keeps the ordinary whole-vector zero tests, then each
+component's exact-zero and point tests in the same order. A nonzero point sum
+still executes the original `exact(..., "add")` and `_sum_enclosure`; a proper
+interval sum still executes its original low and high additions followed by
+that same enclosure. All original endpoint and grid-growth guards remain.
+The local quaternion is exactly the Hamilton identity, so its admitted product
+is the unchanged parent quaternion. No normalization, unit-quaternion
+substitution or reassociation of nonzero arithmetic is introduced.
+
+The previously observed two-offset P09/L03 steady-key pattern has a structural
+ceiling of 16 saved operations: two adjacent rotation admissions, four rotated
+offset cache operations, eight vector/scalar addition admissions, and two
+identity quaternion-product admissions. This is an estimate for that pattern,
+not an original-recording pass. Identified paired execution must establish its
+actual savings and any LRU effects before integration. In particular, repeated
+numerically identical offsets can benefit from the old cache; this change
+makes no universal performance claim for every small graph.
+
+`tests/test_reach_reference_native_composition.py` retains the preceding method
+as a differential control. It covers signed/nonunit exact cells, the two-offset
+cost, ordinary rotation caching, unsupported paths, every remaining callback's
+cancellation and cap behavior, restored caps, wrapper/owner changes, reentry,
+source-batch rejection, forced eviction/reseeding, and complete original-source
+prefix bytes and validation reports. Full original settings and the remaining
+release gates must be executed and reported separately.

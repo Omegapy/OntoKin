@@ -677,6 +677,12 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
     except (KeyError, AttributeError, TypeError):
         return None
     nodes, visiting, used_edges = {}, set(), set()
+    # A captured body may permute the legacy Z arithmetic only when its
+    # complete ancestry occupies one Cartesian axis. This structural set is
+    # local to capture, not a new numerical cache or source admission.
+    ancestry_axes = {}
+    from .reach_recording_fast import _cartesian_axis
+    cartesian = ops.recording_cartesian_axes is True
 
     def visit(frame):
         if frame in nodes:
@@ -712,7 +718,8 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
         if (type(record) is not RecordingAngularFrame or type(record.rate) is not _AxialRate
                 or type(record.rate.value) is not F or type(record.trig_count) is not int
                 or record.trig_count < 0
-                or record.rate.axis is not None and (type(record.rate.axis) is not int or record.rate.axis != 2)
+                or record.rate.axis is not None and (type(record.rate.axis) is not int
+                    or record.rate.axis not in (0, 1, 2) or record.rate.axis != 2 and not cartesian)
                 or record.rate.value and not record.trig_count
                 or type(record.token) is not object
                 or record.parent is not None and type(record.parent) is not str
@@ -738,6 +745,7 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
             # No callback occurs between the witness comparison and binding
             # these immutable inputs. Later arithmetic never reads live fields.
             local_constant = True
+            axes = set() if record.rate.axis is None else {record.rate.axis}
             if kind == "world":
                 operands = ()
             elif kind == "root":
@@ -752,10 +760,14 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
                 components = rotation.components if type(rotation) is RotationValue else rotation
                 if components[1] or components[2]:
                     return None
+                if components[3]:
+                    axes.add(2)
                 if spin is not None:
                     initial = spin.initial.components if type(spin.initial) is RotationValue else spin.initial
                     if initial[1] or initial[2] or spin.vector[0] or spin.vector[1]:
                         return None
+                    if initial[3] or spin.vector[2]:
+                        axes.add(2)
                 local_constant = not any(law is not None and law.running and any(law.vector)
                                          for law in (move, spin))
                 # Source operands above are captured before this cache callback.
@@ -782,10 +794,11 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
                 law, coordinate = (_coordinate_inputs(model, state, path)
                                    if joint.kind == "hinge" else (None, None))
                 if joint.kind == "hinge":
-                    if (type(joint.axis) is not tuple or len(joint.axis) != 3
-                            or joint.axis[0] or joint.axis[1] or not joint.axis[2]
+                    axis = _cartesian_axis(joint.axis)
+                    if (axis is None or axis != 2 and not cartesian
                             or law is None and coordinate is None):
                         return None
+                    axes.add(axis)
                     local_constant = law is None or law.initial == law.target
                     if not local_constant and not law.running:
                         return None
@@ -794,15 +807,32 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
             if kind in {"site", "follow", "joint"}:
                 local = operands[2] if kind == "joint" else operands[0]
                 if (type(local) is not Pose or type(local.position) is not tuple
-                        or type(local.rotation) is not tuple or local.rotation[1] or local.rotation[2]):
+                        or type(local.rotation) is not tuple or len(local.rotation) != 4):
                     return None
-                if (kind == "joint" and not local_constant
-                        and (len(local.position) != 3
-                             or any(type(value) is not float or value != 0.0 for value in local.position))):
-                    # A varying hinge uses the existing independent complete
-                    # body cursor. Nonzero child offsets retain the ordinary
-                    # local-factor sampler and its own cursor publication.
+                local_axes = tuple(index for index, value in enumerate(local.rotation[1:]) if value)
+                if len(local_axes) > 1 or any(axis != 2 for axis in local_axes) and not cartesian:
                     return None
+                axes.update(local_axes)
+                if kind == "joint" and not local_constant:
+                    zero_child = (len(local.position) == 3 and all(
+                        type(value) is float and value == 0.0 for value in local.position))
+                    axial_child = (cartesian and axis in (0, 1)
+                        and len(local.position) == 3
+                        and all(type(value) is float and isfinite(value)
+                                for value in (*local.position, *local.rotation))
+                        and local.rotation == (1.0, 0.0, 0.0, 0.0)
+                        and _cartesian_axis(local.position) == axis)
+                    if not zero_child and not axial_child:
+                        # A nonzero child offset is supported only when its
+                        # exact identity rotation and axial translation prove
+                        # that the original ordered origin addition is fixed
+                        # by every rotation in this captured ancestry.
+                        return None
+                    if axial_child:
+                        # Detach the new nonzero-offset leaf from the live
+                        # source object before any later arithmetic callback.
+                        frozen = Pose(frame=local.frame, position=local.position, rotation=local.rotation)
+                        operands = (*operands[:2], frozen, *operands[3:])
         except (KeyError, AttributeError, TypeError, IndexError):
             return None
         visiting.add(frame)
@@ -812,6 +842,9 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
             visiting.remove(frame)
         if record.parent is not None and (parent is None or parent.kind == "dynamic"
                 or not parent.constant and not varying_parents):
+            return None
+        axes.update(ancestry_axes.get(record.parent, ()))
+        if len(axes) > 1:
             return None
         recipe = _recording_orientation_recipe(record, parent.recipe if parent else None, work=work)
         ops._require_domain()
@@ -823,6 +856,7 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
         node = _Node(frame, kind, path, record, identities, operands, constant,
                      recipe, static_recipe, local_constant)
         nodes[frame] = node
+        ancestry_axes[frame] = frozenset(axes)
         return node
 
     static_carriers = True
@@ -832,7 +866,7 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
             return None
         static_leaf = (node.kind == "joint" and node.operands[0] == "hinge"
             and not node.local_constant and node.record.parent is not None
-            and nodes[node.record.parent].constant)
+            and nodes[node.record.parent].constant and not any(node.operands[2].position))
         if not static_leaf:
             static_carriers = False
             if not varying_parents:
@@ -971,7 +1005,7 @@ def _capture_graph(simulator, time, state, selected, proof, ops, *, minimum_sele
             or _checked_compare(time, proof.end, work) > 0):
         return None
     key = (METHOD, "captured_carrier_graph", MAX_OPERAND_BITS, id(simulator.model),
-           id(state), id(proof), selected)
+           id(state), id(proof), selected, ops.recording_cartesian_axes)
     graph = work.lookup(key)
     ops._require_domain()
     if type(graph) is not _Graph:
@@ -1090,7 +1124,7 @@ def _sample_chain_graph(graph, time, ops, context, publication, constants):
     The source proof independently seeds each varying hinge's complete body
     orientation; an approximate parent never seeds that recurrence.
     """
-    from .reach_recording_fast import captured_recording_orientation
+    from .reach_recording_fast import _FloatPose, captured_recording_orientation
     from .scene import MAX_KEYFRAMES
 
     work, frames, shared = ops.work, {}, {}
@@ -1129,7 +1163,18 @@ def _sample_chain_graph(graph, time, ops, context, publication, constants):
                     ops._require_domain()
                     rotation = frames[representative].rotation
                     ops._rotation_domain(rotation)
-                value = ops.recording_parent_origin(parent, rotation)
+                local = node.operands[2]
+                if any(local.position):
+                    # Capture proved an exact identity child rotation and a
+                    # translation parallel to the complete ancestry's axis.
+                    # That offset is fixed by every such rotation. Keep the
+                    # original source inverse and its one native placement;
+                    # the zero-translation hinge still counts as one depth.
+                    inverse = ops.recording_constant_pose(local, inverse=True, build=source_constant)
+                    anchor = _FloatPose(parent.position, rotation, parent.zeros, parent.depth + 1)
+                    value = ops.compose_recording_fast(anchor, inverse)
+                else:
+                    value = ops.recording_parent_origin(parent, rotation)
                 shared.setdefault(node.recipe, frame)
             else:
                 if node.kind in {"site", "follow"}:

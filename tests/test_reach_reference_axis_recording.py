@@ -194,7 +194,11 @@ class IndependentRecordingAxisTests(unittest.TestCase):
                 compiler = compile_construction(source_case(case))
                 context = (nullcontext() if optimized else
                            patch.object(_PoseArithmetic, "_recording_rotate", new=_PoseArithmetic.rotate))
-                with context:
+                # This oracle isolates the axis-rotation kernel. The later
+                # native composition also uses its private shared-admission
+                # interface, so disable that separate optimization on BOTH
+                # sides before substituting the preceding ordinary kernel.
+                with patch.object(_PoseArithmetic, "_recording_native_composition", return_value=None), context:
                     result = export_glb(compiler.model,
                         options=ExportOptions(end=F(1, 4), fps=4, helpers=False),
                         target_contract="ontokin.glb/0.6", work=compiler.reach_work)

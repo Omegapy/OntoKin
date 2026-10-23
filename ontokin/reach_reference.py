@@ -1031,7 +1031,7 @@ class _PoseArithmetic:
         sine, cosine = self.a.sincos(self.a.mul(norm, F(elapsed) / 2))
         return (cosine, *(self.a.mul(self.a.div(value, norm), sine) for value in values))
 
-    def _recording_rotate(self, q, vector):
+    def _recording_rotate(self, q, vector, *, _composition_admission=None):
         """Enclose an axis offset with one final grid per Hamilton factor.
 
         Recording poses need containment, so the exact square/product ranges
@@ -1039,6 +1039,9 @@ class _PoseArithmetic:
         retains its original cells. This path admits only small, native dyadic
         cells; that complete domain proves every omitted intermediate grid
         and the original corner preflights without trusting a producer pose.
+        A private sequential composition may provide its already charged
+        complete admission. That caller omits this result's one-use cache
+        entry and rechecks the same receipt after every numerical callback.
         """
         def direct():
             return self.rotate(q, vector)
@@ -1074,7 +1077,8 @@ class _PoseArithmetic:
         cap = self.a.operand_limit
 
         def current():
-            return self.a.operand_limit == cap
+            return ((_composition_admission is None or _composition_admission())
+                    and self.a.operand_limit == cap)
 
         def square(cell):
             if cell.lo == cell.hi:
@@ -1114,17 +1118,19 @@ class _PoseArithmetic:
             return min(values), max(values)
 
         def calculate():
-            self.a.tick()
+            if _composition_admission is None:
+                self.a.tick()
             self.a.guard(*(value for cell in cells for value in (cell.lo, cell.hi)))
             if not current():
                 return None
-            key = self._key("recording_axis_rotation", q, vector)
-            cached = self.a.lookup(key)
-            if not current():
-                return None
-            if cached is not None:
-                self.a.guard(*(value for cell in cached for value in (cell.lo, cell.hi)))
-                return cached
+            if _composition_admission is None:
+                key = self._key("recording_axis_rotation", q, vector)
+                cached = self.a.lookup(key)
+                if not current():
+                    return None
+                if cached is not None:
+                    self.a.guard(*(value for cell in cached for value in (cell.lo, cell.hi)))
+                    return cached
             ww, zz = square(q[0]), None
             if ww is not None:
                 zz = square(q[3])
@@ -1164,7 +1170,8 @@ class _PoseArithmetic:
                     return None
             result = (diagonal, off_diagonal, z) if not axis else (off_diagonal, diagonal, z)
             self.a.guard(*(value for cell in result for value in (cell.lo, cell.hi)))
-            self.a.remember(key, result, admission=current)
+            if _composition_admission is None:
+                self.a.remember(key, result, admission=current)
             return result if current() else None
 
         try:
@@ -1717,6 +1724,10 @@ class _PoseArithmetic:
         direct = self._identity_composition(parent, local)
         if direct is not None:
             return direct
+        if recording:
+            native = self._recording_native_composition(parent, local)
+            if native is not None:
+                return native
         offset = (self._recording_rotate(parent.orientation, local.position) if recording else
                   self.rotate(parent.orientation, local.position))
         position = self.add(parent.position, offset)
@@ -1726,6 +1737,108 @@ class _PoseArithmetic:
                        for cell in values for endpoint in (cell.lo, cell.hi)))
         return (result if self.a.operand_limit == MAX_OPERAND_BITS else
                 self.compose(parent, local, recording=recording))
+
+    def _recording_native_composition(self, parent, local):
+        """Share one complete native admission across a sequential placement.
+
+        The caller has just admitted both immutable zero-derivative poses.
+        A fresh receipt binds all their cells and the arithmetic owners after
+        every remaining callback. Only the adjacent rotation admission, its
+        one-use memo entry, and repeated zero/identity addition/product
+        admissions are omitted. All nonzero scalar operations and grids are
+        the original kernels in their original order.
+        """
+        a = self.a
+        if type(parent) is not PoseEnclosure or type(local) is not PoseEnclosure:
+            return None
+        attributes = ("position", "orientation", "velocity", "omega")
+        vectors = tuple(getattr(pose, name) for pose in (parent, local) for name in attributes)
+        if (not self._recording_sequential_domain(*vectors)
+                or any(len(values) != size for values, size in zip(vectors, (3, 4, 3, 3) * 2))
+                or not all(self._zero(values) for values in
+                           (parent.velocity, parent.omega, local.velocity, local.omega))
+                or not all(cell.lo == cell.hi == expected
+                           for cell, expected in zip(local.orientation, UNIT))):
+            return None
+        q, vector = parent.orientation, local.position
+        cells = tuple(cell for values in vectors for cell in values)
+        endpoints = tuple(value for cell in cells for value in (cell.lo, cell.hi))
+        if (any(type(value.numerator) is not int or type(value.denominator) is not int
+                or value.denominator <= 0 for value in endpoints)
+                or any(value.numerator.bit_length() > 131 or value.denominator.bit_length() > 129
+                       for cell in (*q, *vector) for value in (cell.lo, cell.hi))
+                or any(value.denominator > a.scale or value.denominator & (value.denominator - 1)
+                       for cell in (*q, *vector, *parent.position) for value in (cell.lo, cell.hi))
+                or not self._zero((q[1], q[2], vector[2])) or self._zero(vector)
+                or not (self._zero((vector[0],)) or self._zero((vector[1],)))
+                or (q[0].lo == q[0].hi and abs(q[0].lo) == 1 and self._zero(q[1:]))):
+            return None
+        work, check, external = a.work, a.check, getattr(a.work, "external_check", None)
+        bits, scale = a.bits, a.scale
+        invalidated = False
+        receipts = tuple((cell, cell.lo, cell.hi, cell.lo.numerator, cell.lo.denominator,
+                          cell.hi.numerator, cell.hi.denominator) for cell in cells)
+
+        def admit():
+            nonlocal invalidated
+            if (self.a is not a or a.work is not work or a.check is not check
+                    or getattr(work, "external_check", None) is not external
+                    or any(getattr(pose, name) is not saved for (pose, name), saved in
+                           zip(((pose, name) for pose in (parent, local) for name in attributes), vectors))):
+                raise ReferenceError("identity", "Independent sequential composition owner changed")
+            for cell, low, high, ln, ld, hn, hd in receipts:
+                if (cell.lo is not low or cell.hi is not high
+                        or type(low.numerator) is not int or type(low.denominator) is not int
+                        or type(high.numerator) is not int or type(high.denominator) is not int
+                        or (low.numerator, low.denominator, high.numerator, high.denominator) != (ln, ld, hn, hd)):
+                    raise ReferenceError("identity", "Independent sequential composition operand changed")
+            invalidated = invalidated or not (a.bits == bits and a.scale == scale
+                                               and a.operand_limit == MAX_OPERAND_BITS)
+            a.guard(*endpoints)
+            return not invalidated
+
+        if not admit():
+            return None
+        offset = self._recording_rotate(q, vector, _composition_admission=admit)
+        if not admit():
+            return None
+        # The ordinary vector helper first takes its whole-vector identity
+        # branches, then each scalar helper admits and tests its exact zeros.
+        # That ordering is retained without another callback between receipts.
+        left = parent.position
+        if self._zero(left):
+            position = offset
+        elif self._zero(offset):
+            position = left
+        else:
+            result = []
+            for first, last in zip(left, offset):
+                a.guard(first.lo, first.hi, last.lo, last.hi)
+                if first.lo == first.hi == 0:
+                    value = last
+                elif last.lo == last.hi == 0:
+                    value = first
+                elif first.lo == first.hi and last.lo == last.hi:
+                    low = a.exact(first.lo, last.lo, "add")
+                    if not admit():
+                        return None
+                    value = a._sum_enclosure(low, low)
+                else:
+                    low = a.exact(first.lo, last.lo, "add")
+                    if not admit():
+                        return None
+                    high = a.exact(first.hi, last.hi, "add")
+                    if not admit():
+                        return None
+                    value = a._sum_enclosure(low, high)
+                if not admit():
+                    return None
+                result.append(value)
+            position = tuple(result)
+        value = PoseEnclosure(position, parent.orientation, parent.velocity, parent.omega)
+        a.guard(*(endpoint for values in (value.position, value.orientation, value.velocity, value.omega)
+                  for cell in values for endpoint in (cell.lo, cell.hi)))
+        return value if admit() else None
 
     def inverse(self, pose):
         key = self._key("inverse", pose)
