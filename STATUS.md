@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-23T19:34:33.193217+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-23T19:52:53.384938+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -44,13 +44,13 @@ local `569b67b0bdc6854cc069e6a00590e0f15267ae03`
 [draft PR #25](https://github.com/Omegapy/OntoKin/pull/25). Original branches,
 failed attempts and earlier evidence retain their identities.
 
-Latest published continuation source is `f8e0bb3e4a13bf9c83180d21e22e9a2c71e20153`, exact tree `47668cc123bd38897c558043a6680bac5b24a973`. [Checkpoint 015](docs/engineering/reach-recording-validation-2026-10-23/checkpoint-015.json) preserves exact source recovery, current GitHub observations and the later raw-evidence gap. All 1,531 materialized files match Git identities;37 historical binary archives remain unmaterialized. This does not establish release input closure.
+Latest published continuation implementation is `2892305f46ab01f405f5861181b666c0c084373f`, exact tree `b9a22c1bb1d9efb118c5b2399d5d1767ae58c890`, on [draft PR #28](https://github.com/Omegapy/OntoKin/pull/28), stacked onto PR #27. [Checkpoint 015](docs/engineering/reach-recording-validation-2026-10-23/checkpoint-015.json) recovered the exact prior source and disclosed unavailable raw runs 019–022. [Checkpoint 016](docs/engineering/reach-recording-validation-2026-10-23/checkpoint-016.json) now preserves complete fresh execution, test logs, artifacts and diagnostics. The 37 historical binary omissions remain; this is not release input closure.
 
-Checkpoint 014 retains the latest recovered raw original suite: **23/28**, with **P09, P11, P16, P23 and L03** exceeding the unchanged **100,000-operation** cap. The f8 source commit reports later 100/100 static and 126/126 release integration tests and full runs 021/022 at 23/28. Their raw logs and the other post-checkpoint 014 results are unavailable in this fresh workspace and were not found in the published tree. Those recorded claims are separate from newly executed evidence; fresh current-source repetition is next.
+The unchanged original suite is freshly **23/28**, with **P09, P11, P16, P23 and L03** exhausting the **100,000-operation** cap. The selective independent release-ancestry change passed **108/108** worker tests, then **34/34** integrated focused methods followed by the original 28 recordings. P16 gets further into source-basis calculations but still has no accepted full recording. The neutral stage observer exactly matches all five unobserved work totals and diagnostics; two earlier interrupted diagnostic attempts are retained and excluded.
 
-The integrated code now contains independent child-origin/Cartesian calculations, repeated static rotation sharing, and the release-cell correction including PlanningSimulator inherited-method admission and strong source owners. The prior description of these as unintegrated is stale. P16 remains a budget blocker; no unresolved certificate failure is inferred from the old description.
+P23 stops at its first static sample before the final-state optimization can help. The next work targets repeated earlier cold rotation seeds and independent source-pose/certificate calculations. The history-vector sufficient proof has a reviewed detached-arithmetic candidate but is not executed or integrated at this checkpoint. Existing release-cell numerical corrections, source identity and finite-bound checks remain in place. All frozen inputs, sampling, tolerances, operand limits and cache maxima remain unchanged.
 
-The immediate target remains **28/28**. Then complete Agent delivery, full current regression and Python compatibility, independent rates/native/browser/visual checks, inherited and hostile roles, and every R01–R12/Q01–Q22 gate. **PR #27 remains draft and must not merge until all mandatory acceptance gates pass.** The complete language and GOAL remain open.
+The immediate target remains **28/28**. Then complete Agent delivery, full current regression and Python compatibility, independent rates/native/browser/visual checks, inherited and hostile roles, and every R01–R12/Q01–Q22 gate. **PR #27 and PR #28 remain draft and must not merge until all mandatory acceptance gates pass.** The complete language and GOAL remain open.
 
 The historical rows below retain their original cuts and limits.
 

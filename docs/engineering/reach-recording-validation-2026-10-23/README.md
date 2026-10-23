@@ -1,5 +1,14 @@
 # Reach recording continuation, October 23, 2026
 
+## Checkpoint 016: fresh current-source execution and release ancestry
+
+The [checkpoint](checkpoint-016.json) and [archive manifest](checkpoint-016-manifest.json) preserve complete fresh baseline and integrated source recordings, exact input snapshots, full test logs, all produced GLBs/reports, neutral stage diagnostics, and both excluded diagnostic attempts. Reconstruct the ZIP by joining its listed parts in order; every part, ZIP CRC and member hash was verified. This checkpoint also preserves exact worker commit objects and patches, including the unexecuted history-vector candidate and the transient-alias issue found in its first review.
+
+Published implementation `2892305f46ab01f405f5861181b666c0c084373f` (tree `b9a22c1bb1d9efb118c5b2399d5d1767ae58c890`) selects only the required incoming child frame during independent release; its complete ancestry and actual/ideal arithmetic remain separate. The worker passed 7/7 differential and 108/108 relevant tests. The integrated source then passed 34/34 focused methods followed by the original full suite at **23/28**. P09, P11, P16, P23 and L03 still exhaust the unchanged **100,000-operation** cap. P16 reaches later independent source-basis work but has no accepted full GLB. No aggregate capped count is claimed as a quantified complete-recording saving.
+
+The accepted stage observer exactly matched all five unobserved operation counts, work categories and diagnostics. P23 fails at its first static sample, before any final-sample payoff; P09/P11/L03 need further independent pose/certificate reductions. The earlier slow observer and overlapping restart are explicitly excluded. Prior raw runs 019–022 remain unavailable as disclosed in checkpoint 015; new results have distinct identities. The 37 omitted historical binary archives still prevent release input closure. PR #27 and the stacked continuation PR #28 remain draft and unmerged; all mandatory release and full-product gates remain open.
+
+
 ## Checkpoint 015: exact source recovery and evidence gap
 
 The October 23 continuation recovered the exact published source `f8e0bb3e4a13bf9c83180d21e22e9a2c71e20153`, tree `47668cc123bd38897c558043a6680bac5b24a973`. All 1,531 materialized files and every Git tree object match their published identities. The 37 historical binary omissions remain explicitly inventoried. [Checkpoint 015](checkpoint-015.json), its [manifest](checkpoint-015-manifest.json) and [recovery archive](checkpoint-015.zip) preserve source/branch/PR observations, recovery scripts and receipts, and the restored prior run018 report. This is a recovery checkpoint, not new execution or release acceptance.
