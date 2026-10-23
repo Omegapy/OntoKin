@@ -11,7 +11,8 @@ from dataclasses import dataclass, field, replace
 from fractions import Fraction as F
 
 from .reach_reference import (
-    MAX_BOUNDARIES, MAX_CACHE, MAX_OPERAND_BITS, PoseEnclosure, ReferenceError, ZERO, _RecordingBodyRate,
+    MAX_BOUNDARIES, MAX_CACHE, MAX_OPERAND_BITS, Interval, PoseEnclosure, ReferenceError, ZERO,
+    _Action, _RecordingBodyRate,
 )
 
 
@@ -274,6 +275,7 @@ class _Node:
     relation: str | None = None
     axis: tuple | None = None
     stationary: bool = False
+    source_stationary: bool | None = None
 
 
 class _PendingCursors:
@@ -476,7 +478,7 @@ class _Plan:
         return frames
 
 
-def _build(reference, state, targets, context):
+def _build(reference, state, targets, context, *, source_stationarity=False):
     """Capture a bounded native graph in the original first-visit order."""
     model, a = reference.model, reference.a
     owners = _owners(reference)
@@ -531,6 +533,74 @@ def _build(reference, state, targets, context):
                                lambda clock: reference.p.identity().orientation, ())
     bodies, nodes, visiting, used_relations = {"world": world}, [], set(), set()
     stationary = {"world": True}
+    source_stationary = {"world": True}
+
+    def stationary_source(node, fixed):
+        # Pose-plan stationarity describes the ideal formula. Reusing a whole
+        # endpoint comparison also requires the actual source law to be fixed.
+        # These extra immutable source operands join the same bounded receipts;
+        # no evaluated pose, clock history or second numeric cache is retained.
+        if not source_stationarity:
+            return None
+        if not fixed:
+            return False
+        if node.kind == "root":
+            stem = node.path.removesuffix(".frame")
+            def read():
+                move = state.claims.get((stem, "translation"))
+                spin = state.claims.get((stem, "orientation"))
+                for owner in (move, spin):
+                    if owner is not None:
+                        active = state.actions[owner]
+                        if (type(active) is not _Action or type(active.elapsed) is not F
+                                or type(active.since) is not F):
+                            return ("stationary_root_actual", stem, active)
+                return ("stationary_root_actual", stem, state.positions[stem], state.orientations[stem],
+                        None if move is None else state.actions[move].initial,
+                        None if spin is None else state.actions[spin].initial)
+            receipt = reference._recording_capture(read)
+            if receipt is None:
+                return None
+            for vector, size in zip(receipt.values[2:], (3, 4, 3, 4)):
+                if vector is not None and (type(vector) is not tuple or len(vector) != size
+                        or any(type(cell) is not Interval for cell in vector)):
+                    return None
+            add_receipts((receipt,))
+            return True
+        parent = source_stationary[node.parent]
+        if parent is not True or node.kind != "hinge":
+            return parent
+        relation = node.relation
+        def read():
+            owner = state.claims.get((relation, "coordinate"))
+            if owner is not None:
+                active = state.actions[owner]
+                if (type(active) is not _Action or type(active.elapsed) is not F
+                        or type(active.since) is not F):
+                    return ("stationary_coordinate_actual", relation, active)
+            return ("stationary_coordinate_actual", relation, owner,
+                    state.coordinates[relation] if owner is None else state.actions[owner].initial)
+        receipt = reference._recording_capture(read)
+        if receipt is None:
+            return None
+        law = node.body.receipts[-1].values
+        if law[1] is None or law[9] != "running":
+            add_receipts((receipt,))
+            return True
+        index = law[4].index(relation) if law[2] == "reach_planar" else None
+        actual = receipt.values[3]
+        if index is not None:
+            if type(actual) is not tuple or len(actual) != 2:
+                return None
+            actual = actual[index]
+        if type(actual) not in (F, int, float):
+            return None
+        add_receipts((receipt,))
+        ideal = law[7][index] if index is not None else law[7]
+        target = law[8][index] if index is not None else law[6]
+        # A zero ideal slope alone is insufficient: source rounding may have
+        # left the actual initial coordinate different from the ideal target.
+        return F(actual) == F(ideal) == F(target)
 
     def visit(path):
         if path in bodies:
@@ -611,8 +681,10 @@ def _build(reference, state, targets, context):
                     translation.status != "running" or not any(translation.vector))
         else:
             fixed = stationary[node.parent] and (node.kind != "hinge" or not body.coordinate_rate)
-        node = replace(node, stationary=fixed)
+        source_fixed = stationary_source(node, fixed)
+        node = replace(node, stationary=fixed, source_stationary=source_fixed)
         stationary[path] = fixed
+        source_stationary[path] = source_fixed
         add_receipts(body.receipts)
         nodes.append(node)
         bodies[path] = body
@@ -649,7 +721,7 @@ def _phase_poses(reference, time, state, targets, context, batch=None):
         reference._recording_phase_plan = None
         if not reference._recording_body_domain():
             return None
-        plan = _build(reference, state, targets, context)
+        plan = _build(reference, state, targets, context, source_stationarity=batch is not None)
         if plan is None:
             return None
     adopted = batch if batch is not None and batch.register(plan, time) else None
@@ -682,3 +754,62 @@ def recording_phase_poses(reference, time, state, targets, context):
                             batch if batch.depth == 1 else None)
     finally:
         batch.depth -= 1
+
+
+def recording_stationary_frames(reference, carriers, first, last, side):
+    """Use an already registered source plan for a complete reader's reuse.
+
+    The public caller has just executed its original entry checkpoint. Every
+    selected source operand remains covered by the batch's final admission.
+    Outside this small native domain, or without an already captured plan,
+    return the ordinary graph walk sentinel without changing its behavior.
+    """
+    batch, plan = reference._recording_batch, reference._recording_phase_plan
+    if (type(batch) is not _SourceBatch or not batch.active or batch.prepared or batch.depth != 0
+            or type(plan) is not _Plan or not batch.contains(plan) or not batch.matches(plan.context)
+            or not reference._recording_body_domain() or type(side) is not str or side != plan.context[-1]
+            or type(carriers) not in (tuple, list) or len(carriers) > MAX_TARGETS
+            or any(type(carrier) is not str for carrier in carriers)
+            or type(first) is not F or type(last) is not F
+            or any(max(abs(time.numerator).bit_length(), time.denominator.bit_length()) > 1024
+                   for time in (first, last))):
+        return None
+    batch.admit_owners()
+    plan.admit_owners(reference)
+    selected = tuple(carrier if carrier == "world" or carrier.endswith(".frame")
+                     else carrier + ".frame" for carrier in carriers)
+    if len(selected) > 1 + len(reference.model.objects) + len(reference.model.sites):
+        return None
+    known = None
+    # Later endpoint requests omit carriers whose preceding comparison is
+    # already reusable. Their current pose plan can therefore omit a whole
+    # stationary branch. The same bounded batch still owns the earlier full
+    # plan and all of its source receipts: select one matching that exact
+    # phase/context instead of asking for a new source walk or pose table.
+    for candidate, _ in batch.plans.values():
+        if (type(candidate) is not _Plan or candidate.state is not plan.state
+                or candidate.context != plan.context):
+            continue
+        flags = {node.path: node.source_stationary for node in candidate.nodes}
+        flags["world"] = True
+        if all(carrier in flags and flags[carrier] is not None for carrier in selected):
+            candidate.admit_owners(reference)
+            known = flags
+            break
+    if known is None:
+        return None
+    if first > last:
+        return None
+    # Native immutable clocks and native bounded history containers were
+    # admitted on batch entry. These reads have no work callback. Both sides
+    # must select the captured state; a boundary or different side keeps the
+    # original same-state rule, including its empty result.
+    if (reference._state_at(first, side) is not plan.state
+            or reference._state_at(last, side) is not plan.state):
+        return None
+    reference.a.guard(first, last)
+    # Captured native time leaves need at most 1,075 bits. The omitted
+    # elapsed subtraction/sum and original scalar guards fit below 4,302 bits
+    # on this full-cap domain. Final receipt admission still checks all source
+    # values and rejects source replacement before any domain restart.
+    return frozenset(carrier for carrier in selected if known[carrier])

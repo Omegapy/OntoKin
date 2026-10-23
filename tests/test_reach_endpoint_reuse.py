@@ -118,9 +118,16 @@ class ReachEndpointReuseTests(unittest.TestCase):
             result=export_glb(compiler.model,options=ExportOptions(end=F(3),fps=1,helpers=False),
                               target_contract="ontokin.glb/0.6",work=compiler.reach_work)
             return result,compiler.budget.operations
-        current,current_cost=build()
-        with patch.object(export,"_endpoint_rounding",new=original_endpoint):
-            previous,previous_cost=build()
+        # The later component-maxima reduction can cover this entire export
+        # without calling either scalar kernel. Select its ordinary fallback
+        # in both runs so this test still measures the named endpoint change.
+        with patch.object(export,"_endpoint_group_axes",return_value=None):
+            with patch.object(export,"_endpoint_rounding",wraps=export._endpoint_rounding) as current_scalar:
+                current,current_cost=build()
+            with patch.object(export,"_endpoint_rounding",side_effect=original_endpoint) as previous_scalar:
+                previous,previous_cost=build()
+        self.assertGreater(current_scalar.call_count,0)
+        self.assertEqual(current_scalar.call_count,previous_scalar.call_count)
         self.assertEqual(current.data,previous.data)
         self.assertEqual(current.report["validation"],previous.report["validation"])
         self.assertLess(current_cost,previous_cost)

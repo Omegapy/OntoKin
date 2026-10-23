@@ -188,3 +188,68 @@ These checks establish only their executed identities and domains. Full
 recording, regression, compatibility and release acceptance remain separate
 gates; measured operation savings and any failed attempts belong in the
 identified run evidence rather than being inferred from this derivation.
+## Stationary endpoint source proofs within the final source batch
+
+The complete reader already retains the preceding endpoint comparison. It may
+reuse that comparison only when the actual supplied values and claims match
+and both the actual and ideal source pose laws remain constant. The ordinary
+`recording_stationary_frames` walk re-establishes this structural fact for
+every key. An already registered phase plan can establish it once within the
+same bounded source transaction.
+
+The optional proof keeps the original stationarity entry checkpoint. After
+that callback it requires the live 128-bit arithmetic/full operand domain,
+the same model/arithmetic/history owners, a plan registered by the current
+reader context, native bounded carrier names and exact clocks, and the same
+captured state at both queried clocks. Plans from other contexts, a different
+boundary side or state, prepared transactions, nested readers, unsupported
+shapes and plans built without this proof retain the original graph walk.
+No new source plan is created by a stationarity query.
+
+Later endpoint requests omit carriers whose preceding endpoint comparison can
+already be reused, so the current pose plan may omit their stationary branch.
+The stationarity proof may select an earlier plan from the same existing batch
+of at most 16 plans. Its opaque context, exact state identity and boundary side
+must match the registered current plan; its native plan type and source owners
+must pass admission; and it must cover every queried carrier. Its receipts
+remain subject to the original final transaction admission. Missing, foreign,
+unregistered or other-phase plans cannot lend a stationary proof. Evicting
+numeric cursor or pose entries does not invalidate an immutable source recipe
+or grant access to any evicted numeric value.
+
+Ideal stationarity is not sufficient. A zero ideal coordinate slope may
+coexist with a different actual initial coordinate. During a batch's original
+plan construction, stationary roots therefore capture their actual position
+and orientation anchors and the actual initial values of any move/spin laws.
+Stationary hinge candidates capture their actual coordinate/initial operands.
+These are small immutable source receipts, not computed poses or numerical
+memo entries. Native action records and exact elapsed/since clocks are
+required for the optional proof. A running coordinate is stationary only when
+actual initial, ideal initial and target are equal. A fixed attachment inherits
+its parent's result. A moving ideal ancestor cannot produce a positive
+stationarity result merely because its endpoint happens to repeat.
+
+All extra receipts join the existing maximum of 1,024 source receipts and
+16 captured plans. They are charged and re-admitted by the same final source
+batch after every outward report conversion. Replacing a captured actual
+anchor, initial coordinate, source authority or owner rejects the transaction.
+Source identity rejection retains precedence over the private final-cap
+restart. No numerical cursor, completed pose table or clock history is added.
+The existing 256-entry LRU, per-key cursor lookups/publications, eviction and
+64-step reseeding remain unchanged.
+
+The query's clocks have at most 1,024 numerator/denominator bits. Captured
+exact source clock leaves have that same bound; finite binary64 source leaves
+have at most 1,075 bits. The original elapsed subtraction/sum and scalar
+guards fit below 4,302 bits on this sufficient domain, well below the unchanged
+32,768-bit operand ceiling. Narrower requests retain the original calculation.
+No floating approximation or source result from the producer enters the proof.
+
+`tests/test_reach_reference_stationary_batch.py` covers exact stationary sets,
+pose cells, actual source prefix bytes, actual-versus-ideal zero-rate separation,
+final actual-source mutation, entry cancellation/narrowing, owner replacement,
+phase/side and unsupported-domain fallback, nested contexts, eviction and
+reseeding. Full-to-pruned request sequences and actual multi-key prefixes
+exercise selection of an earlier registered plan, including changed source,
+ownership, context and registration. Results must be recorded from the identified committed candidate;
+the existence of these tests is not a passing recording or release claim.

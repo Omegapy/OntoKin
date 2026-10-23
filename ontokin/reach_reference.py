@@ -2788,6 +2788,10 @@ class ReachReference:
         fresh evaluation, including after completion, release and force events.
         """
         self.a.tick()
+        from .reach_reference_plan import recording_stationary_frames
+        captured = recording_stationary_frames(self, carriers, first, last, side)
+        if captured is not None:
+            return captured
         selected = self._recording_carriers(carriers)
         first, last = F(first), F(last)
         self.a.guard(first, last)
