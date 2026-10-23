@@ -3536,8 +3536,12 @@ class ReachReference:
         obj = self.model.objects[child]
         if state.modes[child] != "prescribed" or obj.physical.get("kind") != "sphere_body":
             raise ReferenceError("source_admission", "Independent grip child is not a prescribed physical sphere")
-        actual = self._pose_map(time, incoming, ideal=False)[child + ".frame"]
-        ideal = self._pose_map(time, incoming, ideal=True)[child + ".frame"]
+        # Release consumes this child's full incoming kinematics. The walker
+        # still evaluates its complete ancestry; unrelated frames are unused.
+        actual = self._pose_map(time, incoming, ideal=False,
+                                selected=(child + ".frame",))[child + ".frame"]
+        ideal = self._pose_map(time, incoming, ideal=True,
+                               selected=(child + ".frame",))[child + ".frame"]
         bound = self._phase(child + ".frame", time, time, incoming)
         materialized = PoseEnclosure(
             self._expand_vector(actual.position, bound.source_numeric_position_error, rounded=True),
