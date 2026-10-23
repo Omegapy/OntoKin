@@ -225,6 +225,11 @@ class ReachRecordingCapturedDynamicTests(unittest.TestCase):
                     sim.state.active_grips.add("grip")
                 else:
                     fixture = (sim, ("payload.origin.frame",), *fixture[2:])
+                if change in ("nonplanar_spin", "nonplanar_rotation"):
+                    # This deliberately synthesized native anchor has no
+                    # applicable transition proof. Retaining the old witness
+                    # instead must reject, as the transfer-admission test checks.
+                    sim.state.dynamic_cells.pop("payload", None)
                 before = sim.work.counts.get("recording_captured_phase_clock", 0)
                 self.assertIsNone(begin(fixture, (F(17, 8), F(9, 4))))
                 self.assertEqual(before, sim.work.counts.get("recording_captured_phase_clock", 0))

@@ -638,7 +638,8 @@ def verify_numeric_bases(quantization, *, work):
     root = Path(__file__).resolve().parents[1]
     names = ("ontokin/reach_numeric.py", "ontokin/reach_kinematics.py", "ontokin/reach_pose.py",
              "ontokin/reach_phase.py", "ontokin/reach_runtime.py", "ontokin/reach_export.py",
-             "ontokin/reach_recording_fast.py", "ontokin/reach_recording_capture.py")
+             "ontokin/reach_recording_fast.py", "ontokin/reach_recording_capture.py",
+             "ontokin/reach_transfer_bounds.py")
     entries = [(name, _identified_digest(root / name, work=work)) for name in names]
     _tick(work, "independent_basis_aggregate")
     implementation = hashlib.sha256("".join(name + "\0" + digest + "\n" for name, digest in entries).encode("ascii")).hexdigest()
@@ -647,7 +648,8 @@ def verify_numeric_bases(quantization, *, work):
                         "docs/engineering/reach-carrier-rotation-cursors.md",
                         "docs/engineering/reach-recording-certified-planar.md",
                         "docs/engineering/reach-deferred-phase-locations.md",
-                        "docs/engineering/reach-planning-reuse.md")
+                        "docs/engineering/reach-planning-reuse.md",
+                        "docs/engineering/reach-release-cell-envelope.md")
     derivations = [(name, _identified_digest(root / name, work=work)) for name in derivation_names]
     _tick(work, "independent_basis_aggregate")
     derivation = hashlib.sha256("".join(name + "\0" + digest + "\n" for name, digest in derivations).encode("ascii")).hexdigest()

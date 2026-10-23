@@ -1132,10 +1132,19 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None, rec
         extent = a.add(a.l1(initial.position), a.mul(velocity, elapsed),
             a.div(a.mul(acceleration, elapsed, elapsed), F(2)))
         actual_speed = a.add(velocity, a.mul(acceleration, elapsed))
+        if path in state.dynamic_cells:
+            from .reach_transfer_bounds import source_sizes
+            cells = source_sizes(simulator, state, path, start, end)
+            extent = a.maximum(extent, cells[0])
+            actual_speed = a.maximum(actual_speed, cells[1])
+        else:
+            cells = None
         position_error = a.add(error.position_m, a.mul(error.velocity_m_per_s, error_elapsed),
             a.div(a.mul(acceleration_error, error_elapsed, error_elapsed), F(2)))
         velocity_error = a.add(error.velocity_m_per_s, a.mul(acceleration_error, error_elapsed), a.rounding(actual_speed))
         actual_omega = a.l1(initial.omega)
+        if cells is not None:
+            actual_omega = a.maximum(actual_omega, cells[2])
         rotation_plan(initial.omega, elapsed)
         moving = bool(actual_omega and elapsed)
         return finish(max_position_l1_m=extent, trig_count=int(moving), product_count=3 if moving else 1,

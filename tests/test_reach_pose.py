@@ -298,11 +298,13 @@ class ReachPoseTests(unittest.TestCase):
             "ontokin/reach_numeric.py","ontokin/reach_kinematics.py","ontokin/reach_pose.py",
             "ontokin/reach_phase.py","ontokin/reach_runtime.py","ontokin/reach_export.py",
             "ontokin/reach_recording_fast.py", "ontokin/reach_recording_capture.py",
+            "ontokin/reach_transfer_bounds.py",
             "docs/engineering/reach-numeric-kernel.md","docs/engineering/reach-source-kernel.md",
             "docs/engineering/reach-coaxial-phase-bounds.md","docs/engineering/reach-carrier-rotation-cursors.md",
             "docs/engineering/reach-recording-certified-planar.md",
             "docs/engineering/reach-deferred-phase-locations.md",
-            "docs/engineering/reach-planning-reuse.md"))
+            "docs/engineering/reach-planning-reuse.md",
+            "docs/engineering/reach-release-cell-envelope.md"))
         self.assertEqual(set(basis.as_dict()),{"name","version","implementation","method","derivation"})
         before=work.operations
         self.assertIs(source_numeric_basis(work=work),basis)

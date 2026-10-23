@@ -511,6 +511,7 @@ def _dynamic_source(simulator, state, path, ops, force_sizes, *, copy_initial=Fa
     from .evaluator import _DynamicInitial, _Kinematics
     from .force_runtime import _ActiveForce, _ForceState
     from .model import ForcePayload
+    from .reach_transfer_bounds import recording_receipt
 
     work, model = ops.work, simulator.model
 
@@ -593,6 +594,8 @@ def _dynamic_source(simulator, state, path, ops, force_sizes, *, copy_initial=Fa
         changes.append((freeze(row[0]), force(row[1])))
     acceleration = model.gravity if history.acceleration is None else history.acceleration
     error_values = error if error is not None else AnchorError()
+    proof_identities, proof_witness = recording_receipt(simulator, state, path)
+    identities.extend(proof_identities)
     witness = (freeze(model.duration), vector(model.gravity, 3), freeze(state.modes[path]),
         freeze(anchor.time), freeze(anchor.since), initial_witness,
         vector(history.net, 3), None if history.acceleration is None else vector(history.acceleration, 3),
@@ -600,17 +603,18 @@ def _dynamic_source(simulator, state, path, ops, force_sizes, *, copy_initial=Fa
         active, tuple(changes), tuple(freeze(getattr(error_values, field)) for field in (
             "position_m", "rotation_rad", "velocity_m_per_s", "angular_velocity_rad_per_s")),
         freeze(state.dynamic_error_times[path]), vector(state.ideal_accelerations[path], 3),
-        freeze(model.objects[path].mass))
+        freeze(model.objects[path].mass), proof_witness)
     receipt = _DynamicReceipt(tuple(identities), witness, force_sizes)
     return receipt, initial, anchor.time, model.duration, acceleration
 
 
 def _dynamic_inputs(simulator, state, path, ops):
+    from .reach_transfer_bounds import recording_work
     history = state.forces[path]
     sizes = (len(history.active), len(history.last_changes))
     if sum(sizes) > ops.work.max_cache_entries:
         raise TypeError("An oversized dynamic source history retains ordinary sampling.")
-    ops.work.charge("recording_captured_dynamic_input", sum(sizes) + 1)
+    ops.work.charge("recording_captured_dynamic_input", sum(sizes) + recording_work(state, path) + 1)
     ops._require_domain()
     receipt, initial, anchor_time, duration, acceleration = _dynamic_source(
         simulator, state, path, ops, sizes, copy_initial=True)

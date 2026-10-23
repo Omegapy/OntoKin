@@ -1814,14 +1814,16 @@ def source_numeric_basis(*,work):
     root=Path(__file__).resolve().parent.parent
     implementation_names=("ontokin/reach_numeric.py","ontokin/reach_kinematics.py","ontokin/reach_pose.py",
                           "ontokin/reach_phase.py","ontokin/reach_runtime.py","ontokin/reach_export.py",
-                          "ontokin/reach_recording_fast.py", "ontokin/reach_recording_capture.py")
+                          "ontokin/reach_recording_fast.py", "ontokin/reach_recording_capture.py",
+                          "ontokin/reach_transfer_bounds.py")
     derivation_names=("docs/engineering/reach-numeric-kernel.md",
                       "docs/engineering/reach-source-kernel.md",
                       "docs/engineering/reach-coaxial-phase-bounds.md",
                       "docs/engineering/reach-carrier-rotation-cursors.md",
                       "docs/engineering/reach-recording-certified-planar.md",
                       "docs/engineering/reach-deferred-phase-locations.md",
-                      "docs/engineering/reach-planning-reuse.md")
+                      "docs/engineering/reach-planning-reuse.md",
+                      "docs/engineering/reach-release-cell-envelope.md")
     names=implementation_names+derivation_names
     entries=[]
     for name in names:

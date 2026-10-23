@@ -19,8 +19,41 @@ from .reach_projection import (occurrence, reach_projection, reach_record_bound,
                                measure_reach_json)
 from .reach_source import reach_error
 from .reach_phase import AnchorError, PhaseArithmetic, joint_phase, phase_bounds
-from .reach_pose import ZERO as POSE_ZERO
+from .reach_pose import ZERO as POSE_ZERO, ReachPoseOps as _StaticRecordingOps
 from .values import bounded_data
+
+
+# The exact seed's native kernels must keep their imported dispatch. An
+# instance/class replacement cannot borrow a recipe proved for other code.
+_STATIC_RECORDING_DISPATCH = tuple((name, method)
+    for name, method in vars(_StaticRecordingOps).items() if callable(method))
+_STATIC_RECORDING_ABSENT = object()
+_STATIC_RECORDING_STORAGE = tuple((name, vars(_StaticRecordingOps).get(name, _STATIC_RECORDING_ABSENT))
+    for name in ("__getattribute__", "__getattr__", "__setattr__", "__delattr__", "__dict__", "work"))
+
+
+def _share_static_recording_rotations(state, ops):
+    """Admit only clock-independent native recording operands.
+
+    This predicate enables a structural index into the current traversal's
+    already required poses. It creates no numerical cache or source proof.
+    """
+    if type(state) is not _ReachRunState or type(ops) is not _StaticRecordingOps:
+        return False
+    namespace = vars(_StaticRecordingOps)
+    if any(namespace.get(name, _STATIC_RECORDING_ABSENT) is not saved
+           for name, saved in (*_STATIC_RECORDING_STORAGE, *_STATIC_RECORDING_DISPATCH)):
+        return False
+    # Inspect raw native storage only after admitting its original dispatch.
+    # Class descriptors cannot run merely to claim that they are native.
+    own = object.__getattribute__(ops, "__dict__")
+    if type(own) is not dict or "work" not in own or any(name in own for name, _ in _STATIC_RECORDING_DISPATCH):
+        return False
+    work = own["work"]
+    return (type(state.claims) is dict and not state.claims
+        and type(state.dynamic) is dict and not state.dynamic
+        and type(work.max_operand_bits) is int and work.max_operand_bits == 32768
+        and type(work.max_cache_entries) is int and 1 <= work.max_cache_entries <= 256)
 
 
 def _incoming_release_bound(model, time, *, check=None):
@@ -213,6 +246,7 @@ class _ReachRunState(_ForceRunState):
     dynamic_errors: dict = field(default_factory=dict)
     dynamic_error_times: dict = field(default_factory=dict)
     ideal_accelerations: dict = field(default_factory=dict)
+    dynamic_cells: dict = field(default_factory=dict)
 
 
 @dataclass
@@ -1007,6 +1041,218 @@ class ReachSimulator(ForceSimulator):
                         compare(proof_time, proof.end, self.work) <= 0):
                     angular_proof = proof
 
+        # Exact static recording poses can share a completed complete-body
+        # rotation in this SAME traversal. Their full source proofs and world
+        # origins still belong to each actual occurrence. Moving/native cursor
+        # sharing keeps its existing separately admitted path below.
+        share_static = (recording_only and type(recording_context) is object and type(time) is Fraction
+            and recording_pose_ops is None and angular_proof is not None
+            and type(angular_proof) is RecordingAngularProof
+            and type(angular_proof.frames) is MappingProxyType
+            and len(angular_proof.frames) <= 4096
+            and _share_static_recording_rotations(state, ops))
+        static_valid = share_static
+        static_work, static_check = self.work, self.check
+        static_external_check, static_capacity = self.work.external_check, self.work.max_cache_entries
+        static_proof_frames = angular_proof.frames if share_static else None
+        static_revision = self.model.program_revision
+
+        def fraction_receipt(value):
+            if (type(value) is Fraction and type(value.numerator) is int
+                    and type(value.denominator) is int and value.denominator > 0
+                    and max(abs(value.numerator).bit_length(), value.denominator.bit_length()) <= 512):
+                return value.numerator, value.denominator
+            return None
+
+        static_clocks = (None if not share_static else
+            (fraction_receipt(angular_proof.start), fraction_receipt(angular_proof.end)))
+        static_time = fraction_receipt(time) if share_static else None
+
+        def static_context():
+            nonlocal static_valid
+            if not static_valid:
+                return False
+            valid = (_share_static_recording_rotations(state, ops)
+                and self.model is source_model and self.state is source_root_state
+                and state is source_state and self.pose_ops is ops and self.work is static_work
+                and ops.work is static_work and self.check is static_check
+                and static_work.external_check is static_external_check
+                and static_work.max_cache_entries == static_capacity
+                and type(angular_proof) is RecordingAngularProof
+                and type(angular_proof.frames) is MappingProxyType
+                and angular_proof.frames is static_proof_frames
+                and angular_proof.program_revision == static_revision == source_model.program_revision
+                and static_clocks is not None and None not in static_clocks
+                and static_time is not None and fraction_receipt(time) == static_time
+                and (fraction_receipt(angular_proof.start), fraction_receipt(angular_proof.end)) == static_clocks)
+            if not valid:
+                static_valid = False
+            return valid
+
+        def same_typed_witness(left, right):
+            # The old seed validates each complete witness again. Here each
+            # graph node's fixed native shape is admitted once, before it can
+            # identify an already required representative rotation.
+            pending, count = [(left, right, 0)], 0
+            while pending:
+                if count % 32 == 0:
+                    static_work.charge("recording_static_witness_block")
+                    if not static_context():
+                        return False
+                a, b, depth = pending.pop()
+                count += 1
+                if count > 512 or depth > 8 or type(a) is not type(b):
+                    return False
+                if type(a) is tuple:
+                    if len(a) != len(b) or len(a) > 32:
+                        return False
+                    pending.extend((x, y, depth + 1) for x, y in zip(a, b))
+                elif (a is not None and type(a) not in (int, str)) or a != b:
+                    return False
+            return True
+
+        def static_record_same(saved):
+            frame, kind, path, record, parent, witness, rate, number, axis, pair, count, token = saved
+            return (type(record) is RecordingAngularFrame and type(rate) is _AxialRate
+                and static_proof_frames.get(frame) is record and type(record.parent) is type(parent)
+                and record.parent == parent
+                and record.witness is witness and record.rate is rate and rate.value is number
+                and rate.axis is axis and fraction_receipt(number) == pair == (0, 1)
+                and type(record.trig_count) is int and record.trig_count == count
+                and record.token is token)
+
+        def static_recipe(frame, kind, path, record, current):
+            if (not static_context() or type(record) is not RecordingAngularFrame
+                    or type(record.rate) is not _AxialRate
+                    or type(record.rate.axis) not in (int, type(None))
+                    or record.rate.axis not in (None, 0, 1, 2)
+                    or fraction_receipt(record.rate.value) != (0, 1)
+                    or type(record.token) is not object):
+                return None
+            parent = orientation_recipes.get(record.parent)
+            if record.parent is not None and parent is None:
+                return None
+            saved = (frame, kind, path, record, record.parent, record.witness,
+                record.rate, record.rate.value, record.rate.axis,
+                fraction_receipt(record.rate.value), record.trig_count, record.token)
+            if not same_typed_witness((record.parent, record.witness), current):
+                return None
+            frozen = RecordingAngularFrame(_AxialRate(saved[8], Fraction(saved[7])),
+                saved[4], saved[5], saved[10], saved[11])
+            recipe = _recording_orientation_recipe(frozen,
+                None if parent is None else parent[0], work=static_work)
+            if (recipe is None or not static_context() or not static_record_same(saved)
+                    or _current_recording_angular_witness(source_model, state, kind, path,
+                        work=static_work) != (saved[4], saved[5])):
+                return None
+            # The structural key never retains a mutable Fraction wrapper.
+            # Every zero rate has the same admitted native integer pair.
+            return (recipe[:2] + (saved[9],) + recipe[3:]), saved
+
+        def static_rotation_receipt(rotation):
+            from math import isfinite
+            from .reach_pose import RotationValue
+
+            if (type(rotation) is not RotationValue or type(rotation.components) is not tuple
+                    or len(rotation.components) != 4):
+                return None
+            parts = tuple(fraction_receipt(value) for value in (*rotation.components, rotation.error_rad))
+            if None in parts or not any(pair[0] for pair in parts[:4]) or parts[-1][0] < 0:
+                return None
+            frozen = rotation.frozen_projection
+            if frozen is not None and (type(frozen) is not tuple or len(frozen) != 4
+                    or any(type(value) is not float or not isfinite(value) for value in frozen)):
+                return None
+            return parts, None if frozen is None else tuple(value.hex() for value in frozen)
+
+        def static_chain(frame):
+            nonlocal static_valid
+            steps = 0
+            while frame is not None:
+                steps += 1
+                if steps > 64:
+                    static_valid = False
+                    return False
+                entry = orientation_recipes.get(frame)
+                if entry is None:
+                    static_valid = False
+                    return False
+                saved = entry[1]
+                if (not static_record_same(saved) or
+                        _current_recording_angular_witness(source_model, state, saved[1], saved[2],
+                            work=static_work) != (saved[4], saved[5])):
+                    static_valid = False
+                    return False
+                frame = saved[4]
+            return static_context()
+
+        def static_shared_rotation(representative, frame, source_records, max_steps):
+            from .reach_pose import MAX_RECORDING_ROTATION_STEPS, RecordedTransform, RotationValue
+
+            nonlocal static_valid
+            saved_frame, saved_pose, saved_rotation, fingerprint = representative
+
+            def unchanged():
+                nonlocal static_valid
+                valid = (static_context() and type(max_steps) is int
+                    and 1 <= max_steps <= MAX_RECORDING_ROTATION_STEPS
+                    and frames.get(saved_frame) is saved_pose
+                    and type(saved_pose) is RecordedTransform and saved_pose._ops is ops
+                    and saved_pose.rotation is saved_rotation
+                    and static_rotation_receipt(saved_rotation) == fingerprint)
+                if not valid:
+                    static_valid = False
+                return valid
+
+            if not unchanged():
+                static_valid = False
+                return None
+            # Detach the actual numerical operands before the first callback.
+            # A later transient mutation of an exposed cache/pose wrapper can
+            # neither change this copy nor revive a declined receipt.
+            parts, _ = fingerprint
+            rotation = RotationValue(tuple(Fraction(*part) for part in parts[:4]),
+                Fraction(*parts[4]), saved_rotation.frozen_projection)
+            static_work.charge("recording_static_body_shared_orientation")
+            if not unchanged():
+                static_valid = False
+                return None
+            for _ in range(source_records):
+                static_work.charge("recording_angular_witness_guard")
+                if not unchanged():
+                    static_valid = False
+                    return None
+            if not static_chain(frame):
+                static_valid = False
+                return None
+            static_work.guard(*rotation.components, rotation.error_rad)
+            return rotation, unchanged
+
+        def static_seed_inputs(frame):
+            # A begin/end receipt cannot prove which live proof records a
+            # callback-interleaved decoder consumed. Supply a private native
+            # ancestry copy, made only from the already typed immutable
+            # witnesses. No model/state-reading method is delegated here.
+            if not static_context() or not static_chain(frame):
+                return None
+            snapshots, cursor = [], frame
+            while cursor is not None:
+                saved = orientation_recipes[cursor][1]
+                snapshots.append(saved)
+                cursor = saved[4]
+            for _ in snapshots:
+                static_work.charge("recording_static_seed_input")
+                if not static_context():
+                    return None
+            if not static_chain(frame):
+                return None
+            records = {saved[0]: RecordingAngularFrame(
+                _AxialRate(saved[8], Fraction(*saved[9])), saved[4], saved[5], saved[10], saved[11])
+                for saved in snapshots}
+            proof = RecordingAngularProof(Fraction(*static_clocks[0]), Fraction(*static_clocks[1]),
+                static_revision, MappingProxyType(records))
+            return proof, Fraction(*static_time)
+
         def angular_frame(frame_path, kind, source_path):
             """Validate one current law and its already visited parent proof.
 
@@ -1047,7 +1293,11 @@ class ReachSimulator(ForceSimulator):
             valid_angular_frames.add(frame_path)
             angular_receipts[frame_path] = (kind, source_path, record,
                 angular_receipts.get(record.parent) if record.parent is not None else None)
-            if share_orientations:
+            if share_static:
+                entry = static_recipe(frame_path, kind, source_path, record, current)
+                if entry is not None:
+                    orientation_recipes[frame_path] = entry
+            elif share_orientations:
                 recipe = _recording_orientation_recipe(record,
                     orientation_recipes.get(record.parent), work=self.work)
                 if recipe is not None:
@@ -1206,27 +1456,41 @@ class ReachSimulator(ForceSimulator):
                                 if current != (expected.parent, expected.witness):
                                     raise ReachAdmissionError("reach_domain", "The carrier source witness changed during sampling.")
                             return True
+                        static_seed_fingerprint = None
                         def direct_seed():
+                            nonlocal static_seed_fingerprint
                             # The exact source kernels consume the same frozen
                             # operands as this admitted body proof. A callback
                             # cannot substitute a temporary live-source value
                             # into a seed published under the old proof token.
                             from .reach_recording_fast import captured_recording_orientation
-                            return captured_recording_orientation(
-                                self.pose_ops, angular_proof, path + ".frame", time)
+                            inputs = static_seed_inputs(path + ".frame") if share_static else None
+                            proof, clock = inputs if inputs is not None else (angular_proof, time)
+                            result = captured_recording_orientation(
+                                self.pose_ops, proof, path + ".frame", clock)
+                            if inputs is not None and static_context() and static_chain(path + ".frame"):
+                                static_seed_fingerprint = static_rotation_receipt(result)
+                            return result
                         recipe = orientation_recipes.get(path + ".frame")
+                        if share_static and recipe is not None:
+                            recipe = recipe[0]
                         if recipe is not None:
-                            recipe = (angular_proof.start, angular_proof.end, recipe)
+                            recipe = ((*static_clocks, recipe) if share_static else
+                                      (angular_proof.start, angular_proof.end, recipe))
                         representative = (shared_orientation_frames.get(recipe)
                             if recipe is not None else None)
-                        if representative is None:
+                        shared_rotation = (static_shared_rotation(representative, path + ".frame",
+                            source_records, MAX_KEYFRAMES)
+                            if share_static and representative is not None else None)
+                        rotation = None if shared_rotation is None else shared_rotation[0]
+                        if representative is None or share_static and rotation is None:
                             rotation = ops.recording_body_orientation(direct_seed,
                                 record.rate.axis, record.rate.value, time,
                                 phase_start=angular_proof.start, phase_end=angular_proof.end,
                                 context=recording_context, path="carrier:" + path,
                                 proof_token=record.token, max_steps=MAX_KEYFRAMES,
                                 source_admission=source_admission, source_records=source_records)
-                        else:
+                        elif not share_static:
                             # This index refers only to an already required
                             # pose in this same graph/clock/phase. No second
                             # numerical cache or cursor is retained. Equality
@@ -1239,6 +1503,7 @@ class ReachSimulator(ForceSimulator):
                             ops._require_domain()
                             source_admission()
                             ops._rotation_domain(rotation)
+                        fingerprint = static_rotation_receipt(rotation) if share_static else None
                         # With a zero child-site offset, the hinge and inverse
                         # child-site rotations do not move the parent's origin.
                         # Repeated identical 96-bit grid projections are
@@ -1247,8 +1512,32 @@ class ReachSimulator(ForceSimulator):
                             if recording_pose_ops is not None else ops.make_recording(
                                 position=ops._rounded_vector(parent.exact_position),
                                 orientation=rotation))
+                        if shared_rotation is not None and (not shared_rotation[1]()
+                                or not static_chain(path + ".frame")):
+                            # The original origin/grid/exposure checkpoints
+                            # follow source admission. Recheck the borrowed
+                            # result after those callbacks too, before this
+                            # occurrence can enter the actual graph.
+                            rotation = ops.recording_body_orientation(direct_seed,
+                                record.rate.axis, record.rate.value, time,
+                                phase_start=angular_proof.start, phase_end=angular_proof.end,
+                                context=recording_context, path="carrier:" + path,
+                                proof_token=record.token, max_steps=MAX_KEYFRAMES,
+                                source_admission=source_admission, source_records=source_records)
+                            result = ops.make_recording(
+                                position=ops._rounded_vector(parent.exact_position), orientation=rotation)
+                            fingerprint = None
                         if recipe is not None:
-                            shared_orientation_frames.setdefault(recipe, path + ".frame")
+                            if share_static:
+                                if (static_context() and fingerprint is not None
+                                        and (shared_rotation is not None or static_seed_fingerprint == fingerprint)
+                                        and static_rotation_receipt(result.rotation) == fingerprint
+                                        and static_chain(path + ".frame")
+                                        and len(shared_orientation_frames) < static_capacity):
+                                    shared_orientation_frames.setdefault(recipe,
+                                        (path + ".frame", result, result.rotation, fingerprint))
+                            else:
+                                shared_orientation_frames.setdefault(recipe, path + ".frame")
                     else:
                         result = slot(path,
                             ("joint", parent, joint_kind, joint_axis, coordinate, slope, child_pose), connected)
@@ -1543,7 +1832,7 @@ class ReachSimulator(ForceSimulator):
         return self.pose_ops.materialize(self.pose_ops.make(
             position=current.position, orientation=current.rotation, velocity=velocity, omega=omega))
 
-    def _impulse_error(self, event, time, state, before):
+    def _impulse_error(self, event, time, state, before, transfer=None):
         """Propagate the actual impulse's rounding and incoming orientation error."""
         a = PhaseArithmetic(self.work)
         obj, payload = self.model.objects[event.target], event.impulse
@@ -1565,6 +1854,10 @@ class ReachSimulator(ForceSimulator):
             a.add(before.velocity_error_m_per_s, velocity_round),
             a.add(before.angular_velocity_error_rad_per_s, a.div(angular_impulse_error, a.number(obj.inertia)), omega_round))
         state.dynamic_error_times[event.target] = time
+        if transfer is not None:
+            from .reach_transfer_bounds import impulse_anchor
+            impulse_anchor(self, state, event.target, time, transfer, before,
+                           payload, obj.mass, obj.inertia)
 
     def _ideal_acceleration(self, path, state):
         a = PhaseArithmetic(self.work)
@@ -1656,6 +1949,19 @@ class ReachSimulator(ForceSimulator):
                     ideal_initial = self._ideal_coordinate(action.target, time, state)
             impulse_bound = (self._anchor_bound(event.target, time, state)
                              if event.kind == "impulse" and event.target in state.dynamic else None)
+            release_transfer = impulse_transfer = None
+            if event.kind == "release":
+                from .reach_transfer_bounds import first_release
+                release_joint = self.model.joints.get(event.target)
+                release_site = (self.model.sites.get(release_joint.child)
+                                if release_joint is not None else None)
+                if release_site is not None:
+                    release_transfer = first_release(self, self.state, release_site.owner, time)
+            elif (event.kind == "impulse" and impulse_bound is not None
+                    and event.impulse is not None
+                    and event.impulse.impulse_world_n_s != ZERO):
+                from .reach_transfer_bounds import dynamic_transfer
+                impulse_transfer = dynamic_transfer(self, state, event.target, time)
             super()._event(event, time, state, incoming, dependencies, touched)
             if event.kind == "start" and action is not None:
                 runtime = state.actions[action.path]
@@ -1669,9 +1975,14 @@ class ReachSimulator(ForceSimulator):
                 state.dynamic_errors[child] = self._anchor_error(self._anchor_bound(child, time, self.state))
                 state.dynamic_error_times[child] = time
                 state.ideal_accelerations[child] = tuple(PhaseArithmetic(self.work).number(value) for value in self.model.gravity)
+                from .reach_transfer_bounds import release_anchor
+                release_anchor(self, state, child, time, release_transfer)
                 self._pending_releases.append(self._release_record(event, time, incoming, dependencies))
             if event.kind == "impulse" and event.impulse.impulse_world_n_s != ZERO:
-                self._impulse_error(event, time, state, impulse_bound)
+                if impulse_transfer is None:
+                    self._impulse_error(event, time, state, impulse_bound)
+                else:
+                    self._impulse_error(event, time, state, impulse_bound, impulse_transfer)
             self._invalidate()
             return
         runtime = state.actions[event.target]
@@ -1811,6 +2122,10 @@ class ReachSimulator(ForceSimulator):
             self._terminal_pose_context = None
         original = state.dynamic.get(path)
         before = self._anchor_bound(path, time, state) if changed else None
+        transfer = None
+        if changed and path in state.dynamic_cells:
+            from .reach_transfer_bounds import dynamic_transfer
+            transfer = dynamic_transfer(self, state, path, time)
         super()._aggregate(path, time, state)
         if changed:
             error = self._anchor_error(before)
@@ -1823,6 +2138,11 @@ class ReachSimulator(ForceSimulator):
                 point = self._dynamic_kinematics(path, time, state)
                 position_round = a.l1(tuple(a.sub(a.number(x), y) for x, y in zip(point.position, point.exact_position)))
                 velocity_round = a.l1(tuple(a.sub(a.number(x), y) for x, y in zip(point.velocity, point.exact_velocity)))
+                if transfer is not None:
+                    from .reach_transfer_bounds import CellArithmetic
+                    cell_arithmetic = CellArithmetic(self.work)
+                    position_round = a.maximum(position_round, cell_arithmetic.publication(transfer.sizes[0]))
+                    velocity_round = a.maximum(velocity_round, cell_arithmetic.publication(transfer.sizes[1]))
                 error = AnchorError(a.add(error.position_m, position_round),
                     a.add(error.rotation_rad, Fraction(1, 1 << 50)),
                     a.add(error.velocity_m_per_s, velocity_round), error.angular_velocity_rad_per_s)
@@ -1831,6 +2151,10 @@ class ReachSimulator(ForceSimulator):
             state.dynamic_errors[path] = error
             state.dynamic_error_times[path] = time
             state.ideal_accelerations[path] = self._ideal_acceleration(path, state)
+            if transfer is not None:
+                from .reach_transfer_bounds import force_anchor
+                force_anchor(self, state, path, time, transfer, self._anchor_error(before),
+                             changed=state.dynamic[path] is not original)
         self._invalidate()
 
     def _validate_staged(self, time, staged, incoming):
