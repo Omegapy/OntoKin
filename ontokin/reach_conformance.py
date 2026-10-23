@@ -21,6 +21,7 @@ from .reach_reference import Interval as _ReferenceCell
 
 TARGET = "ontokin.glb/0.6"
 ARC_LIMIT = Fraction(0.7853981633974483)
+_ENDPOINT_TWO = Fraction(2)
 _CERTIFICATE_FOUR = Fraction(4)
 _CERTIFICATE_EIGHT = Fraction(8)
 _CERTIFICATE_THIRTY_TWO = Fraction(32)
@@ -1419,13 +1420,55 @@ def _optional_endpoint_l1(actual, expected, arithmetic, *, admitted_cells=False)
     if (_bound_domain(arithmetic) != MAX_OPERAND_BITS
             or not _small_proof_values((*actual, *(value for cell in expected for value in (cell.lo, cell.hi))))):
         return None
+
+    def receipt(value, cell):
+        if (type(value) is not Fraction or type(cell) is not _Cell
+                or type(cell.lo) is not Fraction or type(cell.hi) is not Fraction):
+            return None
+        integers = (value.numerator, value.denominator, cell.lo.numerator,
+                    cell.lo.denominator, cell.hi.numerator, cell.hi.denominator)
+        if (all(type(integer) is int for integer in integers)
+                and all(integers[index] > 0 for index in (1, 3, 5))):
+            return integers
+        return None
+
+    # The source order above proves x-lo >= x-hi. Keep that proof only while
+    # the exact admitted operands and live work domain survive each existing
+    # subtraction callback. Capture all components now: an earlier component's
+    # callback can also change a later frozen cell through object.__setattr__.
+    owner = arithmetic.work
+    admitted = tuple(receipt(value, cell) for value, cell in zip(actual, expected))
+    def unchanged(value, cell, proof):
+        domain = _bound_domain(arithmetic)
+        return (proof is not None and arithmetic.work is owner
+                and type(domain) is int and domain == MAX_OPERAND_BITS
+                and receipt(value, cell) == proof)
+
     result = Fraction(0)
-    for value, cell in zip(actual, expected):
+    for value, cell, proof in zip(actual, expected, admitted):
         if cell.lo == cell.hi:
             error = Fraction(0) if value == cell.lo else abs(arithmetic.sub(value, cell.lo))
         else:
-            first, last = abs(arithmetic.sub(value, cell.lo)), abs(arithmetic.sub(value, cell.hi))
-            error = first if arithmetic.compare(first, last) >= 0 else last
+            ordered = unchanged(value, cell, proof)
+            signed = arithmetic.sub(value, cell.lo)
+            first = abs(signed)
+            nonpositive = type(signed) is Fraction and signed.numerator <= 0
+            ordered = ordered and unchanged(value, cell, proof)
+            signed = arithmetic.sub(value, cell.hi)
+            last = abs(signed)
+            nonnegative = type(signed) is Fraction and signed.numerator >= 0
+            ordered = ordered and unchanged(value, cell, proof)
+            if ordered and (nonnegative or nonpositive):
+                # Outside the ordered source cell, the farthest endpoint follows
+                # from the already computed signs. No rational cross products
+                # are needed, but retain both original comparison width guards.
+                arithmetic.bits(first.numerator.bit_length(), first.denominator.bit_length(),
+                                last.numerator.bit_length(), last.denominator.bit_length())
+                arithmetic.bits(first.numerator.bit_length() + last.denominator.bit_length(),
+                                last.numerator.bit_length() + first.denominator.bit_length())
+                error = first if nonnegative else last
+            else:
+                error = first if arithmetic.compare(first, last) >= 0 else last
         if error:
             result = arithmetic.add(result, error) if result else error
     return result
@@ -1454,7 +1497,19 @@ def _recording_orientation_bound(quaternion, expected, limit, arithmetic, *, bef
         def calculate_bound():
             aligned = _aligned_reference(quaternion, expected, arithmetic)
             distance = _optional_endpoint_l1(quaternion, aligned, arithmetic, admitted_cells=True)
-            return () if distance is None else (arithmetic.mul(2, distance),)
+            domain = _bound_domain(arithmetic)
+            factor = _ENDPOINT_TWO
+            if (type(domain) is int and domain == MAX_OPERAND_BITS
+                    and type(factor) is Fraction and type(factor.numerator) is int
+                    and type(factor.denominator) is int and factor.numerator == 2
+                    and factor.denominator == 1):
+                # Copy the already exact native ratio without decoding or
+                # reduction. A mul callback cannot mutate this local operand
+                # through an alias to the module's constant Fraction.
+                factor = Fraction(factor)
+            else:
+                factor = 2
+            return () if distance is None else (arithmetic.mul(factor, distance),)
         def sufficient(candidate):
             if not candidate or _bound_domain(arithmetic) != MAX_OPERAND_BITS:
                 return False
