@@ -1,5 +1,19 @@
 # Reach recording continuation, October 23, 2026
 
+## Checkpoint 020: exact source inputs and preserved open reviews
+
+The [checkpoint](checkpoint-020.json) and [archive manifest](checkpoint-020-manifest.json) preserve **263 new evidence members**, including all produced GLBs and reports, complete test logs, input manifests, exact Git commit/patch identities, two neutral P23 diagnostics, and unsuccessful test attempts. The eight parts reconstruct **6,321,603 bytes**, SHA-256 `eb507df022d51a2ba752817d44661a8937b403d18851ebc2f7e17e80a98e5a73`; every member hash, ZIP CRC and ordered part join passed.
+
+Published source `979ede86acf3525fb595a2606e528d8cb634980e`, tree `9af5cf2bae04ad2a68fdcb3a5b50844c163cce7a`, passes **173/173** focused methods. The preceding identity-offset integration passes **305/305**. Each complete original suite remains **23/28**; P09, P11, P16, P23 and L03 exhaust the unchanged 100,000-operation cap. Latest P05 uses **95,064**, P20 81,390, L01 79,963 and L02 74,015. Separate cohorts are not added into a complete regression total.
+
+The [centered proof](../reach-reference-centered-recording.md) now admits larger bounded offsets only through an exact identity parent. Complete original P11 activates this proof; P07/P08 each save 2,622 operations. The [captured-input proof](../reach-captured-source-inputs.md) retains small exact clocks and unclaimed fixed hinge operands, with unchanged source receipts, prospective bounds and result-cache limits. Capture-time callback identity was repaired before the successful 19-method worker run. P16 completes 74 retained-clock cells, versus zero on the earlier captured-placement baseline, but still exhausts the cap. Capped totals do not measure a full-recording saving.
+
+Both P23 observers reproduce the unobserved source identity, counters and diagnostics. The sampling observer attributes planning and sampling without changing callbacks or methods; the separate construction observer reconciles all **22,465** construction operations. These measurements guide development and do not establish acceptance.
+
+The first source-site candidate passes 20/21 tests and exposes a real mutated warm-entry receipt defect; that failed execution and the corrected **unexecuted** cut `de2fab39` are both preserved. Initial certificate-threshold cut `490ec3f9` is **unexecuted and not approved** because later wide comparisons require a continuation-width proof and exact replay on the same work context. Earlier offset-control and captured-input test-harness failures remain separately archived. The checkpoint records the state at its archive cut, not subsequent candidate execution.
+
+Prior raw runs 019–022 and 37 historical archive omissions remain disclosed. Source fixtures, horizons, fps, tolerances, operand limits and cache maxima are unchanged. Release input closure, complete Agent delivery, current full regression/compatibility, independent rates/native/browser/visual roles and all R/Q gates remain open. PR #27 and PR #28 stay draft and unmerged.
+
 ## Checkpoint 019: independent centered proof and producer reductions
 
 The [checkpoint](checkpoint-019.json) and [archive manifest](checkpoint-019-manifest.json) preserve **352 new evidence members**, including every successful artifact, complete original-suite and focused logs, exact input manifests, Git commit/patch identities, neutral diagnostics and the failed centered test attempts. The ten parts reconstruct **8,180,971 bytes**, SHA-256 `634bec7fb33052503eee79a751fd80306cc5801ae9a34c03cc3409b38964f700`; every member hash, ZIP CRC and part join passed.
