@@ -3,14 +3,15 @@
 This module reads only the private source records and arithmetic of
 ``reach_reference``. It imports no production evaluator, sampler or numeric
 kernel. A plan holds source operands and source-derived affine recipes, never
-a second table of completed numeric poses. Every request rechecks its own
-source receipts; all cursor values remain in the existing 256-entry cache.
+a second table of completed numeric poses. Ordinary requests recheck their
+source receipts; an explicit complete-validation batch defers those reads to
+its final callback-free admission. All cursor values use the existing cache.
 """
 from dataclasses import dataclass, field, replace
 from fractions import Fraction as F
 
 from .reach_reference import (
-    MAX_CACHE, PoseEnclosure, ReferenceError, ZERO, _RecordingBodyRate,
+    MAX_BOUNDARIES, MAX_CACHE, MAX_OPERAND_BITS, PoseEnclosure, ReferenceError, ZERO, _RecordingBodyRate,
 )
 
 
@@ -19,6 +20,8 @@ from .reach_reference import (
 MAX_TARGETS = 64
 MAX_NODES = 128
 MAX_CURSORS = 32
+MAX_BATCH_PLANS = 16
+MAX_BATCH_RECEIPTS = 1024
 _SOURCE_MAPS = ("objects", "sites", "joints", "follows", "actions")
 
 
@@ -27,6 +30,210 @@ def _owners(reference):
     return (reference.model, reference.a, reference.p, reference.p.a,
             reference.a.work, reference.a.check,
             *(getattr(reference.model, name) for name in _SOURCE_MAPS))
+
+
+class _SourceBatchRestart(Exception):
+    """Only the added final batch domain gate may request an ordinary replay."""
+
+
+class _SourceBatch:
+    """Defer repeated source admission until the reader's final callback.
+
+    Plans contain immutable source operands, never completed pose maps. Each
+    key still reads and publishes its cursors through the original arithmetic
+    cache. The bounded ledger only identifies writes to remove on rejection;
+    it is never consulted to obtain a numeric cursor or to defeat eviction.
+    """
+    def __init__(self, reference, context):
+        if type(context) is not object:
+            raise ValueError("Independent source batching requires an opaque reader context")
+        self.reference, self.context = reference, context
+        self.active = self.prepared = False
+        self.depth = 0
+        self.current_plan = None
+        self.plans, self.cursors = {}, {}
+        self.receipts, self.seen_receipts = [], set()
+        self.restart = None
+
+    def __enter__(self):
+        reference = self.reference
+        if reference._recording_batch is not None:
+            raise ReferenceError("identity", "Independent source batches cannot replace an active reader")
+        if not reference._recording_body_domain():
+            return self
+        # The native history axis is an immutable tuple of exact Fraction
+        # clocks. Its strong identity therefore binds every boundary value;
+        # mutable or foreign axes retain the ordinary per-key admission.
+        if (type(reference.boundaries) is not tuple or len(reference.boundaries) > MAX_BOUNDARIES
+                or any(type(time) is not F for time in reference.boundaries)
+                or type(reference._before) is not list or type(reference._after) is not list
+                or len(reference._before) != len(reference.boundaries)
+                or len(reference._after) != len(reference.boundaries)):
+            return self
+        self.a = reference.a
+        self.owners = _owners(reference)
+        self.history = (reference.boundaries, reference._before, reference._after)
+        self.header = (reference.end, reference.end_side, reference.mode,
+                       len(reference._before), len(reference._after))
+        reference._recording_batch = self
+        self.active = True
+        return self
+
+    def admit_owners(self):
+        reference = self.reference
+        try:
+            owned = (reference._recording_batch is self and
+                     all(current is saved for current, saved in zip(_owners(reference), self.owners)) and
+                     all(current is saved for current, saved in zip(
+                         (reference.boundaries, reference._before, reference._after), self.history)) and
+                     (reference.end, reference.end_side, reference.mode,
+                      len(reference._before), len(reference._after)) == self.header)
+        except AttributeError:
+            owned = False
+        if not owned:
+            raise ReferenceError("identity", "Independent source batch owner or phase history changed")
+
+    def matches(self, context):
+        return (self.active and not self.prepared and type(context) is tuple and
+                len(context) == 4 and context[0] is self.context)
+
+    def contains(self, plan):
+        return plan.cache_identity in self.plans
+
+    def register(self, plan, time):
+        self.admit_owners()
+        if self.prepared or not self.reference._recording_body_domain():
+            return False
+        if self.contains(plan):
+            return True
+        fresh = [receipt for receipt in plan.receipts if id(receipt) not in self.seen_receipts]
+        if len(self.plans) >= MAX_BATCH_PLANS or len(self.receipts) + len(fresh) > MAX_BATCH_RECEIPTS:
+            # Already captured plans remain covered by the final admission.
+            # A new plan outside this optional bound keeps every original
+            # per-request source check and does not enlarge retained storage.
+            return False
+        self.plans[plan.cache_identity] = (plan, time)
+        self.receipts.extend(fresh)
+        self.seen_receipts.update(id(receipt) for receipt in fresh)
+        return True
+
+    def covers_identity(self, receipts):
+        return (self.depth == 1 and self.current_plan is not None and
+                self.contains(self.current_plan) and
+                all(id(receipt) in self.seen_receipts for receipt in receipts))
+
+    def check_cursors(self):
+        # Drop evicted references before recording the next key. A different
+        # still-retained value is a nested writer, not ordinary LRU eviction.
+        for key, value in tuple(self.cursors.items()):
+            current = self.a.cache.get(key)
+            if current is None:
+                del self.cursors[key]
+            elif current is not value:
+                raise ReferenceError("identity", "Independent source batch cursor changed in a nested reader")
+
+    def record_cursors(self, values):
+        for key, value, _ in values:
+            if self.a.cache.get(key) is value:
+                self.cursors[key] = value
+        self.check_cursors()
+        if len(self.cursors) > MAX_CACHE:
+            raise ReferenceError("resource", "Independent source batch exceeds its cursor ledger bound")
+
+    def discard_cursors(self):
+        for key, value in self.cursors.items():
+            if self.a.cache.get(key) is value:
+                del self.a.cache[key]
+        self.cursors.clear()
+
+    def completed_ordinary_request(self):
+        # A new plan beyond the optional capture bound executes its complete
+        # original per-key source admission. Its independently completed new
+        # values are no longer writes owned by this deferred source batch.
+        # Still-retained older values remain owned and must be admitted later.
+        for key, value in tuple(self.cursors.items()):
+            if self.a.cache.get(key) is not value:
+                del self.cursors[key]
+
+    def prepare_admission(self):
+        """Precharge receipt reads before the reader's last checked callback."""
+        if not self.active or self.prepared:
+            return
+        self.prepared = True
+        if not self.plans:
+            return
+        self.admit_owners()
+        self.depth += 1
+        try:
+            for _ in self.receipts:
+                self.a.tick()
+        finally:
+            self.depth -= 1
+        self.admit_owners()
+
+    def admit(self):
+        if not self.plans:
+            return
+        self.admit_owners()
+        self.check_cursors()
+        reference = self.reference
+        for plan, time in self.plans.values():
+            try:
+                current = reference._state_at(time, plan.context[-1])
+            except (KeyError, AttributeError, IndexError) as error:
+                raise ReferenceError("identity", "Independent source batch state binding changed") from error
+            if current is not plan.state:
+                raise ReferenceError("identity", "Independent source batch state binding changed")
+        # Identity rejection must not be relabeled as an optional domain
+        # restart when the same callback also changes the operand allowance.
+        for receipt in self.receipts:
+            try:
+                current = receipt.read()
+            except (KeyError, AttributeError, IndexError) as error:
+                raise ReferenceError("identity", "Independent source changed during source batch") from error
+            if (reference._recording_source_witness(*current) is None or
+                    current != receipt.values):
+                raise ReferenceError("identity", "Independent source changed during source batch")
+        if reference.a.bits != 128:
+            raise ReferenceError("identity", "Independent source batch arithmetic precision changed")
+        if reference.a.operand_limit != MAX_OPERAND_BITS:
+            self.restart = _SourceBatchRestart("Final independent source batch operand domain changed")
+            raise self.restart
+        if not reference._recording_body_domain():
+            raise ReferenceError("identity", "Independent source batch arithmetic context changed")
+        # The preceding identity-only pass deliberately precedes the optional
+        # cap restart. Now retain the original numeric operand admission;
+        # its second bounded source read cannot invoke a caller callback.
+        reference._recording_admit_receipts(self.receipts)
+        for key, value in self.cursors.items():
+            if key[3] == "recording_body_orientation":
+                _, _, rate, clock, rotation, increment, steps = value
+                self.a.guard(rate, clock, steps, *(endpoint for cell in rotation
+                                                   for endpoint in (cell.lo, cell.hi)),
+                             *((increment or ())))
+            else:
+                clock, coordinate, sine, cosine, steps = value
+                self.a.guard(clock, coordinate, sine.lo, sine.hi, cosine.lo, cosine.hi, steps)
+
+    def __exit__(self, kind, error, traceback):
+        if not self.active:
+            return False
+        try:
+            if error is not None:
+                self.discard_cursors()
+                return False
+            try:
+                self.prepare_admission()
+                self.admit()
+            except BaseException:
+                self.discard_cursors()
+                raise
+            self.cursors.clear()
+        finally:
+            if self.reference._recording_batch is self:
+                self.reference._recording_batch = None
+            self.active = False
+        return False
 
 
 @dataclass(frozen=True)
@@ -127,12 +334,15 @@ class _Plan:
         if not self.owned_by(reference):
             raise ReferenceError("identity", "Independent recording source or arithmetic owner changed")
 
-    def current(self, reference):
+    def current(self, reference, batch=None):
         # Each unique actual source record is freshly read under a charged
         # callback. The captured immutable recipe is used only if it matches.
         # Final admission below rechecks the whole batch after all callbacks.
         if not self.owned_by(reference):
             return False
+        if batch is not None and batch.contains(self):
+            batch.admit_owners()
+            return True
         for receipt in self.receipts:
             reference.a.tick()
             self.admit_owners(reference)
@@ -147,7 +357,7 @@ class _Plan:
                 return False
         return True
 
-    def evaluate(self, reference, time):
+    def evaluate(self, reference, time, batch=None):
         self.admit_owners(reference)
         a, p = reference.a, reference.p
         shared = len(self.targets) > 16
@@ -248,15 +458,21 @@ class _Plan:
             if moving:
                 advanced.add(node.path)
 
-        for _ in self.receipts:
-            a.tick()
+        if batch is None:
+            for _ in self.receipts:
+                a.tick()
         self.admit_owners(reference)
         if not reference._recording_body_domain():
             return None
-        reference._recording_admit_receipts(self.receipts)
+        if batch is None:
+            reference._recording_admit_receipts(self.receipts)
         for value in frames.values():
             guard(value)
+        if batch is not None:
+            batch.check_cursors()
         pending.publish()
+        if batch is not None:
+            batch.record_cursors(pending.values)
         return frames
 
 
@@ -416,7 +632,7 @@ def _build(reference, state, targets, context):
     return _Plan(state, context, targets, tuple(nodes), tuple(receipts), owners)
 
 
-def recording_phase_poses(reference, time, state, targets, context):
+def _phase_poses(reference, time, state, targets, context, batch=None):
     """Return the optional plan's fresh frames, or the original-walk sentinel."""
     # Reject unimplemented dynamic root laws before capturing any recipes.
     # These bounded metadata predicates share the caller's entry admission;
@@ -429,14 +645,40 @@ def recording_phase_poses(reference, time, state, targets, context):
         return None
     plan = reference._recording_phase_plan
     if (plan is None or plan.state is not state or plan.context != context or
-            plan.targets != targets or not plan.current(reference)):
+            plan.targets != targets or not plan.current(reference, batch)):
         reference._recording_phase_plan = None
         if not reference._recording_body_domain():
             return None
         plan = _build(reference, state, targets, context)
         if plan is None:
             return None
-    result = plan.evaluate(reference, time)
+    adopted = batch if batch is not None and batch.register(plan, time) else None
+    if adopted is None:
+        result = plan.evaluate(reference, time)
+        if batch is not None and result is not None:
+            batch.completed_ordinary_request()
+    else:
+        adopted.check_cursors()
+        adopted.current_plan = plan
+        try:
+            result = plan.evaluate(reference, time, adopted)
+        finally:
+            adopted.current_plan = None
     if result is not None:
         reference._recording_phase_plan = plan
     return result
+
+
+def recording_phase_poses(reference, time, state, targets, context):
+    batch = reference._recording_batch
+    if batch is None or not batch.matches(context):
+        return _phase_poses(reference, time, state, targets, context)
+    batch.admit_owners()
+    batch.depth += 1
+    try:
+        # A nested reader keeps its original source admission. The outer
+        # pending publication and ledger must not overwrite its fresh cursor.
+        return _phase_poses(reference, time, state, targets, context,
+                            batch if batch.depth == 1 else None)
+    finally:
+        batch.depth -= 1

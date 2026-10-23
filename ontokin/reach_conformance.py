@@ -1965,8 +1965,8 @@ class _IntervalCertificateClaims:
         return selected
 
 
-def _verify_certificates(decoded, reference, geometry, tables, endpoint_phases, authored, times, quantization, options, *, work):
-    arithmetic = _Bounds(work, cache_intermediates=False)
+def _verify_certificates(decoded, reference, geometry, tables, endpoint_phases, authored, times, quantization, options, *, work,
+                         finalize=None):
     certificates = quantization["interval_certificates"]
     expected_count = (len(authored) - 1) * len(geometry)
     if type(certificates) is not list or len(certificates) != expected_count or expected_count > MAX_CERTIFICATES:
@@ -1986,60 +1986,82 @@ def _verify_certificates(decoded, reference, geometry, tables, endpoint_phases, 
             _error("OKE-E-CERTIFICATE-COVERAGE", "A certificate duplicates or changes a source carrier identity.")
         rows[left, index] = record
     tracks = _tracks(decoded, geometry, work=work)
-    recording_context = object()
-    previous = _key_comparisons(reference, geometry, tracks, authored[0], 0, arithmetic,
-                                recording_context=recording_context, endpoint_rows=rows)
-    batch = _CertificateBatch(arithmetic, options.position_tolerance_m, options.rotation_tolerance_rad)
-    for key, (left, right) in enumerate(zip(authored, authored[1:])):
-        following = _key_comparisons(reference, geometry, tracks, right, key + 1, arithmetic,
-                                     previous=previous, previous_time=left, recording_context=recording_context,
-                                     endpoint_rows=rows)
-        stored_left, stored_right = arithmetic.value(times[key]), arithmetic.value(times[key + 1])
-        width, stored_width = arithmetic.sub(right, left), arithmetic.sub(stored_right, stored_left)
-        shift = max(abs(arithmetic.sub(left, stored_left)), abs(arithmetic.sub(right, stored_right)))
-        low, high = max(Fraction(0), min(left, stored_left)), min(reference.end, max(right, stored_right))
-        required = [index for index, (a, b) in enumerate(zip(reference.boundaries, reference.boundaries[1:]))
-                    if max(a, low) < min(b, high)]
-        source_index = bisect_right(reference.boundaries, left) - 1
-        if not reference.boundaries[source_index] <= left < right <= reference.boundaries[source_index + 1]:
-            _error("OKE-E-PHASE-COVERAGE", "An authored pair crosses an unretained source boundary.")
-        endpoint_index = bisect_right(reference.boundaries, right) - 1
-        numeric_selected = set(required)
-        if endpoint_index < len(reference.boundaries) - 1:
-            numeric_selected.add(endpoint_index)
-        claims = _IntervalCertificateClaims(reference.boundaries, low, high, required, width, stored_width, work)
-        for carrier, item in geometry.items():
-            record, phases = rows[key, carrier], tables[item["frame"]]
-            selected = claims.check(record)
-            phase = phases[source_index]
-            source_position = max(phases[value].source_numeric_position_error for value in numeric_selected)
-            source_rotation = max(phases[value].source_numeric_rotation_error for value in numeric_selected)
-            if right == reference.end:
-                final_phase = endpoint_phases[item["frame"]]
-                source_position = max(source_position, final_phase.source_numeric_position_error)
-                source_rotation = max(source_rotation, final_phase.source_numeric_rotation_error)
-            first, last = previous[carrier], following[carrier]
-            raw_first, raw_last = tracks[carrier]["rotation"][key], tracks[carrier]["rotation"][key + 1]
-            arc = _certified_stored_arc(raw_first, raw_last, first, last, phase.angular_speed, width,
-                                       record["stored_quaternion_arc_upper_rad"], arithmetic,
-                                       source_path_valid=right < reference.boundaries[source_index + 1])
-            minima = {"landmark_radius_m": item["radius"], "local_vertex_error_bound_m": item["vertex_error"],
-                "angular_speed_bound_rad_per_s": phase.angular_speed,
-                "carrier_acceleration_bound_m_per_s2": phase.acceleration,
-                "enclosing_carrier_speed_bound_m_per_s": max(phases[value].speed for value in selected),
-                "enclosing_carrier_acceleration_bound_m_per_s2": max(phases[value].acceleration for value in selected),
-                "enclosing_angular_speed_bound_rad_per_s": max(phases[value].angular_speed for value in selected),
-                "max_endpoint_time_shift_s": shift,
-                "max_endpoint_position_error_m": max(first["position_error"], last["position_error"]),
-                "max_endpoint_unit_quaternion_error": max(first["quaternion_error"], last["quaternion_error"]),
-                "stored_quaternion_arc_upper_rad": arc,
-                "source_numeric_position_bound_m": source_position, "source_numeric_rotation_bound_rad": source_rotation}
-            magnitude = max(first["magnitude"], last["magnitude"])
-            batch.add(record, width, stored_width, minima, magnitude)
-        previous = following
-    batch.flush()
-    return {"max_position_bound_m": batch.max_position, "max_rotation_bound_rad": batch.max_rotation,
-            "interval_certificates_checked": expected_count, "key_pose_comparisons": len(authored) * len(geometry)}
+
+    def compare_certificates(recording_context, source_batch=None):
+        # A replay recreates every endpoint/comparison/certificate accumulator
+        # on the same request work. It never resets or replaces the allowance.
+        arithmetic = _Bounds(work, cache_intermediates=False)
+        previous = _key_comparisons(reference, geometry, tracks, authored[0], 0, arithmetic,
+                                    recording_context=recording_context, endpoint_rows=rows)
+        batch = _CertificateBatch(arithmetic, options.position_tolerance_m, options.rotation_tolerance_rad)
+        for key, (left, right) in enumerate(zip(authored, authored[1:])):
+            following = _key_comparisons(reference, geometry, tracks, right, key + 1, arithmetic,
+                                         previous=previous, previous_time=left, recording_context=recording_context,
+                                         endpoint_rows=rows)
+            stored_left, stored_right = arithmetic.value(times[key]), arithmetic.value(times[key + 1])
+            width, stored_width = arithmetic.sub(right, left), arithmetic.sub(stored_right, stored_left)
+            shift = max(abs(arithmetic.sub(left, stored_left)), abs(arithmetic.sub(right, stored_right)))
+            low, high = max(Fraction(0), min(left, stored_left)), min(reference.end, max(right, stored_right))
+            required = [index for index, (a, b) in enumerate(zip(reference.boundaries, reference.boundaries[1:]))
+                        if max(a, low) < min(b, high)]
+            source_index = bisect_right(reference.boundaries, left) - 1
+            if not reference.boundaries[source_index] <= left < right <= reference.boundaries[source_index + 1]:
+                _error("OKE-E-PHASE-COVERAGE", "An authored pair crosses an unretained source boundary.")
+            endpoint_index = bisect_right(reference.boundaries, right) - 1
+            numeric_selected = set(required)
+            if endpoint_index < len(reference.boundaries) - 1:
+                numeric_selected.add(endpoint_index)
+            claims = _IntervalCertificateClaims(reference.boundaries, low, high, required, width, stored_width, work)
+            for carrier, item in geometry.items():
+                record, phases = rows[key, carrier], tables[item["frame"]]
+                selected = claims.check(record)
+                phase = phases[source_index]
+                source_position = max(phases[value].source_numeric_position_error for value in numeric_selected)
+                source_rotation = max(phases[value].source_numeric_rotation_error for value in numeric_selected)
+                if right == reference.end:
+                    final_phase = endpoint_phases[item["frame"]]
+                    source_position = max(source_position, final_phase.source_numeric_position_error)
+                    source_rotation = max(source_rotation, final_phase.source_numeric_rotation_error)
+                first, last = previous[carrier], following[carrier]
+                raw_first, raw_last = tracks[carrier]["rotation"][key], tracks[carrier]["rotation"][key + 1]
+                arc = _certified_stored_arc(raw_first, raw_last, first, last, phase.angular_speed, width,
+                                           record["stored_quaternion_arc_upper_rad"], arithmetic,
+                                           source_path_valid=right < reference.boundaries[source_index + 1])
+                minima = {"landmark_radius_m": item["radius"], "local_vertex_error_bound_m": item["vertex_error"],
+                    "angular_speed_bound_rad_per_s": phase.angular_speed,
+                    "carrier_acceleration_bound_m_per_s2": phase.acceleration,
+                    "enclosing_carrier_speed_bound_m_per_s": max(phases[value].speed for value in selected),
+                    "enclosing_carrier_acceleration_bound_m_per_s2": max(phases[value].acceleration for value in selected),
+                    "enclosing_angular_speed_bound_rad_per_s": max(phases[value].angular_speed for value in selected),
+                    "max_endpoint_time_shift_s": shift,
+                    "max_endpoint_position_error_m": max(first["position_error"], last["position_error"]),
+                    "max_endpoint_unit_quaternion_error": max(first["quaternion_error"], last["quaternion_error"]),
+                    "stored_quaternion_arc_upper_rad": arc,
+                    "source_numeric_position_bound_m": source_position, "source_numeric_rotation_bound_rad": source_rotation}
+                magnitude = max(first["magnitude"], last["magnitude"])
+                batch.add(record, width, stored_width, minima, magnitude)
+            previous = following
+        if source_batch is not None:
+            source_batch.prepare_admission()
+        batch.flush()
+        return {"max_position_bound_m": batch.max_position, "max_rotation_bound_rad": batch.max_rotation,
+                "interval_certificates_checked": expected_count, "key_pose_comparisons": len(authored) * len(geometry)}
+
+    from .reach_reference_plan import _SourceBatchRestart
+    recording_context, source_batch = object(), None
+    try:
+        with reference.recording_source_batch(recording_context) as source_batch:
+            result = compare_certificates(recording_context, source_batch)
+            if finalize is not None:
+                result = finalize(result)
+        return result
+    except _SourceBatchRestart as error:
+        # A caller can raise any exception from its callback, even this
+        # private type. Only our exact final-admission signal permits replay.
+        if source_batch is None or source_batch.restart is not error:
+            raise
+        result = compare_certificates(object())
+        return finalize(result) if finalize is not None else result
 
 
 def validate_reach_export(data, model, *, options=None, check=None, work=None):
@@ -2095,43 +2117,47 @@ def validate_reach_export(data, model, *, options=None, check=None, work=None):
         allowances = _boundary_allowances(tables, endpoint_phases, geometry, model, _Bounds(work))
         _assert_projection(metadata.get("boundary_states"), boundary_records,
             arithmetic=_Bounds(work), allowances=allowances, path=("boundary_states",))
-        proof = _verify_certificates(decoded, reference, geometry, tables, endpoint_phases,
-                                     authored, times, quantization, options, work=work)
+        def finalize(proof):
+            # Report conversion has its own checked callbacks. Keep those
+            # inside the provisional source batch so the callback-free source
+            # admission is the final action before returning a passed report.
+            surface_tolerance = min(options.position_tolerance_m, 1e-5)
+            expected_surface = {"local_vertex_tolerance_m": surface_tolerance,
+                "max_vertex_quantization_error_m": surface_error, "normal_policy": "flat_shaded_triangle_corners",
+                "material_policy": "one_primitive_per_used_source_region",
+                "placement_policy": "baked_once_in_carrier_local_vertices_and_normals"}
+            if metadata.get("surface_delivery") != expected_surface:
+                _error("OKE-E-GEOMETRY", "Native surface conversion metadata must describe the independently checked actual buffers.")
+            if geometry_error > options.position_tolerance_m or surface_error > surface_tolerance:
+                _error("OKE-E-GEOMETRY-PRECISION", "Actual geometry conversion exceeds the requested native tolerance.")
+            def outward(value):
+                arithmetic = _Bounds(work)
+                value = arithmetic.value(value)
+                arithmetic.tick("independent_report_rounding")
+                result = float(value)
+                if not math.isfinite(result):
+                    _error("OKE-E-NUMERIC-BOUND", "An independently established report bound is not representable.")
+                if arithmetic.compare(Fraction(result), value) < 0:
+                    result = math.nextafter(result, math.inf)
+                return result
+            return {"status": "passed", "structure": "passed_bounded_glb_reader",
+                "method": "Independent exact-sign admission, interval source event/pose reference, exact clock cells and complete supplied-byte continuous inequalities.",
+                "reach_continuous_bounds": "passed_independent_source_and_bytes",
+                "reach_boundary_histories": "passed_complete_both_sides_and_incoming_releases",
+                "position_metric": "conservative uniform Euclidean carrier and native-landmark bound in metres",
+                "rotation_metric": "conservative uniform physical rotation-angle bound in radians",
+                "probe_policy": "every actual stored key endpoint plus every complete source boundary; continuous per-interval proof",
+                "sample_count": len(authored), "node_pose_comparisons": proof["key_pose_comparisons"],
+                "interval_certificates_checked": proof["interval_certificates_checked"],
+                "max_position_error_bound_m": outward(proof["max_position_bound_m"]),
+                "max_rotation_error_bound_rad": outward(proof["max_rotation_bound_rad"]),
+                "max_time_error_seconds": outward(shift), "max_geometry_dimension_error_m": geometry_error,
+                "max_surface_vertex_error_m": surface_error, "surface_vertex_tolerance_m": surface_tolerance,
+                "surface_geometry_materials_and_provenance": "passed_source_comparison", "failures": [],
+                "scope": "Continuous proof for this source, actual bytes and identified controlled destination algorithm; actual native/browser execution and visual review remain separate release obligations."}
+        return _verify_certificates(decoded, reference, geometry, tables, endpoint_phases,
+                                    authored, times, quantization, options, work=work, finalize=finalize)
     except ReferenceError as error:
         _error("OKE-E-INDEPENDENT-VALIDATION", "The independent source reference could not establish the requested recording: " + str(error),
             model=model, kind="resource" if error.code == "resource" else "unsupported",
             details={"reference_code": error.code, **error.details})
-    surface_tolerance = min(options.position_tolerance_m, 1e-5)
-    expected_surface = {"local_vertex_tolerance_m": surface_tolerance,
-        "max_vertex_quantization_error_m": surface_error, "normal_policy": "flat_shaded_triangle_corners",
-        "material_policy": "one_primitive_per_used_source_region",
-        "placement_policy": "baked_once_in_carrier_local_vertices_and_normals"}
-    if metadata.get("surface_delivery") != expected_surface:
-        _error("OKE-E-GEOMETRY", "Native surface conversion metadata must describe the independently checked actual buffers.")
-    if geometry_error > options.position_tolerance_m or surface_error > surface_tolerance:
-        _error("OKE-E-GEOMETRY-PRECISION", "Actual geometry conversion exceeds the requested native tolerance.")
-    def outward(value):
-        arithmetic = _Bounds(work)
-        value = arithmetic.value(value)
-        arithmetic.tick("independent_report_rounding")
-        result = float(value)
-        if not math.isfinite(result):
-            _error("OKE-E-NUMERIC-BOUND", "An independently established report bound is not representable.")
-        if arithmetic.compare(Fraction(result), value) < 0:
-            result = math.nextafter(result, math.inf)
-        return result
-    return {"status": "passed", "structure": "passed_bounded_glb_reader",
-        "method": "Independent exact-sign admission, interval source event/pose reference, exact clock cells and complete supplied-byte continuous inequalities.",
-        "reach_continuous_bounds": "passed_independent_source_and_bytes",
-        "reach_boundary_histories": "passed_complete_both_sides_and_incoming_releases",
-        "position_metric": "conservative uniform Euclidean carrier and native-landmark bound in metres",
-        "rotation_metric": "conservative uniform physical rotation-angle bound in radians",
-        "probe_policy": "every actual stored key endpoint plus every complete source boundary; continuous per-interval proof",
-        "sample_count": len(authored), "node_pose_comparisons": proof["key_pose_comparisons"],
-        "interval_certificates_checked": proof["interval_certificates_checked"],
-        "max_position_error_bound_m": outward(proof["max_position_bound_m"]),
-        "max_rotation_error_bound_rad": outward(proof["max_rotation_bound_rad"]),
-        "max_time_error_seconds": outward(shift), "max_geometry_dimension_error_m": geometry_error,
-        "max_surface_vertex_error_m": surface_error, "surface_vertex_tolerance_m": surface_tolerance,
-        "surface_geometry_materials_and_provenance": "passed_source_comparison", "failures": [],
-        "scope": "Continuous proof for this source, actual bytes and identified controlled destination algorithm; actual native/browser execution and visual review remain separate release obligations."}

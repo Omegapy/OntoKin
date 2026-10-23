@@ -1852,6 +1852,7 @@ class ReachReference:
         self.model.events.sort(key=lambda block: block.time)
         self._incoming_graph_identity = object()
         self._recording_phase_plan = None
+        self._recording_batch = None
         self._targets, self._poses, self._phase_cache, self._basis_cache = {}, {}, {}, {}
         self._numeric_cache_limit = self.a.operand_limit
         self._state, self._records, self._before, self._after = _State(), [], [], []
@@ -2510,11 +2511,16 @@ class ReachReference:
         # new cursor to look up or publish. After their last callback the full
         # receipt chain and every returned field are admitted without another
         # callback. A changed domain takes the original immutable seed path.
-        for _ in body.receipts:
+        batch = self._recording_batch
+        deferred = batch is not None and batch.covers_identity(body.receipts)
+        for _ in range(1 if deferred else len(body.receipts)):
             self.a.tick()
             if not self._recording_body_domain():
                 return None
-        self._recording_admit_receipts(body.receipts)
+        if deferred:
+            batch.admit_owners()
+        else:
+            self._recording_admit_receipts(body.receipts)
         self.a.guard(*(endpoint for values in vectors for cell in values for endpoint in (cell.lo, cell.hi)))
         return parent
 
@@ -2679,6 +2685,13 @@ class ReachReference:
             frame(path)
         if not (body_recording or recording_seed) and limit == self.a.operand_limit and len(self._poses) < MAX_CACHE:
             self._poses[key] = (state, frames)
+        batch = self._recording_batch
+        if batch is not None and batch.matches(recording_context) and batch.depth == 0:
+            # A declined optional plan has completed the original walker,
+            # including every per-key source admission. Its new cursor values
+            # no longer belong to the deferred batch. Nested readers keep the
+            # outer ownership check so they cannot be overwritten silently.
+            batch.completed_ordinary_request()
         return frames
 
     def _state_at(self, time, side):
@@ -2803,6 +2816,16 @@ class ReachReference:
             return value
 
         return frozenset(carrier for carrier in selected if visit(carrier))
+
+    def recording_source_batch(self, recording_context):
+        """Scope provisional source recipes to one complete supplied-byte proof.
+
+        The reader must finish its validation callbacks before leaving this
+        context. Only that final source admission establishes the batch; every
+        original per-key arithmetic operation and finite cache rule remains.
+        """
+        from .reach_reference_plan import _SourceBatch
+        return _SourceBatch(self, recording_context)
 
     def recording_pose_enclosures(self, carriers, time, side="after", *, ideal=True, recording_context=None):
         """Evaluate independent p/q once for the selected carrier ancestries.

@@ -107,6 +107,63 @@ the plan. Their exception identity and the shared work callback's exception
 identity remain intact; a later broadened cap cannot turn a failed original
 operation into a successful retry.
 
+## Complete-validation source batches
+
+The supplied-byte validator can explicitly keep one source batch open across
+its complete endpoint and certificate loop. Each plan still contains only
+immutable independent source operands and direct-seed recipes. At most 16
+plans and 1,024 unique receipt objects are captured for one batch. A new plan
+outside either optional bound keeps the original per-request source checks;
+the already captured plans remain subject to the final batch admission.
+
+Within that explicit scope, a previously captured plan need not reread its
+unchanged source records at every key. The complete validation is provisional
+until a callback-free admission compares every captured record with its actual
+source getter. That admission also binds the current model, source maps,
+arithmetic owners, phase-history containers, and each captured state's actual
+history slot. The boundary axis must be the native immutable tuple of exact
+Fraction clocks, within the original 10,000-boundary limit; its strong identity
+binds every clock value. A mutable or foreign axis keeps ordinary per-key
+admission. Both before/after histories must be exact native lists with one
+state per boundary, so final state selection cannot invoke a foreign indexing
+method. Replacing a model or state with equal values cannot borrow the
+old source binding. Native source operands remain frozen during arithmetic,
+so a transient source change restored before admission cannot enter an
+intermediate equation. A persistent change rejects the complete proof.
+
+This batching does not defer numerical cursor lookup or publication. Every
+key uses the original 256-entry arithmetic cache, including ordinary eviction,
+cold seeds, rewind handling and the 64-step recurrence ceiling. A bounded
+ownership ledger records only which still-retained cursor values the batch
+published. It is never read to evaluate or advance a cursor. Rejection deletes
+only values still owned by the failed batch; a nested reader's independently
+completed replacement is preserved. No evicted cursor is restored. A nested
+request retains the original per-key source admission and cannot silently
+replace an outer pending cursor.
+
+Every unique deferred receipt is precharged before the final certificate
+flush. The batch then stays open through the outward report conversions,
+which also invoke the caller's work callback. Complete source and current-cap
+admission runs after all of those callbacks and immediately before the passed
+validation report is returned. Endpoint comparisons, supplied certificate
+rows, native geometry conditions, interval arithmetic, report fields and
+tolerances retain their original expressions and checks.
+
+Only a changed operand cap detected by this added final admission can request
+an ordinary replay. The helper creates a private restart instance; the reader
+accepts only that exact instance. It clears the failed attempt's private
+endpoint and certificate accumulators, removes its still-owned new cursors,
+and reruns the complete certificate loop plus outward report conversions with
+batching disabled. The existing work object and consumed counters continue
+unchanged. Original arithmetic, cancellation, callback and source-identity
+exceptions do not trigger a retry. A caller exception with the private
+restart type is still the caller's original exception. Changed source identity
+is rejected before a coincident cap change can request replay.
+For that precedence, final admission first checks source identity without
+numerical cap admission, then tests the cap, then retains the original receipt
+operand guards. The latter guard rereads the bounded native source records;
+neither pass invokes a callback, so no mutation can intervene between them.
+
 ## Verification scope
 
 `tests/test_reach_reference_phase_plan.py` compares exact cold and advanced
@@ -118,6 +175,14 @@ publication, callbacks, narrowing, eviction, reentrancy and the original
 64-step reseed limit. Existing source-body, identity, interval, callback and
 operand-domain cohorts remain applicable. The helper is included in the
 independent implementation input hash in `tools/reach_source_rates.py`.
+
+`tests/test_reach_reference_source_batch.py` compares complete-reader and
+ordinary per-key execution, including exact cells, actual source-prefix GLB
+bytes and reports, cache contents after every key, forced eviction, recurrence
+reseed, optional capture bounds, source/owner/history changes, restored
+mutations, nested readers and original exception identity. Its terminal tests
+exercise actual outward report callbacks, including source rejection and
+same-budget full-loop replay after a final cap change.
 
 These checks establish only their executed identities and domains. Full
 recording, regression, compatibility and release acceptance remain separate
