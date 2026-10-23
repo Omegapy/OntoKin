@@ -115,6 +115,39 @@ class _AffineCoordinate:
 
 
 @dataclass(frozen=True)
+class _CapturedConstantHinge:
+    """Detached exact source inputs, never a retained rotation result."""
+    source_ops: object
+    work: object
+    axis: tuple
+    coordinate: F
+    seal: tuple
+
+
+def _captured_scalar(value):
+    """Copy a bounded native source scalar before any arithmetic callback."""
+    if type(value) is float:
+        return value if math.isfinite(value) else None
+    if type(value) is int:
+        return value if value.bit_length() <= 1024 else None
+    if (type(value) is F and type(value.numerator) is int
+            and type(value.denominator) is int and value.denominator > 0
+            and max(value.numerator.bit_length(), value.denominator.bit_length()) <= 1024):
+        return F(value.numerator, value.denominator)
+    return None
+
+
+def _captured_hinge_seal(axis, coordinate):
+    if (type(axis) is not tuple or len(axis) != 3
+            or any(type(value) is not F or type(value.numerator) is not int
+                   or type(value.denominator) is not int or value.denominator <= 0
+                   or max(value.numerator.bit_length(), value.denominator.bit_length()) > 1024
+                   for value in (*axis, coordinate))):
+        return None
+    return tuple((value.numerator, value.denominator) for value in (*axis, coordinate))
+
+
+@dataclass(frozen=True)
 class _ExactAffinePosition:
     """One current exact source position, not a native approximate law."""
     values: tuple[F, F, F]
@@ -1118,6 +1151,74 @@ class Binary64RecordingOps(ReachPoseOps):
         self.work.remember(key, (coordinate, result, count, delta, increment))
         if self.work.max_operand_bits != MAX_OPERAND_BITS:
             raise _UnsupportedPlanar("The recording arithmetic domain changed.")
+        return result
+
+    def capture_constant_hinge(self, axis, coordinate):
+        """Decode an unclaimed captured coordinate once, with original helpers.
+
+        Only the complete captured graph calls this source-input constructor.
+        Its final receipt binds the current joint, axis, coordinate and absent
+        claim. The actual rotation remains in the unchanged axis-projection
+        LRU; evicting that result still invokes its original source kernel.
+        """
+        if type(axis) is not tuple or len(axis) != 3:
+            return None
+        source, work = self.source_ops, self.work
+        copied = tuple(_captured_scalar(value) for value in (*axis, coordinate))
+        if any(value is None for value in copied):
+            return None
+        self._domain()
+        coordinate = rational(copied[3], work)
+        axis = source._recording_vector(copied[:3])
+        self._require_domain()
+        if self.source_ops is not source or self.work is not work or source.work is not work:
+            raise _UnsupportedPlanar("The captured hinge arithmetic owner changed.")
+        seal = _captured_hinge_seal(axis, coordinate)
+        if seal is None:
+            return None
+        axis = tuple(F(numerator, denominator) for numerator, denominator in seal[:3])
+        coordinate = F(*seal[3])
+        index = _cartesian_axis(axis)
+        if index is None or index != 2 and self.recording_cartesian_axes is not True:
+            return None
+        return _CapturedConstantHinge(source, work, axis, coordinate, seal)
+
+    def recording_captured_constant_rotation(self, operands, *, context, path, max_steps):
+        """Evaluate the same pure fixed-axis kernel from copied source inputs."""
+        if type(operands) is not _CapturedConstantHinge:
+            raise _UnsupportedPlanar("A captured constant hinge needs its exact source inputs.")
+        source, work = self.source_ops, self.work
+        axis, coordinate, seal = operands.axis, operands.coordinate, operands.seal
+
+        def valid():
+            return (self.source_ops is source and self.work is work and source.work is work
+                and operands.source_ops is source and operands.work is work
+                and operands.axis is axis and operands.coordinate is coordinate and operands.seal is seal
+                and type(seal) is tuple and len(seal) == 4
+                and all(type(pair) is tuple and len(pair) == 2
+                    and all(type(value) is int for value in pair) for pair in seal)
+                and _captured_hinge_seal(axis, coordinate) == seal)
+
+        if not valid():
+            raise _UnsupportedPlanar("The captured constant hinge source inputs changed.")
+        # Subsequent callbacks can see the graph, but cannot change the exact
+        # operands used by this kernel through a shared Fraction owner.
+        copied_axis = tuple(F(numerator, denominator) for numerator, denominator in seal[:3])
+        copied_coordinate = F(*seal[3])
+        self._domain()
+        if not valid():
+            raise _UnsupportedPlanar("The captured constant hinge source inputs changed.")
+        # No history-dependent path cursor is needed for an unclaimed fixed
+        # coordinate. Preserve its original domain before omitting that key.
+        if (type(context) is not object or type(path) is not str or not path
+                or type(max_steps) is not int or not 1 <= max_steps <= MAX_RECORDING_ROTATION_STEPS):
+            raise ReachAdmissionError("reach_domain",
+                "A recording rotation needs a fresh context and bounded path cursor.")
+        work.guard(max_steps, *copied_axis, copied_coordinate)
+        result = self._axis_rotation(copied_axis, copied_coordinate)
+        self._require_domain()
+        if not valid():
+            raise _UnsupportedPlanar("The captured constant hinge source inputs changed.")
         return result
 
     def recording_body_orientation(self, seed_builder, axis, rate, time, *, phase_start,

@@ -79,6 +79,7 @@ class _Node:
     static_recipe: tuple | None
     local_constant: bool
     identity_child: bool = False
+    constant_hinge: object = None
 
 
 @dataclass(frozen=True)
@@ -482,6 +483,14 @@ def _coordinate_inputs(model, state, path):
                              active.running_since, active.status == "running"), None
 
 
+def _clock_fields(value, maximum):
+    if (type(value) is not F or type(value.numerator) is not int
+            or type(value.denominator) is not int or value.denominator <= 0
+            or max(value.numerator.bit_length(), value.denominator.bit_length()) > maximum):
+        return None
+    return value.numerator, value.denominator
+
+
 def _root_law(model, state, path, channel):
     claimant = state.claims.get((path, channel))
     if claimant is None:
@@ -495,7 +504,11 @@ def _root_law(model, state, path, channel):
                if channel == "orientation" else active.initial)
     if type(initial) is RotationValue:
         initial = RotationValue(initial.components, initial.error_rad, initial.frozen_projection)
-    return _RootLaw(initial, action.vector, active.elapsed, active.running_since,
+    elapsed = _clock_fields(active.elapsed, MAX_OPERAND_BITS)
+    since = _clock_fields(active.running_since, MAX_OPERAND_BITS)
+    if elapsed is None or since is None:
+        raise TypeError("A captured root needs bounded native exact clocks.")
+    return _RootLaw(initial, action.vector, F(*elapsed), F(*since),
                     active.status == "running")
 
 
@@ -516,6 +529,23 @@ def _elapsed(law, time, ops):
         ops.work.guard(law.elapsed)
         return law.elapsed
     op = ops.source_ops._op
+    # Exact identities omit arithmetic; each performed operation retains its
+    # charge. Only small native clocks under the full cap can omit ordinary
+    # prospective cross-product guards. Copy every operand before a remaining
+    # subtraction callback so live Fraction leaves cannot alter this sample.
+    fields = tuple(_clock_fields(value, 1024)
+                   for value in (law.elapsed, time, law.running_since))
+    if (type(law.running) is bool and type(ops.work.max_operand_bits) is int
+            and ops.work.max_operand_bits == MAX_OPERAND_BITS
+            and all(value is not None for value in fields)):
+        elapsed, time, since = (F(*value) for value in fields)
+        offset = time if not since else op(time, since, "sub")
+        # A remaining subtraction can narrow the domain. In that case retain
+        # the original zero-add and its prospective finite guard as well.
+        if (not elapsed and type(ops.work.max_operand_bits) is int
+                and ops.work.max_operand_bits == MAX_OPERAND_BITS):
+            return offset
+        return op(elapsed, offset, "add")
     return op(law.elapsed, op(time, law.running_since, "sub"), "add")
 
 
@@ -784,6 +814,7 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
             # No callback occurs between the witness comparison and binding
             # these immutable inputs. Later arithmetic never reads live fields.
             identity_child = kind == "joint" and _identity_child_witness(record)
+            constant_hinge = None
             local_constant = True
             axes = set() if record.rate.axis is None else {record.rate.axis}
             if kind == "world":
@@ -853,7 +884,8 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
                 if len(local_axes) > 1 or any(axis != 2 for axis in local_axes) and not cartesian:
                     return None
                 axes.update(local_axes)
-                if (kind == "joint" and joint.kind in {"rigid", "grip"}
+                if (kind == "joint" and (joint.kind in {"rigid", "grip"}
+                        or joint.kind == "hinge" and law is None)
                         and len(local.position) == 3
                         and all(type(value) is float and isfinite(value)
                                 for value in (*local.position, *local.rotation))):
@@ -862,6 +894,11 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
                     # operands or promote a nonidentity child during sampling.
                     frozen = Pose(frame=local.frame, position=local.position, rotation=local.rotation)
                     operands = (*operands[:2], frozen, *operands[3:])
+                    if joint.kind == "hinge":
+                        # Only an absent coordinate claim has this fixed input
+                        # path. Active constant laws retain their ordinary
+                        # phase endpoint and sample-clock arithmetic.
+                        constant_hinge = ops.capture_constant_hinge(operands[1], operands[4])
                 if kind == "joint" and not local_constant:
                     zero_child = (len(local.position) == 3 and all(
                         type(value) is float and value == 0.0 for value in local.position))
@@ -882,7 +919,11 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
                         # source object before any later arithmetic callback.
                         frozen = Pose(frame=local.frame, position=local.position, rotation=local.rotation)
                         operands = (*operands[:2], frozen, *operands[3:])
-        except (KeyError, AttributeError, TypeError, IndexError):
+        except (KeyError, AttributeError, TypeError, IndexError) as error:
+            # The fixed-input constructor performs original charged helpers.
+            # A caller's one-shot refusal is never an unsupported source shape.
+            if error is work.callback_error:
+                raise
             return None
         visiting.add(frame)
         try:
@@ -906,7 +947,7 @@ def _capture(simulator, state, selected, proof, ops, *, varying_parents=False,
         # witness captured before callbacks, never a later live child pose.
         # An originally nonidentity child cannot become eligible transiently.
         node = _Node(frame, kind, path, record, identities, operands, constant,
-                     recipe, static_recipe, local_constant, identity_child)
+                     recipe, static_recipe, local_constant, identity_child, constant_hinge)
         nodes[frame] = node
         ancestry_axes[frame] = frozenset(axes)
         return node
@@ -1117,8 +1158,12 @@ def _sample_graph(graph, time, ops, context, publication, *, parents=None):
                             law.elapsed, law.running_since, clock, running=law.running)
                 def build(base=parent):
                     if kind == "hinge":
-                        rotation = ops.recording_axis_rotation(axis, coordinate, context=context,
-                            path="hinge:" + node.path, max_steps=MAX_KEYFRAMES)
+                        if node.constant_hinge is None:
+                            rotation = ops.recording_axis_rotation(axis, coordinate, context=context,
+                                path="hinge:" + node.path, max_steps=MAX_KEYFRAMES)
+                        else:
+                            rotation = ops.recording_captured_constant_rotation(node.constant_hinge,
+                                context=context, path="hinge:" + node.path, max_steps=MAX_KEYFRAMES)
                         relative = ops.make_recording(orientation=rotation)
                     else:
                         relative = ops.make_recording()
@@ -1248,8 +1293,12 @@ def _sample_chain_graph(graph, time, ops, context, publication, constants):
                             law.elapsed, law.running_since, time, running=law.running)
                     def build():
                         if kind == "hinge":
-                            rotation = ops.recording_axis_rotation(axis, coordinate, context=context,
-                                path="hinge:" + node.path, max_steps=MAX_KEYFRAMES)
+                            if node.constant_hinge is None:
+                                rotation = ops.recording_axis_rotation(axis, coordinate, context=context,
+                                    path="hinge:" + node.path, max_steps=MAX_KEYFRAMES)
+                            else:
+                                rotation = ops.recording_captured_constant_rotation(node.constant_hinge,
+                                    context=context, path="hinge:" + node.path, max_steps=MAX_KEYFRAMES)
                             relative = ops.make_recording(orientation=rotation)
                         else:
                             relative = ops.make_recording()
