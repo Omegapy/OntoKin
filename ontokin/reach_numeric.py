@@ -63,11 +63,16 @@ class ReachExecutionWork:
         # A callback may reenter the same bounded cache. This bookkeeping
         # serial prevents an outer insertion from undoing that completed work.
         self._cache_generation = 0
+        # A scoped source traversal can observe an existing callback boundary
+        # without replacing the caller's callback or adding a work operation.
+        # The ordinary path leaves this private observer unset.
+        self._source_after_charge = None
 
     def charge(self, kind="checkpoint", amount=1):
         if type(amount) is not int or amount < 0:
             raise ValueError("Invalid work charge")
         for _ in range(amount):
+            observer = self._source_after_charge
             if self.external_check is not None:
                 try:
                     self.external_check()
@@ -81,6 +86,12 @@ class ReachExecutionWork:
                               (monotonic() - self.started) * 1000)
             self.operations += 1
             self.counts[kind] = self.counts.get(kind, 0) + 1
+            # Capture before the unchanged callback, then observe only after
+            # its normal return and the original resource/counter checks.
+            # A callback replacement cannot hide from the captured observer;
+            # an original callback/resource failure never runs this hook.
+            if observer is not None:
+                observer()
 
     def tick(self):
         self.charge()

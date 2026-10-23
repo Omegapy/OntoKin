@@ -1032,6 +1032,8 @@ class ReachSimulator(ForceSimulator):
             return self._constant_pose(pose, inverse=inverse)
         incoming = self._incoming(state)
         objects, frames, resolving = {}, {"world": self._identity_pose}, set()
+        source_sites = (_SourceSiteIndex.create(self, state, time, objects, frames)
+            if not pose_only and selected_frames is None else None)
         angular_proof = None
         valid_angular_frames = set()
         resolving_angular_frames = set()
@@ -1425,8 +1427,11 @@ class ReachSimulator(ForceSimulator):
                     # The cache signature and its builder must consume the same
                     # immutable placement across lookup and arithmetic callbacks.
                     local_pose = site.pose
-                    frames[path] = slot(path, (owner, local_pose),
-                        lambda base=owner: compose(base, constant_pose(local_pose)), owner=site.owner)
+                    def build_site():
+                        return slot(path, (owner, local_pose),
+                            lambda base=owner: compose(base, constant_pose(local_pose)), owner=site.owner)
+                    frames[path] = (build_site() if source_sites is None else
+                        source_sites.pose(path, site, owner, local_pose, build_site))
             return frames[path]
 
         def instance(path):
@@ -2509,3 +2514,258 @@ class ReachSimulator(ForceSimulator):
             return super().advance(time, side)
         except ReachAdmissionError as error:
             self._numeric_error(error, time=time)
+
+
+# A site index is structural bookkeeping for one already required full graph.
+# Its admission seals are never a second source of computed numerical poses.
+from .model import (ObjectModel as _SourceSiteObject, Pose as _SourceSitePose,
+                    SceneModel as _SourceSiteModel, SiteModel as _SourceSiteRecord)
+from .reach_pose import PoseValue as _SourceSiteValue, RotationValue as _SourceSiteRotation
+
+_SOURCE_SITE_ABSENT = object()
+_SOURCE_SITE_STORAGE = ("__getattribute__", "__getattr__", "__setattr__", "__delattr__", "__dict__")
+_SOURCE_SITE_CLASSES = tuple((kind, tuple((name, vars(kind).get(name, _SOURCE_SITE_ABSENT))
+    for name in dict.fromkeys((*_SOURCE_SITE_STORAGE, *fields,
+                              *(name for name, value in vars(kind).items() if callable(value))))))
+    for kind, fields in (
+        (ReachExecutionWork, ("external_check", "max_operand_bits", "max_cache_entries", "_source_after_charge")),
+        (_StaticRecordingOps, ("work",)),
+        (_SourceSiteModel, ("program_revision", "objects", "sites")),
+        (_SourceSiteRecord, ("path", "element_id", "owner", "pose", "interface", "size", "span")),
+        (_SourceSitePose, ("frame", "position", "rotation")),
+        (_SourceSiteValue, ("exact_position", "rotation", "exact_velocity", "exact_omega", "position_error_m", "_ops")),
+        (_SourceSiteRotation, ("components", "error_rad", "frozen_projection")),
+        (Fraction, ("numerator", "denominator"))))
+_SOURCE_SITE_METHODS = tuple((name, getattr(ReachSimulator, name))
+    for name in ("_pose_slot", "_translated_source_slot", "_constant_pose"))
+_SOURCE_SITE_FIELDS = ("path", "element_id", "owner", "pose", "interface", "size", "span")
+
+
+class _SourceSiteIndex:
+    """Refer equal sites to required poses in the same full source traversal.
+
+    Every original source visit remains in the resolver. Only a native,
+    same-parent composition can reuse an earlier required frame. At most the
+    current numeric-cache capacity's worth of frame paths and admission seals
+    are retained, with no computed result recoverable from those seals.
+    """
+
+    @classmethod
+    def create(cls, simulator, state, time, objects, frames):
+        model, work, ops = simulator.model, simulator.work, simulator.pose_ops
+        if (type(model) is not _SourceSiteModel or type(state) is not _ReachRunState
+                or type(work) is not ReachExecutionWork or type(ops) is not _StaticRecordingOps
+                or type(model.objects) is not dict or type(model.sites) is not dict
+                or type(model.program_revision) is not str or len(model.program_revision) > 1024
+                or type(work.max_operand_bits) is not int or work.max_operand_bits != 32768
+                or type(work.max_cache_entries) is not int or not 1 <= work.max_cache_entries <= 256
+                or len(model.objects) + len(model.sites) <= 256
+                or work._source_after_charge is not None or cls.fraction(time) is None):
+            return None
+        result = cls(simulator, state, time, objects, frames)
+        return result if result.native() else None
+
+    def __init__(self, simulator, state, time, objects, frames):
+        self.simulator, self.state, self.time = simulator, state, time
+        self.model, self.work, self.ops = simulator.model, simulator.work, simulator.pose_ops
+        self.root_state, self.check, self.external = simulator.state, simulator.check, self.work.external_check
+        self.source_objects, self.source_sites = self.model.objects, self.model.sites
+        self.source_sizes = len(self.source_objects), len(self.source_sites)
+        self.revision, self.clock = self.model.program_revision, self.fraction(time)
+        self.capacity = self.work.max_cache_entries
+        self.objects, self.frames, self.entries = objects, frames, {}
+        self.valid, self.observer = True, None
+
+    @staticmethod
+    def fraction(value):
+        from math import gcd
+        if type(value) is not Fraction:
+            return None
+        numerator, denominator = value.numerator, value.denominator
+        if (type(numerator) is int and type(denominator) is int and denominator > 0
+                and max(abs(numerator).bit_length(), denominator.bit_length()) <= 512
+                and gcd(numerator, denominator) == 1):
+            return numerator, denominator
+        return None
+
+    @staticmethod
+    def floats(values, length):
+        from math import isfinite
+        if (type(values) is tuple and len(values) == length
+                and all(type(value) is float and isfinite(value) for value in values)):
+            return tuple(value.hex() for value in values)
+        return None
+
+    def native(self):
+        if any(vars(kind).get(name, _SOURCE_SITE_ABSENT) is not saved
+               for kind, fields in _SOURCE_SITE_CLASSES for name, saved in fields):
+            return False
+        if (type(self.work) is not ReachExecutionWork or type(self.ops) is not _StaticRecordingOps
+                or type(self.simulator).__getattribute__ is not object.__getattribute__):
+            return False
+        for owner, methods in ((self.work, _SOURCE_SITE_CLASSES[0][1]),
+                               (self.ops, _SOURCE_SITE_CLASSES[1][1])):
+            own = object.__getattribute__(owner, "__dict__")
+            if type(own) is not dict or any(name in own for name, method in methods if callable(method)):
+                return False
+        own = object.__getattribute__(self.simulator, "__dict__")
+        if type(own) is not dict or any(name in own or getattr(type(self.simulator), name, None) is not method
+                                       for name, method in _SOURCE_SITE_METHODS):
+            return False
+        return True
+
+    def context(self):
+        # A temporary dispatch/cap departure cannot regain optional admission
+        # when a later original callback restores it. Original arithmetic still
+        # runs, so an actual inherited failure is never hidden by this decline.
+        if not self.native():
+            self.valid = False
+            self.entries.clear()
+            return False
+        if (self.simulator.model is not self.model or self.simulator.state is not self.root_state
+                or type(self.state) is not _ReachRunState or type(self.root_state) is not _ReachRunState
+                or self.simulator.work is not self.work or self.simulator.pose_ops is not self.ops
+                or self.ops.work is not self.work or self.simulator.check is not self.check
+                or self.work.external_check is not self.external
+                or self.work._source_after_charge is not self.observer
+                or self.model.objects is not self.source_objects or self.model.sites is not self.source_sites
+                or (len(self.source_objects), len(self.source_sites)) != self.source_sizes
+                or type(self.model.program_revision) is not str or self.model.program_revision != self.revision
+                or self.fraction(self.time) != self.clock):
+            raise ReachAdmissionError("reach_domain", "The source-site traversal owner changed.")
+        if (type(self.work.max_operand_bits) is not int or self.work.max_operand_bits != 32768
+                or type(self.work.max_cache_entries) is not int or self.work.max_cache_entries != self.capacity):
+            self.valid = False
+            self.entries.clear()
+        return self.valid
+
+    def source_seal(self, path, site, parent, local):
+        from math import isfinite
+        if (type(path) is not str or len(path) > 2048 or not path.endswith(".frame")
+                or type(site) is not _SourceSiteRecord or type(local) is not _SourceSitePose
+                or site.pose is not local or type(site.path) is not str or site.path + ".frame" != path
+                or type(site.owner) is not str or len(site.owner) > 2048
+                or type(site.element_id) is not tuple or len(site.element_id) > 32
+                or any(type(part) is not str or len(part) > 256 for part in site.element_id)
+                or type(site.interface) is not str or len(site.interface) > 128
+                or type(site.size) is not float or not isfinite(site.size)
+                or type(local.frame) is not str or len(local.frame) > 2048
+                or self.floats(local.position, 3) is None or self.floats(local.rotation, 4) is None
+                or self.source_sites.get(site.path) is not site
+                or type(self.source_objects.get(site.owner)) is not _SourceSiteObject
+                or self.objects.get(site.owner) is not parent
+                or self.frames.get(site.owner + ".frame") is not parent):
+            return None
+        return (path, site, self.source_objects[site.owner],
+                tuple(getattr(site, name) for name in _SOURCE_SITE_FIELDS),
+                (local.frame, local.position, local.rotation))
+
+    def source_current(self, seal, parent):
+        path, site, owner, fields, placement = seal
+        return (type(site) is _SourceSiteRecord and self.source_sites.get(fields[0]) is site
+            and self.source_objects.get(fields[2]) is owner
+            and all(getattr(site, name) is value for name, value in zip(_SOURCE_SITE_FIELDS, fields))
+            and type(site.pose) is _SourceSitePose
+            and all(getattr(site.pose, name) is value
+                    for name, value in zip(("frame", "position", "rotation"), placement))
+            and self.objects.get(fields[2]) is parent and self.frames.get(fields[2] + ".frame") is parent)
+
+    def pose_seal(self, value):
+        if (type(value) is not _SourceSiteValue or value._ops is not self.ops
+                or type(value.rotation) is not _SourceSiteRotation):
+            return None
+        fields = (value.exact_position, value.rotation.components, value.exact_velocity, value.exact_omega)
+        if any(type(parts) is not tuple or len(parts) != length
+               for parts, length in zip(fields, (3, 4, 3, 3))):
+            return None
+        numbers = (*fields[0], *fields[1], *fields[2], *fields[3], value.position_error_m, value.rotation.error_rad)
+        pairs = tuple(self.fraction(number) for number in numbers)
+        frozen = value.rotation.frozen_projection
+        if (None in pairs or not any(pair[0] for pair in pairs[3:7])
+                or pairs[-2][0] < 0 or pairs[-1][0] < 0
+                or frozen is not None and self.floats(frozen, 4) is None):
+            return None
+        self.work.guard(*numbers)
+        return value, value.rotation, fields, numbers, pairs, frozen
+
+    def pose_current(self, seal, value):
+        original, rotation, fields, numbers, pairs, frozen = seal
+        return (value is original and type(value) is _SourceSiteValue and value._ops is self.ops
+            and value.rotation is rotation and type(rotation) is _SourceSiteRotation
+            and all(actual is saved for actual, saved in zip(
+                (value.exact_position, rotation.components, value.exact_velocity, value.exact_omega), fields))
+            and value.position_error_m is numbers[-2] and rotation.error_rad is numbers[-1]
+            and rotation.frozen_projection is frozen
+            and all(self.fraction(number) == pair for number, pair in zip(numbers, pairs)))
+
+    def copy_required(self, value):
+        # Read the live required frame only after its seal's final admission.
+        # Seals validate; they never reconstruct an evicted/changed result.
+        # Fresh wrappers/projection maps keep another site's mutable private
+        # memo or later operand mutation from changing this required value.
+        def number(part):
+            return Fraction(part.numerator, part.denominator)
+        rotation = _SourceSiteRotation(tuple(number(part) for part in value.rotation.components),
+            number(value.rotation.error_rad), value.rotation.frozen_projection)
+        return _SourceSiteValue(tuple(number(part) for part in value.exact_position), rotation,
+            tuple(number(part) for part in value.exact_velocity),
+            tuple(number(part) for part in value.exact_omega), number(value.position_error_m), self.ops)
+
+    def pose(self, path, site, parent, local, build):
+        if not self.valid or self.work._source_after_charge is not None or not self.context():
+            return build()
+        source = self.source_seal(path, site, parent, local)
+        if source is None:
+            return build()
+        key = (site.owner, id(parent), local.frame, self.floats(local.position, 3), self.floats(local.rotation, 4))
+        entry = self.entries.get(key)
+
+        def admit_entry():
+            old_path, old_source, old_operand, result = entry
+            if (not self.source_current(old_source, parent) or not self.pose_current(old_operand, parent)
+                    or not self.pose_current(result, self.frames.get(old_path))):
+                raise ReachAdmissionError("reach_domain", "An indexed required source-site pose changed.")
+
+        # A required result can share an exact leaf with its parent. Check an
+        # already indexed receipt before unsupported-parent fallback, so a
+        # changed shared leaf cannot hide its invalid warm result by making
+        # the new operand seal decline. Fresh unsupported inputs still build.
+        if entry is not None:
+            admit_entry()
+        operand = self.pose_seal(parent)
+        if operand is None:
+            return build()
+
+        def current():
+            if not self.context():
+                return False
+            if not self.source_current(source, parent) or not self.pose_current(operand, parent):
+                raise ReachAdmissionError("reach_domain", "A source-site composition operand changed.")
+            if entry is not None:
+                admit_entry()
+            return True
+
+        previous = self.work._source_after_charge
+        self.observer = current
+        self.work._source_after_charge = current
+        try:
+            self.work.charge("source_site_admission")
+            if not current():
+                return build()
+            if entry is not None:
+                self.work.charge("source_site_reuse")
+                if current():
+                    return self.copy_required(self.frames[entry[0]])
+                return build()
+            result = build()
+            if current():
+                result_seal = self.pose_seal(result)
+                if result_seal is not None and len(self.entries) < self.capacity:
+                    self.entries[key] = path, source, operand, result_seal
+            return result
+        finally:
+            # Reentrant scopes can decline an occupied hook. If a callback
+            # replaces it, leave that new owner intact even when admission fails.
+            if self.work._source_after_charge is current:
+                self.work._source_after_charge = previous
+            self.observer = None
