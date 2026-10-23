@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-23T15:28:45.287455+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-23T16:23:38+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -44,22 +44,30 @@ local `569b67b0bdc6854cc069e6a00590e0f15267ae03`
 [draft PR #25](https://github.com/Omegapy/OntoKin/pull/25). Original branches,
 failed attempts and earlier evidence retain their identities.
 
-Latest published continuation implementation is `5eb68c69e30578237886703f8e7e1eed9d860a76`,
-with exactly the tested local `c416eef6d269015f67c5bcd309cf627338e50ea3` tree
-`8f1ff92aa1d7557030a638e980f73da35260471e`.
+Latest published continuation implementation is
+`e114874a934d9662a7d1939c8d0bc5aa7ca080f7`, with exactly the tested local
+`0c56dd41f739d23ccca777473a19622f91ae460d` tree
+`3f7f14a2d0ac41bbd4c1d61eb2d09ec6f32fa7a7`.
 The [October 23 recording checkpoint](docs/engineering/reach-recording-validation-2026-10-23/README.md)
 retains a fresh **22/28** complete source run with stable materialized inputs.
-The identified integrated reference, endpoint and numerical-identity cohorts
-passed **137/137**, **85/85** and **60/60** respectively, without failures,
-errors or skips; these are separate source cuts, not one regression inventory.
-**P05, P09, P11, P16, P23 and L03** still reach the unchanged **100,000-operation**
-limit. P20 uses **95,435**, L01 **92,793**, and L02 **85,593** operations.
+The latest integrated dyadic cohort passes **49/49**, with a complete text log,
+no failures, errors or skips. Separate integrated source-receipt, Cartesian,
+tiny-product and independent Cartesian cohorts pass **50/50**, **29/29**,
+**37/37** and **38/38** at their own identified source cuts.
 
-Checkpoint011 preserves **484 new raw members** in 14 recoverable parts;
-checkpoint010's **238 members** retain their original identities. These include
-failed attempts, actual logs/method IDs, artifacts, traces, rejected candidates
-and source identities. All member hashes, archive part identities and ZIP CRCs
-passed. The earlier
+**P09, P11, P16, P23 and L03** still reach the unchanged **100,000-operation**
+limit. **P05 now reaches independent certificate validation at 99,069 operations
+and fails its final source rotation bound**. The earlier cap had hidden this
+correctness failure. P20 uses **89,767**, L01 **87,281**, and L02 **79,464**.
+No additional complete recording pass is claimed.
+
+Checkpoint012 preserves **859 new raw members** in **26 recoverable parts**;
+its manifest refers to **707 unchanged prior members** through checkpoint011.
+All member hashes, ZIP CRCs and the joined-part identity passed. Checkpoints010
+and011 retain their original archives and source cuts. Failed tests, incomplete
+text logs, completed structured test results, diagnostic observers and exact
+local-to-published Git-tree mappings remain visible. The new development driver
+binds its own bytes and requires a complete unittest log footer. The earlier
 [checkpoint009](docs/engineering/reach-recording-validation-2026-10-22/README.md)
 and its 234- and earlier 686-method cohorts retain their original evidence.
 
@@ -69,13 +77,22 @@ the exact omissions and original Git blob identities are disclosed in every
 execution inventory and remain preserved in the tree. These development runs
 do **not** establish release input closure or complete release acceptance.
 
-Captured prescribed/dynamic roots, independent source-formula plans, endpoint
-operand reuse, literal JSON blocks and guarded scalar/surface construction
-preserve the checked behavior. The numerical implementation identity now also
-binds the executed capture helper. Broader source-template and phase-node
-cache candidates were rejected after measured regressions. Mixed P11 sampling
-and phase-wide independent receipts remain unverified follow-up candidates.
-No fixture, tolerance, operation maximum or 256-entry cache maximum changed.
+New integrated work includes mixed P11 sampling, phase-wide independent source
+receipts with terminal admission, producer and independent Cartesian products,
+exact native unit offsets, exact tiny interval products, and dyadic point/integer
+divisor identities. Targeted and complete recording runs follow each integration.
+Actual P16 admission saves 2,242 operations and P23 saves 834 with otherwise
+identical complete solutions. No fixture, tolerance, operation maximum or
+256-entry cache maximum changed.
+
+The producer final-state bound candidate `1333450` is **not integrated**.
+Its natural-completion test passes; its new module passes 5/7 with two errors:
+one missing-zero test-helper lookup and an actual short P16 final-release
+position-bound mismatch between canonical and independently enclosed anchor
+extents. Both raw failed attempts and exact diagnostic quantities are retained.
+Derive the conservative transfer bound, test it, and rerun original full P05.
+Bounded stationary-source traversal and independent endpoint arithmetic remain
+unverified performance scopes. Earlier rejected source templates remain rejected.
 
 The immediate target remains **28/28**, followed by Agent delivery, complete
 current regression/compatibility, independent rates, native/browser and visual
