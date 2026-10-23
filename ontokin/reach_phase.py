@@ -12,7 +12,7 @@ from math import isfinite
 from types import MappingProxyType
 
 from .model import Pose
-from .reach_numeric import MAX_OPERAND_BITS, ReachAdmissionError, compare, exact, rational
+from .reach_numeric import MAX_OPERAND_BITS, ReachAdmissionError, ReachExecutionWork, compare, exact, rational
 from .reach_pose import EXPOSED_ROTATION_ERROR, VECTOR_ERROR, RotationValue, uniform_source_bounds
 
 
@@ -503,6 +503,131 @@ class PhaseArithmetic:
         return self.add(self.mul(magnitude, F(1, 1 << 53)), F(3, 1 << 1075))
 
 
+_PHASE_LOCATION_ARITHMETIC = PhaseArithmetic
+_PHASE_LOCATION_ADD = PhaseArithmetic.add
+_PHASE_LOCATION_SUB = PhaseArithmetic.sub
+_PHASE_LOCATION_MUL = PhaseArithmetic.mul
+_PHASE_LOCATION_EXACT = exact
+
+
+def _native_phase_location_arithmetic(arithmetic, work):
+    """The optional fixed DAG may omit only the native variadic dispatch."""
+    kind = _PHASE_LOCATION_ARITHMETIC
+    if (PhaseArithmetic is not kind or type(arithmetic) is not kind
+            or kind.__getattribute__ is not object.__getattribute__
+            or kind.__dict__.get("add") is not _PHASE_LOCATION_ADD
+            or kind.__dict__.get("sub") is not _PHASE_LOCATION_SUB
+            or kind.__dict__.get("mul") is not _PHASE_LOCATION_MUL
+            or "work" in kind.__dict__ or "__getattr__" in kind.__dict__
+            or exact is not _PHASE_LOCATION_EXACT
+            or type(work) is not ReachExecutionWork):
+        return False
+    fields = object.__getattribute__(arithmetic, "__dict__")
+    return (type(fields) is dict and len(fields) == 1 and fields.get("work") is work
+            and type(work.max_operand_bits) is int
+            and work.max_operand_bits == MAX_OPERAND_BITS)
+
+
+def _native_phase_location_spatial(values):
+    return (all(type(value) is F and type(value.numerator) is int
+                and type(value.denominator) is int and value.denominator > 0
+                for value in values)
+            and _small_phase_location_operands(*values))
+
+
+def _fixed_phase_location_values(base, extent_delta, offset_delta, arithmetic, work):
+    """Materialize the admitted affine formula without variadic identity scans.
+
+    The existing materialization charge precedes this optional path. Every
+    actual arithmetic operation still uses exact(), including prospective
+    widths. Six spatial operands of at most 2,048 bits leave room for every
+    unreduced intermediate in this seven-operation DAG under the full cap.
+    There is no cached result, coefficient, source projection or new rounding.
+    """
+    if (type(base) is not PhaseBound or not _native_phase_location_arithmetic(arithmetic, work)):
+        return None
+    spatial = (*(getattr(base, name) for name in _LOCATION_FIELDS), extent_delta, offset_delta)
+    if not _native_phase_location_spatial(spatial):
+        return None
+    # Native Fractions and frozen bounds can still be altered by private
+    # callback mutation. These six immutable integer pairs are an admission
+    # receipt for this one local calculation, not another numerical cache.
+    source_values = tuple((value.numerator, value.denominator) for value in spatial)
+
+    def continuing():
+        # The arithmetic owner cannot move a partially executed materializer
+        # to another request. Other dispatch/domain changes abandon this one
+        # attempt; the caller then executes the generic formula afresh.
+        if object.__getattribute__(arithmetic, "__dict__").get("work") is not work:
+            raise ReachAdmissionError("reach_domain", "A phase materialization changed its arithmetic work context.")
+        if not _native_phase_location_arithmetic(arithmetic, work):
+            return False
+        current = (*(getattr(base, name) for name in _LOCATION_FIELDS), extent_delta, offset_delta)
+        return (_native_phase_location_spatial(current)
+                and tuple((value.numerator, value.denominator) for value in current) == source_values)
+
+    def step(left, right, operation):
+        try:
+            result = exact(left, right, operation, work)
+        except ReachAdmissionError as error:
+            if error is work.callback_error:
+                raise
+            if error.details.get("budget") == "numeric_operand_bits" and not continuing():
+                return None
+            raise
+        # Check after every operation's callback. Returning None immediately
+        # latches a changed cap/dispatch; a later restoration cannot resume or
+        # publish this optional partial result.
+        return result if continuing() else None
+
+    extent = step(base.max_position_l1_m, extent_delta, "add")
+    if extent is None:
+        return None
+    offset = step(base.path_offset_l1_m, offset_delta, "add")
+    if offset is None:
+        return None
+    rotation = step(base.rotation_error_rad, EXPOSED_ROTATION_ERROR, "sub")
+    if rotation is None:
+        return None
+    extent_error = step(extent_delta, F(1, 1 << 53), "mul")
+    if extent_error is None:
+        return None
+    offset_error = step(offset_delta, rotation, "mul")
+    if offset_error is None:
+        return None
+    position_error = step(base.position_error_m, extent_error, "add")
+    if position_error is None:
+        return None
+    position_error = step(position_error, offset_error, "add")
+    if position_error is None:
+        return None
+    return extent, offset, position_error
+
+
+def _materialize_phase_location(location, arithmetic, work):
+    if type(location) is not _PhaseLocation:
+        return location
+    work.charge("phase_location_materialize")
+    base, extent_delta, offset_delta = location.relative, location.extent, location.offset
+    operands = (*(getattr(base, field) for field in _BOUND_FIELDS), extent_delta, offset_delta)
+    work.guard(*operands)
+    values = _fixed_phase_location_values(base, extent_delta, offset_delta, arithmetic, work)
+    if values is None:
+        # Keep the original formula and its dispatch/identity behavior for
+        # unusual operands, narrow domains and an abandoned optional attempt.
+        extent = arithmetic.add(base.max_position_l1_m, extent_delta)
+        offset = arithmetic.add(base.path_offset_l1_m, offset_delta)
+        rotation = arithmetic.sub(base.rotation_error_rad, EXPOSED_ROTATION_ERROR)
+        position_error = arithmetic.add(base.position_error_m,
+            arithmetic.mul(extent_delta, F(1, 1 << 53)), arithmetic.mul(offset_delta, rotation))
+    else:
+        extent, offset, position_error = values
+    result = replace(base, max_position_l1_m=extent, path_offset_l1_m=offset,
+                     position_error_m=position_error)
+    work.guard(*operands, *(getattr(result, field) for field in _BOUND_FIELDS))
+    return result
+
+
 def _same_joint_phase_law(actual_initial, ideal_initial, work):
     """Recognize identical decoded affine inputs without another numeric cache.
 
@@ -843,21 +968,7 @@ def phase_bounds(simulator, start, end, state=None, *, selected_frames=None, rec
         return checked(result)
 
     def materialize(location):
-        if type(location) is not _PhaseLocation:
-            return location
-        work.charge("phase_location_materialize")
-        base, extent_delta, offset_delta = location.relative, location.extent, location.offset
-        operands = (*(getattr(base, field) for field in _BOUND_FIELDS), extent_delta, offset_delta)
-        work.guard(*operands)
-        extent = a.add(base.max_position_l1_m, extent_delta)
-        offset = a.add(base.path_offset_l1_m, offset_delta)
-        rotation = a.sub(base.rotation_error_rad, EXPOSED_ROTATION_ERROR)
-        position_error = a.add(base.position_error_m,
-            a.mul(extent_delta, F(1, 1 << 53)), a.mul(offset_delta, rotation))
-        result = replace(base, max_position_l1_m=extent, path_offset_l1_m=offset,
-                         position_error_m=position_error)
-        work.guard(*operands, *(getattr(result, field) for field in _BOUND_FIELDS))
-        return result
+        return _materialize_phase_location(location, a, work)
 
     def compose(parent, local, *, axial_rate=None):
         """Carry exact outer location through repeated relative recurrences.

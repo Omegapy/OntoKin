@@ -1,6 +1,7 @@
 """Prefix planning shares pure metadata, never source state or public outputs."""
 from contextlib import ExitStack
 from copy import deepcopy
+from dataclasses import fields, is_dataclass
 from fractions import Fraction as F
 import unittest
 from unittest.mock import patch
@@ -30,8 +31,84 @@ def plan(case, end, *, reuse=True, check=None):
     return compiled, result
 
 
+def admitted_state_value(simulator, state):
+    """Compare state values after retaining each proof's actual source owner.
+
+    Independently compiled models deliberately have different strong owner
+    tokens. First admit every cell against its own current source, then retain
+    each token's complete source roles and alias relationships in the value
+    comparison. No production identity check or numeric proof field is removed.
+    """
+    from ontokin import reach_transfer_bounds as transfer
+
+    owners = {}
+    if state.dynamic_cells:
+        for path, proof in state.dynamic_cells.items():
+            transfer._source_guard(simulator, state, path, proof, charged=False)
+        lineage = transfer._model_snapshot(simulator)[1]
+
+        def owner_roles(value, path=(), depth=0):
+            if depth > 24:
+                raise AssertionError("The source-owner receipt exceeded its original depth bound")
+            if type(value) is transfer._OwnerRef:
+                if len(value) != 1:
+                    raise AssertionError("Malformed strong source owner")
+                owner = value[0]
+                saved, roles = owners.setdefault(id(owner), (owner, []))
+                if saved is not owner:
+                    raise AssertionError("A source owner address was reused")
+                roles.append(path)
+            elif type(value) is tuple:
+                for index, part in enumerate(value):
+                    owner_roles(part, (*path, index), depth + 1)
+
+        owner_roles(lineage)
+
+    remaining = 250000
+
+    def value(item, depth=0):
+        nonlocal remaining
+        remaining -= 1
+        if remaining < 0 or depth > 64:
+            raise AssertionError("The state comparison exceeded its bounded traversal")
+        kind = type(item)
+        name = (kind.__module__, kind.__qualname__)
+        if kind is transfer._OwnerRef:
+            if len(item) != 1:
+                raise AssertionError("Malformed strong source owner")
+            owner = item[0]
+            saved = owners.get(id(owner))
+            if saved is None or saved[0] is not owner:
+                raise AssertionError("A proof owner is outside its admitted current source")
+            return (name, (type(owner).__module__, type(owner).__qualname__), tuple(saved[1]))
+        if item is None or kind in (bool, int, str):
+            return name, item
+        if kind is float:
+            return name, item.hex()
+        if kind is F:
+            return name, value(item.numerator, depth + 1), value(item.denominator, depth + 1)
+        if is_dataclass(item):
+            # Match the original dataclass equality contract. The excluded
+            # PoseValue owner/projection caches were never state-value fields.
+            return name, tuple((field.name, value(getattr(item, field.name), depth + 1))
+                               for field in fields(item) if field.compare)
+        if kind is dict:
+            return name, tuple((value(key, depth + 1), value(part, depth + 1))
+                               for key, part in item.items())
+        if isinstance(item, tuple) or kind is list:
+            return name, tuple(value(part, depth + 1) for part in item)
+        if kind in (set, frozenset):
+            return name, frozenset(value(part, depth + 1) for part in item)
+        raise AssertionError("Unexpected private state value: " + kind.__qualname__)
+
+    return value(state)
+
+
 class ReachPlanningReuseTests(unittest.TestCase):
     def test_complete_prefixes_equal_ordinary_projections_and_phase_selection(self):
+        from ontokin import reach_transfer_bounds as transfer
+        from ontokin.reach_numeric import ReachAdmissionError
+
         for case, end in (("P01", F(1, 4)), ("P01", F(3)), ("P05", F(1)),
                           ("P16", F(3)), ("L04", F(1, 4)), ("P23", F(3))):
             with self.subTest(case=case, end=end):
@@ -40,8 +117,23 @@ class ReachPlanningReuseTests(unittest.TestCase):
                 self.assertEqual(actual.boundaries, expected.boundaries)
                 self.assertEqual(actual.boundary_records, expected.boundary_records)
                 self.assertEqual(actual.phases, expected.phases)
-                self.assertEqual(actual.phase_states, expected.phase_states)
-                self.assertEqual(actual.final_state, expected.final_state)
+                self.assertEqual(len(actual.phase_states), len(expected.phase_states))
+                before_comparison = (compiled.budget.operations, baseline.budget.operations,
+                                     compiled.reach_work.record(), baseline.reach_work.record())
+                for current, ordinary in (*zip(actual.phase_states, expected.phase_states),
+                                          (actual.final_state, expected.final_state)):
+                    self.assertEqual(admitted_state_value(actual.simulator, current),
+                                     admitted_state_value(expected.simulator, ordinary))
+                    # Equal physical/source values never confer authority to
+                    # borrow a proof from another independently compiled model.
+                    for simulator, foreign in ((actual.simulator, ordinary),
+                                               (expected.simulator, current)):
+                        for path, proof in foreign.dynamic_cells.items():
+                            with self.assertRaisesRegex(ReachAdmissionError, "changed source"):
+                                transfer._source_guard(simulator, foreign, path, proof, charged=False)
+                self.assertEqual(before_comparison,
+                    (compiled.budget.operations, baseline.budget.operations,
+                     compiled.reach_work.record(), baseline.reach_work.record()))
                 self.assertLess(compiled.budget.operations, baseline.budget.operations)
                 self.assertLessEqual(compiled.budget.operations, 100000)
                 self.assertLessEqual(len(compiled.reach_work._cache), 256)
