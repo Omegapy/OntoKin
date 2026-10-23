@@ -1257,7 +1257,7 @@ class _PoseArithmetic:
         # its own failure can never be retried into a later broader domain.
         return direct() if result is None else result
 
-    def _recording_sincos(self, coordinate, *, context, clock, shared=False):
+    def _recording_sincos(self, coordinate, *, context, clock, shared=False, pending=None):
         """Enclose successive point angles without a production error model.
 
         Only the explicit recording path supplies this cursor context. Its
@@ -1328,7 +1328,12 @@ class _PoseArithmetic:
         if self.a.operand_limit != limit:
             return direct()
         self.a.guard(*(endpoint for part in result for endpoint in (part.lo, part.hi)))
-        self.a.remember(key, (clock, coordinate.lo, *result, steps))
+        value = (clock, coordinate.lo, *result, steps)
+        if pending is None:
+            self.a.remember(key, value)
+        else:
+            pending.remember(key, value, previous,
+                             lambda: self.a.operand_limit == limit)
         if self.a.operand_limit != limit:
             return direct()
         return result
@@ -1362,7 +1367,8 @@ class _PoseArithmetic:
         return Interval(sine_low, sine_high), Interval(cosine_low, cosine_high)
 
     def _recording_body_orientation(self, direct, *, axis, rate, witness, context, clock, shared=False,
-                                    source_admission=None, source_records=0, return_advance=False):
+                                    source_admission=None, source_records=0, return_advance=False,
+                                    pending=None):
         """Advance an independently proved constant body-axis orientation.
 
         The caller supplies only its own ideal source proof and a context-free
@@ -1481,7 +1487,11 @@ class _PoseArithmetic:
                 source_admission()
             self.a.guard(*(endpoint for cell in result for endpoint in (cell.lo, cell.hi)))
             return True
-        self.a.remember(key, (witness, axis, rate, clock, result, increment, steps), admission=admit)
+        value = (witness, axis, rate, clock, result, increment, steps)
+        if pending is None:
+            self.a.remember(key, value, admission=admit)
+        else:
+            pending.remember(key, value, previous, admit)
         if self.a.operand_limit != limit:
             return direct_result()
         return (result, advance) if return_advance else result
@@ -1500,7 +1510,7 @@ class _PoseArithmetic:
         return value
 
     def hinge(self, axis, coordinate, rate, *, ideal=False, recording_context=None, recording_time=None,
-              shared_recording=False):
+              shared_recording=False, pending=None):
         axis = self.vector(axis)
         coordinate, rate = self.a.interval(coordinate), self.a.interval(rate)
         key = self._key("hinge", axis, coordinate, rate, ideal)
@@ -1516,8 +1526,11 @@ class _PoseArithmetic:
             sine, cosine = self.a.sincos(self.a.div(coordinate, 2))
         else:
             context = (recording_context, axis)
-            sine, cosine = (self._recording_sincos(coordinate, context=context, clock=recording_time, shared=True)
-                            if shared_recording else self._recording_sincos(coordinate, context=context, clock=recording_time))
+            options = {"pending": pending} if pending is not None else {}
+            sine, cosine = (self._recording_sincos(coordinate, context=context, clock=recording_time,
+                                                 shared=True, **options)
+                            if shared_recording else self._recording_sincos(
+                                coordinate, context=context, clock=recording_time, **options))
         rotation = (cosine, *(self.a.mul(value, sine) for value in normalized_axis))
         # The rotation's mathematical derivative uses a unit axis. The
         # inherited source inspection deliberately retains the canonical raw
@@ -1786,6 +1799,8 @@ class _RecordingBodyRate:
     receipts: tuple
     zero_origin: bool = False
     identity_relative: bool = False
+    coordinate_at: object = None
+    coordinate_rate: F = F(0)
 
 
 @dataclass(frozen=True)
@@ -1836,6 +1851,7 @@ class ReachReference:
             self.model.events.append(copy.deepcopy(block))
         self.model.events.sort(key=lambda block: block.time)
         self._incoming_graph_identity = object()
+        self._recording_phase_plan = None
         self._targets, self._poses, self._phase_cache, self._basis_cache = {}, {}, {}, {}
         self._numeric_cache_limit = self.a.operand_limit
         self._state, self._records, self._before, self._after = _State(), [], [], []
@@ -1857,6 +1873,7 @@ class ReachReference:
             self._poses.clear()
             self._phase_cache.clear()
             self._basis_cache.clear()
+            self._recording_phase_plan = None
             self._numeric_cache_limit = self.a.operand_limit
         return self._numeric_cache_limit
 
@@ -2087,8 +2104,12 @@ class ReachReference:
             self.a.remember(key, slope)
         return coordinate, slope if active.status == "running" else F(0)
 
-    def _prescribed_root_translation(self, path, time, state, *, ideal, pose_only):
+    def _prescribed_root_translation(self, path, time, state, *, ideal, pose_only, captured=None):
         """The unchanged prescribed translation, independent of root orientation."""
+        if captured is not None:
+            if not (ideal and pose_only):
+                raise ValueError("Captured independent translation is restricted to ideal recording poses")
+            return captured.evaluate(self, time)
         position = (state.ideal_positions if ideal else state.positions)[path]
         velocity, omega = self.p.vector(ZERO), self.p.vector(ZERO)
         move = state.claims.get((path, "translation"))
@@ -2465,7 +2486,8 @@ class ReachReference:
             rotation[0] > 0 and all(part == 0 for part in rotation[1:]))
         return _RecordingBodyRate(axis, combined, parent.moving or bool(rate),
                                   (parent.witness, values, coordinate_receipt.values), path, direct,
-                                  (*parent.receipts, receipt, coordinate_receipt), zero_origin, identity_relative)
+                                  (*parent.receipts, receipt, coordinate_receipt), zero_origin, identity_relative,
+                                  coordinate_at, rate)
 
     def _recording_identity_parent(self, parent, body):
         """Reuse an admitted complete pose through an exact identity hinge.
@@ -2513,6 +2535,11 @@ class ReachReference:
         self.a.tick()
         limit = self._sync_numeric_cache()
         body_recording = recording_context is not None and self._recording_body_domain()
+        if body_recording:
+            from .reach_reference_plan import recording_phase_poses
+            planned = recording_phase_poses(self, time, state, targets, recording_context)
+            if planned is not None:
+                return planned
         # Recording walks re-admit their actual source witnesses. In
         # particular, a prior complete frame map must not bypass a changed
         # action/attachment receipt at the same explicit recording clock.

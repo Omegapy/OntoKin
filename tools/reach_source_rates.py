@@ -42,7 +42,7 @@ INPUT_GROUPS = {
         "docs/engineering/reach-recording-certified-planar.md",
         "docs/engineering/reach-deferred-phase-locations.md",
         "docs/engineering/reach-planning-reuse.md"),
-    "independent_source_reference": ("ontokin/reach_reference.py",),
+    "independent_source_reference": ("ontokin/reach_reference.py", "ontokin/reach_reference_plan.py"),
     "proposed_rate_audit": (
         "tools/reach_source_rates.py", "docs/engineering/reach-rate-acceptance.md"),
 }
