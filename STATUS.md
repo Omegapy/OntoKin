@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-23T16:23:38+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-23T16:58:19+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -45,29 +45,30 @@ local `569b67b0bdc6854cc069e6a00590e0f15267ae03`
 failed attempts and earlier evidence retain their identities.
 
 Latest published continuation implementation is
-`e114874a934d9662a7d1939c8d0bc5aa7ca080f7`, with exactly the tested local
-`0c56dd41f739d23ccca777473a19622f91ae460d` tree
-`3f7f14a2d0ac41bbd4c1d61eb2d09ec6f32fa7a7`.
+`911756ae865a415b3fece6c1c35fa2d92fd7b5a8`, with exactly the tested local
+`115adf5cfb528f65b5ccf9a2640f01b39486d029` tree
+`a8e80bacdd5d086bbc78fa8ad794608ed8ee7dbe`.
 The [October 23 recording checkpoint](docs/engineering/reach-recording-validation-2026-10-23/README.md)
-retains a fresh **22/28** complete source run with stable materialized inputs.
-The latest integrated dyadic cohort passes **49/49**, with a complete text log,
-no failures, errors or skips. Separate integrated source-receipt, Cartesian,
-tiny-product and independent Cartesian cohorts pass **50/50**, **29/29**,
-**37/37** and **38/38** at their own identified source cuts.
-
+retains a fresh **23/28** complete source run with stable materialized inputs.
+**P05 now passes at 99,039 operations** after correction of its retained final
+source bound and subsequent exact endpoint arithmetic improvements.
 **P09, P11, P16, P23 and L03** still reach the unchanged **100,000-operation**
-limit. **P05 now reaches independent certificate validation at 99,069 operations
-and fails its final source rotation bound**. The earlier cap had hidden this
-correctness failure. P20 uses **89,767**, L01 **87,281**, and L02 **79,464**.
-No additional complete recording pass is claimed.
+limit. P20 uses **86,659**, L01 **85,576**, and L02 **78,151**.
 
-Checkpoint012 preserves **859 new raw members** in **26 recoverable parts**;
-its manifest refers to **707 unchanged prior members** through checkpoint011.
-All member hashes, ZIP CRCs and the joined-part identity passed. Checkpoints010
-and011 retain their original archives and source cuts. Failed tests, incomplete
+The latest integrated stationary-source cohort passes **51/51**, with a complete
+text log and no failures, errors or skips. The preceding integrated final-source
+and endpoint-order cohorts pass **33/33** and **48/48** at their own identified
+source cuts. Separate endpoint and stationary worker cohorts pass 71 and 96
+methods respectively; these are not summed into a current regression claim.
+Older 49-, 50-, 29-, 37- and 38-method cohorts retain their original identities.
+
+Checkpoint013 preserves **403 new raw members** in **12 recoverable parts**;
+its manifest refers to **1,562 unchanged prior members** through checkpoint012.
+All member hashes, ZIP CRCs and the joined-part identity passed. Checkpoints010,
+011 and012 retain their archives and source cuts. Failed tests, incomplete older
 text logs, completed structured test results, diagnostic observers and exact
-local-to-published Git-tree mappings remain visible. The new development driver
-binds its own bytes and requires a complete unittest log footer. The earlier
+local-to-published Git-tree mappings remain visible. The development driver binds
+its own bytes and requires a complete unittest log footer. The earlier
 [checkpoint009](docs/engineering/reach-recording-validation-2026-10-22/README.md)
 and its 234- and earlier 686-method cohorts retain their original evidence.
 
@@ -77,22 +78,22 @@ the exact omissions and original Git blob identities are disclosed in every
 execution inventory and remain preserved in the tree. These development runs
 do **not** establish release input closure or complete release acceptance.
 
-New integrated work includes mixed P11 sampling, phase-wide independent source
-receipts with terminal admission, producer and independent Cartesian products,
-exact native unit offsets, exact tiny interval products, and dyadic point/integer
-divisor identities. Targeted and complete recording runs follow each integration.
-Actual P16 admission saves 2,242 operations and P23 saves 834 with otherwise
-identical complete solutions. No fixture, tolerance, operation maximum or
-256-entry cache maximum changed.
+New integrated work includes the exact retained final after-source point bounds,
+independent endpoint order/factor-two arithmetic, and reuse of actual-source
+stationarity through covering registered plans under the existing final source
+admission. Paired original-request observers retain identical complete counters
+to ordinary execution and measure 10 and 12 fewer operations per eligible steady
+key respectively. No new numeric cache, fixture, tolerance, operation maximum or
+256-entry cache maximum changed. Targeted tests precede each integration and
+complete 28-recording runs follow it.
 
-The producer final-state bound candidate `1333450` is **not integrated**.
-Its natural-completion test passes; its new module passes 5/7 with two errors:
-one missing-zero test-helper lookup and an actual short P16 final-release
-position-bound mismatch between canonical and independently enclosed anchor
-extents. Both raw failed attempts and exact diagnostic quantities are retained.
-Derive the conservative transfer bound, test it, and rerun original full P05.
-Bounded stationary-source traversal and independent endpoint arithmetic remain
-unverified performance scopes. Earlier rejected source templates remain rejected.
+A separate short P16 release diagnostic still exposes a small position-bound
+mismatch between canonical source anchors and independently enclosed anchors.
+The final-source fix corrects its rotation claim; a conservative finite-grid
+release transfer proof remains under development and is **not integrated or
+verified**. P23 final static proof/graph reuse and phase-specialized independent
+composition are also unverified scopes. No future savings or additional complete
+recording passes are claimed. Earlier rejected candidates remain rejected.
 
 The immediate target remains **28/28**, followed by Agent delivery, complete
 current regression/compatibility, independent rates, native/browser and visual
