@@ -485,8 +485,54 @@ class DyadicContext:
         return Fraction(value.lo, self.scale), Fraction(value.hi, self.scale)
 
     def point(self, value):
+        native = type(value) in (int, float, Fraction)
         value = Fraction(value)
-        self._op(value, width=value.numerator.bit_length()+self.p+1, units=3)
+        precision, meter = self.p, self.work
+        width = value.numerator.bit_length()+precision+1
+        domain = meter.parent if type(meter) is AdmissionWork else meter
+        if (native and type(self) is DyadicContext and type(precision) is int
+                and precision in PRECISIONS
+                and type(getattr(domain, "max_operand_bits", None)) is int
+                and domain.max_operand_bits == MAX_OPERAND_BITS):
+            # Retain the original shift-width admission before classifying a
+            # denominator. An exact grid point needs only its one final shift.
+            self._op(value, width=width, units=0)
+            numerator, denominator = value.numerator, value.denominator
+
+            def same_domain():
+                return (self.work is meter and type(self.p) is int and self.p == precision
+                    and (type(meter) is not AdmissionWork or meter.parent is domain)
+                    and type(domain.max_operand_bits) is int
+                    and domain.max_operand_bits == MAX_OPERAND_BITS)
+
+            direct = (same_domain() and type(numerator) is int and type(denominator) is int
+                and denominator > 0 and denominator.bit_length() <= precision+1
+                and not denominator & (denominator-1))
+            charged = self.work
+            units = 1 if direct else 3
+            admission = charged if direct and type(charged) is AdmissionWork else None
+            # AdmissionWork records a whole successful charge batch. Retain
+            # that boundary even if a callback requires the old constituents.
+            charge = admission.parent.charge if admission is not None else charged.charge
+            charge("interval_constituent", units)
+            if direct:
+                direct = (same_domain() and type(value.numerator) is int
+                    and type(value.denominator) is int
+                    and value.numerator == numerator and value.denominator == denominator)
+                if not direct:
+                    # A retained callback changed the optional proof. Complete
+                    # the old three constituents before its ordinary arithmetic.
+                    charge("interval_constituent", 2)
+                    units = 3
+            if admission is not None:
+                admission.exact_operations += units
+            self.work.guard(value)
+            self.work.guard_bits(width)
+            if direct:
+                cell = numerator << (precision-denominator.bit_length()+1)
+                return Interval(cell, cell)
+        else:
+            self._op(value, width=width, units=3)
         n, d = value.numerator << self.p, value.denominator
         return Interval(n//d, -((-n)//d))
 
@@ -582,7 +628,54 @@ class DyadicContext:
                 pairs = (((a.hi,b.hi),(a.lo,b.lo)) if a.lo >= 0 else
                          ((a.hi,b.lo),(a.lo,b.hi)) if a.hi <= 0 else
                          ((a.hi,b.hi),(a.lo,b.hi)))
-            self._op(a.lo,a.hi,b.lo,b.hi,width=width,units=4)
+            precision, scale, meter = self.p, self.scale, self.work
+            domain = meter.parent if type(meter) is AdmissionWork else meter
+            if (b.lo == b.hi and type(self) is DyadicContext
+                    and type(precision) is int and precision in PRECISIONS
+                    and type(scale) is int and scale > 0
+                    and type(getattr(domain, "max_operand_bits", None)) is int
+                    and domain.max_operand_bits == MAX_OPERAND_BITS):
+                operands = a.lo,a.hi,b.lo,b.hi
+                self._op(*operands,width=width,units=0)
+
+                def same_domain():
+                    return (self.work is meter and type(self.p) is int and self.p == precision
+                        and type(self.scale) is int and self.scale == scale
+                        and (type(meter) is not AdmissionWork or meter.parent is domain)
+                        and type(domain.max_operand_bits) is int
+                        and domain.max_operand_bits == MAX_OPERAND_BITS)
+
+                direct = (same_domain() and scale.bit_length() == precision+1
+                    and not scale & (scale-1) and not operands[2] & (scale-1))
+                if (direct and operands[2] > 0
+                        and (operands[:2] == (0,1) or operands[:2] == (-1,0))):
+                    # A positive integral divisor cannot move either directed
+                    # endpoint of a one-cell interval adjacent to zero. Keep
+                    # the pre-callback cells, just as the selected pairs do.
+                    return Interval(operands[0],operands[1])
+                charged = self.work
+                units = 3 if direct else 4
+                admission = charged if direct and type(charged) is AdmissionWork else None
+                charge = admission.parent.charge if admission is not None else charged.charge
+                charge("interval_constituent", units)
+                if direct:
+                    direct = same_domain()
+                    if not direct:
+                        charge("interval_constituent")
+                        units = 4
+                if admission is not None:
+                    admission.exact_operations += units
+                self.work.guard(*operands)
+                self.work.guard_bits(width)
+                if direct:
+                    # Cancel the common positive scale exactly. One denominator
+                    # shift and two directed quotients replace two products and
+                    # two quotients; the original complete width guard remains.
+                    denominator = operands[2] >> precision
+                    (x,_),(z,_) = pairs
+                    return Interval(x//denominator, -((-z)//denominator))
+            else:
+                self._op(a.lo,a.hi,b.lo,b.hi,width=width,units=4)
             (x,y),(z,w) = pairs
             # Python's integer floor division already has the correct sign
             # for a negative denominator; -floor(-q) supplies the upper end.
