@@ -1,5 +1,16 @@
 # Reach recording continuation, October 23, 2026
 
+## Checkpoint 017: integrated cold seeds and preserved diagnostic candidates
+
+The [checkpoint](checkpoint-017.json) and [archive manifest](checkpoint-017-manifest.json) preserve complete post-checkpoint016 recordings, focused logs, actual GLBs and export reports, neutral reference/planning diagnostics, exact inputs and worker commit objects/patches. Every part join, ZIP CRC and member hash was verified. Reconstruct the ZIP by joining its listed parts in order. Held and incomplete prototypes retain their own identities and are not release evidence.
+
+Published implementation `e238c9e2928a1e08071b8c134263f4b9a87fb60c` (tree `8b7f6459310f2c2914a017daaeee7d2f92f8bc6e`) retains the selective independent release ancestry and adds repeated cold claimed-body seed reuse. Its integrated **42/42** focused methods passed before the original suite again returned **23/28**. P09, P11, P16, P23 and L03 still exhaust the unchanged **100,000-operation** cap. The P23 worker passed 17/17 focused and 55/55 combined methods; its first graph/public projection cost fell from 6,766 to 6,118 operations, preserving every body's ordinary cursor. The full P23 request still stops at its first static sample before certificate validation.
+
+The history-vector candidate passed 18/18 focused and 105/105 combined methods but did not activate or save work on the original three target recordings. It remains unintegrated. A JSON traversal candidate passed 46/46 focused methods and preserved all 23 successful GLB bodies and other JSON values, apart from the required implementation hash. It lowers most passing costs but increases P13 by 107 operations and worsens P11's progress because escaped text loses reuse; it is held for correction. The private center/radius module is an unwired, unexecuted recovery snapshot, with admission, ownership, fallback and tests still in development.
+
+Both neutral observers reproduce the original work counts and diagnostics. The reference observer identifies substantial repeated interval/offset work; the P23 observer supplies reconciled planning attribution. Source fixtures, clocks, horizons, tolerances, operand bounds and cache maxima remain fixed. The earlier raw-log gap and 37 absent historical archives remain disclosed; development execution does not establish release input closure. PR #27 and PR #28 remain draft and unmerged, and every remaining mandatory release gate stays open.
+
+
 ## Checkpoint 016: fresh current-source execution and release ancestry
 
 The [checkpoint](checkpoint-016.json) and [archive manifest](checkpoint-016-manifest.json) preserve complete fresh baseline and integrated source recordings, exact input snapshots, full test logs, all produced GLBs/reports, neutral stage diagnostics, and both excluded diagnostic attempts. Reconstruct the ZIP by joining its listed parts in order; every part, ZIP CRC and member hash was verified. This checkpoint also preserves exact worker commit objects and patches, including the unexecuted history-vector candidate and the transient-alias issue found in its first review.
