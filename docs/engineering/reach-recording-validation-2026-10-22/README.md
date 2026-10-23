@@ -2,7 +2,7 @@
 
 This is a development checkpoint, not release acceptance. The immediate gate
 remains all 28 source recordings under the unchanged shared 100,000-operation
-budget. The latest complete run passes **20/28**; all eight remaining cases
+budget. The latest complete run passes **20/28**; the remaining cases
 still fail on the attempted 100,001st operation. No result is inferred for an
 unexecuted release role.
 
@@ -66,7 +66,51 @@ unchanged. Differential tests compare exact private values and complete GLB
 bytes. Three stale independent-reader test doubles were updated to accept the
 already existing `recording_context` argument; their assertions are unchanged.
 
-## Latest checkpoint 007: 686 focused tests; source gate remains 20/28
+## Latest checkpoint 008: 159 focused tests; 20/28 source recordings
+
+The recovered local checkpoint `e4f51dbdb9ac9447a453e1a79f36e363108bd9af`
+was published and read back at `b1d102a5391721b3e420277526696aca65b11ea5`. Its entire tree is exactly
+`037849976437848c40b7cbbdf7e73ba60f4ada0d`; this also preserves the original
+686-method and 20/28 historical evidence without relabeling it as current.
+
+The new tested source is `4d5cae370aff239e632f05f94f7bbeb99aa145ff`, tree
+`b042008cfd0911348b1665de6d49bea2a769b2ee`. Its full source run finished **2026-10-23T01:59:33.979602+00:00**,
+passing **20/28** at the unchanged **100,000-operation** limit, with stable
+tracked inputs. Remaining failures: **P05, P09, P11, P16, P20, P23, L01, L03**. L02 uses **94,169 operations**.
+
+The same integrated source passes **159/159 focused methods**,
+with no failures, errors or skips, in **42.455 seconds**.
+Complete logs, method inventories, execution environment and before/after inputs
+are retained. This selected cohort does not replace full regression or compatibility.
+
+Changes include the recovered captured-graph sampler and independent phase-root
+reuse, completed residual/square-root reuse, immutable source snapshot correctness
+and original seed-failure propagation, exact repeated independent angular increments,
+and complete orientation-claim inequality reuse. The existing numeric cache stays
+bounded at 256; current source, callback and operand checks remain mandatory.
+
+[checkpoint-008.zip](checkpoint-008.zip) contains **233 raw members**,
+**4,036,914 bytes**, SHA-256 `5f885b5ad669079ab8d0e97c82b6149c712c804c68d18c5a52b53fdae22f4308`.
+The [manifest](checkpoint-008.manifest.json) and [checkpoint](checkpoint-008.json)
+identify every execution and its source. All **80 artifact/report hashes**,
+every member and ZIP CRC were verified. Earlier archives are unchanged.
+The earlier two test-assertion failures and clean-checkout preflight rejections
+remain visible with their precise limitations.
+
+Coordinator `interactive-reach06-continue-20261022-7fb5bc` works on
+`work/reach06-continue-20261022-7fb5bc`; child scopes are recorded in issue #26.
+The next work is complete-phase captured sampling, unchanged boundary-graph
+finiteness admission and further independent arithmetic reductions, then another
+complete 28-recording run. These pending candidates are not part of the current result.
+Runtime, tests and archive creation remain serialized.
+
+**Do not merge.** PR #27 remains draft; main stays
+`2bb4588e121fcfe99b4d42c734b15b38362f3642`. Agent delivery, full current
+regression/compatibility, independent rate verification, destination/browser and
+visual checks, inherited/hostile roles and complete release audits remain pending.
+No main lease or hosted job is claimed. Full GOAL remains open.
+
+## Preserved checkpoint 007: 686 focused tests; source gate remains 20/28
 
 The tested source is `63113dffd06ee879c3beeaaa52e22a74c813c6f5`, tree
 `6f9df822639746327c101ea12da15e959a184eea`. Its complete source run finished

@@ -1107,8 +1107,11 @@ class ReachSimulator(ForceSimulator):
                 else:
                     site = self.model.sites[stem]
                     owner = instance(site.owner)
-                    frames[path] = slot(path, (owner, site.pose),
-                        lambda base=owner: compose(base, constant_pose(site.pose)), owner=site.owner)
+                    # The cache signature and its builder must consume the same
+                    # immutable placement across lookup and arithmetic callbacks.
+                    local_pose = site.pose
+                    frames[path] = slot(path, (owner, local_pose),
+                        lambda base=owner: compose(base, constant_pose(local_pose)), owner=site.owner)
             return frames[path]
 
         def instance(path):
@@ -1124,13 +1127,17 @@ class ReachSimulator(ForceSimulator):
                 if kind == "follow":
                     follow = self.model.follows[relation_path]
                     parent = frame(follow.parent)
-                    result = slot(path, ("follow", parent, follow.offset),
-                        lambda base=parent: compose(base, constant_pose(follow.offset)))
+                    local_pose = follow.offset
+                    result = slot(path, ("follow", parent, local_pose),
+                        lambda base=parent: compose(base, constant_pose(local_pose)))
                 else:
                     joint = self.model.joints[relation_path]
                     parent = frame(joint.parent + ".frame")
                     child_pose = self.model.sites[joint.child].pose
-                    eligible_body = (joint.kind == "hinge" and
+                    # Keep every branch and repeated axis use bound to the
+                    # numerical operands retained in this node's signature.
+                    joint_kind, joint_axis = joint.kind, joint.axis
+                    eligible_body = (joint_kind == "hinge" and
                         (recording_pose_ops is None or ops.recording_body_hinges is None
                          or relation_path in ops.recording_body_hinges))
                     record = ensure_angular_frame(path + ".frame") if eligible_body else None
@@ -1146,10 +1153,10 @@ class ReachSimulator(ForceSimulator):
                         else:
                             body_cursor = native_zero
                     coordinate, slope = None, None
-                    if joint.kind in {"hinge", "slider"} and not body_cursor:
+                    if joint_kind in {"hinge", "slider"} and not body_cursor:
                         if pose_only:
                             coordinate = (ops.recording_coordinate(self, relation_path, time, state)
-                                if recording_pose_ops is not None and joint.kind == "hinge" else
+                                if recording_pose_ops is not None and joint_kind == "hinge" else
                                 self._coordinate(relation_path, time, state,
                                     recording=recording_context is not None)[0])
                             slope = Fraction(0)
@@ -1157,20 +1164,20 @@ class ReachSimulator(ForceSimulator):
                             coordinate, slope, _ = self._exact_coordinate(relation_path, time, state)
                     def connected(base=parent):
                         relative = self._identity_pose
-                        if joint.kind == "hinge":
+                        if joint_kind == "hinge":
                             if recording_context is not None:
                                 from .scene import MAX_KEYFRAMES
                                 relative = ops.make_recording(orientation=ops.recording_axis_rotation(
-                                    joint.axis, coordinate, context=recording_context,
+                                    joint_axis, coordinate, context=recording_context,
                                     path="hinge:" + relation_path, max_steps=MAX_KEYFRAMES))
                             else:
-                                relative = (ops.hinge_recording(joint.axis, coordinate) if recording_only
-                                            else ops.hinge_pose(joint.axis, coordinate, slope))
-                        elif joint.kind == "slider":
-                            position = ops.scale(joint.axis, Fraction(coordinate))
+                                relative = (ops.hinge_recording(joint_axis, coordinate) if recording_only
+                                            else ops.hinge_pose(joint_axis, coordinate, slope))
+                        elif joint_kind == "slider":
+                            position = ops.scale(joint_axis, Fraction(coordinate))
                             relative = (ops.make_recording(position=position) if recording_only
                                         else ops.make(position=position,
-                                                      velocity=ops.scale(joint.axis, slope)))
+                                                      velocity=ops.scale(joint_axis, slope)))
                         return compose(compose(base, relative),
                                        constant_pose(child_pose, inverse=True))
                     if body_cursor:
@@ -1242,7 +1249,7 @@ class ReachSimulator(ForceSimulator):
                             shared_orientation_frames.setdefault(recipe, path + ".frame")
                     else:
                         result = slot(path,
-                            ("joint", parent, joint.kind, joint.axis, coordinate, slope, child_pose), connected)
+                            ("joint", parent, joint_kind, joint_axis, coordinate, slope, child_pose), connected)
             elif state.modes[path] == "dynamic":
                 result = (ops.recording_dynamic_pose(self, path, time, state, context=recording_context)
                     if recording_pose_ops is not None else

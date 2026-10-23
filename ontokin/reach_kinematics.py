@@ -282,18 +282,59 @@ def measured_residual_squared(actual_end_base_m,target_base_m,*,work: ReachExecu
     if len(actual_end_base_m)!=3 or len(target_base_m)!=3:
         raise ReachAdmissionError("reach_domain", "A residual requires two three-dimensional positions.")
     # Separate source occurrences may have identical measured local positions.
-    # Reuse only their completed scalar calculation; every new occurrence still
-    # decodes and bounds its actual inputs before consulting the shared cache.
+    # A complete immutable binary64 tuple can carry its completed decodes in
+    # the same bounded entry as the exact result. Mutable, mixed and unusual
+    # inputs retain the original decode and arithmetic path below.
+    native=None
+    if (type(actual_end_base_m) is tuple and type(target_base_m) is tuple
+            and all(type(value) is float for value in (*actual_end_base_m,*target_base_m))):
+        encoded=tuple((float_bits(actual),float_bits(target))
+                      for actual,target in zip(actual_end_base_m,target_base_m))
+        if all(bits&0x7FF0000000000000!=0x7FF0000000000000
+               for pair in encoded for bits in pair):
+            native=encoded
+
+    def admit_native():
+        # These are precisely bits_fraction's original prospective decode
+        # widths. Check them before another callback can broaden a narrowed
+        # cap, including for signed zero and subnormal inputs.
+        for pair in native:
+            for bits in pair:
+                exponent,trailing=(bits>>52)&2047,bits&((1<<52)-1)
+                significand=trailing if exponent==0 else (1<<52)|trailing
+                shift=-1074 if exponent==0 else exponent-1075
+                work.guard_bits(max(significand.bit_length()+max(shift,0),1+max(-shift,0)))
+        return type(work.max_operand_bits) is int and work.max_operand_bits==MAX_OPERAND_BITS
+
     while True:
         cap=work.max_operand_bits
-        operands=tuple((rational(actual,work),rational(target,work))
-                       for actual,target in zip(actual_end_base_m,target_base_m))
-        if work.max_operand_bits!=cap:
-            continue
-        key=(METHOD,"measured_residual_squared",cap,operands)
-        result=work.lookup(key)
-        if work.max_operand_bits!=cap:
-            continue
+        reuse_native=native is not None and type(cap) is int and cap==MAX_OPERAND_BITS
+        if reuse_native:
+            work.charge("residual_operand_domain")
+            if not admit_native():
+                continue
+            key=(METHOD,"measured_residual_native_v1",cap,native)
+            completed=work.lookup(key)
+            if not admit_native():
+                continue
+            if completed is None:
+                operands=tuple((rational(actual,work),rational(target,work))
+                               for actual,target in zip(actual_end_base_m,target_base_m))
+                result=None
+            else:
+                operands,result=completed
+            work.guard(*(value for pair in operands for value in pair))
+            if work.max_operand_bits!=cap:
+                continue
+        else:
+            operands=tuple((rational(actual,work),rational(target,work))
+                           for actual,target in zip(actual_end_base_m,target_base_m))
+            if work.max_operand_bits!=cap:
+                continue
+            key=(METHOD,"measured_residual_squared",cap,operands)
+            result=work.lookup(key)
+            if work.max_operand_bits!=cap:
+                continue
         if result is None:
             result=F(0)
             for actual,target in operands:
@@ -301,12 +342,62 @@ def measured_residual_squared(actual_end_base_m,target_base_m,*,work: ReachExecu
                 result=exact(result,exact(delta,delta,"mul",work),"add",work)
             if work.max_operand_bits!=cap:
                 continue
-            work.remember(key,result)
+            if reuse_native:
+                work.remember(key,(operands,result),admission=admit_native)
+            else:
+                work.remember(key,result)
         work.charge("residual_result_guard")
+        if reuse_native:
+            admit_native()
         work.guard(result)
         if work.max_operand_bits==cap:
             return result
 
 
 def rounded_sqrt(value,*,work):
-    return sqrt_rational_binary64(value,work=work)
+    # A completed scalar result is a pure function of this exact immutable
+    # fraction. The bounded sufficient domain keeps every original exponent,
+    # scaling and midpoint intermediate below the fixed full operand cap.
+    # Zero, negative, unusual and narrower calls keep their original sequence.
+    if (type(value) is not F or value<=0 or type(work.max_operand_bits) is not int
+            or work.max_operand_bits!=MAX_OPERAND_BITS
+            or max(value.numerator.bit_length(),value.denominator.bit_length())>1024):
+        return sqrt_rational_binary64(value,work=work)
+
+    numerator,denominator=value.numerator,value.denominator
+    nbits,dbits=numerator.bit_length(),denominator.bit_length()
+    raw_exponent=nbits-dbits
+    below=(numerator<denominator<<raw_exponent if raw_exponent>=0
+           else numerator<<-raw_exponent<denominator)
+    exponent=(raw_exponent-int(below))//2
+    # This input domain puts the root's exponent in [-512, 511]. Its
+    # normalized integer square root therefore has exactly 53 bits; the
+    # original scaling and midpoint widths can be checked without isqrt.
+    shift=52-exponent
+    scaled_nbits=nbits+max(2*shift,0)
+    scaled_dbits=dbits+max(-2*shift,0)
+
+    def admit():
+        # Preserve the original prospective widths immediately after each
+        # new callback. A later callback cannot restore a cap that would
+        # already have rejected this completed scalar calculation.
+        work.guard(value)
+        work.guard_bits(max(nbits+max(-raw_exponent,0),dbits+max(raw_exponent,0)))
+        work.guard_bits(max(scaled_nbits,scaled_dbits)+4)
+        work.guard_bits(max(scaled_nbits+2,scaled_dbits+109))
+        return type(work.max_operand_bits) is int and work.max_operand_bits==MAX_OPERAND_BITS
+
+    work.charge("sqrt_result_domain")
+    if not admit():
+        return sqrt_rational_binary64(value,work=work)
+    key=(METHOD,"rounded_sqrt_v1",MAX_OPERAND_BITS,value)
+    result=work.lookup(key)
+    if not admit():
+        return sqrt_rational_binary64(value,work=work)
+    if result is None:
+        result=sqrt_rational_binary64(value,work=work)
+        if admit():
+            work.remember(key,result,admission=admit)
+        if not admit():
+            return sqrt_rational_binary64(value,work=work)
+    return result

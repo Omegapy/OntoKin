@@ -224,13 +224,9 @@ def captured_recording_orientation(source_ops, proof, frame, time):
             if value is not None:
                 work.guard(*value.components, value.error_rad)
                 return value
-        try:
-            value = _captured_recording_orientation_direct(source_ops, proof, frame, time)
-        except ReachAdmissionError as error:
-            if (work.max_operand_bits != cap and error is not work.callback_error
-                    and error.details.get("budget") == "numeric_operand_bits"):
-                continue
-            raise
+        # The direct source kernel owns its refusals. Only successful work may
+        # be replayed after a callback changes the operand cap.
+        value = _captured_recording_orientation_direct(source_ops, proof, frame, time)
         if work.max_operand_bits != cap:
             continue
         if key is not None:
@@ -684,12 +680,18 @@ class Binary64RecordingOps(ReachPoseOps):
         else:
             initial, target = runtime.initial, action.goal
         running = runtime.status == "running"
-        law = self._affine_law(initial, target, action.duration, running=running)
+        return self.recording_affine_coordinate(initial, target, action.duration,
+            runtime.elapsed, runtime.running_since, time, running=running)
+
+    def recording_affine_coordinate(self, initial, target, duration, saved_elapsed,
+                                    running_since, time, *, running):
+        """Evaluate the same admitted law from complete immutable input bindings."""
+        law = self._affine_law(initial, target, duration, running=running)
         self.work.charge("recording_affine_clock_domain")
         self._require_domain()
         # Check the actual clock operands before forming a difference, rather
         # than trusting a previously valid clock or an unguarded Fraction sum.
-        clocks = (runtime.elapsed, time, runtime.running_since) if running else (runtime.elapsed,)
+        clocks = (saved_elapsed, time, running_since) if running else (saved_elapsed,)
         self._immutable_scalar_domain(clocks, small=True)
         clocks = tuple(value if type(value) is F else rational(value, self.work) for value in clocks)
         self._immutable_scalar_domain(clocks, small=True)
@@ -1056,7 +1058,7 @@ class Binary64RecordingOps(ReachPoseOps):
 
     def recording_body_orientation(self, seed_builder, axis, rate, time, *, phase_start,
                                    phase_end, context, path, proof_token, max_steps,
-                                   source_admission=None, source_records=0):
+                                   source_admission=None, source_records=0, stage_cursor=None):
         """Advance a freshly witnessed complete scalar/Z carrier orientation.
 
         A seed is the ordinary private complete-world source rotation, with
@@ -1071,7 +1073,9 @@ class Binary64RecordingOps(ReachPoseOps):
                 or axis is not None and (type(axis) is not int or axis != 2)
                 or type(source_records) is not int or source_records < 0
                 or source_admission is not None and not callable(source_admission)
-                or source_admission is None and source_records):
+                or source_admission is None and source_records
+                or stage_cursor is not None and (not callable(stage_cursor)
+                    or source_admission is not None or source_records)):
             raise _UnsupportedPlanar("A native carrier needs an enabled scalar/Z body proof.")
         values = (rate, time, phase_start, phase_end)
         self._immutable_scalar_domain(values)
@@ -1128,6 +1132,13 @@ class Binary64RecordingOps(ReachPoseOps):
             self._require_domain()
             count += 1
         self._require_domain()
+        if stage_cursor is not None:
+            # A complete captured graph delays these source-bound results
+            # until its one final source receipt. Pure arithmetic remains in
+            # the ordinary LRU, and the staging owner enforces that same bound.
+            stage_cursor(key, previous, (time, result, count, delta, increment))
+            self._require_domain()
+            return result
         admitted = False
         def admit():
             nonlocal admitted
@@ -1843,24 +1854,34 @@ def _sample_planar_frames(simulator, time, state, selected_paths, *, context,
         body_cursors=not require_same_cells and recording_angular_proof is not None)
     try:
         ops._domain()
-        varying_hinges = set() if ops.recording_body_cursors else None
-        supported_set = _planar_paths(simulator, state, selected, dynamic_roots=dynamic_roots,
-                                      varying_hinges=varying_hinges)
-        ops.recording_body_hinges = frozenset(varying_hinges or ())
-        ops.recording_body_cursors = ops.recording_body_cursors and bool(ops.recording_body_hinges)
-        supported = tuple(path for path in selected if path in supported_set)
-        ordinary = tuple(path for path in selected if path not in supported_set)
-        frames = (simulator.recording_frames(time, state, ordinary, moving_frames=moving_frames,
-                  recording_context=context, recording_angular_proof=recording_angular_proof)
-                  if ordinary else {})
-        excesses = {path: _ZERO_EXCESS for path in ordinary}
-        # Ask the existing graph for its private transforms so structural zero
-        # proofs survive to the rounding gate. Its ordinary source paths and
-        # public recording_frames interface are not changed by this helper.
-        _, private = simulator._resolve_kinematics(time, state, selected_frames=tuple(supported),
-            pose_only=True, recording_only=True, recording_moving_frames=moving_frames,
-            recording_context=context, recording_pose_ops=ops,
-            recording_angular_proof=recording_angular_proof if ops.recording_body_cursors else None)
+        captured = None
+        if ops.recording_body_cursors and ops.share_arithmetic:
+            from .reach_recording_capture import sample_captured_carriers
+            captured = sample_captured_carriers(simulator, time, state, selected,
+                recording_angular_proof, ops, context)
+        if captured is not None:
+            private, finish_capture = captured
+            supported, frames, excesses = selected, {}, {}
+        else:
+            finish_capture = None
+            varying_hinges = set() if ops.recording_body_cursors else None
+            supported_set = _planar_paths(simulator, state, selected, dynamic_roots=dynamic_roots,
+                                          varying_hinges=varying_hinges)
+            ops.recording_body_hinges = frozenset(varying_hinges or ())
+            ops.recording_body_cursors = ops.recording_body_cursors and bool(ops.recording_body_hinges)
+            supported = tuple(path for path in selected if path in supported_set)
+            ordinary = tuple(path for path in selected if path not in supported_set)
+            frames = (simulator.recording_frames(time, state, ordinary, moving_frames=moving_frames,
+                      recording_context=context, recording_angular_proof=recording_angular_proof)
+                      if ordinary else {})
+            excesses = {path: _ZERO_EXCESS for path in ordinary}
+            # Ask the existing graph for its private transforms so structural
+            # zero proofs survive to the rounding gate. Unsupported graphs
+            # retain all their ordinary live-source traversal and admission.
+            _, private = simulator._resolve_kinematics(time, state, selected_frames=tuple(supported),
+                pose_only=True, recording_only=True, recording_moving_frames=moving_frames,
+                recording_context=context, recording_pose_ops=ops,
+                recording_angular_proof=recording_angular_proof if ops.recording_body_cursors else None)
         from .reach_runtime import RecordingPose
         candidates = []
         for path in supported:
@@ -1921,6 +1942,8 @@ def _sample_planar_frames(simulator, time, state, selected_paths, *, context,
                 frames[path], excesses[path] = direct[path], excess
         if simulator.work.max_operand_bits != MAX_OPERAND_BITS:
             raise _UnsupportedPlanar("The recording arithmetic domain changed.")
+        if finish_capture is not None:
+            finish_capture()
         return CertifiedRecordingFrames(frames, excesses)
     except _UnsupportedPlanar as error:
         if simulator.work.callback_error is error:

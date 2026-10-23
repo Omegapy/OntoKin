@@ -1333,6 +1333,34 @@ class _PoseArithmetic:
             return direct()
         return result
 
+    def _recording_repeated_increment(self, receipt, rate, elapsed):
+        """Read one complete pure increment from an already admitted cursor.
+
+        The cursor lookup and publication are still charged. Equal exact rate
+        and elapsed operands need no new multiply, divide, grid or sin/cos
+        lookup. Retain every original prospective width proof before using
+        the completed cells; no source clock, witness or orientation is
+        supplied by this receipt. Its Fraction endpoints are immutable and
+        share the cursor's existing bounded cache slot.
+        """
+        if (self.a.bits != 128 or self.a.operand_limit != MAX_OPERAND_BITS or
+                type(rate) is not F or type(elapsed) is not F or
+                type(receipt) is not tuple or len(receipt) != 10 or
+                any(type(value) is not F for value in receipt) or
+                receipt[:2] != (rate, elapsed)):
+            return None
+        _, _, product, delta, low, high, sine_low, sine_high, cosine_low, cosine_high = receipt
+        self.a.guard(*receipt)
+        rn, rd = abs(rate.numerator).bit_length(), rate.denominator.bit_length()
+        en, ed = abs(elapsed.numerator).bit_length(), elapsed.denominator.bit_length()
+        pn, pd = abs(product.numerator).bit_length(), product.denominator.bit_length()
+        # These are exactly the omitted rate*elapsed and product/2 preflights.
+        if max(rn + en, rd + ed, pn + 1, pd + 2) > self.a.operand_limit:
+            raise ReferenceError("resource", "Independent reference intermediate operand limit exceeded")
+        self.a._grid_domain(delta, delta)
+        self.a.guard(low, high, sine_low, sine_high, cosine_low, cosine_high)
+        return Interval(sine_low, sine_high), Interval(cosine_low, cosine_high)
+
     def _recording_body_orientation(self, direct, *, axis, rate, witness, context, clock, shared=False,
                                     source_admission=None, source_records=0, return_advance=False):
         """Advance an independently proved constant body-axis orientation.
@@ -1367,9 +1395,9 @@ class _PoseArithmetic:
         if any(max(abs(value.numerator).bit_length(), value.denominator.bit_length()) > 1024
                for value in (rate, clock)):
             return direct_result()
-        steps, advance = 0, False
+        steps, advance, increment = 0, False, None
         if previous is not None:
-            old_witness, old_axis, old_rate, old_clock, old_rotation, steps = previous
+            old_witness, old_axis, old_rate, old_clock, old_rotation, old_increment, steps = previous
             self.a.guard(old_rate, old_clock,
                          *(endpoint for cell in old_rotation for endpoint in (cell.lo, cell.hi)))
             advance = (old_witness == witness and old_axis == axis and old_rate == rate and
@@ -1381,13 +1409,19 @@ class _PoseArithmetic:
             if rate:
                 try:
                     elapsed = self.a.exact(clock, old_clock, "sub")
-                    delta = self.a.exact(self.a.exact(rate, elapsed, "mul"), 2, "div")
                     if self.a.operand_limit != limit:
                         advance = False
-                    elif abs(delta) <= F(1, 4):
-                        delta_cell = self.a.grid(delta, delta)
                     else:
-                        advance = False
+                        reused_increment = self._recording_repeated_increment(old_increment, rate, elapsed)
+                        if reused_increment is None:
+                            product = self.a.exact(rate, elapsed, "mul")
+                            delta = self.a.exact(product, 2, "div")
+                            if self.a.operand_limit != limit:
+                                advance = False
+                            elif abs(delta) <= F(1, 4):
+                                delta_cell = self.a.grid(delta, delta)
+                            else:
+                                advance = False
                 except ReferenceError as error:
                     if error.code != "resource" or self.a.work.callback_error is error:
                         raise
@@ -1403,7 +1437,13 @@ class _PoseArithmetic:
                 if advance:
                     # Keep all original transcendental and interval fallback
                     # failures outside the added delta's retry handler.
-                    sine, cosine = self.a.sincos(delta_cell)
+                    if reused_increment is None:
+                        sine, cosine = self.a.sincos(delta_cell)
+                        increment = (rate, elapsed, product, delta, delta_cell.lo, delta_cell.hi,
+                                     sine.lo, sine.hi, cosine.lo, cosine.hi)
+                    else:
+                        sine, cosine = reused_increment
+                        increment = old_increment
                     result = list(old_rotation)
                     for first, second in (((1, 0), (2, 3)), ((2, 0), (3, 1)),
                                           ((3, 0), (1, 2)))[axis]:
@@ -1424,7 +1464,7 @@ class _PoseArithmetic:
             if advance:
                 steps += 1
         if not advance:
-            result, steps = direct(), 0
+            result, steps, increment = direct(), 0, None
         if self.a.operand_limit != limit:
             return direct_result()
         self.a.guard(*(endpoint for cell in result for endpoint in (cell.lo, cell.hi)))
@@ -1441,7 +1481,7 @@ class _PoseArithmetic:
                 source_admission()
             self.a.guard(*(endpoint for cell in result for endpoint in (cell.lo, cell.hi)))
             return True
-        self.a.remember(key, (witness, axis, rate, clock, result, steps), admission=admit)
+        self.a.remember(key, (witness, axis, rate, clock, result, increment, steps), admission=admit)
         if self.a.operand_limit != limit:
             return direct_result()
         return (result, advance) if return_advance else result
@@ -3994,11 +4034,207 @@ class ReachReference:
 
         return visit(carrier)
 
+    def _phase_root_poses(self, path, time, state):
+        """Reuse complete phase-root calculations with fresh source authority.
+
+        Both channels are evaluated from immutable captured operands. The
+        existing bounded arithmetic cache retains only those typed operands
+        and exact completed poses, never a state identity or mutable source
+        object. Current authority and operands are read after every cache
+        callback and before publication; a temporary source change during
+        arithmetic cannot enter the captured calculation either.
+        """
+        def direct():
+            return (self._root_pose(path, time, state, ideal=False),
+                    self._root_pose(path, time, state, ideal=True))
+
+        if (not self._recording_body_domain() or type(time) is not F
+                or max(abs(time.numerator).bit_length(), time.denominator.bit_length()) > 1024):
+            return direct()
+
+        def read():
+            mode = state.modes[path]
+            if mode == "dynamic":
+                anchor, force = state.dynamic[path], state.forces[path]
+                if type(anchor.actual) is not PoseEnclosure or type(anchor.ideal) is not PoseEnclosure:
+                    return ("unsupported",)
+                poses = tuple((pose.position, pose.orientation, pose.velocity, pose.omega)
+                              for pose in (anchor.actual, anchor.ideal))
+                return ("dynamic", path, time, mode, anchor.time, *poses,
+                        force.acceleration, force.ideal_acceleration, self.model.gravity)
+
+            def action(channel):
+                owner = state.claims.get((path, channel))
+                if owner is None:
+                    return None
+                source, active = self.model.actions[owner], state.actions[owner]
+                return (owner, source.kind, source.target, source.duration, source.vector,
+                        (active.status, active.elapsed, active.since),
+                        (active.initial, active.ideal_initial))
+
+            return ("prescribed", path, time, mode,
+                    (state.positions[path], state.orientations[path]),
+                    (state.ideal_positions[path], state.ideal_orientations[path]),
+                    action("translation"), action("orientation"))
+
+        receipt = self._recording_capture(read)
+        if receipt is None or receipt.values[0] == "unsupported":
+            return direct()
+        def capture(value):
+            # Native frozen cells are copied as well as their containing
+            # tuples. Source records can be replaced by a callback, and even
+            # hostile in-place changes must never alter captured arithmetic.
+            if type(value) is Interval:
+                return Interval(value.lo, value.hi)
+            if type(value) is tuple:
+                return tuple(capture(part) for part in value)
+            return value
+
+        values = capture(receipt.values)
+
+        def typed(value):
+            if type(value) is F:
+                return ("fraction", value.numerator, value.denominator)
+            if type(value) is float:
+                return ("float", value.hex())
+            if type(value) is int:
+                return ("int", value)
+            if type(value) is Interval:
+                return ("interval", typed(value.lo), typed(value.hi))
+            if type(value) is tuple:
+                return tuple(typed(part) for part in value)
+            return ("none",) if value is None else ("string", value)
+
+        signature, limit = typed(values), self.a.operand_limit
+        key = ("source_phase_root_pair", self.a.bits, limit, signature)
+
+        def current():
+            return self.a.operand_limit == limit and self._recording_body_domain()
+
+        def admit():
+            if not current():
+                return False
+            try:
+                observed = read()
+            except (KeyError, AttributeError, IndexError) as error:
+                raise ReferenceError("identity", "Independent phase root changed during proof") from error
+            if (self._recording_source_witness(*observed) is None or typed(observed) != signature):
+                raise ReferenceError("identity", "Independent phase root changed during proof")
+            # The existing receipt guard admits all numeric leaves, without
+            # another callback between this complete read and the return.
+            self._recording_admit_receipts((_RecordingSourceReceipt(lambda: observed, values),))
+            return True
+
+        result = self.a.lookup(key)
+        if not admit():
+            return direct()
+        if result is not None:
+            self.a.guard(*(endpoint for pose in result
+                           for vector in (pose.position, pose.orientation, pose.velocity, pose.omega)
+                           for cell in vector for endpoint in (cell.lo, cell.hi)))
+            return result
+
+        def calculate(channel):
+            if values[0] == "dynamic":
+                saved = values[5 + channel]
+                dt = time - values[4]
+                acceleration = values[7 + channel] or values[9]
+                position = self.p.add(self.p.add(saved[0], self.p.scale(saved[2], dt)),
+                                      self.p.scale(acceleration, dt * dt / 2))
+                rotation = self.p.multiply(self.p.spin(saved[3], dt), saved[1])
+                return PoseEnclosure(position, rotation,
+                    self.p.add(saved[2], self.p.scale(acceleration, dt)), saved[3])
+
+            position, orientation = values[4 + channel]
+            velocity, omega = self.p.vector(ZERO), self.p.vector(ZERO)
+            move, spin = values[6:]
+
+            def elapsed(action):
+                status, amount, since = action[5]
+                return amount + (time - since if status == "running" else 0)
+
+            if move is not None:
+                position = self.p.add(move[6][channel], self.p.scale(move[4], elapsed(move)))
+                if move[5][0] == "running":
+                    velocity = self.p.vector(move[4])
+            if spin is not None:
+                orientation = self.p.multiply(self.p.spin(spin[4], elapsed(spin)), spin[6][channel])
+                if spin[5][0] == "running":
+                    omega = self.p.vector(spin[4])
+            return PoseEnclosure(position, orientation, velocity, omega)
+
+        if values[0] == "dynamic":
+            channel_inputs = tuple((values[5 + channel], values[7 + channel] or values[9])
+                                   for channel in (0, 1))
+        else:
+            channel_inputs = tuple((values[4 + channel],
+                                    *(None if action is None else action[6][channel] for action in values[6:]))
+                                   for channel in (0, 1))
+        actual = calculate(0)
+        if not current():
+            return direct()
+        # Identical typed inputs use identical equations and intermediate
+        # preflights in this unchanged domain, including every rate field.
+        ideal = actual if typed(channel_inputs[0]) == typed(channel_inputs[1]) else calculate(1)
+        result = actual, ideal
+        if not admit():
+            return direct()
+        self.a.guard(*(endpoint for pose in result
+                       for vector in (pose.position, pose.orientation, pose.velocity, pose.omega)
+                       for cell in vector for endpoint in (cell.lo, cell.hi)))
+        self.a.remember(key, result, admission=admit)
+        # A newly narrowed cache-publication callback must execute the
+        # original calculation in its own domain. Original errors escape.
+        return result if current() else direct()
+
+    def _phase_root_distance(self, first, last):
+        """Omit the exact zero distance between equal native point vectors.
+
+        Every original subtraction needs at most 2049 prospective bits on
+        this small domain; even its optional 128-bit grid fits below 2178.
+        The subsequent L1 fold contains only literal zeros. Equal uncertain
+        cells retain their original nonzero interval-width calculation.
+        """
+        def points():
+            if (type(first) is not tuple or type(last) is not tuple or len(first) != 3 or len(last) != 3
+                    or any(type(cell) is not Interval or type(cell.lo) is not F or type(cell.hi) is not F
+                           or max(abs(cell.lo.numerator).bit_length(), cell.lo.denominator.bit_length(),
+                                  abs(cell.hi.numerator).bit_length(), cell.hi.denominator.bit_length()) > 1024
+                           for vector in (first, last) for cell in vector)
+                    or any(a.lo != a.hi or b.lo != b.hi or a.lo != b.lo for a, b in zip(first, last))):
+                return None
+            return tuple(tuple(cell.lo for cell in vector) for vector in (first, last))
+
+        values = points()
+        if not self._recording_body_domain() or values is None:
+            return self._distance(first, last)
+        self.a.tick()
+        # Even native frozen cells can be replaced or maliciously mutated by
+        # a callback. Recheck the zero premise before omitting subtraction;
+        # no later callback occurs between this capture and the zero result.
+        if points() != values:
+            return self._distance(first, last)
+        self.a.guard(*(value for vector in values for value in vector))
+        # A callback can narrow the live domain before this zero proof. Keep
+        # the prospective widths of the omitted original point subtractions
+        # and their output grid before any later callback can restore it.
+        for value in values[0]:
+            if value:
+                numerator, denominator = abs(value.numerator).bit_length(), value.denominator.bit_length()
+                if max(numerator + denominator + 1, denominator * 2) > self.a.operand_limit:
+                    raise ReferenceError("resource", "Independent reference intermediate operand limit exceeded")
+                self.a._grid_domain(F(0), F(0))
+        if self.a.operand_limit < 2:
+            raise ReferenceError("resource", "Independent reference intermediate operand limit exceeded")
+        if not self._recording_body_domain():
+            return self._distance(first, last)
+        return F(0)
+
     def _phase(self, carrier, start, end, state):
         root, _, joints, path = self._ancestry(carrier, state)
         identity = self.p.identity()
-        actual_root = identity if root is None else self._root_pose(root, start, state, ideal=False)
-        ideal_root = identity if root is None else self._root_pose(root, start, state, ideal=True)
+        actual_root, ideal_root = ((identity, identity) if root is None else
+                                   self._phase_root_poses(root, start, state))
         acceleration = tuple(F(x) for x in ((state.forces[root].acceleration or self.model.gravity)
                              if root is not None and state.modes[root] == "dynamic" else ZERO))
         basis = self._source_basis(carrier, start, end, state)
@@ -4007,8 +4243,8 @@ class ReachReference:
         # cross contribution need this additional independent source proof.
         axial = self._axial_derivatives(carrier, start, end, state) if basis.alpha else None
         coordinates = tuple(self._joint_path(joint, start, end, state) for joint in joints)
-        anchor_velocity = self._distance(actual_root.velocity, ideal_root.velocity)
-        anchor_omega = self._distance(actual_root.omega, ideal_root.omega)
+        anchor_velocity = self._phase_root_distance(actual_root.velocity, ideal_root.velocity)
+        anchor_omega = self._phase_root_distance(actual_root.omega, ideal_root.omega)
         if root is not None and state.modes[root] == "dynamic":
             anchor_velocity = max(anchor_velocity, state.dynamic[root].velocity_error)
             anchor_omega = max(anchor_omega, state.dynamic[root].omega_error)

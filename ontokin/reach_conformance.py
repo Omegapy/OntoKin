@@ -1364,14 +1364,37 @@ def _recording_orientation_bound(quaternion, expected, limit, arithmetic, *, bef
         if type(expected) not in (tuple, list) or len(expected) != 4:
             _error("OKE-E-CERTIFICATE", "An independent orientation comparison requires four source cells.")
         expected = arithmetic.cells(expected)
-        def calculate():
+        def calculate_bound():
             aligned = _aligned_reference(quaternion, expected, arithmetic)
             distance = _optional_endpoint_l1(quaternion, aligned, arithmetic)
             return () if distance is None else (arithmetic.mul(2, distance),)
-        candidate = arithmetic.reuse(("recording_orientation_sufficient_bound", quaternion, expected), calculate)
-        if (candidate and _bound_domain(arithmetic) == MAX_OPERAND_BITS
-                and arithmetic.compare(candidate[0], Fraction(1, 2)) <= 0
-                and arithmetic.compare(candidate[0], limit) <= 0):
+        def sufficient(candidate):
+            return (candidate and _bound_domain(arithmetic) == MAX_OPERAND_BITS
+                    and arithmetic.compare(candidate[0], Fraction(1, 2)) <= 0
+                    and _bound_domain(arithmetic) == MAX_OPERAND_BITS
+                    and arithmetic.compare(candidate[0], limit) <= 0
+                    and _bound_domain(arithmetic) == MAX_OPERAND_BITS)
+        if type(limit) in (int, float, Fraction):
+            # Translated siblings often have the same complete orientation
+            # operands and the same actual endpoint claim. Retain the already
+            # completed two inequalities with that typed threshold in the
+            # existing bounded cache, instead of recalculating them after each
+            # lookup. All actual raw components and independent source cells
+            # have just been admitted. No position proof or writer bound is
+            # inherited, and a changed threshold has a different complete key.
+            def calculate_claim():
+                candidate = calculate_bound()
+                return candidate if sufficient(candidate) else ()
+            candidate = arithmetic.reuse(("recording_orientation_sufficient_claim", quaternion,
+                expected, type(limit).__name__, limit), calculate_claim)
+            admitted = bool(candidate) and _bound_domain(arithmetic) == MAX_OPERAND_BITS
+        else:
+            # Foreign values retain their original charged scalar decoder and
+            # rejection path; coercive equality cannot borrow a native claim.
+            candidate = arithmetic.reuse(("recording_orientation_sufficient_bound", quaternion,
+                                         expected), calculate_bound)
+            admitted = sufficient(candidate)
+        if admitted:
             if before_error is not None:
                 before_error()
             # A position callback or cache callback can narrow the live cap.
