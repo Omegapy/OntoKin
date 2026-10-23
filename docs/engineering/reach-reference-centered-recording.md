@@ -31,7 +31,7 @@ independent enclosure on the same work context.
 The initial source domain has static exact root translations with L1 norm at
 most 64 and exact identity root orientations. All local attachment rotations
 are identity. Local offsets are exact 128-bit-grid source vectors with L1 norm
-at most one. The existing independent body recipe proves the Cartesian
+at most one, except for the separately proved identity translations below. The existing independent body recipe proves the Cartesian
 right-action and complete affine source rate. Independently computed seed
 cells must prove that both inactive quaternion components are exactly zero;
 merely containing zero is insufficient. The complete source graph, state,
@@ -99,6 +99,42 @@ completed nonzero-angle hinges. Then `k*4R` bounds position error. A zero-radius
 exact identity or axial-only step can retain its parent's honest radius.
 Depth at most 128 and root L1 norm at most 64 bound position-center magnitude
 below 256; quaternion/offset bounds alone would not bound an arbitrary root.
+
+## Bounded translations under exact identity parents
+
+The new candidate admits a larger local offset only when its independent
+source ancestry proves exact positive identity orientation throughout the
+current source plan. The admitted root already has exact identity orientation
+and no orientation action. Identity site/follow/fixed/grip transforms preserve
+that fact. A hinge preserves it only when the existing `identity_relative`
+recipe proves a zero child origin and an identically zero coordinate law.
+That recipe checks both affine endpoints, including paused laws; a zero rate,
+a sampled identity center or cancellation of nonzero rates is insufficient.
+
+Such an offset must still be an exact native 128-bit-grid vector, now with
+L1 norm at most 64. Preparation retains a typed, sealed requirement for exact
+identity transport in its source-only recipe. Evaluation freezes the actual
+parent pose and requires quaternion `(1,0,0,0)` and orientation radius zero.
+The check also precedes a stationary-pose cache hit and is repeated at offset
+use after any body update. Radius, source and owner mutation retain the
+existing callback and final source-batch rejection behavior.
+
+For this domain, the true rotation is exactly identity, so transporting the
+offset performs no quaternion products and adds zero position error. The
+parent's honest position radius survives unchanged. Every offset transported
+by an uncertain rotation still has L1 norm at most one and uses the unchanged
+`4R` proof. Counting all nonzero offsets remains conservative even when some
+larger exact offsets add no error.
+
+To preserve the original finite position premise, preparation sums the root
+L1 norm and every local offset L1 norm along each ancestry, using the existing
+guarded arithmetic. Each sum must be at most 192, the former root bound 64
+plus at most 128 unit offsets. Euclidean triangle inequalities give true
+position norm at most 192; accumulated error is at most `128*4R`. Therefore
+the center remains below 256 and retains the existing native numerator and
+denominator limits. This is a sufficient domain for optional evaluation;
+larger cumulative extents use the original full independent intervals on the
+same work context.
 
 ## Actual supplied endpoints
 
@@ -183,3 +219,5 @@ cold radii; mutation/restore, cap, owner and nested-reader boundaries; tight and
 hostile supplied endpoint claims; unchanged public observations; real source
 prefix bytes and independent supplied-byte checks; and the complete unchanged
 original recordings. The checkpoint records each actual execution and failed attempt; this derivation alone does not establish release acceptance.
+
+The identity-translation worker cut `e74f2edde0e9f43805a0141ea7e210731bf3c995` passes305/305 methods, including13 dedicated boundary/source/callback tests. Its unchanged full P11 request activates the new domain but still exhausts100,000 operations. Current-source integration and the full original28 remain separate execution obligations.

@@ -34,10 +34,12 @@ class _CenteredPose:
 class _CenteredNode:
     vector: tuple
     position_radius: F
+    identity_offset: int = 0
     seal: tuple = field(init=False, repr=False, compare=False)
 
     def __post_init__(self):
-        object.__setattr__(self, "seal", _integers((self.vector, self.position_radius)))
+        object.__setattr__(self, "seal", _integers((self.vector, self.position_radius,
+                                                  self.identity_offset)))
 
 
 @dataclass(frozen=True)
@@ -302,8 +304,10 @@ def prepare(plan, reference, batch):
     admit_source(plan, reference, fresh=False)
     a = reference.a
     nodes, depths = [], {"world": 0}
+    identities, extents = {"world": True}, {"world": F(0)}
     for node in plan.nodes:
         guard = _Guard(reference, plan, batch)
+        identity_offset = 0
         if node.kind == "root":
             local, body = node.local, node.body
             if (local.vector is not None or type(local.position) is not tuple
@@ -329,6 +333,7 @@ def prepare(plan, reference, batch):
             if total > 64:
                 return replace(plan, centered=False)
             depth = 0
+            identity, extent = True, total
         else:
             local = node.local
             if (node.kind not in {"site", "follow", "hinge", "fixed", "grip"}
@@ -342,23 +347,38 @@ def prepare(plan, reference, batch):
             supplied = tuple(guard.freeze(value) if type(value) is F else value for value in local.position)
             guard.checked(a.tick)
             vector = tuple(guard.checked(a.point, value).lo for value in supplied)
-            if any(not _native(value, magnitude=1) for value in vector):
+            if any(not _native(value, magnitude=64) for value in vector):
                 return replace(plan, centered=False)
             total = F(0)
             for value in vector:
                 if value:
                     total = abs(value) if not total else guard.exact(total, abs(value), "add")
-            if total > 1:
+            # Only the admitted identity source lineage may transport a
+            # larger exact translation. A zero rate or a sampled identity
+            # center does not establish a zero-width identity orientation.
+            identity = identities[node.parent] and (
+                node.kind != "hinge" or node.body.identity_relative is True)
+            identity_offset = int(total > 1)
+            if total > 64 or identity_offset and not identity:
                 return replace(plan, centered=False)
             if node.kind not in {"site", "follow"}:
                 vector = tuple(guard.neg(value) if value else value for value in vector)
             depth = depths[node.parent] + int(bool(total))
+            parent_extent = extents[node.parent]
+            extent = (parent_extent if not total else total if not parent_extent else
+                      guard.exact(parent_extent, total, "add"))
+            # Retain the previous global source-position premise: root L1
+            # at most 64 plus at most 128 unit attachment offsets. Exact
+            # larger translations consume this same total extent allowance.
+            if extent > 192:
+                return replace(plan, centered=False)
         a.guard(*vector)
         if not reference._recording_body_domain():
             return plan
         radius = guard.exact(F(depth), F(1, 1 << 102), "mul") if depth else F(0)
-        nodes.append(_CenteredNode(vector, radius))
+        nodes.append(_CenteredNode(vector, radius, identity_offset))
         depths[node.path] = depth
+        identities[node.path], extents[node.path] = identity, extent
     plan.admit_owners(reference)
     return replace(plan, centered=tuple(nodes)) if reference._recording_body_domain() else plan
 
@@ -474,8 +494,10 @@ def _orientation(node, time, context, reference, guard, pending):
     return result, radius, axis
 
 
-def _offset(parent, vector, guard):
+def _offset(parent, vector, guard, *, identity_only=False):
     """Project the Hamilton center rotation onto the true rotating plane."""
+    if identity_only and (parent.orientation != (1, 0, 0, 0) or parent.orientation_radius):
+        raise _ChangedDomain()
     if not any(vector):
         return vector, False
     q, radius, axis = parent.orientation, parent.orientation_radius, parent.axis
@@ -519,12 +541,18 @@ def evaluate(plan, reference, time, batch):
             if (type(recipe) is not _CenteredNode or type(recipe.vector) is not tuple
                     or len(recipe.vector) != 3 or any(not _native(value, magnitude=64) for value in recipe.vector)
                     or not _native(recipe.position_radius, magnitude=1)
-                    or _integers((recipe.vector, recipe.position_radius)) != recipe.seal):
+                    or type(recipe.identity_offset) is not int or recipe.identity_offset not in (0, 1)
+                    or _integers((recipe.vector, recipe.position_radius, recipe.identity_offset)) != recipe.seal):
                 raise ReferenceError("identity", "Independent centered source recipe changed")
-            guard.watch(recipe, ("vector", "position_radius", "seal"))
+            guard.watch(recipe, ("vector", "position_radius", "identity_offset", "seal"))
             vector, maximum_radius = guard.vector(recipe.vector), guard.freeze(recipe.position_radius)
             parent = None if node.kind == "root" else guard.pose(frames[node.parent])
             guard.checked(a.tick)
+            # Check before a stationary-cache hit too. The source-only flag
+            # does not substitute for this frozen parent's honest radius.
+            if recipe.identity_offset and (parent is None or
+                    parent.orientation != (1, 0, 0, 0) or parent.orientation_radius):
+                raise _ChangedDomain()
             key = None
             if node.stationary:
                 key = ("reference_centered_stationary_pose", a.bits, a.operand_limit,
@@ -542,7 +570,8 @@ def evaluate(plan, reference, time, batch):
                 if node.kind == "hinge" and not node.body.identity_relative:
                     rotation, radius, axis = _orientation(node, time, plan.context, reference, guard, pending)
                     parent = _CenteredPose(parent.position, rotation, parent.position_radius, radius, axis)
-                offset, uncertain = _offset(parent, vector, guard)
+                offset, uncertain = _offset(parent, vector, guard,
+                                             identity_only=bool(recipe.identity_offset))
                 position = tuple(first if not last else last if not first else
                                  guard.exact(first, last, "add")
                                  for first, last in zip(parent.position, offset))

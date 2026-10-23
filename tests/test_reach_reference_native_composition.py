@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 from ontokin.construction import compile_construction
 from ontokin.gltf import export_glb
-from ontokin.reach_reference import Interval, MAX_CACHE, PoseEnclosure, ReferenceError, _PoseArithmetic
+from ontokin.reach_reference import Interval, MAX_CACHE, PoseEnclosure, ReachReference, ReferenceError, _PoseArithmetic
 from ontokin.scene import ExportOptions
 from reach_agent_support import source_case
 from test_reach_reference_fused_recording import arithmetic, dense_values, point
@@ -306,7 +306,10 @@ class IndependentNativeCompositionTests(unittest.TestCase):
             results = []
             for enabled in (False, True):
                 compiler = compile_construction(source_case(case))
-                with nullcontext() if enabled else ordinary():
+                # This comparison measures the legacy native interval kernel.
+                # Current centered-reader byte/report checks run separately.
+                scope = nullcontext() if enabled else ordinary()
+                with patch.object(ReachReference, "_recording_centered_poses", return_value=None), scope:
                     result = export_glb(compiler.model,
                         options=ExportOptions(end=F(1, 4), fps=4, helpers=False),
                         target_contract="ontokin.glb/0.6", work=compiler.reach_work)
