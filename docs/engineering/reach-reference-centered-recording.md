@@ -1,10 +1,10 @@
-# Private centered recording proof — unexecuted development
+# Private centered recording proof
 
 This candidate is not integrated acceptance evidence. The initial code-only
 checkpoint `1e3da520ed03f35db6a761d04218c639b3a6febd` contained a private module
 without a reader call site. The subsequent development connects its distinct
 private API to the complete supplied-byte endpoint reader; its focused tests
-and unchanged original recordings have not yet been executed.
+and unchanged original recordings now have separately identified execution evidence in [checkpoint019](reach-recording-validation-2026-10-23/checkpoint-019.json). The integrated292-method cohort passes; the full original suite remains23/28.
 The existing public interval observation API, tolerances, 100,000-operation
 allowance, 32,768-bit operand cap, 256-entry caches and 64-update reseed limit
 remain unchanged.
@@ -182,4 +182,4 @@ and signed/axial/general offsets; narrow or nongrid source domains; truthful
 cold radii; mutation/restore, cap, owner and nested-reader boundaries; tight and
 hostile supplied endpoint claims; unchanged public observations; real source
 prefix bytes and independent supplied-byte checks; and the complete unchanged
-original recordings. No such candidate validation is claimed by this document.
+original recordings. The checkpoint records each actual execution and failed attempt; this derivation alone does not establish release acceptance.

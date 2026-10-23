@@ -38,3 +38,7 @@ placement in original P16. These are estimates from the prior trace, not an
 executed saving. Focused tests compare every native pose bit and allowance,
 verify source mutation and cancellation behavior, and retain the unchanged
 100,000-operation and 256-entry cache limits. Full original results are pending.
+
+## Executed checkpoint
+
+[Checkpoint019](reach-recording-validation-2026-10-23/checkpoint-019.json) records41/41 worker and107/107 integration methods, followed by the complete original suite at23/28. Its neutral original P16 observer measures producer sampling36,211 operations versus38,041 previously, exactly1,830 fewer. The full P16 request still exceeds the unchanged operation budget.

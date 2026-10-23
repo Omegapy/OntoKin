@@ -1,5 +1,15 @@
 # Reach recording continuation, October 23, 2026
 
+## Checkpoint 019: independent centered proof and producer reductions
+
+The [checkpoint](checkpoint-019.json) and [archive manifest](checkpoint-019-manifest.json) preserve **352 new evidence members**, including every successful artifact, complete original-suite and focused logs, exact input manifests, Git commit/patch identities, neutral diagnostics and the failed centered test attempts. The ten parts reconstruct **8,180,971 bytes**, SHA-256 `634bec7fb33052503eee79a751fd80306cc5801ae9a34c03cc3409b38964f700`; every member hash, ZIP CRC and part join passed.
+
+Published source `1e1b5aaec48bb9e36e79ac173964725392fb9e9e`, tree `aa445c10b6c7d5e6879df592704d364e7e01c455`, passes **107/107** focused methods and the unchanged original suite remains **23/28**. The immediately preceding centered integration passed292/292 and the phase integration71/71; each had its own complete original28 run. P09, P11, P16, P23 and L03 still exhaust100,000 operations. P05 uses95,494, P20 81,372, L01 79,949 and L02 74,001. Separate cohorts are not added into a regression total.
+
+The [private centered proof](../reach-reference-centered-recording.md) reconstructs centers and finite radii from independent source math and checks actual supplied endpoints. It activates on P09/L03; P11's full pending arm ancestry still exceeds the current small-offset domain. The [phase materializer](../reach-fixed-phase-materialization.md) preserves each of seven exact operations and prospective guards. Its repaired legacy test compares all physical values after own-source proof admission and explicitly rejects foreign-source proofs. The [captured identity placements](../reach-captured-identity-placements.md) retain two composition depths, immutable child operands and final source/cap/callback receipts. A neutral full P16 trace matches every unobserved work category and diagnostic and measures producer sampling38,041→36,211 operations, saving1,830. P16 still fails before complete independent validation.
+
+Initial centered syntax/domain/axial-oracle/control-path failures remain archived, separately from corrected passing tests. The unexecuted exact-identity-parent offset checkpoint remains explicitly unexecuted. Earlier missing raw runs and37 absent historical archives remain disclosed. Inputs, horizons, fps, tolerances, caps and cache maxima stay fixed. Release input closure, Agent delivery, current full regression/compatibility, independent native/browser/visual and all R/Q acceptance gates remain open. PR27/28 stay draft and unmerged.
+
 ## Checkpoint 018: corrected JSON integration and complete diagnostic preservation
 
 The [checkpoint](checkpoint-018.json) and [archive manifest](checkpoint-018-manifest.json) preserve the corrected JSON worker and integrated runs, every successful GLB/report, failed original requests, exact input manifests, complete focused logs and separately identified diagnostic failures. All ZIP CRCs, member hashes and ordered part joins passed. Join the listed parts in order to reconstruct the archive.
