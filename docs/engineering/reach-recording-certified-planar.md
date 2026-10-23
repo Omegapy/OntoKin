@@ -994,3 +994,71 @@ allowances with ordinary scalar sampling, including both P16 release/force
 phases, native reseeding, source mutations, unsupported descendants and
 atomic callback failures. These are verification obligations; identified
 execution evidence establishes which checks and full recordings have passed.
+
+## Mixed complete-path captured phases
+
+A source phase can contain both supported planar paths and paths that require
+the ordinary recorder. P11 is such a composition: its arm hinges use the
+scalar/Z kernel, while its head turns about Y and carries a nonzero child-site
+offset and eye followers. A Y-axis source does not acquire a planar witness,
+and no sampled head pose becomes a native parent.
+
+The optional mixed wrapper applies only after the existing complete capture
+declines. It runs the existing `_planar_paths` classifier on a frozen copy of
+the actual classifier operands. Each copied dependency keeps its complete
+current source witness, original object/action/runtime identities and actual
+topology. The view supplies the same root modes and rotations, claimant spin
+vectors and initial rotations, joint axes, child-site rotations, follow
+rotations and frame ownership as the original classifier. All relevant input
+fields are read without an intervening callback, copied before the next
+callback and admitted again after classification. An unsupported mutable
+shape, dynamic lineage or custom topology implementation declines the whole
+optional wrapper. Both the visited graph and the selected tuple retain the
+256-node/entry limit. Before copying any unselected source names or topology,
+the optional domain also requires each object, site, joint, follow and action
+collection, and the active grip set, to contain at most 256 entries. Larger
+valid scenes keep the scalar sampler under the unchanged public limits.
+The source maps retain their actual identities, and the bounded object/site
+name sets are copied once and compared at final admission. A same-size rename
+or replacement cannot change whether a selected dependency names an object
+or a site. All retained extra records describe source inputs.
+
+The resulting two tuples preserve their order in the original selection.
+Every unsupported path calls the original, dynamically dispatched
+`recording_frames` method at every exact key, with the same live state,
+angular proof and phase context. Ordinary sampling runs before captured
+native sampling, matching the previous partition. The merged output retains
+the original ordinary-then-native order and every selected frame. The wrapper
+retains no ordinary sampled position or orientation across keys. Ordinary
+paths receive exactly zero additional native error; the captured paths use
+their unchanged source and native arithmetic allowances. The original
+boundary samples and strict-cell diagnostic route are unchanged.
+
+Only the supported complete dependency paths enter the existing captured
+graph. The full selection still determines its arithmetic-sharing choice.
+Its immutable source operands, working constants, exact clocks, cursor
+increments and reseeds remain the previously admitted implementation. If
+that entire supported subset cannot be captured, the wrapper declines and
+the complete selection uses the prior scalar partition. It never drops an
+unsupported member of either tuple to obtain a partial success.
+
+The native cursor group's final publication receipt additionally checks the
+complete mixed source/classifier records, all ordinary allowance input
+fields and original bound objects, current model/state/arithmetic ownership,
+topology, active grips and operand domain. That callback-free comparison runs
+after the last ordinary traversal, selected-pose output, hemisphere and cache
+publication callback. A persistent mutation rejects the complete pending
+native group. Temporary live changes cannot enter the copied classifier or
+native operands. Ordinary paths continue to use the ordinary live evaluator
+and its own admission; this wrapper does not claim to freeze their numerical
+calculation. Cancellation keeps the original exception, changed cache limits
+retain the existing fallback/publication behavior, and a newer reentrant
+completion cannot be overwritten by the older group.
+
+`tests/test_reach_recording_captured_mixed.py` specifies exact binary64 and
+stored binary32 equality to the old P11 partition, allowance and output-order
+equality, ordinary subclass dispatch, whole-selection fallback, immutable
+classifier/native inputs, current source/bound/owner changes, cancellation,
+cache changes and reentrant publication. Its source-to-GLB comparison uses
+the actual frozen P11 program. Measured operation savings and recording
+outcomes require separately identified execution evidence.

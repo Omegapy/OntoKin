@@ -96,6 +96,289 @@ class _Graph:
     spin_plans: MappingProxyType
 
 
+@dataclass(frozen=True)
+class _ClassifierSite:
+    owner: str
+    pose: Pose
+
+
+@dataclass(frozen=True)
+class _ClassifierJoint:
+    kind: str
+    parent: str
+    child: str
+    axis: tuple | None
+
+
+@dataclass(frozen=True)
+class _ClassifierFollow:
+    parent: str
+    child: str
+    offset: Pose
+
+
+@dataclass(frozen=True)
+class _ClassifierAction:
+    vector: tuple | None
+
+
+@dataclass(frozen=True)
+class _ClassifierRuntime:
+    initial: object
+    initial_rotation: object
+
+
+@dataclass(frozen=True)
+class _ClassifierModel:
+    objects: frozenset
+    sites: MappingProxyType
+    joints: MappingProxyType
+    follows: MappingProxyType
+    actions: MappingProxyType
+
+
+@dataclass(frozen=True)
+class _ClassifierState:
+    modes: MappingProxyType
+    orientations: MappingProxyType
+    root_rotation_values: MappingProxyType
+    claims: MappingProxyType
+    actions: MappingProxyType
+
+
+@dataclass(frozen=True)
+class _ClassifierSimulator:
+    model: _ClassifierModel
+    incoming: MappingProxyType
+    _check: object
+
+    def _incoming(self, state):
+        return self.incoming
+
+
+_MIXED_SOURCE_TABLES = ("objects", "sites", "joints", "follows", "actions")
+
+
+class _MixedSource:
+    """Complete classifier inputs and ordinary bounds, never sampled poses."""
+    def __init__(self, simulator, state, proof, ops, tables, sizes, names, topology,
+                 grips, records, runtimes, model, captured_state):
+        self.simulator, self.state, self.proof, self.ops = simulator, state, proof, ops
+        self.model, self.root_state = simulator.model, simulator.state
+        self.program_revision = simulator.model.program_revision
+        self.tables, self.sizes, self.names = tables, sizes, names
+        self.topology, self.grips = topology, grips
+        self.records, self.runtimes = records, runtimes
+        self.classifier = _ClassifierSimulator(model, MappingProxyType({row[6]: (row[0], row[1])
+            for row in topology if row[0] != "joint" or row[3] != "grip" or row[1] in grips}), simulator._check)
+        self.captured_state = captured_state
+        self.bounds, self.bound_records = None, ()
+
+    def owners(self):
+        simulator, ops = self.simulator, self.ops
+        ops._require_domain()
+        if (simulator.model is not self.model or simulator.state is not self.root_state
+                or simulator.pose_ops is not ops.source_ops or simulator.work is not ops.work
+                or ops.source_ops.work is not ops.work
+                or simulator.model.program_revision != self.program_revision):
+            raise ReachAdmissionError("reach_domain", "The mixed recording source context changed during sampling.")
+
+    def rows(self):
+        return (sum(self.sizes[:2]) + len(self.records) + len(self.topology)
+                + len(self.grips) + len(self.runtimes) + len(self.bound_records) + 1)
+
+    def admit(self):
+        self.owners()
+        model, state, work = self.model, self.state, self.ops.work
+        valid = (all(getattr(model, name) is table for name, table in zip(_MIXED_SOURCE_TABLES, self.tables))
+            and self.sizes == tuple(len(table) for table in self.tables)
+            and type(state.active_grips) in (set, frozenset)
+            and len(state.active_grips) == len(self.grips)
+            and all(type(name) is str for name in model.objects)
+            and all(type(name) is str for name in model.sites)
+            and all(type(name) is str for name in state.active_grips)
+            and model.objects.keys() == self.names[0] and model.sites.keys() == self.names[1]
+            and frozenset(state.active_grips) == self.grips)
+        if valid:
+            try:
+                for row in self.topology:
+                    current = _topology_record(model, row[0], row[1])
+                    if current[2] is not row[2] or current[:2] + current[3:] != row[:2] + row[3:]:
+                        valid = False
+                        break
+                for frame, kind, path, current, identities, record in self.records:
+                    if (not all(_same_identity(model, identity) for identity in identities)
+                            or _current_recording_angular_witness(model, state, kind, path, work=work) != current
+                            or self.proof.frames.get(frame) is not record
+                            or record is not None and (record.parent, record.witness) != current):
+                        valid = False
+                        break
+                for path, runtime in self.runtimes:
+                    if state.actions.get(path) is not runtime:
+                        valid = False
+                        break
+                for path, original, inputs in self.bound_records:
+                    current = self.bounds.get(path)
+                    if (current is not original or type(current) is not PhaseBound
+                            or any(type(getattr(current, field)) is not type(value)
+                                   or getattr(current, field) != value
+                                   for field, value in zip(_EXCESS_FIELDS, inputs))):
+                        valid = False
+                        break
+            except (KeyError, AttributeError, TypeError, IndexError):
+                valid = False
+        if not valid:
+            raise ReachAdmissionError("reach_domain", "The complete mixed recording source or bounds changed.")
+        return True
+
+
+def _capture_classifier(simulator, state, selected, proof, ops):
+    """Copy the actual complete-path classifier's inputs before its callbacks."""
+    from .reach_runtime import ReachSimulator
+
+    if (type(selected) is not tuple or not selected or len(selected) > 256
+            or type(proof) is not RecordingAngularProof or type(proof.frames) is not MappingProxyType
+            or "_incoming" in simulator.__dict__
+            or getattr(type(simulator), "_incoming") is not ReachSimulator._incoming):
+        return None
+    model, work, root_state, source_ops = simulator.model, ops.work, simulator.state, simulator.pose_ops
+    tables = tuple(getattr(model, name) for name in _MIXED_SOURCE_TABLES)
+    if (any(type(table) is not dict for table in tables)
+            or type(state.active_grips) not in (set, frozenset)):
+        return None
+    sizes = tuple(len(table) for table in tables)
+    grip_count = len(state.active_grips)
+    # This optional view may copy unselected names and topology. Bound each
+    # complete collection before any such copy; larger valid scenes retain
+    # the existing scalar sampler and their original public limits.
+    if any(size > 256 for size in sizes) or grip_count > 256:
+        return None
+    work.charge("recording_mixed_topology", sum(sizes[:4]) + grip_count + 1)
+    ops._require_domain()
+    if (simulator.model is not model or simulator.state is not root_state
+            or simulator.pose_ops is not source_ops or source_ops is not ops.source_ops
+            or simulator.work is not work or source_ops.work is not work):
+        raise ReachAdmissionError("reach_domain", "The mixed recording classifier context changed during capture.")
+    if (any(getattr(model, name) is not table for name, table in zip(_MIXED_SOURCE_TABLES, tables))
+            or sizes != tuple(len(table) for table in tables)
+            or type(state.active_grips) not in (set, frozenset)
+            or grip_count != len(state.active_grips)):
+        return None
+    try:
+        if (any(type(name) is not str for name in model.objects)
+                or any(type(name) is not str for name in model.sites)
+                or any(type(name) is not str for name in state.active_grips)):
+            return None
+        names = frozenset(model.objects), frozenset(model.sites)
+        topology = tuple(_topology_record(model, "joint", path) for path in model.joints)
+        topology += tuple(_topology_record(model, "follow", path) for path in model.follows)
+        grips = frozenset(state.active_grips)
+        incoming = {row[6]: (row[0], row[1]) for row in topology
+                    if row[0] != "joint" or row[3] != "grip" or row[1] in grips}
+    except (KeyError, AttributeError, TypeError):
+        return None
+    sites, joints, follows, actions, runtimes = {}, {}, {}, {}, {}
+    modes, orientations, rotations, claims, active = {}, {}, {}, {}, {}
+    records, visited, visiting = [], set(), set()
+
+    def rotation(value):
+        return (RotationValue(value.components, value.error_rad, value.frozen_projection)
+                if type(value) is RotationValue else value)
+
+    def pose(value):
+        if type(value) is not Pose or type(value.position) is not tuple or type(value.rotation) is not tuple:
+            raise TypeError("A mixed source placement must be immutable.")
+        return Pose(value.frame, value.position, value.rotation)
+
+    def law(path, channel, identities):
+        claimant = state.claims.get((path, channel))
+        if claimant is None:
+            return identities
+        action, runtime = model.actions[claimant], state.actions[claimant]
+        claims[path, channel] = claimant
+        actions[claimant] = _ClassifierAction(action.vector)
+        active[claimant] = _ClassifierRuntime(rotation(runtime.initial), rotation(runtime.initial_rotation))
+        runtimes[claimant] = runtime
+        return identities + (_identity("actions", claimant, action),)
+
+    def visit(frame):
+        if frame in visited:
+            return True
+        if type(frame) is not str or frame in visiting or len(visiting) > 64 or len(visited) + len(visiting) >= 256:
+            return False
+        work.charge("recording_mixed_source_record")
+        ops._require_domain()
+        try:
+            if frame == "world":
+                kind, path, identities = "world", "world", ()
+            elif frame.endswith(".frame") and frame[:-6] in names[0]:
+                stem = frame[:-6]
+                kind, path = incoming.get(stem, ("root", stem))
+                identities = (_identity("objects", stem, model.objects[stem]),)
+            elif frame.endswith(".frame") and frame[:-6] in names[1]:
+                kind, path, identities = "site", frame[:-6], ()
+            else:
+                return False
+            current = _current_recording_angular_witness(model, state, kind, path, work=work)
+            record = proof.frames.get(frame)
+            if (current is None or record is not None and
+                    (type(record) is not RecordingAngularFrame or (record.parent, record.witness) != current)):
+                return False
+            # Current witness and these immutable inputs are read together;
+            # every subsequent classifier callback sees only this copied view.
+            if kind == "root":
+                modes[path] = state.modes[path]
+                orientations[path] = rotation(state.orientations[path])
+                if path in state.root_rotation_values:
+                    rotations[path] = rotation(state.root_rotation_values[path])
+                identities = law(path, "translation", identities)
+                identities = law(path, "orientation", identities)
+            elif kind == "site":
+                site = model.sites[path]
+                identities += (_identity("sites", path, site),)
+                sites[path] = _ClassifierSite(site.owner, pose(site.pose))
+            elif kind == "follow":
+                follow = model.follows[path]
+                identities += (_identity("follows", path, follow),)
+                follows[path] = _ClassifierFollow(follow.parent, follow.child, pose(follow.offset))
+            elif kind == "joint":
+                joint, child = model.joints[path], model.sites[model.joints[path].child]
+                identities += (_identity("joints", path, joint), _identity("sites", joint.child, child))
+                joints[path] = _ClassifierJoint(joint.kind, joint.parent, joint.child, joint.axis)
+                sites[joint.child] = _ClassifierSite(child.owner, pose(child.pose))
+                identities = law(path, "coordinate", identities)
+            if not _immutable_witness(current[1], work):
+                return False
+            ops._require_domain()
+        except (KeyError, AttributeError, TypeError, IndexError):
+            return False
+        visiting.add(frame)
+        try:
+            if current[0] is not None and not visit(current[0]):
+                return False
+        finally:
+            visiting.remove(frame)
+        records.append((frame, kind, path, current, identities, record))
+        visited.add(frame)
+        return True
+
+    if not all(visit(frame) for frame in selected):
+        return None
+    captured_model = _ClassifierModel(names[0], *(MappingProxyType(values)
+        for values in (sites, joints, follows, actions)))
+    captured_state = _ClassifierState(*(MappingProxyType(values)
+        for values in (modes, orientations, rotations, claims, active)))
+    result = _MixedSource(simulator, state, proof, ops, tables, sizes, names, topology,
+                          grips, tuple(records), tuple(runtimes.items()), captured_model, captured_state)
+    # A source replacement during the per-record callbacks cannot silently
+    # become the classifier's authority.  No numeric result is retained here.
+    if simulator.model is not model or simulator.state is not root_state:
+        raise ReachAdmissionError("reach_domain", "The mixed recording source changed during capture.")
+    work.charge("recording_mixed_source_guard", result.rows())
+    result.admit()
+    return result
+
+
 def _identity(table, path, value):
     if (type(value.path) is not str or type(value.element_id) is not tuple
             or any(type(part) is not str for part in value.element_id)
@@ -960,6 +1243,24 @@ class _PhasePublication(_Publication):
         super().finish()
 
 
+class _MixedPhasePublication(_PhasePublication):
+    """Admit the unchanged ordinary partition after every phase callback."""
+    def __init__(self, publication, source):
+        super().__init__(publication.simulator, publication.graph, publication.ops,
+                         publication.bounds, publication.bound_records)
+        self.source = source
+
+    def admit(self):
+        super().admit()
+        self.source.admit()
+        return True
+
+    def finish(self):
+        self.ops.work.charge("recording_mixed_source_guard", self.source.rows())
+        self.ops._require_domain()
+        super().finish()
+
+
 class _CapturedPhase:
     """Stream a finite phase into existing private output arrays.
 
@@ -1034,6 +1335,62 @@ class _CapturedPhase:
         self.publication.indices.clear()
 
 
+class _MixedCapturedPhase:
+    """Stream the old ordinary/native partition without retaining ordinary poses."""
+    def __init__(self, native, source, selected, ordinary):
+        self.native, self.source = native, source
+        self.ops, self.graph = native.ops, native.graph
+        self.selected, self.ordinary = selected, ordinary
+        self.moving_frames = frozenset(selected)
+        self.times, self.index, self.finished, self.active = native.times, 0, False, False
+        self.excesses = None
+        self.publication = _MixedPhasePublication(native.publication, source)
+        native.publication = self.publication
+
+    def sample(self, time):
+        from .reach_recording_fast import CertifiedRecordingFrames, _ZERO_EXCESS
+
+        if (self.finished or self.active or self.index >= len(self.times)
+                or type(time) is not F or time != self.times[self.index]):
+            raise ReachAdmissionError("reach_domain", "Mixed phase samples must follow their exact clock sequence.")
+        self.active = True
+        try:
+            self.source.owners()
+            self.publication._capacity()
+            # Preserve the original dynamic dispatch and ordinary-first order
+            # at every exact key. No ordinary numeric output survives here
+            # after the returned complete frame mapping leaves this method.
+            frames = self.source.simulator.recording_frames(time, self.source.state, self.ordinary,
+                moving_frames=self.moving_frames, recording_context=self.native.context,
+                recording_angular_proof=self.source.proof)
+            self.source.owners()
+            self.publication._capacity()
+            if not isinstance(frames, dict) or set(frames) != set(self.ordinary):
+                raise ReachAdmissionError("reach_domain", "The ordinary recording partition changed its selected coverage.")
+            result = self.native.sample(time)
+            self.source.owners()
+            self.publication._capacity()
+            if set(result.frames) != set(self.graph.selected):
+                raise ReachAdmissionError("reach_domain", "The captured recording partition changed its selected coverage.")
+            frames.update(result.frames)
+            if self.excesses is None:
+                excesses = {path: _ZERO_EXCESS for path in self.ordinary}
+                excesses.update(result.excess_by_frame)
+                self.excesses = MappingProxyType(excesses)
+            self.index += 1
+            return CertifiedRecordingFrames(frames, self.excesses)
+        finally:
+            self.active = False
+
+    def finish(self):
+        if self.finished or self.active or self.index != len(self.times):
+            raise ReachAdmissionError("reach_domain", "A mixed phase must complete every retained sample before admission.")
+        # This receipt runs inside the native group's atomic publication,
+        # after ordinary traversal, output and hemisphere callbacks are done.
+        self.native.finish()
+        self.finished = True
+
+
 def begin_captured_phase(simulator, times, state, selected, proof, ops, context,
                          *, phase_bounds, phase_interval):
     """Prepare an optional complete static-ancestry phase, including small graphs."""
@@ -1090,3 +1447,56 @@ def begin_captured_phase(simulator, times, state, selected, proof, ops, context,
         work.guard(*inputs)
         records.append((path, bound, inputs))
     return _CapturedPhase(simulator, graph, ops, context, times, phase_bounds, tuple(records))
+
+
+def begin_mixed_captured_phase(simulator, times, state, selected, proof, ops, context,
+                               *, phase_bounds, phase_interval):
+    """Capture only the same complete planar paths selected by the old sampler."""
+    from .reach_recording_fast import _planar_paths
+    from .scene import MAX_BAKED_POSES, MAX_KEYFRAMES
+
+    work = ops.work
+    if (type(times) is not tuple or not 2 <= len(times) <= MAX_KEYFRAMES
+            or type(selected) is not tuple or not selected or len(selected) > 256
+            or any(type(path) is not str for path in selected) or len(set(selected)) != len(selected)
+            or len(times) * len(selected) > MAX_BAKED_POSES
+            or type(work.max_cache_entries) is not int or work.max_cache_entries != 256
+            or type(proof) is not RecordingAngularProof
+            or type(proof.start) is not F or type(proof.end) is not F
+            or type(phase_interval) is not tuple or phase_interval != (proof.start, proof.end)
+            or type(phase_bounds) not in (dict, MappingProxyType)):
+        return None
+    source = _capture_classifier(simulator, state, selected, proof, ops)
+    if source is None:
+        return None
+    supported_set = _planar_paths(source.classifier, source.captured_state, selected)
+    source.owners()
+    supported = tuple(path for path in selected if path in supported_set)
+    ordinary = tuple(path for path in selected if path not in supported_set)
+    if not supported or not ordinary:
+        return None
+    # Reuse the original arithmetic owner and the full selection's sharing
+    # choice. No classified path is dropped when the optional capture fails.
+    native = begin_captured_phase(simulator, times, state, supported, proof, ops, context,
+                                  phase_bounds=phase_bounds, phase_interval=phase_interval)
+    if native is None:
+        return None
+    records = []
+    for path in ordinary:
+        work.charge("recording_mixed_phase_bound")
+        source.owners()
+        bound = phase_bounds.get(path)
+        if type(bound) is not PhaseBound:
+            return None
+        inputs = tuple(getattr(bound, field) for field in _EXCESS_FIELDS)
+        if (any(type(value) is not int or value < 0 for value in inputs[:2])
+                or any(type(value) is not F or value.numerator < 0 for value in inputs[2:])):
+            return None
+        work.guard(*inputs)
+        records.append((path, bound, inputs))
+    source.bounds, source.bound_records = phase_bounds, tuple(records)
+    # Classification is sourced from the immutable copy. Persistent changes
+    # during its callbacks cannot become authority for a partial stream.
+    work.charge("recording_mixed_source_guard", source.rows())
+    source.admit()
+    return _MixedCapturedPhase(native, source, selected, ordinary)

@@ -2003,10 +2003,14 @@ def begin_bounded_phase(simulator, times, state, selected_paths, *, context,
         dynamic_phase=phase_interval, dynamic_bounds=phase_bounds)
     try:
         ops._domain()
-        from .reach_recording_capture import begin_captured_phase
+        from .reach_recording_capture import begin_captured_phase, begin_mixed_captured_phase
         phase = begin_captured_phase(simulator, times, state, tuple(selected_paths),
             recording_angular_proof, ops, context, phase_bounds=phase_bounds,
             phase_interval=phase_interval)
+        if phase is None:
+            phase = begin_mixed_captured_phase(simulator, times, state, tuple(selected_paths),
+                recording_angular_proof, ops, context, phase_bounds=phase_bounds,
+                phase_interval=phase_interval)
         return _BoundedCapturedPhase(phase) if phase is not None else None
     except _UnsupportedPlanar as error:
         if simulator.work.callback_error is error:
