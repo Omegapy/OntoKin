@@ -737,7 +737,7 @@ class _UnchangedBoundaryProjection:
         return result if self.matches(check=True) else None
 
 
-def recording_phase_bounds(simulator, start, end, *, recording_proof=False):
+def recording_phase_bounds(simulator, start, end, *, recording_proof=False, state=None):
     """Prove every deliverable carrier and its complete source dependencies.
 
     A carrier certificate includes every local vertex/site through its geometry
@@ -756,7 +756,7 @@ def recording_phase_bounds(simulator, start, end, *, recording_proof=False):
         selected = selector.selected(simulator)
         # The ordinary exact phase traversal still follows all required
         # site/ownership/joint paths and prepares every root's spin plan.
-        result = phase_bounds(simulator, start, end, selected_frames=selected,
+        result = phase_bounds(simulator, start, end, state, selected_frames=selected,
                               recording_proof=recording_proof)
         return ((result["frames"], result["recording_angular_proof"]) if recording_proof
                 else result["frames"])
@@ -1257,6 +1257,12 @@ def interval_certificates(model, options, plan, nodes, geometry_bounds, exact, t
         group["shift"] = max(group["shift"], shift)
         group["numeric_selected"].update(numeric_selected)
         intervals.append((index, group_key, s0, s1))
+    # The retained final key samples final_state AFTER its complete boundary.
+    # A completed spin, release or authored transition can transfer additional
+    # anchor error there. It is not another positive-width motion phase, and
+    # its allowance cannot be recovered from the preceding phase alone.
+    final_source = (recording_phase_bounds(plan.simulator, exact[-1], exact[-1],
+                    state=plan.final_state) if intervals else None)
     proofs = {}
     for group_key, group in groups.items():
         source_index, selected = group_key
@@ -1271,6 +1277,9 @@ def interval_certificates(model, options, plan, nodes, geometry_bounds, exact, t
                                     max(plan.phases[i].carriers[frame].angular_speed for i in selected))
             nsp = _source_max(plan, group["numeric_selected"], frame, "position_error_m")
             nsr = _source_max(plan, group["numeric_selected"], frame, "rotation_error_rad")
+            if len(exact) - 1 in group["keys"]:
+                nsp = max(nsp, final_source[frame].position_error_m)
+                nsr = max(nsr, final_source[frame].rotation_error_rad)
             ep, eq, magnitude = endpoint_maxima[carrier]
             extra_position = extra_rotation = Fraction(0)
             for phase_index in sorted(group["numeric_selected"]):
