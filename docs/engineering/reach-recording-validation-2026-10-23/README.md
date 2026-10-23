@@ -1,5 +1,16 @@
 # Reach recording continuation, October 23, 2026
 
+## Checkpoint 018: corrected JSON integration and complete diagnostic preservation
+
+The [checkpoint](checkpoint-018.json) and [archive manifest](checkpoint-018-manifest.json) preserve the corrected JSON worker and integrated runs, every successful GLB/report, failed original requests, exact input manifests, complete focused logs and separately identified diagnostic failures. All ZIP CRCs, member hashes and ordered part joins passed. Join the listed parts in order to reconstruct the archive.
+
+Published source `e293d27fd55f013ec715e1f0ae0815cdd52eeb1d`, tree `6bf3b71cabc2b7b6f8a9f5679f9c70f5b9098cde`, passes **71/71** integrated focused methods and the unchanged original suite remains **23/28**. P09, P11, P16, P23 and L03 still exhaust **100,000 operations**. The JSON worker passed 47/47 methods; removing escaped-size cache churn lowers work in every successful original recording versus e238c9e2, including 2,401 operations for P13 and 2,637 for P20. P05 now uses 95,423. All 23 successful artifact bytes match the first JSON candidate exactly; that specific comparison does not span the earlier P23 numerical implementation change.
+
+Neutral P16 diagnostics reproduce the original work and source states: isolated independent-reference construction costs 6,411 operations, while producer sampling consumes 38,041. A held P23 phase materializer passes 12/12 dedicated methods; its 58/59 existing cohort exposes a cross-compilation owner-token assertion that also fails on the exact parent. Two own-source-admitted comparisons find 77 intended owner identity differences and no semantic differences. The unchanged original P23 still fails at the cap. The test repair and integration remain pending. A wired but unexecuted center/radius candidate and 28 dedicated tests are preserved at their exact cut; no pass is inferred.
+
+The first JSON artifact comparator and first P16 constructor observer failed in their diagnostic code; both raw attempts remain archived separately from their corrected successful runs. The earlier raw-log gap and 37 absent historical archives remain disclosed. Limits, inputs, tolerances and cache maxima are unchanged. This is development evidence, with release input closure and all remaining mandatory gates open. PR #27 and PR #28 remain draft and unmerged.
+
+
 ## Checkpoint 017: integrated cold seeds and preserved diagnostic candidates
 
 The [checkpoint](checkpoint-017.json) and [archive manifest](checkpoint-017-manifest.json) preserve complete post-checkpoint016 recordings, focused logs, actual GLBs and export reports, neutral reference/planning diagnostics, exact inputs and worker commit objects/patches. Every part join, ZIP CRC and member hash was verified. Reconstruct the ZIP by joining its listed parts in order. Held and incomplete prototypes retain their own identities and are not release evidence.
