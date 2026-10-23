@@ -149,7 +149,9 @@ class ReachRecordingFastTests(unittest.TestCase):
             self.assertEqual(actual.zeros, expected.zeros)
             self.assertEqual(actual.depth, expected.depth)
         self.assertLess(shared.work.operations, direct.work.operations)
-        self.assertEqual(shared.work.counts["recording_float_mul"], 6)
+        # The first unit-X offset needs only the four coefficient products;
+        # later arms reuse that completed offset with their own translation.
+        self.assertEqual(shared.work.counts["recording_float_mul"], 4)
         self.assertLessEqual(len(shared.work._cache), 256)
 
     def test_shared_native_product_keys_preserve_operand_bits_and_structural_flags(self):

@@ -990,12 +990,18 @@ class Binary64RecordingOps(ReachPoseOps):
         s = op(op(w, z, "mul"), 2.0, "mul")
         cross_zero = rotation.zero_w or rotation.zero_z
         if zeros[1]:
-            offset = (op(c, x, "mul"), op(s, x, "mul"), zz)
+            # Native multiplication by positive one preserves every finite
+            # binary64 bit, including signed zeros and subnormals. The coefficients
+            # have just passed their original finite/domain callbacks. Foreign
+            # scalar types retain both ordinary arithmetic calls.
+            unit = type(x) is float and x == 1.0 and type(c) is float and type(s) is float
+            offset = ((c, s, zz) if unit else (op(c, x, "mul"), op(s, x, "mul"), zz))
             offset_zeros = (zeros[0], zeros[0] or cross_zero, zeros[2])
         elif zeros[0]:
             self.work.charge("recording_float_sign")
             self._require_domain()
-            offset = (op(-s, y, "mul"), op(c, y, "mul"), zz)
+            unit = type(y) is float and y == 1.0 and type(c) is float and type(s) is float
+            offset = ((-s, c, zz) if unit else (op(-s, y, "mul"), op(c, y, "mul"), zz))
             offset_zeros = (zeros[1] or cross_zero, zeros[1], zeros[2])
         else:
             offset = (op(op(c, x, "mul"), op(s, y, "mul"), "sub"),
