@@ -1672,6 +1672,55 @@ class _CenteredEndpointDomain(Exception):
     """A compact sufficient proof needs the ordinary current-domain path."""
 
 
+def _centered_claim_sufficient(value, claim, arithmetic):
+    """Prove a strict local inequality from fresh native field metadata.
+
+    This does not decode the claim or replace the independent endpoint bound.
+    The complete original decode/comparison domain fits before either actual
+    operation can be omitted. Unsupported or tight operands keep that path.
+    """
+    if (type(arithmetic) is not _Bounds or _tick is not _CERTIFICATE_TICK
+            or type(_bound_domain(arithmetic)) is not int
+            or _bound_domain(arithmetic) != MAX_OPERAND_BITS
+            or type(claim) is not float or not math.isfinite(claim) or claim <= 0):
+        return False
+    # Check dispatch at this actual omission point, after every preceding
+    # surviving callback. A custom or newly replaced operation must execute
+    # through the existing exact fallback, including its original exception.
+    dispatches = ((arithmetic, _CERTIFICATE_BOUNDS_DISPATCH),)
+    owner = arithmetic.work
+    if owner is not None:
+        if type(owner) is not _CertificateWork:
+            return False
+        dispatches += ((owner, _CERTIFICATE_WORK_DISPATCH),)
+    for target, entries in dispatches:
+        for name, original in entries:
+            method = getattr(target, name, None)
+            if type(method) is not MethodType or method.__self__ is not target or method.__func__ is not original:
+                return False
+    fields = _certificate_fraction_fields(value)
+    if fields is None or fields[0] < 0:
+        return False
+    numerator, denominator = fields
+    encoded = struct.unpack(">Q", struct.pack(">d", claim))[0]
+    exponent = (encoded >> 52) & 0x7ff
+    # For a positive normal q, q >= 2**(E-1023). A positive subnormal
+    # q=M*2**-1074 instead has q >= 2**(bits(M)-1075). No power, exact
+    # float ratio or rational cross product is constructed by this proof.
+    lower = (exponent - 1023 if exponent else
+             (encoded & ((1 << 52) - 1)).bit_length() - 1075)
+    if numerator and numerator.bit_length() - denominator.bit_length() + 1 > lower:
+        return False
+    # A native finite binary64 decode has <=1024 numerator and <=1075
+    # denominator bits. With the fresh <=2048-bit fraction, every original
+    # scalar and prospective comparison guard is therefore <=3123 bits.
+    # These native guard methods have no cancellation callback; snapshots
+    # cannot be redirected between this admission and the strict proof.
+    arithmetic.bits(numerator.bit_length(), denominator.bit_length(), 1075,
+                    numerator.bit_length() + 1075, 1024 + denominator.bit_length())
+    return _certificate_fraction_fields(value) == fields
+
+
 def _recording_centered_comparison(ideal, position, quaternion, limits, arithmetic, *,
                                    previous=None, completed=()):
     """Compare actual supplied values to a private center AND its radius.
@@ -1745,6 +1794,12 @@ def _recording_centered_comparison(ideal, position, quaternion, limits, arithmet
         return distance
 
     def compare_claim(value, claim):
+        if not current():
+            raise _CenteredEndpointDomain()
+        if _centered_claim_sufficient(value, claim, arithmetic):
+            if not current():
+                raise _CenteredEndpointDomain()
+            return -1
         # A raw claim decode and the following native comparison have
         # separate original callbacks. Check both before the next can restore
         # a narrowed domain or changed operand owner.
