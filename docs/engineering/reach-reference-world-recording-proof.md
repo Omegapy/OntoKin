@@ -195,6 +195,50 @@ An interrupted cursor update publishes no partial clock/orientation pair.
 Other already completed pure numeric cache entries remain valid; source model
 and action state are never changed by this optional proof.
 
+## Exact sparse Cartesian products
+
+The ordinary independent Hamilton product already has a scalar/Z case.
+Its scalar/X and scalar/Y cases can omit the same exact-zero terms while
+retaining the ordinary cache and every nonzero interval operation. For a
+shared Cartesian axis `i`, with both inputs zero on the other two axes, the
+complete original expression reduces to
+
+```
+scalar = sub(mul(a[0], b[0]), mul(a[i], b[i]))
+axis   = add(mul(a[0], b[i]), mul(a[i], b[0]))
+```
+
+These are the original kernels in their original nonzero order. In the
+complete expression, `total` starts from exact zero, zero interval products
+are exactly zero, and adding exact zero aliases the other interval without
+rounding. Removing those terms therefore preserves every final interval
+endpoint, including signed, straddling and non-dyadic input cells. It does not
+replace an uncertain zero or reassociate a nonzero sum.
+
+This shortcut admits only native tuples of native interval/Fraction cells,
+each endpoint at most 256 bits, at precision 128 and the unchanged full
+32,768-bit live operand cap. The four original nonzero interval products and
+their scalar sum/difference retain all operand, corner, exact arithmetic and
+grid preflights. Even a conservative 2,048-bit bound covers the small admitted
+products, endpoint rescalings and additions; the omitted exact-zero terms
+could not introduce an additional intermediate extent in that domain.
+Unsupported shapes, larger cells, other precision schedules and narrowed
+caps execute the complete original Hamilton expression.
+
+The product uses the same lookup key and one completed insertion in the
+existing 256-entry independent cache. Callback-free input/result guards run
+after the arithmetic and after the insertion and cache-domain callbacks.
+A changed optional domain returns to the original complete expression with
+the same work object and counters. An original arithmetic or callback
+exception is never caught, so a later broadening callback cannot retry it.
+
+This is also valid inside ordinary `q*(0,v)*conjugate(q)` rotation when all
+three factors lie on the same axis. Both Hamilton products remain in place;
+there is no unit-quaternion assumption or production rotation formula. For
+example, raw `q=(2,0,3,0)` maps `(0,5,0)` to `(0,65,0)` through the original
+factor `2*2+3*3`. The character's Y-axis head and nonzero child-site placement
+therefore retain their ordinary local compositions and position cells.
+
 ## Verification scope
 
 `tests/test_reach_reference_world_recording.py` specifies finer independent
@@ -207,3 +251,12 @@ equivalence with measured shared work. Existing local/fused/shared recurrence,
 independent endpoint, forged-claim and source-reference cohorts remain relevant.
 Executed results must identify the actual code revision separately; this
 derivation does not claim that the complete recording or release gates passed.
+
+`tests/test_reach_reference_sparse_cartesian.py` compares the new optional
+case with the complete retained Hamilton expression across signs, raw
+nonunit rotations, exact points, uncertain zeros and refused domains. It
+exercises every remaining callback for cancellation and live-cap changes,
+original failure identity, warm cache hits, full eviction and reentry. Actual
+P11 source poses and a recorded prefix compare exact interval cells, GLB
+bytes and validation reports; observed operation counts remain separate
+execution evidence and do not imply a complete recording pass.

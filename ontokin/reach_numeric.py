@@ -511,6 +511,34 @@ class DyadicContext:
             if a.lo == a.hi == self.scale or b.lo == b.hi == self.scale:
                 self._op(a.lo,a.hi,b.lo,b.hi,width=width,units=0)
                 return b if a.lo == a.hi == self.scale else a
+            # A one-cell interval touching zero is a fixed point of outward
+            # multiplication by a positive factor no larger than one. This
+            # omits only integer products/quotients with an already proved
+            # result; all original operands and prospective widths remain
+            # admitted. In particular the fixed atan degree is unchanged.
+            tiny = ((a.lo,a.hi) if type(self.scale) is int and (a.lo,a.hi) in ((0,1),(-1,0)) and 0<=b.lo<=b.hi<=self.scale and b.hi>0 else
+                    (b.lo,b.hi) if type(self.scale) is int and (b.lo,b.hi) in ((0,1),(-1,0)) and 0<=a.lo<=a.hi<=self.scale and a.hi>0 else None)
+            if tiny is not None:
+                operands=(a.lo,a.hi,b.lo,b.hi)
+                scale=self.scale
+                al,ah,bl,bh=operands
+                pairs=(((al,bl),(ah,bh)) if tiny==(0,1) else
+                       ((al,bh),(ah,bl)) if ah==0 else ((ah,bl),(al,bh)))
+                self._op(*operands,width=width,units=0)
+                # The ordinary monotone path captures both endpoint pairs
+                # before callbacks. Return their fresh result, not a private
+                # input cell a callback could replace via object.__setattr__.
+                if type(self.scale) is int and self.scale==scale:
+                    return Interval(*tiny)
+                # A changed scale invalidates only the fixed-cell identity.
+                # Finish the same captured ordinary pairs and its original
+                # four constituents, retaining every post-callback guard.
+                self.work.charge("interval_constituent",4)
+                self.work.guard(*operands)
+                self.work.guard_bits(width)
+                (x,y),(z,w)=pairs
+                low,high=x*y,z*w
+                return Interval(low//self.scale,-((-high)//self.scale))
             if a.lo == a.hi and b.lo == b.hi:
                 self._op(a.lo,a.hi,b.lo,b.hi,width=width,units=3)
                 product = a.lo*b.lo

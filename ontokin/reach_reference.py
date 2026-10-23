@@ -911,12 +911,55 @@ class _PoseArithmetic:
             return self.a.remember(key, (
                 self.a.sub(self.a.mul(a[0], b[0]), self.a.mul(a[3], b[3])), zero, zero,
                 self.a.add(self.a.mul(a[0], b[3]), self.a.mul(a[3], b[0]))))
+        sparse = self._sparse_cartesian_multiply(a, b, key)
+        if sparse is not None:
+            return sparse
         return self.a.remember(key, (
             self.a.sub(self.a.mul(a[0], b[0]), self.a.total(self.a.mul(a[i], b[i]) for i in (1, 2, 3))),
             self.a.total((self.a.mul(a[0], b[1]), self.a.mul(a[1], b[0]), self.a.mul(a[2], b[3]), self.a.neg(self.a.mul(a[3], b[2])))),
             self.a.total((self.a.mul(a[0], b[2]), self.a.neg(self.a.mul(a[1], b[3])), self.a.mul(a[2], b[0]), self.a.mul(a[3], b[1]))),
             self.a.total((self.a.mul(a[0], b[3]), self.a.mul(a[1], b[2]), self.a.neg(self.a.mul(a[2], b[1])), self.a.mul(a[3], b[0]))),
         ))
+
+    def _sparse_cartesian_multiply(self, left, right, key):
+        """Omit only exact-zero terms of a small scalar/X or scalar/Y product.
+
+        This retains the original nonzero products and their interval-grid
+        order. In particular it does not normalize a raw quaternion or replace
+        q*(0,v)*conjugate(q) by a unit-quaternion identity. Other domains keep
+        the complete Hamilton expression in multiply.
+        """
+        if (len(left) != 4 or len(right) != 4 or
+                not self._recording_sequential_domain(left, right)):
+            return None
+        if self._zero((left[2], left[3], right[2], right[3])):
+            axis = 1
+        elif self._zero((left[1], left[3], right[1], right[3])):
+            axis = 2
+        else:
+            return None
+        scalar = self.a.sub(self.a.mul(left[0], right[0]), self.a.mul(left[axis], right[axis]))
+        component = self.a.add(self.a.mul(left[0], right[axis]), self.a.mul(left[axis], right[0]))
+        zero = left[3]
+        result = ((scalar, component, zero, zero) if axis == 1 else
+                  (scalar, zero, component, zero))
+        admitted = False
+
+        def admit():
+            nonlocal admitted
+            self.a.guard(*(endpoint for values in (left, right, result) for cell in values
+                           for endpoint in (cell.lo, cell.hi)))
+            admitted = self._recording_sequential_domain(left, right)
+            return admitted
+
+        # Check before another callback, then after the original insertion and
+        # any cache-domain synchronization callbacks. A changed domain falls
+        # through to multiply's complete expression on the same work. Original
+        # arithmetic and callback exceptions are never caught or retried.
+        if not admit():
+            return None
+        self.a.remember(key, result, admission=admit)
+        return result if admitted else None
 
     def conjugate(self, q):
         self.a.guard(*(endpoint for part in q for endpoint in (part.lo, part.hi)))

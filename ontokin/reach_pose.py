@@ -384,6 +384,21 @@ class ReachPoseOps:
                 return integer
             return self._rescale((self._op(mul(aw,bw),mul(az,bz),"sub"),F(0),F(0),
                                   self._op(mul(aw,bz),mul(az,bw),"add")),error)
+        # A shared X or Y axis has the same two-component Hamilton algebra
+        # as Z. Only the existing small exact grid domain can omit the generic
+        # zero products; wider/non-grid inputs and narrowed caps keep them.
+        # Freeze the already read generic operands: a callback cannot replace
+        # a private RotationValue between branch selection and integer work.
+        components=(aw,ax,ay,az,bw,bx,by,bz)
+        if (self.work.max_operand_bits==MAX_OPERAND_BITS and
+                all(type(value) is F for value in components)):
+            axis=(0 if not any((ay,az,by,bz)) else
+                  1 if not any((ax,az,bx,bz)) else None)
+            if axis is not None:
+                integer=self._integer_planar_product(
+                    RotationValue(components[:4]),RotationValue(components[4:]),error,axis=axis)
+                if integer is not None:
+                    return integer
         self.work.charge("quaternion_signed_terms",6)
         values=(self._sum((mul(aw,bw),-mul(ax,bx),-mul(ay,by),-mul(az,bz))),
                 self._sum((mul(aw,bx),mul(ax,bw),mul(ay,bz),-mul(az,by))),
@@ -443,13 +458,15 @@ class ReachPoseOps:
             return F(rounded,_GRID_SCALE)
         return rounded
 
-    def _integer_planar_product(self,a,b,error):
-        """The exact scalar/Z Hamilton product and its original scale/grid."""
+    def _integer_planar_product(self,a,b,error,*,axis=2):
+        """An exact scalar/Cartesian Hamilton product and original scale/grid."""
         if self.work.max_operand_bits!=MAX_OPERAND_BITS:
             return None
         try:
             self._planar_step("planar_integer_domain")
-            first,last=(a.components[0],a.components[3]),(b.components[0],b.components[3])
+            if type(axis) is not int or not 0<=axis<3:
+                return None
+            first,last=(a.components[0],a.components[axis+1]),(b.components[0],b.components[axis+1])
             if not self._planar_grid_domain(first+last,unit=True):
                 return None
             # Each operand may use its own common dyadic denominator. The
@@ -475,11 +492,12 @@ class ReachPoseOps:
             if real<0 or (not real and imag<0):
                 real,imag=op(0,real,"sub"),op(0,imag,"sub")
             self.work.guard(real,imag,_GRID_SCALE)
-            values=(F(real,_GRID_SCALE),ZERO[0],ZERO[0],F(imag,_GRID_SCALE))
+            values=[F(real,_GRID_SCALE),ZERO[0],ZERO[0],ZERO[0]]
+            values[axis+1]=F(imag,_GRID_SCALE)
             allowance=self._op(error,PRODUCT_ERROR,"add")
             if self.work.max_operand_bits!=MAX_OPERAND_BITS:
                 return None
-            return RotationValue(values,allowance)
+            return RotationValue(tuple(values),allowance)
         except _FractionPlanarFallback as error:
             if self.work.callback_error is error:
                 raise
