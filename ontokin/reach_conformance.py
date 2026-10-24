@@ -549,22 +549,39 @@ def _complete_inequality_values(ha, hs, quantities, position_tolerance, rotation
     envelope_acceleration = q("enclosing_carrier_acceleration_bound_m_per_s2")
     speed, shift = q("enclosing_carrier_speed_bound_m_per_s"), q("max_endpoint_time_shift_s")
     position_quarter, rotation_quarter = div(position_tolerance, four), div(rotation_tolerance, four)
-    for width, a, w in ((ha, acceleration, angular), (hs, envelope_acceleration, envelope_angular)):
-        angle, width_squared = mul(w, width), square(width)
-        rotation, chord = div(square(angle), four), div(mul(a, width_squared), eight)
+    terms = _CertificateTermReuse.create(arithmetic, quantities,
+        (ha, hs, angular, acceleration, four, eight, position_tolerance,
+         rotation_tolerance, position_quarter, rotation_quarter))
+    for index, (width, a, w) in enumerate(((ha, acceleration, angular), (hs, envelope_acceleration, envelope_angular))):
+        if index == 0 and terms is not None:
+            angle = terms.calculate("angle", mul, w, width)
+            width_squared = terms.calculate("width_squared", square, width)
+            angle_squared = terms.calculate("angle_squared", square, angle)
+            rotation = terms.calculate("rotation", div, angle_squared, four)
+            product = terms.calculate("product", mul, a, width_squared)
+            chord = terms.calculate("chord", div, product, eight)
+        else:
+            angle, width_squared = mul(w, width), square(width)
+            rotation, chord = div(square(angle), four), div(mul(a, width_squared), eight)
         if (arithmetic.compare(angle, ARC_LIMIT) > 0 or arithmetic.compare(rotation, rotation_quarter) > 0
                 or arithmetic.compare(add(chord, mul(radius, rotation)), position_quarter) > 0):
             _error("OKE-E-CERTIFICATE", "The supplied key interval violates the mandatory quarter-allocation plan.", model=model)
     arc = q("stored_quaternion_arc_upper_rad")
     if arc > ARC_LIMIT:
         _error("OKE-E-CERTIFICATE", "The supplied stored quaternion arc exceeds the proved local range.", model=model)
-    angular_width_squared, width_squared = square(mul(angular, ha)), square(ha)
+    borrowed = terms.borrow("angle", "angle_squared", "width_squared") if terms is not None else None
+    if borrowed is None:
+        angular_width_squared, width_squared = square(mul(angular, ha)), square(ha)
+    else:
+        _, angular_width_squared, width_squared = borrowed
     difference = require("unit_quaternion_difference_bound", arithmetic.total((
         q("max_endpoint_unit_quaternion_error"), div(angular_width_squared, thirty_two), div(square(arc), eight))))
     if difference > Fraction(1, 2):
         _error("OKE-E-CERTIFICATE", "The supplied quaternion comparison exceeds its proved local range.", model=model)
-    require("ideal_rotation_bound_rad", div(angular_width_squared, four))
-    chord = div(mul(acceleration, width_squared), eight)
+    borrowed = terms.borrow("rotation") if terms is not None else None
+    require("ideal_rotation_bound_rad", div(angular_width_squared, four) if borrowed is None else borrowed[0])
+    borrowed = terms.borrow("product", "chord") if terms is not None else None
+    chord = div(mul(acceleration, width_squared), eight) if borrowed is None else borrowed[1]
     require("ideal_position_bound_m", chord)
     rotation = require("total_rotation_bound_rad", arithmetic.total((mul(four, difference),
         q("source_numeric_rotation_bound_rad"), q("destination_numeric_rotation_bound_rad"),
@@ -2624,6 +2641,225 @@ _CERTIFICATE_BOUNDS_DISPATCH = tuple((name, getattr(_Bounds, name))
 _CERTIFICATE_WORK_DISPATCH = tuple((name, getattr(_CertificateWork, name))
                                  for name in ("charge", "guard_bits"))
 _CERTIFICATE_MAXIMUM = _CertificateBatch.maximum
+
+
+# This optional local reuse admits only scalar paths with no foreign callback.
+# A native construction budget still receives every performed work charge.
+from . import construction as _term_construction
+from . import reach_numeric as _term_numeric
+import fractions as _term_fractions
+import sys as _term_sys
+import abc as _term_abc
+import numbers as _term_numbers
+from types import FunctionType as _TermFunction, ModuleType as _TermModule
+
+
+_TERM_ABSENT = object()
+_TERM_STORAGE = ("__getattribute__", "__getattr__", "__setattr__", "__delattr__", "__dict__")
+_TERM_BOUNDS_METHODS = ("add", "mul", "div", "square", "op", "bits", "tick", "value", "compare", "total",
+                        "_cache_operand_domain")
+_TERM_WORK_METHODS = ("charge", "guard_bits", "resource")
+_TERM_BUDGET_METHODS = ("tick", "exceeded")
+_TERM_CLASS_FIELDS = tuple((kind, tuple((name, type.__getattribute__(kind, "__dict__").get(name, _TERM_ABSENT))
+    for name in dict.fromkeys((*_TERM_STORAGE, *names)))) for kind, names in (
+        (_Bounds, (*_TERM_BOUNDS_METHODS, "work")),
+        (_CertificateWork, (*_TERM_WORK_METHODS, "external_check", "_source_after_charge", "counts",
+            "operations", "max_operations", "max_operand_bits", "max_elapsed_ms", "started")),
+        (_term_construction.ConstructionBudget, (*_TERM_BUDGET_METHODS, "check", "operations", "limits", "started")),
+        (Fraction, ("__new__", "__init__", "__mul__", "__truediv__", "_mul", "_div", "_from_coprime_ints",
+            "__add__", "_add", "__bool__", "__eq__", "__lt__", "__gt__", "__le__", "__ge__", "_richcmp",
+            "numerator", "denominator", "_numerator", "_denominator")),
+        (_term_abc.ABCMeta, ("__instancecheck__", "__subclasscheck__")),
+        (_term_numbers.Rational, ("__subclasshook__",)),
+        (_term_numbers.Real, ("__subclasshook__",)),
+        (_term_numbers.Complex, ("__subclasshook__",)),
+        (_term_numbers.Number, ("__subclasshook__",))))
+
+
+def _term_functions():
+    # Native arithmetic forwarders retain the monomorphic function in a
+    # closure. Its object and code are part of admission, not just __mul__.
+    functions = [_tick, _bound_domain, _certificate_fraction_fields, _small_proof_values]
+    for kind, fields in _TERM_CLASS_FIELDS:
+        for _, member in fields:
+            if type(member) in (classmethod, staticmethod):
+                member = member.__func__
+            elif type(member) is property:
+                member = member.fget
+            if type(member) is _TermFunction:
+                functions.append(member)
+                if member.__closure__ is not None:
+                    functions.extend(cell.cell_contents for cell in member.__closure__
+                                     if type(cell.cell_contents) is _TermFunction)
+    return tuple(dict.fromkeys(functions))
+
+
+def _term_function_state(function):
+    namespace = function.__globals__
+    builtins = function.__builtins__
+    return (function.__code__, function.__defaults__, function.__kwdefaults__,
+            tuple((function.__kwdefaults__ or {}).items()),
+            tuple(cell.cell_contents for cell in function.__closure__ or ()),
+            tuple((name, namespace.get(name, _TERM_ABSENT), builtins.get(name, _TERM_ABSENT))
+                  for name in function.__code__.co_names))
+
+
+_TERM_FUNCTIONS = tuple((function, _term_function_state(function)) for function in _term_functions())
+_TERM_FIELD_READER = _certificate_fraction_fields
+_TERM_GLOBALS = ((_term_numeric, "monotonic", _term_numeric.monotonic),
+                 (_term_construction, "time", _term_construction.time),
+                 (_term_construction.time, "monotonic", _term_construction.time.monotonic),
+                 (_term_fractions, "Fraction", Fraction), (_term_fractions, "math", math),
+                 (_term_fractions, "numbers", _term_numbers),
+                 (_term_numbers, "Rational", _term_numbers.Rational),
+                 (_term_numbers, "Real", _term_numbers.Real),
+                 (_term_numbers, "Complex", _term_numbers.Complex),
+                 (_term_numbers, "Number", _term_numbers.Number),
+                 (math, "gcd", math.gcd),
+                 (_term_sys, "getprofile", _term_sys.getprofile), (_term_sys, "gettrace", _term_sys.gettrace))
+
+
+def _certificate_term_native(arithmetic):
+    """Admit only original scalar dispatch and a native, non-reentrant budget.
+
+    Custom callbacks and preexisting observers take the untouched calculation.
+    This does not replace, wrap or clear either callback. Class descriptors
+    are checked before reading potentially overridden instance properties.
+    """
+    if type(arithmetic) is not _Bounds or _certificate_fraction_fields is not _TERM_FIELD_READER:
+        return False
+    if any(type.__getattribute__(kind, "__dict__").get(name, _TERM_ABSENT) is not saved
+           for kind, fields in _TERM_CLASS_FIELDS for name, saved in fields):
+        return False
+    if any(type(module) is not _TermModule
+           or _TermModule.__getattribute__(module, "__dict__").get(name, _TERM_ABSENT) is not saved
+           for module, name, saved in _TERM_GLOBALS):
+        return False
+    if _term_sys.gettrace() is not None or _term_sys.getprofile() is not None:
+        return False
+    for function, (code, defaults, kwdefaults, kwfields, closure, globals_) in _TERM_FUNCTIONS:
+        if (function.__code__ is not code or function.__defaults__ is not defaults
+                or function.__kwdefaults__ is not kwdefaults
+                or len(function.__kwdefaults__ or {}) != len(kwfields)
+                or any(type(name) is not str or name != saved_name or value is not saved
+                       for (name, value), (saved_name, saved) in zip(
+                           (function.__kwdefaults__ or {}).items(), kwfields))
+                or len(function.__closure__ or ()) != len(closure)
+                or any(cell.cell_contents is not saved
+                       for cell, saved in zip(function.__closure__ or (), closure))
+                or any(function.__globals__.get(name, _TERM_ABSENT) is not saved
+                       or function.__builtins__.get(name, _TERM_ABSENT) is not builtin
+                       for name, saved, builtin in globals_)):
+            return False
+    own = object.__getattribute__(arithmetic, "__dict__")
+    if any(name in own for name in _TERM_BOUNDS_METHODS):
+        return False
+    owner = own.get("work")
+    if owner is None:
+        return True
+    if type(owner) is not _CertificateWork:
+        return False
+    state = object.__getattribute__(owner, "__dict__")
+    if (any(name in state for name in _TERM_WORK_METHODS)
+            or state.get("_source_after_charge") is not None
+            or type(state.get("max_operand_bits")) is not int or state["max_operand_bits"] != MAX_OPERAND_BITS
+            or any(type(state.get(name)) is not int or state[name] < 0
+                   for name in ("operations", "max_operations", "max_elapsed_ms"))
+            or type(state.get("started")) is not float
+            # This bounds inspection of diagnostic categories only. It does
+            # not change the separate 256-entry numerical cache maximum.
+            or type(state.get("counts")) is not dict or len(state["counts"]) > 512
+            or any(type(name) is not str or type(value) is not int
+                   for name, value in state["counts"].items())):
+        return False
+    callback = state.get("external_check")
+    if callback is None:
+        return True
+    if (type(callback) is not MethodType or callback.__func__ is not _term_construction.ConstructionBudget.tick
+            or type(callback.__self__) is not _term_construction.ConstructionBudget):
+        return False
+    budget = object.__getattribute__(callback.__self__, "__dict__")
+    return (not any(name in budget for name in _TERM_BUDGET_METHODS)
+            and budget.get("check") is None and type(budget.get("operations")) is int
+            and type(budget.get("started")) is float and type(budget.get("limits")) is dict
+            and len(budget["limits"]) == 5
+            and all(type(name) is str and type(value) is int and value > 0
+                    for name, value in budget["limits"].items())
+            and "max_operations" in budget["limits"] and "max_elapsed_ms" in budget["limits"])
+
+
+class _CertificateTermReuse:
+    """Six completed scalar operations, retained only within one invocation."""
+    @classmethod
+    def create(cls, arithmetic, quantities, operands):
+        if (not _certificate_term_native(arithmetic) or type(quantities) is not dict
+                or len(quantities) != len(_NUMERIC_CERTIFICATE_KEYS)
+                or any(type(name) is not str for name in quantities)
+                or set(quantities) != set(_NUMERIC_CERTIFICATE_KEYS)
+                or any(_certificate_fraction_fields(value) is None
+                       for value in (*operands, *quantities.values()))):
+            return None
+        return cls(arithmetic, operands)
+
+    def __init__(self, arithmetic, operands):
+        self.arithmetic, self.owner = arithmetic, arithmetic.work
+        self.external = getattr(self.owner, "external_check", None)
+        self.operands, self.fields = operands, tuple(_certificate_fraction_fields(value) for value in operands)
+        self.results = {}
+        self.valid, self.admitted = True, False
+
+    def current(self):
+        self.valid = (self.valid and _certificate_term_native(self.arithmetic)
+            and self.arithmetic.work is self.owner
+            and getattr(self.owner, "external_check", None) is self.external
+            and tuple(_certificate_fraction_fields(value) for value in self.operands) == self.fields)
+        return self.valid
+
+    def calculate(self, name, operation, *args):
+        before = self.current()
+        fields = tuple(_certificate_fraction_fields(value, bits=8195) for value in args) if before else ()
+        result = operation(*args)
+        # An original scalar/callback/resource exception escapes untouched.
+        if (before and self.current() and all(value is not None for value in fields)
+                and fields == tuple(_certificate_fraction_fields(value, bits=8195) for value in args)):
+            result_fields = _certificate_fraction_fields(result, bits=8195)
+            if result_fields is not None:
+                self.results[name] = (args, fields, result, result_fields)
+        return result
+
+    def borrow(self, *names):
+        if not self.current() or any(name not in self.results for name in names):
+            return None
+        records = tuple(self.results[name] for name in names)
+        for operands, fields, result, result_fields in records:
+            if (tuple(_certificate_fraction_fields(value, bits=8195) for value in operands) != fields
+                    or _certificate_fraction_fields(result, bits=8195) != result_fields):
+                self.valid = False
+                return None
+        if not self.admitted:
+            # The extra bounded proof charges at its first actual omission,
+            # after both mandatory quarter plans retain their failure order.
+            self.arithmetic.tick("independent_certificate_term_admission")
+            self.admitted = True
+            if not self.current():
+                return None
+        for name, (operands, fields, result, result_fields) in zip(names, records):
+            first, last = (fields[0], fields[0]) if len(fields) == 1 else fields
+            an, ad, bn, bd = first[0].bit_length(), first[1].bit_length(), last[0].bit_length(), last[1].bit_length()
+            # The operation names describe original mul/square or div guards.
+            divide = name in ("rotation", "chord")
+            self.arithmetic.bits(an, ad, bn, bd, an + (bd if divide else bn),
+                                 ad + (bn if divide else bd),
+                                 result_fields[0].bit_length(), result_fields[1].bit_length())
+        # Copy already admitted native integer fields without new reduction or
+        # numerical arithmetic. The caller receives its own result objects.
+        copies = []
+        for _, _, _, fields in records:
+            value = object.__new__(Fraction)
+            object.__setattr__(value, "_numerator", fields[0])
+            object.__setattr__(value, "_denominator", fields[1])
+            copies.append(value)
+        return tuple(copies)
 
 
 _ADJACENT_BOUNDS_DISPATCH = tuple((name, getattr(_Bounds, name))
