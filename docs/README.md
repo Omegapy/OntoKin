@@ -182,6 +182,11 @@ the original rational calculation retained for other operand domains.
 The [independent identity-carrier derivation](engineering/reach-reference-identity-carriers.md)
 reuses a parent enclosure only after proving an exact identity relative
 transform and admitting the complete current source ancestry.
+The [adjacent-clock operand derivation](engineering/reach-adjacent-clock-operands.md)
+and [retained-clock parsing derivation](engineering/reach-retained-clock-parsing.md)
+describe bounded reuse and one-shot parsing with unchanged exact values and
+live admission checks. The [October 23 continuation](engineering/reach-recording-validation-2026-10-23/README.md)
+preserves their actual focused tests and full original recording outcomes.
 
 The [recorded delivery checkpoints](engineering/reach-delivery-implementation.md)
 and [independent reader implementation](engineering/reach-independent-validation.md)
