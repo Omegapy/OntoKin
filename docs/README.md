@@ -198,8 +198,13 @@ retains completed authored scalar results under bounded native dispatch and
 operand admission, preserving fresh comparisons, callbacks and ordinary fallback.
 The [checkpoint 027 experiment and handoff](engineering/reach-recording-validation-2026-10-23/HANDOFF-027.md)
 preserve the equal-operand second-quarter candidate outside integration after all
-15 complete-request pairs saved zero operations. The accepted runtime is unchanged;
-the next exact-zero identity remains a separate unimplemented proof target.
+15 complete-request pairs saved zero operations. Checkpoint 027 left the accepted runtime unchanged;
+the exact-zero identity was the next separate proof target.
+The [canonical-zero stored-quarter derivation](engineering/reach-certificate-zero-quarter.md)
+and [checkpoint 028 handoff](engineering/reach-recording-validation-2026-10-23/HANDOFF-028.md)
+record its subsequent implementation, 61 dedicated and 154 related passing methods,
+positive complete-request savings, and the still-failed 23/28 full recording gate.
+The next bounded task is a neutral capture of P09's final certificate groups.
 
 The [recorded delivery checkpoints](engineering/reach-delivery-implementation.md)
 and [independent reader implementation](engineering/reach-independent-validation.md)

@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-24T03:16:36.674895+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-24T03:43:14.760029+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -44,19 +44,21 @@ local `569b67b0bdc6854cc069e6a00590e0f15267ae03`
 [draft PR #25](https://github.com/Omegapy/OntoKin/pull/25). Original branches,
 failed attempts and earlier evidence retain their identities.
 
-Latest accepted continuation implementation remains `327e778cece3bb292f3e64751506dff364e4ee87`, exact tree `e5a11ac55d8740ce0b2b0fadbe06ea7a0080c609`, on [draft PR #28](https://github.com/Omegapy/OntoKin/pull/28), stacked onto PR #27. [Checkpoint 026](docs/engineering/reach-recording-validation-2026-10-23/checkpoint-026.json) accepted bounded authored-term reuse; its 28 dedicated methods are included in its 121 passing selected methods. Its original 23 successful recordings saved 30–160 operations each, 1,575 total. That earlier evidence retains its identified source and scope.
+Latest accepted continuation implementation is [`b9f79d1e4bcbef957b239a24a3c6c3d54cb47154`](https://github.com/Omegapy/OntoKin/commit/b9f79d1e4bcbef957b239a24a3c6c3d54cb47154), exact tree `ce1d7971b10be03ad5d9381695283fd2fe5cf79d`, on the [PR #28 continuation](https://github.com/Omegapy/OntoKin/pull/28). Its complete tree matches actually tested local `3a6b0751d23ab01a5cfb09405e7600f420d3070d`. [Checkpoint 028](docs/engineering/reach-recording-validation-2026-10-23/checkpoint-028.json) accepts a separate exact-zero identity for the stored certificate quarter. All four authored/enclosing angular and acceleration fields must be canonical zero. The actual stored-width square, current operand/prospective/result guards, both quarter plans, fresh claims, native dispatch/callback fallback and one actual admission charge remain.
 
-[Checkpoint 027](docs/engineering/reach-recording-validation-2026-10-23/checkpoint-027.json) implements, tests and **holds the equal-triple second-quarter candidate outside integration**. The isolated published candidate is `03c8dc68f7c9c404704511e0c5e20742247dd418`, exact tested tree `4603d083217173136f9b978bc9c4a3787e5c6d3e`. **55/55** dedicated methods pass (28 existing plus 27 new), but every one of **15 paired prefix controls / 30 requests** saves **zero operations**. Shared counts remain P09 **39,606**, P11 **66,762**, L03 **35,660**, with identical GLB bytes, full export reports and work records. Both measurement commands correctly fail the positive-savings gate. No elapsed-speedup claim is made. Exact analysis of actual binary32 clock bytes finds no equal width/triple in any of the **6 / 16 / 6** groups. The candidate's broader cohort, original 28 and full regression were not run because it was not adopted. This continuation changes documentation/evidence only.
+The final dedicated run passes **61/61** methods (28 existing plus 33 new); the related cohort passes **154/154**, with zero failures/errors/skips and complete stable inputs. Earlier **60/60** evidence and all **15 alternating complete-prefix pairs / 30 requests** retain source `caf666e1222ba5912d88434ad71065333ca09775`. Only one boundary test and a wording correction changed afterward; runtime bytes and the frozen checkpoint 026 control are identical. Complete shared-request savings are **P09 15, P11 50, L03 15 operations**, exactly three multiplications and two divisions per eligible group. All GLB bytes and entire export reports match. Median timing changes are **-0.146%, +1.835%, -0.432%**; every case passes the predeclared 10% development screen. No elapsed-speedup claim is made.
 
-A fresh stock run on checkpoint 026 `f59da3cbca337cad2b436617b5a59f82348d223e` confirms **23/28 original recordings**, with **P09/P11/P16/P23/L03** still failing at **100,001** under the unchanged **100,000-operation** limit. P05/P20/L01/L02 remain **93,097 / 79,992 / 77,812 / 72,268**. Every tracked input was present and stable; this is CPython **3.12.14** evidence. The new archive preserves **226 members / 5 parts / 3,786,924 bytes** and passes **45,956 independent checks**, including the raw executions, exact Git inputs, local source cuts and captured held-source publication receipts. Earlier acceptance records and failed attempts remain unchanged.
+The fresh stock original suite remains **23/28**. **P09/P11/P16/P23/L03** still refuse at **100,001** under the unchanged **100,000-operation** cap; the command retains failed status and exit 1. All 23 prior passes preserve identical GLB bytes, source units and validation; report differences are limited to independently verified implementation fingerprints. **22** successful requests became cheaper, saving **1,260 operations** in total; P05 is unchanged. P05/P20/L01/L02 now use **93,097 / 79,842 / 77,737 / 72,208**. The comparison baseline is the verified checkpoint 027 archive, not a new control execution. All **1,769 tracked inputs** were present and stable. This is CPython **3.12.14** development evidence, not full regression or compatibility.
+
+The [checkpoint 026 authored-term optimization](docs/engineering/reach-recording-validation-2026-10-23/checkpoint-026.json) remains accepted. The [checkpoint 027 equal-triple candidate](docs/engineering/reach-recording-validation-2026-10-23/checkpoint-027.json) remains separately held at `03c8dc68f7c9c404704511e0c5e20742247dd418`, with its real zero-savings failures unchanged. No historical run is relabeled.
 
 [Checkpoint 023](docs/engineering/reach-recording-validation-2026-10-23/checkpoint-023.json) recovered all **1,682 tracked files / 357,041,344 bytes** at its exact implementation tree, including the **37 historical archives / 200,032,683 bytes** previously omitted. Fresh documentation verification passes **29 sources and 233 sections**, with zero failures. The original strict source collector ran with no missing tracked inputs. Formal release input closure remains pending independent audit.
 
 The prior post-checkpoint-022 raw execution and archive-restoration logs were unavailable here and absent from the published tree. Historical Issue #26 summaries remain distinct from these new executions. Older raw runs 019–022 remain unavailable as disclosed in checkpoint015. No old run was reconstructed from a summary.
 
-The immediate target remains **28/28 recordings**. Resume from the accepted checkpoint 026 runtime. The next bounded proposal is a separate proof for groups whose authored/enclosing angular and acceleration fields are all canonical exact zero. The preserved prefixes contain **3 / 10 / 3** such groups for P09/P11/L03; these are possible application sites, not measured savings or recording passes. Retain the actual stored-width square, all original operand/prospective/result guards, both quarter comparisons, fresh claims, callback/dispatch fallback and real accounting. Do not weaken the held triple-equality condition or alter clocks. This new identity is unimplemented and unmeasured. Require positive complete-request savings, acceptable elapsed controls and dedicated hostile/equivalence checks before integration, then the related cohort and every unchanged original recording. Active profiling disables the accepted shortcut; the old v7 profiler cannot neutrally measure its savings. P11/L03 fail earlier; P16/P23 still need separate scoped work. P23's static-sample candidate remains held after its approximately 59 ms to 10,044 ms regression; its observer repair is unaccepted.
+The immediate target remains **28/28 recordings**. The [next handoff](docs/engineering/reach-recording-validation-2026-10-23/HANDOFF-028.md) scopes an external neutral capture of the complete original P09 request's actual supplied reader input and final certificate groups. Fresh counters show 205 retained-clock checks, 1,224 certificate members, 12 groups and failure at the first authored-angle multiplication of group 11. Capture must preserve complete work counters, original settings/caps, diagnostic and underlying failure site. Save immutable bytes only after the failed request ends and label them unvalidated reader input. Reconstruct group order and actual binary32 gaps independently before choosing another optimization. This capture is **unimplemented**; no remaining full cost or new pass is inferred. P11/L03/P16/P23 fail before certificate-term admission and require separate work. The earlier P23 static-sample candidate remains held after its elapsed regression; its observer repair remains unaccepted.
 
-Preserve original fixtures, horizons, fps/helpers, oracles/tolerances, **100,000 operations / 30,000 ms / 32,768 operand bits / 256 numerical-cache entries**, callbacks and independent checks. After all recordings pass, complete actual Agent delivery, current full regression, CPython 3.11/3.12/3.13, independent rates/native/browser/visual, hostile/inherited roles, formal input closure and every R01–R12/Q01–Q22 gate. **PR #27 and PR #28 remain open drafts and must not merge.** Main remains `2bb4588e`; no main lease is held. The full GOAL remains open.
+Preserve original fixtures, horizons, fps/helpers, oracles/tolerances, **100,000 operations / 30,000 ms / 32,768 operand bits / 256 numerical-cache entries**, callbacks and independent checks. After all recordings pass, complete actual Agent delivery, current full regression, CPython 3.11/3.12/3.13, complete independent rates/native/browser/visual, hostile/inherited roles, formal input closure and every R01-R12/Q01-Q22 gate. **PR #27 and PR #28 remain open drafts and must not merge.** Main remains `2bb4588e`; no main lease is held. The full GOAL remains open.
 
 The historical rows below retain their original cuts and limits.
 
@@ -107,17 +109,16 @@ GOAL still requires richer typed algorithms/libraries and compatible replacement
 ## Integration and recovery
 
 **No main integration lease is held by this continuation.** Main remains
-`2bb4588e121fcfe99b4d42c734b15b38362f3642`; the prior lease is released.
-Coordinator `interactive-reach06-second-quarter-20261023-c5c9` uses evidence branch
-`work/reach06-second-quarter-evidence-20261023-c5c9`, starting from observed
-`f59da3cbca337cad2b436617b5a59f82348d223e`, and conditionally publishes reviewed evidence to
-the existing PR #28 branch. The unaccepted candidate remains isolated on
-`work/reach06-second-quarter-20261023-c5c9` at `03c8dc68f7c9c404704511e0c5e20742247dd418`.
-The bounded scope and held decision are recorded in Issue #26; previous branches
-retain their identities. The [next handoff](docs/engineering/reach-recording-validation-2026-10-23/HANDOFF-027.md)
-records exact source identities, failed savings, archive checks and the next proof obligation.
-This branch-only update claims no main write or runtime integration. Publication
-uses nonforce expected-head checks. Runtime/test/SQLite/workflow/archive
-execution is serialized. Main integration requires complete acceptance and a
-fresh observed-head lease. Both workflows remain manual-only with default-false
-opt-in; no hosted job was dispatched or retried.
+`2bb4588e121fcfe99b4d42c734b15b38362f3642`; the prior main lease is released.
+Coordinator `interactive-reach06-zero-quarter-20261023-b553` uses source branch
+`work/reach06-zero-quarter-20261023-b553` and evidence branch
+`work/reach06-zero-quarter-evidence-20261023-b553`. The source is published at
+`b9f79d1e4bcbef957b239a24a3c6c3d54cb47154` with all three changed file contents and the complete tree read
+back and verified. The actual raw Git commit object was independently hashed.
+Reviewed checkpoint 028 evidence continues PR #28 through fresh nonforce
+expected-head publication. Issue #26 records the scope. All prior branches and
+held candidates retain their identities. The [next handoff](docs/engineering/reach-recording-validation-2026-10-23/HANDOFF-028.md)
+records source identities, real savings, still-failed gates and the next bounded task.
+Runtime/test/SQLite/workflow/archive execution remains serialized. Main integration
+requires complete acceptance and a fresh observed-head lease. Both workflows remain
+manual-only with default-false opt-in; no hosted job was dispatched or retried.

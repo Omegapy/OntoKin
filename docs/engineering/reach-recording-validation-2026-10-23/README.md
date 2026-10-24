@@ -518,3 +518,124 @@ roles and every R01–R12/Q01–Q22 requirement under the
 [adopted contract](../../language-design/planar-reach-v0.1/ADOPTION.md).
 No main integration lease, hosted-job dispatch, paid execution or Actions
 setting change occurs at this checkpoint.
+
+
+## Checkpoint 028: canonical-zero stored-quarter terms
+
+The [checkpoint](checkpoint-028.json) accepts the separately proved
+[exact-zero identity](../reach-certificate-zero-quarter.md). Published implementation
+`b9f79d1e4bcbef957b239a24a3c6c3d54cb47154` has exactly the tested final tree
+`ce1d7971b10be03ad5d9381695283fd2fe5cf79d` of local
+`3a6b0751d23ab01a5cfb09405e7600f420d3070d`. All three changed remote file contents,
+the complete tree and the actual raw published commit object were verified.
+This is a development integration; the complete release is still open.
+
+Only four canonical zero angular/acceleration operands enable the identity.
+The actual stored-width square still executes. Each of the five omitted terms
+retains its current operand, prospective-product and result guards, completed
+source receipt, native owner/dispatch admission and ordinary fallback. Both
+quarter plans, radius arithmetic and all later reported claims remain. The
+single existing admission charge moves to the first actual zero omission and
+is shared with later authored reuse. No fixture, clock, tolerance or limit changes.
+
+### Actual focused and prefix evidence
+
+| Run | Source | Actual result |
+| --- | --- | --- |
+| `candidate-focused-001` | `caf666e1` | 60/60 unique methods passed. |
+| `candidate-controls-001` | `caf666e1` | 30 successful requests / 15 alternating pairs; exact output equality and positive savings. |
+| `candidate-focused-002` | `3a6b0751` | 61/61 unique methods passed, including the added exact admission-boundary method. |
+| `candidate-related-001` | `3a6b0751` | 154/154 unique related methods passed. |
+| `candidate-original28-001` | `3a6b0751` | 23/28 passed; failed status and exit 1 preserved. |
+| `original28-comparison-001` | Static analysis of identified runs | Passed artifact/input/cost comparison; recording gate remains failed. |
+
+Tests have zero failures/errors/skips and complete logs. Final focused and related
+cohorts overlap and must not be added together as unique coverage. Execution used
+CPython 3.12.14. All tracked inputs were present and stable. The initial and final
+cuts differ only by one additional test method and a proof wording correction;
+the complete runtime and frozen control are identical. Their original run
+identities are preserved and bound explicitly.
+
+The frozen checkpoint 026 algebra is AST-identical apart from its definition name.
+The existing `create`, `current`, `calculate` and `borrow` methods retain their
+AST and behavior; the initializer adds inert `zero_coefficients = None` state,
+and the two new methods are additive.
+The original 28 authored-term methods and 33 new methods cover the zero identity,
+unequal widths, every nonempty nonzero-coefficient subset, fresh claims, native/shared
+budgets, callbacks, tracing/dispatch fallback, receipt/object mutation, the actual
+stored-square failure, exact 2,048-bit admission and adjacent 2,049-bit fallback.
+
+Five alternating prefix pairs per case use unchanged source fixtures at end 1/4,
+4 fps and helpers disabled. Costs include construction and all producer/reader work.
+
+| Prefix | Control shared | Candidate shared | Saved | Control median ms | Candidate median ms |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| P09 | 39,606 | 39,591 | 15 | 552.069 | 551.266 |
+| P11 | 66,762 | 66,712 | 50 | 919.554 | 936.426 |
+| L03 | 35,660 | 35,645 | 15 | 421.506 | 419.685 |
+
+Every pair preserves identical complete GLB bytes and entire export-report bytes.
+The only work-category deltas are 9/30/9 multiplications and 6/20/6 divisions;
+shared and reach savings agree. Admission/group-check counts, remaining categories
+and cache occupancy match. All medians pass the predeclared 1.10 development
+nonregression ratio. Timing ranges overlap and P11's median increases 1.835%;
+**no elapsed-speedup claim is made**. The historical held equal-triple candidate's
+zero-savings failed measurements remain unchanged.
+
+### Full original result and next task
+
+The fresh stock collector used every original case, default 1 fps, original
+horizons and helpers disabled. **P09, P11, P16, P23 and L03** still fail at 100,001
+under the unchanged 100,000 cap. No previously failing recording passed. All 23 prior
+passes preserve GLBs, source units and validation. Entire reports differ only in
+the independently verified implementation fingerprint. Twenty-two completed
+requests save **1,260 operations** in total; P05 saves zero. P05/P20/L01/L02 use
+**93,097 / 79,842 / 77,737 / 72,208**. The comparison baseline is the restored,
+hash-verified checkpoint 027 archive, not a new checkpoint 028 execution.
+The final stock run binds **1,769 files / 380,805,772 bytes** with stable inputs.
+
+Static inspection of these actual failures finds P09 at the first authored-angle
+multiplication of its eleventh certificate group. Counts retain 205 clock checks,
+1,224 certificate members, 12 groups and 10 term admissions. P11/L03/P16/P23 fail
+before term admission. These capped requests do not establish their complete cost.
+
+The [handoff](HANDOFF-028.md) scopes a neutral external capture of P09's actual
+immutable supplied reader input and final native group fields. Compare the complete
+counts, unchanged caps/options, diagnostic and underlying failure site with the
+stock request before using the capture. Independently reconstruct actual binary32
+gaps and group order, then choose a demonstrated optimization. Captured failed
+reader-input bytes are unvalidated and are not accepted export artifacts. This
+next capture is unimplemented and unmeasured.
+
+### Evidence closure and publication
+
+The [manifest](checkpoint-028-manifest.json), [auditor source](checkpoint-028-audit.py),
+[independent review](checkpoint-028-archive-review.json) and
+[documentation result](checkpoint-028-documentation.json) identify the final
+archive and verification. The archive preserves actual command receipts and logs,
+all dedicated/related outcomes, every prefix artifact, all original28 requests,
+source cuts, exact input inventories, independent source/measurement reviews,
+static failure analysis and captured implementation publication receipts.
+The separately verified checkpoint 027 archive supplies the historical baseline.
+
+The joined archive is **4,194,051 bytes**, split into **five parts** with **259
+members**, SHA-256 `a57f0154cda6a8a2430583444a77d5bc0a8e51e74cc06fed058aff483eb8674b`.
+The independent audit passed **63,968 checks** and preserves the recording gate's
+failed status. Its [actual command](checkpoint-028-audit-command.json),
+[stdout](checkpoint-028-audit-command.stdout.txt) and
+[stderr](checkpoint-028-audit-command.stderr.txt) are retained separately from
+the archive, alongside the [packaging receipt](checkpoint-028-packaging.json).
+
+Recovery used an existing local object store whose complete tree matched the live
+remote checkpoint. The initial direct Git network attempt was unavailable; exact
+GitHub connector metadata and independently hashed raw commit recovery established
+the actual published parent. Earlier archive-recovery and unavailable-log disclosures
+remain unchanged. No old execution was reconstructed or silently replaced.
+
+Main remains `2bb4588e121fcfe99b4d42c734b15b38362f3642`. No main lease is held, both
+PRs remain open drafts, and no hosted workflow was dispatched/retried. All original
+resource maxima and manual-only/default-false policy remain binding. Full current
+regression, compatibility, actual Agent delivery, complete independent rates,
+native/browser/visual and hostile/inherited roles, formal release input closure,
+R01-R12/Q01-Q22 and resulting-main verification remain open. The full GOAL remains
+in progress.
