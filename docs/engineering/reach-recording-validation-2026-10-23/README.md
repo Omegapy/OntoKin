@@ -1,5 +1,61 @@
 # Reach recording continuation, October 23, 2026
 
+## Checkpoint 027: held equal-triple second-quarter candidate
+
+The [checkpoint](checkpoint-027.json), [member manifest](checkpoint-027-manifest.json), [independent archive review](checkpoint-027-archive-review.json), [documentation record](checkpoint-027-documentation.json) and [next handoff](HANDOFF-027.md) identify this evidence-only continuation. The accepted runtime remains `327e778cece3bb292f3e64751506dff364e4ee87`; checkpoint 026 evidence parent is `f59da3cbca337cad2b436617b5a59f82348d223e`. No candidate runtime, test, tool or workflow change is integrated into this continuation.
+
+### Candidate and admission decision
+
+The completed [derivation and source](https://github.com/Omegapy/OntoKin/blob/03c8dc68f7c9c404704511e0c5e20742247dd418/docs/engineering/reach-certificate-second-quarter.md) are preserved on isolated branch `work/reach06-second-quarter-20261023-c5c9`. Published commit `03c8dc68f7c9c404704511e0c5e20742247dd418` has exactly the tested local `64e888a769b3ac7c4024b9fd96bd331b8e39087c` tree, `4603d083217173136f9b978bc9c4a3787e5c6d3e`. The captured remote tree and all three changed blob identities were read back. Remote and local commit identities differ; the archive does not claim independent hashing of an unavailable remote raw commit object.
+
+The candidate reuses the six completed authored scalar results in the stored quarter only when the current exact `(width, acceleration, angular)` triple coincides. Both quarter comparisons, radius multiplication, chord addition, current claims and original fallback remain. Dedicated tests establish six additional omitted operations on eligible synthetic controls, a single actual admission charge, and unchanged accounting on mismatches. **55/55 unique methods pass**: 28 existing authored-term methods and 27 new second-quarter methods, with zero failures/errors/skips. The frozen checkpoint 026 control function matches its source abstract syntax tree (AST) except for the function name; it does not subtract the already accepted checkpoint 026 benefit again. All execution is on CPython 3.12.14 with complete, stable inputs.
+
+Despite the passing focused tests, the candidate is **held and unintegrated**. It failed the required positive complete-request savings gate in every measured prefix pair. Its related broad integration cohort, original 28 and full regression were therefore not run. Those unexecuted gates remain explicit; they are not inferred from focused tests.
+
+### Complete-request controls and timing
+
+Original fixtures were executed at end `1/4`, 4 fps, helpers disabled, five alternating pairs each. Shared counts include construction and all producer/reader work. All 30 individual requests completed and validated; every pair has identical GLB bytes, entire export-report bytes and complete work records.
+
+| Prefix | Control shared operations | Candidate shared operations | Saved | Reach-work count on both | Pairs |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| P09 | 39,606 | 39,606 | 0 | 35,473 | 5 |
+| P11 | 66,762 | 66,762 | 0 | 60,039 | 5 |
+| L03 | 35,660 | 35,660 | 0 | 31,427 | 5 |
+
+Both measurement commands retain **failed status / exit 1** because their positive-savings assertions failed. This is not an artifact or equivalence failure. The raw errors, request files, command records and logs remain archived.
+
+| Prefix | Control median ms | Candidate median ms | Median change | Candidate slower / faster pairs |
+| --- | ---: | ---: | ---: | ---: |
+| P09 | 529.525 | 546.182 | +16.657 ms / +3.15% | 3 / 2 |
+| P11 | 1,008.613 | 940.126 | −68.487 ms / −6.79% | 2 / 3 |
+| L03 | 433.111 | 432.442 | −0.669 ms / −0.15% | 2 / 3 |
+
+These elapsed observations are descriptive, with overlapping ranges retained in the raw comparisons. **No elapsed-speedup claim is made.** The positive work-saving gate already fails. The prefix controls do not replace the original full-recording gate.
+
+### Actual operand census and the next proof
+
+The archived `analysis/quarter-operands.json` is post-run static analysis, not product instrumentation or another recording execution. Its standard-library driver verifies paired artifact/report hashes, decodes the actual binary32 clock accessor bytes, checks all supplied width labels and reconstructs the bounded 64-group batching. Every reconstructed group count matches the already recorded independent group-check count; all analysis inputs remained unchanged.
+
+| Prefix | Certificate rows | Authored width | Reconstructed groups | Exact triple matches | All-four-zero coefficient groups |
+| --- | ---: | --- | ---: | ---: | ---: |
+| P09 | 156 | `1/104` | 6 | 0 | 3 |
+| P11 | 140 | `1/28` | 16 | 0 | 10 |
+| L03 | 66 | `1/44` | 6 | 0 | 3 |
+
+Authored widths have odd denominator factors 13, 7 and 11. Finite binary32 clock gaps, and their separate maxima, are dyadic rationals, with power-of-two denominators. Therefore these widths cannot coincide exactly. Angular and acceleration fields do match in every reconstructed group; width mismatch alone explains why the held candidate never triggers in these prefixes. This conclusion is scoped to the retained prefixes, not unexecuted full-candidate recordings.
+
+The next bounded proposal starts from the accepted checkpoint 026 runtime: derive a **separate exact-zero identity** when all four authored/enclosing angular and acceleration fields are canonical `(0, 1)`. Then the stored angle, angle squared, rotation, acceleration product and chord are mathematically zero independent of unequal widths. The actual stored-width square must still execute. Preserve every original operand/prospective/result guard using actual current operands, both quarter comparisons, radius multiplication/addition, fresh claims, native dispatch/callback fallback and real accounting. Do not weaken the held equality condition or change clocks. Angular-only and acceleration-only scopes add no observed opportunities to this census, so begin with the narrower all-four-zero case.
+
+The 3/10/3 group counts are possible application sites, **not measured savings or new recording passes**. This proposal is unimplemented and unmeasured. Require a complete bounded proof, dedicated equivalence/hostile tests, positive complete shared-request savings and acceptable elapsed behavior before integration. After an accepted integration run the related cohort and all unchanged original 28. Active tracing/profiling disables the accepted shortcut, so the old v7 profiler is not neutral for its enabled path. P11/L03 fail earlier; P16/P23 need separate scoped work.
+
+### Fresh accepted-runtime baseline and preserved evidence
+
+The unchanged stock original collector ran on checkpoint 026 `f59da3c` with all **1,754 tracked files** present and stable. It confirms **23/28** passed and **P09, P11, P16, P23, L03** failed at **100,001** under the unchanged **100,000-operation** cap. P05/P20/L01/L02 remain **93,097 / 79,992 / 77,812 / 72,268**. This is a fresh accepted-runtime baseline, not an original 28 run on the held candidate.
+
+The archive preserves **226 members in 5 parts / 3,786,924 bytes**, SHA-256 `e309a5a365d9e067e4da21bace84ec8c443be8327caea61637215451ebd94590`. The [independent auditor](checkpoint-027-audit.py) passes **45,956 checks** on its first execution, including every part/member hash and CRC, four complete input-receipt pairs against exact Git blobs, 55 unique methods and their raw log, all 28 baseline outcomes, all 30 prefix requests, three local source cuts, captured remote publication receipts and 196 acceptance-review input bindings. It confirms no runtime/test/tool/workflow difference from checkpoint 026 in the evidence checkout. Local test/proof/candidate commits and patches are preserved without changing their identities. One rejected same-path delete/add attempt while preparing a publication receipt caused no file change and is disclosed in its readback record. Older failed runs and unavailable-log disclosures retain their original meanings.
+
+Original fixtures/settings/oracles/tolerances, **100,000 operations / 30,000 ms / 32,768 operand bits / 256 numerical-cache entries**, callbacks and independent checks remain unchanged. All original recordings, actual Agent delivery, current full regression, CPython 3.11/3.12/3.13, complete independent rates/native/browser/visual and hostile/inherited roles, formal release input closure and all R01–R12/Q01–Q22 gates remain required. PR #27 and PR #28 remain open drafts; main remains `2bb4588e121fcfe99b4d42c734b15b38362f3642`. No main lease, hosted-job dispatch/retry or release/full-GOAL completion is claimed.
+
 ## Checkpoint 026: exact certificate terms within one invocation
 
 The [checkpoint](checkpoint-026.json), [member manifest](checkpoint-026-manifest.json), [independent archive review](checkpoint-026-archive-review.json), [documentation record](checkpoint-026-documentation.json) and [next handoff](HANDOFF-026.md) identify this continuation. The archive preserves **385 members in 8 parts / 6,834,663 bytes**, SHA-256 `4741da9ab50da2966122243d1ca2101b4b98e6eae75c2ae8d4f01a32ecf373c5`. Every ordered part, member hash and ZIP CRC was checked; evidence members remained stable while packaging. It includes all successful and failed executions, complete raw reports and GLBs, both original28 runs, exact local review cuts, source publication receipts, controls, drivers and independent reviews. Earlier checkpoints and unavailable-log disclosures remain unchanged.
