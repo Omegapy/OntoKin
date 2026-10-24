@@ -2843,6 +2843,13 @@ _FIELD_KEY_READER = _certificate_field_key
 _FIELD_FUNCTIONS = tuple((function, _term_function_state(function)) for function in
     (_certificate_term_native, _certificate_raw_fields, _certificate_field_key, _term_function_state))
 _FIELD_GLOBALS = ((math, "isfinite", math.isfinite), (struct, "pack", struct.pack))
+_FIELD_FRACTION_CLASS = Fraction
+_FIELD_NATIVE_TYPE, _FIELD_NATIVE_INT = type, int
+_FIELD_CLASS_READ, _FIELD_SLOT_READ = type.__getattribute__, object.__getattribute__
+_FIELD_GETTRACE, _FIELD_GETPROFILE = _term_sys.gettrace, _term_sys.getprofile
+_FIELD_FRACTION_ACCESS = tuple((name, saved) for kind, fields in _TERM_CLASS_FIELDS
+    if kind is Fraction for name, saved in fields
+    if name in (*_TERM_STORAGE, "numerator", "denominator", "_numerator", "_denominator"))
 
 
 def _certificate_fields_native(arithmetic):
@@ -2985,6 +2992,31 @@ class _CertificateFieldComparisons:
 
     def compare(self, actual, minimum):
         arithmetic = self.arithmetic
+        # Hooks installed after context creation must reach ordinary dispatch
+        # before optional slot reads can expose a new observable event.
+        if _FIELD_GETTRACE() is not None or _FIELD_GETPROFILE() is not None:
+            return arithmetic.compare(actual, minimum)
+        # This filter only declines work; it cannot establish a claim. Check
+        # native access descriptors before bounded native slot reads, without
+        # invoking a possibly replaced public property or module field reader.
+        if (Fraction is not _FIELD_FRACTION_CLASS or _FIELD_NATIVE_TYPE(actual) is not _FIELD_FRACTION_CLASS
+                or _FIELD_NATIVE_TYPE(minimum) is not _FIELD_FRACTION_CLASS):
+            return arithmetic.compare(actual, minimum)
+        for name, saved in _FIELD_FRACTION_ACCESS:
+            if _FIELD_CLASS_READ(_FIELD_FRACTION_CLASS, "__dict__").get(name, _TERM_ABSENT) is not saved:
+                return arithmetic.compare(actual, minimum)
+        try:
+            rn, rd = _FIELD_SLOT_READ(actual, "_numerator"), _FIELD_SLOT_READ(actual, "_denominator")
+            mn, md = _FIELD_SLOT_READ(minimum, "_numerator"), _FIELD_SLOT_READ(minimum, "_denominator")
+        except AttributeError:
+            return arithmetic.compare(actual, minimum)
+        if (_FIELD_NATIVE_TYPE(rn) is not _FIELD_NATIVE_INT or _FIELD_NATIVE_TYPE(rd) is not _FIELD_NATIVE_INT
+                or _FIELD_NATIVE_TYPE(mn) is not _FIELD_NATIVE_INT or _FIELD_NATIVE_TYPE(md) is not _FIELD_NATIVE_INT
+                or rd <= 0 or md <= 0 or rn.bit_length() > 2048 or rd.bit_length() > 2048
+                or mn.bit_length() > 2048 or md.bit_length() > 2048 or (rn, rd) != (mn, md)):
+            return arithmetic.compare(actual, minimum)
+        # Potential equality still needs the full gate and fresh original
+        # field reads. No result from the early filter admits an omission.
         if not self.current():
             return arithmetic.compare(actual, minimum)
         left, right = _certificate_fraction_fields(actual), _certificate_fraction_fields(minimum)

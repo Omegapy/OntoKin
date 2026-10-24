@@ -655,6 +655,104 @@ class CertificateNativeFieldGateTests(NativeFieldTestCase):
                 self.assertEqual(work.record()["cache_entries"], 0)
 
 
+    def test_late_trace_cannot_replace_slots_between_optional_filter_checks(self):
+        import inspect
+        context, arithmetic, work = self.native_compare()
+        actual, minimum = F(1, 2), F(1, 3)
+        function = reader._CertificateFieldComparisons.compare
+        lines, first = inspect.getsourcelines(function)
+        target = first + next(index for index, line in enumerate(lines)
+                              if 'rn, rd = _FIELD_SLOT_READ' in line)
+        original, saved_hook, mutations = F._numerator, sys.gettrace(), []
+        marker = RuntimeError("a tracing hook reached an optional slot read")
+        def foreign(value):
+            raise marker
+        def hook(frame, event, arg):
+            if frame.f_code is function.__code__ and event == "line" and frame.f_lineno == target:
+                mutations.append(True)
+                F._numerator = property(foreign)
+            return hook
+        try:
+            sys.settrace(hook)
+            self.assertEqual(context.compare(actual, minimum), 1)
+            self.assertIs(sys.gettrace(), hook)
+        finally:
+            sys.settrace(saved_hook)
+            F._numerator = original
+        self.assertEqual(mutations, [])
+        self.assertEqual(work.counts, {"independent_exact_compare": 1})
+
+    def test_late_profile_keeps_the_original_operand_property_exception(self):
+        context, arithmetic, work = self.native_compare()
+        actual, minimum = F(1, 2), F(1, 3)
+        original, saved_hook, calls = F._numerator, sys.getprofile(), []
+        marker = RuntimeError("original late-profile operand failure")
+        def foreign(value):
+            calls.append("field")
+            raise marker
+        def hook(frame, event, arg):
+            if frame.f_code is reader._CertificateFieldComparisons.compare.__code__ and event == "call":
+                F._numerator = property(foreign)
+        try:
+            sys.setprofile(hook)
+            with self.assertRaises(RuntimeError) as caught:
+                context.compare(actual, minimum)
+            self.assertIs(caught.exception, marker)
+            self.assertIs(sys.getprofile(), hook)
+        finally:
+            sys.setprofile(saved_hook)
+            F._numerator = original
+        self.assertEqual(calls, ["field"])
+        self.assertEqual(work.counts, {})
+
+    def test_unequal_filter_preserves_foreign_public_and_slot_property_calls(self):
+        for name in ("numerator", "_numerator"):
+            marker = RuntimeError("original unequal operand property")
+            outcomes = []
+            for optimized in (False, True):
+                context, arithmetic, work = self.native_compare()
+                actual, minimum, calls = F(1, 2), F(1, 3), []
+                def foreign(value):
+                    calls.append("field")
+                    raise marker
+                with patch.object(F, name, property(foreign)):
+                    with self.assertRaises(RuntimeError) as caught:
+                        (context.compare if optimized else arithmetic.compare)(actual, minimum)
+                self.assertIs(caught.exception, marker)
+                outcomes.append((calls, work.counts))
+            with self.subTest(property=name):
+                self.assertEqual(outcomes[0], outcomes[1])
+                self.assertEqual(outcomes[1], (["field"], {}))
+
+    def test_unequal_filter_preserves_foreign_attribute_access_sequence(self):
+        outcomes = []
+        for optimized in (False, True):
+            context, arithmetic, work = self.native_compare()
+            actual, minimum, calls = F(1, 2), F(1, 3), []
+            def foreign(value, name):
+                calls.append(name)
+                return object.__getattribute__(value, name)
+            with patch.object(F, "__getattribute__", foreign):
+                result = (context.compare if optimized else arithmetic.compare)(actual, minimum)
+            outcomes.append((result, calls, work.counts))
+        self.assertEqual(outcomes[0], outcomes[1])
+        self.assertEqual(outcomes[1][0], 1)
+        self.assertEqual(outcomes[1][2], {"independent_exact_compare": 1})
+
+    def test_unequal_filter_does_not_call_replaced_module_readers_or_object(self):
+        context, _, work = self.native_compare()
+        actual, minimum = F(1, 2), F(1, 3)
+        marker = RuntimeError("an optional reader must not run")
+        with patch.object(reader, "_certificate_fraction_fields", side_effect=marker) as fields, \
+             patch.object(reader, "_certificate_raw_fields", side_effect=marker) as raw, \
+             patch.object(reader, "object", create=True) as foreign_object:
+            foreign_object.__getattribute__ = lambda *args: (_ for _ in ()).throw(marker)
+            self.assertEqual(context.compare(actual, minimum), 1)
+            fields.assert_not_called()
+            raw.assert_not_called()
+        self.assertEqual(work.counts, {"independent_exact_compare": 1})
+
+
 class CertificateNativeFieldIntegrationTests(NativeFieldTestCase):
     def test_each_transformation_independently_reduces_complete_group_work(self):
         expected, control, _ = complete_group(decode=False, compare=False)

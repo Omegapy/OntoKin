@@ -25,8 +25,8 @@ float, the key is its exact native type and its eight binary64 bytes. Thus an
 integer and a numerically equal float are different keys; positive and negative
 floating zero are also different keys. Eligible floats are finite and
 nonnegative. Eligible integers are nonnegative with at most 2,048 bits. A
-helper receives only the original bounded tuple, and every call must match the
-next original typed key. An unlisted or reordered input declines reuse.
+helper receives only the original bounded tuple. Receipt retention and reuse
+require the next original typed key; other inputs use ordinary decoding.
 
 The original `arithmetic.value` must execute and finish before its result is
 eligible. The strict native gate holds before that call and after it returns.
@@ -65,6 +65,15 @@ prove that their exact comparison returns zero. The proof reads both current
 objects at every requirement. It does not call Fraction equality or retain a
 previous comparison result. Unequal or unsupported fields take the original
 `arithmetic.compare` path.
+
+A bounded native slot filter can decline unequal or unsupported pairs before
+the full native-state scan. It pins the original Fraction class and access
+descriptors before reading native integer slots through a saved native getter,
+and first declines through saved native trace/profile queries when a hook is
+active, including a hook installed after context creation. The filter never
+establishes a claim. Every potentially equal pair still runs the
+complete gate and freshly reads both current fields through the original
+reported-value/minimum field reader.
 
 Write `B(n)` for the bit length of native integer `n`. The proof retains both
 stages of the original comparison guards:
