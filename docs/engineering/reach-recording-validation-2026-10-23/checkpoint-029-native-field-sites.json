@@ -1,0 +1,1405 @@
+{
+  "schema_version": "ontokin.p09-native-field-site-inventory/0.1",
+  "status": "passed",
+  "created_at": "2026-10-24T04:26:16.910547+00:00",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/scratch/e1681a7483bd/checkpoint029-work/drivers/analyze_native_field_sites.py",
+    "--snapshot",
+    "/workspace/scratch/e1681a7483bd/checkpoint029-work/execution/capture-p09-001/flush-snapshots.json",
+    "--census",
+    "/workspace/scratch/e1681a7483bd/checkpoint029-work/analysis/P09-full-input-census.json",
+    "--output",
+    "/workspace/scratch/e1681a7483bd/checkpoint029-work/analysis/native-field-sites-001.json"
+  ],
+  "imports_ontokin": false,
+  "product_runtime_executed": false,
+  "optimization_implemented": false,
+  "measured_savings": null,
+  "runtime_admission_applicability_proved": false,
+  "captured_source_minima_independently_certified": false,
+  "complete_requirement_basis": "Exact reported-field formulas in the independently audited census",
+  "summary": {
+    "group_count": 12,
+    "reported_fields": 252,
+    "duplicate_decode_sites": 78,
+    "fresh_equal_requirement_sites": 96,
+    "equal_requirement_categories": {
+      "observed_source_minimum": 74,
+      "complete_inequality_requirement": 20,
+      "destination_requirement": 2
+    },
+    "gross_site_ceiling": 174,
+    "illustrative_admission_allowance": 24,
+    "conditional_net_ceiling_under_allowance": 150,
+    "conditional_request_deficit": 125,
+    "conditional_margin_under_allowance": 25,
+    "maximum_reported_fraction_field_bits": 1074,
+    "maximum_duplicate_fraction_field_bits": 1074,
+    "maximum_equal_minimum_fraction_field_bits": 92,
+    "maximum_equal_minimum_prospective_bits": 134
+  },
+  "groups": [
+    {
+      "group": 1,
+      "reported_fields": 21,
+      "distinct_typed_inputs": 14,
+      "duplicate_decode_sites": [
+        {
+          "field": "carrier_acceleration_bound_m_per_s2",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_angular_speed_bound_rad_per_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_carrier_acceleration_bound_m_per_s2",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_carrier_speed_bound_m_per_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "ideal_position_bound_m",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "ideal_rotation_bound_rad",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "source_numeric_position_bound_m",
+          "earlier_completed_field": "max_endpoint_position_error_m",
+          "native_type": "float",
+          "exact_input": "0000000000000002",
+          "max_fraction_field_bits": 1074
+        }
+      ],
+      "fresh_equal_requirement_sites": [
+        {
+          "name": "source_minimum.landmark_radius_m",
+          "kind": "observed_source_minimum",
+          "numerator": "4165829655317709",
+          "denominator": "4503599627370496",
+          "original_prospective_comparison_bits": 105
+        },
+        {
+          "name": "source_minimum.angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.carrier_acceleration_bound_m_per_s2",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_carrier_speed_bound_m_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_carrier_acceleration_bound_m_per_s2",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.source_numeric_rotation_bound_rad",
+          "kind": "observed_source_minimum",
+          "numerator": "2199023255553",
+          "denominator": "2475880078570760549798248448",
+          "original_prospective_comparison_bits": 134
+        },
+        {
+          "name": "ideal_rotation_bound_rad",
+          "kind": "complete_inequality_requirement",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "ideal_position_bound_m",
+          "kind": "complete_inequality_requirement",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        }
+      ]
+    },
+    {
+      "group": 2,
+      "reported_fields": 21,
+      "distinct_typed_inputs": 14,
+      "duplicate_decode_sites": [
+        {
+          "field": "carrier_acceleration_bound_m_per_s2",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_angular_speed_bound_rad_per_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_carrier_acceleration_bound_m_per_s2",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_carrier_speed_bound_m_per_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "ideal_position_bound_m",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "ideal_rotation_bound_rad",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "source_numeric_position_bound_m",
+          "earlier_completed_field": "max_endpoint_position_error_m",
+          "native_type": "float",
+          "exact_input": "3c80000000007001",
+          "max_fraction_field_bits": 108
+        }
+      ],
+      "fresh_equal_requirement_sites": [
+        {
+          "name": "source_minimum.angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.carrier_acceleration_bound_m_per_s2",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_carrier_speed_bound_m_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_carrier_acceleration_bound_m_per_s2",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.source_numeric_rotation_bound_rad",
+          "kind": "observed_source_minimum",
+          "numerator": "2199023255555",
+          "denominator": "2475880078570760549798248448",
+          "original_prospective_comparison_bits": 134
+        },
+        {
+          "name": "ideal_rotation_bound_rad",
+          "kind": "complete_inequality_requirement",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "ideal_position_bound_m",
+          "kind": "complete_inequality_requirement",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        }
+      ]
+    },
+    {
+      "group": 3,
+      "reported_fields": 21,
+      "distinct_typed_inputs": 11,
+      "duplicate_decode_sites": [
+        {
+          "field": "carrier_acceleration_bound_m_per_s2",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_angular_speed_bound_rad_per_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_carrier_acceleration_bound_m_per_s2",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_carrier_speed_bound_m_per_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "ideal_position_bound_m",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "ideal_rotation_bound_rad",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "landmark_radius_m",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "local_vertex_error_bound_m",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "source_numeric_position_bound_m",
+          "earlier_completed_field": "max_endpoint_position_error_m",
+          "native_type": "float",
+          "exact_input": "3cb0000000006201",
+          "max_fraction_field_bits": 105
+        },
+        {
+          "field": "total_position_bound_m",
+          "earlier_completed_field": "carrier_position_bound_m",
+          "native_type": "float",
+          "exact_input": "3da0004000000002",
+          "max_fraction_field_bits": 89
+        }
+      ],
+      "fresh_equal_requirement_sites": [
+        {
+          "name": "source_minimum.landmark_radius_m",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.local_vertex_error_bound_m",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.carrier_acceleration_bound_m_per_s2",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_carrier_speed_bound_m_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_carrier_acceleration_bound_m_per_s2",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.source_numeric_rotation_bound_rad",
+          "kind": "observed_source_minimum",
+          "numerator": "2199023255555",
+          "denominator": "2475880078570760549798248448",
+          "original_prospective_comparison_bits": 134
+        },
+        {
+          "name": "destination_numeric_position_bound_m",
+          "kind": "destination_requirement",
+          "numerator": "1",
+          "denominator": "137438953472",
+          "original_prospective_comparison_bits": 39
+        },
+        {
+          "name": "ideal_rotation_bound_rad",
+          "kind": "complete_inequality_requirement",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "ideal_position_bound_m",
+          "kind": "complete_inequality_requirement",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "total_position_bound_m",
+          "kind": "complete_inequality_requirement",
+          "numerator": "2251937252638721",
+          "denominator": "309485009821345068724781056",
+          "original_prospective_comparison_bits": 141
+        }
+      ]
+    },
+    {
+      "group": 4,
+      "reported_fields": 21,
+      "distinct_typed_inputs": 19,
+      "duplicate_decode_sites": [
+        {
+          "field": "enclosing_angular_speed_bound_rad_per_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "400890fdaa22168c",
+          "max_fraction_field_bits": 51
+        },
+        {
+          "field": "enclosing_carrier_acceleration_bound_m_per_s2",
+          "earlier_completed_field": "carrier_acceleration_bound_m_per_s2",
+          "native_type": "float",
+          "exact_input": "3a3c4a142b0db392",
+          "max_fraction_field_bits": 144
+        }
+      ],
+      "fresh_equal_requirement_sites": [
+        {
+          "name": "source_minimum.angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "1728704649135523",
+          "denominator": "562949953421312",
+          "original_prospective_comparison_bits": 101
+        },
+        {
+          "name": "source_minimum.enclosing_angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "1728704649135523",
+          "denominator": "562949953421312",
+          "original_prospective_comparison_bits": 101
+        }
+      ]
+    },
+    {
+      "group": 5,
+      "reported_fields": 21,
+      "distinct_typed_inputs": 19,
+      "duplicate_decode_sites": [
+        {
+          "field": "enclosing_angular_speed_bound_rad_per_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "4002487ed5110b46",
+          "max_fraction_field_bits": 52
+        },
+        {
+          "field": "enclosing_carrier_acceleration_bound_m_per_s2",
+          "earlier_completed_field": "carrier_acceleration_bound_m_per_s2",
+          "native_type": "float",
+          "exact_input": "4022dc0d72092262",
+          "max_fraction_field_bits": 52
+        }
+      ],
+      "fresh_equal_requirement_sites": [
+        {
+          "name": "source_minimum.angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "2573129579267491",
+          "denominator": "1125899906842624",
+          "original_prospective_comparison_bits": 103
+        },
+        {
+          "name": "source_minimum.enclosing_angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "2573129579267491",
+          "denominator": "1125899906842624",
+          "original_prospective_comparison_bits": 103
+        }
+      ]
+    },
+    {
+      "group": 6,
+      "reported_fields": 21,
+      "distinct_typed_inputs": 19,
+      "duplicate_decode_sites": [
+        {
+          "field": "enclosing_angular_speed_bound_rad_per_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "4002487ed5110b46",
+          "max_fraction_field_bits": 52
+        },
+        {
+          "field": "enclosing_carrier_acceleration_bound_m_per_s2",
+          "earlier_completed_field": "carrier_acceleration_bound_m_per_s2",
+          "native_type": "float",
+          "exact_input": "402d4e405e71cf34",
+          "max_fraction_field_bits": 51
+        }
+      ],
+      "fresh_equal_requirement_sites": [
+        {
+          "name": "source_minimum.landmark_radius_m",
+          "kind": "observed_source_minimum",
+          "numerator": "3742914633261649",
+          "denominator": "18014398509481984",
+          "original_prospective_comparison_bits": 107
+        },
+        {
+          "name": "source_minimum.angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "2573129579267491",
+          "denominator": "1125899906842624",
+          "original_prospective_comparison_bits": 103
+        },
+        {
+          "name": "source_minimum.enclosing_angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "2573129579267491",
+          "denominator": "1125899906842624",
+          "original_prospective_comparison_bits": 103
+        }
+      ]
+    },
+    {
+      "group": 7,
+      "reported_fields": 21,
+      "distinct_typed_inputs": 13,
+      "duplicate_decode_sites": [
+        {
+          "field": "carrier_acceleration_bound_m_per_s2",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_angular_speed_bound_rad_per_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_carrier_acceleration_bound_m_per_s2",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_carrier_speed_bound_m_per_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "ideal_position_bound_m",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "ideal_rotation_bound_rad",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "max_endpoint_time_shift_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "source_numeric_position_bound_m",
+          "earlier_completed_field": "max_endpoint_position_error_m",
+          "native_type": "float",
+          "exact_input": "0000000000000002",
+          "max_fraction_field_bits": 1074
+        }
+      ],
+      "fresh_equal_requirement_sites": [
+        {
+          "name": "source_minimum.landmark_radius_m",
+          "kind": "observed_source_minimum",
+          "numerator": "4165829655317709",
+          "denominator": "4503599627370496",
+          "original_prospective_comparison_bits": 105
+        },
+        {
+          "name": "source_minimum.angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.carrier_acceleration_bound_m_per_s2",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_carrier_speed_bound_m_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_carrier_acceleration_bound_m_per_s2",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.max_endpoint_time_shift_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.source_numeric_rotation_bound_rad",
+          "kind": "observed_source_minimum",
+          "numerator": "2199023255553",
+          "denominator": "2475880078570760549798248448",
+          "original_prospective_comparison_bits": 134
+        },
+        {
+          "name": "ideal_rotation_bound_rad",
+          "kind": "complete_inequality_requirement",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "ideal_position_bound_m",
+          "kind": "complete_inequality_requirement",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        }
+      ]
+    },
+    {
+      "group": 8,
+      "reported_fields": 21,
+      "distinct_typed_inputs": 13,
+      "duplicate_decode_sites": [
+        {
+          "field": "carrier_acceleration_bound_m_per_s2",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_angular_speed_bound_rad_per_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_carrier_acceleration_bound_m_per_s2",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_carrier_speed_bound_m_per_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "ideal_position_bound_m",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "ideal_rotation_bound_rad",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "max_endpoint_time_shift_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "source_numeric_position_bound_m",
+          "earlier_completed_field": "max_endpoint_position_error_m",
+          "native_type": "float",
+          "exact_input": "3c80000000007001",
+          "max_fraction_field_bits": 108
+        }
+      ],
+      "fresh_equal_requirement_sites": [
+        {
+          "name": "source_minimum.angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.carrier_acceleration_bound_m_per_s2",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_carrier_speed_bound_m_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_carrier_acceleration_bound_m_per_s2",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.max_endpoint_time_shift_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.source_numeric_rotation_bound_rad",
+          "kind": "observed_source_minimum",
+          "numerator": "2199023255555",
+          "denominator": "2475880078570760549798248448",
+          "original_prospective_comparison_bits": 134
+        },
+        {
+          "name": "ideal_rotation_bound_rad",
+          "kind": "complete_inequality_requirement",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "ideal_position_bound_m",
+          "kind": "complete_inequality_requirement",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        }
+      ]
+    },
+    {
+      "group": 9,
+      "reported_fields": 21,
+      "distinct_typed_inputs": 10,
+      "duplicate_decode_sites": [
+        {
+          "field": "carrier_acceleration_bound_m_per_s2",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_angular_speed_bound_rad_per_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_carrier_acceleration_bound_m_per_s2",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_carrier_speed_bound_m_per_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "ideal_position_bound_m",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "ideal_rotation_bound_rad",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "landmark_radius_m",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "local_vertex_error_bound_m",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "max_endpoint_time_shift_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "source_numeric_position_bound_m",
+          "earlier_completed_field": "max_endpoint_position_error_m",
+          "native_type": "float",
+          "exact_input": "3cb0000000006201",
+          "max_fraction_field_bits": 105
+        },
+        {
+          "field": "total_position_bound_m",
+          "earlier_completed_field": "carrier_position_bound_m",
+          "native_type": "float",
+          "exact_input": "3da0004000000002",
+          "max_fraction_field_bits": 89
+        }
+      ],
+      "fresh_equal_requirement_sites": [
+        {
+          "name": "source_minimum.landmark_radius_m",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.local_vertex_error_bound_m",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.carrier_acceleration_bound_m_per_s2",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_carrier_speed_bound_m_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_carrier_acceleration_bound_m_per_s2",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.max_endpoint_time_shift_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.source_numeric_rotation_bound_rad",
+          "kind": "observed_source_minimum",
+          "numerator": "2199023255555",
+          "denominator": "2475880078570760549798248448",
+          "original_prospective_comparison_bits": 134
+        },
+        {
+          "name": "destination_numeric_position_bound_m",
+          "kind": "destination_requirement",
+          "numerator": "1",
+          "denominator": "137438953472",
+          "original_prospective_comparison_bits": 39
+        },
+        {
+          "name": "ideal_rotation_bound_rad",
+          "kind": "complete_inequality_requirement",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "ideal_position_bound_m",
+          "kind": "complete_inequality_requirement",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "total_position_bound_m",
+          "kind": "complete_inequality_requirement",
+          "numerator": "2251937252638721",
+          "denominator": "309485009821345068724781056",
+          "original_prospective_comparison_bits": 141
+        }
+      ]
+    },
+    {
+      "group": 10,
+      "reported_fields": 21,
+      "distinct_typed_inputs": 14,
+      "duplicate_decode_sites": [
+        {
+          "field": "carrier_acceleration_bound_m_per_s2",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_angular_speed_bound_rad_per_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_carrier_acceleration_bound_m_per_s2",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_carrier_speed_bound_m_per_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "ideal_position_bound_m",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "ideal_rotation_bound_rad",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "max_endpoint_time_shift_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        }
+      ],
+      "fresh_equal_requirement_sites": [
+        {
+          "name": "source_minimum.angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.carrier_acceleration_bound_m_per_s2",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_carrier_speed_bound_m_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_carrier_acceleration_bound_m_per_s2",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.max_endpoint_time_shift_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.source_numeric_rotation_bound_rad",
+          "kind": "observed_source_minimum",
+          "numerator": "2199023386633",
+          "denominator": "2475880078570760549798248448",
+          "original_prospective_comparison_bits": 134
+        },
+        {
+          "name": "ideal_rotation_bound_rad",
+          "kind": "complete_inequality_requirement",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "ideal_position_bound_m",
+          "kind": "complete_inequality_requirement",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        }
+      ]
+    },
+    {
+      "group": 11,
+      "reported_fields": 21,
+      "distinct_typed_inputs": 14,
+      "duplicate_decode_sites": [
+        {
+          "field": "carrier_acceleration_bound_m_per_s2",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_angular_speed_bound_rad_per_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_carrier_acceleration_bound_m_per_s2",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_carrier_speed_bound_m_per_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "ideal_position_bound_m",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "ideal_rotation_bound_rad",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "max_endpoint_time_shift_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        }
+      ],
+      "fresh_equal_requirement_sites": [
+        {
+          "name": "source_minimum.angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.carrier_acceleration_bound_m_per_s2",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_carrier_speed_bound_m_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_carrier_acceleration_bound_m_per_s2",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.max_endpoint_time_shift_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.source_numeric_rotation_bound_rad",
+          "kind": "observed_source_minimum",
+          "numerator": "2199023517711",
+          "denominator": "2475880078570760549798248448",
+          "original_prospective_comparison_bits": 134
+        },
+        {
+          "name": "ideal_rotation_bound_rad",
+          "kind": "complete_inequality_requirement",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "ideal_position_bound_m",
+          "kind": "complete_inequality_requirement",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        }
+      ]
+    },
+    {
+      "group": 12,
+      "reported_fields": 21,
+      "distinct_typed_inputs": 14,
+      "duplicate_decode_sites": [
+        {
+          "field": "carrier_acceleration_bound_m_per_s2",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_angular_speed_bound_rad_per_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_carrier_acceleration_bound_m_per_s2",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "enclosing_carrier_speed_bound_m_per_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "ideal_position_bound_m",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "ideal_rotation_bound_rad",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        },
+        {
+          "field": "max_endpoint_time_shift_s",
+          "earlier_completed_field": "angular_speed_bound_rad_per_s",
+          "native_type": "float",
+          "exact_input": "0000000000000000",
+          "max_fraction_field_bits": 1
+        }
+      ],
+      "fresh_equal_requirement_sites": [
+        {
+          "name": "source_minimum.landmark_radius_m",
+          "kind": "observed_source_minimum",
+          "numerator": "3742914633261649",
+          "denominator": "18014398509481984",
+          "original_prospective_comparison_bits": 107
+        },
+        {
+          "name": "source_minimum.angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.carrier_acceleration_bound_m_per_s2",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_carrier_speed_bound_m_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_carrier_acceleration_bound_m_per_s2",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.enclosing_angular_speed_bound_rad_per_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.max_endpoint_time_shift_s",
+          "kind": "observed_source_minimum",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "source_minimum.source_numeric_rotation_bound_rad",
+          "kind": "observed_source_minimum",
+          "numerator": "2199023517713",
+          "denominator": "2475880078570760549798248448",
+          "original_prospective_comparison_bits": 134
+        },
+        {
+          "name": "ideal_rotation_bound_rad",
+          "kind": "complete_inequality_requirement",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        },
+        {
+          "name": "ideal_position_bound_m",
+          "kind": "complete_inequality_requirement",
+          "numerator": "0",
+          "denominator": "1",
+          "original_prospective_comparison_bits": 1
+        }
+      ]
+    }
+  ],
+  "required_proof": [
+    "Retain exact native input type and binary64 bits, including signed zero.",
+    "Reuse only earlier completed decodes in the same 21-field group; copy fresh Fraction results.",
+    "Pin all omitted dispatch paths, including math.isfinite and any field/bit readers.",
+    "Keep original operand, output and prospective-product guards under current live limits.",
+    "Keep each current required claim, threshold continuation flags, owner and receipt checks.",
+    "Use ordinary fallback for foreign or modified callbacks, observers, dispatch or unsupported domains.",
+    "Charge actual admission work; establish runtime eligibility and measured complete-request savings separately."
+  ],
+  "limitations": [
+    "Numerical matches do not prove the proposed native admission predicate.",
+    "The 24-operation allowance is an illustration, not measured or implemented overhead.",
+    "125 is a conditional static deficit, not an observed completed request total.",
+    "The retained GLB remains unvalidated; no new recording or release pass is claimed."
+  ],
+  "inputs": [
+    {
+      "path": "/workspace/scratch/e1681a7483bd/checkpoint029-work/drivers/analyze_native_field_sites.py",
+      "bytes": 8119,
+      "sha256": "31e0137e9c2dbd3c152e1dd89adb5e49818b19732c6f731fc582bb6a85587203",
+      "unchanged": true
+    },
+    {
+      "path": "/workspace/scratch/e1681a7483bd/checkpoint029-work/execution/capture-p09-001/flush-snapshots.json",
+      "bytes": 251593,
+      "sha256": "74ef0440466a41647ab5100e2b6bcb23e80283c9e00ee741dfe2af533151d495",
+      "unchanged": true
+    },
+    {
+      "path": "/workspace/scratch/e1681a7483bd/checkpoint029-work/analysis/P09-full-input-census.json",
+      "bytes": 1644702,
+      "sha256": "d0c4ab3a106380f5a7dc8d55529f02f31be127d6e685908f5a3bc79b7879212d",
+      "unchanged": true
+    }
+  ]
+}

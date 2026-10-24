@@ -1,5 +1,172 @@
 # Reach recording continuation, October 23, 2026
 
+## Checkpoint 029: neutral full-P09 capture and independent census
+
+[Checkpoint 029](checkpoint-029.json), the [full census](P09-full-input-census.json),
+[independent audit](checkpoint-029-archive-review.json),
+[member manifest](checkpoint-029-manifest.json) and [HANDOFF-029](HANDOFF-029.md)
+complete the bounded capture/census task selected in checkpoint 028. The runtime
+is unchanged: accepted implementation `b9f79d1e4bcbef957b239a24a3c6c3d54cb47154`.
+New product execution used exact observed source
+`91c28f839ae29881d0f8e1287b10bdafa2804361`, tree
+`c9c13c27c58f6e3a88a23cb54483c00d2baebebf`, on CPython **3.12.14**.
+All **1,784 tracked files / 385,203,884 bytes** were recovered and Git-verified;
+the complete before/after inventories are stable. Full checkout recovery does
+not close the separate formal release input-closure gate.
+
+### Actual capture and operation neutrality
+
+The original stock P09 and externally wrapped request retain end **3**, **1 fps**,
+helpers disabled, default tolerances and original resource limits. Both end with
+**failed status and exit 1** at **100,001 shared / 95,867 reach operations**, with
+**256** cache entries. Every complete work category, source identity, option,
+diagnostic and underlying failure frame agrees after removing only the two
+identified wrapper frames. The original 57-check comparison remains preserved;
+the later independent audit checks its bindings and completeness separately.
+
+The [capture driver](checkpoint-029-capture.py) wraps only reader entry and final
+batch flush. It stores immutable bytes and bounded primitive fields, serializes
+after the request ends, and restores original functions in `finally`. All 17
+capture identity assertions and all three flush identity assertions are present
+and true. No work observer, trace/profile hook, fixture/cap change or product
+arithmetic calculation is added by the wrappers. Stock report command synthesis
+is explicitly disclosed; actual command receipts and the recorded stock API
+call identify the executed request.
+
+`unvalidated-reader-input.glb` is **1,857,820 bytes**, SHA-256
+`12e95c68f188a15dcc764dac770ce96ad40f905a33a3bcb0e4de67d6bf5ad945`.
+It is the reader input of a failed request, **not an accepted export**. Neither
+request returned a successful `ExportResult`. No elapsed neutrality or speedup
+is inferred from the two diagnostic executions.
+
+### Actual clocks, group order and remaining work
+
+The standalone [census driver](checkpoint-029-census.py) independently reads the
+GLB JSON/BIN chunks and binary32 clock bits, verifies exact clock cells and
+width labels, and reconstructs interval-then-node first-appearance order. It
+imports no product arithmetic. **205 clocks / 204 intervals / six carriers /
+1,224 certificate records / 12 groups** agree with the capture and raw counters.
+Both actually executed census versions are archived; the canonical JSON equals
+version 002 byte-for-byte. Version 002 adds exact scalar operands and identity
+site flags without changing the clock, group or remaining-work conclusions.
+
+| Group | Carrier | Members | Phase | Maximum authored width | Maximum stored width |
+| --- | --- | ---: | ---: | --- | --- |
+| 1 | `rig` | 203 | 0 | 2/203 | 82647/8388608 |
+| 2 | `rig.column` | 203 | 0 | 2/203 | 82647/8388608 |
+| 3 | `rig.arm` | 203 | 0 | 2/203 | 82647/8388608 |
+| 4 | `rig.arm.upper` | 203 | 0 | 2/203 | 82647/8388608 |
+| 5 | `rig.arm.forearm` | 203 | 0 | 2/203 | 82647/8388608 |
+| 6 | `rig.tool` | 203 | 0 | 2/203 | 82647/8388608 |
+| 7 | `rig` | 1 | 1 | 1/1 | 1/1 |
+| 8 | `rig.column` | 1 | 1 | 1/1 | 1/1 |
+| 9 | `rig.arm` | 1 | 1 | 1/1 | 1/1 |
+| 10 | `rig.arm.upper` | 1 | 1 | 1/1 | 1/1 |
+| 11 | `rig.arm.forearm` | 1 | 1 | 1/1 | 1/1 |
+| 12 | `rig.tool` | 1 | 1 | 1/1 | 1/1 |
+
+Groups 1–6 cover seconds 0–2 with used threshold receipts. Groups 7–12 cover
+seconds 2–3; both widths are exactly one, all four authored/enclosing angular and
+acceleration fields are zero, and their threshold receipts are unused. Group
+11 is forearm node 4; group 12 is tool node 5. Both use clock indices 203→204 and
+source phase 1. Captured minima, magnitude and discarded-threshold domains are
+observations, not independently certified source bounds.
+
+At final flush entry, the request has **99,242 shared / 95,109 reach operations**.
+The complete **758-charge executed prefix** and its category map reconcile with
+the independent scalar ledger. The next external budget call refuses before
+incrementing the reach ledger. The conditional model has **873** flush charges,
+so **115** remain, including that refused attempt once. Nine final report charges
+and one final export checkpoint give **100,125 conditional shared operations**,
+a **125-operation deficit**. The maximum modeled prospective/result field is
+2,148 bits.
+
+These are static results. The unvisited tail, final source admission and
+successful return did not execute. Native dispatch, unchanged domains, no
+replay, valid observed minima and successful final admission remain assumptions.
+No completed-request cost, successful validation or new recording pass follows.
+
+### Selected next implementation scope
+
+The [supplementary site inventory](checkpoint-029-native-field-sites.json),
+[its driver](checkpoint-029-native-field-sites.py) and
+[source review](checkpoint-029-next-scope.json) select **bounded duplicate field
+decoding plus fresh equal-field requirement proofs within each certificate
+group**, as two independently testable transformations.
+
+| Full-input opportunity | Static sites |
+| --- | ---: |
+| Earlier completed typed-identical decode in the same group | 78 |
+| Fresh reported-field equality with a captured minimum | 74 |
+| Fresh complete-inequality requirement equality | 20 |
+| Fresh destination-position requirement equality | 2 |
+| Gross candidate ceiling | **174** |
+
+An illustrative two admissions per group would leave **150** potential net
+omissions; three would leave **138**. These are implementation-dependent ceilings,
+not measured savings. All 252 decoded inputs are native floats, the matches
+survive exact binary64 bit identity, no negative zero occurs, and the largest
+decoded field is 1,074 bits. Native source/callback inspection finds no work
+observer blocking these sites; the proposed gate itself has not executed.
+
+A strict new gate must retain no-observer/native-callback restrictions and pin
+newly omitted paths such as `math.isfinite`, raw-field reads and bit encoding.
+Decode reuse must be local to the 21-field construction, bind an earlier completed
+result and return fresh Fractions. Each equality proof must inspect the current
+claim, preserve operand and prospective-product guards and retain threshold
+continuation calls/flags and all owner checks. Both actual width squares,
+quarter plans, tolerances and maxima remain. Actual admission work must be
+charged, and foreign or changed contexts must keep the ordinary path.
+
+The held equal-triple proposal can add at most six omissions here, because all
+six matching groups already receive the accepted five zero-term omissions.
+The remaining zero multiplication/division sites total 92; adding 18 raw-quarter
+zero additions yields 110 before overhead. Neither narrow alternative covers
+the modeled deficit. A broader scalar identity inventory has an optimistic
+152-site union, but includes actual width-square omissions; it is not the
+selected scope. Cross-group decode reuse would require broader storage/lifetime
+proof and is also not selected.
+
+Require a separate derivation, hostile/equivalence tests, actual native
+applicability, positive complete shared-request savings and acceptable
+alternating elapsed controls. Then run the unchanged original P09, related
+cohort and all original 28 on the accepted integrated cut. P11/L03/P16/P23 fail
+earlier and need separate scopes. The latest full suite remains checkpoint
+028's **23/28**; it was not rerun for this unchanged runtime.
+
+### Retained evidence and publication
+
+The [packaging receipt](checkpoint-029-packaging.json) identifies **60 members in
+one part / 870,723 bytes**, SHA-256
+`04084572758391366fa6bc76659e03024e3f0e73a5e91a616babd0f9a37d98e0`.
+All ordered-part, joined and member hashes, ZIP CRCs and exact expanded bytes
+verify. [Independent auditor source](checkpoint-029-audit.py),
+[preflight](checkpoint-029-audit-preflight-001.json),
+[final audit](checkpoint-029-archive-review.json),
+[actual audit command](checkpoint-029-audit-command.json),
+[stdout](checkpoint-029-audit-command.stdout.txt) and
+[stderr](checkpoint-029-audit-command.stderr.txt) are retained directly.
+The preflight passed 91 checks and the final archive audit passed **100 checks**;
+these are evidence checks, not product test methods. The supplementary 174-site
+inventory was separately executed and source-reviewed; archive equality binds
+its bytes but does not prove the proposed optimization safe.
+
+[Documentation verification](checkpoint-029-documentation.json) is separate
+from product execution. The archive preserves every actual stock/capture and
+analysis attempt, including both census versions. Later packaging/audit/docs
+receipts are outside the payload to avoid circular hashes. The handoff identifies
+replay dependencies; no separate fresh-clone recovery experiment is claimed.
+All older records below retain their original identities and limitations.
+
+PR #28 continues from observed `91c28f839ae29881d0f8e1287b10bdafa2804361` through
+fresh nonforce expected-head publication. Main remains `2bb4588e121fcfe99b4d42c734b15b38362f3642`;
+no main lease is held, PR #27/#28 remain open drafts, and no hosted job was
+dispatched/retried. Source fixtures, clocks/settings, oracles, tolerances and
+resource limits remain unchanged. **28/28 recordings**, actual Agent delivery,
+current full regression/compatibility, independent rates, native/browser/visual,
+hostile/inherited roles, formal input closure, all R01–R12/Q01–Q22 gates and
+resulting-main verification remain open. The full GOAL remains in progress.
+
 ## Checkpoint 027: held equal-triple second-quarter candidate
 
 The [checkpoint](checkpoint-027.json), [member manifest](checkpoint-027-manifest.json), [independent archive review](checkpoint-027-archive-review.json), [documentation record](checkpoint-027-documentation.json) and [next handoff](HANDOFF-027.md) identify this evidence-only continuation. The accepted runtime remains `327e778cece3bb292f3e64751506dff364e4ee87`; checkpoint 026 evidence parent is `f59da3cbca337cad2b436617b5a59f82348d223e`. No candidate runtime, test, tool or workflow change is integrated into this continuation.
