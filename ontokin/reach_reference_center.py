@@ -9,6 +9,7 @@ the existing arithmetic LRU and pending-publication/source-batch admission.
 from dataclasses import dataclass, field, replace
 from fractions import Fraction as F
 import math
+from types import MethodType
 
 from .reach_reference import (
     MAX_CACHE, MAX_OPERAND_BITS, Interval, ReferenceError, _Arithmetic, _PoseArithmetic,
@@ -35,11 +36,25 @@ class _CenteredNode:
     vector: tuple
     position_radius: F
     identity_offset: int = 0
+    coefficient_source: str | None = None
     seal: tuple = field(init=False, repr=False, compare=False)
 
     def __post_init__(self):
         object.__setattr__(self, "seal", _integers((self.vector, self.position_radius,
-                                                  self.identity_offset)))
+                                                  self.identity_offset, self.coefficient_source)))
+
+
+@dataclass(frozen=True)
+class _CenteredCoefficients:
+    scalar: F
+    active: F
+    diagonal: F
+    cross: F
+    seal: tuple = field(init=False, repr=False, compare=False)
+
+    def __post_init__(self):
+        object.__setattr__(self, "seal", _integers((self.scalar, self.active,
+                                                  self.diagonal, self.cross)))
 
 
 @dataclass(frozen=True)
@@ -264,21 +279,29 @@ class _Guard:
         self.a.guard(value)
         return -value
 
-    def lookup(self, key):
+    def lookup(self, key, *, admission=None):
         # Expose both original callback boundaries to the live receipt, so a
         # cap narrowed by lookup cannot be restored by cache synchronization
         # before this optional proof notices it.
         self.checked(self.a.tick)
+        if admission is not None and not admission():
+            return None
         self.checked(self.a._sync_cache_operand_limit)
+        if admission is not None and not admission():
+            return None
         value = self.a.cache.get(key)
         if value is not None:
             del self.a.cache[key]
             self.a.cache[key] = value
         return value
 
-    def remember(self, key, value, *, pending=None, previous=None):
+    def remember(self, key, value, *, pending=None, previous=None, admission=None):
         self.checked(self.a.tick)
+        if admission is not None and not admission():
+            return
         self.checked(self.a._sync_cache_operand_limit)
+        if admission is not None and not admission():
+            return
         if pending is not None:
             from .reach_reference_plan import MAX_CURSORS
             if len(pending.values) >= MAX_CURSORS:
@@ -304,6 +327,8 @@ def prepare(plan, reference, batch):
     admit_source(plan, reference, fresh=False)
     a = reference.a
     nodes, depths = [], {"world": 0}
+    orientations, projections = {"world": (None, None)}, {}
+    groups, group = [], 0
     identities, extents = {"world": True}, {"world": F(0)}
     for node in plan.nodes:
         guard = _Guard(reference, plan, batch)
@@ -334,6 +359,7 @@ def prepare(plan, reference, batch):
                 return replace(plan, centered=False)
             depth = 0
             identity, extent = True, total
+            orientation_source, orientation_axis = None, None
         else:
             local = node.local
             if (node.kind not in {"site", "follow", "hinge", "fixed", "grip"}
@@ -358,6 +384,9 @@ def prepare(plan, reference, batch):
             # center does not establish a zero-width identity orientation.
             identity = identities[node.parent] and (
                 node.kind != "hinge" or node.body.identity_relative is True)
+            orientation_source, orientation_axis = orientations[node.parent]
+            if node.kind == "hinge" and not node.body.identity_relative:
+                orientation_source, orientation_axis = node.path, node.body.axis
             identity_offset = int(total > 1)
             if total > 64 or identity_offset and not identity:
                 return replace(plan, centered=False)
@@ -376,10 +405,27 @@ def prepare(plan, reference, batch):
         if not reference._recording_body_domain():
             return plan
         radius = guard.exact(F(depth), F(1, 1 << 102), "mul") if depth else F(0)
-        nodes.append(_CenteredNode(vector, radius, identity_offset))
+        # A new orientation seed may populate the shared LRU. Require the
+        # repeated projections to share a segment without another seed in
+        # between, rather than charging a memo miss for distant one-off uses.
+        if node.kind == "hinge" and not node.body.identity_relative:
+            group += 1
+        coefficient_source = None
+        if (orientation_source is not None and type(orientation_axis) is int
+                and orientation_axis in (0, 1, 2)
+                and any(value for index, value in enumerate(vector) if index != orientation_axis)):
+            coefficient_source = orientation_source
+            key = coefficient_source, group
+            projections[key] = projections.get(key, 0) + 1
+        nodes.append(_CenteredNode(vector, radius, identity_offset, coefficient_source))
+        groups.append(group)
         depths[node.path] = depth
         identities[node.path], extents[node.path] = identity, extent
+        orientations[node.path] = orientation_source, orientation_axis
     plan.admit_owners(reference)
+    nodes = [replace(recipe, coefficient_source=None)
+             if recipe.coefficient_source is not None and projections[recipe.coefficient_source, group] < 2
+             else recipe for recipe, group in zip(nodes, groups)]
     return replace(plan, centered=tuple(nodes)) if reference._recording_body_domain() else plan
 
 
@@ -494,7 +540,122 @@ def _orientation(node, time, context, reference, guard, pending):
     return result, radius, axis
 
 
-def _offset(parent, vector, guard, *, identity_only=False):
+_COEFFICIENT_METHODS = tuple((name, getattr(_Arithmetic, name)) for name in (
+    "exact", "guard", "tick", "_sync_cache_operand_limit"))
+_COEFFICIENT_GUARD_METHODS = tuple((name, getattr(_Guard, name)) for name in (
+    "exact", "checked", "current", "freeze", "vector", "watch", "lookup", "remember"))
+
+
+def _coefficient_domain(guard):
+    a = guard.a
+    for owner, kind, methods in ((a, _Arithmetic, _COEFFICIENT_METHODS),
+                                 (guard, _Guard, _COEFFICIENT_GUARD_METHODS)):
+        if (type(owner) is not kind
+                or any(kind.__dict__.get(name) is not original for name, original in methods)):
+            return False
+        for name, original in methods:
+            method = getattr(owner, name)
+            if (type(method) is not MethodType or method.__self__ is not owner
+                    or method.__func__ is not original):
+                return False
+    if (type(a.cache) is not dict
+            or type(a.bits) is not int or a.bits != 128
+            or type(a.scale) is not int or a.scale != 1 << 128
+            or a.operand_limit != MAX_OPERAND_BITS):
+        return False
+    return True
+
+
+def _direct_coefficients(w, s, guard, *, completed=None):
+    # Preserve Python's original outer-method binding before evaluating its
+    # inner calls. A callback may replace instance dispatch between them.
+    subtract = guard.exact
+    square_w = guard.exact(w, w, "mul")
+    if completed is not None:
+        completed()
+    square_s = guard.exact(s, s, "mul")
+    if completed is not None:
+        completed()
+    diagonal = subtract(square_w, square_s, "sub")
+    if completed is not None:
+        completed()
+    double = guard.exact
+    product = guard.exact(w, s, "mul")
+    if completed is not None:
+        completed()
+    cross = double(product, 2, "mul")
+    if completed is not None:
+        completed()
+    return diagonal, cross
+
+
+def _coefficients(w, s, guard, source):
+    """Reuse completed exact arithmetic only for a repeated source orientation.
+
+    One existing LRU slot per admitted source replaces its preceding operands;
+    no per-clock coefficient table or pending cursor value is retained.
+    """
+    if (source is None or type(source) is not tuple or len(source) != 2
+            or type(source[0]) is not object or type(source[1]) is not str
+            or not _coefficient_domain(guard)
+            or not _native(w, magnitude=2) or not _native(s, magnitude=2)):
+        return _direct_coefficients(w, s, guard)
+    w, s = guard.freeze(w), guard.freeze(s)
+    # The detached copies become the arithmetic operands and, on a miss,
+    # the retained receipt leaves. Watch those exact objects too; watching
+    # only their source aliases would miss a cold-publication mutation.
+    guard.freeze(w)
+    guard.freeze(s)
+    guard.watch(guard.a, ("cache",))
+    key = ("reference_centered_coefficients", guard.a.bits, guard.a.operand_limit, *source)
+    previous = guard.lookup(key, admission=lambda: _coefficient_domain(guard))
+    # A lookup callback may install custom arithmetic. Its original five
+    # operations then execute on this same work object, without cache reuse.
+    if not _coefficient_domain(guard):
+        return _direct_coefficients(w, s, guard)
+    if previous is not None:
+        fields = ("scalar", "active", "diagonal", "cross", "seal")
+        if (type(previous) is not _CenteredCoefficients
+                or not _native(previous.scalar, magnitude=2)
+                or not _native(previous.active, magnitude=2)
+                or any(type(value) is not F or type(value.numerator) is not int
+                       or type(value.denominator) is not int or value.denominator <= 0
+                       or abs(value.numerator).bit_length() > 535
+                       or value.denominator.bit_length() > 516
+                       for value in (previous.diagonal, previous.cross))
+                or type(previous.seal) is not tuple or len(previous.seal) != 4
+                or any(type(pair) is not tuple or len(pair) != 2
+                       or any(type(value) is not int for value in pair)
+                       for pair in previous.seal)
+                or _integers((previous.scalar, previous.active, previous.diagonal,
+                              previous.cross)) != previous.seal):
+            raise ReferenceError("identity", "Independent centered coefficients changed")
+        if (previous.scalar, previous.active) == (w, s):
+            guard.watch(previous, fields)
+            guard.freeze(previous.scalar)
+            guard.freeze(previous.active)
+            return guard.vector((previous.diagonal, previous.cross))
+    native = True
+    def completed():
+        nonlocal native
+        native = native and _coefficient_domain(guard)
+    diagonal, cross = _direct_coefficients(w, s, guard, completed=completed)
+    # Keep the departure latched if later original callbacks restore native
+    # dispatch. Custom arithmetic still runs at each original position, but
+    # its completed values cannot acquire a native memo receipt afterwards.
+    if not native or not _coefficient_domain(guard):
+        return diagonal, cross
+    value = _CenteredCoefficients(w, s, diagonal, cross)
+    guard.watch(value, ("scalar", "active", "diagonal", "cross", "seal"))
+    result = guard.vector((diagonal, cross))
+    # These are completed pure arithmetic values, not deferred source poses.
+    # Like the existing arithmetic memoization, they do not enter the source
+    # cursor ledger or the separate pending-publication inventory.
+    guard.remember(key, value, admission=lambda: _coefficient_domain(guard))
+    return result
+
+
+def _offset(parent, vector, guard, *, identity_only=False, coefficient_source=None):
     """Project the Hamilton center rotation onto the true rotating plane."""
     if identity_only and (parent.orientation != (1, 0, 0, 0) or parent.orientation_radius):
         raise _ChangedDomain()
@@ -510,8 +671,7 @@ def _offset(parent, vector, guard, *, identity_only=False):
     if not x and not y:
         return vector, False
     w, s = q[0], q[axis + 1]
-    diagonal = guard.exact(guard.exact(w, w, "mul"), guard.exact(s, s, "mul"), "sub")
-    cross = guard.exact(guard.exact(w, s, "mul"), 2, "mul")
+    diagonal, cross = _coefficients(w, s, guard, coefficient_source)
     def product(first, last):
         return (F(0) if not first or not last else first if last == 1 else
                 guard.neg(first) if last == -1 else guard.exact(first, last, "mul"))
@@ -542,9 +702,11 @@ def evaluate(plan, reference, time, batch):
                     or len(recipe.vector) != 3 or any(not _native(value, magnitude=64) for value in recipe.vector)
                     or not _native(recipe.position_radius, magnitude=1)
                     or type(recipe.identity_offset) is not int or recipe.identity_offset not in (0, 1)
-                    or _integers((recipe.vector, recipe.position_radius, recipe.identity_offset)) != recipe.seal):
+                    or recipe.coefficient_source is not None and type(recipe.coefficient_source) is not str
+                    or _integers((recipe.vector, recipe.position_radius, recipe.identity_offset,
+                                  recipe.coefficient_source)) != recipe.seal):
                 raise ReferenceError("identity", "Independent centered source recipe changed")
-            guard.watch(recipe, ("vector", "position_radius", "identity_offset", "seal"))
+            guard.watch(recipe, ("vector", "position_radius", "identity_offset", "coefficient_source", "seal"))
             vector, maximum_radius = guard.vector(recipe.vector), guard.freeze(recipe.position_radius)
             parent = None if node.kind == "root" else guard.pose(frames[node.parent])
             guard.checked(a.tick)
@@ -571,7 +733,9 @@ def evaluate(plan, reference, time, batch):
                     rotation, radius, axis = _orientation(node, time, plan.context, reference, guard, pending)
                     parent = _CenteredPose(parent.position, rotation, parent.position_radius, radius, axis)
                 offset, uncertain = _offset(parent, vector, guard,
-                                             identity_only=bool(recipe.identity_offset))
+                    identity_only=bool(recipe.identity_offset),
+                    coefficient_source=None if recipe.coefficient_source is None else
+                    (plan.cache_identity, recipe.coefficient_source))
                 position = tuple(first if not last else last if not first else
                                  guard.exact(first, last, "add")
                                  for first, last in zip(parent.position, offset))

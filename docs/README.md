@@ -187,6 +187,9 @@ and [retained-clock parsing derivation](engineering/reach-retained-clock-parsing
 describe bounded reuse and one-shot parsing with unchanged exact values and
 live admission checks. The [October 23 continuation](engineering/reach-recording-validation-2026-10-23/README.md)
 preserves their actual focused tests and full original recording outcomes.
+The [independent planar coefficient derivation](engineering/reach-centered-coefficients.md)
+shares completed exact Hamilton coefficients across repeated source offsets,
+using the existing bounded arithmetic cache and live source/dispatch receipts.
 
 The [recorded delivery checkpoints](engineering/reach-delivery-implementation.md)
 and [independent reader implementation](engineering/reach-independent-validation.md)
