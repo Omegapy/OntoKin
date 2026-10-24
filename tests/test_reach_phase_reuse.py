@@ -123,8 +123,14 @@ class ReachPhaseReuseTests(unittest.TestCase):
 
         dynamic = simulator(source("P16"))
         dynamic.advance(F(2), "after")
-        baseline = phase_bounds(dynamic, F(2), F(3))
-        state = copy.deepcopy(dynamic.state)
+        # Synthetic error changes invalidate the admitted CellAnchor witness.
+        # Compare both operand sets through the same ordinary phase equations;
+        # retaining an old proof must instead reject, as checked separately.
+        baseline_state = copy.deepcopy(dynamic.state)
+        self.assertIn("payload", baseline_state.dynamic_cells)
+        baseline_state.dynamic_cells.pop("payload")
+        baseline = phase_bounds(dynamic, F(2), F(3), baseline_state)
+        state = copy.deepcopy(baseline_state)
         previous = state.dynamic_errors["payload"]
         state.dynamic_errors["payload"] = replace(previous,
             velocity_m_per_s=previous.velocity_m_per_s + F(1, 1000),
@@ -134,6 +140,32 @@ class ReachPhaseReuseTests(unittest.TestCase):
             expected = phase_bounds(dynamic, F(2), F(3), state)
         self.assertEqual(actual, expected)
         self.assertNotEqual(actual, baseline)
+        first, second = baseline["objects"]["payload"], actual["objects"]["payload"]
+        self.assertEqual(second.velocity_error_m_per_s - first.velocity_error_m_per_s, F(1, 1000))
+        self.assertEqual(second.angular_velocity_error_rad_per_s
+                         - first.angular_velocity_error_rad_per_s, F(1, 1000))
+
+    def test_changed_dynamic_errors_reject_the_retained_cell_anchor(self):
+        sim = simulator(source("P16"))
+        sim.advance(F(2), "after")
+        phase_bounds(sim, F(2), F(3))
+        original_proof = sim.state.dynamic_cells["payload"]
+        original_error = sim.state.dynamic_errors["payload"]
+        for fields in (("velocity_m_per_s",), ("angular_velocity_rad_per_s",),
+                       ("velocity_m_per_s", "angular_velocity_rad_per_s")):
+            with self.subTest(fields=fields):
+                state = copy.deepcopy(sim.state)
+                proof = state.dynamic_cells["payload"]
+                state.dynamic_errors["payload"] = replace(original_error,
+                    **{name: getattr(original_error, name) + F(1, 1000) for name in fields})
+                before = sim.work.counts.get("transfer_dynamic_publish", 0)
+                with self.assertRaisesRegex(ReachAdmissionError, "changed source") as caught:
+                    phase_bounds(sim, F(2), F(3), state)
+                self.assertEqual(caught.exception.reach_code, "reach_domain")
+                self.assertIs(state.dynamic_cells["payload"], proof)
+                self.assertEqual(sim.work.counts.get("transfer_dynamic_publish", 0), before)
+                self.assertIs(sim.state.dynamic_cells["payload"], original_proof)
+                self.assertIs(sim.state.dynamic_errors["payload"], original_error)
 
     def test_joint_key_retains_actual_ideal_target_clock_duration_and_status(self):
         sim = simulator(source("P01"))

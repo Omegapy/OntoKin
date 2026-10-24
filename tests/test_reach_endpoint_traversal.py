@@ -38,7 +38,7 @@ class ReachEndpointTraversalTests(unittest.TestCase):
         old, new = ReachExecutionWork(), ReachExecutionWork()
         keys = set(range(len(nodes[0].translations)))
         expected = carrier_major(nodes, keys, None, work=old)
-        actual = export._endpoint_group_maxima(nodes, keys, None, work=new)
+        actual = export._endpoint_group_maxima_exact(nodes, keys, None, work=new)
         self.assertEqual(actual, expected)
         self.assertLess(new.operations, old.operations)
         self.assertLessEqual(len(new._cache), 256)
@@ -48,7 +48,7 @@ class ReachEndpointTraversalTests(unittest.TestCase):
     def test_each_requested_endpoint_contributes_to_its_own_carrier(self):
         nodes = translated_tracks(7)
         keys = {0, 3, 6}
-        actual = export._endpoint_group_maxima(nodes, keys, None, work=ReachExecutionWork())
+        actual = export._endpoint_group_maxima_exact(nodes, keys, None, work=ReachExecutionWork())
         for carrier, node in enumerate(nodes):
             decoded = [export._endpoint_rounding(node.translations[key], node.rotations_xyzw[key],
                        None, work=ReachExecutionWork()) for key in keys]
@@ -64,9 +64,14 @@ class ReachEndpointTraversalTests(unittest.TestCase):
             calls += 1
             if calls == 83:
                 raise marker
+        work = ReachExecutionWork(check=cancel)
+        # Exercise the exact traversal: the later component reduction can
+        # complete these inputs before the selected cancellation checkpoint.
         with self.assertRaises(RuntimeError) as caught:
-            export._endpoint_group_maxima(nodes, range(7), None, work=ReachExecutionWork(check=cancel))
+            export._endpoint_group_maxima_exact(nodes, range(7), None, work=work)
+        self.assertEqual(calls, 83)
         self.assertIs(caught.exception, marker)
+        self.assertIs(work.callback_error, marker)
         self.assertEqual(original, tuple((node.translations, node.rotations_xyzw) for node in nodes))
 
     def test_complete_p01_bytes_equal_carrier_major_proofs(self):
@@ -76,11 +81,26 @@ class ReachEndpointTraversalTests(unittest.TestCase):
                 root / "docs/language-design/planar-reach-v0.1/p01.files.json"), level="constructed")
             return export_glb(compiler.model, options=ExportOptions(end=F(3), fps=1, helpers=False),
                               target_contract="ontokin.glb/0.6", work=compiler.reach_work)
-        current = build()
-        with patch.object(export, "_endpoint_group_maxima", new=carrier_major):
-            previous = build()
+        # Select the same scalar endpoint proof in both arms. The separately
+        # tested component reduction may emit larger conservative certificates.
+        with patch.object(export, "_endpoint_group_axes", return_value=None):
+            with patch.object(export, "_endpoint_group_maxima_exact",
+                              wraps=export._endpoint_group_maxima_exact) as current_groups, \
+                 patch.object(export, "_endpoint_rounding",
+                              wraps=export._endpoint_rounding) as current_scalar:
+                current = build()
+            with patch.object(export, "_endpoint_group_maxima_exact",
+                              side_effect=carrier_major) as previous_groups, \
+                 patch.object(export, "_endpoint_rounding",
+                              wraps=export._endpoint_rounding) as previous_scalar:
+                previous = build()
+        self.assertGreater(current_groups.call_count, 0)
+        self.assertEqual(current_groups.call_count, previous_groups.call_count)
+        self.assertGreater(current_scalar.call_count, 0)
+        self.assertEqual(current_scalar.call_count, previous_scalar.call_count)
         self.assertEqual(current.data, previous.data)
         self.assertEqual(current.report["validation"], previous.report["validation"])
+        self.assertEqual(current.report, previous.report)
 
 
 if __name__ == "__main__":

@@ -8,13 +8,17 @@ from ontokin.construction import compile_construction
 from ontokin.diagnostics import OntoKinError
 from ontokin.json_limits import JSONLimitError
 from ontokin.reach_runtime import ReachSimulator
+from ontokin.reach_transfer_bounds import CellAnchor, _source_method_receipt
 from reach_agent_support import source_case
 
 
 class FreshOutputSimulator(ReachSimulator):
-    def _validate_staged(self, time, staged, incoming):
-        super()._validate_staged(time, staged, incoming)
+    def snapshot(self, time, side):
+        # Reconstruct only the public observation. Overriding _validate_staged
+        # also disables the independent native release-envelope proof.
+        self.discarded_pending_output = self._pending_reach_output is not None
         self._pending_reach_output = None
+        return super().snapshot(time, side)
 
 
 def prepared(name="P01", cls=ReachSimulator):
@@ -31,9 +35,24 @@ class ReachPendingOutputTests(unittest.TestCase):
             with self.subTest(case=name, time=time):
                 actual = prepared(name)
                 expected = prepared(name, FreshOutputSimulator)
+                self.assertEqual(_source_method_receipt(actual)[1:],
+                                 _source_method_receipt(expected)[1:])
                 self.assertEqual(actual.advance(time), expected.advance(time))
                 self.assertLess(actual.work.operations, expected.work.operations)
                 self.assertIsNone(actual._pending_reach_output)
+                self.assertTrue(expected.discarded_pending_output)
+                self.assertIsNone(expected._pending_reach_output)
+                self.assertEqual(_source_method_receipt(actual)[1:],
+                                 _source_method_receipt(expected)[1:])
+                self.assertEqual(actual.state.dynamic_cells.keys(), expected.state.dynamic_cells.keys())
+                self.assertEqual(actual.work.counts["source_validated_reach_output_publish"],
+                                 expected.work.counts["source_validated_reach_output_publish"])
+                if name == "P16":
+                    self.assertIsInstance(actual.state.dynamic_cells["payload"], CellAnchor)
+                    self.assertIsInstance(expected.state.dynamic_cells["payload"], CellAnchor)
+                    for category in ("transfer_release_capture", "transfer_anchor_publish"):
+                        self.assertGreater(actual.work.counts.get(category, 0), 0)
+                        self.assertEqual(actual.work.counts[category], expected.work.counts[category])
 
     def test_output_moves_once_and_exposed_mutations_do_not_change_state(self):
         sim = prepared()
