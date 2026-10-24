@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: **2026-10-23T22:53:22.627870+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: **2026-10-24T00:14:39.226689+00:00**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
 
 ## Integrated capability and evidence
 
@@ -44,17 +44,13 @@ local `569b67b0bdc6854cc069e6a00590e0f15267ae03`
 [draft PR #25](https://github.com/Omegapy/OntoKin/pull/25). Original branches,
 failed attempts and earlier evidence retain their identities.
 
-Latest published continuation implementation is `21c1368176117076f0bfebeb33fec9fd7f0d5f66`, exact tree `58956f83039632a2f19f67a137930032128a7adf`, on [draft PR #28](https://github.com/Omegapy/OntoKin/pull/28), stacked onto PR #27. [Checkpoint 015](docs/engineering/reach-recording-validation-2026-10-23/checkpoint-015.json) recovered the requested source first and disclosed unavailable raw runs 019–022. Checkpoints 016–021 preserve the intervening work. [Checkpoint 022](docs/engineering/reach-recording-validation-2026-10-23/checkpoint-022.json) preserves the certificate and prescribed/dynamic partition integrations, their complete original suites, neutral diagnostics, rejected attempts and unexecuted review cuts: **259 members in 7 verified parts**. The 37 historical binary omissions remain; release input closure is incomplete.
+Latest tested continuation implementation is `465cf884c58ee54512da4f994bb95b3bae73398e`, exact tree `57b1511426faa162fdaa81dd5f73c30b1fe2344d`, on [draft PR #28](https://github.com/Omegapy/OntoKin/pull/28), stacked onto PR #27. [Checkpoint 023](docs/engineering/reach-recording-validation-2026-10-23/checkpoint-023.json) preserves fresh **268/268 focused methods**, the complete original **23/28 recordings**, actual artifacts/reports, stable complete input receipts, neutral diagnostics and this workspace's exact recovery evidence. P09, P11, P16, P23 and L03 still fail at 100,001 under the unchanged **100,000-operation** limit. P05 uses **93,553**, P20 **80,438**, L01 **78,348** and L02 **72,689** operations. Focused tests do not establish full regression or compatibility.
 
-The complete original suite remains **23/28**. **P09, P11, P16, P23 and L03** exhaust the unchanged **100,000-operation** cap at 100,001. The certificate integration passes **206/206** related methods; the subsequent partition integration passes **168/168**, with no failures, errors or skips and stable inputs. Each integration was followed by all original 28 recordings. Separate cohorts are not a complete current regression claim. Latest P05 uses **94,193**, P20 80,952, L01 79,468 and L02 73,577 operations.
+All **1,682 tracked files / 357,041,344 bytes** match the published tree, including the **37 historical archives / 200,032,683 bytes** previously omitted. Fresh documentation verification passes **29 sources and 233 sections**, with zero failures. The original strict source collector ran with no missing tracked inputs. Formal release input closure remains pending independent audit.
 
-The certificate correction retains fresh independent minima, exact widths and magnitudes, continuation-width envelopes, source/dispatch receipts, original finite-bound and callback ordering, and owned replay on the same request. The partition retains every requested carrier and complete global source receipts: prescribed ancestries use existing interval plans, while released dynamic roots use the original walker. It preserves exact cells across 32 original P16 post-release keys at **13,484 → 12,663 operations**. A separate early-release variant preserves complete bytes/report at **70,171 → 70,017**; it is not original P16 acceptance. Current full P16 fails before this later-stage saving can apply.
+The prior post-checkpoint-022 raw execution and archive-restoration logs were unavailable here and absent from the published tree. Historical Issue #26 summaries remain distinct from these new executions. Older raw runs 019–022 remain unavailable as disclosed in checkpoint015. No old run was reconstructed from a summary.
 
-The final static-proof selector is rejected: its P23 final-frame bits match, but cost increases **5,395 → 5,418**, failing its positive-saving gate. It is not integrated. The first partition test controls and their separate test-only repair remain preserved. A corrected forward-translation candidate has independent source reviews and 19 unexecuted focused methods; its initial callback-owner defect and separate correction are both retained. Final static sample transfer remains separate work.
-
-The accepted coarse diagnostic reproduces all five original failures with identical work/status/diagnostics, stable source inputs, unchanged owners/limits, and reconciled request/work attribution. P16 uses **83,359 production/encoding operations** after 4,644 construction operations, then 11,998 reader operations through failure. P23 uses **21,697 construction operations** and 78,304 production operations through failure, entering no independent reader. These are partial request costs, not estimates of a completed recording. Earlier elapsed-limit and diagnostic-inventory failures remain separate and are not claimed as accepted measurements.
-
-The immediate target remains **28/28**. Next execute the reviewed forward-translation candidate, complete and review final static sample transfer, and reduce measured production/reference costs. Preserve source fixtures, horizons, sampling, tolerances, operand/cache maxima and the no-payment/manual-workflow policy. Then complete Agent delivery, full current regression, CPython 3.11/3.12/3.13, independent rates/native/browser/visual checks, hostile/inherited roles, and every R01–R12/Q01–Q22 gate. **PR #27 and PR #28 remain draft and must not merge until all mandatory acceptance gates pass.** Main and its integration lease are unchanged; the complete language and GOAL remain open.
+The immediate target remains **28/28 recordings**. Read-only review identifies adjacent-clock operands, repeated independent planar coefficients and P23's final static sample as bounded candidates; none has a new measured saving at checkpoint023. Preserve source fixtures, horizons, fps, tolerances, operation/operand/cache limits, callbacks and independent numerical checks. Require focused correctness and all original 28 after each accepted integration, then actual Agent delivery, complete current regression, CPython 3.11/3.12/3.13, independent rates/native/browser/visual, hostile/inherited roles and every R01–R12/Q01–Q22 gate. **PR #27 and PR #28 remain draft and must not merge until all mandatory gates pass.** Main remains `2bb4588e`; this continuation holds no main lease. The full GOAL remains open.
 
 The historical rows below retain their original cuts and limits.
 
@@ -106,9 +102,10 @@ GOAL still requires richer typed algorithms/libraries and compatible replacement
 
 **No main integration lease is held by this continuation.** Main remains
 `2bb4588e121fcfe99b4d42c734b15b38362f3642`; the prior lease is released.
-Coordinator `interactive-reach06-recordings-20261023-7of9-3be6` uses
-`work/reach06-recordings-20261023-7of9-3be6`, starting from observed
-`f8e0bb3e4a13bf9c83180d21e22e9a2c71e20153`. The new bounded recovery scope
+Coordinator `interactive-reach06-resume-20261023-1bda` uses isolated branch
+`work/reach06-recordings-20261023-resume-1bda`, starting from observed
+`465cf884c58ee54512da4f994bb95b3bae73398e`, and conditionally publishes reviewed
+continuation work to the existing PR #28 branch. The new bounded recovery scope
 is recorded in Issue #26; previous branches retain their identities.
 This branch-only update claims no main write or runtime integration. Publication
 uses nonforce expected-head checks. Runtime/test/SQLite/workflow/archive

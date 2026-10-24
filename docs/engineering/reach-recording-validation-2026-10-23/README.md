@@ -1,5 +1,27 @@
 # Reach recording continuation, October 23, 2026
 
+## Checkpoint 023: recovered inputs and fresh validation
+
+The [checkpoint](checkpoint-023.json) and [archive manifest](checkpoint-023-manifest.json) preserve **120 evidence members in three parts**, totaling **2,311,432 bytes**, SHA-256 `97d83a0e92f3a5ac4e1620a76b001ca9b6d6c600514c3cb17e7f0852758a8ce9`. Ordered joins, every member hash and ZIP CRC passed. Tested implementation is `465cf884c58ee54512da4f994bb95b3bae73398e`, tree `57b1511426faa162fdaa81dd5f73c30b1fe2344d`; this checkpoint adds documentation and evidence only.
+
+Fresh CPython 3.12.14 execution passes **268/268 focused methods**, with no failures, errors or skips. The complete original source suite remains **23/28**. P09, P11, P16, P23 and L03 reach 100,001 under the unchanged 100,000-operation allowance. The strict original collector ran with all tracked inputs present. Every successful GLB, complete report, failed request, command, process exit and before/after receipt is archived. Latest passing counts include P05 **93,553**, P20 **80,438**, L01 **78,348** and L02 **72,689**.
+
+All **1,682 tracked files / 357,041,344 bytes** match the published tree, including all **37 previously omitted historical archives / 200,032,683 bytes**. This session's recovery and its initial 70 expired-link failures retain separate receipts. Ephemeral authenticated URLs are excluded; sanitized acquisition outcomes and exact file identities are preserved. Documentation verification passes **29 sources and 233 sections**, with zero failures.
+
+The prior post-checkpoint-022 raw execution and archive-restoration logs were not published and were unavailable in this workspace. Issue #26's summaries remain historical observations. These fresh runs have new identities and do not reconstruct the missing logs. The previously disclosed raw runs 019–022 remain a separate gap. Existing checkpoint-022 statements retain their original archive boundary.
+
+The independently reviewed diagnostic adapter changes only the identity-helper location and complete input-receipt representation comparison. All five observed requests reproduce the fresh unobserved work, diagnostics and failures, with unchanged callback/limit owners and reconciled attribution. These costs stop at failure:
+
+| Case | Construction | Production and encoding | Independent reader |
+| --- | ---: | ---: | ---: |
+| P09 | 4,403 | 43,364 | 52,234 |
+| P11 | 7,391 | 54,021 | 38,589 |
+| P16 | 4,644 | 81,927 | 13,430 |
+| P23 | 21,697 | 78,304 | 0 |
+| L03 | 4,499 | 50,486 | 45,016 |
+
+No optimization was integrated before this checkpoint. Read-only review identifies adjacent-clock operands, repeated independent planar coefficients and the final static sample as candidates; no new saving is measured. Preserve original callbacks, prospective finite guards, source/output receipts and numeric/cache maxima. Each accepted change requires focused correctness and the unchanged original 28 recordings. Agent delivery, full regression, compatibility, independent rates/native/browser/visual, hostile/inherited and R01–R12/Q01–Q22 gates remain open. Complete tracked-byte recovery does not alone establish the formal release input-closure audit. Both PRs remain draft and main is unchanged.
+
 ## Checkpoint 022: certificate and partition integrations, measured remaining work
 
 The [checkpoint](checkpoint-022.json) and [archive manifest](checkpoint-022-manifest.json) preserve **259 new evidence members** in **7 parts**, including every produced artifact/report, complete focused logs, before/after input receipts, exact Git cuts and patches, accepted diagnostics and failed attempts. The ordered parts reconstruct **5,740,170 bytes**, SHA-256 `c216c0e88eca519dad303c57cbbdee2d5e21673f8611413d122861694b0f3576`. Every member hash, ZIP CRC and ordered join was verified.
