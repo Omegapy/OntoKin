@@ -1,5 +1,70 @@
 # Reach recording continuation, October 23, 2026
 
+## Checkpoint 026: exact certificate terms within one invocation
+
+The [checkpoint](checkpoint-026.json), [member manifest](checkpoint-026-manifest.json), [independent archive review](checkpoint-026-archive-review.json), [documentation record](checkpoint-026-documentation.json) and [next handoff](HANDOFF-026.md) identify this continuation. The archive preserves **385 members in 8 parts / 6,834,663 bytes**, SHA-256 `4741da9ab50da2966122243d1ca2101b4b98e6eae75c2ae8d4f01a32ecf373c5`. Every ordered part, member hash and ZIP CRC was checked; evidence members remained stable while packaging. It includes all successful and failed executions, complete raw reports and GLBs, both original28 runs, exact local review cuts, source publication receipts, controls, drivers and independent reviews. Earlier checkpoints and unavailable-log disclosures remain unchanged.
+
+The independent archive audit passes **1,958 checks**. It also resolves a derived-report provenance detail: the source review pinned the performance summary before two explanatory counter fields were added. Removing only those additions exactly reconstructs the earlier pinned bytes and hash, retained in [the prior derived summary](checkpoint-026-performance-before-counter-clarification.json). The audit binds both versions; all raw execution rows remain unchanged. This is reconstruction of a known derived summary against its captured hash, not reconstruction of an unavailable raw run.
+
+Tested published implementation is `327e778cece3bb292f3e64751506dff364e4ee87`, tree `e5a11ac55d8740ce0b2b0fadbe06ea7a0080c609`. The [derivation](../reach-certificate-term-reuse.md) permits six already computed authored scalar results to be retained within one `_complete_inequality_values` call. It omits four multiplications and two divisions after one actual admission charge: **five net operations per eligible completed invocation**. Both quarter plans, fresh supplied fields, comparisons, thresholds and finite guards remain. Custom callbacks/observers, tracing/profiling, foreign dispatch and unsupported operand domains use the original arithmetic. No cross-call cache was added; the 512-entry native metadata inspection bound is separate from the unchanged 256-entry numerical cache.
+
+The dedicated cohort passes **28/28** on local review `f8af193f9147e22aaed8d47e5400f3db33f72d92`, whose entire tree equals the published implementation. The integrated selected cohort passes **121/121** on `327e778cece3bb292f3e64751506dff364e4ee87`, including those 28 methods, with zero failures, errors or skips. CPython 3.12.14 is the only freshly executed compatibility environment. All tracked inputs were present and stable. These selected cohorts do not establish full regression or release acceptance.
+
+### Complete prefix controls
+
+Original fixtures with end `1/4`, 4 fps and helpers disabled were executed in alternating control/candidate order. These totals include construction and all producer/reader work; the raw reports also retain the smaller reach-work counter separately. Complete GLB bytes and entire export reports are identical within every pair.
+
+| Case | Control shared operations | Candidate shared operations | Saved | Retained pairs |
+| --- | ---: | ---: | ---: | ---: |
+| P09 | 39,636 | 39,606 | 30 | 3 |
+| P11 | 66,842 | 66,762 | 80 | 3 |
+| L03 | 35,690 | 35,660 | 30 | 8 |
+
+P09 median elapsed time is **521.68→518.59 ms** and P11 **926.80→907.85 ms** across three pairs each. The initial L03 median rose; one fixed additional set of five alternating pairs was retained alongside the first three. Across all eight, the median is **410.26→423.04 ms**, a **12.78 ms / 3.1% increase**, with four slower/four faster pairs and overlapping ranges. The 17 native-state scans per eligible invocation add real bounded metadata overhead. This acceptance establishes operation savings and value equivalence; it does not establish elapsed speedup or isolate the cause of the timing difference.
+
+### Unchanged original recording gate
+
+The strict stock collector ran every original recording on checkpoint025 and on the published implementation. Both runs pass **23/28**. Every passing request saves **30–160 operations**, **1,575 total** across the 23 completed requests. All 23 GLB files, validation reports, source-unit receipts, options and program revisions are identical. Complete cross-revision export reports differ only in `source_code_sha256`; each implementation receipt was independently recomputed from its exact Git source. All five failed diagnostics remain identical at 100,001 operations. Capped failures do not reveal a complete request cost or a full-request saving. No elapsed-cap failure occurred; the largest candidate elapsed time was **2,403.50 ms**.
+
+| Case | Checkpoint025 operations | Candidate operations | Saved | Result |
+| --- | ---: | ---: | ---: | --- |
+| P01 | 41,821 | 41,761 | 60 | passed |
+| P02 | 45,194 | 45,134 | 60 | passed |
+| P03 | 43,045 | 42,985 | 60 | passed |
+| P04 | 44,112 | 44,052 | 60 | passed |
+| P05 | 93,157 | 93,097 | 60 | passed |
+| P06 | 22,284 | 22,239 | 45 | passed |
+| P07 | 56,075 | 56,015 | 60 | passed |
+| P08 | 56,072 | 56,012 | 60 | passed |
+| P09 | 100,001 | 100,001 | capped | failed |
+| P10 | 41,821 | 41,761 | 60 | passed |
+| P11 | 100,001 | 100,001 | capped | failed |
+| P12 | 32,309 | 32,269 | 40 | passed |
+| P13 | 64,057 | 63,897 | 160 | passed |
+| P14 | 52,333 | 52,228 | 105 | passed |
+| P15 | 33,077 | 33,017 | 60 | passed |
+| P16 | 100,001 | 100,001 | capped | failed |
+| P17 | 39,254 | 39,224 | 30 | passed |
+| P18 | 63,086 | 63,026 | 60 | passed |
+| P19 | 47,447 | 47,402 | 45 | passed |
+| P20 | 80,152 | 79,992 | 160 | passed |
+| P21 | 41,559 | 41,499 | 60 | passed |
+| P22 | 22,307 | 22,262 | 45 | passed |
+| P23 | 100,001 | 100,001 | capped | failed |
+| P25 | 42,162 | 42,102 | 60 | passed |
+| P26 | 40,302 | 40,272 | 30 | passed |
+| L01 | 77,917 | 77,812 | 105 | passed |
+| L02 | 72,358 | 72,268 | 90 | passed |
+| L03 | 100,001 | 100,001 | capped | failed |
+
+The first dedicated attempt remains preserved: 25 of 26 methods passed, with one error from an invalid newly authored positive-control enclosure rejected by the untouched baseline too. The exact input was retained as a negative test and a valid positive control added; no original fixture or oracle changed. The second 27-method attempt passed, then a further mutable-keyword-default admission guard and regression method produced the final 28-method cut. An initial evidence-preparation helper assumed a later proof document existed at the earliest review cut; its failed preparation and precise correction are recorded separately. No failed product run was overwritten or relabeled.
+
+Fresh unobserved P09 and the old neutral v7 profiler agree on checkpoint025: 205 completed key comparisons, the last ending at operation 99,037, then a final-certificate failure. **The profiler is not neutral for the enabled new shortcut**, because active profiling/tracing intentionally selects ordinary arithmetic. Do not use that adapter to claim candidate savings.
+
+Fixtures, horizons/fps/helpers, independent oracles, tolerances, **100,000 operations / 30,000 ms / 32,768 operand bits / 256 numerical cache entries**, guards and callback obligations remain unchanged. Continue bounded exact final-certificate work on the published implementation. Review whether the second, stored quarter can reuse already completed authored terms only when the current exact operand triples coincide; derive its complete admission, guard, fallback and accounting obligations first. This extension is unimplemented and unmeasured. Require dedicated equivalence/hostile tests, complete shared-request cost and elapsed controls, the related cohort and every unchanged original recording after an accepted integration. An active sys.setprofile/sys.settrace disables the current shortcut; the old v7 profiler is not neutral for measuring enabled candidate savings. P11/L03 fail earlier; P16/P23 need their separate scoped work.
+
+The recording gate, Agent delivery, full regression/compatibility, independent rate/native/browser/visual and hostile/inherited roles, formal input closure and every R01–R12/Q01–Q22 gate remain open. PR #27 and PR #28 remain open drafts and must not merge. Main stays `2bb4588e121fcfe99b4d42c734b15b38362f3642`; no main lease is held and no hosted job was dispatched or retried. The full GOAL remains in progress.
+
 ## Checkpoint 025: independent coefficients and ballistic clock proof
 
 The [checkpoint](checkpoint-025.json), [member manifest](checkpoint-025-manifest.json) and [independent archive review](checkpoint-025-archive-review.json) preserve **339 members in 6 parts**, totaling **5,303,455 bytes**, SHA-256 `3d0a0517a79d7ce96fbf843c61c410231fe677263b454419acb3bfe8452e2261`. The archive contains complete dedicated/integration logs, both original-suite runs and their produced artifacts/failures, stable input receipts, neutral diagnostics, exact local review cuts, the held static attempt and the unexecuted repair draft. The [documentation record](checkpoint-025-documentation.json) identifies the separate navigation/preservation check. Prior checkpoint and unavailable-log disclosures retain their original meanings.

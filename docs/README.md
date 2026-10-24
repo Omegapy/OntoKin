@@ -193,6 +193,9 @@ using the existing bounded arithmetic cache and live source/dispatch receipts.
 The [ballistic elapsed-clock derivation](engineering/reach-ballistic-clock-domain.md)
 proves the original nonzero clock range from live bounded integer widths,
 retaining the horizon comparison, finite guards and complete ordinary fallback.
+The [intra-invocation certificate-term derivation](engineering/reach-certificate-term-reuse.md)
+retains completed authored scalar results under bounded native dispatch and
+operand admission, preserving fresh comparisons, callbacks and ordinary fallback.
 
 The [recorded delivery checkpoints](engineering/reach-delivery-implementation.md)
 and [independent reader implementation](engineering/reach-independent-validation.md)

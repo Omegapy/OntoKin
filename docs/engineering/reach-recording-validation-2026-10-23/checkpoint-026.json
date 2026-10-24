@@ -1,0 +1,775 @@
+{
+  "schema_version": "ontokin.reach-development-checkpoint/0.1",
+  "checkpoint": 26,
+  "created_at": "2026-10-24T02:43:46.798214+00:00",
+  "publication": {
+    "source_implementation_commit": "327e778cece3bb292f3e64751506dff364e4ee87",
+    "source_implementation_tree": "e5a11ac55d8740ce0b2b0fadbe06ea7a0080c609",
+    "control_checkpoint_commit": "6bfb0944c5c9c16f64beb0138aaac69dd5ee22db",
+    "tree_identical_local_review_commit": "f8af193f9147e22aaed8d47e5400f3db33f72d92",
+    "source_branch": "work/reach06-p09-certificate-20261023-2bcf",
+    "continuation_pr": 28,
+    "continuation_branch": "work/reach06-recordings-20261023-7of9-3be6",
+    "pr27_and_pr28_remain_open_drafts": true,
+    "main_unchanged": "2bb4588e121fcfe99b4d42c734b15b38362f3642",
+    "main_lease_held": false,
+    "hosted_jobs_dispatched_or_retried": false,
+    "source_blob_verification": "publication/source-verification.json"
+  },
+  "implemented": {
+    "scope": "Bounded intra-invocation reuse of six already computed authored certificate scalar results; four multiplications and two divisions omitted for one real admission charge.",
+    "proof": "../reach-certificate-term-reuse.md",
+    "dedicated_module": "tests/test_reach_certificate_term_reuse.py",
+    "net_saved_operations_per_eligible_complete_invocation": 5,
+    "both_authored_and_stored_quarter_plans_still_execute": true,
+    "cross_invocation_reuse": false,
+    "native_metadata_scan_limit": 512,
+    "metadata_scan_limit_is_not_numerical_cache_limit": true,
+    "native_input_bits": 2048,
+    "native_intermediate_bits": 8195,
+    "fallback": "Original arithmetic, with no added admission charge, for custom callbacks/observers, tracing/profiling, foreign dispatch, unsupported or narrow operand domains.",
+    "acceptance": "Accepted positive operation savings; no elapsed-speedup claim.",
+    "independent_source_review": "reviews/candidate-source-review-002.json",
+    "independent_final_acceptance": "reviews/final-source-acceptance.json"
+  },
+  "focused_tests": {
+    "dedicated": {
+      "passed": 28,
+      "total": 28,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "source_commit": "f8af193f9147e22aaed8d47e5400f3db33f72d92",
+      "source_tree": "e5a11ac55d8740ce0b2b0fadbe06ea7a0080c609",
+      "report": "execution/candidate-focused-003/report.json"
+    },
+    "integrated": {
+      "passed": 121,
+      "total": 121,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "source_commit": "327e778cece3bb292f3e64751506dff364e4ee87",
+      "source_tree": "e5a11ac55d8740ce0b2b0fadbe06ea7a0080c609",
+      "report": "execution/integrated-focused-001/report.json"
+    },
+    "integrated_includes_dedicated": true,
+    "full_regression": false,
+    "executed_environment": {
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "platform": "Linux-6.18.55-x86_64-with-glibc2.39"
+    },
+    "all_inputs_present_and_stable": true
+  },
+  "whole_prefix_controls": {
+    "settings": {
+      "end_seconds": "1/4",
+      "fps": 4,
+      "helpers": false
+    },
+    "shared_request_totals": [
+      {
+        "case_id": "P09",
+        "control_shared_operations": 39636,
+        "candidate_shared_operations": 39606,
+        "saved_shared_operations": 30,
+        "includes_construction": true,
+        "pair_count": 3,
+        "glb_bytes_identical": true,
+        "complete_reports_identical": true
+      },
+      {
+        "case_id": "P11",
+        "control_shared_operations": 66842,
+        "candidate_shared_operations": 66762,
+        "saved_shared_operations": 80,
+        "includes_construction": true,
+        "pair_count": 3,
+        "glb_bytes_identical": true,
+        "complete_reports_identical": true
+      },
+      {
+        "case_id": "L03",
+        "control_shared_operations": 35690,
+        "candidate_shared_operations": 35660,
+        "saved_shared_operations": 30,
+        "includes_construction": true,
+        "pair_count": 8,
+        "glb_bytes_identical": true,
+        "complete_reports_identical": true
+      }
+    ],
+    "reach_only_and_timing_detail": "reviews/performance-review.json",
+    "all_14_pairs_retained": true,
+    "complete_glb_and_export_report_equivalence": true,
+    "original_complete_recordings": false,
+    "L03_pooled_timing": {
+      "pairs": 8,
+      "control_median_ms": 410.2567480003927,
+      "candidate_median_ms": 423.0392980025499,
+      "median_delta_ms": 12.782550002157222,
+      "paired_delta_mean_ms": 5.95192775290343,
+      "paired_delta_median_ms": 10.707615001592785,
+      "slower_pairs": 4,
+      "faster_pairs": 4,
+      "control_range_ms": [
+        375.0665420011501,
+        460.76621399697615
+      ],
+      "candidate_range_ms": [
+        390.8604180032853,
+        448.66255200031446
+      ]
+    },
+    "elapsed_speedup_claimed": false,
+    "native_state_scans_per_eligible_invocation": 17,
+    "timing_limit": "L03 pooled median increases12.78255ms (3.1%); four slower/four faster pairs with overlapping ranges. Real metadata overhead remains; no causal isolation or general speedup established."
+  },
+  "source_recordings": {
+    "required": 28,
+    "passed": 23,
+    "failed": [
+      "P09",
+      "P11",
+      "P16",
+      "P23",
+      "L03"
+    ],
+    "status": "failed",
+    "control_report": "execution/control-original28/report.json",
+    "candidate_report": "execution/integrated-original28-001/report.json",
+    "comparison": "execution/original28-comparison.json",
+    "rows": [
+      {
+        "case_id": "P01",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 41821,
+        "candidate_operations": 41761,
+        "control_elapsed_ms": 773.0990409982041,
+        "candidate_elapsed_ms": 897.5352560009924,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 60,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "P02",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 45194,
+        "candidate_operations": 45134,
+        "control_elapsed_ms": 743.5607190054725,
+        "candidate_elapsed_ms": 886.5904240010423,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 60,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "P03",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 43045,
+        "candidate_operations": 42985,
+        "control_elapsed_ms": 727.8021989986883,
+        "candidate_elapsed_ms": 803.8964290026342,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 60,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "P04",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 44112,
+        "candidate_operations": 44052,
+        "control_elapsed_ms": 714.2025790017215,
+        "candidate_elapsed_ms": 807.7941390001797,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 60,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "P05",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 93157,
+        "candidate_operations": 93097,
+        "control_elapsed_ms": 1576.132707996294,
+        "candidate_elapsed_ms": 1738.6601039979723,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 60,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "P06",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 22284,
+        "candidate_operations": 22239,
+        "control_elapsed_ms": 277.7073639954324,
+        "candidate_elapsed_ms": 300.8665759989526,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 45,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "P07",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 56075,
+        "candidate_operations": 56015,
+        "control_elapsed_ms": 1219.7072269991622,
+        "candidate_elapsed_ms": 1305.9430490029627,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 60,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "P08",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 56072,
+        "candidate_operations": 56012,
+        "control_elapsed_ms": 1266.854500005138,
+        "candidate_elapsed_ms": 1265.481334994547,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 60,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "P09",
+        "control_status": "failed",
+        "candidate_status": "failed",
+        "control_operations": 100001,
+        "candidate_operations": 100001,
+        "control_elapsed_ms": 2146.3978690007934,
+        "candidate_elapsed_ms": 2357.845915998041,
+        "same_program_revision": true,
+        "same_options": true,
+        "diagnostic_identical": true,
+        "failure_identical": true,
+        "completed_request_saving": null
+      },
+      {
+        "case_id": "P10",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 41821,
+        "candidate_operations": 41761,
+        "control_elapsed_ms": 804.0197950031143,
+        "candidate_elapsed_ms": 764.6594369944069,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 60,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "P11",
+        "control_status": "failed",
+        "candidate_status": "failed",
+        "control_operations": 100001,
+        "candidate_operations": 100001,
+        "control_elapsed_ms": 1796.0198640066665,
+        "candidate_elapsed_ms": 1644.4275100002415,
+        "same_program_revision": true,
+        "same_options": true,
+        "diagnostic_identical": true,
+        "failure_identical": true,
+        "completed_request_saving": null
+      },
+      {
+        "case_id": "P12",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 32309,
+        "candidate_operations": 32269,
+        "control_elapsed_ms": 540.768686994852,
+        "candidate_elapsed_ms": 551.3914339971961,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 40,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "P13",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 64057,
+        "candidate_operations": 63897,
+        "control_elapsed_ms": 1390.1266769971699,
+        "candidate_elapsed_ms": 1448.014540997974,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 160,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "P14",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 52333,
+        "candidate_operations": 52228,
+        "control_elapsed_ms": 815.8219929973711,
+        "candidate_elapsed_ms": 914.2687590065179,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 105,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "P15",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 33077,
+        "candidate_operations": 33017,
+        "control_elapsed_ms": 426.0091529940837,
+        "candidate_elapsed_ms": 454.25698399776593,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 60,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "P16",
+        "control_status": "failed",
+        "candidate_status": "failed",
+        "control_operations": 100001,
+        "candidate_operations": 100001,
+        "control_elapsed_ms": 1021.7777029974968,
+        "candidate_elapsed_ms": 1022.8356139996322,
+        "same_program_revision": true,
+        "same_options": true,
+        "diagnostic_identical": true,
+        "failure_identical": true,
+        "completed_request_saving": null
+      },
+      {
+        "case_id": "P17",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 39254,
+        "candidate_operations": 39224,
+        "control_elapsed_ms": 692.6702450000448,
+        "candidate_elapsed_ms": 694.8692539954209,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 30,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "P18",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 63086,
+        "candidate_operations": 63026,
+        "control_elapsed_ms": 1128.1768859989825,
+        "candidate_elapsed_ms": 1266.8901090000873,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 60,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "P19",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 47447,
+        "candidate_operations": 47402,
+        "control_elapsed_ms": 660.6135619949782,
+        "candidate_elapsed_ms": 755.2117279992672,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 45,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "P20",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 80152,
+        "candidate_operations": 79992,
+        "control_elapsed_ms": 1686.5041779965395,
+        "candidate_elapsed_ms": 1945.8586299952003,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 160,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "P21",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 41559,
+        "candidate_operations": 41499,
+        "control_elapsed_ms": 738.3579020024627,
+        "candidate_elapsed_ms": 760.6314169970574,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 60,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "P22",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 22307,
+        "candidate_operations": 22262,
+        "control_elapsed_ms": 297.57680599868763,
+        "candidate_elapsed_ms": 326.28970599762397,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 45,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "P23",
+        "control_status": "failed",
+        "candidate_status": "failed",
+        "control_operations": 100001,
+        "candidate_operations": 100001,
+        "control_elapsed_ms": 2260.3705729998183,
+        "candidate_elapsed_ms": 2403.5032699976,
+        "same_program_revision": true,
+        "same_options": true,
+        "diagnostic_identical": true,
+        "failure_identical": true,
+        "completed_request_saving": null
+      },
+      {
+        "case_id": "P25",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 42162,
+        "candidate_operations": 42102,
+        "control_elapsed_ms": 754.9383119985578,
+        "candidate_elapsed_ms": 860.3553180000745,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 60,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "P26",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 40302,
+        "candidate_operations": 40272,
+        "control_elapsed_ms": 791.951864004659,
+        "candidate_elapsed_ms": 888.8712029947783,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 30,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "L01",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 77917,
+        "candidate_operations": 77812,
+        "control_elapsed_ms": 1332.5129030054086,
+        "candidate_elapsed_ms": 1551.3897819982958,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 105,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "L02",
+        "control_status": "passed",
+        "candidate_status": "passed",
+        "control_operations": 72358,
+        "candidate_operations": 72268,
+        "control_elapsed_ms": 1187.6928650017362,
+        "candidate_elapsed_ms": 1273.8687110031606,
+        "same_program_revision": true,
+        "same_options": true,
+        "glb_bytes_identical": true,
+        "validation_reports_identical": true,
+        "source_units_identical": true,
+        "changed_report_keys": [
+          "source_code_sha256"
+        ],
+        "saved_operations": 90,
+        "implementation_hashes_independently_verified": true
+      },
+      {
+        "case_id": "L03",
+        "control_status": "failed",
+        "candidate_status": "failed",
+        "control_operations": 100001,
+        "candidate_operations": 100001,
+        "control_elapsed_ms": 1969.2811479981174,
+        "candidate_elapsed_ms": 2199.483106000116,
+        "same_program_revision": true,
+        "same_options": true,
+        "diagnostic_identical": true,
+        "failure_identical": true,
+        "completed_request_saving": null
+      }
+    ],
+    "all_passing_glb_bytes_and_validation_reports_identical": true,
+    "complete_export_reports_differ_only_in_verified_implementation_source_hash": true,
+    "implementation_source_sha256": {
+      "control": "444f7ea24df400b578b3ace84c3ebdd40ee5050132d0a26ebf7eb11c938e301a",
+      "candidate": "d73a5f9d35fcc74570e21d28e1a364c4a6f6743a3df4b0b8300ae3e37359a325"
+    },
+    "passing_saved_operations_range": [
+      30,
+      160
+    ],
+    "passing_saved_operations_total": 1575,
+    "no_elapsed_cap_failures": true,
+    "maximum_candidate_elapsed_ms": 2403.5032699976,
+    "capped_failures_are_not_complete_costs": true,
+    "all_inputs_present_and_stable": true
+  },
+  "diagnostics": {
+    "control_source": "6bfb0944c5c9c16f64beb0138aaac69dd5ee22db",
+    "P09_neutral_profile": "execution/control-p09-observed/report.json",
+    "completed_key_comparisons": 205,
+    "last_completed_key_operation": 99037,
+    "source_and_attribution_match_unobserved_control": true,
+    "enabled_candidate_neutral_profile_claimed": false,
+    "reason": "The current shortcut deliberately falls back when profiling/tracing is active; v7 cannot neutrally measure enabled candidate savings."
+  },
+  "failed_attempts": {
+    "candidate_focused_001": "25 of26 methods passed, one error in an invalid new positive-control enclosure; untouched baseline rejects that input too. Raw attempt retained.",
+    "candidate_focused_002": "27 of27 passed; superseded by mutable-keyword-default guard and final 28th method.",
+    "correction_record": "reviews/first-execution-correction.json",
+    "evidence_preparation_correction": "reviews/preservation-script-correction.json",
+    "cross_cut_report_comparison_correction": "execution/original28-comparison.json#earlier_comparison_attempt",
+    "no_original_fixtures_or_oracles_modified": true
+  },
+  "historical_recovery": {
+    "control_tracked_files": 1735,
+    "control_tracked_bytes": 369544915,
+    "exact_remote_blob_closure": "recovery/tracked-closure.json",
+    "historical_archives_present": 37,
+    "old_unavailable_raw_logs_remain_unavailable": true,
+    "older_run_reconstruction_claimed": false
+  },
+  "local_review_cuts": "local-review-cuts/index.json",
+  "documentation": {
+    "record": "checkpoint-026-documentation.json",
+    "handoff": "HANDOFF-026.md"
+  },
+  "unchanged_acceptance": {
+    "max_operations": 100000,
+    "max_elapsed_ms": 30000,
+    "max_operand_bits": 32768,
+    "max_numerical_cache_entries": 256,
+    "fixtures_horizons_fps_helpers_tolerances_unchanged": true,
+    "original_guards_callbacks_and_independent_checks_preserved": true
+  },
+  "pending": [
+    "original source recordings28/28",
+    "actual Agent delivery",
+    "full current regression",
+    "CPython3.11/3.12/3.13 compatibility",
+    "complete independent rates",
+    "native/browser/visual roles",
+    "hostile/inherited roles",
+    "all R01\u2013R12/Q01\u2013Q22 gates",
+    "formal release input-closure audit",
+    "resulting-main verification"
+  ],
+  "release_input_closure": false,
+  "release_acceptance": false,
+  "full_product_goal_completed": false,
+  "next_action": "Continue bounded exact final-certificate work on the published implementation. Review whether the second, stored quarter can reuse already completed authored terms only when the current exact operand triples coincide; derive its complete admission, guard, fallback and accounting obligations first. This extension is unimplemented and unmeasured. Require dedicated equivalence/hostile tests, complete shared-request cost and elapsed controls, the related cohort and every unchanged original recording after an accepted integration. An active sys.setprofile/sys.settrace disables the current shortcut; the old v7 profiler is not neutral for measuring enabled candidate savings. P11/L03 fail earlier; P16/P23 need their separate scoped work.",
+  "archive": {
+    "bytes": 6834663,
+    "sha256": "4741da9ab50da2966122243d1ca2101b4b98e6eae75c2ae8d4f01a32ecf373c5",
+    "parts": [
+      {
+        "path": "checkpoint-026.zip.part001",
+        "bytes": 900000,
+        "sha256": "d6b017756842f0186ad5f1cf28c8d6ff1ef719bcc39b9239f40643198fc62d6a"
+      },
+      {
+        "path": "checkpoint-026.zip.part002",
+        "bytes": 900000,
+        "sha256": "62b99c2034c3d125a585a6aa848fd56f1eca2f8c22d5d2f3d44ac555d71c3f32"
+      },
+      {
+        "path": "checkpoint-026.zip.part003",
+        "bytes": 900000,
+        "sha256": "988c3646d9fd2deef493d9b972cfdcbbafc5d12ae66208ba91bbf51384ac4fd3"
+      },
+      {
+        "path": "checkpoint-026.zip.part004",
+        "bytes": 900000,
+        "sha256": "e994900fd918b2a518bf4aee907b680eb14739ad9ec28c8312e721c6e37d52d3"
+      },
+      {
+        "path": "checkpoint-026.zip.part005",
+        "bytes": 900000,
+        "sha256": "a046c11ebbb790dcf41dc0ce1fcd0c57686fe0f57493bd851e1522e94fbe8561"
+      },
+      {
+        "path": "checkpoint-026.zip.part006",
+        "bytes": 900000,
+        "sha256": "9c77ce0459fe51789f68891dbd0b3439699a4d30540f9850e7e3145642329786"
+      },
+      {
+        "path": "checkpoint-026.zip.part007",
+        "bytes": 900000,
+        "sha256": "85c0580512d5f7733430275db791176250ef7cb0cca9c681011e5276e9ab90e5"
+      },
+      {
+        "path": "checkpoint-026.zip.part008",
+        "bytes": 534663,
+        "sha256": "7ac9bb112afdd39d60906dd2532a48a8d1aeab86a10b1634787b34e090773c31"
+      }
+    ],
+    "member_count": 385,
+    "manifest": "checkpoint-026-manifest.json",
+    "joined_hash_verified": true,
+    "member_hashes_verified": true,
+    "zip_crc_verified": true,
+    "source_members_stable_during_packaging": true,
+    "independent_review": "checkpoint-026-archive-review.json"
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "schema_version": "ontokin.certificate-term-performance-review/0.1",
+  "source_commit": "f8af193f9147e22aaed8d47e5400f3db33f72d92",
+  "source_tree": "e5a11ac55d8740ce0b2b0fadbe06ea7a0080c609",
+  "published_tree_identical_commit": "327e778cece3bb292f3e64751506dff364e4ee87",
+  "whole_prefix_controls": [
+    {
+      "case_id": "P09",
+      "control_operations": 35503,
+      "candidate_operations": 35473,
+      "saved_operations": 30,
+      "glb_bytes_identical": true,
+      "complete_reports_identical": true,
+      "control_elapsed_ms": [
+        550.3210649985704,
+        521.6821870053536,
+        508.2971660012845
+      ],
+      "candidate_elapsed_ms": [
+        507.48161699448247,
+        518.5875930037582,
+        547.5135539963958
+      ],
+      "control_median_elapsed_ms": 521.6821870053536,
+      "candidate_median_elapsed_ms": 518.5875930037582
+    },
+    {
+      "case_id": "P11",
+      "control_operations": 60119,
+      "candidate_operations": 60039,
+      "saved_operations": 80,
+      "glb_bytes_identical": true,
+      "complete_reports_identical": true,
+      "control_elapsed_ms": [
+        909.3261860034545,
+        959.4901360032964,
+        926.8043960037176
+      ],
+      "candidate_elapsed_ms": [
+        904.4015140025294,
+        907.8485060017556,
+        968.7895140014007
+      ],
+      "control_median_elapsed_ms": 926.8043960037176,
+      "candidate_median_elapsed_ms": 907.8485060017556
+    },
+    {
+      "case_id": "L03",
+      "control_operations": 31457,
+      "candidate_operations": 31427,
+      "saved_operations": 30,
+      "glb_bytes_identical": true,
+      "complete_reports_identical": true,
+      "control_elapsed_ms": [
+        415.7755139967776,
+        404.7379820040078,
+        426.6490599984536
+      ],
+      "candidate_elapsed_ms": [
+        415.1772519981023,
+        446.785212996474,
+        448.66255200031446
+      ],
+      "control_median_elapsed_ms": 415.7755139967776,
+      "candidate_median_elapsed_ms": 446.785212996474
+    }
+  ],
+  "additional_L03_fixed_pairs": {
+    "case_id": "L03",
+    "control_operations": 31457,
+    "candidate_operations": 31427,
+    "saved_operations": 30,
+    "glb_bytes_identical": true,
+    "complete_reports_identical": true,
+    "control_elapsed_ms": [
+      460.76621399697615,
+      443.8765659942874,
+      401.75437499419786,
+      375.0665420011501,
+      399.8973279958591
+    ],
+    "candidate_elapsed_ms": [
+      424.4314360039425,
+      421.6471600011573,
+      427.58031000266783,
+      400.99466199899325,
+      390.8604180032853
+    ],
+    "control_median_elapsed_ms": 401.75437499419786,
+    "candidate_median_elapsed_ms": 421.6471600011573
+  },
+  "pooled_L03": {
+    "pairs": 8,
+    "control_median_ms": 410.2567480003927,
+    "candidate_median_ms": 423.0392980025499,
+    "median_delta_ms": 12.782550002157222,
+    "paired_delta_mean_ms": 5.95192775290343,
+    "paired_delta_median_ms": 10.707615001592785,
+    "slower_pairs": 4,
+    "faster_pairs": 4,
+    "control_range_ms": [
+      375.0665420011501,
+      460.76621399697615
+    ],
+    "candidate_range_ms": [
+      390.8604180032853,
+      448.66255200031446
+    ]
+  },
+  "all_attempts_retained": true,
+  "timing_speedup_claimed": false,
+  "decision": "Positive complete-request operation savings with exact bytes/reports. P09/P11 medians are similar. L03 pooled median is12.78ms higher(3.1%), with4 slower/4 faster pairs and overlapping ranges; this does not establish a wall-clock improvement or an unacceptable elapsed regression. Proceed to unchanged original28 and retain actual cap outcomes.",
+  "source_review_overhead": "Source worker counted17 native-state admissions per eligible invocation. This is real bounded Python metadata overhead and may contribute to timing; measured samples do not isolate its causal size.",
+  "original_limits": {
+    "max_operations": 100000,
+    "max_elapsed_ms": 30000,
+    "max_operand_bits": 32768,
+    "max_cache_entries": 256
+  }
+}
