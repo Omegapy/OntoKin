@@ -560,6 +560,26 @@ def _complete_inequality_values(ha, hs, quantities, position_tolerance, rotation
             rotation = terms.calculate("rotation", div, angle_squared, four)
             product = terms.calculate("product", mul, a, width_squared)
             chord = terms.calculate("chord", div, product, eight)
+        elif (terms is not None and terms.zero_quarter(
+                angular, acceleration, envelope_angular, envelope_acceleration)):
+            # Canonical zero coefficients do not depend on width equality.
+            # The stored square still executes, with its own original guards.
+            angle = terms.zero("angle", "mul", w, width)
+            if angle is None:
+                angle = mul(w, width)
+            width_squared = square(width)
+            angle_squared = terms.zero("angle_squared", "mul", angle, angle)
+            if angle_squared is None:
+                angle_squared = square(angle)
+            rotation = terms.zero("rotation", "div", angle_squared, four)
+            if rotation is None:
+                rotation = div(angle_squared, four)
+            product = terms.zero("product", "mul", a, width_squared)
+            if product is None:
+                product = mul(a, width_squared)
+            chord = terms.zero("chord", "div", product, eight)
+            if chord is None:
+                chord = div(product, eight)
         else:
             angle, width_squared = mul(w, width), square(width)
             rotation, chord = div(square(angle), four), div(mul(a, width_squared), eight)
@@ -2807,6 +2827,7 @@ class _CertificateTermReuse:
         self.operands, self.fields = operands, tuple(_certificate_fraction_fields(value) for value in operands)
         self.results = {}
         self.valid, self.admitted = True, False
+        self.zero_coefficients = None
 
     def current(self):
         self.valid = (self.valid and _certificate_term_native(self.arithmetic)
@@ -2837,7 +2858,7 @@ class _CertificateTermReuse:
                 self.valid = False
                 return None
         if not self.admitted:
-            # The extra bounded proof charges at its first actual omission,
+            # If no earlier zero omission admitted the proof, charge here
             # after both mandatory quarter plans retain their failure order.
             self.arithmetic.tick("independent_certificate_term_admission")
             self.admitted = True
@@ -2860,6 +2881,77 @@ class _CertificateTermReuse:
             object.__setattr__(value, "_denominator", fields[1])
             copies.append(value)
         return tuple(copies)
+
+    def zero_quarter(self, angular, acceleration, envelope_angular, envelope_acceleration):
+        """Admit the separate all-four-zero identity for the stored quarter.
+
+        Saved primitive fields cheaply reject ordinary nonzero groups. The
+        enclosing coefficients are the original local objects, not fresh
+        dictionary reads that could change the calculation's binding order.
+        """
+        if self.fields[2:4] != ((0, 1), (0, 1)) or not self.current():
+            return False
+        coefficients = (angular, acceleration, envelope_angular, envelope_acceleration)
+        if any(_certificate_fraction_fields(value) != (0, 1) for value in coefficients):
+            return False
+        for name in ("angle", "angle_squared", "rotation", "product", "chord"):
+            record = self.results.get(name)
+            if record is None or record[3] != (0, 1):
+                return False
+            operands, fields, result, result_fields = record
+            if (tuple(_certificate_fraction_fields(value, bits=8195) for value in operands) != fields
+                    or _certificate_fraction_fields(result, bits=8195) != result_fields):
+                self.valid = False
+                return False
+        self.zero_coefficients = coefficients
+        return True
+
+    def zero(self, name, operation, first, last):
+        """Copy a completed zero after guarding this actual omitted operation."""
+        expected = {"angle": "mul", "angle_squared": "mul", "rotation": "div",
+                    "product": "mul", "chord": "div"}
+        if expected.get(name) != operation or self.zero_coefficients is None:
+            return None
+
+        def admitted_fields():
+            if (not self.current() or any(_certificate_fraction_fields(value) != (0, 1)
+                    for value in self.zero_coefficients)):
+                return None
+            record = self.results.get(name)
+            if record is None or record[3] != (0, 1):
+                return None
+            operands, saved, result, result_fields = record
+            if (tuple(_certificate_fraction_fields(value, bits=8195) for value in operands) != saved
+                    or _certificate_fraction_fields(result, bits=8195) != result_fields):
+                self.valid = False
+                return None
+            a = _certificate_fraction_fields(first, bits=8195)
+            b = _certificate_fraction_fields(last, bits=8195)
+            if (a != (0, 1) or b is None or operation == "div" and b[0] == 0
+                    or name == "angle_squared" and b != (0, 1)):
+                return None
+            return a, b, result_fields
+
+        fields = admitted_fields()
+        if fields is None:
+            return None
+        if not self.admitted:
+            # Share the existing admission with later authored-term reuse.
+            # This is real performed work at the first actual zero omission.
+            self.arithmetic.tick("independent_certificate_term_admission")
+            self.admitted = True
+            if admitted_fields() != fields:
+                return None
+        a, b, result_fields = fields
+        an, ad, bn, bd = a[0].bit_length(), a[1].bit_length(), b[0].bit_length(), b[1].bit_length()
+        divide = operation == "div"
+        self.arithmetic.bits(an, ad, bn, bd, an + (bd if divide else bn),
+                             ad + (bn if divide else bd),
+                             result_fields[0].bit_length(), result_fields[1].bit_length())
+        value = object.__new__(Fraction)
+        object.__setattr__(value, "_numerator", result_fields[0])
+        object.__setattr__(value, "_denominator", result_fields[1])
+        return value
 
 
 _ADJACENT_BOUNDS_DISPATCH = tuple((name, getattr(_Bounds, name))
