@@ -1,0 +1,147 @@
+{
+  "status": "passed",
+  "scope": "Four completed regression reproductions only; no complete regression acceptance",
+  "normalization": "Only each actual absolute repository directory is replaced by <repository> in derivative trace comparisons; every original traceback remains retained.",
+  "baseline_and_candidate_records": {
+    "baseline": {
+      "source_commit": "6afa8439a37f0b7387b77a13f174014963adca8c",
+      "source_tree": "368cf57fe150302e2b0c606eb4d185ae09dc8003",
+      "test_ids": [
+        "test_reach_endpoint_traversal.ReachEndpointTraversalTests.test_cancellation_preserves_input_tracks_and_propagates_original_exception",
+        "test_reach_endpoint_traversal.ReachEndpointTraversalTests.test_complete_p01_bytes_equal_carrier_major_proofs",
+        "test_reach_pending_output.ReachPendingOutputTests.test_every_observed_field_equals_fresh_boundary_reconstruction",
+        "test_reach_phase_reuse.ReachPhaseReuseTests.test_translated_and_differently_anchored_paths_do_not_borrow_bounds"
+      ],
+      "test_module_hashes": {
+        "tests/test_reach_endpoint_traversal.py": "c890d3ad33b559cea203666e50a19540c58f1041f4c872a6d19babbb2df151ca",
+        "tests/test_reach_pending_output.py": "8501af510379012acd1dce502bcf3da879d7cf9e5100880a6095e07a100a6caa",
+        "tests/test_reach_phase_reuse.py": "80ee60a97a2ac566f521c85c36677e336e8c2836340def3b126796bfeeb69fb7"
+      },
+      "normalized_results": [
+        {
+          "test_id": "test_reach_endpoint_traversal.ReachEndpointTraversalTests.test_cancellation_preserves_input_tracks_and_propagates_original_exception",
+          "status": "failed",
+          "traceback": "Traceback (most recent call last):\n  File \"<repository>/tests/test_reach_endpoint_traversal.py\", line 67, in test_cancellation_preserves_input_tracks_and_propagates_original_exception\n    with self.assertRaises(RuntimeError) as caught:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: RuntimeError not raised\n"
+        },
+        {
+          "test_id": "test_reach_endpoint_traversal.ReachEndpointTraversalTests.test_complete_p01_bytes_equal_carrier_major_proofs",
+          "status": "failed",
+          "traceback": "Traceback (most recent call last):\n  File \"<repository>/tests/test_reach_endpoint_traversal.py\", line 82, in test_complete_p01_bytes_equal_carrier_major_proofs\n    self.assertEqual(current.data, previous.data)\nAssertionError: b'glT[14 chars]x00\\x18\\x88\\x08\\x00\\xbc\\xc5\\x07\\x00JSON{\"asset[662819 chars]045?' != b'glT[14 chars]x00\\xe8\\x88\\x08\\x00\\x8c\\xc6\\x07\\x00JSON{\"asset[663027 chars]045?'\n"
+        },
+        {
+          "test_id": "test_reach_pending_output.ReachPendingOutputTests.test_every_observed_field_equals_fresh_boundary_reconstruction",
+          "subtest": "test_reach_pending_output.ReachPendingOutputTests.test_every_observed_field_equals_fresh_boundary_reconstruction (case='P16', time=Fraction(2, 1))",
+          "status": "failed",
+          "traceback": "Traceback (most recent call last):\n  File \"<repository>/tests/test_reach_pending_output.py\", line 35, in test_every_observed_field_equals_fresh_boundary_reconstruction\n    self.assertLess(actual.work.operations, expected.work.operations)\nAssertionError: 18813 not less than 16442\n"
+        },
+        {
+          "test_id": "test_reach_phase_reuse.ReachPhaseReuseTests.test_translated_and_differently_anchored_paths_do_not_borrow_bounds",
+          "status": "error",
+          "traceback": "Traceback (most recent call last):\n  File \"<repository>/tests/test_reach_phase_reuse.py\", line 132, in test_translated_and_differently_anchored_paths_do_not_borrow_bounds\n    actual = phase_bounds(dynamic, F(2), F(3), state)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repository>/ontokin/reach_phase.py\", line 1357, in phase_bounds\n    instance(path)\n  File \"<repository>/ontokin/reach_phase.py\", line 1340, in instance\n    result = dynamic(path)\n             ^^^^^^^^^^^^^\n  File \"<repository>/ontokin/reach_phase.py\", line 1248, in dynamic\n    cells = source_sizes(simulator, state, path, start, end)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repository>/ontokin/reach_transfer_bounds.py\", line 983, in source_sizes\n    _, acceleration, _, _, initial = _source_guard(simulator, state, path, proof)\n                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repository>/ontokin/reach_transfer_bounds.py\", line 955, in _source_guard\n    raise ReachAdmissionError(\"reach_domain\", \"An admitted dynamic envelope changed source.\")\nontokin.reach_numeric.ReachAdmissionError: An admitted dynamic envelope changed source.\n"
+        }
+      ]
+    },
+    "candidate": {
+      "source_commit": "d2f0088c4f3c1f570630334804a5a8f78e0105ac",
+      "source_tree": "1f0b08f8846f443b8bc573fe0c9d5e1e3c319c47",
+      "test_ids": [
+        "test_reach_endpoint_traversal.ReachEndpointTraversalTests.test_cancellation_preserves_input_tracks_and_propagates_original_exception",
+        "test_reach_endpoint_traversal.ReachEndpointTraversalTests.test_complete_p01_bytes_equal_carrier_major_proofs",
+        "test_reach_pending_output.ReachPendingOutputTests.test_every_observed_field_equals_fresh_boundary_reconstruction",
+        "test_reach_phase_reuse.ReachPhaseReuseTests.test_translated_and_differently_anchored_paths_do_not_borrow_bounds"
+      ],
+      "test_module_hashes": {
+        "tests/test_reach_endpoint_traversal.py": "c890d3ad33b559cea203666e50a19540c58f1041f4c872a6d19babbb2df151ca",
+        "tests/test_reach_pending_output.py": "8501af510379012acd1dce502bcf3da879d7cf9e5100880a6095e07a100a6caa",
+        "tests/test_reach_phase_reuse.py": "80ee60a97a2ac566f521c85c36677e336e8c2836340def3b126796bfeeb69fb7"
+      },
+      "normalized_results": [
+        {
+          "test_id": "test_reach_endpoint_traversal.ReachEndpointTraversalTests.test_cancellation_preserves_input_tracks_and_propagates_original_exception",
+          "status": "failed",
+          "traceback": "Traceback (most recent call last):\n  File \"<repository>/tests/test_reach_endpoint_traversal.py\", line 67, in test_cancellation_preserves_input_tracks_and_propagates_original_exception\n    with self.assertRaises(RuntimeError) as caught:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: RuntimeError not raised\n"
+        },
+        {
+          "test_id": "test_reach_endpoint_traversal.ReachEndpointTraversalTests.test_complete_p01_bytes_equal_carrier_major_proofs",
+          "status": "failed",
+          "traceback": "Traceback (most recent call last):\n  File \"<repository>/tests/test_reach_endpoint_traversal.py\", line 82, in test_complete_p01_bytes_equal_carrier_major_proofs\n    self.assertEqual(current.data, previous.data)\nAssertionError: b'glT[14 chars]x00\\x18\\x88\\x08\\x00\\xbc\\xc5\\x07\\x00JSON{\"asset[662819 chars]045?' != b'glT[14 chars]x00\\xe8\\x88\\x08\\x00\\x8c\\xc6\\x07\\x00JSON{\"asset[663027 chars]045?'\n"
+        },
+        {
+          "test_id": "test_reach_pending_output.ReachPendingOutputTests.test_every_observed_field_equals_fresh_boundary_reconstruction",
+          "subtest": "test_reach_pending_output.ReachPendingOutputTests.test_every_observed_field_equals_fresh_boundary_reconstruction (case='P16', time=Fraction(2, 1))",
+          "status": "failed",
+          "traceback": "Traceback (most recent call last):\n  File \"<repository>/tests/test_reach_pending_output.py\", line 35, in test_every_observed_field_equals_fresh_boundary_reconstruction\n    self.assertLess(actual.work.operations, expected.work.operations)\nAssertionError: 18813 not less than 16442\n"
+        },
+        {
+          "test_id": "test_reach_phase_reuse.ReachPhaseReuseTests.test_translated_and_differently_anchored_paths_do_not_borrow_bounds",
+          "status": "error",
+          "traceback": "Traceback (most recent call last):\n  File \"<repository>/tests/test_reach_phase_reuse.py\", line 132, in test_translated_and_differently_anchored_paths_do_not_borrow_bounds\n    actual = phase_bounds(dynamic, F(2), F(3), state)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repository>/ontokin/reach_phase.py\", line 1357, in phase_bounds\n    instance(path)\n  File \"<repository>/ontokin/reach_phase.py\", line 1340, in instance\n    result = dynamic(path)\n             ^^^^^^^^^^^^^\n  File \"<repository>/ontokin/reach_phase.py\", line 1248, in dynamic\n    cells = source_sizes(simulator, state, path, start, end)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repository>/ontokin/reach_transfer_bounds.py\", line 983, in source_sizes\n    _, acceleration, _, _, initial = _source_guard(simulator, state, path, proof)\n                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<repository>/ontokin/reach_transfer_bounds.py\", line 955, in _source_guard\n    raise ReachAdmissionError(\"reach_domain\", \"An admitted dynamic envelope changed source.\")\nontokin.reach_numeric.ReachAdmissionError: An admitted dynamic envelope changed source.\n"
+        }
+      ]
+    }
+  },
+  "input_receipts": [
+    {
+      "path": "execution/baseline-regression-failures-001/report.json",
+      "bytes": 1949,
+      "sha256": "1cc3275f6a9e0e6228b4df5a7a9175442d7e93848299ff7dfc0d07395a5050a1"
+    },
+    {
+      "path": "execution/baseline-regression-failures-001/tests.json",
+      "bytes": 4153,
+      "sha256": "90bfbed40ac2601770732820da03d61d9ec4b7091981037922e8a110806921f9"
+    },
+    {
+      "path": "execution/baseline-regression-failures-001/tests.log",
+      "bytes": 5010,
+      "sha256": "90edf9ecf232de4ba519d2f3c112916393c2e5557e685669be85627f5d8898ab"
+    },
+    {
+      "path": "execution/baseline-regression-failures-001/inputs-before.json",
+      "bytes": 375974,
+      "sha256": "03a61ad98eed9ca17ddf6bf2cdd8ff698d334bb8bad9ac35979e4e8a01c89643"
+    },
+    {
+      "path": "execution/baseline-regression-failures-001/inputs-after.json",
+      "bytes": 375974,
+      "sha256": "03a61ad98eed9ca17ddf6bf2cdd8ff698d334bb8bad9ac35979e4e8a01c89643"
+    },
+    {
+      "path": "execution/integrated-regression-failures-001/report.json",
+      "bytes": 1928,
+      "sha256": "30f096a40f9fa744bfef507c84504baddf3fe10ef7ba9e54adb21365fb08107c"
+    },
+    {
+      "path": "execution/integrated-regression-failures-001/tests.json",
+      "bytes": 4045,
+      "sha256": "ffc6a9aa152e5e085fde2516429a909fddc83e59549570a06ced17605bb7cc35"
+    },
+    {
+      "path": "execution/integrated-regression-failures-001/tests.log",
+      "bytes": 4903,
+      "sha256": "bfead8ca8f2c3f07742ab112e2824fea14b0dc404f7b8566c2f9a1109ed082a4"
+    },
+    {
+      "path": "execution/integrated-regression-failures-001/inputs-before.json",
+      "bytes": 376356,
+      "sha256": "47a1c4ed41540e77773f69ceec61e0a5af3891c586624ca75fb2e35249a0bd43"
+    },
+    {
+      "path": "execution/integrated-regression-failures-001/inputs-after.json",
+      "bytes": 376356,
+      "sha256": "47a1c4ed41540e77773f69ceec61e0a5af3891c586624ca75fb2e35249a0bd43"
+    }
+  ],
+  "identical_test_bytes": true,
+  "identical_failure_signatures_after_exact_path_replacement": true,
+  "failures_predate_native_field_change": true,
+  "full_regression_passed": false,
+  "partial_log_recovery": {
+    "named_bytes": 195830,
+    "recovered_bytes": 360058,
+    "named_is_exact_prefix": true,
+    "recovered_sha256": "c710063c2ec404653a4288f459b1ff4eb08c126ccf7b96f3b9a35f96358ed63a",
+    "complete_test_count": null
+  },
+  "release_acceptance": false
+}

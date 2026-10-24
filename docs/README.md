@@ -204,7 +204,15 @@ The [canonical-zero stored-quarter derivation](engineering/reach-certificate-zer
 and [checkpoint 028 handoff](engineering/reach-recording-validation-2026-10-23/HANDOFF-028.md)
 record its subsequent implementation, 61 dedicated and 154 related passing methods,
 positive complete-request savings, and the still-failed 23/28 full recording gate.
-The next bounded task is a neutral capture of P09's final certificate groups.
+The [checkpoint 029 capture and census](engineering/reach-recording-validation-2026-10-23/HANDOFF-029.md)
+then identified the full P09 field opportunities. The [native-field derivation](engineering/reach-certificate-native-fields.md)
+and [checkpoint 030 handoff](engineering/reach-recording-validation-2026-10-23/HANDOFF-030.md)
+record the accepted separate decode/comparison proofs, 115 focused and 194 related
+passing methods and **24/28** original recordings. The default local attempt and
+four-case baseline reproductions leave full regression open.
+P09 now passes at **99,975 operations** under the original cap. The next bounded
+task reconciles the four inherited regression fixtures; a neutral P11/L03
+source-endpoint capture and independent census follows.
 
 The [recorded delivery checkpoints](engineering/reach-delivery-implementation.md)
 and [independent reader implementation](engineering/reach-independent-validation.md)

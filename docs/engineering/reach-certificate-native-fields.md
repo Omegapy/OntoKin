@@ -174,3 +174,13 @@ Agent delivery, full regression, Python compatibility, independent rates,
 native/browser/visual roles, formal release input closure and all R/Q gates
 remain separate obligations. This bounded proof does not complete the release
 or the full product goal.
+
+## Identified development acceptance
+
+[Checkpoint 030](reach-recording-validation-2026-10-23/checkpoint-030.json) records
+separate and combined controls, hostile regressions and acceptance on published
+source `d2f0088c4f3c1f570630334804a5a8f78e0105ac`. P09 passes at 99,975 operations
+and the original suite is 24/28. Actual measurements and remaining failures are
+identified in [HANDOFF-030](reach-recording-validation-2026-10-23/HANDOFF-030.md);
+the earlier static 150-operation ceiling remains distinct from measured complete
+baseline savings.

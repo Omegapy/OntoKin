@@ -1,5 +1,66 @@
 # Reach recording continuation, October 23, 2026
 
+## Checkpoint 030: native field proofs and 24/28 recordings
+
+[Checkpoint 030](checkpoint-030.json), [HANDOFF-030](HANDOFF-030.md),
+[source review](checkpoint-030-source-review.json), [original28 comparison](checkpoint-030-original28-comparison.json)
+and [independent archive audit](checkpoint-030-archive-review.json) identify the accepted
+group-local decode/comparison implementation. Executed integrated source is
+`d2f0088c4f3c1f570630334804a5a8f78e0105ac`, exact tree
+`1f0b08f8846f443b8bc573fe0c9d5e1e3c319c47`, identical to reviewed author cut `6a9fb22`.
+
+**Original P09 passes at 99,975 operations; the full unchanged original suite is
+24/28.** P11/P16/P23/L03 still refuse at 100,001. The validated P09 artifact is
+1,857,820 bytes, SHA-256 `12e95c68f188a15dcc764dac770ce96ad40f905a33a3bcb0e4de67d6bf5ad945`,
+identical to checkpoint 029's unvalidated input. That earlier request remains
+failed. No complete-baseline P09 saving is claimed. All 23 prior successes retain
+identical GLBs/source units and unchanged numerical bases; only verified package
+fingerprints differ in export reports. They save **4,059 complete operations**.
+
+Final focused/related cohorts pass **115/115** and **194/194**. The required
+[default local driver](checkpoint-030-local-core.json) passes **6/7** checks on
+CPython **3.12.14**; full unittest execution reaches the 900-second batch timeout.
+The externally replaced named log and recovered original partial log remain.
+[Four-case reproductions](checkpoint-030-regression-comparison.json) fail identically
+on current and untouched checkpoint-029 source (3 failures / 1 error), so full
+regression remains incomplete; no complete test count or pass is claimed.
+External pending surface/impulse attestations remain pending. Every integrated
+input inventory is complete and stable. See the [derivation](../reach-certificate-native-fields.md)
+for strict native receipts, original guards, actual admissions, fresh claims and fallback.
+
+| Prefix case | Decode-only net saving | Comparison-only net saving | Combined net saving | Combined median elapsed ratio |
+| --- | ---: | ---: | ---: | ---: |
+| P09 | 24 | 30 | 54 | 1.03942 |
+| P11 | 66 | 87 | 153 | 1.03847 |
+| L03 | 24 | 27 | 51 | 1.03023 |
+
+Final comparison/combined modes each execute 15 alternating pairs with identical
+complete GLBs/reports and positive whole-request savings. Every case passes the
+unchanged 1.10 screen. Decode acceptance retains its unchanged source cut and
+predeclared expanded 20-pair / pooled 25-pair requirement, with no exclusions. The initial
+focused signature error, decode001/002 and comparison001 timing failures, and
+actual late-hook regression failure remain archived at their actual source cuts.
+The hook repair passes both new controls within the 115-method final cohort.
+No elapsed-speedup or full-release claim is made.
+
+The [manifest](checkpoint-030-manifest.json) identifies **1,379
+members in 23 parts / 19,857,281 bytes**, joined SHA-256
+`fab5b79c27f5142828fcfde74f2377bc65f60dd1e2cbcb524359296e52ac24b6`. Every member, hash, CRC and exact archive/evidence membership
+passes. The small author-history bundle preserves executed local commits for
+replay; HANDOFF-030 supplies recovery/audit commands. Final packaging, audit and
+documentation receipts are outside the archive to avoid circular hashes.
+
+The [regression review](checkpoint-030-regression-next-scope.json) prioritizes
+reconciliation of the four inherited fixtures without weakening their contracts.
+The [recording next-scope review](checkpoint-030-next-scope.json) then selects neutral
+original P11/L03 endpoint capture and census. P16 clock and P23 producer work remain
+separate, and earlier held candidates remain held. PR27/28 remain open drafts,
+main unchanged, no main lease and no hosted job dispatched. Original limits,
+Agent delivery, compatibility, complete independent rates/native/browser/visual,
+formal release input closure and all R01–R12/Q01–Q22 obligations remain.
+
+The checkpoint sections below preserve their historical source cuts and outcomes.
+
 ## Checkpoint 029: neutral full-P09 capture and independent census
 
 [Checkpoint 029](checkpoint-029.json), the [full census](P09-full-input-census.json),
