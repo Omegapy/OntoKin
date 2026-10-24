@@ -250,6 +250,59 @@ def _checked_compare(left, right, work):
     return result
 
 
+def _ballistic_clock_in_range(ops, elapsed):
+    """Prove a strict interior clock from bounded native integer widths.
+
+    This runs only after the original horizon comparison has returned. There
+    is no remembered admission: its operands, dispatch and cap are live at the
+    exact point where the two range comparisons would otherwise execute.
+    """
+    if (type(ops) is not Binary64RecordingOps or type(elapsed) is not F
+            or _checked_compare is not _BALLISTIC_CLOCK_CHECKED_COMPARE
+            or compare is not _BALLISTIC_CLOCK_COMPARE
+            or _MIN_BALLISTIC_ELAPSED is not _BALLISTIC_CLOCK_BOUNDS[0]
+            or _MAX_BALLISTIC_ELAPSED is not _BALLISTIC_CLOCK_BOUNDS[1]
+            or any(vars(kind).get(name, _BALLISTIC_CLOCK_ABSENT) is not saved
+                   for kind, fields in _BALLISTIC_CLOCK_CLASSES for name, saved in fields)):
+        return False
+    own = object.__getattribute__(ops, "__dict__")
+    if type(own) is not dict or any(name in own for name in _BALLISTIC_CLOCK_OPS_METHODS):
+        return False
+    work = own.get("work")
+    if type(work) is not ReachExecutionWork:
+        return False
+    work_own = object.__getattribute__(work, "__dict__")
+    if (type(work_own) is not dict
+            or any(name in work_own for name in _BALLISTIC_CLOCK_WORK_METHODS)
+            or type(work_own.get("max_operand_bits")) is not int
+            or work_own["max_operand_bits"] != 32768):
+        return False
+    fields = []
+    for value in (elapsed, *_BALLISTIC_CLOCK_BOUNDS):
+        if type(value) is not F:
+            return False
+        numerator, denominator = value.numerator, value.denominator
+        if (type(numerator) is not int or type(denominator) is not int
+                or numerator <= 0 or denominator <= 0):
+            return False
+        fields.append((numerator, denominator))
+    if fields[1:] != [(1, 1 << 250), (1 << 250, 1)]:
+        return False
+    numerator_bits, denominator_bits = (value.bit_length() for value in fields[0])
+    if (max(numerator_bits, denominator_bits) > 1024
+            or not -249 <= numerator_bits - denominator_bits <= 249):
+        return False
+    # For n,d>0 with widths B,D, 2**(B-D-1) < n/d < 2**(B-D+1).
+    # These sufficient strict bounds leave all edge shapes to the original
+    # comparisons. Preserve their actual prospective guards at this omission
+    # point; each is callback-free and at most 1,275 bits in the native domain.
+    for bound, (numerator, denominator) in zip(_BALLISTIC_CLOCK_BOUNDS, fields[1:]):
+        work.guard(elapsed, bound)
+        work.guard_bits(max(numerator_bits + denominator.bit_length(),
+                            numerator.bit_length() + denominator_bits))
+    return True
+
+
 def _captured_recording_seed_key(proof, frame, time, work):
     """Describe a complete immutable direct calculation, without its result.
 
@@ -1030,7 +1083,8 @@ class Binary64RecordingOps(ReachPoseOps):
             raise _UnsupportedPlanar("A native ballistic sample needs a completed law and exact clock.")
         self.work.guard(law.horizon, law.extent, elapsed)
         self._immutable_scalar_domain((elapsed,), small=True)
-        if (elapsed.numerator < 0 or _checked_compare(elapsed, law.horizon, self.work) > 0 or (elapsed and
+        if (elapsed.numerator < 0 or _checked_compare(elapsed, law.horizon, self.work) > 0 or
+                (elapsed and not _ballistic_clock_in_range(self, elapsed) and
                 (_checked_compare(elapsed, _MIN_BALLISTIC_ELAPSED, self.work) < 0 or
                  _checked_compare(elapsed, _MAX_BALLISTIC_ELAPSED, self.work) > 0))):
             raise _UnsupportedPlanar("A native ballistic sample is outside its proved clock domain.")
@@ -2015,6 +2069,22 @@ class Binary64RecordingOps(ReachPoseOps):
             position = tuple(0.0 if zero else value for value, zero in zip(position, zeros))
         rotation = self._product(parent.rotation, local.rotation)
         return _FloatPose(position, rotation, zeros, parent.depth + 1)
+
+
+_BALLISTIC_CLOCK_ABSENT = object()
+_BALLISTIC_CLOCK_CHECKED_COMPARE = _checked_compare
+_BALLISTIC_CLOCK_COMPARE = compare
+_BALLISTIC_CLOCK_BOUNDS = (_MIN_BALLISTIC_ELAPSED, _MAX_BALLISTIC_ELAPSED)
+_BALLISTIC_CLOCK_OPS_METHODS = ("_require_domain", "_immutable_scalar_domain")
+_BALLISTIC_CLOCK_WORK_METHODS = ("charge", "guard", "guard_bits", "resource")
+_BALLISTIC_CLOCK_CLASSES = tuple((kind, tuple((name, vars(kind).get(name, _BALLISTIC_CLOCK_ABSENT))
+    for name in dict.fromkeys(("__getattribute__", "__getattr__", "__dict__", *fields))))
+    for kind, fields in (
+        (Binary64RecordingOps, ("work", *_BALLISTIC_CLOCK_OPS_METHODS)),
+        (ReachPoseOps, ("work",)),
+        (ReachExecutionWork, (*_BALLISTIC_CLOCK_WORK_METHODS, "max_operand_bits", "external_check",
+            "_source_after_charge", "operations", "counts", "max_operations", "max_elapsed_ms", "started")),
+        (F, ("numerator", "denominator", "_numerator", "_denominator", "__lt__", "__gt__", "_richcmp"))))
 
 
 _FORWARD_ABSENT = object()
