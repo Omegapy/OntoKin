@@ -385,7 +385,7 @@ def _integer(text, *, work=None):
     return value
 
 
-def rational_clock(record, *, work=None):
+def rational_clock(record, *, work=None, cache_parse=True):
     """Read a reduced, nonnegative exact clock without float conversion."""
     if not isinstance(record, dict) or set(record) != {"numerator", "denominator"}:
         _error("OKE-E-CLOCK", "A recording clock must retain its exact rational identity.")
@@ -405,7 +405,8 @@ def rational_clock(record, *, work=None):
     texts = record["numerator"], record["denominator"]
     if all(type(text) is str and len(text) <= 128 for text in texts):
         arithmetic = _Bounds(work)
-        value = arithmetic.reuse(("rational_clock", *texts), calculate)
+        value = (arithmetic.reuse(("rational_clock", *texts), calculate)
+                 if cache_parse else calculate())
         arithmetic.bits(value.numerator.bit_length(), value.denominator.bit_length())
         return value
     return calculate()
@@ -597,7 +598,12 @@ def verify_retained_clocks(decoded, quantization, authored_records, boundaries, 
         _tick(work, "independent_retained_clock")
         if not isinstance(record, dict) or set(record) != {"authored_seconds", "stored_seconds", "stored_binary32_bits", "semantic_boundary"}:
             _error("OKE-E-CLOCK", "A retained key must contain exactly its required identity fields.")
-        source = rational_clock(source_record, work=work)
+        # The complete common axis is parsed in order and retained below.
+        # Every valid authored clock is distinct; these one-shot decodes need
+        # no numerical-LRU lookup, insertion or eviction. Canonical parsing,
+        # reduction, cancellation and the final live result guard still run.
+        # Repeated interval widths keep rational_clock's ordinary cache path.
+        source = rational_clock(source_record, work=work, cache_parse=False)
         if record["authored_seconds"] != source_record:
             _error("OKE-E-CLOCK", "Animation and quantization metadata disagree on the exact authored clock.")
         bits = struct.unpack("<I", struct.pack("<f", actual))[0]
