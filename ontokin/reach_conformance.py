@@ -2620,6 +2620,137 @@ _CERTIFICATE_WORK_DISPATCH = tuple((name, getattr(_CertificateWork, name))
 _CERTIFICATE_MAXIMUM = _CertificateBatch.maximum
 
 
+_ADJACENT_BOUNDS_DISPATCH = tuple((name, getattr(_Bounds, name))
+                                for name in ("value", "sub", "op", "bits", "tick"))
+
+
+@dataclass(frozen=True)
+class _AdjacentClockReceipt:
+    arithmetic: _Bounds
+    index: int
+    authored: Fraction
+    authored_fields: tuple
+    raw: bytes
+    stored: Fraction
+    stored_fields: tuple
+    difference: Fraction
+    difference_fields: tuple
+
+
+class _AdjacentClockOperands:
+    """One preceding endpoint's completed operands, never an extra cache.
+
+    Adjacent intervals already share an authored/stored endpoint. Only its
+    native float decode and exact signed difference may be borrowed. The two
+    widths, fresh right endpoint and ordinary abs/max still run in order.
+    """
+    def __init__(self, arithmetic):
+        self.arithmetic, self.owner = arithmetic, arithmetic.work
+        self.external = getattr(self.owner, "external_check", None)
+        self.previous, self.generation = None, 0
+
+    def native(self):
+        arithmetic = self.arithmetic
+        if (type(arithmetic) is not _Bounds or arithmetic.work is not self.owner
+                or getattr(self.owner, "external_check", None) is not self.external
+                or _tick is not _CERTIFICATE_TICK
+                or type(_bound_domain(arithmetic)) is not int
+                or _bound_domain(arithmetic) != MAX_OPERAND_BITS):
+            return False
+        dispatches = ((arithmetic, _ADJACENT_BOUNDS_DISPATCH),)
+        if self.owner is not None:
+            if type(self.owner) is not _CertificateWork:
+                return False
+            dispatches += ((self.owner, _CERTIFICATE_WORK_DISPATCH),)
+        for target, entries in dispatches:
+            for name, original in entries:
+                method = getattr(target, name, None)
+                if type(method) is not MethodType or method.__self__ is not target or method.__func__ is not original:
+                    return False
+        return True
+
+    @staticmethod
+    def raw(value):
+        return struct.pack(">d", value) if type(value) is float and math.isfinite(value) else None
+
+    def reuse(self, previous, key, authored, raw):
+        if (not self.native() or type(previous) is not _AdjacentClockReceipt
+                or previous.arithmetic is not self.arithmetic
+                or type(key) is not int or not 1 <= key < MAX_KEYS
+                or key != previous.index + 1 or authored is not previous.authored
+                or self.raw(raw) != previous.raw
+                or _certificate_fraction_fields(authored) != previous.authored_fields
+                or _certificate_fraction_fields(previous.stored, bits=1075) != previous.stored_fields
+                or _certificate_fraction_fields(previous.difference, bits=3124) != previous.difference_fields):
+            return None
+        return previous
+
+    def calculate(self, key, left, right, raw_left, raw_right):
+        arithmetic, previous = self.arithmetic, self.previous
+        self.previous = None
+        self.generation += 1
+        generation = self.generation
+        source_fields = (_certificate_fraction_fields(left), _certificate_fraction_fields(right),
+                         self.raw(raw_left), self.raw(raw_right))
+        capture = (self.native() and type(key) is int and 0 <= key < MAX_KEYS
+                   and all(value is not None for value in source_fields))
+        borrowed, stored_right, stored_fields = None, None, None
+
+        def checked(operation, *args):
+            nonlocal capture
+            result = operation(*args)
+            # An original callback/resource failure escapes before this check.
+            # Checking fields adds no callback and never guards an operand at
+            # an earlier point than the original finite arithmetic would.
+            if borrowed is not None and (
+                    self.arithmetic is not arithmetic or arithmetic.work is not self.owner
+                    or getattr(self.owner, "external_check", None) is not self.external
+                    or _certificate_fraction_fields(borrowed.stored, bits=1075) != borrowed.stored_fields):
+                _error("OKE-E-INDEPENDENT-VALIDATION", "A borrowed adjacent clock operand or owner changed.")
+            capture = (capture and self.arithmetic is arithmetic and self.native()
+                       and source_fields == (_certificate_fraction_fields(left), _certificate_fraction_fields(right),
+                                             self.raw(raw_left), self.raw(raw_right))
+                       and (stored_fields is None
+                            or _certificate_fraction_fields(stored_right, bits=1075) == stored_fields))
+            return result
+
+        candidate = self.reuse(previous, key, left, raw_left) if capture else None
+        if candidate is None:
+            stored_left = checked(arithmetic.value, raw_left)
+        else:
+            # The original binary64 decode has at most 1075-bit fields. Native
+            # full-domain guards cannot call back or fail within that bound.
+            arithmetic.bits(*(value.bit_length() for value in candidate.stored_fields))
+            stored_left, borrowed = candidate.stored, candidate
+        stored_right = checked(arithmetic.value, raw_right)
+        stored_fields = _certificate_fraction_fields(stored_right, bits=1075)
+        capture = capture and stored_fields is not None
+        width = checked(arithmetic.sub, right, left)
+        stored_width = checked(arithmetic.sub, stored_right, stored_left)
+        candidate = self.reuse(previous, key, left, raw_left) if borrowed is not None else None
+        if candidate is None:
+            left_difference = checked(arithmetic.sub, left, stored_left)
+        else:
+            # <=2048-bit authored fields and a finite binary64 ratio imply
+            # <=3124-bit prospective subtraction/result guards. Only this
+            # actual omission point may discharge them under the full cap.
+            an, ad = (value.bit_length() for value in candidate.authored_fields)
+            bn, bd = (value.bit_length() for value in candidate.stored_fields)
+            arithmetic.bits(an, ad, bn, bd, max(an + bd, bn + ad) + 1, ad + bd,
+                            *(value.bit_length() for value in candidate.difference_fields))
+            left_difference = candidate.difference
+        # abs() remains at the original position and creates the current
+        # interval's own absolute result before the next surviving callback.
+        left_shift = abs(left_difference)
+        difference = checked(arithmetic.sub, right, stored_right)
+        shift = max(left_shift, abs(difference))
+        difference_fields = _certificate_fraction_fields(difference, bits=3124)
+        if capture and difference_fields is not None and self.generation == generation:
+            self.previous = _AdjacentClockReceipt(arithmetic, key, right, source_fields[1], source_fields[3],
+                                                  stored_right, stored_fields, difference, difference_fields)
+        return stored_left, stored_right, width, stored_width, shift
+
+
 class _IntervalCertificateClaims:
     """Validate every supplied row against one interval's common source facts.
 
@@ -2700,13 +2831,13 @@ def _verify_certificates(decoded, reference, geometry, tables, endpoint_phases, 
                  _CertificateBatch(arithmetic, options.position_tolerance_m, options.rotation_tolerance_rad,
                                    thresholds=thresholds))
         threshold_batch = batch
+        clocks = _AdjacentClockOperands(arithmetic)
         for key, (left, right) in enumerate(zip(authored, authored[1:])):
             following = _key_comparisons(reference, geometry, tracks, right, key + 1, arithmetic,
                                          previous=previous, previous_time=left, recording_context=recording_context,
                                          endpoint_rows=rows)
-            stored_left, stored_right = arithmetic.value(times[key]), arithmetic.value(times[key + 1])
-            width, stored_width = arithmetic.sub(right, left), arithmetic.sub(stored_right, stored_left)
-            shift = max(abs(arithmetic.sub(left, stored_left)), abs(arithmetic.sub(right, stored_right)))
+            stored_left, stored_right, width, stored_width, shift = clocks.calculate(
+                key, left, right, times[key], times[key + 1])
             low, high = max(Fraction(0), min(left, stored_left)), min(reference.end, max(right, stored_right))
             required = [index for index, (a, b) in enumerate(zip(reference.boundaries, reference.boundaries[1:]))
                         if max(a, low) < min(b, high)]
