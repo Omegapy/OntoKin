@@ -529,8 +529,12 @@ def check_complete_inequalities(record, *, position_tolerance, rotation_toleranc
         ha, hs, q, position_tolerance, rotation_tolerance, arithmetic, model).items())))
 
 
-def _complete_inequality_values(ha, hs, quantities, position_tolerance, rotation_tolerance, arithmetic, model):
+def _complete_inequality_values(ha, hs, quantities, position_tolerance, rotation_tolerance, arithmetic, model,
+                                *, field_comparisons=None):
     """Pure exact algebra after all supplied fields and widths are decoded."""
+    if (field_comparisons is not None and (type(field_comparisons) is not _CertificateFieldComparisons
+            or field_comparisons.arithmetic is not arithmetic)):
+        field_comparisons = None
     q = quantities.__getitem__
     add, mul, div, square = arithmetic.add, arithmetic.mul, arithmetic.div, arithmetic.square
     # These intrinsic rational coefficients need no repeated external-value
@@ -539,7 +543,9 @@ def _complete_inequality_values(ha, hs, quantities, position_tolerance, rotation
     four, eight, thirty_two = _CERTIFICATE_FOUR, _CERTIFICATE_EIGHT, _CERTIFICATE_THIRTY_TWO
     def require(name, minimum):
         actual = q(name)
-        if arithmetic.compare(actual, minimum) < 0:
+        relation = (arithmetic.compare(actual, minimum) if field_comparisons is None
+                    else field_comparisons.compare(actual, minimum))
+        if relation < 0:
             _error("OKE-E-CERTIFICATE", "A reported bound understates the required exact sum.",
                    model=model, details={"quantity": name})
         return actual
@@ -2571,9 +2577,12 @@ class _CertificateBatch:
             arithmetic.tick("independent_certificate_group")
             if member is not None:
                 member.current()
+            decodes = _CertificateFieldDecodes.create(arithmetic, key)
             quantities = dict(zip(_NUMERIC_CERTIFICATE_KEYS,
-                                  (member.checked(arithmetic.value, value) if member is not None
-                                   else arithmetic.value(value) for value in key)))
+                                  (member.checked(arithmetic.value if decodes is None else decodes.value, value)
+                                   if member is not None else
+                                   arithmetic.value(value) if decodes is None else decodes.value(value)
+                                   for value in key)))
             group = {"quantities": quantities, "minima": dict(minima),
                      "width": width, "stored_width": stored_width, "magnitude": magnitude}
             if member is not None and member.enabled:
@@ -2624,11 +2633,13 @@ class _CertificateBatch:
             quantities = (thresholds.copied_quantities(arithmetic) if thresholds is not None and thresholds.used
                           else group["quantities"])
             extents = thresholds.copied_extents(arithmetic) if thresholds is not None and thresholds.used else group
+            comparisons = _CertificateFieldComparisons.create(arithmetic)
             def require(name, minimum):
                 actual = quantities[name]
                 if thresholds is not None:
                     thresholds.admit_continuation(name, actual, arithmetic, equality_shortcut=False)
-                relation = arithmetic.compare(actual, minimum)
+                relation = (arithmetic.compare(actual, minimum) if comparisons is None
+                            else comparisons.compare(actual, minimum))
                 if thresholds is not None:
                     thresholds.current(arithmetic)
                     thresholds.admit_continuation(name, actual, arithmetic,
@@ -2646,8 +2657,15 @@ class _CertificateBatch:
             require("destination_numeric_position_bound_m", arithmetic.div(arithmetic.add(domain, 1), 1 << 38))
             require("destination_numeric_rotation_bound_rad", arithmetic.add(
                 arithmetic.square(quantities["stored_quaternion_arc_upper_rad"]), Fraction(1, 1 << 44)))
-            totals = _complete_inequality_values(extents["width"], extents["stored_width"], quantities,
-                self.position_tolerance, self.rotation_tolerance, arithmetic, None)
+            arguments = (extents["width"], extents["stored_width"], quantities,
+                         self.position_tolerance, self.rotation_tolerance, arithmetic, None)
+            if (_complete_inequality_values is _FIELD_COMPLETE_ALGEBRA
+                    and _complete_inequality_values.__code__ is _FIELD_COMPLETE_CODE):
+                totals = _complete_inequality_values(*arguments, field_comparisons=comparisons)
+            else:
+                # A replaced algebra function retains its original positional
+                # interface and gets no optional context it did not request.
+                totals = _complete_inequality_values(*arguments)
             if thresholds is not None:
                 thresholds.current(arithmetic)
             self.max_position = self.maximum(self.max_position, totals["position_bound_m"])
@@ -2661,6 +2679,8 @@ _CERTIFICATE_BOUNDS_DISPATCH = tuple((name, getattr(_Bounds, name))
 _CERTIFICATE_WORK_DISPATCH = tuple((name, getattr(_CertificateWork, name))
                                  for name in ("charge", "guard_bits"))
 _CERTIFICATE_MAXIMUM = _CertificateBatch.maximum
+_FIELD_COMPLETE_ALGEBRA = _complete_inequality_values
+_FIELD_COMPLETE_CODE = _complete_inequality_values.__code__
 
 
 # This optional local reuse admits only scalar paths with no foreign callback.
@@ -2806,6 +2826,182 @@ def _certificate_term_native(arithmetic):
             and all(type(name) is str and type(value) is int and value > 0
                     for name, value in budget["limits"].items())
             and "max_operations" in budget["limits"] and "max_elapsed_ms" in budget["limits"])
+
+
+def _certificate_field_key(value):
+    """Native input identity, retaining signed zero and integer/float type."""
+    if type(value) is int and 0 <= value and value.bit_length() <= 2048:
+        return int, value
+    if type(value) is float and math.isfinite(value) and value >= 0:
+        return float, struct.pack(">d", value)
+    return None
+
+
+_FIELD_TERM_NATIVE = _certificate_term_native
+_FIELD_RAW_READER = _certificate_raw_fields
+_FIELD_KEY_READER = _certificate_field_key
+_FIELD_FUNCTIONS = tuple((function, _term_function_state(function)) for function in
+    (_certificate_term_native, _certificate_raw_fields, _certificate_field_key, _term_function_state))
+_FIELD_GLOBALS = ((math, "isfinite", math.isfinite), (struct, "pack", struct.pack))
+
+
+def _certificate_fields_native(arithmetic):
+    """Strengthen scalar admission for the newly omitted decode paths."""
+    if (_certificate_term_native is not _FIELD_TERM_NATIVE
+            or _certificate_raw_fields is not _FIELD_RAW_READER
+            or _certificate_field_key is not _FIELD_KEY_READER):
+        return False
+    if any(type(module) is not _TermModule
+           or _TermModule.__getattribute__(module, "__dict__").get(name, _TERM_ABSENT) is not saved
+           for module, name, saved in _FIELD_GLOBALS):
+        return False
+    for function, (code, defaults, kwdefaults, kwfields, closure, globals_) in _FIELD_FUNCTIONS:
+        if (function.__code__ is not code or function.__defaults__ is not defaults
+                or function.__kwdefaults__ is not kwdefaults
+                or len(function.__kwdefaults__ or {}) != len(kwfields)
+                or any(type(name) is not str or name != saved_name or value is not saved
+                       for (name, value), (saved_name, saved) in zip(
+                           (function.__kwdefaults__ or {}).items(), kwfields))
+                or len(function.__closure__ or ()) != len(closure)
+                or any(cell.cell_contents is not saved
+                       for cell, saved in zip(function.__closure__ or (), closure))
+                or any(function.__globals__.get(name, _TERM_ABSENT) is not saved
+                       or function.__builtins__.get(name, _TERM_ABSENT) is not builtin
+                       for name, saved, builtin in globals_)):
+            return False
+    return _certificate_term_native(arithmetic)
+
+
+class _CertificateFieldDecodes:
+    """Completed input decodes retained only while constructing one group."""
+    @classmethod
+    def create(cls, arithmetic, values):
+        if (not _certificate_fields_native(arithmetic) or type(values) is not tuple
+                or not 1 <= len(values) <= len(_NUMERIC_CERTIFICATE_KEYS)):
+            return None
+        keys = tuple(_certificate_field_key(value) for value in values)
+        if any(key is None for key in keys) or len(set(keys)) == len(keys):
+            return None
+        return cls(arithmetic, values, keys)
+
+    def __init__(self, arithmetic, values, keys):
+        self.arithmetic, self.owner = arithmetic, arithmetic.work
+        self.external = getattr(self.owner, "external_check", None)
+        self.values, self.keys = values, keys
+        self.repeated = frozenset(key for key in keys if keys.count(key) > 1)
+        self.index = 0
+        self.results = {}
+        self._completed = ()
+        self.valid, self.admitted = True, False
+
+    def current(self):
+        self.valid = (self.valid and _certificate_fields_native(self.arithmetic)
+            and self.arithmetic.work is self.owner
+            and getattr(self.owner, "external_check", None) is self.external)
+        return self.valid
+
+    def value(self, value):
+        arithmetic = self.arithmetic
+        index = self.index
+        self.index += 1
+        # A field with no later typed match cannot supply reuse. Preserve its
+        # ordinary dynamic decode without an unnecessary native-state scan.
+        if index < len(self.keys) and self.keys[index] not in self.repeated:
+            return arithmetic.value(value)
+        if not self.current():
+            return arithmetic.value(value)
+        key = _certificate_field_key(value)
+        if index >= len(self.keys) or key is None or key != self.keys[index]:
+            self.valid = False
+            return arithmetic.value(value)
+        receipt = self.results.get(key)
+        if receipt is None:
+            # The native gate ran before the original decode. A foreign path
+            # that restores itself during the call cannot supply a receipt.
+            result = arithmetic.value(value)
+            if self.current():
+                fields = _certificate_fraction_fields(result)
+                if fields is not None:
+                    receipt = (value, result, fields)
+                    self.results[key] = receipt
+                    self._completed += ((key, receipt),)
+            return result
+
+        def current_fields(*, check_native=True):
+            if ((check_native and not self.current()) or type(receipt) is not tuple or len(receipt) != 3
+                    or self.results.get(key) is not receipt
+                    or not any(saved_key == key and saved_receipt is receipt
+                               for saved_key, saved_receipt in self._completed)):
+                return None
+            original, result, saved = receipt
+            if (type(saved) is not tuple or len(saved) != 2
+                    or any(type(field) is not int for field in saved)
+                    or _certificate_field_key(original) != key
+                    or _certificate_field_key(value) != key
+                    or _certificate_fraction_fields(result) != saved):
+                self.valid = False
+                return None
+            return saved
+
+        # Only pinned pure native key/receipt reads have occurred since the
+        # entry gate. Repeat the full gate after the actual admission below.
+        fields = current_fields(check_native=False)
+        if fields is None:
+            return arithmetic.value(value)
+        if not self.admitted:
+            arithmetic.tick("independent_certificate_decode_admission")
+            self.admitted = True
+            if current_fields() != fields:
+                return arithmetic.value(value)
+        if type(value) is int:
+            arithmetic.bits(value.bit_length())
+        arithmetic.bits(fields[0].bit_length(), fields[1].bit_length())
+        # Copy the already completed exact decode, without reduction or an
+        # alias to a prior reported field. No result survives this group.
+        result = object.__new__(Fraction)
+        object.__setattr__(result, "_numerator", fields[0])
+        object.__setattr__(result, "_denominator", fields[1])
+        return result
+
+
+class _CertificateFieldComparisons:
+    """Fresh equal-field proofs sharing one actual admission within a group."""
+    @classmethod
+    def create(cls, arithmetic):
+        if not _certificate_fields_native(arithmetic):
+            return None
+        return cls(arithmetic)
+
+    def __init__(self, arithmetic):
+        self.arithmetic, self.owner = arithmetic, arithmetic.work
+        self.external = getattr(self.owner, "external_check", None)
+        self.valid, self.admitted = True, False
+
+    def current(self):
+        self.valid = (self.valid and _certificate_fields_native(self.arithmetic)
+            and self.arithmetic.work is self.owner
+            and getattr(self.owner, "external_check", None) is self.external)
+        return self.valid
+
+    def compare(self, actual, minimum):
+        arithmetic = self.arithmetic
+        if not self.current():
+            return arithmetic.compare(actual, minimum)
+        left, right = _certificate_fraction_fields(actual), _certificate_fraction_fields(minimum)
+        if left is None or right is None or left != right:
+            return arithmetic.compare(actual, minimum)
+        an, ad, bn, bd = (left[0].bit_length(), left[1].bit_length(),
+                          right[0].bit_length(), right[1].bit_length())
+        arithmetic.bits(an, ad, bn, bd)
+        if not self.admitted:
+            arithmetic.tick("independent_certificate_compare_admission")
+            self.admitted = True
+            if (not self.current() or _certificate_fraction_fields(actual) != left
+                    or _certificate_fraction_fields(minimum) != right):
+                return arithmetic.compare(actual, minimum)
+        # Equality does not waive the original prospective cross products.
+        arithmetic.bits(an + bd, bn + ad)
+        return 0
 
 
 class _CertificateTermReuse:
