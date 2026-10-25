@@ -1,0 +1,46 @@
+{
+  "schema": "ontokin.checkpoint036-publication-setup-observations/0.1",
+  "recorded_at": "2026-10-25T23:01:41.062137+00:00",
+  "record_kind": "coordinator transcription of actual tool observations; not reconstructed raw command receipts",
+  "attempts": [
+    {
+      "attempt": "initial local remote-commit materialization",
+      "exit_code": 1,
+      "command_summary": "Python reconstruction of GitHub commit using UTC offset +0000, with exact SHA comparison before writing any commit object",
+      "observed_error": "AssertionError: Could not reconstruct exact remote commit bytes",
+      "cause": "The exact Git object retains author/committer timezone -0600 although the API date is normalized to UTC.",
+      "remote_publication_effect": "none; the already verified own remote head remained 8f8d874779b8be505cb4c6f83f00afdf6b793186",
+      "correction": "Read the original parent Git headers, then reconstruct with the preserved -0600 timezone, verify exact SHA, write the exact object and conditionally advance only the owned local branch.",
+      "complete_raw_command_stream_retained": false
+    },
+    {
+      "attempt": "documentation-001 wrapper preflight",
+      "exit_code": 1,
+      "wrapper_argv": [
+        "python3",
+        "-B",
+        "/workspace/scratch/407b78ff2574/c036-drivers/run_closed.py",
+        "--root",
+        "/workspace/scratch/407b78ff2574/OntoKin",
+        "--output",
+        "/workspace/scratch/407b78ff2574/c036-final-validation/documentation-001",
+        "--timeout",
+        "180",
+        "--",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "observed_error": "AssertionError: Validation source must be a clean committed checkout",
+      "failure_location": "run_closed.py line 56, before = snapshot(root); snapshot line 35 clean-tree assertion",
+      "cause": "Coordinator launched the dependent documentation wrapper before checking the failed materialization exit. Local HEAD still named the parent while the evidence additions were staged.",
+      "output_directory_created": true,
+      "output_directory_file_count": 0,
+      "documentation_checker_executed": false,
+      "complete_raw_command_stream_retained": false,
+      "correction": "After verified clean exact-commit materialization, execute a fresh wrapper in documentation-002. That actual checker completed and its full closed receipts are preserved."
+    }
+  ],
+  "product_request_reruns": 0,
+  "frozen_evidence_changes": false
+}
