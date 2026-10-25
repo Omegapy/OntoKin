@@ -844,6 +844,8 @@ def _product_native(guard):
     if any(type(module) is not ModuleType or ModuleType.__getattribute__(module, "__dict__").get(
             name, _PRODUCT_ABSENT) is not value for module, name, value in _PRODUCT_GLOBALS):
         return False
+    if type.__getattribute__(F, "__mro__") is not _PRODUCT_FRACTION_MRO:
+        return False
     if sys.gettrace() is not None or sys.getprofile() is not None:
         return False
     own = object.__getattribute__(guard, "__dict__")
@@ -1286,6 +1288,9 @@ _PRODUCT_SAME_PAYLOAD = _ProductSession._same_payload
 _PRODUCT_CLOSE = FunctionType(_ProductSession.close.__code__, globals(),
                               "_close_centered_product_session", (_PRODUCT_SESSION_STATE,))
 _PRODUCT_STORAGE = ("__getattribute__", "__getattr__", "__setattr__", "__delattr__", "__dict__")
+# Fraction inherits its storage dispatch through these mutable numeric ABCs.
+# Admit their own fields and the exact MRO before any added operand probe.
+_PRODUCT_FRACTION_MRO = type.__getattribute__(F, "__mro__")
 _PRODUCT_PLAN_FIELDS = ("cache_identity", "context", "state", "nodes", "centered")
 _PRODUCT_ARITHMETIC_METHODS = ("exact", "guard", "tick", "_sync_cache_operand_limit",
                                "_grid_domain", "operand_limit")
@@ -1309,7 +1314,8 @@ _PRODUCT_CLASS_FIELDS = tuple((kind, tuple((name, type.__getattribute__(kind, "_
                            "a", "cache", "check", "work", "reference", "plan", "time", "token", "error")),
         (F, ("__new__", "__init__", "__mul__", "__add__", "__sub__", "__truediv__", "__neg__", "__abs__",
              "_mul", "_add", "_sub", "_div", "_from_coprime_ints", "__bool__", "__eq__", "__lt__",
-             "__le__", "__gt__", "__ge__", "_richcmp", "numerator", "denominator", "_numerator", "_denominator"))))
+             "__le__", "__gt__", "__ge__", "_richcmp", "numerator", "denominator", "_numerator", "_denominator")),
+        (numbers.Rational, ()), (numbers.Real, ()), (numbers.Complex, ()), (numbers.Number, ())))
 
 
 def _product_function_state(function):

@@ -125,6 +125,7 @@ original check raises, neither observer runs. This adds no tick.
 
 The product observer only latches eligibility/integrity; it does not raise
 ahead of an original prospective guard. Class and instance dispatch,
+including fixed Fraction ancestry and inherited numeric-base storage fields,
 participating function code/default/closure/global identities, native
 Fraction fields, arithmetic owners, live/cache caps, source/phase/clock,
 and receipt/operand seals remain admitted at affected checked boundaries.
@@ -144,7 +145,7 @@ The new dedicated test module is
 Its controls cover independent all-axis Hamilton arithmetic, complete pair
 and preparation costs, actual P11 keys, bounded P11/L03 byte comparisons,
 every actual paired cancellation boundary, shortcuts, full cache pressure,
-stale tokens/clocks/phase/owners, mutation, foreign/restored dispatch,
+stale tokens/clocks/phase/owners, mutation, foreign/restored and inherited dispatch,
 conditional replacement, observer coexistence and cleanup.
 
 Required subsequent execution retains unchanged complete P11 end 3 and L03

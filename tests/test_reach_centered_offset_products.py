@@ -8,6 +8,7 @@ from contextlib import nullcontext
 from dataclasses import dataclass, field, replace
 from fractions import Fraction as F
 from types import MethodType, SimpleNamespace
+import numbers
 import unittest
 from unittest.mock import patch
 
@@ -588,6 +589,52 @@ class CenteredOffsetProductKernelTests(unittest.TestCase):
                     mutation.stop()
                 pair.close()
             self.assertIsNone(arithmetic._recording_product_after_tick)
+
+    def test_inherited_fraction_getters_are_never_probed_and_cannot_restore_product_reuse(self):
+        for base in (numbers.Rational, numbers.Real, numbers.Complex, numbers.Number):
+            with self.subTest(base=base.__name__):
+                pair, installed, touched = Pair(), [], []
+                arithmetic, work = pair.reference.a, pair.reference.a.work
+                try:
+                    pair.project(0)
+                    self.assertTrue(pair.session.valid)
+                    self.assertIsNotNone(arithmetic._recording_product_after_tick)
+                    before = work.operations
+                    def install(current):
+                        def foreign(value, name):
+                            touched.append(name)
+                            mutation.stop()
+                            return object.__getattribute__(value, name)
+                        mutation = patch.object(base, "__getattribute__", foreign, create=True)
+                        mutation.start()
+                        installed.append(mutation)
+                    pair.action = install
+                    # The original direct tick has no Fraction reads after
+                    # its callback. An added observer must reject inherited
+                    # dispatch before a getter could restore native storage.
+                    arithmetic.tick()
+                    self.assertEqual(len(installed), 1)
+                    self.assertEqual(work.operations - before, 1)
+                    self.assertFalse(touched)
+                    self.assertFalse(pair.session.valid)
+                    self.assertIsNone(work.callback_error)
+
+                    pair.action = None
+                    for mutation in reversed(installed):
+                        mutation.stop()
+                    self.assertFalse(pair.session.valid)
+                    before = work.operations
+                    actual, _ = pair.project(1)
+                    self.assertEqual(work.operations - before, 9)
+                    self.assertEqual(actual, expected_offset(pair.rotation, pair.vectors[1], pair.axis))
+                    self.assertFalse(pair.session.valid)
+                    self.assertFalse(touched)
+                    self.assertIsNone(work.callback_error)
+                finally:
+                    pair.action = None
+                    for mutation in reversed(installed):
+                        mutation.stop()
+                    pair.close()
 
     def test_plan_identity_swaps_are_latched_before_a_recipient_can_reuse_products(self):
         for field_name in ("cache_identity", "context", "state", "nodes", "centered"):
