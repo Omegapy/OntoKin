@@ -7,7 +7,7 @@ from unittest.mock import patch
 
 from ontokin.construction import compile_construction
 from ontokin.gltf import export_glb
-from ontokin.reach_reference import Interval, MAX_CACHE, ReferenceError, _Arithmetic, _PoseArithmetic
+from ontokin.reach_reference import Interval, MAX_CACHE, ReachReference, ReferenceError, _Arithmetic, _PoseArithmetic
 from ontokin.scene import ExportOptions
 from reach_agent_support import source_case
 from test_reach_reference_fused_recording import arithmetic, dense_values, point
@@ -243,7 +243,7 @@ class IndependentSparseCartesianTests(unittest.TestCase):
         original_multiply = _PoseArithmetic.multiply
         original_sparse = _PoseArithmetic._sparse_cartesian_multiply
         for optimized in (False, True):
-            counts = {"calls": 0, "operations": 0, "sparse_misses": 0}
+            counts = {"calls": 0, "operations": 0, "sparse_misses": 0, "centered": 0}
             def observe(ops, left, right):
                 before = ops.a.work.operations
                 result = original_multiply(ops, left, right)
@@ -255,14 +255,21 @@ class IndependentSparseCartesianTests(unittest.TestCase):
                 if result is not None:
                     counts["sparse_misses"] += 1
                 return result
+            def interval_reader(reference, carriers, time, side="after", *, recording_context=None):
+                counts["centered"] += 1
+                return None
             compiler = compile_construction(source_case("P11"))
+            # Select the same interval reader in both arms so the centered
+            # endpoint proof cannot bypass the Hamilton products under test.
             with patch.object(_PoseArithmetic, "multiply", observe), \
-                    patch.object(_PoseArithmetic, "_sparse_cartesian_multiply", select):
+                    patch.object(_PoseArithmetic, "_sparse_cartesian_multiply", select), \
+                    patch.object(ReachReference, "_recording_centered_poses", interval_reader):
                 result = export_glb(compiler.model,
                     options=ExportOptions(end=F(1, 4), fps=4, helpers=False),
                     target_contract="ontokin.glb/0.6", work=compiler.reach_work)
             self.assertEqual(result.report["validation"]["status"], "passed")
             self.assertEqual(compiler.reach_work.max_operations, 100000)
+            self.assertGreater(counts["centered"], 0)
             outcomes.append((result.data, result.report["validation"], compiler.budget.operations, counts))
         self.assertEqual(outcomes[0][:2], outcomes[1][:2])
         self.assertGreater(outcomes[1][3]["sparse_misses"], 0)

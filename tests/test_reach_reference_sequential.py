@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 from ontokin.construction import compile_construction
 from ontokin.gltf import export_glb
-from ontokin.reach_reference import Interval, MAX_CACHE, PoseEnclosure, ReferenceError, _PoseArithmetic
+from ontokin.reach_reference import Interval, MAX_CACHE, PoseEnclosure, ReachReference, ReferenceError, _PoseArithmetic
 from ontokin.scene import ExportOptions
 from reach_agent_support import source_case
 from test_reach_reference_fused_recording import arithmetic, dense_values, point
@@ -205,24 +205,43 @@ class IndependentSequentialPoseTests(unittest.TestCase):
 
     def test_actual_prefix_glb_bytes_and_validation_match_with_less_work(self):
         savings = []
+        composition_calls = 0
+        original_compose = _PoseArithmetic._recording_sequential_compose
         for case in ("P01", "P09", "P11", "L03"):
             results = []
             for optimized in (False, True):
+                counts = {"compose": 0, "centered": 0}
+
+                def compose(ops, parent, local, *, recording=False):
+                    counts["compose"] += 1
+                    selected = original_compose if optimized else ordinary
+                    return selected(ops, parent, local, recording=recording)
+
+                def interval_reader(reference, carriers, time, side="after", *, recording_context=None):
+                    counts["centered"] += 1
+                    return None
+
                 compiler = compile_construction(source_case(case))
-                selected = nullcontext() if optimized else patch.object(
-                    _PoseArithmetic, "_recording_sequential_compose", new=ordinary)
-                with selected:
+                # Keep both arms on the interval path whose composition is
+                # measured; the private centered reader can bypass that path.
+                with patch.object(ReachReference, "_recording_centered_poses", interval_reader), \
+                     patch.object(_PoseArithmetic, "_recording_sequential_compose", compose):
                     result = export_glb(compiler.model,
                         options=ExportOptions(end=F(1, 4), fps=4, helpers=False),
                         target_contract="ontokin.glb/0.6", work=compiler.reach_work)
                 self.assertEqual(result.report["validation"]["status"], "passed")
                 self.assertEqual(compiler.reach_work.max_operations, 100000)
-                results.append((result.data, result.report["validation"], compiler.budget.operations))
+                self.assertGreater(counts["centered"], 0)
+                results.append((result.data, result.report["validation"], compiler.budget.operations, counts))
             with self.subTest(case=case):
                 self.assertEqual(results[0][:2], results[1][:2])
                 self.assertLessEqual(results[1][2], results[0][2])
+                self.assertEqual(results[0][3]["compose"], results[1][3]["compose"])
+            composition_calls += results[1][3]["compose"]
             savings.append(results[0][2] - results[1][2])
             print(f"{case} prefix: ordinary={results[0][2]}, sequential={results[1][2]}")
+        # Broad graphs such as P11 deliberately retain shared composition.
+        self.assertGreater(composition_calls, 0)
         self.assertGreater(sum(savings), 0)
 
     def test_broad_graph_keeps_its_existing_shared_cache_policy(self):

@@ -210,27 +210,42 @@ class ReachRecordingUnitOffsetTests(unittest.TestCase):
     def test_actual_p16_phase_keeps_all_frame_bits_enclosures_and_source_state(self):
         outcomes = []
         times = tuple(F(index, 8) for index in range(1, 16))
+        native_offset = fast.Binary64RecordingOps._rotated_offset
         for folded in (False, True):
             fixture = chain("P16", F(0), F(2))
             sim = fixture[0]
             source = deepcopy(sim.state)
             started = sim.work.operations
+            counts = dict(sim.work.counts)
             multiplies = sim.work.counts.get("recording_float_mul", 0)
             mode = nullcontext() if folded else patch.object(fast.Binary64RecordingOps,
                                                              "_rotated_offset", ordinary_offset)
-            with mode:
+            # The later forward-translation proof pins _rotated_offset, so the
+            # old kernel alone would also lose unrelated domain-entry savings.
+            # Hold that optional path off in both arms; keep the native offset
+            # method itself untouched in the folded arm.
+            with patch.object(fast.Binary64RecordingOps, "recording_forward_translation",
+                              return_value=None) as forward, mode:
                 phase = begin(fixture, times)
                 self.assertIsNotNone(phase)
+                self.assertIs(phase.phase.ops._rotated_offset.__func__,
+                              native_offset if folded else ordinary_offset)
                 values = [bits(phase.sample(time)) for time in times]
                 phase.finish()
+            self.assertGreater(forward.call_count, 0)
             self.assertEqual(sim.state, source)
             self.assertEqual(sim.work.operations, sum(sim.work.counts.values()))
             self.assertLessEqual(len(sim.work._cache), 256)
+            other_counts = {kind: count - counts.get(kind, 0)
+                for kind, count in sim.work.counts.items()
+                if kind != "recording_float_mul" and count != counts.get(kind, 0)}
             outcomes.append((values, sim.work.operations - started,
-                             sim.work.counts.get("recording_float_mul", 0) - multiplies))
+                             sim.work.counts.get("recording_float_mul", 0) - multiplies,
+                             other_counts, forward.call_count))
         self.assertEqual(outcomes[0][0], outcomes[1][0])
         self.assertGreater(outcomes[0][1] - outcomes[1][1], 0)
         self.assertEqual(outcomes[0][1] - outcomes[1][1], outcomes[0][2] - outcomes[1][2])
+        self.assertEqual(outcomes[0][3:], outcomes[1][3:])
 
     def test_actual_p16_prefix_keeps_complete_delivered_glb_bytes(self):
         outputs = []

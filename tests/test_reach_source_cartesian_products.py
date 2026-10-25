@@ -6,6 +6,7 @@ import random
 import unittest
 from unittest.mock import patch
 
+from ontokin import reach_recording_fast as fast
 from ontokin.construction import compile_construction
 from ontokin.gltf import export_glb
 from ontokin.reach_numeric import ReachAdmissionError, ReachExecutionWork, float_bits
@@ -278,17 +279,40 @@ class ReachSourceCartesianProductTests(unittest.TestCase):
 
     def test_actual_p11_prefix_glb_is_identical_with_less_source_product_work(self):
         results = []
+        native_init = fast.Binary64RecordingOps.__init__
+        begin_phase = fast.begin_bounded_phase
         for enabled in (False, True):
             compiler = compile_construction(source_case("P11"))
+            phases = []
+            # Keep the original ordinary/Y + captured/Z producer in both arms.
+            # The later Cartesian capture otherwise bypasses this source product.
+            def planar_only(instance, *args, **kwargs):
+                kwargs["cartesian_axes"] = False
+                native_init(instance, *args, **kwargs)
+            def record_phase(*args, **kwargs):
+                phase = begin_phase(*args, **kwargs)
+                if phase is not None:
+                    phases.append(phase.phase)
+                return phase
             def build():
                 return export_glb(compiler.model,
                     options=ExportOptions(end=F(1, 4), fps=1, helpers=False),
                     target_contract="ontokin.glb/0.6", work=compiler.reach_work)
-            if enabled:
-                artifact = build()
-            else:
-                with previous_products():
+            with patch.object(fast.Binary64RecordingOps, "__init__", planar_only), \
+                    patch.object(fast, "begin_bounded_phase", record_phase):
+                if enabled:
                     artifact = build()
+                else:
+                    with previous_products():
+                        artifact = build()
+            self.assertTrue(phases)
+            self.assertTrue(any("rig.head.frame" in getattr(phase, "ordinary", ())
+                                for phase in phases))
+            for phase in phases:
+                self.assertIs(phase.ops.recording_cartesian_axes, False)
+                self.assertIs(phase.ops._recording_cartesian_selector, False)
+                self.assertTrue(phase.finished)
+            self.assertGreater(compiler.reach_work.counts.get("recording_rotation_step", 0), 0)
             self.assertEqual(artifact.report["validation"]["status"], "passed")
             self.assertEqual(compiler.reach_work.max_operations, 100000)
             self.assertEqual(compiler.reach_work.max_operand_bits, 32768)

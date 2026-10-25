@@ -1,5 +1,4 @@
 """Independent recording offsets retain exact containment and live limits."""
-from contextlib import nullcontext
 from fractions import Fraction as F
 from itertools import product
 import unittest
@@ -7,7 +6,7 @@ from unittest.mock import patch
 
 from ontokin.construction import compile_construction
 from ontokin.gltf import export_glb
-from ontokin.reach_reference import Interval, MAX_CACHE, ReferenceError, _PoseArithmetic
+from ontokin.reach_reference import Interval, MAX_CACHE, ReachReference, ReferenceError, _PoseArithmetic
 from ontokin.scene import ExportOptions
 from reach_agent_support import source_case
 from test_reach_reference_fused_recording import arithmetic, dense_values, point
@@ -191,16 +190,22 @@ class IndependentRecordingAxisTests(unittest.TestCase):
             outcomes = []
             for optimized in (False, True):
                 compiler = compile_construction(source_case(case))
-                context = (nullcontext() if optimized else
-                           patch.object(_PoseArithmetic, "_recording_rotate", new=_PoseArithmetic.rotate))
-                # This oracle isolates the axis-rotation kernel. The later
-                # native composition also uses its private shared-admission
-                # interface, so disable that separate optimization on BOTH
-                # sides before substituting the preceding ordinary kernel.
-                with patch.object(_PoseArithmetic, "_recording_native_composition", return_value=None), context:
+                rotation = (_PoseArithmetic._recording_rotate if optimized else _PoseArithmetic.rotate)
+                calls = 0
+                def observe(ops, *args, **kwargs):
+                    nonlocal calls
+                    calls += 1
+                    return rotation(ops, *args, **kwargs)
+                # Keep both arms on interval endpoints: sufficient centered
+                # proofs can bypass both measured rotation kernels. Native
+                # composition also has a separate private admission interface.
+                with patch.object(ReachReference, "_recording_centered_poses", return_value=None), \
+                     patch.object(_PoseArithmetic, "_recording_native_composition", return_value=None), \
+                     patch.object(_PoseArithmetic, "_recording_rotate", new=observe):
                     result = export_glb(compiler.model,
                         options=ExportOptions(end=F(1, 4), fps=4, helpers=False),
                         target_contract="ontokin.glb/0.6", work=compiler.reach_work)
+                self.assertGreater(calls, 0)
                 self.assertEqual(result.report["validation"]["status"], "passed")
                 self.assertEqual(compiler.reach_work.max_operations, 100000)
                 outcomes.append((result.data, result.report["validation"], compiler.budget.operations))

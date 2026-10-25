@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 from ontokin.construction import compile_construction
 from ontokin.gltf import export_glb
-from ontokin.reach_reference import MAX_CACHE, ReferenceError, _PoseArithmetic
+from ontokin.reach_reference import MAX_CACHE, ReachReference, ReferenceError, _PoseArithmetic
 from ontokin.reach_reference_plan import _LocalPose, _SourceBatchRestart, _identity_child_origin
 from ontokin.scene import ExportOptions
 from reach_agent_support import source_case
@@ -297,7 +297,10 @@ class IndependentChildOriginTests(unittest.TestCase):
             control = nullcontext() if enabled else patch(
                 "ontokin.reach_reference_plan._identity_child_origin", return_value=False)
             before = len(advances)
-            with control, patch.object(_PoseArithmetic, "_recording_body_orientation", observe):
+            # Centered endpoints use their own cursor and can bypass later
+            # advances of the interval body cursor measured by this test.
+            with control, patch.object(ReachReference, "_recording_centered_poses", return_value=None), \
+                    patch.object(_PoseArithmetic, "_recording_body_orientation", observe):
                 result = export_glb(compiler.model,
                     options=ExportOptions(end=F(1, 4), fps=4, helpers=False),
                     target_contract="ontokin.glb/0.6", work=compiler.reach_work)
