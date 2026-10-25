@@ -82,6 +82,9 @@ class _Arithmetic:
         # boundary while an inherited multi-operation oracle is running.
         # This hook never replaces the caller's check or adds a work charge.
         self._recording_after_tick = None
+        # The centered product receipt has a separate, non-raising latch.
+        # Do not overload the oracle hook: existing nested routes inspect it.
+        self._recording_product_after_tick = None
 
     @property
     def operand_limit(self):
@@ -106,7 +109,10 @@ class _Arithmetic:
 
     def tick(self):
         observer = self._recording_after_tick
+        product_observer = self._recording_product_after_tick
         self.check()
+        if product_observer is not None:
+            product_observer()
         if observer is not None:
             observer()
 

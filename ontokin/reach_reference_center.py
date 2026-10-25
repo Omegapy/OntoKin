@@ -9,7 +9,10 @@ the existing arithmetic LRU and pending-publication/source-batch admission.
 from dataclasses import dataclass, field, replace
 from fractions import Fraction as F
 import math
-from types import MethodType
+import fractions
+import numbers
+import sys
+from types import FunctionType, GetSetDescriptorType, MemberDescriptorType, MethodType, ModuleType
 
 from .reach_reference import (
     MAX_CACHE, MAX_OPERAND_BITS, Interval, ReferenceError, _Arithmetic, _PoseArithmetic,
@@ -37,11 +40,14 @@ class _CenteredNode:
     position_radius: F
     identity_offset: int = 0
     coefficient_source: str | None = None
+    product_pair: tuple | None = None
+    product_owner: tuple | None = None
     seal: tuple = field(init=False, repr=False, compare=False)
 
     def __post_init__(self):
         object.__setattr__(self, "seal", _integers((self.vector, self.position_radius,
-                                                  self.identity_offset, self.coefficient_source)))
+                                                  self.identity_offset, self.coefficient_source,
+                                                  self.product_pair, self.product_owner)))
 
 
 @dataclass(frozen=True)
@@ -50,11 +56,27 @@ class _CenteredCoefficients:
     active: F
     diagonal: F
     cross: F
+    products: object = None
     seal: tuple = field(init=False, repr=False, compare=False)
 
     def __post_init__(self):
         object.__setattr__(self, "seal", _integers((self.scalar, self.active,
                                                   self.diagonal, self.cross)))
+
+
+@dataclass(frozen=True)
+class _CenteredProducts:
+    token: object
+    clock: tuple
+    pair: tuple
+    operand: F
+    first: F
+    last: F
+    seal: tuple = field(init=False, repr=False, compare=False)
+
+    def __post_init__(self):
+        object.__setattr__(self, "seal", _integers((self.clock, self.pair,
+                                                   self.operand, self.first, self.last)))
 
 
 @dataclass(frozen=True)
@@ -149,7 +171,7 @@ def guard_pose(arithmetic, pose):
 
 class _Guard:
     """Freeze operands and recheck their live owners after every callback."""
-    def __init__(self, reference, plan, batch):
+    def __init__(self, reference, plan, batch, product_session=None):
         self.reference, self.plan, self.batch = reference, plan, batch
         self.a, self.p = reference.a, reference.p
         self.work, self.check = self.a.work, self.a.check
@@ -158,6 +180,8 @@ class _Guard:
         self.leaves, self.records, self.cells = [], [], []
         self.invalidated = False
         self.oracle_guard = None
+        self.product_session = product_session
+        self.coefficient_slot = None
         if not self.current():
             raise _ChangedDomain()
 
@@ -228,6 +252,18 @@ class _Guard:
         for cell, low, high in self.cells:
             if type(cell) is not Interval or cell.lo is not low or cell.hi is not high:
                 raise ReferenceError("identity", "Independent centered seed cell changed")
+        if self.product_session is not None:
+            session = self.product_session
+            state = _PRODUCT_SESSION_STATE(session)
+            state["guard"] = self
+            if state.get("installed") and state.get("valid"):
+                if (_product_native is _PRODUCT_NATIVE and _product_native.__code__ is _PRODUCT_NATIVE_CODE
+                        and _product_native(self)):
+                    _PRODUCT_CURRENT(session, self)
+                else:
+                    state["valid"] = False
+            if state.get("error") is not None:
+                raise ReferenceError("identity", state["error"])
         self.invalidated = self.invalidated or not (
             type(self.a.bits) is int and self.a.bits == 128
             and type(self.a.scale) is int and self.a.scale == 1 << 128
@@ -330,6 +366,7 @@ def prepare(plan, reference, batch):
     orientations, projections = {"world": (None, None)}, {}
     groups, group = [], 0
     identities, extents = {"world": True}, {"world": F(0)}
+    product_candidates, product_pair = {}, None
     for node in plan.nodes:
         guard = _Guard(reference, plan, batch)
         identity_offset = 0
@@ -417,15 +454,35 @@ def prepare(plan, reference, batch):
             coefficient_source = orientation_source
             key = coefficient_source, group
             projections[key] = projections.get(key, 0) + 1
+            # Source metadata only, inside the existing bounded visit. A
+            # single pair in the whole plan avoids overlapping live receipts.
+            if (product_pair is None and node.kind in {"site", "follow", "fixed", "grip"}
+                    and node.stationary is False):
+                order = ((orientation_axis + 1) % 3, (orientation_axis + 2) % 3,
+                         orientation_axis)
+                x, y, z = (vector[index] for index in order)
+                xn, xd, yn, yd = x.numerator, x.denominator, y.numerator, y.denominator
+                if xn not in (0, xd, -xd) and yn:
+                    candidate = (node.parent, coefficient_source, group, orientation_axis,
+                                 xn, xd, z.numerator, z.denominator, abs(yn), yd)
+                    previous = product_candidates.get(candidate)
+                    if previous is not None and previous[1] == -yn:
+                        product_pair = (group, orientation_axis, previous[0], len(nodes))
+                    elif previous is None:
+                        product_candidates[candidate] = (len(nodes), yn)
         nodes.append(_CenteredNode(vector, radius, identity_offset, coefficient_source))
         groups.append(group)
         depths[node.path] = depth
         identities[node.path], extents[node.path] = identity, extent
         orientations[node.path] = orientation_source, orientation_axis
     plan.admit_owners(reference)
-    nodes = [replace(recipe, coefficient_source=None)
-             if recipe.coefficient_source is not None and projections[recipe.coefficient_source, group] < 2
-             else recipe for recipe, group in zip(nodes, groups)]
+    nodes = [replace(recipe,
+             coefficient_source=None if recipe.coefficient_source is not None
+                 and projections[recipe.coefficient_source, group] < 2 else recipe.coefficient_source,
+             product_pair=product_pair if product_pair is not None and index in product_pair[2:] else None,
+             product_owner=(node.path, node.kind, node.parent)
+                 if product_pair is not None and index in product_pair[2:] else None)
+             for index, (node, recipe, group) in enumerate(zip(plan.nodes, nodes, groups))]
     return replace(plan, centered=tuple(nodes)) if reference._recording_body_domain() else plan
 
 
@@ -595,6 +652,7 @@ def _coefficients(w, s, guard, source):
     One existing LRU slot per admitted source replaces its preceding operands;
     no per-clock coefficient table or pending cursor value is retained.
     """
+    guard.coefficient_slot = None
     if (source is None or type(source) is not tuple or len(source) != 2
             or type(source[0]) is not object or type(source[1]) is not str
             or not _coefficient_domain(guard)
@@ -614,7 +672,7 @@ def _coefficients(w, s, guard, source):
     if not _coefficient_domain(guard):
         return _direct_coefficients(w, s, guard)
     if previous is not None:
-        fields = ("scalar", "active", "diagonal", "cross", "seal")
+        fields = ("scalar", "active", "diagonal", "cross", "seal", "products")
         if (type(previous) is not _CenteredCoefficients
                 or not _native(previous.scalar, magnitude=2)
                 or not _native(previous.active, magnitude=2)
@@ -634,6 +692,7 @@ def _coefficients(w, s, guard, source):
             guard.watch(previous, fields)
             guard.freeze(previous.scalar)
             guard.freeze(previous.active)
+            guard.coefficient_slot = key, previous
             return guard.vector((previous.diagonal, previous.cross))
     native = True
     def completed():
@@ -646,16 +705,415 @@ def _coefficients(w, s, guard, source):
     if not native or not _coefficient_domain(guard):
         return diagonal, cross
     value = _CenteredCoefficients(w, s, diagonal, cross)
-    guard.watch(value, ("scalar", "active", "diagonal", "cross", "seal"))
+    guard.watch(value, ("scalar", "active", "diagonal", "cross", "seal", "products"))
     result = guard.vector((diagonal, cross))
     # These are completed pure arithmetic values, not deferred source poses.
     # Like the existing arithmetic memoization, they do not enter the source
     # cursor ledger or the separate pending-publication inventory.
     guard.remember(key, value, admission=lambda: _coefficient_domain(guard))
+    guard.coefficient_slot = key, value
     return result
 
 
-def _offset(parent, vector, guard, *, identity_only=False, coefficient_source=None):
+def _product_fields(value, numerator_bits=673, denominator_bits=645):
+    if type(value) is not F:
+        return None
+    numerator, denominator = value.numerator, value.denominator
+    if (type(numerator) is not int or type(denominator) is not int or denominator <= 0
+            or abs(numerator).bit_length() > numerator_bits
+            or denominator.bit_length() > denominator_bits):
+        return None
+    return numerator, denominator
+
+
+def _product_pair_shape(pair, length=128):
+    return (type(pair) is tuple and len(pair) == 4
+            and all(type(value) is int for value in pair)
+            and 0 <= pair[0] <= 128 and pair[1] in (0, 1, 2)
+            and 0 <= pair[2] < pair[3] < length)
+
+
+def _product_mapping(owner, fields, *, maximum=32):
+    """Read only bounded stored source fields, never caller descriptors."""
+    for kind in type.__getattribute__(type(owner), "__mro__"):
+        namespace = type.__getattribute__(kind, "__dict__")
+        dictionary = namespace.get("__dict__", _PRODUCT_ABSENT)
+        if dictionary is not _PRODUCT_ABSENT and type(dictionary) not in (GetSetDescriptorType, MemberDescriptorType):
+            return None
+        for name in fields:
+            member = namespace.get(name, _PRODUCT_ABSENT)
+            if member is not _PRODUCT_ABSENT and any("__get__" in type.__getattribute__(base, "__dict__")
+                    for base in type.__getattribute__(type(member), "__mro__")):
+                return None
+    own = object.__getattribute__(owner, "__dict__")
+    if type(own) is not dict or len(own) > maximum or any(type(name) is not str for name in own):
+        return None
+    return own
+
+
+def _product_plan_identity(plan):
+    own = _product_mapping(plan, _PRODUCT_PLAN_FIELDS)
+    if own is None or type(own.get("cache_identity")) is not object:
+        return None
+    fields = tuple(own.get(name, _PRODUCT_ABSENT) for name in _PRODUCT_PLAN_FIELDS)
+    context = fields[1]
+    if context is _PRODUCT_ABSENT:
+        phase = _PRODUCT_ABSENT
+    elif type(context) is tuple and len(context) == 4 and all(
+            type(value) is object or value is None or type(value) is int and abs(value).bit_length() <= 1024
+            or type(value) is str and len(value) <= 128 for value in context):
+        phase = tuple((type(value), value) for value in context)
+    else:
+        return None
+    return fields, phase
+
+
+def _product_source(plan, pair):
+    """Bind both sealed prepared recipes to the actual source-node roles."""
+    from .reach_reference_plan import _Node
+    source = _product_mapping(plan, ("nodes", "centered", "cache_identity"))
+    if source is None:
+        return None
+    nodes, recipes = source.get("nodes"), source.get("centered")
+    if (type(nodes) is not tuple or not 1 <= len(nodes) <= 128
+            or type(recipes) is not tuple or len(recipes) != len(nodes)
+            or not _product_pair_shape(pair, len(nodes))):
+        return None
+    saved, vectors = [], []
+    for index in pair[2:]:
+        node, recipe = nodes[index], recipes[index]
+        if type(node) is not _Node or type(recipe) is not _CenteredNode:
+            return None
+        actual = _product_mapping(node, ("path", "kind", "parent", "stationary"))
+        prepared = _product_mapping(recipe, ("vector", "position_radius", "identity_offset",
+            "coefficient_source", "product_pair", "product_owner", "seal"))
+        if actual is None or prepared is None:
+            return None
+        owner = tuple(actual.get(name) for name in ("path", "kind", "parent"))
+        vector = prepared.get("vector")
+        if (any(type(value) is not str for value in owner)
+                or owner[1] not in {"site", "follow", "fixed", "grip"}
+                or actual.get("stationary") is not False
+                or prepared.get("product_owner") != owner
+                or prepared.get("product_pair") != pair
+                or type(prepared.get("coefficient_source")) is not str
+                or type(vector) is not tuple or len(vector) != 3
+                or _integers(tuple(prepared.get(name) for name in ("vector", "position_radius",
+                    "identity_offset", "coefficient_source", "product_pair", "product_owner"))) != prepared.get("seal")):
+            return None
+        vector = tuple(_product_fields(value, 138, 129) for value in vector)
+        if any(value is None for value in vector):
+            return None
+        saved.append((node, recipe, *owner, prepared["coefficient_source"], prepared["seal"]))
+        vectors.append(vector)
+    axis = pair[1]
+    first, second = vectors
+    x, y = (axis + 1) % 3, (axis + 2) % 3
+    if saved[0][4] != saved[1][4] or saved[0][5] != saved[1][5]:
+        return None
+    if (first[x] != second[x] or first[axis] != second[axis]
+            or first[x][0] in (0, first[x][1], -first[x][1]) or not first[y][0]
+            or (first[y][0], first[y][1]) != (-second[y][0], second[y][1])):
+        return None
+    return tuple(saved)
+
+
+def _product_native(guard):
+    """Inspect fixed native dispatch without binding foreign descriptors."""
+    if type(guard) is not _Guard:
+        return False
+    for kind, fields in _PRODUCT_CLASS_FIELDS:
+        namespace = type.__getattribute__(kind, "__dict__")
+        if any(namespace.get(name, _PRODUCT_ABSENT) is not value for name, value in fields):
+            return False
+    for function, state in _PRODUCT_FUNCTIONS:
+        code, defaults, kwdefaults, kwfields, closure, globals_ = state
+        if (function.__code__ is not code or function.__defaults__ is not defaults
+                or function.__kwdefaults__ is not kwdefaults
+                or len(function.__kwdefaults__ or {}) != len(kwfields)
+                or any(type(name) is not str or name != saved_name or value is not saved
+                       for (name, value), (saved_name, saved) in
+                       zip((function.__kwdefaults__ or {}).items(), kwfields))
+                or len(function.__closure__ or ()) != len(closure)
+                or any(cell.cell_contents is not value for cell, value in
+                       zip(function.__closure__ or (), closure))
+                or any(function.__globals__.get(name, _PRODUCT_ABSENT) is not value
+                       or function.__builtins__.get(name, _PRODUCT_ABSENT) is not builtin
+                       for name, value, builtin in globals_)):
+            return False
+    if any(type(module) is not ModuleType or ModuleType.__getattribute__(module, "__dict__").get(
+            name, _PRODUCT_ABSENT) is not value for module, name, value in _PRODUCT_GLOBALS):
+        return False
+    if sys.gettrace() is not None or sys.getprofile() is not None:
+        return False
+    own = object.__getattribute__(guard, "__dict__")
+    if any(name in own for name in _PRODUCT_GUARD_METHODS):
+        return False
+    session = own.get("product_session")
+    if session is not None:
+        if type(session) is not _ProductSession:
+            return False
+        session_state = _PRODUCT_SESSION_STATE(session)
+        if any(name in session_state for name in _PRODUCT_SESSION_METHODS):
+            return False
+    a = own.get("a")
+    if type(a) is not _Arithmetic:
+        return False
+    state = object.__getattribute__(a, "__dict__")
+    if (any(name in state for name in _PRODUCT_ARITHMETIC_METHODS)
+            or type(state.get("bits")) is not int or state["bits"] != 128
+            or type(state.get("scale")) is not int or state["scale"] != 1 << 128
+            or type(state.get("_cache_operand_limit")) is not int
+            or state["_cache_operand_limit"] != MAX_OPERAND_BITS
+            or type(state.get("cache")) is not dict):
+        return False
+    work = state.get("work")
+    if work is not own.get("work") or state.get("check") is not own.get("check"):
+        return False
+    # The live cap must be an ordinary stored integer, not a descriptor that
+    # could execute caller code during optional admission.
+    if work is None:
+        return False
+    for kind in type.__getattribute__(type(work), "__mro__"):
+        namespace = type.__getattribute__(kind, "__dict__")
+        if "max_operand_bits" in namespace or "__getattr__" in namespace:
+            return False
+        if "__getattribute__" in namespace and namespace["__getattribute__"] is not object.__getattribute__:
+            return False
+    work_state = object.__getattribute__(work, "__dict__")
+    return (type(work_state) is dict and type(work_state.get("max_operand_bits")) is int
+            and work_state["max_operand_bits"] == MAX_OPERAND_BITS)
+
+
+class _ProductSession:
+    """One evaluation's bounded latch; never a source of evicted numbers."""
+    def __init__(self, reference, plan, time, batch):
+        self.reference, self.plan, self.time, self.batch = reference, plan, time, batch
+        self.a = reference.a
+        self.token = object()
+        self.observer = self._observe
+        self.guard = None
+        self.pair = self.source = self.clock = self.slot = None
+        self.plan_fields = self.phase_fields = None
+        self.cache = self.check = self.work = None
+        self.arithmetic_state = None
+        self.watched = ()
+        self.products = (None, None)
+        self.payload = self.payload_fields = None
+        self.record = self.record_fields = None
+        self.recipient_seen = False
+        self.valid = self.installed = False
+        self.closed = False
+        self.error = None
+
+    def _observe(self):
+        # tick invokes this only after the original check succeeds. Never
+        # preempt an original prospective guard or replace its exception.
+        try:
+            if _PRODUCT_SESSION_STATE(self).get("valid") is not True:
+                return
+            if (_product_native is not _PRODUCT_NATIVE
+                    or _product_native.__code__ is not _PRODUCT_NATIVE_CODE
+                    or not _product_native(self.guard)):
+                self.valid = False
+                return
+            current = object.__getattribute__(self.a, "__dict__")
+            if (current is not self.arithmetic_state
+                    or current.get("_recording_product_after_tick") is not self.observer):
+                self.valid = False
+                self.error = "Independent centered product observer owner changed"
+            if not self.valid:
+                return
+            reference = _product_mapping(self.reference, ("a",), maximum=64)
+            if reference is None:
+                self.valid = False
+                return
+            if (current.get("cache") is not self.cache or current.get("check") is not self.check
+                    or current.get("work") is not self.work or reference.get("a") is not self.a):
+                self.valid = False
+                self.error = "Independent centered product arithmetic owner changed"
+                return
+            plan_identity = _product_plan_identity(self.plan)
+            if (plan_identity is None or any(now is not saved for now, saved in
+                    zip(plan_identity[0], self.plan_fields)) or plan_identity[1] != self.phase_fields):
+                self.valid = False
+                self.error = "Independent centered product plan or phase changed"
+                return
+            if _product_fields(self.time, 1024, 1024) != self.clock:
+                self.valid = False
+                self.error = "Independent centered product clock changed"
+            elif not self._same_source(_product_source(self.plan, self.pair)):
+                self.valid = False
+                self.error = "Independent centered product source changed"
+            elif any(_product_fields(value) != fields for value, fields in self.watched):
+                self.valid = False
+                self.error = "Independent centered product operand changed"
+            elif self.record is not None and (
+                    any(getattr(self.record, name) is not value for name, value in self.record_fields)
+                    or _integers((self.record.scalar, self.record.active, self.record.diagonal,
+                                  self.record.cross)) != self.record.seal):
+                self.valid = False
+                self.error = "Independent centered product coefficient record changed"
+            elif self.payload is not None and not self._same_payload(self._payload_snapshot(self.payload)):
+                self.valid = False
+                self.error = "Independent centered product receipt changed"
+        except Exception:
+            # Foreign or malformed metadata cannot authorize a skip. Ordinary
+            # operation errors still propagate through their original caller.
+            self.valid = False
+            self.error = "Independent centered product admission changed"
+
+    def _same_source(self, current):
+        return (current is not None and all(now[0] is saved[0] and now[1] is saved[1]
+                and now[2:] == saved[2:] for now, saved in zip(current, self.source)))
+
+    def _same_payload(self, current):
+        return (current is not None and self.payload_fields is not None
+                and all(now is saved for now, saved in zip(current[:7], self.payload_fields[:7]))
+                and current[7:] == self.payload_fields[7:])
+
+    def current(self, guard):
+        self.guard = guard
+        if self.installed:
+            _PRODUCT_OBSERVE(self)
+            if self.error is not None:
+                raise ReferenceError("identity", self.error)
+
+    def enter(self, guard, pair, index, source):
+        guard.product_session = self
+        self.guard = guard
+        if self.closed:
+            return False
+        if not self.installed:
+            if (not _product_pair_shape(pair) or index != pair[2]
+                    or _product_native is not _PRODUCT_NATIVE
+                    or _product_native.__code__ is not _PRODUCT_NATIVE_CODE
+                    or not _product_native(guard)
+                    or self.a._recording_product_after_tick is not None):
+                return False
+            clock = _product_fields(self.time, 1024, 1024)
+            saved = _product_source(self.plan, pair)
+            identity = _product_plan_identity(self.plan)
+            reference = _product_mapping(self.reference, ("a",), maximum=64)
+            if (clock is None or saved is None or identity is None or reference is None
+                    or reference.get("a") is not self.a or type(source) is not tuple or len(source) != 2
+                    or source[0] is not identity[0][0] or source[1] != saved[0][5]):
+                return False
+            self.pair, self.source, self.clock = pair, saved, clock
+            self.plan_fields, self.phase_fields = identity
+            self.cache, self.check, self.work = self.a.cache, self.a.check, self.a.work
+            self.arithmetic_state = object.__getattribute__(self.a, "__dict__")
+            self.valid = self.installed = True
+            self.a._recording_product_after_tick = self.observer
+        _PRODUCT_CURRENT(self, guard)
+        return (self.valid and pair == self.pair and index in pair[2:]
+                and type(source) is tuple and len(source) == 2
+                and source[0] is self.plan_fields[0] and source[1] == self.source[0][5])
+
+    def bind(self, guard, index, diagonal, cross, operand):
+        _PRODUCT_CURRENT(self, guard)
+        if not self.valid or guard.coefficient_slot is None:
+            return None
+        fields = tuple(_product_fields(value) for value in (diagonal, cross, operand))
+        if (any(value is None for value in fields) or not fields[0][0] or not fields[1][0]
+                or fields[2][0] in (0, fields[2][1], -fields[2][1])):
+            return None
+        if index == self.pair[2]:
+            if self.slot is not None:
+                self.valid = False
+                return None
+            self.slot = guard.coefficient_slot
+            self.watched = tuple(zip((diagonal, cross, operand), fields))
+            return None
+        if self.recipient_seen:
+            self.valid = False
+            return None
+        self.recipient_seen = True
+        if self.slot is None or fields[:2] != tuple(fields for _, fields in self.watched[:2]):
+            return None
+        record = guard.coefficient_slot[1]
+        payload = record.products
+        if payload is None:
+            return None
+        snapshot = _PRODUCT_PAYLOAD(self, payload)
+        if snapshot is None:
+            raise ReferenceError("identity", "Independent centered product receipt changed")
+        if (payload.token is not self.token or payload.clock != self.clock
+                or payload.pair != self.pair or _product_fields(payload.operand) != fields[2]):
+            return None
+        if payload is not self.payload:
+            return None
+        if not _PRODUCT_SAME_PAYLOAD(self, snapshot):
+            raise ReferenceError("identity", "Independent centered product receipt changed")
+        guard.watch(record, ("scalar", "active", "diagonal", "cross", "seal", "products"))
+        guard.watch(payload, ("token", "clock", "pair", "operand", "first", "last", "seal"))
+        values = guard.vector((payload.first, payload.last))
+        for value in values:
+            guard.freeze(value)
+        return values
+
+    def _payload_snapshot(self, payload):
+        if (type(payload) is not _CenteredProducts or type(payload.token) is not object
+                or type(payload.clock) is not tuple or len(payload.clock) != 2
+                or any(type(value) is not int or abs(value).bit_length() > 1024 for value in payload.clock)
+                or payload.clock[1] <= 0 or not _product_pair_shape(payload.pair)
+                or _product_fields(payload.operand, 138, 129) is None
+                or _product_fields(payload.first) is None or _product_fields(payload.last) is None
+                or _integers((payload.clock, payload.pair, payload.operand,
+                              payload.first, payload.last)) != payload.seal):
+            return None
+        return (payload.token, payload.clock, payload.pair, payload.operand, payload.first,
+                payload.last, payload.seal, _product_fields(payload.operand),
+                _product_fields(payload.first), _product_fields(payload.last))
+
+    def capture(self, guard, slot, value):
+        _PRODUCT_CURRENT(self, guard)
+        if self.valid and _product_fields(value) is not None:
+            if self.products[slot] is not None:
+                self.valid = False
+                return
+            self.products = (value, self.products[1]) if slot == 0 else (self.products[0], value)
+            self.watched += ((value, _product_fields(value)),)
+
+    def reuse(self, guard, value):
+        _PRODUCT_CURRENT(self, guard)
+        return self.valid
+
+    def publish(self, guard, operand):
+        _PRODUCT_CURRENT(self, guard)
+        if not self.valid or self.slot is None or any(value is None for value in self.products):
+            return
+        key, previous = self.slot
+        leaves = guard.vector((operand, *self.products))
+        payload = _CenteredProducts(self.token, self.clock, self.pair, *leaves)
+        self.payload, self.payload_fields = payload, _PRODUCT_PAYLOAD(self, payload)
+        expanded = _CenteredCoefficients(previous.scalar, previous.active, previous.diagonal,
+                                         previous.cross, products=payload)
+        fields = ("scalar", "active", "diagonal", "cross", "seal", "products")
+        self.record, self.record_fields = expanded, tuple((name, getattr(expanded, name)) for name in fields)
+        guard.watch(expanded, fields)
+        guard.watch(payload, ("token", "clock", "pair", "operand", "first", "last", "seal"))
+        # The sole additional operation. A callback may replace or evict the
+        # slot; never resurrect it or overwrite a nested writer afterwards.
+        guard.checked(self.a.tick)
+        if not self.valid:
+            return
+        guard.checked(self.a._sync_cache_operand_limit)
+        if self.valid and self.a.cache.get(key) is previous:
+            self.a.cache[key] = expanded
+
+    def close(self, _read=None):
+        # Use the admitted dictionary directly: a callback-installed property
+        # must not run during cleanup or replace an in-flight original error.
+        state = (_PRODUCT_SESSION_STATE if _read is None else _read)(self)
+        if state["installed"] and state["arithmetic_state"].get("_recording_product_after_tick") is state["observer"]:
+            state["arithmetic_state"]["_recording_product_after_tick"] = None
+        state["valid"] = state["installed"] = False
+        state["closed"] = True
+
+
+def _offset(parent, vector, guard, *, identity_only=False, coefficient_source=None,
+            product_session=None, product_pair=None, product_index=None):
     """Project the Hamilton center rotation onto the true rotating plane."""
     if identity_only and (parent.orientation != (1, 0, 0, 0) or parent.orientation_radius):
         raise _ChangedDomain()
@@ -671,15 +1129,43 @@ def _offset(parent, vector, guard, *, identity_only=False, coefficient_source=No
     if not x and not y:
         return vector, False
     w, s = q[0], q[axis + 1]
+    selected = (product_session is not None and _product_pair_shape(product_pair)
+                and axis == product_pair[1]
+                and _product_native is _PRODUCT_NATIVE and _product_native.__code__ is _PRODUCT_NATIVE_CODE
+                and _product_native(guard)
+                and _PRODUCT_ENTER(product_session, guard, product_pair, product_index, coefficient_source))
     diagonal, cross = _coefficients(w, s, guard, coefficient_source)
-    def product(first, last):
-        return (F(0) if not first or not last else first if last == 1 else
-                guard.neg(first) if last == -1 else guard.exact(first, last, "mul"))
+    reused = (_PRODUCT_BIND(product_session, guard, product_index, diagonal, cross, x)
+              if selected and _product_native is _PRODUCT_NATIVE
+              and _product_native.__code__ is _PRODUCT_NATIVE_CODE and _product_native(guard) else None)
+    def product(first, last, slot=None):
+        if (reused is not None and slot is not None and _product_native is _PRODUCT_NATIVE
+                and _product_native.__code__ is _PRODUCT_NATIVE_CODE and _product_native(guard)
+                and _PRODUCT_REUSE(product_session, guard, reused[slot])):
+            return reused[slot]
+        if not first or not last:
+            return F(0)
+        if last == 1:
+            return first
+        if last == -1:
+            return guard.neg(first)
+        value = guard.exact(first, last, "mul")
+        if (selected and slot is not None and product_index == product_pair[2]
+                and _product_native is _PRODUCT_NATIVE and _product_native.__code__ is _PRODUCT_NATIVE_CODE
+                and _product_native(guard)):
+            _PRODUCT_CAPTURE(product_session, guard, slot, value)
+        return value
     def combined(first, last, subtract=False):
         return ((guard.neg(last) if subtract and last else last) if not first else first if not last else
                 guard.exact(first, last, "sub" if subtract else "add"))
-    first = guard.floor(combined(product(diagonal, x), product(cross, y), True))
-    last = guard.floor(combined(product(cross, x), product(diagonal, y)))
+    first = guard.floor(combined(product(diagonal, x, 0), product(cross, y), True))
+    last = guard.floor(combined(product(cross, x, 1), product(diagonal, y)))
+    if (selected and product_index == product_pair[2] and _product_native is _PRODUCT_NATIVE
+            and _product_native.__code__ is _PRODUCT_NATIVE_CODE and _product_native(guard)):
+        _PRODUCT_PUBLISH(product_session, guard, x)
+    if (product_session is not None and _product_pair_shape(product_pair)
+            and product_index == product_pair[3]):
+        _PRODUCT_CLOSE(product_session)
     values = [None] * 3
     for index, value in zip(order, (first, last, z)):
         values[index] = value
@@ -694,19 +1180,28 @@ def evaluate(plan, reference, time, batch):
         return None
     a = reference.a
     pending = _PendingCursors(a)
+    products = _ProductSession(reference, plan, time, batch)
     frames = {"world": _CenteredPose((F(0),) * 3, (F(1), F(0), F(0), F(0)), F(0), F(0), None)}
     try:
-        for node, recipe in zip(plan.nodes, plan.centered):
-            guard = _Guard(reference, plan, batch)
+        for index, (node, recipe) in enumerate(zip(plan.nodes, plan.centered)):
+            guard = _Guard(reference, plan, batch, product_session=products)
             if (type(recipe) is not _CenteredNode or type(recipe.vector) is not tuple
                     or len(recipe.vector) != 3 or any(not _native(value, magnitude=64) for value in recipe.vector)
                     or not _native(recipe.position_radius, magnitude=1)
                     or type(recipe.identity_offset) is not int or recipe.identity_offset not in (0, 1)
                     or recipe.coefficient_source is not None and type(recipe.coefficient_source) is not str
+                    or recipe.product_pair is not None and (
+                        not _product_pair_shape(recipe.product_pair, len(plan.nodes))
+                        or index not in recipe.product_pair[2:]
+                        or type(recipe.product_owner) is not tuple or len(recipe.product_owner) != 3
+                        or any(type(value) is not str for value in recipe.product_owner))
+                    or recipe.product_pair is None and recipe.product_owner is not None
                     or _integers((recipe.vector, recipe.position_radius, recipe.identity_offset,
-                                  recipe.coefficient_source)) != recipe.seal):
+                                  recipe.coefficient_source, recipe.product_pair,
+                                  recipe.product_owner)) != recipe.seal):
                 raise ReferenceError("identity", "Independent centered source recipe changed")
-            guard.watch(recipe, ("vector", "position_radius", "identity_offset", "coefficient_source", "seal"))
+            guard.watch(recipe, ("vector", "position_radius", "identity_offset", "coefficient_source",
+                                 "product_pair", "product_owner", "seal"))
             vector, maximum_radius = guard.vector(recipe.vector), guard.freeze(recipe.position_radius)
             parent = None if node.kind == "root" else guard.pose(frames[node.parent])
             guard.checked(a.tick)
@@ -735,7 +1230,8 @@ def evaluate(plan, reference, time, batch):
                 offset, uncertain = _offset(parent, vector, guard,
                     identity_only=bool(recipe.identity_offset),
                     coefficient_source=None if recipe.coefficient_source is None else
-                    (plan.cache_identity, recipe.coefficient_source))
+                    (plan.cache_identity, recipe.coefficient_source),
+                    product_session=products, product_pair=recipe.product_pair, product_index=index)
                 position = tuple(first if not last else last if not first else
                                  guard.exact(first, last, "add")
                                  for first, last in zip(parent.position, offset))
@@ -773,3 +1269,76 @@ def evaluate(plan, reference, time, batch):
         # ordinary reference calculation is outside this handler.
         batch.discard_cursors()
         return None
+    finally:
+        _PRODUCT_CLOSE(products)
+
+
+_PRODUCT_ABSENT = object()
+_PRODUCT_NATIVE, _PRODUCT_NATIVE_CODE = _product_native, _product_native.__code__
+_PRODUCT_SESSION_STATE = _ProductSession.__dict__["__dict__"].__get__
+_PRODUCT_OBSERVE, _PRODUCT_CURRENT = _ProductSession._observe, _ProductSession.current
+_PRODUCT_ENTER, _PRODUCT_BIND = _ProductSession.enter, _ProductSession.bind
+_PRODUCT_CAPTURE, _PRODUCT_REUSE = _ProductSession.capture, _ProductSession.reuse
+_PRODUCT_PUBLISH, _PRODUCT_PAYLOAD = _ProductSession.publish, _ProductSession._payload_snapshot
+_PRODUCT_SAME_PAYLOAD = _ProductSession._same_payload
+# A separate code-bearing function also preserves cleanup if a callback
+# replaces the class method or mutates that method's __code__ in place.
+_PRODUCT_CLOSE = FunctionType(_ProductSession.close.__code__, globals(),
+                              "_close_centered_product_session", (_PRODUCT_SESSION_STATE,))
+_PRODUCT_STORAGE = ("__getattribute__", "__getattr__", "__setattr__", "__delattr__", "__dict__")
+_PRODUCT_PLAN_FIELDS = ("cache_identity", "context", "state", "nodes", "centered")
+_PRODUCT_ARITHMETIC_METHODS = ("exact", "guard", "tick", "_sync_cache_operand_limit",
+                               "_grid_domain", "operand_limit")
+_PRODUCT_GUARD_METHODS = ("exact", "checked", "current", "freeze", "vector", "watch", "lookup",
+                         "remember", "floor", "neg", "original", "pose", "intervals")
+_PRODUCT_SESSION_METHODS = ("_observe", "current", "enter", "bind", "capture", "reuse", "publish", "close",
+                            "_same_source", "_same_payload", "_payload_snapshot")
+from .reach_reference_plan import _Node as _ProductNode, _Plan as _ProductPlan
+_PRODUCT_CLASS_FIELDS = tuple((kind, tuple((name, type.__getattribute__(kind, "__dict__").get(
+    name, _PRODUCT_ABSENT)) for name in dict.fromkeys((*_PRODUCT_STORAGE, *names)))) for kind, names in (
+        (_Arithmetic, (*_PRODUCT_ARITHMETIC_METHODS, "bits", "scale", "cache", "work", "check",
+                       "_cache_operand_limit", "_recording_after_tick", "_recording_product_after_tick")),
+        (_Guard, (*_PRODUCT_GUARD_METHODS, "a", "work", "check", "coefficient_slot", "product_session")),
+        (_ProductNode, ("path", "kind", "parent", "stationary")),
+        (_ProductPlan, _PRODUCT_PLAN_FIELDS),
+        (_CenteredNode, ("__new__", "__init__", "__post_init__", "vector", "position_radius", "identity_offset", "coefficient_source",
+                         "product_pair", "product_owner", "seal")),
+        (_CenteredCoefficients, ("__new__", "__init__", "__post_init__", "scalar", "active", "diagonal", "cross", "seal", "products")),
+        (_CenteredProducts, ("__new__", "__init__", "__post_init__", "token", "clock", "pair", "operand", "first", "last", "seal")),
+        (_ProductSession, ("__init__", *_PRODUCT_SESSION_METHODS, "valid", "installed", "closed", "observer",
+                           "a", "cache", "check", "work", "reference", "plan", "time", "token", "error")),
+        (F, ("__new__", "__init__", "__mul__", "__add__", "__sub__", "__truediv__", "__neg__", "__abs__",
+             "_mul", "_add", "_sub", "_div", "_from_coprime_ints", "__bool__", "__eq__", "__lt__",
+             "__le__", "__gt__", "__ge__", "_richcmp", "numerator", "denominator", "_numerator", "_denominator"))))
+
+
+def _product_function_state(function):
+    return (function.__code__, function.__defaults__, function.__kwdefaults__,
+            tuple((function.__kwdefaults__ or {}).items()),
+            tuple(cell.cell_contents for cell in function.__closure__ or ()),
+            tuple((name, function.__globals__.get(name, _PRODUCT_ABSENT),
+                   function.__builtins__.get(name, _PRODUCT_ABSENT)) for name in function.__code__.co_names))
+
+
+def _product_functions():
+    functions = [_product_fields, _product_pair_shape, _product_mapping, _product_plan_identity,
+                 _product_source, _integers, _native]
+    for _, members in _PRODUCT_CLASS_FIELDS:
+        for _, function in members:
+            if type(function) in (classmethod, staticmethod):
+                function = function.__func__
+            elif type(function) is property:
+                function = function.fget
+            if type(function) is FunctionType:
+                functions.append(function)
+                if function.__closure__ is not None:
+                    functions.extend(cell.cell_contents for cell in function.__closure__
+                                     if type(cell.cell_contents) is FunctionType)
+    return tuple(dict.fromkeys(functions))
+
+
+_PRODUCT_FUNCTIONS = tuple((function, _product_function_state(function)) for function in _product_functions())
+_PRODUCT_GLOBALS = ((fractions, "Fraction", F), (fractions, "math", math), (fractions, "numbers", numbers),
+                    (numbers, "Rational", numbers.Rational), (numbers, "Real", numbers.Real),
+                    (numbers, "Complex", numbers.Complex), (math, "gcd", math.gcd),
+                    (sys, "gettrace", sys.gettrace), (sys, "getprofile", sys.getprofile))
