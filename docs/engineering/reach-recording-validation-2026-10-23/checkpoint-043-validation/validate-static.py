@@ -118,7 +118,7 @@ def audit():
     finish=next(r for r in historical['calls']if r['function']=='reach_recording_capture.py:_CapturedPhase.finish')
     check('phase finish and later original refusal', finish['request_end']==95308 and 'work.charge("binary64_round")' in historical['traceback'])
     check('no observation anomalies/restart', historical['observer_anomalies']==[] and historical['unreturned_selected_frames']==0
-          and historical['unreturned_work_charges']==0 and all('restart'not in k for k in historical['work']['counts'])
+          and historical['unreturned_work_charges']==0 and all('restart'not in k for k in historical['work']['counts']))
     check('no scalar sampler substitution', 'reach_recording_fast.py:_sample_planar_frames' not in historical['stats'])
     check('original requests/caps match', historical['options']==current['options'] and historical['max_operations']==current['max_operations']==100000)
     check('failures and current domains retained', historical['operations']==current['operations']==100001 and current['work']['operations']==80801
