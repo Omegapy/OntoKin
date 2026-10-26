@@ -1,0 +1,78 @@
+{
+  "schema": "ontokin.checkpoint043-validation-execution/0.1",
+  "candidate": {
+    "schema": "ontokin.checkpoint043-core-publication/0.1",
+    "observed_utc": "2026-10-26T16:31:04.130Z",
+    "owner": "interactive-reach06-angular-envelope-feasibility-20261026-c043-7302",
+    "branch": "work/reach06-angular-envelope-feasibility-20261026-c043",
+    "commit": "f0b53b8d66ae581e1e38b1581a50eec51c6c79b8",
+    "tree": "73225fccc4bd47636f6de4d0b88c09a7e7a1bbe6",
+    "parent": "1242022a634eaa7cdea7e9accdf5bcca93b245a3",
+    "parent_tree": "1715e820ad8acb5ffea235b3edd3fa17f2599ec0",
+    "parent_files": 2215,
+    "added_files": 19,
+    "total_files": 2234,
+    "added_bytes": 346761,
+    "all_original_blob_modes_preserved": true,
+    "all_new_blob_modes_sizes_match": true,
+    "conditional_nonforce_ref_update": true,
+    "remote_commit_and_ref_verified": true,
+    "complete_execution_checkout": false,
+    "original_base_commit": "00606a16be62631179b50255d4de8daa34f8f196",
+    "original_base_tree": "9d9dd9f77b976c4b8b2076b8f5a0c4f87aa82342",
+    "syntax_correction": {
+      "path": "docs/engineering/reach-recording-validation-2026-10-23/checkpoint-043-validation/validate-static.py",
+      "prior_failed_attempt": "attempt-001",
+      "original_audit_blob": "28c63c2575c8427cc85ab524f566b43c52bdd6a0",
+      "corrected_audit_blob": "6b2e55d09a1cb43d4bad29cd9c11046cb5740267",
+      "scope": "one closing parenthesis; no product code changed"
+    }
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "platform": "Linux-6.18.55-x86_64-with-glibc2.39"
+  },
+  "commands": [
+    {
+      "name": "static-audit",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "docs/engineering/reach-recording-validation-2026-10-23/checkpoint-043-validation/validate-static.py"
+      ],
+      "working_directory": "/workspace/scratch/73029ed6994e/ontokin-c043",
+      "started_utc": "2026-10-26T16:31:07.445390+00:00",
+      "ended_utc": "2026-10-26T16:31:07.811100+00:00",
+      "seconds": 0.3657122509994224,
+      "exit_code": 0,
+      "stdout": "static-audit.stdout",
+      "stderr": "static-audit.stderr"
+    },
+    {
+      "name": "documentation-check",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "working_directory": "/workspace/scratch/73029ed6994e/ontokin-c043",
+      "started_utc": "2026-10-26T16:31:07.811126+00:00",
+      "ended_utc": "2026-10-26T16:31:08.527621+00:00",
+      "seconds": 0.7165131820001989,
+      "exit_code": 1,
+      "stdout": "documentation-check.stdout",
+      "stderr": "documentation-check.stderr"
+    }
+  ],
+  "inputs": {
+    "file_count": 726,
+    "total_bytes": 43176587,
+    "unchanged": true,
+    "all_present_files_match_published_candidate": true,
+    "complete_execution_checkout": false
+  },
+  "product_requests": 0,
+  "runtime_tests": 0,
+  "recording_runs": 0,
+  "numerical_replays": 0,
+  "benchmarks": 0
+}
