@@ -1,0 +1,113 @@
+{
+  "schema": "ontokin.checkpoint039-ordering-cost/0.1",
+  "status": "named_routes_rejected_no_positive_implementation_selected",
+  "source_commit": "4ca73909f861fe4bef9694787473621c1d21c140",
+  "accounting_authority": "docs/language-design/planar-reach-v0.1/budget-counting.md section 3, adopted through ADOPTION.md",
+  "baseline": {
+    "source_sites": [
+      "ontokin/reach_conformance.py:174-184",
+      "ontokin/reach_conformance.py:662-665"
+    ],
+    "generic_clock_count": "N",
+    "gross_complete_comparison_charges": "N - 1",
+    "extra_decode_charges_in_ordering_loop": 0,
+    "p16": {
+      "rows": 206,
+      "gross_sites": 205,
+      "completed_before_failure": 160,
+      "first_uncompleted_pair": [
+        160,
+        161
+      ],
+      "shared_refusal_count": 100001,
+      "measured_saving": null
+    }
+  },
+  "named_routes": [
+    {
+      "name": "historical reader/class/cache identity",
+      "result": "unsafe",
+      "reason": "No fresh current-axis proof; mutable reader storage and callback gap."
+    },
+    {
+      "name": "fresh scalar stored-order scan",
+      "added_lower_bound": "N - 1",
+      "net_saving_upper_bound": "0 - A - P - L - R",
+      "p16_favorable_ceiling": 0,
+      "result": "no_positive_saving"
+    },
+    {
+      "name": "additional immutable full-axis snapshot",
+      "added_lower_bound": "N copied logical values",
+      "net_saving_upper_bound": "-1 - A - P - L - R",
+      "p16_favorable_ceiling": -1,
+      "result": "no_positive_saving"
+    },
+    {
+      "name": "new per-row authored width admission",
+      "added_lower_bound": "N row admissions",
+      "net_saving_upper_bound": "-1 - A - P - L - R",
+      "p16_favorable_ceiling": -1,
+      "result": "no_positive_saving"
+    },
+    {
+      "name": "per-row binding to historical axis receipt",
+      "added_lower_bound": "N fresh value-binding checks",
+      "net_saving_upper_bound": "-1 - A - P - L - R",
+      "p16_favorable_ceiling": -1,
+      "result": "no_positive_saving"
+    }
+  ],
+  "terms": {
+    "A": "All newly performed native dispatch, storage, source/work, domain and invocation admissions.",
+    "P": "Proof construction/publication and bounded storage.",
+    "L": "Every proof lookup/consumption/type/limit/claim check.",
+    "R": "Retirement and cleanup.",
+    "F": "Actually performed unsuccessful admission/fallback overhead, with the ordinary path still charged.",
+    "C": "Newly copied logical values; no exemption for copying references to immutable values."
+  },
+  "broader_reader_origin_route": {
+    "status": "unresolved_not_selected_for_implementation",
+    "exception_to_snapshot_bound": "Construction of an immutable axis can replace an existing materialization rather than add a second snapshot; cannot claim every reader design must copy N additional values.",
+    "net_saving": "(N - 1) - H",
+    "H": "Complete actual newly executed work; may depend on N, sampler count and bounded metadata size. No established value or upper bound.",
+    "p16_positive_requirement": "H < 205",
+    "unresolved": [
+      "Private reader-origin immutable axis and current sampler/channel binding",
+      "Native dispatch/storage and work/source ownership interval",
+      "Domain witness and original prospective guard equivalence",
+      "Counter/receipt storage authority without free scans or copies",
+      "Foreign/custom/direct-helper fallback and original error precedence",
+      "Lifetime, exception cleanup and bounded storage",
+      "Complete eligible and unsuccessful-route charged schedules"
+    ]
+  },
+  "domain_witnesses": [
+    {
+      "name": "unchanged native division counter",
+      "logical_status": "sufficient_if_authentic_monotone_and_invocation_bound",
+      "reason": "Every successful rational cell fallback executes upper midpoint exact division; unchanged counter after successful rows implies integer path <=1024-bit fields, giving <=2048-bit pair prospective bounds.",
+      "cost_status": "unclosed; counter/native storage scan and all snapshot/readback actions must be counted"
+    },
+    {
+      "name": "fallback-only scoped invalidation",
+      "logical_status": "design_idea_not_implemented_or_selected",
+      "cost_status": "unclosed; requires new current-work state, publication, bounded lifetime, charged invalidation and retirement"
+    }
+  ],
+  "unchanged_work": [
+    "All common-sampler comparisons",
+    "All canonical row parsing and direct cell checks",
+    "Stored/semantic labels and exact shifts",
+    "Start/end, semantic coverage and time tolerance",
+    "Downstream independent geometry/endpoints/certificates"
+  ],
+  "fallback_accounting": "New performed work is retained before original fallback. No credit, new allowance or discarded adverse attempt.",
+  "universal_impossibility_claim": false,
+  "full_p16_pass_established": false,
+  "product_requests": 0,
+  "runtime_tests": 0,
+  "numerical_analyzers": 0,
+  "timing_runs": 0
+}
+
