@@ -1,0 +1,33 @@
+{
+  "schema": "ontokin.checkpoint045-reviewer-inspection-attempts/0.1",
+  "reviewer": "/root/source_recovery",
+  "scope": "Incidental read-only inspection commands, separate from the successful formal metadata audit. No files were changed by these commands.",
+  "captured_log_qualification": "Outputs remain in the tool transcript; these are structured disclosures, not reconstructed raw logs.",
+  "nonzero_inspections": [
+    {
+      "operation": "Summarize evidence manifest before formal audit window",
+      "exit_code": 1,
+      "error": "TypeError: object of type int has no len()",
+      "cause": "Summary code applied len() to the integer files-count field. The manifest itself was not invalid."
+    },
+    {
+      "operation": "Read guessed core-validation receipt filenames",
+      "exit_code": 1,
+      "missing_paths": [
+        "c045-meta/core-validation/receipt.json",
+        "c045-meta/core-validation/documentation-command.json",
+        "c045-meta/core-validation/source-audit-command.json"
+      ],
+      "cause": "The actual filenames were result.json, documentation-receipt.json and source-data-receipt.json. Those were then read successfully."
+    },
+    {
+      "operation": "Search two possible core-validator script filenames",
+      "exit_code": 2,
+      "missing_path": "c045-meta/validate_published_core.py",
+      "cause": "The actual validate_core.py path existed and was read; the second guessed path did not. The invocation suppressed stderr."
+    }
+  ],
+  "formal_audit_attempts": 1,
+  "formal_audit_exit_code": 0,
+  "product_requests": 0
+}
