@@ -1,0 +1,50 @@
+{
+  "scope": "Acquisition/preparation failures, not product or documentation command outcomes",
+  "failures": [
+    {
+      "action": "initial shell git ls-remote",
+      "result": "browser-proxy connection failed"
+    },
+    {
+      "action": "generic GitHub fetch of binary contents/blob",
+      "result": "UTF-8-only response rejection; no bytes obtained"
+    },
+    {
+      "action": "large inline shell base64 command",
+      "result": "Argument list too long; no receiver started"
+    },
+    {
+      "action": "base64 contents response above GitHub inline content limit",
+      "result": "empty content with base64 field; receiver hash assertion rejected before writing destination"
+    },
+    {
+      "action": "read-only exact GitHub binary download with approved escalation",
+      "result": "URLError: Temporary failure in name resolution; no bytes obtained"
+    },
+    {
+      "action": "alternate trailing-slash Git blob GET",
+      "result": "GitHub 404; no bytes obtained"
+    },
+    {
+      "action": "checkpoint-014 JSON fetch",
+      "result": "server disconnected; later exact-byte recovery succeeded"
+    }
+  ],
+  "exact_text_recovery": "Four original no-final-newline files were restored to their exact parent blobs before validation; no original content change.",
+  "missing_local_binary_targets": [
+    "docs/engineering/reach-recording-validation-2026-10-22/checkpoint-001.zip",
+    "docs/engineering/reach-recording-validation-2026-10-22/checkpoint-002-verified.zip",
+    "docs/engineering/reach-recording-validation-2026-10-22/checkpoint-003.zip",
+    "docs/engineering/reach-recording-validation-2026-10-22/checkpoint-004.zip",
+    "docs/engineering/reach-recording-validation-2026-10-22/checkpoint-005.zip",
+    "docs/engineering/reach-recording-validation-2026-10-22/checkpoint-006.zip",
+    "docs/engineering/reach-recording-validation-2026-10-22/checkpoint-007.zip",
+    "docs/engineering/reach-recording-validation-2026-10-22/checkpoint-008.zip",
+    "docs/engineering/reach-recording-validation-2026-10-22/checkpoint-009.zip",
+    "docs/engineering/local-validation-2026-10-19/evidence.zip",
+    "docs/engineering/impulse-release-validation/evidence.tar.xz",
+    "docs/engineering/surface-release-validation/evidence-80d59bb.zip"
+  ],
+  "credential_urls_retained_in_publication": false,
+  "runtime_executions": 0
+}
