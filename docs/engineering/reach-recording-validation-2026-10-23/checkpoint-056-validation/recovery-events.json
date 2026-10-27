@@ -1,0 +1,43 @@
+{
+  "schema": "ontokin.checkpoint056-recovery-events/0.1",
+  "events": [
+    {
+      "kind": "default_network_denial",
+      "result": "URLError Operation not permitted during read-only raw-file attempt; no downloaded bytes",
+      "resolution": "bounded network recovery received automatic approval"
+    },
+    {
+      "kind": "unauthenticated_raw_transport_404",
+      "selected": 955,
+      "existing_valid_files": 12,
+      "remote_download_failures": 943,
+      "record": "recovery-attempt001.json",
+      "details": "All remote reads returned404 without authenticated download metadata; original source unchanged",
+      "resolution": "Authenticated immutable directory download metadata returned through connected GitHub account"
+    },
+    {
+      "kind": "binary_text_transport_probe",
+      "result": "fetch_blob UTF-8 decode failure and contents/git-blob text-only rejection; base64 small-file probe succeeded",
+      "resolution": "Same immutable signed download metadata route used for complete recovery"
+    },
+    {
+      "kind": "authenticated_recovery",
+      "status": "passed",
+      "files": 955,
+      "bytes": 121864778,
+      "record": "recovered-inputs.json",
+      "raw_log": "recovery-results.jsonl",
+      "signed_urls_removed": true,
+      "original_files_changed": false,
+      "raw_log_scope": "Append-only log of both attempts; separately retained attempt001 log is its initial prefix."
+    },
+    {
+      "kind": "preparation_copy_missing_log_name",
+      "result": "FileNotFoundError before source-binding creation; no original source changed",
+      "resolution": "Copied actual append-only recovery-results.jsonl and retained original attempt001 log separately; source binding regenerated."
+    }
+  ],
+  "full_checkout": false,
+  "product_imports": 0,
+  "archives_extracted": 0
+}
