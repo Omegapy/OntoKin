@@ -1,0 +1,874 @@
+{
+  "case_id": "P11",
+  "status": "failed",
+  "source_files": "docs/language-design/planar-reach-v0.1/p11.files.json",
+  "program_revision": "sha256:7ee1fca89536d3618b0a9a39e39ea2286be9973ce14ae148d7d8806d973ff000",
+  "options": {
+    "end": "3",
+    "fps": 1.0,
+    "helpers": false,
+    "position_tolerance_m": 0.001,
+    "rotation_tolerance_rad": 0.001,
+    "time_tolerance_s": 1e-06
+  },
+  "started_at": "2026-10-28T21:30:56.277805+00:00",
+  "max_operations": 100000,
+  "source_manifest": {
+    "path": "docs/language-design/planar-reach-v0.1/p11.files.json",
+    "sha256": "sha256:f76b4f8350b7d0adbf6e0acc2c8d48d72fc2a7c12b1d3e4a48f633e548fc98f8",
+    "bytes": 665
+  },
+  "after_construction": {
+    "shared_operations": 7391,
+    "work": {
+      "operations": 668,
+      "counts": {
+        "cache_lookup": 274,
+        "cache_insert": 147,
+        "cache_promote": 181,
+        "source_surface_key": 11,
+        "source_surface_section_key": 33,
+        "source_surface_material_key": 22
+      },
+      "cache_entries": 120
+    }
+  },
+  "failure": {
+    "type": "OntoKinError",
+    "message": "Construction exceeded max_operations.",
+    "frames": [
+      {
+        "file": "tools/probe_reach_recording_work.py",
+        "line": 182,
+        "function": "build"
+      },
+      {
+        "file": "ontokin/gltf.py",
+        "line": 1073,
+        "function": "export_glb"
+      },
+      {
+        "file": "ontokin/gltf.py",
+        "line": 1036,
+        "function": "_export_glb"
+      },
+      {
+        "file": "ontokin/gltf.py",
+        "line": 987,
+        "function": "validate_export"
+      },
+      {
+        "file": "ontokin/reach_conformance.py",
+        "line": 3598,
+        "function": "validate_reach_export"
+      },
+      {
+        "file": "ontokin/reach_conformance.py",
+        "line": 3458,
+        "function": "_verify_certificates"
+      },
+      {
+        "file": "ontokin/reach_conformance.py",
+        "line": 3398,
+        "function": "compare_certificates"
+      },
+      {
+        "file": "ontokin/reach_conformance.py",
+        "line": 1998,
+        "function": "_key_comparisons"
+      },
+      {
+        "file": "ontokin/reach_reference.py",
+        "line": 3287,
+        "function": "_recording_centered_poses"
+      },
+      {
+        "file": "ontokin/reach_reference_plan.py",
+        "line": 960,
+        "function": "recording_centered_poses"
+      },
+      {
+        "file": "ontokin/reach_reference_plan.py",
+        "line": 928,
+        "function": "_phase_poses"
+      },
+      {
+        "file": "ontokin/reach_reference_center.py",
+        "line": 735,
+        "function": "evaluate"
+      },
+      {
+        "file": "ontokin/reach_reference_center.py",
+        "line": 681,
+        "function": "_offset"
+      },
+      {
+        "file": "ontokin/reach_reference_center.py",
+        "line": 677,
+        "function": "product"
+      },
+      {
+        "file": "ontokin/reach_reference_center.py",
+        "line": 275,
+        "function": "exact"
+      },
+      {
+        "file": "ontokin/reach_reference_center.py",
+        "line": 238,
+        "function": "checked"
+      },
+      {
+        "file": "ontokin/reach_reference.py",
+        "line": 121,
+        "function": "exact"
+      },
+      {
+        "file": "ontokin/reach_reference.py",
+        "line": 109,
+        "function": "tick"
+      },
+      {
+        "file": "ontokin/reach_numeric.py",
+        "line": 97,
+        "function": "tick"
+      },
+      {
+        "file": "ontokin/reach_numeric.py",
+        "line": 78,
+        "function": "charge"
+      },
+      {
+        "file": "ontokin/construction.py",
+        "line": 84,
+        "function": "tick"
+      },
+      {
+        "file": "ontokin/construction.py",
+        "line": 90,
+        "function": "exceeded"
+      },
+      {
+        "file": "ontokin/validator.py",
+        "line": 50,
+        "function": "fail"
+      }
+    ]
+  },
+  "traceback": "Traceback (most recent call last):\n  File \"/workspace/scratch/3f450eca9f36/ontokin/tools/probe_reach_recording_work.py\", line 182, in build\n    result = export_glb(compiler.model,\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/gltf.py\", line 1073, in export_glb\n    return _export_glb(model, options=options, source_uri=source_uri, source_sha256=source_sha256,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/gltf.py\", line 1036, in _export_glb\n    validation = (validate_export(data, model, options=scene.options, target_contract=target_contract, check=check, work=work)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/gltf.py\", line 987, in validate_export\n    return validate_reach_export(data, model, options=options, check=_guard_check(check), work=work)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/reach_conformance.py\", line 3598, in validate_reach_export\n    return _verify_certificates(decoded, reference, geometry, tables, endpoint_phases,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/reach_conformance.py\", line 3458, in _verify_certificates\n    result = compare_certificates(recording_context, source_batch,\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/reach_conformance.py\", line 3398, in compare_certificates\n    following = _key_comparisons(reference, geometry, tracks, right, key + 1, arithmetic,\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/reach_conformance.py\", line 1998, in _key_comparisons\n    centered = (centered_reader(tuple(item[\"frame\"] for _, item, _, _, _ in pending), time,\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/reach_reference.py\", line 3287, in _recording_centered_poses\n    frames = recording_centered_poses(self, time, state, selected, context)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/reach_reference_plan.py\", line 960, in recording_centered_poses\n    return _phase_poses(reference, time, state, targets, context, batch, centered=True)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/reach_reference_plan.py\", line 928, in _phase_poses\n    result = (evaluate(plan, reference, time, adopted) if centered else\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/reach_reference_center.py\", line 735, in evaluate\n    offset, uncertain = _offset(parent, vector, guard,\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/reach_reference_center.py\", line 681, in _offset\n    first = guard.floor(combined(product(diagonal, x), product(cross, y), True))\n                                 ^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/reach_reference_center.py\", line 677, in product\n    guard.neg(first) if last == -1 else guard.exact(first, last, \"mul\"))\n                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/reach_reference_center.py\", line 275, in exact\n    return self.checked(self.a.exact, first, last, operation)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/reach_reference_center.py\", line 238, in checked\n    result = operation(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/reach_reference.py\", line 121, in exact\n    self.tick()\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/reach_reference.py\", line 109, in tick\n    self.check()\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/reach_numeric.py\", line 97, in tick\n    self.charge()\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/reach_numeric.py\", line 78, in charge\n    self.external_check()\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/construction.py\", line 84, in tick\n    self.exceeded(\"max_operations\", self.operations, node)\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/construction.py\", line 90, in exceeded\n    fail(\"OKL-E-RESOURCE\", f\"Construction exceeded {name}.\", node, phase=\"support\",\n  File \"/workspace/scratch/3f450eca9f36/ontokin/ontokin/validator.py\", line 50, in fail\n    raise OntoKinError(code, message, node, phase=phase,\nontokin.diagnostics.OntoKinError: Construction exceeded max_operations.\n",
+  "diagnostic": {
+    "schema_version": "ontokin.diagnostic/0.1",
+    "code": "OKL-E-RESOURCE",
+    "severity": "error",
+    "category": "resource_limit",
+    "phase": "support",
+    "message": "Construction exceeded max_operations.",
+    "source_revision": "sha256:9e58d517ad21f6838247096ced3983188b6820b3a7f94d2bb7ac8ace8b77146a",
+    "run_id": null,
+    "time": null,
+    "primary": {
+      "file": "reach-entry.ok",
+      "start_byte": 0,
+      "end_byte": 0,
+      "element_id": null
+    },
+    "related": [],
+    "rule_ids": [
+      "LANG-009"
+    ],
+    "details": {
+      "budget": "max_operations",
+      "limit": 100000,
+      "consumed": 100001,
+      "profile": "planar-reach-0.1"
+    },
+    "repair": {
+      "summary": "Revise the indicated declaration or expression to satisfy the stated core rule.",
+      "patches": []
+    },
+    "blocks": [
+      "represented",
+      "constructed",
+      "evaluated",
+      "delivered"
+    ]
+  },
+  "finished_at": "2026-10-28T21:30:58.584289+00:00",
+  "elapsed_seconds": 2.306479777002096,
+  "operations": 100001,
+  "work": {
+    "operations": 93277,
+    "counts": {
+      "cache_lookup": 3064,
+      "cache_insert": 1321,
+      "cache_promote": 2259,
+      "source_surface_key": 33,
+      "source_surface_section_key": 99,
+      "source_surface_material_key": 66,
+      "checkpoint": 23557,
+      "recording_stage_planning": 1,
+      "pose_identity": 1,
+      "exact_decode": 1591,
+      "binary64_decode": 1036,
+      "recording_boundary_preflight": 3,
+      "source_pose_time_key": 50,
+      "source_topology_key": 20,
+      "pose_vector_domain": 664,
+      "quaternion_rescale": 75,
+      "pose_grid_check": 421,
+      "exact_mul": 1470,
+      "quaternion_sign": 60,
+      "exact_add": 2747,
+      "pose_stationary_check": 42,
+      "pose_finiteness_proof": 312,
+      "composition_stationary_check": 161,
+      "composition_operand_guard": 161,
+      "pose_rotation_reference": 561,
+      "rotation_sparse_check": 117,
+      "pose_add_zero_check": 228,
+      "pose_norm_bound": 267,
+      "quaternion_sparse_check": 23,
+      "quaternion_scalar_scale_check": 23,
+      "quaternion_identity_canonical_check": 23,
+      "quaternion_identity_grid_check": 92,
+      "axis_scale": 9,
+      "exact_div": 83,
+      "interval": 1836,
+      "interval_constituent": 3425,
+      "integer_sqrt": 29,
+      "integer_sqrt_return": 29,
+      "sqrt_exactness": 5,
+      "interval_extract": 26,
+      "pose_scale_identity_check": 12,
+      "quaternion_conjugate": 87,
+      "pose_position_negate": 12,
+      "rotation_product_error_identity": 144,
+      "planar_integer_domain": 17,
+      "planar_integer_shift": 35,
+      "planar_integer_mul": 68,
+      "planar_integer_add": 14,
+      "planar_integer_sub": 14,
+      "planar_integer_round": 34,
+      "cache_evict": 804,
+      "source_physical_observation_lookup": 10,
+      "source_terminal_pose_guard": 10,
+      "source_relative_pose_operands": 10,
+      "exact_sub": 428,
+      "source_world_target_rotation": 10,
+      "vector_projection_operand_guard": 75,
+      "vector_projection_zero_check": 75,
+      "binary64_round": 151,
+      "binary_exponent": 115,
+      "integer_round": 140,
+      "pose_projection_lookup": 166,
+      "quaternion_projection_operand_guard": 80,
+      "quaternion_projection_support": 9,
+      "sqrt_binary64": 32,
+      "sqrt_midpoint": 24,
+      "quaternion_projection_sign": 23,
+      "known_zero_quaternion_projection": 29,
+      "source_physical_observation_publish": 10,
+      "phase_native_operand_key": 166,
+      "phase_absolute": 238,
+      "admission": 2,
+      "planar_admission_input": 18,
+      "numeric_domain": 14,
+      "exact_compare": 1028,
+      "radical_sign": 4,
+      "series_recurrence": 294,
+      "taylor_tail_precharge": 388,
+      "phase_product_domain": 1119,
+      "phase_sum_domain": 1202,
+      "composition_rate_domains": 176,
+      "composition_derivative_zero_check": 36,
+      "pose_cross_zero_check": 14,
+      "pair_clock_domain": 14,
+      "dyadic_round": 49,
+      "source_world_target_components": 8,
+      "residual_operand_domain": 10,
+      "residual_result_guard": 10,
+      "sqrt_result_domain": 2,
+      "source_validated_reach_output_publish": 2,
+      "source_validated_reach_output_check": 2,
+      "recording_stage_planning_phase": 2,
+      "recording_phase_frame": 31,
+      "phase_boundary_check": 12,
+      "phase_recording_proof_domain": 2,
+      "phase_source_node": 60,
+      "recording_angular_witness_guard": 312,
+      "uniform_bound_counts": 168,
+      "phase_recording_proof_publish": 62,
+      "phase_equal_joint_law": 8,
+      "phase_axial_transport_guard": 90,
+      "phase_constant_extent_domain": 28,
+      "phase_composition_operand_guard": 123,
+      "phase_local_translation_factor": 18,
+      "phase_path_counts": 111,
+      "phase_composition_extent": 96,
+      "phase_axial_derivative_guard": 123,
+      "phase_axial_hinge_guard": 33,
+      "phase_axial_axis_guard": 3,
+      "phase_axial_hinge_sign": 3,
+      "phase_composition_extent_identity": 86,
+      "phase_recording_proof_return": 2,
+      "pose_unit_axis_check": 4,
+      "source_series_grid_guard": 12,
+      "source_factorial": 50,
+      "source_coefficients": 52,
+      "source_horner_packing_domain": 12,
+      "source_horner_scale_shift": 4,
+      "source_horner_integer_coefficient": 52,
+      "source_horner_coefficient_pack": 78,
+      "source_horner_grid_shift": 11,
+      "source_horner_argument_square": 12,
+      "source_series_recurrence": 144,
+      "source_horner_integer_product": 144,
+      "source_horner_integer_subtract": 144,
+      "source_horner_unpack": 12,
+      "source_horner_fraction": 24,
+      "source_terminal_latch_guard": 2,
+      "source_terminal_pose_remember": 1,
+      "recording_phase_selection_reuse": 2,
+      "recording_boundary_state_block": 81,
+      "recording_graph_finiteness_guard": 20,
+      "recording_boundary_projection_guard": 1,
+      "recording_boundary_side": 2,
+      "recording_stage_geometry": 1,
+      "recording_geometry_bound": 20,
+      "recording_vertex_block": 49,
+      "recording_vector_component": 60,
+      "recording_decode": 1718,
+      "recording_exact_mul": 399,
+      "recording_exact_add": 812,
+      "recording_sqrt_precision": 8,
+      "recording_integer_shift": 118,
+      "recording_sqrt_quotient": 8,
+      "recording_integer_sqrt": 8,
+      "recording_integer_sqrt_return": 8,
+      "recording_sqrt_exactness": 8,
+      "recording_subdivision_plan": 2,
+      "recording_key": 51,
+      "clock_conversion": 52,
+      "recording_decimal_result": 224,
+      "recording_decimal_chunk": 222,
+      "recording_binary_exponent": 51,
+      "recording_integer_round": 51,
+      "recording_integer_round_return": 51,
+      "recording_stage_sampling": 1,
+      "recording_sample": 52,
+      "recording_phase_context": 3,
+      "recording_constant_law_check": 5,
+      "recording_body_proof_domain": 2,
+      "recording_identity_operand_guard": 83,
+      "recording_identity_composition": 83,
+      "recording_body_witness": 72,
+      "recording_body_child_origin": 22,
+      "recording_moving_pose": 4,
+      "recording_rotation_cursor_domain": 177,
+      "recording_body_phase_guard": 15,
+      "recording_body_direct_seed": 15,
+      "recording_body_seed_domain": 18,
+      "recording_body_seed_witness_block": 231,
+      "recording_orientation_recipe": 135,
+      "recording_body_seed_frame": 71,
+      "recording_body_seed_decode": 436,
+      "recording_pair_operand_domain": 10,
+      "recording_pose": 1040,
+      "recording_float_domain": 759,
+      "recording_captured_phase_domain": 1,
+      "recording_captured_graph_domain": 1,
+      "recording_captured_topology": 20,
+      "recording_captured_witness_block": 46,
+      "recording_captured_phase_clock": 49,
+      "recording_captured_phase_bound": 6,
+      "recording_float_add": 445,
+      "recording_float_body_direct_seed": 3,
+      "recording_body_cursor_stage": 147,
+      "recording_float_mul": 1960,
+      "recording_float_sub": 440,
+      "recording_affine_clock_domain": 2,
+      "recording_affine_operand_guard": 2,
+      "recording_float_excess_domain": 6,
+      "recording_fast_endpoint_allowance": 6,
+      "recording_exact_compare": 460,
+      "recording_hemisphere_domain": 334,
+      "recording_captured_constant_reuse": 144,
+      "recording_body_cursor_reuse": 144,
+      "recording_float_cursor_guard": 144,
+      "recording_float_rotation_step": 144,
+      "recording_float_body_increment_reuse": 141,
+      "recording_captured_bound_guard": 6,
+      "recording_captured_topology_guard": 10,
+      "cache_batch_domain": 1,
+      "recording_static_witness_block": 67,
+      "recording_static_seed_input": 26,
+      "recording_static_body_shared_orientation": 5,
+      "recording_stage_certification": 1,
+      "recording_interval": 51,
+      "phase_coverage": 102,
+      "recording_endpoint_group_domain": 1060,
+      "recording_endpoint_sum_domain": 120,
+      "recording_certificate_group": 40,
+      "recording_endpoint_recurrence_domain": 60,
+      "recording_exact_div": 184,
+      "recording_exact_sub": 23,
+      "recording_bound_float_return": 199,
+      "recording_bound_nextafter": 104,
+      "destination_bound": 23,
+      "recording_certificate": 1020,
+      "numeric_basis_open": 17,
+      "numeric_basis_read": 85,
+      "numeric_basis_read_return": 85,
+      "numeric_basis_hash": 68,
+      "numeric_basis_digest": 2,
+      "recording_stage_encoding": 1,
+      "json_text_batch_domain": 1858,
+      "json_text_literal_return": 252,
+      "json_text_block_encode": 1606,
+      "json_text_block_encode_return": 1606,
+      "independent_clock_integer": 120,
+      "independent_clock_reduction": 60,
+      "independent_clock_reduction_return": 60,
+      "independent_basis_open": 19,
+      "independent_basis_read": 89,
+      "independent_basis_read_return": 89,
+      "independent_basis_aggregate": 2,
+      "independent_metadata_identity": 13,
+      "independent_common_clock": 40,
+      "independent_retained_clock": 52,
+      "independent_clock_cell": 52,
+      "independent_bound_decode": 2154,
+      "independent_exact_add": 2003,
+      "independent_exact_compare": 1465,
+      "independent_exact_sub": 857,
+      "independent_source_geometry": 20,
+      "independent_geometry_point": 2404,
+      "independent_norm_domain": 16,
+      "independent_exact_mul": 277,
+      "independent_sqrt_scale": 9,
+      "independent_sqrt_divide": 9,
+      "independent_sqrt_enter": 9,
+      "independent_sqrt_return": 9,
+      "independent_sqrt_exactness": 9,
+      "independent_geometry_proof_block": 23,
+      "source_primitive_key": 4,
+      "independent_geometry_reuse_block": 26,
+      "independent_phase_table": 20,
+      "independent_projection_entry": 673,
+      "independent_interval_domain": 8,
+      "independent_interval_vector_domain": 44,
+      "independent_certificate_identity": 1020,
+      "independent_carrier_track": 40,
+      "independent_key_pose": 740,
+      "independent_endpoint_claims": 740,
+      "independent_sufficient_orientation_domain": 20,
+      "independent_quaternion_sign": 2,
+      "independent_sufficient_endpoint_domain": 22,
+      "independent_position_magnitude": 128,
+      "independent_stationary_key_comparison": 504,
+      "independent_centered_endpoint_domain": 210,
+      "independent_centered_quaternion_sign": 210,
+      "independent_centered_endpoint_reuse": 172,
+      "independent_interval_claim": 700,
+      "independent_interval_phase_claim": 35,
+      "independent_sufficient_arc_domain": 700,
+      "independent_certificate_member": 700,
+      "independent_certificate_group": 16,
+      "independent_certificate_decode_admission": 16,
+      "independent_stored_lift_sign": 233,
+      "independent_exact_div": 87,
+      "independent_source_arc_reuse": 204
+    },
+    "cache_entries": 256
+  },
+  "budget_limits": {
+    "max_objects": 1000,
+    "max_operations": 100000,
+    "max_result_items": 1000,
+    "max_elapsed_ms": 30000,
+    "max_value_entries": 100000
+  },
+  "work_limits": {
+    "max_operations": 100000,
+    "max_elapsed_ms": 30000,
+    "max_operand_bits": 32768,
+    "max_cache_entries": 256
+  },
+  "source_units": [
+    {
+      "source_id": "entry",
+      "bytes": 1138,
+      "sha256": "sha256:9e58d517ad21f6838247096ced3983188b6820b3a7f94d2bb7ac8ace8b77146a"
+    },
+    {
+      "source_id": "package:proposal.reach-assets@0.1.0",
+      "bytes": 5549,
+      "sha256": "sha256:6551d3dd5a772e85e92547d71db081e6ae7c21a0f3d57424b01c64a18191d6ba"
+    },
+    {
+      "source_id": "package:proposal.reach-exterior@0.1.0",
+      "bytes": 2354,
+      "sha256": "sha256:3b94fc91ca96f8fb0b21a90a1d6b4d78cdbd19600383a10cb6a3646ba67af763"
+    },
+    {
+      "source_id": "package:proposal.reach-parts@0.1.0",
+      "bytes": 2556,
+      "sha256": "sha256:aa04a78696122cd18def6993b1056971f8990a21e8617b3ee73ca98be9b9b0cb"
+    }
+  ],
+  "exception_graph": [
+    {
+      "type": "OntoKinError",
+      "message": "Construction exceeded max_operations.",
+      "frames": [
+        {
+          "file": "tools/probe_reach_recording_work.py",
+          "line": 182,
+          "function": "build"
+        },
+        {
+          "file": "ontokin/gltf.py",
+          "line": 1073,
+          "function": "export_glb"
+        },
+        {
+          "file": "ontokin/gltf.py",
+          "line": 1036,
+          "function": "_export_glb"
+        },
+        {
+          "file": "ontokin/gltf.py",
+          "line": 987,
+          "function": "validate_export"
+        },
+        {
+          "file": "ontokin/reach_conformance.py",
+          "line": 3598,
+          "function": "validate_reach_export"
+        },
+        {
+          "file": "ontokin/reach_conformance.py",
+          "line": 3458,
+          "function": "_verify_certificates"
+        },
+        {
+          "file": "ontokin/reach_conformance.py",
+          "line": 3398,
+          "function": "compare_certificates"
+        },
+        {
+          "file": "ontokin/reach_conformance.py",
+          "line": 1998,
+          "function": "_key_comparisons"
+        },
+        {
+          "file": "ontokin/reach_reference.py",
+          "line": 3287,
+          "function": "_recording_centered_poses"
+        },
+        {
+          "file": "ontokin/reach_reference_plan.py",
+          "line": 960,
+          "function": "recording_centered_poses"
+        },
+        {
+          "file": "ontokin/reach_reference_plan.py",
+          "line": 928,
+          "function": "_phase_poses"
+        },
+        {
+          "file": "ontokin/reach_reference_center.py",
+          "line": 735,
+          "function": "evaluate"
+        },
+        {
+          "file": "ontokin/reach_reference_center.py",
+          "line": 681,
+          "function": "_offset"
+        },
+        {
+          "file": "ontokin/reach_reference_center.py",
+          "line": 677,
+          "function": "product"
+        },
+        {
+          "file": "ontokin/reach_reference_center.py",
+          "line": 275,
+          "function": "exact"
+        },
+        {
+          "file": "ontokin/reach_reference_center.py",
+          "line": 238,
+          "function": "checked"
+        },
+        {
+          "file": "ontokin/reach_reference.py",
+          "line": 121,
+          "function": "exact"
+        },
+        {
+          "file": "ontokin/reach_reference.py",
+          "line": 109,
+          "function": "tick"
+        },
+        {
+          "file": "ontokin/reach_numeric.py",
+          "line": 97,
+          "function": "tick"
+        },
+        {
+          "file": "ontokin/reach_numeric.py",
+          "line": 78,
+          "function": "charge"
+        },
+        {
+          "file": "ontokin/construction.py",
+          "line": 84,
+          "function": "tick"
+        },
+        {
+          "file": "ontokin/construction.py",
+          "line": 90,
+          "function": "exceeded"
+        },
+        {
+          "file": "ontokin/validator.py",
+          "line": 50,
+          "function": "fail"
+        }
+      ],
+      "cause": null,
+      "context": null,
+      "suppress_context": false
+    }
+  ],
+  "unvalidated_reader_input": {
+    "path": "P11/unvalidated-reader-input.glb",
+    "sha256": "sha256:4ea1d4d90fd1942aa8a793892dfe1a72f7ae047b5725f9750ab5c7b330477c3d",
+    "bytes": 1799228
+  },
+  "accepted_artifact": false,
+  "loaded_modules": [
+    {
+      "module": "ontokin",
+      "path": "ontokin/__init__.py",
+      "sha256": "sha256:01302c1c07d6cfd6cae2bf9181763818f8392bc5cf49bc5e205db2cc75403777",
+      "bytes": 95
+    },
+    {
+      "module": "ontokin.bundle",
+      "path": "ontokin/bundle.py",
+      "sha256": "sha256:478595a34186cf7857d922b921ff9b16bbbadbc2eb204f159274e7f9c8e17a61",
+      "bytes": 15272
+    },
+    {
+      "module": "ontokin.construction",
+      "path": "ontokin/construction.py",
+      "sha256": "sha256:eae788d2e4c2a6c0cac76e578c3a1be683fca415e62b6e6e3b55f807d7f346c2",
+      "bytes": 98274
+    },
+    {
+      "module": "ontokin.diagnostics",
+      "path": "ontokin/diagnostics.py",
+      "sha256": "sha256:106b723f452fcf1bf40070d2890bf654033d35541b3c200bba700d694063e177",
+      "bytes": 5913
+    },
+    {
+      "module": "ontokin.evaluator",
+      "path": "ontokin/evaluator.py",
+      "sha256": "sha256:cc93c896bbe020842f3c9b7688c48f90a958639db27f4ccd041141376891488f",
+      "bytes": 61584
+    },
+    {
+      "module": "ontokin.force_export",
+      "path": "ontokin/force_export.py",
+      "sha256": "sha256:a9f06134871199485dd5906442cd6c982174a19f52bee9e466ddacfdebebc521",
+      "bytes": 6735
+    },
+    {
+      "module": "ontokin.force_runtime",
+      "path": "ontokin/force_runtime.py",
+      "sha256": "sha256:e7e22cbf50b4fb95c74d4b3554f11e9ba210a45cd696c572605c3b6c10a24059",
+      "bytes": 16463
+    },
+    {
+      "module": "ontokin.geometry",
+      "path": "ontokin/geometry.py",
+      "sha256": "sha256:1442fbcea2b16eb8b0cb663949ad2b17586395eaa79ba207bd650a9c9442a2b9",
+      "bytes": 4942
+    },
+    {
+      "module": "ontokin.gltf",
+      "path": "ontokin/gltf.py",
+      "sha256": "sha256:4d6d944784cbbad7e45a312b23692407c361621a7b274c150e41808f9fca12f0",
+      "bytes": 67727
+    },
+    {
+      "module": "ontokin.json_limits",
+      "path": "ontokin/json_limits.py",
+      "sha256": "sha256:d6a7899e8bb6d6ca482dec75e5e64a42e93c9385ba599c6ac097d96f6e2f27ee",
+      "bytes": 7554
+    },
+    {
+      "module": "ontokin.linker",
+      "path": "ontokin/linker.py",
+      "sha256": "sha256:e262ecae009e35fd2f677ca9e7443340ebf8ca1f630ce610edddf157bcbd0e7f",
+      "bytes": 15583
+    },
+    {
+      "module": "ontokin.model",
+      "path": "ontokin/model.py",
+      "sha256": "sha256:ff5cf400592335b44bb9a49ae4e01ecf8ee704b61c746c9df24407a8779cc27f",
+      "bytes": 5697
+    },
+    {
+      "module": "ontokin.reach_conformance",
+      "path": "ontokin/reach_conformance.py",
+      "sha256": "sha256:b4c657eac72186203960b18738f65f08e700f52dffa11c1364c6b4609c59a81a",
+      "bytes": 206759
+    },
+    {
+      "module": "ontokin.reach_export",
+      "path": "ontokin/reach_export.py",
+      "sha256": "sha256:9ce63f55313175222a8ec539c1865c8ec15b4835e4cf1c96ec723337dd10c35e",
+      "bytes": 94468
+    },
+    {
+      "module": "ontokin.reach_kinematics",
+      "path": "ontokin/reach_kinematics.py",
+      "sha256": "sha256:685c8fa0f2dce8d280caeec77359fa0294e1e9fcd13db676c00a3188a2ca7923",
+      "bytes": 20512
+    },
+    {
+      "module": "ontokin.reach_numeric",
+      "path": "ontokin/reach_numeric.py",
+      "sha256": "sha256:1bd7da1d6721369d8662ba314e08c8704abfd24a4d9707113da4ac296d92ea0a",
+      "bytes": 38427
+    },
+    {
+      "module": "ontokin.reach_phase",
+      "path": "ontokin/reach_phase.py",
+      "sha256": "sha256:e1904fa4b05719b72a56c6d35f653836250cb455a39cb5d191c6dcc58251421c",
+      "bytes": 70626
+    },
+    {
+      "module": "ontokin.reach_pose",
+      "path": "ontokin/reach_pose.py",
+      "sha256": "sha256:e1ec6bd98184900a5637b05fce1c0066820fa9b9f159c89f57ea7c1364167013",
+      "bytes": 96438
+    },
+    {
+      "module": "ontokin.reach_projection",
+      "path": "ontokin/reach_projection.py",
+      "sha256": "sha256:71e65cf1fa33cca943578c12e6bc3846a74a1b3fd472721edf66703955391b62",
+      "bytes": 6530
+    },
+    {
+      "module": "ontokin.reach_recording_capture",
+      "path": "ontokin/reach_recording_capture.py",
+      "sha256": "sha256:30a3747ced90a5e5e9aa3a7326c6faeebc1ce80bb615993ea380d3597549e085",
+      "bytes": 85135
+    },
+    {
+      "module": "ontokin.reach_recording_fast",
+      "path": "ontokin/reach_recording_fast.py",
+      "sha256": "sha256:bbe0a389f633dd4e6974538b17d2f92d8ed6658b8078ca0ae666fa3df6a4391e",
+      "bytes": 133038
+    },
+    {
+      "module": "ontokin.reach_recording_finite",
+      "path": "ontokin/reach_recording_finite.py",
+      "sha256": "sha256:bb925203b61c97d1cf25a44ae0f34b852862b503163faa7385230b2680778f4f",
+      "bytes": 7014
+    },
+    {
+      "module": "ontokin.reach_reference",
+      "path": "ontokin/reach_reference.py",
+      "sha256": "sha256:e17fb50c54f41e13b42ce5bc2c6464544c26992299b474032ad2b19e0485949f",
+      "bytes": 259473
+    },
+    {
+      "module": "ontokin.reach_reference_center",
+      "path": "ontokin/reach_reference_center.py",
+      "sha256": "sha256:ee4b28542d2bf75b9a4e1da76e51e321f8131c90f249c15ccdbe3d50a3df71e9",
+      "bytes": 38447
+    },
+    {
+      "module": "ontokin.reach_reference_plan",
+      "path": "ontokin/reach_reference_plan.py",
+      "sha256": "sha256:7b83c6ffdeaaac41820ad320d13263ffbabc434006579bb8aed49debb776a7cb",
+      "bytes": 49370
+    },
+    {
+      "module": "ontokin.reach_runtime",
+      "path": "ontokin/reach_runtime.py",
+      "sha256": "sha256:fb38864a9ee73a1f00a1c72366305d95105b2486922d61f6606611fb435600e6",
+      "bytes": 160641
+    },
+    {
+      "module": "ontokin.reach_source",
+      "path": "ontokin/reach_source.py",
+      "sha256": "sha256:aa8e9b3a9a615bdd8dd4fe5f91109e649f76c5ea02c51ac3cfb347a8d16c8abc",
+      "bytes": 11248
+    },
+    {
+      "module": "ontokin.scene",
+      "path": "ontokin/scene.py",
+      "sha256": "sha256:47d5b1d25558da6f1b2e6daffcff7da1f6f6e19b0a8a62e7bf48f891cf2fd28b",
+      "bytes": 72123
+    },
+    {
+      "module": "ontokin.surface",
+      "path": "ontokin/surface.py",
+      "sha256": "sha256:8ef6cb86f18786207f4fb8bdce62ce35510f4f3c174a8ba2dc87772daecb89b4",
+      "bytes": 12478
+    },
+    {
+      "module": "ontokin.surface_runtime",
+      "path": "ontokin/surface_runtime.py",
+      "sha256": "sha256:18cf25ca5dfcc8e0db91d53f9cac8deb5f4567c4cb0965f161bc567b97b6e2a5",
+      "bytes": 5120
+    },
+    {
+      "module": "ontokin.syntax",
+      "path": "ontokin/syntax.py",
+      "sha256": "sha256:3b84c6c1c79a0d20e8e38326105a1c643e8d9397fad2712a16ea7d79a62dce46",
+      "bytes": 19757
+    },
+    {
+      "module": "ontokin.syntax02",
+      "path": "ontokin/syntax02.py",
+      "sha256": "sha256:af011648c2d7e98a42fba0ebbd4c6f3a717e536662f93d8c1f7415a03397f0dd",
+      "bytes": 14603
+    },
+    {
+      "module": "ontokin.syntax05",
+      "path": "ontokin/syntax05.py",
+      "sha256": "sha256:f9be350406f5f50146236f4f9939688908a2a46a244634e32dcb2546fff5a493",
+      "bytes": 2106
+    },
+    {
+      "module": "ontokin.syntax06",
+      "path": "ontokin/syntax06.py",
+      "sha256": "sha256:6665a52c701ceb61dd3a5eeedcd8313ea289f5075badef6cc57f6fe567ca91a0",
+      "bytes": 407
+    },
+    {
+      "module": "ontokin.validator",
+      "path": "ontokin/validator.py",
+      "sha256": "sha256:70fac9425bec17dbcb0716801b2cb0bf9206bc9b0d4a3622771ea29ddb48fea5",
+      "bytes": 73538
+    },
+    {
+      "module": "ontokin.values",
+      "path": "ontokin/values.py",
+      "sha256": "sha256:4fff5edda701aba27656561aa3fc3a61678ba228e1715bc8b5f43d0f104b9c6d",
+      "bytes": 22500
+    },
+    {
+      "module": "tools.reach_delivery_inventory",
+      "path": "tools/reach_delivery_inventory.py",
+      "sha256": "sha256:1920801b6f6c56ef40c6d20471797bd370c412a8b7a8f6a815c1e2d739c286b5",
+      "bytes": 8293
+    }
+  ]
+}

@@ -155,6 +155,13 @@ The October 17, 2026 reorganization preserved the six substantive records that e
 
 ## Reach delivery implementation work
 
+The [October 28 C060 P11/L03 diagnostic](engineering/reach-recording-validation-2026-10-28-c060/README.md)
+records four original-limit failures, independently reconciled producer/reader work,
+and a reviewed no-go for isolated producer pi-series shortening. Its
+[handoff](engineering/reach-recording-validation-2026-10-28-c060/HANDOFF.md) preserves
+the failed documentation gate and the next bounded reader-initialization target;
+it makes no runtime repair or release-acceptance claim.
+
 The [October 22 recording checkpoint](engineering/reach-recording-validation-2026-10-22/README.md) preserves current measured costs, exact source identities, all failed attempts and the next unmet recording gate.
 
 The [coaxial phase derivation](engineering/reach-coaxial-phase-bounds.md) proves
