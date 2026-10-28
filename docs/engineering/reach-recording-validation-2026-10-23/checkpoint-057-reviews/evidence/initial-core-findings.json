@@ -1,0 +1,62 @@
+{
+  "schema": "ontokin.checkpoint057-evidence-initial-findings/0.1",
+  "reviewer": "/root/evidence_recovery",
+  "initial_inputs": [
+    {
+      "path": "docs/engineering/reach-recording-validation-2026-10-23/HANDOFF-057.md",
+      "bytes": 8222,
+      "sha256": "256c069ee25d5f06622b10582771679ac5bd0bdfe134ce7aea69ca70c4e584ab"
+    },
+    {
+      "path": "docs/engineering/reach-recording-validation-2026-10-23/checkpoint-057-comparison-admission-audit.md",
+      "bytes": 21573,
+      "sha256": "b69f189490774c07ed4c7439d4ed1777d625d9341da8aefae0dcdfd3c41a61eb"
+    },
+    {
+      "path": "docs/engineering/reach-recording-validation-2026-10-23/checkpoint-057-event-funding.json",
+      "bytes": 9462,
+      "sha256": "9c8260a077776cd5b915d6cbfde113c80d2fd5e462b46a55003b54165bee7bd3"
+    },
+    {
+      "path": "docs/engineering/reach-recording-validation-2026-10-23/checkpoint-057-cost-ledger.json",
+      "bytes": 3413,
+      "sha256": "598f7570ea1f6b0d3462be0e1bc74dc6cda5396741b91e9ed1ee182fa86f982e"
+    },
+    {
+      "path": "docs/engineering/reach-recording-validation-2026-10-23/checkpoint-057-next-scope.json",
+      "bytes": 3925,
+      "sha256": "b075967bb3039642f8d9396a83de7d9160dfbac3a198bfeeb456f21615684caa"
+    },
+    {
+      "path": "docs/engineering/reach-recording-validation-2026-10-23/checkpoint-057-source-binding.json",
+      "bytes": 7488,
+      "sha256": "e8656bfe6fd755c87763eed30b672f13643562cb28fcd197590b0811318c4413"
+    }
+  ],
+  "findings": [
+    {
+      "id": "EV1",
+      "status": "resolved_and_reread",
+      "detail": "Initial E04 range3004\u20133010 omitted the AttributeError handler/fallback at3011\u20133012. E03/E04/E05 stage boundaries needed exact alignment.",
+      "corrected_ranges": {
+        "E03": [
+          2993,
+          3004
+        ],
+        "E04": [
+          3005,
+          3012
+        ],
+        "E05": [
+          3013,
+          3017
+        ]
+      },
+      "locations": [
+        "checkpoint-057-event-funding.json",
+        "checkpoint-057-comparison-admission-audit.md"
+      ]
+    }
+  ],
+  "root_corrections_record": "../root-corrections002.json"
+}
