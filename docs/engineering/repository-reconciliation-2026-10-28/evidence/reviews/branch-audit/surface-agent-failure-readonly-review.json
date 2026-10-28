@@ -1,0 +1,185 @@
+{
+  "schema_version": "ontokin.c059.surface-agent-failure-review/0.1",
+  "reviewer": "c059-branch-cleanup-reviewer / live_readiness",
+  "scope": "Read-only inspection of failed C059 validation logs, source, exchange files and retained SQLite metadata. No product imports, runtime, tests, SQLite writes or source edits.",
+  "status": "confirmed_loss_of_request_history_cause_unresolved",
+  "candidate": {
+    "commit": "4155acfd1b01e1b72aac23be5e28b054d2e10440",
+    "tree": "6afc9960c5551115c87aafdcbc1d9d002172d5f6",
+    "workspace": "/workspace/scratch/abbf47b1d319/c059-validation-full-001/workspace",
+    "source_unchanged_reported": true
+  },
+  "original_run": {
+    "root": "/workspace/scratch/abbf47b1d319/c059-validation-full-001",
+    "step": "surface-agent-build",
+    "started_at": "2026-10-28T19:50:05.642953+00:00",
+    "finished_at": "2026-10-28T19:51:09.095980+00:00",
+    "duration_seconds": 63.453,
+    "returncode": 1,
+    "argv": [
+      "/workspace/scratch/abbf47b1d319/reconcile-env/venv/bin/python",
+      "tools/build_surface_agent_demo.py",
+      "--output-dir",
+      "/workspace/scratch/abbf47b1d319/c059-validation-full-001/artifacts/surface-agent"
+    ],
+    "log_sha256": "115c175354ed68b29a8c634ae67a3bf7d5644543ed3f594cbc847de36033e5b2",
+    "log_bytes": 5422,
+    "workflow_sha256": "c72716a530402dced2ba547632f67958e56aa5a8b92032755470e47e3a054841",
+    "workflow_bytes": 284329,
+    "workflow_status": "failed",
+    "completed_fixtures": 20,
+    "completed_exchanges": 459
+  },
+  "failure": {
+    "exception": "TypeError: 'NoneType' object is not subscriptable",
+    "source": "ontokin/agent.py:582",
+    "method": "AgentService._commit_task",
+    "statement": "if row[\"state\"] != \"running\" or row[\"owner\"] != self._store.owner:",
+    "request_id": "surface-workflow-0460",
+    "project_id": "surface-workflow-composition-generated-7",
+    "operation": "export",
+    "program_revision": "sha256:1ae2570ed46665c82197b9cf2ce3ef6b2401d8757f81d2aade3aa4547dcbefca",
+    "destination": "ontokin.glb/0.3"
+  },
+  "database": {
+    "path": "/workspace/scratch/abbf47b1d319/c059-validation-full-001/artifacts/surface-agent/service-store/surface-program-agent.sqlite3",
+    "method": "Python standard-library sqlite3, URI mode=ro&immutable=1, only SELECT and PRAGMA quick_check. No WAL/SHM/journal existed before inspection. Original DB SHA-256 was unchanged before/after reading.",
+    "sha256": "dc429a28b3a827d4c702dcdc73013fae4a82f5f0beec5bc276d2e9dba5c90187",
+    "bytes": 11599872,
+    "inode": 1187984,
+    "mtime_utc": "2026-10-28T19:51:08.962270+00:00",
+    "ctime_utc": "2026-10-28T19:51:08.962270+00:00",
+    "symlink": false,
+    "wal_present": false,
+    "shm_present": false,
+    "journal_present": false,
+    "quick_check": "ok",
+    "sqlite_inspector_version": "3.53.1",
+    "schema_version": "ontokin.surface-program-agent-store/0.1",
+    "counts": {
+      "projects": 16,
+      "sources": 21,
+      "sessions": 1,
+      "requests": 457,
+      "runs": 41,
+      "artifacts": 19
+    },
+    "request_states": {
+      "rejected": 5,
+      "succeeded": 451,
+      "unknown_outcome": 1
+    },
+    "sqlite_sequence_requests": 457,
+    "session": {
+      "id": "worker:f37e67036b8244ce8834bd3a3dd3cafa",
+      "pid": 547,
+      "host": "3c188710f4ee",
+      "process_start": null,
+      "closed": 1
+    }
+  },
+  "receipt_comparison": {
+    "all_request_files_examined": 460,
+    "all_response_files_examined": 459,
+    "retained_matching_responses": 456,
+    "missing_request_rows": [
+      "surface-workflow-0458",
+      "surface-workflow-0459",
+      "surface-workflow-0460"
+    ],
+    "differing_response_rows": [
+      {
+        "request_id": "surface-workflow-0457",
+        "exchange_status": "succeeded",
+        "exchange_response_mtime_utc": "2026-10-28T19:51:06.710213+00:00",
+        "db_status": "unknown_outcome",
+        "db_updated_epoch": 1793217068.9641273,
+        "db_error_code": "OKA-E-UNKNOWN-OUTCOME",
+        "db_error_message": "The service closed while this work was running; no replay is authorized."
+      }
+    ],
+    "missing_completed_receipts": [
+      {
+        "id": "surface-workflow-0458",
+        "status": "succeeded",
+        "response_mtime_utc": "2026-10-28T19:51:06.829986+00:00"
+      },
+      {
+        "id": "surface-workflow-0459",
+        "status": "succeeded",
+        "response_mtime_utc": "2026-10-28T19:51:06.927627+00:00"
+      }
+    ],
+    "failed_request_mtime_utc": "2026-10-28T19:51:06.927990+00:00"
+  },
+  "static_source_evidence": [
+    {
+      "file": "ontokin/agent_store.py",
+      "lines": "104-123, 131-143",
+      "finding": "Each connection opens the configured database path, uses synchronous=FULL; transactions begin IMMEDIATE and commit or roll back. Request rows are INSERTed and UPDATEd."
+    },
+    {
+      "file": "ontokin/agent_store.py",
+      "lines": "173-212",
+      "finding": "Unknown-outcome recovery and close UPDATE existing request rows and session state; they do not delete request identities."
+    },
+    {
+      "files": [
+        "ontokin/agent*.py",
+        "ontokin/program*.py",
+        "tools/build_surface_agent_demo.py"
+      ],
+      "finding": "Static search found no DELETE, DROP TABLE, TRUNCATE, rmtree, or unlink statement."
+    },
+    {
+      "file": "ontokin/agent.py",
+      "lines": "73-79, 237-245, 576-583",
+      "finding": "_Check treats a missing row as cancellation, while _commit_task and synchronous handle subsequently dereference request rows without handling None. This is a defensive gap, not proof of the cause of missing durable history."
+    },
+    {
+      "file": "tools/build_surface_agent_demo.py",
+      "lines": "78-109, 431-460",
+      "finding": "Builder requires a new empty output directory, uses output/service-store, writes each request before handling and response after handling, and calls service.close in finish on failure."
+    },
+    {
+      "file": "tools/check_local.py",
+      "lines": "328-338, 396-400, 480-488",
+      "finding": "Surface-native, surface-agent, impulse-agent and force-agent artifact directories are distinct. Driver executes and waits for each subprocess sequentially."
+    }
+  ],
+  "source_sha256": {
+    "ontokin/agent.py": "4963dbdafb6ac45c59fcb9dd25412a7d332a70c22f55d7aaf1ad995a216c0d0c",
+    "ontokin/agent_store.py": "6a0b0a0a739066b7ecf882f9074d067cf4c0e37a05497b9035113228b6f4598a",
+    "ontokin/program_store.py": "ff3882a60713476e3aad9c77d3d9789d84a3676ebadc5bdddd85a7a99e37ce2a",
+    "ontokin/program_agent.py": "88302cdb0ec287fd8b4c98200156b6b0df1f0360b5bb2a0aee0518f95b21ff94",
+    "tools/check_local.py": "ce12a690237eea2b9d2d9c6f74e3e14c49e70b8cb8aee27eb0c55e466434df0d",
+    "tools/build_surface_agent_demo.py": "420fcf0b621a35e02d7ac34f76ed446898a5066f92bf3f84aafc57448db60574"
+  },
+  "assessment": {
+    "confirmed": "The service returned three successful request responses whose retained DB states are now older or absent. The failure is broader than a single missing export lookup.",
+    "inference": "The retained state is consistent with regression to a snapshot in which request 0457 was running, followed by normal service.close fencing that row. This describes the observed state transition, not its physical cause.",
+    "source_defect": "A missing-row handling gap exists, but no code path deleting these records was found in the lifecycle/store code. A guard alone would not repair durability or synchronous handle.",
+    "artifact_path_collision": "No collision found in configured driver/build paths; original paths and parents are non-symlink paths. External processes are not fully observable.",
+    "external_file_replacement": "Not established. No historical inode/hash/WAL event trace exists. One current inode/stat and absence of current WAL cannot prove past replacement.",
+    "environment_or_sqlite": "Not established. The snapshot passes quick_check; this does not certify that previously committed transactions persisted or attribute their loss.",
+    "gate_result": "Original surface-agent-build remains failed; its dependent format/browser gates were blocked. The original full driver result must remain failed."
+  },
+  "next_steps": {
+    "recovery_root": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001",
+    "root_reported": "Root launched exact nine failed/blocked gates using unchanged check_local.execute_step under elevated process permissions, with fresh output and original artifacts preserved. Browser preflight passed; surface Agent build was running at handoff.",
+    "read_only_review_pending": "Completed. See surface-agent-recovery-readonly-verification.json: all nine recovery gates passed, all 492 request/response receipts match final DB, 22 fixtures completed, source/workspace manifest bytes unchanged. This does not identify the physical cause of original request history loss.",
+    "suggested_capture": [
+      "Exact command/cwd/interpreter and runtime SQLite version",
+      "Source input inventory before/after",
+      "Complete exchanges and workflow/build manifests",
+      "Final DB/WAL/SHM/journal presence, stat and hashes after process exit",
+      "If attribution remains necessary, filesystem create/delete/move/close-write events for service-store without opening SQLite during the live builder"
+    ],
+    "not_recommended": "No product guard patch or deletion/overwrite of failed artifacts. A later passing rerun must be reported separately and does not retrospectively identify the cause.",
+    "recovery_verification": "surface-agent-recovery-readonly-verification.json"
+  },
+  "original_database_preserved_after_recovery": {
+    "sha256": "dc429a28b3a827d4c702dcdc73013fae4a82f5f0beec5bc276d2e9dba5c90187",
+    "matches_original": true
+  }
+}

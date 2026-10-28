@@ -1,16 +1,18 @@
 # OntoKin status
 
-Checkpoint: October 28, 2026, C059 integration preparation. The full [GOAL](GOAL.md) remains in progress: an AI-agent programming language for editable 3D shapes, objects and animation, with validated delivery to game engines including Unreal Engine.
+Checkpoint: October 28, 2026, C059 verified development candidate. The full [GOAL](GOAL.md) remains in progress: an AI-agent programming language for editable 3D shapes, objects and animation, with validated delivery to game engines including Unreal Engine.
 
 ## Released capability
 
-The finite force-0.1 / Agent/0.5 / recorded GLB/0.5 release remains complete at its identified implementation and [release evidence](docs/engineering/force-release-validation/README.md). Earlier core, construction, surface and impulse releases retain their meanings. Recorded GLB playback supplies no live destination physics. No new release or engine acceptance is claimed by C059.
+The finite force-0.1 / Agent/0.5 / recorded GLB/0.5 release remains complete at its identified implementation and [release evidence](docs/engineering/force-release-validation/README.md). Earlier core, construction, surface and impulse releases retain their meanings. Recorded GLB playback supplies no live destination physics. C059 makes no new release or engine-acceptance claim.
 
 ## Current development integration
 
-C059 prepares one main integration of the reviewed C032 runtime and later C058 evidence. It excludes the held C035 runtime changes and preserves their exact tests and historical results. Explicit source 0.6 / planar-reach-0.1, Agent/0.6 and GLB/0.6 remain experimental; their discovery text states that release acceptance is incomplete. Existing defaults remain CLI Agent/0.1, Python ProgramAgentService/0.2 and GLB/0.1.
+[PR #56](https://github.com/Omegapy/OntoKin/pull/56) consolidates the reviewed C032 runtime and later C058 evidence. It excludes the held C035 runtime changes and preserves their exact tests and historical results. Explicit source 0.6 / planar-reach-0.1, Agent/0.6 and GLB/0.6 remain experimental. Existing defaults remain CLI Agent/0.1, Python ProgramAgentService/0.2 and GLB/0.1.
 
-[The reconciliation record](docs/engineering/repository-reconciliation-2026-10-28/README.md) identifies source selection, archive proof and actual verification. Fresh candidate checks and main integration are pending at this preparation checkpoint. Historical C032 results remain separate from new executions.
+Tested candidate `4155acfd1b01e1b72aac23be5e28b054d2e10440`, tree `6afc9960c5551115c87aafdcbc1d9d002172d5f6`, passed 3,064 tests on CPython 3.12.14 with no skips. The separate 106-test Agent/0.5 cohort passed and overlaps that suite. Selected executions cover all 34 local-driver roles and eight supplemental force roles; all 83 resulting PNGs were actually reviewed. [The reconciliation record](docs/engineering/repository-reconciliation-2026-10-28/README.md) preserves exact commands, inputs, failed attempts, successful recoveries and limits.
+
+The original full run failed two roles and blocked seven; the recovery passed those nine. The first force run passed four roles and failed its Agent build; an exclusive recovery passed the remaining four. SQLite state loss/corruption occurred in the failed attempts; its physical cause remains unresolved. Neither failed run is relabeled as passed. Evidence publication and the actual resulting-main verification are separate stages. This checkpoint precedes the final main merge.
 
 ## Decisions and unresolved gates
 
@@ -22,9 +24,15 @@ The next runtime objective is to resolve the remaining original recording failur
 
 ## Repository lifecycle and ownership
 
-[OK-ENG-009/0.1.0](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) treats main as the current development baseline and keeps release acceptance separate. Use one branch per active bounded scope, normally at most three active work branches; checkpoints are commits. Retain exact histories before removing inactive branches. The historical archive `archive/pre-consolidation-20261028` preserves all 104 original heads through 95 distinct parents; never merge its index-only tree into main.
+[OK-ENG-009/0.1.0](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) makes main the current development baseline while keeping release acceptance separate. Use one branch per active bounded scope, normally at most three active work branches; checkpoints are commits. The historical archive `archive/pre-consolidation-20261028` at `e6917dae0be3a786c22e76be3de62e3c97784cf5` preserves all 104 original branch heads through 95 distinct parents. Never merge its index-only tree into main.
 
-Active root scope: `work/main-reconciliation-20261028-c059`, [Issue #26 comment 6478260243](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6478260243). Main lease owner `interactive-main-reconciliation-20261028-c059-7of9` acquired `22c43aa07012eed147f34d7fe311dfd1bf1e8123` at `2026-10-28T19:24:54.000Z`, expiring `2026-10-28T19:54:54.000Z`. Root alone owns main, source edits and runtime/test/SQLite execution. The explicitly delegated cleanup worker may remove only reconciled historical refs; it cannot change source or main. Reconcile actual heads before uncertain retries. Both hosted workflows remain manual-only/default-false; no hosted execution is selected.
+All 34 original open draft PRs were closed with exact provenance; all 103 original inactive non-main branch names were removed after fresh-head checks and verified retention. The recorded post-cleanup state has main, the archive and PR #56's active branch. Automatic deletion of merged head branches is enabled.
+
+Active integration scope: `work/main-reconciliation-20261028-c059`, [Issue #26](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6479485387). Main lease owner `interactive-main-reconciliation-20261028-c059-7of9` renewed at `2026-10-28T20:12:14Z`, expiring `2026-10-28T20:42:14.000Z`, at verified main `a5199cd419ab071981cfcba02d8c64d0fed5127b`. Root owns main integration. Reconcile actual heads before uncertain retries. Both hosted workflows remain manual-only/default-false; no hosted execution was dispatched.
+
+## Git LFS
+
+The owner authorized Git LFS use and funding. GitHub's inclusion of LFS objects in repository archives is enabled. Storage-identity compatibility and migration tooling are being prepared separately. No payload has been replaced with an unuploaded pointer. Authenticated LFS upload and download verification remain pending because the available GitHub connector cannot transfer LFS objects and this executor has no authenticated Git transport. Archive inclusion alone does not establish completed migration or reduce historical Git storage.
 
 ## Remaining product scope
 

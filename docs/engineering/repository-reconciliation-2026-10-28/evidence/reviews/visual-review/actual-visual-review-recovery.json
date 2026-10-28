@@ -1,0 +1,1904 @@
+{
+  "schema_version": "ontokin.actual-visual-review/0.1",
+  "review_id": "c059-recovery-actual-visual-review",
+  "reviewer": {
+    "agent": "/root/packet_evidence",
+    "method": "Actual inspection through view_image of complete PNGs or labeled contact sheets; original follow-up for small impulse subjects.",
+    "independence": "Reviewer did not run or modify the capture harnesses or product code during this task; this is an AI visual review, not a claimed human sign-off."
+  },
+  "completed_at_utc": "2026-10-28T20:05:26.450983+00:00",
+  "status": "VISUAL_REVIEW_COMPLETE_NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+  "scope": {
+    "root": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts",
+    "browser_gate_count": 6,
+    "png_count": 35,
+    "pngs_visually_reviewed": 35,
+    "pngs_with_report_sha256": 32,
+    "reported_sha256_matches": 32,
+    "pngs_without_report_sha256": 3,
+    "unreported_pngs": [],
+    "all_reviewed_bytes_stable_at_completion": true
+  },
+  "summary": [
+    "All 35 PNGs in the six completed browser gates were actually inspected. No blocking visual rendering or layout concern was observed in these captured states.",
+    "Five viewer PNGs were inspected directly; the remaining 30 PNGs were inspected as complete labeled three-frame contact sheets, with all six impulse P04/P11 PNGs additionally inspected at original resolution.",
+    "The three legacy visual-browser captures lack hashes in their browser report; their actual bytes, SHA256 and pixel dimensions are bound here. The other 32 capture hashes agree with their report.",
+    "Side-view occlusion and small-subject frames constrain visual coverage. These are retained as evidence limitations."
+  ],
+  "blocking_findings": [],
+  "nonblocking_visibility_limitations": [
+    "Surface side views overlap multiple components, limiting component-by-component observation from those views.",
+    "Impulse P04/P11 use a broad scene; fine details are not reliably assessable from the small subjects."
+  ],
+  "claim_boundaries": [
+    "Report statuses and metadata are quoted from the identified reports; the reviewer did not reproduce their functional or numerical checks.",
+    "The inspection covers only captured views and reported times, not intervening playback or controls in use.",
+    "These screenshots show browser playback of recorded transforms. They do not establish live physics, Blender/Unreal import, full language conformance, release readiness or general rendering quality.",
+    "Fixture labels are scoped to each gate. The impulse fixture P11 here is not evidence resolving the historical planar-reach P11 failure.",
+    "No product import, runtime, test, source edit or remote mutation was performed by this review. Raw PNGs were not modified."
+  ],
+  "reports": [
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/agent-demo-browser/viewer-results.json",
+      "byte_length": 15596,
+      "sha256": "58b9ff6d1bfd4f614b568564f5eebc6251852815610b1bdfed624a06e28997a6",
+      "schema_version": "ontokin.visual-validation/0.1",
+      "status": "passed",
+      "generated_at_utc": "2026-10-28T19:55:01.060Z",
+      "scenario": "agent-authoring-custom-import",
+      "environment": {
+        "platform": "linux",
+        "architecture": "x64",
+        "node": "v24.22.1",
+        "rendering": "Headless Chromium with ANGLE SwiftShader software rendering"
+      },
+      "browser": "141.0.7390.37",
+      "renderer": "Three.js 0.180.0 / WebGL2",
+      "limits": [
+        "Browser world-pose comparisons cover 1.5 and 2 seconds for this artifact; the export report and independent importer checks provide separate evidence.",
+        "The custom-import UI receives only the GLB and correctly makes no source or numerical-conformance claim; this external harness verifies the sidecar provenance.",
+        "Geometry dimensions above are retained source metadata; the screenshot is a rendering observation, not a complete mesh validator.",
+        "No Blender import, model-authoring efficiency, or general rendering-quality certification is claimed."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/construction-demo-browser/viewer-results.json",
+      "byte_length": 91008,
+      "sha256": "5cee2d99319db3582acdea8c270ce5c89c6392ffda09baed280394c2fd63418b",
+      "schema_version": "ontokin.visual-validation/0.2",
+      "status": "passed",
+      "generated_at_utc": "2026-10-28T19:55:02.556Z",
+      "scenario": "construction-program-custom-import",
+      "environment": {
+        "platform": "linux",
+        "architecture": "x64",
+        "node": "v24.22.1",
+        "rendering": "Headless Chromium with ANGLE SwiftShader software rendering"
+      },
+      "browser": "141.0.7390.37",
+      "renderer": "Three.js 0.180.0 / WebGL2",
+      "limits": [
+        "Seven sampled times cover 126 browser world poses. They do not certify every possible program or continuous-time error.",
+        "The custom-import UI receives only the GLB. This external harness separately verifies its source and numerical sidecars.",
+        "Decoded mesh bounds are independently checked by verify_gltf.mjs; a screenshot alone does not establish geometry accuracy.",
+        "No Blender import, live physics, agent productivity improvement, or general rendering-quality certification is claimed."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/browser-validation.json",
+      "byte_length": 339935,
+      "sha256": "411bc81ec4bc0f511591867208a103cf42bb1b287585ada012c9453e0baf5402",
+      "schema_version": "ontokin.impulse-browser-validation/0.1",
+      "status": "passed",
+      "generated_at_utc": "2026-10-28T19:55:12.096Z",
+      "environment": {
+        "node": "v24.22.1",
+        "platform": "linux",
+        "architecture": "x64",
+        "playwright": "1.56.1",
+        "three": "0.180.0",
+        "esbuild": "0.25.10",
+        "renderer": "Headless Chromium WebGL2 / ANGLE SwiftShader",
+        "camera_up": [
+          0,
+          1,
+          0
+        ],
+        "viewport": {
+          "width": 1220,
+          "height": 1160
+        },
+        "device_scale_factor": 1
+      },
+      "browser": "141.0.7390.37",
+      "limits": [
+        "Screenshots still require identified visual review; a numerical report alone cannot complete D02.",
+        "The independent native decoder verifies exact geometry, winding, materials and influence metadata of these same artifacts.",
+        "This offline harness plays recorded GLB transforms; it does not simulate a live impulse or physics engine.",
+        "Current inherited regression/conformance and identified CI remain separate mandatory release gates."
+      ],
+      "implementation": {
+        "name": "ontokin-reference",
+        "source_code_sha256": "sha256:c87bf41b1219a0ab281af26dcc666a864d75c944c57f23b398dea4ea55c5b39c",
+        "version": "0.4.0"
+      }
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/browser-results.json",
+      "byte_length": 114863,
+      "sha256": "246abc1a489551eb7f4e5b87ec3dfb688816e488a83716097a4738c35875c0de",
+      "schema_version": "ontokin.surface-native-browser-validation/0.1",
+      "status": "passed",
+      "generated_at_utc": "2026-10-28T19:55:07.445Z",
+      "environment": {
+        "node": "v24.22.1",
+        "platform": "linux",
+        "architecture": "x64",
+        "playwright": "1.56.1",
+        "three": "0.180.0",
+        "esbuild": "0.25.10",
+        "renderer": "Headless Chromium WebGL2 / ANGLE SwiftShader"
+      },
+      "browser": "141.0.7390.37",
+      "limits": [
+        "The selected source programs establish bounded native destination evidence; complete M01--M12 acceptance is a separate identified gate.",
+        "The harness is an identified offline validation destination, not a replacement of the existing production viewer.",
+        "Screenshots require human or visual review; numerical topology/material checks are in verify_surface_native.mjs.",
+        "No Blender, external engine, deformation or live physics support is claimed."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-native-browser/browser-results.json",
+      "byte_length": 41799,
+      "sha256": "dbfb5ec4498b164df0e009aacaebe2b24704c383a7c25b5eb8f8f0242f93f73e",
+      "schema_version": "ontokin.surface-native-browser-validation/0.1",
+      "status": "passed",
+      "generated_at_utc": "2026-10-28T19:55:04.455Z",
+      "environment": {
+        "node": "v24.22.1",
+        "platform": "linux",
+        "architecture": "x64",
+        "playwright": "1.56.1",
+        "three": "0.180.0",
+        "esbuild": "0.25.10",
+        "renderer": "Headless Chromium WebGL2 / ANGLE SwiftShader"
+      },
+      "browser": "141.0.7390.37",
+      "limits": [
+        "The selected source programs establish bounded native destination evidence; complete M01--M12 acceptance is a separate identified gate.",
+        "The harness is an identified offline validation destination, not a replacement of the existing production viewer.",
+        "Screenshots require human or visual review; numerical topology/material checks are in verify_surface_native.mjs.",
+        "No Blender, external engine, deformation or live physics support is claimed."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/visual-browser/viewer-results.json",
+      "byte_length": 1689,
+      "sha256": "db54482d7a2cdcbe312c00709d67bda4e95e34df36590f008ef62d877ad4b210",
+      "schema_version": "ontokin.visual-validation/0.1",
+      "status": "passed",
+      "environment": "Headless Chromium on linux (x64) with SwiftShader software rendering",
+      "browser": "141.0.7390.37",
+      "renderer": "Three.js 0.180.0 / WebGL2",
+      "limits": [
+        "Blender import was not run.",
+        "Screenshots and functional checks are bounded evidence for these demonstrations."
+      ]
+    }
+  ],
+  "frames": [
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/agent-demo-browser/agent-authoring.png",
+      "byte_length": 384944,
+      "sha256": "6b740d583092ed6a9c9742de3f6e0a4aa5b67ba3d2447d23d027d53d16ef7e9c",
+      "relative_path": "agent-demo-browser/agent-authoring.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/agent-demo-browser/viewer-results.json",
+      "capture_metadata": {
+        "file": "agent-authoring.png",
+        "sha256": "sha256:6b740d583092ed6a9c9742de3f6e0a4aa5b67ba3d2447d23d027d53d16ef7e9c",
+        "time_seconds": 1.5,
+        "selected_object": "reference",
+        "viewport": {
+          "width": 1440,
+          "height": 1060
+        },
+        "source_revision": "sha256:d9b63c16c2efc92e947b0a39564234d9e14693cc9afb32bcffeabd08350cc324",
+        "artifact_sha256": "sha256:cc279ca86a63798548203056755a5d68f387b43c233dd4bd8fc7ac6473f4a40b"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1440,
+        1241
+      ],
+      "fixture": "agent-authoring-custom-import",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/agent-demo-browser/agent-authoring.png",
+          "viewed_at_utc": "2026-10-28T20:03:18.901Z",
+          "method": "view_image original"
+        }
+      ],
+      "contact_sheets": [],
+      "observations": [
+        "Two box-based assemblies are visible on the grid, with distinct head sizes and separated arm/hand elements.",
+        "The imported-file badge says numerical status unknown; all three tolerance fields show Unknown, the source-save control is greyed, and neither built-in demo is selected.",
+        "The full page is legible, with no obvious panel overlap or clipped scene object."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/construction-demo-browser/keyed-rack.png",
+      "byte_length": 379191,
+      "sha256": "37056a797f1acbd502daef56aec2dd585683475880afd1afe59bdf15b357b513",
+      "relative_path": "construction-demo-browser/keyed-rack.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/construction-demo-browser/viewer-results.json",
+      "capture_metadata": {
+        "file": "keyed-rack.png",
+        "sha256": "sha256:37056a797f1acbd502daef56aec2dd585683475880afd1afe59bdf15b357b513",
+        "time_seconds": 1.5,
+        "selected_object": "second",
+        "viewport": {
+          "width": 1440,
+          "height": 1060
+        },
+        "program_revision": "sha256:c77d102a4b201d3c3cce6cbdc73c38eedf0bb1dfca7c9843a92d697cc0c7e082",
+        "artifact_sha256": "sha256:4b72428deea4604962b59f4391beeaabd2715610f0158fb7db09d25b68ec376e"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1440,
+        1241
+      ],
+      "fixture": "construction-program-custom-import",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/construction-demo-browser/keyed-rack.png",
+          "viewed_at_utc": "2026-10-28T20:03:18.901Z",
+          "method": "view_image original"
+        }
+      ],
+      "contact_sheets": [],
+      "observations": [
+        "Two upright rack assemblies are visible, with separated blue arms and visible joint markers; the left rack includes an oblique arm.",
+        "The imported-file badge and export panel visibly retain numerical status unknown and no conformance report.",
+        "The full scene and timeline controls fit within their panels; no obvious page layout defect is visible."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/P02-front.png",
+      "byte_length": 78752,
+      "sha256": "535e8a9e96e9cc53faf916d6bacf6057065709aad7e84827dac4cda5a7692d5a",
+      "relative_path": "impulse-agent-browser/P02-front.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/browser-validation.json",
+      "capture_metadata": {
+        "file": "P02-front.png",
+        "sha256": "sha256:535e8a9e96e9cc53faf916d6bacf6057065709aad7e84827dac4cda5a7692d5a",
+        "fixture": "P02",
+        "view": "front",
+        "camera_view": "front",
+        "time_seconds": 0,
+        "program_revision": "sha256:ccf996e0060096655878f2bb5ad812cdaa025f4706604613597ea13c32f74a5d",
+        "artifact_sha256": "sha256:99b8ca55a2e2a33a9153a322a1d8cc8ca1e39f0934bf3822cce2ddcee440d02b"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "P02",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P02.png",
+          "viewed_at_utc": "2026-10-28T20:03:25.913Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P02.png",
+          "byte_length": 95600,
+          "sha256": "f6bd0731127617f491f1a855d39fb2f288da3c2d95ca6df7ac95de3a465e212a",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "One faceted brown-and-blue tapered object is fully visible in each front, side and later-time frame; the later frame shows a different position and orientation."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/P02-side.png",
+      "byte_length": 72442,
+      "sha256": "f793193f9ccd962692f23cd331ad75747d7002c05714d7985f1063c39105851c",
+      "relative_path": "impulse-agent-browser/P02-side.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/browser-validation.json",
+      "capture_metadata": {
+        "file": "P02-side.png",
+        "sha256": "sha256:f793193f9ccd962692f23cd331ad75747d7002c05714d7985f1063c39105851c",
+        "fixture": "P02",
+        "view": "side",
+        "camera_view": "side",
+        "time_seconds": 0,
+        "program_revision": "sha256:ccf996e0060096655878f2bb5ad812cdaa025f4706604613597ea13c32f74a5d",
+        "artifact_sha256": "sha256:99b8ca55a2e2a33a9153a322a1d8cc8ca1e39f0934bf3822cce2ddcee440d02b"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "P02",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P02.png",
+          "viewed_at_utc": "2026-10-28T20:03:25.913Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P02.png",
+          "byte_length": 95600,
+          "sha256": "f6bd0731127617f491f1a855d39fb2f288da3c2d95ca6df7ac95de3a465e212a",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "One faceted brown-and-blue tapered object is fully visible in each front, side and later-time frame; the later frame shows a different position and orientation."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/P02-animated.png",
+      "byte_length": 74944,
+      "sha256": "4a43b4c5539952911c12c50ace27ccbf9dd944e2311e9e4f1f857ed1ec866272",
+      "relative_path": "impulse-agent-browser/P02-animated.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/browser-validation.json",
+      "capture_metadata": {
+        "file": "P02-animated.png",
+        "sha256": "sha256:4a43b4c5539952911c12c50ace27ccbf9dd944e2311e9e4f1f857ed1ec866272",
+        "fixture": "P02",
+        "view": "animated",
+        "camera_view": "front",
+        "time_seconds": 1.5,
+        "program_revision": "sha256:ccf996e0060096655878f2bb5ad812cdaa025f4706604613597ea13c32f74a5d",
+        "artifact_sha256": "sha256:99b8ca55a2e2a33a9153a322a1d8cc8ca1e39f0934bf3822cce2ddcee440d02b"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "P02",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P02.png",
+          "viewed_at_utc": "2026-10-28T20:03:25.913Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P02.png",
+          "byte_length": 95600,
+          "sha256": "f6bd0731127617f491f1a855d39fb2f288da3c2d95ca6df7ac95de3a465e212a",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "One faceted brown-and-blue tapered object is fully visible in each front, side and later-time frame; the later frame shows a different position and orientation."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/P04-front.png",
+      "byte_length": 74598,
+      "sha256": "c3842c2cb1d5b314d7bd756b7c2abc656d4774d38319b29bea3a954e9701857c",
+      "relative_path": "impulse-agent-browser/P04-front.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/browser-validation.json",
+      "capture_metadata": {
+        "file": "P04-front.png",
+        "sha256": "sha256:c3842c2cb1d5b314d7bd756b7c2abc656d4774d38319b29bea3a954e9701857c",
+        "fixture": "P04",
+        "view": "front",
+        "camera_view": "front",
+        "time_seconds": 0,
+        "program_revision": "sha256:8a989dc7da609b1841bfeb77552f886b50e79944f406b76340af4fc2f12e7211",
+        "artifact_sha256": "sha256:301fcddfee2d9c3411161300da14715477f3590c3e7fc9086a7bf1f2dad8b53a"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "P04",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/P04-front.png",
+          "viewed_at_utc": "2026-10-28T20:04:23.015Z",
+          "method": "view_image original follow-up for small subject"
+        },
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P04.png",
+          "viewed_at_utc": "2026-10-28T20:03:25.913Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P04.png",
+          "byte_length": 86833,
+          "sha256": "08b4515341d07ba73f4595addecd905fa2727c3cf61973a0a4b0091d59021c3a",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "One brown-and-blue faceted object is visible above the grid in each frame; front and side silhouettes are distinct, and the later-time object is shifted right.",
+        "All three originals were also inspected because the subject is small relative to the canvas; no clipping or blank rendering was observed."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import.",
+        "The subject occupies a small fraction of the canvas even at original image resolution, limiting fine-detail judgment."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/P04-side.png",
+      "byte_length": 70041,
+      "sha256": "dccc9807901eb9c7c580340d594c9d9b72f809cb4f20fde548c293c0e8ff03eb",
+      "relative_path": "impulse-agent-browser/P04-side.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/browser-validation.json",
+      "capture_metadata": {
+        "file": "P04-side.png",
+        "sha256": "sha256:dccc9807901eb9c7c580340d594c9d9b72f809cb4f20fde548c293c0e8ff03eb",
+        "fixture": "P04",
+        "view": "side",
+        "camera_view": "side",
+        "time_seconds": 0,
+        "program_revision": "sha256:8a989dc7da609b1841bfeb77552f886b50e79944f406b76340af4fc2f12e7211",
+        "artifact_sha256": "sha256:301fcddfee2d9c3411161300da14715477f3590c3e7fc9086a7bf1f2dad8b53a"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "P04",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/P04-side.png",
+          "viewed_at_utc": "2026-10-28T20:04:23.015Z",
+          "method": "view_image original follow-up for small subject"
+        },
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P04.png",
+          "viewed_at_utc": "2026-10-28T20:03:25.913Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P04.png",
+          "byte_length": 86833,
+          "sha256": "08b4515341d07ba73f4595addecd905fa2727c3cf61973a0a4b0091d59021c3a",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "One brown-and-blue faceted object is visible above the grid in each frame; front and side silhouettes are distinct, and the later-time object is shifted right.",
+        "All three originals were also inspected because the subject is small relative to the canvas; no clipping or blank rendering was observed."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import.",
+        "The subject occupies a small fraction of the canvas even at original image resolution, limiting fine-detail judgment."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/P04-animated.png",
+      "byte_length": 73821,
+      "sha256": "0b5974b7344a5fc7fea106795243e3637d383b199a42ade6842979fdf4d5e292",
+      "relative_path": "impulse-agent-browser/P04-animated.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/browser-validation.json",
+      "capture_metadata": {
+        "file": "P04-animated.png",
+        "sha256": "sha256:0b5974b7344a5fc7fea106795243e3637d383b199a42ade6842979fdf4d5e292",
+        "fixture": "P04",
+        "view": "animated",
+        "camera_view": "front",
+        "time_seconds": 1.5,
+        "program_revision": "sha256:8a989dc7da609b1841bfeb77552f886b50e79944f406b76340af4fc2f12e7211",
+        "artifact_sha256": "sha256:301fcddfee2d9c3411161300da14715477f3590c3e7fc9086a7bf1f2dad8b53a"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "P04",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/P04-animated.png",
+          "viewed_at_utc": "2026-10-28T20:04:23.015Z",
+          "method": "view_image original follow-up for small subject"
+        },
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P04.png",
+          "viewed_at_utc": "2026-10-28T20:03:25.913Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P04.png",
+          "byte_length": 86833,
+          "sha256": "08b4515341d07ba73f4595addecd905fa2727c3cf61973a0a4b0091d59021c3a",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "One brown-and-blue faceted object is visible above the grid in each frame; front and side silhouettes are distinct, and the later-time object is shifted right.",
+        "All three originals were also inspected because the subject is small relative to the canvas; no clipping or blank rendering was observed."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import.",
+        "The subject occupies a small fraction of the canvas even at original image resolution, limiting fine-detail judgment."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/P08-front.png",
+      "byte_length": 84538,
+      "sha256": "acba4072fc490e27b3f74257cf6722b8eb9e24c9278a4bb80f963bf7d7d7f8ab",
+      "relative_path": "impulse-agent-browser/P08-front.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/browser-validation.json",
+      "capture_metadata": {
+        "file": "P08-front.png",
+        "sha256": "sha256:acba4072fc490e27b3f74257cf6722b8eb9e24c9278a4bb80f963bf7d7d7f8ab",
+        "fixture": "P08",
+        "view": "front",
+        "camera_view": "front",
+        "time_seconds": 0,
+        "program_revision": "sha256:13717af0a4c9cec4c1147705ebbfca80bac6eb385a3269fd4a1b48ca7f58a940",
+        "artifact_sha256": "sha256:0f3294bb6b8a7091c9ef0d10fd791c0217b9a8959f248c607c5da51c236feb81"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "P08",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P08.png",
+          "viewed_at_utc": "2026-10-28T20:03:25.913Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P08.png",
+          "byte_length": 104299,
+          "sha256": "44854cb4a8cd848d77e3b7b4a4afc5034434049283140fe55aa8c20963f922c0",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "Two brown-and-blue objects are separately visible in the front and later-time frames; both side profiles are discernible in the side view.",
+        "The later-time frame shows distinct orientations; all visible geometry remains inside the scene."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/P08-side.png",
+      "byte_length": 76830,
+      "sha256": "eec71fff12e48ffebf7883e9931569dc9c05c31f75e8c30502a4948aac9b0309",
+      "relative_path": "impulse-agent-browser/P08-side.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/browser-validation.json",
+      "capture_metadata": {
+        "file": "P08-side.png",
+        "sha256": "sha256:eec71fff12e48ffebf7883e9931569dc9c05c31f75e8c30502a4948aac9b0309",
+        "fixture": "P08",
+        "view": "side",
+        "camera_view": "side",
+        "time_seconds": 0,
+        "program_revision": "sha256:13717af0a4c9cec4c1147705ebbfca80bac6eb385a3269fd4a1b48ca7f58a940",
+        "artifact_sha256": "sha256:0f3294bb6b8a7091c9ef0d10fd791c0217b9a8959f248c607c5da51c236feb81"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "P08",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P08.png",
+          "viewed_at_utc": "2026-10-28T20:03:25.913Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P08.png",
+          "byte_length": 104299,
+          "sha256": "44854cb4a8cd848d77e3b7b4a4afc5034434049283140fe55aa8c20963f922c0",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "Two brown-and-blue objects are separately visible in the front and later-time frames; both side profiles are discernible in the side view.",
+        "The later-time frame shows distinct orientations; all visible geometry remains inside the scene."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/P08-animated.png",
+      "byte_length": 83629,
+      "sha256": "ab9ac1e700867ca8971ed83b58dcb4b71dd70a53af7b61b74779a61a9a7c7542",
+      "relative_path": "impulse-agent-browser/P08-animated.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/browser-validation.json",
+      "capture_metadata": {
+        "file": "P08-animated.png",
+        "sha256": "sha256:ab9ac1e700867ca8971ed83b58dcb4b71dd70a53af7b61b74779a61a9a7c7542",
+        "fixture": "P08",
+        "view": "animated",
+        "camera_view": "front",
+        "time_seconds": 1.5,
+        "program_revision": "sha256:13717af0a4c9cec4c1147705ebbfca80bac6eb385a3269fd4a1b48ca7f58a940",
+        "artifact_sha256": "sha256:0f3294bb6b8a7091c9ef0d10fd791c0217b9a8959f248c607c5da51c236feb81"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "P08",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P08.png",
+          "viewed_at_utc": "2026-10-28T20:03:25.913Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P08.png",
+          "byte_length": 104299,
+          "sha256": "44854cb4a8cd848d77e3b7b4a4afc5034434049283140fe55aa8c20963f922c0",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "Two brown-and-blue objects are separately visible in the front and later-time frames; both side profiles are discernible in the side view.",
+        "The later-time frame shows distinct orientations; all visible geometry remains inside the scene."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/P11-front.png",
+      "byte_length": 97160,
+      "sha256": "960228efd9df98ae89e51a5f855c1cf6a9f4ae7517e574dd9e9020ac18627fd6",
+      "relative_path": "impulse-agent-browser/P11-front.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/browser-validation.json",
+      "capture_metadata": {
+        "file": "P11-front.png",
+        "sha256": "sha256:960228efd9df98ae89e51a5f855c1cf6a9f4ae7517e574dd9e9020ac18627fd6",
+        "fixture": "P11",
+        "view": "front",
+        "camera_view": "front",
+        "time_seconds": 0,
+        "program_revision": "sha256:04cd6cc700f5fdeaa6b65b6e17b15839a9a96a484e5da7faabad5f1ac056a48a",
+        "artifact_sha256": "sha256:9ce2361e9169329c32c5c3b0f24aed2a14a9bd3652d7a9d4d15beb919cc5e8b9"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "P11",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/P11-front.png",
+          "viewed_at_utc": "2026-10-28T20:04:36.590Z",
+          "method": "view_image original follow-up for small subject"
+        },
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P11.png",
+          "viewed_at_utc": "2026-10-28T20:03:25.913Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P11.png",
+          "byte_length": 154362,
+          "sha256": "ab7c5a6e3951b919f5052c8e53b51c756b41d4e421f7b11bf4f9f766e8ed10b2",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "A small brown-and-blue object is visible near the lower grid at the initial time and higher in the later-time frame.",
+        "All three originals were also inspected; the small apparent size limits fine surface-detail assessment, but no scene-edge clipping or missing subject was observed."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import.",
+        "The subject occupies a small fraction of the canvas even at original image resolution, limiting fine-detail judgment."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/P11-side.png",
+      "byte_length": 88967,
+      "sha256": "a333ceadd1f822af9dd562bc99339ba412e8d96b4589f98e8d0be762807616b6",
+      "relative_path": "impulse-agent-browser/P11-side.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/browser-validation.json",
+      "capture_metadata": {
+        "file": "P11-side.png",
+        "sha256": "sha256:a333ceadd1f822af9dd562bc99339ba412e8d96b4589f98e8d0be762807616b6",
+        "fixture": "P11",
+        "view": "side",
+        "camera_view": "side",
+        "time_seconds": 0,
+        "program_revision": "sha256:04cd6cc700f5fdeaa6b65b6e17b15839a9a96a484e5da7faabad5f1ac056a48a",
+        "artifact_sha256": "sha256:9ce2361e9169329c32c5c3b0f24aed2a14a9bd3652d7a9d4d15beb919cc5e8b9"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "P11",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/P11-side.png",
+          "viewed_at_utc": "2026-10-28T20:04:36.590Z",
+          "method": "view_image original follow-up for small subject"
+        },
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P11.png",
+          "viewed_at_utc": "2026-10-28T20:03:25.913Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P11.png",
+          "byte_length": 154362,
+          "sha256": "ab7c5a6e3951b919f5052c8e53b51c756b41d4e421f7b11bf4f9f766e8ed10b2",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "A small brown-and-blue object is visible near the lower grid at the initial time and higher in the later-time frame.",
+        "All three originals were also inspected; the small apparent size limits fine surface-detail assessment, but no scene-edge clipping or missing subject was observed."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import.",
+        "The subject occupies a small fraction of the canvas even at original image resolution, limiting fine-detail judgment."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/P11-animated.png",
+      "byte_length": 97147,
+      "sha256": "328e6e4d920b063edaf3cb613714b647586a3f33ac96a216d4fbc04c00f7228d",
+      "relative_path": "impulse-agent-browser/P11-animated.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/browser-validation.json",
+      "capture_metadata": {
+        "file": "P11-animated.png",
+        "sha256": "sha256:328e6e4d920b063edaf3cb613714b647586a3f33ac96a216d4fbc04c00f7228d",
+        "fixture": "P11",
+        "view": "animated",
+        "camera_view": "front",
+        "time_seconds": 1.5,
+        "program_revision": "sha256:04cd6cc700f5fdeaa6b65b6e17b15839a9a96a484e5da7faabad5f1ac056a48a",
+        "artifact_sha256": "sha256:9ce2361e9169329c32c5c3b0f24aed2a14a9bd3652d7a9d4d15beb919cc5e8b9"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "P11",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/P11-animated.png",
+          "viewed_at_utc": "2026-10-28T20:04:36.590Z",
+          "method": "view_image original follow-up for small subject"
+        },
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P11.png",
+          "viewed_at_utc": "2026-10-28T20:03:25.913Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-impulse-agent-browser-P11.png",
+          "byte_length": 154362,
+          "sha256": "ab7c5a6e3951b919f5052c8e53b51c756b41d4e421f7b11bf4f9f766e8ed10b2",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "A small brown-and-blue object is visible near the lower grid at the initial time and higher in the later-time frame.",
+        "All three originals were also inspected; the small apparent size limits fine surface-detail assessment, but no scene-edge clipping or missing subject was observed."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import.",
+        "The subject occupies a small fraction of the canvas even at original image resolution, limiting fine-detail judgment."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/palette-repaired-front.png",
+      "byte_length": 94536,
+      "sha256": "845e2e35633852faa3df90595d3cfa92570ac23e4a957c1ee8b6c3c44fa3867e",
+      "relative_path": "surface-agent-browser/palette-repaired-front.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/browser-results.json",
+      "capture_metadata": {
+        "file": "palette-repaired-front.png",
+        "sha256": "sha256:845e2e35633852faa3df90595d3cfa92570ac23e4a957c1ee8b6c3c44fa3867e",
+        "fixture": "palette-repaired",
+        "view": "front",
+        "time_seconds": 0,
+        "program_revision": "sha256:ad5d6d9c1f7aaf2965bc19863b77d0e124dd4c3c75fcf0a6de886e8c70c88f09",
+        "artifact_sha256": "sha256:b391d204b9f2b832be5a07812ba6f4f024023bd22b275210aa9c1a90fbadbfc2"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "palette-repaired",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-palette-repaired.png",
+          "viewed_at_utc": "2026-10-28T20:03:46.267Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-palette-repaired.png",
+          "byte_length": 152976,
+          "sha256": "7bbc14e1aace99ae8389ecc30fcc58c5fede95440914fedaaaa1ab1b026f9439",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "The front and later frames show two tapered brown forms; the left one has a blue upper region.",
+        "The side view collapses their separation into an overlapping silhouette; the visible surfaces remain solid and consistently faceted."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/palette-repaired-side.png",
+      "byte_length": 94031,
+      "sha256": "35b59a1f6445c6a751d30bbe889f10407b79346fd1607d68666aced0869feb6d",
+      "relative_path": "surface-agent-browser/palette-repaired-side.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/browser-results.json",
+      "capture_metadata": {
+        "file": "palette-repaired-side.png",
+        "sha256": "sha256:35b59a1f6445c6a751d30bbe889f10407b79346fd1607d68666aced0869feb6d",
+        "fixture": "palette-repaired",
+        "view": "side",
+        "time_seconds": 0,
+        "program_revision": "sha256:ad5d6d9c1f7aaf2965bc19863b77d0e124dd4c3c75fcf0a6de886e8c70c88f09",
+        "artifact_sha256": "sha256:b391d204b9f2b832be5a07812ba6f4f024023bd22b275210aa9c1a90fbadbfc2"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "palette-repaired",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-palette-repaired.png",
+          "viewed_at_utc": "2026-10-28T20:03:46.267Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-palette-repaired.png",
+          "byte_length": 152976,
+          "sha256": "7bbc14e1aace99ae8389ecc30fcc58c5fede95440914fedaaaa1ab1b026f9439",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "The front and later frames show two tapered brown forms; the left one has a blue upper region.",
+        "The side view collapses their separation into an overlapping silhouette; the visible surfaces remain solid and consistently faceted."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import.",
+        "Side projection overlaps component silhouettes; the screenshot cannot prove that every component is independently visible."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/palette-repaired-animated.png",
+      "byte_length": 94881,
+      "sha256": "b564dd025ac2446faf2e248ed536aaf06308e2c4ad349d0941029ea261d27b6a",
+      "relative_path": "surface-agent-browser/palette-repaired-animated.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/browser-results.json",
+      "capture_metadata": {
+        "file": "palette-repaired-animated.png",
+        "sha256": "sha256:b564dd025ac2446faf2e248ed536aaf06308e2c4ad349d0941029ea261d27b6a",
+        "fixture": "palette-repaired",
+        "view": "front",
+        "time_seconds": 1.5,
+        "program_revision": "sha256:ad5d6d9c1f7aaf2965bc19863b77d0e124dd4c3c75fcf0a6de886e8c70c88f09",
+        "artifact_sha256": "sha256:b391d204b9f2b832be5a07812ba6f4f024023bd22b275210aa9c1a90fbadbfc2"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "palette-repaired",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-palette-repaired.png",
+          "viewed_at_utc": "2026-10-28T20:03:46.267Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-palette-repaired.png",
+          "byte_length": 152976,
+          "sha256": "7bbc14e1aace99ae8389ecc30fcc58c5fede95440914fedaaaa1ab1b026f9439",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "The front and later frames show two tapered brown forms; the left one has a blue upper region.",
+        "The side view collapses their separation into an overlapping silhouette; the visible surfaces remain solid and consistently faceted."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/composition-ordinary-front.png",
+      "byte_length": 88253,
+      "sha256": "c4b880d167b7e54c10027627943d1c97a2d4d6306aa0dfbe7fa921b2622285c8",
+      "relative_path": "surface-agent-browser/composition-ordinary-front.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/browser-results.json",
+      "capture_metadata": {
+        "file": "composition-ordinary-front.png",
+        "sha256": "sha256:c4b880d167b7e54c10027627943d1c97a2d4d6306aa0dfbe7fa921b2622285c8",
+        "fixture": "composition-ordinary",
+        "view": "front",
+        "time_seconds": 0,
+        "program_revision": "sha256:a9125138e2b1004e185be26e25aa77258ca87574f249953fec557226332ea400",
+        "artifact_sha256": "sha256:8dd95207e63bb8d79a42967d65f0e0feba2fb87824f4b416390534271d676153"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "composition-ordinary",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-composition-ordinary.png",
+          "viewed_at_utc": "2026-10-28T20:03:46.267Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-composition-ordinary.png",
+          "byte_length": 97661,
+          "sha256": "df8fefc770cede622f0d019d425318db06738e4f8ec09c527a2a361134e04a3a",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "The front and later frames show a pair of tapered forms, one blue-topped and one brown.",
+        "The side view is dominated by one brown silhouette because the forms overlap in projection; controls and material text remain arranged within the page."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/composition-ordinary-side.png",
+      "byte_length": 80654,
+      "sha256": "966666a2f75daa49d1a9758de49f08358677f89b6403bb57f812e688583501d4",
+      "relative_path": "surface-agent-browser/composition-ordinary-side.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/browser-results.json",
+      "capture_metadata": {
+        "file": "composition-ordinary-side.png",
+        "sha256": "sha256:966666a2f75daa49d1a9758de49f08358677f89b6403bb57f812e688583501d4",
+        "fixture": "composition-ordinary",
+        "view": "side",
+        "time_seconds": 0,
+        "program_revision": "sha256:a9125138e2b1004e185be26e25aa77258ca87574f249953fec557226332ea400",
+        "artifact_sha256": "sha256:8dd95207e63bb8d79a42967d65f0e0feba2fb87824f4b416390534271d676153"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "composition-ordinary",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-composition-ordinary.png",
+          "viewed_at_utc": "2026-10-28T20:03:46.267Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-composition-ordinary.png",
+          "byte_length": 97661,
+          "sha256": "df8fefc770cede622f0d019d425318db06738e4f8ec09c527a2a361134e04a3a",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "The front and later frames show a pair of tapered forms, one blue-topped and one brown.",
+        "The side view is dominated by one brown silhouette because the forms overlap in projection; controls and material text remain arranged within the page."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import.",
+        "Side projection overlaps component silhouettes; the screenshot cannot prove that every component is independently visible."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/composition-ordinary-animated.png",
+      "byte_length": 88073,
+      "sha256": "1f486e397ff2f8cc8717d6756dd97b46f2fd83251d54e1995af0edc9b43a5535",
+      "relative_path": "surface-agent-browser/composition-ordinary-animated.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/browser-results.json",
+      "capture_metadata": {
+        "file": "composition-ordinary-animated.png",
+        "sha256": "sha256:1f486e397ff2f8cc8717d6756dd97b46f2fd83251d54e1995af0edc9b43a5535",
+        "fixture": "composition-ordinary",
+        "view": "front",
+        "time_seconds": 1.5,
+        "program_revision": "sha256:a9125138e2b1004e185be26e25aa77258ca87574f249953fec557226332ea400",
+        "artifact_sha256": "sha256:8dd95207e63bb8d79a42967d65f0e0feba2fb87824f4b416390534271d676153"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "composition-ordinary",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-composition-ordinary.png",
+          "viewed_at_utc": "2026-10-28T20:03:46.267Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-composition-ordinary.png",
+          "byte_length": 97661,
+          "sha256": "df8fefc770cede622f0d019d425318db06738e4f8ec09c527a2a361134e04a3a",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "The front and later frames show a pair of tapered forms, one blue-topped and one brown.",
+        "The side view is dominated by one brown silhouette because the forms overlap in projection; controls and material text remain arranged within the page."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/composition-generated-front.png",
+      "byte_length": 102941,
+      "sha256": "d1867374bfa652a50cbf7ef191b868898c5e9b9b4877336bc371de5ab9ac94a8",
+      "relative_path": "surface-agent-browser/composition-generated-front.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/browser-results.json",
+      "capture_metadata": {
+        "file": "composition-generated-front.png",
+        "sha256": "sha256:d1867374bfa652a50cbf7ef191b868898c5e9b9b4877336bc371de5ab9ac94a8",
+        "fixture": "composition-generated",
+        "view": "front",
+        "time_seconds": 0,
+        "program_revision": "sha256:aaca864efef7ca689e1dac365db162d47d2993bf1f365b6e996d2c5449d47341",
+        "artifact_sha256": "sha256:3ab390e57d3a4d4c0809477070e3a55268e320aaa517c85e6bb11bd8a62e51ad"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1215
+      ],
+      "fixture": "composition-generated",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-composition-generated.png",
+          "viewed_at_utc": "2026-10-28T20:03:46.267Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-composition-generated.png",
+          "byte_length": 157696,
+          "sha256": "5318e0ee63fcb09e6e8a465cff0b900d42a4d60125286e218bd33df7b59326fd",
+          "dimensions": [
+            1830,
+            700
+          ]
+        }
+      ],
+      "observations": [
+        "Three differently sized blue-topped tapered forms are visible across the front and later-time views.",
+        "The side view overlaps the forms and cannot establish the count or visibility of every component by itself; front views provide separation."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/composition-generated-side.png",
+      "byte_length": 99973,
+      "sha256": "0eb9c68001123b4685b30768d72bad484c34f33550ad5f933155473fa43f7475",
+      "relative_path": "surface-agent-browser/composition-generated-side.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/browser-results.json",
+      "capture_metadata": {
+        "file": "composition-generated-side.png",
+        "sha256": "sha256:0eb9c68001123b4685b30768d72bad484c34f33550ad5f933155473fa43f7475",
+        "fixture": "composition-generated",
+        "view": "side",
+        "time_seconds": 0,
+        "program_revision": "sha256:aaca864efef7ca689e1dac365db162d47d2993bf1f365b6e996d2c5449d47341",
+        "artifact_sha256": "sha256:3ab390e57d3a4d4c0809477070e3a55268e320aaa517c85e6bb11bd8a62e51ad"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1215
+      ],
+      "fixture": "composition-generated",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-composition-generated.png",
+          "viewed_at_utc": "2026-10-28T20:03:46.267Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-composition-generated.png",
+          "byte_length": 157696,
+          "sha256": "5318e0ee63fcb09e6e8a465cff0b900d42a4d60125286e218bd33df7b59326fd",
+          "dimensions": [
+            1830,
+            700
+          ]
+        }
+      ],
+      "observations": [
+        "Three differently sized blue-topped tapered forms are visible across the front and later-time views.",
+        "The side view overlaps the forms and cannot establish the count or visibility of every component by itself; front views provide separation."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import.",
+        "Side projection overlaps component silhouettes; the screenshot cannot prove that every component is independently visible."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/composition-generated-animated.png",
+      "byte_length": 102263,
+      "sha256": "90f33fd9cdbdcc65e9e39decac411f6c9d3a91abd9d04bf8d26bc5d6ebebc150",
+      "relative_path": "surface-agent-browser/composition-generated-animated.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/browser-results.json",
+      "capture_metadata": {
+        "file": "composition-generated-animated.png",
+        "sha256": "sha256:90f33fd9cdbdcc65e9e39decac411f6c9d3a91abd9d04bf8d26bc5d6ebebc150",
+        "fixture": "composition-generated",
+        "view": "front",
+        "time_seconds": 1.5,
+        "program_revision": "sha256:aaca864efef7ca689e1dac365db162d47d2993bf1f365b6e996d2c5449d47341",
+        "artifact_sha256": "sha256:3ab390e57d3a4d4c0809477070e3a55268e320aaa517c85e6bb11bd8a62e51ad"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1215
+      ],
+      "fixture": "composition-generated",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-composition-generated.png",
+          "viewed_at_utc": "2026-10-28T20:03:46.267Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-composition-generated.png",
+          "byte_length": 157696,
+          "sha256": "5318e0ee63fcb09e6e8a465cff0b900d42a4d60125286e218bd33df7b59326fd",
+          "dimensions": [
+            1830,
+            700
+          ]
+        }
+      ],
+      "observations": [
+        "Three differently sized blue-topped tapered forms are visible across the front and later-time views.",
+        "The side view overlaps the forms and cannot establish the count or visibility of every component by itself; front views provide separation."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/rotated-release-front.png",
+      "byte_length": 75754,
+      "sha256": "6a37af7b21495fd71d08b1883b6c79a7c70952085305b2f22b40d0393fbcb51f",
+      "relative_path": "surface-agent-browser/rotated-release-front.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/browser-results.json",
+      "capture_metadata": {
+        "file": "rotated-release-front.png",
+        "sha256": "sha256:6a37af7b21495fd71d08b1883b6c79a7c70952085305b2f22b40d0393fbcb51f",
+        "fixture": "rotated-release",
+        "view": "front",
+        "time_seconds": 0,
+        "program_revision": "sha256:701ba568ef0f2368567f7441c59041678fc000340e65bed1e09b22b00100210b",
+        "artifact_sha256": "sha256:9e6e1653e62121a6e458170db7fd99ca70ab3ef3d5548a8ddd37d62258b871d3"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "rotated-release",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-rotated-release.png",
+          "viewed_at_utc": "2026-10-28T20:03:46.267Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-rotated-release.png",
+          "byte_length": 96474,
+          "sha256": "e42d0e55502088577079e871a79dcb13ee5be762a2ca889819494214ee5e6b9b",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "Two horizontal brown-and-blue tapered forms are separated in front and later-time captures.",
+        "The side view presents an overlapping end-on silhouette; all visible material regions and scene controls render without an obvious break."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/rotated-release-side.png",
+      "byte_length": 78430,
+      "sha256": "07c3e62925a284461f7416d101ec65441c826cd8171315fcda0e438dfd22eb43",
+      "relative_path": "surface-agent-browser/rotated-release-side.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/browser-results.json",
+      "capture_metadata": {
+        "file": "rotated-release-side.png",
+        "sha256": "sha256:07c3e62925a284461f7416d101ec65441c826cd8171315fcda0e438dfd22eb43",
+        "fixture": "rotated-release",
+        "view": "side",
+        "time_seconds": 0,
+        "program_revision": "sha256:701ba568ef0f2368567f7441c59041678fc000340e65bed1e09b22b00100210b",
+        "artifact_sha256": "sha256:9e6e1653e62121a6e458170db7fd99ca70ab3ef3d5548a8ddd37d62258b871d3"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "rotated-release",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-rotated-release.png",
+          "viewed_at_utc": "2026-10-28T20:03:46.267Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-rotated-release.png",
+          "byte_length": 96474,
+          "sha256": "e42d0e55502088577079e871a79dcb13ee5be762a2ca889819494214ee5e6b9b",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "Two horizontal brown-and-blue tapered forms are separated in front and later-time captures.",
+        "The side view presents an overlapping end-on silhouette; all visible material regions and scene controls render without an obvious break."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import.",
+        "Side projection overlaps component silhouettes; the screenshot cannot prove that every component is independently visible."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/rotated-release-animated.png",
+      "byte_length": 74980,
+      "sha256": "ce10d5563203a2d3a35e6a1e1c8149f6d39077d497f0350d1dced15a692422c9",
+      "relative_path": "surface-agent-browser/rotated-release-animated.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/browser-results.json",
+      "capture_metadata": {
+        "file": "rotated-release-animated.png",
+        "sha256": "sha256:ce10d5563203a2d3a35e6a1e1c8149f6d39077d497f0350d1dced15a692422c9",
+        "fixture": "rotated-release",
+        "view": "front",
+        "time_seconds": 1.5,
+        "program_revision": "sha256:701ba568ef0f2368567f7441c59041678fc000340e65bed1e09b22b00100210b",
+        "artifact_sha256": "sha256:9e6e1653e62121a6e458170db7fd99ca70ab3ef3d5548a8ddd37d62258b871d3"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "rotated-release",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-rotated-release.png",
+          "viewed_at_utc": "2026-10-28T20:03:46.267Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-agent-browser-rotated-release.png",
+          "byte_length": 96474,
+          "sha256": "e42d0e55502088577079e871a79dcb13ee5be762a2ca889819494214ee5e6b9b",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "Two horizontal brown-and-blue tapered forms are separated in front and later-time captures.",
+        "The side view presents an overlapping end-on silhouette; all visible material regions and scene controls render without an obvious break."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-native-browser/studio-front.png",
+      "byte_length": 93061,
+      "sha256": "23a9c0e3805d4c5265eb79360f8aed344af92de441d9377782887046e0475155",
+      "relative_path": "surface-native-browser/studio-front.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-native-browser/browser-results.json",
+      "capture_metadata": {
+        "file": "studio-front.png",
+        "sha256": "sha256:23a9c0e3805d4c5265eb79360f8aed344af92de441d9377782887046e0475155",
+        "fixture": "studio",
+        "view": "front",
+        "time_seconds": 0,
+        "program_revision": "sha256:239531e8b4692dc3112b3148171d7231db500e6fea687a3d5f08558c04e45431",
+        "artifact_sha256": "sha256:5099c13675b74c12727e750ccbbb1d6940d977977e8952db3b8608181c704727"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "studio",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-native-browser-studio.png",
+          "viewed_at_utc": "2026-10-28T20:03:56.278Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-native-browser-studio.png",
+          "byte_length": 149992,
+          "sha256": "2d55707f45b2771656eb18a757dfc147b2aa56f6ea97c87ef641626594e99e4b",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "The front and later-time views show two tapered forms, one blue-topped and one brown, with the left form slightly higher in the later view.",
+        "The side view overlaps the forms into one dominant silhouette; no blank canvas or obvious clipped object is visible."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-native-browser/studio-side.png",
+      "byte_length": 91838,
+      "sha256": "8ec94b0efc0f332c5cece5d5e3f36fa0a2f79bc9dcaa23d1a19c42d1b5a573d8",
+      "relative_path": "surface-native-browser/studio-side.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-native-browser/browser-results.json",
+      "capture_metadata": {
+        "file": "studio-side.png",
+        "sha256": "sha256:8ec94b0efc0f332c5cece5d5e3f36fa0a2f79bc9dcaa23d1a19c42d1b5a573d8",
+        "fixture": "studio",
+        "view": "side",
+        "time_seconds": 0,
+        "program_revision": "sha256:239531e8b4692dc3112b3148171d7231db500e6fea687a3d5f08558c04e45431",
+        "artifact_sha256": "sha256:5099c13675b74c12727e750ccbbb1d6940d977977e8952db3b8608181c704727"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "studio",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-native-browser-studio.png",
+          "viewed_at_utc": "2026-10-28T20:03:56.278Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-native-browser-studio.png",
+          "byte_length": 149992,
+          "sha256": "2d55707f45b2771656eb18a757dfc147b2aa56f6ea97c87ef641626594e99e4b",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "The front and later-time views show two tapered forms, one blue-topped and one brown, with the left form slightly higher in the later view.",
+        "The side view overlaps the forms into one dominant silhouette; no blank canvas or obvious clipped object is visible."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import.",
+        "Side projection overlaps component silhouettes; the screenshot cannot prove that every component is independently visible."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-native-browser/studio-animated.png",
+      "byte_length": 92797,
+      "sha256": "c60967f41638b94f994c8e3f8e5c13a8cec3466dc822eea83b3173cdb0edbf33",
+      "relative_path": "surface-native-browser/studio-animated.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-native-browser/browser-results.json",
+      "capture_metadata": {
+        "file": "studio-animated.png",
+        "sha256": "sha256:c60967f41638b94f994c8e3f8e5c13a8cec3466dc822eea83b3173cdb0edbf33",
+        "fixture": "studio",
+        "view": "front",
+        "time_seconds": 1.5,
+        "program_revision": "sha256:239531e8b4692dc3112b3148171d7231db500e6fea687a3d5f08558c04e45431",
+        "artifact_sha256": "sha256:5099c13675b74c12727e750ccbbb1d6940d977977e8952db3b8608181c704727"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "studio",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-native-browser-studio.png",
+          "viewed_at_utc": "2026-10-28T20:03:56.278Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-native-browser-studio.png",
+          "byte_length": 149992,
+          "sha256": "2d55707f45b2771656eb18a757dfc147b2aa56f6ea97c87ef641626594e99e4b",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "The front and later-time views show two tapered forms, one blue-topped and one brown, with the left form slightly higher in the later view.",
+        "The side view overlaps the forms into one dominant silhouette; no blank canvas or obvious clipped object is visible."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-native-browser/rotated-animation-front.png",
+      "byte_length": 72566,
+      "sha256": "93f8019b12c18ec5df3b8019fe3bb839e586c0d6ce25f468749bd6961dba763f",
+      "relative_path": "surface-native-browser/rotated-animation-front.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-native-browser/browser-results.json",
+      "capture_metadata": {
+        "file": "rotated-animation-front.png",
+        "sha256": "sha256:93f8019b12c18ec5df3b8019fe3bb839e586c0d6ce25f468749bd6961dba763f",
+        "fixture": "rotated-animation",
+        "view": "front",
+        "time_seconds": 0,
+        "program_revision": "sha256:14fa12d7b274f18a8b0f167739413ecd48dde5c5a604b9ded05e8e40a23ed0e1",
+        "artifact_sha256": "sha256:3a91b93f0c1fbd4c9de2067b11b7c0a154d8bf62942e84cb8cf0ce18a9db1dc8"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "rotated-animation",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-native-browser-rotated-animation.png",
+          "viewed_at_utc": "2026-10-28T20:03:56.278Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-native-browser-rotated-animation.png",
+          "byte_length": 98844,
+          "sha256": "ca0054d555b259e0951472acd1012b7e1718e97cb0d3ba272f627ac2e10d628b",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "A single brown-and-blue faceted tapered form is visible in all three frames.",
+        "The front and side views expose distinct silhouettes; the later-time view shows changed orientation with the full visible object inside the canvas."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-native-browser/rotated-animation-side.png",
+      "byte_length": 78455,
+      "sha256": "09fc2f6ca995f576234f931aecdcf6f0739dbdf2cd129e4f9d4848ceb1978b41",
+      "relative_path": "surface-native-browser/rotated-animation-side.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-native-browser/browser-results.json",
+      "capture_metadata": {
+        "file": "rotated-animation-side.png",
+        "sha256": "sha256:09fc2f6ca995f576234f931aecdcf6f0739dbdf2cd129e4f9d4848ceb1978b41",
+        "fixture": "rotated-animation",
+        "view": "side",
+        "time_seconds": 0,
+        "program_revision": "sha256:14fa12d7b274f18a8b0f167739413ecd48dde5c5a604b9ded05e8e40a23ed0e1",
+        "artifact_sha256": "sha256:3a91b93f0c1fbd4c9de2067b11b7c0a154d8bf62942e84cb8cf0ce18a9db1dc8"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "rotated-animation",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-native-browser-rotated-animation.png",
+          "viewed_at_utc": "2026-10-28T20:03:56.278Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-native-browser-rotated-animation.png",
+          "byte_length": 98844,
+          "sha256": "ca0054d555b259e0951472acd1012b7e1718e97cb0d3ba272f627ac2e10d628b",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "A single brown-and-blue faceted tapered form is visible in all three frames.",
+        "The front and side views expose distinct silhouettes; the later-time view shows changed orientation with the full visible object inside the canvas."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-native-browser/rotated-animation-animated.png",
+      "byte_length": 74303,
+      "sha256": "525c79b31008c4cfca7834a9e3b3168252634343b5b3689bc039d830e5d07d5d",
+      "relative_path": "surface-native-browser/rotated-animation-animated.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-native-browser/browser-results.json",
+      "capture_metadata": {
+        "file": "rotated-animation-animated.png",
+        "sha256": "sha256:525c79b31008c4cfca7834a9e3b3168252634343b5b3689bc039d830e5d07d5d",
+        "fixture": "rotated-animation",
+        "view": "front",
+        "time_seconds": 1.5,
+        "program_revision": "sha256:14fa12d7b274f18a8b0f167739413ecd48dde5c5a604b9ded05e8e40a23ed0e1",
+        "artifact_sha256": "sha256:3a91b93f0c1fbd4c9de2067b11b7c0a154d8bf62942e84cb8cf0ce18a9db1dc8"
+      },
+      "report_hash_matches": true,
+      "pixel_dimensions": [
+        1220,
+        1201
+      ],
+      "fixture": "rotated-animation",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-native-browser-rotated-animation.png",
+          "viewed_at_utc": "2026-10-28T20:03:56.278Z",
+          "method": "view_image labeled contact sheet; complete frames scaled to 610px width"
+        }
+      ],
+      "contact_sheets": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/reconcile-audit/visual-review/recovery-surface-native-browser-rotated-animation.png",
+          "byte_length": 98844,
+          "sha256": "ca0054d555b259e0951472acd1012b7e1718e97cb0d3ba272f627ac2e10d628b",
+          "dimensions": [
+            1830,
+            692
+          ]
+        }
+      ],
+      "observations": [
+        "A single brown-and-blue faceted tapered form is visible in all three frames.",
+        "The front and side views expose distinct silhouettes; the later-time view shows changed orientation with the full visible object inside the canvas."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/visual-browser/independent-parts.png",
+      "byte_length": 378865,
+      "sha256": "09a923392332234f6919599a5edfb20f7cc306b715f4c6ec9ceef98d96959e46",
+      "relative_path": "visual-browser/independent-parts.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/visual-browser/viewer-results.json",
+      "capture_metadata": {
+        "file": "independent-parts.png",
+        "demo": "independent-parts",
+        "time_seconds": 1.5
+      },
+      "report_hash_matches": null,
+      "pixel_dimensions": [
+        1440,
+        1247
+      ],
+      "fixture": "independent-parts",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/visual-browser/independent-parts.png",
+          "viewed_at_utc": "2026-10-28T20:03:06.487Z",
+          "method": "view_image original"
+        }
+      ],
+      "contact_sheets": [],
+      "observations": [
+        "A central box assembly, blue head, turquoise arm and separated blue hand are visible on the grid.",
+        "The selected-object panel and 1.500-second timeline display are legible; controls and evidence panels fit without visible overlap."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/visual-browser/gravity-and-release.png",
+      "byte_length": 417992,
+      "sha256": "25e6ee36f92213880ba6638d7ba51769d76914fcb2a9f54076e39064e33fb2b7",
+      "relative_path": "visual-browser/gravity-and-release.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/visual-browser/viewer-results.json",
+      "capture_metadata": {
+        "file": "gravity-and-release.png",
+        "demo": "gravity-and-release",
+        "time_seconds": 1.5
+      },
+      "report_hash_matches": null,
+      "pixel_dimensions": [
+        1440,
+        1267
+      ],
+      "fixture": "gravity-and-release",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/visual-browser/gravity-and-release.png",
+          "viewed_at_utc": "2026-10-28T20:03:06.488Z",
+          "method": "view_image original"
+        }
+      ],
+      "contact_sheets": [],
+      "observations": [
+        "A turquoise carrier, orange sphere and curved path are visible within the scene.",
+        "The sphere is below the carrier in this still; the page visibly states that the grid has no collision response.",
+        "The selected-object coordinates and 1.500-second timeline are legible; the page is not visibly clipped."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    },
+    {
+      "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/visual-browser/viewer-narrow.png",
+      "byte_length": 284000,
+      "sha256": "8a167c28f7f732ecd2894f6f01997970fb90931abfdcea032d97b2e12a7f997a",
+      "relative_path": "visual-browser/viewer-narrow.png",
+      "report_path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/visual-browser/viewer-results.json",
+      "capture_metadata": {
+        "file": "viewer-narrow.png",
+        "demo": "gravity-and-release",
+        "time_seconds": 1.5,
+        "viewport_width": 720
+      },
+      "report_hash_matches": null,
+      "pixel_dimensions": [
+        720,
+        1579
+      ],
+      "fixture": "gravity-and-release",
+      "actual_visual_review": true,
+      "review_status": "NO_BLOCKING_RENDERING_CONCERN_OBSERVED",
+      "inspection_events": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/visual-browser/viewer-narrow.png",
+          "viewed_at_utc": "2026-10-28T20:03:06.488Z",
+          "method": "view_image original"
+        }
+      ],
+      "contact_sheets": [],
+      "observations": [
+        "At the captured 720-pixel width the scene, timeline and lower inspection/evidence panels fit the page without visible horizontal clipping.",
+        "The turquoise carrier, orange sphere, path and grid remain visible; the full-page layout stacks cleanly."
+      ],
+      "visual_limitations": [
+        "A single still cannot establish continuous motion, numerical accuracy, mesh topology, material parameter fidelity, physics behavior or destination-native import."
+      ]
+    }
+  ]
+}
