@@ -1,10 +1,12 @@
 # OntoKin goal
 
-Reaffirmed by the project owner on October 18, 2026. This record preserves the goal across sessions and implementation milestones. [STATUS.md](STATUS.md) records current evidence and work; [AGENTS.md](AGENTS.md) defines the working procedure.
+Reaffirmed by the project owner on October 28, 2026, including authority to reconcile and integrate the repository while preserving this mission. This record preserves the goal across sessions and implementation milestones. [STATUS.md](STATUS.md) records current evidence and work; [AGENTS.md](AGENTS.md) defines the working procedure.
 
 ## Mission
 
 Build OntoKin into a programming language designed primarily for AI agents to create, inspect, revise, and reuse meaningful 3D objects and their behavior. An agent should express form, parts, appearance, physical properties, connections, and intended actions in editable, human-readable `.ok` source. OntoKin should supply the supported construction, routine setup, evaluation, and delivery needed to turn that source into usable models and animations.
+
+Game-engine delivery, including Unreal Engine and other suitable engines, remains a product target. Each claimed destination must have a named format/version and actual import and animation-playback evidence; a valid exported file alone does not establish support in a particular engine.
 
 The language must offer actual programmable abstractions: types, classes, instances, functions, operations, composition, and progressively richer reusable libraries and algorithms. Its purpose includes independent local actions within coherent assemblies, understandable physical and mechanical behavior, and precise inspection and repair. Human direction and review remain possible through the same source and evidence. Ordinary execution must continue without a language-model call per frame.
 
@@ -35,6 +37,8 @@ Support profiles define finite promises within this scope. They must not redefin
 ## Invariants and completion gates
 
 Preserve stable identities and source revisions; distinguish ownership, frames, following, physical connections, and visual bindings. Resolve one motion authority per coordinate and count represented matter once. Keep defaults, assumptions, approximations, unsupported requests, and information loss inspectable. A failed edit preserves the accepted revision; a failed evaluation cannot label later state valid. The adopted [language baseline](docs/language-design/OK-LANG-001-core-language-specification.md) governs these meanings until an explicit versioned change replaces it.
+
+Reviewed development increments can be integrated into main under [OK-ENG-009](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) before the complete feature release. Explicitly selected incomplete capabilities remain experimental; existing meanings and defaults are preserved.
 
 A release is complete only for its named scope when:
 

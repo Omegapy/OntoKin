@@ -1,0 +1,28 @@
+{
+  "schema": "ontokin.checkpoint057-preparation-events/0.1",
+  "entries": [
+    {
+      "event": "root ordinary git ls-remote",
+      "exit_code": 128,
+      "reported_stderr": "fatal: unable to access 'https://github.com/Omegapy/OntoKin.git/': Failed to connect to browser-proxy port 8889 after 0 ms: Couldn't connect to server",
+      "outcome": "No repository obtained or mutated. Connected GitHub immutable reads used for source."
+    },
+    {
+      "event": "root initial materialization response-shape assumption",
+      "exit_code": 1,
+      "reported_error": "KeyError: 'content'",
+      "outcome": "Contents fetch returned raw text, not contents metadata. No source file written. Raw text subsequently encoded and all14 initial files matched remote bytes/Git blobs."
+    },
+    {
+      "event": "root branch metadata preflight",
+      "reported_error": "Error: Parent moved",
+      "qualification": "Expected commit.sha field was not obtained from that branch route. The message was not evidence of head movement; no branch mutation preceded it. Git ref readback then proved the exact expected parent before create and again afterward."
+    },
+    {
+      "event": "source diff command",
+      "exit_code": 1,
+      "outcome": "Expected diff exit status identifying actual reference/derivation differences; not a failed validation run."
+    }
+  ],
+  "evidence_limit": "Session tool-output errors are quoted here; unavailable raw transport responses are not reconstructed. Independent dependency recovery attempts retain separate original logs and results."
+}

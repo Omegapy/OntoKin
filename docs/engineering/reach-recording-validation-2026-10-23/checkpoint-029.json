@@ -1,0 +1,166 @@
+{
+  "schema_version": "ontokin.reach-development-checkpoint/0.1",
+  "checkpoint": 29,
+  "created_at": "2026-10-24T04:28:47.451104+00:00",
+  "release_acceptance": false,
+  "full_product_goal_completed": false,
+  "outcome": "Neutral original P09 reader-input capture and independent complete-input census completed.",
+  "implementation": {
+    "source_commit": "91c28f839ae29881d0f8e1287b10bdafa2804361",
+    "source_tree": "c9c13c27c58f6e3a88a23cb54483c00d2baebebf",
+    "accepted_runtime_commit": "b9f79d1e4bcbef957b239a24a3c6c3d54cb47154",
+    "runtime_changed": false,
+    "source_branch": "work/reach06-p09-census-20261023-e168",
+    "all_tracked_source_files_present_and_stable": 1784
+  },
+  "results": {
+    "stock_p09_status": "failed",
+    "capture_p09_product_status": "failed",
+    "product_exit_codes": [
+      1,
+      1
+    ],
+    "capture_status": "captured_failed_request",
+    "neutrality": "passed",
+    "elapsed_neutrality_claimed": false,
+    "shared_operations": 100001,
+    "reach_operations": 95867,
+    "numerical_cache_entries": 256,
+    "complete_category_maps_equal": true,
+    "underlying_failure_frames_equal_after_removing_only_wrapper_frames": true,
+    "failure": "First authored-angle multiplication in final certificate group 11",
+    "successful_ExportResult": false,
+    "artifact": {
+      "path": "unvalidated-reader-input.glb",
+      "bytes": 1857820,
+      "sha256": "12e95c68f188a15dcc764dac770ce96ad40f905a33a3bcb0e4de67d6bf5ad945"
+    },
+    "artifact_accepted": false,
+    "clock_count": 205,
+    "interval_count": 204,
+    "certificate_count": 1224,
+    "group_count": 12,
+    "flush_entry_shared_operations": 99242,
+    "flush_entry_reach_operations": 95109,
+    "executed_flush_reach_charges": 758,
+    "conditional_complete_flush_operations": 873,
+    "conditional_remaining_flush_operations_including_refused_attempt_once": 115,
+    "conditional_final_report_and_return_operations": 10,
+    "conditional_complete_shared_operations": 100125,
+    "conditional_reduction_needed_for_100000": 125,
+    "maximum_modeled_prospective_or_result_bits": 2148,
+    "measured_complete_cost": null,
+    "new_recording_passes": [],
+    "full_original28_reexecuted": false,
+    "latest_full_original28_checkpoint": 28,
+    "latest_full_original28_passed": 23,
+    "latest_full_original28_failed": [
+      "P09",
+      "P11",
+      "P16",
+      "P23",
+      "L03"
+    ],
+    "latest_full_original28_status": "failed"
+  },
+  "execution": {
+    "environment": {
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "platform": "Linux-6.18.55-x86_64-with-glibc2.39"
+    },
+    "serialized": true,
+    "product_commands": [
+      "commands/stock-p09-001.json",
+      "commands/capture-p09-001.json"
+    ],
+    "analysis_commands": [
+      "commands/capture-neutrality-001.json",
+      "commands/census-001.json",
+      "commands/census-002.json",
+      "commands/native-field-sites-001.json"
+    ],
+    "capture": "execution/capture-p09-001/capture.json",
+    "snapshot": "execution/capture-p09-001/flush-snapshots.json",
+    "raw_reader_input": "execution/capture-p09-001/unvalidated-reader-input.glb",
+    "canonical_census": "analysis/P09-full-input-census.json",
+    "canonical_census_equals": "analysis/P09-full-input-census-002.json",
+    "all_actual_attempts_preserved": true,
+    "no_product_runtime_imports_in_census_or_audit": true,
+    "historical_archive_recovery_is_not_historical_reexecution": true
+  },
+  "model_scope": {
+    "basis": "Independent actual GLB clock/group decode and static exact scalar ledger, reconciled with all 758 observed flush charges and categories.",
+    "assumptions": [
+      "Original native dispatch and callback owners remain admitted with the default operand domain.",
+      "All remaining predicates and source ownership/receipt checks succeed without replay or cancellation.",
+      "Final source admission is callback-free; this census does not execute or certify it.",
+      "Three outward report conversions each decode, charge report rounding and compare; the final exporter check charges checkpoint.",
+      "Surface/geometry verification, report copying/hashing/environment reads and successful ExportResult construction still must complete."
+    ],
+    "captured_source_minima_independently_certified": false,
+    "final_source_admission_executed": false,
+    "successful_request_inferred": false
+  },
+  "next_task": {
+    "status": "proposed_not_implemented",
+    "scope": "Bounded duplicate field decoding and fresh exact-field requirement proofs within each certificate group",
+    "source_review": "reviews/next-scope-source-review.json",
+    "inventory": "analysis/native-field-sites-001.json",
+    "gross_site_ceiling": 174,
+    "illustrative_two_admissions_per_group_net_ceiling": 150,
+    "illustrative_three_admissions_per_group_net_ceiling": 138,
+    "measured_savings": null,
+    "runtime_admission_gate_executed": false,
+    "next_action": "Derive and implement the two independently testable native group proofs, measure actual complete-request applicability/savings/elapsed, and rerun relevant gates before acceptance."
+  },
+  "limits": {
+    "max_operations": 100000,
+    "max_elapsed_ms": 30000,
+    "max_operand_bits": 32768,
+    "max_numerical_cache_entries": 256,
+    "separate_native_metadata_bound": 512
+  },
+  "publication": {
+    "continuation_pr": 28,
+    "continuation_branch": "work/reach06-recordings-20261023-7of9-3be6",
+    "evidence_branch": "work/reach06-p09-census-20261023-e168",
+    "observed_parent": "91c28f839ae29881d0f8e1287b10bdafa2804361",
+    "main_unchanged": "2bb4588e121fcfe99b4d42c734b15b38362f3642",
+    "main_lease_held": false,
+    "pr27_and_pr28_remain_open_drafts": true,
+    "hosted_jobs_dispatched_or_retried": false
+  },
+  "archive": {
+    "format": "zip-deflate",
+    "parts": [
+      {
+        "path": "checkpoint-029.zip.part001",
+        "bytes": 870723,
+        "sha256": "04084572758391366fa6bc76659e03024e3f0e73a5e91a616babd0f9a37d98e0"
+      }
+    ],
+    "bytes": 870723,
+    "sha256": "04084572758391366fa6bc76659e03024e3f0e73a5e91a616babd0f9a37d98e0",
+    "member_count": 60,
+    "uncompressed_bytes": 8579827,
+    "producer": "drivers/pack_checkpoint029.py",
+    "payload_inventory_stable_during_packaging": true,
+    "packer_verified_member_bytes_and_crcs": true,
+    "independent_audit": "checkpoint-029-archive-review.json",
+    "scope": "Actual diagnostic source cuts, original capped P09/control capture commands, unvalidated GLB, final-group snapshot, both census versions, conditional site inventory, source reviews and recovery identities. Subsequent archive/documentation audits are retained separately."
+  },
+  "remaining_acceptance": [
+    "28/28 original recordings",
+    "actual Agent delivery",
+    "current full regression",
+    "CPython 3.11/3.12/3.13 compatibility",
+    "complete independent rates",
+    "native/browser/visual roles",
+    "hostile/inherited roles",
+    "formal release input closure",
+    "all R01-R12/Q01-Q22",
+    "resulting-main verification"
+  ],
+  "manifest_sha256": "39bc96f1b84d1521e1c24a1bae2f4093352c90d665e2281a884bc2af2b740ae7"
+}

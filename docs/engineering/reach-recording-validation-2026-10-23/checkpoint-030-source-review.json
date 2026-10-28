@@ -1,0 +1,523 @@
+{
+  "schema_version": "ontokin.certificate-native-fields-source-review/0.1",
+  "created_at": "2026-10-24T14:32:54.099805+00:00",
+  "reviewer": "/root/proof_review",
+  "scope": "Independent source review and inspection of completed retained execution records; no product or test code executed/imported by this reviewer.",
+  "disposition": "no_remaining_source_level_blockers_for_the_identified_final_candidate",
+  "release_acceptance": false,
+  "full_product_goal_completed": false,
+  "reviewed_source": {
+    "commit": "6a9fb22fb8ca901e18d315406cbca667f2ef8321",
+    "tree": "1f0b08f8846f443b8bc573fe0c9d5e1e3c319c47",
+    "path": "ontokin/reach_conformance.py",
+    "git_blob_sha1": "f91cdbc43fe7134c4b11c73bd43cd033bf9d16ea",
+    "bytes": 206759,
+    "sha256": "b4c657eac72186203960b18738f65f08e700f52dffa11c1364c6b4609c59a81a"
+  },
+  "derivation": {
+    "path": "docs/engineering/reach-certificate-native-fields.md",
+    "sha256": "4da3c8269e1ed088a76cb4ebbe371aff69c4be134107ee9db9534c8d38a2471a"
+  },
+  "findings": [
+    {
+      "id": "late-hook-optional-slot-read",
+      "status": "resolved",
+      "description": "A comparison context created before tracing was enabled could inspect optional raw Fraction slots before the full native gate. A hook could replace a slot descriptor between the cheap descriptor check and the raw read, introducing a foreign call before ordinary fallback.",
+      "demonstrated_source_commit": "3b0c2670b5b889a465352562b1219baed77d1302",
+      "demonstrated_failure_report": "execution/candidate-hook-regression-001/report.json",
+      "demonstrated_failure_log": "execution/candidate-hook-regression-001/tests.log",
+      "demonstrated_result": "2 methods executed; late-trace method errored with the targeted optional-slot-read marker; late-profile method passed; failed status retained.",
+      "repair_commit": "6a9fb22fb8ca901e18d315406cbca667f2ef8321",
+      "repair": "Saved native gettrace/getprofile queries now decline active hooks before every optional descriptor/slot read, including hooks installed after context creation. Potential equality still requires the full native gate and fresh current operand reads.",
+      "verified_report": "execution/candidate-focused-005/report.json",
+      "verification_scope": "Root-executed 115-method focused suite, zero failures/errors/skips and stable inputs; reviewed record, not re-executed by reviewer."
+    },
+    {
+      "id": "replaced-algebra-signature",
+      "status": "resolved",
+      "description": "Initial integration passed the new optional keyword to an original-control replacement that retained the seven-positional-argument interface.",
+      "demonstrated_failure_report": "execution/candidate-focused-001/report.json",
+      "repair_commit": "a6c15941ac720bdae93daeafc624f9a5b10bf6a8",
+      "repair": "Pass the optional comparison context only to the saved native complete-algebra function with its saved code; call all replacements through the original seven positional arguments.",
+      "verified_report": "execution/candidate-focused-002/report.json"
+    },
+    {
+      "id": "initial-source-draft-repairs",
+      "status": "resolved_before_first_focused_execution",
+      "description": "Read-only review of the initial draft found a prebound ordinary decoder, a substitutable receipt map entry and a missing comparison-context arithmetic binding.",
+      "repair": "Ordinary decoder lookup remains dynamic for every field; an immutable completed-receipt identity tuple rejects substituted lookup entries; complete algebra ignores contexts belonging to another arithmetic object.",
+      "evidence": "Dedicated regression methods are included in the final 115-method focused report. No runtime failure from the pre-repair author draft is claimed."
+    }
+  ],
+  "preserved_proof_obligations": [
+    "Only earlier completed native typed-identical group-local decodes are retained; float identity includes exact binary64 bits and signed zero, and int/float types remain distinct.",
+    "Original retained decodes require before/after native gates; omissions validate input, result fields, receipt identity and owners and return distinct Fraction objects.",
+    "Only current numerator-and-denominator equality can discharge a fresh required comparison; successful claims are never cached.",
+    "Both operand and prospective cross-product guards remain, with actual lazy admission and post-charge checks.",
+    "The cheap slot filter only declines; saved primitive readers and descriptor pins prevent foreign preliminary field calls, and active hooks decline before optional reads.",
+    "Both threshold admit_continuation calls and flags, current owner/receipt checks, both actual width squares, both quarter plans, maxima and tolerances remain.",
+    "Custom callbacks, work observers, foreign scalar dispatch and unsupported live operand domains use ordinary arithmetic.",
+    "Limits remain 100000 operations,30000 ms,32768 operand bits,256 numerical cache entries; the 512-category metadata inspection bound is separate."
+  ],
+  "decode_change_binding": {
+    "earlier_measured_commit": "6788ee2f9352875375334b7d542848b334b5d37c",
+    "final_reviewed_commit": "6a9fb22fb8ca901e18d315406cbca667f2ef8321",
+    "method": "Parse original Git blobs as syntax only; compare complete AST dumps with location attributes excluded and exact source segments. No product module import or execution.",
+    "all_selected_nodes_equal": true,
+    "nodes": [
+      {
+        "symbol": "_CertificateFieldDecodes",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "54b09cd90dd6db192158738dc9425156d5f853a8256a644259fafbd879d7ea3d",
+        "new_ast_sha256": "54b09cd90dd6db192158738dc9425156d5f853a8256a644259fafbd879d7ea3d",
+        "old_source_sha256": "4ee8748c988310d2c0de24842d110553a4341aef7360a149e1ceff54d42e7ffe",
+        "new_source_sha256": "4ee8748c988310d2c0de24842d110553a4341aef7360a149e1ceff54d42e7ffe"
+      },
+      {
+        "symbol": "_CertificateBatch.add",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "ecec96b90f511c84ecaa1090be7a975dbc76170c67de073b0b6a7562ee2ccbb7",
+        "new_ast_sha256": "ecec96b90f511c84ecaa1090be7a975dbc76170c67de073b0b6a7562ee2ccbb7",
+        "old_source_sha256": "015a2c1b708370fadfdcd4d06b99c311c26121ad70a0f08658f0ce92b6afd1d1",
+        "new_source_sha256": "015a2c1b708370fadfdcd4d06b99c311c26121ad70a0f08658f0ce92b6afd1d1"
+      },
+      {
+        "symbol": "_certificate_fields_native",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "22918fd2fe941be4000a3db7b1f17007606a0b47e7a7d637c01ad1a168e21226",
+        "new_ast_sha256": "22918fd2fe941be4000a3db7b1f17007606a0b47e7a7d637c01ad1a168e21226",
+        "old_source_sha256": "0c3fd871ee4cfc1867fd54e799b23cb14ac29a8d4a185c7ba3e61432c0929642",
+        "new_source_sha256": "0c3fd871ee4cfc1867fd54e799b23cb14ac29a8d4a185c7ba3e61432c0929642"
+      },
+      {
+        "symbol": "_certificate_field_key",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "d97c960b26bc9ae289d4d98acce09996d6f808ebea3d76cfb3926f3aef438a87",
+        "new_ast_sha256": "d97c960b26bc9ae289d4d98acce09996d6f808ebea3d76cfb3926f3aef438a87",
+        "old_source_sha256": "9f6701896e2351ada4bb1af54922ff2fb6a4312167d4803dd67134d9cc9b0548",
+        "new_source_sha256": "9f6701896e2351ada4bb1af54922ff2fb6a4312167d4803dd67134d9cc9b0548"
+      },
+      {
+        "symbol": "_certificate_term_native",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "767765ac8de4934d196dd27c4b8226a2cba0742cafd8a4dff5d60f73998526f7",
+        "new_ast_sha256": "767765ac8de4934d196dd27c4b8226a2cba0742cafd8a4dff5d60f73998526f7",
+        "old_source_sha256": "fe8dc1b37c98cfce1d29b4ca56a0dac3d46ac469e93c8c26ab67ee11a896cf56",
+        "new_source_sha256": "fe8dc1b37c98cfce1d29b4ca56a0dac3d46ac469e93c8c26ab67ee11a896cf56"
+      },
+      {
+        "symbol": "_certificate_fraction_fields",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "c15c0ec6e270e895749f67f50a8e2fa706a8e362071fe0f6ae0521cbf6edb30b",
+        "new_ast_sha256": "c15c0ec6e270e895749f67f50a8e2fa706a8e362071fe0f6ae0521cbf6edb30b",
+        "old_source_sha256": "eca40a2cbb40436e13f3ff01b47b935802d2e0d634e7dee8412301c8fb85d1f0",
+        "new_source_sha256": "eca40a2cbb40436e13f3ff01b47b935802d2e0d634e7dee8412301c8fb85d1f0"
+      },
+      {
+        "symbol": "_certificate_raw_fields",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "206aab6523771efd77430bf16a159c9aa243e6bc444a8e22bb54f2581ba5d458",
+        "new_ast_sha256": "206aab6523771efd77430bf16a159c9aa243e6bc444a8e22bb54f2581ba5d458",
+        "old_source_sha256": "e5a3c43675d4fae5347690e20c543e71d7866ce9b8eb4d18f6166972068c8802",
+        "new_source_sha256": "e5a3c43675d4fae5347690e20c543e71d7866ce9b8eb4d18f6166972068c8802"
+      },
+      {
+        "symbol": "_term_function_state",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "7cf1bd7b6744fcf613e59771b596e6a906cc6522a4b77e7a9f270c0afc0f28b8",
+        "new_ast_sha256": "7cf1bd7b6744fcf613e59771b596e6a906cc6522a4b77e7a9f270c0afc0f28b8",
+        "old_source_sha256": "2d3309f74ac38376a2b8d5cedb65149ee840845d6ce62209b4f87351512177ef",
+        "new_source_sha256": "2d3309f74ac38376a2b8d5cedb65149ee840845d6ce62209b4f87351512177ef"
+      },
+      {
+        "symbol": "_term_functions",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "753325d8fc2763841babb89efd17fbb1ef3061a6ed1f511d6a99dfee1e600c93",
+        "new_ast_sha256": "753325d8fc2763841babb89efd17fbb1ef3061a6ed1f511d6a99dfee1e600c93",
+        "old_source_sha256": "ad8d88bfd5d10cd7e77ddd811b1706ef2c614229a3b2f93f961f7261d088cc1d",
+        "new_source_sha256": "ad8d88bfd5d10cd7e77ddd811b1706ef2c614229a3b2f93f961f7261d088cc1d"
+      },
+      {
+        "symbol": "_Bounds",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "92e09112663863c6e82ce68e4b20adbb766bca1d07e6af6ab3729f6555fabc78",
+        "new_ast_sha256": "92e09112663863c6e82ce68e4b20adbb766bca1d07e6af6ab3729f6555fabc78",
+        "old_source_sha256": "7d9c1e9c5dbf6549fa31edf3ddb890a2cb78c531a5f1b29dd145721a4fec3545",
+        "new_source_sha256": "7d9c1e9c5dbf6549fa31edf3ddb890a2cb78c531a5f1b29dd145721a4fec3545"
+      },
+      {
+        "symbol": "_FIELD_TERM_NATIVE",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "0e167ca125c873ec2f0a05f9b6a26a2668f0b22a4f484ee9c697e068ca0062f5",
+        "new_ast_sha256": "0e167ca125c873ec2f0a05f9b6a26a2668f0b22a4f484ee9c697e068ca0062f5",
+        "old_source_sha256": "62534a866e9997c73f11aa96be9230561a3641ead112391df1fc81e7695ed76d",
+        "new_source_sha256": "62534a866e9997c73f11aa96be9230561a3641ead112391df1fc81e7695ed76d"
+      },
+      {
+        "symbol": "_FIELD_RAW_READER",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "e29005a8ddda5686842580b051b282f96b6c1b8f3229b4a57c8df109b67208e7",
+        "new_ast_sha256": "e29005a8ddda5686842580b051b282f96b6c1b8f3229b4a57c8df109b67208e7",
+        "old_source_sha256": "3ee8e784e03a9c075f0a73bf7110e7f6df6167247f79e3b8f106c099f01118ab",
+        "new_source_sha256": "3ee8e784e03a9c075f0a73bf7110e7f6df6167247f79e3b8f106c099f01118ab"
+      },
+      {
+        "symbol": "_FIELD_KEY_READER",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "2df5bf197cacd98ddace1244e2fcf351ce8acaeb266bac485522e5229ed5fc9b",
+        "new_ast_sha256": "2df5bf197cacd98ddace1244e2fcf351ce8acaeb266bac485522e5229ed5fc9b",
+        "old_source_sha256": "e6ff4f8f76b91314987984e1ab3e247950525e0d12baa4629c1ec1cd820ce73d",
+        "new_source_sha256": "e6ff4f8f76b91314987984e1ab3e247950525e0d12baa4629c1ec1cd820ce73d"
+      },
+      {
+        "symbol": "_FIELD_FUNCTIONS",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "63cf4fcdccde32bf0468695d99cddff4bec46d9dc17b03cdfe053f0bbbd81fea",
+        "new_ast_sha256": "63cf4fcdccde32bf0468695d99cddff4bec46d9dc17b03cdfe053f0bbbd81fea",
+        "old_source_sha256": "7374a44c30dded4f6b18729d9e6cf501db7a275ddca0c4ee862a6e6831016933",
+        "new_source_sha256": "7374a44c30dded4f6b18729d9e6cf501db7a275ddca0c4ee862a6e6831016933"
+      },
+      {
+        "symbol": "_FIELD_GLOBALS",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "b8aaf027e9474d239774c54d6ff1d91b9d4a4f3c07a69993c17ea43059c885f9",
+        "new_ast_sha256": "b8aaf027e9474d239774c54d6ff1d91b9d4a4f3c07a69993c17ea43059c885f9",
+        "old_source_sha256": "44a33cb511a4d252d4f4043c26b93f02e8c72a834b632971a6c5ba56a56e1425",
+        "new_source_sha256": "44a33cb511a4d252d4f4043c26b93f02e8c72a834b632971a6c5ba56a56e1425"
+      },
+      {
+        "symbol": "_TERM_CLASS_FIELDS",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "8be98c5fee6615daac34510f513b3c588f6de1616dc39128f2cd121dff0539ca",
+        "new_ast_sha256": "8be98c5fee6615daac34510f513b3c588f6de1616dc39128f2cd121dff0539ca",
+        "old_source_sha256": "15e041ba9def47ed4a3f3b1fc311fa5c92d12226754d4afc9f91f0f8a392ff80",
+        "new_source_sha256": "15e041ba9def47ed4a3f3b1fc311fa5c92d12226754d4afc9f91f0f8a392ff80"
+      },
+      {
+        "symbol": "_TERM_FUNCTIONS",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "4bc308dc68a05e96160e27977a1cf63824c8cb3c771ab242cbb68093921352a5",
+        "new_ast_sha256": "4bc308dc68a05e96160e27977a1cf63824c8cb3c771ab242cbb68093921352a5",
+        "old_source_sha256": "e0f9f1b372f0e37b16716c3d3249e0425c670bd0390b3b63112afc892b22775a",
+        "new_source_sha256": "e0f9f1b372f0e37b16716c3d3249e0425c670bd0390b3b63112afc892b22775a"
+      },
+      {
+        "symbol": "_TERM_GLOBALS",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "cd33f4fb3e639d486e1447ed7e72b94f2df6a74bdd7e9598909cb4809a6cfe4b",
+        "new_ast_sha256": "cd33f4fb3e639d486e1447ed7e72b94f2df6a74bdd7e9598909cb4809a6cfe4b",
+        "old_source_sha256": "1cf14b35b949220d1d4e8db33931b44409f8e91736c373eddc7ed7958b51b4dd",
+        "new_source_sha256": "1cf14b35b949220d1d4e8db33931b44409f8e91736c373eddc7ed7958b51b4dd"
+      },
+      {
+        "symbol": "_TERM_FIELD_READER",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "0ad8878c71a4f875b7985d00cf2ebd86e92df56f033ccdcd7b93df1a57914d06",
+        "new_ast_sha256": "0ad8878c71a4f875b7985d00cf2ebd86e92df56f033ccdcd7b93df1a57914d06",
+        "old_source_sha256": "113cb27df38ab8e29fb5be33a10a8b912db6a1fdc23b799a92de52e866d9ad23",
+        "new_source_sha256": "113cb27df38ab8e29fb5be33a10a8b912db6a1fdc23b799a92de52e866d9ad23"
+      },
+      {
+        "symbol": "_TERM_ABSENT",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "690c24980b9d43d0ac0f827bfddfe212c385fce4fbd36c86c6832ab227ee0eaa",
+        "new_ast_sha256": "690c24980b9d43d0ac0f827bfddfe212c385fce4fbd36c86c6832ab227ee0eaa",
+        "old_source_sha256": "313d54b6fce34d9475b7f42a9ea0e641edc8dd5ec7a3789731120707d5327664",
+        "new_source_sha256": "313d54b6fce34d9475b7f42a9ea0e641edc8dd5ec7a3789731120707d5327664"
+      },
+      {
+        "symbol": "_TERM_STORAGE",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "583c407880e08d370a19ba8c554b5e2fb97f1f2d402eb79ef54cc55591a56252",
+        "new_ast_sha256": "583c407880e08d370a19ba8c554b5e2fb97f1f2d402eb79ef54cc55591a56252",
+        "old_source_sha256": "a3da46acd691e42a37fae636e837123dae65933431ddaf0780f2905533b2dab4",
+        "new_source_sha256": "a3da46acd691e42a37fae636e837123dae65933431ddaf0780f2905533b2dab4"
+      },
+      {
+        "symbol": "_TERM_BOUNDS_METHODS",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "f775d5f7f0064ab711324528a509770f7df93cc49df2fb0e035f6f193ee48c82",
+        "new_ast_sha256": "f775d5f7f0064ab711324528a509770f7df93cc49df2fb0e035f6f193ee48c82",
+        "old_source_sha256": "387e1760792f6b7326b4e5b088910cac834bbb809cea2be34428b70cca288799",
+        "new_source_sha256": "387e1760792f6b7326b4e5b088910cac834bbb809cea2be34428b70cca288799"
+      },
+      {
+        "symbol": "_TERM_WORK_METHODS",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "80e5726ab5a5be583146baf7e732ae7537c5406d3e6dd7e7f83ff92d4189098e",
+        "new_ast_sha256": "80e5726ab5a5be583146baf7e732ae7537c5406d3e6dd7e7f83ff92d4189098e",
+        "old_source_sha256": "8de5cfbaa56740095306647f62e7ac385db20468b1e1d47d672dc5582c4970eb",
+        "new_source_sha256": "8de5cfbaa56740095306647f62e7ac385db20468b1e1d47d672dc5582c4970eb"
+      },
+      {
+        "symbol": "_TERM_BUDGET_METHODS",
+        "ast_equal": true,
+        "source_segment_equal": true,
+        "old_ast_sha256": "580c13e27580b4aa4c401b167c37470c332dc8bcf2b7d003093fe5c33e65bc1e",
+        "new_ast_sha256": "580c13e27580b4aa4c401b167c37470c332dc8bcf2b7d003093fe5c33e65bc1e",
+        "old_source_sha256": "d7d33b3f96e08b717a82bb2616253e15231a7b418bb35b6cd691edb784792335",
+        "new_source_sha256": "d7d33b3f96e08b717a82bb2616253e15231a7b418bb35b6cd691edb784792335"
+      }
+    ],
+    "interpretation": "The decode helper, call site and native gate/dependencies are unchanged. Earlier decode measurements retain their original complete source identities and are not relabeled as executions of the final candidate."
+  },
+  "recorded_focused_evidence": {
+    "candidate-focused-001": {
+      "report": {
+        "path": "execution/candidate-focused-001/report.json",
+        "bytes": 1566,
+        "sha256": "5ed1af150cc2937853cd480157fd1ffe59fe6b6f800b50fb933b51c39fe44159"
+      },
+      "tests_log": {
+        "path": "execution/candidate-focused-001/tests.log",
+        "bytes": 26546,
+        "sha256": "626c102aebaf7ff5f7104d1cfcbb7361945f68e9d3c3cbe6e8fac04246a9bfe9"
+      },
+      "status": "failed",
+      "source_commit": "9c6c4b80fa00568b8d426d8d0952a417adf75d75",
+      "source_tree": "c56c691689eac612b1b57530c864941fb486e01f",
+      "test_count": 110,
+      "passed_count": 109,
+      "failures": 0,
+      "errors": 1,
+      "skips": 0,
+      "test_log_complete": true,
+      "inputs_stable": true
+    },
+    "candidate-focused-002": {
+      "report": {
+        "path": "execution/candidate-focused-002/report.json",
+        "bytes": 1565,
+        "sha256": "fb47b24ce121e92608c1db417ba9f3afdee7514382895d7f3bcdfdf279ad201a"
+      },
+      "tests_log": {
+        "path": "execution/candidate-focused-002/tests.log",
+        "bytes": 23124,
+        "sha256": "2fca3ebc2888192010fa61334b3961fcc44e0dfd4450d0a179cd2d36b1f9b105"
+      },
+      "status": "passed",
+      "source_commit": "a6c15941ac720bdae93daeafc624f9a5b10bf6a8",
+      "source_tree": "46098ae2be39e0c485a227e6e27e5d2a41352228",
+      "test_count": 110,
+      "passed_count": 110,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "test_log_complete": true,
+      "inputs_stable": true
+    },
+    "candidate-focused-003": {
+      "report": {
+        "path": "execution/candidate-focused-003/report.json",
+        "bytes": 1566,
+        "sha256": "446bc95e13bd34f12fd585c79bd3c44228e56a798e991bf595e00c7c0c8621e8"
+      },
+      "tests_log": {
+        "path": "execution/candidate-focused-003/tests.log",
+        "bytes": 23124,
+        "sha256": "bfd54f938cb6852ab254fde7b957efa39f92dddf70a131872e2c9b57c4d564be"
+      },
+      "status": "passed",
+      "source_commit": "6788ee2f9352875375334b7d542848b334b5d37c",
+      "source_tree": "0b542f77e5f7ec3591fda6b181adb2a55bf63d0e",
+      "test_count": 110,
+      "passed_count": 110,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "test_log_complete": true,
+      "inputs_stable": true
+    },
+    "candidate-focused-004": {
+      "report": {
+        "path": "execution/candidate-focused-004/report.json",
+        "bytes": 1566,
+        "sha256": "34e7d13cabded988aca0e8dbdd435f7844af8a6a347467ff5ba6b13fd5f8f5fe"
+      },
+      "tests_log": {
+        "path": "execution/candidate-focused-004/tests.log",
+        "bytes": 23760,
+        "sha256": "b5307465d0a43f67d35cb3f7937488b506235e12f98a266333a16caea8d6e10d"
+      },
+      "status": "passed",
+      "source_commit": "50f4524a1f32c4a013b4a8355ea5cc902f540b20",
+      "source_tree": "71803ccff06eaea5c9c19c2472ee53807f3ee86f",
+      "test_count": 113,
+      "passed_count": 113,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "test_log_complete": true,
+      "inputs_stable": true
+    },
+    "candidate-hook-regression-001": {
+      "report": {
+        "path": "execution/candidate-hook-regression-001/report.json",
+        "bytes": 1712,
+        "sha256": "14b851957a6baa67054efc6fd1a0993631a23ee5f457e149469dd216227783ad"
+      },
+      "tests_log": {
+        "path": "execution/candidate-hook-regression-001/tests.log",
+        "bytes": 1657,
+        "sha256": "73e9ea8e922566132ee22ec816f42935afd4e232b8719e7076b4bc9ded86e361"
+      },
+      "status": "failed",
+      "source_commit": "3b0c2670b5b889a465352562b1219baed77d1302",
+      "source_tree": "da8073f214eef92b30c0ca71baeceb2e7be7e935",
+      "test_count": 2,
+      "passed_count": 1,
+      "failures": 0,
+      "errors": 1,
+      "skips": 0,
+      "test_log_complete": true,
+      "inputs_stable": true
+    },
+    "candidate-focused-005": {
+      "report": {
+        "path": "execution/candidate-focused-005/report.json",
+        "bytes": 1566,
+        "sha256": "b38d4794c676a3ce52ed6ae51f4d36994baadef1f3a2433ec448afd4e02484f9"
+      },
+      "tests_log": {
+        "path": "execution/candidate-focused-005/tests.log",
+        "bytes": 24180,
+        "sha256": "4499dae866fcacfda0f9093e5ceb0bf5e63155d7b77833a34135d5f761916f11"
+      },
+      "status": "passed",
+      "source_commit": "6a9fb22fb8ca901e18d315406cbca667f2ef8321",
+      "source_tree": "1f0b08f8846f443b8bc573fe0c9d5e1e3c319c47",
+      "test_count": 115,
+      "passed_count": 115,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "test_log_complete": true,
+      "inputs_stable": true
+    }
+  },
+  "numeric_basis_review": {
+    "additional_basis_list_change_required": false,
+    "reason": "The scope changes independent exact verification, not the controlled source evaluator, destination player or numerical allowances. Existing source/destination basis lists intentionally omit the independent reader and earlier certificate-only derivations.",
+    "identity_binding": "Package implementation identity hashes every ontokin/*.py; fresh all-tracked-file inventories bind the new derivation and complete candidate bytes.",
+    "reviewed_paths": [
+      "ontokin/reach_pose.py:source_numeric_basis",
+      "ontokin/reach_conformance.py:verify_numeric_bases",
+      "ontokin/reach_export.py:destination_numeric_basis",
+      "ontokin/construction_conformance.py:implementation_identity",
+      "tools/reach_delivery_inventory.py:snapshot",
+      "docs/language-design/planar-reach-v0.1/quantization.md"
+    ]
+  },
+  "recommended_related_cohort": {
+    "selection_basis": "Complete modules covering both changed transformations, their accepted arithmetic dependencies, group minima/threshold replay, complete inequalities, intrinsic coefficient guards, shared total arithmetic and actual forged endpoint claims.",
+    "modules": [
+      {
+        "module": "test_reach_certificate_native_fields",
+        "defined_test_methods": 54,
+        "file_sha256": "6e1f2532ea61c6b63a8e9a4aa6ae9b1b6009638ea352d21547491c884094e551"
+      },
+      {
+        "module": "test_reach_certificate_term_reuse",
+        "defined_test_methods": 28,
+        "file_sha256": "d229916976feff0100740fd3025b08690cc32c96a26ed567898cf064822f687b"
+      },
+      {
+        "module": "test_reach_certificate_zero_quarter",
+        "defined_test_methods": 33,
+        "file_sha256": "3fc6d2bfb9810d5e70644e2692c4ae048ee995836b6030fb6485b8f1ede402f9"
+      },
+      {
+        "module": "test_reach_certificate_thresholds",
+        "defined_test_methods": 37,
+        "file_sha256": "70db3e329a61640f93280c0755868af5ff64eff3676d0f5ff2802b4dc561d9b9"
+      },
+      {
+        "module": "test_reach_conformance",
+        "defined_test_methods": 27,
+        "file_sha256": "8d343e0208517d6cc47b22b06aac78b8f014e703118ae96638a0ac9d41e8c018"
+      },
+      {
+        "module": "test_reach_certificate_coefficients",
+        "defined_test_methods": 3,
+        "file_sha256": "b432c7d9ad3fd1e61dc7f939c95b52b4ff13f2200c6e1a3a26daac7f0dcdec2e"
+      },
+      {
+        "module": "test_reach_certificate_single_pass",
+        "defined_test_methods": 3,
+        "file_sha256": "c6eb576ae69bf66c69790b9a5c08d3bf87c7d4249c7597f03db25a0f42757ee6"
+      },
+      {
+        "module": "test_reach_independent_sparse_totals",
+        "defined_test_methods": 7,
+        "file_sha256": "19e14dcf3fb911a2c0b556b591ff1e13e2b668ddef4948730ae529d9bd3194ec"
+      },
+      {
+        "module": "test_reach_recurring_endpoint_claims",
+        "defined_test_methods": 2,
+        "file_sha256": "21c6d0c9339901fafaf5804e43ebbc2df3186c367c620c08d9d10b2a467d0164"
+      }
+    ],
+    "statically_defined_methods": 194,
+    "count_is_executed_result": false,
+    "recommendation": "Root executes these nine modules serially on the accepted integrated cut; all original 28 and the required default local driver remain separate runs."
+  },
+  "default_local_driver_review": {
+    "driver_path": "tools/check_local.py",
+    "profile": "core",
+    "full_visual_requested": false,
+    "force_agent_role_requested": false,
+    "planned_steps": [
+      "unit-tests",
+      "source",
+      "agent",
+      "construction",
+      "surface",
+      "impulse",
+      "documents"
+    ],
+    "node_browser_dependency_in_default_plan": false,
+    "workspace_behavior": "Copies source and evidence into an isolated output workspace, preserves the exact local Git commit/tree, executes serially there, and verifies original source bytes and immutable workspace inputs afterward.",
+    "generated_input_rule": "Named generated visual/agent/construction outputs may differ only in the isolated workspace; original checkout example bytes remain inventoried and unchanged.",
+    "concrete_environment_preflight": "Read-only distribution metadata found jsonschema,referencing,jsonschema-specifications,rpds-py absent and attrs26.1.0 present. Without schema tools two Force Agent test classes skip; the default unit-test step rejects skips. Prepare pinned verification-only tools externally before execution.",
+    "dependency_manifest": "tools/force-agent-verification-requirements.txt",
+    "limits_of_result": "One Python interpreter only; surface/impulse --allow-pending does not pass external release gates; full compatibility and release obligations remain open."
+  },
+  "remaining_acceptance_at_review": [
+    "Final-cut comparison and combined timing controls as required by the coordinator",
+    "Bounded related cohort on accepted integrated source",
+    "Unchanged original P09 and all original 28 recording requests",
+    "Required default local driver on the accepted integrated cut",
+    "All separately required release and resulting-main gates"
+  ],
+  "reviewer_execution_disclosure": {
+    "product_imports": false,
+    "product_commands": false,
+    "test_execution": false,
+    "archive_execution": false,
+    "source_or_test_edits": false,
+    "only_written_artifact": "review/final-source-review.json"
+  }
+}

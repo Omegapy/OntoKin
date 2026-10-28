@@ -50,6 +50,7 @@ class _Task:
     run: dict | None = None
     run_version: int | None = None
     artifact: tuple[bytes, dict, str] | None = None
+    publication_context: object | None = None
 
 
 class _Check:
@@ -113,6 +114,15 @@ class AgentService:
     def _check_task_response(self, task):
         """Check a proposed publication with its immutable request context."""
         self._check_response(task.response)
+
+    def _bind_publication_context(self, task, *, accepted_revision, source_accepted_once):
+        """Bind fresh versioned projections before a run is serialized.
+
+        The default preserves all earlier bindings. The transaction has already
+        fenced cancellation, source acceptance and competing run advancement.
+        Implementations receive the prospective committed identities, not a
+        store handle, and must leave historical descriptors and receipts alone.
+        """
 
     def __init__(self, store_path: Path):
         self.implementation = copy.deepcopy(implementation_identity())
@@ -587,6 +597,7 @@ class AgentService:
                 response["diagnostics"].append(self._diagnostic(error, task.source, response.get("run_id")))
                 if response.get("result") is not None:
                     response["result"]["acceptance"] = "stale; source not accepted; any returned isolated validation run is retained for diagnosis"
+            run_version = None
             if task.run is not None:
                 run_id = task.run["run_id"]
                 old = db.execute("SELECT version,descriptor FROM runs WHERE project_id=? AND id=?", (project, run_id)).fetchone()
@@ -597,13 +608,19 @@ class AgentService:
                     response["result"] = {"run_state": json.loads(old["descriptor"]), "run_advance_committed": False}
                 else:
                     task.run["candidate_only"] = not (task.accept or self._source_accepted_db(db, project, self._revision(task.source)))
-                    version = 1 if old is None else old["version"] + 1
-                    db.execute("INSERT INTO runs VALUES (?,?,?,?,?) ON CONFLICT(project_id,id) DO UPDATE SET descriptor=excluded.descriptor,version=excluded.version",
-                               (project, run_id, self._revision(task.source), dumps(task.run), version))
+                    run_version = 1 if old is None else old["version"] + 1
+            if task.accept:
+                response[self._accepted_key] = self._revision(task.source)
+            source_accepted = task.source is not None and (
+                task.accept or self._source_accepted_db(db, project, self._revision(task.source)))
+            self._bind_publication_context(task, accepted_revision=response[self._accepted_key],
+                                           source_accepted_once=bool(source_accepted))
+            if task.run is not None:
+                db.execute("INSERT INTO runs VALUES (?,?,?,?,?) ON CONFLICT(project_id,id) DO UPDATE SET descriptor=excluded.descriptor,version=excluded.version",
+                           (project, task.run["run_id"], self._revision(task.source), dumps(task.run), run_version))
             if task.accept:
                 db.execute("UPDATE projects SET accepted_revision=? WHERE id=?", (self._revision(task.source), project))
                 db.execute("UPDATE sources SET accepted_once=1 WHERE project_id=? AND revision=?", (project, self._revision(task.source)))
-                response[self._accepted_key] = self._revision(task.source)
             if task.artifact is not None and response["status"] == "succeeded":
                 data, report, artifact_id = task.artifact
                 db.execute("INSERT OR IGNORE INTO artifacts VALUES (?,?,?,?,?,?)",

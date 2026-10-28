@@ -1,0 +1,1572 @@
+{
+  "schema_version": "ontokin.full-documentation-review/0.1",
+  "record_assembled_at_utc": "2026-10-21 00:22:30 UTC",
+  "source_cut": {
+    "repository": "https://github.com/Omegapy/OntoKin",
+    "commit": "f3dd5432b3eb1e26374b267dd5636feee2bde193",
+    "tree": "8193fed640f537ba04a71f00d5b6dca18f966485",
+    "observed_local_branch": "work/reach06-release-review-20261020-2320-7of9",
+    "identity_method": "git ls-tree plus git cat-file blob bytes; SHA-256 over exact bytes at the commit",
+    "remote_publication_verified_by_this_review": false,
+    "resulting_main_verified_by_this_review": false
+  },
+  "scope": {
+    "purpose": "Durable full-document reading ledger and authority/gap review",
+    "narrative_selection": "All 89 tracked Markdown files, the five explicitly listed narrative TXT files and the OK-003 HTML alternate edition at the source cut.",
+    "diagram_selection": "All 15 assets in docs/language-design/foundations/diagrams/.",
+    "read_history": "Full reads occurred across the preceding review checkpoints. Long-document full-body gaps were subsequently closed by the named reviewers; changed source-cut notes were reread. Hashes identify the exact source-cut bytes, not hypothetical dates of individual reads.",
+    "all_narratives_fully_read": true,
+    "unread_narrative_paths": [],
+    "machine_readable_evidence_blanket_certified": false,
+    "blanket_semantic_or_mathematical_proof_audit": false,
+    "runtime_executed_by_this_review": false,
+    "repository_modules_imported_by_this_review": false,
+    "archives_extracted_or_certified_by_this_review": false,
+    "exclusions": [
+      "Machine-readable fixtures, schemas, mappings, execution JSON/JSONL and logs are not blanket newly certified by narrative reading.",
+      "Historical archives, build artifacts and destination GLBs are not reexecuted or reaudited by this record.",
+      "Destination screenshots are not included in the 15 foundational diagram assets.",
+      "Source/runtime code, viewer application HTML, licenses and dependency manifests are not counted as narrative documents."
+    ]
+  },
+  "counts": {
+    "narratives": 95,
+    "docs_markdown": 77,
+    "other_markdown": 12,
+    "narrative_txt": 5,
+    "html_alternate_editions": 1,
+    "diagrams": 15,
+    "png_visual": 6,
+    "svg_structure_and_text": 6,
+    "dot_full_text": 3,
+    "narrative_primary_reviewer_counts": {
+      "review_language_docs": 56,
+      "review_engineering": 32,
+      "review_branches": 7
+    }
+  },
+  "reviewers": {
+    "review_language_docs": {
+      "task": "/root/review_language_docs",
+      "role": "Language/product/foundational review, remaining narratives and diagrams, static peer review, source-cut reconciliation and this ledger."
+    },
+    "review_engineering": {
+      "task": "/root/review_engineering",
+      "role": "Full reads of 13 engineering contracts and 18 other preexisting engineering notes/validation READMEs; author/full reviewer of the native component note.",
+      "coverage_basis": "Explicit collaborator completion confirmation; not an independent rerun of cited evidence."
+    },
+    "review_branches": {
+      "task": "/root/review_branches",
+      "role": "Full-body reads of PRD001, LANG001-LANG005 and SEM001; author/full reviewer of the rate criterion proposal.",
+      "coverage_basis": "Explicit confirmation of contiguous untruncated reads totalling 4,017 lines and 495,235 bytes for the seven long documents."
+    }
+  },
+  "read_modes": {
+    "full_text": "Complete narrative body read, including status, scope, requirements, examples, acceptance and limitations; no blanket proof or execution claim.",
+    "full_html_source": "Complete HTML alternate-edition source read, including visible narrative and document metadata.",
+    "visual_inspection": "Actual PNG viewed and its labels/relationships inspected.",
+    "structure_and_all_text_inspection": "SVG XML structure, text and topology labels inspected together with the corresponding rendered PNG."
+  },
+  "earlier_inventory": {
+    "path": "docs/engineering/reach-source-acceptance-validation/documentation-review.json",
+    "bytes": 27537,
+    "git_blob": "880d0c07f9d796f876cb6f175718f8b68a0380db",
+    "sha256": "7d52ebd75215f53d78eb8ab1828db4520552fa9b077cac65786996331fded7ad",
+    "schema_version": "ontokin.documentation-review/0.1",
+    "recorded_at": "2026-10-20T22:09:10.424257+00:00",
+    "narratives": 90,
+    "auxiliary_files": 9,
+    "docs_markdown": 72,
+    "other_narratives": 18,
+    "scope_distinction": "The earlier record explicitly describes metadata, complete section/rule structure and principal/acceptance/scope clauses for long documents. Its narrative_reviewed label did not establish a fresh full-body read. This ledger records the later completed full reads without rewriting that earlier scope.",
+    "prior_narrative_paths_preserved": 90,
+    "prior_narrative_bytes_unchanged_at_cut": 88,
+    "prior_narratives_changed_and_reread": [
+      "docs/engineering/reach-source-acceptance-validation/README.md",
+      "docs/engineering/reach-source-acceptance-validation/SOURCE-CORPUS.md"
+    ],
+    "new_narrative_paths": [
+      "docs/engineering/reach-source-acceptance-validation/CACHE-BUDGET.md",
+      "docs/engineering/reach-source-acceptance-validation/POSE-BUDGET.md",
+      "docs/engineering/reach-pose-operation-reuse.md",
+      "docs/engineering/reach-rate-acceptance.md",
+      "docs/engineering/reach-native-verification.md"
+    ]
+  },
+  "source_cut_reconciliation_full_rereads": [
+    "docs/engineering/reach-native-verification.md",
+    "docs/engineering/reach-pose-operation-reuse.md",
+    "docs/engineering/reach-rate-acceptance.md",
+    "docs/engineering/reach-source-acceptance-validation/README.md",
+    "docs/engineering/reach-source-acceptance-validation/SOURCE-CORPUS.md"
+  ],
+  "authority_and_findings": [
+    {
+      "id": "DOC-01",
+      "topic": "Authority and historical labels",
+      "finding": "Current adopted contracts and explicit adoption records govern their named profiles. Historical draft, unimplemented and syntax-only labels remain preserved checkpoint text; they neither undo later adoption nor establish current execution.",
+      "sources": [
+        "STATUS.md",
+        "docs/language-design/planar-reach-v0.1/ADOPTION.md",
+        "docs/language-design/OK-LANG-006-reusable-planar-reach-actions.md",
+        "tests/reach_agent_handoff.md",
+        "tests/reach_reference_handoff.md"
+      ]
+    },
+    {
+      "id": "DOC-02",
+      "topic": "Coordination and historical automation",
+      "finding": "Current AGENTS allows authorized nonoverlapping branch work with serialized integration and exclusive runtime windows. Archived serial-work restrictions, hosted-CI instructions and scheduler observations are historical. The latest archived surface status records the owner disabling Advance OntoKin; this review creates or changes no automation.",
+      "sources": [
+        "AGENTS.md",
+        "docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+        "docs/engineering/surface-validation/status-20261018-0654.md.txt",
+        "docs/engineering/surface-validation/status-20261018-1442.md.txt",
+        "docs/engineering/surface-validation/status-20261018-1727.md.txt"
+      ]
+    },
+    {
+      "id": "DOC-03",
+      "topic": "Failed boundaries and terminal histories",
+      "finding": "Detailed adopted lifecycle semantics distinguish preserved accepted source and valid incoming state from a failed-run descriptor that may advance to the certified incoming prefix. Terminal reach records latch time, coordinates, base-frame pose and residual; current physical rates can later belong to another action. Cancellation retains its separate no-advancement rule.",
+      "sources": [
+        "docs/language-design/OK-LANG-006-reusable-planar-reach-actions.md",
+        "docs/language-design/planar-reach-v0.1/agent-operations.md",
+        "docs/language-design/planar-reach-v0.1/repair-briefs.md"
+      ]
+    },
+    {
+      "id": "DOC-04",
+      "topic": "Unchanged numerical and work limits",
+      "finding": "Exact reachability and canonical rounding proofs, the finite precision schedule, source residual and orientation requirements, shared 100000-operation allowance and logical occurrence counts remain binding. Bounded pure arithmetic reuse may avoid work actually not performed; it cannot enlarge budgets, waive authority checks, suppress cancellation or deduplicate published logical occurrences.",
+      "sources": [
+        "docs/language-design/OK-LANG-006-reusable-planar-reach-actions.md",
+        "docs/language-design/planar-reach-v0.1/numeric-admission.md",
+        "docs/language-design/planar-reach-v0.1/numeric-counter-units.md",
+        "docs/language-design/planar-reach-v0.1/budget-counting.md",
+        "docs/engineering/reach-pose-operation-reuse.md"
+      ]
+    },
+    {
+      "id": "DOC-05",
+      "topic": "Source cases and actual Agent requirements",
+      "finding": "The 45-case source cohort is a development assertion cohort. All 42 principal LP steps, actual Q03 complete-response N/N-1 behavior, same-project Q22 stale-run rejection, and the separate L04 recovery artifact retain their specific obligations. Synthetic preparation counts and independently compiling repaired sources do not replace actual Agent operations.",
+      "sources": [
+        "docs/engineering/reach-source-acceptance-validation/SOURCE-CORPUS.md",
+        "docs/language-design/planar-reach-v0.1/agent-operations.md",
+        "docs/language-design/planar-reach-v0.1/draft2-supplements/README.md",
+        "docs/language-design/planar-reach-v0.1/release-contract.md"
+      ]
+    },
+    {
+      "id": "DOC-06",
+      "topic": "Derived rate comparison proposal",
+      "finding": "The adopted frozen profile does not state a separate acceptance tolerance for derived world linear/angular rate comparisons. The new pointwise interval audit is explicitly proposed, uses the same exact source/time/side and independently derived Euclidean allowances, and keeps optional frozen libm values as measurements. It supplies no blanket continuous, compiler, source-role or release acceptance.",
+      "sources": [
+        "docs/engineering/reach-rate-acceptance.md",
+        "docs/engineering/reach-source-kernel.md",
+        "docs/engineering/reach-source-acceptance-validation/SOURCE-CORPUS.md"
+      ]
+    },
+    {
+      "id": "DOC-07",
+      "topic": "Source, native and visual evidence remain separate",
+      "finding": "The new native component describes actual byte, loader, geometry and pose comparisons but does not establish a successful real-GLB run merely by existing. Source provenance, retrieved Agent bytes, continuous certificates, native checks, actual browser captures and visual review have separate roles. Foundational diagram inspection is not review of destination screenshots.",
+      "sources": [
+        "docs/engineering/reach-native-verification.md",
+        "docs/language-design/planar-reach-v0.1/release-contract.md",
+        "docs/language-design/planar-reach-v0.1/quantization.md"
+      ]
+    },
+    {
+      "id": "DOC-08",
+      "topic": "Full product and authoring benefit",
+      "finding": "Finite reach does not complete the broader goal: acquired grasp/manipulation, contacts and broader dynamics, locomotion, flight/swimming, vegetation/flexibility, terrain/buildings, deformation, live destination behavior and other retained requirements remain. Direct-tool authoring benefit still needs an identified baseline, actual costs/quality and unseen tasks; deterministic demonstrations and source line counts do not establish it.",
+      "sources": [
+        "GOAL.md",
+        "docs/product/OK-CAP-001-modeling-motion-and-object-structure.md",
+        "docs/product/OK-PRD-001-product-requirements.md",
+        "docs/language-design/planar-reach-v0.1/review-decisions.md"
+      ]
+    }
+  ],
+  "integrator_reported_development_observations": {
+    "reported_by": "/root",
+    "reported_source_commit": "f3dd5432b3eb1e26374b267dd5636feee2bde193",
+    "focused_methods_passed": 71,
+    "source_cases_passed": 45,
+    "p01_prefix_export": "resource_failure_at100001_operations",
+    "p01_full_export": "resource_failure_at100001_operations",
+    "reproduced_in_this_review": false,
+    "raw_execution_evidence_audited_in_this_review": false,
+    "qualification": "These are attributed coordination observations, not new execution receipts or release-role certification. The integrator must retain the corresponding exact raw records separately."
+  },
+  "remaining_gates": [
+    {
+      "id": "G01",
+      "requirement": "Successful source and Agent GLB/0.6 delivery within the existing shared request budget",
+      "status": "blocked_at_reported_checkpoint",
+      "basis": "Integrator reports that P01 prefix and full exports still fail at 100001 operations; this review did not execute or audit those runs."
+    },
+    {
+      "id": "G02",
+      "requirement": "Complete source_execution role and explicit authority for derived-rate comparisons",
+      "status": "pending",
+      "basis": "A passing 45-case development cohort does not close source_execution; the new rate criterion remains proposed."
+    },
+    {
+      "id": "G03",
+      "requirement": "Literal current R01-R12/Q01-Q22 mapping and actual Agent workflows, including all 42 principal LP steps, Q03, Q22 and L04 recovery",
+      "status": "pending_complete_current_evidence",
+      "basis": "Current receipts, complete envelopes, transaction behavior and exact retrieved artifacts are separate acceptance evidence."
+    },
+    {
+      "id": "G04",
+      "requirement": "All 28 required source artifacts and 9 ordinary Agent artifacts plus the separate tenth L04 recovery artifact",
+      "status": "pending_complete_current_evidence",
+      "basis": "Each artifact must retain exact source, run, request, implementation and byte identities."
+    },
+    {
+      "id": "G05",
+      "requirement": "Independent supplied-byte source histories, continuous phase/certificate checks and hostile-input obligations",
+      "status": "pending_complete_current_evidence",
+      "basis": "Preparation checkers and finite point comparisons do not certify continuous delivered motion."
+    },
+    {
+      "id": "G06",
+      "requirement": "Actual native and browser roles with at least 54 required reviewed captures across the prescribed selections",
+      "status": "pending_complete_current_evidence",
+      "basis": "Use the actual source/retrieved artifacts, required pinned environment and controlled playback; images must be inspected and identified."
+    },
+    {
+      "id": "G07",
+      "requirement": "Complete CPython 3.11/3.12/3.13 compatibility and mandatory inherited workflow roles",
+      "status": "pending_complete_current_evidence",
+      "basis": "Focused tests are not a substitute for identified complete current runs with the required zero-failure/error/skip/expected-failure policy."
+    },
+    {
+      "id": "G08",
+      "requirement": "Complete stable input closure, role evidence, independent release audit and resulting-main checks",
+      "status": "pending",
+      "basis": "This source cut is an isolated branch commit; this report verifies no remote publication, release bundle or resulting-main execution."
+    },
+    {
+      "id": "G09",
+      "requirement": "Full GOAL and measured direct-tool authoring advantage",
+      "status": "not_complete",
+      "basis": "The broader product requirements and empirical comparison remain distinct from the finite reach milestone."
+    }
+  ],
+  "release_acceptance": false,
+  "source_execution_role_closed_by_this_review": false,
+  "full_product_complete": false,
+  "report_self_exclusion": {
+    "source_cut_predates_this_record": true,
+    "paths": [
+      "docs/engineering/reach-release-review/documentation-review.json",
+      "docs/engineering/reach-release-review/documentation-review.md"
+    ],
+    "included_in95_narratives": false,
+    "explanation": "The two new review files are deliverables produced after the fixed source cut; neither is counted in the reviewed 95-document inventory."
+  },
+  "narrative_documents": [
+    {
+      "path": "AGENTS.md",
+      "bytes": 10906,
+      "git_blob": "df5df81a1b5fdfedb50576a4d580936435aa0ff0",
+      "sha256": "73a87caf482c4a8c6e4f3b389ef62cbf67afe731b5fcf9bd504bdea76a854d73",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "GOAL.md",
+      "bytes": 15738,
+      "git_blob": "f93b2ef53adae0f40e09018d206ee96a3b469f06",
+      "sha256": "4cb64149328c0a9fad7312065e0331e5a7754dbcc2db45d82def91478e69a538",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "README.md",
+      "bytes": 30184,
+      "git_blob": "0e60e2242870d20ede4d114b5b55841f20c601de",
+      "sha256": "75d4b12d63ae1064e0ca710b240184ab2e28f5303fc363637023b0f67eae2895",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "STATUS.md",
+      "bytes": 8952,
+      "git_blob": "63c452887a4cb2c6f60738797ad98bc9f612e5d4",
+      "sha256": "b2f7fe013d12b4c5a760a12a82017fb2360aaaed8797e72778bbe19f32c24f10",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/README.md",
+      "bytes": 34992,
+      "git_blob": "c1004b53829bc9f6576b0b466ac1f3d8b7e29414",
+      "sha256": "20012b3c1011c0b3be1a31d1e3a44a0f29c0ea441bf8792762325d612490eed2",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/OK-AGENT-001-ai-agent-authoring-and-inspection-interface.md",
+      "bytes": 47996,
+      "git_blob": "e521f093eadec497af5c7e5d9348e9b256d2d3d5",
+      "sha256": "2c4154effecf80a77c2971f2030ac409bffc514140c91ecaa292cfa0f8e678bd",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/OK-AGENT-002-program-bundles-and-atomic-source-edits.md",
+      "bytes": 18165,
+      "git_blob": "9c422c2d575d484195c605033d860b9bee8d3302",
+      "sha256": "8f0747aabeba56bbd706bf71be0abd8629ec0256828015ce2f19d64fdcfc8a0a",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/OK-AGENT-003-native-surface-program-workflows.md",
+      "bytes": 22498,
+      "git_blob": "d8a38cb692351907a13c68530aee0bdf01e8dbc9",
+      "sha256": "0a30c0fdf31cf87b9a3176333b4cf145d22ec4b2d69c2b9534e84b75d3660681",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/OK-AGENT-004-source-impulse-program-workflows.md",
+      "bytes": 16217,
+      "git_blob": "fb8596339e8956be0938d682e81e8d2a33d90686",
+      "sha256": "b8615a4558ad9841cd64e4ddd61f2c11248cbce51f14ea2c0a47133fef7564a0",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/OK-AGENT-005-finite-force-program-workflows.md",
+      "bytes": 7455,
+      "git_blob": "8edb0a6d89afbc0d0bc8c972291ad9bac22fd13f",
+      "sha256": "4c0f56b53bd14b28bb550d9c8a98d564587ae12dd563720a9bc721dbb275b17e",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/OK-ENG-001-core-reference-implementation-and-conformance-plan.md",
+      "bytes": 22890,
+      "git_blob": "70c554d2fb48ed6c7f89e6d2a759bfa7af53179c",
+      "sha256": "d25f1034fff979c19f84585d24d1214b0a6487e05aed3eaa2748320ef7955364",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/OK-ENG-002-3d-scene-animation-export-and-visual-validation.md",
+      "bytes": 48450,
+      "git_blob": "a55beb5f147779d6ffe25bbd683774d95d4777f5",
+      "sha256": "137bb3e93dfc26d280808b56045e36da3a94e5d0393a5f14c7b34e236cb2214b",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/OK-ENG-003-native-surface-glb-export.md",
+      "bytes": 9362,
+      "git_blob": "8bdcfdd7aed6f0e509239200ac74968afab6af48",
+      "sha256": "de8662770c5b3b6322c10bb0e673673423cc6fe709dc173fbc93fdb3a328e6b9",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/OK-ENG-004-native-surface-release-conformance.md",
+      "bytes": 10713,
+      "git_blob": "a0a8ec2c1069d27fde251f7b3ad344043058e761",
+      "sha256": "a59be4540d607be1d8d775286bc5c2fadca7599a429f054c04bd46b3418d3e51",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/OK-ENG-005-source-impulse-release-conformance.md",
+      "bytes": 13544,
+      "git_blob": "d42cf3966f5334328f7c2ea0e75f7431d3d6d49f",
+      "sha256": "8e46afd2f6bb5a222d42031b7f5791ba345e57bee4242310162b0f56d1eb1967",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "bytes": 12159,
+      "git_blob": "94c82f2d7e2bca56e207dab74a2c015a8946b42e",
+      "sha256": "85b2f5a7b8e1bfbc1613a9f2a3dc3bd697384d4f623cebada1c18e9c785219c3",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/OK-ENG-007-native-force-glb-export.md",
+      "bytes": 8718,
+      "git_blob": "52311705ad09ff12b2375452f3fde7e74682bc0d",
+      "sha256": "c1eae29c000c6d5252ae4cc90549c18dc34657ffc1a36d46e017eff2cc33c8e6",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/OK-ENG-008-force-release-conformance.md",
+      "bytes": 13590,
+      "git_blob": "e34a8a2701ca72b924df92d1640c279c97224497",
+      "sha256": "a273dad6983b717c2d5d4f73be2efc08966a9742d4d9fb417d857079037480ce",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/agent-validation/README.md",
+      "bytes": 9297,
+      "git_blob": "83fde112e6df8009251715e02dfa721e1b0669b3",
+      "sha256": "c8e85911a8f7f084e2fee37cb3a8ab9e461714971183d31607e936fd854e739f",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/construction-validation/README.md",
+      "bytes": 7454,
+      "git_blob": "6e42d78be3fda0dc06bac61418b10ab18e53c80e",
+      "sha256": "ceac9b596c831188e8b16afa12d30dbd167a732c4c871cddd98ca29dd82e1f8b",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/force-agent-local-validation-2026-10-19/README.md",
+      "bytes": 9466,
+      "git_blob": "08da1a996671459aab6af8250cd501ff02bd3644",
+      "sha256": "546fbbed1c9f43720080e2a45e3abb0c7352167cc1c742cac2f6458cd8e48733",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/force-agent-validation/README.md",
+      "bytes": 6543,
+      "git_blob": "6ae1108811e3d9c31a9adfd8d07127151a109702",
+      "sha256": "cbe3fd185f9ba4158ae123ec5b8409c9a03ef33e41addeeae9850e8399c73534",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/force-release-validation/README.md",
+      "bytes": 17496,
+      "git_blob": "463ef360c2fd0181b2471eddd7c8938ffb064cb2",
+      "sha256": "4e59777cac2262fea73a398b2fcaa21bbf880a0c901e0db831e0fe30750d33cf",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/impulse-release-validation/README.md",
+      "bytes": 2865,
+      "git_blob": "ee9343d68398596bd3cdf7e3b1fd314009ee29e1",
+      "sha256": "071b4dd42e28642813930e23134f8d5c3ab577bb6e552c1b7c9bf9528fccc3c6",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/local-validation-2026-10-19/README.md",
+      "bytes": 6533,
+      "git_blob": "b15670d6da10952beba17332dce24d551f086a99",
+      "sha256": "4142762669ab12f8d6afafce09a09d0ff8961c66c91b09cd234c98bac5d8c86b",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/reach-delivery-implementation.md",
+      "bytes": 4740,
+      "git_blob": "e3d44ea5a56138a15d2d06fa7d3d62d2e0030f6b",
+      "sha256": "a130794141cdf200d04dbe151f4dbe491b08e6b017fd8602cb8437cc9c1ea29d",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/reach-destination-numerics.md",
+      "bytes": 12344,
+      "git_blob": "e4e77bacfe7042db06cf029f0ce5e90e2799e926",
+      "sha256": "abba4bb5417402973192d3a0b45d2cec4fe2fecc43e7dd1656cbf9b48f2803c6",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/reach-destination-validation/README.md",
+      "bytes": 1961,
+      "git_blob": "5919a5beb18991515418e00add532c474ce8a09c",
+      "sha256": "8ed3122dab4594fd356dd1bc2d505ad5abc1138663d49cf7edcfee97a5e4c989",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/reach-fixture-repair-validation/README.md",
+      "bytes": 4897,
+      "git_blob": "103814e2863f19efb067bb0d8b66d90a58d9b343",
+      "sha256": "132b16a5f607c47ce2879db8246f995933291516448b085b9e70f48292a2f060",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/reach-independent-validation.md",
+      "bytes": 5535,
+      "git_blob": "2d6e724be2fc4118007505c368fc8988876b2165",
+      "sha256": "617eb6b5d3d0f23bbe924f8ddc2cce44f5018e6b4317e7829cb72a2e02806576",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/reach-native-verification.md",
+      "bytes": 20699,
+      "git_blob": "992b09d08115fe260ea231c379f146b6a3aee1be",
+      "sha256": "410ff01b13ae3921f6220f2d3f4e1c6953962b1ebfd6228169f9bc8f86e9847f",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [
+        "review_language_docs"
+      ],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": true,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/reach-numeric-kernel.md",
+      "bytes": 18562,
+      "git_blob": "756ab22b815dd5eac8ac3b4a87f0ab5919595a92",
+      "sha256": "66385b219fc48798d7e72ddcba50f48e0dd29ed2e708f2e5735e1430535dcd58",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/reach-pose-operation-reuse.md",
+      "bytes": 10537,
+      "git_blob": "ee0104d566723776e1191ac41dc080c5687d332d",
+      "sha256": "aca5be85407b569ce7e4b302df771b0cf8c6dcc8b447bc3501b241285e7f6adb",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": true,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/reach-rate-acceptance.md",
+      "bytes": 15601,
+      "git_blob": "958f36821a7c87300ccd4dbf0865a80988079ff2",
+      "sha256": "d342778519c77a7827c3efaec9a866705b41d7dd013d9c53a535718c42b28e5c",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [
+        "review_branches"
+      ],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": true,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/reach-runtime-validation/README.md",
+      "bytes": 9926,
+      "git_blob": "02fdc0b13343905a51015ba1d353e5d9f04d90d5",
+      "sha256": "a1292bf2b768c5bab399ded988f3547fa9d92c9504ec599088c58c44746a5a32",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/reach-source-acceptance-validation/CACHE-BUDGET.md",
+      "bytes": 4362,
+      "git_blob": "9fbaba60723f32f081540264d7aaf180040dcc47",
+      "sha256": "2184d87ba1bfd691fa9638c447bdaee51ac27fa67da56ddc29723eb110e4d527",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/reach-source-acceptance-validation/POSE-BUDGET.md",
+      "bytes": 4613,
+      "git_blob": "f9be1cd280d29dcbce7f4d0394814ba969bc6625",
+      "sha256": "0860d68c4db215b4bd518da276bbdc816742aafcca77604a0ed925ed149e059d",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/reach-source-acceptance-validation/README.md",
+      "bytes": 8810,
+      "git_blob": "1d04a7152a370f997539274c3bdf72281f55b117",
+      "sha256": "03dc8a7d0c7be8f9ce966ce76693e576d348285b04a8384fbf8b923e2a47031c",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [
+        "review_language_docs"
+      ],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": true,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/reach-source-acceptance-validation/SOURCE-CORPUS.md",
+      "bytes": 7275,
+      "git_blob": "612bbc1711b1e8f3d37eb88ca1293d9ae56c801d",
+      "sha256": "a79e1abbb0bc3a766cec199c1511c2d36c6943ce736a4656ffc353b1644f5454",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": true,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/reach-source-kernel.md",
+      "bytes": 18239,
+      "git_blob": "2dff1e30a026b351b55c2b3af7b85ad9b4eb9228",
+      "sha256": "e19c0c1d66c4bd6a1918aebc5dc84e5276e41cd13228be33b46c642a7674a236",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/surface-native-validation/README.md",
+      "bytes": 5194,
+      "git_blob": "5a5f278cd6a92dbb00b8abcafcaacbf92dd4aafc",
+      "sha256": "8d734e56013b666b13a993868cbd38fd402c542996d26a0d5c344fdc296c8370",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/surface-release-validation/README.md",
+      "bytes": 5973,
+      "git_blob": "f6da9b31b80fca30f7619902920542264b4047b2",
+      "sha256": "857dc0012ac429dfa71ee4a0f424570938897f9fd00ffeb65022453f5c6fbd20",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/surface-validation/prototype-checkpoint.md",
+      "bytes": 3649,
+      "git_blob": "51015fd0b61e96b61025b2eac4693c8a83248140",
+      "sha256": "1c0f594f903e95e4c33b457ab254f9345fcf4412164417c265bb79ba1856d923",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/surface-validation/recovery-2026-10-18.md",
+      "bytes": 6517,
+      "git_blob": "b2f1b9b752e4644e6138b043ba4998389b83f9ea",
+      "sha256": "e1903096b8d4e1492d0ae55ad2d09bb21531bb9c489cb59bdff05e01dad76938",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_engineering",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/surface-validation/status-20261018-0654.md.txt",
+      "bytes": 12322,
+      "git_blob": "27c10aa335dc81a633d461ba09735deda2c4d776",
+      "sha256": "254760f16813da2340dad8de729a7646357c76eaabd5740db91925ae4bd86049",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/surface-validation/status-20261018-1442.md.txt",
+      "bytes": 9998,
+      "git_blob": "2440c73fc9f58fcdf3840c226ce73800e2e0b88b",
+      "sha256": "671d0abb79476ebc2426334146787694d5dd377c4e211da6cb674237495c5c1f",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/engineering/surface-validation/status-20261018-1727.md.txt",
+      "bytes": 8420,
+      "git_blob": "f9334bdf76b1581cc97f0c5b0e21b6ab931091af",
+      "sha256": "0be1826e9a38a41b99be2864d7989b566f796519a9127f62b268420779f5dd68",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/OK-LANG-001-core-language-specification.md",
+      "bytes": 128525,
+      "git_blob": "c3c8e82c8ca7f927563e5a29829bfbf287e29dbb",
+      "sha256": "d19d117cf26a281fc0fd2fa06b07c1075aa1d346ad4c8f13d12ec8e1de98fced",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_branches",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md",
+      "bytes": 53806,
+      "git_blob": "d7be1b4d1b64bd0fb484454074303cf8f93357f3",
+      "sha256": "7a3700b2b72924582184e49829b5678a8c53e4d419b79d3fa5bd55c5c76b940e",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_branches",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md",
+      "bytes": 16605,
+      "git_blob": "7354895bbb84dd66cac0fe8866f200b77a6de73c",
+      "sha256": "334ef999f0bb1e013a84de00dd4c0d2bfe3ccd2a40fdca369cf1a1c1994e7a83",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_branches",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/OK-LANG-004-source-impulses-and-free-sphere-dynamics.md",
+      "bytes": 24695,
+      "git_blob": "d5a5d0f08095120b71a6e9efabdfeaea7d9bf860",
+      "sha256": "00ee830f2764d50f899f9c8043f12e8cf294f41fdc0ae6cbc32f71d71ea08419",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_branches",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/OK-LANG-005-finite-center-of-mass-force-intervals.md",
+      "bytes": 16956,
+      "git_blob": "aecff235b64334feaa3448e3d4a2e292ac737bb4",
+      "sha256": "bff121cf8e0bca57598c9211b42a915d278742b97bafc59a5bcc3cc972193523",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_branches",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/OK-LANG-006-reusable-planar-reach-actions.md",
+      "bytes": 29682,
+      "git_blob": "18ef0bf65f0e1a8475441ab68299c7f13e69691b",
+      "sha256": "b1cc1c9c141b0eb252928d95c334b20af2f0bd2477fa761350392abedb406574",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/OK-SEM-001-core-object-motion-and-physics-semantics.md",
+      "bytes": 69740,
+      "git_blob": "714901942b4bf958e0aeeb13827dc3ad1c87888e",
+      "sha256": "75cf53937c33f6c0e1282f4eb83af5e898edb2b07f32b6c17ebf66894a29318f",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_branches",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/force-v0.1/ADOPTION.md",
+      "bytes": 7685,
+      "git_blob": "5a8b46143d451111fa3478907728eaddb7f66293",
+      "sha256": "d1ef76c5b261688098ac74ef56702a1a0fbb8c160e7ddf119e326edb4581bf72",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/force-v0.1/KERNEL-CHECKPOINT.md",
+      "bytes": 4666,
+      "git_blob": "35740a81a3653ef2150e59fe03fee4c4e51950d2",
+      "sha256": "d60b574e4145c6db2dfdfc57c3ab4f14b8929391ca1d1d5edbf0834825398249",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/force-v0.1/RECOVERY.md",
+      "bytes": 3280,
+      "git_blob": "b125a81a32ff4bbfcc6a64cd27804d85caa828f2",
+      "sha256": "37c551ca3276272488604c2beed43a4217f7262b904fededbe34dc2ebb46ca57",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/foundations/OK-001-project-vision-and-architecture.md",
+      "bytes": 22020,
+      "git_blob": "216f2116512ba01d5e89398fb3e4b3d5a90ad50a",
+      "sha256": "354f3e916f79022d630a9f493d0c7b147f02b8cd5b420b4ee281a6f5accd770a",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/foundations/OK-002-language-foundations-and-minimal-specification.md",
+      "bytes": 16166,
+      "git_blob": "4bea9cbeeca2968476db6118da144d5b35884585",
+      "sha256": "1094c3d7c214832d87935623f3f4b12f0d49ee6d17f35154711b0c108644c65a",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/foundations/OK-003-compilation-and-runtime-architecture.html",
+      "bytes": 31038,
+      "git_blob": "20569f092a5a98169428d8db77f47748b39db55e",
+      "sha256": "f52054e12859fa411ec884bcec77f32e2d1a3c95ac9fceacbc8975eaf5603063",
+      "read_mode": "full_html_source",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/foundations/OK-003-compilation-and-runtime-architecture.md",
+      "bytes": 24497,
+      "git_blob": "82d919333fb71cf4873d82cb9e88e01c9b690539",
+      "sha256": "f96dfb1957fcb533659b74ef356f2c1e9230a51d635c9acc8a995f4469e3a9f8",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/impulse-v0.1/README.md",
+      "bytes": 3521,
+      "git_blob": "691e4cbc8d8b901076812e5882c85dc5b24ed699",
+      "sha256": "387dd06202c9131d7cf1d9ec21f0ba0c98270b152b00481936bfb34d48515716",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/planar-reach-v0.1/ADOPTION.md",
+      "bytes": 5938,
+      "git_blob": "53df12590687983a239e7c1d29b86488ab95c0d6",
+      "sha256": "ded24c5a10ebfb57e6578299845606f770283d5fc090145e2cc206f94f6a65fe",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/planar-reach-v0.1/README.md",
+      "bytes": 12006,
+      "git_blob": "35814bc5218948b5cd6789f2e81b0809bd46fc2f",
+      "sha256": "87554a74bbe5d780466e2b9b75afedf7615f83dcffd2f5b6ad616c724ea3bfa1",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/planar-reach-v0.1/agent-operations.md",
+      "bytes": 29675,
+      "git_blob": "60fc23bddd3db636846473220a3219e388cc4b33",
+      "sha256": "10d136260e62acc95ca4a154047d0ba8df47838e8af9c5091a8f86a682910e2e",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/planar-reach-v0.1/agent-review/README.md",
+      "bytes": 6498,
+      "git_blob": "454237cbfc039e9ddcbb212f000ad919cc6d36ec",
+      "sha256": "c6fa44da2488171751560b502ac901adb620a8cb3f3f3efafd92239ce57da587",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/planar-reach-v0.1/agent-review/numeric-peer-review/README.md",
+      "bytes": 4043,
+      "git_blob": "bb878b84149c6637f7c24c81b19e88613a95249e",
+      "sha256": "983329c70e2c5ac41df0180da4693bbd21fd43b9687b81cba26d93959c6a1333",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/planar-reach-v0.1/budget-counting.md",
+      "bytes": 8368,
+      "git_blob": "d2113ebd1f44bbf78ba484a5f971d62741dab715",
+      "sha256": "055b6167cbf67dc420c99dc24f3e08d449ae9d8d993250fbddfb48cabb4f4d04",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/planar-reach-v0.1/contract-review/README.md",
+      "bytes": 4618,
+      "git_blob": "d3cc380a66a0b82f46e87a914092c98f9d9842a9",
+      "sha256": "8dd7e0527bb3aea2a3eb08bf4ddcbdcd46ce0519a5391a36114be9be0c1627ae",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/planar-reach-v0.1/draft2-supplements/README.md",
+      "bytes": 9015,
+      "git_blob": "41b648bc7b0adea3ebc54b1be88a3013c885b2ac",
+      "sha256": "592aa77fda0d4b9bd202690927d18d03dce8455b1d09918df655c9a429862cd1",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/planar-reach-v0.1/numeric-admission.md",
+      "bytes": 20335,
+      "git_blob": "bad7053d1a8b43e3494a35e3a1ef83ad12403fce",
+      "sha256": "ba23ca641dbf25ca4c99e95cd6f6a1d34ac8f080c86c18790c8457edf545d978",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/planar-reach-v0.1/numeric-counter-units.md",
+      "bytes": 3230,
+      "git_blob": "c7fade55ac236b8e2f425fa44b78e913f9e50887",
+      "sha256": "9646c41383ee2a077e6f54ad24a89ae81cc25bd1271c61dc181de92dc8540328",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/planar-reach-v0.1/numeric-review/README.md",
+      "bytes": 4976,
+      "git_blob": "30b6abc99fd7f2aba2425af0dd65dc083b03e0af",
+      "sha256": "0fdb90b2285623e35eebfafea4ca0adefc5f32a73c62c455fc9a9632150b5f96",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/planar-reach-v0.1/numeric-review/preliminary-001/README.txt",
+      "bytes": 334,
+      "git_blob": "6c278f45994de9c671dc72ea53abcaae0b36626a",
+      "sha256": "ebc14ef93ae5ec3f657c424ae7b443b415843a82d66fec894eea1f7f5409c335",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/planar-reach-v0.1/quantization.md",
+      "bytes": 17761,
+      "git_blob": "ad2c1716542476440339dbe3c7d4a8d28ffb2546",
+      "sha256": "ee8b60cf240615966f6c4f9724ec45fc7c90964ce7c6ff873b65e8b779520184",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/planar-reach-v0.1/release-contract.md",
+      "bytes": 14750,
+      "git_blob": "0c410900fbe3c8aad62c1c1194df65385ad350e8",
+      "sha256": "c7d7be836a9e6e4116c872d0a0f62e99b785d1d2a5a549915d129b86a5f00191",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/planar-reach-v0.1/repair-briefs.md",
+      "bytes": 5248,
+      "git_blob": "7117f2ba5f9655664aea3f13618656c1af014d36",
+      "sha256": "eaf976ec774f9f60ed7d5646adf0e9c9298ec0718b6f7d936c98b6a6cd70ae3e",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/planar-reach-v0.1/review-decisions.md",
+      "bytes": 13327,
+      "git_blob": "07ac0cf2931f532d31b5ae25f90e20740b985408",
+      "sha256": "5510215e8a674ffb2a9e4d965994324613d0176c607daadf085fb23235ba84be",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/planar-reach-v0.1/sampling-bound.md",
+      "bytes": 10539,
+      "git_blob": "06d20b203f4152f2e7a9046334a319ac5e68488f",
+      "sha256": "f9d29ef0c20909fabe967fafe945f1ab43ef95506fcee52027394ec343341f27",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/surface-v0.1/README.md",
+      "bytes": 3389,
+      "git_blob": "ae1a971dad4c309e665bfcad2ee2d94b1c7ada45",
+      "sha256": "b24f571ee79638cef075bc9fe630cde35012afc06ce35012f85fa42eb7db6048",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/surface-v0.1/clarification-c1.md",
+      "bytes": 3547,
+      "git_blob": "37ae2f16a8227a86ed70b070f0f0a7e28f6b2420",
+      "sha256": "e14490f410ba9ad81e911212602519d474feedac958b28e5af85e279d9a3b3e2",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/language-design/surface-v0.1/compositions/README.md",
+      "bytes": 2073,
+      "git_blob": "220a73862a8c119e24547bbaafda49ae0b54d4a6",
+      "sha256": "17849bcf723785fa96f99a9c459fded5864865dcb4f3973a47412047d9138a7e",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/maintenance/contract-proposals/OK-LANG-003-original-proposal.txt",
+      "bytes": 10669,
+      "git_blob": "f8cf1b8d45644db56f1b8d3080be9d9df7cdeb0b",
+      "sha256": "179ded9a7c50e0c49de0f256c995c9a59e86128169d6c832fe1dd888757da9af",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/maintenance/reorganization-2026-10-17/navigation-history.md",
+      "bytes": 19247,
+      "git_blob": "528c53c06f577000765faac5deff2293a8acb870",
+      "sha256": "2516070645d77aa8a2f8600459cc6e986205e2cf86c65398f90be733f1f4f84d",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/maintenance/reorganization-2026-10-17/reorganization-record.md",
+      "bytes": 24626,
+      "git_blob": "f286d064c67bc2fac1782146e991bbf53244ac3e",
+      "sha256": "d28655704828bb067f48f5a6a486b7f3b0ed8544eaa0ad581e7ca40488761b27",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/product/OK-CAP-001-modeling-motion-and-object-structure.md",
+      "bytes": 30731,
+      "git_blob": "e8955c9cbe7b705e7dbcae4a86e8ed3ea96ae4dc",
+      "sha256": "a107f46f6de63c6d7c227972e0c78fc9db7b9e6b04ae81a4257c9259b8a7a3a6",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "docs/product/OK-PRD-001-product-requirements.md",
+      "bytes": 184908,
+      "git_blob": "315ea595ba9e5136c69ef846326d61ad284bc398",
+      "sha256": "e6731a486c0c0f8f866e474e328e2933058fe85b2ce9afebf835e4192e7b112d",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_branches",
+      "additional_reviewers": [],
+      "review_basis": "collaborator_confirmed_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "examples/agent/README.md",
+      "bytes": 5696,
+      "git_blob": "96bfb9f6947187b9a96f17af5501d7a94601ba28",
+      "sha256": "61e2de0a9ec58d26bb1eeeb79828c7c64f14b43df208810081a52abf9f127865",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "examples/construction/README.md",
+      "bytes": 15426,
+      "git_blob": "31c5511a07b702e9f61dff3ba083c335de3c6381",
+      "sha256": "6c3512730b2105f98f00859246141a1c5e4fdd892476bfaba1e7ff4484c4c980",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "examples/force-agent/README.md",
+      "bytes": 3153,
+      "git_blob": "b7c872f20ef848a96bec27d889b85f1eaad2772c",
+      "sha256": "84b4497c648a74eeb30ca485b971e609129d89faaccc22617a47fbac2068c9ec",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "examples/force/README.md",
+      "bytes": 11747,
+      "git_blob": "9ff939b0a257a901cb00ee1c955d78b918be3530",
+      "sha256": "601d0198ebd0e00fa66661b13820792367ef2c7d9d939e2182261066ddb5534c",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "examples/visual/README.md",
+      "bytes": 6171,
+      "git_blob": "0b2d5bdf1e36cb4e31c307c74818eb47e4a89be3",
+      "sha256": "9d24630e174752ea633515c6a9b24d77402d94b46f4699e780c6a7bf9975a1ce",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "prototypes/surface_v01/README.md",
+      "bytes": 1350,
+      "git_blob": "69e7dda9fbadf444867af8865b35cf7bd285c2ae",
+      "sha256": "fb0402ed43c2dce0406da991fdbf114e6fc61e6ddaf0b74379638a7760cdb1b7",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "tests/reach_agent_handoff.md",
+      "bytes": 8978,
+      "git_blob": "b60a345d3ca5b407aca24758ea4be669d11d2bf2",
+      "sha256": "213dff6e3f134a6293a94df1978cb4f7e74d4e60ffd1b23a4c694eae1bc5a778",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    },
+    {
+      "path": "tests/reach_reference_handoff.md",
+      "bytes": 5309,
+      "git_blob": "beddcb1ce587a33abaa5d545a7366dd58e246b2f",
+      "sha256": "35379228d7c6fd3a66ef5bf77c0047cc32665aad2a574b1e258c50522001a7b6",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "additional_reviewers": [],
+      "review_basis": "direct_full_read",
+      "source_cut_full_reread": false,
+      "blanket_semantic_or_mathematical_proof_audit": false
+    }
+  ],
+  "diagram_assets": [
+    {
+      "path": "docs/language-design/foundations/diagrams/OK-002-Figure-01-Authoring-to-Execution.png",
+      "bytes": 80345,
+      "git_blob": "53e50b8e65ae1e8f8f9a25a0e592ae9f07e4569e",
+      "sha256": "72a7ede6b9fb40fc07ee4f4a7c0074ce257703137f584ece39a1291cd2f2b592",
+      "read_mode": "visual_inspection",
+      "primary_reviewer": "review_language_docs",
+      "review_basis": "direct_inspection",
+      "rendered_application_acceptance": false
+    },
+    {
+      "path": "docs/language-design/foundations/diagrams/OK-002-Figure-01-Authoring-to-Execution.svg",
+      "bytes": 8218,
+      "git_blob": "f6fc4df0969b54c080fdb6d85b82db5d12fd5801",
+      "sha256": "fb076606356cee01b4834e20bccbb44c877f7d2fcdee2b11f1da26b18d2bacc8",
+      "read_mode": "structure_and_all_text_inspection",
+      "primary_reviewer": "review_language_docs",
+      "review_basis": "direct_inspection",
+      "rendered_application_acceptance": false
+    },
+    {
+      "path": "docs/language-design/foundations/diagrams/OK-002-Figure-02-Conceptual-Language-Core.png",
+      "bytes": 87853,
+      "git_blob": "4e0730bba9813e7394783e007c5d7397d8982b01",
+      "sha256": "aade136ba4d57ab6694dddec25d08c6e689d32afa8add7b28b9d25379f1bf0c5",
+      "read_mode": "visual_inspection",
+      "primary_reviewer": "review_language_docs",
+      "review_basis": "direct_inspection",
+      "rendered_application_acceptance": false
+    },
+    {
+      "path": "docs/language-design/foundations/diagrams/OK-002-Figure-02-Conceptual-Language-Core.svg",
+      "bytes": 6270,
+      "git_blob": "df01139670ab6b1b325a885fc9a18f46043bb950",
+      "sha256": "60fe912fc64c22b7efba95d92fc5b6a8b5e594db11b2e32b2643b0648ed58341",
+      "read_mode": "structure_and_all_text_inspection",
+      "primary_reviewer": "review_language_docs",
+      "review_basis": "direct_inspection",
+      "rendered_application_acceptance": false
+    },
+    {
+      "path": "docs/language-design/foundations/diagrams/OK-003-Figure-01-Compiler-and-Package.dot",
+      "bytes": 1242,
+      "git_blob": "4817f5c187b284e613685f5d30c778f92ee8dc15",
+      "sha256": "d73e6dfee3f521e3feb507a8eb42b3d75f6b9454cb9a5c6d8d72baff6ef08284",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "review_basis": "direct_inspection",
+      "rendered_application_acceptance": false
+    },
+    {
+      "path": "docs/language-design/foundations/diagrams/OK-003-Figure-01-Compiler-and-Package.png",
+      "bytes": 53171,
+      "git_blob": "9c0314df18e17f364609394e64feceb490f1351e",
+      "sha256": "403adccbbfc7467534a6da7987a7019d0f61bbe6a6813b2afd5271274ab27339",
+      "read_mode": "visual_inspection",
+      "primary_reviewer": "review_language_docs",
+      "review_basis": "direct_inspection",
+      "rendered_application_acceptance": false
+    },
+    {
+      "path": "docs/language-design/foundations/diagrams/OK-003-Figure-01-Compiler-and-Package.svg",
+      "bytes": 7931,
+      "git_blob": "ec02dede99ac22bf063829be4123087f85577368",
+      "sha256": "1060027969132857d587852418c8d6865bc8bee00cc8e04b098d0d089edd575e",
+      "read_mode": "structure_and_all_text_inspection",
+      "primary_reviewer": "review_language_docs",
+      "review_basis": "direct_inspection",
+      "rendered_application_acceptance": false
+    },
+    {
+      "path": "docs/language-design/foundations/diagrams/OK-003-Figure-02-Runtime-and-Renderer.dot",
+      "bytes": 1360,
+      "git_blob": "60b8a9168c834d57763dab67d7045efdb09782e8",
+      "sha256": "51337bb56658ae18d4211276e229712ca333fe4c3ed82f0415f8d3a4fe692099",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "review_basis": "direct_inspection",
+      "rendered_application_acceptance": false
+    },
+    {
+      "path": "docs/language-design/foundations/diagrams/OK-003-Figure-02-Runtime-and-Renderer.png",
+      "bytes": 70865,
+      "git_blob": "98e620c7c3b824dd7352b8602cae6b551be533b9",
+      "sha256": "2c3f3ffdeeb09319237a7d0cba41f0a4144b622699b412daea18921daf2ebce1",
+      "read_mode": "visual_inspection",
+      "primary_reviewer": "review_language_docs",
+      "review_basis": "direct_inspection",
+      "rendered_application_acceptance": false
+    },
+    {
+      "path": "docs/language-design/foundations/diagrams/OK-003-Figure-02-Runtime-and-Renderer.svg",
+      "bytes": 8760,
+      "git_blob": "38ae5e4cc8eabb909d6cb26d61fb3b70c276fdbd",
+      "sha256": "609e5c333ab52a85119f2c4815f05d3034c7d47d458c8f515771189c2cb55e14",
+      "read_mode": "structure_and_all_text_inspection",
+      "primary_reviewer": "review_language_docs",
+      "review_basis": "direct_inspection",
+      "rendered_application_acceptance": false
+    },
+    {
+      "path": "docs/language-design/foundations/diagrams/OK-003-Figure-03-Backend-Choices.dot",
+      "bytes": 1304,
+      "git_blob": "6e837aa4733a66f5a1b2713801268f9c0a5731c0",
+      "sha256": "e1b45c28e57e32c5ac6f4b5b9aabf76311871e26b98120d373ce7f07625cfbf6",
+      "read_mode": "full_text",
+      "primary_reviewer": "review_language_docs",
+      "review_basis": "direct_inspection",
+      "rendered_application_acceptance": false
+    },
+    {
+      "path": "docs/language-design/foundations/diagrams/OK-003-Figure-03-Backend-Choices.png",
+      "bytes": 46810,
+      "git_blob": "6544a9ce8f74b2fffefb59c09af19c6f48cd677e",
+      "sha256": "e0df0dd3acdbc5d02285b65d60bba22e56377998520c93178af81c0eb4f8c159",
+      "read_mode": "visual_inspection",
+      "primary_reviewer": "review_language_docs",
+      "review_basis": "direct_inspection",
+      "rendered_application_acceptance": false
+    },
+    {
+      "path": "docs/language-design/foundations/diagrams/OK-003-Figure-03-Backend-Choices.svg",
+      "bytes": 6769,
+      "git_blob": "82cdf4afbd353c90d993a607368837e2bb498f20",
+      "sha256": "4c62635d4f1ed3dbb206033c20c7e80678a7e0a0cbe78827ce17d2af1bb55542",
+      "read_mode": "structure_and_all_text_inspection",
+      "primary_reviewer": "review_language_docs",
+      "review_basis": "direct_inspection",
+      "rendered_application_acceptance": false
+    },
+    {
+      "path": "docs/language-design/foundations/diagrams/OntoKin_001_Architecture_Diagram.png",
+      "bytes": 213128,
+      "git_blob": "e2343cebdd0764ab11c9288622e166b5097d00de",
+      "sha256": "4c9d26486a3711c1f74bc071ed8234b809a5ed73fa7f0f1a6e14cdb1767b52a0",
+      "read_mode": "visual_inspection",
+      "primary_reviewer": "review_language_docs",
+      "review_basis": "direct_inspection",
+      "rendered_application_acceptance": false
+    },
+    {
+      "path": "docs/language-design/foundations/diagrams/OntoKin_001_Architecture_Diagram.svg",
+      "bytes": 19058,
+      "git_blob": "de9ba440416ffeb96993fcb252ab90dc18e95d3d",
+      "sha256": "cd5caf3597917cfaff8c6ee78e3f9c495e91c01a8b26b52d6b9c2a287a859c20",
+      "read_mode": "structure_and_all_text_inspection",
+      "primary_reviewer": "review_language_docs",
+      "review_basis": "direct_inspection",
+      "rendered_application_acceptance": false
+    }
+  ]
+}

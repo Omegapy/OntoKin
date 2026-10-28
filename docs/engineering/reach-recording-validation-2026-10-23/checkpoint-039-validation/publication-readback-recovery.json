@@ -1,0 +1,27 @@
+{
+  "schema": "ontokin.checkpoint039-publication-readback-recovery/0.1",
+  "status": "closed_transport_retry",
+  "candidate_commit": "b80d233a1e70681279880a16daa0092e7b2195b1",
+  "candidate_tree": "9e01927fa7021dc14acf0b26dc0e93d8832d235f",
+  "attempt_001": {
+    "status": "stopped_before_ref_write",
+    "path": "docs/engineering/reach-recording-validation-2026-10-23/checkpoint-039-validation/documentation-001/stderr.txt",
+    "expected_bytes": 0,
+    "expected_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    "failure": "Raw text readback did not return the expected empty string; harness raised Final readback differs. The exact raw-response object was not retained, so no actual stored-byte mismatch is inferred.",
+    "ref_write_started": false
+  },
+  "recovery": {
+    "method": "github_fetch_file with explicit base64 encoding",
+    "status": "passed",
+    "returned_content_bytes": 0,
+    "returned_git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+  },
+  "authority_read": {
+    "first_single_branch_route": "Response did not expose expected JSON content; parser stopped before writes.",
+    "successful_route": "Fresh complete branch collection",
+    "owned_ref": "30eb22e5df3bc2e70d9af1375cb6b4a8e829724f"
+  },
+  "rule": "Final source/content/tree verification resumes before the first owned-ref update. This receipt adds no narrative or runtime changes."
+}
+

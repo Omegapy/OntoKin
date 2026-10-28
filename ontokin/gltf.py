@@ -24,7 +24,7 @@ from .model import SceneModel
 from .json_limits import JSONLimitError, measure_json
 from .values import bounded_data
 from .scene import (MAX_GLB_BYTES, MAX_VALIDATION_POSES, MAX_KEYFRAMES, MAX_BAKED_POSES, TARGET_CONTRACT,
-                    CONSTRUCTION_TARGET, SURFACE_TARGET, IMPULSE_TARGET, FORCE_TARGET, NATIVE_TARGETS, PROGRAM_TARGETS, MAX_MESH_VERTICES,
+                    CONSTRUCTION_TARGET, SURFACE_TARGET, IMPULSE_TARGET, FORCE_TARGET, REACH_TARGET, NATIVE_TARGETS, PROGRAM_TARGETS, MAX_MESH_VERTICES,
                     SurfaceMesh, build_surface_mesh, geometry_metadata, surface_metadata,
                     checked_contract, program_metadata,
                     BakedScene, ExportOptions, build_scene, export_error,
@@ -128,7 +128,7 @@ class _BufferBuilder:
         return len(self.accessors) - 1
 
 
-def _encode(scene: BakedScene, *, check=None) -> tuple[bytes, float]:
+def _encode(scene: BakedScene, *, check=None, work=None) -> tuple[bytes, float]:
     builder = _BufferBuilder(check)
     nodes, meshes, materials, samplers, channels = [], [], [], [], []
     geometry_cache, mesh_cache, material_cache = {}, {}, {}
@@ -204,6 +204,11 @@ def _encode(scene: BakedScene, *, check=None) -> tuple[bytes, float]:
             output = builder.add(values, size)
             channels.append({"sampler": len(samplers), "target": {"node": index, "path": path}})
             samplers.append({"input": time_accessor, "output": output, "interpolation": "LINEAR"})
+    if scene.contract == REACH_TARGET:
+        from .reach_export import rational_record
+        exact_clocks = [rational_record(time, work=work) for time in scene.exact_times]
+    else:
+        exact_clocks = [time_text(time) for time in scene.exact_times]
     document: dict[str, Any] = {
         "asset": {"version": "2.0", "generator": "OntoKin reference " + scene.report["exporter"]["version"]},
         "scene": 0, "scenes": [{"name": scene.scene_name, "nodes": list(range(len(nodes)))}],
@@ -212,7 +217,7 @@ def _encode(scene: BakedScene, *, check=None) -> tuple[bytes, float]:
         "animations": [{"name": scene.module_name + ": " + scene.scene_name,
                         "samplers": samplers, "channels": channels,
                         "extras": {"ontokin": {"target_contract": scene.contract,
-                                               "exact_times_seconds": [time_text(t) for t in scene.exact_times],
+                                               "exact_times_seconds": exact_clocks,
                                                "boundary_times_seconds": [time_text(t) for t in scene.boundaries]}}}],
         "extras": {"ontokin": scene.metadata},
     }
@@ -228,7 +233,7 @@ def _encode(scene: BakedScene, *, check=None) -> tuple[bytes, float]:
             "placement_policy": "baked_once_in_carrier_local_vertices_and_normals"}
     try:
         measure_json(document, max_bytes=max(0, MAX_GLB_BYTES - len(builder.binary) - 34),
-                     max_entries=MAX_GLB_BYTES, check=check)
+                     max_entries=MAX_GLB_BYTES, check=check, work=work)
     except JSONLimitError as error:
         export_error("OKE-E-GLB-BUDGET", "Encoded glTF JSON and binary exceed the GLB byte budget.",
                      kind="resource", details=error.details)
@@ -390,9 +395,54 @@ def _preflight_scene_layout(document, *, target_contract=None, check=None) -> No
             check()
         _referenced(animation["samplers"], channel["sampler"], "animation sampler")
         _referenced(nodes, channel["target"]["node"], "animation target node")
+    if selected == REACH_TARGET:
+        _preflight_reach_expansion(document, check=check)
 
 
-def read_glb(source: bytes | bytearray | str | Path, *, check=None, target_contract=None) -> DecodedGLB:
+def _preflight_reach_expansion(document, *, check=None) -> None:
+    """Count every used occurrence before shared accessors can hide expansion."""
+    accessors, animation = document["accessors"], document["animations"][0]
+    components = 0
+    carrier_counts = {}
+
+    def charge(accessor_id):
+        nonlocal components
+        if check:
+            check()
+        accessor = _referenced(accessors, accessor_id, "expanded accessor")
+        arity = {"SCALAR": 1, "VEC2": 2, "VEC3": 3, "VEC4": 4}[accessor["type"]]
+        components += accessor["count"] * arity
+        if components > MAX_DECODED_COMPONENTS:
+            export_error("OKE-E-ACCESSOR-BUDGET", "Repeated reach accessor uses exceed the decoded component budget.",
+                         kind="resource", details={"required_components": components,
+                         "max_decoded_components": MAX_DECODED_COMPONENTS,
+                         "counting": "every channel and primitive occurrence, including shared accessors"})
+        return accessor["count"]
+
+    for channel in animation["channels"]:
+        sampler = animation["samplers"][channel["sampler"]]
+        count = charge(sampler["input"])
+        charge(sampler["output"])
+        node = channel["target"]["node"]
+        carrier_counts[node] = max(count, carrier_counts.get(node, 0))
+    if sum(carrier_counts.values()) > MAX_BAKED_POSES:
+        export_error("OKE-E-POSE-BUDGET", "Repeated reach carrier poses exceed the allocation budget.", kind="resource")
+    for node in document["nodes"]:
+        if "mesh" not in node:
+            continue
+        mesh = _referenced(document.get("meshes", []), node["mesh"], "expanded mesh")
+        for primitive in mesh["primitives"]:
+            for name in ("POSITION", "NORMAL"):
+                charge(primitive["attributes"][name])
+            charge(primitive["indices"])
+    quantization = document.get("extras", {}).get("ontokin", {}).get("reach_quantization", {})
+    certificates = quantization.get("interval_certificates", [])
+    if not isinstance(certificates, list) or len(certificates) > 100000:
+        export_error("OKE-E-CERTIFICATE-BUDGET", "Reach interval certificates exceed their independent cap.",
+                     kind="resource", details={"max_interval_certificates": 100000})
+
+
+def read_glb(source: bytes | bytearray | str | Path, *, check=None, target_contract=None, work=None) -> DecodedGLB:
     """Decode and structurally check the adapter's embedded, flat GLB subset."""
     if check:
         check()
@@ -426,7 +476,7 @@ def read_glb(source: bytes | bytearray | str | Path, *, check=None, target_contr
         except RecursionError:
             export_error("OKE-E-METADATA-BUDGET", "Supplied glTF JSON exceeds bounded parser nesting.", kind="resource")
         try:
-            measure_json(document, max_bytes=MAX_GLB_BYTES, max_entries=MAX_GLB_BYTES, check=check)
+            measure_json(document, max_bytes=MAX_GLB_BYTES, max_entries=MAX_GLB_BYTES, check=check, work=work)
         except JSONLimitError as error:
             export_error("OKE-E-METADATA-BUDGET", "Supplied glTF JSON exceeds bounded metadata materialization.",
                          kind="resource", details=error.details)
@@ -589,9 +639,13 @@ def sample_animation(decoded: DecodedGLB, time_seconds: float | Fraction) -> dic
 
 
 def _validate_surface(decoded: DecodedGLB, node: dict, obj, model: SceneModel,
-                      *, remaining_vertices: int, check=None) -> tuple[float, int]:
+                      *, remaining_vertices: int, check=None, expected_mesh=None) -> tuple[float, int]:
     """Compare actual regional buffers and PBR assignments with the source recipe."""
-    expected = build_surface_mesh(obj.geometry, max_vertices=remaining_vertices, check=check)
+    expected = (expected_mesh if expected_mesh is not None else
+                build_surface_mesh(obj.geometry, max_vertices=remaining_vertices, check=check))
+    if len(expected.positions) > remaining_vertices:
+        export_error("OKE-E-MESH-BUDGET", "Decoded surface occurrences exceed the aggregate mesh budget.",
+                     model, kind="resource")
     if node["extras"]["ontokin"].get("surface") != surface_metadata(obj.geometry, expected, check=check):
         _format_error("Surface metadata must preserve authored section ordering, regions and local placement.")
     primitives = decoded.document["meshes"][node["mesh"]]["primitives"]
@@ -640,6 +694,99 @@ def _validate_surface(decoded: DecodedGLB, node: dict, obj, model: SceneModel,
     if len(attribute_pairs) != 1:
         _format_error("Surface primitives must share the logical mesh's positions and normals.")
     return max_error, len(expected.positions)
+
+
+def _validate_geometry(decoded, model, options, target_contract, program, *, check=None, source_meshes=None):
+    """Preserve complete inherited geometry/PBR/identity byte obligations."""
+    nodes = decoded.document["nodes"]
+    def plain(value):
+        return json.loads(json.dumps(value, allow_nan=False))
+    paths, frames, actual_helpers = set(), {}, set()
+    max_geometry_error = max_surface_error = 0.
+    remaining_vertices = MAX_MESH_VERTICES
+    properties = (bounded_data({path: dict(obj.properties) for path, obj in model.objects.items()}, check=check)
+                  if program is not None else None)
+    for index, node in enumerate(nodes):
+        if check:
+            check()
+        metadata = node.get("extras", {}).get("ontokin", {})
+        if metadata.get("kind") == "object":
+            path = metadata.get("path")
+            if path in paths or path not in model.objects or metadata.get("element_id") != list(model.objects[path].element_id) or metadata.get("owner") != model.objects[path].owner:
+                _format_error("Exported object identities and ownership must match the supplied semantic model.")
+            paths.add(path)
+            frames[index] = path + ".frame"
+            obj = model.objects[path]
+            for key, expected in (("class_name", obj.class_name), ("geometry", geometry_metadata(obj.geometry, check=check)
+                                  if target_contract in NATIVE_TARGETS else obj.geometry),
+                                  ("physical", obj.physical), ("collision", obj.collision),
+                                  ("authored_motion", obj.motion), ("appearance_linear_rgba", obj.appearance),
+                                  ("role", obj.role), ("pose_frame", "world"),
+                                  ("properties", properties[path] if properties is not None else
+                                   {name: value.to_data() for name, value in obj.properties.items()})):
+                if metadata.get(key) != plain(expected):
+                    _format_error("Object metadata must preserve the supplied model's geometry, physical description, and resolved properties.")
+            if program is not None and (metadata.get("program_revision") != model.program_revision or
+                                        metadata.get("source_mapping") != model.occurrence_provenance[path]):
+                _format_error("Each exported object must retain its matching generated/ordinary source mapping.")
+            if obj.geometry["kind"] == "empty":
+                if "mesh" in node:
+                    _format_error("An empty source object cannot acquire untagged helper geometry.")
+            elif obj.geometry["kind"] in ("loft", "placed") and target_contract in NATIVE_TARGETS:
+                if "mesh" not in node:
+                    _format_error("A native surface must have an actual mesh.")
+                error, vertex_count = _validate_surface(decoded, node, obj, model,
+                    remaining_vertices=remaining_vertices, check=check,
+                    expected_mesh=None if source_meshes is None else source_meshes.get(index))
+                max_geometry_error = max(max_geometry_error, error)
+                max_surface_error = max(max_surface_error, error)
+                remaining_vertices -= vertex_count
+            else:
+                if "mesh" not in node:
+                    _format_error("A source visual solid must have a mesh.")
+                primitives = decoded.document["meshes"][node["mesh"]]["primitives"]
+                if len(primitives) != 1:
+                    _format_error("A source visual solid must use the adapter's single material primitive.")
+                primitive = primitives[0]
+                positions = decoded.accessor(primitive["attributes"]["POSITION"])
+                if target_contract in NATIVE_TARGETS:
+                    remaining_vertices -= len(positions)
+                extents = ([obj.geometry["radius"]] * 3 if obj.geometry["kind"] == "sphere" else
+                           [component / 2 for component in obj.geometry["size"]])
+                for axis, extent in enumerate(extents):
+                    max_geometry_error = max(max_geometry_error, abs(min(p[axis] for p in positions) + extent),
+                                             abs(max(p[axis] for p in positions) - extent))
+                if obj.geometry["kind"] == "sphere":
+                    max_geometry_error = max(max_geometry_error,
+                        max(abs(math.hypot(*p) - obj.geometry["radius"]) for p in positions))
+                else:
+                    max_geometry_error = max(max_geometry_error,
+                        max(abs(abs(component) - extent) for p in positions for component, extent in zip(p, extents)))
+                material = decoded.document["materials"][primitive["material"]]
+                pbr = material.get("pbrMetallicRoughness", {})
+                if pbr.get("baseColorFactor") != list(obj.appearance) or pbr.get("metallicFactor") != 0 or pbr.get("roughnessFactor") != .7 or material.get("alphaMode", "OPAQUE") != ("BLEND" if obj.appearance[3] < 1 else "OPAQUE"):
+                    _format_error("Exported material factors must preserve the source linear RGBA and adapter material defaults.")
+        elif metadata.get("kind") == "visual_helper" and metadata.get("physical_participation") == "none":
+            frames[index] = metadata["frame_path"]
+            identity = (metadata.get("helper_kind"), tuple(metadata.get("related_element_id", ())))
+            if identity in actual_helpers:
+                _format_error("Visual helper identities cannot be duplicated.")
+            actual_helpers.add(identity)
+            if target_contract in NATIVE_TARGETS and "mesh" in node:
+                primitive = decoded.document["meshes"][node["mesh"]]["primitives"][0]
+                remaining_vertices -= len(decoded.accessor(primitive["attributes"]["POSITION"]))
+        else:
+            _format_error("Every node must identify its OntoKin occurrence or explicit visual-helper role.")
+        if target_contract in NATIVE_TARGETS and remaining_vertices < 0:
+            export_error("OKE-E-MESH-BUDGET", "Decoded surface occurrences exceed the aggregate mesh budget.",
+                         model, kind="resource")
+    if paths != set(model.objects):
+        _format_error("All semantic object occurrences must appear exactly once in the exported scene.")
+    expected_helpers = ({("assembly_origin", tuple(obj.element_id)) for obj in model.objects.values() if obj.geometry["kind"] == "empty"}
+                        | {("joint_parent_site", tuple(j.element_id)) for j in model.joints.values()}) if options.helpers else set()
+    if actual_helpers != expected_helpers:
+        _format_error("Visual helper nodes must match the requested option and declared source objects/joints.")
+    return frames, max_geometry_error, max_surface_error
 
 
 def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions | None = None,
@@ -757,90 +904,8 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
     if len(requests) * len(nodes) > MAX_VALIDATION_POSES:
         export_error("OKE-E-VALIDATION-BUDGET", "Independent validation exceeds the pose comparison budget.", model,
                      kind="resource", details={"max_validation_poses": MAX_VALIDATION_POSES})
-    paths, frames, actual_helpers = set(), {}, set()
-    max_geometry_error = max_surface_error = 0.
-    remaining_vertices = MAX_MESH_VERTICES
-    properties = (bounded_data({path: dict(obj.properties) for path, obj in model.objects.items()}, check=check)
-                  if program is not None else None)
-    for index, node in enumerate(nodes):
-        if check:
-            check()
-        metadata = node.get("extras", {}).get("ontokin", {})
-        if metadata.get("kind") == "object":
-            path = metadata.get("path")
-            if path in paths or path not in model.objects or metadata.get("element_id") != list(model.objects[path].element_id) or metadata.get("owner") != model.objects[path].owner:
-                _format_error("Exported object identities and ownership must match the supplied semantic model.")
-            paths.add(path)
-            frames[index] = path + ".frame"
-            obj = model.objects[path]
-            for key, expected in (("class_name", obj.class_name), ("geometry", geometry_metadata(obj.geometry, check=check)
-                                  if target_contract in NATIVE_TARGETS else obj.geometry),
-                                  ("physical", obj.physical), ("collision", obj.collision),
-                                  ("authored_motion", obj.motion), ("appearance_linear_rgba", obj.appearance),
-                                  ("role", obj.role), ("pose_frame", "world"),
-                                  ("properties", properties[path] if properties is not None else
-                                   {name: value.to_data() for name, value in obj.properties.items()})):
-                if metadata.get(key) != plain(expected):
-                    _format_error("Object metadata must preserve the supplied model's geometry, physical description, and resolved properties.")
-            if program is not None and (metadata.get("program_revision") != model.program_revision or
-                                        metadata.get("source_mapping") != model.occurrence_provenance[path]):
-                _format_error("Each exported object must retain its matching generated/ordinary source mapping.")
-            if obj.geometry["kind"] == "empty":
-                if "mesh" in node:
-                    _format_error("An empty source object cannot acquire untagged helper geometry.")
-            elif obj.geometry["kind"] in ("loft", "placed") and target_contract in NATIVE_TARGETS:
-                if "mesh" not in node:
-                    _format_error("A native surface must have an actual mesh.")
-                error, vertex_count = _validate_surface(decoded, node, obj, model,
-                    remaining_vertices=remaining_vertices, check=check)
-                max_geometry_error = max(max_geometry_error, error)
-                max_surface_error = max(max_surface_error, error)
-                remaining_vertices -= vertex_count
-            else:
-                if "mesh" not in node:
-                    _format_error("A source visual solid must have a mesh.")
-                primitives = decoded.document["meshes"][node["mesh"]]["primitives"]
-                if len(primitives) != 1:
-                    _format_error("A source visual solid must use the adapter's single material primitive.")
-                primitive = primitives[0]
-                positions = decoded.accessor(primitive["attributes"]["POSITION"])
-                if target_contract in NATIVE_TARGETS:
-                    remaining_vertices -= len(positions)
-                extents = ([obj.geometry["radius"]] * 3 if obj.geometry["kind"] == "sphere" else
-                           [component / 2 for component in obj.geometry["size"]])
-                for axis, extent in enumerate(extents):
-                    max_geometry_error = max(max_geometry_error, abs(min(p[axis] for p in positions) + extent),
-                                             abs(max(p[axis] for p in positions) - extent))
-                if obj.geometry["kind"] == "sphere":
-                    max_geometry_error = max(max_geometry_error,
-                        max(abs(math.hypot(*p) - obj.geometry["radius"]) for p in positions))
-                else:
-                    max_geometry_error = max(max_geometry_error,
-                        max(abs(abs(component) - extent) for p in positions for component, extent in zip(p, extents)))
-                material = decoded.document["materials"][primitive["material"]]
-                pbr = material.get("pbrMetallicRoughness", {})
-                if pbr.get("baseColorFactor") != list(obj.appearance) or pbr.get("metallicFactor") != 0 or pbr.get("roughnessFactor") != .7 or material.get("alphaMode", "OPAQUE") != ("BLEND" if obj.appearance[3] < 1 else "OPAQUE"):
-                    _format_error("Exported material factors must preserve the source linear RGBA and adapter material defaults.")
-        elif metadata.get("kind") == "visual_helper" and metadata.get("physical_participation") == "none":
-            frames[index] = metadata["frame_path"]
-            identity = (metadata.get("helper_kind"), tuple(metadata.get("related_element_id", ())))
-            if identity in actual_helpers:
-                _format_error("Visual helper identities cannot be duplicated.")
-            actual_helpers.add(identity)
-            if target_contract in NATIVE_TARGETS and "mesh" in node:
-                primitive = decoded.document["meshes"][node["mesh"]]["primitives"][0]
-                remaining_vertices -= len(decoded.accessor(primitive["attributes"]["POSITION"]))
-        else:
-            _format_error("Every node must identify its OntoKin occurrence or explicit visual-helper role.")
-        if target_contract in NATIVE_TARGETS and remaining_vertices < 0:
-            export_error("OKE-E-MESH-BUDGET", "Decoded surface occurrences exceed the aggregate mesh budget.",
-                         model, kind="resource")
-    if paths != set(model.objects):
-        _format_error("All semantic object occurrences must appear exactly once in the exported scene.")
-    expected_helpers = ({("assembly_origin", tuple(obj.element_id)) for obj in model.objects.values() if obj.geometry["kind"] == "empty"}
-                        | {("joint_parent_site", tuple(j.element_id)) for j in model.joints.values()}) if options.helpers else set()
-    if actual_helpers != expected_helpers:
-        _format_error("Visual helper nodes must match the requested option and declared source objects/joints.")
+    frames, max_geometry_error, max_surface_error = _validate_geometry(
+        decoded, model, options, target_contract, program, check=check)
     max_position = max_rotation = 0.
     worst_position = worst_rotation = None
     failures = []
@@ -909,36 +974,68 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
 
 
 def validate_export(data: bytes, model: SceneModel, *, options: ExportOptions | None = None,
-                    target_contract: str = TARGET_CONTRACT, check=None) -> dict[str, Any]:
+                    target_contract: str = TARGET_CONTRACT, check=None, work=None) -> dict[str, Any]:
     """Return measured byte-validation results, or a structured malformed-data error."""
+    if target_contract == REACH_TARGET:
+        from .reach_numeric import ReachExecutionWork
+        if work is None:
+            work = ReachExecutionWork(check=_guard_check(check))
+        check = work.tick
     try:
+        if target_contract == REACH_TARGET:
+            from .reach_conformance import validate_reach_export
+            return validate_reach_export(data, model, options=options, check=_guard_check(check), work=work)
         return _validate_export(data, model, options=options, target_contract=target_contract,
                                 check=_guard_check(check))
     except _CallbackFailure as failure:
+        if target_contract == REACH_TARGET:
+            _translate_reach_work_failure(failure.error, work, model)
         raise failure.error
     except OntoKinError as error:
+        if work is not None and error is work.callback_error:
+            raise
         error.diagnostic.details["target_contract"] = target_contract
         raise
     except JSONLimitError as error:
         export_error("OKE-E-METADATA-BUDGET", "Supplied program values exceed bounded validation materialization.",
                      model, kind="resource", details=error.details)
     except (KeyError, IndexError, TypeError, ValueError, AttributeError, OverflowError) as exc:
+        if work is not None and exc is work.callback_error:
+            raise
         export_error("OKE-E-GLB-STRUCTURE", "Malformed source mapping or validation data in the bounded GLB contract: " + str(exc),
                      model, kind="unsupported", details={"target_contract": target_contract})
+    except Exception as error:
+        if target_contract == REACH_TARGET:
+            _translate_reach_work_failure(error, work, model)
+        raise
+
+
+def _translate_reach_work_failure(error, work, model):
+    """Translate our numeric exhaustion while preserving caller exceptions."""
+    from .reach_numeric import ReachAdmissionError
+    from .reach_source import reach_error
+    if isinstance(error, ReachAdmissionError) and error is not work.callback_error:
+        raise reach_error(error.reach_code, str(error), model.span, phase="evaluation",
+                          details=error.details, blocks=["delivered"]) from error
 
 
 def _export_glb(model: SceneModel, *, options: ExportOptions | None = None,
                 source_uri: str | None = None, source_sha256: str | None = None,
-                target_contract: str = TARGET_CONTRACT, check=None) -> ExportResult:
+                target_contract: str = TARGET_CONTRACT, check=None, work=None, reach_plan=None) -> ExportResult:
     """Produce verified GLB bytes and their report without writing any files."""
     scene = build_scene(model, options=options, source_uri=source_uri, source_sha256=source_sha256,
-                        target_contract=target_contract, check=check)
-    data, geometry_error = _encode(scene, check=check)
+                        target_contract=target_contract, check=check, work=work, reach_plan=reach_plan)
+    if target_contract == REACH_TARGET:
+        from .reach_export import recording_stage
+        recording_stage("encoding", work=work, check=check)
+    data, geometry_error = _encode(scene, check=check, work=work)
     if geometry_error > scene.options.position_tolerance_m:
         export_error("OKE-E-GEOMETRY-PRECISION", "Mesh vertex binary32 quantization exceeds the position tolerance.", model,
                      details={"max_geometry_quantization_error_m": geometry_error,
                               "position_tolerance_m": scene.options.position_tolerance_m})
-    validation = _validate_export(data, model, options=scene.options, target_contract=target_contract, check=check)
+    validation = (validate_export(data, model, options=scene.options, target_contract=target_contract, check=check, work=work)
+                  if target_contract == REACH_TARGET else
+                  _validate_export(data, model, options=scene.options, target_contract=target_contract, check=check))
     if validation["status"] != "passed":
         export_error("OKE-E-ANIMATION-PRECISION", "Decoded GLB animation exceeds the requested numerical tolerance.", model,
                      details={"validation": validation, "tolerances": scene.report["tolerances"]})
@@ -965,13 +1062,26 @@ def _export_glb(model: SceneModel, *, options: ExportOptions | None = None,
 
 def export_glb(model: SceneModel, *, options: ExportOptions | None = None,
                source_uri: str | None = None, source_sha256: str | None = None,
-               target_contract: str = TARGET_CONTRACT, check=None) -> ExportResult:
+               target_contract: str = TARGET_CONTRACT, check=None, work=None, reach_plan=None) -> ExportResult:
     """Produce verified bytes with an explicit profile and cooperative cancellation."""
+    if target_contract == REACH_TARGET:
+        from .reach_numeric import ReachExecutionWork
+        if work is None:
+            work = ReachExecutionWork(check=_guard_check(check))
+        check = work.tick
     try:
         return _export_glb(model, options=options, source_uri=source_uri, source_sha256=source_sha256,
-                           target_contract=target_contract, check=_guard_check(check))
+                           target_contract=target_contract, check=_guard_check(check), work=work, reach_plan=reach_plan)
     except _CallbackFailure as failure:
+        if target_contract == REACH_TARGET:
+            _translate_reach_work_failure(failure.error, work, model)
         raise failure.error
     except OntoKinError as error:
+        if work is not None and error is work.callback_error:
+            raise
         error.diagnostic.details["target_contract"] = target_contract
+        raise
+    except Exception as error:
+        if target_contract == REACH_TARGET:
+            _translate_reach_work_failure(error, work, model)
         raise

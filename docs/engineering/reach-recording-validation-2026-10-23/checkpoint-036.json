@@ -1,0 +1,97 @@
+{
+  "schema_version": "ontokin.runtime-investigation-checkpoint/0.1",
+  "checkpoint": 36,
+  "owner": "interactive-reach06-p11-quaternion-census-20261025-c036",
+  "branch": "work/reach06-p11-quaternion-census-20261025-c036",
+  "starting_commit": "d485c9bc81a5bdc8500c93d70eeb6b738f1fba97",
+  "starting_tree": "c146832a29d4d5be738ddd0128c88186cdef36b9",
+  "execution_commit": "4ca73909f861fe4bef9694787473621c1d21c140",
+  "execution_tree": "87c949b238055af1ce368c694e1d5683c8aeacde",
+  "accepted_runtime": "d2f0088c4f3c1f570630334804a5a8f78e0105ac",
+  "disposition": "diagnostic_complete_runtime_unchanged_candidate_held",
+  "runtime_optimization_selected": false,
+  "release_acceptance": false,
+  "request_pair": {
+    "plan": "execution/pair-001/plan.json",
+    "commands": "execution/pair-001/pair-command.json",
+    "control": "execution/pair-001/control/request-result.json",
+    "capture": "execution/pair-001/capture/request-result.json",
+    "census": "execution/pair-001/capture/census.json",
+    "requests": 2,
+    "request_status": "failed",
+    "unchanged_full_p11": true,
+    "shared_operations": 100001,
+    "reach_operations": 93277,
+    "categories": 279,
+    "work_cache_entries": 256,
+    "reference_cache_entries_post_cleanup": 171
+  },
+  "neutrality": {
+    "status": "passed",
+    "analyzer": "execution/analysis-001/report.json",
+    "analyzer_sha256": "7158be2e6f2657140aaebad208f0c8035bbbe879f30db3eba422cd3930355c90",
+    "checks": 105,
+    "independent_review": "observations/independent-census-review.json",
+    "independent_neutrality_assertions": 2137,
+    "independent_census_assertions": 260,
+    "elapsed_neutrality_claimed": false
+  },
+  "finding": {
+    "key_index": 36,
+    "exact_time_seconds": "36/25",
+    "carrier": 7,
+    "frame": "rig.arms[\"right\"].forearm.frame",
+    "phase": 0,
+    "attempted_operation": "Add completed z-error and completed w-error; charge refused before arithmetic",
+    "completed_comparison_records": 16,
+    "available_centered_orientation_proofs": 2,
+    "first_misses": {
+      "unavailable_proof": 14,
+      "actual_quaternion": 2
+    },
+    "whole_orientation_match": false,
+    "claim_only_miss": false,
+    "identical_completed_scalar": "w decode 3feb04bc00000000 to 442671/524288, donor4 and current7",
+    "scalar_decode_retained_separately_in_existing_proof": false,
+    "complete_request_saving_established": false
+  },
+  "unchanged_prior_evidence": {
+    "checkpoint": 35,
+    "original_recordings_passed": 24,
+    "original_recordings_total": 28,
+    "failed_cases": [
+      "P11",
+      "P16",
+      "P23",
+      "L03"
+    ],
+    "focused_methods_passed": 29,
+    "full_regression_methods_passed": 3093,
+    "default_local_checks_passed": 7,
+    "rerun_by_c036": false
+  },
+  "report": "checkpoint-036-census.md",
+  "handoff": "HANDOFF-036.md",
+  "next_scope": "checkpoint-036-next-scope.json",
+  "next_scope_kind": "source_only_feasibility_derivation",
+  "manifest_sha256": "ce72418d4e128213464e12e7ae0916e8ad5ee1c651eb0dfa3e5c98e1e92e12c2",
+  "archive": {
+    "format": "ZIP_DEFLATED",
+    "parts": [
+      {
+        "path": "checkpoint-036-evidence.zip.part001",
+        "bytes": 700000,
+        "sha256": "96c7c970d2330a107d5fc4121b656ef54ecb42f681a1ad1062ba434c2df7b31a"
+      },
+      {
+        "path": "checkpoint-036-evidence.zip.part002",
+        "bytes": 307236,
+        "sha256": "0bba2277ff99ba5346f37f0079487793103301c93928914381ea827c3dc84a58"
+      }
+    ],
+    "bytes": 1007236,
+    "sha256": "f10883a1cf8041378dc796490957f62aacbc9fb4bc9c6f19550a9f4a98877baf",
+    "member_count": 43
+  },
+  "receipt_policy": "Packaging/recovery/documentation/publication receipts live outside this archive to avoid circular hashes. The enclosing commit and closing Issue26 comment identify publication; execution remains the separate immutable candidate."
+}

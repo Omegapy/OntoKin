@@ -1,5 +1,7 @@
 # OntoKin documentation guide
 
+For current integration and branch ownership, read [OK-ENG-009](engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md), [STATUS](../STATUS.md), and the [C059 repository reconciliation](engineering/repository-reconciliation-2026-10-28/README.md). [The M1 disposition](engineering/OK-DEC-COMPARE-M1-0.1.0.md) closes the exact C058 proposal for operation saving; historical proposal and validation records retain their original meanings.
+
 For current development checks, start with [OK-ENG-006: Local validation and hosted CI policy](engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md). Local execution is the default; historical CI records and complete release contracts retain their identified scope.
 
 Start with the capability definition, then use the PRD for detailed product requirements, the semantic model for proposed meanings, and OK-LANG-001 for the formal `core-0.1` source-language contract. OK-ENG-001 explains the first headless reference prototype; OK-ENG-002 adds viewable GLB animation; OK-AGENT-001 adds the durable single-source agent interface. The 0.4.0 milestone implements OK-LANG-002 and OK-AGENT-002 for pinned reusable modules, keyed assembly construction, and atomic program-bundle editing. Its [identified local and CI gate passed](engineering/construction-validation/validation-summary.json). OK-LANG-003 fixes the adopted surface-0.1 source contract. Native parsing, construction and GLB/0.3 export are implemented; OK-AGENT-003 supplies source-authoritative native surface workflows. [STATUS](../STATUS.md) separates implemented components from complete release evidence and unmet product requirements. The product, capability, and semantic records retain their review status. The original vision and architecture records remain available in full for their rationale, examples, alternatives, and open questions.
@@ -149,6 +151,76 @@ The October 17, 2026 reorganization preserved the six substantive records that e
 
 [Return to the project overview](../README.md).
 
+## Reach delivery implementation work
+
+The [October 22 recording checkpoint](engineering/reach-recording-validation-2026-10-22/README.md) preserves current measured costs, exact source identities, all failed attempts and the next unmet recording gate.
+
+The [coaxial phase derivation](engineering/reach-coaxial-phase-bounds.md) proves
+the signed ideal derivative refinement. The [carrier rotation derivation](engineering/reach-carrier-rotation-cursors.md)
+binds the optional recording cursor to those source laws and the existing
+finite endpoint allowance. Both complete derivations participate in the
+recording's identified numerical basis; execution results remain separate.
+The [deferred phase-location derivation](engineering/reach-deferred-phase-locations.md)
+proves exact reuse of outer translations through repeated phase paths; its
+complete text is also part of that identified basis.
+The [planning-reuse derivation](engineering/reach-planning-reuse.md) binds
+structural selection, empty-history measurement and unchanged endpoint
+projections to fresh source, state, ownership and output-limit checks.
+The [independent endpoint and arc derivation](engineering/reach-independent-endpoint-bounds.md)
+checks supplied bytes with sufficient exact bounds and retains the original
+normalization and norm calculations when those bounds cannot prove a claim.
+The [bounded native recording derivation](engineering/reach-recording-certified-planar.md)
+proves additional endpoint allowances for its optional planar and dynamic
+interior samples; its complete implementation and derivation are identified
+in the producer's numerical basis. The independent reader's
+[fused interval rotation](engineering/reach-reference-fused-recording-proof.md),
+[shared completed arithmetic](engineering/reach-reference-shared-recording-proof.md)
+and [complete carrier and root recurrence](engineering/reach-reference-world-recording-proof.md)
+derivations keep source reconstruction and supplied-byte checks separate from
+the producer. Their identities are retained in the complete execution inputs.
+The [independent clock-cell derivation](engineering/reach-independent-clock-cells.md)
+checks the same exact binary32 rounding cells on a bounded integer grid, with
+the original rational calculation retained for other operand domains.
+The [independent identity-carrier derivation](engineering/reach-reference-identity-carriers.md)
+reuses a parent enclosure only after proving an exact identity relative
+transform and admitting the complete current source ancestry.
+The [adjacent-clock operand derivation](engineering/reach-adjacent-clock-operands.md)
+and [retained-clock parsing derivation](engineering/reach-retained-clock-parsing.md)
+describe bounded reuse and one-shot parsing with unchanged exact values and
+live admission checks. The [October 23 continuation](engineering/reach-recording-validation-2026-10-23/README.md)
+preserves their actual focused tests and full original recording outcomes.
+The [independent planar coefficient derivation](engineering/reach-centered-coefficients.md)
+shares completed exact Hamilton coefficients across repeated source offsets,
+using the existing bounded arithmetic cache and live source/dispatch receipts.
+The [ballistic elapsed-clock derivation](engineering/reach-ballistic-clock-domain.md)
+proves the original nonzero clock range from live bounded integer widths,
+retaining the horizon comparison, finite guards and complete ordinary fallback.
+The [intra-invocation certificate-term derivation](engineering/reach-certificate-term-reuse.md)
+retains completed authored scalar results under bounded native dispatch and
+operand admission, preserving fresh comparisons, callbacks and ordinary fallback.
+The [checkpoint 027 experiment and handoff](engineering/reach-recording-validation-2026-10-23/HANDOFF-027.md)
+preserve the equal-operand second-quarter candidate outside integration after all
+15 complete-request pairs saved zero operations. Checkpoint 027 left the accepted runtime unchanged;
+the exact-zero identity was the next separate proof target.
+The [canonical-zero stored-quarter derivation](engineering/reach-certificate-zero-quarter.md)
+and [checkpoint 028 handoff](engineering/reach-recording-validation-2026-10-23/HANDOFF-028.md)
+record its subsequent implementation, 61 dedicated and 154 related passing methods,
+positive complete-request savings, and the still-failed 23/28 full recording gate.
+The [checkpoint 029 capture and census](engineering/reach-recording-validation-2026-10-23/HANDOFF-029.md)
+then identified the full P09 field opportunities. The [native-field derivation](engineering/reach-certificate-native-fields.md)
+and [checkpoint 030 handoff](engineering/reach-recording-validation-2026-10-23/HANDOFF-030.md)
+record the accepted separate decode/comparison proofs, 115 focused and 194 related
+passing methods and **24/28** original recordings. The default local attempt and
+four-case baseline reproductions leave full regression open.
+P09 now passes at **99,975 operations** under the original cap. The next bounded
+task reconciles the four inherited regression fixtures; a neutral P11/L03
+source-endpoint capture and independent census follows.
+
+The [recorded delivery checkpoints](engineering/reach-delivery-implementation.md)
+and [independent reader implementation](engineering/reach-independent-validation.md)
+describe branch work and its remaining execution obligations. Implementation
+notes do not establish complete reach or product acceptance.
+
 ## Force workflows and recorded delivery
 
 The [Agent/0.5 verification guide](engineering/force-agent-validation/README.md) and [source workflow example](../examples/force-agent/README.md) document finite-force inspection and repair. [OK-ENG-007](engineering/OK-ENG-007-native-force-glb-export.md) defines bounded GLB/0.5 recording, and the [delivery guide](../examples/force/README.md) documents actual export, artifact retrieval, independent native decoding and browser validation. Implementation and component results do not close complete F01–F12 acceptance; [STATUS](../STATUS.md) identifies the integrated evidence and next unmet gate.
@@ -161,3 +233,8 @@ The [Agent/0.5 local integration record](engineering/force-agent-local-validatio
 ## Reusable reach action development
 
 The [separate OK-LANG-006 adoption](language-design/planar-reach-v0.1/ADOPTION.md) establishes authority for the exact reviewed [language contract](language-design/OK-LANG-006-reusable-planar-reach-actions.md) and its original and supplementary corpora. Frozen draft labels remain historical. The [contract integration record](language-design/planar-reach-v0.1/contract-review/integration18.json) identifies the actual merge and fresh pure checks. Runtime implementation, all R01–R12/Q01–Q22 obligations and the complete [finite release gate](language-design/planar-reach-v0.1/release-contract.md) remain pending.
+
+The [source acceptance development record](engineering/reach-source-acceptance-validation/README.md)
+retains fresh integration and regression runs, failed source-export probes,
+legacy protocol-test corrections and the exact checkout recovery. Its source
+corpus mapping and execution outcomes are distinct from complete release acceptance.

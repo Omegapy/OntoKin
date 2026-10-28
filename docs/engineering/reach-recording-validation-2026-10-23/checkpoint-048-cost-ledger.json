@@ -1,0 +1,136 @@
+{
+  "schema": "ontokin.checkpoint048-cost-ledger/0.1",
+  "kind": "source-derived arithmetic and rejection bounds; not measured candidate costs",
+  "source_commit": "3ad8e84209bf0b39716dc6167ca4553dcf3aa29f",
+  "domain": {
+    "degree": "D >= 1",
+    "exponent": "e >= 0",
+    "factorials": "genuine exact factorial sequence",
+    "operand_domain": "fixed native cap with unchanged original dyadic sufficient admission",
+    "changed_domain_reset_costs": "additional; excluded from fixed-domain formula"
+  },
+  "baseline": {
+    "construction": "4*D+3",
+    "complete_miss": "4*D+5",
+    "existing_full_key_hit": 1,
+    "degree14": {
+      "construction": 59,
+      "complete_miss": 61,
+      "hit": 1
+    },
+    "factorial_hit": 1,
+    "factorial_miss": "last+1 for last >= 1"
+  },
+  "endpoint_checkpoint_preserving": {
+    "removed_duplicate_shift": -1,
+    "retained_first_tick_and_guard": 1,
+    "removed_last_division": -1,
+    "retained_last_tick_and_guard": 1,
+    "unchanged_lookup_publication_output_occurrences": 0,
+    "new_screening_cost": "nonnegative additional actual cost",
+    "maximum_net_saving_before_screening": 0,
+    "decision": "NO-GO for positive operation reduction"
+  },
+  "affine_arithmetic": {
+    "equations": [
+      "F=(2*D+1)!",
+      "Q=F*2**(2*e*D)",
+      "L=2**bit_length(Q)",
+      "N0=F*(L+1)",
+      "delta=2*F",
+      "Ni=N(i-1)+delta",
+      "Ci=(Ni/(2*i+1)!)*2**(2*e*(D-i))",
+      "CD=L+2*D+1"
+    ],
+    "schedule": {
+      "denominator_lane_shifts": 2,
+      "N0_add_multiply": 2,
+      "delta_shift": 1,
+      "C0_shift": 1,
+      "interior_operations": "3*(D-1)",
+      "final_add": 1,
+      "lookup": 1,
+      "publication": 1
+    },
+    "construction": "3*D+4",
+    "complete_miss_before_new_admission": "3*D+6",
+    "gross_saving": "D-1",
+    "degree14_gross_complete_ceiling": 13,
+    "native_admission_defined": false,
+    "candidate_net_saving": null,
+    "prospective_width": "All new prospective widths <= 2*q+2 <= 2*W+2*e+5 in the original genuine-factorial fixed domain; each actual guard still runs.",
+    "storage": {
+      "retained_coefficient_integers": "unchanged D+1",
+      "cache_entries_added_by_arithmetic_identity": 0,
+      "temporary_values": [
+        "affine numerator",
+        "delta=2*F"
+      ],
+      "peak_lifetime": "old and new numerator can coexist during assignment; bounded widths, no persistent receipt selected"
+    }
+  },
+  "affine_fresh_divisibility_audit": {
+    "removed_arithmetic": "D-1",
+    "added_guarded_divisibility_operations": "D-1",
+    "additional_costs_nonnegative": [
+      "native/type/domain/owner screening",
+      "remainder checks",
+      "callback/lifetime admission",
+      "copied logical values or detached audit output",
+      "new receipt/cache lookup or publication if introduced",
+      "ineligible and low-degree fallback work",
+      "cache-pressure/invalidation work"
+    ],
+    "net_bound": "(D-1)-(D-1)-sum(additional_costs) <= 0",
+    "decision": "NO-GO for this concrete audit design; not a complete positive implementation ledger"
+  },
+  "current_evidence": {
+    "new_completed_degrees": [
+      7,
+      8,
+      13,
+      17,
+      16
+    ],
+    "gross_ceilings": [
+      6,
+      7,
+      12,
+      16,
+      15
+    ],
+    "sum_gross_complete_ceiling": 56,
+    "initial_resident_keys": 7,
+    "initial_keys_are_exact_miss_count": false,
+    "failed_degree14": {
+      "index": 7,
+      "original_completed_construction": 29,
+      "hypothetical_affine_before_corresponding_division": 25,
+      "gross_prefix_difference": 4,
+      "complete_tail_cost": null,
+      "candidate_executed": false
+    },
+    "cache_hit_counts": "not observed",
+    "full_request_net_saving": null
+  },
+  "fallbacks": {
+    "full_key_hit": "Can remain original if new admission is after lookup; not an implemented guarantee.",
+    "degree1": "Affine schedule gross 0 before any screen.",
+    "degree2": "Affine schedule gross 1 before any screen.",
+    "degree0": "Outside selected positive-degree domain; preserve original unless separately reviewed.",
+    "cold_factorial_cache": "Retain all actual construction and publication costs.",
+    "malformed_or_mutated_cache": "Native tuple shape alone is insufficient.",
+    "active_source_observer": "Present during actual target through Guard.original; hooks-None design is ineligible.",
+    "generic_or_instrumented_callbacks": "Require original supported behavior and interruption identity; no unreviewed fallback selected."
+  },
+  "preserved_limits": {
+    "shared_operations": 100000,
+    "elapsed_ms": 30000,
+    "operand_bits": 32768,
+    "cache_entries": 256,
+    "cursor_updates": 64
+  },
+  "runtime_candidate_selected": false,
+  "runtime_execution": false,
+  "release_acceptance": false
+}

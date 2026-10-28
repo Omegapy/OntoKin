@@ -1,0 +1,10 @@
+{
+  "schema_version": "ontokin.checkpoint035-publication-transport/0.1",
+  "status": "failed_read_before_upload",
+  "action": "Read a 900000-byte archive part as one JSON/base64 command output",
+  "observed_error": "SyntaxError: Bad control character in string literal in JSON at position 524288 (line 1 column 524289)",
+  "interpretation": "The command-output transport truncated the large JSON value. No GitHub blob or ref write was attempted by that call.",
+  "raw_truncated_stdout_preserved": false,
+  "source_file_altered": false,
+  "next_action": "Read bounded 240000-byte chunks, validate encoded length, then require the created Git blob SHA to match the frozen file manifest."
+}

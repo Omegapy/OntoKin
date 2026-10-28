@@ -1,0 +1,72 @@
+test_before_after_complete_projection_and_persisted_run_agree (test_reach_agent.ReachAgentTests.test_before_after_complete_projection_and_persisted_run_agree) ... ok
+test_construction_unrun_and_reset_have_distinct_observation_contexts (test_reach_agent.ReachAgentTests.test_construction_unrun_and_reset_have_distinct_observation_contexts) ... ok
+test_discovery_and_mesh_page_preserve_profile_source_and_cursor_context (test_reach_agent.ReachAgentTests.test_discovery_and_mesh_page_preserve_profile_source_and_cursor_context) ... ok
+test_failed_handoff_exposes_incoming_state_and_preserves_it_after_reset (test_reach_agent.ReachAgentTests.test_failed_handoff_exposes_incoming_state_and_preserves_it_after_reset) ... ok
+test_named_alias_has_independent_pending_state_and_shared_description_identity (test_reach_agent.ReachAgentTests.test_named_alias_has_independent_pending_state_and_shared_description_identity) ... ok
+test_object_actions_include_both_joint_endpoint_owners (test_reach_agent.ReachAgentTests.test_object_actions_include_both_joint_endpoint_owners) ... ok
+test_paused_and_terminal_projections_retain_complete_independent_history (test_reach_agent.ReachAgentTests.test_paused_and_terminal_projections_retain_complete_independent_history) ... 
+  test_paused_and_terminal_projections_retain_complete_independent_history (test_reach_agent.ReachAgentTests.test_paused_and_terminal_projections_retain_complete_independent_history) (name='L01') ... FAIL
+  test_paused_and_terminal_projections_retain_complete_independent_history (test_reach_agent.ReachAgentTests.test_paused_and_terminal_projections_retain_complete_independent_history) (name='L02') ... FAIL
+  test_paused_and_terminal_projections_retain_complete_independent_history (test_reach_agent.ReachAgentTests.test_paused_and_terminal_projections_retain_complete_independent_history) (name='L03') ... FAIL
+test_same_project_action_edit_l04_to_l02_rejects_stale_run (test_reach_agent.ReachAgentTests.test_same_project_action_edit_l04_to_l02_rejects_stale_run) ... FAIL
+
+======================================================================
+FAIL: test_paused_and_terminal_projections_retain_complete_independent_history (test_reach_agent.ReachAgentTests.test_paused_and_terminal_projections_retain_complete_independent_history) (name='L01')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_agent.py", line 151, in test_paused_and_terminal_projections_retain_complete_independent_history
+    created = self.success(self.send("create", project_id=project, bundle=program.to_payload(),
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/reach_agent_support.py", line 74, in success
+    self.assertEqual(response["status"], "succeeded", response)
+AssertionError: 'failed' != 'succeeded'
+- failed
++ succeeded
+ : {'accepted_program_revision': None, 'achieved_level': None, 'diagnostics': [{'blocks': ['represented', 'constructed', 'evaluated', 'delivered'], 'category': 'resource_limit', 'code': 'OKL-E-RESOURCE', 'details': {'budget': 'max_operations', 'consumed': 100001, 'limit': 100000, 'partial_results': 'No uncommitted source, artifact or run advancement is available.', 'request_terminated': True}, 'location_status': 'program_condition_without_source_span', 'message': 'The request exhausted max_operations.', 'phase': 'support', 'primary': None, 'program_revision': 'sha256:6e116b81c6834ab3e36d914ad8baa739a1e31d72697ce3902245fd46b78a4dc8', 'related': [], 'repair': {'patches': [], 'summary': 'Correct the reported condition and validate the complete candidate again.'}, 'rule_ids': ['LANG-009'], 'run_id': None, 'schema_version': 'ontokin.diagnostic/0.2', 'severity': 'error', 'source_id': None, 'source_revision': None, 'time': None}], 'next_cursor': None, 'operation': 'create', 'program_revision': 'sha256:6e116b81c6834ab3e36d914ad8baa739a1e31d72697ce3902245fd46b78a4dc8', 'progress': {'cancellation_requested': False, 'implementation': {'name': 'ontokin-reference', 'source_code_sha256': 'sha256:3ba3f5bf65d2feefd1056743eff57dab0289771b11103843c4a286ef645363ec', 'version': '0.4.0'}, 'phase': 'complete'}, 'project_id': 'l01', 'protocol_error': None, 'request_id': '1', 'requested_level': 'evaluated', 'result': {'achieved_level': None, 'delivery': 'not_requested', 'implementation': {'name': 'ontokin-reference', 'source_code_sha256': 'sha256:3ba3f5bf65d2feefd1056743eff57dab0289771b11103843c4a286ef645363ec', 'version': '0.4.0'}, 'outcome': 'resource_limit', 'partial_results': 'Only already-retained immutable source snapshots and any previously committed run descriptor are available.', 'requested_level': 'evaluated', 'run_state': None}, 'run_id': None, 'schema_version': 'ontokin.agent/0.6', 'status': 'failed', 'truncated': False}
+
+======================================================================
+FAIL: test_paused_and_terminal_projections_retain_complete_independent_history (test_reach_agent.ReachAgentTests.test_paused_and_terminal_projections_retain_complete_independent_history) (name='L02')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_agent.py", line 151, in test_paused_and_terminal_projections_retain_complete_independent_history
+    created = self.success(self.send("create", project_id=project, bundle=program.to_payload(),
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/reach_agent_support.py", line 74, in success
+    self.assertEqual(response["status"], "succeeded", response)
+AssertionError: 'failed' != 'succeeded'
+- failed
++ succeeded
+ : {'accepted_program_revision': None, 'achieved_level': None, 'diagnostics': [{'blocks': ['represented', 'constructed', 'evaluated', 'delivered'], 'category': 'resource_limit', 'code': 'OKL-E-RESOURCE', 'details': {'budget': 'max_operations', 'consumed': 100001, 'limit': 100000, 'partial_results': 'No uncommitted source, artifact or run advancement is available.', 'request_terminated': True}, 'location_status': 'program_condition_without_source_span', 'message': 'The request exhausted max_operations.', 'phase': 'support', 'primary': None, 'program_revision': 'sha256:8fe2123277e94597d3e4ca518e3c1c1fd68d9a18325459f563c9eb5a270fe748', 'related': [], 'repair': {'patches': [], 'summary': 'Correct the reported condition and validate the complete candidate again.'}, 'rule_ids': ['LANG-009'], 'run_id': None, 'schema_version': 'ontokin.diagnostic/0.2', 'severity': 'error', 'source_id': None, 'source_revision': None, 'time': None}], 'next_cursor': None, 'operation': 'create', 'program_revision': 'sha256:8fe2123277e94597d3e4ca518e3c1c1fd68d9a18325459f563c9eb5a270fe748', 'progress': {'cancellation_requested': False, 'implementation': {'name': 'ontokin-reference', 'source_code_sha256': 'sha256:3ba3f5bf65d2feefd1056743eff57dab0289771b11103843c4a286ef645363ec', 'version': '0.4.0'}, 'phase': 'complete'}, 'project_id': 'l02', 'protocol_error': None, 'request_id': '2', 'requested_level': 'evaluated', 'result': {'achieved_level': None, 'delivery': 'not_requested', 'implementation': {'name': 'ontokin-reference', 'source_code_sha256': 'sha256:3ba3f5bf65d2feefd1056743eff57dab0289771b11103843c4a286ef645363ec', 'version': '0.4.0'}, 'outcome': 'resource_limit', 'partial_results': 'Only already-retained immutable source snapshots and any previously committed run descriptor are available.', 'requested_level': 'evaluated', 'run_state': None}, 'run_id': None, 'schema_version': 'ontokin.agent/0.6', 'status': 'failed', 'truncated': False}
+
+======================================================================
+FAIL: test_paused_and_terminal_projections_retain_complete_independent_history (test_reach_agent.ReachAgentTests.test_paused_and_terminal_projections_retain_complete_independent_history) (name='L03')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_agent.py", line 151, in test_paused_and_terminal_projections_retain_complete_independent_history
+    created = self.success(self.send("create", project_id=project, bundle=program.to_payload(),
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/reach_agent_support.py", line 74, in success
+    self.assertEqual(response["status"], "succeeded", response)
+AssertionError: 'failed' != 'succeeded'
+- failed
++ succeeded
+ : {'accepted_program_revision': None, 'achieved_level': None, 'diagnostics': [{'blocks': ['represented', 'constructed', 'evaluated', 'delivered'], 'category': 'resource_limit', 'code': 'OKL-E-RESOURCE', 'details': {'budget': 'max_operations', 'consumed': 100001, 'limit': 100000, 'partial_results': 'No uncommitted source, artifact or run advancement is available.', 'request_terminated': True}, 'location_status': 'program_condition_without_source_span', 'message': 'The request exhausted max_operations.', 'phase': 'support', 'primary': None, 'program_revision': 'sha256:0d8e38f49425cf9a0e9b96f8aadb42d7baf1743208e152aaea8f2d58f759abc7', 'related': [], 'repair': {'patches': [], 'summary': 'Correct the reported condition and validate the complete candidate again.'}, 'rule_ids': ['LANG-009'], 'run_id': None, 'schema_version': 'ontokin.diagnostic/0.2', 'severity': 'error', 'source_id': None, 'source_revision': None, 'time': None}], 'next_cursor': None, 'operation': 'create', 'program_revision': 'sha256:0d8e38f49425cf9a0e9b96f8aadb42d7baf1743208e152aaea8f2d58f759abc7', 'progress': {'cancellation_requested': False, 'implementation': {'name': 'ontokin-reference', 'source_code_sha256': 'sha256:3ba3f5bf65d2feefd1056743eff57dab0289771b11103843c4a286ef645363ec', 'version': '0.4.0'}, 'phase': 'complete'}, 'project_id': 'l03', 'protocol_error': None, 'request_id': '3', 'requested_level': 'evaluated', 'result': {'achieved_level': None, 'delivery': 'not_requested', 'implementation': {'name': 'ontokin-reference', 'source_code_sha256': 'sha256:3ba3f5bf65d2feefd1056743eff57dab0289771b11103843c4a286ef645363ec', 'version': '0.4.0'}, 'outcome': 'resource_limit', 'partial_results': 'Only already-retained immutable source snapshots and any previously committed run descriptor are available.', 'requested_level': 'evaluated', 'run_state': None}, 'run_id': None, 'schema_version': 'ontokin.agent/0.6', 'status': 'failed', 'truncated': False}
+
+======================================================================
+FAIL: test_same_project_action_edit_l04_to_l02_rejects_stale_run (test_reach_agent.ReachAgentTests.test_same_project_action_edit_l04_to_l02_rejects_stale_run)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_agent.py", line 135, in test_same_project_action_edit_l04_to_l02_rejects_stale_run
+    edited = self.success(self.service.handle(request))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/reach_agent_support.py", line 74, in success
+    self.assertEqual(response["status"], "succeeded", response)
+AssertionError: 'failed' != 'succeeded'
+- failed
++ succeeded
+ : {'accepted_program_revision': 'sha256:af42329216000f3799b08cf4ec4272c8907bcc1446c2d0b0b5edc9f044e57e0e', 'achieved_level': None, 'diagnostics': [{'blocks': ['represented', 'constructed', 'evaluated', 'delivered'], 'category': 'resource_limit', 'code': 'OKL-E-RESOURCE', 'details': {'budget': 'max_operations', 'consumed': 100001, 'limit': 100000, 'partial_results': 'No uncommitted source, artifact or run advancement is available.', 'request_terminated': True}, 'location_status': 'program_condition_without_source_span', 'message': 'The request exhausted max_operations.', 'phase': 'support', 'primary': None, 'program_revision': 'sha256:8fe2123277e94597d3e4ca518e3c1c1fd68d9a18325459f563c9eb5a270fe748', 'related': [], 'repair': {'patches': [], 'summary': 'Correct the reported condition and validate the complete candidate again.'}, 'rule_ids': ['LANG-009'], 'run_id': None, 'schema_version': 'ontokin.diagnostic/0.2', 'severity': 'error', 'source_id': None, 'source_revision': None, 'time': None}], 'next_cursor': None, 'operation': 'edit', 'program_revision': 'sha256:8fe2123277e94597d3e4ca518e3c1c1fd68d9a18325459f563c9eb5a270fe748', 'progress': {'cancellation_requested': False, 'implementation': {'name': 'ontokin-reference', 'source_code_sha256': 'sha256:3ba3f5bf65d2feefd1056743eff57dab0289771b11103843c4a286ef645363ec', 'version': '0.4.0'}, 'phase': 'complete'}, 'project_id': 'reach', 'protocol_error': None, 'request_id': '4', 'requested_level': 'evaluated', 'result': {'achieved_level': None, 'delivery': 'not_requested', 'implementation': {'name': 'ontokin-reference', 'source_code_sha256': 'sha256:3ba3f5bf65d2feefd1056743eff57dab0289771b11103843c4a286ef645363ec', 'version': '0.4.0'}, 'outcome': 'resource_limit', 'partial_results': 'Only already-retained immutable source snapshots and any previously committed run descriptor are available.', 'requested_level': 'evaluated', 'run_state': None}, 'run_id': None, 'schema_version': 'ontokin.agent/0.6', 'status': 'failed', 'truncated': False}
+
+----------------------------------------------------------------------
+Ran 8 tests in 6.370s
+
+FAILED (failures=4)

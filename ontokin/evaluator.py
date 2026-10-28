@@ -30,7 +30,9 @@ MAX_SAMPLES = 1000
 MAX_OUTPUT_RECORDS = 100000
 IMPULSE_PROFILE = "impulse-0.1"
 FORCE_PROFILE = "force-0.1"
-IMPULSE_PROFILES = frozenset({IMPULSE_PROFILE, FORCE_PROFILE})
+REACH_PROFILE = "planar-reach-0.1"
+FORCE_PROFILES = frozenset({FORCE_PROFILE, REACH_PROFILE})
+IMPULSE_PROFILES = frozenset({IMPULSE_PROFILE, *FORCE_PROFILES})
 
 
 class _NumericFault(Exception):
@@ -507,19 +509,17 @@ class _Simulator:
                     raise _NumericFault("Impulse operands and sphere mass/inertia must be finite.")
                 current = self._dynamic_kinematics(event.target, time, state)
                 operation = "lever_arm_world_m"
-                lever = _rotate(current.orientation, payload.point_self_m)
+                lever = self._impulse_lever(current, payload.point_self_m)
                 operation = "application_point_world_m"
-                point = _add(current.position, lever)
+                point = self._impulse_point(current, lever)
                 operation = "angular_impulse_world_n_m_s"
-                angular_impulse = _cross(lever, payload.impulse_world_n_s)
+                angular_impulse = self._impulse_cross(lever, payload.impulse_world_n_s)
                 # Round each exposed final component once. The unexposed
                 # quotient can exceed binary64 when the final sum cancels.
                 operation = "linear_velocity_after_world_m_per_s"
-                velocity = tuple(_round(_f(value) + _f(impulse) / _f(obj.mass))
-                                 for value, impulse in zip(current.velocity, payload.impulse_world_n_s))
+                velocity = self._impulse_velocity(current.velocity, payload.impulse_world_n_s, obj.mass)
                 operation = "angular_velocity_after_world_rad_per_s"
-                omega = tuple(_round(_f(value) + _f(impulse) / _f(obj.inertia))
-                              for value, impulse in zip(current.omega, angular_impulse))
+                omega = self._impulse_velocity(current.omega, angular_impulse, obj.inertia)
             except _NumericFault as error:
                 fail("OKL-E-NUMERIC", str(error), phase="evaluation", category="numerical_failure",
                      rules=["IMP-002", "IMP-003", "LANG-004"],
@@ -530,7 +530,7 @@ class _Simulator:
             if payload.impulse_world_n_s != ZERO:
                 original = state.dynamic[event.target]
                 state.dynamic[event.target] = _DynamicInitial(
-                    time, _Kinematics(current.position, current.orientation, velocity, omega), original.since)
+                    time, self._impulse_anchor(current, velocity, omega), original.since)
                 touched.add(("object", event.target))
             # A zero impulse changes only its influence projection. In
             # particular, it does not change another grip's motion dependency.
@@ -621,6 +621,22 @@ class _Simulator:
         else:
             self._latch(event.target, time, state, "stopped")
         touched.add(("joint" if action.kind == "tween" else "object", action.target))
+
+    def _impulse_lever(self, current, point):
+        return _rotate(current.orientation, point)
+
+    def _impulse_point(self, current, lever):
+        return _add(current.position, lever)
+
+    def _impulse_cross(self, lever, impulse):
+        return _cross(lever, impulse)
+
+    def _impulse_velocity(self, initial, impulse, denominator):
+        return tuple(_round(_f(value) + _f(delta) / _f(denominator))
+                     for value, delta in zip(initial, impulse))
+
+    def _impulse_anchor(self, current, velocity, omega):
+        return _Kinematics(current.position, current.orientation, velocity, omega)
 
     def _process_boundary(self, time: Fraction) -> None:
         if self.check is not None:
@@ -755,18 +771,47 @@ class _Simulator:
                 "scene_mass_kg": _round(sum((_f(obj.mass) for obj in self.model.objects.values()), Fraction(0)))}
 
 
-def _simulator(model, check=None):
+def _simulator(model, check=None, *, work=None):
+    if model.profile == REACH_PROFILE:
+        from .reach_runtime import ReachSimulator
+        return ReachSimulator(model, check=check, work=work)
     if model.profile == FORCE_PROFILE:
         from .force_runtime import ForceSimulator
         return ForceSimulator(model, check=check)
     return _Simulator(model, check=check)
 
 
-def preflight(model: SceneModel, *, check: Callable[[], None] | None = None) -> dict[str, Any]:
+def _request_work(model, check, work):
+    """A direct reach evaluation is bounded even without an Agent callback.
+
+    Source/Agent/export callers pass their transient compiler context for a
+    single combined request. A separate call without it starts a fresh context;
+    no counters or cache are retained in the reusable source model.
+    """
+    if model.profile == REACH_PROFILE:
+        if work is None:
+            from .reach_numeric import ReachExecutionWork
+            work = ReachExecutionWork(check=check)
+        def checkpoint():
+            from .reach_numeric import ReachAdmissionError
+            from .reach_source import reach_error
+            try:
+                work.tick()
+            except ReachAdmissionError as error:
+                if error is work.callback_error:
+                    raise
+                raise reach_error(error.reach_code, str(error), model.span,
+                                  phase="evaluation", details=error.details) from error
+        return checkpoint, work
+    return check, work
+
+
+def preflight(model: SceneModel, *, check: Callable[[], None] | None = None, work=None) -> dict[str, Any]:
     """Validate the authored timeline without creating a persistent live run."""
+    check, work = _request_work(model, check, work)
     if model.profile in IMPULSE_PROFILES:
         _output_budget(model, 1, check=check)
-    simulator = _simulator(model, check=check)
+    simulator = _simulator(model, check=check, work=work)
     simulator.advance(model.duration)
     return {"outcome": "valid", "duration_seconds": time_text(model.duration),
             "boundary_times_seconds": simulator.boundaries}
@@ -789,15 +834,18 @@ def _records_per_sample(model: SceneModel, *, constructing: bool = False,
     if check is not None:
         check()
     base += 4 * len(model.objects)
-    if model.profile == FORCE_PROFILE:
+    if model.profile in FORCE_PROFILES:
         from .force_runtime import force_record_bound
         base += force_record_bound(model, constructing=constructing, horizon=horizon, side=side, check=check)
+    if model.profile == REACH_PROFILE:
+        from .reach_projection import reach_record_bound
+        base += reach_record_bound(model, check=check)
     if constructing:
         return base
     retained: dict[str, int] = {}
     total = maximum = 0
     for boundary, blocks in groupby(sorted(model.events, key=lambda block: block.time), key=lambda block: block.time):
-        if model.profile == FORCE_PROFILE and horizon is not None and (boundary > horizon or (boundary == horizon and side == "before")):
+        if model.profile in FORCE_PROFILES and horizon is not None and (boundary > horizon or (boundary == horizon and side == "before")):
             break
         group: dict[str, int] = {}
         for block in blocks:
@@ -834,15 +882,19 @@ def _output_budget(model: SceneModel, sample_count: int, *, constructing: bool =
                            repair="Request fewer sample times, or use a smaller scene for this bounded prototype.")
 
 
-def construct(model: SceneModel) -> dict[str, Any]:
+def construct(model: SceneModel, *, check=None, work=None) -> dict[str, Any]:
     """Construct initial world state, before t=0 action/event processing.
 
     Construction resolves the relationship graph and physical descriptions. A
     later action conflict does not prevent this lower-level result.
     """
-    _output_budget(model, 1, constructing=True)
+    check, work = _request_work(model, check, work)
+    _output_budget(model, 1, constructing=True, check=check)
     try:
-        initial = _simulator(model).advance(Fraction(0), "before")
+        simulator = _simulator(model, check=check, work=work)
+        if model.profile == REACH_PROFILE:
+            simulator.context_kind = "constructed_initial"
+        initial = simulator.advance(Fraction(0), "before")
     except OntoKinError as exc:
         if exc.diagnostic.category == "numerical_failure":
             exc.diagnostic.phase = "elaboration"
@@ -854,23 +906,24 @@ def construct(model: SceneModel) -> dict[str, Any]:
             "duration_seconds": time_text(model.duration), "initial_state": initial}
 
 
-def evaluate(model: SceneModel, times: Iterable[Any] | None = None, *, side: str = "after") -> dict[str, Any]:
+def evaluate(model: SceneModel, times: Iterable[Any] | None = None, *, side: str = "after", check=None, work=None) -> dict[str, Any]:
     """Evaluate requested times and verify all authored events through the horizon.
 
     A request may be a decimal string/number, or a dictionary containing
     ``time_seconds`` and an optional ``side``. Results retain the caller's order.
     Exact decimal strings are recommended; float arguments retain binary64 time.
     """
+    check, work = _request_work(model, check, work)
     if times is None:
         times = ["0", model.duration]
-    records = _records_per_sample(model)
+    records = _records_per_sample(model, check=check)
     if model.profile in IMPULSE_PROFILES:
         # Even an empty requested sample list still validates the full horizon
         # and must not allocate an unbounded retained application group.
-        _output_budget(model, 1, records_per_sample=records)
+        _output_budget(model, 1, records_per_sample=records, check=check)
     requests: list[tuple[Fraction, str, int]] = []
     for index, request in enumerate(times):
-        _output_budget(model, index + 1, records_per_sample=records)
+        _output_budget(model, index + 1, records_per_sample=records, check=check)
         sample_side = request.get("side", side) if isinstance(request, dict) else side
         value = request.get("time_seconds", request.get("time")) if isinstance(request, dict) else request
         time = exact_time(value)
@@ -881,7 +934,7 @@ def evaluate(model: SceneModel, times: Iterable[Any] | None = None, *, side: str
                                         "requested_time_seconds": time_text(time), "requested_side": sample_side},
                                repair="Use before or after and a timestamp from zero through the scene duration.")
         requests.append((time, sample_side, index))
-    simulator = _simulator(model)
+    simulator = _simulator(model, check=check, work=work)
     samples: list[Any] = [None] * len(requests)
     for time, sample_side, index in sorted(requests, key=lambda request: (request[0], request[1] == "after")):
         samples[index] = simulator.advance(time, sample_side)
@@ -896,7 +949,7 @@ def evaluate(model: SceneModel, times: Iterable[Any] | None = None, *, side: str
         assumptions.update(external_torque="authored_instantaneous_angular_impulses_only",
                            impulses="authored_world_impulse_at_target_self_point",
                            continuous_external_forces="uniform_gravity_only", continuous_external_torque="absent")
-    if model.profile == FORCE_PROFILE:
+    if model.profile in FORCE_PROFILES:
         assumptions.update(continuous_external_forces="authored_constant_world_com_intervals_and_uniform_gravity",
                            force_intervals="exact_rational_start_plus_canonical_duration")
     return {
@@ -910,7 +963,8 @@ def evaluate(model: SceneModel, times: Iterable[Any] | None = None, *, side: str
 
 
 def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
-                    check: Callable[[], None] | None = None) -> dict[str, Any]:
+                    check: Callable[[], None] | None = None, work=None,
+                    context_kind: str = "recorded_prefix", capture_observer=None) -> dict[str, Any]:
     """Replay only through an exact endpoint, retaining the last checked state.
 
     Unlike evaluate(), this additive agent hook does not preflight future
@@ -918,7 +972,11 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
     between boundaries retains the last state actually checked. ``failure`` is
     an OntoKinError for the caller to bind to its immutable source and run.
     Wrap OntoKinError callback interruptions if they must propagate unchanged.
+    An internal recording observer may retain the checked source observations
+    and phase anchors from this same replay. It must preflight retention before
+    capture; Agent-only action fields never mutate those source observations.
     """
+    check, work = _request_work(model, check, work)
     endpoint = exact_time(until)
     if side not in ("before", "after") or not 0 <= endpoint <= model.duration:
         raise OntoKinError("OKL-E-SAMPLE", "The requested run endpoint is outside the scene or has an invalid side.",
@@ -926,19 +984,38 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
                            details={"duration_seconds": time_text(model.duration),
                                     "requested_time_seconds": time_text(endpoint), "requested_side": side})
     _output_budget(model, 1, check=check, records_per_sample=(
-        _records_per_sample(model, check=check, horizon=endpoint, side=side) if model.profile == FORCE_PROFILE else None))
+        _records_per_sample(model, check=check, horizon=endpoint, side=side) if model.profile in FORCE_PROFILES else None))
     simulator = None
     last = None
     failure = None
 
     def capture(time: Fraction, boundary_side: str) -> dict[str, Any]:
+        if capture_observer is not None:
+            capture_observer.before_capture(simulator, time, boundary_side)
         sample = simulator.advance(time, boundary_side)
+        source_sample = sample
+        if capture_observer is not None:
+            sample = dict(sample)
+            sample["actions"] = dict(sample["actions"])
         # These fields belong to the prefix adapter; legacy samples stay intact.
         for path, action in model.actions.items():
             if check is not None:
                 check()
             runtime = simulator.state.actions[path]
             record = sample["actions"][path]
+            if capture_observer is not None:
+                record = dict(record)
+                sample["actions"][path] = record
+            if action.kind == "reach_planar":
+                value = sample["reaches"][path]["current"]["value"]
+                resolved = value["resolved_joint_targets_rad"]
+                record.update(channel="joint_coordinates", value_type="AnglePair",
+                              start_value={"available": runtime.initial is not None,
+                                           "value": copy.deepcopy(runtime.initial)},
+                              current_value={"available": True, "value": value["joint_coordinates_rad"]},
+                              target_value={"available": resolved is not None, "value": resolved,
+                                            "reason": "action_has_not_started" if resolved is None else None})
+                continue
             record["channel"] = simulator._channel(action)[1]
             record["start_value"] = {"available": runtime.initial is not None,
                                       "value": copy.deepcopy(runtime.initial)}
@@ -954,16 +1031,23 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
                     reason = "action_has_not_started"
                 else:
                     try:
-                        target = (_affine(runtime.initial, action.vector, action.duration) if action.kind == "move"
-                                  else _advance_orientation(runtime.initial, action.vector, action.duration))
+                        if model.profile == REACH_PROFILE:
+                            target = simulator.ordinary_target(path, time)
+                        else:
+                            target = (_affine(runtime.initial, action.vector, action.duration) if action.kind == "move"
+                                      else _advance_orientation(runtime.initial, action.vector, action.duration))
                     except _NumericFault:
                         reason = "target_exceeds_finite_range"
             record["target_value"] = {"available": reason is None, "value": target, "reason": reason}
             record["value_type"] = {"move": "Point3", "spin": "Rotation", "tween": "Quantity"}[action.kind]
+        if capture_observer is not None:
+            capture_observer.after_capture(simulator, time, boundary_side, source_sample)
         return sample
 
     try:
-        simulator = _simulator(model, check=check)
+        simulator = _simulator(model, check=check, work=work)
+        if model.profile == REACH_PROFILE:
+            simulator.context_kind = context_kind
         last = capture(Fraction(0), "before")
         while True:
             if check is not None:
@@ -971,13 +1055,22 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
             boundary = simulator._next_boundary()
             if boundary is None or boundary > endpoint or (boundary == endpoint and side == "before"):
                 break
-            last = capture(boundary, "before")
+            if (capture_observer is None or last["time_seconds"] != time_text(boundary)
+                    or last["side"] != "before"):
+                last = capture(boundary, "before")
             last = capture(boundary, "after")
         if last["time_seconds"] != time_text(endpoint) or last["side"] != side:
+            # A non-event recording endpoint still needs two actual source
+            # observations. Do not relabel its after-state as a before-state.
+            if (capture_observer is not None and side == "after"
+                    and (last["time_seconds"] != time_text(endpoint) or last["side"] != "before")):
+                last = capture(endpoint, "before")
             last = capture(endpoint, side)
         if check is not None:
             check()
     except OntoKinError as exc:
+        if model.profile == REACH_PROFILE and work is not None and exc is work.callback_error:
+            raise
         failure = exc
     return {"valid_until_seconds": None if last is None else last["time_seconds"],
             "valid_until_side": None if last is None else last["side"],
@@ -985,7 +1078,7 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
             "boundary_times_seconds": [] if simulator is None else list(simulator.boundaries)}
 
 
-def inspect_in_frame(sample: dict[str, Any], object_path: str, frame_path: str = "world") -> dict[str, Any]:
+def inspect_in_frame(sample: dict[str, Any], object_path: str, frame_path: str = "world", *, work=None) -> dict[str, Any]:
     """Re-express a sampled pose and world-measured velocity in another frame.
 
     Velocity components are rotated into the requested axes. They remain
@@ -998,17 +1091,48 @@ def inspect_in_frame(sample: dict[str, Any], object_path: str, frame_path: str =
         raise OntoKinError("OKL-E-SAMPLE", "The requested object or frame is absent from this sample.",
                            phase="inspection", blocks=[],
                            repair="Use an object and frame present in this revision's sample.") from exc
-    try:
-        inverse = _inverse(tuple(reference["orientation_wxyz"]))
-        position = _rotate(inverse, _add(tuple(obj["position_m"]), _neg(tuple(reference["position_m"]))))
-        rotation = _multiply(inverse, tuple(obj["orientation_wxyz"]))
-        velocity = _rotate(inverse, tuple(obj["velocity_m_per_s"]))
-        omega = _rotate(inverse, tuple(obj["angular_velocity_rad_per_s"]))
-    except _NumericFault as exc:
-        raise OntoKinError("OKL-E-NUMERIC", str(exc), phase="inspection", category="numerical_failure",
-                           time=exact_time(sample["time_seconds"]), side=sample["side"], blocks=[],
-                           element_id=obj["element_id"], details={"object": object_path, "frame": frame_path},
-                           repair="Inspect in world or in a frame whose relative coordinates remain finite.") from exc
+    if work is not None:
+        from .reach_numeric import ReachAdmissionError
+        from .reach_pose import ReachPoseOps
+        try:
+            work.tick()
+            if frame_path == "world":
+                position, rotation = obj["position_m"], obj["orientation_wxyz"]
+                velocity, omega = obj["velocity_m_per_s"], obj["angular_velocity_rad_per_s"]
+            else:
+                ops = ReachPoseOps(work)
+                value = ops.make(obj["position_m"], obj["orientation_wxyz"],
+                                 obj["velocity_m_per_s"], obj["angular_velocity_rad_per_s"])
+                base = ops.make(reference["position_m"], reference["orientation_wxyz"])
+                inverse = ops.inverse_rotation(base.rotation)
+                relative = ops.make(position=ops.relative_point(base, value),
+                    orientation=ops.multiply(inverse, value.rotation),
+                    velocity=ops.rotate(inverse, value.exact_velocity),
+                    omega=ops.rotate(inverse, value.exact_omega))
+                position, rotation, velocity, omega = (relative.position, relative.orientation,
+                                                       relative.velocity, relative.omega)
+        except ReachAdmissionError as exc:
+            if exc is work.callback_error:
+                raise
+            resource = exc.reach_code == "reach_resource"
+            raise OntoKinError("OKL-E-RESOURCE" if resource else "OKL-E-NUMERIC", str(exc),
+                phase="inspection", category="resource_limit" if resource else "numerical_failure",
+                time=exact_time(sample["time_seconds"]), side=sample["side"], blocks=[],
+                element_id=obj["element_id"],
+                details={**exc.details, "object": object_path, "frame": frame_path},
+                repair="Inspect in world or in a frame whose relative coordinates remain finite.") from exc
+    else:
+        try:
+            inverse = _inverse(tuple(reference["orientation_wxyz"]))
+            position = _rotate(inverse, _add(tuple(obj["position_m"]), _neg(tuple(reference["position_m"]))))
+            rotation = _multiply(inverse, tuple(obj["orientation_wxyz"]))
+            velocity = _rotate(inverse, tuple(obj["velocity_m_per_s"]))
+            omega = _rotate(inverse, tuple(obj["angular_velocity_rad_per_s"]))
+        except _NumericFault as exc:
+            raise OntoKinError("OKL-E-NUMERIC", str(exc), phase="inspection", category="numerical_failure",
+                               time=exact_time(sample["time_seconds"]), side=sample["side"], blocks=[],
+                               element_id=obj["element_id"], details={"object": object_path, "frame": frame_path},
+                               repair="Inspect in world or in a frame whose relative coordinates remain finite.") from exc
     return {
         "element_id": obj["element_id"], "time_seconds": sample["time_seconds"], "side": sample["side"],
         "pose_frame": frame_path, "position_m": list(position),

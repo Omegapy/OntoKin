@@ -1,64 +1,33 @@
 # OntoKin status
 
-Checkpoint: **2026-10-21T05:33:28Z**. The complete [GOAL](GOAL.md) remains **in progress**. The finite **force-0.1 / Agent/0.5 / recorded GLB/0.5 release is complete**: all **F01–F12** and mandatory roles passed, [PR #17](https://github.com/Omegapy/OntoKin/pull/17) merged as `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`, and fresh resulting-main verification passed.
+Checkpoint: October 28, 2026, C059 integration preparation. The full [GOAL](GOAL.md) remains in progress: an AI-agent programming language for editable 3D shapes, objects and animation, with validated delivery to game engines including Unreal Engine.
 
-## Integrated capability and evidence
+## Released capability
 
-Supported programs author finite world forces at the center of mass of free homogeneous spheres, including additive overlap, exact completion, gravity, impulse/release ordering, whole-boundary rollback and valid requested prefixes. Explicit Agent/0.5 supplies complete revision-bound inspection, atomic physical-parameter repair, isolated stores, retries, cancellation, budgets and exact artifact retrieval. Recorded GLB/0.5 preserves source geometry/PBR and bounded sampled motion with complete source force histories. Recorded playback supplies no live destination physics.
+The finite force-0.1 / Agent/0.5 / recorded GLB/0.5 release remains complete at its identified implementation and [release evidence](docs/engineering/force-release-validation/README.md). Earlier core, construction, surface and impulse releases retain their meanings. Recorded GLB playback supplies no live destination physics. No new release or engine acceptance is claimed by C059.
 
-The [release record](docs/engineering/force-release-validation/README.md), [actual audit](docs/engineering/force-release-validation/audit-008.json) and [integration record](docs/engineering/force-release-validation/integration.json) identify tested implementation `c7db6520e172b2b38591969a4bdf75f97a993dbb`, evidence publication `34e33adce7eb07896c8f6f30ddbf6caa66545d2d` and actual main merge `e74dd14bd90bfd0ef7b11d9a939292bb9e5dda4c`. All **482 eligible inputs** match across those revisions. Runtime remains `ontokin-reference` 0.4.0, SHA-256 `0ff20c31e7233a21f164891576181cd4c11e3301e07567915502440be4137ea0`.
+## Current development integration
 
-| Executed evidence | Actual result |
-| --- | --- |
-| Complete force acceptance | 20/20 fresh execution stages; 56/56 adopted source cases and 242/242 mapped methods passed. |
-| Compatibility | 878/878 tests passed separately on CPython 3.11.17, 3.12.14 and 3.13.16, with no failures, errors or skips. |
-| Source and Agent delivery | 23 source GLBs, seven Agent-retrieved GLBs, five required failures without artifacts; independent geometry/PBR and fixed/dense motion checks passed. |
-| Browser and inherited workflows | All 83 new PNGs actually reviewed; all 34 inherited local steps passed. |
-| Independent release audit | F01–F12 and all mandatory roles passed; zero failed or pending gates. |
-| Resulting main | Six stages passed, including the eleven-step local plan, 878 regression tests, 106 Agent/0.5 cohort tests, fresh source/delivery/native checks and another complete F01–F12 audit. |
+C059 prepares one main integration of the reviewed C032 runtime and later C058 evidence. It excludes the held C035 runtime changes and preserves their exact tests and historical results. Explicit source 0.6 / planar-reach-0.1, Agent/0.6 and GLB/0.6 remain experimental; their discovery text states that release acceptance is incomplete. Existing defaults remain CLI Agent/0.1, Python ProgramAgentService/0.2 and GLB/0.1.
 
-The accepted run and resulting-main run both retained stable source/Git identities. Six earlier failures, interrupted attempt 007, the rejected main preflight and all accepted results remain separately preserved. Six exact-hash archives reconstruct with verified ZIP CRCs. Actual execution and archive creation used exclusive executor windows after observed external file replacement/truncation; the responsible environment component remains unidentified. Runtime, WAL behavior and the suite's own concurrency tests were unchanged.
+[The reconciliation record](docs/engineering/repository-reconciliation-2026-10-28/README.md) identifies source selection, archive proof and actual verification. Fresh candidate checks and main integration are pending at this preparation checkpoint. Historical C032 results remain separate from new executions.
 
-Earlier finite gates retain their original evidence:
+## Decisions and unresolved gates
 
-- Pinned modules and keyed construction: [C01–C20 record](docs/engineering/construction-validation/validation-summary.json).
-- Native surfaces, Agent/0.3 and GLB/0.3: [M01–M12 record](docs/engineering/surface-release-validation/README.md), [PR #9](https://github.com/Omegapy/OntoKin/pull/9).
-- Explicit impulses, Agent/0.4 and GLB/0.4: [I01–I12 record](docs/engineering/impulse-release-validation/README.md), [PR #11](https://github.com/Omegapy/OntoKin/pull/11).
-- Force source kernel: [original checkpoint](docs/language-design/force-v0.1/KERNEL-CHECKPOINT.md), [PR #13](https://github.com/Omegapy/OntoKin/pull/13).
-- Agent/0.5 source interface: [local integration record](docs/engineering/force-agent-local-validation-2026-10-19/README.md), [PR #16](https://github.com/Omegapy/OntoKin/pull/16). The [historical archive recovery](docs/engineering/force-agent-validation/README.md#historical-archive-recovery) retains its separately identified scope; the conversation archive remains unavailable.
+[OK-DEC-COMPARE-M1/0.1.0](docs/engineering/OK-DEC-COMPARE-M1-0.1.0.md) rejects exact C058 M1 for comparison-only operation saving. No replacement accounting model is adopted. The C057 comparison accounting/passive-authority concern remains open.
 
-## Local validation and next unmet gate
+Historical original recording evidence remains **24/28, failed**. **P11/P16/P23/L03** remain unresolved, and **C035 remains held, including adverse timing**. Preserve all original limits: 100,000 shared operations, 30,000 ms, 32,768 operand bits, 256 numerical-cache entries and 64 cursor updates; all fixtures, horizons/fps/helpers, equations, independent oracles and tolerances remain.
 
-[OK-ENG-006](docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md) retains the owner's no-payment policy. Use `python3 tools/check_local.py --force-agent` with the pinned verification packages; `--full` adds the inherited visual roles. [OK-ENG-008](docs/engineering/OK-ENG-008-force-release-conformance.md) defines the complete finite force audit. Historical C/M/I provider-pending rows remain unchanged; the new versioned audit independently reconciles their current raw evidence and executed provider roles.
+The next runtime objective is to resolve the remaining original recording failures under the adopted semantics and complete-request accounting, beginning with the identified P11/L03 source-evaluation bottleneck and its independent evidence. Every new runtime change requires relevant regression and original-input verification. The finite reach release still needs all 28 source recordings and ten Agent artifacts, CPython 3.11/3.12/3.13, independent rates/native/browser/visual and hostile/inherited roles, formal input closure, and every R01–R12/Q01–Q22 requirement.
 
-Both workflows remain manual-only with default-false hosted-job opt-in. No hosted job was dispatched or retried, and GitHub reported no run for the tested candidate, evidence head or resulting merge. Repository-wide Actions settings and automations were not changed. No unexecuted macOS, Blender or live-engine support is claimed.
+## Repository lifecycle and ownership
 
-**Next: finish bounded GLB/0.6 recording and Agent delivery, then complete the reach release gates.** [OK-LANG-006/0.1.0](docs/language-design/planar-reach-v0.1/ADOPTION.md) is adopted on main; its runtime is **not integrated**. The continuation is published in [draft PR #27](https://github.com/Omegapy/OntoKin/pull/27), stacked on [draft PR #25](https://github.com/Omegapy/OntoKin/pull/25). [Issue #26](https://github.com/Omegapy/OntoKin/issues/26) records the current ownership and recovered handoff. Original branches and failures remain preserved.
+[OK-ENG-009/0.1.0](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) treats main as the current development baseline and keeps release acceptance separate. Use one branch per active bounded scope, normally at most three active work branches; checkpoints are commits. Retain exact histories before removing inactive branches. The historical archive `archive/pre-consolidation-20261028` preserves all 104 original heads through 95 distinct parents; never merge its index-only tree into main.
 
-The interrupted evidence publication is now complete. The [checkpoint](https://github.com/Omegapy/OntoKin/blob/7769d107b8dd63ed8e4f0d0f3901d24a1f088c9d/docs/engineering/reach-release-review/README.md), [complete documentation review](https://github.com/Omegapy/OntoKin/blob/7769d107b8dd63ed8e4f0d0f3901d24a1f088c9d/docs/engineering/reach-release-review/documentation-review.md) and [execution archive](https://github.com/Omegapy/OntoKin/blob/7769d107b8dd63ed8e4f0d0f3901d24a1f088c9d/docs/engineering/reach-release-review/execution-001.tar.xz) retain the actual prior source identities and raw results:
+Active root scope: `work/main-reconciliation-20261028-c059`, [Issue #26 comment 6478260243](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6478260243). Main lease owner `interactive-main-reconciliation-20261028-c059-7of9` acquired `22c43aa07012eed147f34d7fe311dfd1bf1e8123` at `2026-10-28T19:24:54.000Z`, expiring `2026-10-28T19:54:54.000Z`. Root alone owns main, source edits and runtime/test/SQLite execution. The explicitly delegated cleanup worker may remove only reconciled historical refs; it cannot change source or main. Reconcile actual heads before uncertain retries. Both hosted workflows remain manual-only/default-false; no hosted execution is selected.
 
-| Preserved branch evidence | Actual result |
-| --- | --- |
-| Documentation | 95 narrative documents and 15 diagrams reviewed; unchanged review inputs freshly reconciled. |
-| Frozen reach source corpus | 45/45 cases passed within the original 100,000-operation request budget, including P23's 32 arms. |
-| Complete Python suite | 1,103 passed; seven reach-delivery failures out of 1,110. |
-| Local verification plan | 10/11 stages passed; complete-suite stage blocked by those seven failures. |
-| Agent/0.5 compatibility | 106 tests, source workflow and independent audit passed. |
+## Remaining product scope
 
-Those historical results do not certify subsequent changed code. Published continuation `7769d107b8dd63ed8e4f0d0f3901d24a1f088c9d` has the exact tree of local `2bdbf6c73e2c4a3ead3b1e5d37027beecab3a978`. A separately identified P01 quarter-second development artifact first exported and passed the independent supplied-byte checker at **90,381 shared operations**, with the original 100,000 limit. The full recording and current delivery cohort remain under implementation; no complete reach acceptance is claimed. Prefix reuse, exact retry, cancellation/rollback, conservative certificate arithmetic and independent reference corrections are being verified on the continuation branch.
+Keep the complete GOAL scope: richer typed algorithms/libraries and replacement, textures/mapping/skin deformation, continuous torques and contacts/collisions, general rigid dynamics and mechanisms, vehicles, articulated creatures and purposeful movement, flight/swimming and medium forces, vegetation/flexibility/wind, terrain/buildings, liquids/deformable solids, animation transitions, live engines, measured scale/performance, and a documented direct-tool authoring comparison. Finishing reach will not complete those domains.
 
-The next acceptance gate is a successful full recording and all remaining actual Agent delivery tests without budget or frozen-input changes. Then complete independent reference/rate acceptance, all **28 source and ten Agent artifacts**, actual native/browser validation, compatibility and inherited roles, the complete **R01–R12/Q01–Q22** audit and resulting-main checks under the [release contract](docs/language-design/planar-reach-v0.1/release-contract.md). The direct-tool authoring comparison requires its own adopted preparation and measured unseen variants.
-
-## Remaining full-product scope
-
-GOAL still requires richer typed algorithms/libraries and compatible replacement; textures, mapping and skin deformation; continuous torques, contacts/collisions, general rigid dynamics and dynamic/closed mechanisms; vehicles; articulated creatures and purposeful locomotion/manipulation; flight/swimming and medium forces; vegetation/flexibility/wind; terrain/buildings; liquids and deformable solids; animation transitions, live engines, measured scale/performance and a documented direct-tool authoring comparison. Blender delivery and a generic delivered-level check remain unestablished. Visual lofts add no physical matter or motion authority. A finite force pass does not complete these domains.
-
-## Integration and recovery
-
-**Active C059 main integration lease.** Owner `interactive-main-reconciliation-20261028-c059-7of9` acquired this bounded lease at `2026-10-28T19:24:54.000Z`, expiring at `2026-10-28T19:54:54.000Z`. Scope: selected development integration, current decisions/status and branch reconciliation under Issue #26 comment 6478260243. Starting main is `2bb4588e121fcfe99b4d42c734b15b38362f3642`; the verified archival history is `e6917dae0be3a786c22e76be3de62e3c97784cf5`. Candidate verification is pending. Root owns source execution and main writes; source reviewers remain read-only. No release acceptance is claimed. Reconcile actual refs before retrying any unknown write.
-
-The preceding checkpoint's release record follows.
-
-**Main documentation lease released by this checkpoint.** Owner `interactive-reach06-delivery-finish-20261021-0330-7of9` acquired the STATUS-only lease at `2026-10-21T05:32:35Z` in `6e8702c281cb91f57a652cf750fed5ba33ac9402`, expiring at `2026-10-21T06:02:35Z`. The recovered checkpoint is now published. This nonforce expected-head update releases that lease and changes only STATUS; reach runtime and workflows remain unmerged. The [preceding status](https://github.com/Omegapy/OntoKin/blob/edf2412e5ea993b369e0204194921e4976504811/STATUS.md) preserves the prior adoption integration record.
-
-Implementation continues on `work/reach06-delivery-finish-20261021-0330-7of9` and its coordinated Agent, reference and destination worktrees. Main runtime integration requires a fresh verified lease and complete applicable acceptance. Actual runtime/Agent/SQLite/full-suite/workflow/archive executions retain exclusive executor windows; keep source hashes stable and preserve failed attempts. Reconcile uncertain writes against actual refs before retrying. No hosted execution was dispatched or retried.
+The prior [main status](https://github.com/Omegapy/OntoKin/blob/2bb4588e121fcfe99b4d42c734b15b38362f3642/STATUS.md) and [C058 continuation status](https://github.com/Omegapy/OntoKin/blob/8d17f369dadf4db038d72577112e8669e10ae55b/STATUS.md) preserve their historical evidence and limitations unchanged.

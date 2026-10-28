@@ -56,11 +56,12 @@ class SurfaceAgentProtocolTests(unittest.TestCase):
         for binding in (previous, program_protocol):
             with self.assertRaises(ProtocolError):
                 binding.validate_request(self.request())
-        for schema in ("ontokin.agent/0.1", "ontokin.agent/0.2", "ontokin.agent/0.4"):
+        for schema in ("ontokin.agent/0.1", "ontokin.agent/0.2", "ontokin.agent/0.4",
+                       "ontokin.agent/0.5", "ontokin.agent/0.6"):
             with self.subTest(schema=schema), self.assertRaises(ProtocolError):
                 self.binding.validate_request(self.request(schema_version=schema))
         with self.assertRaises(ProtocolError):
-            program_protocol.bind("ontokin.agent/0.6")
+            program_protocol.bind("ontokin.agent/9999")
 
     def test_mesh_count_is_a_required_integer_token_in_triangle_units(self):
         for count in (1, 7, 256):

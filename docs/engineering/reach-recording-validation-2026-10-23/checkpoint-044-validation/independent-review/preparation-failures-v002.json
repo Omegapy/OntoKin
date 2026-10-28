@@ -1,0 +1,36 @@
+[
+  {
+    "attempt": "attempt-001",
+    "status": "audit_preparation_defect_preserved",
+    "failed_script": "audit_v001.py",
+    "failed_script_sha256": "8e0c86280bcb8dcb38af422fa6b0fde8a14095e7e5f7639d4ab3eca85a849085",
+    "corrected_script": "audit_v002.py",
+    "corrected_script_sha256": "1055c614282980632be9ef7e7a1bac119de61eddfd0339d0d755d3f4a0b525d9",
+    "change": "Accept the exact report phrase unknown remainder after the original refusal alongside the HANDOFF word unseen; both explicitly preserve the already reviewed unknown-tail limitation. No core or artifact file changed.",
+    "core_checks_completed_before_failure": [
+      "all2282 physical blobs/modes/sizes",
+      "both original/core Git tree reconstruction",
+      "all9 archive parts and99 members/CRC/hash/mode",
+      "actual99-member restored hash/mode/mtime_ns",
+      "request/review/reference bindings through exact prose hashes"
+    ],
+    "product_requests": 0
+  },
+  {
+    "attempt": "attempt-002",
+    "status": "audit_preparation_defect_preserved",
+    "failed_script": "audit_v002.py",
+    "failed_script_sha256": "1055c614282980632be9ef7e7a1bac119de61eddfd0339d0d755d3f4a0b525d9",
+    "corrected_script": "audit_v003.py",
+    "corrected_script_sha256": "6a77d958d3b724d9c947cbb9280141fa8465206e288967d98f43aab17c20bf7a",
+    "cause": "Pathlib Path ordering groups directories before similarly named sibling files, while original git ls-files inventory uses bytewise complete path order. Full row maps and all nonfile fields already match exactly; zero path or content discrepancies.",
+    "first_order_difference": {
+      "index": 949,
+      "git_ls_files": "docs/engineering/reach-recording-validation-2026-10-23/checkpoint-041-reviews.json",
+      "pathlib": "docs/engineering/reach-recording-validation-2026-10-23/checkpoint-041-reviews/p16-rounding.md"
+    },
+    "change": "Sort independently read source rows by UTF-8 path bytes before exact full inventory comparison, preserving all original blob/mode/size/SHA checks.",
+    "product_requests": 0,
+    "core_mutations": 0
+  }
+]

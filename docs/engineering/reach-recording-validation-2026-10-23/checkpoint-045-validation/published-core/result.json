@@ -1,0 +1,71 @@
+{
+  "schema": "ontokin.checkpoint045-published-core-validation/0.1",
+  "status": "passed",
+  "source_commit": "f2ed86eddcf37215fc134c5bb0ee9dce9bbd9d2b",
+  "source_tree": "64f80e946d8f498bfc96ad75fd010315c0a9ecc5",
+  "started_utc": "2026-10-26T18:25:14.336217+00:00",
+  "finished_utc": "2026-10-26T18:25:18.550132+00:00",
+  "python_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.39",
+  "commands": [
+    {
+      "label": "documentation",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "cwd": "/workspace/scratch/bd03c06e866f/ontokin",
+      "source_commit": "f2ed86eddcf37215fc134c5bb0ee9dce9bbd9d2b",
+      "source_tree": "64f80e946d8f498bfc96ad75fd010315c0a9ecc5",
+      "started_utc": "2026-10-26T18:25:16.452277+00:00",
+      "finished_utc": "2026-10-26T18:25:17.260957+00:00",
+      "exit_code": 0,
+      "stdout": "documentation.stdout",
+      "stdout_bytes": 6606,
+      "stdout_sha256": "427d5d29877f6170546e9ec32d0b0e0cdc16646eba59bdb7c34adb9dcc7454d0",
+      "stderr": "documentation.stderr",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "environment_override": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      }
+    },
+    {
+      "label": "source-data",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "docs/engineering/reach-recording-validation-2026-10-23/checkpoint-045-audit.py",
+        "--repo",
+        "/workspace/scratch/bd03c06e866f/ontokin",
+        "--retained",
+        "/workspace/scratch/bd03c06e866f/c044-retained",
+        "--output",
+        "/workspace/scratch/bd03c06e866f/c045-meta/core-validation/source-data-result.json"
+      ],
+      "cwd": "/workspace/scratch/bd03c06e866f/ontokin",
+      "source_commit": "f2ed86eddcf37215fc134c5bb0ee9dce9bbd9d2b",
+      "source_tree": "64f80e946d8f498bfc96ad75fd010315c0a9ecc5",
+      "started_utc": "2026-10-26T18:25:17.261780+00:00",
+      "finished_utc": "2026-10-26T18:25:17.603497+00:00",
+      "exit_code": 0,
+      "stdout": "source-data.stdout",
+      "stdout_bytes": 267,
+      "stdout_sha256": "aca9b9af32f546ce3cedab7d0b967e08af71c9f4612ffaf21b3e7c0d9c33edcf",
+      "stderr": "source-data.stderr",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "environment_override": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      }
+    }
+  ],
+  "source_files": 2397,
+  "source_bytes": 493496287,
+  "all_remote_paths_modes_sizes_git_blobs_match": true,
+  "inputs_stable": true,
+  "worktree_clean_before_and_after": true,
+  "product_imports_requests_tests_or_candidate_replays": 0,
+  "hosted_jobs_dispatched": 0,
+  "validation_scope": "documentation preservation/links plus stdlib source AST, retained JSON, original recorded key-order and integer bound analysis only"
+}

@@ -1,0 +1,675 @@
+{
+  "source_commit": "9e46219637241299fb85431d54c4f8bbcf3e2a96",
+  "purpose": "Actual per-sample operation costs; no budget changes or implementation patches.",
+  "input_hashes_unchanged": true,
+  "cases": [
+    {
+      "case": "L01",
+      "constructor_operations": 4163,
+      "numeric_before_simulator": 0,
+      "samples": [
+        {
+          "time": "0",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 2464,
+          "numeric_total": 2485,
+          "shared_total": 6648
+        },
+        {
+          "time": "0",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 16181,
+          "numeric_total": 18666,
+          "shared_total": 22829
+        },
+        {
+          "time": "0.25",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 2854,
+          "numeric_total": 21520,
+          "shared_total": 25683
+        },
+        {
+          "time": "0.25",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 241,
+          "numeric_total": 21761,
+          "shared_total": 25924
+        },
+        {
+          "time": "0.5",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 2773,
+          "numeric_total": 24534,
+          "shared_total": 28697
+        },
+        {
+          "time": "0.5",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 1620,
+          "numeric_total": 26154,
+          "shared_total": 30317
+        },
+        {
+          "time": "1",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 319,
+          "numeric_total": 26473,
+          "shared_total": 30636
+        },
+        {
+          "time": "1.25",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 319,
+          "numeric_total": 26792,
+          "shared_total": 30955
+        },
+        {
+          "time": "1.5",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 319,
+          "numeric_total": 27111,
+          "shared_total": 31274
+        },
+        {
+          "time": "1.5",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 2364,
+          "numeric_total": 29475,
+          "shared_total": 33638
+        },
+        {
+          "time": "2",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 2562,
+          "numeric_total": 32037,
+          "shared_total": 36200
+        },
+        {
+          "time": "2",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 241,
+          "numeric_total": 32278,
+          "shared_total": 36441
+        },
+        {
+          "time": "2.5",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 2773,
+          "numeric_total": 35051,
+          "shared_total": 39214
+        },
+        {
+          "time": "3",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 2821,
+          "numeric_total": 37872,
+          "shared_total": 42035
+        },
+        {
+          "time": "3",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 1691,
+          "numeric_total": 39563,
+          "shared_total": 43726
+        },
+        {
+          "time": "4",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 310,
+          "numeric_total": 39873,
+          "shared_total": 44036
+        }
+      ],
+      "simulator_init_numeric_operations": 21,
+      "numeric_work": {
+        "operations": 39873,
+        "counts": {
+          "pose_identity": 1,
+          "checkpoint": 2364,
+          "cache_lookup": 749,
+          "pose_vector_domain": 1898,
+          "exact_decode": 397,
+          "binary64_decode": 358,
+          "quaternion_rescale": 760,
+          "pose_grid_check": 617,
+          "exact_mul": 3570,
+          "quaternion_sign": 608,
+          "exact_add": 2958,
+          "cache_insert": 231,
+          "pose_stationary_check": 38,
+          "pose_projection_lookup": 2434,
+          "binary64_round": 1073,
+          "exact_div": 704,
+          "sqrt_binary64": 496,
+          "binary_exponent": 666,
+          "integer_sqrt": 235,
+          "integer_sqrt_return": 235,
+          "sqrt_midpoint": 233,
+          "quaternion_projection_sign": 476,
+          "composition_stationary_check": 150,
+          "pose_rotation_reference": 742,
+          "rotation_sparse_check": 407,
+          "pose_add_zero_check": 528,
+          "pose_cross_zero_check": 132,
+          "pose_norm_bound": 399,
+          "quaternion_sparse_check": 142,
+          "integer_round": 1005,
+          "axis_scale": 3,
+          "interval": 2229,
+          "interval_constituent": 10925,
+          "sqrt_exactness": 2,
+          "interval_extract": 16,
+          "pose_scale_identity_check": 20,
+          "quaternion_conjugate": 63,
+          "pose_position_negate": 3,
+          "exact_sub": 325,
+          "dyadic_round": 572,
+          "admission": 1,
+          "numeric_domain": 7,
+          "exact_compare": 19,
+          "radical_sign": 2,
+          "series_recurrence": 394,
+          "taylor_tail_precharge": 388,
+          "pair_clock_domain": 7,
+          "source_factorial": 40,
+          "source_coefficients": 40,
+          "source_series_recurrence": 206,
+          "quadrant_preflight": 3,
+          "quadrant_restore": 2
+        },
+        "cache_entries": 114
+      }
+    },
+    {
+      "case": "L02",
+      "constructor_operations": 4262,
+      "numeric_before_simulator": 0,
+      "samples": [
+        {
+          "time": "0",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 2569,
+          "numeric_total": 2596,
+          "shared_total": 6858
+        },
+        {
+          "time": "0",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 16212,
+          "numeric_total": 18808,
+          "shared_total": 23070
+        },
+        {
+          "time": "0.25",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 2870,
+          "numeric_total": 21678,
+          "shared_total": 25940
+        },
+        {
+          "time": "0.25",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 256,
+          "numeric_total": 21934,
+          "shared_total": 26196
+        },
+        {
+          "time": "0.5",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 2789,
+          "numeric_total": 24723,
+          "shared_total": 28985
+        },
+        {
+          "time": "0.5",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 8401,
+          "numeric_total": 33124,
+          "shared_total": 37386
+        },
+        {
+          "time": "0.75",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 2825,
+          "numeric_total": 35949,
+          "shared_total": 40211
+        },
+        {
+          "time": "1",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 2817,
+          "numeric_total": 38766,
+          "shared_total": 43028
+        },
+        {
+          "time": "1",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 284,
+          "numeric_total": 39050,
+          "shared_total": 43312
+        },
+        {
+          "time": "1.25",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 2817,
+          "numeric_total": 41867,
+          "shared_total": 46129
+        },
+        {
+          "time": "1.5",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 2633,
+          "numeric_total": 44500,
+          "shared_total": 48762
+        },
+        {
+          "time": "1.5",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 1723,
+          "numeric_total": 46223,
+          "shared_total": 50485
+        },
+        {
+          "time": "2",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 349,
+          "numeric_total": 46572,
+          "shared_total": 50834
+        },
+        {
+          "time": "2",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 273,
+          "numeric_total": 46845,
+          "shared_total": 51107
+        }
+      ],
+      "simulator_init_numeric_operations": 27,
+      "numeric_work": {
+        "operations": 46845,
+        "counts": {
+          "pose_identity": 1,
+          "checkpoint": 2191,
+          "cache_lookup": 688,
+          "pose_vector_domain": 1984,
+          "exact_decode": 473,
+          "binary64_decode": 431,
+          "quaternion_rescale": 810,
+          "pose_grid_check": 651,
+          "exact_mul": 3899,
+          "quaternion_sign": 648,
+          "exact_add": 3238,
+          "cache_insert": 234,
+          "pose_stationary_check": 39,
+          "pose_projection_lookup": 2211,
+          "binary64_round": 1139,
+          "exact_div": 703,
+          "sqrt_binary64": 529,
+          "binary_exponent": 726,
+          "integer_sqrt": 239,
+          "integer_sqrt_return": 239,
+          "sqrt_midpoint": 236,
+          "quaternion_projection_sign": 500,
+          "composition_stationary_check": 151,
+          "pose_rotation_reference": 772,
+          "rotation_sparse_check": 425,
+          "pose_add_zero_check": 552,
+          "pose_cross_zero_check": 138,
+          "pose_norm_bound": 417,
+          "quaternion_sparse_check": 148,
+          "integer_round": 1236,
+          "axis_scale": 3,
+          "interval": 3146,
+          "interval_constituent": 15356,
+          "sqrt_exactness": 3,
+          "interval_extract": 26,
+          "pose_scale_identity_check": 20,
+          "quaternion_conjugate": 63,
+          "pose_position_negate": 3,
+          "exact_sub": 345,
+          "dyadic_round": 746,
+          "admission": 2,
+          "numeric_domain": 14,
+          "exact_compare": 27,
+          "radical_sign": 4,
+          "series_recurrence": 541,
+          "taylor_tail_precharge": 582,
+          "pair_clock_domain": 8,
+          "source_factorial": 40,
+          "source_coefficients": 40,
+          "source_series_recurrence": 228
+        },
+        "cache_entries": 117
+      }
+    },
+    {
+      "case": "L03",
+      "constructor_operations": 4260,
+      "numeric_before_simulator": 0,
+      "samples": [
+        {
+          "time": "0",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 2569,
+          "numeric_total": 2596,
+          "shared_total": 6856
+        },
+        {
+          "time": "0",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 16212,
+          "numeric_total": 18808,
+          "shared_total": 23068
+        },
+        {
+          "time": "0.5",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 2870,
+          "numeric_total": 21678,
+          "shared_total": 25938
+        },
+        {
+          "time": "1",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 2789,
+          "numeric_total": 24467,
+          "shared_total": 28727
+        },
+        {
+          "time": "1",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 256,
+          "numeric_total": 24723,
+          "shared_total": 28983
+        },
+        {
+          "time": "1.5",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 2789,
+          "numeric_total": 27512,
+          "shared_total": 31772
+        },
+        {
+          "time": "2",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 2837,
+          "numeric_total": 30349,
+          "shared_total": 34609
+        },
+        {
+          "time": "2",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 8400,
+          "numeric_total": 38749,
+          "shared_total": 43009
+        },
+        {
+          "time": "2.25",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 2817,
+          "numeric_total": 41566,
+          "shared_total": 45826
+        },
+        {
+          "time": "2.5",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 2606,
+          "numeric_total": 44172,
+          "shared_total": 48432
+        },
+        {
+          "time": "3",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 2633,
+          "numeric_total": 46805,
+          "shared_total": 51065
+        },
+        {
+          "time": "3",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 1723,
+          "numeric_total": 48528,
+          "shared_total": 52788
+        },
+        {
+          "time": "4",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 349,
+          "numeric_total": 48877,
+          "shared_total": 53137
+        },
+        {
+          "time": "4",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 273,
+          "numeric_total": 49150,
+          "shared_total": 53410
+        }
+      ],
+      "simulator_init_numeric_operations": 27,
+      "numeric_work": {
+        "operations": 49150,
+        "counts": {
+          "pose_identity": 1,
+          "checkpoint": 2219,
+          "cache_lookup": 735,
+          "pose_vector_domain": 2180,
+          "exact_decode": 483,
+          "binary64_decode": 437,
+          "quaternion_rescale": 885,
+          "pose_grid_check": 716,
+          "exact_mul": 4321,
+          "quaternion_sign": 708,
+          "exact_add": 3559,
+          "cache_insert": 251,
+          "pose_stationary_check": 42,
+          "pose_projection_lookup": 2233,
+          "binary64_round": 1254,
+          "exact_div": 836,
+          "sqrt_binary64": 579,
+          "binary_exponent": 807,
+          "integer_sqrt": 263,
+          "integer_sqrt_return": 263,
+          "sqrt_midpoint": 260,
+          "quaternion_projection_sign": 552,
+          "composition_stationary_check": 165,
+          "pose_rotation_reference": 850,
+          "rotation_sparse_check": 468,
+          "pose_add_zero_check": 608,
+          "pose_cross_zero_check": 152,
+          "pose_norm_bound": 459,
+          "quaternion_sparse_check": 163,
+          "integer_round": 1328,
+          "axis_scale": 3,
+          "interval": 3148,
+          "interval_constituent": 15362,
+          "sqrt_exactness": 3,
+          "interval_extract": 26,
+          "pose_scale_identity_check": 22,
+          "quaternion_conjugate": 69,
+          "pose_position_negate": 3,
+          "exact_sub": 406,
+          "dyadic_round": 781,
+          "admission": 2,
+          "numeric_domain": 14,
+          "exact_compare": 31,
+          "radical_sign": 4,
+          "series_recurrence": 541,
+          "taylor_tail_precharge": 582,
+          "pair_clock_domain": 9,
+          "source_factorial": 40,
+          "source_coefficients": 40,
+          "source_series_recurrence": 282,
+          "quadrant_preflight": 3,
+          "quadrant_restore": 2
+        },
+        "cache_entries": 121
+      }
+    },
+    {
+      "case": "L04",
+      "constructor_operations": 4262,
+      "numeric_before_simulator": 0,
+      "samples": [
+        {
+          "time": "0",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 2569,
+          "numeric_total": 2596,
+          "shared_total": 6858
+        },
+        {
+          "time": "0",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 16212,
+          "numeric_total": 18808,
+          "shared_total": 23070
+        },
+        {
+          "time": "0.125",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 2870,
+          "numeric_total": 21678,
+          "shared_total": 25940
+        },
+        {
+          "time": "0.125",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 256,
+          "numeric_total": 21934,
+          "shared_total": 26196
+        },
+        {
+          "time": "0.25",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 2789,
+          "numeric_total": 24723,
+          "shared_total": 28985
+        },
+        {
+          "time": "0.25",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 256,
+          "numeric_total": 24979,
+          "shared_total": 29241
+        },
+        {
+          "time": "0.5",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 2578,
+          "numeric_total": 27557,
+          "shared_total": 31819
+        }
+      ],
+      "simulator_init_numeric_operations": 27,
+      "numeric_work": {
+        "operations": 27557,
+        "counts": {
+          "pose_identity": 1,
+          "checkpoint": 1004,
+          "cache_lookup": 313,
+          "pose_vector_domain": 1062,
+          "exact_decode": 221,
+          "binary64_decode": 201,
+          "quaternion_rescale": 425,
+          "pose_grid_check": 344,
+          "exact_mul": 1963,
+          "quaternion_sign": 340,
+          "exact_add": 1623,
+          "cache_insert": 135,
+          "pose_stationary_check": 24,
+          "pose_projection_lookup": 1043,
+          "binary64_round": 610,
+          "exact_div": 378,
+          "sqrt_binary64": 275,
+          "binary_exponent": 360,
+          "integer_sqrt": 118,
+          "integer_sqrt_return": 118,
+          "sqrt_midpoint": 116,
+          "quaternion_projection_sign": 268,
+          "composition_stationary_check": 81,
+          "pose_rotation_reference": 407,
+          "rotation_sparse_check": 225,
+          "pose_add_zero_check": 292,
+          "pose_cross_zero_check": 73,
+          "pose_norm_bound": 222,
+          "quaternion_sparse_check": 78,
+          "integer_round": 564,
+          "axis_scale": 3,
+          "interval": 2227,
+          "interval_constituent": 10919,
+          "sqrt_exactness": 2,
+          "interval_extract": 16,
+          "pose_scale_identity_check": 10,
+          "quaternion_conjugate": 33,
+          "pose_position_negate": 3,
+          "exact_sub": 157,
+          "dyadic_round": 320,
+          "admission": 1,
+          "numeric_domain": 7,
+          "exact_compare": 12,
+          "radical_sign": 2,
+          "series_recurrence": 394,
+          "taylor_tail_precharge": 388,
+          "pair_clock_domain": 4,
+          "source_factorial": 40,
+          "source_coefficients": 40,
+          "source_series_recurrence": 95
+        },
+        "cache_entries": 83
+      }
+    }
+  ]
+}

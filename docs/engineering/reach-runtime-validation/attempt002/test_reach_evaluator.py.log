@@ -1,0 +1,198 @@
+test_failed_boundary_retains_incoming_running_owner_and_no_after (test_reach_evaluator.ReachEvaluatorTests.test_failed_boundary_retains_incoming_running_owner_and_no_after) ... ok
+test_frozen_admission_failures_have_strict_reach_subcodes (test_reach_evaluator.ReachEvaluatorTests.test_frozen_admission_failures_have_strict_reach_subcodes) ... ok
+test_frozen_lifecycle_51_sides_and_86_complete_action_states (test_reach_evaluator.ReachEvaluatorTests.test_frozen_lifecycle_51_sides_and_86_complete_action_states) ... 
+  test_frozen_lifecycle_51_sides_and_86_complete_action_states (test_reach_evaluator.ReachEvaluatorTests.test_frozen_lifecycle_51_sides_and_86_complete_action_states) (case='L01') ... ERROR
+  test_frozen_lifecycle_51_sides_and_86_complete_action_states (test_reach_evaluator.ReachEvaluatorTests.test_frozen_lifecycle_51_sides_and_86_complete_action_states) (case='L02') ... ERROR
+  test_frozen_lifecycle_51_sides_and_86_complete_action_states (test_reach_evaluator.ReachEvaluatorTests.test_frozen_lifecycle_51_sides_and_86_complete_action_states) (case='L03') ... ERROR
+test_frozen_lifecycle_51_sides_and_86_complete_action_states (test_reach_evaluator.ReachEvaluatorTests.test_frozen_lifecycle_51_sides_and_86_complete_action_states) ... FAIL
+test_q16_uses_actual_nonbinary_events_and_exact_completion (test_reach_evaluator.ReachEvaluatorTests.test_q16_uses_actual_nonbinary_events_and_exact_completion) ... ok
+test_release_uses_incoming_rates_at_natural_completion (test_reach_evaluator.ReachEvaluatorTests.test_release_uses_incoming_rates_at_natural_completion) ... ok
+test_short_failed_source_prefix_does_not_admit_future_boundary (test_reach_evaluator.ReachEvaluatorTests.test_short_failed_source_prefix_does_not_admit_future_boundary) ... ok
+test_unrun_source_and_constructed_initial_are_distinct (test_reach_evaluator.ReachEvaluatorTests.test_unrun_source_and_constructed_initial_are_distinct) ... ok
+
+======================================================================
+ERROR: test_frozen_lifecycle_51_sides_and_86_complete_action_states (test_reach_evaluator.ReachEvaluatorTests.test_frozen_lifecycle_51_sides_and_86_complete_action_states) (case='L01')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_evaluator.py", line 51, in test_frozen_lifecycle_51_sides_and_86_complete_action_states
+    actual = sim.advance(Q(expected["time_seconds"]), expected["side"])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_runtime.py", line 601, in advance
+    return super().advance(time, side)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/evaluator.py", line 691, in advance
+    return self.snapshot(time, side)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_runtime.py", line 586, in snapshot
+    result["reaches"] = self._reach_map(time, side, self.state)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_runtime.py", line 536, in _reach_map
+    context_kind=self.context_kind, current=self._current(path, time, side, state))
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_runtime.py", line 496, in _current
+    base_tip = self._tip_base(action, time, state)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_runtime.py", line 300, in _tip_base
+    result = self.pose_ops.make(position=self.pose_ops.relative_point(base, tip), orientation=relative.rotation)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_pose.py", line 429, in relative_point
+    return self.rotate(self.inverse_rotation(base.rotation),difference)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_pose.py", line 215, in rotate
+    return self._rounded_vector(self._sum(self._op(a,b,"mul") for a,b in zip(row,vector))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_pose.py", line 120, in _rounded_vector
+    return tuple(round_dyadic(value,BITS,work=self.work) for value in values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_pose.py", line 120, in <genexpr>
+    return tuple(round_dyadic(value,BITS,work=self.work) for value in values)
+                                                                      ^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_pose.py", line 215, in <genexpr>
+    return self._rounded_vector(self._sum(self._op(a,b,"mul") for a,b in zip(row,vector))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_pose.py", line 110, in _sum
+    for value in values: result=self._op(result,value,"add")
+                 ^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_pose.py", line 215, in <genexpr>
+    return self._rounded_vector(self._sum(self._op(a,b,"mul") for a,b in zip(row,vector))
+                                          ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_pose.py", line 106, in _op
+    def _op(self,a,b,kind): return exact(a,b,kind,self.work)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_numeric.py", line 174, in exact
+    work.charge("exact_" + operation)
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_numeric.py", line 68, in charge
+    self.external_check()
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/construction.py", line 75, in tick
+    self.exceeded("max_operations", self.operations, node)
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/construction.py", line 81, in exceeded
+    fail("OKL-E-RESOURCE", f"Construction exceeded {name}.", node, phase="support",
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/validator.py", line 50, in fail
+    raise OntoKinError(code, message, node, phase=phase,
+ontokin.diagnostics.OntoKinError: Construction exceeded max_operations.
+
+======================================================================
+ERROR: test_frozen_lifecycle_51_sides_and_86_complete_action_states (test_reach_evaluator.ReachEvaluatorTests.test_frozen_lifecycle_51_sides_and_86_complete_action_states) (case='L02')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_evaluator.py", line 51, in test_frozen_lifecycle_51_sides_and_86_complete_action_states
+    actual = sim.advance(Q(expected["time_seconds"]), expected["side"])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_runtime.py", line 601, in advance
+    return super().advance(time, side)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/evaluator.py", line 691, in advance
+    return self.snapshot(time, side)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_runtime.py", line 585, in snapshot
+    result = super().snapshot(time, side)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/force_runtime.py", line 336, in snapshot
+    result = super().snapshot(time, side)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/evaluator.py", line 701, in snapshot
+    poses, frames = self._kinematics(time, self.state)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_runtime.py", line 284, in _kinematics
+    instance(path)
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_runtime.py", line 246, in instance
+    parent = frame(joint.parent + ".frame")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_runtime.py", line 228, in frame
+    frames[path] = ops.compose(instance(site.owner), ops.constant_pose(site.pose))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_pose.py", line 405, in compose
+    velocity=self._rounded_vector(self.add(self.add(parent.exact_velocity,
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_pose.py", line 127, in add
+    a,b=self._vector(a),self._vector(b)
+                        ^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_pose.py", line 114, in _vector
+    self.work.charge("pose_vector_domain")
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_numeric.py", line 68, in charge
+    self.external_check()
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/construction.py", line 75, in tick
+    self.exceeded("max_operations", self.operations, node)
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/construction.py", line 81, in exceeded
+    fail("OKL-E-RESOURCE", f"Construction exceeded {name}.", node, phase="support",
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/validator.py", line 50, in fail
+    raise OntoKinError(code, message, node, phase=phase,
+ontokin.diagnostics.OntoKinError: Construction exceeded max_operations.
+
+======================================================================
+ERROR: test_frozen_lifecycle_51_sides_and_86_complete_action_states (test_reach_evaluator.ReachEvaluatorTests.test_frozen_lifecycle_51_sides_and_86_complete_action_states) (case='L03')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_evaluator.py", line 51, in test_frozen_lifecycle_51_sides_and_86_complete_action_states
+    actual = sim.advance(Q(expected["time_seconds"]), expected["side"])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_runtime.py", line 601, in advance
+    return super().advance(time, side)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/evaluator.py", line 689, in advance
+    self._process_boundary(boundary)
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_runtime.py", line 457, in _process_boundary
+    super()._process_boundary(time)
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/force_runtime.py", line 312, in _process_boundary
+    self._validate_staged(time, staged, incoming)
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_runtime.py", line 479, in _validate_staged
+    super()._validate_staged(time, staged, incoming)
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/force_runtime.py", line 322, in _validate_staged
+    self._kinematics(time, staged)
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_runtime.py", line 284, in _kinematics
+    instance(path)
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_runtime.py", line 243, in instance
+    result = ops.compose(frame(follow.parent), ops.constant_pose(follow.offset))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_pose.py", line 406, in compose
+    self.cross(parent.exact_omega,offset)),self.rotate(parent.rotation,local.exact_velocity)))
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_pose.py", line 215, in rotate
+    return self._rounded_vector(self._sum(self._op(a,b,"mul") for a,b in zip(row,vector))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_pose.py", line 120, in _rounded_vector
+    return tuple(round_dyadic(value,BITS,work=self.work) for value in values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_pose.py", line 120, in <genexpr>
+    return tuple(round_dyadic(value,BITS,work=self.work) for value in values)
+                                                                      ^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_pose.py", line 215, in <genexpr>
+    return self._rounded_vector(self._sum(self._op(a,b,"mul") for a,b in zip(row,vector))
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_pose.py", line 110, in _sum
+    for value in values: result=self._op(result,value,"add")
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_pose.py", line 106, in _op
+    def _op(self,a,b,kind): return exact(a,b,kind,self.work)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_numeric.py", line 174, in exact
+    work.charge("exact_" + operation)
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/reach_numeric.py", line 68, in charge
+    self.external_check()
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/construction.py", line 75, in tick
+    self.exceeded("max_operations", self.operations, node)
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/construction.py", line 81, in exceeded
+    fail("OKL-E-RESOURCE", f"Construction exceeded {name}.", node, phase="support",
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/ontokin/validator.py", line 50, in fail
+    raise OntoKinError(code, message, node, phase=phase,
+ontokin.diagnostics.OntoKinError: Construction exceeded max_operations.
+
+======================================================================
+FAIL: test_frozen_lifecycle_51_sides_and_86_complete_action_states (test_reach_evaluator.ReachEvaluatorTests.test_frozen_lifecycle_51_sides_and_86_complete_action_states)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_evaluator.py", line 61, in test_frozen_lifecycle_51_sides_and_86_complete_action_states
+    self.assertEqual((sides, states), (51, 86))
+AssertionError: Tuples differ: (29, 50) != (51, 86)
+
+First differing element 0:
+29
+51
+
+- (29, 50)
++ (51, 86)
+
+----------------------------------------------------------------------
+Ran 7 tests in 2.238s
+
+FAILED (failures=1, errors=3)

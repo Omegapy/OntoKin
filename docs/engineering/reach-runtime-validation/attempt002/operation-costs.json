@@ -1,0 +1,502 @@
+{
+  "source_commit": "f5e21456d8843d9a0beb9c608525b13ab1f13368",
+  "purpose": "Actual per-sample operation costs; no budget changes or implementation patches.",
+  "input_hashes_unchanged": true,
+  "cases": [
+    {
+      "case": "L01",
+      "constructor_operations": 4163,
+      "numeric_before_simulator": 0,
+      "samples": [
+        {
+          "time": "0",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 8356,
+          "numeric_total": 8376,
+          "shared_total": 12539
+        },
+        {
+          "time": "0",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 29136,
+          "numeric_total": 37512,
+          "shared_total": 41675
+        },
+        {
+          "time": "0.25",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 9012,
+          "numeric_total": 46524,
+          "shared_total": 50687
+        },
+        {
+          "time": "0.25",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 241,
+          "numeric_total": 46765,
+          "shared_total": 50928
+        },
+        {
+          "time": "0.5",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 8931,
+          "numeric_total": 55696,
+          "shared_total": 59859
+        },
+        {
+          "time": "0.5",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 15313,
+          "numeric_total": 71009,
+          "shared_total": 75172
+        },
+        {
+          "time": "1",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 8402,
+          "numeric_total": 79411,
+          "shared_total": 83574
+        },
+        {
+          "time": "1.25",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 8402,
+          "numeric_total": 87813,
+          "shared_total": 91976
+        },
+        {
+          "time": "1.5",
+          "side": "before",
+          "status": "failed",
+          "error_type": "OntoKinError",
+          "message": "Construction exceeded max_operations.",
+          "code": "OKL-E-RESOURCE",
+          "numeric_delta": 8024,
+          "numeric_total": 95837,
+          "shared_total": 100001
+        }
+      ],
+      "simulator_init_numeric_operations": 20,
+      "numeric_work": {
+        "operations": 95837,
+        "counts": {
+          "checkpoint": 1284,
+          "pose_identity": 30,
+          "pose_vector_domain": 4250,
+          "exact_decode": 13142,
+          "binary64_decode": 1859,
+          "cache_lookup": 1017,
+          "quaternion_rescale": 1305,
+          "exact_mul": 15799,
+          "dyadic_round": 5763,
+          "integer_round": 6161,
+          "quaternion_sign": 1044,
+          "exact_add": 17580,
+          "cache_insert": 14,
+          "pose_projection_lookup": 1343,
+          "binary64_round": 1839,
+          "exact_div": 1023,
+          "sqrt_binary64": 821,
+          "binary_exponent": 732,
+          "integer_sqrt": 355,
+          "integer_sqrt_return": 355,
+          "sqrt_midpoint": 334,
+          "quaternion_projection_sign": 812,
+          "pose_rotation_reference": 1324,
+          "exact_sub": 846,
+          "pose_norm_bound": 819,
+          "quaternion_signed_terms": 1470,
+          "axis_scale": 60,
+          "interval": 2246,
+          "interval_constituent": 10976,
+          "sqrt_exactness": 21,
+          "interval_extract": 54,
+          "quaternion_conjugate": 108,
+          "pose_position_negate": 84,
+          "admission": 1,
+          "numeric_domain": 7,
+          "exact_compare": 11,
+          "radical_sign": 2,
+          "series_recurrence": 394,
+          "taylor_tail_precharge": 388,
+          "pair_clock_domain": 8,
+          "source_factorial": 40,
+          "source_coefficients": 40,
+          "source_series_recurrence": 76
+        },
+        "cache_entries": 14
+      }
+    },
+    {
+      "case": "L02",
+      "constructor_operations": 4262,
+      "numeric_before_simulator": 0,
+      "samples": [
+        {
+          "time": "0",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 8641,
+          "numeric_total": 8667,
+          "shared_total": 12929
+        },
+        {
+          "time": "0",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 29438,
+          "numeric_total": 38105,
+          "shared_total": 42367
+        },
+        {
+          "time": "0.25",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 9299,
+          "numeric_total": 47404,
+          "shared_total": 51666
+        },
+        {
+          "time": "0.25",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 256,
+          "numeric_total": 47660,
+          "shared_total": 51922
+        },
+        {
+          "time": "0.5",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 9218,
+          "numeric_total": 56878,
+          "shared_total": 61140
+        },
+        {
+          "time": "0.5",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 28763,
+          "numeric_total": 85641,
+          "shared_total": 89903
+        },
+        {
+          "time": "0.75",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 9246,
+          "numeric_total": 94887,
+          "shared_total": 99149
+        },
+        {
+          "time": "1",
+          "side": "before",
+          "status": "failed",
+          "error_type": "OntoKinError",
+          "message": "Construction exceeded max_operations.",
+          "code": "OKL-E-RESOURCE",
+          "numeric_delta": 851,
+          "numeric_total": 95738,
+          "shared_total": 100001
+        }
+      ],
+      "simulator_init_numeric_operations": 26,
+      "numeric_work": {
+        "operations": 95738,
+        "counts": {
+          "checkpoint": 1207,
+          "pose_identity": 28,
+          "pose_vector_domain": 3972,
+          "exact_decode": 12310,
+          "binary64_decode": 1760,
+          "cache_lookup": 952,
+          "quaternion_rescale": 1210,
+          "exact_mul": 14702,
+          "dyadic_round": 5453,
+          "integer_round": 5888,
+          "quaternion_sign": 968,
+          "exact_add": 16396,
+          "cache_insert": 19,
+          "pose_projection_lookup": 1144,
+          "binary64_round": 1534,
+          "exact_div": 880,
+          "sqrt_binary64": 676,
+          "binary_exponent": 706,
+          "integer_sqrt": 291,
+          "integer_sqrt_return": 291,
+          "sqrt_midpoint": 271,
+          "quaternion_projection_sign": 664,
+          "pose_rotation_reference": 1231,
+          "exact_sub": 818,
+          "pose_norm_bound": 759,
+          "quaternion_signed_terms": 1368,
+          "axis_scale": 54,
+          "interval": 3163,
+          "interval_constituent": 15407,
+          "sqrt_exactness": 20,
+          "interval_extract": 60,
+          "quaternion_conjugate": 96,
+          "pose_position_negate": 75,
+          "admission": 2,
+          "numeric_domain": 14,
+          "exact_compare": 21,
+          "radical_sign": 4,
+          "series_recurrence": 541,
+          "taylor_tail_precharge": 582,
+          "pair_clock_domain": 7,
+          "source_factorial": 40,
+          "source_coefficients": 40,
+          "source_series_recurrence": 114
+        },
+        "cache_entries": 19
+      }
+    },
+    {
+      "case": "L03",
+      "constructor_operations": 4260,
+      "numeric_before_simulator": 0,
+      "samples": [
+        {
+          "time": "0",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 8641,
+          "numeric_total": 8667,
+          "shared_total": 12927
+        },
+        {
+          "time": "0",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 29438,
+          "numeric_total": 38105,
+          "shared_total": 42365
+        },
+        {
+          "time": "0.5",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 9299,
+          "numeric_total": 47404,
+          "shared_total": 51664
+        },
+        {
+          "time": "1",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 9218,
+          "numeric_total": 56622,
+          "shared_total": 60882
+        },
+        {
+          "time": "1",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 256,
+          "numeric_total": 56878,
+          "shared_total": 61138
+        },
+        {
+          "time": "1.5",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 9218,
+          "numeric_total": 66096,
+          "shared_total": 70356
+        },
+        {
+          "time": "2",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 9297,
+          "numeric_total": 75393,
+          "shared_total": 79653
+        },
+        {
+          "time": "2",
+          "side": "after",
+          "status": "failed",
+          "error_type": "OntoKinError",
+          "message": "Construction exceeded max_operations.",
+          "code": "OKL-E-RESOURCE",
+          "numeric_delta": 20347,
+          "numeric_total": 95740,
+          "shared_total": 100001
+        }
+      ],
+      "simulator_init_numeric_operations": 26,
+      "numeric_work": {
+        "operations": 95740,
+        "counts": {
+          "checkpoint": 1125,
+          "pose_identity": 28,
+          "pose_vector_domain": 3954,
+          "exact_decode": 12231,
+          "binary64_decode": 1729,
+          "cache_lookup": 950,
+          "quaternion_rescale": 1205,
+          "exact_mul": 14769,
+          "dyadic_round": 5470,
+          "integer_round": 5904,
+          "quaternion_sign": 964,
+          "exact_add": 16392,
+          "cache_insert": 23,
+          "pose_projection_lookup": 1126,
+          "binary64_round": 1525,
+          "exact_div": 955,
+          "sqrt_binary64": 668,
+          "binary_exponent": 700,
+          "integer_sqrt": 286,
+          "integer_sqrt_return": 286,
+          "sqrt_midpoint": 266,
+          "quaternion_projection_sign": 660,
+          "pose_rotation_reference": 1226,
+          "exact_sub": 849,
+          "pose_norm_bound": 756,
+          "quaternion_signed_terms": 1362,
+          "axis_scale": 54,
+          "interval": 3165,
+          "interval_constituent": 15413,
+          "sqrt_exactness": 20,
+          "interval_extract": 60,
+          "quaternion_conjugate": 96,
+          "pose_position_negate": 75,
+          "admission": 2,
+          "numeric_domain": 14,
+          "exact_compare": 26,
+          "radical_sign": 4,
+          "series_recurrence": 541,
+          "taylor_tail_precharge": 582,
+          "pair_clock_domain": 7,
+          "source_factorial": 40,
+          "source_coefficients": 40,
+          "source_series_recurrence": 187,
+          "quadrant_preflight": 3,
+          "quadrant_restore": 2
+        },
+        "cache_entries": 23
+      }
+    },
+    {
+      "case": "L04",
+      "constructor_operations": 4262,
+      "numeric_before_simulator": 0,
+      "samples": [
+        {
+          "time": "0",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 8641,
+          "numeric_total": 8667,
+          "shared_total": 12929
+        },
+        {
+          "time": "0",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 29438,
+          "numeric_total": 38105,
+          "shared_total": 42367
+        },
+        {
+          "time": "0.125",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 9299,
+          "numeric_total": 47404,
+          "shared_total": 51666
+        },
+        {
+          "time": "0.125",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 256,
+          "numeric_total": 47660,
+          "shared_total": 51922
+        },
+        {
+          "time": "0.25",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 9218,
+          "numeric_total": 56878,
+          "shared_total": 61140
+        },
+        {
+          "time": "0.25",
+          "side": "after",
+          "status": "passed",
+          "numeric_delta": 256,
+          "numeric_total": 57134,
+          "shared_total": 61396
+        },
+        {
+          "time": "0.5",
+          "side": "before",
+          "status": "passed",
+          "numeric_delta": 9038,
+          "numeric_total": 66172,
+          "shared_total": 70434
+        }
+      ],
+      "simulator_init_numeric_operations": 26,
+      "numeric_work": {
+        "operations": 66172,
+        "counts": {
+          "checkpoint": 1004,
+          "pose_identity": 18,
+          "pose_vector_domain": 2654,
+          "exact_decode": 8209,
+          "binary64_decode": 1144,
+          "cache_lookup": 635,
+          "quaternion_rescale": 805,
+          "exact_mul": 10052,
+          "dyadic_round": 3682,
+          "integer_round": 3999,
+          "quaternion_sign": 644,
+          "exact_add": 11106,
+          "cache_insert": 17,
+          "pose_projection_lookup": 1043,
+          "binary64_round": 1159,
+          "exact_div": 661,
+          "sqrt_binary64": 511,
+          "binary_exponent": 515,
+          "integer_sqrt": 211,
+          "integer_sqrt_return": 211,
+          "sqrt_midpoint": 198,
+          "quaternion_projection_sign": 504,
+          "pose_rotation_reference": 826,
+          "exact_sub": 559,
+          "pose_norm_bound": 510,
+          "quaternion_signed_terms": 918,
+          "axis_scale": 36,
+          "interval": 2238,
+          "interval_constituent": 10952,
+          "sqrt_exactness": 13,
+          "interval_extract": 38,
+          "quaternion_conjugate": 66,
+          "pose_position_negate": 51,
+          "admission": 1,
+          "numeric_domain": 7,
+          "exact_compare": 12,
+          "radical_sign": 2,
+          "series_recurrence": 394,
+          "taylor_tail_precharge": 388,
+          "pair_clock_domain": 4,
+          "source_factorial": 40,
+          "source_coefficients": 40,
+          "source_series_recurrence": 95
+        },
+        "cache_entries": 17
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+test_corrupt_selected_store_returns_error_without_replacement (test_reach_agent_cli.ReachAgentCLITests.test_corrupt_selected_store_returns_error_without_replacement) ... ok
+test_default_transport_stays_agent_01 (test_reach_agent_cli.ReachAgentCLITests.test_default_transport_stays_agent_01) ... ok
+test_malformed_json_then_actual_create_retain_selected_binding (test_reach_agent_cli.ReachAgentCLITests.test_malformed_json_then_actual_create_retain_selected_binding) ... FAIL
+
+======================================================================
+FAIL: test_malformed_json_then_actual_create_retain_selected_binding (test_reach_agent_cli.ReachAgentCLITests.test_malformed_json_then_actual_create_retain_selected_binding)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_agent_cli.py", line 31, in test_malformed_json_then_actual_create_retain_selected_binding
+    self.assertEqual(results[1]["status"], "succeeded", results[1])
+AssertionError: 'failed' != 'succeeded'
+- failed
++ succeeded
+ : {'accepted_program_revision': None, 'achieved_level': None, 'diagnostics': [], 'next_cursor': None, 'operation': 'create', 'program_revision': 'sha256:b5f5d362666a22b18ae02a338bb869a49748469542121749291fb4a68a823c43', 'progress': {'cancellation_requested': False, 'implementation': {'name': 'ontokin-reference', 'source_code_sha256': 'sha256:0919a8d50f4430e67e9c1ae00605cb88a6ef843e91043c16d4ea5ee6484cdcf4', 'version': '0.4.0'}, 'phase': 'complete'}, 'project_id': 'cli', 'protocol_error': {'code': 'OKA-E-INTERNAL', 'details': {'exception': 'ValueError', 'reason': 'Unsupported JSON value type: LoftSection.'}, 'message': 'The operation failed before commit.'}, 'request_id': 'create', 'requested_level': 'constructed', 'result': None, 'run_id': None, 'schema_version': 'ontokin.agent/0.6', 'status': 'failed', 'truncated': False}
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.749s
+
+FAILED (failures=1)
