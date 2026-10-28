@@ -56,7 +56,7 @@ Historical original28 remains **24/28, failed**. P11/P16/P23/L03 remain unresolv
 
 Existing preparation JSON and historical reviews remain immutable, including their original pending states and reviewed input hashes. This narrative and new records describe later outcomes. [The reviewed reuse method](evidence/reviews/reuse-method/FINAL-EVIDENCE-REUSE-METHOD.md) requires complete Git-tree and actual source-inventory equality outside a closed exact-path list for new evidence and these two governance narratives. The unchanged preservation/link checker and independent evidence/claim review apply to those additions. Runtime results remain attributed to the tested candidate.
 
-At this premerge checkpoint, final evidence publication and actual resulting-main verification remain pending. The completion receipt will identify the observed merge and any later evidence-only closure. No planned SHA is reported as an actual merge.
+PR #56 merged as `1e2e7fff7bfb7ed638aa01db84c23fdf30bd35a3`. Its observed tree equals the published evidence tree `86a83027cb6761bd0ed3c8f1f59b9177066a597f`, with parents `a5199cd419ab071981cfcba02d8c64d0fed5127b` and `e7f2516ac60e7b4ca5bd95026bbd746ca6e4529f`. [Actual resulting-main verification](evidence/resulting-main-verification.json) confirms all 3,184 unchanged original inputs and the exact 101-path evidence/narrative difference from the tested candidate. [Its fresh preservation/navigation check](evidence/resulting-main-documentation.log) passed. [The integration receipt](evidence/integration.json) records actual merge, branch cleanup and subsequent evidence-only closure. The work branch was automatically deleted; main and the archive remain.
 
 ## Git LFS boundary
 
