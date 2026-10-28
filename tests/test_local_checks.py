@@ -108,6 +108,19 @@ class LocalChecksTests(unittest.TestCase):
         self.assertNotIn("local_head", summary["workspace_git"])
         self.assertFalse((self.output / "workspace/.git").exists())
 
+    def test_future_lfs_attributes_without_payloads_need_no_lfs_client(self):
+        attributes = self.root / ".gitattributes"
+        attributes.write_text("docs/engineering/lfs-archives/**/*.zip filter=lfs diff=lfs merge=lfs -text\n")
+        self.initialize_git(self.root)
+        with patch("tools.storage_identity.shutil.which", return_value=None):
+            code, summary = self.execute([])
+        self.assertEqual(code, 0, summary)
+        self.assertEqual((self.output / "workspace/.gitattributes").read_bytes(), attributes.read_bytes())
+        self.assertEqual(summary["workspace_storage"]["lfs_files"], [])
+        self.assertNotIn("client", summary["workspace_storage"])
+        self.assertEqual(summary["workspace_git"]["tracked_worktree_status"], "")
+        self.assertTrue(summary["source_unchanged"])
+
     def test_workspace_git_copy_failure_is_explicit_and_does_not_start_checks(self):
         self.initialize_git(self.root)
         read = checks.git_read
@@ -222,6 +235,8 @@ class LocalChecksTests(unittest.TestCase):
 
     def test_force_agent_preflight_failure_blocks_its_tests_builder_and_audit(self):
         (self.root / "tools/check_local.py").write_bytes(Path(checks.__file__).read_bytes())
+        (self.root / "tools/storage_identity.py").write_bytes(
+            Path(checks.__file__).with_name("storage_identity.py").read_bytes())
         (self.root / "tools/force-agent-verification-requirements.txt").write_text(
             "ontokin-local-checks-unavailable-test-package==0.0.0\n", encoding="utf-8")
         marker = self.directory / "force-command-was-run"

@@ -20,6 +20,12 @@ Main is the current development baseline under [OK-ENG-009](docs/engineering/OK-
 
 The language's goal remains editable `.ok` programs that AI agents use to build reusable 3D shapes and animation for game engines, including Unreal Engine. Current GLB playback does not establish live engine integration or destination physics.
 
+## Git LFS for engineering archives
+
+Git LFS tracking is configured for future ZIP, numeric ZIP-part, TAR.XZ and TAR.GZ payloads under `docs/engineering/lfs-archives/`. Existing archives remain ordinary Git files with their original bytes and history. [The storage guide](docs/engineering/OK-ENG-010-git-lfs-archive-storage.md) defines the exact profile, local Git LFS setup, storage verification and no-history-rewrite migration procedure. [The focused validation record](docs/engineering/lfs-storage-validation-2026-10-28/README.md) identifies the actual checks.
+
+Authenticated object upload and independent retrieval are required before publishing new LFS pointers. Existing-archive migration is prepared but remains pending that authenticated transfer. Ordinary checkouts with no LFS payloads retain their existing local-validation requirements; checkouts containing tracked LFS payloads need Git LFS 3.8.1 or newer and hydrated files.
+
 ## Export native exterior surfaces
 
 The [OK-LANG-003 surface contract](docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md) defines typed keyed sections, material regions and rigid local placement. Its pinned studio source now compiles through the native language and produces two actual animated, multi-material meshes:

@@ -12,18 +12,22 @@ import hashlib
 import json
 from pathlib import Path
 import platform
-import subprocess
 import sys
 import time
 import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+from tools.storage_identity import (PROFILE as STORAGE_PROFILE, SCHEMA as STORAGE_SCHEMA,
+                                    StorageContext, StorageIdentityError, git as storage_git)
+
 MAPPING = ROOT / "docs/engineering/reach-source-acceptance-validation/source-case-map.json"
 
 
 def _git(*args):
-    return subprocess.check_output(["git", "-C", str(ROOT), *args])
+    return storage_git(ROOT, *args)
 
 
 def _write(path, value):
@@ -31,32 +35,36 @@ def _write(path, value):
 
 
 def _snapshot():
-    tracked = {}
-    for entry in _git("ls-files", "--stage", "-z").split(b"\0"):
-        if not entry:
-            continue
-        metadata, name = entry.split(b"\t", 1)
-        mode, sha, stage = metadata.decode().split()
-        if stage != "0":
-            raise RuntimeError("Unmerged source input: " + name.decode())
-        tracked[name.decode()] = (mode, sha)
+    try:
+        return _storage_snapshot()
+    except StorageIdentityError as error:
+        raise RuntimeError(str(error)) from error
+
+
+def _storage_snapshot():
+    storage = StorageContext(ROOT, revision=None)
+    if storage.algorithm != "sha1":
+        raise RuntimeError("This source snapshot's existing Git-blob field requires SHA-1 Git objects")
+    tracked = {name: (entry.mode, entry.blob) for name, entry in storage.entries.items()}
     names = set(tracked) | {p.decode() for p in _git("ls-files", "--others", "--exclude-standard", "-z").split(b"\0") if p}
     rows = []
     for name in sorted(names):
-        path = ROOT / name
-        if path.is_symlink() or not path.is_file() or not path.resolve().is_relative_to(ROOT):
-            raise RuntimeError("Missing, nonregular or escaping input: " + name)
-        raw = path.read_bytes()
-        blob = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
-        mode, expected = tracked.get(name, (None, None))
-        if expected is not None and blob != expected:
-            raise RuntimeError("Tracked input differs from Git index; stage deliberate changes before execution: " + name)
-        rows.append({"path": name, "bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest(),
-                     "git_blob_sha1": blob, "index_mode": mode, "tracked": name in tracked})
-    return {"git_commit": _git("rev-parse", "HEAD").decode().strip(),
+        binding = storage.verify_file(name)
+        payload = binding["payload"]
+        mode, _ = tracked.get(name, (None, None))
+        row = {"path": name, "bytes": payload["bytes"], "sha256": payload["sha256"].removeprefix("sha256:"),
+               "git_blob_sha1": payload["raw_git_blob"], "index_mode": mode, "tracked": name in tracked}
+        if binding["kind"] == "git-lfs":
+            row["storage_binding"] = binding
+        rows.append(row)
+    result = {"git_commit": _git("rev-parse", "HEAD").decode().strip(),
             "git_tree": _git("rev-parse", "HEAD^{tree}").decode().strip(),
             "git_status": _git("status", "--porcelain=v1", "--untracked-files=all").decode(),
             "input_count": len(rows), "inputs": rows}
+    if storage.lfs_paths:
+        result["storage_identity"] = {"schema_version": STORAGE_SCHEMA, "profile": STORAGE_PROFILE,
+                                      "lfs_files": len(storage.lfs_paths), "network_transfers": False}
+    return result
 
 
 class _Result(unittest.TextTestResult):

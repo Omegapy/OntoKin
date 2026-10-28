@@ -32,7 +32,9 @@ C059 integration owner `interactive-main-reconciliation-20261028-c059-7of9` rele
 
 ## Git LFS
 
-The owner authorized Git LFS use and funding. GitHub's inclusion of LFS objects in repository archives is enabled. Storage-identity compatibility and migration tooling are being prepared separately. No payload has been replaced with an unuploaded pointer. Authenticated LFS upload and download verification remain pending because the available GitHub connector cannot transfer LFS objects and this executor has no authenticated Git transport. Archive inclusion alone does not establish completed migration or reduce historical Git storage.
+The owner authorized Git LFS use and funding. GitHub's inclusion of LFS objects in repository archives is enabled. The separate LFS increment configures four future archive rules under the currently unused `docs/engineering/lfs-archives/` directory, with zero existing payload matches. [OK-ENG-010](docs/engineering/OK-ENG-010-git-lfs-archive-storage.md) defines strict pointer/payload identities, isolated local hydration and exact no-history-rewrite migration. [Focused evidence](docs/engineering/lfs-storage-validation-2026-10-28/README.md) records 15 storage tests and 21 local-driver tests passing, with zero skips. Product runtime and existing archive payloads remain unchanged by that increment.
+
+No payload has been replaced with an unuploaded pointer. Authenticated LFS upload and independent download verification remain pending because the available connector cannot transfer LFS objects and this executor has no authenticated Git transport. Future tracking configuration and archive inclusion do not establish completed existing-archive migration or reduce historical Git storage. The prepared migration can continue from a clean authenticated maintainer checkout using the documented procedure.
 
 ## Remaining product scope
 
