@@ -27,8 +27,13 @@ import time
 import uuid
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+from tools.storage_identity import prepare_offline_workspace
+
 SOURCE_DIRS = ("ontokin", "tests", "tools", "docs", "examples", "schemas", "prototypes", ".github")
-ROOT_FILES = ("pyproject.toml", "README.md", "AGENTS.md", "GOAL.md", "STATUS.md", "LICENSE", ".gitignore")
+ROOT_FILES = ("pyproject.toml", "README.md", "AGENTS.md", "GOAL.md", "STATUS.md", "LICENSE", ".gitignore",
+              ".gitattributes", ".lfsconfig")
 IGNORED = {".git", "node_modules", "__pycache__", ".venv", "venv", ".tox", ".cache",
            ".pytest_cache", ".mypy_cache", ".ruff_cache", "build", "dist", "_build"}
 GENERATED_EXAMPLES = {
@@ -117,6 +122,7 @@ def git_environment(root: Path) -> dict[str, str]:
     """Keep Git local to this checkout and independent of caller Git overrides."""
     environment = {key: value for key, value in os.environ.items() if not key.startswith("GIT_")}
     environment.update(GIT_CONFIG_NOSYSTEM="1", GIT_CONFIG_GLOBAL=os.devnull, GIT_TERMINAL_PROMPT="0",
+                       GIT_ATTR_NOSYSTEM="1",
                        GIT_OPTIONAL_LOCKS="0", GIT_NO_REPLACE_OBJECTS="1", GIT_NO_LAZY_FETCH="1",
                        GIT_CEILING_DIRECTORIES=str(root.resolve().parent))
     return environment
@@ -198,6 +204,9 @@ def prepare_workspace(root: Path, output: Path, full: bool, *, source_git: dict 
         if (root / name).is_file():
             shutil.copy2(root / name, workspace / name)
     prepare_workspace_git(root, workspace, source_git)
+    storage = (prepare_offline_workspace(workspace) if source_git["available"] else
+               {"lfs_files": [], "git_available": False, "network_transfers": False})
+    write_json(output / "workspace-storage.json", storage)
     dependencies = root / "tools/node_modules"
     if full and dependencies.is_dir():
         # Verification commands only read these installed tools; they never install.
@@ -470,6 +479,9 @@ def run(root: Path, output: Path, full: bool, timeout: float, *, force_agent: bo
             "patterns": ["examples/{visual,agent,construction}/*.{glb,export.json,reference.json}"],
             "scope": "Only the isolated workspace comparison; all original checkout example bytes are preserved and checked."}
         workspace = prepare_workspace(root, output, full, source_git=summary["git"])
+        summary["workspace_storage"] = {"path": "workspace-storage.json",
+                                        **file_identity(output / "workspace-storage.json"),
+                                        **json.loads((output / "workspace-storage.json").read_text(encoding="utf-8"))}
         summary["workspace_git"] = git_metadata(workspace)
         if summary["workspace_git"]["available"]:
             summary["workspace_git"].update(index_basis="source_commit_tree",
