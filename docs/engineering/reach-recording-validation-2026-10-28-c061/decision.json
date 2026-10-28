@@ -1,0 +1,2034 @@
+{
+  "schema_version": "ontokin.c061-decision/0.1",
+  "decision": "no_go_isolated_axial_reader_setup_reuse",
+  "source_commit": "bd5a09618c123a0b1d3339df3a944cfd6ed63b56",
+  "source_tree": "037157a58442ba1956597d32e1e540802f9ed896",
+  "runtime_candidate_selected": false,
+  "runtime_changed": false,
+  "product_requests_executed": 4,
+  "conditional_candidate_requests_executed": 0,
+  "complete_request_cost": null,
+  "measured_optimization_savings": null,
+  "elapsed_time_neutrality_claimed": false,
+  "release_acceptance": false,
+  "cases": {
+    "P11": {
+      "product_request_status": "failed",
+      "accepted_artifact": false,
+      "release_acceptance": false,
+      "final_shared_operations": 100001,
+      "final_reach_operations": 93277,
+      "setup_total": {
+        "shared_operations": 23171,
+        "reach_operations": 23171,
+        "checkpoint": 13121
+      },
+      "span_count": 93,
+      "balanced_event_count": 188,
+      "observed_costs_by_label": [
+        {
+          "label": "gltf._validate_geometry",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 111,
+            "reach_operations": 111,
+            "checkpoint": 111
+          },
+          "exclusive": {
+            "shared_operations": 111,
+            "reach_operations": 111,
+            "checkpoint": 111
+          }
+        },
+        {
+          "label": "gltf.read_glb",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 3857,
+            "reach_operations": 3857,
+            "checkpoint": 1196
+          },
+          "exclusive": {
+            "shared_operations": 3857,
+            "reach_operations": 3857,
+            "checkpoint": 1196
+          }
+        },
+        {
+          "label": "reader._assert_projection",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 1095,
+            "reach_operations": 1095,
+            "checkpoint": 0
+          },
+          "exclusive": {
+            "shared_operations": 1095,
+            "reach_operations": 1095,
+            "checkpoint": 0
+          }
+        },
+        {
+          "label": "reader._boundary_allowances",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 18,
+            "reach_operations": 18,
+            "checkpoint": 0
+          },
+          "exclusive": {
+            "shared_operations": 18,
+            "reach_operations": 18,
+            "checkpoint": 0
+          }
+        },
+        {
+          "label": "reader._geometry_bounds",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 5559,
+            "reach_operations": 5559,
+            "checkpoint": 1350
+          },
+          "exclusive": {
+            "shared_operations": 5559,
+            "reach_operations": 5559,
+            "checkpoint": 1350
+          }
+        },
+        {
+          "label": "reader._phase_tables",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 4856,
+            "reach_operations": 4856,
+            "checkpoint": 4836
+          },
+          "exclusive": {
+            "shared_operations": 60,
+            "reach_operations": 60,
+            "checkpoint": 40
+          }
+        },
+        {
+          "label": "reader._tracks",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 40,
+            "reach_operations": 40,
+            "checkpoint": 0
+          },
+          "exclusive": {
+            "shared_operations": 40,
+            "reach_operations": 40,
+            "checkpoint": 0
+          }
+        },
+        {
+          "label": "reader._verify_metadata",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 18,
+            "reach_operations": 18,
+            "checkpoint": 5
+          },
+          "exclusive": {
+            "shared_operations": 18,
+            "reach_operations": 18,
+            "checkpoint": 5
+          }
+        },
+        {
+          "label": "reader.verify_numeric_bases",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 199,
+            "reach_operations": 199,
+            "checkpoint": 0
+          },
+          "exclusive": {
+            "shared_operations": 199,
+            "reach_operations": 199,
+            "checkpoint": 0
+          }
+        },
+        {
+          "label": "reader.verify_retained_clocks",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 768,
+            "reach_operations": 768,
+            "checkpoint": 0
+          },
+          "exclusive": {
+            "shared_operations": 768,
+            "reach_operations": 768,
+            "checkpoint": 0
+          }
+        },
+        {
+          "label": "reference._phase",
+          "calls": 60,
+          "inclusive": {
+            "shared_operations": 6006,
+            "reach_operations": 6006,
+            "checkpoint": 6006
+          },
+          "exclusive": {
+            "shared_operations": 6006,
+            "reach_operations": 6006,
+            "checkpoint": 6006
+          }
+        },
+        {
+          "label": "reference.boundary_states",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 1530,
+            "reach_operations": 1530,
+            "checkpoint": 1530
+          },
+          "exclusive": {
+            "shared_operations": 1530,
+            "reach_operations": 1530,
+            "checkpoint": 1530
+          }
+        },
+        {
+          "label": "reference.build_reference",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 2815,
+            "reach_operations": 2815,
+            "checkpoint": 2815
+          },
+          "exclusive": {
+            "shared_operations": 2815,
+            "reach_operations": 2815,
+            "checkpoint": 2815
+          }
+        },
+        {
+          "label": "reference.point_phase",
+          "calls": 20,
+          "inclusive": {
+            "shared_operations": 1230,
+            "reach_operations": 1230,
+            "checkpoint": 1230
+          },
+          "exclusive": {
+            "shared_operations": 20,
+            "reach_operations": 20,
+            "checkpoint": 20
+          }
+        },
+        {
+          "label": "scene.program_metadata",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 48,
+            "reach_operations": 48,
+            "checkpoint": 48
+          },
+          "exclusive": {
+            "shared_operations": 48,
+            "reach_operations": 48,
+            "checkpoint": 48
+          }
+        }
+      ],
+      "disjoint_stage_ledger": [
+        {
+          "kind": "unwrapped_setup",
+          "after": "reader_entry",
+          "before": "gltf.read_glb",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 0,
+          "label": "gltf.read_glb",
+          "shared_operations": 3857,
+          "admitted_reach_operations": 3857,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 1196,
+            "json_text_batch_domain": 929,
+            "json_text_block_encode": 803,
+            "json_text_block_encode_return": 803,
+            "json_text_literal_return": 126
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "gltf.read_glb",
+          "before": "reader.verify_numeric_bases",
+          "shared_operations": 7,
+          "admitted_reach_operations": 7,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "cache_evict": 1,
+            "cache_insert": 1,
+            "cache_lookup": 1,
+            "independent_clock_integer": 2,
+            "independent_clock_reduction": 1,
+            "independent_clock_reduction_return": 1
+          }
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 1,
+          "label": "reader.verify_numeric_bases",
+          "shared_operations": 199,
+          "admitted_reach_operations": 199,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "independent_basis_aggregate": 2,
+            "independent_basis_open": 19,
+            "independent_basis_read": 89,
+            "independent_basis_read_return": 89
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reader.verify_numeric_bases",
+          "before": "scene.program_metadata",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 2,
+          "label": "scene.program_metadata",
+          "shared_operations": 48,
+          "admitted_reach_operations": 48,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 48
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "scene.program_metadata",
+          "before": "reference.build_reference",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 3,
+          "label": "reference.build_reference",
+          "shared_operations": 2815,
+          "admitted_reach_operations": 2815,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 2815
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.build_reference",
+          "before": "reference.boundary_states",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 4,
+          "label": "reference.boundary_states",
+          "shared_operations": 1530,
+          "admitted_reach_operations": 1530,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 1530
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.boundary_states",
+          "before": "reader._verify_metadata",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 5,
+          "label": "reader._verify_metadata",
+          "shared_operations": 18,
+          "admitted_reach_operations": 18,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 5,
+            "independent_metadata_identity": 13
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reader._verify_metadata",
+          "before": "reader.verify_retained_clocks",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 6,
+          "label": "reader.verify_retained_clocks",
+          "shared_operations": 768,
+          "admitted_reach_operations": 768,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "independent_bound_decode": 105,
+            "independent_clock_cell": 52,
+            "independent_clock_integer": 104,
+            "independent_clock_reduction": 52,
+            "independent_clock_reduction_return": 52,
+            "independent_common_clock": 40,
+            "independent_exact_add": 103,
+            "independent_exact_compare": 156,
+            "independent_exact_sub": 52,
+            "independent_retained_clock": 52
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reader.verify_retained_clocks",
+          "before": "reader._geometry_bounds",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 7,
+          "label": "reader._geometry_bounds",
+          "shared_operations": 5559,
+          "admitted_reach_operations": 5559,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "cache_evict": 21,
+            "cache_insert": 21,
+            "cache_lookup": 37,
+            "cache_promote": 16,
+            "checkpoint": 1350,
+            "independent_bound_decode": 766,
+            "independent_exact_add": 737,
+            "independent_exact_mul": 21,
+            "independent_geometry_point": 2404,
+            "independent_geometry_proof_block": 23,
+            "independent_geometry_reuse_block": 26,
+            "independent_norm_domain": 12,
+            "independent_source_geometry": 20,
+            "independent_sqrt_divide": 7,
+            "independent_sqrt_enter": 7,
+            "independent_sqrt_exactness": 7,
+            "independent_sqrt_return": 7,
+            "independent_sqrt_scale": 7,
+            "source_primitive_key": 4,
+            "source_surface_key": 11,
+            "source_surface_material_key": 22,
+            "source_surface_section_key": 33
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reader._geometry_bounds",
+          "before": "gltf._validate_geometry",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 8,
+          "label": "gltf._validate_geometry",
+          "shared_operations": 111,
+          "admitted_reach_operations": 111,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 111
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "gltf._validate_geometry",
+          "before": "reader._phase_tables",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 9,
+          "label": "reader._phase_tables",
+          "shared_operations": 4856,
+          "admitted_reach_operations": 4856,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 4836,
+            "independent_phase_table": 20
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reader._phase_tables",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 50,
+          "label": "reference.point_phase",
+          "shared_operations": 36,
+          "admitted_reach_operations": 36,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 36
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 52,
+          "label": "reference.point_phase",
+          "shared_operations": 81,
+          "admitted_reach_operations": 81,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 81
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 54,
+          "label": "reference.point_phase",
+          "shared_operations": 23,
+          "admitted_reach_operations": 23,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 23
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 56,
+          "label": "reference.point_phase",
+          "shared_operations": 89,
+          "admitted_reach_operations": 89,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 89
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 58,
+          "label": "reference.point_phase",
+          "shared_operations": 92,
+          "admitted_reach_operations": 92,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 92
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 60,
+          "label": "reference.point_phase",
+          "shared_operations": 23,
+          "admitted_reach_operations": 23,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 23
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 62,
+          "label": "reference.point_phase",
+          "shared_operations": 89,
+          "admitted_reach_operations": 89,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 89
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 64,
+          "label": "reference.point_phase",
+          "shared_operations": 92,
+          "admitted_reach_operations": 92,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 92
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 66,
+          "label": "reference.point_phase",
+          "shared_operations": 23,
+          "admitted_reach_operations": 23,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 23
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 68,
+          "label": "reference.point_phase",
+          "shared_operations": 89,
+          "admitted_reach_operations": 89,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 89
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 70,
+          "label": "reference.point_phase",
+          "shared_operations": 92,
+          "admitted_reach_operations": 92,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 92
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 72,
+          "label": "reference.point_phase",
+          "shared_operations": 23,
+          "admitted_reach_operations": 23,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 23
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 74,
+          "label": "reference.point_phase",
+          "shared_operations": 89,
+          "admitted_reach_operations": 89,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 89
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 76,
+          "label": "reference.point_phase",
+          "shared_operations": 92,
+          "admitted_reach_operations": 92,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 92
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 78,
+          "label": "reference.point_phase",
+          "shared_operations": 23,
+          "admitted_reach_operations": 23,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 23
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 80,
+          "label": "reference.point_phase",
+          "shared_operations": 89,
+          "admitted_reach_operations": 89,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 89
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 82,
+          "label": "reference.point_phase",
+          "shared_operations": 92,
+          "admitted_reach_operations": 92,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 92
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 84,
+          "label": "reference.point_phase",
+          "shared_operations": 31,
+          "admitted_reach_operations": 31,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 31
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 86,
+          "label": "reference.point_phase",
+          "shared_operations": 31,
+          "admitted_reach_operations": 31,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 31
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 88,
+          "label": "reference.point_phase",
+          "shared_operations": 31,
+          "admitted_reach_operations": 31,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 31
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reader._boundary_allowances",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 90,
+          "label": "reader._boundary_allowances",
+          "shared_operations": 18,
+          "admitted_reach_operations": 18,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "independent_bound_decode": 8,
+            "independent_exact_add": 5,
+            "independent_exact_mul": 5
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reader._boundary_allowances",
+          "before": "reader._assert_projection",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 91,
+          "label": "reader._assert_projection",
+          "shared_operations": 1095,
+          "admitted_reach_operations": 1095,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "cache_evict": 28,
+            "cache_insert": 28,
+            "cache_lookup": 94,
+            "cache_promote": 66,
+            "independent_bound_decode": 54,
+            "independent_exact_add": 46,
+            "independent_exact_compare": 28,
+            "independent_exact_mul": 22,
+            "independent_exact_sub": 30,
+            "independent_interval_domain": 8,
+            "independent_interval_vector_domain": 4,
+            "independent_norm_domain": 4,
+            "independent_projection_entry": 673,
+            "independent_sqrt_divide": 2,
+            "independent_sqrt_enter": 2,
+            "independent_sqrt_exactness": 2,
+            "independent_sqrt_return": 2,
+            "independent_sqrt_scale": 2
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reader._assert_projection",
+          "before": "reader._tracks",
+          "shared_operations": 1020,
+          "admitted_reach_operations": 1020,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "independent_certificate_identity": 1020
+          }
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 92,
+          "label": "reader._tracks",
+          "shared_operations": 40,
+          "admitted_reach_operations": 40,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "independent_carrier_track": 40
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reader._tracks",
+          "before": "first_key_entry",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        }
+      ],
+      "repeat_inventory": {
+        "repeated_typed_arguments": [],
+        "axial_phase_groups": [],
+        "group_identities_are_process_local": true,
+        "net_savings_established": false,
+        "interpretation": "Repeated typed values and within-run state IDs identify observations only. Admission, invalidation, lookup, insertion and displacement costs remain unmeasured."
+      },
+      "entered_keys": 37,
+      "unvisited_keys": 15,
+      "carrier_count": 20,
+      "interval_rows_not_yet_traversed": 320,
+      "audit_status": "passed",
+      "audit_assertions": 381009
+    },
+    "L03": {
+      "product_request_status": "failed",
+      "accepted_artifact": false,
+      "release_acceptance": false,
+      "final_shared_operations": 100001,
+      "final_reach_operations": 95767,
+      "setup_total": {
+        "shared_operations": 17185,
+        "reach_operations": 17185,
+        "checkpoint": 8900
+      },
+      "span_count": 83,
+      "balanced_event_count": 168,
+      "observed_costs_by_label": [
+        {
+          "label": "gltf._validate_geometry",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 30,
+            "reach_operations": 30,
+            "checkpoint": 30
+          },
+          "exclusive": {
+            "shared_operations": 30,
+            "reach_operations": 30,
+            "checkpoint": 30
+          }
+        },
+        {
+          "label": "gltf.read_glb",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 2299,
+            "reach_operations": 2299,
+            "checkpoint": 641
+          },
+          "exclusive": {
+            "shared_operations": 2299,
+            "reach_operations": 2299,
+            "checkpoint": 641
+          }
+        },
+        {
+          "label": "reader._assert_projection",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 1004,
+            "reach_operations": 1004,
+            "checkpoint": 0
+          },
+          "exclusive": {
+            "shared_operations": 1004,
+            "reach_operations": 1004,
+            "checkpoint": 0
+          }
+        },
+        {
+          "label": "reader._boundary_allowances",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 18,
+            "reach_operations": 18,
+            "checkpoint": 0
+          },
+          "exclusive": {
+            "shared_operations": 18,
+            "reach_operations": 18,
+            "checkpoint": 0
+          }
+        },
+        {
+          "label": "reader._geometry_bounds",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 2342,
+            "reach_operations": 2342,
+            "checkpoint": 540
+          },
+          "exclusive": {
+            "shared_operations": 2342,
+            "reach_operations": 2342,
+            "checkpoint": 540
+          }
+        },
+        {
+          "label": "reader._phase_tables",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 3053,
+            "reach_operations": 3053,
+            "checkpoint": 3047
+          },
+          "exclusive": {
+            "shared_operations": 24,
+            "reach_operations": 24,
+            "checkpoint": 18
+          }
+        },
+        {
+          "label": "reader._tracks",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 12,
+            "reach_operations": 12,
+            "checkpoint": 0
+          },
+          "exclusive": {
+            "shared_operations": 12,
+            "reach_operations": 12,
+            "checkpoint": 0
+          }
+        },
+        {
+          "label": "reader._verify_metadata",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 13,
+            "reach_operations": 13,
+            "checkpoint": 0
+          },
+          "exclusive": {
+            "shared_operations": 13,
+            "reach_operations": 13,
+            "checkpoint": 0
+          }
+        },
+        {
+          "label": "reader.verify_numeric_bases",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 199,
+            "reach_operations": 199,
+            "checkpoint": 0
+          },
+          "exclusive": {
+            "shared_operations": 199,
+            "reach_operations": 199,
+            "checkpoint": 0
+          }
+        },
+        {
+          "label": "reader.verify_retained_clocks",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 2504,
+            "reach_operations": 2504,
+            "checkpoint": 0
+          },
+          "exclusive": {
+            "shared_operations": 2504,
+            "reach_operations": 2504,
+            "checkpoint": 0
+          }
+        },
+        {
+          "label": "reference._axial_derivatives",
+          "calls": 4,
+          "inclusive": {
+            "shared_operations": 376,
+            "reach_operations": 376,
+            "checkpoint": 376
+          },
+          "exclusive": {
+            "shared_operations": 174,
+            "reach_operations": 174,
+            "checkpoint": 174
+          }
+        },
+        {
+          "label": "reference._axis_transport",
+          "calls": 14,
+          "inclusive": {
+            "shared_operations": 70,
+            "reach_operations": 70,
+            "checkpoint": 70
+          },
+          "exclusive": {
+            "shared_operations": 70,
+            "reach_operations": 70,
+            "checkpoint": 70
+          }
+        },
+        {
+          "label": "reference._l1",
+          "calls": 22,
+          "inclusive": {
+            "shared_operations": 132,
+            "reach_operations": 132,
+            "checkpoint": 132
+          },
+          "exclusive": {
+            "shared_operations": 132,
+            "reach_operations": 132,
+            "checkpoint": 132
+          }
+        },
+        {
+          "label": "reference._phase",
+          "calls": 24,
+          "inclusive": {
+            "shared_operations": 3300,
+            "reach_operations": 3300,
+            "checkpoint": 3300
+          },
+          "exclusive": {
+            "shared_operations": 2924,
+            "reach_operations": 2924,
+            "checkpoint": 2924
+          }
+        },
+        {
+          "label": "reference.boundary_states",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 1761,
+            "reach_operations": 1761,
+            "checkpoint": 1761
+          },
+          "exclusive": {
+            "shared_operations": 1761,
+            "reach_operations": 1761,
+            "checkpoint": 1761
+          }
+        },
+        {
+          "label": "reference.build_reference",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 2589,
+            "reach_operations": 2589,
+            "checkpoint": 2589
+          },
+          "exclusive": {
+            "shared_operations": 2589,
+            "reach_operations": 2589,
+            "checkpoint": 2589
+          }
+        },
+        {
+          "label": "reference.point_phase",
+          "calls": 6,
+          "inclusive": {
+            "shared_operations": 277,
+            "reach_operations": 277,
+            "checkpoint": 277
+          },
+          "exclusive": {
+            "shared_operations": 6,
+            "reach_operations": 6,
+            "checkpoint": 6
+          }
+        },
+        {
+          "label": "scene.program_metadata",
+          "calls": 1,
+          "inclusive": {
+            "shared_operations": 15,
+            "reach_operations": 15,
+            "checkpoint": 15
+          },
+          "exclusive": {
+            "shared_operations": 15,
+            "reach_operations": 15,
+            "checkpoint": 15
+          }
+        }
+      ],
+      "disjoint_stage_ledger": [
+        {
+          "kind": "unwrapped_setup",
+          "after": "reader_entry",
+          "before": "gltf.read_glb",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 0,
+          "label": "gltf.read_glb",
+          "shared_operations": 2299,
+          "admitted_reach_operations": 2299,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 641,
+            "json_text_batch_domain": 829,
+            "json_text_literal_return": 829
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "gltf.read_glb",
+          "before": "reader.verify_numeric_bases",
+          "shared_operations": 7,
+          "admitted_reach_operations": 7,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "cache_evict": 1,
+            "cache_insert": 1,
+            "cache_lookup": 1,
+            "independent_clock_integer": 2,
+            "independent_clock_reduction": 1,
+            "independent_clock_reduction_return": 1
+          }
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 1,
+          "label": "reader.verify_numeric_bases",
+          "shared_operations": 199,
+          "admitted_reach_operations": 199,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "independent_basis_aggregate": 2,
+            "independent_basis_open": 19,
+            "independent_basis_read": 89,
+            "independent_basis_read_return": 89
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reader.verify_numeric_bases",
+          "before": "scene.program_metadata",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 2,
+          "label": "scene.program_metadata",
+          "shared_operations": 15,
+          "admitted_reach_operations": 15,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 15
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "scene.program_metadata",
+          "before": "reference.build_reference",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 3,
+          "label": "reference.build_reference",
+          "shared_operations": 2589,
+          "admitted_reach_operations": 2589,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 2589
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.build_reference",
+          "before": "reference.boundary_states",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 4,
+          "label": "reference.boundary_states",
+          "shared_operations": 1761,
+          "admitted_reach_operations": 1761,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 1761
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.boundary_states",
+          "before": "reader._verify_metadata",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 5,
+          "label": "reader._verify_metadata",
+          "shared_operations": 13,
+          "admitted_reach_operations": 13,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "independent_metadata_identity": 13
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reader._verify_metadata",
+          "before": "reader.verify_retained_clocks",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 6,
+          "label": "reader.verify_retained_clocks",
+          "shared_operations": 2504,
+          "admitted_reach_operations": 2504,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "independent_bound_decode": 357,
+            "independent_clock_cell": 178,
+            "independent_clock_integer": 356,
+            "independent_clock_reduction": 178,
+            "independent_clock_reduction_return": 178,
+            "independent_common_clock": 12,
+            "independent_exact_add": 355,
+            "independent_exact_compare": 534,
+            "independent_exact_sub": 178,
+            "independent_retained_clock": 178
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reader.verify_retained_clocks",
+          "before": "reader._geometry_bounds",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 7,
+          "label": "reader._geometry_bounds",
+          "shared_operations": 2342,
+          "admitted_reach_operations": 2342,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "cache_evict": 11,
+            "cache_insert": 11,
+            "cache_lookup": 13,
+            "cache_promote": 2,
+            "checkpoint": 540,
+            "independent_bound_decode": 310,
+            "independent_exact_add": 298,
+            "independent_exact_mul": 11,
+            "independent_geometry_point": 1082,
+            "independent_geometry_proof_block": 10,
+            "independent_geometry_reuse_block": 3,
+            "independent_norm_domain": 5,
+            "independent_source_geometry": 6,
+            "independent_sqrt_divide": 4,
+            "independent_sqrt_enter": 4,
+            "independent_sqrt_exactness": 4,
+            "independent_sqrt_return": 4,
+            "independent_sqrt_scale": 4,
+            "source_primitive_key": 2,
+            "source_surface_key": 3,
+            "source_surface_material_key": 6,
+            "source_surface_section_key": 9
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reader._geometry_bounds",
+          "before": "gltf._validate_geometry",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 8,
+          "label": "gltf._validate_geometry",
+          "shared_operations": 30,
+          "admitted_reach_operations": 30,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 30
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "gltf._validate_geometry",
+          "before": "reader._phase_tables",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 9,
+          "label": "reader._phase_tables",
+          "shared_operations": 3053,
+          "admitted_reach_operations": 3053,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 3047,
+            "independent_phase_table": 6
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reader._phase_tables",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 68,
+          "label": "reference.point_phase",
+          "shared_operations": 33,
+          "admitted_reach_operations": 33,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 33
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 70,
+          "label": "reference.point_phase",
+          "shared_operations": 16,
+          "admitted_reach_operations": 16,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 16
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 72,
+          "label": "reference.point_phase",
+          "shared_operations": 16,
+          "admitted_reach_operations": 16,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 16
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 74,
+          "label": "reference.point_phase",
+          "shared_operations": 86,
+          "admitted_reach_operations": 86,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 86
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 76,
+          "label": "reference.point_phase",
+          "shared_operations": 92,
+          "admitted_reach_operations": 92,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 92
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reference.point_phase",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 78,
+          "label": "reference.point_phase",
+          "shared_operations": 34,
+          "admitted_reach_operations": 34,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "checkpoint": 34
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reference.point_phase",
+          "before": "reader._boundary_allowances",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 80,
+          "label": "reader._boundary_allowances",
+          "shared_operations": 18,
+          "admitted_reach_operations": 18,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "independent_bound_decode": 8,
+            "independent_exact_add": 5,
+            "independent_exact_mul": 5
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reader._boundary_allowances",
+          "before": "reader._assert_projection",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 81,
+          "label": "reader._assert_projection",
+          "shared_operations": 1004,
+          "admitted_reach_operations": 1004,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "cache_evict": 33,
+            "cache_insert": 33,
+            "cache_lookup": 97,
+            "cache_promote": 64,
+            "independent_bound_decode": 62,
+            "independent_exact_add": 48,
+            "independent_exact_compare": 28,
+            "independent_exact_mul": 26,
+            "independent_exact_sub": 38,
+            "independent_interval_domain": 12,
+            "independent_interval_vector_domain": 6,
+            "independent_norm_domain": 6,
+            "independent_projection_entry": 521,
+            "independent_sqrt_divide": 6,
+            "independent_sqrt_enter": 6,
+            "independent_sqrt_exactness": 6,
+            "independent_sqrt_return": 6,
+            "independent_sqrt_scale": 6
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reader._assert_projection",
+          "before": "reader._tracks",
+          "shared_operations": 1062,
+          "admitted_reach_operations": 1062,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "independent_certificate_identity": 1062
+          }
+        },
+        {
+          "kind": "observed_stage",
+          "span_id": 82,
+          "label": "reader._tracks",
+          "shared_operations": 12,
+          "admitted_reach_operations": 12,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {
+            "independent_carrier_track": 12
+          }
+        },
+        {
+          "kind": "unwrapped_setup",
+          "after": "reader._tracks",
+          "before": "first_key_entry",
+          "shared_operations": 0,
+          "admitted_reach_operations": 0,
+          "shared_minus_reach": 0,
+          "reach_category_delta": {}
+        }
+      ],
+      "repeat_inventory": {
+        "repeated_typed_arguments": [
+          {
+            "label": "reference._l1",
+            "input": {
+              "reference_identity": 140216225585856,
+              "vector": {
+                "type": "tuple",
+                "items": [
+                  {
+                    "type": "float",
+                    "hex": "0x0.0p+0"
+                  },
+                  {
+                    "type": "float",
+                    "hex": "0x0.0p+0"
+                  },
+                  {
+                    "type": "float",
+                    "hex": "0x0.0p+0"
+                  }
+                ]
+              }
+            },
+            "call_count": 12,
+            "span_ids": [
+              25,
+              26,
+              30,
+              35,
+              36,
+              40,
+              46,
+              47,
+              51,
+              58,
+              59,
+              63
+            ],
+            "observed_result_variants": 1,
+            "inclusive_observed_work": {
+              "shared_operations": 72,
+              "reach_operations": 72,
+              "checkpoint": 72
+            },
+            "net_savings": null,
+            "source_reuse_authority_established": false
+          },
+          {
+            "label": "reference._axis_transport",
+            "input": {
+              "reference_identity": 140216225585856,
+              "rotation": {
+                "type": "tuple",
+                "items": [
+                  {
+                    "type": "float",
+                    "hex": "0x1.0000000000000p+0"
+                  },
+                  {
+                    "type": "float",
+                    "hex": "0x0.0p+0"
+                  },
+                  {
+                    "type": "float",
+                    "hex": "0x0.0p+0"
+                  },
+                  {
+                    "type": "float",
+                    "hex": "0x0.0p+0"
+                  }
+                ]
+              },
+              "axis": {
+                "type": "int",
+                "value": 2
+              }
+            },
+            "call_count": 14,
+            "span_ids": [
+              27,
+              29,
+              31,
+              37,
+              39,
+              41,
+              48,
+              50,
+              52,
+              54,
+              60,
+              62,
+              64,
+              66
+            ],
+            "observed_result_variants": 1,
+            "inclusive_observed_work": {
+              "shared_operations": 70,
+              "reach_operations": 70,
+              "checkpoint": 70
+            },
+            "net_savings": null,
+            "source_reuse_authority_established": false
+          },
+          {
+            "label": "reference._l1",
+            "input": {
+              "reference_identity": 140216225585856,
+              "vector": {
+                "type": "tuple",
+                "items": [
+                  {
+                    "type": "float",
+                    "hex": "0x1.0000000000000p+0"
+                  },
+                  {
+                    "type": "float",
+                    "hex": "0x0.0p+0"
+                  },
+                  {
+                    "type": "float",
+                    "hex": "0x0.0p+0"
+                  }
+                ]
+              }
+            },
+            "call_count": 6,
+            "span_ids": [
+              28,
+              38,
+              49,
+              53,
+              61,
+              65
+            ],
+            "observed_result_variants": 1,
+            "inclusive_observed_work": {
+              "shared_operations": 36,
+              "reach_operations": 36,
+              "checkpoint": 36
+            },
+            "net_savings": null,
+            "source_reuse_authority_established": false
+          },
+          {
+            "label": "reference._l1",
+            "input": {
+              "reference_identity": 140216225585856,
+              "vector": {
+                "type": "tuple",
+                "items": [
+                  {
+                    "type": "float",
+                    "hex": "0x0.0p+0"
+                  },
+                  {
+                    "type": "float",
+                    "hex": "0x1.0000000000000p+0"
+                  },
+                  {
+                    "type": "float",
+                    "hex": "0x0.0p+0"
+                  }
+                ]
+              }
+            },
+            "call_count": 4,
+            "span_ids": [
+              24,
+              34,
+              45,
+              57
+            ],
+            "observed_result_variants": 1,
+            "inclusive_observed_work": {
+              "shared_operations": 24,
+              "reach_operations": 24,
+              "checkpoint": 24
+            },
+            "net_savings": null,
+            "source_reuse_authority_established": false
+          }
+        ],
+        "axial_phase_groups": [
+          {
+            "group": {
+              "reference_identity": 140216225585856,
+              "state_identity": 140216224089392,
+              "model_identity": 140216225585904,
+              "start": {
+                "type": "Fraction",
+                "value": {
+                  "numerator": "0",
+                  "denominator": "1"
+                }
+              },
+              "end": {
+                "type": "Fraction",
+                "value": {
+                  "numerator": "2",
+                  "denominator": "1"
+                }
+              },
+              "arithmetic_bits": 128,
+              "operand_limit_field": 32768
+            },
+            "call_count": 2,
+            "carriers": [
+              "rig.arm.forearm.frame",
+              "rig.tool.frame"
+            ],
+            "span_ids": [
+              23,
+              44
+            ],
+            "inclusive_observed_work": {
+              "shared_operations": 188,
+              "reach_operations": 188,
+              "checkpoint": 188
+            },
+            "same_state_identity_proves_equivalence": false
+          },
+          {
+            "group": {
+              "reference_identity": 140216225585856,
+              "state_identity": 140216224089296,
+              "model_identity": 140216225585904,
+              "start": {
+                "type": "Fraction",
+                "value": {
+                  "numerator": "2",
+                  "denominator": "1"
+                }
+              },
+              "end": {
+                "type": "Fraction",
+                "value": {
+                  "numerator": "3",
+                  "denominator": "1"
+                }
+              },
+              "arithmetic_bits": 128,
+              "operand_limit_field": 32768
+            },
+            "call_count": 2,
+            "carriers": [
+              "rig.arm.forearm.frame",
+              "rig.tool.frame"
+            ],
+            "span_ids": [
+              33,
+              56
+            ],
+            "inclusive_observed_work": {
+              "shared_operations": 188,
+              "reach_operations": 188,
+              "checkpoint": 188
+            },
+            "same_state_identity_proves_equivalence": false
+          }
+        ],
+        "group_identities_are_process_local": true,
+        "net_savings_established": false,
+        "interpretation": "Repeated typed values and within-run state IDs identify observations only. Admission, invalidation, lookup, insertion and displacement costs remain unmeasured."
+      },
+      "entered_keys": 154,
+      "unvisited_keys": 24,
+      "carrier_count": 6,
+      "interval_rows_not_yet_traversed": 150,
+      "audit_status": "passed",
+      "audit_assertions": 677251
+    }
+  },
+  "conditional_l03_bound": {
+    "successfully_charged_original_prefix": 100000,
+    "ideal_removed_axial_setup_charges": 376,
+    "wholly_unvisited_key_admissions": 144,
+    "untraversed_interval_row_admissions": 450,
+    "minimum_required_under_conditions": 100218,
+    "cap": 100000,
+    "conditions": [
+      "exact setup output equality",
+      "unchanged downstream control paths and charged work",
+      "unchanged downstream source admission, callback and cache behavior"
+    ],
+    "not_a_complete_request_cost": true,
+    "not_a_bound_on_all_algorithms": true
+  },
+  "negative_controls": [
+    {
+      "case_id": "L03",
+      "mutation": "checkpoint-map-mismatch",
+      "target": "/workspace/scratch/16cb56e5d545/c061-evidence/round-001/L03/capture/reader-setup.json",
+      "original_sha256": "c86c6bd6c32f0294907a32b01a8f468824cf425e6b0eb36d59ecc1f020a8ffb5",
+      "altered_sha256": "5bf7fa1da4b836285321c9e2f66fbb2fa1592f60476c8ed3c8d2de069e3e253b",
+      "expected_error": "Setup checkpoint scalar differs from the full category map",
+      "product_requests_executed": 0,
+      "returncode": 1,
+      "actual_status": "failed",
+      "actual_error": "Setup checkpoint scalar differs from the full category map",
+      "rejected_for_intended_reason": true,
+      "restored_sha256": "c86c6bd6c32f0294907a32b01a8f468824cf425e6b0eb36d59ecc1f020a8ffb5",
+      "exact_input_restored": true
+    },
+    {
+      "case_id": "P11",
+      "mutation": "duplicate-entry-event",
+      "target": "/workspace/scratch/16cb56e5d545/c061-evidence/round-001/P11/capture/reader-setup.json",
+      "original_sha256": "49fa81a134a14e962d21737197faa1ad32b0d148a15422757275958279f4f55a",
+      "altered_sha256": "20e274380f704dcfd81e6771dde4131e257b160ff2b210d092afd5b10a1b5e75",
+      "expected_error": "Duplicate or out-of-scope setup event",
+      "product_requests_executed": 0,
+      "returncode": 1,
+      "actual_status": "failed",
+      "actual_error": "Duplicate or out-of-scope setup event",
+      "rejected_for_intended_reason": true,
+      "restored_sha256": "49fa81a134a14e962d21737197faa1ad32b0d148a15422757275958279f4f55a",
+      "exact_input_restored": true
+    }
+  ]
+}
