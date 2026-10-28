@@ -27,3 +27,13 @@ The dedicated Git LFS suite lives under `tools/storage_tests` so the default cor
 Actual conversion requires an authenticated Git/LFS executor. After the selected main integration, regenerate a plan from the exact clean main, convert only its recorded archive paths, upload their objects before publishing the pointer branch, and independently fetch/hash them from an empty cache. Integrate that verified storage commit through the current lease/expected-head procedure. Preserve all historical commits, archive parts and their member manifests.
 
 [The retained-member inventory](retained-inputs.json) binds the earlier execution receipts, logs and client provenance as originally copied. Later attempts and final documentation/patch checks have their own separately bound records. The original documentation check remains attributed to the earlier narrative; it is not overwritten by the final check.
+
+## Integrated result
+
+[PR #57](https://github.com/Omegapy/OntoKin/pull/57) merged as `a8138a2605448675e1a9cd515d960b9b52a077c2`, with tree `14b131b5a1d293e33db6693176021ec5b7e92af2`, after the C059 reconciliation. [The applied integration check](applied-integration-check-001/receipt.json) repeated all 15 storage and 21 local-driver tests on the reconciled checkout and passed the documentation checker. [Independent review](independent-review.json) retains the original reviewed patch scope and identities.
+
+[Actual resulting-main verification](resulting-main-verification.json) checked all 3,322 checkout files against the observed merge tree, confirmed the exact 42-path increment, all nine tested input identities, and unchanged bytes for all 65 product runtime files. The five paths added after the focused tests contain only their raw outputs and publication metadata. The original C059 runtime results remain attributed to their own candidate; this increment does not claim a new full-suite execution.
+
+[The migration snapshot](migration-plan-001/plan.json) was prepared from the clean, observed LFS merge without mutation or network transfer. It identifies **357 archives / 459,206,837 bytes** and preserves exact original payload and proposed pointer identities. Its [proposed attributes](migration-plan-001/gitattributes.proposed) and [NUL-delimited path list](migration-plan-001/archive-paths.nul) are preparation artifacts, not active configuration. No object has been uploaded or converted.
+
+Publishing these results adds later evidence files. Therefore regenerate a plan from the clean current HEAD before an actual conversion; do not silently retarget this snapshot. [The integration record](integration.json) identifies the actual merge, verification, remaining authentication requirement and finite evidence-only closure.
