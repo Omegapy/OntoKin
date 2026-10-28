@@ -55,6 +55,10 @@ GOAL still requires richer typed algorithms/libraries and compatible replacement
 
 ## Integration and recovery
 
+**Active C059 main integration lease.** Owner `interactive-main-reconciliation-20261028-c059-7of9` acquired this bounded lease at `2026-10-28T19:24:54.000Z`, expiring at `2026-10-28T19:54:54.000Z`. Scope: selected development integration, current decisions/status and branch reconciliation under Issue #26 comment 6478260243. Starting main is `2bb4588e121fcfe99b4d42c734b15b38362f3642`; the verified archival history is `e6917dae0be3a786c22e76be3de62e3c97784cf5`. Candidate verification is pending. Root owns source execution and main writes; source reviewers remain read-only. No release acceptance is claimed. Reconcile actual refs before retrying any unknown write.
+
+The preceding checkpoint's release record follows.
+
 **Main documentation lease released by this checkpoint.** Owner `interactive-reach06-delivery-finish-20261021-0330-7of9` acquired the STATUS-only lease at `2026-10-21T05:32:35Z` in `6e8702c281cb91f57a652cf750fed5ba33ac9402`, expiring at `2026-10-21T06:02:35Z`. The recovered checkpoint is now published. This nonforce expected-head update releases that lease and changes only STATUS; reach runtime and workflows remain unmerged. The [preceding status](https://github.com/Omegapy/OntoKin/blob/edf2412e5ea993b369e0204194921e4976504811/STATUS.md) preserves the prior adoption integration record.
 
 Implementation continues on `work/reach06-delivery-finish-20261021-0330-7of9` and its coordinated Agent, reference and destination worktrees. Main runtime integration requires a fresh verified lease and complete applicable acceptance. Actual runtime/Agent/SQLite/full-suite/workflow/archive executions retain exclusive executor windows; keep source hashes stable and preserve failed attempts. Reconcile uncertain writes against actual refs before retrying. No hosted execution was dispatched or retried.
