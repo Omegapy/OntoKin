@@ -1,0 +1,28 @@
+{
+  "schema": "ontokin.c058-recovery-preparation/0.1",
+  "events": [
+    {
+      "stage": "coordinator branch readback",
+      "reported_by": "root",
+      "kind": "response parse issue",
+      "detail": "Initial URL-encoded branches path yielded no structured content; then git/ref/heads readback succeeded. Raw failed response not captured by this worker.",
+      "classification": "acquisition/control-plane; not validation"
+    },
+    {
+      "stage": "worker metadata fetch",
+      "kind": "response parse issue",
+      "detail": "Contents-file endpoint returned decoded Python content; initial JSON.parse attempt failed. Directory metadata was subsequently used.",
+      "classification": "acquisition/control-plane; not validation"
+    },
+    {
+      "stage": "worker code-mode orchestration",
+      "kind": "syntax errors",
+      "count": 2,
+      "detail": "Unexpected token ')' before tool dispatch; corrected JavaScript then executed.",
+      "classification": "orchestration; not validation"
+    }
+  ],
+  "product_execution": false,
+  "checker_executed": false
+}
+

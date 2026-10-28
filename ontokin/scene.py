@@ -24,7 +24,9 @@ from .geometry import (SPHERE_RINGS, SPHERE_SEGMENTS, Mesh, assembly_marker,
                        box_mesh, joint_marker, sphere_mesh)
 from .model import SceneModel, Vec
 from .json_limits import JSONLimitError
-from .surface import RegionTriangles, SurfaceError
+from .surface import (LoftSection, SurfaceMaterial, RegionTriangles, SurfaceError,
+                      MAX_SECTIONS, MAX_MATERIALS,
+                      MAX_MESH_VERTICES as SURFACE_MAX_MESH_VERTICES)
 from .surface_runtime import materialize_surface
 from .values import bounded_data
 
@@ -34,7 +36,8 @@ CONSTRUCTION_TARGET = "ontokin.glb/0.2"
 SURFACE_TARGET = "ontokin.glb/0.3"
 IMPULSE_TARGET = "ontokin.glb/0.4"
 FORCE_TARGET = "ontokin.glb/0.5"
-NATIVE_TARGETS = (SURFACE_TARGET, IMPULSE_TARGET, FORCE_TARGET)
+REACH_TARGET = "ontokin.glb/0.6"
+NATIVE_TARGETS = (SURFACE_TARGET, IMPULSE_TARGET, FORCE_TARGET, REACH_TARGET)
 PROGRAM_TARGETS = (CONSTRUCTION_TARGET, *NATIVE_TARGETS)
 SURFACE_POSITION_TOLERANCE_M = 1e-5
 MAX_KEYFRAMES = 10000
@@ -79,7 +82,8 @@ def export_error(export_code: str, message: str, model: SceneModel | None = None
                        details={"target_contract": ({"construction-0.1": CONSTRUCTION_TARGET,
                                                      "surface-0.1": SURFACE_TARGET,
                                                      "impulse-0.1": IMPULSE_TARGET,
-                                                     "force-0.1": FORCE_TARGET}.get(model.profile, TARGET_CONTRACT)
+                                                     "force-0.1": FORCE_TARGET,
+                                                     "planar-reach-0.1": REACH_TARGET}.get(model.profile, TARGET_CONTRACT)
                                                     if model is not None else TARGET_CONTRACT),
                                 "export_code": export_code, **(details or {})},
                        repair=("Use supported visual geometry and the explicitly matching model/delivery profile." if kind == "unsupported" else
@@ -181,21 +185,235 @@ def build_surface_mesh(geometry: dict[str, Any], *, max_vertices: int = MAX_MESH
     mesh, placement = materialize_surface(geometry, max_vertices=max_vertices, check=check)
     positions: list[Vec] = []
     normals: list[Vec] = []
-    for position, normal in zip(mesh.positions, mesh.normals):
-        if check is not None:
+    # Adjacent triangles retain their ring-point tuples, and each flat face
+    # retains one normal for all three corners. Keep only three preceding
+    # point witnesses and the last normal; equal numeric values are not keys.
+    # The native immutable inputs make their already-placed results exact,
+    # including signed zero. This state is local to this materialization, so
+    # independent readers still reconstruct their own source geometry.
+    native_placement = (
+        type(placement.position) is tuple and len(placement.position) == 3
+        and type(placement.rotation) is tuple and len(placement.rotation) == 4
+        and all(type(value) is float for value in (*placement.position, *placement.rotation)))
+    point_witnesses: list[tuple[Vec, Vec]] = []
+    normal_witness = None
+    for index, (position, normal) in enumerate(zip(mesh.positions, mesh.normals)):
+        transformed = next((value for original, value in point_witnesses
+                            if position is original), None)
+        transformed_normal = (normal_witness[1] if normal_witness is not None
+                              and normal is normal_witness[0] else None)
+        new_position, new_normal = transformed is None, transformed_normal is None
+        # A checkpoint precedes every new calculation. Even an unusual run of
+        # entirely repeated corners remains cancellable in bounded blocks.
+        if check is not None and (new_position or new_normal or index % 64 == 0):
             check()
-        rotated = _rotate(placement.rotation, position)
-        transformed = tuple(a + b for a, b in zip(rotated, placement.position))
-        transformed_normal = _rotate(placement.rotation, normal)
-        if not all(math.isfinite(value) for value in (*transformed, *transformed_normal)):
+        if new_position:
+            rotated = _rotate(placement.rotation, position)
+            transformed = tuple(a + b for a, b in zip(rotated, placement.position))
+        if new_normal:
+            transformed_normal = _rotate(placement.rotation, normal)
+        if ((new_position or new_normal)
+                and not all(math.isfinite(value) for value in (*transformed, *transformed_normal))):
             raise SurfaceError("OKL-E-SURFACE-NUMERIC",
                                "Local visual placement produced a nonfinite surface coordinate.")
+        if (new_position and native_placement and type(position) is tuple and len(position) == 3
+                and all(type(value) is float for value in position)):
+            if len(point_witnesses) == 3:
+                point_witnesses.pop(0)
+            point_witnesses.append((position, transformed))
+        if (new_normal and native_placement and type(normal) is tuple and len(normal) == 3
+                and all(type(value) is float for value in normal)):
+            normal_witness = normal, transformed_normal
         positions.append(transformed)
         normals.append(transformed_normal)
     if check is not None:
         check()
     return SurfaceMesh("loft", tuple(positions), tuple(normals), mesh.regions,
                        mesh.section_keys, mesh.facets, mesh.caps)
+
+
+def _surface_recipe_snapshot(geometry, *, work):
+    """Freeze a bounded complete constructor input, or retain the ordinary path.
+
+    The first successful constructor validates this exact key. Later equal
+    inputs may reuse only its immutable mesh. Exact types and binary64 bits
+    prevent Boolean/numeric aliases, nonfinite values and signed-zero aliases.
+    Mutable or unusually shaped host values keep the original validation path.
+    Provenance is deliberately outside the pure constructor and still checked
+    separately for every source occurrence.
+    """
+    work.charge("source_surface_key")
+
+    def number(value):
+        if type(value) not in (int, float):
+            return None
+        try:
+            if not math.isfinite(value):
+                return None
+        except OverflowError:
+            return None
+        return ("float", struct.pack("!d", value)) if type(value) is float else ("int", value)
+
+    def vector(value, count):
+        if type(value) is not tuple or len(value) != count:
+            return None
+        keys = tuple(number(component) for component in value)
+        return keys if all(key is not None for key in keys) else None
+
+    def name(value):
+        return type(value) is str and 1 <= len(value) <= 64
+
+    if type(geometry) is not dict or type(geometry.get("kind")) is not str:
+        return None
+    kind = geometry["kind"]
+    if kind == "placed":
+        position, rotation = geometry.get("local_position"), geometry.get("local_rotation")
+        position_key, rotation_key = vector(position, 3), vector(rotation, 4)
+        if position_key is None or rotation_key is None:
+            return None
+        surface = geometry.get("surface")
+    elif kind == "loft":
+        surface, position_key, rotation_key = geometry, None, None
+    else:
+        return None
+    if (type(surface) is not dict or type(surface.get("kind")) is not str
+            or surface["kind"] != "loft"):
+        return None
+    sections, materials = surface.get("sections"), surface.get("materials")
+    facets, caps = surface.get("facets"), surface.get("caps")
+    if (type(sections) is not tuple or not 2 <= len(sections) <= MAX_SECTIONS
+            or type(materials) is not tuple or not 1 <= len(materials) <= MAX_MATERIALS
+            or type(facets) is not int or not 8 <= facets <= 64 or facets % 4
+            or type(caps) is not str or caps not in ("flat", "none")):
+        return None
+    section_keys, frozen_sections = [], []
+    for section in sections:
+        work.charge("source_surface_section_key")
+        if type(section) is not LoftSection:
+            return None
+        key, station, center, rx, ry, region = (section.key, section.station_m, section.center_m,
+                                              section.radius_x_m, section.radius_y_m, section.region)
+        numeric = number(station), vector(center, 3), number(rx), number(ry)
+        if not name(key) or not name(region) or any(value is None for value in numeric):
+            return None
+        section_keys.append((key, *numeric, region))
+        frozen_sections.append(LoftSection(key, station, center, rx, ry, region))
+    material_keys, frozen_materials = [], []
+    for material in materials:
+        work.charge("source_surface_material_key")
+        if type(material) is not SurfaceMaterial:
+            return None
+        key, rgba, metallic, roughness = (material.key, material.rgba,
+                                          material.metallic, material.roughness)
+        numeric = vector(rgba, 4), number(metallic), number(roughness)
+        if not name(key) or any(value is None for value in numeric):
+            return None
+        material_keys.append((key, *numeric))
+        frozen_materials.append(SurfaceMaterial(key, rgba, metallic, roughness))
+    frozen = {"kind": "loft", "sections": tuple(frozen_sections),
+              "materials": tuple(frozen_materials), "facets": facets, "caps": caps}
+    if kind == "placed":
+        frozen = {"kind": "placed", "surface": frozen,
+                  "local_position": position, "local_rotation": rotation}
+    key = (kind, tuple(section_keys), tuple(material_keys), facets, caps,
+           position_key, rotation_key)
+    return key, frozen
+
+
+def _source_surface_mesh(geometry, *, max_vertices, work, namespace):
+    """Reuse expected source construction within the original request cache.
+
+    Writer and independent reader supply distinct namespaces. Actual buffers,
+    identities, PBR/provenance, sites and repeated-vertex accounting never use
+    this cache. A reduced remaining allowance is checked on every cache hit.
+    """
+    snapshot = _surface_recipe_snapshot(geometry, work=work)
+    if snapshot is None:
+        return build_surface_mesh(geometry, max_vertices=max_vertices, check=work.tick)
+    if type(max_vertices) is not int or not 0 <= max_vertices <= SURFACE_MAX_MESH_VERTICES:
+        raise SurfaceError("OKL-E-RESOURCE", "Invalid remaining vertex budget.",
+                           details={"budget": max_vertices})
+    recipe_key, frozen = snapshot
+    key = ("source_surface_mesh", namespace, recipe_key)
+    cached = work.lookup(key)
+    if cached is not None:
+        if len(cached.positions) > max_vertices:
+            raise SurfaceError("OKL-E-RESOURCE", "Surface exceeds the remaining mesh vertex budget.",
+                               details={"required": len(cached.positions), "available": max_vertices})
+        return cached
+    mesh = build_surface_mesh(frozen, max_vertices=max_vertices, check=work.tick)
+    work.remember(key, mesh)
+    return mesh
+
+
+def _source_primitive_snapshot(geometry):
+    """Capture only complete native constructor inputs without numeric aliases."""
+    def number(value):
+        if type(value) not in (int, float):
+            return None
+        try:
+            if not math.isfinite(value):
+                return None
+        except OverflowError:
+            return None
+        return ("float", struct.pack("!d", value)) if type(value) is float else ("int", value)
+
+    if type(geometry) is not dict or type(geometry.get("kind")) is not str:
+        return None
+    kind = geometry["kind"]
+    if kind == "sphere":
+        radius = geometry.get("radius")
+        key = number(radius)
+        return None if key is None else ((kind, key), radius)
+    if kind == "box":
+        size = geometry.get("size")
+        if type(size) is not tuple or len(size) != 3:
+            return None
+        key = tuple(number(value) for value in size)
+        return None if any(value is None for value in key) else ((kind, key), size)
+    return None
+
+
+def _source_primitive_mesh(geometry, *, work, namespace):
+    """Reuse immutable native geometry within one source-construction role.
+
+    Only current exact constructor inputs can reuse a mesh. The caller still
+    accounts every occurrence's vertices and verifies its actual supplied
+    buffers, material and provenance. Independent and writer roles never
+    share this proof namespace or a vertex-extrema proof.
+    """
+    def construct(kind, value):
+        if kind == "box":
+            return box_mesh(value)
+        if kind == "sphere":
+            return sphere_mesh(value)
+        raise ValueError("Expected native box or sphere geometry.")
+
+    while True:
+        work.charge("source_primitive_key")
+        snapshot = _source_primitive_snapshot(geometry)
+        if snapshot is None:
+            kind = geometry["kind"]
+            return construct(kind, geometry["size" if kind == "box" else "radius"])
+        recipe_key, value = snapshot
+        key = ("source_primitive_mesh", namespace, recipe_key)
+
+        def current():
+            latest = _source_primitive_snapshot(geometry)
+            return latest is not None and latest[0] == recipe_key
+
+        cached = work.lookup(key)
+        if not current():
+            continue
+        if cached is not None:
+            return cached
+        mesh = construct(recipe_key[0], value)
+        # Insertion/promotion/eviction can call back into the current source.
+        # A changed recipe is retried under the same remaining work budget;
+        # the stale mesh is neither returned nor admitted to the cache.
+        work.remember(key, mesh, admission=current)
+        if current():
+            return mesh
 
 
 def surface_metadata(geometry: dict[str, Any], mesh: SurfaceMesh, *,
@@ -254,7 +472,8 @@ class BakedScene:
 
 def checked_contract(model: SceneModel, target_contract: str) -> str:
     expected = {TARGET_CONTRACT: "core-0.1", CONSTRUCTION_TARGET: "construction-0.1",
-                SURFACE_TARGET: "surface-0.1", IMPULSE_TARGET: "impulse-0.1", FORCE_TARGET: "force-0.1"}
+                SURFACE_TARGET: "surface-0.1", IMPULSE_TARGET: "impulse-0.1", FORCE_TARGET: "force-0.1",
+                REACH_TARGET: "planar-reach-0.1"}
     if target_contract not in expected or model.profile != expected[target_contract]:
         export_error("OKE-E-SUPPORT", "The named GLB contract must explicitly match the authored semantic profile.",
                      model, kind="unsupported", details={"target_contract": target_contract,
@@ -262,7 +481,7 @@ def checked_contract(model: SceneModel, target_contract: str) -> str:
     if model.requested_capabilities or any(diagnostic.code.startswith("OKL-E-") for diagnostic in model.diagnostics):
         export_error("OKE-E-SUPPORT", "The GLB adapter requires a supported, validated model.", model, kind="unsupported")
     return {TARGET_CONTRACT: "0.1", CONSTRUCTION_TARGET: "0.2", SURFACE_TARGET: "0.3",
-            IMPULSE_TARGET: "0.4", FORCE_TARGET: "0.5"}[target_contract]
+            IMPULSE_TARGET: "0.4", FORCE_TARGET: "0.5", REACH_TARGET: "0.6"}[target_contract]
 
 
 def program_metadata(model: SceneModel, *, check: Callable[[], None] | None = None) -> dict[str, Any]:
@@ -307,7 +526,7 @@ def program_metadata(model: SceneModel, *, check: Callable[[], None] | None = No
                     source = model.source_provenance[location["source_id"]]
                     if location["source_revision"] != source["source_revision"] or location["filename"] != source["filename"] or not 0 <= location["start_byte"] <= location["end_byte"]:
                         raise ValueError("Occurrence source location differs from its source identity.")
-            if model.profile in ("surface-0.1", "impulse-0.1", "force-0.1") and obj.geometry.get("kind") in ("loft", "placed"):
+            if model.profile in ("surface-0.1", "impulse-0.1", "force-0.1", "planar-reach-0.1") and obj.geometry.get("kind") in ("loft", "placed"):
                 recipes = [obj.geometry]
                 if obj.geometry["kind"] == "placed":
                     recipes.append(obj.geometry["surface"])
@@ -676,11 +895,11 @@ def _timeline(model: SceneModel, options: ExportOptions, end: Fraction,
 
 
 def _nodes(model: SceneModel, options: ExportOptions, *,
-           check: Callable[[], None] | None = None) -> list[BakedNode]:
+           check: Callable[[], None] | None = None, work=None) -> list[BakedNode]:
     nodes: list[BakedNode] = []
     meshes: dict[tuple, Mesh] = {}
     vertex_count = 0
-    native = model.profile in ("surface-0.1", "impulse-0.1", "force-0.1")
+    native = model.profile in ("surface-0.1", "impulse-0.1", "force-0.1", "planar-reach-0.1")
 
     if native:
         predicted = 0
@@ -723,13 +942,17 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
             return None
         if kind in ("loft", "placed") and native:
             try:
-                mesh = build_surface_mesh(geometry, max_vertices=MAX_MESH_VERTICES - vertex_count, check=check)
+                remaining = MAX_MESH_VERTICES - vertex_count
+                mesh = (build_surface_mesh(geometry, max_vertices=remaining, check=check)
+                        if work is None else _source_surface_mesh(geometry, max_vertices=remaining,
+                            work=work, namespace="reach_recording_source"))
             except SurfaceError as error:
                 raise OntoKinError(error.code, str(error), obj.span, phase="elaboration",
                                    category="resource_limit" if error.code == "OKL-E-RESOURCE" else "invalid",
                                    element_id=list(obj.element_id), blocks=["delivered"],
                                    details={"target_contract": {"impulse-0.1": IMPULSE_TARGET,
-                                                                "force-0.1": FORCE_TARGET}.get(model.profile, SURFACE_TARGET),
+                                                                "force-0.1": FORCE_TARGET,
+                                                                "planar-reach-0.1": REACH_TARGET}.get(model.profile, SURFACE_TARGET),
                                             "object_path": obj.path, **error.details}) from error
             charge(mesh)
             return mesh
@@ -745,7 +968,7 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
         return meshes[key]
     properties = None
     geometries = None
-    if model.profile in ("construction-0.1", "surface-0.1", "impulse-0.1", "force-0.1"):
+    if model.profile in ("construction-0.1", "surface-0.1", "impulse-0.1", "force-0.1", "planar-reach-0.1"):
         try:
             properties = bounded_data({path: dict(obj.properties) for path, obj in model.objects.items()}, check=check)
             if native:
@@ -763,7 +986,7 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
                     "appearance_linear_rgba": list(obj.appearance), "pose_frame": "world",
                     "role": obj.role, "properties": properties[path] if properties is not None else
                     {name: value.to_data() for name, value in obj.properties.items()}}
-        if model.profile in ("construction-0.1", "surface-0.1", "impulse-0.1", "force-0.1"):
+        if model.profile in ("construction-0.1", "surface-0.1", "impulse-0.1", "force-0.1", "planar-reach-0.1"):
             metadata["source_mapping"] = model.occurrence_provenance[path]
             metadata["program_revision"] = model.program_revision
         mesh = mesh_for(obj.geometry, obj)
@@ -1031,9 +1254,14 @@ def _build_scene(model: SceneModel, *, options: ExportOptions | None = None,
 def build_scene(model: SceneModel, *, options: ExportOptions | None = None,
                 source_uri: str | None = None, source_sha256: str | None = None,
                 target_contract: str = TARGET_CONTRACT,
-                check: Callable[[], None] | None = None) -> BakedScene:
+                check: Callable[[], None] | None = None, work=None, reach_plan=None) -> BakedScene:
     """Bake the explicit profile while preserving caller cancellation errors."""
     try:
+        if target_contract == REACH_TARGET:
+            from .reach_export import build_reach_scene
+            return build_reach_scene(model, options=options, source_uri=source_uri,
+                                     source_sha256=source_sha256, check=_guard_check(check), work=work,
+                                     reach_plan=reach_plan)
         return _build_scene(model, options=options, source_uri=source_uri, source_sha256=source_sha256,
                             target_contract=target_contract, check=_guard_check(check))
     except _ExportInterrupt as interrupted:

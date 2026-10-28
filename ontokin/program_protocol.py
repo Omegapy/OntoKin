@@ -17,6 +17,7 @@ SCHEMA_VERSION = "ontokin.agent/0.2"
 SURFACE_SCHEMA_VERSION = "ontokin.agent/0.3"
 IMPULSE_SCHEMA_VERSION = "ontokin.agent/0.4"
 FORCE_SCHEMA_VERSION = "ontokin.agent/0.5"
+REACH_SCHEMA_VERSION = "ontokin.agent/0.6"
 MAX_REQUEST_BYTES = MAX_JSON_BYTES
 MAX_BUDGETS = {**core.MAX_BUDGETS, "max_value_entries": MAX_JSON_ENTRIES}
 COMMON = core.COMMON
@@ -206,6 +207,9 @@ def validate_request(request, *, schema_version=SCHEMA_VERSION):
         _bad("The program destination contract is " + binding.destination + ".")
     if "options" in request:
         _options(request["options"])
+        if (schema_version == REACH_SCHEMA_VERSION
+                and request["options"].get("time_tolerance_s", 1e-6) > 1e-6):
+            _bad("Agent/0.6 time_tolerance_s must be at most 1e-6.")
         if "destination" not in request:
             _bad("Export options require an explicit destination contract.")
     if op in {"create", "edit", "validate"} and ("destination" in request or "options" in request) and request["requested_level"] != "delivered":

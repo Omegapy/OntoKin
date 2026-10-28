@@ -1,0 +1,50 @@
+{
+  "schema": "ontokin.checkpoint055-final-authority-audit/0.1",
+  "reviewer": "/root/c055_authority",
+  "status": "one wording finding pending",
+  "inputs": [
+    {
+      "path": "docs/engineering/reach-recording-validation-2026-10-23/checkpoint-055-cold-pi-feasibility.md",
+      "bytes": 17783,
+      "sha256": "ddb6a1b66a85adcda651a0dadf26c68aac61f97ef44e80eb3f82fdc00d567873",
+      "git_blob": "c45f2f406aa93e33038fe31c7cc5a2062215826c",
+      "read_complete": true
+    },
+    {
+      "path": "docs/engineering/reach-recording-validation-2026-10-23/checkpoint-055-schedule.json",
+      "bytes": 6737,
+      "sha256": "b739a9c5156db2e86b06c3be61aea1efbd40b5c8639995befd5a1dfdb5913735",
+      "git_blob": "877c4f4512a275d1e37a42b127f8b2de2754802b",
+      "read_complete": true
+    },
+    {
+      "path": "docs/engineering/reach-recording-validation-2026-10-23/checkpoint-055-cost-ledger.json",
+      "bytes": 3940,
+      "sha256": "028e621a3482407a585c0706170c8b2e40b776e00ba6a24871d02ac0c8d181d0",
+      "git_blob": "81f319296f344ddfd4ae1917f9dc85ac7b6f78b3",
+      "read_complete": true
+    },
+    {
+      "path": "docs/engineering/reach-recording-validation-2026-10-23/checkpoint-055-next-scope.json",
+      "bytes": 5882,
+      "sha256": "b44b316e469571f81b63a03f353682a3ae9970bb97b342325dfbc964816e96a0",
+      "git_blob": "711c1a67c75742a87d8f05e337e4e3919b8708c3",
+      "read_complete": true
+    },
+    {
+      "path": "docs/engineering/reach-recording-validation-2026-10-23/HANDOFF-055.md",
+      "bytes": 8508,
+      "sha256": "b9bf00cb49c66165e655cd565cfe21c2215ff9883cdf00961727fd503196b679",
+      "git_blob": "b5046beb422481723ed1ec74c7e98e53a57cd5d2",
+      "read_complete": true
+    }
+  ],
+  "finding": {
+    "id": "AUTH-W1",
+    "file": "checkpoint-055-cold-pi-feasibility.md",
+    "section": "2",
+    "text": "Function identity plus current code and code plus current globals/used closures are possible alternative authentication designs.",
+    "issue": "The first alternative can imply identity+code alone authenticates mutable globals/cells. Require all relevant mutable used state, as the other core documents already state.",
+    "classification": "authority wording precision; no change to witnesses or scoped rejection"
+  }
+}

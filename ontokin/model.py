@@ -103,6 +103,34 @@ class ActionModel:
     vector: Vec | None = None
     goal: float | None = None
     span: Any = None
+    reach: ReachPayload | None = None
+
+
+@dataclass(frozen=True)
+class ReachSourceLocation:
+    """Immutable original UTF-8 source location, independent of run identity."""
+
+    source_id: str
+    source_revision: str
+    start_byte: int
+    end_byte: int
+
+
+@dataclass(frozen=True)
+class ReachPayload:
+    """Pure two-coordinate description; admission and clocks are run state."""
+
+    shoulder: str
+    elbow: str
+    tip: str
+    target_frame: str
+    target_m: Vec
+    branch: str
+    base_frame: str | None = None
+    lengths_m: tuple[float, float] | None = None
+    limits_rad: tuple[tuple[float, float], tuple[float, float]] | None = None
+    description_identity: tuple[str, ...] = ()
+    source_location: ReachSourceLocation | None = None
 
 
 @dataclass

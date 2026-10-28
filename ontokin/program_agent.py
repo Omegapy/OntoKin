@@ -7,6 +7,7 @@ from functools import partial
 
 from .agent import AgentService
 from .agent_protocol import ProtocolError
+from .agent_runtime import _Interrupt
 from .agent_store import dumps
 from .bundle import load_bundle
 from .diagnostics import OntoKinError
@@ -77,13 +78,28 @@ class ProgramAgentService(AgentService):
     def _context_binding(self):
         context = {"implementation": self.implementation, "protocol": self._protocol.SCHEMA_VERSION}
         if self._protocol.SCHEMA_VERSION in (program_protocol.IMPULSE_SCHEMA_VERSION,
-                                             program_protocol.FORCE_SCHEMA_VERSION):
+                                             program_protocol.FORCE_SCHEMA_VERSION,
+                                             program_protocol.REACH_SCHEMA_VERSION):
             context["entry_profile"] = self._profile
         return context
 
+    def _absorb(self, task, result, *, origin=None):
+        super()._absorb(task, result, origin=origin)
+        if self._protocol.SCHEMA_VERSION == program_protocol.REACH_SCHEMA_VERSION:
+            from .reach_context import register_fresh
+            task.publication_context = register_fresh(
+                result, run=task.run, inspection_run_id=task.request.get("run_id"))
+
+    def _bind_publication_context(self, task, *, accepted_revision, source_accepted_once):
+        if self._protocol.SCHEMA_VERSION == program_protocol.REACH_SCHEMA_VERSION:
+            from .reach_context import bind_fresh
+            bind_fresh(task.publication_context, result=task.response.get("result"), run=task.run,
+                       accepted_revision=accepted_revision, source_accepted_once=source_accepted_once)
+
     def _validate(self, task, check):
         request = task.request
-        if (self._protocol.SCHEMA_VERSION == program_protocol.FORCE_SCHEMA_VERSION
+        if (self._protocol.SCHEMA_VERSION in (program_protocol.FORCE_SCHEMA_VERSION,
+                                             program_protocol.REACH_SCHEMA_VERSION)
                 and request["requested_level"] == "delivered"
                 and request.get("destination") == self._destination
                 and self._protocol.definition.delivery_available):
@@ -93,12 +109,22 @@ class ProgramAgentService(AgentService):
     def _force_delivery(self, task, check):
         """Prepare a fresh requested-prefix run and its recorded artifact.
 
-        A GLB/0.5 end time authorizes only that prefix. In particular, a later
-        force completion or authored event cannot invalidate this request by
+        A GLB/0.5 or /0.6 end time authorizes only that prefix. A later
+        action completion or authored event cannot invalidate this request by
         being evaluated before export. Ordinary evaluated validation and all
         earlier Agent bindings retain their complete-horizon semantics.
         """
         request = task.request
+        if self._protocol.SCHEMA_VERSION == program_protocol.REACH_SCHEMA_VERSION:
+            compiler, result = self._runtime.prepare_delivery(task.source,
+                until=request.get("options", {}).get("end"), budgets=request.get("budgets"), check=check)
+            result["requested_level"] = "delivered"
+            self._absorb(task, result, origin="validation")
+            if result["outcome"] == "valid":
+                self._export(task, check, compiler=compiler)
+                task.response["achieved_level"] = "delivered"
+                result["achieved_level"] = "delivered"
+            return
         endpoint = request.get("options", {}).get("end")
         if endpoint is None:
             compiler = self._runtime.compile_program(task.source,
@@ -115,7 +141,8 @@ class ProgramAgentService(AgentService):
 
     def _execute(self, task, check):
         if (task.request["operation"] == "export"
-                and self._protocol.SCHEMA_VERSION == program_protocol.FORCE_SCHEMA_VERSION
+                and self._protocol.SCHEMA_VERSION in (program_protocol.FORCE_SCHEMA_VERSION,
+                                                      program_protocol.REACH_SCHEMA_VERSION)
                 and self._protocol.definition.delivery_available):
             task.source = self.read_program(task.request["project_id"], task.request["program_revision"])
             task.response["program_revision"] = task.source.program_revision
@@ -215,7 +242,7 @@ class ProgramAgentService(AgentService):
         task.response.update(status="succeeded", result=result, truncated=next_offset is not None,
                              next_cursor=None if next_offset is None else self._cursor(context, next_offset))
 
-    def _export(self, task, check):
+    def _export(self, task, check, *, compiler=None):
         check()
         if not self._protocol.definition.delivery_available:
             raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED",
@@ -223,17 +250,27 @@ class ProgramAgentService(AgentService):
                                category="unsupported", phase="support", blocks=["delivered"],
                                details={"destination": self._destination, "delivery_targets": [],
                                         "adapter_available": False},
-                               repair="Request represented, constructed or evaluated output; recorded force delivery remains unfinished.")
+                               repair="Request represented, constructed or evaluated output; this selected delivery adapter remains unfinished.")
         from .gltf import export_glb
         from .scene import ExportOptions
-        compiler = self._runtime.compile_program(task.source, budgets=task.request.get("budgets"), check=check)
+        if compiler is None:
+            compiler = self._runtime.compile_program(task.source, budgets=task.request.get("budgets"), check=check)
         # Agent/0.2's frozen operation budget never counted internal GLB work.
-        # The separately selected Agent/0.3, /0.4 and /0.5 contracts add cooperative delivery
+        # The separately selected Agent/0.3 through /0.6 contracts add cooperative delivery
         # checks without retroactively rejecting formerly valid old requests.
         delivery_check = check if self._protocol.definition.bounded_delivery else None
-        artifact = export_glb(compiler.model, options=ExportOptions(**task.request.get("options", {})),
-                              source_uri=task.source.entry.filename, source_sha256=task.source.entry.revision,
-                              target_contract=self._destination, check=delivery_check)
+        work = ({"work": compiler.reach_work,
+                 "reach_plan": getattr(compiler, "reach_delivery_plan", None)}
+                if self._profile == program_runtime.REACH_PROFILE else {})
+        try:
+            artifact = export_glb(compiler.model, options=ExportOptions(**task.request.get("options", {})),
+                                  source_uri=task.source.entry.filename, source_sha256=task.source.entry.revision,
+                                  target_contract=self._destination, check=delivery_check, **work)
+        except _Interrupt as interrupted:
+            # The retained compiler's budget still owns the service callback.
+            # Preserve its actual cancellation/resource error across the later
+            # exporter call, just as prepare_delivery does during evaluation.
+            raise interrupted.error
         check()
         sha = hashlib.sha256(artifact.data).hexdigest()
         artifact_id = "artifact:" + sha

@@ -1,0 +1,119 @@
+{
+  "schema": "ontokin.checkpoint052-validation/0.1",
+  "status": "source feasibility and independent reviews complete; unchanged documentation checker passed; metadata passed after preserved first failure",
+  "source_parent_commit": "9aeab3e1b4e05e47a0284da55925f41cccc23964",
+  "source_parent_tree": "c661e9b40d5ba8390d4ed96725e41198f67655f9",
+  "scope_comment": 6451095874,
+  "snapshot": {
+    "files": 1042,
+    "bytes": 132726817,
+    "runtime_modules": 65,
+    "all_match_parent": true,
+    "all_runtime_match_held_c035": true,
+    "full_checkout": false,
+    "archive_internal_audit": false,
+    "c047_archive_parts_available": false
+  },
+  "documentation": {
+    "status": "passed",
+    "checker": "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+    "checker_unchanged": true,
+    "checker_git_blob": "25e4c5a224cbe15bbeba9a7e35301de4368d3de7",
+    "attempts": [
+      "documentation-001"
+    ],
+    "exit_code": 0,
+    "sources_verified": 29,
+    "sections_verified": 233,
+    "links": {
+      "documents": 233,
+      "local_links": 1814,
+      "anchors": 94,
+      "external_skipped": 431
+    },
+    "failures": [],
+    "stable_inputs": 1069,
+    "command": "checkpoint-052-validation/documentation-001/command.json",
+    "result": "checkpoint-052-validation/documentation-001/result.json"
+  },
+  "metadata": {
+    "status": "passed",
+    "attempts": [
+      {
+        "name": "metadata-001",
+        "status": "failed",
+        "reason": "unexpected untracked temporary archive outside owned C052 addition scope;all1042 tracked source inputs unchanged"
+      },
+      {
+        "name": "metadata-002",
+        "status": "passed",
+        "grouped_checks": 9,
+        "stable_inputs": 1079
+      }
+    ],
+    "checker_unchanged_between_attempts": true,
+    "resolution": "Unexpected 5,242,880-byte file had no visible open handle;exact bytes preserved by reversible move outside source. No tracked input or checker changed.",
+    "anomaly_record": "checkpoint-052-validation/unexpected-local-file.json",
+    "exit_code": 0,
+    "result": "checkpoint-052-validation/metadata-002/result.json",
+    "command": "checkpoint-052-validation/metadata-002/command.json"
+  },
+  "runtime": {
+    "imports": 0,
+    "candidate_replays": 0,
+    "original_requests": 0,
+    "runtime_tests": 0,
+    "benchmarks": 0,
+    "archived_drivers": 0,
+    "hosted_jobs": 0
+  },
+  "release": {
+    "original28": "24/28 historical",
+    "open_cases": [
+      "P11",
+      "P16",
+      "P23",
+      "L03"
+    ],
+    "C035": "held including adverse timing",
+    "accepted": false
+  },
+  "publication": "Final containing commit/tree, immutable remote readback and later Issue26 release supplied separately.",
+  "exclusive_window_comment": 6451201192,
+  "exclusive_window_start_utc": "2026-10-27T19:11:29Z",
+  "exclusive_window_expires_utc": "2026-10-27T19:41:29Z",
+  "independent_reviews": {
+    "roles": 3,
+    "source_inputs": {
+      "authority": 18,
+      "cost": 15,
+      "evidence": 32
+    },
+    "final_draft_findings": 0,
+    "index": "checkpoint-052-reviews.json",
+    "qualification": "Source audits bind their selected inputs and the four unchanged core files;coordinator summaries updated afterward from actual execution."
+  },
+  "core_files_after_validation": [
+    {
+      "path": "HANDOFF-052.md",
+      "bytes": 9173,
+      "sha256": "16cf82cde279a4981035f10991b378b6c03df274d9d194f5663bbdc0a45c85de"
+    },
+    {
+      "path": "checkpoint-052-canonical-arithmetic-feasibility.md",
+      "bytes": 15081,
+      "sha256": "dcf8a64a0898d42470a3a1a36ee60d67dcbfd0b1fb2479cb09ee08c30f48ccf1"
+    },
+    {
+      "path": "checkpoint-052-cost-ledger.json",
+      "bytes": 6874,
+      "sha256": "2540d600f9d9c81f872b4f0345455e4d76c934650653f161ffb8c317434002d4"
+    },
+    {
+      "path": "checkpoint-052-next-scope.json",
+      "bytes": 5560,
+      "sha256": "385ccec6336ff05ba95591601136f84e8b162f320e91dad84880e836ba35c2cd"
+    }
+  ],
+  "input_stability_qualification": "All named inputs stable during each actual command. The source draft files are unchanged. Final checkpoint/index/validation records and this outcome summary are later coordinator bookkeeping;no runtime or publication success is inferred."
+}

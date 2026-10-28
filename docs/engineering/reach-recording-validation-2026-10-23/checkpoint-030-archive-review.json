@@ -1,0 +1,3125 @@
+{
+  "schema_version": "ontokin.native-fields-evidence-audit/0.1",
+  "status": "passed",
+  "started_at": "2026-10-24T15:15:08.833202+00:00",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/scratch/11f36910f3c3/evidence030/drivers/audit_native_fields_v003.py",
+    "--repo",
+    "/workspace/scratch/11f36910f3c3/OntoKin",
+    "--evidence",
+    "/workspace/scratch/11f36910f3c3/evidence030",
+    "--checkpoint",
+    "/workspace/scratch/11f36910f3c3/checkpoint030-package/checkpoint-030.json",
+    "--manifest",
+    "/workspace/scratch/11f36910f3c3/checkpoint030-package/checkpoint-030-manifest.json",
+    "--archive-base",
+    "/workspace/scratch/11f36910f3c3/checkpoint030-package",
+    "--output",
+    "/workspace/scratch/11f36910f3c3/audits030/archive-audit-001.json"
+  ],
+  "auditor_sha256": "b90f937e4fe85b9f5445dda122a40b0f2a4a1677134f8cda144a9af8bab7425d",
+  "product_code_imported_or_executed": false,
+  "release_acceptance": false,
+  "full_product_goal_completed": false,
+  "attempts": {
+    "execution/baseline-regression-failures-001": {
+      "kind": "tests",
+      "status": "failed",
+      "test_count": 4,
+      "failed": 3,
+      "error": 1,
+      "unsuccessful_test_outcomes": [
+        {
+          "test_id": "test_reach_endpoint_traversal.ReachEndpointTraversalTests.test_cancellation_preserves_input_tracks_and_propagates_original_exception",
+          "status": "failed"
+        },
+        {
+          "test_id": "test_reach_endpoint_traversal.ReachEndpointTraversalTests.test_complete_p01_bytes_equal_carrier_major_proofs",
+          "status": "failed"
+        },
+        {
+          "test_id": "test_reach_pending_output.ReachPendingOutputTests.test_every_observed_field_equals_fresh_boundary_reconstruction",
+          "status": "failed"
+        },
+        {
+          "test_id": "test_reach_phase_reuse.ReachPhaseReuseTests.test_translated_and_differently_anchored_paths_do_not_borrow_bounds",
+          "status": "error"
+        }
+      ],
+      "source_commit": "6afa8439a37f0b7387b77a13f174014963adca8c",
+      "source_tree": "368cf57fe150302e2b0c606eb4d185ae09dc8003"
+    },
+    "execution/candidate-focused-001": {
+      "kind": "tests",
+      "status": "failed",
+      "test_count": 110,
+      "passed": 109,
+      "error": 1,
+      "unsuccessful_test_outcomes": [
+        {
+          "test_id": "test_reach_certificate_term_reuse.CertificateTermReuseTests.test_original_source_prefix_bytes_certificates_and_reports_are_identical",
+          "status": "error"
+        }
+      ],
+      "source_commit": "9c6c4b80fa00568b8d426d8d0952a417adf75d75",
+      "source_tree": "c56c691689eac612b1b57530c864941fb486e01f"
+    },
+    "execution/candidate-focused-002": {
+      "kind": "tests",
+      "status": "passed",
+      "test_count": 110,
+      "passed": 110,
+      "unsuccessful_test_outcomes": [],
+      "source_commit": "a6c15941ac720bdae93daeafc624f9a5b10bf6a8",
+      "source_tree": "46098ae2be39e0c485a227e6e27e5d2a41352228"
+    },
+    "execution/candidate-focused-003": {
+      "kind": "tests",
+      "status": "passed",
+      "test_count": 110,
+      "passed": 110,
+      "unsuccessful_test_outcomes": [],
+      "source_commit": "6788ee2f9352875375334b7d542848b334b5d37c",
+      "source_tree": "0b542f77e5f7ec3591fda6b181adb2a55bf63d0e"
+    },
+    "execution/candidate-focused-004": {
+      "kind": "tests",
+      "status": "passed",
+      "test_count": 113,
+      "passed": 113,
+      "unsuccessful_test_outcomes": [],
+      "source_commit": "50f4524a1f32c4a013b4a8355ea5cc902f540b20",
+      "source_tree": "71803ccff06eaea5c9c19c2472ee53807f3ee86f"
+    },
+    "execution/candidate-focused-005": {
+      "kind": "tests",
+      "status": "passed",
+      "test_count": 115,
+      "passed": 115,
+      "unsuccessful_test_outcomes": [],
+      "source_commit": "6a9fb22fb8ca901e18d315406cbca667f2ef8321",
+      "source_tree": "1f0b08f8846f443b8bc573fe0c9d5e1e3c319c47"
+    },
+    "execution/candidate-hook-regression-001": {
+      "kind": "tests",
+      "status": "failed",
+      "test_count": 2,
+      "error": 1,
+      "passed": 1,
+      "unsuccessful_test_outcomes": [
+        {
+          "test_id": "test_reach_certificate_native_fields.CertificateNativeFieldGateTests.test_late_trace_cannot_replace_slots_between_optional_filter_checks",
+          "status": "error"
+        }
+      ],
+      "source_commit": "3b0c2670b5b889a465352562b1219baed77d1302",
+      "source_tree": "da8073f214eef92b30c0ca71baeceb2e7be7e935"
+    },
+    "execution/combined-controls-001": {
+      "kind": "performance",
+      "status": "passed",
+      "complete": true,
+      "requests": 30,
+      "summaries": [
+        {
+          "mode": "combined",
+          "case_id": "P09",
+          "pair_count": 5,
+          "control_seconds": [
+            1.058474018999732,
+            0.9025977499995861,
+            0.9498865829996248,
+            1.0547560089999024,
+            0.8676369879999584
+          ],
+          "candidate_seconds": [
+            0.9703055819995825,
+            1.1143189899999015,
+            0.9579426029999922,
+            0.9873268309997911,
+            1.1543558759999542
+          ],
+          "control_median_seconds": 0.9498865829996248,
+          "candidate_median_seconds": 0.9873268309997911,
+          "control_range_seconds": [
+            0.8676369879999584,
+            1.058474018999732
+          ],
+          "candidate_range_seconds": [
+            0.9579426029999922,
+            1.1543558759999542
+          ],
+          "candidate_to_control_median_ratio": 1.0394154930391106,
+          "timing_screen_passed": true,
+          "shared_operation_savings": [
+            54,
+            54,
+            54,
+            54,
+            54
+          ],
+          "complete_outputs_equal": true,
+          "all_pair_checks_passed": true
+        },
+        {
+          "mode": "combined",
+          "case_id": "P11",
+          "pair_count": 5,
+          "control_seconds": [
+            1.6120911389998582,
+            1.6137484009996115,
+            1.4194940530001077,
+            1.5335660549999375,
+            1.7638058309998996
+          ],
+          "candidate_seconds": [
+            1.8013546100000895,
+            1.7410927030000494,
+            1.5334826280000016,
+            1.6252972480001517,
+            1.6741107120001288
+          ],
+          "control_median_seconds": 1.6120911389998582,
+          "candidate_median_seconds": 1.6741107120001288,
+          "control_range_seconds": [
+            1.4194940530001077,
+            1.7638058309998996
+          ],
+          "candidate_range_seconds": [
+            1.5334826280000016,
+            1.8013546100000895
+          ],
+          "candidate_to_control_median_ratio": 1.038471505425399,
+          "timing_screen_passed": true,
+          "shared_operation_savings": [
+            153,
+            153,
+            153,
+            153,
+            153
+          ],
+          "complete_outputs_equal": true,
+          "all_pair_checks_passed": true
+        },
+        {
+          "mode": "combined",
+          "case_id": "L03",
+          "pair_count": 5,
+          "control_seconds": [
+            0.712594447000356,
+            0.77306087199986,
+            0.8114428359999692,
+            1.147927460000119,
+            1.1663648679996186
+          ],
+          "candidate_seconds": [
+            0.8359763380003642,
+            0.7685598789998949,
+            0.9142951509998056,
+            0.9274042249999184,
+            0.748441725000248
+          ],
+          "control_median_seconds": 0.8114428359999692,
+          "candidate_median_seconds": 0.8359763380003642,
+          "control_range_seconds": [
+            0.712594447000356,
+            1.1663648679996186
+          ],
+          "candidate_range_seconds": [
+            0.748441725000248,
+            0.9274042249999184
+          ],
+          "candidate_to_control_median_ratio": 1.0302344181400793,
+          "timing_screen_passed": true,
+          "shared_operation_savings": [
+            51,
+            51,
+            51,
+            51,
+            51
+          ],
+          "complete_outputs_equal": true,
+          "all_pair_checks_passed": true
+        }
+      ],
+      "pairs_per_case_mode": 5,
+      "source_commit": "6a9fb22fb8ca901e18d315406cbca667f2ef8321",
+      "source_tree": "1f0b08f8846f443b8bc573fe0c9d5e1e3c319c47",
+      "driver_sha256": "1a39e835fe2ab21ba705ae0b19c8b9827587bbdd827be813e488b61bfa07ca00"
+    },
+    "execution/compare-controls-001": {
+      "kind": "performance",
+      "status": "failed",
+      "complete": true,
+      "requests": 30,
+      "summaries": [
+        {
+          "mode": "compare_only",
+          "case_id": "P09",
+          "pair_count": 5,
+          "control_seconds": [
+            1.1167563139997583,
+            1.0298909749999439,
+            0.7692361240001446,
+            0.8071109379998234,
+            0.7909176769999249
+          ],
+          "candidate_seconds": [
+            0.9808103259997552,
+            0.7958959949996824,
+            0.9054911949997404,
+            0.873713914000291,
+            0.9648074120000274
+          ],
+          "control_median_seconds": 0.8071109379998234,
+          "candidate_median_seconds": 0.9054911949997404,
+          "control_range_seconds": [
+            0.7692361240001446,
+            1.1167563139997583
+          ],
+          "candidate_range_seconds": [
+            0.7958959949996824,
+            0.9808103259997552
+          ],
+          "candidate_to_control_median_ratio": 1.121891864386973,
+          "timing_screen_passed": false,
+          "shared_operation_savings": [
+            30,
+            30,
+            30,
+            30,
+            30
+          ],
+          "complete_outputs_equal": true,
+          "all_pair_checks_passed": true
+        },
+        {
+          "mode": "compare_only",
+          "case_id": "P11",
+          "pair_count": 5,
+          "control_seconds": [
+            2.000734636999823,
+            1.7344669879998946,
+            1.7464102489998368,
+            1.857268643000225,
+            1.9707892540000103
+          ],
+          "candidate_seconds": [
+            1.8942487619997337,
+            1.8161342650000734,
+            1.8722320649999347,
+            2.3129326900002525,
+            1.9733348479999222
+          ],
+          "control_median_seconds": 1.857268643000225,
+          "candidate_median_seconds": 1.8942487619997337,
+          "control_range_seconds": [
+            1.7344669879998946,
+            2.000734636999823
+          ],
+          "candidate_range_seconds": [
+            1.8161342650000734,
+            2.3129326900002525
+          ],
+          "candidate_to_control_median_ratio": 1.0199110231785162,
+          "timing_screen_passed": true,
+          "shared_operation_savings": [
+            87,
+            87,
+            87,
+            87,
+            87
+          ],
+          "complete_outputs_equal": true,
+          "all_pair_checks_passed": true
+        },
+        {
+          "mode": "compare_only",
+          "case_id": "L03",
+          "pair_count": 5,
+          "control_seconds": [
+            0.8974996500000998,
+            1.0596637979997467,
+            0.7876558439998007,
+            0.6445884190002289,
+            0.6241667680001228
+          ],
+          "candidate_seconds": [
+            0.9541421049998462,
+            0.9063354519998938,
+            0.8171366350002245,
+            0.8841601580002134,
+            0.6168565570001192
+          ],
+          "control_median_seconds": 0.7876558439998007,
+          "candidate_median_seconds": 0.8841601580002134,
+          "control_range_seconds": [
+            0.6241667680001228,
+            1.0596637979997467
+          ],
+          "candidate_range_seconds": [
+            0.6168565570001192,
+            0.9541421049998462
+          ],
+          "candidate_to_control_median_ratio": 1.1225209140966357,
+          "timing_screen_passed": false,
+          "shared_operation_savings": [
+            27,
+            27,
+            27,
+            27,
+            27
+          ],
+          "complete_outputs_equal": true,
+          "all_pair_checks_passed": true
+        }
+      ],
+      "pairs_per_case_mode": 5,
+      "source_commit": "6788ee2f9352875375334b7d542848b334b5d37c",
+      "source_tree": "0b542f77e5f7ec3591fda6b181adb2a55bf63d0e",
+      "driver_sha256": "1a39e835fe2ab21ba705ae0b19c8b9827587bbdd827be813e488b61bfa07ca00"
+    },
+    "execution/compare-controls-002": {
+      "kind": "performance",
+      "status": "passed",
+      "complete": true,
+      "requests": 30,
+      "summaries": [
+        {
+          "mode": "compare_only",
+          "case_id": "P09",
+          "pair_count": 5,
+          "control_seconds": [
+            1.5405895789999704,
+            1.1112924409999323,
+            1.3275919309999153,
+            1.1934007189997828,
+            0.791217424000024
+          ],
+          "candidate_seconds": [
+            1.4616090419999637,
+            1.365105181999752,
+            0.860397699999794,
+            1.1190310380002302,
+            1.152187147999939
+          ],
+          "control_median_seconds": 1.1934007189997828,
+          "candidate_median_seconds": 1.152187147999939,
+          "control_range_seconds": [
+            0.791217424000024,
+            1.5405895789999704
+          ],
+          "candidate_range_seconds": [
+            0.860397699999794,
+            1.4616090419999637
+          ],
+          "candidate_to_control_median_ratio": 0.9654654381016413,
+          "timing_screen_passed": true,
+          "shared_operation_savings": [
+            30,
+            30,
+            30,
+            30,
+            30
+          ],
+          "complete_outputs_equal": true,
+          "all_pair_checks_passed": true
+        },
+        {
+          "mode": "compare_only",
+          "case_id": "P11",
+          "pair_count": 5,
+          "control_seconds": [
+            2.140133500000047,
+            1.9618534249998447,
+            1.5898614820002877,
+            1.4499863750002078,
+            1.4179135399999723
+          ],
+          "candidate_seconds": [
+            1.612071926000226,
+            1.5749123059999874,
+            1.5083321520000936,
+            1.3821740029998182,
+            4.158451011999659
+          ],
+          "control_median_seconds": 1.5898614820002877,
+          "candidate_median_seconds": 1.5749123059999874,
+          "control_range_seconds": [
+            1.4179135399999723,
+            2.140133500000047
+          ],
+          "candidate_range_seconds": [
+            1.3821740029998182,
+            4.158451011999659
+          ],
+          "candidate_to_control_median_ratio": 0.9905971833587088,
+          "timing_screen_passed": true,
+          "shared_operation_savings": [
+            87,
+            87,
+            87,
+            87,
+            87
+          ],
+          "complete_outputs_equal": true,
+          "all_pair_checks_passed": true
+        },
+        {
+          "mode": "compare_only",
+          "case_id": "L03",
+          "pair_count": 5,
+          "control_seconds": [
+            0.9959810790001029,
+            0.7581803299999592,
+            0.6373585159999493,
+            0.7494603890004328,
+            0.6305658060000496
+          ],
+          "candidate_seconds": [
+            0.8389987750001637,
+            1.087825444000373,
+            0.7668909459998758,
+            0.637231563000114,
+            0.6091319940001085
+          ],
+          "control_median_seconds": 0.7494603890004328,
+          "candidate_median_seconds": 0.7668909459998758,
+          "control_range_seconds": [
+            0.6305658060000496,
+            0.9959810790001029
+          ],
+          "candidate_range_seconds": [
+            0.6091319940001085,
+            1.087825444000373
+          ],
+          "candidate_to_control_median_ratio": 1.023257475985743,
+          "timing_screen_passed": true,
+          "shared_operation_savings": [
+            27,
+            27,
+            27,
+            27,
+            27
+          ],
+          "complete_outputs_equal": true,
+          "all_pair_checks_passed": true
+        }
+      ],
+      "pairs_per_case_mode": 5,
+      "source_commit": "50f4524a1f32c4a013b4a8355ea5cc902f540b20",
+      "source_tree": "71803ccff06eaea5c9c19c2472ee53807f3ee86f",
+      "driver_sha256": "1a39e835fe2ab21ba705ae0b19c8b9827587bbdd827be813e488b61bfa07ca00"
+    },
+    "execution/compare-controls-003": {
+      "kind": "performance",
+      "status": "passed",
+      "complete": true,
+      "requests": 30,
+      "summaries": [
+        {
+          "mode": "compare_only",
+          "case_id": "P09",
+          "pair_count": 5,
+          "control_seconds": [
+            0.9708204939997813,
+            0.91738128399993,
+            0.9234333089998472,
+            0.994745039999998,
+            0.9853382969999984
+          ],
+          "candidate_seconds": [
+            0.9286873770001876,
+            0.8946173449999151,
+            0.8654360079999606,
+            0.8796597400000792,
+            0.924099877000117
+          ],
+          "control_median_seconds": 0.9708204939997813,
+          "candidate_median_seconds": 0.8946173449999151,
+          "control_range_seconds": [
+            0.91738128399993,
+            0.994745039999998
+          ],
+          "candidate_range_seconds": [
+            0.8654360079999606,
+            0.9286873770001876
+          ],
+          "candidate_to_control_median_ratio": 0.9215064479264243,
+          "timing_screen_passed": true,
+          "shared_operation_savings": [
+            30,
+            30,
+            30,
+            30,
+            30
+          ],
+          "complete_outputs_equal": true,
+          "all_pair_checks_passed": true
+        },
+        {
+          "mode": "compare_only",
+          "case_id": "P11",
+          "pair_count": 5,
+          "control_seconds": [
+            1.6485488140001507,
+            1.6539427590000741,
+            1.5007553679997727,
+            1.2507352929997069,
+            1.2653899420001835
+          ],
+          "candidate_seconds": [
+            1.6754413120002027,
+            1.6050094629999876,
+            1.5665761440000097,
+            1.5294740259996615,
+            1.1833970960001352
+          ],
+          "control_median_seconds": 1.5007553679997727,
+          "candidate_median_seconds": 1.5665761440000097,
+          "control_range_seconds": [
+            1.2507352929997069,
+            1.6539427590000741
+          ],
+          "candidate_range_seconds": [
+            1.1833970960001352,
+            1.6754413120002027
+          ],
+          "candidate_to_control_median_ratio": 1.0438584311632106,
+          "timing_screen_passed": true,
+          "shared_operation_savings": [
+            87,
+            87,
+            87,
+            87,
+            87
+          ],
+          "complete_outputs_equal": true,
+          "all_pair_checks_passed": true
+        },
+        {
+          "mode": "compare_only",
+          "case_id": "L03",
+          "pair_count": 5,
+          "control_seconds": [
+            0.5452694580003481,
+            0.5587431690000813,
+            0.5459873029999471,
+            0.5369987409999339,
+            0.5722605480000311
+          ],
+          "candidate_seconds": [
+            0.5788713020001524,
+            0.5258047919996898,
+            0.5736772059999566,
+            0.5550923999999213,
+            0.5510524849996727
+          ],
+          "control_median_seconds": 0.5459873029999471,
+          "candidate_median_seconds": 0.5550923999999213,
+          "control_range_seconds": [
+            0.5369987409999339,
+            0.5722605480000311
+          ],
+          "candidate_range_seconds": [
+            0.5258047919996898,
+            0.5788713020001524
+          ],
+          "candidate_to_control_median_ratio": 1.0166763896338722,
+          "timing_screen_passed": true,
+          "shared_operation_savings": [
+            27,
+            27,
+            27,
+            27,
+            27
+          ],
+          "complete_outputs_equal": true,
+          "all_pair_checks_passed": true
+        }
+      ],
+      "pairs_per_case_mode": 5,
+      "source_commit": "6a9fb22fb8ca901e18d315406cbca667f2ef8321",
+      "source_tree": "1f0b08f8846f443b8bc573fe0c9d5e1e3c319c47",
+      "driver_sha256": "1a39e835fe2ab21ba705ae0b19c8b9827587bbdd827be813e488b61bfa07ca00"
+    },
+    "execution/decode-controls-001": {
+      "kind": "performance",
+      "status": "failed",
+      "complete": true,
+      "requests": 30,
+      "summaries": [
+        {
+          "mode": "decode_only",
+          "case_id": "P09",
+          "pair_count": 5,
+          "control_seconds": [
+            1.1813978499999394,
+            0.9905006929998308,
+            0.9412055099996905,
+            1.6084300029997394,
+            0.9704834210001536
+          ],
+          "candidate_seconds": [
+            0.9659858739996707,
+            1.061299955999857,
+            1.2447112149998247,
+            1.1494410999998763,
+            1.017393600000105
+          ],
+          "control_median_seconds": 0.9905006929998308,
+          "candidate_median_seconds": 1.061299955999857,
+          "control_range_seconds": [
+            0.9412055099996905,
+            1.6084300029997394
+          ],
+          "candidate_range_seconds": [
+            0.9659858739996707,
+            1.2447112149998247
+          ],
+          "candidate_to_control_median_ratio": 1.0714782569062153,
+          "timing_screen_passed": true,
+          "shared_operation_savings": [
+            24,
+            24,
+            24,
+            24,
+            24
+          ],
+          "complete_outputs_equal": true,
+          "all_pair_checks_passed": true
+        },
+        {
+          "mode": "decode_only",
+          "case_id": "P11",
+          "pair_count": 5,
+          "control_seconds": [
+            1.696044264000193,
+            1.82355791100008,
+            1.6327545969998027,
+            1.8030220400000871,
+            2.4914020580004035
+          ],
+          "candidate_seconds": [
+            2.015262261999851,
+            2.0066118940003435,
+            1.7918264999998428,
+            1.9067434550001963,
+            2.2104826340000727
+          ],
+          "control_median_seconds": 1.8030220400000871,
+          "candidate_median_seconds": 2.0066118940003435,
+          "control_range_seconds": [
+            1.6327545969998027,
+            2.4914020580004035
+          ],
+          "candidate_range_seconds": [
+            1.7918264999998428,
+            2.2104826340000727
+          ],
+          "candidate_to_control_median_ratio": 1.1129158986876535,
+          "timing_screen_passed": false,
+          "shared_operation_savings": [
+            66,
+            66,
+            66,
+            66,
+            66
+          ],
+          "complete_outputs_equal": true,
+          "all_pair_checks_passed": true
+        },
+        {
+          "mode": "decode_only",
+          "case_id": "L03",
+          "pair_count": 5,
+          "control_seconds": [
+            0.9304319970001416,
+            0.981349770000179,
+            1.209407586999987,
+            0.7851383959996383,
+            0.8355746019997241
+          ],
+          "candidate_seconds": [
+            0.8542316759999267,
+            0.8898098429999663,
+            0.9179308380003022,
+            0.8248863609996988,
+            0.8508645450001495
+          ],
+          "control_median_seconds": 0.9304319970001416,
+          "candidate_median_seconds": 0.8542316759999267,
+          "control_range_seconds": [
+            0.7851383959996383,
+            1.209407586999987
+          ],
+          "candidate_range_seconds": [
+            0.8248863609996988,
+            0.9179308380003022
+          ],
+          "candidate_to_control_median_ratio": 0.9181022135460768,
+          "timing_screen_passed": true,
+          "shared_operation_savings": [
+            24,
+            24,
+            24,
+            24,
+            24
+          ],
+          "complete_outputs_equal": true,
+          "all_pair_checks_passed": true
+        }
+      ],
+      "pairs_per_case_mode": 5,
+      "source_commit": "a6c15941ac720bdae93daeafc624f9a5b10bf6a8",
+      "source_tree": "46098ae2be39e0c485a227e6e27e5d2a41352228",
+      "driver_sha256": "698d728e130eb386d3a5e4d5bcbe2cbaffad93e7964b55c6b0404fcfc0d6e970"
+    },
+    "execution/decode-controls-002": {
+      "kind": "performance",
+      "status": "failed",
+      "complete": true,
+      "requests": 30,
+      "summaries": [
+        {
+          "mode": "decode_only",
+          "case_id": "P09",
+          "pair_count": 5,
+          "control_seconds": [
+            0.8139855999997962,
+            0.7639930160003132,
+            0.9656663000000663,
+            0.8928038620001644,
+            1.272614386999976
+          ],
+          "candidate_seconds": [
+            1.0673044800000753,
+            0.8627822009998454,
+            0.7362221960001989,
+            0.7233900969999922,
+            0.8460260849997212
+          ],
+          "control_median_seconds": 0.8928038620001644,
+          "candidate_median_seconds": 0.8460260849997212,
+          "control_range_seconds": [
+            0.7639930160003132,
+            1.272614386999976
+          ],
+          "candidate_range_seconds": [
+            0.7233900969999922,
+            1.0673044800000753
+          ],
+          "candidate_to_control_median_ratio": 0.9476057631564831,
+          "timing_screen_passed": true,
+          "shared_operation_savings": [
+            24,
+            24,
+            24,
+            24,
+            24
+          ],
+          "complete_outputs_equal": true,
+          "all_pair_checks_passed": true
+        },
+        {
+          "mode": "decode_only",
+          "case_id": "P11",
+          "pair_count": 5,
+          "control_seconds": [
+            6.803373299000214,
+            1.3105795999999827,
+            1.9252725490000557,
+            1.2698537440001019,
+            1.2816705239997646
+          ],
+          "candidate_seconds": [
+            2.293532213999697,
+            4.408700095000313,
+            2.5549163839996254,
+            1.342567218000113,
+            1.2601790900002925
+          ],
+          "control_median_seconds": 1.3105795999999827,
+          "candidate_median_seconds": 2.293532213999697,
+          "control_range_seconds": [
+            1.2698537440001019,
+            6.803373299000214
+          ],
+          "candidate_range_seconds": [
+            1.2601790900002925,
+            4.408700095000313
+          ],
+          "candidate_to_control_median_ratio": 1.7500136687613077,
+          "timing_screen_passed": false,
+          "shared_operation_savings": [
+            66,
+            66,
+            66,
+            66,
+            66
+          ],
+          "complete_outputs_equal": true,
+          "all_pair_checks_passed": true
+        },
+        {
+          "mode": "decode_only",
+          "case_id": "L03",
+          "pair_count": 5,
+          "control_seconds": [
+            0.5536054840003999,
+            0.8750089210002443,
+            0.6644399850001719,
+            0.5411628689998906,
+            0.5792037050000545
+          ],
+          "candidate_seconds": [
+            0.5741381550001279,
+            0.5771067460000268,
+            0.616773055000067,
+            0.5909544099999948,
+            0.539862254000127
+          ],
+          "control_median_seconds": 0.5792037050000545,
+          "candidate_median_seconds": 0.5771067460000268,
+          "control_range_seconds": [
+            0.5411628689998906,
+            0.8750089210002443
+          ],
+          "candidate_range_seconds": [
+            0.539862254000127,
+            0.616773055000067
+          ],
+          "candidate_to_control_median_ratio": 0.9963795828964397,
+          "timing_screen_passed": true,
+          "shared_operation_savings": [
+            24,
+            24,
+            24,
+            24,
+            24
+          ],
+          "complete_outputs_equal": true,
+          "all_pair_checks_passed": true
+        }
+      ],
+      "pairs_per_case_mode": 5,
+      "source_commit": "6788ee2f9352875375334b7d542848b334b5d37c",
+      "source_tree": "0b542f77e5f7ec3591fda6b181adb2a55bf63d0e",
+      "driver_sha256": "698d728e130eb386d3a5e4d5bcbe2cbaffad93e7964b55c6b0404fcfc0d6e970"
+    },
+    "execution/decode-controls-003": {
+      "kind": "performance",
+      "status": "passed",
+      "complete": true,
+      "requests": 120,
+      "summaries": [
+        {
+          "mode": "decode_only",
+          "case_id": "P09",
+          "pair_count": 20,
+          "control_seconds": [
+            0.8759011409997584,
+            0.8281851149999966,
+            0.8298447310003212,
+            0.7867966270000579,
+            0.7394917139999961,
+            0.7573111259998768,
+            0.7405648860003566,
+            0.7609705300001224,
+            0.7224741500003802,
+            0.7455129459999625,
+            0.7221972130000722,
+            0.7633574029996453,
+            0.7603984829997898,
+            0.7097005169998738,
+            0.8207129659999737,
+            0.7010510810000596,
+            0.7847264830002132,
+            0.7462567729999137,
+            0.7288876570000866,
+            0.758256898000127
+          ],
+          "candidate_seconds": [
+            0.7992862579999382,
+            0.875147200000356,
+            0.908521293999911,
+            0.9571746520000488,
+            0.8962510410001414,
+            0.7734850069996355,
+            0.7922888910002257,
+            0.7803842660000555,
+            0.7551625380001497,
+            0.7183014229999571,
+            0.8282466570003635,
+            0.7911948150003809,
+            0.763944229000117,
+            0.7483045379999567,
+            0.6923402120000901,
+            0.717252532999737,
+            0.770134598000368,
+            0.7055990699996073,
+            0.7231441310000264,
+            0.6970798259999356
+          ],
+          "control_median_seconds": 0.7577840120000019,
+          "candidate_median_seconds": 0.7718098025000018,
+          "control_range_seconds": [
+            0.7010510810000596,
+            0.8759011409997584
+          ],
+          "candidate_range_seconds": [
+            0.6923402120000901,
+            0.9571746520000488
+          ],
+          "candidate_to_control_median_ratio": 1.0185089554251507,
+          "timing_screen_passed": true,
+          "shared_operation_savings": [
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24
+          ],
+          "complete_outputs_equal": true,
+          "all_pair_checks_passed": true
+        },
+        {
+          "mode": "decode_only",
+          "case_id": "P11",
+          "pair_count": 20,
+          "control_seconds": [
+            1.2022619179997491,
+            1.2838198190002004,
+            1.4018592150000586,
+            1.3243277750002562,
+            1.2612519260001136,
+            1.3119772430000012,
+            1.2047732549999637,
+            1.253774137000164,
+            1.350382947000071,
+            1.2637643220000427,
+            1.4990299630003392,
+            1.2652721409999685,
+            1.383175203999599,
+            1.233993068000018,
+            1.256778752000173,
+            1.7530365399998118,
+            2.091837770999973,
+            2.406102366000141,
+            1.86083133000011,
+            1.946503317999941
+          ],
+          "candidate_seconds": [
+            1.2420305089999601,
+            1.3101763259996915,
+            1.2260601590000988,
+            1.3172712129999127,
+            1.3045734380002614,
+            1.4411298679997344,
+            1.3946779329999117,
+            1.331075194999812,
+            1.3680629590003264,
+            1.3598473739998553,
+            1.2636973039998338,
+            1.2763199860000896,
+            1.2973200920000636,
+            1.285417963999862,
+            1.3409929120002744,
+            1.8533074510000915,
+            1.5758267969999906,
+            1.9421035139998821,
+            1.7396657050003341,
+            2.0711670480000066
+          ],
+          "control_median_seconds": 1.3181525090001287,
+          "candidate_median_seconds": 1.3360340535000432,
+          "control_range_seconds": [
+            1.2022619179997491,
+            2.406102366000141
+          ],
+          "candidate_range_seconds": [
+            1.2260601590000988,
+            2.0711670480000066
+          ],
+          "candidate_to_control_median_ratio": 1.0135656112459084,
+          "timing_screen_passed": true,
+          "shared_operation_savings": [
+            66,
+            66,
+            66,
+            66,
+            66,
+            66,
+            66,
+            66,
+            66,
+            66,
+            66,
+            66,
+            66,
+            66,
+            66,
+            66,
+            66,
+            66,
+            66,
+            66
+          ],
+          "complete_outputs_equal": true,
+          "all_pair_checks_passed": true
+        },
+        {
+          "mode": "decode_only",
+          "case_id": "L03",
+          "pair_count": 20,
+          "control_seconds": [
+            0.8896382309999353,
+            0.7952013239996631,
+            0.964168275999782,
+            0.7100741780000135,
+            0.7192109140000866,
+            0.7641981169999781,
+            0.8884761799999978,
+            0.7435183029997461,
+            0.762773622000168,
+            0.7151780529998177,
+            0.7683590310002728,
+            0.7805810380000366,
+            0.9106433980000475,
+            0.7033051410003281,
+            0.7826882970002771,
+            0.7959825019997879,
+            0.7822592219999933,
+            0.8015380679998998,
+            0.7624202230003903,
+            0.7158501880003314
+          ],
+          "candidate_seconds": [
+            0.946003882000241,
+            1.1706500919999598,
+            0.809062054000151,
+            0.8546071929999925,
+            0.803147803000229,
+            0.8529751030000625,
+            0.7541941959998439,
+            0.7182839869997224,
+            0.7460617290003029,
+            0.7168099400000756,
+            0.7710861249997834,
+            0.8525954540000384,
+            0.7924667030001729,
+            0.7148598339999808,
+            0.899285768000027,
+            0.9298425990000396,
+            0.6845357120000699,
+            0.7864784729999883,
+            0.7462650109996503,
+            0.7977237320001223
+          ],
+          "control_median_seconds": 0.7744700345001547,
+          "candidate_median_seconds": 0.7950952175001476,
+          "control_range_seconds": [
+            0.7033051410003281,
+            0.964168275999782
+          ],
+          "candidate_range_seconds": [
+            0.6845357120000699,
+            1.1706500919999598
+          ],
+          "candidate_to_control_median_ratio": 1.0266313505767908,
+          "timing_screen_passed": true,
+          "shared_operation_savings": [
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24,
+            24
+          ],
+          "complete_outputs_equal": true,
+          "all_pair_checks_passed": true
+        }
+      ],
+      "pairs_per_case_mode": 20,
+      "source_commit": "6788ee2f9352875375334b7d542848b334b5d37c",
+      "source_tree": "0b542f77e5f7ec3591fda6b181adb2a55bf63d0e",
+      "driver_sha256": "1a39e835fe2ab21ba705ae0b19c8b9827587bbdd827be813e488b61bfa07ca00"
+    },
+    "execution/integrated-original-p09-001": {
+      "kind": "original_recordings",
+      "status": "passed",
+      "selected_cases": [
+        "P09"
+      ],
+      "passed_count": 1,
+      "failed_cases": [],
+      "operations": {
+        "P09": 99975
+      },
+      "source_commit": "d2f0088c4f3c1f570630334804a5a8f78e0105ac",
+      "source_tree": "1f0b08f8846f443b8bc573fe0c9d5e1e3c319c47"
+    },
+    "execution/integrated-original28-001": {
+      "kind": "original_recordings",
+      "status": "failed",
+      "selected_cases": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07",
+        "P08",
+        "P09",
+        "P10",
+        "P11",
+        "P12",
+        "P13",
+        "P14",
+        "P15",
+        "P16",
+        "P17",
+        "P18",
+        "P19",
+        "P20",
+        "P21",
+        "P22",
+        "P23",
+        "P25",
+        "P26",
+        "L01",
+        "L02",
+        "L03"
+      ],
+      "passed_count": 24,
+      "failed_cases": [
+        "P11",
+        "P16",
+        "P23",
+        "L03"
+      ],
+      "operations": {
+        "P01": 41552,
+        "P02": 44935,
+        "P03": 42776,
+        "P04": 43845,
+        "P05": 93040,
+        "P06": 22058,
+        "P07": 55806,
+        "P08": 55803,
+        "P09": 99975,
+        "P10": 41552,
+        "P11": 100001,
+        "P12": 32121,
+        "P13": 63253,
+        "P14": 51881,
+        "P15": 32820,
+        "P16": 100001,
+        "P17": 39141,
+        "P18": 62831,
+        "P19": 47263,
+        "P20": 79363,
+        "P21": 41290,
+        "P22": 22081,
+        "P23": 100001,
+        "P25": 41905,
+        "P26": 40181,
+        "L01": 77499,
+        "L02": 72011,
+        "L03": 100001
+      },
+      "source_commit": "d2f0088c4f3c1f570630334804a5a8f78e0105ac",
+      "source_tree": "1f0b08f8846f443b8bc573fe0c9d5e1e3c319c47"
+    },
+    "execution/integrated-regression-failures-001": {
+      "kind": "tests",
+      "status": "failed",
+      "test_count": 4,
+      "failed": 3,
+      "error": 1,
+      "unsuccessful_test_outcomes": [
+        {
+          "test_id": "test_reach_endpoint_traversal.ReachEndpointTraversalTests.test_cancellation_preserves_input_tracks_and_propagates_original_exception",
+          "status": "failed"
+        },
+        {
+          "test_id": "test_reach_endpoint_traversal.ReachEndpointTraversalTests.test_complete_p01_bytes_equal_carrier_major_proofs",
+          "status": "failed"
+        },
+        {
+          "test_id": "test_reach_pending_output.ReachPendingOutputTests.test_every_observed_field_equals_fresh_boundary_reconstruction",
+          "status": "failed"
+        },
+        {
+          "test_id": "test_reach_phase_reuse.ReachPhaseReuseTests.test_translated_and_differently_anchored_paths_do_not_borrow_bounds",
+          "status": "error"
+        }
+      ],
+      "source_commit": "d2f0088c4f3c1f570630334804a5a8f78e0105ac",
+      "source_tree": "1f0b08f8846f443b8bc573fe0c9d5e1e3c319c47"
+    },
+    "execution/integrated-related-001": {
+      "kind": "tests",
+      "status": "passed",
+      "test_count": 194,
+      "passed": 194,
+      "unsuccessful_test_outcomes": [],
+      "source_commit": "d2f0088c4f3c1f570630334804a5a8f78e0105ac",
+      "source_tree": "1f0b08f8846f443b8bc573fe0c9d5e1e3c319c47"
+    }
+  },
+  "supplementary_attempts": {
+    "local-core-001": {
+      "kind": "supplementary_local_core",
+      "status": "failed",
+      "unit_tests": null,
+      "unit_test_completion": false,
+      "unit_log_recovery": {
+        "receipt": {
+          "path": "recovery/local-core-001-log-recovery.json",
+          "bytes": 2152,
+          "sha256": "323a1b4b871bef9ea86e459213129b8702e437aea69a1546d97ffc489a61c3be"
+        },
+        "recovered_log": {
+          "path": "recovery/local-core-001-actual-unit-tests.log",
+          "bytes": 360058,
+          "sha256": "c710063c2ec404653a4288f459b1ff4eb08c126ccf7b96f3b9a35f96358ed63a"
+        },
+        "named_log": {
+          "path": "local-core-001/logs/unit-tests.log",
+          "bytes": 195830,
+          "sha256": "70205258d82e4db9a2c3e480b9edcc11b0b02b82f02b95a6a90a85e7bcbba50b"
+        },
+        "named_log_is_exact_prefix": true,
+        "full_regression_completed": false,
+        "observed_failure_outcomes": [
+          {
+            "test_id": "test_reach_endpoint_traversal.ReachEndpointTraversalTests.test_cancellation_preserves_input_tracks_and_propagates_original_exception",
+            "status": "failed"
+          },
+          {
+            "test_id": "test_reach_endpoint_traversal.ReachEndpointTraversalTests.test_complete_p01_bytes_equal_carrier_major_proofs",
+            "status": "failed"
+          },
+          {
+            "test_id": "test_reach_pending_output.ReachPendingOutputTests.test_every_observed_field_equals_fresh_boundary_reconstruction",
+            "status": "failed"
+          },
+          {
+            "test_id": "test_reach_phase_reuse.ReachPhaseReuseTests.test_translated_and_differently_anchored_paths_do_not_borrow_bounds",
+            "status": "error"
+          }
+        ],
+        "historical_inode_values_are_receipt_evidence": true
+      },
+      "unit_test_count_scope": "unknown; stock parser zero is only a missing-summary sentinel",
+      "source_commit": "d2f0088c4f3c1f570630334804a5a8f78e0105ac",
+      "source_tree": "1f0b08f8846f443b8bc573fe0c9d5e1e3c319c47",
+      "steps": [
+        {
+          "id": "unit-tests",
+          "status": "failed",
+          "returncode": -15,
+          "duration_seconds": 900.039,
+          "reason": "Exceeded 900 seconds"
+        },
+        {
+          "id": "source",
+          "status": "passed",
+          "returncode": 0,
+          "duration_seconds": 1.185
+        },
+        {
+          "id": "agent",
+          "status": "passed",
+          "returncode": 0,
+          "duration_seconds": 2.901
+        },
+        {
+          "id": "construction",
+          "status": "passed",
+          "returncode": 0,
+          "duration_seconds": 57.02
+        },
+        {
+          "id": "surface",
+          "status": "passed",
+          "returncode": 0,
+          "duration_seconds": 32.842
+        },
+        {
+          "id": "impulse",
+          "status": "passed",
+          "returncode": 0,
+          "duration_seconds": 74.175
+        },
+        {
+          "id": "documents",
+          "status": "passed",
+          "returncode": 0,
+          "duration_seconds": 1.074
+        }
+      ],
+      "pending_external_cases": [
+        {
+          "step": "construction",
+          "report": "reports/construction.json",
+          "id": "C20",
+          "reasons": [
+            "The identified independent visual-delivery gate is pending."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M01",
+          "reasons": [
+            "destination: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M02",
+          "reasons": [
+            "destination: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M03",
+          "reasons": [
+            "destination: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M04",
+          "reasons": [
+            "destination: No identified surface release evidence manifest was supplied.",
+            "workflow: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M05",
+          "reasons": [
+            "workflow: No identified surface release evidence manifest was supplied.",
+            "destination: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M06",
+          "reasons": [
+            "workflow: No identified surface release evidence manifest was supplied.",
+            "destination: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M07",
+          "reasons": [
+            "workflow: No identified surface release evidence manifest was supplied.",
+            "destination: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M08",
+          "reasons": [
+            "workflow: No identified surface release evidence manifest was supplied.",
+            "destination: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M09",
+          "reasons": [
+            "workflow: No identified surface release evidence manifest was supplied.",
+            "destination: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M11",
+          "reasons": [
+            "workflow: No identified surface release evidence manifest was supplied.",
+            "destination: No identified surface release evidence manifest was supplied.",
+            "browser: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M12",
+          "reasons": [
+            "regression: No identified surface release evidence manifest was supplied.",
+            "ci: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "impulse",
+          "report": "reports/impulse.json",
+          "id": "I07",
+          "reasons": [
+            "workflow: No identified impulse release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "impulse",
+          "report": "reports/impulse.json",
+          "id": "I09",
+          "reasons": [
+            "workflow: No identified impulse release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "impulse",
+          "report": "reports/impulse.json",
+          "id": "I11",
+          "reasons": [
+            "workflow: No identified impulse release evidence manifest was supplied.",
+            "destination: No identified impulse release evidence manifest was supplied.",
+            "browser: No identified impulse release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "impulse",
+          "report": "reports/impulse.json",
+          "id": "I12",
+          "reasons": [
+            "regression: No identified impulse release evidence manifest was supplied.",
+            "ci: No identified impulse release evidence manifest was supplied."
+          ]
+        }
+      ],
+      "full_raw_regression_log_retained": false,
+      "raw_unit_output_through_termination_retained": true,
+      "stock_driver_sha256": "ce12a690237eea2b9d2d9c6f74e3e14c49e70b8cb8aee27eb0c55e466434df0d",
+      "release_certified": false
+    }
+  },
+  "selected_development_evidence": {
+    "status": "validated_selected_development_evidence",
+    "selections": {
+      "combined_controls": "execution/combined-controls-001",
+      "compare_controls": "execution/compare-controls-003",
+      "decode_controls": "execution/decode-controls-003",
+      "focused": "execution/candidate-focused-005",
+      "original28": "execution/integrated-original28-001",
+      "original_p09": "execution/integrated-original-p09-001",
+      "related": "execution/integrated-related-001"
+    },
+    "source_commits": [
+      "6788ee2f9352875375334b7d542848b334b5d37c",
+      "6a9fb22fb8ca901e18d315406cbca667f2ef8321",
+      "d2f0088c4f3c1f570630334804a5a8f78e0105ac"
+    ],
+    "original_p09": {
+      "status": "passed",
+      "operations": 99975
+    },
+    "original28": {
+      "status": "failed",
+      "passed_count": 24,
+      "failed_cases": [
+        "P11",
+        "P16",
+        "P23",
+        "L03"
+      ]
+    },
+    "published_source_commit": "d2f0088c4f3c1f570630334804a5a8f78e0105ac",
+    "published_source_tree": "1f0b08f8846f443b8bc573fe0c9d5e1e3c319c47",
+    "retained_decode_source_equivalence": {
+      "status": "passed",
+      "measured_source": {
+        "commit": "6788ee2f9352875375334b7d542848b334b5d37c",
+        "tree": "0b542f77e5f7ec3591fda6b181adb2a55bf63d0e",
+        "reader_sha256": "689f0cfc300a6412c01773eb65ec590d37128e66304a54ecf808d722b1ccba02",
+        "comparison_method_sha256": "3bbb346522dedd64f87fcba8aa530391f72e0170dc8c10d1160b48510753a0b6",
+        "active_reader_sha256": "a291b265598fb44c9f979e020ebbae5248cf0f85fd331bfc775f8e10c35ccf52",
+        "unchanged_definition_sha256": {
+          "_complete_inequality_values": "a724b3810d944bde5378a2c878d23fae3faff0fe291839970dfb4f8eaf54c447",
+          "_certificate_fraction_fields": "eca40a2cbb40436e13f3ff01b47b935802d2e0d634e7dee8412301c8fb85d1f0",
+          "_certificate_raw_fields": "e5a3c43675d4fae5347690e20c543e71d7866ce9b8eb4d18f6166972068c8802",
+          "_CertificateBatch": "5fed72d9d1c5fccd9a1e7f4ce58bc62c40a2388ed63a3771b8a5c05d38c7560d",
+          "_term_function_state": "2d3309f74ac38376a2b8d5cedb65149ee840845d6ce62209b4f87351512177ef",
+          "_certificate_term_native": "fe8dc1b37c98cfce1d29b4ca56a0dac3d46ac469e93c8c26ab67ee11a896cf56",
+          "_certificate_field_key": "9f6701896e2351ada4bb1af54922ff2fb6a4312167d4803dd67134d9cc9b0548",
+          "_certificate_fields_native": "0c3fd871ee4cfc1867fd54e799b23cb14ac29a8d4a185c7ba3e61432c0929642",
+          "_CertificateFieldDecodes": "4ee8748c988310d2c0de24842d110553a4341aef7360a149e1ceff54d42e7ffe"
+        },
+        "aliases": []
+      },
+      "published_source": {
+        "commit": "d2f0088c4f3c1f570630334804a5a8f78e0105ac",
+        "tree": "1f0b08f8846f443b8bc573fe0c9d5e1e3c319c47",
+        "reader_sha256": "b4c657eac72186203960b18738f65f08e700f52dffa11c1364c6b4609c59a81a",
+        "comparison_method_sha256": "cbdcc3616f0b75e60b0f842323adf3205a1be7c5a4c5420718618b1b13b7248c",
+        "active_reader_sha256": "a291b265598fb44c9f979e020ebbae5248cf0f85fd331bfc775f8e10c35ccf52",
+        "unchanged_definition_sha256": {
+          "_complete_inequality_values": "a724b3810d944bde5378a2c878d23fae3faff0fe291839970dfb4f8eaf54c447",
+          "_certificate_fraction_fields": "eca40a2cbb40436e13f3ff01b47b935802d2e0d634e7dee8412301c8fb85d1f0",
+          "_certificate_raw_fields": "e5a3c43675d4fae5347690e20c543e71d7866ce9b8eb4d18f6166972068c8802",
+          "_CertificateBatch": "5fed72d9d1c5fccd9a1e7f4ce58bc62c40a2388ed63a3771b8a5c05d38c7560d",
+          "_term_function_state": "2d3309f74ac38376a2b8d5cedb65149ee840845d6ce62209b4f87351512177ef",
+          "_certificate_term_native": "fe8dc1b37c98cfce1d29b4ca56a0dac3d46ac469e93c8c26ab67ee11a896cf56",
+          "_certificate_field_key": "9f6701896e2351ada4bb1af54922ff2fb6a4312167d4803dd67134d9cc9b0548",
+          "_certificate_fields_native": "0c3fd871ee4cfc1867fd54e799b23cb14ac29a8d4a185c7ba3e61432c0929642",
+          "_CertificateFieldDecodes": "4ee8748c988310d2c0de24842d110553a4341aef7360a149e1ceff54d42e7ffe"
+        },
+        "aliases": [
+          "_FIELD_CLASS_READ, _FIELD_SLOT_READ = type.__getattribute__, object.__getattribute__",
+          "_FIELD_FRACTION_ACCESS = tuple((name, saved) for kind, fields in _TERM_CLASS_FIELDS\n    if kind is Fraction for name, saved in fields\n    if name in (*_TERM_STORAGE, \"numerator\", \"denominator\", \"_numerator\", \"_denominator\"))",
+          "_FIELD_FRACTION_CLASS = Fraction",
+          "_FIELD_GETTRACE, _FIELD_GETPROFILE = _term_sys.gettrace, _term_sys.getprofile",
+          "_FIELD_NATIVE_TYPE, _FIELD_NATIVE_INT = type, int"
+        ]
+      },
+      "identical_other_runtime_and_tool_files": 119,
+      "scope": "Frozen decode-only driver disables comparison creation; all other reader bytes and runtime/tool files match."
+    },
+    "supplementary_local_core": {
+      "kind": "supplementary_local_core",
+      "status": "failed",
+      "unit_tests": null,
+      "unit_test_completion": false,
+      "unit_log_recovery": {
+        "receipt": {
+          "path": "recovery/local-core-001-log-recovery.json",
+          "bytes": 2152,
+          "sha256": "323a1b4b871bef9ea86e459213129b8702e437aea69a1546d97ffc489a61c3be"
+        },
+        "recovered_log": {
+          "path": "recovery/local-core-001-actual-unit-tests.log",
+          "bytes": 360058,
+          "sha256": "c710063c2ec404653a4288f459b1ff4eb08c126ccf7b96f3b9a35f96358ed63a"
+        },
+        "named_log": {
+          "path": "local-core-001/logs/unit-tests.log",
+          "bytes": 195830,
+          "sha256": "70205258d82e4db9a2c3e480b9edcc11b0b02b82f02b95a6a90a85e7bcbba50b"
+        },
+        "named_log_is_exact_prefix": true,
+        "full_regression_completed": false,
+        "observed_failure_outcomes": [
+          {
+            "test_id": "test_reach_endpoint_traversal.ReachEndpointTraversalTests.test_cancellation_preserves_input_tracks_and_propagates_original_exception",
+            "status": "failed"
+          },
+          {
+            "test_id": "test_reach_endpoint_traversal.ReachEndpointTraversalTests.test_complete_p01_bytes_equal_carrier_major_proofs",
+            "status": "failed"
+          },
+          {
+            "test_id": "test_reach_pending_output.ReachPendingOutputTests.test_every_observed_field_equals_fresh_boundary_reconstruction",
+            "status": "failed"
+          },
+          {
+            "test_id": "test_reach_phase_reuse.ReachPhaseReuseTests.test_translated_and_differently_anchored_paths_do_not_borrow_bounds",
+            "status": "error"
+          }
+        ],
+        "historical_inode_values_are_receipt_evidence": true
+      },
+      "unit_test_count_scope": "unknown; stock parser zero is only a missing-summary sentinel",
+      "source_commit": "d2f0088c4f3c1f570630334804a5a8f78e0105ac",
+      "source_tree": "1f0b08f8846f443b8bc573fe0c9d5e1e3c319c47",
+      "steps": [
+        {
+          "id": "unit-tests",
+          "status": "failed",
+          "returncode": -15,
+          "duration_seconds": 900.039,
+          "reason": "Exceeded 900 seconds"
+        },
+        {
+          "id": "source",
+          "status": "passed",
+          "returncode": 0,
+          "duration_seconds": 1.185
+        },
+        {
+          "id": "agent",
+          "status": "passed",
+          "returncode": 0,
+          "duration_seconds": 2.901
+        },
+        {
+          "id": "construction",
+          "status": "passed",
+          "returncode": 0,
+          "duration_seconds": 57.02
+        },
+        {
+          "id": "surface",
+          "status": "passed",
+          "returncode": 0,
+          "duration_seconds": 32.842
+        },
+        {
+          "id": "impulse",
+          "status": "passed",
+          "returncode": 0,
+          "duration_seconds": 74.175
+        },
+        {
+          "id": "documents",
+          "status": "passed",
+          "returncode": 0,
+          "duration_seconds": 1.074
+        }
+      ],
+      "pending_external_cases": [
+        {
+          "step": "construction",
+          "report": "reports/construction.json",
+          "id": "C20",
+          "reasons": [
+            "The identified independent visual-delivery gate is pending."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M01",
+          "reasons": [
+            "destination: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M02",
+          "reasons": [
+            "destination: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M03",
+          "reasons": [
+            "destination: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M04",
+          "reasons": [
+            "destination: No identified surface release evidence manifest was supplied.",
+            "workflow: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M05",
+          "reasons": [
+            "workflow: No identified surface release evidence manifest was supplied.",
+            "destination: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M06",
+          "reasons": [
+            "workflow: No identified surface release evidence manifest was supplied.",
+            "destination: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M07",
+          "reasons": [
+            "workflow: No identified surface release evidence manifest was supplied.",
+            "destination: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M08",
+          "reasons": [
+            "workflow: No identified surface release evidence manifest was supplied.",
+            "destination: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M09",
+          "reasons": [
+            "workflow: No identified surface release evidence manifest was supplied.",
+            "destination: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M11",
+          "reasons": [
+            "workflow: No identified surface release evidence manifest was supplied.",
+            "destination: No identified surface release evidence manifest was supplied.",
+            "browser: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "surface",
+          "report": "reports/surface.json",
+          "id": "M12",
+          "reasons": [
+            "regression: No identified surface release evidence manifest was supplied.",
+            "ci: No identified surface release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "impulse",
+          "report": "reports/impulse.json",
+          "id": "I07",
+          "reasons": [
+            "workflow: No identified impulse release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "impulse",
+          "report": "reports/impulse.json",
+          "id": "I09",
+          "reasons": [
+            "workflow: No identified impulse release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "impulse",
+          "report": "reports/impulse.json",
+          "id": "I11",
+          "reasons": [
+            "workflow: No identified impulse release evidence manifest was supplied.",
+            "destination: No identified impulse release evidence manifest was supplied.",
+            "browser: No identified impulse release evidence manifest was supplied."
+          ]
+        },
+        {
+          "step": "impulse",
+          "report": "reports/impulse.json",
+          "id": "I12",
+          "reasons": [
+            "regression: No identified impulse release evidence manifest was supplied.",
+            "ci: No identified impulse release evidence manifest was supplied."
+          ]
+        }
+      ],
+      "full_raw_regression_log_retained": false,
+      "raw_unit_output_through_termination_retained": true,
+      "stock_driver_sha256": "ce12a690237eea2b9d2d9c6f74e3e14c49e70b8cb8aee27eb0c55e466434df0d",
+      "release_certified": false
+    }
+  },
+  "current_source": {
+    "commit": "d2f0088c4f3c1f570630334804a5a8f78e0105ac",
+    "status": "",
+    "tree": "1f0b08f8846f443b8bc573fe0c9d5e1e3c319c47",
+    "tracked_files_verified": 1813
+  },
+  "pooled_timing": {
+    "schema_version": "ontokin.native-field-pooled-timing/0.1",
+    "protocol": "timing-followup-protocol.json",
+    "attempts": [
+      "execution/decode-controls-002",
+      "execution/decode-controls-003"
+    ],
+    "observations_excluded": 0,
+    "maximum_median_ratio": 1.1,
+    "cases": [
+      {
+        "case_id": "P09",
+        "new_pairs": 20,
+        "pooled_pairs": 25,
+        "new_medians_seconds": {
+          "control": 0.7577840120000019,
+          "candidate": 0.7718098025000018
+        },
+        "new_median_ratio": 1.0185089554251507,
+        "pooled_samples_seconds": {
+          "control": [
+            0.8139855999997962,
+            0.7639930160003132,
+            0.9656663000000663,
+            0.8928038620001644,
+            1.272614386999976,
+            0.8759011409997584,
+            0.8281851149999966,
+            0.8298447310003212,
+            0.7867966270000579,
+            0.7394917139999961,
+            0.7573111259998768,
+            0.7405648860003566,
+            0.7609705300001224,
+            0.7224741500003802,
+            0.7455129459999625,
+            0.7221972130000722,
+            0.7633574029996453,
+            0.7603984829997898,
+            0.7097005169998738,
+            0.8207129659999737,
+            0.7010510810000596,
+            0.7847264830002132,
+            0.7462567729999137,
+            0.7288876570000866,
+            0.758256898000127
+          ],
+          "candidate": [
+            1.0673044800000753,
+            0.8627822009998454,
+            0.7362221960001989,
+            0.7233900969999922,
+            0.8460260849997212,
+            0.7992862579999382,
+            0.875147200000356,
+            0.908521293999911,
+            0.9571746520000488,
+            0.8962510410001414,
+            0.7734850069996355,
+            0.7922888910002257,
+            0.7803842660000555,
+            0.7551625380001497,
+            0.7183014229999571,
+            0.8282466570003635,
+            0.7911948150003809,
+            0.763944229000117,
+            0.7483045379999567,
+            0.6923402120000901,
+            0.717252532999737,
+            0.770134598000368,
+            0.7055990699996073,
+            0.7231441310000264,
+            0.6970798259999356
+          ]
+        },
+        "pooled_medians_seconds": {
+          "control": 0.7609705300001224,
+          "candidate": 0.7734850069996355
+        },
+        "pooled_median_ratio": 1.0164454160918834,
+        "passed": true
+      },
+      {
+        "case_id": "P11",
+        "new_pairs": 20,
+        "pooled_pairs": 25,
+        "new_medians_seconds": {
+          "control": 1.3181525090001287,
+          "candidate": 1.3360340535000432
+        },
+        "new_median_ratio": 1.0135656112459084,
+        "pooled_samples_seconds": {
+          "control": [
+            6.803373299000214,
+            1.3105795999999827,
+            1.9252725490000557,
+            1.2698537440001019,
+            1.2816705239997646,
+            1.2022619179997491,
+            1.2838198190002004,
+            1.4018592150000586,
+            1.3243277750002562,
+            1.2612519260001136,
+            1.3119772430000012,
+            1.2047732549999637,
+            1.253774137000164,
+            1.350382947000071,
+            1.2637643220000427,
+            1.4990299630003392,
+            1.2652721409999685,
+            1.383175203999599,
+            1.233993068000018,
+            1.256778752000173,
+            1.7530365399998118,
+            2.091837770999973,
+            2.406102366000141,
+            1.86083133000011,
+            1.946503317999941
+          ],
+          "candidate": [
+            2.293532213999697,
+            4.408700095000313,
+            2.5549163839996254,
+            1.342567218000113,
+            1.2601790900002925,
+            1.2420305089999601,
+            1.3101763259996915,
+            1.2260601590000988,
+            1.3172712129999127,
+            1.3045734380002614,
+            1.4411298679997344,
+            1.3946779329999117,
+            1.331075194999812,
+            1.3680629590003264,
+            1.3598473739998553,
+            1.2636973039998338,
+            1.2763199860000896,
+            1.2973200920000636,
+            1.285417963999862,
+            1.3409929120002744,
+            1.8533074510000915,
+            1.5758267969999906,
+            1.9421035139998821,
+            1.7396657050003341,
+            2.0711670480000066
+          ]
+        },
+        "pooled_medians_seconds": {
+          "control": 1.3119772430000012,
+          "candidate": 1.342567218000113
+        },
+        "pooled_median_ratio": 1.0233159341469704,
+        "passed": true
+      },
+      {
+        "case_id": "L03",
+        "new_pairs": 20,
+        "pooled_pairs": 25,
+        "new_medians_seconds": {
+          "control": 0.7744700345001547,
+          "candidate": 0.7950952175001476
+        },
+        "new_median_ratio": 1.0266313505767908,
+        "pooled_samples_seconds": {
+          "control": [
+            0.5536054840003999,
+            0.8750089210002443,
+            0.6644399850001719,
+            0.5411628689998906,
+            0.5792037050000545,
+            0.8896382309999353,
+            0.7952013239996631,
+            0.964168275999782,
+            0.7100741780000135,
+            0.7192109140000866,
+            0.7641981169999781,
+            0.8884761799999978,
+            0.7435183029997461,
+            0.762773622000168,
+            0.7151780529998177,
+            0.7683590310002728,
+            0.7805810380000366,
+            0.9106433980000475,
+            0.7033051410003281,
+            0.7826882970002771,
+            0.7959825019997879,
+            0.7822592219999933,
+            0.8015380679998998,
+            0.7624202230003903,
+            0.7158501880003314
+          ],
+          "candidate": [
+            0.5741381550001279,
+            0.5771067460000268,
+            0.616773055000067,
+            0.5909544099999948,
+            0.539862254000127,
+            0.946003882000241,
+            1.1706500919999598,
+            0.809062054000151,
+            0.8546071929999925,
+            0.803147803000229,
+            0.8529751030000625,
+            0.7541941959998439,
+            0.7182839869997224,
+            0.7460617290003029,
+            0.7168099400000756,
+            0.7710861249997834,
+            0.8525954540000384,
+            0.7924667030001729,
+            0.7148598339999808,
+            0.899285768000027,
+            0.9298425990000396,
+            0.6845357120000699,
+            0.7864784729999883,
+            0.7462650109996503,
+            0.7977237320001223
+          ]
+        },
+        "pooled_medians_seconds": {
+          "control": 0.7641981169999781,
+          "candidate": 0.7710861249997834
+        },
+        "pooled_median_ratio": 1.0090133799685945,
+        "passed": true
+      }
+    ],
+    "status": "passed",
+    "source_commit": "6788ee2f9352875375334b7d542848b334b5d37c",
+    "source_tree": "0b542f77e5f7ec3591fda6b181adb2a55bf63d0e"
+  },
+  "regression_failure_reproductions": {
+    "status": "validated_failed_reproductions",
+    "attempts": [
+      "execution/baseline-regression-failures-001",
+      "execution/integrated-regression-failures-001"
+    ],
+    "outcomes": [
+      {
+        "test_id": "test_reach_endpoint_traversal.ReachEndpointTraversalTests.test_cancellation_preserves_input_tracks_and_propagates_original_exception",
+        "status": "failed"
+      },
+      {
+        "test_id": "test_reach_endpoint_traversal.ReachEndpointTraversalTests.test_complete_p01_bytes_equal_carrier_major_proofs",
+        "status": "failed"
+      },
+      {
+        "test_id": "test_reach_pending_output.ReachPendingOutputTests.test_every_observed_field_equals_fresh_boundary_reconstruction",
+        "status": "failed"
+      },
+      {
+        "test_id": "test_reach_phase_reuse.ReachPhaseReuseTests.test_translated_and_differently_anchored_paths_do_not_borrow_bounds",
+        "status": "error"
+      }
+    ],
+    "baseline_source_commit": "6afa8439a37f0b7387b77a13f174014963adca8c",
+    "integrated_source_commit": "d2f0088c4f3c1f570630334804a5a8f78e0105ac",
+    "scope": "Only the four observed failure identities and statuses; no completed full-suite result or absence of further failures is inferred.",
+    "full_regression_completed": false,
+    "full_regression_accepted": false
+  },
+  "archive": {
+    "parts": 23,
+    "members": 1379,
+    "bytes": 19857281,
+    "sha256": "fab5b79c27f5142828fcfde74f2377bc65f60dd1e2cbcb524359296e52ac24b6",
+    "membership_scope": "Every regular evidence file; only local-core-001/workspace and generated __pycache__ directories are excluded.",
+    "retained_evidence_files": 1379,
+    "excluded_directories": [
+      "local-core-001/workspace"
+    ],
+    "uncompressed_member_bytes": 254107363
+  },
+  "preserved_failed_attempts": [
+    "execution/baseline-regression-failures-001",
+    "execution/candidate-focused-001",
+    "execution/candidate-hook-regression-001",
+    "execution/compare-controls-001",
+    "execution/decode-controls-001",
+    "execution/decode-controls-002",
+    "execution/integrated-original28-001",
+    "execution/integrated-regression-failures-001",
+    "local-core-001"
+  ],
+  "source_commits": [
+    "3b0c2670b5b889a465352562b1219baed77d1302",
+    "50f4524a1f32c4a013b4a8355ea5cc902f540b20",
+    "6788ee2f9352875375334b7d542848b334b5d37c",
+    "6a9fb22fb8ca901e18d315406cbca667f2ef8321",
+    "6afa8439a37f0b7387b77a13f174014963adca8c",
+    "9c6c4b80fa00568b8d426d8d0952a417adf75d75",
+    "a6c15941ac720bdae93daeafc624f9a5b10bf6a8",
+    "d2f0088c4f3c1f570630334804a5a8f78e0105ac"
+  ],
+  "finished_at": "2026-10-24T15:15:35.618915+00:00",
+  "check_detail_mode": "compact",
+  "total_checks": 153720,
+  "passed_checks": 153720,
+  "failed_checks": 0,
+  "check_counts_by_name": {
+    "CPU timing is diagnostic only": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "Git blob content identity": {
+      "passed": 1726,
+      "failed": 0,
+      "total": 1726
+    },
+    "Git blob header": {
+      "passed": 1726,
+      "failed": 0,
+      "total": 1726
+    },
+    "Git blob stream complete": {
+      "passed": 1899,
+      "failed": 0,
+      "total": 1899
+    },
+    "Git object reader completed": {
+      "passed": 6,
+      "failed": 0,
+      "total": 6
+    },
+    "SHA-256 shape": {
+      "passed": 6123,
+      "failed": 0,
+      "total": 6123
+    },
+    "ZIP exact membership and no duplicate members": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "ZIP member size, SHA-256 and CRC": {
+      "passed": 1379,
+      "failed": 0,
+      "total": 1379
+    },
+    "actual command argument vector": {
+      "passed": 31,
+      "failed": 0,
+      "total": 31
+    },
+    "actual complete GLB framing": {
+      "passed": 325,
+      "failed": 0,
+      "total": 325
+    },
+    "actual execution sequence is complete and unique": {
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    "actual exit preserves report success or failure": {
+      "passed": 18,
+      "failed": 0,
+      "total": 18
+    },
+    "actual export retains passed supplied-byte validation": {
+      "passed": 325,
+      "failed": 0,
+      "total": 325
+    },
+    "actual final focused run retains all 115 passes": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "actual first focused failure remains 109 passes and one error": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "actual isolated core step matches default plan": {
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    "actual late-hook regression failure remains one pass and one error": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "actual local command executes only the stock default core profile": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "actual local driver belongs to the identified checkout": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "actual process exit retained": {
+      "passed": 31,
+      "failed": 0,
+      "total": 31
+    },
+    "actual repaired focused run remains 110 passes": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "actual subprocess capture encloses the reported attempt": {
+      "passed": 18,
+      "failed": 0,
+      "total": 18
+    },
+    "all ZIP CRCs valid": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "all decode, gate and group-dispatch definitions are bound": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "all seven stock default core steps actually executed": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "all timing medians and ranges independently recomputed": {
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    "archive evidence contains no symlink": {
+      "passed": 3474,
+      "failed": 0,
+      "total": 3474
+    },
+    "archive evidence contains unique regular files only": {
+      "passed": 2758,
+      "failed": 0,
+      "total": 2758
+    },
+    "archive manifest exactly covers every retained evidence file with only the two declared exclusions": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "attempt does not overstate release scope": {
+      "passed": 18,
+      "failed": 0,
+      "total": 18
+    },
+    "audit output is fresh and outside evidence": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "both actual four-method failure reproductions are retained": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "both predeclared pooled attempts are present": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "captured command encloses the complete local core run": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "checkpoint P09 outcome matches actual request": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "checkpoint binds exact manifest bytes": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "checkpoint declares every accepted execution selection": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "checkpoint local core outcome and actual count bind to published source": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "checkpoint original28 outcome matches every row": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "clean actual execution commit and tree": {
+      "passed": 18,
+      "failed": 0,
+      "total": 18
+    },
+    "comparison-only alias statement occurs once": {
+      "passed": 5,
+      "failed": 0,
+      "total": 5
+    },
+    "complete archive audit inputs": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "complete callback and hook return evidence": {
+      "passed": 300,
+      "failed": 0,
+      "total": 300
+    },
+    "complete declared test-method inventory": {
+      "passed": 9,
+      "failed": 0,
+      "total": 9
+    },
+    "complete file receipt": {
+      "passed": 2568,
+      "failed": 0,
+      "total": 2568
+    },
+    "complete hash-bound unittest log": {
+      "passed": 9,
+      "failed": 0,
+      "total": 9
+    },
+    "complete input inventories remained identical": {
+      "passed": 18,
+      "failed": 0,
+      "total": 18
+    },
+    "complete local core source inventories independently match exact Git file bytes": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "complete native callback and hook entry evidence": {
+      "passed": 300,
+      "failed": 0,
+      "total": 300
+    },
+    "complete ordered archive size and digest": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "complete original recording request inventory": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "complete reach operation categories reconcile": {
+      "passed": 329,
+      "failed": 0,
+      "total": 329
+    },
+    "complete request inventory agrees with retained raw rows": {
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    "complete retained evidence inventory is nonempty": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "complete retained evidence membership remains stable across archive verification": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "complete snapshot membership and every byte bind to exact Git tree": {
+      "passed": 18,
+      "failed": 0,
+      "total": 18
+    },
+    "contained regular evidence file": {
+      "passed": 4009,
+      "failed": 0,
+      "total": 4009
+    },
+    "control source identity remains original checkpoint 029": {
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    "control substitution and exact-output scope are explicit": {
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    "core outcome and pending-case receipts match complete report bytes": {
+      "passed": 5,
+      "failed": 0,
+      "total": 5
+    },
+    "core step preserves actual subprocess exit": {
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    "current source checkout is clean before independent audit": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "current source commit and clean state remain stable across the complete audit": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "current source identity and clean state remain stable while audited": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "current source retains the published runtime, tools and test bytes": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "current tracked-file membership equals identified source tree": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "declared fixed measurement sample count": {
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    "declared mode and case inventory": {
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    "declared selected test modules are complete": {
+      "passed": 9,
+      "failed": 0,
+      "total": 9
+    },
+    "declared test selection resolves to exact source methods": {
+      "passed": 34,
+      "failed": 0,
+      "total": 34
+    },
+    "every complete stderr has its command receipt": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "every complete stdout has its command receipt": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "every completed pair retained exactly once in files and report": {
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    "every delivered source unit matches exact Git bytes": {
+      "passed": 325,
+      "failed": 0,
+      "total": 325
+    },
+    "every expected core report retained": {
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    "every pooled pair independently passed exact output and complete-operation checks": {
+      "passed": 3,
+      "failed": 0,
+      "total": 3
+    },
+    "every started test has a retained outcome": {
+      "passed": 9,
+      "failed": 0,
+      "total": 9
+    },
+    "exact selected original function bodies": {
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    "exact source commit identity": {
+      "passed": 271,
+      "failed": 0,
+      "total": 271
+    },
+    "executed sample count agrees with declared plan": {
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    "executed test exists in exact source": {
+      "passed": 762,
+      "failed": 0,
+      "total": 762
+    },
+    "execution has actual command receipt": {
+      "passed": 18,
+      "failed": 0,
+      "total": 18
+    },
+    "expanded evidence matches ZIP member exactly": {
+      "passed": 1379,
+      "failed": 0,
+      "total": 1379
+    },
+    "explicit module/class/method test identity": {
+      "passed": 762,
+      "failed": 0,
+      "total": 762
+    },
+    "explicit test selection is a module, class or method": {
+      "passed": 34,
+      "failed": 0,
+      "total": 34
+    },
+    "export report identifies actual returned bytes": {
+      "passed": 325,
+      "failed": 0,
+      "total": 325
+    },
+    "export source revision and sampled request bind": {
+      "passed": 325,
+      "failed": 0,
+      "total": 325
+    },
+    "extended attempt used the predeclared diagnostic driver": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "extended decode selection passes both independent new and pooled timing requirements": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "extended sample is the exact predeclared source and attempt": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "failed request publishes no accepted artifact": {
+      "passed": 4,
+      "failed": 0,
+      "total": 4
+    },
+    "failed request retains its actual exception evidence": {
+      "passed": 4,
+      "failed": 0,
+      "total": 4
+    },
+    "failure reproductions bind separately to unchanged baseline and actual published core source": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "file receipt matches bytes": {
+      "passed": 2568,
+      "failed": 0,
+      "total": 2568
+    },
+    "final selected role uses published runtime, tools and test bytes": {
+      "passed": 6,
+      "failed": 0,
+      "total": 6
+    },
+    "finite development evidence does not close release or full product goal": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "fixed follow-up preserves every observation and the original timing threshold": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "fixed timing follow-up protocol predates execution": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "follow-up driver differs only by CPU diagnostic reads": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "follow-up retains positive CPU diagnostic per request": {
+      "passed": 120,
+      "failed": 0,
+      "total": 120
+    },
+    "four-method reproduction preserves the observed identities and three failures plus one error": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "frozen executed driver identity": {
+      "passed": 16,
+      "failed": 0,
+      "total": 16
+    },
+    "frozen original control reader binds byte-for-byte to Git": {
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    "hash is a string": {
+      "passed": 6123,
+      "failed": 0,
+      "total": 6123
+    },
+    "independently derived performance attempt status": {
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    "independently derived test status": {
+      "passed": 9,
+      "failed": 0,
+      "total": 9
+    },
+    "initial decode timing failure remains separately visible": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "input stable while read": {
+      "passed": 4584,
+      "failed": 0,
+      "total": 4584
+    },
+    "integrated requirement executed on the exact published source commit": {
+      "passed": 3,
+      "failed": 0,
+      "total": 3
+    },
+    "isolated workspace immutable source bytes independently remain unchanged": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "known per-test result statuses": {
+      "passed": 9,
+      "failed": 0,
+      "total": 9
+    },
+    "known stock driver schema": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "local core actual exit and reported status agree": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "local core aggregate and external pending cases independently reconcile": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "local core and isolated workspace retain exact source identity": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "local core evidence retains its distinct limited role": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "local core reports unchanged clean source before and after": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "local core source receipt binds complete membership": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "missing unittest summary is preserved only for the actual stock timeout and negative exit": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "native work and cache inventory": {
+      "passed": 329,
+      "failed": 0,
+      "total": 329
+    },
+    "no evidence symlink": {
+      "passed": 13411,
+      "failed": 0,
+      "total": 13411
+    },
+    "no hidden expected failures or unexpected successes": {
+      "passed": 9,
+      "failed": 0,
+      "total": 9
+    },
+    "normalized relative path": {
+      "passed": 32648,
+      "failed": 0,
+      "total": 32648
+    },
+    "observed controls and candidates follow declared alternating order": {
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    "one direct comparison method definition": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "one exact comparison context definition": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "one explicit CPU diagnostic source addition": {
+      "passed": 4,
+      "failed": 0,
+      "total": 4
+    },
+    "only the exact comparator-only native alias block was added": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "ordered archive part numbering": {
+      "passed": 23,
+      "failed": 0,
+      "total": 23
+    },
+    "original case source manifest": {
+      "passed": 329,
+      "failed": 0,
+      "total": 329
+    },
+    "original recording status honestly derives from every actual result": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "original source acceptance bytes unchanged": {
+      "passed": 329,
+      "failed": 0,
+      "total": 329
+    },
+    "original source manifest bytes unchanged": {
+      "passed": 329,
+      "failed": 0,
+      "total": 329
+    },
+    "original source unit bytes unchanged": {
+      "passed": 1316,
+      "failed": 0,
+      "total": 1316
+    },
+    "original source-recording command": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "pair result independently reconstructed from bytes and counters": {
+      "passed": 150,
+      "failed": 0,
+      "total": 150
+    },
+    "pool includes all five prior and twenty new pairs on identical source": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "pooled source attempts use the two protocol-frozen drivers": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "pooled timing receipt independently reconstructed from every raw request with no exclusions": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "positive recorded command duration": {
+      "passed": 31,
+      "failed": 0,
+      "total": 31
+    },
+    "positive recorded request duration": {
+      "passed": 329,
+      "failed": 0,
+      "total": 329
+    },
+    "post-run workspace inventory has complete unique component-sorted member identities": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "post-run workspace member has an actual byte count": {
+      "passed": 1813,
+      "failed": 0,
+      "total": 1813
+    },
+    "prefix evidence retains its limited scope": {
+      "passed": 300,
+      "failed": 0,
+      "total": 300
+    },
+    "program revision matches frozen source case": {
+      "passed": 329,
+      "failed": 0,
+      "total": 329
+    },
+    "recovered partial output retains the four observed failure markers without inferring a suite total": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "recovered producer log matches its complete capture byte count and SHA-256": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "recovered producer output does not claim a completed unittest summary": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "recovery identifies the original producer log separately from the replaced named file": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "recovery receipt retains its read-only observation scope and reported inode replacement": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "recovery receipt tail matches actual retained bytes": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "recovery spans the actual core process completion": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "regular input": {
+      "passed": 4584,
+      "failed": 0,
+      "total": 4584
+    },
+    "regular safe ZIP member": {
+      "passed": 1379,
+      "failed": 0,
+      "total": 1379
+    },
+    "relative path has native safe characters": {
+      "passed": 32648,
+      "failed": 0,
+      "total": 32648
+    },
+    "report working directory exactly agrees with the captured absolute directory": {
+      "passed": 18,
+      "failed": 0,
+      "total": 18
+    },
+    "reported absolute script resolves from captured launch path with every option argument unchanged": {
+      "passed": 18,
+      "failed": 0,
+      "total": 18
+    },
+    "reproduced test definition bytes are unchanged between baseline and published source": {
+      "passed": 3,
+      "failed": 0,
+      "total": 3
+    },
+    "request source manifest receipt": {
+      "passed": 329,
+      "failed": 0,
+      "total": 329
+    },
+    "retained decode driver active source is byte-identical across measured and published cuts": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "retained decode source has identical remaining runtime and tool files": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "retained external driver source matches actual frozen execution bytes": {
+      "passed": 16,
+      "failed": 0,
+      "total": 16
+    },
+    "retained post-run workspace inventory digest is independently reconstructed": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "selected attempt exists and was independently audited": {
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    "selected attempt is an explicit execution directory": {
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    "selected local core evidence remains a separate audited role": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "selected measured transformation passed": {
+      "passed": 3,
+      "failed": 0,
+      "total": 3
+    },
+    "selected mode covers every case at its fixed predeclared sample count": {
+      "passed": 3,
+      "failed": 0,
+      "total": 3
+    },
+    "selected stock P09 and original28 are complete requests": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "selected test requirement passed": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "source commit object exists": {
+      "passed": 8,
+      "failed": 0,
+      "total": 8
+    },
+    "source member belongs to exact commit": {
+      "passed": 220,
+      "failed": 0,
+      "total": 220
+    },
+    "source read bound to Git object": {
+      "passed": 220,
+      "failed": 0,
+      "total": 220
+    },
+    "source tree contains unique regular files": {
+      "passed": 14502,
+      "failed": 0,
+      "total": 14502
+    },
+    "stock recording original operation allowance": {
+      "passed": 29,
+      "failed": 0,
+      "total": 29
+    },
+    "stock zero parser sentinel records missing completion and is not treated as an actual test count": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "successful request respects operation cap": {
+      "passed": 325,
+      "failed": 0,
+      "total": 325
+    },
+    "test starts have exact unique identities": {
+      "passed": 9,
+      "failed": 0,
+      "total": 9
+    },
+    "test summary derives from actual result rows": {
+      "passed": 9,
+      "failed": 0,
+      "total": 9
+    },
+    "timing protocol freezes both external driver versions": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "timing protocol identifies a Git source commit": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "unchanged actual request settings": {
+      "passed": 329,
+      "failed": 0,
+      "total": 329
+    },
+    "unchanged complete-request elapsed timing protocol": {
+      "passed": 7,
+      "failed": 0,
+      "total": 7
+    },
+    "unchanged named log is verified separately as an exact prefix of recovered producer output": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    },
+    "unchanged original 28-case source inventory": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "unchanged shared request limits": {
+      "passed": 300,
+      "failed": 0,
+      "total": 300
+    },
+    "unique actual request identity": {
+      "passed": 300,
+      "failed": 0,
+      "total": 300
+    },
+    "unique archive manifest member with an actual byte count": {
+      "passed": 1379,
+      "failed": 0,
+      "total": 1379
+    },
+    "unique command attempt": {
+      "passed": 31,
+      "failed": 0,
+      "total": 31
+    },
+    "unique selected original cases": {
+      "passed": 2,
+      "failed": 0,
+      "total": 2
+    },
+    "workspace comparison uses only the stock runner's exact declared generated products": {
+      "passed": 1,
+      "failed": 0,
+      "total": 1
+    }
+  },
+  "failed_check_details": []
+}

@@ -1,0 +1,101 @@
+{
+  "schema_version": "ontokin.c059.force-delivery-database-review/0.1",
+  "status": "passed",
+  "scope": "Read-only standard-library SQLite metadata/SELECT inspection after completed execution; no product imports/runtime/tests or SQLite writes. URI mode=ro&immutable=1.",
+  "candidate": "4155acfd1b01e1b72aac23be5e28b054d2e10440",
+  "path": "/workspace/scratch/abbf47b1d319/c059-force-delivery-recovery-002/artifacts/force-delivery/service-store/force-program-agent.sqlite3",
+  "bytes": 5267456,
+  "inode": 1314302,
+  "sha256": "b79e2853b67a3bd8344d31b2319ca1e0a5e96d8c0becc89ea23b9f4ea6e2694d",
+  "sha256_after": "b79e2853b67a3bd8344d31b2319ca1e0a5e96d8c0becc89ea23b9f4ea6e2694d",
+  "mtime_utc": "2026-10-28T20:01:19.644975+00:00",
+  "sidecars": {
+    "-wal": false,
+    "-shm": false,
+    "-journal": false
+  },
+  "quick_check": [
+    [
+      "ok"
+    ]
+  ],
+  "counts": {
+    "projects": 12,
+    "sources": 13,
+    "sessions": 1,
+    "requests": 409,
+    "runs": 15,
+    "artifacts": 7
+  },
+  "sqlite_sequence": 409,
+  "request_states": [
+    {
+      "state": "cancelled",
+      "count": 1
+    },
+    {
+      "state": "failed",
+      "count": 2
+    },
+    {
+      "state": "rejected",
+      "count": 12
+    },
+    {
+      "state": "succeeded",
+      "count": 394
+    }
+  ],
+  "exchanges": 412,
+  "exchange_methods": {
+    "handle": 411,
+    "submit": 1
+  },
+  "unique_request_identities": 409,
+  "matching_responses": 410,
+  "matching_exchange_file_hashes": 824,
+  "extra_db_rows": [],
+  "raw_equality_differences": [
+    {
+      "sequence": 400,
+      "kind": "payload"
+    },
+    {
+      "sequence": 400,
+      "kind": "response",
+      "method": "handle",
+      "receipt_status": "rejected",
+      "db_status": "succeeded"
+    },
+    {
+      "sequence": 406,
+      "kind": "response",
+      "method": "submit",
+      "receipt_status": "queued",
+      "db_status": "cancelled"
+    }
+  ],
+  "unexpected_mismatches": [],
+  "protocol_reconciliation": {
+    "all_unique_identities_reconciled": 409,
+    "exact_response_matches": 410,
+    "expected_historical_response_differences": 2,
+    "collision_rejected_without_overwriting_original": {
+      "passed": true,
+      "original_sequence": 19,
+      "same_payload_retry": 399,
+      "collision_sequence": 400,
+      "status_readback": 401,
+      "code": "OKL-E-REQUEST-ID"
+    },
+    "queued_then_cancelled": {
+      "passed": true,
+      "submit_sequence": 406,
+      "cancel_sequence": 407,
+      "terminal_retry": 408,
+      "status_readback": 409
+    },
+    "meaning": "All 412 exchange files and 409 unique durable identities reconcile. Exact final-response equality is inappropriate for the collision rejection and earlier queued response; their original/final identities are explicitly verified."
+  },
+  "sha256_after_protocol_reconciliation": "b79e2853b67a3bd8344d31b2319ca1e0a5e96d8c0becc89ea23b9f4ea6e2694d"
+}

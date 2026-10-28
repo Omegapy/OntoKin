@@ -27,6 +27,7 @@ CONSTRUCTION_PROFILE = "construction-0.1"
 SURFACE_PROFILE = "surface-0.1"
 IMPULSE_PROFILE = "impulse-0.1"
 FORCE_PROFILE = "force-0.1"
+REACH_PROFILE = "planar-reach-0.1"
 
 
 class ProgramRuntime:
@@ -51,6 +52,9 @@ class ProgramRuntime:
 
     def compile_program(self, source, **kwargs):
         return compile_program(source, profile=self.profile, **kwargs)
+
+    def prepare_delivery(self, source, **kwargs):
+        return prepare_delivery(source, profile=self.profile, **kwargs)
 
 
 class _Budget(core._Budget):
@@ -90,6 +94,11 @@ def _compile(source: ProgramBundle, budget: _Budget):
                            blocks=["represented", "constructed", "evaluated", "delivered"],
                            details={"required_profile": budget.profile, "actual_profile": compiler.model.profile})
     return compiler
+
+
+def _reach_work(compiler):
+    """Keep the explicit 0.6 request's bounded numerical context transient."""
+    return {"work": compiler.reach_work} if compiler.model.profile == REACH_PROFILE else {}
 
 
 def compile_program(source, *, budgets=None, check=None, profile=CONSTRUCTION_PROFILE):
@@ -187,7 +196,7 @@ def validate_revision(source: ProgramBundle, *, level: str = "represented", budg
             raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED", "A delivered request requires an explicit supported destination contract.",
                                compiler.program, category="unsupported", phase="support", blocks=["delivered"])
         _support(compiler)
-        prefix = evaluate_prefix(compiler.model, "0", side="before", check=budget.tick)
+        prefix = evaluate_prefix(compiler.model, "0", side="before", check=budget.tick, **_reach_work(compiler))
         if prefix["failure"] is not None:
             error = prefix["failure"]
             if error.diagnostic.category == "numerical_failure":
@@ -200,7 +209,7 @@ def validate_revision(source: ProgramBundle, *, level: str = "represented", budg
         if level == "constructed":
             return _result(source, level, achieved, diagnostics, stages=stages,
                            duration_seconds=time_text(compiler.model.duration), initial_state=budget.data(prefix["last_valid_state"]))
-        prefix = evaluate_prefix(compiler.model, compiler.model.duration, check=budget.tick)
+        prefix = evaluate_prefix(compiler.model, compiler.model.duration, check=budget.tick, **_reach_work(compiler))
         run = _run_state(source, prefix, budget=budget)
         if prefix["failure"] is not None:
             stages["evaluated"] = prefix["failure"].diagnostic.category
@@ -228,6 +237,63 @@ def _point(time: Fraction, side: str) -> tuple[Fraction, bool]:
     return time, side == "after"
 
 
+def _evaluate_compiled(source, compiler, budget, until, *, side="after", previous=None, capture_observer=None):
+    """Use the already compiled request context for a single source prefix."""
+    achieved = "represented"
+    diagnostics = [diagnostic_dict(d, source) for d in compiler.model.diagnostics]
+    _support(compiler)
+    endpoint = exact_time(until)
+    if side not in ("before", "after"):
+        raise OntoKinError("OKL-E-SAMPLE", "A run boundary side must be before or after.",
+                           compiler.program.scene, phase="inspection", blocks=[])
+    if previous is not None:
+        prior_time, prior_side = _interval(source, previous, node=compiler.program.scene)
+        if _point(endpoint, side) < _point(prior_time, prior_side):
+            raise OntoKinError("OKL-E-SAMPLE", "An existing run cannot evaluate backward.", compiler.program.scene,
+                               category="conflict", phase="inspection", blocks=[],
+                               details={"valid_until_seconds": time_text(prior_time), "valid_until_side": prior_side})
+        if previous.get("status") == "failed":
+            raise OntoKinError("OKL-E-SAMPLE", "A failed run is retained for diagnosis; reset to start a new run.",
+                               compiler.program.scene, phase="inspection", blocks=[])
+    prefix = evaluate_prefix(compiler.model, endpoint, side=side, check=budget.tick,
+                             capture_observer=capture_observer, **_reach_work(compiler))
+    run = _run_state(source, prefix, budget=budget, previous=previous)
+    if run["last_valid_state"] is not None:
+        achieved = "constructed"
+    if prefix["failure"] is not None:
+        return _error_result(source, "evaluated", achieved, prefix["failure"], diagnostics, run_state=run)
+    return _result(source, "evaluated", "evaluated", diagnostics, run_state=run,
+                   duration_seconds=time_text(compiler.model.duration))
+
+
+def prepare_delivery(source, *, until=None, budgets=None, check=None, profile=REACH_PROFILE):
+    """Return one transient compiler and prefix result for the 0.6 adapter.
+
+    The compiler owns the request's numerical work/cache and checked recording
+    plan; the exporter consumes those without replay or a fresh allowance.
+    None of these transient objects is placed in returned JSON.
+    """
+    compiler, achieved, diagnostics = None, None, []
+    try:
+        budget = _Budget(budgets, check, profile)
+        compiler = _compile(source, budget)
+        achieved = "represented"
+        diagnostics = [diagnostic_dict(d, source) for d in compiler.model.diagnostics]
+        endpoint = compiler.model.duration if until is None else until
+        capture = None
+        if profile == REACH_PROFILE:
+            from .reach_delivery import ReachDeliveryCapture
+            capture = ReachDeliveryCapture(compiler.model, exact_time(endpoint), work=compiler.reach_work)
+        result = _evaluate_compiled(source, compiler, budget, endpoint, capture_observer=capture)
+        if capture is not None and result["outcome"] == "valid":
+            compiler.reach_delivery_plan = capture.finish()
+        return compiler, result
+    except _Interrupt as exc:
+        raise exc.error
+    except OntoKinError as exc:
+        return compiler, _error_result(source, "evaluated", achieved, exc, diagnostics)
+
+
 def evaluate_revision(source: ProgramBundle, *, until: Any, side: str = "after", previous: dict | None = None,
                       budgets: dict | None = None, check: Callable[[], None] | None = None,
                       profile=CONSTRUCTION_PROFILE) -> dict:
@@ -239,28 +305,7 @@ def evaluate_revision(source: ProgramBundle, *, until: Any, side: str = "after",
         compiler = _compile(source, budget)
         achieved = "represented"
         diagnostics = [diagnostic_dict(d, source) for d in compiler.model.diagnostics]
-        _support(compiler)
-        endpoint = exact_time(until)
-        if side not in ("before", "after"):
-            raise OntoKinError("OKL-E-SAMPLE", "A run boundary side must be before or after.",
-                               compiler.program.scene, phase="inspection", blocks=[])
-        if previous is not None:
-            prior_time, prior_side = _interval(source, previous, node=compiler.program.scene)
-            if _point(endpoint, side) < _point(prior_time, prior_side):
-                raise OntoKinError("OKL-E-SAMPLE", "An existing run cannot evaluate backward.", compiler.program.scene,
-                                   category="conflict", phase="inspection", blocks=[],
-                                   details={"valid_until_seconds": time_text(prior_time), "valid_until_side": prior_side})
-            if previous.get("status") == "failed":
-                raise OntoKinError("OKL-E-SAMPLE", "A failed run is retained for diagnosis; reset to start a new run.",
-                                   compiler.program.scene, phase="inspection", blocks=[])
-        prefix = evaluate_prefix(compiler.model, endpoint, side=side, check=budget.tick)
-        run = _run_state(source, prefix, budget=budget, previous=previous)
-        if run["last_valid_state"] is not None:
-            achieved = "constructed"
-        if prefix["failure"] is not None:
-            return _error_result(source, "evaluated", achieved, prefix["failure"], diagnostics, run_state=run)
-        return _result(source, "evaluated", "evaluated", diagnostics, run_state=run,
-                       duration_seconds=time_text(compiler.model.duration))
+        return _evaluate_compiled(source, compiler, budget, until, side=side, previous=previous)
     except _Interrupt as exc:
         raise exc.error
     except OntoKinError as exc:
@@ -562,7 +607,10 @@ def _value_record(program, compiler, path, name, budget):
 def _project(program, record, fields, compiler, sample, run, frame, budget):
     # Geometry, mass, and mechanical projections are the same normalized model
     # operations as core0.1. Source, values, support, and state context are versioned.
-    shared = [field for field in fields if field not in {"values", "state", "support"}]
+    specialized = {"values", "state", "support"}
+    if budget.profile == REACH_PROFILE:
+        specialized.add("actions")
+    shared = [field for field in fields if field not in specialized]
     result = core._project(program.entry.to_source(), record, shared, compiler, sample, run, frame, budget)
     if "support" in fields:
         result["support"] = core._support_record(compiler, budget)
@@ -577,6 +625,8 @@ def _project(program, record, fields, compiler, sample, run, frame, budget):
                 result[field] = {"available": False, "reason": "definition_has_no_occurrence_state" if record["_definition"] else "source_is_unresolved"}
         return result
     path = record.get("_object_path")
+    if "actions" in fields and budget.profile == REACH_PROFILE:
+        result["actions"] = _reach_actions(compiler, record, path, sample, budget)
     if "geometry" in fields and path is not None and compiler.model.objects[path].geometry["kind"] in ("loft", "placed"):
         from .program_surface import surface_summary
         result["geometry"]["representation"] = "native_parameterized_exterior_surface"
@@ -600,13 +650,41 @@ def _project(program, record, fields, compiler, sample, run, frame, budget):
         else:
             state = copy.deepcopy(sample["objects"][path])
             if frame != "world":
-                state.update(inspect_in_frame(sample, path, frame))
+                state.update(inspect_in_frame(sample, path, frame, **_reach_work(compiler)))
             state.update(available=True, program_revision=program.program_revision, run_id=run.get("run_id"),
                          time_seconds=sample["time_seconds"], side=sample["side"],
                          valid_interval={"start_seconds": "0", "start_side": "before",
                                          "end_seconds": run["valid_until_seconds"], "end_side": run["valid_until_side"]})
             result["state"] = state
     return budget.data(result)
+
+
+def _reach_actions(compiler, record, object_path, sample, budget):
+    """Project both claimed joints without reusing the one-target renderer."""
+    from .reach_projection import reach_projection
+    model = compiler.model
+    names = [record["path"]] if record["path"] in model.actions else []
+    if object_path is not None:
+        names = []
+        for name, action in model.actions.items():
+            budget.tick()
+            payload = getattr(action, "reach", None)
+            targets = (payload.shoulder, payload.elbow) if payload is not None else (action.target,)
+            associated = object_path in targets
+            for target in targets:
+                if target in model.joints:
+                    joint = model.joints[target]
+                    associated |= object_path in (model.sites[joint.parent].owner, model.sites[joint.child].owner)
+            if associated:
+                names.append(name)
+    result = []
+    for name in names:
+        budget.tick()
+        if getattr(model.actions[name], "reach", None) is not None:
+            result.append(reach_projection(model, name, sample, check=budget.tick))
+        else:
+            result.append(core._action_record(compiler, name, sample))
+    return result
 
 
 def inspect_revision(program, *, selector=None, fields=None, limit=100, offset=0, run=None,
@@ -635,7 +713,7 @@ def inspect_revision(program, *, selector=None, fields=None, limit=100, offset=0
             if compiler is None or not 0 <= when <= compiler.model.duration or _point(when, which_side) > _point(end, end_side):
                 raise OntoKinError("OKL-E-SAMPLE", "This sample is outside the run's available interval.", category="stale", phase="inspection", blocks=[])
             _support(compiler)
-            prefix = evaluate_prefix(compiler.model, when, side=which_side, check=budget.tick)
+            prefix = evaluate_prefix(compiler.model, when, side=which_side, check=budget.tick, **_reach_work(compiler))
             if prefix["failure"] is not None:
                 return _error_result(program, None, achieved, prefix["failure"], diagnostics,
                                      items=[], total=0, next_offset=None, truncated=False, index_complete=complete)

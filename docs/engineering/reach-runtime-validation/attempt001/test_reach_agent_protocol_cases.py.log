@@ -1,0 +1,77 @@
+test_frozen_protocol_inventory_is_exactly_forty_two_steps (test_reach_agent_protocol_cases.ReachProtocolCaseTests.test_frozen_protocol_inventory_is_exactly_forty_two_steps) ... ok
+test_lp01_failed_prefix_reset_all_nine_steps (test_reach_agent_protocol_cases.ReachProtocolCaseTests.test_lp01_failed_prefix_reset_all_nine_steps) ... FAIL
+test_lp02_authorized_root_repair_retry_history_all_nine_steps (test_reach_agent_protocol_cases.ReachProtocolCaseTests.test_lp02_authorized_root_repair_retry_history_all_nine_steps) ... FAIL
+test_lp03_accepted_construction_failed_admission_repair_all_five_steps (test_reach_agent_protocol_cases.ReachProtocolCaseTests.test_lp03_accepted_construction_failed_admission_repair_all_five_steps) ... FAIL
+test_lp04_q03_fixed_128_actions_real_n_and_n_minus_one_all_seven_steps (test_reach_agent_protocol_cases.ReachProtocolCaseTests.test_lp04_q03_fixed_128_actions_real_n_and_n_minus_one_all_seven_steps) ... FAIL
+test_lp05_candidate_and_later_accepted_history_all_twelve_steps (test_reach_agent_protocol_cases.ReachProtocolCaseTests.test_lp05_candidate_and_later_accepted_history_all_twelve_steps) ... FAIL
+
+======================================================================
+FAIL: test_lp01_failed_prefix_reset_all_nine_steps (test_reach_agent_protocol_cases.ReachProtocolCaseTests.test_lp01_failed_prefix_reset_all_nine_steps)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_agent_protocol_cases.py", line 82, in test_lp01_failed_prefix_reset_all_nine_steps
+    self.step("LP01.01")
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_agent_protocol_cases.py", line 43, in step
+    self.assertEqual(response["status"], expected["status"], (identity, response))
+AssertionError: 'failed' != 'succeeded'
+- failed
++ succeeded
+ : ('LP01.01', {'accepted_program_revision': None, 'achieved_level': None, 'diagnostics': [], 'next_cursor': None, 'operation': 'create', 'program_revision': 'sha256:af42329216000f3799b08cf4ec4272c8907bcc1446c2d0b0b5edc9f044e57e0e', 'progress': {'cancellation_requested': False, 'implementation': {'name': 'ontokin-reference', 'source_code_sha256': 'sha256:0919a8d50f4430e67e9c1ae00605cb88a6ef843e91043c16d4ea5ee6484cdcf4', 'version': '0.4.0'}, 'phase': 'complete'}, 'project_id': 'reach-reconstruction-lp01', 'protocol_error': {'code': 'OKA-E-INTERNAL', 'details': {'exception': 'ValueError', 'reason': 'Unsupported JSON value type: LoftSection.'}, 'message': 'The operation failed before commit.'}, 'request_id': 'LP01.01', 'requested_level': 'constructed', 'result': None, 'run_id': None, 'schema_version': 'ontokin.agent/0.6', 'status': 'failed', 'truncated': False})
+
+======================================================================
+FAIL: test_lp02_authorized_root_repair_retry_history_all_nine_steps (test_reach_agent_protocol_cases.ReachProtocolCaseTests.test_lp02_authorized_root_repair_retry_history_all_nine_steps)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_agent_protocol_cases.py", line 104, in test_lp02_authorized_root_repair_retry_history_all_nine_steps
+    before = self.step("LP02.01")
+             ^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_agent_protocol_cases.py", line 43, in step
+    self.assertEqual(response["status"], expected["status"], (identity, response))
+AssertionError: 'failed' != 'succeeded'
+- failed
++ succeeded
+ : ('LP02.01', {'accepted_program_revision': None, 'achieved_level': None, 'diagnostics': [], 'next_cursor': None, 'operation': 'create', 'program_revision': 'sha256:a18c49d2a522b90b0b7e8f4ea5bf5f4f134fdfa8e1017ee4e24d0ad0c67400bd', 'progress': {'cancellation_requested': False, 'implementation': {'name': 'ontokin-reference', 'source_code_sha256': 'sha256:0919a8d50f4430e67e9c1ae00605cb88a6ef843e91043c16d4ea5ee6484cdcf4', 'version': '0.4.0'}, 'phase': 'complete'}, 'project_id': 'reach-reconstruction-lp02', 'protocol_error': {'code': 'OKA-E-INTERNAL', 'details': {'exception': 'ValueError', 'reason': 'Unsupported JSON value type: LoftSection.'}, 'message': 'The operation failed before commit.'}, 'request_id': 'LP02.01', 'requested_level': 'evaluated', 'result': None, 'run_id': None, 'schema_version': 'ontokin.agent/0.6', 'status': 'failed', 'truncated': False})
+
+======================================================================
+FAIL: test_lp03_accepted_construction_failed_admission_repair_all_five_steps (test_reach_agent_protocol_cases.ReachProtocolCaseTests.test_lp03_accepted_construction_failed_admission_repair_all_five_steps)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_agent_protocol_cases.py", line 148, in test_lp03_accepted_construction_failed_admission_repair_all_five_steps
+    self.step("LP03.01")
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_agent_protocol_cases.py", line 43, in step
+    self.assertEqual(response["status"], expected["status"], (identity, response))
+AssertionError: 'failed' != 'succeeded'
+- failed
++ succeeded
+ : ('LP03.01', {'accepted_program_revision': None, 'achieved_level': None, 'diagnostics': [], 'next_cursor': None, 'operation': 'create', 'program_revision': 'sha256:61a49cebac61f0f204c9ef5ad67592d54b1372e7a8c1b5af458ed04917d26e95', 'progress': {'cancellation_requested': False, 'implementation': {'name': 'ontokin-reference', 'source_code_sha256': 'sha256:0919a8d50f4430e67e9c1ae00605cb88a6ef843e91043c16d4ea5ee6484cdcf4', 'version': '0.4.0'}, 'phase': 'complete'}, 'project_id': 'reach-reconstruction-lp03', 'protocol_error': {'code': 'OKA-E-INTERNAL', 'details': {'exception': 'ValueError', 'reason': 'Unsupported JSON value type: LoftSection.'}, 'message': 'The operation failed before commit.'}, 'request_id': 'LP03.01', 'requested_level': 'constructed', 'result': None, 'run_id': None, 'schema_version': 'ontokin.agent/0.6', 'status': 'failed', 'truncated': False})
+
+======================================================================
+FAIL: test_lp04_q03_fixed_128_actions_real_n_and_n_minus_one_all_seven_steps (test_reach_agent_protocol_cases.ReachProtocolCaseTests.test_lp04_q03_fixed_128_actions_real_n_and_n_minus_one_all_seven_steps)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_agent_protocol_cases.py", line 164, in test_lp04_q03_fixed_128_actions_real_n_and_n_minus_one_all_seven_steps
+    self.step("LP04.01")
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_agent_protocol_cases.py", line 43, in step
+    self.assertEqual(response["status"], expected["status"], (identity, response))
+AssertionError: 'failed' != 'succeeded'
+- failed
++ succeeded
+ : ('LP04.01', {'accepted_program_revision': None, 'achieved_level': None, 'diagnostics': [], 'next_cursor': None, 'operation': 'create', 'program_revision': 'sha256:aba217566fd6331eb9cda4df702a8d0ef475a94557c5a60ef7b6b6b974036d77', 'progress': {'cancellation_requested': False, 'implementation': {'name': 'ontokin-reference', 'source_code_sha256': 'sha256:0919a8d50f4430e67e9c1ae00605cb88a6ef843e91043c16d4ea5ee6484cdcf4', 'version': '0.4.0'}, 'phase': 'complete'}, 'project_id': 'reach-reconstruction-lp04', 'protocol_error': {'code': 'OKA-E-INTERNAL', 'details': {'exception': 'ValueError', 'reason': 'Unsupported JSON value type: LoftSection.'}, 'message': 'The operation failed before commit.'}, 'request_id': 'LP04.01', 'requested_level': 'constructed', 'result': None, 'run_id': None, 'schema_version': 'ontokin.agent/0.6', 'status': 'failed', 'truncated': False})
+
+======================================================================
+FAIL: test_lp05_candidate_and_later_accepted_history_all_twelve_steps (test_reach_agent_protocol_cases.ReachProtocolCaseTests.test_lp05_candidate_and_later_accepted_history_all_twelve_steps)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_agent_protocol_cases.py", line 241, in test_lp05_candidate_and_later_accepted_history_all_twelve_steps
+    self.step("LP05.01")
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_agent_protocol_cases.py", line 43, in step
+    self.assertEqual(response["status"], expected["status"], (identity, response))
+AssertionError: 'failed' != 'succeeded'
+- failed
++ succeeded
+ : ('LP05.01', {'accepted_program_revision': None, 'achieved_level': None, 'diagnostics': [], 'next_cursor': None, 'operation': 'create', 'program_revision': 'sha256:5d51e51d87e718d31faf3539879c8c180c2bb53d4b9ccb263e0de5eb4818eb1d', 'progress': {'cancellation_requested': False, 'implementation': {'name': 'ontokin-reference', 'source_code_sha256': 'sha256:0919a8d50f4430e67e9c1ae00605cb88a6ef843e91043c16d4ea5ee6484cdcf4', 'version': '0.4.0'}, 'phase': 'complete'}, 'project_id': 'reach-reconstruction-lp05', 'protocol_error': {'code': 'OKA-E-INTERNAL', 'details': {'exception': 'ValueError', 'reason': 'Unsupported JSON value type: LoftSection.'}, 'message': 'The operation failed before commit.'}, 'request_id': 'LP05.01', 'requested_level': 'constructed', 'result': None, 'run_id': None, 'schema_version': 'ontokin.agent/0.6', 'status': 'failed', 'truncated': False})
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.775s
+
+FAILED (failures=5)

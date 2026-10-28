@@ -1,0 +1,89 @@
+# C055 independent authority review
+
+Reviewer: `/root/c055_authority`. Source: OntoKin commit `2aca5afb05a0320971ccaf9d9ce30904d120e249`, tree `7082ceb840e0ce4c2f30baccbdb527913e9fa2ca`. This is a source review only. No product import, request, endpoint calculation, numerical replay, collector, runtime test or benchmark was performed.
+
+## Finding
+
+**Reject a cold-miss gate that runs a new precharge before preserving the original factory's evaluation prefix, then restarts the original expression on rejection.** Its fallback can change which already pending call is invoked. This failure exists with an initially native factory, a normally returning callback, sufficient resources, exact native dictionaries and no runtime observer or finalizer. A second witness changes the first exception when an earlier original Fraction call would fail.
+
+Capturing only the outer `remember`, `sub`, first `mul` and first `_atan_small` before precharge repairs one witness but is not complete. The rest of the original prefix before the first genuine checkpoint still contains observable calls and comparisons. A complete repair must preserve that prefix, the pending calls and the continuation. No complete safe executable gate, positive all-path bound or general impossibility is established by this review.
+
+The direct boundary removes C054's early-publication target-owner corridor. It does not remove the original expression's evaluation order, mutable current dependencies, callback capture order or original failure identity.
+
+## 1. Source identity and scope
+
+`input-binding.json` identifies eleven exact source files and the twelve supplied attachments. Every fetched source file's reconstructed Git blob matches the provider identity. The source review reads the relevant portions identified in that binding, rather than claiming all materialized code was read. The two initial lookups for nonexistent `ontokin/reach_work.py` and `ontokin/reach.py` returned 404; the actual work class is in `ontokin/reach_numeric.py` and the reader arithmetic is in `ontokin/reach_reference.py`.
+
+The adopted `ADOPTION.md` establishes authority for the historically labeled release contract and budget-counting text. Budget section 3 requires charging new lookups, type/limit/claim checks, copied logical values and output occurrences, while preserving cancellation checkpoints and independent reader authority. Source governance and the full GOAL were read. Root separately reconciles live ownership, branches, PRs and CI.
+
+## 2. Original prefix and captured calls
+
+The original expression is at `reach_reference.py:394-395`. Python's expression evaluation rules evaluate the callable before its arguments and evaluate expressions from left to right. The pinned CPython reference text documents this in `Doc/reference/expressions.rst:1951-1970`; the argument-before-call rule is also stated at line 1037.
+
+After the unchanged lookup returns a cold miss, the original evaluation proceeds through the following relevant prefix:
+
+1. Resolve and retain the bound `self.remember` callable; retain `key` as its first argument.
+2. Resolve and retain `self.sub`, then the first `self.mul`, then the first `self._atan_small`.
+3. Resolve `F` and execute `F(1, 5)`.
+4. Invoke the already selected first `_atan_small`. Its body executes `F(value)`, the comparison with zero, `F(1, 2)` and the upper-range comparison.
+5. Resolve and enter `self.exact(value, value, "mul")` for the square. Native `exact` first resolves and invokes `self.tick()`.
+6. Native `tick` captures both arithmetic observers, calls `self.check()`, then invokes the captured product observer and ordinary observer after normal check return.
+7. Only after the complete original tick returns does native `exact` convert its operands, guard them, inspect their widths, choose the multiplication operator and form the square.
+
+The first scalar multiplication by 16 has not run at the first factory tick, but its callable is already retained. The second multiplication by 4 has not yet been resolved. This difference matters even if all original callable bindings were native at cold-miss entry.
+
+The original final `remember` invocation uses the callable retained before the factory, not a new lookup after the factory. Keeping the word `remember` in a rewritten return statement does not by itself preserve that behavior.
+
+## 3. A normally returning callback defeats restarted fallback
+
+Freeze the examined schedule as follows: after the unchanged cold lookup, perform one or more new precharge ticks; inspect current state; on rejection, evaluate the original factory expression afresh. This schedule has not preserved the original pending callable captures before its first new tick.
+
+Take an initially native arithmetic owner with bits 128, the unchanged 32,768-bit domain, a stable empty cache, native Fraction/Interval behavior, absent arithmetic/work observers and sufficient operation/elapsed allowances. Its shared work may have a callback; source construction expressly supports one. Grant the existing native factory's ordinary successful path as a premise. No new numerical endpoint proof is needed for the control-flow distinction.
+
+Let the callback return normally at the lookup. At the first subsequent callback, it assigns an instance-level replacement `R` to `arithmetic.mul`. The replacement raises a preexisting exception object only when its first scalar argument is the native integer 16. For first argument 4 it delegates to a retained original native bound `mul`. Subsequent callback invocations do nothing. An instance attribute containing a function is returned as that stored function, so `R` takes the two ordinary explicit arguments. This is a declarative source witness; no witness function was executed.
+
+In the original, the first native `mul` was selected before the callback. The replacement cannot retroactively change that pending call. `_atan_small` completes, the first native multiplication receives 16, and the later second multiplication resolves `R` with 4 and delegates to the original. The original result follows the native successful path.
+
+In the examined gate, the new precharge invokes the same callback before the first multiplication callable was captured. A current-binding screen can correctly reject the now modified owner. Nevertheless, its fresh fallback selects `R` for the first multiplication by 16 and raises the preexisting marker. Rejection has not restored original behavior.
+
+This witness does not mutate Fraction, Interval, code objects, module globals, dictionary order, operand limits or the cache. It needs no observer, trace hook, destructor, concurrent worker or certificate value. It concerns the failure of this specific precharge-and-restart plan, not all possible ways to specialize pi.
+
+## 4. Preserving four captures is not a complete repair
+
+Capturing `remember`, `sub`, first `mul` and first `_atan_small` before the new tick excludes the preceding particular replacement witness. It does not preserve all earlier original exception opportunities.
+
+For example, if the current first `F(1,5)` call raises a preexisting exception `E_F`, the original raises `E_F` before the first factory checkpoint. A new checkpoint executed before that call can instead invoke a callback that raises a different preexisting `E_C`. Even a gate intended to reject the current nonnative F binding has changed the exception that appears first. This is also source reasoning only.
+
+Moving the precharge after `F(1,5)` still leaves the original `_atan_small` entry conversion, its comparisons and its `F(1,2)` call before the first native tick. Those can dispatch or fail. A gate cannot assert they are native and passive by an uncharged inspection while simultaneously claiming every new type/authority read is precharged.
+
+The first source-defined candidate cut after all these effects is after the actual first native `exact.tick` returns, including both originally captured arithmetic observers. To resume at that cut, the design must retain the original pending frames, callables, locals and remaining operand-guard work; restarting `_atan_small` or the whole factory would replay a prefix. Establishing such a continuation is a different explicit design obligation. This review does not claim that merely moving a gate there solves it.
+
+A still clearer but narrower possible seam is after the original `square = self.exact(value, value, "mul")` completes inside `_atan_small`. Native value, square and caller captures then already exist. An independent specialization of the remaining atan tail would preserve the outer mul/sub/remember calls. Under the inherited stop candidates N=28 and N=8, the original atan charge count is `4*N + 3`, so retaining its square leaves 114 and 34 operations respectively. These are source accounting expressions, not measured incidence or a selection of that route. Its reduced opportunity and remaining authority obligations must be assessed before nomination.
+
+## 5. Used-state dependencies and justified exclusions
+
+The following inventory distinguishes actual used state from C054's blanket five-metadata-predicate screen. It is an analysis of dependency families, not a claim of a completed minimal gate. The precharge/restart route is already rejected above.
+
+| Family | State read by the original or proposed replacement | Relevant exclusion or qualification |
+| --- | --- | --- |
+| Arithmetic factory | `operand_limit.fget`, `_dyadic_denominator`, `tick`, `guard`, `exact`, `point`, `grid`, `_grid_domain`, `_sum_enclosure`, `interval`, `sub`, `_corner_domain`, `mul`, `_atan_small`; live instance overrides, class descriptors, current code and used global references | This is 14 arithmetic callable entries. It omits `sincos`, unrelated series helpers and target caller owners. Negative-argument `_atan_small` recursion/`neg` is unreachable for authentic native positive inputs; unauthenticated inputs must retain original behavior. |
+| Active and retained calls | Original active pi frame, prior lookup, retained `remember` callable and original final invocation | An already active native frame does not become new code merely because its function object's current `__code__` or its class slot changes. The prior lookup is not omitted work. Retained final remember behavior still must be preserved, including its consumed admission default and later callbacks; it is not free new credit. |
+| Arithmetic owner values | `bits`, `scale`, `work`, current operand maximum, `check`, both arithmetic observer fields and original key/captured locals | Domain/cache synchronization already occurred on lookup but may have callbacks. Current state after lookup cannot be inferred from constructor history. The key's originally captured fields and later live fields are distinct. |
+| Shared charge path | Actual bound work owner and `ReachExecutionWork.tick/charge`; `charge` defaults `kind="checkpoint"`, `amount=1`; `external_check`, work observer, counters, limits, start time, count-map dispatch, clock and `resource` failure helper | The work observer is captured before external check. Inspecting its current field later cannot erase a pending captured observer. Native work type alone does not authenticate nested callbacks or failure helpers. |
+| Construction callback | Bound `ConstructionBudget.tick`, its used defaults `node=None`, `amount=1`, nested check, counters, limit map, clock, `exceeded` and failure dependencies | A native outer callback is not proof that its nested check is absent. The direct arithmetic callback form remains an original supported path requiring safe fallback. |
+| Fraction construction | `Fraction.__new__`, denominator default `None`, native class/slot/descriptor authority, current globals and allocation path | All original calls supply numerator; its unused default zero need not be checked. This pinned 3.12.14 source has no `_normalize` argument. |
+| Fraction exact operators | Four forward wrappers, their used `monomorphic_operator` closure cells and delegates `_add/_sub/_mul/_div`; `_from_coprime_ints`, gcd, globals and superclass allocation | For exact Fraction operands, forward wrappers take their first branch. Their `fallback_operator` cells and reverse float/complex paths are not read. Stable closure-tuple identity does not authenticate mutable used cell contents. |
+| Fraction comparisons and fields | Numerator/denominator getters, `__bool__`, `__eq__`, `__lt__`, `__gt__`, `__ge__`, `_richcmp`, used operator globals, Rational checks and raw integer slots | The negative-sign branches of mul would add `__le__`; excluding them requires the admitted native positive path. Class/ABC/descriptor dependencies cannot be replaced by a stable function-object assumption. |
+| Interval | Actual constructor/allocator, generated `__init__`, used object-setter closure, dynamic `__post_init__`, endpoint storage and comparison | The pinned dataclass generator closes over `object` for frozen field assignment. Unused annotations, class metadata and nonexistent defaults are not numerical dependencies. Frozen fields do not establish adversarial immutability. |
+| Certificate and inspection | Independently authenticated fixed source/storage, exact integers, access/copy/retention costs, fresh native construction, trusted inspection references and current raw storage access | No value was generated or authenticated here. A copied constant or shared expected-reference cache is not free or self-authenticating. |
+| Runtime lifetime | Effectful descriptors, active callbacks, pending captured observers, failures, possible observer/finalizer/concurrency effects in any claimed callback-free window | None is used by the main witness. A hypothetical narrower admitted world must actually establish its restrictions and charge the checks. |
+
+The finite native call graph needs less irrelevant metadata than D36, but its actual class/global/closure/descriptor dependencies extend beyond the names in D36. This review supplies no universal predicate-count lower bound.
+
+## 6. Decision and remaining proof
+
+The examined precharge-before-prefix schedule is NO-GO on original behavior before certificate or endpoint work. The four-capture repair is insufficient; the later original checkpoint is an explicit redesign question, not an accepted repair. If the coordinator chooses a distinct direct-screen schedule, its binding/read/default/closure cost and its own failure ordering must be reviewed separately.
+
+Original lookup plus final remember remain outside the 163-operation factory opportunity. A rejected gate gets no factory-elimination credit and retains every reached new charge. Interrupted paths need their actual original prefix and exception identity; a completed-cost formula cannot repair these witnesses. No whole-request savings or recording improvement follows.
+
+Original 28 remains 24/28 historical, with P11, P16, P23 and L03 unresolved. C035 remains held including adverse timing. The unchanged 100,000 shared operations, 30,000 ms, 32,768 operand bits, 256 numerical-cache entries and 64 cursor updates remain in force. Runtime implementation, numerical generation, collector selection, release acceptance and main integration remain outside this review.

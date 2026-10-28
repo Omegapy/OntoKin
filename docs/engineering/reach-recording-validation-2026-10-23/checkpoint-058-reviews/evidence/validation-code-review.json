@@ -1,0 +1,136 @@
+{
+  "schema": "ontokin.checkpoint058-independent-validation-code-review/0.1",
+  "reviewer": "live_readback/evidence",
+  "reviewed_at_utc": "2026-10-28T16:45:02.135895+00:00",
+  "result": "passed",
+  "scope": "Static review of validator and runner only; separate from the seven core inputs and 40 substantive proposal checks.",
+  "inputs": [
+    {
+      "path": "checkpoint-058-validation/audit_metadata.py",
+      "bytes": 15476,
+      "sha256": "34c8ce4866ea2d543bc836a0051c9c1d7117af2d83e724fd4923d2600d077ff9",
+      "git_blob": "24a2581517a3714172753465abfc11c1290a0cfa"
+    },
+    {
+      "path": "checkpoint-058-validation/run_checks.py",
+      "bytes": 3376,
+      "sha256": "4807cf0482643cf81eba86e1524674c107028002c0e49c63e8f26121588383f8",
+      "git_blob": "6c5cd659a352097635b0f84d69f7a1bf0e8a7f3c"
+    }
+  ],
+  "unresolved_findings": [],
+  "checks": [
+    {
+      "id": "SC01",
+      "check": "Runner and auditor resolve the snapshot root correctly",
+      "result": "pass",
+      "evidence": "With scripts under CORE/checkpoint-058-validation, HERE.parents[3] resolves exactly to the recovered source root; CORE and relative receipt paths agree."
+    },
+    {
+      "id": "SC02",
+      "check": "Receipt field shapes match actual metadata",
+      "result": "pass",
+      "evidence": "Startup reconciliation reads branches=103 and open_prs=33 with arrays for change sets. Recovery uses inputs and acquisition_failures; observed adoption uses effective_normative_inputs basename lists and frozen_inputs path records."
+    },
+    {
+      "id": "SC03",
+      "check": "Adopted authority checks use exact identities",
+      "result": "pass",
+      "evidence": "Auditor checks exact effective-input membership and exact frozen pathname, byte length and SHA256 in both adoption and observed-priority receipts, in addition to actual file identities. The earlier serialized-substring weakness was corrected before execution."
+    },
+    {
+      "id": "SC04",
+      "check": "Final reviewer checks require the exact unique seven-input set",
+      "result": "pass",
+      "evidence": "Auditor compares set equality against the six manifest paths plus the manifest itself, rejects duplicate paths, requires seven entries, checks each identity, pass and paused flags, and checks the summary counts."
+    },
+    {
+      "id": "SC05",
+      "check": "Passive premise checks match actual structured values",
+      "result": "pass",
+      "evidence": "Auditor uses exact proposed eligibility status, concrete_meter_schedule_proved is False, and a nonempty ordinary_route. The earlier mismatched unproved-substring assertion was corrected before execution; semantic routing adequacy remains a substantive reviewer obligation."
+    },
+    {
+      "id": "SC06",
+      "check": "Expanded gate coverage reaches repeated events",
+      "result": "pass",
+      "evidence": "Auditor computes the G1-G4 unit union and requires it in E02/E06/E09, separately requiring E05 C/W, E07 N and the E01/E00/E02 prefix. These checks do not purport to prove runtime accounting authority."
+    },
+    {
+      "id": "SC07",
+      "check": "Static cost analysis does not import product code",
+      "result": "pass",
+      "evidence": "AST parsing and constrained literal/syntax inspection derive the class/global/early counts without import, product execution, construction of product tables, or measured runtime tick claims."
+    },
+    {
+      "id": "SC08",
+      "check": "Recovery and scope audits bind old bytes and new paths",
+      "result": "pass",
+      "evidence": "Auditor checks all 939 source-parent byte identities/modes against the full C057 tree, validates source/accepted pairs, and restricts additions to HANDOFF-058/checkpoint-058 paths. A passing audit will remain a partial-snapshot identity result."
+    },
+    {
+      "id": "SC09",
+      "check": "Runner stable-input manifests retain non-output evidence",
+      "result": "pass",
+      "evidence": "Final runner excludes only the two explicitly listed postprocessed summaries and paths beneath actual documentation-/metadata- result directories. metadata-review-corrections.json is now included because a matching filename alone is not a result directory."
+    },
+    {
+      "id": "SC10",
+      "check": "Runner retains actual command and output receipts",
+      "result": "pass",
+      "evidence": "Each attempt uses a new exist_ok=False directory, records real argv/cwd/Python/platform/time/source identifiers, before/after identities, stdout, stderr, actual exit status, elapsed time and parsed result. No successful synthetic command result is supplied."
+    },
+    {
+      "id": "SC11",
+      "check": "Runner pass and stopping rules match intended checks",
+      "result": "pass",
+      "evidence": "For the known checker/auditor object-shaped JSON outputs, a pass requires zero actual exit status, stable inputs and status passed. It stops after first failed stage and aggregate success requires both selected stages."
+    },
+    {
+      "id": "SC12",
+      "check": "Execution list is limited to the two selected validators",
+      "result": "pass",
+      "evidence": "Commands are only the unchanged documentation reorganization checker and new metadata auditor. The runner adds no product test, benchmark, hostile probe, archive-driver or release execution."
+    },
+    {
+      "id": "SC13",
+      "check": "Both exact final scripts were read and syntax-parsed only",
+      "result": "pass",
+      "evidence": "Full final script text was reviewed and parsed with ast.parse; neither script nor its checker subprocesses were executed by this reviewer."
+    },
+    {
+      "id": "SC14",
+      "check": "Summary files are explicit pre-execution requirements",
+      "result": "pass",
+      "evidence": "Root must supply truthful review/checkpoint/validation summaries referenced by the documents before exclusive checking. Runner does not invent those summaries, and this static review is not a documentation-validation pass."
+    },
+    {
+      "id": "SC15",
+      "check": "Owned JSON parser excludes result directories, not receipt filenames",
+      "result": "pass",
+      "evidence": "Final audit parse_owned_json applies exclusions to relative directory parts only (parts[:-1]), so metadata-review-corrections.json is parsed. This correction was made before execution."
+    },
+    {
+      "id": "SC16",
+      "check": "Runner filename-exclusion defect was corrected and final hash recaptured",
+      "result": "pass",
+      "evidence": "Evidence review identified that the old rel.startswith rule also omitted metadata-review-corrections.json from stable-input manifests. Root replaced it with relative directory parts plus len>1; the complete amended runner was re-read, rehashed and syntax-parsed before this report."
+    }
+  ],
+  "resolved_before_execution": [
+    "Exact adopted-path/hash membership",
+    "Exact unique seven-input review set",
+    "Passive premise assertion shape",
+    "Audit JSON directory-only exclusions",
+    "Runner stable-input directory-only exclusions"
+  ],
+  "scripts_executed": 0,
+  "product_imports": 0,
+  "documentation_checker_runs": 0,
+  "metadata_auditor_runs": 0,
+  "runtime_tests": 0,
+  "archive_extractions": 0,
+  "remote_mutations": 0,
+  "qualification": "Static code review establishes no validator outcome, runtime authority, release acceptance, or whole-request saving.",
+  "paused": true
+}

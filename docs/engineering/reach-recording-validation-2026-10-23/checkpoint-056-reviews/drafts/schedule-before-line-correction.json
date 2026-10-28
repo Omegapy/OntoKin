@@ -1,0 +1,131 @@
+{
+  "schema": "ontokin.checkpoint056-schedule/0.1",
+  "schedule_id": "R56-first-term-read-compare-repay",
+  "status": "frozen first-stage bootstrap and rejected continuation; source review pending",
+  "source_commit": "8000959ad25e89d1794d1401c0f8c2960bcd18fc",
+  "source_tree": "5282f90bc12c321c67829ce6d7ce62c891b32424",
+  "scope": "One source-level checkpoint reassignment candidate; no runtime implementation or endpoint work",
+  "seam": {
+    "file": "ontokin/reach_reference.py",
+    "method": "_Arithmetic.exact",
+    "call": "first positive _atan_small term self.exact(power, 2*k+1, 'div'), k=0",
+    "position": "after original self.tick() has returned normally, before a,b = F(a),F(b)",
+    "primary_operand": "native positive 1/5",
+    "secondary_operand": "1/239 only if separately proved",
+    "source_lines": [
+      126,
+      128,
+      368,
+      388
+    ]
+  },
+  "original_prefix": [
+    "pi key construction, operand_limit, original lookup including domain sync and warm-hit return",
+    "capture outer remember, then sub, then first mul with scalar16, then first atan; evaluate F(1,5), invoke captured atan",
+    "atan F(value), sign comparison, F(1,2), upper comparison, capture exact for square with current value/value/'mul'",
+    "original square exact tick and all its observers; exact remainder conversions, guards, bit-size/prospective domain, operator dispatch; return square",
+    "evaluate value then F(0), assign power and total; resolve range, evaluate self.bits+8, construct iterator, obtain k=0",
+    "capture first-term exact, evaluate power, 2*k+1=1, kind='div'; enter original exact frame",
+    "resolve and invoke original arithmetic tick; capture ordinary and product observer, resolve/invoke check",
+    "for native ReachExecutionWork tick: resolve charge/defaults, capture work observer, external callback, operation and elapsed checks, increment operation/category, captured work observer",
+    "arithmetic captured product observer then captured ordinary observer; normal tick return is the seam"
+  ],
+  "retained_state": {
+    "pi": "self,key,cached=None and original pending remember/sub/first mul/first atan call references; scalar16 and already evaluated original argument state; second mul/atan and final future lookups are not captured prematurely",
+    "atan": "self,value,square,power,total,k=0,original range iterator and suspended term assignment",
+    "exact": "original active self,a=power,b=1,kind='div'; return to exact line128 then original atan term assignment, never re-enter exact at its tick or restart pi",
+    "observers": "all observers captured by this reached tick already ran in original order; a failure in any of them propagates unchanged before admission",
+    "future_reads": "F(a), then fresh F(b), guard, operand attributes/prospective checks, current operator dictionary entries, later atan loop/tail lookups remain original dynamic events"
+  },
+  "explicit_favorable_grants": [
+    "Native raw dictionary G for the active exact function's global namespace and expected native Fraction reference F0 are available from separately valid charged provenance.",
+    "G['F'] is a passive bounded lookup with an existing str key, and native identity comparison has no callback or allocation failure.",
+    "The added charging route has authentic current authority and observer ordering. Native continuation storage adds no finalizer/runtime/concurrent-mutation effect.",
+    "These grants strengthen the candidate for the source counterexample; they are not proved admission mechanisms, free production operations or a completed dependency authentication."
+  ],
+  "states": [
+    {
+      "id": "P",
+      "event": "Execute the full unchanged original prefix to the seam.",
+      "funding": "All original charges pay their original work except pending first-term unit U is reserved for reassignment in next state.",
+      "failure": "Propagate exact original exception object; admission has not begun.",
+      "next": "I1"
+    },
+    {
+      "id": "I1",
+      "event": "Read currentF = G['F']; retain the returned reference.",
+      "funding": "Reassign the reached original unit U to this one new lookup only. U no longer funds pending first-term exact arithmetic.",
+      "failure": "Any unexpected lookup failure propagates; no old arithmetic credit is claimed.",
+      "next": "Q2"
+    },
+    {
+      "id": "Q2",
+      "event": "Invoke one authentic callback-bearing charge for the identity comparison.",
+      "funding": "New unit V, obtained before I2. No inspection is performed on a failed charge.",
+      "failure": "Propagate the actual callback/resource/observer exception unchanged; cannot substitute original future E.",
+      "next": "I2"
+    },
+    {
+      "id": "I2",
+      "event": "Compare currentF is F0.",
+      "funding": "V pays this one identity check only.",
+      "on_false": "QR",
+      "on_true": "AUTHORITY_REMAINDER_UNSELECTED"
+    },
+    {
+      "id": "QR",
+      "event": "Invoke one authentic callback-bearing replacement charge for the displaced first-term arithmetic.",
+      "funding": "New unit W pays pending first-term exact operation; U and V are already spent.",
+      "failure": "Propagate actual new exception; candidate has already rejected.",
+      "next": "R"
+    },
+    {
+      "id": "R",
+      "event": "Resume the original active exact frame at line128 using its saved arguments; retain fresh original F(a), F(b), guard/attribute/prospective/operator ordering; return through the original pending atan/pi expressions.",
+      "funding": "W pays this original exact operation; later original operations keep their own original charges. No repeated original tick or fresh-expression restart.",
+      "failure": "Propagate the exact exception object raised by the resumed original remainder; an earlier new failure cannot be undone.",
+      "next": "ORIGINAL_CONTINUATION"
+    },
+    {
+      "id": "AUTHORITY_REMAINDER_UNSELECTED",
+      "event": "Only a surviving bootstrap could select remaining authentication and specialization. Every added read/check/copy/construction would require its own funding and stability proof.",
+      "funding": "Unknown; no additional hypothetical budget is admitted.",
+      "failure": "No accepted path, endpoint or implementation selected by this first-stage record.",
+      "next": "STOP_IF_FIRST_STAGE_FAILS"
+    }
+  ],
+  "witnesses": [
+    {
+      "id": "W1-new-comparison-charge",
+      "kind": "conditional source counterexample, not executed",
+      "setup": "Use otherwise native arithmetic and ReachExecutionWork, absent arithmetic/work observers, ample limits and preexisting distinct exception objects E and B. Earlier callbacks return. At the reached first-term original tick, its external callback changes reach_reference.F to existing callable R that raises E on invocation; that callback returns. The next callback raises B.",
+      "original": "After the original tick returns, line128 calls current R(a) and raises E. No next callback occurs.",
+      "candidate": "I1 passively reads R with U. Q2 invokes the next callback and raises B before I2 or R(a).",
+      "conclusion": "Even before a rejection verdict, funded admission changes first exception identity. No endpoint or completed factory assumed."
+    },
+    {
+      "id": "W2-rejected-repayment",
+      "kind": "conditional source counterexample, not executed",
+      "setup": "Same setup, except the first added callback at Q2 returns normally and the following callback at QR raises B. R remains current and R is not F0.",
+      "original": "Pending R(a) raises E immediately after the original tick; neither later callback occurs.",
+      "candidate": "I1 reads R; Q2 returns; I2 rejects; QR raises B before original pending R(a).",
+      "conclusion": "A rejected path with exact saved frames still changes first exception identity through repayment-before-resume."
+    },
+    {
+      "id": "W3-lowered-remaining-budget",
+      "kind": "conditional source counterexample, not executed",
+      "setup": "Same native reached prefix and F mutation. Let the original U increment operations from L-1 to L=max_operations; all future external callbacks are passive and elapsed/operand limits otherwise adequate. This is a valid lowered remaining allowance.",
+      "original": "The funded original remainder calls R(a) and raises existing E before any further operation-limit check.",
+      "candidate": "I1 spends U; Q2 reaches operations>=max_operations and raises the actual reach resource error before R(a).",
+      "conclusion": "The extra charge can change the first failure under lower budgets without any raising future callback."
+    }
+  ],
+  "funding_alternatives_rejected_for_this_schedule": [
+    "Charging U to both I1 and pending exact is double funding.",
+    "Executing the displaced exact remainder before QR leaves retained work unprecharged after U was reassigned.",
+    "Debiting a later term/completed saving cannot fund an interrupted prefix.",
+    "Suppressing B or inventing/replacing it with E breaks actual callback/resource exception identity.",
+    "Replaying the old pi/atan expression loses original pending captures and repeats prior events."
+  ],
+  "stop_rule": "If any witness holds under the stated favorable grants, reject this R56 bootstrap immediately before complete gate cost or endpoints. No universal impossibility is inferred."
+}

@@ -12,6 +12,7 @@ from __future__ import annotations
 from dataclasses import dataclass, fields, is_dataclass, replace
 from fractions import Fraction
 import json
+import math
 import time
 from typing import Any, Callable as Check
 
@@ -31,13 +32,22 @@ from .values import (ACCELERATION, ALIASES, BOOL, INT, LENGTH, STRING, TIME,
 PROFILE = "construction-0.1"
 IMPULSE_PROFILE = "impulse-0.1"
 FORCE_PROFILE = "force-0.1"
-SURFACE_PROFILES = frozenset({SURFACE_PROFILE, IMPULSE_PROFILE, FORCE_PROFILE})
+REACH_PROFILE = "planar-reach-0.1"
+SURFACE_PROFILES = frozenset({SURFACE_PROFILE, IMPULSE_PROFILE, FORCE_PROFILE, REACH_PROFILE})
 IMPULSE_DIMENSION = (1, 1, -1, 0)
 PREDEFINED_02 = PREDEFINED | {"Keyed", "len"}
 MAX_KEYED_ENTRIES = 256
 MAX_OWNERSHIP_DEPTH = 64
 MAX_PATH_BYTES = 32768
 MAX_JSON_BYTES = 4 * 1024 * 1024
+# Only constructors with immutable, context-free value payloads are eligible.
+# Names still resolve in their actual lexical context; a shadowing local
+# disables the fold. Geometry, source references, actions and surface recipes
+# deliberately retain their ordinary occurrence/provenance paths.
+_CONSTANT_CALLS = frozenset({"real", "abs", "min", "max", "near", "sqrt", "sin", "cos",
+    "vec3", "vector", "point", "quat", "axis_angle", "range", "rgba"})
+_IMMUTABLE_SURFACE_CALLS = frozenset({"loft_section", "surface_material"})
+_PARAMETER_CALLS = _CONSTANT_CALLS | _IMMUTABLE_SURFACE_CALLS
 LIMITS = {"max_objects": 1000, "max_operations": 100000,
           "max_result_items": 1000, "max_elapsed_ms": 30000,
           "max_value_entries": 100000}
@@ -145,6 +155,36 @@ class InitializerBinding:
     origin_path: str
 
 
+def _materialize_reach_surface(recipe, *, max_vertices, work, check):
+    """Reuse immutable loft construction, retaining each occurrence's limit.
+
+    The complete typed recipe snapshot is shared with the source exporter;
+    this namespace retains unplaced triangles and never supplies reader proof.
+    Each caller receives its own placement value and provenance.
+    """
+    from .scene import _surface_recipe_snapshot
+    from .surface import MAX_MESH_VERTICES
+
+    snapshot = _surface_recipe_snapshot(recipe, work=work)
+    if snapshot is None:
+        return materialize_surface(recipe, max_vertices=max_vertices, check=check)
+    if type(max_vertices) is not int or not 0 <= max_vertices <= MAX_MESH_VERTICES:
+        raise SurfaceError("OKL-E-RESOURCE", "Invalid remaining vertex budget.",
+                           details={"budget": max_vertices})
+    recipe_key, frozen = snapshot
+    key = ("reach_constructed_surface", recipe_key)
+    cached = work.lookup(key)
+    if cached is None:
+        mesh, placement = materialize_surface(frozen, max_vertices=max_vertices, check=check)
+        cached = mesh, placement.position, placement.rotation
+        work.remember(key, cached)
+    mesh, position, rotation = cached
+    if len(mesh.positions) > max_vertices:
+        raise SurfaceError("OKL-E-RESOURCE", "Surface exceeds the remaining mesh vertex budget.",
+                           details={"required": len(mesh.positions), "available": max_vertices})
+    return mesh, Pose("self", position, rotation)
+
+
 class ConstructionCompiler(Validator):
     """A source-aware compiler and inspectable, revision-bound elaboration index.
 
@@ -157,8 +197,15 @@ class ConstructionCompiler(Validator):
     def __init__(self, linked, level: str, budget: ConstructionBudget):
         super().__init__(linked.entry.ast, level)
         self.linked, self.bundle, self.budget = linked, linked.bundle, budget
-        if self.model.profile in {IMPULSE_PROFILE, FORCE_PROFILE}:
+        if self.model.profile in {IMPULSE_PROFILE, FORCE_PROFILE, REACH_PROFILE}:
             self.budget.profile = self.model.profile
+        self.reach_work = None
+        self._reach_descriptions = {}
+        if self.model.profile == REACH_PROFILE:
+            from .reach_numeric import ReachExecutionWork
+            self.reach_work = ReachExecutionWork(
+                check=budget.tick, max_operations=budget.limits["max_operations"],
+                max_elapsed_ms=budget.limits["max_elapsed_ms"])
         self.linked_program = linked
         self.surface_meshes: dict[str, dict] = {}
         self.source_registry = linked.source_registry
@@ -183,6 +230,14 @@ class ConstructionCompiler(Validator):
         self._tainted_values: dict[int, Value] = {}
         self._lexical_self_origins: dict[int, tuple[Value, str]] = {}
         self._expression_depth = 0
+        # A syntax classification, like the resolved-type index, not a value
+        # cache. Values share the request's existing 256-entry bounded LRU.
+        self._constant_syntax: dict[int, tuple[frozenset[str] | None, int]] = {}
+        self._parameter_syntax: dict[int, tuple[Any, tuple | None]] = {}
+        self._parameter_capture = None
+        # Bounded source-only routes. No occurrence values or computed poses
+        # live here; those retain their existing owners and numeric LRU.
+        self._assignment_syntax: dict[int, tuple] = {}
         self._type_depth = 0
         self.model.program_revision = self.bundle.program_revision
         self.model.source_manifest = self.bundle.manifest()
@@ -203,6 +258,12 @@ class ConstructionCompiler(Validator):
         if member is None:
             return tuple(self._class_symbols[class_id].element_id)
         declared = self.effective(class_id).members[member]
+        return self._member_definition_id(declared)
+
+    def _member_definition_id(self, declared: Member) -> tuple[str, ...]:
+        # Member access and tree expansion already resolved this exact member.
+        # Re-entering effective() would repeat a class lookup for every field
+        # read and every generated occurrence without adding binding evidence.
         return tuple(self._class_symbols[declared.declaring].element_id) + (declared.node.key,)
 
     def _resolve(self, node: Any, name: str, kind: str | None = None):
@@ -233,12 +294,18 @@ class ConstructionCompiler(Validator):
         for node in nodes:
             self.budget.tick(node)
             self.key(node, node.key)
-            if node.name in PREDEFINED_02 or node.name in names:
+            if node.name in self.predefined(node) or node.name in names:
                 fail("OKL-E-NAME", f"Name '{node.name}' is predefined or duplicated in this scope.", node, phase="binding")
             if node.key in keys:
                 fail("OKL-E-ID", f"Stable key '{node.key}' is reused in this scope.", node, phase="binding")
             names.add(node.name)
             keys.add(node.key)
+
+    def predefined(self, node: Any) -> frozenset | set:
+        if self.linked.modules[node.source_id].ast.profile == REACH_PROFILE:
+            from .reach_source import NAMES
+            return PREDEFINED_02 | NAMES
+        return PREDEFINED_02
 
     def parse_type(self, node: Any) -> Type:
         self.budget.tick(node)
@@ -255,6 +322,11 @@ class ConstructionCompiler(Validator):
                 element = self.parse_type(args[0])
                 self._keyed_leaf(element, node)
                 result = Type("Keyed", element=element)
+            elif name == "ReachBranch" and self.linked.modules[node.source_id].ast.profile == REACH_PROFILE:
+                if args:
+                    from .reach_source import reach_error
+                    raise reach_error("reach_type", "ReachBranch takes no type arguments.", node)
+                result = Type("ReachBranch")
             elif name in SURFACE_TYPES and self.linked.modules[node.source_id].ast.profile in SURFACE_PROFILES:
                 if args:
                     fail("OKL-E-TYPE", f"Surface type '{name}' takes no type arguments.", node, phase="type")
@@ -290,7 +362,7 @@ class ConstructionCompiler(Validator):
         self.budget.tick(node)
         names, params = set(), []
         for param in node.params:
-            if param.name in PREDEFINED_02 or param.name in names:
+            if param.name in self.predefined(param) or param.name in names:
                 fail("OKL-E-NAME", f"Parameter '{param.name}' duplicates or shadows a predefined symbol.", param, phase="binding")
             names.add(param.name)
             params.append((param.name, self.parse_type(param.type)))
@@ -309,6 +381,10 @@ class ConstructionCompiler(Validator):
         return result
 
     def expect(self, value: Value, typ: Type, node: Any) -> Value:
+        if typ.kind == "ReachBranch" and value.type != typ:
+            from .reach_source import reach_error
+            raise reach_error("reach_type", "ReachBranch has no implicit String, Int or other conversion.", node,
+                              details={"expected_type": "ReachBranch", "actual_type": str(value.type)})
         return self._inherit_value_info(value, super().expect(value, typ, node))
 
     def effective(self, name: str) -> EffectiveClass:
@@ -362,7 +438,7 @@ class ConstructionCompiler(Validator):
                     cls.defaults[target] = (member.value, name)
                     continue
                 self.key(member, member.key)
-                if member.name in PREDEFINED_02 or member.name in FIELD_TYPES or member.name in READONLY_FIELDS or member.name in local_names:
+                if member.name in self.predefined(member) or member.name in FIELD_TYPES or member.name in READONLY_FIELDS or member.name in local_names:
                     fail("OKL-E-NAME", f"Member name '{member.name}' is predefined or duplicated.", member, phase="binding")
                 local_names.add(member.name)
                 old = parent.members.get(member.name)
@@ -386,7 +462,7 @@ class ConstructionCompiler(Validator):
                 elif kind in ("part", "parts"):
                     self.class_reference(member)
                     if kind == "parts":
-                        if member.key_name == member.value_name or {member.key_name, member.value_name} & PREDEFINED_02:
+                        if member.key_name == member.value_name or {member.key_name, member.value_name} & self.predefined(member):
                             fail("OKL-E-NAME", "Generated-part binders must be distinct and cannot shadow predefined names.", member, phase="binding")
                 elif kind not in ("joint", "follow", "site"):
                     fail("OKL-E-NAME", f"Unsupported class member kind '{kind}'.", member, phase="binding")
@@ -531,7 +607,7 @@ class ConstructionCompiler(Validator):
         names = set(ctx.locals)
         for local in node.locals:
             self.budget.tick(local)
-            if local.name in names or local.name in PREDEFINED_02:
+            if local.name in names or local.name in self.predefined(local):
                 fail("OKL-E-NAME", f"Local '{local.name}' duplicates or shadows a predefined symbol.", local, phase="binding")
             typ = self.parse_type(local.type)
             self.expect(self.expression(local.value, ctx), typ, local.value)
@@ -599,6 +675,12 @@ class ConstructionCompiler(Validator):
                     stack.append((child, iter(self.call_edges.get(child, ()))))
 
     def name(self, name: str, ctx: Context, node: Any) -> Value:
+        if self.linked.modules[node.source_id].ast.profile == REACH_PROFILE and name not in ctx.locals:
+            from .reach_source import BRANCHES
+            if name in BRANCHES:
+                return Value(Type("ReachBranch"), name)
+            if name == "reach_planar":
+                return Value(Type("BuiltinCallable"), name)
         if (name in SURFACE_CALLS and self.linked.modules[node.source_id].ast.profile in SURFACE_PROFILES
                 and name not in ctx.locals):
             return Value(Type("BuiltinCallable"), name)
@@ -668,7 +750,7 @@ class ConstructionCompiler(Validator):
             member = cls.members.get(name)
             if member is not None:
                 self.access(member, ctx, node)
-                self.bindings[id(node)] = self.definition_id(cls.name, name)
+                self.bindings[id(node)] = self._member_definition_id(member)
                 if member.node.kind == "parts":
                     typ = Type("Keyed", element=Type("Ref", name=self.class_reference(member.node)))
                     if actual is None:
@@ -720,47 +802,344 @@ class ConstructionCompiler(Validator):
                       self.index_value(result, Value(STRING, step.value), node, ctx))
         return result
 
+    def _constant_names(self, node: Any, depth: int = 0) -> frozenset[str] | None:
+        """Classify a sealed source subtree without reading occurrence state.
+
+        Linked source nodes live for the whole compiler and are never edited
+        during construction. Each first classification is charged; nesting is
+        bounded independently of whether the subtree will produce a cache hit.
+        The names returned must remain unshadowed in the current context.
+        Retain the subtree height too: a value warmed in a shallow call must
+        not bypass the same expression nesting limit in a deeper occurrence.
+        """
+        if id(node) in self._constant_syntax:
+            return self._constant_syntax[id(node)][0]
+        self.budget.tick(node)
+        if depth >= 128:
+            return None
+        kind = node.kind
+        children = ()
+        height = 1
+        if kind in {"number", "string", "bool"}:
+            result = frozenset()
+        elif kind == "name" and node.name in _CONSTANT_CALLS | {"world"}:
+            result = frozenset({node.name})
+        elif kind == "unary":
+            children = (node.value,)
+            result = frozenset()
+        elif kind == "binary":
+            children = (node.left, node.right)
+            result = frozenset()
+        elif kind == "call" and node.callee.kind == "name" and node.callee.name in _CONSTANT_CALLS:
+            children = (node.callee, *node.args)
+            result = frozenset()
+        else:
+            result = None
+        for child in children:
+            names = self._constant_names(child, depth + 1)
+            if names is None:
+                result = None
+                break
+            result = result | names
+            height = max(height, 1 + self._constant_syntax[id(child)][1])
+        self._constant_syntax[id(node)] = result, height
+        return result
+
+    def _parameter_plan(self, node: Any, depth: int = 0):
+        """Find ordered reads in a sealed, non-short-circuit pure expression.
+
+        The plan contains syntax only. Each successful value remains in the
+        existing request LRU, and every occurrence replays its own ordinary
+        member/dependency/access guards before using that value.
+        """
+        prior = self._parameter_syntax.get(id(node))
+        if prior is not None and prior[0] is node:
+            return prior[1]
+        self.budget.tick(node)
+        if depth >= 128:
+            return None
+        kind, children, reads, names, height = node.kind, (), (), frozenset(), 1
+        # A successful sealed constant subtree has no occurrence reads. Its
+        # names still participate in every occurrence's shadowing guard. This
+        # also keeps an inner constant-cache hit from hiding a planned read.
+        constants = self._constant_names(node) if kind in {"call", "binary"} else None
+        if kind in {"number", "string", "bool"}:
+            pass
+        elif kind == "name" and node.name in _PARAMETER_CALLS | {"world"}:
+            reads, names = (("name", node),), frozenset({node.name})
+        elif kind == "member" and node.target.kind == "name" and node.target.name == "self":
+            reads, names, height = (("parameter", node),), frozenset({"self"}), 2
+        elif kind == "unary":
+            children = (node.value,)
+        elif kind == "binary" and node.op not in {"and", "or"}:
+            children = (node.left, node.right)
+        elif kind == "call" and node.callee.kind == "name" and node.callee.name in _PARAMETER_CALLS:
+            children = (node.callee, *node.args)
+        elif (kind == "keyed" and depth == 0 and node.element_type.name in SURFACE_TYPES
+                and not optional(node.element_type, "args", [])
+                and len(node.entries) <= MAX_KEYED_ENTRIES):
+            for entry in node.entries:
+                plan = self._parameter_plan(entry.value, depth + 1)
+                if plan is None:
+                    self._parameter_syntax[id(node)] = node, None
+                    return None
+                child_reads, child_names, child_height = plan
+                reads += (("keyed_entry", entry),) + child_reads
+                names |= child_names
+                height = max(height, 1 + child_height)
+        else:
+            self._parameter_syntax[id(node)] = node, None
+            return None
+        for child in children:
+            plan = self._parameter_plan(child, depth + 1)
+            if plan is None:
+                self._parameter_syntax[id(node)] = node, None
+                return None
+            child_reads, child_names, child_height = plan
+            reads += child_reads
+            names |= child_names
+            height = max(height, 1 + child_height)
+        # Classify every child before dropping constant-only reads, so even
+        # an entirely constant conditional/short-circuit expression remains
+        # outside this parameter-result optimization.
+        result = (() if constants is not None else reads), names, height
+        self._parameter_syntax[id(node)] = node, result
+        return result
+
+    @staticmethod
+    def _parameter_value_key(value: Value, *, name=False):
+        """Exact native scalar identity; no numeric coercion or mutable data."""
+        if type(value) is not Value or type(value.type) is not Type:
+            return None
+        typ, payload = value.type, value.value
+        if value.frame is not None or value.hint is not None:
+            return None
+        if name:
+            if (typ == Type("BuiltinCallable") and type(payload) is str and payload in _PARAMETER_CALLS
+                    or typ == Type("FrameRef") and type(payload) is str and payload == "world"):
+                return typ, payload
+            return None
+        if typ.kind == "Quantity":
+            if (type(typ.dimension) is not tuple or len(typ.dimension) != 4
+                    or any(type(x) is not int for x in typ.dimension)):
+                return None
+        elif typ not in {INT, Type("Real"), BOOL, STRING}:
+            return None
+        if typ.element is not None or typ.name is not None:
+            return None
+        if typ.kind in {"Real", "Quantity"}:
+            if type(payload) is not float or not math.isfinite(payload):
+                return None
+            return typ, payload.hex()
+        expected = {"Int": int, "Bool": bool, "String": str}[typ.kind]
+        return (typ, payload) if type(payload) is expected else None
+
+    @classmethod
+    def _parameter_result_immutable(cls, value):
+        if type(value) is Value:
+            if cls._parameter_value_key(value) is not None:
+                return True
+            if (type(value.type) is Type and value.type.kind == "Keyed"
+                    and value.type.element in {Type(name) for name in SURFACE_TYPES}
+                    and value.type.dimension is None and value.type.name is None
+                    and value.frame is None and value.hint is None):
+                payload = value.value
+                return (type(payload) is KeyedValue and type(payload.entries) is tuple
+                        and len(payload.entries) <= MAX_KEYED_ENTRIES
+                        and all(type(entry) is tuple and len(entry) == 2
+                                and type(entry[0]) is str and type(entry[1]) is Value
+                                and entry[1].type == value.type.element
+                                and cls._parameter_result_immutable(entry[1])
+                                for entry in payload.entries))
+            if (type(value.type) is not Type or value.type.kind not in
+                    {"Vec3", "Vector3", "Point3", "Rotation", "Color", "Range", *SURFACE_TYPES}
+                    or value.frame not in (None, "world") or value.hint is not None):
+                return False
+            return cls._parameter_result_immutable(value.value)
+        if type(value) is tuple:
+            return all(cls._parameter_result_immutable(item) for item in value)
+        return type(value) is str or type(value) is float and math.isfinite(value)
+
+    @classmethod
+    def _parameter_copy(cls, value):
+        """Detach all wrappers while sharing only immutable scalar leaves."""
+        if type(value) is Value:
+            return Value(value.type, cls._parameter_copy(value.value), value.frame, value.hint)
+        if type(value) is KeyedValue:
+            return KeyedValue(tuple((key, cls._parameter_copy(item)) for key, item in value.entries))
+        if type(value) is tuple:
+            return tuple(cls._parameter_copy(item) for item in value)
+        return value
+
+    def _capture_parameter_event(self, kind, node, key):
+        capture = self._parameter_capture
+        if capture is None or capture[2] is None or id(node) not in capture[0]:
+            return
+        reads, seen = capture[1], capture[2]
+        if (len(seen) == len(reads) or reads[len(seen)][0] != kind or reads[len(seen)][1] is not node
+                or key is None):
+            capture[2] = None
+        else:
+            seen.append(key)
+
+    def _capture_parameter_read(self, node, result):
+        capture = self._parameter_capture
+        if capture is None or capture[2] is None or id(node) not in capture[0]:
+            return
+        reads, seen = capture[1], capture[2]
+        if len(seen) == len(reads) or reads[len(seen)][1] is not node:
+            capture[2] = None
+            return
+        kind = reads[len(seen)][0]
+        key = self._parameter_value_key(result, name=kind == "name")
+        self._capture_parameter_event(kind, node, key)
+
+    def _parameter_context(self, ctx, reads, names, node=None):
+        if (ctx.abstract or ctx.self_path is None or not names.isdisjoint(ctx.locals)
+                or ctx.self_path not in self.instances):
+            return None
+        if node is not None and node.kind == "keyed":
+            entries = tuple(read for kind, read in reads if kind == "keyed_entry")
+            if (len(entries) != len(node.entries)
+                    or any(planned is not current for planned, current in zip(entries, node.entries))):
+                return None
+        instance = self.instances[ctx.self_path]
+        for kind, read in reads:
+            if kind == "parameter":
+                member = instance.cls.members.get(read.name)
+                if member is None or member.node.kind != "param":
+                    return None
+        return ctx.self_path, ctx.self_type, ctx.lexical_class, ctx.abstract, id(instance), id(instance.cls)
+
+    def _parameter_replay(self, ctx, reads, expected):
+        for (kind, read), wanted in zip(reads, expected):
+            if kind == "keyed_entry":
+                self.budget.tick(read)
+                self.key(read, read.key)
+                if type(read.key) is not str or read.key != wanted:
+                    return False
+                continue
+            elif kind == "name":
+                value = self.name(read.name, ctx, read)
+            else:
+                target = self.name("self", ctx, read.target)
+                value = self.member(target, read.name, ctx, read)
+            if self._parameter_value_key(value, name=kind == "name") != wanted:
+                # Do not inspect later parameters: the ordinary arithmetic
+                # following this changed read may fail before reaching them.
+                return False
+        return True
+
+    def _keyed_expression(self, node, ctx):
+        element = self.parse_type(node.element_type)
+        self._keyed_leaf(element, node)
+        if len(node.entries) > MAX_KEYED_ENTRIES:
+            fail("OKL-E-RESOURCE", "Keyed input exceeds 256 entries.", node, phase="support",
+                 details={"budget": "keyed_entries", "limit": MAX_KEYED_ENTRIES,
+                          "consumed": len(node.entries)})
+        keys, entries, origins = set(), [], {}
+        for entry in node.entries:
+            self.budget.tick(entry)
+            self.key(entry, entry.key)
+            if entry.key in keys:
+                fail("OKL-E-ID", f"Keyed literal duplicates stable key '{entry.key}'.", entry, phase="binding")
+            keys.add(entry.key)
+            self._capture_parameter_event("keyed_entry", entry, entry.key)
+            val = self.expect(self.expression(entry.value, ctx), element, entry.value)
+            if not ctx.abstract:
+                entries.append((entry.key, val))
+                origins[entry.key] = entry
+        if ctx.abstract:
+            return Value(Type("Keyed", element=element))
+        payload = KeyedValue(tuple(sorted(entries, key=lambda item: item[0])))
+        result = Value(Type("Keyed", element=element), payload)
+        self.budget.charge_value(result, node)
+        self._keyed_origins[id(payload)] = origins
+        self._keyed_payloads[id(payload)] = payload
+        return result
+
     def expression(self, node: Any, ctx: Context) -> Value:
         self.budget.tick(node)
         self._expression_depth += 1
         try:
             if self._expression_depth > 128:
                 fail("OKL-E-RESOURCE", "Pure expression/call nesting exceeds bounded construction work.", node, phase="support")
-            if node.kind == "keyed":
-                element = self.parse_type(node.element_type)
-                self._keyed_leaf(element, node)
-                if len(node.entries) > MAX_KEYED_ENTRIES:
-                    fail("OKL-E-RESOURCE", "Keyed input exceeds 256 entries.", node, phase="support",
-                         details={"budget": "keyed_entries", "limit": MAX_KEYED_ENTRIES,
-                                  "consumed": len(node.entries)})
-                keys, entries, origins = set(), [], {}
-                for entry in node.entries:
-                    self.budget.tick(entry)
-                    self.key(entry, entry.key)
-                    if entry.key in keys:
-                        fail("OKL-E-ID", f"Keyed literal duplicates stable key '{entry.key}'.", entry, phase="binding")
-                    keys.add(entry.key)
-                    val = self.expect(self.expression(entry.value, ctx), element, entry.value)
-                    if not ctx.abstract:
-                        entries.append((entry.key, val))
-                        origins[entry.key] = entry
-                if ctx.abstract:
-                    return Value(Type("Keyed", element=element))
-                payload = KeyedValue(tuple(sorted(entries, key=lambda item: item[0])))
-                result = Value(Type("Keyed", element=element), payload)
-                self.budget.charge_value(result, node)
-                self._keyed_origins[id(payload)] = origins
-                self._keyed_payloads[id(payload)] = payload
-                return result
-            if node.kind == "index":
-                value = self.expression(node.target, ctx)
-                index = self.expression(node.index, ctx)
-                return self.index_value(value, index, node, ctx)
-            return super().expression(node, ctx)
+            constant_names = (self._constant_names(node) if self.reach_work is not None
+                              and node.kind in {"call", "binary"} else None)
+            constant_key = None
+            if (constant_names is not None and constant_names.isdisjoint(ctx.locals)
+                    and self._expression_depth + self._constant_syntax[id(node)][1] - 1 <= 128):
+                constant_key = ("construction_constant", id(node), ctx.abstract)
+                cached = self.reach_work.lookup(constant_key)
+                if (cached is not None and constant_names.isdisjoint(ctx.locals)
+                        and constant_key[-1] == ctx.abstract):
+                    # A binding can attach its own dependency/taint route to a
+                    # wrapper. Never return the retained wrapper to that code.
+                    return Value(cached.type, cached.value, cached.frame, cached.hint)
+            parameter_key = parameter_plan = parameter_context = capture = None
+            if (self.reach_work is not None and constant_names is None and not ctx.abstract
+                    and self._parameter_capture is None and node.kind in {"call", "binary", "keyed"}):
+                parameter_plan = self._parameter_plan(node)
+                if parameter_plan is not None:
+                    reads, names, height = parameter_plan
+                    surface_value = (node.kind == "keyed" or node.kind == "call"
+                                     and node.callee.kind == "name"
+                                     and node.callee.name in _IMMUTABLE_SURFACE_CALLS)
+                    if ((surface_value or any(kind == "parameter" for kind, _ in reads))
+                            and self._expression_depth + height - 1 <= 128):
+                        parameter_context = self._parameter_context(ctx, reads, names, node)
+                    if parameter_context is not None:
+                        parameter_key = ("construction_parameters", id(node))
+                        cached = self.reach_work.lookup(parameter_key)
+                        keyed_type = None
+                        if cached is not None and cached[0] is node and node.kind == "keyed":
+                            element = self.parse_type(node.element_type)
+                            self._keyed_leaf(element, node)
+                            keyed_type = Type("Keyed", element=element)
+                        if (cached is not None and cached[0] is node
+                                and (node.kind != "keyed" or keyed_type == cached[2].type)
+                                and self._parameter_context(ctx, reads, names, node) == parameter_context
+                                and self._parameter_replay(ctx, reads, cached[1])
+                                and self._parameter_context(ctx, reads, names, node) == parameter_context):
+                            value = self._parameter_copy(cached[2])
+                            if node.kind == "keyed":
+                                self.budget.charge_value(value, node)
+                                self._keyed_origins[id(value.value)] = {
+                                    entry.key: entry for entry in node.entries}
+                                self._keyed_payloads[id(value.value)] = value.value
+                            return value
+                        capture = [{id(read) for _, read in reads}, reads, []]
+                        self._parameter_capture = capture
+            try:
+                if node.kind == "keyed":
+                    result = self._keyed_expression(node, ctx)
+                elif node.kind == "index":
+                    value = self.expression(node.target, ctx)
+                    index = self.expression(node.index, ctx)
+                    result = self.index_value(value, index, node, ctx)
+                else:
+                    result = super().expression(node, ctx)
+            finally:
+                if capture is not None:
+                    self._parameter_capture = None
+            self._capture_parameter_read(node, result)
+            if (constant_key is not None and constant_names.isdisjoint(ctx.locals)
+                    and constant_key[-1] == ctx.abstract):
+                self.reach_work.remember(constant_key, result)
+            if (capture is not None and capture[2] is not None and len(capture[2]) == len(reads)
+                    and self._parameter_result_immutable(result)
+                    and self._parameter_context(ctx, reads, names, node) == parameter_context):
+                value = self._parameter_copy(result)
+                self.reach_work.remember(parameter_key, (node, tuple(capture[2]), value),
+                    admission=lambda: self._parameter_context(ctx, reads, names, node) == parameter_context)
+            return result
         finally:
             self._expression_depth -= 1
 
     def builtin(self, name: str, args: list[Value], node: Any, ctx: Context) -> Value:
+        if name == "reach_planar":
+            from .reach_source import reach_builtin
+            return reach_builtin(self, args, node, ctx)
         if name in SURFACE_CALLS:
             if self.linked.modules[node.source_id].ast.profile not in SURFACE_PROFILES:
                 fail("OKL-E-CAPABILITY-UNSUPPORTED", "Surface constructors need the surface-0.1 profile.",
@@ -878,7 +1257,7 @@ class ConstructionCompiler(Validator):
             scope = Context(path, cls.name, member.declaring)
             member_path = path + "." + member_name
             member_id = ids + (child.key,)
-            definition_id = self.definition_id(cls.name, member_name)
+            definition_id = self._member_definition_id(member)
             child_steps = steps + (PathStep("member", member_name, child.start, child.end),)
             if child.kind == "part":
                 forwarded = self._forwards[path].get((("member", member_name),), [])
@@ -965,10 +1344,75 @@ class ConstructionCompiler(Validator):
                                 declaration_id=collection["definition_id"])
         self._collection_state[path] = "done"
 
+    @staticmethod
+    def _assignment_shape(node, required):
+        """Seal at most eight native field routes without evaluating values."""
+        from .syntax import Node
+        from .syntax02 import PathStep
+        if (type(node) is not Node or type(node.data) is not dict or type(node.kind) is not str
+                or "assignments" in node.__dict__
+                or type(required) is not set or not 1 <= len(required) <= 8
+                or any(type(name) is not str or len(name) > 128 for name in required)):
+            return None
+        assignments = node.data.get("assignments")
+        if type(assignments) is not list or not 1 <= len(assignments) <= 8:
+            return None
+        rows, owners = [], [node, node.data, assignments]
+        for assignment in assignments:
+            if (type(assignment) is not Node or type(assignment.data) is not dict
+                    or "path" in assignment.__dict__):
+                return None
+            path = assignment.data.get("path")
+            if type(path) not in (tuple, list) or len(path) != 1:
+                return None
+            step = path[0]
+            if (type(step) is not PathStep or type(step.kind) is not str
+                    or type(step.value) is not str or len(step.value) > 128):
+                return None
+            rows.append((id(assignment), id(assignment.data), id(path), id(step), step.kind, step.value))
+            owners.extend((assignment, assignment.data, path, step))
+        return ((id(node), id(node.data), node.kind, id(assignments), tuple(sorted(required)), tuple(rows)),
+                tuple(owners))
+
     def assignments(self, node: Any, required: set[str]) -> dict[str, Any]:
+        # Sealed routing can avoid repeated path normalization, duplicate-name
+        # checks and required-field set construction. Each occurrence still
+        # evaluates every original expression in its own lexical context.
+        shape = self._assignment_shape(node, required) if self.reach_work is not None else None
+        cached = self._assignment_syntax.get(id(node)) if shape is not None else None
+        if cached is not None and cached[0] == shape[0]:
+            # This is the first ordinary assignment checkpoint, at its original
+            # source span. Retain its live iterator before invoking the caller:
+            # if a callback changes routing, the original validation resumes
+            # with this already-charged first row and its actual iterator.
+            remaining = iter(node.assignments)
+            first = next(remaining)
+            self.budget.tick(first)
+            current = self._assignment_shape(node, required)
+            if current is not None and current[0] == cached[0]:
+                return dict(cached[1])
+            self._assignment_syntax.pop(id(node), None)
+            return self._assignment_fields(node, required, remaining, first=first)
+        result = self._assignment_fields(node, required, iter(node.assignments))
+        if shape is not None and len(self._assignment_syntax) < 64:
+            current = self._assignment_shape(node, required)
+            if current is not None and current[0] == shape[0]:
+                # Keep original owners alive so an object-id cannot be reused
+                # as an unrelated warm source route. Expressions are not read.
+                self._assignment_syntax[id(node)] = shape[0], tuple(result.items()), shape[1]
+        return result
+
+    def _assignment_fields(self, node, required, remaining, *, first=None):
+        def rows():
+            if first is not None:
+                yield first, True
+            for assignment in remaining:
+                yield assignment, False
+
         result = {}
-        for assignment in node.assignments:
-            self.budget.tick(assignment)
+        for assignment, charged in rows():
+            if not charged:
+                self.budget.tick(assignment)
             steps = _steps(assignment.path)
             if len(steps) != 1 or steps[0].kind != "member" or steps[0].value not in required:
                 fail("OKL-E-NAME", f"Allowed {node.kind} fields are {', '.join(sorted(required))}.", assignment, phase="binding")
@@ -996,9 +1440,14 @@ class ConstructionCompiler(Validator):
             location = Node("span", surface["start"], surface["end"],
                             source_id=surface["source_id"])
             try:
-                mesh, local_pose = materialize_surface(
-                    recipe, max_vertices=remaining_vertices,
-                    check=lambda: self.budget.tick(location))
+                if self.reach_work is None:
+                    mesh, local_pose = materialize_surface(
+                        recipe, max_vertices=remaining_vertices,
+                        check=lambda: self.budget.tick(location))
+                else:
+                    mesh, local_pose = _materialize_reach_surface(
+                        recipe, max_vertices=remaining_vertices, work=self.reach_work,
+                        check=lambda: self.budget.tick(location))
             except SurfaceError as error:
                 fail(error.code, str(error), location, details=error.details)
             remaining_vertices -= len(mesh.positions)
@@ -1040,7 +1489,7 @@ class ConstructionCompiler(Validator):
 
     def impulse_values(self, event: Any, context: Context) -> tuple[Value, Value, Value]:
         """Check pure source operands under their actual declaring profile."""
-        if self.linked.modules[event.source_id].ast.profile not in {IMPULSE_PROFILE, FORCE_PROFILE}:
+        if self.linked.modules[event.source_id].ast.profile not in {IMPULSE_PROFILE, FORCE_PROFILE, REACH_PROFILE}:
             raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED", "Source impulses require impulse-0.1.",
                                event, phase="support", category="unsupported", rule_ids=["IMP-001"])
 
@@ -1231,6 +1680,9 @@ class ConstructionCompiler(Validator):
             self.action_value(path)
         self.assertions()
         self.relation_validation()
+        if self.model.profile == REACH_PROFILE:
+            from .reach_source import bind_reaches
+            bind_reaches(self)
         self.event_blocks()
         requires = tuple(self.linked.capabilities)
         self.model.requested_capabilities = tuple(node.value for node in requires)
@@ -1238,13 +1690,21 @@ class ConstructionCompiler(Validator):
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "Required capabilities are not supplied by " + self.model.profile + ": " +
                  ", ".join(self.model.requested_capabilities), requires[0], phase="support")
         if self.level == "delivered":
-            target = ("ontokin.glb/0.5" if self.model.profile == FORCE_PROFILE else
+            target = ("ontokin.glb/0.6" if self.model.profile == REACH_PROFILE else
+                      "ontokin.glb/0.5" if self.model.profile == FORCE_PROFILE else
                       "ontokin.glb/0.4" if self.model.profile == IMPULSE_PROFILE else
                       "ontokin.glb/0.3" if self.model.profile == "surface-0.1" else "ontokin.glb/0.2")
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "Delivery requires the explicit " + target + " target.", self.program, phase="support")
         self._attach_provenance()
         self.budget.tick(self.program)
         return self.model
+
+    def action_value(self, path: str) -> Value:
+        value = super().action_value(path)
+        if self.model.profile == REACH_PROFILE:
+            from .reach_source import bind_description
+            bind_description(self, path, value)
+        return value
 
     def annotate(self, error: OntoKinError) -> None:
         diagnostic = error.diagnostic

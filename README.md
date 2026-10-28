@@ -10,6 +10,16 @@ The current direction begins with exterior 3D models and short animations. Those
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
 
+### Current development: experimental planar reach
+
+The C059 reconciliation selects the reviewed C032 development runtime, preserves the later C058 evidence, and excludes the held C035 runtime experiment. Source `0.6` / `planar-reach-0.1`, Agent/0.6 and recorded GLB/0.6 require explicit selection and are marked experimental in capabilities and discovery. Earlier bindings and defaults retain their meanings. [Current integration status](STATUS.md) and the [reconciliation record](docs/engineering/repository-reconciliation-2026-10-28/README.md) distinguish the actual candidate, checks and resulting main from release acceptance.
+
+Historical original recording evidence is **24/28, a failed gate**. P11/P16/P23/L03 remain unresolved under the original limits; C035 remains held, including adverse timing. The comparison accounting/passive-authority concern remains open. [The M1 decision](docs/engineering/OK-DEC-COMPARE-M1-0.1.0.md) rejects the exact proposed model for comparison-only operation saving and adopts no replacement.
+
+Main is the current development baseline under [OK-ENG-009](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md). New checkpoints normally become commits on the same active scope branch. Historical branches are preserved through a separately verified archival history before removal. This consolidation does not complete the reach release: all 28 source recordings, ten Agent artifacts, compatibility, rates, native/browser/visual checks, formal input closure and every R01–R12/Q01–Q22 obligation remain required.
+
+The language's goal remains editable `.ok` programs that AI agents use to build reusable 3D shapes and animation for game engines, including Unreal Engine. Current GLB playback does not establish live engine integration or destination physics.
+
 ## Export native exterior surfaces
 
 The [OK-LANG-003 surface contract](docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md) defines typed keyed sections, material regions and rigid local placement. Its pinned studio source now compiles through the native language and produces two actual animated, multi-material meshes:

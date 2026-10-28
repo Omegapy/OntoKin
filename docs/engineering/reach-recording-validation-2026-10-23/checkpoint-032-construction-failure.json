@@ -1,0 +1,3387 @@
+{
+  "schema_version": "ontokin.construction-conformance/0.1",
+  "executed": true,
+  "generated_at_utc": "2026-10-25T02:15:00.266782+00:00",
+  "implementation": {
+    "name": "ontokin-reference",
+    "version": "0.4.0",
+    "source_code_sha256": "sha256:66eaf6fc97b8a71d090b993849bc9b50846872e2a50f884f3cf1901ca199f23d"
+  },
+  "implementation_after_run": {
+    "name": "ontokin-reference",
+    "version": "0.4.0",
+    "source_code_sha256": "sha256:66eaf6fc97b8a71d090b993849bc9b50846872e2a50f884f3cf1901ca199f23d"
+  },
+  "evidence_stable_during_run": true,
+  "environment": {
+    "python": "3.12.14",
+    "python_implementation": "CPython",
+    "platform": "Linux-6.18.55-x86_64-with-glibc2.39"
+  },
+  "language_version": "0.2",
+  "profile": "construction-0.1",
+  "agent_contract": "ontokin.agent/0.2",
+  "delivery_contract": "ontokin.glb/0.2",
+  "manifest": {
+    "path": "docs/language-design/construction-v0.1/validation-cases.json",
+    "sha256": "sha256:7d88f1c15ba8dd473d2311eb2c475b883a0a9af295053c92f56da262421a399c",
+    "expectation_status": "predetermined_expectations_not_execution_results"
+  },
+  "module_manifest": {
+    "path": "docs/language-design/construction-v0.1/module-cases.json",
+    "sha256": "sha256:de225224adbcf89a2e6af6674667b93bc25084b4f94608576a0341ad13b4e025"
+  },
+  "settings": {
+    "max_dependency_units": 16,
+    "max_import_depth_edges": 8,
+    "max_total_source_bytes": 2000000,
+    "max_total_tokens": 200000,
+    "max_keyed_entries": 256,
+    "max_objects": 1000,
+    "max_ownership_depth_edges": 64,
+    "max_operations": 100000,
+    "max_materialized_entries": 100000,
+    "max_json_bytes": 4194304,
+    "max_elapsed_ms": 30000,
+    "evaluator_position_tolerance_m": 1e-09,
+    "evaluator_rotation_tolerance_rad": 1e-09,
+    "geometry_dimension_tolerance_m": 1e-12,
+    "delivery_position_tolerance_m": 0.001,
+    "delivery_rotation_tolerance_rad": 0.001,
+    "delivery_time_tolerance_s": 1e-06
+  },
+  "fixtures": [
+    {
+      "id": "01-keyed-rack",
+      "case_ids": [
+        "C01",
+        "C04",
+        "C08",
+        "C16",
+        "C20"
+      ],
+      "bundle": "docs/language-design/construction-v0.1/01-keyed-rack/program.bundle.json",
+      "bundle_sha256": "sha256:83ca659aadd23d7ce09ebcd209c210efd69028ca6e51ebd70d69ec47f65098e4",
+      "editable_manifest": "docs/language-design/construction-v0.1/01-keyed-rack/program.files.json",
+      "expected": "docs/language-design/construction-v0.1/01-keyed-rack/expected.json",
+      "expected_sha256": "sha256:87e3d58eae4e151806c19fa2e1e8a12386ab74601ae12221bdcc6ab3344f5fcb",
+      "expectation_basis": "Predetermined source and oracle; measured test results are recorded separately.",
+      "program_revision": "sha256:c77d102a4b201d3c3cce6cbdc73c38eedf0bb1dfca7c9843a92d697cc0c7e082",
+      "source_manifest": {
+        "schema_version": "ontokin.bundle/0.1",
+        "entry_source_id": "entry",
+        "units": [
+          {
+            "source_id": "entry",
+            "package_id": null,
+            "version": null,
+            "filename": "main.ok",
+            "source_revision": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a"
+          },
+          {
+            "source_id": "package:example.hinges@1.0.0",
+            "package_id": "example.hinges",
+            "version": "1.0.0",
+            "filename": "hinges.ok",
+            "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+          }
+        ]
+      }
+    },
+    {
+      "id": "02-namespaces",
+      "case_ids": [
+        "C02"
+      ],
+      "bundle": "docs/language-design/construction-v0.1/02-namespaces/program.bundle.json",
+      "bundle_sha256": "sha256:18d9e6a0da99ad901d040771944959d4af857e76a355d0ff5a266ba91058f657",
+      "editable_manifest": "docs/language-design/construction-v0.1/02-namespaces/program.files.json",
+      "expected": "docs/language-design/construction-v0.1/02-namespaces/expected.json",
+      "expected_sha256": "sha256:92d1e8099c3177e0af46368bea31abc38b338556ac8f3a4c693545b4931cae19",
+      "expectation_basis": "Predetermined source and oracle; measured test results are recorded separately.",
+      "program_revision": "sha256:297079ebd66992995bef39fbb9d6e4120848a40a9ddbeb88a6992becdbaa2669",
+      "source_manifest": {
+        "schema_version": "ontokin.bundle/0.1",
+        "entry_source_id": "entry",
+        "units": [
+          {
+            "source_id": "entry",
+            "package_id": null,
+            "version": null,
+            "filename": "main.ok",
+            "source_revision": "sha256:c1337f4355acd43dbaf4bf5916d3432050cb999087525b6d11b49cee80343d95"
+          },
+          {
+            "source_id": "package:example.left@1.0.0",
+            "package_id": "example.left",
+            "version": "1.0.0",
+            "filename": "left.ok",
+            "source_revision": "sha256:7d7ed2502ba88acfdc7d32668ae9bd0cf77add38f70cec5856c6c4a2e6a835b1"
+          },
+          {
+            "source_id": "package:example.right@1.0.0",
+            "package_id": "example.right",
+            "version": "1.0.0",
+            "filename": "right.ok",
+            "source_revision": "sha256:8f822d2b66bdb32e88304f846f1667ce940573d271e5d08202f6b75197ce2c67"
+          }
+        ]
+      }
+    },
+    {
+      "id": "03-transitive",
+      "case_ids": [
+        "C03"
+      ],
+      "bundle": "docs/language-design/construction-v0.1/03-transitive/program.bundle.json",
+      "bundle_sha256": "sha256:6b635dcb222e4c22009fa6874145b936ddc102abcbe5b805a1471243f506ba03",
+      "editable_manifest": "docs/language-design/construction-v0.1/03-transitive/program.files.json",
+      "expected": "docs/language-design/construction-v0.1/03-transitive/expected.json",
+      "expected_sha256": "sha256:7fb8e4600b2f13c43dc92d81208c175006f28a5eeee8fecc408cd659e9a878f2",
+      "expectation_basis": "Predetermined source and oracle; measured test results are recorded separately.",
+      "program_revision": "sha256:cd5e1dc9b47c89f6a82299b775e57e62f9e95b2de4d211006938f3f9318fb391",
+      "source_manifest": {
+        "schema_version": "ontokin.bundle/0.1",
+        "entry_source_id": "entry",
+        "units": [
+          {
+            "source_id": "entry",
+            "package_id": null,
+            "version": null,
+            "filename": "main.ok",
+            "source_revision": "sha256:023e0bce0158fad6494894bb2a60724bb8774446420a80ea136a9bc7e8b4758f"
+          },
+          {
+            "source_id": "package:example.arithmetic@1.0.0",
+            "package_id": "example.arithmetic",
+            "version": "1.0.0",
+            "filename": "arithmetic.ok",
+            "source_revision": "sha256:0324f021efeba5a20e2a0bf05e920336f2b9307497705eb85d8d575f5a5e8081"
+          },
+          {
+            "source_id": "package:example.geometry@1.0.0",
+            "package_id": "example.geometry",
+            "version": "1.0.0",
+            "filename": "geometry.ok",
+            "source_revision": "sha256:f684a724c77210c07208dd0986ed460ed41f8aa502ccc2cd82a6ad549cab63cb"
+          }
+        ]
+      }
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md",
+      "sha256": "sha256:7a3700b2b72924582184e49829b5678a8c53e4d419b79d3fa5bd55c5c76b940e"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/01-keyed-rack/expected.json",
+      "sha256": "sha256:87e3d58eae4e151806c19fa2e1e8a12386ab74601ae12221bdcc6ab3344f5fcb"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/01-keyed-rack/hinges.ok",
+      "sha256": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/01-keyed-rack/main.ok",
+      "sha256": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/01-keyed-rack/program.bundle.json",
+      "sha256": "sha256:83ca659aadd23d7ce09ebcd209c210efd69028ca6e51ebd70d69ec47f65098e4"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/01-keyed-rack/program.files.json",
+      "sha256": "sha256:b100629f4390b539d1d72cbbbd1bec7c66da075f86d5598cf7a33e553c0a94ab"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/02-namespaces/expected.json",
+      "sha256": "sha256:92d1e8099c3177e0af46368bea31abc38b338556ac8f3a4c693545b4931cae19"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/02-namespaces/left.ok",
+      "sha256": "sha256:7d7ed2502ba88acfdc7d32668ae9bd0cf77add38f70cec5856c6c4a2e6a835b1"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/02-namespaces/main.ok",
+      "sha256": "sha256:c1337f4355acd43dbaf4bf5916d3432050cb999087525b6d11b49cee80343d95"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/02-namespaces/program.bundle.json",
+      "sha256": "sha256:18d9e6a0da99ad901d040771944959d4af857e76a355d0ff5a266ba91058f657"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/02-namespaces/program.files.json",
+      "sha256": "sha256:daf336c43df4085cff0f722653e0196ad99d698fe6b96171134192b8f1be15d9"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/02-namespaces/right.ok",
+      "sha256": "sha256:8f822d2b66bdb32e88304f846f1667ce940573d271e5d08202f6b75197ce2c67"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/03-transitive/arithmetic.ok",
+      "sha256": "sha256:0324f021efeba5a20e2a0bf05e920336f2b9307497705eb85d8d575f5a5e8081"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/03-transitive/expected.json",
+      "sha256": "sha256:7fb8e4600b2f13c43dc92d81208c175006f28a5eeee8fecc408cd659e9a878f2"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/03-transitive/geometry.ok",
+      "sha256": "sha256:f684a724c77210c07208dd0986ed460ed41f8aa502ccc2cd82a6ad549cab63cb"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/03-transitive/main.ok",
+      "sha256": "sha256:023e0bce0158fad6494894bb2a60724bb8774446420a80ea136a9bc7e8b4758f"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/03-transitive/program.bundle.json",
+      "sha256": "sha256:6b635dcb222e4c22009fa6874145b936ddc102abcbe5b805a1471243f506ba03"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/03-transitive/program.files.json",
+      "sha256": "sha256:7e0ba6f92b034279fbecbe02f23235e8fce541d0f733e2d2d199d570f567cc48"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/04-module-rejections/changed-filename.bundle.json",
+      "sha256": "sha256:2aae41812206acd781395b504b683348b8c9e90ab4e9ddd33d06ee9edc5c2299"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/04-module-rejections/changed-library.bundle.json",
+      "sha256": "sha256:024605a013031a49e1e192130d719d12947c4a14b75a9ad1a3ed2b9fc580bdac"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/04-module-rejections/conflicting-versions.bundle.json",
+      "sha256": "sha256:e94063fd48fe0e9a4bcc16b3e892588201642aa67a8a97e97c6fb6c9260535ca"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/04-module-rejections/duplicate-definition-key.bundle.json",
+      "sha256": "sha256:83ad56e46c31328cab7987201c5accd79fdb24ce048ebc0193c9fdba3a363700"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/04-module-rejections/escaped-path.files.json",
+      "sha256": "sha256:4ab4a7ed6040ab9b1f026391af369fdec971e0c2e9897076e3e03fdff081d55b"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/04-module-rejections/import-cycle.bundle.json",
+      "sha256": "sha256:05a88fe7cb9274d0e997d6626c355e98d084739a8ecf1b6f572a92038fa0e36d"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/04-module-rejections/imported-scene.bundle.json",
+      "sha256": "sha256:e8b9fde9aaf17ee3aadd51cdf6628f8388eb4328bc0aac94e24772232a1905b7"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/04-module-rejections/incompatible-language.bundle.json",
+      "sha256": "sha256:e74b15b4af970575ff63123c416fe0b03f70fcfcebbc3b03e8d39688989549a2"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/04-module-rejections/incompatible-profile.bundle.json",
+      "sha256": "sha256:1b0ce9155d3c57207a92da5a16c911a5d1dcf0f2b128d685ff75e56d3df2a413"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/04-module-rejections/invalid-library-candidate.bundle.json",
+      "sha256": "sha256:919e197a5c7957cac4aebd66e055eb13e77c3bdf512cca5f88defc372be8afeb"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/04-module-rejections/missing-library.bundle.json",
+      "sha256": "sha256:3c40b3908a54298bbfada2acd4b933306879be983b88ea4de3fa4f4c80ec35b5"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/04-module-rejections/reordered-modules.bundle.json",
+      "sha256": "sha256:3ea0167e13ad947ccead3786a99cc674aa262023521d313280a11a1d79c1fb5f"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/04-module-rejections/top-level-effect.bundle.json",
+      "sha256": "sha256:1b9d8b399f42d5f5daaf11fbb8d3ff6d84690cf8d4a97428d45ad6d731d84135"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/04-module-rejections/undeclared-library.bundle.json",
+      "sha256": "sha256:2c1c67da0bc16a47a7ae7edbeb5b5fd6c8b33ef5cd4c1c34892292bdf7e5622c"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/04-module-rejections/wrong-pin.bundle.json",
+      "sha256": "sha256:72f8de42d74f034e45a72b67147271123fb11cb0168c5fd8ef9090f5d609fedb"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/bundle.schema.json",
+      "sha256": "sha256:80b36917ec713508c1a64d5d0dd70d842fa2794eaa958ccdcfefc0bf8982a7ec"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/file-manifest.schema.json",
+      "sha256": "sha256:1d2a1f55d543b8bd5bd74724788a1788c669a09bc355a6a9218af31739589c41"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/module-cases.json",
+      "sha256": "sha256:de225224adbcf89a2e6af6674667b93bc25084b4f94608576a0341ad13b4e025"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/ontokin-construction.ebnf",
+      "sha256": "sha256:3603c44daf891244cda2c5adeadede03635d1d66e3bdbead26b1bd5459cff1a6"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/validation-cases.json",
+      "sha256": "sha256:7d88f1c15ba8dd473d2311eb2c475b883a0a9af295053c92f56da262421a399c"
+    },
+    {
+      "path": "docs/language-design/core-v0.1/01-independent-parts.ok",
+      "sha256": "sha256:557c6ef369911fcd4e9ebd57398534f40afb5815dad5e305ef20dd8709b46be3"
+    },
+    {
+      "path": "docs/language-design/core-v0.1/02-gravity-and-release.ok",
+      "sha256": "sha256:39c87ca27b2f8d5c46eccc9ba0d88ae94615695de5e20336b4257edc2cff5acf"
+    },
+    {
+      "path": "docs/language-design/core-v0.1/03-rotating-release.ok",
+      "sha256": "sha256:6b51b88c75a3973f475adba6c112be65130c76ff08a1839cae6b6329118a9938"
+    },
+    {
+      "path": "docs/language-design/core-v0.1/04-ownership-reuse-and-follow.ok",
+      "sha256": "sha256:44e5dbe09da192d39678d5c8b5e17e7526db30e467e3d2ff516214dfd5654bb6"
+    },
+    {
+      "path": "docs/language-design/core-v0.1/diagnostic-example.json",
+      "sha256": "sha256:57b8d2ee5e1c324ce5c8a8a21e3d99de5d73186b5bc7a266251e2988d939b7ed"
+    },
+    {
+      "path": "docs/language-design/core-v0.1/diagnostic.schema.json",
+      "sha256": "sha256:7021f408e8866d6abdc8241f0c454c35770aa0a8ebd0603b454079f8e039ebb3"
+    },
+    {
+      "path": "docs/language-design/core-v0.1/requirement-coverage.json",
+      "sha256": "sha256:078141a50c35efb5e31375ee30600e664d7f465bdb69082a1ff9a54ef6d96372"
+    },
+    {
+      "path": "docs/language-design/core-v0.1/validation-cases.json",
+      "sha256": "sha256:4bbb7695963be84143c963667ebb8908459f450a66ecf7d0889f542b756bbfe2"
+    },
+    {
+      "path": "tests/fixtures/rack_explicit.ok",
+      "sha256": "sha256:a12194316c682f8675e2718003a819ace124de5e1111a1d6eb8341ba16833d50"
+    },
+    {
+      "path": "tests/reach_agent_support.py",
+      "sha256": "sha256:1ece12b0e4aa5d8047b54ee0bf465bf8c88bf9993d8402012c9efabad7a17ec5"
+    },
+    {
+      "path": "tests/reach_fixture_support.py",
+      "sha256": "sha256:94d4e044095d78fac2288bd056379584f506942bf557e097283b14c39c43f298"
+    },
+    {
+      "path": "tests/test_agent.py",
+      "sha256": "sha256:05b3c902807c5f85e23382fd4766e8e50866f2c69e643c0650014309b2f38ad5"
+    },
+    {
+      "path": "tests/test_agent_catalog.py",
+      "sha256": "sha256:9c06e0a923cf1c048e4a123e019b3a28914e813fb0fdff7562514c257a4ca359"
+    },
+    {
+      "path": "tests/test_agent_cli.py",
+      "sha256": "sha256:edf31ac2eebdee3099499f552a4ea94bc1887478242210c2b4f167ddf218521d"
+    },
+    {
+      "path": "tests/test_agent_transactions.py",
+      "sha256": "sha256:8ad9fa2c5ea559fb8c9ea9ac9901957b089cf61c64a09dbfe4cb394d7f1c8d5b"
+    },
+    {
+      "path": "tests/test_bundle.py",
+      "sha256": "sha256:4e5eb05456bbeb8bc238a763a33cf590d7540373cf3fd4e9cda279ac8af571ca"
+    },
+    {
+      "path": "tests/test_cli.py",
+      "sha256": "sha256:a61d10884e7177beddd669f91917e2b2368dd39da7558e540a481bcd34b78991"
+    },
+    {
+      "path": "tests/test_conformance.py",
+      "sha256": "sha256:1d5d49273c2d4c24dd97380e805683c45c20feed5ca24725ab5009418b79c8ea"
+    },
+    {
+      "path": "tests/test_construction.py",
+      "sha256": "sha256:14efc50c4a4bcfcb4d1b9f596cabf5466e58f11aa3283ccda467cfc2963e1004"
+    },
+    {
+      "path": "tests/test_construction_catalog.py",
+      "sha256": "sha256:bd0a249d4c10fad39306b5574fd8eeb149d852319519db97767fc2f94afc4c78"
+    },
+    {
+      "path": "tests/test_construction_conformance.py",
+      "sha256": "sha256:e5eb6589c9190c17c2fcace607f2c7ec0ac4232eb1a9d856d2a14c01f7dd20a5"
+    },
+    {
+      "path": "tests/test_construction_export.py",
+      "sha256": "sha256:708650b05d24cb08376a2145d631c4165d9c4b093766789f504da72bdcb7b78f"
+    },
+    {
+      "path": "tests/test_evaluator.py",
+      "sha256": "sha256:84ca96177244318704c0e0305057195fde629cf0a3f0faf1c6593b803a0cbd25"
+    },
+    {
+      "path": "tests/test_export.py",
+      "sha256": "sha256:3f06394d93041f7beb04d33c4c5c6e6a95d3718c2f7a3e2be55b56dcab77cdaf"
+    },
+    {
+      "path": "tests/test_export_cli.py",
+      "sha256": "sha256:3d5033b8c5e64b12f8c16ba9794cbfce83a84a2475a91e57d8cf9c23ba12a9e1"
+    },
+    {
+      "path": "tests/test_force_agent.py",
+      "sha256": "sha256:0402b9102db3de123428d59410093f25141e7b399ed1d81e6aea26283d013772"
+    },
+    {
+      "path": "tests/test_force_agent_cli.py",
+      "sha256": "sha256:0304753262d2450f042d8f74d5ef90b4c78ffb13b5d02cf39ece09ac5279063b"
+    },
+    {
+      "path": "tests/test_force_agent_delivery.py",
+      "sha256": "sha256:ec7ed0e1be467219179341a63224ecd95ec6fecce085f743f1bebc48dad46c7c"
+    },
+    {
+      "path": "tests/test_force_agent_delivery_verification.py",
+      "sha256": "sha256:45d69a00bf16f0124ea7323f8887a34a49d519c4cc7f0792aa8c791080a56512"
+    },
+    {
+      "path": "tests/test_force_agent_transactions.py",
+      "sha256": "sha256:479e5997375e5d13901d8e753e45f8a629da6542dc197547cefce0cfed42741a"
+    },
+    {
+      "path": "tests/test_force_agent_verification.py",
+      "sha256": "sha256:5c3ad666510c745158259d480d412a8a9ec2386470b0db46f0fa3fedf4e1bd37"
+    },
+    {
+      "path": "tests/test_force_conformance.py",
+      "sha256": "sha256:8d258ecdf80a28327531f4647658354a75bc6b3aea3bb9ce94a7d56cfe7f05d5"
+    },
+    {
+      "path": "tests/test_force_contract.py",
+      "sha256": "sha256:2ce66274de1b5d0804d38c35ae1549e8687bc24c92196593fac4f43e12b2062d"
+    },
+    {
+      "path": "tests/test_force_destination_oracles.py",
+      "sha256": "sha256:00b4fadec0de15b117485ad95ed7f3cab7ad5c9f8065164eb94fa2ef8c21046b"
+    },
+    {
+      "path": "tests/test_force_evaluator.py",
+      "sha256": "sha256:10e00eded3fa3ef8f5de4c266d0fbf54111303a96b2fe83c41e65efe85164cca"
+    },
+    {
+      "path": "tests/test_force_evidence_collection.py",
+      "sha256": "sha256:f4779927885b1d3c554f5a133205cea9ac03f6740bb3d194444ae561d402da70"
+    },
+    {
+      "path": "tests/test_force_export.py",
+      "sha256": "sha256:b72c646b8ee5d331af89ad7d9bf6d4dd419dbc3127c7c8c2a989a40a5b707733"
+    },
+    {
+      "path": "tests/test_force_export_cli.py",
+      "sha256": "sha256:8d394fb67fb4fe44b0ce37aa3989c416d2cd9c26c9addfc87988afdd04d3aefe"
+    },
+    {
+      "path": "tests/test_force_source.py",
+      "sha256": "sha256:e1737d2bcf3c3ed4d73e2d4dd52182c544e850a2fd4d4da8daa195fdaff89a48"
+    },
+    {
+      "path": "tests/test_impulse_agent.py",
+      "sha256": "sha256:f18c0d81707b908948fcb794956536436193617fd87277e4ba7c81b6d360a827"
+    },
+    {
+      "path": "tests/test_impulse_agent_protocol.py",
+      "sha256": "sha256:3e5ce23eb82d769cc2239c3d7e57df6e16ce23ce3315047447ad5b2751574410"
+    },
+    {
+      "path": "tests/test_impulse_catalog.py",
+      "sha256": "sha256:2e589d05fa0c8db72bfa7e970d2b67f76a264aaeb878034f75ed7edd86c962bc"
+    },
+    {
+      "path": "tests/test_impulse_cli.py",
+      "sha256": "sha256:e82e7651e742784005afaa657c771922202867397663fce996c3e0ea7c50a04b"
+    },
+    {
+      "path": "tests/test_impulse_conformance.py",
+      "sha256": "sha256:6cf99908e20e84ea9942edf897aaafdb5fd4426d50c0c1428c7bada36ec7548b"
+    },
+    {
+      "path": "tests/test_impulse_evaluator.py",
+      "sha256": "sha256:e35b97bc2313f63cd7920c6ab194b1548c52396fe44e41c8628598ddb52a98aa"
+    },
+    {
+      "path": "tests/test_impulse_export.py",
+      "sha256": "sha256:a2e9db0c7673fd10c252518ef0afed8d461854026cf28e2c58a2f5279679eae2"
+    },
+    {
+      "path": "tests/test_impulse_source.py",
+      "sha256": "sha256:0df05aa9f7b36d3229fb47ce10b9a5dd5fc938ba7eada81b7ced4aecba5db5b4"
+    },
+    {
+      "path": "tests/test_impulse_workflow.py",
+      "sha256": "sha256:15a00cc45113363d1e2eed6de91609f47277df6e73cb8fe7f49d9f0507abe997"
+    },
+    {
+      "path": "tests/test_json_limits.py",
+      "sha256": "sha256:546b0db477d5e6b4785057c66929c0a4a334e09f015459e102342061c5448a05"
+    },
+    {
+      "path": "tests/test_json_literal_blocks.py",
+      "sha256": "sha256:3f3a5d0dd3dc33bc12182fb179996439bbf6fc00b48809d8dbab675a8cb65cd7"
+    },
+    {
+      "path": "tests/test_json_text_reuse.py",
+      "sha256": "sha256:9dc823fe77a61eeff60292d55cd0cf7c583bfadbf2e6574c13505a9e50a3cbc8"
+    },
+    {
+      "path": "tests/test_json_traversal_blocks.py",
+      "sha256": "sha256:759f2a8015ef4e23f8865f22adc803b66033d909fafe54487625e8ccf12e41e4"
+    },
+    {
+      "path": "tests/test_linker.py",
+      "sha256": "sha256:326e74ccd9547c0309a9614f9ee6d68cb4476f269779662cfed3cab1f8f80b26"
+    },
+    {
+      "path": "tests/test_local_checks.py",
+      "sha256": "sha256:35ef456394661c8d2292fb955aa3ac7722fdb0949e8a9e64111c49de16b85972"
+    },
+    {
+      "path": "tests/test_parser.py",
+      "sha256": "sha256:927f2385097feeb45d03b25355646f3c256b33f019d83a6c7f3ab88f18ae75f9"
+    },
+    {
+      "path": "tests/test_program_agent.py",
+      "sha256": "sha256:e71e0148c229e9c2509e07e5faf1acad766b1fb966eef33193707c6453f066dc"
+    },
+    {
+      "path": "tests/test_program_protocol.py",
+      "sha256": "sha256:7d7a15e191295fbcd1b879254cb76b14e3222561e8c43fd4dbbde36b230cf172"
+    },
+    {
+      "path": "tests/test_program_source_review.py",
+      "sha256": "sha256:3ce42588ffe8fd581a13b7b91e0b96c10c3431665df8506577f37fbf1ba34d59"
+    },
+    {
+      "path": "tests/test_program_transactions.py",
+      "sha256": "sha256:f3c299b0be2a1f2ff071111860a35443ee27d11e9ef663fb9b24335699d71f45"
+    },
+    {
+      "path": "tests/test_reach_accounting.py",
+      "sha256": "sha256:25f626493c8727d211517d00279cf7aa53a781bf8afa5e803d5332dd4e44b680"
+    },
+    {
+      "path": "tests/test_reach_adjacent_clock_operands.py",
+      "sha256": "sha256:c891a8e22fabc04c42067cdfcc0d342b755f18c1e74970aa8fef4aef3dfa5c65"
+    },
+    {
+      "path": "tests/test_reach_agent.py",
+      "sha256": "sha256:6dc337b9c9c53cb12251f965475232e3f6ae1155ec6226cbd8b5af7e9003efb4"
+    },
+    {
+      "path": "tests/test_reach_agent_cli.py",
+      "sha256": "sha256:6f18e9130ee74353078eb9e5f5f2f2e137f5bb9c80a875107b254f22a36254cf"
+    },
+    {
+      "path": "tests/test_reach_agent_delivery.py",
+      "sha256": "sha256:a1521bf42ed1d53d775ff31ead839cffe80ee0766f22926d499c8bcb2f5d6860"
+    },
+    {
+      "path": "tests/test_reach_agent_delivery_audit.py",
+      "sha256": "sha256:5215b18df432519e557a8c77536a2dfa718d9412e1d639433252967bfe68e543"
+    },
+    {
+      "path": "tests/test_reach_agent_producer.py",
+      "sha256": "sha256:1528ee97552d7753712086aeb99eb7bcb7541a0fd9108eb336b9403de823138c"
+    },
+    {
+      "path": "tests/test_reach_agent_protocol.py",
+      "sha256": "sha256:2a4a0cdcf439567703d529e5f4cc45f8b7dc77542b862eb536e23039110c3b68"
+    },
+    {
+      "path": "tests/test_reach_agent_protocol_cases.py",
+      "sha256": "sha256:242a60c6f0eaf81d61d3da0853838b0357478f42a74b1b9f78cb4139bddc570b"
+    },
+    {
+      "path": "tests/test_reach_agent_transactions.py",
+      "sha256": "sha256:c45d94e3fd03760998dc1827573006a3f4c2ff59024b2ddbe4937e5098db0cf1"
+    },
+    {
+      "path": "tests/test_reach_agent_verification.py",
+      "sha256": "sha256:3e432b64c7d2a987c46ace34b4c62a5bf8cd89029350600f837a22aa4d564f30"
+    },
+    {
+      "path": "tests/test_reach_ballistic_clock_domain.py",
+      "sha256": "sha256:185d92cb22c704dd01f7bd7b026e24d4b608bb6ae1433ad5f80e0a13e005f032"
+    },
+    {
+      "path": "tests/test_reach_bound_zero_projection.py",
+      "sha256": "sha256:094a6cd0cea1e20d7732df5db695e6c700bddea9fe426e2548b05c58cd82c8e4"
+    },
+    {
+      "path": "tests/test_reach_cache_budget.py",
+      "sha256": "sha256:c83168f8f2c6c4cf1dfd8c035ab1a372924c854cb15c16956d57857ea9d3b198"
+    },
+    {
+      "path": "tests/test_reach_cache_callback_domains.py",
+      "sha256": "sha256:ad67c08fefb43d245a3a2f6adaa8e2a8d70286a46011a808c965bab1c7ea5b43"
+    },
+    {
+      "path": "tests/test_reach_captured_seed_failure_identity.py",
+      "sha256": "sha256:7eb8d1fa5f0818afeb19f1e00f9350a2a1276c5f45d1365018566726363185e9"
+    },
+    {
+      "path": "tests/test_reach_centered_claim_thresholds.py",
+      "sha256": "sha256:2a908cfc4415c41c7e6b76cd5c6ea0e7718c4d4f0292c4b977955d650c753697"
+    },
+    {
+      "path": "tests/test_reach_centered_coefficients.py",
+      "sha256": "sha256:c7eb6e9053e51438ebb7d997013237fca897b95503866055d08389fc464bcee9"
+    },
+    {
+      "path": "tests/test_reach_centered_endpoint_proofs.py",
+      "sha256": "sha256:996c1afaa62404466af606121139f0f78c5df2019783bac761f391cb0d12105b"
+    },
+    {
+      "path": "tests/test_reach_centered_identity_offsets.py",
+      "sha256": "sha256:ab6e8e79fbaa16429698e2188c93da1baccffd60d796017b99d645e58815f110"
+    },
+    {
+      "path": "tests/test_reach_certificate_coefficients.py",
+      "sha256": "sha256:b432c7d9ad3fd1e61dc7f939c95b52b4ff13f2200c6e1a3a26daac7f0dcdec2e"
+    },
+    {
+      "path": "tests/test_reach_certificate_native_fields.py",
+      "sha256": "sha256:6e1f2532ea61c6b63a8e9a4aa6ae9b1b6009638ea352d21547491c884094e551"
+    },
+    {
+      "path": "tests/test_reach_certificate_single_pass.py",
+      "sha256": "sha256:c6eb576ae69bf66c69790b9a5c08d3bf87c7d4249c7597f03db25a0f42757ee6"
+    },
+    {
+      "path": "tests/test_reach_certificate_term_reuse.py",
+      "sha256": "sha256:d229916976feff0100740fd3025b08690cc32c96a26ed567898cf064822f687b"
+    },
+    {
+      "path": "tests/test_reach_certificate_thresholds.py",
+      "sha256": "sha256:70db3e329a61640f93280c0755868af5ff64eff3676d0f5ff2802b4dc561d9b9"
+    },
+    {
+      "path": "tests/test_reach_certificate_zero_quarter.py",
+      "sha256": "sha256:3fc6d2bfb9810d5e70644e2692c4ae048ee995836b6030fb6485b8f1ede402f9"
+    },
+    {
+      "path": "tests/test_reach_claimed_recording_seeds.py",
+      "sha256": "sha256:e0cdf0df6a0bd003483142c2063a1a0e4d7e6f25ec0d8d9e9be07b43e9278253"
+    },
+    {
+      "path": "tests/test_reach_clock_record_reuse.py",
+      "sha256": "sha256:dbc5940470808a8cd184f40ffa420eed7362c5fd82b3668f92607fcc66e85806"
+    },
+    {
+      "path": "tests/test_reach_complete_admission.py",
+      "sha256": "sha256:df65bb4fd28df9ce560d98d03f90cde8cf237acacb6d7aefd009172788f7bc13"
+    },
+    {
+      "path": "tests/test_reach_complete_finiteness.py",
+      "sha256": "sha256:1f524176067dc73bd89789126f3bed85558e96073612eb2105d2f3aa5f73746f"
+    },
+    {
+      "path": "tests/test_reach_conformance.py",
+      "sha256": "sha256:8d343e0208517d6cc47b22b06aac78b8f014e703118ae96638a0ac9d41e8c018"
+    },
+    {
+      "path": "tests/test_reach_construction_constants.py",
+      "sha256": "sha256:5957f7628a487464b9153ea59306b0f81aa5d983c7b84beb95262d4743e51ad6"
+    },
+    {
+      "path": "tests/test_reach_construction_field_plans.py",
+      "sha256": "sha256:89046ba3a5e5de4b366452c6df17d7721dd7f4cd345131ce948e20ee8032e1a1"
+    },
+    {
+      "path": "tests/test_reach_construction_mesh_reuse.py",
+      "sha256": "sha256:f39affa5ebd05129d1396e58962a29b5ac73bf45a14a0a99f16f147e5897c8f4"
+    },
+    {
+      "path": "tests/test_reach_construction_parameters.py",
+      "sha256": "sha256:7111979dc72d62719fde32e1567927f2afe083fb4c8cdb0e1e580b0909d640a7"
+    },
+    {
+      "path": "tests/test_reach_construction_surface_values.py",
+      "sha256": "sha256:32ff9cb262deed5659c78fbe2da378f8012628712fa221bd59c7dfada3000e4f"
+    },
+    {
+      "path": "tests/test_reach_delivery_plan.py",
+      "sha256": "sha256:fd8a331d5dbf26df0a9c211dea8071fde26e1c05bcfac0266614872e13715041"
+    },
+    {
+      "path": "tests/test_reach_destination_inventory.py",
+      "sha256": "sha256:e2e80da2ccbcb1566770e3ca67ec4197b7d8074353bbe005da451f4f6c6c3af7"
+    },
+    {
+      "path": "tests/test_reach_destination_resources.py",
+      "sha256": "sha256:17f662be3272d09b474d7a57e33dd2e012fe741a025de1c2a37bd61c00c208eb"
+    },
+    {
+      "path": "tests/test_reach_dyadic_corners.py",
+      "sha256": "sha256:db398e29ff96c6c69bae5035fe276d4c7117cf81dca94b734163ff0c090ce811"
+    },
+    {
+      "path": "tests/test_reach_dyadic_identities.py",
+      "sha256": "sha256:2afdd06b3a724fec1b2af0e4f08dfc24d478f864e5da382c22b79ad86df51615"
+    },
+    {
+      "path": "tests/test_reach_dyadic_tiny_products.py",
+      "sha256": "sha256:92c498452eb8824fc1edf2022d0cb52600164fde6c5e4117c9c1a45c572918c8"
+    },
+    {
+      "path": "tests/test_reach_endpoint_l1_order.py",
+      "sha256": "sha256:7f3ce03a1f4d0cd17cc42d2a446b3b9224c163a7524daf886ae35209835ac7fa"
+    },
+    {
+      "path": "tests/test_reach_endpoint_operands.py",
+      "sha256": "sha256:f1f28d31195afeba5692a73408b7c7593ce0060f5f25781b8dbda4879eccdac2"
+    },
+    {
+      "path": "tests/test_reach_endpoint_reduction.py",
+      "sha256": "sha256:5b6a17effab3340e65664b20ecae8d5b13bf62a016c0b7309c4035a230c0f37f"
+    },
+    {
+      "path": "tests/test_reach_endpoint_reuse.py",
+      "sha256": "sha256:dfcad73ce9d16dca6d9954750ba436125774325c6e8cdf246a4d41c488ec85fc"
+    },
+    {
+      "path": "tests/test_reach_endpoint_traversal.py",
+      "sha256": "sha256:903be758d388fb180dc8dc904cc3d8439070cb5b70cb1a66a7f9d38c8dcc70b4"
+    },
+    {
+      "path": "tests/test_reach_evaluator.py",
+      "sha256": "sha256:d6a95e0b9ea0843fb380cb2bac7c680d9df2f2c949c4ef40fc23026ccfa88e53"
+    },
+    {
+      "path": "tests/test_reach_export_arithmetic.py",
+      "sha256": "sha256:99a49217b26dfe39a0408bbf63d5d36c31f676e47dcb242ad97ad04d71dc0d70"
+    },
+    {
+      "path": "tests/test_reach_final_source_bounds.py",
+      "sha256": "sha256:6a5320c18c1799c7d2af26e8e70acaa936fecf90d46ec7f6b674273ca3bc3a34"
+    },
+    {
+      "path": "tests/test_reach_finiteness_family.py",
+      "sha256": "sha256:f896276f2bc04e5342503184f19a379c8be5569e6be148ee5848721b5ae4c9f5"
+    },
+    {
+      "path": "tests/test_reach_finiteness_reuse.py",
+      "sha256": "sha256:f4c3740a445ba6cb19d6089e36aece63d369b58dec9198fb885fb39adbcdc806"
+    },
+    {
+      "path": "tests/test_reach_fixture_preconditions.py",
+      "sha256": "sha256:b6fff1d1e6ff71a19b720ab66da9ccbf3af48c5f2814341fc60a449fcd755acf"
+    },
+    {
+      "path": "tests/test_reach_force_projection.py",
+      "sha256": "sha256:e4291282ffe1664f7b95db4ef86209a0874b44f683a960b90c653e8ba991ffd0"
+    },
+    {
+      "path": "tests/test_reach_geometry_extrema_reuse.py",
+      "sha256": "sha256:aa17caf11b7a166d7d5753cf1d4eefd4794c6d363d9c3e5f931f0e3f7483fc92"
+    },
+    {
+      "path": "tests/test_reach_geometry_maximum_witness.py",
+      "sha256": "sha256:ad462b891fdc2dfafa4c676fda30aa22be566ac42ee849bf6ae30f9a6db3f6bf"
+    },
+    {
+      "path": "tests/test_reach_history_orientation_bounds.py",
+      "sha256": "sha256:75ae8fcfaf6b833e85023d99a469f14946ec98ef72af9b03dc627bd4af425282"
+    },
+    {
+      "path": "tests/test_reach_history_preflight.py",
+      "sha256": "sha256:e8e797203ded4fbe20c66535d1c71aed4166da620151ba72909516a243393a70"
+    },
+    {
+      "path": "tests/test_reach_incoming_graph_reuse.py",
+      "sha256": "sha256:170c6b9fcb19a4e68db70ec34ecbde6c460014049e6272ef471b982280be2fda"
+    },
+    {
+      "path": "tests/test_reach_independent_arc_receipts.py",
+      "sha256": "sha256:2eba3b6dc3adbc69af6589582947a13872b79486452787e00926616e6243bae4"
+    },
+    {
+      "path": "tests/test_reach_independent_clock_cells.py",
+      "sha256": "sha256:ec3a8f77d8c66a9b91c61eb74db5105d1aee5c8101074c8665420067eead684f"
+    },
+    {
+      "path": "tests/test_reach_independent_constant_coordinates.py",
+      "sha256": "sha256:5c9af592e8aaf5d9a18e4bdf8b5e4e70c3e62c3fa2cf6fe06933eed2cebaf787"
+    },
+    {
+      "path": "tests/test_reach_independent_constant_parents.py",
+      "sha256": "sha256:f8729eee3f89c095240fa931188570ae8db83b27ac70f200ffe7edad7410d62a"
+    },
+    {
+      "path": "tests/test_reach_independent_orientation_claims.py",
+      "sha256": "sha256:90cadfaa804609dccb61c680c579dee62062686a0af0421dd9532ca83b83b61a"
+    },
+    {
+      "path": "tests/test_reach_independent_position_receipts.py",
+      "sha256": "sha256:77b3ee52e7ed53c6501e529dcddce4337b7ab9d58e13d66442bdb96aa287844a"
+    },
+    {
+      "path": "tests/test_reach_independent_sparse_endpoints.py",
+      "sha256": "sha256:127cb2985ef7426f25a5aba36bc7094cba075d63094b90fb8ca0364dc88c3d18"
+    },
+    {
+      "path": "tests/test_reach_independent_sparse_totals.py",
+      "sha256": "sha256:19e14dcf3fb911a2c0b556b591ff1e13e2b668ddef4948730ae529d9bd3194ec"
+    },
+    {
+      "path": "tests/test_reach_independent_sufficient_bounds.py",
+      "sha256": "sha256:8a9edf4cd0a87061f16d067c9b3cc95df0b0da36ee8cd40bc41d8341bd1e72db"
+    },
+    {
+      "path": "tests/test_reach_integer_planar.py",
+      "sha256": "sha256:98fae98c33f1ef2f008633ab6c73aaa2f430bca7787aa3772525571fc858d1ee"
+    },
+    {
+      "path": "tests/test_reach_interval_vector_domains.py",
+      "sha256": "sha256:1bc9de838bdc7470f285c6fc728ee58456c046ceb3cf34b222eb6a18e331e301"
+    },
+    {
+      "path": "tests/test_reach_kinematics.py",
+      "sha256": "sha256:375a1c1c3f78302a0fdafe2dc3e38ade69ff15ac2912d3925f19cce66e5b05af"
+    },
+    {
+      "path": "tests/test_reach_native_reference_bridge.py",
+      "sha256": "sha256:d33f281a84a23e6878e1e7550dcd5274a851905d81d899dcca6cffe798a482f2"
+    },
+    {
+      "path": "tests/test_reach_numeric.py",
+      "sha256": "sha256:1a98643c5308d230280217af6887df747d038b0210840d09b3c8d2e4e11dabab"
+    },
+    {
+      "path": "tests/test_reach_observation.py",
+      "sha256": "sha256:7c3b926200dbabfcf4b67565c3f7272585e822a09470a54469a816ffb71903a8"
+    },
+    {
+      "path": "tests/test_reach_observation_reuse.py",
+      "sha256": "sha256:0d2654165e467a627f826de150106fef1321dd6ce4d515fcaa92f309ac8abbe4"
+    },
+    {
+      "path": "tests/test_reach_orientation_proof_reuse.py",
+      "sha256": "sha256:69300be17bfdcd3fc54343415e6a7d0f0f1926b65f72ab66580a7c47761e6c55"
+    },
+    {
+      "path": "tests/test_reach_packed_horner.py",
+      "sha256": "sha256:05897599d01078b0ef10d0dc3e490f878d87402c338297a1dd7c8af97e8414b1"
+    },
+    {
+      "path": "tests/test_reach_pair_law_reuse.py",
+      "sha256": "sha256:20b01e48ff0ad9c8ab9faf2e6b7335e921ee74111813de1a71de04769acef2ad"
+    },
+    {
+      "path": "tests/test_reach_pending_output.py",
+      "sha256": "sha256:dc228907d725edc0489c2a574d1c014932e6234fb48f13870a1955433afcdef3"
+    },
+    {
+      "path": "tests/test_reach_phase.py",
+      "sha256": "sha256:193070541367b625394021df8819e90b2de47c86d93b0f807a3361afa3b71bb3"
+    },
+    {
+      "path": "tests/test_reach_phase_arithmetic.py",
+      "sha256": "sha256:d7908c2b6a7e5567b5afebcc64918dcc114e4f5f235e85feccb3b0a2c3ce1ca8"
+    },
+    {
+      "path": "tests/test_reach_phase_coaxial.py",
+      "sha256": "sha256:2d87e8888cbf5dc0ad88e4b81ec1cd619dbe56bf6451fbc82ac8d6bab3534b07"
+    },
+    {
+      "path": "tests/test_reach_phase_equal_laws.py",
+      "sha256": "sha256:b99b6eb7027fe9a6d04bdda884d61fcd602e6ebe4a3645d178dd54e7adee2f37"
+    },
+    {
+      "path": "tests/test_reach_phase_fixed_materialization.py",
+      "sha256": "sha256:b700873bafb438f270a15d917eaa7862a51ad72fcceecd8293ef45510c3c6a6b"
+    },
+    {
+      "path": "tests/test_reach_phase_local_reuse.py",
+      "sha256": "sha256:707a7d4980d7d99a845d371192ef5a6cd9ec19252cb8171729e032c880f81bae"
+    },
+    {
+      "path": "tests/test_reach_phase_locations.py",
+      "sha256": "sha256:d1efaaa991d0cd518699a03305aac0d839e7f2dc370bd9e4316a21318b7ba5cc"
+    },
+    {
+      "path": "tests/test_reach_phase_mounts.py",
+      "sha256": "sha256:36220d81ee586cd7431762e46063e3b7be6f65c9c93d5e9418668fc2bf1a7202"
+    },
+    {
+      "path": "tests/test_reach_phase_node_reuse.py",
+      "sha256": "sha256:def077c28424cde8b13827f257384845f8e9c7482ca4a633b73abcd920db236d"
+    },
+    {
+      "path": "tests/test_reach_phase_operand_reuse.py",
+      "sha256": "sha256:e625b38e1b0bb67fd3e98e595b4d9de46487f70e9ae930a2c5e782f1ee55c737"
+    },
+    {
+      "path": "tests/test_reach_phase_recording_proof.py",
+      "sha256": "sha256:0919ce7a6427141f425f0a551ce59c74707d93d4b5134a815c14af6d1de058b3"
+    },
+    {
+      "path": "tests/test_reach_phase_reuse.py",
+      "sha256": "sha256:0fa12d24896e25030b00f237d3f6d4de80761b02bb2d187955a13717faa048ce"
+    },
+    {
+      "path": "tests/test_reach_planning_object_finiteness.py",
+      "sha256": "sha256:76e7822a9bf5542e7494209a9bd32ec92ea776f893f4fa1f1ac92e3861a38330"
+    },
+    {
+      "path": "tests/test_reach_planning_reuse.py",
+      "sha256": "sha256:d2e7f44958a639d38987470826618067df0b60e0708d0608aea83969c505dd93"
+    },
+    {
+      "path": "tests/test_reach_pose.py",
+      "sha256": "sha256:ed7a7868032c30724430846746f0ffa3b2ceb561f70f48932038deb5a66f816b"
+    },
+    {
+      "path": "tests/test_reach_pose_budget.py",
+      "sha256": "sha256:658d5bb885111d22209151e2f8c4aec72dad4b9e27131ae7c68ac52d08c48182"
+    },
+    {
+      "path": "tests/test_reach_pose_reuse.py",
+      "sha256": "sha256:439f30c66253d337f972f391321acdd64a28e24d8f3f5e4667ee8084390cb8bf"
+    },
+    {
+      "path": "tests/test_reach_pose_slot_budget.py",
+      "sha256": "sha256:c9f2968eecf4d49e2fc1524eba7c161410e9f555ac917eb69ee3bfac2abff3d8"
+    },
+    {
+      "path": "tests/test_reach_projection_finiteness.py",
+      "sha256": "sha256:e37f56cf02abdbdd989609efaab871e9d772b9abef0694b7fc772995ffc4ddc8"
+    },
+    {
+      "path": "tests/test_reach_recording_affine.py",
+      "sha256": "sha256:2015538fee8d38aa8b9ce6cfd54618ea2cfe0bb2ce3d0d489998043b55e39f2c"
+    },
+    {
+      "path": "tests/test_reach_recording_basis.py",
+      "sha256": "sha256:58f7a68265e55084cc4ff2e759bcb2c50685dcb1bc5a9873b9caa8f16501347a"
+    },
+    {
+      "path": "tests/test_reach_recording_batch_publication.py",
+      "sha256": "sha256:0f896fb6c5c4d3efe228d3e3556c9b9c011c37b273e65d7b521b2550b24817a8"
+    },
+    {
+      "path": "tests/test_reach_recording_body_cursor.py",
+      "sha256": "sha256:b80ae29a564f663c3cf43bf5e553e29add1607cff24179d4e327156ba856d87a"
+    },
+    {
+      "path": "tests/test_reach_recording_boundary.py",
+      "sha256": "sha256:b2609593915675a44c760782231ebcae945c6d33d282e103170838ae43f6cf5f"
+    },
+    {
+      "path": "tests/test_reach_recording_budget.py",
+      "sha256": "sha256:5db59dbcef6d3f8d4151d0a2a2bc96fb44307290196e8ac51aea266e40e717e0"
+    },
+    {
+      "path": "tests/test_reach_recording_cache_policy.py",
+      "sha256": "sha256:3a6dcfc428066f8035c6f02b06d82a85ecf13e0e614c360fb8362d79e7ea1bd5"
+    },
+    {
+      "path": "tests/test_reach_recording_captured_chain.py",
+      "sha256": "sha256:75f7590939f3d0c69e8e827f21fe6b5be71dc28526ddbf96b06ca0ef459f8e03"
+    },
+    {
+      "path": "tests/test_reach_recording_captured_dynamic.py",
+      "sha256": "sha256:ce0eddb7930d999ae6e94a993b3a8fca10253f9c2b93a6d85203ba3ad785ec07"
+    },
+    {
+      "path": "tests/test_reach_recording_captured_graph.py",
+      "sha256": "sha256:b99787afd4befc09c3e5e1cb00395637e48092e4cb7e11e39164a8110d93666c"
+    },
+    {
+      "path": "tests/test_reach_recording_captured_identities.py",
+      "sha256": "sha256:02c28816301785cf93cee4cf0ed3af2c05237fa37f210b78d7de1d4531c7bc80"
+    },
+    {
+      "path": "tests/test_reach_recording_captured_inputs.py",
+      "sha256": "sha256:3336e2b0fd0313a3c6d49c6f13ea3f1b57dc226c5bf2a277e86cbf708398fb01"
+    },
+    {
+      "path": "tests/test_reach_recording_captured_mixed.py",
+      "sha256": "sha256:9549ec398e421cf8509f31d3df86587205df4561e7ff9d9cf64c30fa681b3ed3"
+    },
+    {
+      "path": "tests/test_reach_recording_captured_phase.py",
+      "sha256": "sha256:7f43e366e9c67b74bb503d4123254e9c414e9d59be63d98a91462a517fdbe03d"
+    },
+    {
+      "path": "tests/test_reach_recording_captured_roots.py",
+      "sha256": "sha256:b41b5c71a863f433c9e386faef39dd2aec1c73a26660211f612fa28d51c4932d"
+    },
+    {
+      "path": "tests/test_reach_recording_captured_seed.py",
+      "sha256": "sha256:6f1450a8053e16aeee9add5224b70ad13582c758ce9c4e0d04e77d7f36dc3618"
+    },
+    {
+      "path": "tests/test_reach_recording_cartesian.py",
+      "sha256": "sha256:2563f5b4009199de7c0a5549eddf42374cb97852f4a6082e5e0759c7cf6c1fc1"
+    },
+    {
+      "path": "tests/test_reach_recording_child_origin.py",
+      "sha256": "sha256:f5c1bb89caa54320a0d5a7b36bcdba72ab532410fe7bcf9321b7624aab69c9d6"
+    },
+    {
+      "path": "tests/test_reach_recording_cursor_proof.py",
+      "sha256": "sha256:8a32b1d45526167fa64ec1998d407316e1bf640d75350a42497d9fd47370055d"
+    },
+    {
+      "path": "tests/test_reach_recording_dynamic.py",
+      "sha256": "sha256:b03e6580cd07166c6e33d2068608336dbeb33a76caddcdd04bfefa27403b89f7"
+    },
+    {
+      "path": "tests/test_reach_recording_exact_affine_position.py",
+      "sha256": "sha256:9d0f360c4751e21a1e8d34449f880a279166e87f71c601bc5722461375539590"
+    },
+    {
+      "path": "tests/test_reach_recording_exact_seed_reuse.py",
+      "sha256": "sha256:43feebc724749419dc6e576d112397c5f8702eb7bd6e0a7bfb6b5e4612f3d4bc"
+    },
+    {
+      "path": "tests/test_reach_recording_fast.py",
+      "sha256": "sha256:5765e6ac48c2fb9472bc87cc92b77e43ec7901a7ab6bfaae90408a93139fe7d6"
+    },
+    {
+      "path": "tests/test_reach_recording_fast_export.py",
+      "sha256": "sha256:1c141183aa6eba2642795cf32e126c534ddcd261b5b1ce98e7e6ad8e95c08245"
+    },
+    {
+      "path": "tests/test_reach_recording_forward_translations.py",
+      "sha256": "sha256:37c46b76b829f4d9bf7072d207ab37ef201518c5ed025678d9f43cec010b45cb"
+    },
+    {
+      "path": "tests/test_reach_recording_graph_finiteness.py",
+      "sha256": "sha256:fabd2df101a62918288cc4883ba35b74ce6676da178b7d7040b6d92f3fed4654"
+    },
+    {
+      "path": "tests/test_reach_recording_graph_sharing.py",
+      "sha256": "sha256:09651bd30c96d4c0f45092b331ebf973bdb88a71733b0372260e17c8ea7121cf"
+    },
+    {
+      "path": "tests/test_reach_recording_identity.py",
+      "sha256": "sha256:87eaa40381904f2ff6ab52924728965e65150e3d98021720e1f3cd39b88880e7"
+    },
+    {
+      "path": "tests/test_reach_recording_identity_leaves.py",
+      "sha256": "sha256:4a9f31e5988f107b244cb52a31058fbb0de570356bbab2fe891dd0e480616d36"
+    },
+    {
+      "path": "tests/test_reach_recording_native_body.py",
+      "sha256": "sha256:5a9d2b1e5c06153a4eb0b76281762b6323061291adc439ba93e16530fac511d5"
+    },
+    {
+      "path": "tests/test_reach_recording_native_recovery.py",
+      "sha256": "sha256:fdb04bab0b8861a0658468ffe2d35e310edc915843a20f0436f9769ff774db30"
+    },
+    {
+      "path": "tests/test_reach_recording_native_reuse.py",
+      "sha256": "sha256:41b42a5d7e01fef2062027b5b98f51897c196f8e2d63de8fd8ebfbc94ddac410"
+    },
+    {
+      "path": "tests/test_reach_recording_phase_selection.py",
+      "sha256": "sha256:088ebb200c1fe7dd7225afc88f942fec35aba3f8e92636738544b4e12315a8b9"
+    },
+    {
+      "path": "tests/test_reach_recording_proof_scope.py",
+      "sha256": "sha256:5c48acb1cbeb87cc74f2b02613b71e17f25dfc46f98f4d7d149db6dae351dfc2"
+    },
+    {
+      "path": "tests/test_reach_recording_recurrence.py",
+      "sha256": "sha256:976e5070956aadc4d23fe9c09d0ad9c295f4d60e8c46779535026826e4eb6e5b"
+    },
+    {
+      "path": "tests/test_reach_recording_relative.py",
+      "sha256": "sha256:63384daa4494a36099d5168ab6b41db6475ec971b81380c3483d757eb0f7a525"
+    },
+    {
+      "path": "tests/test_reach_recording_relative_native_reuse.py",
+      "sha256": "sha256:e55ab162d62502c22fec8116f2ff980bcce6faf66eb60ec55a227b1dfa03b429"
+    },
+    {
+      "path": "tests/test_reach_recording_reuse.py",
+      "sha256": "sha256:8b321a85af1704a566408dac067fe849ace3e1509f5139b216c24c7f284b5a8b"
+    },
+    {
+      "path": "tests/test_reach_recording_rotation.py",
+      "sha256": "sha256:55c1b52b2413a1fe643d7f8cc19018104fb922a807ff940ec501e499d06304ba"
+    },
+    {
+      "path": "tests/test_reach_recording_sampler.py",
+      "sha256": "sha256:871727c8d1f7c9d3c713756c4e02f68e28a6f0fe9dcafaa7c15641a451dc9ae6"
+    },
+    {
+      "path": "tests/test_reach_recording_source_admission.py",
+      "sha256": "sha256:ff1031825a3214f7351d96a5b22b07b958cc549d0d259554c5145d48b6f242cd"
+    },
+    {
+      "path": "tests/test_reach_recording_spin_operands.py",
+      "sha256": "sha256:3d3c2bf40a5edf0e4eb77725f78eec398302a2e019ee2ff5ba06b1f0daa54daf"
+    },
+    {
+      "path": "tests/test_reach_recording_stationarity.py",
+      "sha256": "sha256:995beeaa68f43acacd2218a53915d9f0d5dcaa3f30a8abc29e5929acaa5e7d72"
+    },
+    {
+      "path": "tests/test_reach_recording_unit_offsets.py",
+      "sha256": "sha256:af2b5b8c6ce7cdb9c13d9f092f48333a869b2b9fb76096a10ae70a1d2fdb59fb"
+    },
+    {
+      "path": "tests/test_reach_recurring_endpoint_claims.py",
+      "sha256": "sha256:21c6d0c9339901fafaf5804e43ebbc2df3186c367c620c08d9d10b2a467d0164"
+    },
+    {
+      "path": "tests/test_reach_reference.py",
+      "sha256": "sha256:677a33aa59a30d4500b5e151e224bb410a3f7c79bee6434c52ab44312776bb60"
+    },
+    {
+      "path": "tests/test_reach_reference_affine.py",
+      "sha256": "sha256:8f7e1f6a44ee4aca7829a200c024ac31fc97236382d1202f6f07caf1874c20c3"
+    },
+    {
+      "path": "tests/test_reach_reference_axial_derivatives.py",
+      "sha256": "sha256:9f78af0ce161eac38eccb8a80b77793ea7f9ced11451fafb72cea68b548c25d2"
+    },
+    {
+      "path": "tests/test_reach_reference_axis_recording.py",
+      "sha256": "sha256:66c03bb794d039822eaa66a53e2fb2654e669de0323c75001a03af2f32becb67"
+    },
+    {
+      "path": "tests/test_reach_reference_boundary_projection.py",
+      "sha256": "sha256:a801db47dc7fd9f528b7ddebc9da16673666f386c692cd3ff3e8b7d887f0874b"
+    },
+    {
+      "path": "tests/test_reach_reference_callback_domains.py",
+      "sha256": "sha256:2402d6c73032b7dee4418f9c79c9beb8fda20b17984f0cc88e96e483745f4552"
+    },
+    {
+      "path": "tests/test_reach_reference_cartesian_recording.py",
+      "sha256": "sha256:5351588173cb2df4445eb2f9adf29b2adad3813c73dcd0cd05102c276443277b"
+    },
+    {
+      "path": "tests/test_reach_reference_centered_recording.py",
+      "sha256": "sha256:005e47519e46113409d6d89076ba4bf02bf78cd3d393eeb28dda72761932b20d"
+    },
+    {
+      "path": "tests/test_reach_reference_child_origins.py",
+      "sha256": "sha256:de74ea2e766e6fee6bfc3142ca9e078447af3eb038803430365b918f3dbd7aac"
+    },
+    {
+      "path": "tests/test_reach_reference_coordinate_law.py",
+      "sha256": "sha256:f4ae58b3390fd2adf9a774279c286318c50700231b75abc4bdb268a5b99dc950"
+    },
+    {
+      "path": "tests/test_reach_reference_derivations.py",
+      "sha256": "sha256:cf2144fa3f765044d0eab9af94dbd1c9963ec951586bbbcd972bce7934cd32cd"
+    },
+    {
+      "path": "tests/test_reach_reference_exact_work.py",
+      "sha256": "sha256:5f750ec3acbbc1fef31ba22d013ff66b876be65dc50c9a7acab0b2d4e1c3bc36"
+    },
+    {
+      "path": "tests/test_reach_reference_extrema.py",
+      "sha256": "sha256:bc33c2de1449120c92b220f02db575c125def366ca4ae35241f0d441a3ac1446"
+    },
+    {
+      "path": "tests/test_reach_reference_fused_recording.py",
+      "sha256": "sha256:de02f0bb947c936764002885d1dd53b1ba3bb673206f5f77d93c8df93abf5445"
+    },
+    {
+      "path": "tests/test_reach_reference_identity.py",
+      "sha256": "sha256:c8d68eaeffd3acfe899bc5ec27d9852ce9f9dd05c861caf2cbaba9d790253a39"
+    },
+    {
+      "path": "tests/test_reach_reference_identity_carriers.py",
+      "sha256": "sha256:5142bbfa666ccda421d42546683c828e0331c20deb561d8ef49bd1d05590f8a2"
+    },
+    {
+      "path": "tests/test_reach_reference_impulses.py",
+      "sha256": "sha256:ffbc6f05f0d0e44c6a35981522716598d807e1c5f5975d15069bc544d5778c63"
+    },
+    {
+      "path": "tests/test_reach_reference_integer_series.py",
+      "sha256": "sha256:1ba60ba526a1c49aa8db5177f136cb74d1a2a4ca722eed0c7baabbebdef7ce6f"
+    },
+    {
+      "path": "tests/test_reach_reference_native_composition.py",
+      "sha256": "sha256:9bcfad069fa8dc8a705f7eadd66a80f7f1cee0d1bb2f8e53ce011f5f3093b5d8"
+    },
+    {
+      "path": "tests/test_reach_reference_operand_caps.py",
+      "sha256": "sha256:d068b6f2eb9406cb0e71d248ecd906fd16ed67f419a224faf404464f9bab576b"
+    },
+    {
+      "path": "tests/test_reach_reference_partitioned_plans.py",
+      "sha256": "sha256:f8180f47ebd3c2e4daeb7a731bf48a84a48dc2e1b4d0876f33539324a92b7dbc"
+    },
+    {
+      "path": "tests/test_reach_reference_path_law.py",
+      "sha256": "sha256:944cec7baeefe88e37db9ac2464a3530f2f398e9863b14a65efb894c87d70860"
+    },
+    {
+      "path": "tests/test_reach_reference_phase_plan.py",
+      "sha256": "sha256:44546cec4bb8734bb2208f50fe98e47799ab3003c4dbd07152733ea65a01eeb6"
+    },
+    {
+      "path": "tests/test_reach_reference_phase_roots.py",
+      "sha256": "sha256:68078c94fe1bd8d68ff296c129967d48b7be9e688f80df16cb25f2362e5eb6b8"
+    },
+    {
+      "path": "tests/test_reach_reference_recording_recurrence.py",
+      "sha256": "sha256:f303d9eeefecddb108759602f6d8f69ec4c961adefbcbed16b37e5a1f69f16b1"
+    },
+    {
+      "path": "tests/test_reach_reference_release_selection.py",
+      "sha256": "sha256:7244b2e713ef15c8d32a1ef94a4567b90d3ead4ff63dc045b9548f90469e9d4a"
+    },
+    {
+      "path": "tests/test_reach_reference_repeated_increment.py",
+      "sha256": "sha256:923d3f7868b8bddb1c93caa5c31c38ccb9af33e00dfb5cea4baf49a9f6e38823"
+    },
+    {
+      "path": "tests/test_reach_reference_reuse.py",
+      "sha256": "sha256:001c4b4ef446febd3fb5fa0611ffd7b7eb0ea2e0f32d7fe1bc6d6f470cbeeb0c"
+    },
+    {
+      "path": "tests/test_reach_reference_sequential.py",
+      "sha256": "sha256:be9abd2faef0263be0516ea57555753fdf9cedff41add9396806c51a99ef47b0"
+    },
+    {
+      "path": "tests/test_reach_reference_shared_recording.py",
+      "sha256": "sha256:0bd4036894c6a3e23ca8cb700615b2c2532502fe0cea4ec96cddd8f3d5b3e6ab"
+    },
+    {
+      "path": "tests/test_reach_reference_source_batch.py",
+      "sha256": "sha256:433e6a6dfc80e1ea952048472d60621b2b679b1b0a6004742dea4653b0304d66"
+    },
+    {
+      "path": "tests/test_reach_reference_sparse_cartesian.py",
+      "sha256": "sha256:3158b6cc61d97e4104d158d2b00d1ba4d679a5e78c60a7b3e3fbf4159d804e77"
+    },
+    {
+      "path": "tests/test_reach_reference_state_sharing.py",
+      "sha256": "sha256:a5d6128aef00ad45b567edd2f1a6f5d4c9c547d3935e2180441c78fb690fa2ad"
+    },
+    {
+      "path": "tests/test_reach_reference_stationary_batch.py",
+      "sha256": "sha256:fa51efaa0d00a14d6070121c29a16f93eb275573504d1e8d7b1988a9fbb391a6"
+    },
+    {
+      "path": "tests/test_reach_reference_topology.py",
+      "sha256": "sha256:39ae4d3a66eea5662869402690b252aade67eb2923e428db9b56674308f7d3d2"
+    },
+    {
+      "path": "tests/test_reach_reference_world_recording.py",
+      "sha256": "sha256:b6d92cd7733e07f85ede2091e490da9ff1bad4b9199e5097c55911338d0e0e4a"
+    },
+    {
+      "path": "tests/test_reach_relative_observations.py",
+      "sha256": "sha256:c92e1bf097eb09ac5d83eb730c6e870ca941ef1e1ca5b850a76e5541b63cf0d1"
+    },
+    {
+      "path": "tests/test_reach_residual_operands.py",
+      "sha256": "sha256:e5c1b6bbd7d2b396865eeec70c9b10503d899e6287bfa0ef68c183f13ab23f52"
+    },
+    {
+      "path": "tests/test_reach_retained_clock_parsing.py",
+      "sha256": "sha256:3636bb21cdae0aa5c0074a61415afaaaaa5c429ff3ff2a6dda434d8195c0f196"
+    },
+    {
+      "path": "tests/test_reach_sampling_factor_reuse.py",
+      "sha256": "sha256:accf08fc1742059cdbe307808f512ab3b8bf920581dda09cd1c83edaf3047155"
+    },
+    {
+      "path": "tests/test_reach_sampling_scalar_reuse.py",
+      "sha256": "sha256:65c49f7f5feafdd9d086b43a0b83e11c407855f2f31dcd2ade43ca545d7c9077"
+    },
+    {
+      "path": "tests/test_reach_source.py",
+      "sha256": "sha256:576067472ab1f3b28a778a6b8d4f9f2aa3a4cde518e27845e6c10e986ab98bfc"
+    },
+    {
+      "path": "tests/test_reach_source_cartesian_products.py",
+      "sha256": "sha256:802aa940e3e2b5785508f462c31bc92961cfed74872832a3c6813e805c7f447f"
+    },
+    {
+      "path": "tests/test_reach_source_corpus.py",
+      "sha256": "sha256:2cc2083fcf85950eb1cb0f9c9e6cc2d4b2bb276e9e01a9dbff011d25236c1578"
+    },
+    {
+      "path": "tests/test_reach_source_mesh_reuse.py",
+      "sha256": "sha256:ebc645592330e0a5541853deee644f889bb2bef24436f7aaaf19180500a34f28"
+    },
+    {
+      "path": "tests/test_reach_source_rate_observation.py",
+      "sha256": "sha256:bc2cfe5586f53646eb9db8dba9ca2c37f7988049dfb2615317f96509cf1c5b39"
+    },
+    {
+      "path": "tests/test_reach_source_rates.py",
+      "sha256": "sha256:2cb89f1de8a5812047abee27222b0b03ee9f3bd197c7af25f9997af58fee3246"
+    },
+    {
+      "path": "tests/test_reach_source_site_index.py",
+      "sha256": "sha256:a3085dab3036c772c2910561f871ee1fa2146b7dd1514dd9d1fb8dd4a3d7096b"
+    },
+    {
+      "path": "tests/test_reach_source_snapshots.py",
+      "sha256": "sha256:91445f59d5af49a320bf8b8488375df5e183369022c97fd5d28f56e5e5a619fb"
+    },
+    {
+      "path": "tests/test_reach_source_translation.py",
+      "sha256": "sha256:f3f09bd747beea4576f37f4534363b8d1155d330ef487ae0670dfd5ee1a5b138"
+    },
+    {
+      "path": "tests/test_reach_static_recording_rotations.py",
+      "sha256": "sha256:8bed5bfb02deebf88355426d2c320dceeccec0622bb5c98c60072f7654911959"
+    },
+    {
+      "path": "tests/test_reach_stationary_claim_receipts.py",
+      "sha256": "sha256:30a89f64c25d39c9f37968dfc29c111326c8842e7028b08c5fcace52f7601fd4"
+    },
+    {
+      "path": "tests/test_reach_stored_lift_signs.py",
+      "sha256": "sha256:74f570820313ba6ee7086a0b004a2f27157df6fcb996316bdb135a13027b2299"
+    },
+    {
+      "path": "tests/test_reach_surface_placement_reuse.py",
+      "sha256": "sha256:ccd3d294d837c8c7adcf536be497a3df64a150d5e70e1e9a697f7b2f142fdab6"
+    },
+    {
+      "path": "tests/test_reach_terminal_paths.py",
+      "sha256": "sha256:f933cae47a6e358038b18fe261a0e2ad9456eafd536943440c6d49202e7567ad"
+    },
+    {
+      "path": "tests/test_reach_terminal_projection_reuse.py",
+      "sha256": "sha256:d291983d66d0501c70a48ab0ea4b80df8cebfa64eca146fa100cf0ac8ca6abd5"
+    },
+    {
+      "path": "tests/test_reach_terminal_static_graph.py",
+      "sha256": "sha256:24c9fb6b3c9c8a9a4ccded41e2e1db41dac3e8e487de7946e46fe8df34418531"
+    },
+    {
+      "path": "tests/test_reach_transfer_bounds.py",
+      "sha256": "sha256:1b8fff392d351896f95f90c5b4bb9f14d2ed6f5a954ae8fda12b3a0788197bc9"
+    },
+    {
+      "path": "tests/test_reach_world_target_components.py",
+      "sha256": "sha256:bfe8aa913bb923befac74cd01b025de31e2cf409c3628b4f314f6946000c9140"
+    },
+    {
+      "path": "tests/test_reach_world_target_input_reuse.py",
+      "sha256": "sha256:22d3f10ef70b3683c654cffd06e0dcd457ee761e265bd1a3b7e7be7a1accc1c9"
+    },
+    {
+      "path": "tests/test_surface_agent.py",
+      "sha256": "sha256:4415412c0b6e80f80a4f4f1d6bae146058ef94cf0d9ba37a9612f6dd9ba37d4c"
+    },
+    {
+      "path": "tests/test_surface_agent_cli.py",
+      "sha256": "sha256:c1ddc3406b79aabf197acf36d50d9a23db91ce0801fe67878f43941a1bbaf0e6"
+    },
+    {
+      "path": "tests/test_surface_agent_protocol.py",
+      "sha256": "sha256:602d4934aa8ac6a37cff9f985a9e4f70a402a346c0584ad3952d76643751bff8"
+    },
+    {
+      "path": "tests/test_surface_catalog.py",
+      "sha256": "sha256:798832cbb09fa376998af146d06079fa4223fe562fc268ea632d4bb138e10713"
+    },
+    {
+      "path": "tests/test_surface_conformance.py",
+      "sha256": "sha256:950f182ae11b52cc4b49e5066fecd84ac4842f70f42be5ca47ea66bdd68efdde"
+    },
+    {
+      "path": "tests/test_surface_corpus.py",
+      "sha256": "sha256:25f5e0be0db3b7473d6db7d85af94123c31ae301a232e14b53eb8ca024568aed"
+    },
+    {
+      "path": "tests/test_surface_export.py",
+      "sha256": "sha256:42b29fe619ead2fe884aa889a82a5ab4bf13fb3b243a7d6383538de080e2fc2e"
+    },
+    {
+      "path": "tests/test_surface_export_cli.py",
+      "sha256": "sha256:9b7dd0949cd213bc0510b6de3caf0e4079342303f45885706a5cfc2987c180df"
+    },
+    {
+      "path": "tests/test_surface_geometry.py",
+      "sha256": "sha256:897d0a833813664d1567bbfc29bb9fc126c2c0fb6b544c5c0730de707d3532bb"
+    },
+    {
+      "path": "tests/test_surface_glb.py",
+      "sha256": "sha256:dada1dedf71f5a82edf7c99f09230b7bc6eac3784dfc8a9c06a40ce0aec5985c"
+    },
+    {
+      "path": "tests/test_surface_manifest.py",
+      "sha256": "sha256:a085627b8b0c1416d2a8178237ee9b1126ff9ffc090e7b3b6169e5b7afb2dc89"
+    },
+    {
+      "path": "tests/test_surface_regressions.py",
+      "sha256": "sha256:1d1794a67eebdfff6e27a0f5744309872cf5e008ee9abfb2ab305433333b08c6"
+    },
+    {
+      "path": "tests/test_surface_source.py",
+      "sha256": "sha256:0b6f728e522c994f141159e5adbc03178ab5fcc9a59a5ff4f83c13dd1bb76a98"
+    },
+    {
+      "path": "tests/test_syntax02.py",
+      "sha256": "sha256:4db175bead1ea57f04882f348521a65a2e5cdda71c60fdc20d2bdaaca8a862d3"
+    },
+    {
+      "path": "tests/test_syntax03.py",
+      "sha256": "sha256:d46bc8a6639389f7bff185e4dd6973f71119f7a2420f7cf62c37f239f6033413"
+    },
+    {
+      "path": "tests/test_validator_edges.py",
+      "sha256": "sha256:0ce9edd43131462cd7b8dd8f0a46dab765d35e9aa4ad56426bf072975b9187f0"
+    },
+    {
+      "path": "tests/test_verify_construction_ci.py",
+      "sha256": "sha256:71105fbcdff4d2a7bd6549148aefeaaa6ecac0424a8995cc69dfefcaa41d19d8"
+    },
+    {
+      "path": "tools/audit_reach_agent_delivery.py",
+      "sha256": "sha256:015c4c461cddb6e83b70c018fcc05ce09e0f24f6819eee266035b772e7ddd5ef"
+    },
+    {
+      "path": "tools/build_agent_demo.py",
+      "sha256": "sha256:6f85bf2ba2f9c33fa9ae70cf9445bc4d216a3303bac595c019e85f9f6d31333a"
+    },
+    {
+      "path": "tools/build_construction_demo.py",
+      "sha256": "sha256:479d5df00196b5e83e938f6bc88788bc4b9b51263d3859dfee38d1a520e2a196"
+    },
+    {
+      "path": "tools/build_force_agent_demo.py",
+      "sha256": "sha256:a3e264559216f7f239b1104a550a5e1bd34d32a8af8ae5a300fbf7f19223d534"
+    },
+    {
+      "path": "tools/build_force_delivery_demo.py",
+      "sha256": "sha256:c73443ca04f1bb1bdc472c1c662b5276f24b7ab013c3e69c56b6168dca54df55"
+    },
+    {
+      "path": "tools/build_force_demo.py",
+      "sha256": "sha256:401dde5a8a2f77a7e2cf94330a69a11e5bdf020b34ee497167fa247148849d98"
+    },
+    {
+      "path": "tools/build_force_release_evidence.py",
+      "sha256": "sha256:d28e3bfbc5296ba539257bddaf33b48e9eb441421292e2d1b6989415f07c2362"
+    },
+    {
+      "path": "tools/build_impulse_agent_demo.py",
+      "sha256": "sha256:3b47d2733b28e08a11ad031d905a9690f70f9513bc3b124a3cc42329371f9b00"
+    },
+    {
+      "path": "tools/build_reach_agent_delivery.py",
+      "sha256": "sha256:41dbec6f71433e70ee199737d2236f905a298d5f1126e1bed96ae6fb430a47e2"
+    },
+    {
+      "path": "tools/build_reach_native_reference.py",
+      "sha256": "sha256:58075db8230238fecb61b09fcc9e2daa1eca9c889fde83c2012a76e30c4e60b3"
+    },
+    {
+      "path": "tools/build_reach_source_artifacts.py",
+      "sha256": "sha256:231d11a039df4a9fa2f5fe5c09828d1d0da1ff240208cf5fb70af90e71640a1a"
+    },
+    {
+      "path": "tools/build_surface_agent_demo.py",
+      "sha256": "sha256:420fcf0b621a35e02d7ac34f76ed446898a5066f92bf3f84aafc57448db60574"
+    },
+    {
+      "path": "tools/build_surface_demo.py",
+      "sha256": "sha256:0281d740b5994972ffd134547037a7e545ecedf700c64779d99b8f892624431b"
+    },
+    {
+      "path": "tools/build_surface_prototype.py",
+      "sha256": "sha256:4669d444d4b63f528660ed6ce316eafa21fca277cd39389d32bbcec757f7f8d5"
+    },
+    {
+      "path": "tools/build_viewer.mjs",
+      "sha256": "sha256:63e5a0e9375a94e19b0ba30a9ea967ee592ef8e5f10767a07816d2e5ac1305a4"
+    },
+    {
+      "path": "tools/build_visual_demos.py",
+      "sha256": "sha256:751bbf1d6884a936edd5dd2eabcdff5bf87387e6d14b99773a4b87afadfabfbe"
+    },
+    {
+      "path": "tools/check_local.py",
+      "sha256": "sha256:ce12a690237eea2b9d2d9c6f74e3e14c49e70b8cb8aee27eb0c55e466434df0d"
+    },
+    {
+      "path": "tools/force_oracles.py",
+      "sha256": "sha256:e3a6f3f85ca99a565b845c809c11de18e3d874683421bcc1a47c2a904633cb2e"
+    },
+    {
+      "path": "tools/impulse_oracles.py",
+      "sha256": "sha256:efddf0988ed41ba0438f9fbc3bf35343befcf4d0609f8ccebb262a0fbbfad88c"
+    },
+    {
+      "path": "tools/package-lock.json",
+      "sha256": "sha256:f1351b945f847f937dcacc9736fea07a710f1c066dbc9d7a5e19e89a858d635a"
+    },
+    {
+      "path": "tools/package.json",
+      "sha256": "sha256:ce695b672904c8c01d699c06b0ed16f97e34e6e34115b65fb192e25d70dee4cb"
+    },
+    {
+      "path": "tools/probe_reach_native_artifact.mjs",
+      "sha256": "sha256:14ff83a0a77745ace2bf62c55daad8aed7099fc20a5abd009994840707bcf469"
+    },
+    {
+      "path": "tools/reach_delivery_inventory.py",
+      "sha256": "sha256:1920801b6f6c56ef40c6d20471797bd370c412a8b7a8f6a815c1e2d739c286b5"
+    },
+    {
+      "path": "tools/reach_destination.mjs",
+      "sha256": "sha256:98360ee870ce74dfbab91553409186ad4f25583cb5fbf326f3c34c92db3c1637"
+    },
+    {
+      "path": "tools/reach_native_support.mjs",
+      "sha256": "sha256:2d48989fff7756214fb38b1b0763df00afd0dfc1d048806da6b7ab6a9437258f"
+    },
+    {
+      "path": "tools/reach_rate_inventory.py",
+      "sha256": "sha256:5908df77f9c59be0b6b5d0dd2b1e51659cd72a24345e1cf390bb44df5f2352ed"
+    },
+    {
+      "path": "tools/reach_source_rates.py",
+      "sha256": "sha256:52f6e0fd6d7fe9ccec0f284da2a66256cf9bec355b52123d78f71b75170bc19d"
+    },
+    {
+      "path": "tools/reach_viewer_harness.mjs",
+      "sha256": "sha256:f75a7e548ea962e2e79cf93e49d5e5dd25f7a271ea4b143b2b4ab4f70c398b71"
+    },
+    {
+      "path": "tools/record_construction_evidence.py",
+      "sha256": "sha256:ed24e3fa584ef3643e5d1505718eacb158e8e93c0af12cc31e035efc30529032"
+    },
+    {
+      "path": "tools/run_agent_conformance.py",
+      "sha256": "sha256:4b46a1245a17655a5871fcdcb2e108bc48f0fdf21627c83557238fa849ae5f5e"
+    },
+    {
+      "path": "tools/run_force_conformance.py",
+      "sha256": "sha256:d96e4b358fac0d7b454d0729f142a2eae1765fa55d0de832265e16cd3f9796a5"
+    },
+    {
+      "path": "tools/run_impulse_conformance.py",
+      "sha256": "sha256:e432b3225fed6e1db668e627dff9d1e4d0d5833e79ede4131eac63c1bdb4f683"
+    },
+    {
+      "path": "tools/run_reach_regression.py",
+      "sha256": "sha256:52ac98cea1a78c9711aeb2093e6805e8690fb766f2d231fa5095ab162200acfb"
+    },
+    {
+      "path": "tools/run_reach_source_corpus.py",
+      "sha256": "sha256:337c44bc787160560422be03e52b4e4365d18d8167129e68a310b166feaaca74"
+    },
+    {
+      "path": "tools/run_surface_conformance.py",
+      "sha256": "sha256:0b4212d2e62816e54fda3efc7fa5a4459e1eab260cd56269e5148da1c0c7836a"
+    },
+    {
+      "path": "tools/verify_agent_viewer.mjs",
+      "sha256": "sha256:b4540ba146567dd090f9b139e57beee429e9420fa96877e1115a88004caf1b7c"
+    },
+    {
+      "path": "tools/verify_construction_ci.py",
+      "sha256": "sha256:53c97f11a57df4feec74d855f92b53aac29d98f3809e18674a4f563fcaa8aa17"
+    },
+    {
+      "path": "tools/verify_construction_viewer.mjs",
+      "sha256": "sha256:b733ae754d8b593540e3f478f1bab300d54769f4be17335c195386aa013177a6"
+    },
+    {
+      "path": "tools/verify_force_agent_workflow.py",
+      "sha256": "sha256:13a1d94104c1cdbae4314bfc267b1c492dcfe6e615d937fa1425272cb866a194"
+    },
+    {
+      "path": "tools/verify_force_delivery_workflow.py",
+      "sha256": "sha256:b57a93069a29fa3391c9e6b2a294f742a21e74cc098c4514679908b72db24d33"
+    },
+    {
+      "path": "tools/verify_force_native.mjs",
+      "sha256": "sha256:be08e5bea462fb98a87e7ba4c9d3d7e30500698e1dd52d5407038aba23c7bd75"
+    },
+    {
+      "path": "tools/verify_force_viewer.mjs",
+      "sha256": "sha256:6cbba29481f743111bc371b387a65a4d1a99919ddcc5db3847a5328c65b96a72"
+    },
+    {
+      "path": "tools/verify_gltf.mjs",
+      "sha256": "sha256:edc372d797ab4191e4fb70425e9106623d1f3b0ac4609f32d47b35179a308073"
+    },
+    {
+      "path": "tools/verify_impulse_native.mjs",
+      "sha256": "sha256:ca315b6475135decbfc4946b7200adf19b1b5cf32f3b40fc352c36840c355756"
+    },
+    {
+      "path": "tools/verify_impulse_viewer.mjs",
+      "sha256": "sha256:7b980366316615bb1f27f677c5b8da6fa2b373d407ca55a0cdca7967b5dd660a"
+    },
+    {
+      "path": "tools/verify_program_schemas.py",
+      "sha256": "sha256:a1d9dfaca7bc0a23d3ac00b6e7a3310b4d1b076de8185ed800b9dfd1d0772b07"
+    },
+    {
+      "path": "tools/verify_reach_destinations.py",
+      "sha256": "sha256:3500dea57e7aec58ab7f86883fb5d2cfc7400a23c62e3957f87dcd1a468850c6"
+    },
+    {
+      "path": "tools/verify_reach_native.mjs",
+      "sha256": "sha256:9397f5a68d17548b1dd8756a98171e315dc2f1bd9df561d3b6735ac76f818a5a"
+    },
+    {
+      "path": "tools/verify_reach_viewer.mjs",
+      "sha256": "sha256:ffd308b2e5193d78f5314339a29f80fb0049b38b66892dd1168e48a3eb0c34e1"
+    },
+    {
+      "path": "tools/verify_surface_native.mjs",
+      "sha256": "sha256:77b74bc15c606840034d50bfc266446cb96a43dd95ccfe83294401e918ba8226"
+    },
+    {
+      "path": "tools/verify_surface_prototype.mjs",
+      "sha256": "sha256:892236885dc7191cd52cde1e2064100bd718ac25331f6663a89341812fa9bb40"
+    },
+    {
+      "path": "tools/verify_surface_viewer.mjs",
+      "sha256": "sha256:62221c96986db0549dceba4db4e3fadddd07411ec073594f8c4ab97a5edc85b1"
+    },
+    {
+      "path": "tools/verify_viewer.mjs",
+      "sha256": "sha256:f6ce713e976572280958140a070f214edf1ed838a640c86108fbf666a1cec4fd"
+    }
+  ],
+  "scope": "Selected C01-C20 requirements measured through distinct real unittest methods and identified retained external evidence. This report does not certify the whole Python suite, remote CI, every legacy external destination, or the full product.",
+  "full_product_conformance_certified": false,
+  "summary": {
+    "total": 20,
+    "passed": 17,
+    "failed": 3,
+    "pending": 0,
+    "all_adopted_cases_selected": true,
+    "case_gate_complete": false
+  },
+  "cases": [
+    {
+      "id": "C01",
+      "title": "Positive module reuse",
+      "requirements": [
+        "CON-002",
+        "CON-003",
+        "CON-007",
+        "CON-009",
+        "CON-010"
+      ],
+      "expected": "Two entry objects instantiate one pinned library class; internal parts, parameter overrides, references, and motion state remain independent.",
+      "status": "passed",
+      "required_tests": [
+        "test_construction.ConstructionTests.test_frozen_rack_all_126_independent_world_poses",
+        "test_construction_catalog.ConstructionCatalogTests.test_complete_import_parts_override_and_action_example_evaluates",
+        "test_construction_catalog.ConstructionCatalogTests.test_linked_rack_exposes_public_declarations_at_exact_original_spans",
+        "test_linker.LinkerTests.test_c01_reusable_library_has_original_namespace_and_private_boundary",
+        "test_linker.LinkerTests.test_manifest_seals_concrete_cases_and_expected_failure_origins",
+        "test_linker.ModuleExecutionTests.test_c01_actual_reused_component_instances_are_independent"
+      ],
+      "test_outcomes": {
+        "passed": 6
+      },
+      "module_scenario_expectations": [
+        {
+          "id": "01-keyed-rack",
+          "source": "01-keyed-rack/program.files.json",
+          "loader": "files",
+          "level": "constructed",
+          "expected": {
+            "outcome": "valid",
+            "fixture_expectations": "01-keyed-rack/expected.json",
+            "program_revision": "sha256:c77d102a4b201d3c3cce6cbdc73c38eedf0bb1dfca7c9843a92d697cc0c7e082",
+            "source_revisions": {
+              "entry": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+              "package:example.hinges@1.0.0": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+            }
+          }
+        }
+      ],
+      "external_gates": [],
+      "pending_reasons": []
+    },
+    {
+      "id": "C02",
+      "title": "Namespaces and composition",
+      "requirements": [
+        "CON-003",
+        "CON-005"
+      ],
+      "expected": "Two libraries expose the same lexical class/function names through distinct aliases. Qualification resolves each correctly; alias rename retains the imported nominal identity.",
+      "status": "passed",
+      "required_tests": [
+        "test_construction_catalog.ConstructionCatalogTests.test_alias_changes_preserve_imported_nominal_identity_and_source_provenance",
+        "test_construction_catalog.ConstructionCatalogTests.test_unrelated_packages_may_share_module_names_keys_and_filenames",
+        "test_linker.LinkerTests.test_alias_rename_and_two_aliases_do_not_create_nominal_types",
+        "test_linker.LinkerTests.test_c02_equal_lexical_names_and_module_keys_are_package_scoped",
+        "test_linker.LinkerTests.test_manifest_seals_concrete_cases_and_expected_failure_origins",
+        "test_linker.ModuleExecutionTests.test_alias_change_preserves_constructed_types_and_strict_nominal_argument_check",
+        "test_linker.ModuleExecutionTests.test_c02_c03_execute_declaring_module_helpers_and_nominal_references",
+        "test_syntax02.Syntax02Tests.test_qualified_base_reference_types_calls_and_visibility"
+      ],
+      "test_outcomes": {
+        "passed": 8
+      },
+      "module_scenario_expectations": [
+        {
+          "id": "02-namespaces",
+          "source": "02-namespaces/program.files.json",
+          "loader": "files",
+          "level": "constructed",
+          "expected": {
+            "outcome": "valid",
+            "fixture_expectations": "02-namespaces/expected.json",
+            "program_revision": "sha256:297079ebd66992995bef39fbb9d6e4120848a40a9ddbeb88a6992becdbaa2669",
+            "source_revisions": {
+              "entry": "sha256:c1337f4355acd43dbaf4bf5916d3432050cb999087525b6d11b49cee80343d95",
+              "package:example.left@1.0.0": "sha256:7d7ed2502ba88acfdc7d32668ae9bd0cf77add38f70cec5856c6c4a2e6a835b1",
+              "package:example.right@1.0.0": "sha256:8f822d2b66bdb32e88304f846f1667ce940573d271e5d08202f6b75197ce2c67"
+            }
+          }
+        }
+      ],
+      "external_gates": [],
+      "pending_reasons": []
+    },
+    {
+      "id": "C03",
+      "title": "Transitive closure",
+      "requirements": [
+        "CON-002",
+        "CON-003",
+        "CON-005"
+      ],
+      "expected": "An entry imports A, A imports B; a clean offline resolver uses exactly the supplied pinned bytes and reports the full dependency closure.",
+      "status": "passed",
+      "required_tests": [
+        "test_bundle.BundleTests.test_file_manifest_preserves_bytes_and_ignores_transport_location",
+        "test_linker.LinkerTests.test_c03_transitive_and_diamond_resolution_use_supplied_exact_units_once",
+        "test_linker.LinkerTests.test_manifest_seals_concrete_cases_and_expected_failure_origins",
+        "test_linker.LinkerTests.test_whole_closure_requires_and_caller_cancellation_are_preserved",
+        "test_linker.ModuleExecutionTests.test_c02_c03_execute_declaring_module_helpers_and_nominal_references"
+      ],
+      "test_outcomes": {
+        "passed": 5
+      },
+      "module_scenario_expectations": [
+        {
+          "id": "03-transitive",
+          "source": "03-transitive/program.files.json",
+          "loader": "files",
+          "level": "constructed",
+          "expected": {
+            "outcome": "valid",
+            "fixture_expectations": "03-transitive/expected.json",
+            "program_revision": "sha256:cd5e1dc9b47c89f6a82299b775e57e62f9e95b2de4d211006938f3f9318fb391",
+            "source_revisions": {
+              "entry": "sha256:023e0bce0158fad6494894bb2a60724bb8774446420a80ea136a9bc7e8b4758f",
+              "package:example.arithmetic@1.0.0": "sha256:0324f021efeba5a20e2a0bf05e920336f2b9307497705eb85d8d575f5a5e8081",
+              "package:example.geometry@1.0.0": "sha256:f684a724c77210c07208dd0986ed460ed41f8aa502ccc2cd82a6ad549cab63cb"
+            }
+          }
+        }
+      ],
+      "external_gates": [],
+      "pending_reasons": []
+    },
+    {
+      "id": "C04",
+      "title": "Positive keyed construction",
+      "requirements": [
+        "CON-007",
+        "CON-008",
+        "CON-010"
+      ],
+      "expected": "One generator creates three explicitly keyed asymmetric parts. Expected identities, dimensions, poses, ownership, and own/aggregate mass match a separately authored reference assembly.",
+      "status": "passed",
+      "required_tests": [
+        "test_construction.ConstructionTests.test_frozen_rack_all_126_independent_world_poses",
+        "test_construction.ConstructionTests.test_nonzero_own_and_aggregate_mass_has_no_collection_contribution",
+        "test_construction.ConstructionTests.test_rack_matches_separately_authored_ordinary_assembly"
+      ],
+      "test_outcomes": {
+        "passed": 3
+      },
+      "module_scenario_expectations": [],
+      "external_gates": [],
+      "pending_reasons": []
+    },
+    {
+      "id": "C05",
+      "title": "Key stability",
+      "requirements": [
+        "CON-006",
+        "CON-008"
+      ],
+      "expected": "Reorder inputs, insert one key, then remove another. Surviving occurrence/descendant identities and effective inputs remain unchanged; only intended membership changes.",
+      "status": "passed",
+      "required_tests": [
+        "test_construction.ConstructionTests.test_stable_keys_order_insert_remove_and_dot_key",
+        "test_syntax02.Syntax02Tests.test_key_steps_do_not_split_dotted_entry_names"
+      ],
+      "test_outcomes": {
+        "passed": 2
+      },
+      "module_scenario_expectations": [],
+      "external_gates": [],
+      "pending_reasons": []
+    },
+    {
+      "id": "C06",
+      "title": "Empty and singleton boundaries",
+      "requirements": [
+        "CON-006",
+        "CON-007",
+        "CON-010"
+      ],
+      "expected": "Empty and one-entry inputs have declared types, exact counts and mass; valid empty generation produces no phantom object/frame/body. Invalid body types/access still fail when empty.",
+      "status": "passed",
+      "required_tests": [
+        "test_construction.ConstructionTests.test_empty_body_still_type_access_and_recursive_composition_checked",
+        "test_construction.ConstructionTests.test_empty_singleton_have_no_collection_body_or_frame",
+        "test_construction_catalog.ConstructionCatalogTests.test_closed_keyed_and_len_examples_construct_real_geometry"
+      ],
+      "test_outcomes": {
+        "passed": 3
+      },
+      "module_scenario_expectations": [],
+      "external_gates": [],
+      "pending_reasons": []
+    },
+    {
+      "id": "C07",
+      "title": "Nested final-input composition",
+      "requirements": [
+        "CON-007",
+        "CON-009"
+      ],
+      "expected": "An outer initializer changes a child's keyed input before nested construction. No default-only child survives, no child is duplicated, and final references/values resolve once.",
+      "status": "passed",
+      "required_tests": [
+        "test_construction.ConstructionTests.test_all_generated_sibling_shells_exist_before_body_fields",
+        "test_construction.ConstructionTests.test_deeper_generated_parent_lexical_self_inputs_feed_child_shape",
+        "test_construction.ConstructionTests.test_final_keyed_override_replaces_shape_before_registration",
+        "test_construction.ConstructionTests.test_generated_child_own_final_input_drives_nested_shape",
+        "test_construction.ConstructionTests.test_helper_preserves_lexical_self_origin_through_base_ref_coercion"
+      ],
+      "test_outcomes": {
+        "passed": 5
+      },
+      "module_scenario_expectations": [],
+      "external_gates": [],
+      "pending_reasons": []
+    },
+    {
+      "id": "C08",
+      "title": "Scoped per-key repair",
+      "requirements": [
+        "CON-009",
+        "CON-011",
+        "CON-013"
+      ],
+      "expected": "Change one generated public parameter through an occurrence initializer. Siblings and shared library bytes remain unchanged; inspection identifies the override and its origin.",
+      "status": "passed",
+      "required_tests": [
+        "test_construction.ConstructionTests.test_generated_provenance_and_precise_public_repair_target",
+        "test_construction.ConstructionTests.test_per_key_scope_precedence_and_duplicate_write",
+        "test_program_agent.ProgramAgentTests.test_generated_source_locations_and_public_initializer_target",
+        "test_program_agent.ProgramAgentTests.test_scoped_repair_changes_one_generated_occurrence_only"
+      ],
+      "test_outcomes": {
+        "passed": 4
+      },
+      "module_scenario_expectations": [],
+      "external_gates": [],
+      "pending_reasons": []
+    },
+    {
+      "id": "C09",
+      "title": "UTF-8 and candidate source",
+      "requirements": [
+        "CON-005",
+        "CON-011",
+        "CON-013"
+      ],
+      "expected": "A rejected per-key unit edit reports the actual file/hash and candidate byte span, preserves accepted program bytes, and can be repaired against the accepted head.",
+      "status": "passed",
+      "required_tests": [
+        "test_construction_catalog.ConstructionCatalogTests.test_utf8_source_previews_are_bounded_without_fabricated_characters",
+        "test_program_agent.ProgramAgentTests.test_entry_and_library_patch_is_atomic_on_wrong_source_precondition",
+        "test_program_agent.ProgramAgentTests.test_invalid_candidate_has_its_actual_unit_hash_and_preserves_head",
+        "test_program_agent.ProgramAgentTests.test_utf8_boundary_failure_uses_original_source_location",
+        "test_program_source_review.ProgramEditReviewTests.test_c09_utf8_dot_key_candidate_failure_and_accepted_head_repair",
+        "test_program_source_review.SourceProjectionReviewTests.test_imported_utf8_diagnostic_and_cross_file_related_span_use_original_units",
+        "test_syntax02.Syntax02Tests.test_utf8_crlf_primary_and_import_literal_spans",
+        "test_program_agent.ProgramAgentTests.test_unverified_patch_coordinates_do_not_invent_source_locations"
+      ],
+      "test_outcomes": {
+        "passed": 8
+      },
+      "module_scenario_expectations": [],
+      "external_gates": [],
+      "pending_reasons": []
+    },
+    {
+      "id": "C10",
+      "title": "Exact pin failure",
+      "requirements": [
+        "CON-002",
+        "CON-004",
+        "CON-005"
+      ],
+      "expected": "Absent file, wrong hash, changed dependency bytes under one name, invalid path, and undeclared dependency each fail explicitly without ambient or network fallback.",
+      "status": "passed",
+      "required_tests": [
+        "test_bundle.BundleTests.test_closed_transport_shapes_unicode_and_pin_domains",
+        "test_bundle.BundleTests.test_file_path_validation_rejects_escape_symlink_and_nonregular",
+        "test_bundle.BundleTests.test_manifest_json_and_source_bytes_fail_as_transport",
+        "test_linker.LinkerTests.test_c10_missing_wrong_changed_and_extra_content_rejects_with_candidate_identity",
+        "test_linker.LinkerTests.test_import_pin_literal_domains_are_source_diagnostics",
+        "test_linker.LinkerTests.test_manifest_seals_concrete_cases_and_expected_failure_origins"
+      ],
+      "test_outcomes": {
+        "passed": 6
+      },
+      "module_scenario_expectations": [
+        {
+          "id": "missing-library",
+          "source": "04-module-rejections/missing-library.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-NAME",
+            "primary_source_id": "entry",
+            "program_revision": "sha256:97763f35e35450c30fa5c7a8894c8fa2f806e70b4d97542f8b376c6e36e03666",
+            "source_revisions": {
+              "entry": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a"
+            },
+            "reason": "missing_dependency"
+          }
+        },
+        {
+          "id": "wrong-pin",
+          "source": "04-module-rejections/wrong-pin.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-REVISION",
+            "primary_source_id": "entry",
+            "program_revision": "sha256:e11dbf1b63f70f8496f2695a8574fbbec430d015b29a7fef68f62f7cae59983d",
+            "source_revisions": {
+              "entry": "sha256:3c59e9ffc5220708b075e882e99b3630756786e85e2deda5a7b029f1b851ab13",
+              "package:example.hinges@1.0.0": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+            },
+            "reason": "pin_mismatch"
+          }
+        },
+        {
+          "id": "changed-library",
+          "source": "04-module-rejections/changed-library.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-REVISION",
+            "primary_source_id": "entry",
+            "program_revision": "sha256:5a5b76c46878c43ab0f0067baabb6122323f20f32febf0e3382b32953e90caa1",
+            "source_revisions": {
+              "entry": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+              "package:example.hinges@1.0.0": "sha256:f10ca23a8cc6e29682f99cdb2e0b4403362d0d814be369ffaa6267d9f3a1286a"
+            },
+            "reason": "pin_mismatch"
+          }
+        },
+        {
+          "id": "undeclared-library",
+          "source": "04-module-rejections/undeclared-library.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-NAME",
+            "primary_source_id": "package:example.extra@1.0.0",
+            "program_revision": "sha256:11748180d9f29e8575144d1766cf7c54b394d99679964068bcbc71d3e3eb1257",
+            "source_revisions": {
+              "entry": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+              "package:example.extra@1.0.0": "sha256:12fbdedbb1549a8e295ae75662f0b506ae72e088e5b73f54a43a48c283d23a33",
+              "package:example.hinges@1.0.0": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+            },
+            "reason": "unreachable_dependency"
+          }
+        },
+        {
+          "id": "escaped-path",
+          "source": "04-module-rejections/escaped-path.files.json",
+          "loader": "files",
+          "level": "linked",
+          "expected": {
+            "outcome": "transport_error",
+            "code": "OKA-E-REQUEST",
+            "primary_source_id": null
+          }
+        }
+      ],
+      "external_gates": [],
+      "pending_reasons": []
+    },
+    {
+      "id": "C11",
+      "title": "Module validity failure",
+      "requirements": [
+        "CON-001",
+        "CON-003",
+        "CON-004"
+      ],
+      "expected": "Import cycle, conflicting package pin/definition identity, incompatible version/profile, imported scene, or forbidden import-side effect fails before construction. Unrelated packages may reuse a module key without collision.",
+      "status": "passed",
+      "required_tests": [
+        "test_construction_catalog.ConstructionCatalogTests.test_unrelated_packages_may_share_module_names_keys_and_filenames",
+        "test_linker.LinkerTests.test_c11_cycles_are_detected_before_impossible_digest_fixed_points",
+        "test_linker.LinkerTests.test_conflicting_versions_are_revision_bound_semantic_rejection",
+        "test_linker.LinkerTests.test_imported_scene_missing_entry_scene_and_unsupported_profiles",
+        "test_linker.LinkerTests.test_manifest_seals_concrete_cases_and_expected_failure_origins",
+        "test_linker.LinkerTests.test_module_lookup_scope_disallows_collisions_unqualified_imports_and_reexports",
+        "test_linker.ModuleExecutionTests.test_unused_imported_function_body_and_capability_requirements_are_not_ignored",
+        "test_syntax02.Syntax02Tests.test_role_is_linked_version_and_profile_are_explicit"
+      ],
+      "test_outcomes": {
+        "passed": 8
+      },
+      "module_scenario_expectations": [
+        {
+          "id": "import-cycle",
+          "source": "04-module-rejections/import-cycle.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-DEPENDENCY-CYCLE",
+            "primary_source_id": "package:example.b@1.0.0",
+            "program_revision": "sha256:cac904e78336f19eb08ad3d7d3a470a671618b8def4af1fa789490744c5aafd9",
+            "source_revisions": {
+              "entry": "sha256:6f562b9dadf604bfd1f25525c311292a0efef9c9350b5b4722adc620ab5f5913",
+              "package:example.a@1.0.0": "sha256:eb385793e041b563cf1771ff21ac1a80c48ce4a62b1df84510eab5420d7d77a1",
+              "package:example.b@1.0.0": "sha256:79c23b34f4440671a65197cf6765701a96105f57ac84e9ca89cc721e9c1ab87e"
+            },
+            "reason": "import_cycle"
+          }
+        },
+        {
+          "id": "conflicting-versions",
+          "source": "04-module-rejections/conflicting-versions.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-REVISION",
+            "primary_source_id": "entry",
+            "program_revision": "sha256:c953a959b37a3f2aa75e607adb66e0f307907402b972fbf380e56cc419acef23",
+            "source_revisions": {
+              "entry": "sha256:898dc9e7559d995ec88ed3213ffe73fa9f53866cd1071892156aad53bfc7d56b",
+              "package:example.a@1.0.0": "sha256:a481a2e5710edf6e56dfa2d9e7cbddf32cae9bfba66c3f52503e6e6e6831ddc0",
+              "package:example.a@2.0.0": "sha256:c498e0bd906d4f995e4ef433700a560da4e6194f0971df00e5c0c910cf167ebd"
+            },
+            "reason": "conflicting_package_versions"
+          }
+        },
+        {
+          "id": "imported-scene",
+          "source": "04-module-rejections/imported-scene.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-TYPE",
+            "primary_source_id": "package:example.library@1.0.0",
+            "program_revision": "sha256:e7845b4605053d3358c6847d99c122089bd321e30480798db0b27bd9ce1ed1b2",
+            "source_revisions": {
+              "entry": "sha256:ef4274c24952e94185f4b097b49639f11d0488ad32c930ae438abda00182b158",
+              "package:example.library@1.0.0": "sha256:5398887e0f1682c47ab08ff18d9c4b6097ef52c41acc01862451fbf1bbe973fd"
+            }
+          }
+        },
+        {
+          "id": "incompatible-language",
+          "source": "04-module-rejections/incompatible-language.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-CAPABILITY-UNSUPPORTED",
+            "primary_source_id": "package:example.library@1.0.0",
+            "program_revision": "sha256:c9648a339209fda1d49243f0c7cb86da1d8c0ac5a72c10cc8d5131b8aeb52c62",
+            "source_revisions": {
+              "entry": "sha256:b872fc860ed7fb4f07c416e18e7bcae4f98d44fa268910f60623988ca3398bd4",
+              "package:example.library@1.0.0": "sha256:a6444add01ee48d5d8a8a17cb8119d2c41e971507c13cfdfce969c3657d7767f"
+            }
+          }
+        },
+        {
+          "id": "incompatible-profile",
+          "source": "04-module-rejections/incompatible-profile.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-CAPABILITY-UNSUPPORTED",
+            "primary_source_id": "package:example.library@1.0.0",
+            "program_revision": "sha256:194c5227548a1264ea87f19ac6c2b07ba8270e071969fe9ad881b03286835604",
+            "source_revisions": {
+              "entry": "sha256:bfd85b1e3fb92b1921a71a7ce1998acad7e1671d67b18789e0fbea65e749a816",
+              "package:example.library@1.0.0": "sha256:57da99b74653ebc60cb6c6d6f8c5eb20636cd48af736a632d645065f99b5adbb"
+            }
+          }
+        },
+        {
+          "id": "top-level-effect",
+          "source": "04-module-rejections/top-level-effect.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-SYNTAX",
+            "primary_source_id": "package:example.library@1.0.0",
+            "program_revision": "sha256:5d3f7a9088c928f5ec3edc95159cf3d45663602787c3564bd373a4c0db1bc804",
+            "source_revisions": {
+              "entry": "sha256:d12f7c9e580329cbec74d59e59dfd4fb1d322c61f8f2293739f3b9762bd43a81",
+              "package:example.library@1.0.0": "sha256:8884400ab53770926e730c85c651eef28d7518c76053448687e4c702c9a7d400"
+            }
+          }
+        },
+        {
+          "id": "duplicate-definition-key",
+          "source": "04-module-rejections/duplicate-definition-key.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-ID",
+            "primary_source_id": "package:example.library@1.0.0",
+            "program_revision": "sha256:1a35fe6ba459edb69703dae0e31cff8e9445ff65a6cd2a9fea6700f7b79a5589",
+            "source_revisions": {
+              "entry": "sha256:0021247704ad9ddeb88cc61162daeb6dc82239cc25422d81dafab9011aee14c5",
+              "package:example.library@1.0.0": "sha256:0be99a6b1ada2e585ff83601182482e8d119798933c0307c917f6cdba7ee5b3e"
+            }
+          }
+        }
+      ],
+      "external_gates": [],
+      "pending_reasons": []
+    },
+    {
+      "id": "C12",
+      "title": "Key/type failure",
+      "requirements": [
+        "CON-006",
+        "CON-009"
+      ],
+      "expected": "Duplicate/invalid/missing keys, wrong element type/unit, and an unsupported keyed nesting/type form each return the specified error rather than silently coerce or omit an entry.",
+      "status": "passed",
+      "required_tests": [
+        "test_construction.ConstructionTests.test_duplicate_invalid_missing_and_wrong_dimension_keys",
+        "test_construction.ConstructionTests.test_keyed_literal_coercion_is_per_entry_and_collection_is_invariant",
+        "test_construction.ConstructionTests.test_no_keyed_operators_or_nested_reference_inputs",
+        "test_syntax02.Syntax02Tests.test_expression_keys_can_be_computed_but_assignment_keys_are_literals",
+        "test_syntax02.Syntax02Tests.test_keyed_empty_type_duplicate_entries_and_typed_body_bindings"
+      ],
+      "test_outcomes": {
+        "passed": 5
+      },
+      "module_scenario_expectations": [],
+      "external_gates": [],
+      "pending_reasons": []
+    },
+    {
+      "id": "C13",
+      "title": "Access and identity failure",
+      "requirements": [
+        "CON-003",
+        "CON-008",
+        "CON-009",
+        "CON-011",
+        "CON-013"
+      ],
+      "expected": "Private traversal, generated shared-span write, same-level duplicate override, and nominal replacement under an unchanged occurrence key fail without partial acceptance.",
+      "status": "passed",
+      "required_tests": [
+        "test_construction.ConstructionTests.test_empty_body_still_type_access_and_recursive_composition_checked",
+        "test_construction.ConstructionTests.test_per_key_scope_precedence_and_duplicate_write",
+        "test_program_agent.ProgramAgentTests.test_generated_identity_cannot_write_shared_library_bytes",
+        "test_program_agent.ProgramAgentTests.test_generated_nominal_replacement_requires_new_occurrence_key",
+        "test_program_source_review.ProgramEditReviewTests.test_c13_alias_rename_retains_nominal_identity_but_class_replacement_rejects",
+        "test_program_source_review.SourceProjectionReviewTests.test_equal_filenames_offsets_and_text_do_not_grant_cross_unit_write_scope",
+        "test_program_source_review.SourceProjectionReviewTests.test_generated_collection_and_occurrence_scopes_are_distinct_from_shared_definitions",
+        "test_program_agent.ProgramAgentTests.test_unverified_patch_coordinates_do_not_invent_source_locations"
+      ],
+      "test_outcomes": {
+        "passed": 8
+      },
+      "module_scenario_expectations": [],
+      "external_gates": [],
+      "pending_reasons": []
+    },
+    {
+      "id": "C14",
+      "title": "Shape dependency and cycle boundary",
+      "requirements": [
+        "CON-007",
+        "CON-009",
+        "CON-012"
+      ],
+      "expected": "Valid lazy pure inputs preserve baseline branch semantics. Prohibited evaluated shape reads, cyclic derivation, and recursive composition—including an empty generated edge—fail distinctly from resource exhaustion.",
+      "status": "passed",
+      "required_tests": [
+        "test_construction.ConstructionTests.test_cached_generated_scalar_and_true_derived_cycle_remain_invalid",
+        "test_construction.ConstructionTests.test_empty_body_still_type_access_and_recursive_composition_checked",
+        "test_construction.ConstructionTests.test_helper_preserves_lexical_self_origin_through_base_ref_coercion",
+        "test_construction.ConstructionTests.test_lazy_unused_generated_read_branch_is_typechecked_only",
+        "test_construction.ConstructionTests.test_shape_forbids_generated_views_len_and_cached_derivation",
+        "test_construction.ConstructionTests.test_tainted_body_assignment_cannot_become_own_nested_input",
+        "test_construction.ConstructionTests.test_tainted_copy_does_not_poison_shared_untainted_keyed_input"
+      ],
+      "test_outcomes": {
+        "passed": 7
+      },
+      "module_scenario_expectations": [],
+      "external_gates": [],
+      "pending_reasons": []
+    },
+    {
+      "id": "C15",
+      "title": "Resource boundaries",
+      "requirements": [
+        "CON-012",
+        "CON-013"
+      ],
+      "expected": "The supported maximum and one-over limit are tested for files/bytes, keyed entries, generated objects/depth, dependency work, and serialized output. Failure preserves accepted source and does not claim a partial complete assembly.",
+      "status": "passed",
+      "required_tests": [
+        "test_bundle.BundleTests.test_aggregate_source_module_and_filename_boundaries",
+        "test_construction.ConstructionTests.test_1000_objects_and_one_over",
+        "test_construction.ConstructionTests.test_1000_total_generated_objects_and_one_over",
+        "test_construction.ConstructionTests.test_check_callback_cancels_real_work",
+        "test_construction.ConstructionTests.test_key_count_256_and_257_boundary",
+        "test_construction.ConstructionTests.test_ownership_depth64_and65_before_host_recursion",
+        "test_construction.ConstructionTests.test_repeated_generated_reference_views_charge_logical_values",
+        "test_construction.ConstructionTests.test_work_value_and_encoded_byte_budgets",
+        "test_construction_catalog.ConstructionCatalogTests.test_cancellation_and_materialization_limits_do_not_return_partial_success",
+        "test_linker.LinkerTests.test_module_and_longest_import_depth_boundaries",
+        "test_linker.LinkerTests.test_total_token_budget_is_not_reset_for_each_dependency",
+        "test_program_agent.ProgramAgentTests.test_result_budget_failure_rolls_back_computed_acceptance_and_run",
+        "test_program_protocol.ProgramProtocolTests.test_exact_utf8_json_size_and_logically_repeated_values",
+        "test_program_protocol.ProgramProtocolTests.test_oversized_shared_graph_fails_before_json_string_allocation",
+        "test_program_transactions.ProgramTransactionTests.test_oversized_control_response_rolls_back_real_pending_cancellation",
+        "test_program_transactions.ProgramTransactionTests.test_request_termination_cannot_commit_a_computed_program_run_extension",
+        "test_syntax02.Syntax02Tests.test_bounded_nesting_and_caller_interrupt_are_not_host_failures",
+        "test_construction.ConstructionTests.test_generated_collection_steps_add_no_ownership_depth"
+      ],
+      "test_outcomes": {
+        "passed": 18
+      },
+      "module_scenario_expectations": [],
+      "external_gates": [],
+      "pending_reasons": []
+    },
+    {
+      "id": "C16",
+      "title": "Mechanical composition",
+      "requirements": [
+        "CON-007",
+        "CON-010"
+      ],
+      "expected": "Generated components with prescribed internal following/joints move independently within a moving owner; world transforms and mass match a written reference with no double motion.",
+      "status": "passed",
+      "required_tests": [
+        "test_construction.ConstructionTests.test_frozen_rack_all_126_independent_world_poses",
+        "test_construction.ConstructionTests.test_nonzero_own_and_aggregate_mass_has_no_collection_contribution",
+        "test_construction.ConstructionTests.test_rack_matches_separately_authored_ordinary_assembly",
+        "test_construction_catalog.ConstructionCatalogTests.test_complete_import_parts_override_and_action_example_evaluates"
+      ],
+      "test_outcomes": {
+        "passed": 4
+      },
+      "module_scenario_expectations": [],
+      "external_gates": [],
+      "pending_reasons": []
+    },
+    {
+      "id": "C17",
+      "title": "Release composition",
+      "requirements": [
+        "CON-010",
+        "CON-014"
+      ],
+      "expected": "A generated sphere initially carried through an explicit supported grip releases with the existing world-state transfer and gravity trajectory; ownership alone does not keep it attached.",
+      "status": "passed",
+      "required_tests": [
+        "test_construction.ConstructionTests.test_generated_grip_release_inherits_world_motion_then_gravity",
+        "test_construction_export.ConstructionExportTests.test_generated_release_is_world_baked_and_other_entry_remains_carried"
+      ],
+      "test_outcomes": {
+        "passed": 2
+      },
+      "module_scenario_expectations": [],
+      "external_gates": [],
+      "pending_reasons": []
+    },
+    {
+      "id": "C18",
+      "title": "Program revision and lifecycle",
+      "requirements": [
+        "CON-001",
+        "CON-005",
+        "CON-013"
+      ],
+      "expected": "Change a dependency pin through one atomic candidate; stale expected heads, old cursors/runs/artifacts, retries, cancellation, and independent-process recovery retain the specified program context. Existing `0.1` operations still pass their original cases.",
+      "status": "failed",
+      "required_tests": [
+        "test_agent.AgentContractTests.test_A01_stale_edit_preserves_current_revision",
+        "test_agent.AgentContractTests.test_A02_invalid_multi_patch_candidate_is_atomic",
+        "test_agent.AgentContractTests.test_A03_same_canonical_request_has_one_durable_effect",
+        "test_agent.AgentContractTests.test_A04_request_identity_cannot_change_payload",
+        "test_agent.AgentContractTests.test_A05_inspection_is_repeatable_without_advancing_run",
+        "test_agent.AgentContractTests.test_A06_continuation_cannot_switch_context",
+        "test_agent.AgentContractTests.test_A07_requested_support_is_not_silently_downgraded",
+        "test_agent.AgentContractTests.test_A08_cancel_after_commit_reports_accepted_result",
+        "test_agent.AgentContractTests.test_A09_expired_result_retains_unknown_outcome_tombstone",
+        "test_agent.AgentContractTests.test_A10_rotated_velocity_keeps_world_measurement_frame",
+        "test_conformance.ConformanceTests.test_all_published_cases_and_observations",
+        "test_program_agent.ProgramAgentTests.test_complete_program_identity_and_independent_store",
+        "test_program_agent.ProgramAgentTests.test_cursor_is_bound_to_program_and_immutable_query",
+        "test_program_agent.ProgramAgentTests.test_entry_and_library_patch_is_atomic_on_wrong_source_precondition",
+        "test_program_agent.ProgramAgentTests.test_library_change_and_exact_import_pin_are_one_candidate",
+        "test_program_agent.ProgramAgentTests.test_retrieved_old_artifact_keeps_its_original_program_after_edit",
+        "test_program_agent.ProgramAgentTests.test_source_only_state_prefix_and_old_program_run_isolation",
+        "test_program_protocol.ProgramProtocolTests.test_cli_invalid_json_still_returns_selected_protocol",
+        "test_program_protocol.ProgramProtocolTests.test_cli_requires_version_selection_and_keeps_stores_separate",
+        "test_program_protocol.ProgramProtocolTests.test_malformed_bundle_has_transport_error_before_candidate",
+        "test_program_protocol.ProgramProtocolTests.test_new_envelope_requires_program_fields_and_explicit_protocol",
+        "test_program_source_review.SourceProjectionReviewTests.test_program_conditions_do_not_invent_locations_or_mutate_core_diagnostics",
+        "test_program_transactions.ProgramTransactionTests.test_cancellation_after_complete_bundle_computation_prevents_acceptance",
+        "test_program_transactions.ProgramTransactionTests.test_changed_engine_preserves_program_evidence_but_fences_old_work",
+        "test_program_transactions.ProgramTransactionTests.test_competing_complete_bundles_commit_one_head_and_retain_loser_evidence",
+        "test_program_transactions.ProgramTransactionTests.test_competing_run_extensions_report_the_actual_committed_program_prefix",
+        "test_program_transactions.ProgramTransactionTests.test_exact_retry_and_expired_identity_never_replay_program_effects",
+        "test_program_transactions.ProgramTransactionTests.test_persisted_queued_bundle_resumes_in_a_new_python_process",
+        "test_program_transactions.ProgramTransactionTests.test_proven_dead_worker_is_fenced_but_a_live_worker_is_not_stolen",
+        "test_syntax02.Syntax02Tests.test_old_keywords_and_old_path_ast_keep_their_meaning"
+      ],
+      "test_outcomes": {
+        "failed": 1,
+        "passed": 29
+      },
+      "module_scenario_expectations": [],
+      "external_gates": [],
+      "pending_reasons": []
+    },
+    {
+      "id": "C19",
+      "title": "Deterministic identity and invalidation",
+      "requirements": [
+        "CON-005",
+        "CON-008",
+        "CON-013",
+        "CON-014"
+      ],
+      "expected": "Equivalent source-map ordering follows the adopted canonical hash rule; changing any closure bytes/pins changes the required revision. Old results retain the old identities and are not presented as new output.",
+      "status": "failed",
+      "required_tests": [
+        "test_bundle.BundleTests.test_candidate_hash_is_defined_before_parsing_and_survives_exact_utf8",
+        "test_bundle.BundleTests.test_frozen_golden_pin_and_exact_file_inline_round_trip",
+        "test_bundle.BundleTests.test_hash_order_and_every_declared_identity_input",
+        "test_bundle.BundleTests.test_snapshot_does_not_share_mutable_source_or_payload",
+        "test_bundle.BundleTests.test_source_id_ambiguity_and_conflicting_versions_are_distinct",
+        "test_construction_catalog.ConstructionCatalogTests.test_catalog_revisions_identify_content_and_returns_are_detached",
+        "test_construction_export.ConstructionExportTests.test_dependency_revision_cannot_relabel_existing_artifact",
+        "test_linker.LinkerTests.test_c19_supplied_snapshot_hash_precedes_any_link_error",
+        "test_linker.LinkerTests.test_manifest_seals_concrete_cases_and_expected_failure_origins",
+        "test_program_agent.ProgramAgentTests.test_cursor_is_bound_to_program_and_immutable_query",
+        "test_program_agent.ProgramAgentTests.test_retrieved_old_artifact_keeps_its_original_program_after_edit",
+        "test_program_agent.ProgramAgentTests.test_source_only_state_prefix_and_old_program_run_isolation"
+      ],
+      "test_outcomes": {
+        "failed": 1,
+        "passed": 11
+      },
+      "module_scenario_expectations": [
+        {
+          "id": "reordered-modules",
+          "source": "04-module-rejections/reordered-modules.bundle.json",
+          "loader": "inline",
+          "level": "constructed",
+          "expected": {
+            "outcome": "valid",
+            "program_revision": "sha256:cd5e1dc9b47c89f6a82299b775e57e62f9e95b2de4d211006938f3f9318fb391",
+            "source_revisions": {
+              "entry": "sha256:023e0bce0158fad6494894bb2a60724bb8774446420a80ea136a9bc7e8b4758f",
+              "package:example.arithmetic@1.0.0": "sha256:0324f021efeba5a20e2a0bf05e920336f2b9307497705eb85d8d575f5a5e8081",
+              "package:example.geometry@1.0.0": "sha256:f684a724c77210c07208dd0986ed460ed41f8aa502ccc2cd82a6ad549cab63cb"
+            }
+          }
+        },
+        {
+          "id": "changed-filename",
+          "source": "04-module-rejections/changed-filename.bundle.json",
+          "loader": "inline",
+          "level": "constructed",
+          "expected": {
+            "outcome": "valid",
+            "program_revision": "sha256:e9b65be9db6e8dfb1aaf456598a8ff05d1672f1afa5aded2f9056eea13273576",
+            "source_revisions": {
+              "entry": "sha256:023e0bce0158fad6494894bb2a60724bb8774446420a80ea136a9bc7e8b4758f",
+              "package:example.arithmetic@1.0.0": "sha256:0324f021efeba5a20e2a0bf05e920336f2b9307497705eb85d8d575f5a5e8081",
+              "package:example.geometry@1.0.0": "sha256:f684a724c77210c07208dd0986ed460ed41f8aa502ccc2cd82a6ad549cab63cb"
+            }
+          }
+        },
+        {
+          "id": "invalid-library-candidate",
+          "source": "04-module-rejections/invalid-library-candidate.bundle.json",
+          "loader": "inline",
+          "level": "linked",
+          "expected": {
+            "outcome": "invalid",
+            "code": "OKL-E-SYNTAX",
+            "primary_source_id": "package:example.geometry@1.0.0",
+            "program_revision": "sha256:8564b7fc41d030b209b75d576b86afe08b2f7e9fc6ff64c4c6d322471c2d6147",
+            "source_revisions": {
+              "entry": "sha256:023e0bce0158fad6494894bb2a60724bb8774446420a80ea136a9bc7e8b4758f",
+              "package:example.arithmetic@1.0.0": "sha256:0324f021efeba5a20e2a0bf05e920336f2b9307497705eb85d8d575f5a5e8081",
+              "package:example.geometry@1.0.0": "sha256:8cc518e29c1c120544d6c0060442082eea3ac7765b62a48b65e390120ccacb73"
+            }
+          }
+        }
+      ],
+      "external_gates": [],
+      "pending_reasons": []
+    },
+    {
+      "id": "C20",
+      "title": "Actual versioned delivery",
+      "requirements": [
+        "CON-005",
+        "CON-011",
+        "CON-014",
+        "CON-015"
+      ],
+      "expected": "Export and retrieve the generated assembly, verify source/program/artifact hashes and authored profile, validate glTF, compare imported geometry and motion, and visually inspect the same artifact. Unsupported output and lost recipe information are reported.",
+      "status": "failed",
+      "required_tests": [
+        "test_construction_catalog.ConstructionCatalogTests.test_global_metadata_preserves_core_and_covers_executable_names",
+        "test_construction_export.ConstructionExportTests.test_dependency_revision_cannot_relabel_existing_artifact",
+        "test_construction_export.ConstructionExportTests.test_explicit_target_profile_and_complete_exact_source_map",
+        "test_construction_export.ConstructionExportTests.test_generated_release_is_world_baked_and_other_entry_remains_carried",
+        "test_construction_export.ConstructionExportTests.test_independent_decode_matches_all126_frozen_poses_and_geometry",
+        "test_construction_export.ConstructionExportTests.test_real_serialized_provenance_tampering_is_rejected",
+        "test_construction_export.ConstructionExportTests.test_version_mismatch_and_ambiguous_source_hash_fail_closed",
+        "test_program_agent.ProgramAgentTests.test_retrieved_old_artifact_keeps_its_original_program_after_edit"
+      ],
+      "test_outcomes": {
+        "failed": 1,
+        "passed": 7
+      },
+      "module_scenario_expectations": [],
+      "external_gates": [
+        "identified_visual_delivery"
+      ],
+      "pending_reasons": [
+        "The identified independent visual-delivery gate is pending."
+      ]
+    }
+  ],
+  "test_execution": {
+    "unique_required": 128,
+    "tests_run": 128,
+    "elapsed_seconds": 79.891645,
+    "outcomes": {
+      "failed": 1,
+      "passed": 127
+    },
+    "loader_errors": [],
+    "fixture_errors": [],
+    "unexpected_test_records": [],
+    "tests": [
+      {
+        "test_id": "test_agent.AgentContractTests.test_A01_stale_edit_preserves_current_revision",
+        "status": "passed",
+        "elapsed_seconds": 0.089454,
+        "failures": []
+      },
+      {
+        "test_id": "test_agent.AgentContractTests.test_A02_invalid_multi_patch_candidate_is_atomic",
+        "status": "passed",
+        "elapsed_seconds": 0.058043,
+        "failures": []
+      },
+      {
+        "test_id": "test_agent.AgentContractTests.test_A03_same_canonical_request_has_one_durable_effect",
+        "status": "passed",
+        "elapsed_seconds": 0.090212,
+        "failures": []
+      },
+      {
+        "test_id": "test_agent.AgentContractTests.test_A04_request_identity_cannot_change_payload",
+        "status": "passed",
+        "elapsed_seconds": 0.082888,
+        "failures": []
+      },
+      {
+        "test_id": "test_agent.AgentContractTests.test_A05_inspection_is_repeatable_without_advancing_run",
+        "status": "passed",
+        "elapsed_seconds": 0.106926,
+        "failures": []
+      },
+      {
+        "test_id": "test_agent.AgentContractTests.test_A06_continuation_cannot_switch_context",
+        "status": "passed",
+        "elapsed_seconds": 0.427734,
+        "failures": []
+      },
+      {
+        "test_id": "test_agent.AgentContractTests.test_A07_requested_support_is_not_silently_downgraded",
+        "status": "passed",
+        "elapsed_seconds": 0.053874,
+        "failures": []
+      },
+      {
+        "test_id": "test_agent.AgentContractTests.test_A08_cancel_after_commit_reports_accepted_result",
+        "status": "passed",
+        "elapsed_seconds": 0.076011,
+        "failures": []
+      },
+      {
+        "test_id": "test_agent.AgentContractTests.test_A09_expired_result_retains_unknown_outcome_tombstone",
+        "status": "passed",
+        "elapsed_seconds": 0.074435,
+        "failures": []
+      },
+      {
+        "test_id": "test_agent.AgentContractTests.test_A10_rotated_velocity_keeps_world_measurement_frame",
+        "status": "passed",
+        "elapsed_seconds": 0.080279,
+        "failures": []
+      },
+      {
+        "test_id": "test_bundle.BundleTests.test_aggregate_source_module_and_filename_boundaries",
+        "status": "passed",
+        "elapsed_seconds": 0.012659,
+        "failures": []
+      },
+      {
+        "test_id": "test_bundle.BundleTests.test_candidate_hash_is_defined_before_parsing_and_survives_exact_utf8",
+        "status": "passed",
+        "elapsed_seconds": 0.000107,
+        "failures": []
+      },
+      {
+        "test_id": "test_bundle.BundleTests.test_closed_transport_shapes_unicode_and_pin_domains",
+        "status": "passed",
+        "elapsed_seconds": 0.000428,
+        "failures": []
+      },
+      {
+        "test_id": "test_bundle.BundleTests.test_file_manifest_preserves_bytes_and_ignores_transport_location",
+        "status": "passed",
+        "elapsed_seconds": 0.002152,
+        "failures": []
+      },
+      {
+        "test_id": "test_bundle.BundleTests.test_file_path_validation_rejects_escape_symlink_and_nonregular",
+        "status": "passed",
+        "elapsed_seconds": 0.004043,
+        "failures": []
+      },
+      {
+        "test_id": "test_bundle.BundleTests.test_frozen_golden_pin_and_exact_file_inline_round_trip",
+        "status": "passed",
+        "elapsed_seconds": 0.000937,
+        "failures": []
+      },
+      {
+        "test_id": "test_bundle.BundleTests.test_hash_order_and_every_declared_identity_input",
+        "status": "passed",
+        "elapsed_seconds": 0.000687,
+        "failures": []
+      },
+      {
+        "test_id": "test_bundle.BundleTests.test_manifest_json_and_source_bytes_fail_as_transport",
+        "status": "passed",
+        "elapsed_seconds": 0.002578,
+        "failures": []
+      },
+      {
+        "test_id": "test_bundle.BundleTests.test_snapshot_does_not_share_mutable_source_or_payload",
+        "status": "passed",
+        "elapsed_seconds": 0.000106,
+        "failures": []
+      },
+      {
+        "test_id": "test_bundle.BundleTests.test_source_id_ambiguity_and_conflicting_versions_are_distinct",
+        "status": "passed",
+        "elapsed_seconds": 0.000138,
+        "failures": []
+      },
+      {
+        "test_id": "test_conformance.ConformanceTests.test_all_published_cases_and_observations",
+        "status": "passed",
+        "elapsed_seconds": 0.000366,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_1000_objects_and_one_over",
+        "status": "passed",
+        "elapsed_seconds": 0.326352,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_1000_total_generated_objects_and_one_over",
+        "status": "passed",
+        "elapsed_seconds": 0.602225,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_all_generated_sibling_shells_exist_before_body_fields",
+        "status": "passed",
+        "elapsed_seconds": 0.003832,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_cached_generated_scalar_and_true_derived_cycle_remain_invalid",
+        "status": "passed",
+        "elapsed_seconds": 0.005205,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_check_callback_cancels_real_work",
+        "status": "passed",
+        "elapsed_seconds": 0.00091,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_deeper_generated_parent_lexical_self_inputs_feed_child_shape",
+        "status": "passed",
+        "elapsed_seconds": 0.008978,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_duplicate_invalid_missing_and_wrong_dimension_keys",
+        "status": "passed",
+        "elapsed_seconds": 0.005568,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_empty_body_still_type_access_and_recursive_composition_checked",
+        "status": "passed",
+        "elapsed_seconds": 0.002871,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_empty_singleton_have_no_collection_body_or_frame",
+        "status": "passed",
+        "elapsed_seconds": 0.004307,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_final_keyed_override_replaces_shape_before_registration",
+        "status": "passed",
+        "elapsed_seconds": 0.004845,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_frozen_rack_all_126_independent_world_poses",
+        "status": "passed",
+        "elapsed_seconds": 0.178636,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_generated_child_own_final_input_drives_nested_shape",
+        "status": "passed",
+        "elapsed_seconds": 0.004031,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_generated_collection_steps_add_no_ownership_depth",
+        "status": "passed",
+        "elapsed_seconds": 0.20823,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_generated_grip_release_inherits_world_motion_then_gravity",
+        "status": "passed",
+        "elapsed_seconds": 0.018782,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_generated_provenance_and_precise_public_repair_target",
+        "status": "passed",
+        "elapsed_seconds": 0.028842,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_helper_preserves_lexical_self_origin_through_base_ref_coercion",
+        "status": "passed",
+        "elapsed_seconds": 0.007724,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_key_count_256_and_257_boundary",
+        "status": "passed",
+        "elapsed_seconds": 0.200215,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_keyed_literal_coercion_is_per_entry_and_collection_is_invariant",
+        "status": "passed",
+        "elapsed_seconds": 0.002289,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_lazy_unused_generated_read_branch_is_typechecked_only",
+        "status": "passed",
+        "elapsed_seconds": 0.004303,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_no_keyed_operators_or_nested_reference_inputs",
+        "status": "passed",
+        "elapsed_seconds": 0.005361,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_nonzero_own_and_aggregate_mass_has_no_collection_contribution",
+        "status": "passed",
+        "elapsed_seconds": 0.003303,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_ownership_depth64_and65_before_host_recursion",
+        "status": "passed",
+        "elapsed_seconds": 0.071519,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_per_key_scope_precedence_and_duplicate_write",
+        "status": "passed",
+        "elapsed_seconds": 0.007166,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_rack_matches_separately_authored_ordinary_assembly",
+        "status": "passed",
+        "elapsed_seconds": 0.328986,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_repeated_generated_reference_views_charge_logical_values",
+        "status": "passed",
+        "elapsed_seconds": 0.105861,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_shape_forbids_generated_views_len_and_cached_derivation",
+        "status": "passed",
+        "elapsed_seconds": 0.005204,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_stable_keys_order_insert_remove_and_dot_key",
+        "status": "passed",
+        "elapsed_seconds": 0.009671,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_tainted_body_assignment_cannot_become_own_nested_input",
+        "status": "passed",
+        "elapsed_seconds": 0.001629,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_tainted_copy_does_not_poison_shared_untainted_keyed_input",
+        "status": "passed",
+        "elapsed_seconds": 0.008364,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction.ConstructionTests.test_work_value_and_encoded_byte_budgets",
+        "status": "passed",
+        "elapsed_seconds": 0.752159,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction_catalog.ConstructionCatalogTests.test_alias_changes_preserve_imported_nominal_identity_and_source_provenance",
+        "status": "passed",
+        "elapsed_seconds": 0.023394,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction_catalog.ConstructionCatalogTests.test_cancellation_and_materialization_limits_do_not_return_partial_success",
+        "status": "passed",
+        "elapsed_seconds": 0.172926,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction_catalog.ConstructionCatalogTests.test_catalog_revisions_identify_content_and_returns_are_detached",
+        "status": "passed",
+        "elapsed_seconds": 0.047726,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction_catalog.ConstructionCatalogTests.test_closed_keyed_and_len_examples_construct_real_geometry",
+        "status": "passed",
+        "elapsed_seconds": 0.014039,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction_catalog.ConstructionCatalogTests.test_complete_import_parts_override_and_action_example_evaluates",
+        "status": "passed",
+        "elapsed_seconds": 0.137614,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction_catalog.ConstructionCatalogTests.test_global_metadata_preserves_core_and_covers_executable_names",
+        "status": "passed",
+        "elapsed_seconds": 0.010885,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction_catalog.ConstructionCatalogTests.test_linked_rack_exposes_public_declarations_at_exact_original_spans",
+        "status": "passed",
+        "elapsed_seconds": 0.012832,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction_catalog.ConstructionCatalogTests.test_unrelated_packages_may_share_module_names_keys_and_filenames",
+        "status": "passed",
+        "elapsed_seconds": 0.007582,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction_catalog.ConstructionCatalogTests.test_utf8_source_previews_are_bounded_without_fabricated_characters",
+        "status": "passed",
+        "elapsed_seconds": 0.007787,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction_export.ConstructionExportTests.test_dependency_revision_cannot_relabel_existing_artifact",
+        "status": "passed",
+        "elapsed_seconds": 0.136897,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction_export.ConstructionExportTests.test_explicit_target_profile_and_complete_exact_source_map",
+        "status": "passed",
+        "elapsed_seconds": 0.000522,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction_export.ConstructionExportTests.test_generated_release_is_world_baked_and_other_entry_remains_carried",
+        "status": "passed",
+        "elapsed_seconds": 1.073288,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction_export.ConstructionExportTests.test_independent_decode_matches_all126_frozen_poses_and_geometry",
+        "status": "passed",
+        "elapsed_seconds": 0.013872,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction_export.ConstructionExportTests.test_real_serialized_provenance_tampering_is_rejected",
+        "status": "passed",
+        "elapsed_seconds": 0.471217,
+        "failures": []
+      },
+      {
+        "test_id": "test_construction_export.ConstructionExportTests.test_version_mismatch_and_ambiguous_source_hash_fail_closed",
+        "status": "passed",
+        "elapsed_seconds": 0.010182,
+        "failures": []
+      },
+      {
+        "test_id": "test_linker.LinkerTests.test_alias_rename_and_two_aliases_do_not_create_nominal_types",
+        "status": "passed",
+        "elapsed_seconds": 0.008175,
+        "failures": []
+      },
+      {
+        "test_id": "test_linker.LinkerTests.test_c01_reusable_library_has_original_namespace_and_private_boundary",
+        "status": "passed",
+        "elapsed_seconds": 0.004638,
+        "failures": []
+      },
+      {
+        "test_id": "test_linker.LinkerTests.test_c02_equal_lexical_names_and_module_keys_are_package_scoped",
+        "status": "passed",
+        "elapsed_seconds": 0.002858,
+        "failures": []
+      },
+      {
+        "test_id": "test_linker.LinkerTests.test_c03_transitive_and_diamond_resolution_use_supplied_exact_units_once",
+        "status": "passed",
+        "elapsed_seconds": 0.002743,
+        "failures": []
+      },
+      {
+        "test_id": "test_linker.LinkerTests.test_c10_missing_wrong_changed_and_extra_content_rejects_with_candidate_identity",
+        "status": "passed",
+        "elapsed_seconds": 0.011903,
+        "failures": []
+      },
+      {
+        "test_id": "test_linker.LinkerTests.test_c11_cycles_are_detected_before_impossible_digest_fixed_points",
+        "status": "passed",
+        "elapsed_seconds": 0.000539,
+        "failures": []
+      },
+      {
+        "test_id": "test_linker.LinkerTests.test_c19_supplied_snapshot_hash_precedes_any_link_error",
+        "status": "passed",
+        "elapsed_seconds": 0.002003,
+        "failures": []
+      },
+      {
+        "test_id": "test_linker.LinkerTests.test_conflicting_versions_are_revision_bound_semantic_rejection",
+        "status": "passed",
+        "elapsed_seconds": 0.000858,
+        "failures": []
+      },
+      {
+        "test_id": "test_linker.LinkerTests.test_import_pin_literal_domains_are_source_diagnostics",
+        "status": "passed",
+        "elapsed_seconds": 0.001487,
+        "failures": []
+      },
+      {
+        "test_id": "test_linker.LinkerTests.test_imported_scene_missing_entry_scene_and_unsupported_profiles",
+        "status": "passed",
+        "elapsed_seconds": 0.001268,
+        "failures": []
+      },
+      {
+        "test_id": "test_linker.LinkerTests.test_manifest_seals_concrete_cases_and_expected_failure_origins",
+        "status": "passed",
+        "elapsed_seconds": 0.068258,
+        "failures": []
+      },
+      {
+        "test_id": "test_linker.LinkerTests.test_module_and_longest_import_depth_boundaries",
+        "status": "passed",
+        "elapsed_seconds": 0.004543,
+        "failures": []
+      },
+      {
+        "test_id": "test_linker.LinkerTests.test_module_lookup_scope_disallows_collisions_unqualified_imports_and_reexports",
+        "status": "passed",
+        "elapsed_seconds": 0.001455,
+        "failures": []
+      },
+      {
+        "test_id": "test_linker.LinkerTests.test_total_token_budget_is_not_reset_for_each_dependency",
+        "status": "passed",
+        "elapsed_seconds": 0.681758,
+        "failures": []
+      },
+      {
+        "test_id": "test_linker.LinkerTests.test_whole_closure_requires_and_caller_cancellation_are_preserved",
+        "status": "passed",
+        "elapsed_seconds": 0.000559,
+        "failures": []
+      },
+      {
+        "test_id": "test_linker.ModuleExecutionTests.test_alias_change_preserves_constructed_types_and_strict_nominal_argument_check",
+        "status": "passed",
+        "elapsed_seconds": 0.01435,
+        "failures": []
+      },
+      {
+        "test_id": "test_linker.ModuleExecutionTests.test_c01_actual_reused_component_instances_are_independent",
+        "status": "passed",
+        "elapsed_seconds": 0.029045,
+        "failures": []
+      },
+      {
+        "test_id": "test_linker.ModuleExecutionTests.test_c02_c03_execute_declaring_module_helpers_and_nominal_references",
+        "status": "passed",
+        "elapsed_seconds": 0.008594,
+        "failures": []
+      },
+      {
+        "test_id": "test_linker.ModuleExecutionTests.test_unused_imported_function_body_and_capability_requirements_are_not_ignored",
+        "status": "passed",
+        "elapsed_seconds": 0.002118,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_agent.ProgramAgentTests.test_complete_program_identity_and_independent_store",
+        "status": "passed",
+        "elapsed_seconds": 0.287988,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_agent.ProgramAgentTests.test_cursor_is_bound_to_program_and_immutable_query",
+        "status": "passed",
+        "elapsed_seconds": 0.451719,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_agent.ProgramAgentTests.test_entry_and_library_patch_is_atomic_on_wrong_source_precondition",
+        "status": "passed",
+        "elapsed_seconds": 0.125085,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_agent.ProgramAgentTests.test_generated_identity_cannot_write_shared_library_bytes",
+        "status": "passed",
+        "elapsed_seconds": 0.120537,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_agent.ProgramAgentTests.test_generated_nominal_replacement_requires_new_occurrence_key",
+        "status": "passed",
+        "elapsed_seconds": 0.3063,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_agent.ProgramAgentTests.test_generated_source_locations_and_public_initializer_target",
+        "status": "passed",
+        "elapsed_seconds": 0.183121,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_agent.ProgramAgentTests.test_invalid_candidate_has_its_actual_unit_hash_and_preserves_head",
+        "status": "passed",
+        "elapsed_seconds": 0.353489,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_agent.ProgramAgentTests.test_library_change_and_exact_import_pin_are_one_candidate",
+        "status": "passed",
+        "elapsed_seconds": 0.568261,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_agent.ProgramAgentTests.test_result_budget_failure_rolls_back_computed_acceptance_and_run",
+        "status": "passed",
+        "elapsed_seconds": 0.763338,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_agent.ProgramAgentTests.test_retrieved_old_artifact_keeps_its_original_program_after_edit",
+        "status": "failed",
+        "elapsed_seconds": 48.394125,
+        "failures": [
+          "Traceback (most recent call last):\n  File \"/tmp/ontokin-05dd-checkpoint032/evidence/local-core-002/workspace/tests/test_program_agent.py\", line 249, in test_retrieved_old_artifact_keeps_its_original_program_after_edit\n    self.assertEqual(exported['status'],'succeeded',exported)\nAssertionError: 'failed' != 'succeeded'\n- failed\n+ succeeded\n : {'accepted_program_revision': 'sha256:c77d102a4b201d3c3cce6cbdc73c38eedf0bb1dfca7c9843a92d697cc0c7e082', 'achieved_level': 'evaluated', 'diagnostics': [{'blocks': ['represented', 'constructed', 'evaluated', 'delivered'], 'category': 'resource_limit', 'code': 'OKL-E-RESOURCE', 'details': {'budget': 'max_elapsed_ms', 'consumed': 48103.099285006465, 'limit': 30000, 'partial_results': 'No uncommitted source, artifact or run advancement is available.', 'request_terminated': True}, 'location_status': 'program_condition_without_source_span', 'message': 'The request exhausted max_elapsed_ms.', 'phase': 'support', 'primary': None, 'program_revision': 'sha256:c77d102a4b201d3c3cce6cbdc73c38eedf0bb1dfca7c9843a92d697cc0c7e082', 'related': [], 'repair': {'patches': [], 'summary': 'Correct the reported condition and validate the complete candidate again.'}, 'rule_ids': ['LANG-009'], 'run_id': None, 'schema_version': 'ontokin.diagnostic/0.2', 'severity': 'error', 'source_id': None, 'source_revision': None, 'time': None}], 'next_cursor': None, 'operation': 'export', 'program_revision': 'sha256:c77d102a4b201d3c3cce6cbdc73c38eedf0bb1dfca7c9843a92d697cc0c7e082', 'progress': {'cancellation_requested': False, 'implementation': {'name': 'ontokin-reference', 'source_code_sha256': 'sha256:66eaf6fc97b8a71d090b993849bc9b50846872e2a50f884f3cf1901ca199f23d', 'version': '0.4.0'}, 'phase': 'complete'}, 'project_id': 'program', 'protocol_error': None, 'request_id': 'r2', 'requested_level': 'delivered', 'result': {'achieved_level': 'evaluated', 'delivery': 'failed', 'implementation': {'name': 'ontokin-reference', 'source_code_sha256': 'sha256:66eaf6fc97b8a71d090b993849bc9b50846872e2a50f884f3cf1901ca199f23d', 'version': '0.4.0'}, 'outcome': 'resource_limit', 'partial_results': 'Only already-retained immutable source snapshots and any previously committed run descriptor are available.', 'requested_level': 'delivered', 'run_state': None}, 'run_id': None, 'schema_version': 'ontokin.agent/0.2', 'status': 'failed', 'truncated': False}\n"
+        ]
+      },
+      {
+        "test_id": "test_program_agent.ProgramAgentTests.test_scoped_repair_changes_one_generated_occurrence_only",
+        "status": "passed",
+        "elapsed_seconds": 0.84643,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_agent.ProgramAgentTests.test_source_only_state_prefix_and_old_program_run_isolation",
+        "status": "passed",
+        "elapsed_seconds": 0.750036,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_agent.ProgramAgentTests.test_unverified_patch_coordinates_do_not_invent_source_locations",
+        "status": "passed",
+        "elapsed_seconds": 0.346401,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_agent.ProgramAgentTests.test_utf8_boundary_failure_uses_original_source_location",
+        "status": "passed",
+        "elapsed_seconds": 0.108642,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_protocol.ProgramProtocolTests.test_cli_invalid_json_still_returns_selected_protocol",
+        "status": "passed",
+        "elapsed_seconds": 0.240164,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_protocol.ProgramProtocolTests.test_cli_requires_version_selection_and_keeps_stores_separate",
+        "status": "passed",
+        "elapsed_seconds": 0.544091,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_protocol.ProgramProtocolTests.test_exact_utf8_json_size_and_logically_repeated_values",
+        "status": "passed",
+        "elapsed_seconds": 0.000313,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_protocol.ProgramProtocolTests.test_malformed_bundle_has_transport_error_before_candidate",
+        "status": "passed",
+        "elapsed_seconds": 0.000466,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_protocol.ProgramProtocolTests.test_new_envelope_requires_program_fields_and_explicit_protocol",
+        "status": "passed",
+        "elapsed_seconds": 0.000429,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_protocol.ProgramProtocolTests.test_oversized_shared_graph_fails_before_json_string_allocation",
+        "status": "passed",
+        "elapsed_seconds": 1.030846,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_source_review.ProgramEditReviewTests.test_c09_utf8_dot_key_candidate_failure_and_accepted_head_repair",
+        "status": "passed",
+        "elapsed_seconds": 0.664055,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_source_review.ProgramEditReviewTests.test_c13_alias_rename_retains_nominal_identity_but_class_replacement_rejects",
+        "status": "passed",
+        "elapsed_seconds": 0.207087,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_source_review.SourceProjectionReviewTests.test_equal_filenames_offsets_and_text_do_not_grant_cross_unit_write_scope",
+        "status": "passed",
+        "elapsed_seconds": 0.018785,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_source_review.SourceProjectionReviewTests.test_generated_collection_and_occurrence_scopes_are_distinct_from_shared_definitions",
+        "status": "passed",
+        "elapsed_seconds": 0.322036,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_source_review.SourceProjectionReviewTests.test_imported_utf8_diagnostic_and_cross_file_related_span_use_original_units",
+        "status": "passed",
+        "elapsed_seconds": 0.004804,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_source_review.SourceProjectionReviewTests.test_program_conditions_do_not_invent_locations_or_mutate_core_diagnostics",
+        "status": "passed",
+        "elapsed_seconds": 0.000239,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_transactions.ProgramTransactionTests.test_cancellation_after_complete_bundle_computation_prevents_acceptance",
+        "status": "passed",
+        "elapsed_seconds": 0.604236,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_transactions.ProgramTransactionTests.test_changed_engine_preserves_program_evidence_but_fences_old_work",
+        "status": "passed",
+        "elapsed_seconds": 0.35771,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_transactions.ProgramTransactionTests.test_competing_complete_bundles_commit_one_head_and_retain_loser_evidence",
+        "status": "passed",
+        "elapsed_seconds": 1.075483,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_transactions.ProgramTransactionTests.test_competing_run_extensions_report_the_actual_committed_program_prefix",
+        "status": "passed",
+        "elapsed_seconds": 0.525112,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_transactions.ProgramTransactionTests.test_exact_retry_and_expired_identity_never_replay_program_effects",
+        "status": "passed",
+        "elapsed_seconds": 0.713666,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_transactions.ProgramTransactionTests.test_oversized_control_response_rolls_back_real_pending_cancellation",
+        "status": "passed",
+        "elapsed_seconds": 1.061518,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_transactions.ProgramTransactionTests.test_persisted_queued_bundle_resumes_in_a_new_python_process",
+        "status": "passed",
+        "elapsed_seconds": 0.555229,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_transactions.ProgramTransactionTests.test_proven_dead_worker_is_fenced_but_a_live_worker_is_not_stolen",
+        "status": "passed",
+        "elapsed_seconds": 1.49406,
+        "failures": []
+      },
+      {
+        "test_id": "test_program_transactions.ProgramTransactionTests.test_request_termination_cannot_commit_a_computed_program_run_extension",
+        "status": "passed",
+        "elapsed_seconds": 0.570492,
+        "failures": []
+      },
+      {
+        "test_id": "test_syntax02.Syntax02Tests.test_bounded_nesting_and_caller_interrupt_are_not_host_failures",
+        "status": "passed",
+        "elapsed_seconds": 0.005084,
+        "failures": []
+      },
+      {
+        "test_id": "test_syntax02.Syntax02Tests.test_expression_keys_can_be_computed_but_assignment_keys_are_literals",
+        "status": "passed",
+        "elapsed_seconds": 0.000527,
+        "failures": []
+      },
+      {
+        "test_id": "test_syntax02.Syntax02Tests.test_key_steps_do_not_split_dotted_entry_names",
+        "status": "passed",
+        "elapsed_seconds": 0.000308,
+        "failures": []
+      },
+      {
+        "test_id": "test_syntax02.Syntax02Tests.test_keyed_empty_type_duplicate_entries_and_typed_body_bindings",
+        "status": "passed",
+        "elapsed_seconds": 0.000294,
+        "failures": []
+      },
+      {
+        "test_id": "test_syntax02.Syntax02Tests.test_old_keywords_and_old_path_ast_keep_their_meaning",
+        "status": "passed",
+        "elapsed_seconds": 0.00416,
+        "failures": []
+      },
+      {
+        "test_id": "test_syntax02.Syntax02Tests.test_qualified_base_reference_types_calls_and_visibility",
+        "status": "passed",
+        "elapsed_seconds": 0.000338,
+        "failures": []
+      },
+      {
+        "test_id": "test_syntax02.Syntax02Tests.test_role_is_linked_version_and_profile_are_explicit",
+        "status": "passed",
+        "elapsed_seconds": 0.000325,
+        "failures": []
+      },
+      {
+        "test_id": "test_syntax02.Syntax02Tests.test_utf8_crlf_primary_and_import_literal_spans",
+        "status": "passed",
+        "elapsed_seconds": 0.000323,
+        "failures": []
+      }
+    ],
+    "counting_basis": "Executed unittest methods; no assertion count is inferred."
+  },
+  "external_evidence": {
+    "id": "identified_visual_delivery",
+    "status": "pending",
+    "executed_external_tools": false,
+    "basis": "Identity/provenance verification of a retained external run; this function does not execute those tools.",
+    "manifest": "docs/engineering/construction-validation/external-gate.json",
+    "issues": [
+      "The external run does not match the current implementation identity."
+    ],
+    "verified_provenance": [
+      {
+        "role": "source_bundle",
+        "path": "examples/construction/program.bundle.json",
+        "claimed_sha256": "sha256:83ca659aadd23d7ce09ebcd209c210efd69028ca6e51ebd70d69ec47f65098e4",
+        "actual_sha256": "sha256:83ca659aadd23d7ce09ebcd209c210efd69028ca6e51ebd70d69ec47f65098e4",
+        "matches": true
+      },
+      {
+        "role": "workflow",
+        "path": "examples/construction/workflow.json",
+        "claimed_sha256": "sha256:b90c86c796b1fcb7a778f5bf70f8f63bb8f4fe2ba764b7919ef59c3915ffed2e",
+        "actual_sha256": "sha256:b90c86c796b1fcb7a778f5bf70f8f63bb8f4fe2ba764b7919ef59c3915ffed2e",
+        "matches": true
+      },
+      {
+        "role": "artifact",
+        "path": "examples/construction/keyed-rack.glb",
+        "claimed_sha256": "sha256:4b72428deea4604962b59f4391beeaabd2715610f0158fb7db09d25b68ec376e",
+        "actual_sha256": "sha256:4b72428deea4604962b59f4391beeaabd2715610f0158fb7db09d25b68ec376e",
+        "matches": true
+      },
+      {
+        "role": "reference",
+        "path": "examples/construction/keyed-rack.reference.json",
+        "claimed_sha256": "sha256:a60149c9c0fdabcb22c2cd81863c9252fe0c1173fbe64953ffa875e38636b4d6",
+        "actual_sha256": "sha256:a60149c9c0fdabcb22c2cd81863c9252fe0c1173fbe64953ffa875e38636b4d6",
+        "matches": true
+      },
+      {
+        "role": "external_results",
+        "path": "docs/engineering/construction-validation/external-results.json",
+        "claimed_sha256": "sha256:a18513af01939729ae7bbd233c9320b1b9ea3c0d94ef17f34ae7252c0c7475b1",
+        "actual_sha256": "sha256:a18513af01939729ae7bbd233c9320b1b9ea3c0d94ef17f34ae7252c0c7475b1",
+        "matches": true
+      },
+      {
+        "role": "viewer_results",
+        "path": "docs/engineering/construction-validation/viewer-results.json",
+        "claimed_sha256": "sha256:8e81076b4f689b8340fae16e395fefac41fbf264b1f5fc0b4228140912ccbd0c",
+        "actual_sha256": "sha256:8e81076b4f689b8340fae16e395fefac41fbf264b1f5fc0b4228140912ccbd0c",
+        "matches": true
+      },
+      {
+        "role": "capture",
+        "path": "docs/engineering/construction-validation/keyed-rack.png",
+        "claimed_sha256": "sha256:37056a797f1acbd502daef56aec2dd585683475880afd1afe59bdf15b357b513",
+        "actual_sha256": "sha256:37056a797f1acbd502daef56aec2dd585683475880afd1afe59bdf15b357b513",
+        "matches": true
+      }
+    ],
+    "manifest_sha256": "sha256:a586103f77d0b2e4e78ea08716d22cfcc3fef9ff2d81420422b4c029b7592eb6",
+    "recorded_checks": {
+      "workflow": {
+        "status": "passed",
+        "checks": 35,
+        "operations": 22
+      },
+      "format": {
+        "status": "passed",
+        "errors": 0,
+        "warnings": 0
+      },
+      "geometry": {
+        "status": "passed",
+        "objects": 18
+      },
+      "motion": {
+        "status": "passed",
+        "pose_comparisons": 126,
+        "max_position_error_m": 4.768371586472142e-08,
+        "max_rotation_error_rad": 3.018720990412825e-08
+      },
+      "viewer": {
+        "status": "passed",
+        "checks": 8,
+        "pose_comparisons": 126,
+        "capture_sha256": "sha256:37056a797f1acbd502daef56aec2dd585683475880afd1afe59bdf15b357b513",
+        "visual_review": {
+          "status": "reviewed",
+          "reviewer": "root",
+          "observation": "Inspected the actual Chromium capture at 1.5 seconds. The left Rack has three visible cyan articulated blades and the right Rack has five. The longer middle blade of the left Rack is rotated upward while its other blades remain horizontal. Both assemblies fit in the viewport; the selected second Rack displays world position (1, 0, 0) m. The custom-import UI correctly leaves source and numerical conformance unknown because only the GLB was supplied to that UI."
+        }
+      }
+    },
+    "artifact_sha256": "sha256:4b72428deea4604962b59f4391beeaabd2715610f0158fb7db09d25b68ec376e",
+    "program_revision": "sha256:c77d102a4b201d3c3cce6cbdc73c38eedf0bb1dfca7c9843a92d697cc0c7e082"
+  },
+  "run_issues": [],
+  "additional_release_gates": [
+    "Complete Python suite for the identified implementation.",
+    "Fresh legacy source, agent, independent GLB and viewer regression evidence.",
+    "Relevant remote CI for the exact published implementation."
+  ]
+}

@@ -1,0 +1,28 @@
+test_cancel_after_computation_prevents_acceptance_and_run (test_reach_agent_transactions.ReachAgentTransactionTests.test_cancel_after_computation_prevents_acceptance_and_run) ... ok
+test_cancel_tentative_extension_preserves_stored_run_and_context (test_reach_agent_transactions.ReachAgentTransactionTests.test_cancel_tentative_extension_preserves_stored_run_and_context) ... ok
+test_competing_acceptance_binds_isolated_candidate_to_real_winning_head (test_reach_agent_transactions.ReachAgentTransactionTests.test_competing_acceptance_binds_isolated_candidate_to_real_winning_head) ... ok
+test_competing_run_advance_returns_unchanged_winning_descriptor (test_reach_agent_transactions.ReachAgentTransactionTests.test_competing_run_advance_returns_unchanged_winning_descriptor) ... ok
+test_complete_response_guard_rolls_back_acceptance_and_serialized_run (test_reach_agent_transactions.ReachAgentTransactionTests.test_complete_response_guard_rolls_back_acceptance_and_serialized_run) ... FAIL
+test_request_work_failure_preserves_prior_source_and_run (test_reach_agent_transactions.ReachAgentTransactionTests.test_request_work_failure_preserves_prior_source_and_run) ... ok
+
+======================================================================
+FAIL: test_complete_response_guard_rolls_back_acceptance_and_serialized_run (test_reach_agent_transactions.ReachAgentTransactionTests.test_complete_response_guard_rolls_back_acceptance_and_serialized_run)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/test_reach_agent_transactions.py", line 94, in test_complete_response_guard_rolls_back_acceptance_and_serialized_run
+    program, baseline = self.create("P24", level="evaluated")
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/reach_agent_support.py", line 89, in create
+    response = self.success(self.send("create", bundle=program.to_payload(),
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/0229a0b41cd2/OntoKin-reach06-combined/tests/reach_agent_support.py", line 74, in success
+    self.assertEqual(response["status"], "succeeded", response)
+AssertionError: 'failed' != 'succeeded'
+- failed
++ succeeded
+ : {'accepted_program_revision': None, 'achieved_level': None, 'diagnostics': [{'blocks': ['represented', 'constructed', 'evaluated', 'delivered'], 'category': 'resource_limit', 'code': 'OKL-E-RESOURCE', 'details': {'budget': 'max_operations', 'consumed': 100001, 'limit': 100000, 'partial_results': 'No uncommitted source, artifact or run advancement is available.', 'request_terminated': True}, 'location_status': 'program_condition_without_source_span', 'message': 'The request exhausted max_operations.', 'phase': 'support', 'primary': None, 'program_revision': 'sha256:aba217566fd6331eb9cda4df702a8d0ef475a94557c5a60ef7b6b6b974036d77', 'related': [], 'repair': {'patches': [], 'summary': 'Correct the reported condition and validate the complete candidate again.'}, 'rule_ids': ['LANG-009'], 'run_id': None, 'schema_version': 'ontokin.diagnostic/0.2', 'severity': 'error', 'source_id': None, 'source_revision': None, 'time': None}], 'next_cursor': None, 'operation': 'create', 'program_revision': 'sha256:aba217566fd6331eb9cda4df702a8d0ef475a94557c5a60ef7b6b6b974036d77', 'progress': {'cancellation_requested': False, 'implementation': {'name': 'ontokin-reference', 'source_code_sha256': 'sha256:3ba3f5bf65d2feefd1056743eff57dab0289771b11103843c4a286ef645363ec', 'version': '0.4.0'}, 'phase': 'complete'}, 'project_id': 'reach', 'protocol_error': None, 'request_id': '1', 'requested_level': 'evaluated', 'result': {'achieved_level': None, 'delivery': 'not_requested', 'implementation': {'name': 'ontokin-reference', 'source_code_sha256': 'sha256:3ba3f5bf65d2feefd1056743eff57dab0289771b11103843c4a286ef645363ec', 'version': '0.4.0'}, 'outcome': 'resource_limit', 'partial_results': 'Only already-retained immutable source snapshots and any previously committed run descriptor are available.', 'requested_level': 'evaluated', 'run_state': None}, 'run_id': None, 'schema_version': 'ontokin.agent/0.6', 'status': 'failed', 'truncated': False}
+
+----------------------------------------------------------------------
+Ran 6 tests in 4.495s
+
+FAILED (failures=1)

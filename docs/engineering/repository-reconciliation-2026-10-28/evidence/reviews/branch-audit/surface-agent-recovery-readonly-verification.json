@@ -1,0 +1,216 @@
+{
+  "schema_version": "ontokin.c059.recovery-readonly-verification/0.1",
+  "status": "passed",
+  "candidate": {
+    "available": true,
+    "local_head": "4155acfd1b01e1b72aac23be5e28b054d2e10440",
+    "local_tree": "6afc9960c5551115c87aafdcbc1d9d002172d5f6",
+    "tracked_worktree_status": "",
+    "untracked_source_files": [],
+    "head_is_base_revision": true,
+    "source_inventory_includes_untracked_files": true,
+    "remote_head_verified": false
+  },
+  "recovery_root": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001",
+  "recovery_summary_sha256": "947d1f3958273e612502e045cea496930f7f6c4671cec89f828b86171ead4103",
+  "recovery_started_at": "2026-10-28T19:53:54.440024+00:00",
+  "recovery_finished_at": "2026-10-28T19:55:17.414508+00:00",
+  "method": "Read-only file inspection and standard-library sqlite3 opened mode=ro&immutable=1 only after final recovery summary. No WAL/SHM/journal present; no SQLite writes, product imports or execution.",
+  "database": {
+    "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent/service-store/surface-program-agent.sqlite3",
+    "sha256": "adc0b6f381ada9f2faf8053a80a9a79c6b5aefdecd06655de7c7356a836e1875",
+    "sha256_after": "adc0b6f381ada9f2faf8053a80a9a79c6b5aefdecd06655de7c7356a836e1875",
+    "unchanged_by_inspection": true,
+    "bytes": 12791808,
+    "inode": 1310775,
+    "mtime_utc": "2026-10-28T19:54:57.541909+00:00",
+    "sidecars": {
+      "-wal": false,
+      "-shm": false,
+      "-journal": false
+    },
+    "quick_check": [
+      {
+        "quick_check": "ok"
+      }
+    ],
+    "counts": {
+      "projects": 17,
+      "sources": 22,
+      "sessions": 1,
+      "requests": 492,
+      "runs": 44,
+      "artifacts": 21
+    },
+    "states": [
+      {
+        "state": "rejected",
+        "count": 5
+      },
+      {
+        "state": "succeeded",
+        "count": 487
+      }
+    ],
+    "sessions": [
+      {
+        "id": "worker:3f33d79af0fb4f9abe4702d8a4657447",
+        "pid": 12947,
+        "host": "3c188710f4ee",
+        "process_start": "1485995",
+        "closed": 1
+      }
+    ],
+    "sqlite_sequence_requests": 492
+  },
+  "exchanges": {
+    "request_files": 492,
+    "response_files": 492,
+    "matching_rows_and_responses": 492,
+    "missing_request_rows": [],
+    "request_payload_mismatches": [],
+    "response_mismatches": [],
+    "request_digest_mismatches": [],
+    "missing_responses": []
+  },
+  "workflow": {
+    "status": "passed",
+    "exchanges": 492,
+    "artifacts": 22,
+    "fixtures": 22,
+    "build_status": "built",
+    "sha256": "fcec2114ded60abce6601375e93bf5b74b54ea2cf48c951a75ce0c42125c6cc2",
+    "build_sha256": "ddfe971c3764c3c68783ed8afb521bed3eb77a8f501a37c3683fc3cd81744226",
+    "implementation": {
+      "name": "ontokin-reference",
+      "version": "0.4.0",
+      "source_code_sha256": "sha256:c87bf41b1219a0ab281af26dcc666a864d75c944c57f23b398dea4ea55c5b39c"
+    }
+  },
+  "source_manifest_bytes_equal": true,
+  "workspace_manifest_bytes_equal": true,
+  "gates": [
+    {
+      "step": "browser-ready",
+      "status": "passed",
+      "returncode": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_matches_receipt": true,
+      "reports": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/reports/browser-ready.json",
+          "sha256": "6c7eae4436801b1ecc0b581b0e8a041fccd348c5ecc8f1bce7dab6b06f115bb4",
+          "matches_receipt": true
+        }
+      ]
+    },
+    {
+      "step": "surface-agent-build",
+      "status": "passed",
+      "returncode": 0,
+      "log_sha256": "551a6283c2f2f125fcee463c0baceba3116a891b743e98f79145fade0f136048",
+      "log_matches_receipt": true,
+      "reports": []
+    },
+    {
+      "step": "surface-agent-format",
+      "status": "passed",
+      "returncode": 0,
+      "log_sha256": "52cca0aede6bb66a2a73e05d27e241a8bcff7236560feab40dff02665e0bade5",
+      "log_matches_receipt": true,
+      "reports": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/reports/surface-agent-destination.json",
+          "sha256": "05d8f2c05b41ce7f9b7aac8201bff7efa5c11315d1eb826860b347fa1ae5154d",
+          "matches_receipt": true
+        }
+      ]
+    },
+    {
+      "step": "visual-browser",
+      "status": "passed",
+      "returncode": 0,
+      "log_sha256": "59882426d91bea079454842081ddaaab367e02fb42118660141b7ba52b15c6aa",
+      "log_matches_receipt": true,
+      "reports": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/visual-browser/viewer-results.json",
+          "sha256": "db54482d7a2cdcbe312c00709d67bda4e95e34df36590f008ef62d877ad4b210",
+          "matches_receipt": true
+        }
+      ]
+    },
+    {
+      "step": "agent-demo-browser",
+      "status": "passed",
+      "returncode": 0,
+      "log_sha256": "548463766b821f0ec0fab7bba883f2e4a7b38434cdd544173df48759509c9f26",
+      "log_matches_receipt": true,
+      "reports": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/agent-demo-browser/viewer-results.json",
+          "sha256": "58b9ff6d1bfd4f614b568564f5eebc6251852815610b1bdfed624a06e28997a6",
+          "matches_receipt": true
+        }
+      ]
+    },
+    {
+      "step": "construction-demo-browser",
+      "status": "passed",
+      "returncode": 0,
+      "log_sha256": "2fac2db22355b460586850a987d777cfbf446685e643a2ce2dd02a73b31d83b0",
+      "log_matches_receipt": true,
+      "reports": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/construction-demo-browser/viewer-results.json",
+          "sha256": "5cee2d99319db3582acdea8c270ce5c89c6392ffda09baed280394c2fd63418b",
+          "matches_receipt": true
+        }
+      ]
+    },
+    {
+      "step": "surface-native-browser",
+      "status": "passed",
+      "returncode": 0,
+      "log_sha256": "f6b16572910fbd5ac84afd92efdf0b1cffb88f317ab7260cbb67fecdb326ee81",
+      "log_matches_receipt": true,
+      "reports": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-native-browser/browser-results.json",
+          "sha256": "dbfb5ec4498b164df0e009aacaebe2b24704c383a7c25b5eb8f8f0242f93f73e",
+          "matches_receipt": true
+        }
+      ]
+    },
+    {
+      "step": "surface-agent-browser",
+      "status": "passed",
+      "returncode": 0,
+      "log_sha256": "cd7222201bb9f5ef0fd7e4c3af96f20de3bd9d2fcef3e57cec3dde08e9354e17",
+      "log_matches_receipt": true,
+      "reports": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/surface-agent-browser/browser-results.json",
+          "sha256": "246abc1a489551eb7f4e5b87ec3dfb688816e488a83716097a4738c35875c0de",
+          "matches_receipt": true
+        }
+      ]
+    },
+    {
+      "step": "impulse-agent-browser",
+      "status": "passed",
+      "returncode": 0,
+      "log_sha256": "30de9e5f3f0e27727ae7d56daa091f10883cc182bd061ff53882dc0878732bc8",
+      "log_matches_receipt": true,
+      "reports": [
+        {
+          "path": "/workspace/scratch/abbf47b1d319/c059-validation-recovery-001/artifacts/impulse-agent-browser/browser-validation.json",
+          "sha256": "411bc81ec4bc0f511591867208a103cf42bb1b287585ada012c9453e0baf5402",
+          "matches_receipt": true
+        }
+      ]
+    }
+  ],
+  "original_failure_remains": "The original full-001 run remains failed with lost request history; successful fresh execution does not identify the prior physical cause.",
+  "release_certified": false
+}

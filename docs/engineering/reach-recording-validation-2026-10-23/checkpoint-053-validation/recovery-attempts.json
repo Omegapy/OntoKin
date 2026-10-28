@@ -1,0 +1,59 @@
+{
+  "schema": "ontokin.c053-recovery-attempts/0.1",
+  "source_commit": "853c01589af790bc83bf52ed70b18dc87673873b",
+  "method": "Repository connector reads; exact blob-and-size verification before writing. Directory-supplied GitHub raw URLs used for 12 >1-MB archives after approved network escalation.",
+  "failures": [
+    {
+      "operation": "fetch_file",
+      "path": "ontokin/reach_work.py",
+      "outcome": {
+        "error": "GitHub API error 404: {\"message\":\"Not Found\",\"documentation_url\":\"https://docs.github.com/rest/repos/contents#get-repository-content\",\"status\":\"404\"}",
+        "error_code": "NOT_FOUND",
+        "error_data": {
+          "message": "Not Found",
+          "documentation_url": "https://docs.github.com/rest/repos/contents#get-repository-content",
+          "status": "404"
+        }
+      },
+      "qualification": "Mistyped exploratory path; not in remote tree; no local write."
+    },
+    {
+      "operation": "fetch_file base64",
+      "path": "docs/language-design/foundations/diagrams/OntoKin_001_Architecture_Diagram.svg",
+      "outcome": {
+        "error": "RemoteProtocolError: Server disconnected without sending a response.",
+        "error_code": "UNKNOWN"
+      },
+      "resolution": "Independent read retry succeeded and bytes matched published Git blob."
+    },
+    {
+      "operation": "fetch_file base64 >1 MB",
+      "paths": [
+        "docs/engineering/reach-recording-validation-2026-10-22/checkpoint-003.zip",
+        "docs/engineering/reach-recording-validation-2026-10-23/P09-full-input-census.json"
+      ],
+      "outcome": "Returned empty content while reporting published nonempty blob SHA. Materializer rejected first mismatch before writing any file.",
+      "resolution": "JSON recovered through fetch_blob; binary recovered from authenticated raw download with exact Git hash."
+    },
+    {
+      "operation": "github_fetch binary blob",
+      "path": "docs/engineering/reach-recording-validation-2026-10-22/checkpoint-003.zip",
+      "outcome": {
+        "error": "HTTPError: 400: GitHub Fetch only accepts UTF-8 text. (Response: None)",
+        "error_code": "INVALID_ARGUMENT"
+      },
+      "resolution": "Authenticated raw download with exact Git blob."
+    },
+    {
+      "operation": "sandbox direct download",
+      "record": "recovery-download-001.json",
+      "outcome": "URLError [Errno 1] Operation not permitted",
+      "resolution": "Approved escalation; recovery-download-002.json verifies all 12 files."
+    }
+  ],
+  "private_signed_url_manifest_removed": true,
+  "runtime_imports": 0,
+  "checker_executions": 0,
+  "archive_internal_audits": 0,
+  "qualification": "Original source recovery and hashing only. Root will execute actual documentation/metadata validation under its declared window."
+}
