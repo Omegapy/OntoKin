@@ -34,9 +34,11 @@ The [next proposed task, C067](docs/engineering/reach-sphere-candidates-2026-10-
 
 ## Repository lifecycle and ownership
 
-[OK-ENG-009](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) keeps development integration separate from release acceptance. C066 integration is complete. This final status publication releases the main integration lease held by `interactive-sphere-candidates-20261029-c066-7of9`. **No main integration lease remains active.** The separate packet/checker/archive window remains reserved until explicit Issue #26 closure after final verification and delivery; reconcile that release and live state before another scope.
+**Active C067 main integration lease.** Owner `interactive-actual-point-bound-20261029-c067-a7d2`; acquired from observed main `1aefbc24c38805cdd75add056421fcd0856e1f93`; expires `2026-10-29T23:52:36.000Z`. Scope: integrate the independently reviewed C067 source-only record, update documentation navigation, verify the actual resulting main and publish final status/receipts. No product runtime change or hosted job is selected. Root also owns the separate documentation-check/packet/archive window until explicit Issue #26 closure. Read-only reviewers have completed the source review.
 
-The reviewed work branch may be removed automatically after merge; its exact candidate remains the actual merge's second parent. The archive-retention branch remains history-only at `e6917dae0be3a786c22e76be3de62e3c97784cf5`. Never merge or develop from it. No hosted execution was dispatched.
+[OK-ENG-009](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) keeps development integration separate from release acceptance. C066 main and packet scopes were explicitly released in Issue #26. Current C067 scope is declared in [comment 6510695412](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6510695412). Reconcile this lease and actual refs before shared writes.
+
+The archive-retention branch remains history-only at `e6917dae0be3a786c22e76be3de62e3c97784cf5`. Never merge or develop from it. No hosted execution was dispatched.
 
 ## Git LFS
 
