@@ -1,5 +1,7 @@
 # OntoKin documentation guide
 
+For the C065 signed nonzero offset expression review and finite rejection of the detached four-product bridge, read [C065](engineering/reach-offset-expression-design-2026-10-29-c065/README.md). Its valid arithmetic identity does not establish a positive complete-request saving or runtime improvement.
+
 For the C064 centered source-plan identity-elision decision, source-derived node census and independent authority/cost reviews, read [C064](engineering/reach-source-reference-design-2026-10-29-c064/README.md). The selected candidate has no eligible moving aliases in original P11/L03 and establishes no runtime improvement.
 
 For the complete source recovery and passing documentation gate that unblock review of C060 through C062, read [C063](engineering/documentation-recovery-2026-10-28-c063/README.md). Actual development integration and remaining product failures are recorded separately.
