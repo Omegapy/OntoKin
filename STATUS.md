@@ -1,5 +1,9 @@
 # OntoKin status
 
+## Active C063 integration lease
+
+Owner: `interactive-archive-recovery-20261028-c063-7of9-a913`. Acquired `2026-10-29T00:42:45Z`; expiry `2026-10-29T01:12:45Z`. Scope: ordered development integration of diagnostic PRs #58, #59 and #60, then C063 recovery evidence [PR #61](https://github.com/Omegapy/OntoKin/pull/61), with exact source/tree reconciliation and resulting-main documentation checks. The archive-only retention branch is excluded. This lease reserves main and current STATUS; it authorizes no runtime change, hosted job or release acceptance. [Issue #26](https://github.com/Omegapy/OntoKin/issues/26) records scope and explicit release.
+
 Checkpoint: October 28, 2026, C059 reconciliation and Git LFS configuration merged and verified. The full [GOAL](GOAL.md) remains in progress: an AI-agent programming language for editable 3D shapes, objects and animation, with validated delivery to game engines including Unreal Engine.
 
 ## Released capability
