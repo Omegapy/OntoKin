@@ -1,5 +1,7 @@
 # OntoKin documentation guide
 
+For the C066 cold sphere-radius shortlist review, conditional subnormal witness and surviving restricted-domain theorem, read [C066](engineering/reach-sphere-candidates-2026-10-29-c066/README.md). The unrestricted eight-index shortcut is not approved and no runtime improvement is established.
+
 For the C065 signed nonzero offset expression review and finite rejection of the detached four-product bridge, read [C065](engineering/reach-offset-expression-design-2026-10-29-c065/README.md). Its valid arithmetic identity does not establish a positive complete-request saving or runtime improvement.
 
 For the C064 centered source-plan identity-elision decision, source-derived node census and independent authority/cost reviews, read [C064](engineering/reach-source-reference-design-2026-10-29-c064/README.md). The selected candidate has no eligible moving aliases in original P11/L03 and establishes no runtime improvement.
