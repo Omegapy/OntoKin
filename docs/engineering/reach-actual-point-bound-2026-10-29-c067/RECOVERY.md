@@ -1,0 +1,15 @@
+# C067 baseline source recovery
+
+The six attached C066 handoff files identify final main `1aefbc24c38805cdd75add056421fcd0856e1f93`, tree `233cd6ae287bdcd4a77e0ea674dc1774f6923010`. Fresh GitHub main, branches, open PRs and Issue #26 matched that handoff. Comment 6510442842 explicitly closed C066's remaining packet/checker/archive window. The original C066 full packet and ZIP were not available in this session and were not freshly verified.
+
+The available complete C064 packet and its 477,588,135-byte ZIP were retrieved and checked with their unchanged verifier. That verification passed with ZIP SHA-256 `1a0624a2d8d943997bdea42dfc392387cd48c9a11e7f7a4e3600c368ebfb3401`. Every C066 indexed source byte was then recovered using that C064 source plus seventy immutable C066 paths. All 3,584 files / 621,829,701 bytes matched the uploaded complete C066 index, original Git blob identities and modes, and reconstructed tree. The actual C066 raw commit was recovered using its original `-0600` timestamps and no trailing message newline, then verified against its Git commit hash before installation.
+
+The local Git checkout is shallow at that actual baseline commit. It is not a synthetic snapshot commit or a full-history clone. The complete tracked source includes historical payloads, but the presence of those bytes does not constitute a fresh execution of their historical audits.
+
+## Preparation failures retained
+
+The initial direct Git network read and unprivileged transfer helper could not connect. The authorized transfer then succeeded. An attempted oversized source-preview command was rejected before process creation; source bytes were subsequently written in bounded chunks and checked. An unused guessed source path `ontokin/numeric.py` returned not found; the actual `ontokin/reach_numeric.py` is bound in this checkpoint.
+
+The first C064 packet verification rejected an unlisted mode-0600 extraction temporary. It was identified by path, size and hash and moved outside the frozen packet without altering any manifested member. The unchanged verifier then passed. A separate unlisted temporary appeared during the repository copy; the initial complete-file-set check rejected it before declaring recovery verified. Its bytes were also preserved separately before the successful complete source check. These are preparation discrepancies, not product outcomes or exceptions to source completeness.
+
+[The recovery receipt](checks/c066-source-recovery.json), [successful C064 command](checks/c064-success-command.json), [successful C064 output](checks/c064-success.stdout.json), [first C064 command](checks/c064-verification-command.json), [first stderr](checks/c064-verification.stderr.txt), [extraction record](checks/extraction-unlisted-files.json) and [copy record](checks/copy-unlisted-files.json) preserve the distinction. The unlisted temporary payloads remain quarantined supporting material; they are not part of the original indexed source or a claim of missing tracked content.
