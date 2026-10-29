@@ -34,9 +34,11 @@ The [next proposed task, C066](docs/engineering/reach-offset-expression-design-2
 
 ## Repository lifecycle and ownership
 
-[OK-ENG-009](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) keeps development integration separate from release acceptance. C065 integration is complete. This final status publication releases the main integration lease held by `interactive-offset-expression-design-20261029-c065-7of9-f7b2`. **No main integration lease remains active.** The separate packet window remains open until explicit Issue #26 closure after final verification and saving; reconcile that release and live state before another scope.
+[OK-ENG-009](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) keeps development integration separate from release acceptance.
 
-GitHub automatically removed the merged C065 work branch. Its final reviewed head and first checkpoint remain in the actual merge's second-parent ancestry. Observed remaining branches are main and `archive/pre-consolidation-20261028`, unchanged at `e6917dae0be3a786c22e76be3de62e3c97784cf5`. Never merge or develop from that archive-only tree. No hosted execution was dispatched.
+**Active main integration lease:** owner `interactive-sphere-candidates-20261029-c066-7of9`, acquired from observed main `b7357df3bc296cc1cd728bdf52dbeaf2697da85b`, expires **2026-10-29 23:11:02 UTC**. Scope is reviewed C066 [PR #64](https://github.com/Omegapy/OntoKin/pull/64), candidate `345989ac75a2108d13e1c1e4f30cbdeb03eafe79`, resulting-main documentation verification and final status/receipt publication. The holder alone writes main and these ownership fields during the lease. No runtime/product/hosted execution is selected.
+
+C065 explicitly released its separate packet window in [Issue #26 comment 6509001258](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6509001258). C066 owns its declared engineering directory and separate packet preparation until a later explicit closure. The archive branch remains history-only at `e6917dae0be3a786c22e76be3de62e3c97784cf5`; never merge or develop from it.
 
 ## Git LFS
 
