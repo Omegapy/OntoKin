@@ -24,13 +24,36 @@
     ]
   },
   "documentation_checks": {
-    "status": "pending exact published-candidate, actual-merge and final-main checks; recorded separately at their source identities"
+    "status": "published candidate and actual merge passed; final status publication check is separately bound in portable final state",
+    "checks": [
+      {
+        "role": "published-candidate",
+        "source_commit": "e8bba1b8bfc9d68e540e68f04177ba8fc080eb78",
+        "source_tree": "0035e43269b8912b34d98a149f4211bbf95da5c0",
+        "returncode": 0,
+        "inputs_stable": true,
+        "input_count": 3538,
+        "input_inventory_sha256": "f39dcea25fd85aae35ca7695cb4c5bab8e1290fa26286b57499d0a3a71e68c03",
+        "command_receipt": "checks/published-candidate-command.json"
+      },
+      {
+        "role": "resulting-merge",
+        "source_commit": "489bbb0a292d24a0ce4cd615227e22dde26503b8",
+        "source_tree": "1ebaba48154a53740dd79373cd5c406cb2dbab6a",
+        "returncode": 0,
+        "inputs_stable": true,
+        "input_count": 3538,
+        "input_inventory_sha256": "bf4a4f3a33a12d0fc781b577bb45e3bb809aa002aa09162f43889e1c884245f9",
+        "command_receipt": "checks/resulting-merge-command.json"
+      }
+    ]
   },
   "preparation_failures": {
     "initial_packet_verification": "unlisted extraction temporary; preserved and isolated before successful recheck",
     "initial_native_index": "default add omitted historically tracked ignored logs; corrected from complete source index",
     "clean_native_snapshot": "unlisted copy temporary isolated; exact tree and original commit confirmed",
-    "raw_git_commit": "UTC-only reconstruction did not match; original -0600 offset preserved and exact observed Git identity verified"
+    "raw_git_commit": "UTC-only reconstruction did not match; original -0600 offset preserved and exact observed Git identity verified",
+    "signed_merge_reconstruction": "Trimmed signature continuation did not match; exact original signature/payload reconstructed and hash verified before installation"
   },
   "runtime_files_changed": 0,
   "runtime_files_verified_unchanged": 65,
