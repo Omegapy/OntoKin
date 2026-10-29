@@ -1,5 +1,7 @@
 # OntoKin documentation guide
 
+For the complete source recovery and passing documentation gate that unblock review of C060 through C062, read [C063](engineering/documentation-recovery-2026-10-28-c063/README.md). Actual development integration and remaining product failures are recorded separately.
+
 For the completed C062 source ancestry screen, its conditional whole-helper cost bounds, and the next archive-recovery prerequisite, read [C062](engineering/reach-recording-validation-2026-10-28-c062/README.md). The diagnostic result selects no runtime optimization or accepted recording.
 
 For current integration and branch ownership, read [OK-ENG-009](engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md), [STATUS](../STATUS.md), and the [C059 repository reconciliation](engineering/repository-reconciliation-2026-10-28/README.md). [The M1 disposition](engineering/OK-DEC-COMPARE-M1-0.1.0.md) closes the exact C058 proposal for operation saving; historical proposal and validation records retain their original meanings.
