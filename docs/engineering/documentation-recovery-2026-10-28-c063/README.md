@@ -16,11 +16,22 @@ C060, C061 and C062 cumulatively add 131 paths and modify only the preexisting `
 
 The [fresh C062 calculation](checks/calculation-command.json) passes and its [stdout](checks/calculation.stdout) equals the historical ledger byte for byte. It uses the standard library and imports no OntoKin module.
 
-## Integration boundary
+## Verified development integration
 
-This first C063 publication records the completed recovery and review prerequisites. Main integration remains pending until a fresh expected-head lease is acquired. The sequence is C060 PR #58, C061 PR #59, C062 PR #60, then this recovery record, with live dependency reconciliation and resulting-main checks. Actual resulting commits and final status will be recorded separately; this paragraph is not a merge claim.
+All four pull requests are merged into main, in dependency order. The unchanged documentation checker passed after **each** merge, with stable complete source inputs. [The integration record](integration.json) binds every actual commit/tree, command and result.
 
-The complete source checkout has shallow Git history at the exact original C062 commit. It is not a full history clone. The archive-only retention branch remains outside development and all merge paths.
+| Increment | Pull request | Actual main merge |
+| --- | --- | --- |
+| C060 diagnostic tooling and evidence | #58 | `203703cc5fedac58ebe0235e474c6504f7fafe7a` |
+| C061 reader-setup diagnostic evidence | #59 | `18a212d794e5aed64f9056a07dadc257cf3fcb3b` |
+| C062 source-only ancestry decision | #60 | `371716fca642829595e977fde824382678d7b3d4` |
+| C063 archive recovery and checks | #61 | `da69c1d16fcfdb1c257e17edb9e12961d07d204f` |
+
+Each merged tree equals its reviewed candidate except for the separately acquired main integration lease in `STATUS.md`. All diagnostic, runtime, fixture and workflow inputs retain their exact identities. GitHub deleted the four merged work branches automatically; their heads remain parents of the recorded merges. The unchanged historical archive branch and main are the two observed remaining branch names.
+
+This updated record and current STATUS are a final documentation receipt increment after the four merges. Its actual publication identity and final resulting-main check are recorded in the portable handoff and subsequent Issue #26 release. [HANDOFF-063.md](HANDOFF-063.md) provides continuation instructions; [NEXT-TASK.md](NEXT-TASK.md) defines the next bounded objective.
+
+Recovery first produced a native checkout with its shallow history boundary at the exact original C062 commit. Resulting-main checks use separately verified original commit/tree objects; the portable snapshot does not include full Git history. The archive-only retention branch remains outside development and all merge paths.
 
 ## Product limits retained
 
