@@ -1,0 +1,1219 @@
+{
+  "L03_source_review_conclusion": {
+    "basis": "Pinned unit offsets use distinct orientations; the original product helper skips multiplication by one",
+    "runtime_measurement": false,
+    "selected_offset_product_opportunity": 0
+  },
+  "audit_kind": "standard-library symbolic algebra and static source checks",
+  "baseline_commit": "a7452d0063b785c1bfb02c45844ef341e3e0bf0b",
+  "baseline_tree": "f063d6c54b0bbca286353169f6d7505cfaa8ccb8",
+  "branch_models_not_runtime_measurements": [
+    {
+      "case": "both_nonzero",
+      "original_right_arithmetic": 6,
+      "raw_reduction": 4,
+      "signed_right_arithmetic": 2
+    },
+    {
+      "case": "diagonal_zero",
+      "original_right_arithmetic": 3,
+      "raw_reduction": 3,
+      "signed_right_arithmetic": 0
+    },
+    {
+      "case": "cross_zero",
+      "original_right_arithmetic": 2,
+      "raw_reduction": 1,
+      "signed_right_arithmetic": 1
+    },
+    {
+      "case": "both_zero",
+      "original_right_arithmetic": 0,
+      "raw_reduction": 0,
+      "signed_right_arithmetic": 0
+    }
+  ],
+  "coefficient_controls_are_abstract_rationals_not_captured_centers": true,
+  "floor_noncommutation_controls": {
+    "sign": true,
+    "sum": true
+  },
+  "illustrative_exact_source_operands": {
+    "A": {
+      "denominator": 36028797018963968,
+      "numerator": 3602879701896397
+    },
+    "Z": {
+      "denominator": 36028797018963968,
+      "numerator": 8286623314361713
+    }
+  },
+  "new_runtime_speedup_claimed": false,
+  "original_offset": {
+    "floor_lines": [
+      681,
+      682
+    ],
+    "floors_per_node": 2,
+    "product_call_sites_per_node": 4
+  },
+  "polynomial_identities": [
+    {
+      "candidate": "p-n",
+      "equal_unrounded_polynomial": [
+        {
+          "coefficient": 1,
+          "factors": [
+            "A",
+            "C"
+          ]
+        },
+        {
+          "coefficient": 1,
+          "factors": [
+            "D",
+            "Z"
+          ]
+        }
+      ],
+      "floor_location": "unchanged",
+      "original": "D*Z-C*(-A)"
+    },
+    {
+      "candidate": "q+m",
+      "equal_unrounded_polynomial": [
+        {
+          "coefficient": -1,
+          "factors": [
+            "A",
+            "D"
+          ]
+        },
+        {
+          "coefficient": 1,
+          "factors": [
+            "C",
+            "Z"
+          ]
+        }
+      ],
+      "floor_location": "unchanged",
+      "original": "C*Z+D*(-A)"
+    },
+    {
+      "candidate": "p+n",
+      "equal_unrounded_polynomial": [
+        {
+          "coefficient": -1,
+          "factors": [
+            "A",
+            "C"
+          ]
+        },
+        {
+          "coefficient": 1,
+          "factors": [
+            "D",
+            "Z"
+          ]
+        }
+      ],
+      "floor_location": "unchanged",
+      "original": "D*Z-C*A"
+    },
+    {
+      "candidate": "q-m",
+      "equal_unrounded_polynomial": [
+        {
+          "coefficient": 1,
+          "factors": [
+            "A",
+            "D"
+          ]
+        },
+        {
+          "coefficient": 1,
+          "factors": [
+            "C",
+            "Z"
+          ]
+        }
+      ],
+      "floor_location": "unchanged",
+      "original": "C*Z+D*A"
+    }
+  ],
+  "product_modules_imported": false,
+  "product_requests_executed": 0,
+  "product_suites_executed": 0,
+  "release_acceptance": false,
+  "retained_data": {
+    "archive": {
+      "bytes": 6954619,
+      "name": "checkpoint-061-evidence.zip",
+      "sha256": "417bc250d0028671ffd62c328b67f345d26f2cbce03eec453aeb25644a598f43"
+    },
+    "clock_metadata": {
+      "L03": {
+        "bytes": 1657840,
+        "count": 178,
+        "exact_times_seconds": [
+          {
+            "denominator": "1",
+            "numerator": "0"
+          },
+          {
+            "denominator": "87",
+            "numerator": "2"
+          },
+          {
+            "denominator": "87",
+            "numerator": "4"
+          },
+          {
+            "denominator": "29",
+            "numerator": "2"
+          },
+          {
+            "denominator": "87",
+            "numerator": "8"
+          },
+          {
+            "denominator": "87",
+            "numerator": "10"
+          },
+          {
+            "denominator": "29",
+            "numerator": "4"
+          },
+          {
+            "denominator": "87",
+            "numerator": "14"
+          },
+          {
+            "denominator": "87",
+            "numerator": "16"
+          },
+          {
+            "denominator": "29",
+            "numerator": "6"
+          },
+          {
+            "denominator": "87",
+            "numerator": "20"
+          },
+          {
+            "denominator": "87",
+            "numerator": "22"
+          },
+          {
+            "denominator": "29",
+            "numerator": "8"
+          },
+          {
+            "denominator": "87",
+            "numerator": "26"
+          },
+          {
+            "denominator": "87",
+            "numerator": "28"
+          },
+          {
+            "denominator": "29",
+            "numerator": "10"
+          },
+          {
+            "denominator": "87",
+            "numerator": "32"
+          },
+          {
+            "denominator": "87",
+            "numerator": "34"
+          },
+          {
+            "denominator": "29",
+            "numerator": "12"
+          },
+          {
+            "denominator": "87",
+            "numerator": "38"
+          },
+          {
+            "denominator": "87",
+            "numerator": "40"
+          },
+          {
+            "denominator": "29",
+            "numerator": "14"
+          },
+          {
+            "denominator": "87",
+            "numerator": "44"
+          },
+          {
+            "denominator": "87",
+            "numerator": "46"
+          },
+          {
+            "denominator": "29",
+            "numerator": "16"
+          },
+          {
+            "denominator": "87",
+            "numerator": "50"
+          },
+          {
+            "denominator": "87",
+            "numerator": "52"
+          },
+          {
+            "denominator": "29",
+            "numerator": "18"
+          },
+          {
+            "denominator": "87",
+            "numerator": "56"
+          },
+          {
+            "denominator": "3",
+            "numerator": "2"
+          },
+          {
+            "denominator": "29",
+            "numerator": "20"
+          },
+          {
+            "denominator": "87",
+            "numerator": "62"
+          },
+          {
+            "denominator": "87",
+            "numerator": "64"
+          },
+          {
+            "denominator": "29",
+            "numerator": "22"
+          },
+          {
+            "denominator": "87",
+            "numerator": "68"
+          },
+          {
+            "denominator": "87",
+            "numerator": "70"
+          },
+          {
+            "denominator": "29",
+            "numerator": "24"
+          },
+          {
+            "denominator": "87",
+            "numerator": "74"
+          },
+          {
+            "denominator": "87",
+            "numerator": "76"
+          },
+          {
+            "denominator": "29",
+            "numerator": "26"
+          },
+          {
+            "denominator": "87",
+            "numerator": "80"
+          },
+          {
+            "denominator": "87",
+            "numerator": "82"
+          },
+          {
+            "denominator": "29",
+            "numerator": "28"
+          },
+          {
+            "denominator": "87",
+            "numerator": "86"
+          },
+          {
+            "denominator": "87",
+            "numerator": "88"
+          },
+          {
+            "denominator": "29",
+            "numerator": "30"
+          },
+          {
+            "denominator": "87",
+            "numerator": "92"
+          },
+          {
+            "denominator": "87",
+            "numerator": "94"
+          },
+          {
+            "denominator": "29",
+            "numerator": "32"
+          },
+          {
+            "denominator": "87",
+            "numerator": "98"
+          },
+          {
+            "denominator": "87",
+            "numerator": "100"
+          },
+          {
+            "denominator": "29",
+            "numerator": "34"
+          },
+          {
+            "denominator": "87",
+            "numerator": "104"
+          },
+          {
+            "denominator": "87",
+            "numerator": "106"
+          },
+          {
+            "denominator": "29",
+            "numerator": "36"
+          },
+          {
+            "denominator": "87",
+            "numerator": "110"
+          },
+          {
+            "denominator": "87",
+            "numerator": "112"
+          },
+          {
+            "denominator": "29",
+            "numerator": "38"
+          },
+          {
+            "denominator": "3",
+            "numerator": "4"
+          },
+          {
+            "denominator": "87",
+            "numerator": "118"
+          },
+          {
+            "denominator": "29",
+            "numerator": "40"
+          },
+          {
+            "denominator": "87",
+            "numerator": "122"
+          },
+          {
+            "denominator": "87",
+            "numerator": "124"
+          },
+          {
+            "denominator": "29",
+            "numerator": "42"
+          },
+          {
+            "denominator": "87",
+            "numerator": "128"
+          },
+          {
+            "denominator": "87",
+            "numerator": "130"
+          },
+          {
+            "denominator": "29",
+            "numerator": "44"
+          },
+          {
+            "denominator": "87",
+            "numerator": "134"
+          },
+          {
+            "denominator": "87",
+            "numerator": "136"
+          },
+          {
+            "denominator": "29",
+            "numerator": "46"
+          },
+          {
+            "denominator": "87",
+            "numerator": "140"
+          },
+          {
+            "denominator": "87",
+            "numerator": "142"
+          },
+          {
+            "denominator": "29",
+            "numerator": "48"
+          },
+          {
+            "denominator": "87",
+            "numerator": "146"
+          },
+          {
+            "denominator": "87",
+            "numerator": "148"
+          },
+          {
+            "denominator": "29",
+            "numerator": "50"
+          },
+          {
+            "denominator": "87",
+            "numerator": "152"
+          },
+          {
+            "denominator": "87",
+            "numerator": "154"
+          },
+          {
+            "denominator": "29",
+            "numerator": "52"
+          },
+          {
+            "denominator": "87",
+            "numerator": "158"
+          },
+          {
+            "denominator": "87",
+            "numerator": "160"
+          },
+          {
+            "denominator": "29",
+            "numerator": "54"
+          },
+          {
+            "denominator": "87",
+            "numerator": "164"
+          },
+          {
+            "denominator": "87",
+            "numerator": "166"
+          },
+          {
+            "denominator": "29",
+            "numerator": "56"
+          },
+          {
+            "denominator": "87",
+            "numerator": "170"
+          },
+          {
+            "denominator": "87",
+            "numerator": "172"
+          },
+          {
+            "denominator": "1",
+            "numerator": "2"
+          },
+          {
+            "denominator": "89",
+            "numerator": "179"
+          },
+          {
+            "denominator": "89",
+            "numerator": "180"
+          },
+          {
+            "denominator": "89",
+            "numerator": "181"
+          },
+          {
+            "denominator": "89",
+            "numerator": "182"
+          },
+          {
+            "denominator": "89",
+            "numerator": "183"
+          },
+          {
+            "denominator": "89",
+            "numerator": "184"
+          },
+          {
+            "denominator": "89",
+            "numerator": "185"
+          },
+          {
+            "denominator": "89",
+            "numerator": "186"
+          },
+          {
+            "denominator": "89",
+            "numerator": "187"
+          },
+          {
+            "denominator": "89",
+            "numerator": "188"
+          },
+          {
+            "denominator": "89",
+            "numerator": "189"
+          },
+          {
+            "denominator": "89",
+            "numerator": "190"
+          },
+          {
+            "denominator": "89",
+            "numerator": "191"
+          },
+          {
+            "denominator": "89",
+            "numerator": "192"
+          },
+          {
+            "denominator": "89",
+            "numerator": "193"
+          },
+          {
+            "denominator": "89",
+            "numerator": "194"
+          },
+          {
+            "denominator": "89",
+            "numerator": "195"
+          },
+          {
+            "denominator": "89",
+            "numerator": "196"
+          },
+          {
+            "denominator": "89",
+            "numerator": "197"
+          },
+          {
+            "denominator": "89",
+            "numerator": "198"
+          },
+          {
+            "denominator": "89",
+            "numerator": "199"
+          },
+          {
+            "denominator": "89",
+            "numerator": "200"
+          },
+          {
+            "denominator": "89",
+            "numerator": "201"
+          },
+          {
+            "denominator": "89",
+            "numerator": "202"
+          },
+          {
+            "denominator": "89",
+            "numerator": "203"
+          },
+          {
+            "denominator": "89",
+            "numerator": "204"
+          },
+          {
+            "denominator": "89",
+            "numerator": "205"
+          },
+          {
+            "denominator": "89",
+            "numerator": "206"
+          },
+          {
+            "denominator": "89",
+            "numerator": "207"
+          },
+          {
+            "denominator": "89",
+            "numerator": "208"
+          },
+          {
+            "denominator": "89",
+            "numerator": "209"
+          },
+          {
+            "denominator": "89",
+            "numerator": "210"
+          },
+          {
+            "denominator": "89",
+            "numerator": "211"
+          },
+          {
+            "denominator": "89",
+            "numerator": "212"
+          },
+          {
+            "denominator": "89",
+            "numerator": "213"
+          },
+          {
+            "denominator": "89",
+            "numerator": "214"
+          },
+          {
+            "denominator": "89",
+            "numerator": "215"
+          },
+          {
+            "denominator": "89",
+            "numerator": "216"
+          },
+          {
+            "denominator": "89",
+            "numerator": "217"
+          },
+          {
+            "denominator": "89",
+            "numerator": "218"
+          },
+          {
+            "denominator": "89",
+            "numerator": "219"
+          },
+          {
+            "denominator": "89",
+            "numerator": "220"
+          },
+          {
+            "denominator": "89",
+            "numerator": "221"
+          },
+          {
+            "denominator": "89",
+            "numerator": "222"
+          },
+          {
+            "denominator": "89",
+            "numerator": "223"
+          },
+          {
+            "denominator": "89",
+            "numerator": "224"
+          },
+          {
+            "denominator": "89",
+            "numerator": "225"
+          },
+          {
+            "denominator": "89",
+            "numerator": "226"
+          },
+          {
+            "denominator": "89",
+            "numerator": "227"
+          },
+          {
+            "denominator": "89",
+            "numerator": "228"
+          },
+          {
+            "denominator": "89",
+            "numerator": "229"
+          },
+          {
+            "denominator": "89",
+            "numerator": "230"
+          },
+          {
+            "denominator": "89",
+            "numerator": "231"
+          },
+          {
+            "denominator": "89",
+            "numerator": "232"
+          },
+          {
+            "denominator": "89",
+            "numerator": "233"
+          },
+          {
+            "denominator": "89",
+            "numerator": "234"
+          },
+          {
+            "denominator": "89",
+            "numerator": "235"
+          },
+          {
+            "denominator": "89",
+            "numerator": "236"
+          },
+          {
+            "denominator": "89",
+            "numerator": "237"
+          },
+          {
+            "denominator": "89",
+            "numerator": "238"
+          },
+          {
+            "denominator": "89",
+            "numerator": "239"
+          },
+          {
+            "denominator": "89",
+            "numerator": "240"
+          },
+          {
+            "denominator": "89",
+            "numerator": "241"
+          },
+          {
+            "denominator": "89",
+            "numerator": "242"
+          },
+          {
+            "denominator": "89",
+            "numerator": "243"
+          },
+          {
+            "denominator": "89",
+            "numerator": "244"
+          },
+          {
+            "denominator": "89",
+            "numerator": "245"
+          },
+          {
+            "denominator": "89",
+            "numerator": "246"
+          },
+          {
+            "denominator": "89",
+            "numerator": "247"
+          },
+          {
+            "denominator": "89",
+            "numerator": "248"
+          },
+          {
+            "denominator": "89",
+            "numerator": "249"
+          },
+          {
+            "denominator": "89",
+            "numerator": "250"
+          },
+          {
+            "denominator": "89",
+            "numerator": "251"
+          },
+          {
+            "denominator": "89",
+            "numerator": "252"
+          },
+          {
+            "denominator": "89",
+            "numerator": "253"
+          },
+          {
+            "denominator": "89",
+            "numerator": "254"
+          },
+          {
+            "denominator": "89",
+            "numerator": "255"
+          },
+          {
+            "denominator": "89",
+            "numerator": "256"
+          },
+          {
+            "denominator": "89",
+            "numerator": "257"
+          },
+          {
+            "denominator": "89",
+            "numerator": "258"
+          },
+          {
+            "denominator": "89",
+            "numerator": "259"
+          },
+          {
+            "denominator": "89",
+            "numerator": "260"
+          },
+          {
+            "denominator": "89",
+            "numerator": "261"
+          },
+          {
+            "denominator": "89",
+            "numerator": "262"
+          },
+          {
+            "denominator": "89",
+            "numerator": "263"
+          },
+          {
+            "denominator": "89",
+            "numerator": "264"
+          },
+          {
+            "denominator": "89",
+            "numerator": "265"
+          },
+          {
+            "denominator": "89",
+            "numerator": "266"
+          },
+          {
+            "denominator": "1",
+            "numerator": "3"
+          },
+          {
+            "denominator": "1",
+            "numerator": "4"
+          }
+        ],
+        "member": "evidence/round-001/L03/capture/unvalidated-reader-input.glb",
+        "sha256": "12f78939fd6fb5e8a6dace1ed4469c4da90ae3e56a8f0e21dd2e73947ae567e5",
+        "successful_reader_validation_claimed": false
+      },
+      "P11": {
+        "bytes": 1799228,
+        "count": 52,
+        "exact_times_seconds": [
+          {
+            "denominator": "1",
+            "numerator": "0"
+          },
+          {
+            "denominator": "25",
+            "numerator": "1"
+          },
+          {
+            "denominator": "25",
+            "numerator": "2"
+          },
+          {
+            "denominator": "25",
+            "numerator": "3"
+          },
+          {
+            "denominator": "25",
+            "numerator": "4"
+          },
+          {
+            "denominator": "5",
+            "numerator": "1"
+          },
+          {
+            "denominator": "25",
+            "numerator": "6"
+          },
+          {
+            "denominator": "25",
+            "numerator": "7"
+          },
+          {
+            "denominator": "25",
+            "numerator": "8"
+          },
+          {
+            "denominator": "25",
+            "numerator": "9"
+          },
+          {
+            "denominator": "5",
+            "numerator": "2"
+          },
+          {
+            "denominator": "25",
+            "numerator": "11"
+          },
+          {
+            "denominator": "25",
+            "numerator": "12"
+          },
+          {
+            "denominator": "25",
+            "numerator": "13"
+          },
+          {
+            "denominator": "25",
+            "numerator": "14"
+          },
+          {
+            "denominator": "5",
+            "numerator": "3"
+          },
+          {
+            "denominator": "25",
+            "numerator": "16"
+          },
+          {
+            "denominator": "25",
+            "numerator": "17"
+          },
+          {
+            "denominator": "25",
+            "numerator": "18"
+          },
+          {
+            "denominator": "25",
+            "numerator": "19"
+          },
+          {
+            "denominator": "5",
+            "numerator": "4"
+          },
+          {
+            "denominator": "25",
+            "numerator": "21"
+          },
+          {
+            "denominator": "25",
+            "numerator": "22"
+          },
+          {
+            "denominator": "25",
+            "numerator": "23"
+          },
+          {
+            "denominator": "25",
+            "numerator": "24"
+          },
+          {
+            "denominator": "1",
+            "numerator": "1"
+          },
+          {
+            "denominator": "25",
+            "numerator": "26"
+          },
+          {
+            "denominator": "25",
+            "numerator": "27"
+          },
+          {
+            "denominator": "25",
+            "numerator": "28"
+          },
+          {
+            "denominator": "25",
+            "numerator": "29"
+          },
+          {
+            "denominator": "5",
+            "numerator": "6"
+          },
+          {
+            "denominator": "25",
+            "numerator": "31"
+          },
+          {
+            "denominator": "25",
+            "numerator": "32"
+          },
+          {
+            "denominator": "25",
+            "numerator": "33"
+          },
+          {
+            "denominator": "25",
+            "numerator": "34"
+          },
+          {
+            "denominator": "5",
+            "numerator": "7"
+          },
+          {
+            "denominator": "25",
+            "numerator": "36"
+          },
+          {
+            "denominator": "25",
+            "numerator": "37"
+          },
+          {
+            "denominator": "25",
+            "numerator": "38"
+          },
+          {
+            "denominator": "25",
+            "numerator": "39"
+          },
+          {
+            "denominator": "5",
+            "numerator": "8"
+          },
+          {
+            "denominator": "25",
+            "numerator": "41"
+          },
+          {
+            "denominator": "25",
+            "numerator": "42"
+          },
+          {
+            "denominator": "25",
+            "numerator": "43"
+          },
+          {
+            "denominator": "25",
+            "numerator": "44"
+          },
+          {
+            "denominator": "5",
+            "numerator": "9"
+          },
+          {
+            "denominator": "25",
+            "numerator": "46"
+          },
+          {
+            "denominator": "25",
+            "numerator": "47"
+          },
+          {
+            "denominator": "25",
+            "numerator": "48"
+          },
+          {
+            "denominator": "25",
+            "numerator": "49"
+          },
+          {
+            "denominator": "1",
+            "numerator": "2"
+          },
+          {
+            "denominator": "1",
+            "numerator": "3"
+          }
+        ],
+        "member": "evidence/round-001/P11/capture/unvalidated-reader-input.glb",
+        "sha256": "4ea1d4d90fd1942aa8a793892dfe1a72f7ae047b5725f9750ab5c7b330477c3d",
+        "successful_reader_validation_claimed": false
+      }
+    },
+    "parts_verified": 10
+  },
+  "schema_version": "ontokin.c065-symbolic-derivation/0.1",
+  "selected_detached_schedule": {
+    "bridge_definition": "All four producer copies completed; include partial consumer progress before a later failure",
+    "charge_per_new_scalar_copy": 1,
+    "complete_request_inequality": "sum(g(e)-4) - preparation - other_added - unsuccessful_attempt_work <= 0",
+    "decision": "reject selected detached-copy schedule",
+    "generic_reference_only_graph_impossibility_claimed": false,
+    "maximum_removed_arithmetic_per_completed_pair": 4,
+    "net_upper_bound_before_all_other_added_work": 0,
+    "new_producer_scalar_copies_per_completed_pair": 4,
+    "replay_independent": true
+  },
+  "single_traversal_only": {
+    "P11_supplied_keys": 52,
+    "gross_ceiling": 208,
+    "replay_or_fallback_total_not_inferred": true
+  },
+  "source_inputs_verified": [
+    {
+      "bytes": 38447,
+      "git_blob": "499db559592c0846ecefb24e369515dab18da1ac",
+      "path": "ontokin/reach_reference_center.py",
+      "sha256": "ee4b28542d2bf75b9a4e1da76e51e321f8131c90f249c15ccdbe3d50a3df71e9"
+    },
+    {
+      "bytes": 259473,
+      "git_blob": "d751b2a49d6da41f61d1a92e2d32eadf507e5c7e",
+      "path": "ontokin/reach_reference.py",
+      "sha256": "e17fb50c54f41e13b42ce5bc2c6464544c26992299b474032ad2b19e0485949f"
+    },
+    {
+      "bytes": 49370,
+      "git_blob": "8a797f3805d29da637a01c32359492315a9e95bc",
+      "path": "ontokin/reach_reference_plan.py",
+      "sha256": "7b83c6ffdeaaac41820ad320d13263ffbabc434006579bb8aed49debb776a7cb"
+    },
+    {
+      "bytes": 206759,
+      "git_blob": "f91cdbc43fe7134c4b11c73bd43cd033bf9d16ea",
+      "path": "ontokin/reach_conformance.py",
+      "sha256": "b4c657eac72186203960b18738f65f08e700f52dffa11c1364c6b4609c59a81a"
+    },
+    {
+      "bytes": 4942,
+      "git_blob": "c060ffb3b88023aa1521ef74777377a3ab47df7c",
+      "path": "ontokin/geometry.py",
+      "sha256": "1442fbcea2b16eb8b0cb663949ad2b17586395eaa79ba207bd650a9c9442a2b9"
+    },
+    {
+      "bytes": 30654,
+      "git_blob": "ce5f60bc45602794e58dcd0ccac487a7704f19c4",
+      "path": "tests/test_reach_centered_coefficients.py",
+      "sha256": "c7eb6e9053e51438ebb7d997013237fca897b95503866055d08389fc464bcee9"
+    },
+    {
+      "bytes": 20362,
+      "git_blob": "56e3627d35b4c2c2984f2975d87d4d7eaf625bd7",
+      "path": "tests/test_reach_centered_identity_offsets.py",
+      "sha256": "ab6e8e79fbaa16429698e2188c93da1baccffd60d796017b99d645e58815f110"
+    },
+    {
+      "bytes": 5549,
+      "git_blob": "a9ff85b48649fd9997f6387dfa6fddab438d8841",
+      "path": "docs/language-design/planar-reach-v0.1/libraries/reach-assets.ok",
+      "sha256": "6551d3dd5a772e85e92547d71db081e6ae7c21a0f3d57424b01c64a18191d6ba"
+    },
+    {
+      "bytes": 2556,
+      "git_blob": "a139d1d7eef8d97e5190528f4a0e6e891411ba7e",
+      "path": "docs/language-design/planar-reach-v0.1/libraries/reach-parts.ok",
+      "sha256": "aa04a78696122cd18def6993b1056971f8990a21e8617b3ee73ca98be9b9b0cb"
+    },
+    {
+      "bytes": 2354,
+      "git_blob": "9545c1cdbb4ae260bff56190d5ab37f026ec347b",
+      "path": "docs/language-design/planar-reach-v0.1/libraries/reach-exterior.ok",
+      "sha256": "3b94fc91ca96f8fb0b21a90a1d6b4d78cdbd19600383a10cb6a3646ba67af763"
+    },
+    {
+      "bytes": 1138,
+      "git_blob": "27b0fa8faeb790d655d2a29691e2727d107bad4a",
+      "path": "docs/language-design/planar-reach-v0.1/sources/p11-complete-segmented-character.ok",
+      "sha256": "9e58d517ad21f6838247096ced3983188b6820b3a7f94d2bb7ac8ace8b77146a"
+    },
+    {
+      "bytes": 1183,
+      "git_blob": "5a63c8e7545b442596f1a2a6aaee337bf136818e",
+      "path": "docs/language-design/planar-reach-v0.1/draft2-supplements/sources/l03-completed-action-new-owner.ok",
+      "sha256": "a57e8513d93cc4dd5b8998bd4119b9b534c7b6c1faf06574a8d88ceb99e11736"
+    },
+    {
+      "bytes": 8368,
+      "git_blob": "d2113ebd1f44bbf78ba484a5f971d62741dab715",
+      "path": "docs/language-design/planar-reach-v0.1/budget-counting.md",
+      "sha256": "055b6167cbf67dc420c99dc24f3e08d449ae9d8d993250fbddfb48cabb4f4d04"
+    },
+    {
+      "bytes": 5938,
+      "git_blob": "53df12590687983a239e7c1d29b86488ab95c0d6",
+      "path": "docs/language-design/planar-reach-v0.1/ADOPTION.md",
+      "sha256": "ded24c5a10ebfb57e6578299845606f770283d5fc090145e2cc206f94f6a65fe"
+    },
+    {
+      "bytes": 56183,
+      "git_blob": "61547fa798ffb0ab06cfaba165dce63dc003ec03",
+      "path": "docs/language-design/planar-reach-v0.1/adoption.json",
+      "sha256": "05453342c602808f33f1fb0560e2baa2460148f9bf150e174882143b3c63a822"
+    },
+    {
+      "bytes": 56763,
+      "git_blob": "fbbe086663547a995d4793ce8783fdc9a6c3a656",
+      "path": "docs/engineering/reach-source-reference-design-2026-10-29-c064/derived-evidence.json",
+      "sha256": "4d577fa35d91d72c1f77f888078e3a32fbf68a096d8e332d234af5d53248c207"
+    },
+    {
+      "bytes": 21581,
+      "git_blob": "aed6d218b9a893e9a186e6f3cc171931137e2929",
+      "path": "docs/engineering/reach-recording-validation-2026-10-23/checkpoint-057-comparison-admission-audit.md",
+      "sha256": "bf6662bff92242e5e47b10fb9b7e49a643b584093aa5c288c9e46b4adf19271b"
+    }
+  ]
+}
