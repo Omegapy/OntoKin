@@ -30,7 +30,9 @@ The [next proposed task, C065](docs/engineering/reach-source-reference-design-20
 
 ## Repository lifecycle and ownership
 
-[OK-ENG-009](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) keeps development integration separate from release acceptance. C064 integration is complete. This final status publication releases the main integration lease held by owner `interactive-source-reference-design-20261029-c064-7of9-fbdc`. **No main integration lease remains active.** The separate packet window remains open until explicit closure in Issue #26 after final verification and saving; reconcile that release and live state before another scope.
+**Active C065 main integration lease:** owner `interactive-offset-expression-design-20261029-c065-7of9-f7b2`; acquired October 29, 2026 at 21:25 UTC, expires at 21:55 UTC. Scope: integrate reviewed C065 head `e8bba1b8bfc9d68e540e68f04177ba8fc080eb78`, verify actual merge, publish final status/receipts, and release ownership. Expected starting main is `a7452d0063b785c1bfb02c45844ef341e3e0bf0b`. C064's scope and packet window were explicitly closed in Issue #26 comment 6504858288. No product execution or hosted job is included.
+
+[OK-ENG-009](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) keeps development integration separate from release acceptance. C064 integration is complete. This final status publication releases the main integration lease held by owner `interactive-source-reference-design-20261029-c064-7of9-fbdc`. That C064 lease is closed; the new C065 lease above is now authoritative. Its separate packet window was explicitly closed in Issue #26 comment 6504858288.
 
 GitHub automatically removed the merged C064 work branch; its exact head remains the second parent of PR #62's merge. Observed remaining branches are main and `archive/pre-consolidation-20261028`, unchanged at `e6917dae0be3a786c22e76be3de62e3c97784cf5`. The archive retains earlier branch history and must never be merged or used as a development base. No hosted execution was dispatched.
 
