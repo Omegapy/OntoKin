@@ -1,6 +1,6 @@
 # OntoKin status
 
-Checkpoint: October 28, 2026, **C063 archive recovery and diagnostic integration complete**. The full [GOAL](GOAL.md) remains in progress: an AI-agent programming language for editable 3D objects and animation, with validated delivery to game engines including Unreal Engine.
+Checkpoint: October 29, 2026, **C064 source/reference design review complete; identity-node elision rejected**. The full [GOAL](GOAL.md) remains in progress: an AI-agent programming language for editable 3D objects and animation, with validated delivery to game engines including Unreal Engine.
 
 ## Released capability and current development
 
@@ -8,46 +8,37 @@ The finite force-0.1 / Agent/0.5 / recorded GLB/0.5 release remains complete at 
 
 C059 [PR #56](https://github.com/Omegapy/OntoKin/pull/56), merged as `1e2e7fff7bfb7ed638aa01db84c23fdf30bd35a3`, consolidated the reviewed C032 runtime and later C058 evidence while excluding held C035 runtime changes. Explicit source 0.6 / planar-reach-0.1, Agent/0.6 and GLB/0.6 remain experimental. Defaults remain CLI Agent/0.1, Python ProgramAgentService/0.2 and GLB/0.1.
 
-[The C059 reconciliation record](docs/engineering/repository-reconciliation-2026-10-28/README.md) retains its 3,064-test CPython 3.12.14 result, overlapping 106-test Agent/0.5 cohort, all local-driver/supplemental roles and 83 reviewed PNGs, together with the original failed attempts and recoveries. Its SQLite state-loss/corruption cause remains unresolved. Those executions retain their original source attribution; C063 did not rerun or relabel them.
+[The C059 reconciliation record](docs/engineering/repository-reconciliation-2026-10-28/README.md) retains its 3,064-test CPython 3.12.14 result, overlapping 106-test Agent/0.5 cohort, other local-driver/supplemental roles and 83 reviewed PNGs, together with failed attempts and recoveries. Its SQLite state-loss/corruption cause remains unresolved. Those executions retain their original source attribution; C063 and C064 did not rerun or relabel them.
 
-## C063 result and integration
+## C064 decision and integration
 
-[C063](docs/engineering/documentation-recovery-2026-10-28-c063/README.md) recovered twelve exact historical archive objects totaling **74,915,834 bytes**. It then verified the complete C062 tree: **3,458 tracked files / 618,214,168 bytes**, zero omissions, exact file blobs and modes. The original commits were reconstructed as native shallow Git objects; complete source does not imply complete Git history.
+[C064](docs/engineering/reach-source-reference-design-2026-10-29-c064/README.md) assessed one concrete reduction: omit nonstationary, zero-offset, identity-orientation nodes from independent centered evaluation after unchanged preparation. The source-derived census finds **zero eligible visits in original P11/L03**, including their unchanged authored tails. One node tick could be removed per eligible visit, but there are none; added compilation, authority and redirection work cannot produce a positive saving. A separate hypothetical recipe-mutation witness shows why final source admission cannot substitute for live recipe checks. It was not executed as a product test.
 
-The unchanged documentation checker passed on complete C062 and on the published recovery candidate. Diagnostic archive verification passed all **603 C060** and **609 C061** members. The C062 standard-library calculation reproduced its recorded ledger exactly. Earlier failed documentation and product receipts remain unchanged.
+The finite decision is **NO-GO**, not a runtime improvement or a general impossibility result. [PR #62](https://github.com/Omegapy/OntoKin/pull/62) integrated the independently reviewed record as actual main merge `81dbd6a363383c23c4cc96e3c3c39323dc991553`, with reviewed head `d4f95957910d41eacbc0c80576e08d0724322974` as its second parent. [The integration receipt](docs/engineering/reach-source-reference-design-2026-10-29-c064/integration.json) identifies the exact source, checks and publication boundary.
 
-The diagnostic stack and recovery record are now integrated:
+The standard-library evidence calculation reproduced byte-for-byte, verifying 21 archive members and 11 frozen/current source comparisons. The unchanged documentation checker passed on the exact published candidate and resulting merge with all 3,509 tracked inputs stable. No product requests, runtime suites or hosted jobs were executed. All **65 runtime files**, fixtures, limits, defaults and manual-only/default-false workflows remain unchanged. The portable handoff and [Issue #26](https://github.com/Omegapy/OntoKin/issues/26) retain the separate final status publication and its resulting-main check.
 
-| Increment | Pull request | Actual main merge |
-| --- | --- | --- |
-| C060 original-request diagnostics | [#58](https://github.com/Omegapy/OntoKin/pull/58) | `203703cc5fedac58ebe0235e474c6504f7fafe7a` |
-| C061 reader-setup diagnostics | [#59](https://github.com/Omegapy/OntoKin/pull/59) | `18a212d794e5aed64f9056a07dadc257cf3fcb3b` |
-| C062 source-only ancestry decision | [#60](https://github.com/Omegapy/OntoKin/pull/60) | `371716fca642829595e977fde824382678d7b3d4` |
-| C063 recovery and validation | [#61](https://github.com/Omegapy/OntoKin/pull/61) | `da69c1d16fcfdb1c257e17edb9e12961d07d204f` |
+## Preserved recovery and unresolved gates
 
-The documentation checker passed after **each** merge with stable complete inputs. Each resulting tree equals its reviewed candidate except for the separately acquired integration lease in this current status file. [The integration record](docs/engineering/documentation-recovery-2026-10-28-c063/integration.json) retains exact trees, commands, input identities and results. All **65 runtime files**, fixtures, limits, defaults and both manual-only/default-false workflows remain unchanged. Standalone diagnostic tools and their failed-request evidence do not establish new runtime success.
-
-## Unresolved gates and next objective
+[C063](docs/engineering/documentation-recovery-2026-10-28-c063/README.md) recovered twelve exact historical archives totaling 74,915,834 bytes and integrated C060–C063 through PRs #58–#61. Its final complete source snapshot had 3,490 files, zero omissions, and exact Git blobs, modes, tree and commit. C064 reverified that packet and preserves every earlier source file except this current status and the documentation navigation addition. Complete source does not imply complete Git history. Earlier failed evidence and the completed C060/C061/C062 finite rejections remain intact.
 
 Historical original recordings remain **24/28, failed**. **P11/P16/P23/L03** remain unresolved. **C035 remains held, including adverse timing**, and [M1 remains rejected](docs/engineering/OK-DEC-COMPARE-M1-0.1.0.md). The C057 comparison-accounting/passive-authority concern remains open.
 
 Preserve 100,000 shared operations, 30,000 ms, 32,768 operand bits, 256 numerical-cache entries, 64 cursor updates, and all original fixtures, horizons/fps/helpers, equations, independent oracles and tolerances. The finite reach release still needs all 28 source recordings and ten Agent artifacts, CPython 3.11/3.12/3.13, independent rates/native/browser/visual and hostile/inherited roles, formal input closure, and every R01–R12/Q01–Q22 requirement.
 
-The [next proposed task](docs/engineering/documentation-recovery-2026-10-28-c063/NEXT-TASK.md) is one source-bound algorithmic design for independent source/reference evaluation, with a complete positive cost and authority premise before new instrumentation or product requests. Preserve the completed C060/C061/C062 finite rejections; another ancestry-only measurement is not their continuation. No C064 worker or schedule is started by this checkpoint.
+The [next proposed task, C065](docs/engineering/reach-source-reference-design-2026-10-29-c064/NEXT-TASK.md), is a source-bound expression graph for actual nonzero planar offset arithmetic. It must find additional shared exact products or sums beyond existing coefficient reuse, preserve all floor locations, live authority, callback/first-exception behavior and bounded storage, and establish a positive complete-request cost premise before instrumentation or product requests. It is an unproven hypothesis. No C065 worker or schedule is started by this checkpoint.
 
 ## Repository lifecycle and ownership
 
-[OK-ENG-009](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) keeps development integration separate from release acceptance. C063 ownership was explicitly released in [Issue #26](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6484917616).
+[OK-ENG-009](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) keeps development integration separate from release acceptance. C064 integration is complete. This final status publication releases the main integration lease held by owner `interactive-source-reference-design-20261029-c064-7of9-fbdc`. **No main integration lease remains active.** The separate packet window remains open until explicit closure in Issue #26 after final verification and saving; reconcile that release and live state before another scope.
 
-**Active main integration lease:** owner `interactive-source-reference-design-20261029-c064-7of9-fbdc`, acquired October 29, 2026 at 18:06 UTC from observed main `3486829791629a5013599efceff9c98d7b369766`, expires **18:36 UTC**. Scope: integrate reviewed C064 [PR #62](https://github.com/Omegapy/OntoKin/pull/62), run the resulting-main documentation check, and publish the concise current status and exact integration receipts. Only this owner may change main or these ownership fields during the lease. Independent nonoverlapping branch work remains allowed. This is documentation-only integration; no product execution, hosted job or LFS migration is selected. The final status publication will release this lease; the separate C064 packet window will be explicitly closed in Issue #26.
-
-GitHub automatically removed the four merged work branches; their exact heads remain parents of the verified merges. The two observed remaining branches are main and `archive/pre-consolidation-20261028`, unchanged at `e6917dae0be3a786c22e76be3de62e3c97784cf5`. That archive retains the earlier 104 branch heads through 95 distinct parents. Never merge its index-only tree or use it as a development base. No hosted execution was dispatched.
+GitHub automatically removed the merged C064 work branch; its exact head remains the second parent of PR #62's merge. Observed remaining branches are main and `archive/pre-consolidation-20261028`, unchanged at `e6917dae0be3a786c22e76be3de62e3c97784cf5`. The archive retains earlier branch history and must never be merged or used as a development base. No hosted execution was dispatched.
 
 ## Git LFS
 
-The owner authorized Git LFS use and funding. [PR #57](https://github.com/Omegapy/OntoKin/pull/57), merged as `a8138a2605448675e1a9cd515d960b9b52a077c2`, configures four future tracking rules under `docs/engineering/lfs-archives/` and enables LFS objects in repository archives. [The storage record](docs/engineering/lfs-storage-validation-2026-10-28/README.md) preserves its tests and integration evidence.
+The owner authorized Git LFS use and funding. [PR #57](https://github.com/Omegapy/OntoKin/pull/57), merged as `a8138a2605448675e1a9cd515d960b9b52a077c2`, configures four future tracking rules under `docs/engineering/lfs-archives/` and enables LFS objects in repository archives. [The storage record](docs/engineering/lfs-storage-validation-2026-10-28/README.md) preserves its evidence.
 
-**Historical payload migration remains unfinished.** The saved plan identifies 357 archives / 459,206,837 bytes at its original merge; it is not a current migration inventory. C063's authenticated raw-byte recovery does not provide an LFS upload capability or establish independent LFS hydration. Regenerate the plan from clean current HEAD in an authenticated maintainer checkout and follow [OK-ENG-010](docs/engineering/OK-ENG-010-git-lfs-archive-storage.md). No archive was replaced with an unuploaded pointer and no history rewrite occurred.
+**Historical payload migration remains unfinished.** The saved plan identifies 357 archives / 459,206,837 bytes at its original merge; it is not a current migration inventory. C063 recovery and C064 packet verification do not provide LFS upload capability or establish independent LFS hydration. Regenerate the plan from clean current HEAD in an authenticated maintainer checkout and follow [OK-ENG-010](docs/engineering/OK-ENG-010-git-lfs-archive-storage.md). No archive was replaced with an unuploaded pointer and no history rewrite occurred.
 
 ## Remaining product scope
 
