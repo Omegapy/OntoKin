@@ -36,9 +36,11 @@ Preserve 100,000 shared operations, 30,000 ms, 32,768 operand bits, 256 numerica
 
 ## Repository lifecycle and ownership
 
-[OK-ENG-009](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) keeps development integration separate from release acceptance. C067 integration is complete. This final status publication releases the main integration lease held by `interactive-actual-point-bound-20261029-c067-a7d2`. **No main integration lease remains active.** Root retains the separate C067 packet/checker/archive window until explicit Issue #26 closure after final verification and delivery. Reconcile that closure and live state before beginning another scope.
+**Active C068 main integration lease.** Owner: `interactive-cold-admission-20261029-c068-7of9`. Acquired from observed main `7c1bf5d32d194f2faf7f38c9f3c153089f7a7b7e`; expires **2026-10-30T00:26:05.000Z**. [Scope](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6511179345) covers the reviewed C068 source-only admission/funding record, documentation navigation, actual merge checks and final publication. C067's separate scope and packet window were explicitly released in [comment 6511093850](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6511093850).
 
-The merged work branch may be removed automatically; its exact candidate remains the actual merge's second parent. The archive-retention branch remains history-only at `e6917dae0be3a786c22e76be3de62e3c97784cf5`. Never merge or develop from it. No hosted execution was dispatched.
+Root alone owns integration and the C068 documentation-check/packet/archive window. Read-only reviews do not run product or archive work. No C069 worker, schedule, instrumentation or product execution is started. [OK-ENG-009](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) separates this development integration from release acceptance. All original runtime, contracts, limits, fixtures, defaults, workflows and adverse evidence remain unchanged.
+
+The archive-retention branch remains history-only at `e6917dae0be3a786c22e76be3de62e3c97784cf5`. Never merge or develop from it. No hosted execution was dispatched.
 
 ## Git LFS
 
