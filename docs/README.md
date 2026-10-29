@@ -1,5 +1,7 @@
 # OntoKin documentation guide
 
+For C067 actual-point lower-bound screening, visited-seed redundancy and the conditional future-seed prefix proof, read [C067](engineering/reach-actual-point-bound-2026-10-29-c067/README.md). Native list authority and positive complete-request costs remain unproved; no runtime implementation is approved.
+
 For the C066 cold sphere-radius shortlist review, conditional subnormal witness and surviving restricted-domain theorem, read [C066](engineering/reach-sphere-candidates-2026-10-29-c066/README.md). The unrestricted eight-index shortcut is not approved and no runtime improvement is established.
 
 For the C065 signed nonzero offset expression review and finite rejection of the detached four-product bridge, read [C065](engineering/reach-offset-expression-design-2026-10-29-c065/README.md). Its valid arithmetic identity does not establish a positive complete-request saving or runtime improvement.
