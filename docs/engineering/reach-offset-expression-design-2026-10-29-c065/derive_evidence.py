@@ -222,6 +222,7 @@ def derive(root):
         "floor_noncommutation_controls": {"sign": True, "sum": True},
         "selected_detached_schedule": {
             "maximum_removed_arithmetic_per_completed_pair": 4,
+            "bridge_definition": "All four producer copies completed; include partial consumer progress before a later failure",
             "new_producer_scalar_copies_per_completed_pair": 4,
             "charge_per_new_scalar_copy": 1,
             "net_upper_bound_before_all_other_added_work": 0,

@@ -40,11 +40,11 @@ The following ledger deliberately gives the design favorable bounds. Work that i
 
 The one-charge-per-scalar materialization/admission rule is an explicit property of this conservative candidate. It is not an assertion that all Python assignments inherently charge the current runtime. In particular, existing `_Guard.freeze` constructs a detached `Fraction` and guards its fields without its own tick. Calling it four additional times and declaring that new work free would leave the C065 accounting requirement unmet. A different bounded, funded bulk operation would be a different candidate needing an explicit authority and accounting proof; none is assumed here.
 
-Let `N` be the number of completed bridges over every attempt in the complete request, including any replay. Let `g(e)` be the corresponding raw arithmetic benefit, with `g(e) <= 4`. With original coefficient/cache/cursor work preserved, the selected schedule has
+Let `N` be the number of fully produced bridges over every attempt in the complete request, including replay and bridges whose right consumer later stops early. All four producer-copy charges have completed for each such bridge. Let `g(e)` include the actual raw arithmetic benefit before any later consumer failure, with `g(e) <= 4`. With original coefficient/cache/cursor work preserved, the selected schedule has
 
 `net saving <= sum(g(e)) - 4*N - C_other <= -C_other <= 0`.
 
-`C_other` includes all remaining added preparation, admission, storage, selection, consumer-copy, partial-attempt, cleanup and fallback work. A bridge that is partly built or never consumed adds work but removes no right-eye operations. Degenerate coefficients and stationary/unsupported paths only reduce its raw opportunity. Consequently neither an exact future visit count nor a guessed tail cost is needed to reject this schedule's strictly positive premise. Unproven improvements to another cache, callback route or retry path cannot be inserted as a negative overhead credit.
+`C_other` includes all remaining added preparation, admission, storage, selection, consumer-copy, partial-attempt, cleanup and fallback work. A bridge that is partly produced or never consumed adds work but removes no right-eye operations. A partly consumed, fully produced bridge already paid all four copies and remains covered by the same bound. Degenerate coefficients and stationary/unsupported paths only reduce its raw opportunity. Consequently neither an exact future visit count nor a guessed tail cost is needed to reject this schedule's strictly positive premise. Unproven improvements to another cache, callback route or retry path cannot be inserted as a negative overhead credit.
 
 ## Existing-coefficient-cache variant
 

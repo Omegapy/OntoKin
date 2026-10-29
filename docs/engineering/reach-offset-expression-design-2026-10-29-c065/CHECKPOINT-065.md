@@ -35,11 +35,11 @@ The selected graph uses a source-only pair descriptor and one bounded temporary 
 
 This choice follows the existing evaluator's use of detached values to protect against mutable Fraction aliases. The new four-copy schedule is explicit. The current `_Guard.freeze` has no separate tick; calling it four more times would not, by itself, fund four new logical copies. This checkpoint does not declare every Python assignment a semantic operation or invent a one-tick bulk exemption.
 
-For every completed bridge `e`, let `g(e)` be the numerical work actually removed. The source branch analysis establishes `g(e)<=4`. Let `N` count completed bridges across the complete request, including replay, and let `C_other>=0` include all additional work beyond the four producer-copy charges:
+For every fully produced bridge `e`, let `g(e)` be the numerical work actually removed, including any work omitted before a later consumer failure. The source branch analysis establishes `g(e)<=4`. Let `N` count fully produced bridges, for which all four producer-copy charges completed, across the complete request including replay. Include a bridge even if its consumer later stops early, and let `C_other>=0` include all additional work beyond the four producer-copy charges:
 
 `net saving <= sum(g(e)) - 4*N - C_other <= 0`.
 
-`C_other` includes source-pair preparation, publication and selection, new type/limit/claim and dispatch checks, consumer copies if used, partial or rejected bridges, cleanup, fallback and finalization. A partial bridge can add work without earning a right-eye saving. No unknown cost is assigned a favorable negative value. The inequality therefore rejects the required strictly positive premise without guessing how often an unvisited tail would use the graph.
+`C_other` includes source-pair preparation, publication and selection, new type/limit/claim and dispatch checks, consumer copies if used, partial or rejected bridges, cleanup, fallback and finalization. A partially produced bridge cannot reach a consumer and earns no right-eye saving. A partially consumed, fully produced bridge has already paid all four copies and remains covered by `g(e)<=4`. No unknown cost is assigned a favorable negative value. The inequality therefore rejects the required strictly positive premise without guessing how often an unvisited tail would use the graph.
 
 An extended coefficient-cache entry does not rescue this selected copy schedule. The left coefficient lookup or cold publication occurs before the vector-dependent products exist. A later product update and its new receipts require their own funding. The unchanged right coefficient lookup cannot be counted as a new saving or used as an unlimited allowance for added checks. This conclusion preserves the existing 256-entry cache, its eviction effects and every earlier coefficient optimization.
 
@@ -70,7 +70,7 @@ The original C064 ZIP matched its published 477,588,135-byte size and SHA-256, a
 
 The standalone [derivation](derive_evidence.py) imports only the Python standard library. It verifies 17 bound source inputs, all ten C061 archive parts and both used GLB members; proves four polynomial identities; checks the original two floor/four product call sites; and checks all four degenerate arithmetic branches and two floor noncommutation controls. The coefficient controls are illustrative exact rationals, not captured runtime centers. The zero L03 opportunity remains an explicitly labeled source-review conclusion. [Validation](validation.json) identifies actual commands and final reproduction results.
 
-Independent mathematics, authority and cost reviews agree on the finite disposition. Exact published-candidate, actual-merge and final-main documentation checks are recorded separately at their actual source identities. No runtime test result is inferred from documentation or symbolic arithmetic checks.
+Independent mathematics, authority and cost reviews agree on the finite disposition. Exact published-candidate, actual-merge and final-main documentation checks are pending at this candidate boundary and must be recorded separately at their actual source identities. No runtime test result is inferred from documentation or symbolic arithmetic checks.
 
 ## Preserved product state and next task
 
