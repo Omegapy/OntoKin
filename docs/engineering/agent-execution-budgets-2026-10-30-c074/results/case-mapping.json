@@ -1,0 +1,600 @@
+{
+  "schema_version": "ontokin.c074-actual-case-mapping/0.1",
+  "status": "mapping_only_attach_final_candidate_results_before_acceptance_claim",
+  "candidate": {
+    "commit": "734992f832c0b824253e9b61acee9e734cfa0f4b",
+    "tree": "800a49b1c0149ffe73f73218915e34ba1dd48612"
+  },
+  "original_conformance_case_count": 29,
+  "scope": "The five C074 cases in the unchanged 29-case execution-budget plan; supporting tests can also cover inherited C073 obligations.",
+  "test_method_count": 58,
+  "test_methods_counted_once_by_primary_case": true,
+  "test_file_method_counts": {
+    "tests/test_budget_program_runtime.py": 18,
+    "tests/test_budget_agent_lifecycle.py": 34,
+    "tests/test_budget_agent_regressions.py": 6
+  },
+  "test_file_hashes": {
+    "tests/test_budget_program_runtime.py": {
+      "bytes": 15788,
+      "sha256": "baf07e0d7703a569336760b50e4d0d783330880b16d46eef23aa0e67db14db08"
+    },
+    "tests/test_budget_agent_lifecycle.py": {
+      "bytes": 35330,
+      "sha256": "1bcf086a4ce24f555cfd19fd238cd804a544f6d21f676b49a5086e0cd4053a9b"
+    },
+    "tests/test_budget_agent_regressions.py": {
+      "bytes": 16533,
+      "sha256": "ff18c943da09512689961f099fcfa5ff23027b2411f7d6db7209608eb5b7a28f"
+    }
+  },
+  "acceptance_exchange_count": 45,
+  "acceptance_assertion_count": 74,
+  "acceptance_labels_counted_once_by_primary_case": true,
+  "acceptance_source": "tools/run_budget_agent_acceptance.py",
+  "acceptance_source_sha256": "3538c509deaeac1ed7b707d1cddd3fb474c66f93a3b079573cb735c6dbbe3242",
+  "product_tests_executed_by_this_mapping_task": false,
+  "final_acceptance_results_attached": false,
+  "secondary_coverage": [
+    {
+      "case": "EB-24",
+      "methods": [
+        "test_nominal_identity_rejection_after_export_has_no_published_delivery_claim",
+        "test_competing_accepted_edit_removes_losing_tentative_delivery_claim",
+        "test_late_host_clock_exception_is_preserved_and_retry_never_reads_clock",
+        "test_nonfinite_or_backward_clock_is_durably_cancelled_after_valid_start"
+      ],
+      "reason": "Publication and clock-failure regressions also require identical retry to preserve the historical outcome without repeating work."
+    },
+    {
+      "case": "EB-24",
+      "methods": [
+        "test_construction_evaluation_inspection_use_one_counter_and_start",
+        "test_exhaustion_in_later_operation_does_not_reset_allowance"
+      ],
+      "reason": "One admitted runtime context retains its counter and original clock across nested work."
+    },
+    {
+      "case": "EB-29",
+      "methods": [
+        "test_nominal_identity_rejection_after_export_has_no_published_delivery_claim",
+        "test_competing_accepted_edit_removes_losing_tentative_delivery_claim"
+      ],
+      "reason": "Failed publication responses may not claim delivery or advertise nonexistent artifacts."
+    }
+  ],
+  "cases": [
+    {
+      "id": "EB-15",
+      "source_plan_literal_id": "EB15",
+      "title": "Candidate source and revision",
+      "planned_expected": "Candidate declaration participates in source hash and determines the candidate request; current host policy authorizes its execution; a failed candidate preserves accepted source/run/artifact state",
+      "actual_coverage": "Candidate header changes revision and authority; byte/source preconditions, complete nominal identity, and transaction fences preserve accepted source, prior runs, and artifacts on failure.",
+      "method_count": 15,
+      "methods_by_file": {
+        "tests/test_budget_program_runtime.py": 6,
+        "tests/test_budget_agent_lifecycle.py": 7,
+        "tests/test_budget_agent_regressions.py": 2
+      },
+      "test_methods": [
+        {
+          "file": "tests/test_budget_program_runtime.py",
+          "class": "BudgetProgramRuntimeTests",
+          "method": "test_old_high_request_can_be_repaired_without_executing_it"
+        },
+        {
+          "file": "tests/test_budget_program_runtime.py",
+          "class": "BudgetProgramRuntimeTests",
+          "method": "test_edit_preparation_time_remains_in_original_deadline"
+        },
+        {
+          "file": "tests/test_budget_program_runtime.py",
+          "class": "BudgetProgramRuntimeTests",
+          "method": "test_patch_stale_hash_expected_text_and_overlap_fail_atomically"
+        },
+        {
+          "file": "tests/test_budget_program_runtime.py",
+          "class": "BudgetProgramRuntimeTests",
+          "method": "test_patch_utf8_boundaries_and_source_scope_are_enforced"
+        },
+        {
+          "file": "tests/test_budget_program_runtime.py",
+          "class": "BudgetProgramRuntimeTests",
+          "method": "test_identity_map_is_complete_beyond_inspection_page_limit"
+        },
+        {
+          "file": "tests/test_budget_program_runtime.py",
+          "class": "BudgetProgramRuntimeTests",
+          "method": "test_inspection_exposes_only_implemented_source_edit_scope"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB15_candidate_header_changes_revision_and_effective_request"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB15_unauthorized_candidate_preserves_source_run_and_artifact"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB15_candidate_construction_exhaustion_keeps_prior_acceptance"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB15_lowering_source_budget_repairs_under_lower_current_host"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB15_nominal_occurrence_identity_cannot_change_silently"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB15_exact_utf8_preconditions_and_source_scope_are_atomic"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB15_failed_new_project_retains_no_accepted_revision"
+        },
+        {
+          "file": "tests/test_budget_agent_regressions.py",
+          "class": "BudgetAgentRegressionTests",
+          "method": "test_nominal_identity_rejection_after_export_has_no_published_delivery_claim"
+        },
+        {
+          "file": "tests/test_budget_agent_regressions.py",
+          "class": "BudgetAgentRegressionTests",
+          "method": "test_competing_accepted_edit_removes_losing_tentative_delivery_claim"
+        }
+      ],
+      "acceptance_sequences": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "acceptance_assertion_labels": [
+        "Frozen source is accepted through actual Agent create",
+        "Source-unit edit scopes are inspectable",
+        "Unauthorized candidate preserves accepted source",
+        "Exact budget source repair changes immutable revision",
+        "Exact inverse edit restores the frozen source identity"
+      ]
+    },
+    {
+      "id": "EB-16",
+      "source_plan_literal_id": "EB16",
+      "title": "Saved program reauthorization",
+      "planned_expected": "New execution under a lower current host ceiling rejects unless source or explicit caller cap fits; old receipt grants no authority",
+      "actual_coverage": "New saved-program, run, inspection, reset, and artifact requests use current host authority; explicit caps can reduce requests; an old receipt or another execution context cannot authorize work.",
+      "method_count": 7,
+      "methods_by_file": {
+        "tests/test_budget_program_runtime.py": 3,
+        "tests/test_budget_agent_lifecycle.py": 4,
+        "tests/test_budget_agent_regressions.py": 0
+      },
+      "test_methods": [
+        {
+          "file": "tests/test_budget_program_runtime.py",
+          "class": "BudgetProgramRuntimeTests",
+          "method": "test_rejected_host_request_cannot_construct_body"
+        },
+        {
+          "file": "tests/test_budget_program_runtime.py",
+          "class": "BudgetProgramRuntimeTests",
+          "method": "test_missing_or_unrelated_execution_context_is_rejected"
+        },
+        {
+          "file": "tests/test_budget_program_runtime.py",
+          "class": "BudgetProgramRuntimeTests",
+          "method": "test_runtime_cannot_substitute_caps_for_request_context"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB16_saved_program_requires_current_policy_or_explicit_caps"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB16_saved_run_reauthorizes_and_preserves_failed_advancement"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB16_artifact_retrieval_uses_its_source_and_current_host"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB16_new_inspection_and_reset_reauthorize_saved_source"
+        }
+      ],
+      "acceptance_sequences": [
+        11,
+        12,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41
+      ],
+      "acceptance_assertion_labels": [
+        "A new saved-program request reauthorizes under the current lower host policy",
+        "Explicit caller reductions fit the current host",
+        "Historical artifact metadata cannot authorize new retrieval",
+        "Artifact chunk 0 is newly authorized",
+        "Artifact chunk 65536 is newly authorized",
+        "Artifact chunk 131072 is newly authorized",
+        "Artifact chunk 196608 is newly authorized",
+        "Artifact chunk 262144 is newly authorized",
+        "Artifact chunk 327680 is newly authorized",
+        "Artifact chunk 393216 is newly authorized",
+        "Artifact chunk 458752 is newly authorized",
+        "Artifact chunk 524288 is newly authorized",
+        "Artifact chunk 589824 is newly authorized",
+        "Artifact chunk 655360 is newly authorized",
+        "Artifact chunk 720896 is newly authorized",
+        "Artifact chunk 786432 is newly authorized",
+        "Artifact chunk 851968 is newly authorized",
+        "Artifact chunk 917504 is newly authorized",
+        "Artifact chunk 983040 is newly authorized",
+        "Artifact chunk 1048576 is newly authorized",
+        "Artifact chunk 1114112 is newly authorized",
+        "Artifact chunk 1179648 is newly authorized",
+        "Artifact chunk 1245184 is newly authorized",
+        "Artifact chunk 1310720 is newly authorized",
+        "Artifact chunk 1376256 is newly authorized",
+        "Artifact chunk 1441792 is newly authorized",
+        "Artifact chunk 1507328 is newly authorized",
+        "Artifact chunk 1572864 is newly authorized",
+        "Artifact chunk 1638400 is newly authorized",
+        "Artifact chunk 1703936 is newly authorized"
+      ]
+    },
+    {
+      "id": "EB-18",
+      "source_plan_literal_id": "EB18",
+      "title": "Request isolation and policy snapshot",
+      "planned_expected": "Concurrent requests do not share mutable maxima; policy changes affect new worker admissions, while explicit cancellation can revoke active work",
+      "actual_coverage": "Worker admission snapshots policy; concurrent requests retain separate ledgers; queue limits and cancellation preserve durable outcomes, original callback/clock exceptions, and prior state.",
+      "method_count": 10,
+      "methods_by_file": {
+        "tests/test_budget_program_runtime.py": 2,
+        "tests/test_budget_agent_lifecycle.py": 6,
+        "tests/test_budget_agent_regressions.py": 2
+      },
+      "test_methods": [
+        {
+          "file": "tests/test_budget_program_runtime.py",
+          "class": "BudgetProgramRuntimeTests",
+          "method": "test_host_exception_identity_survives_header_and_evaluation"
+        },
+        {
+          "file": "tests/test_budget_program_runtime.py",
+          "class": "BudgetProgramRuntimeTests",
+          "method": "test_caller_ontokin_error_from_numeric_work_keeps_identity"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB18_queued_work_uses_policy_when_worker_admits"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB18_pending_limit_preserves_retries_and_control_requests"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB18_running_limit_leaves_second_request_queued"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB18_concurrent_workers_keep_distinct_ledgers_and_policy_snapshots"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB18_cancel_after_actual_computation_prevents_all_new_effects"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB18_cancelled_extension_preserves_original_run_bytes"
+        },
+        {
+          "file": "tests/test_budget_agent_regressions.py",
+          "class": "BudgetAgentRegressionTests",
+          "method": "test_late_host_clock_exception_is_preserved_and_retry_never_reads_clock"
+        },
+        {
+          "file": "tests/test_budget_agent_regressions.py",
+          "class": "BudgetAgentRegressionTests",
+          "method": "test_nonfinite_or_backward_clock_is_durably_cancelled_after_valid_start"
+        }
+      ],
+      "acceptance_sequences": [
+        42,
+        43,
+        44
+      ],
+      "acceptance_assertion_labels": [
+        "Queued cancellation and status execute without replay"
+      ]
+    },
+    {
+      "id": "EB-24",
+      "source_plan_literal_id": "EB24",
+      "title": "Idempotency and resume",
+      "planned_expected": "Same request identity/payload returns its prior receipt; changed budget conflicts; new explicit execution reauthorizes; internal resume never resets allowance",
+      "actual_coverage": "Exact retries return historical receipts after policy change or reopen; changed payload conflicts; expired results remain tombstones; failed work is not automatically retried.",
+      "method_count": 5,
+      "methods_by_file": {
+        "tests/test_budget_program_runtime.py": 0,
+        "tests/test_budget_agent_lifecycle.py": 5,
+        "tests/test_budget_agent_regressions.py": 0
+      },
+      "test_methods": [
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB24_same_payload_returns_original_receipt_after_policy_change"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB24_changed_budget_under_used_request_id_conflicts"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB24_retry_after_reopening_retains_old_receipt_without_reauthorization"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB24_expired_result_is_not_reexecuted"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB24_work_failure_is_not_automatically_retried"
+        }
+      ],
+      "acceptance_sequences": [
+        8,
+        9,
+        10
+      ],
+      "acceptance_assertion_labels": [
+        "Identical retry returns the complete original durable receipt",
+        "Changed budget under the same identity cannot replay effects"
+      ]
+    },
+    {
+      "id": "EB-29",
+      "source_plan_literal_id": "EB29",
+      "title": "Actual Agent protocol path",
+      "planned_expected": "Explicit Agent/0.7 discovery, create/edit, evaluate, export/retrieve, status, cancel, hostile input and retry cases execute before that interface is advertised",
+      "actual_coverage": "The explicit .7 protocol covers discovery, linked definition profiles, construction, evaluation, inspection, mesh pages, export and exact retrieval, status/cancel, hostile authority, CLI selection, receipts, and final publication limits.",
+      "method_count": 21,
+      "methods_by_file": {
+        "tests/test_budget_program_runtime.py": 7,
+        "tests/test_budget_agent_lifecycle.py": 12,
+        "tests/test_budget_agent_regressions.py": 2
+      },
+      "test_methods": [
+        {
+          "file": "tests/test_budget_program_runtime.py",
+          "class": "BudgetProgramRuntimeTests",
+          "method": "test_construction_evaluation_inspection_use_one_counter_and_start"
+        },
+        {
+          "file": "tests/test_budget_program_runtime.py",
+          "class": "BudgetProgramRuntimeTests",
+          "method": "test_exhaustion_in_later_operation_does_not_reset_allowance"
+        },
+        {
+          "file": "tests/test_budget_program_runtime.py",
+          "class": "BudgetProgramRuntimeTests",
+          "method": "test_omitted_source_fields_keep_defaults_on_larger_host"
+        },
+        {
+          "file": "tests/test_budget_program_runtime.py",
+          "class": "BudgetProgramRuntimeTests",
+          "method": "test_fixed_materialization_cap_still_applies"
+        },
+        {
+          "file": "tests/test_budget_program_runtime.py",
+          "class": "BudgetProgramRuntimeTests",
+          "method": "test_native_mesh_build_and_page_use_admitted_ledger"
+        },
+        {
+          "file": "tests/test_budget_program_runtime.py",
+          "class": "BudgetProgramRuntimeTests",
+          "method": "test_delivery_retains_compiler_work_for_exact_glb_readback"
+        },
+        {
+          "file": "tests/test_budget_program_runtime.py",
+          "class": "BudgetProgramRuntimeTests",
+          "method": "test_legacy_binding_maps_and_budget_constructor_remain_closed"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB29_discovery_reports_authority_and_preserves_legacy_registry"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB29_complete_discover_create_inspect_evaluate_export_retrieve_status_cycle"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB29_requested_delivery_without_target_cannot_return_lower_level_success"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB29_execution_fields_cannot_grant_host_authority"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB29_large_host_does_not_raise_omitted_source_defaults"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB29_success_receipt_keeps_original_clock_and_complete_identity"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB29_small_output_budget_returns_failure_without_acceptance"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB29_final_transaction_work_exhaustion_rolls_back_all_tentative_effects"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB29_final_transaction_deadline_uses_original_clock_and_rolls_back"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB29_trusted_callback_exception_identity_survives_durable_cancellation"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB29_frozen_c073_source_mesh_pages_remain_bounded_and_revision_bound"
+        },
+        {
+          "file": "tests/test_budget_agent_lifecycle.py",
+          "class": "BudgetAgentLifecycleTests",
+          "method": "test_EB29_cli_selects_only_explicit_budget_protocol"
+        },
+        {
+          "file": "tests/test_budget_agent_regressions.py",
+          "class": "BudgetAgentRegressionTests",
+          "method": "test_discovery_names_exact_header_service_store_and_file_edit_domain"
+        },
+        {
+          "file": "tests/test_budget_agent_regressions.py",
+          "class": "BudgetAgentRegressionTests",
+          "method": "test_linked_discovery_preserves_six_and_seven_definition_profiles_and_real_specs"
+        }
+      ],
+      "acceptance_sequences": [
+        1,
+        2,
+        8,
+        13,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        45
+      ],
+      "acceptance_assertion_labels": [
+        "Default-control Agent create exhausts its original 100000-operation grant without acceptance",
+        "Default-control failure publishes no artifact",
+        "Actual Agent discovery succeeds",
+        "Saved source evaluates through the Agent",
+        "Authorized Agent export completes source evaluation, recording and supplied-byte validation",
+        "Artifact chunk 0 retains its exact program and byte position",
+        "Artifact chunk 65536 retains its exact program and byte position",
+        "Artifact chunk 131072 retains its exact program and byte position",
+        "Artifact chunk 196608 retains its exact program and byte position",
+        "Artifact chunk 262144 retains its exact program and byte position",
+        "Artifact chunk 327680 retains its exact program and byte position",
+        "Artifact chunk 393216 retains its exact program and byte position",
+        "Artifact chunk 458752 retains its exact program and byte position",
+        "Artifact chunk 524288 retains its exact program and byte position",
+        "Artifact chunk 589824 retains its exact program and byte position",
+        "Artifact chunk 655360 retains its exact program and byte position",
+        "Artifact chunk 720896 retains its exact program and byte position",
+        "Artifact chunk 786432 retains its exact program and byte position",
+        "Artifact chunk 851968 retains its exact program and byte position",
+        "Artifact chunk 917504 retains its exact program and byte position",
+        "Artifact chunk 983040 retains its exact program and byte position",
+        "Artifact chunk 1048576 retains its exact program and byte position",
+        "Artifact chunk 1114112 retains its exact program and byte position",
+        "Artifact chunk 1179648 retains its exact program and byte position",
+        "Artifact chunk 1245184 retains its exact program and byte position",
+        "Artifact chunk 1310720 retains its exact program and byte position",
+        "Artifact chunk 1376256 retains its exact program and byte position",
+        "Artifact chunk 1441792 retains its exact program and byte position",
+        "Artifact chunk 1507328 retains its exact program and byte position",
+        "Artifact chunk 1572864 retains its exact program and byte position",
+        "Artifact chunk 1638400 retains its exact program and byte position",
+        "Artifact chunk 1703936 retains its exact program and byte position",
+        "Actual retrieved Agent bytes match the exact exported artifact",
+        "Protocol rejects source-supplied host authority",
+        "Every unique Agent request has a durable row",
+        "Complete source inputs remain unchanged through acceptance"
+      ]
+    }
+  ]
+}
