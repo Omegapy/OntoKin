@@ -1,0 +1,90 @@
+ontokin "0.8";
+module ExtrusionCase @ "extrusion-case";
+profile "polygon-extrusion-0.1";
+
+public class Shape @ "shape" {
+    public param outline @ "outline": Keyed<PolygonVertex> = keyed<PolygonVertex> {
+        "v0": polygon_vertex(0, planar_point(1[m], 0[m]), "side"),
+        "v1": polygon_vertex(10, planar_point(0.99518472667219693[m], 0.098017140329560604[m]), "side"),
+        "v2": polygon_vertex(20, planar_point(0.98078528040323043[m], 0.19509032201612825[m]), "side"),
+        "v3": polygon_vertex(30, planar_point(0.95694033573220882[m], 0.29028467725446233[m]), "side"),
+        "v4": polygon_vertex(40, planar_point(0.92387953251128674[m], 0.38268343236508978[m]), "side"),
+        "v5": polygon_vertex(50, planar_point(0.88192126434835505[m], 0.47139673682599764[m]), "side"),
+        "v6": polygon_vertex(60, planar_point(0.83146961230254524[m], 0.55557023301960218[m]), "side"),
+        "v7": polygon_vertex(70, planar_point(0.77301045336273699[m], 0.63439328416364549[m]), "side"),
+        "v8": polygon_vertex(80, planar_point(0.70710678118654757[m], 0.70710678118654746[m]), "side"),
+        "v9": polygon_vertex(90, planar_point(0.63439328416364549[m], 0.77301045336273699[m]), "side"),
+        "v10": polygon_vertex(100, planar_point(0.55557023301960229[m], 0.83146961230254524[m]), "side"),
+        "v11": polygon_vertex(110, planar_point(0.47139673682599781[m], 0.88192126434835494[m]), "side"),
+        "v12": polygon_vertex(120, planar_point(0.38268343236508984[m], 0.92387953251128674[m]), "side"),
+        "v13": polygon_vertex(130, planar_point(0.29028467725446233[m], 0.95694033573220894[m]), "side"),
+        "v14": polygon_vertex(140, planar_point(0.19509032201612833[m], 0.98078528040323043[m]), "side"),
+        "v15": polygon_vertex(150, planar_point(0.09801714032956077[m], 0.99518472667219682[m]), "side"),
+        "v16": polygon_vertex(160, planar_point(6.123233995736766e-17[m], 1[m]), "side"),
+        "v17": polygon_vertex(170, planar_point(-0.098017140329560645[m], 0.99518472667219693[m]), "side"),
+        "v18": polygon_vertex(180, planar_point(-0.19509032201612819[m], 0.98078528040323043[m]), "side"),
+        "v19": polygon_vertex(190, planar_point(-0.29028467725446216[m], 0.95694033573220894[m]), "side"),
+        "v20": polygon_vertex(200, planar_point(-0.38268343236508973[m], 0.92387953251128674[m]), "side"),
+        "v21": polygon_vertex(210, planar_point(-0.4713967368259977[m], 0.88192126434835505[m]), "side"),
+        "v22": polygon_vertex(220, planar_point(-0.55557023301960196[m], 0.83146961230254546[m]), "side"),
+        "v23": polygon_vertex(230, planar_point(-0.63439328416364538[m], 0.7730104533627371[m]), "side"),
+        "v24": polygon_vertex(240, planar_point(-0.70710678118654746[m], 0.70710678118654757[m]), "side"),
+        "v25": polygon_vertex(250, planar_point(-0.77301045336273699[m], 0.63439328416364549[m]), "side"),
+        "v26": polygon_vertex(260, planar_point(-0.83146961230254535[m], 0.55557023301960218[m]), "side"),
+        "v27": polygon_vertex(270, planar_point(-0.88192126434835494[m], 0.47139673682599786[m]), "side"),
+        "v28": polygon_vertex(280, planar_point(-0.92387953251128674[m], 0.38268343236508989[m]), "side"),
+        "v29": polygon_vertex(290, planar_point(-0.95694033573220882[m], 0.29028467725446239[m]), "side"),
+        "v30": polygon_vertex(300, planar_point(-0.98078528040323043[m], 0.19509032201612861[m]), "side"),
+        "v31": polygon_vertex(310, planar_point(-0.99518472667219682[m], 0.098017140329560826[m]), "side"),
+        "v32": polygon_vertex(320, planar_point(-1[m], 1.2246467991473532e-16[m]), "side"),
+        "v33": polygon_vertex(330, planar_point(-0.99518472667219693[m], -0.09801714032956059[m]), "side"),
+        "v34": polygon_vertex(340, planar_point(-0.98078528040323043[m], -0.19509032201612836[m]), "side"),
+        "v35": polygon_vertex(350, planar_point(-0.95694033573220894[m], -0.29028467725446211[m]), "side"),
+        "v36": polygon_vertex(360, planar_point(-0.92387953251128685[m], -0.38268343236508967[m]), "side"),
+        "v37": polygon_vertex(370, planar_point(-0.88192126434835505[m], -0.47139673682599764[m]), "side"),
+        "v38": polygon_vertex(380, planar_point(-0.83146961230254546[m], -0.55557023301960196[m]), "side"),
+        "v39": polygon_vertex(390, planar_point(-0.7730104533627371[m], -0.63439328416364527[m]), "side"),
+        "v40": polygon_vertex(400, planar_point(-0.70710678118654768[m], -0.70710678118654746[m]), "side"),
+        "v41": polygon_vertex(410, planar_point(-0.63439328416364593[m], -0.77301045336273666[m]), "side"),
+        "v42": polygon_vertex(420, planar_point(-0.55557023301960218[m], -0.83146961230254524[m]), "side"),
+        "v43": polygon_vertex(430, planar_point(-0.47139673682599786[m], -0.88192126434835494[m]), "side"),
+        "v44": polygon_vertex(440, planar_point(-0.38268343236509034[m], -0.92387953251128652[m]), "side"),
+        "v45": polygon_vertex(450, planar_point(-0.29028467725446244[m], -0.95694033573220882[m]), "side"),
+        "v46": polygon_vertex(460, planar_point(-0.19509032201612866[m], -0.98078528040323032[m]), "side"),
+        "v47": polygon_vertex(470, planar_point(-0.098017140329560451[m], -0.99518472667219693[m]), "side"),
+        "v48": polygon_vertex(480, planar_point(-1.8369701987210297e-16[m], -1[m]), "side"),
+        "v49": polygon_vertex(490, planar_point(0.09801714032956009[m], -0.99518472667219693[m]), "side"),
+        "v50": polygon_vertex(500, planar_point(0.1950903220161283[m], -0.98078528040323043[m]), "side"),
+        "v51": polygon_vertex(510, planar_point(0.29028467725446205[m], -0.95694033573220894[m]), "side"),
+        "v52": polygon_vertex(520, planar_point(0.38268343236509[m], -0.92387953251128663[m]), "side"),
+        "v53": polygon_vertex(530, planar_point(0.47139673682599759[m], -0.88192126434835505[m]), "side"),
+        "v54": polygon_vertex(540, planar_point(0.55557023301960184[m], -0.83146961230254546[m]), "side"),
+        "v55": polygon_vertex(550, planar_point(0.6343932841636456[m], -0.77301045336273688[m]), "side"),
+        "v56": polygon_vertex(560, planar_point(0.70710678118654735[m], -0.70710678118654768[m]), "side"),
+        "v57": polygon_vertex(570, planar_point(0.77301045336273666[m], -0.63439328416364593[m]), "side"),
+        "v58": polygon_vertex(580, planar_point(0.83146961230254524[m], -0.55557023301960218[m]), "side"),
+        "v59": polygon_vertex(590, planar_point(0.88192126434835483[m], -0.47139673682599792[m]), "side"),
+        "v60": polygon_vertex(600, planar_point(0.92387953251128652[m], -0.38268343236509039[m]), "side"),
+        "v61": polygon_vertex(610, planar_point(0.95694033573220882[m], -0.2902846772544625[m]), "side"),
+        "v62": polygon_vertex(620, planar_point(0.98078528040323032[m], -0.19509032201612872[m]), "side"),
+        "v63": polygon_vertex(630, planar_point(0.99518472667219693[m], -0.098017140329560506[m]), "side")
+    };
+    public param depth @ "depth": Length = 0.25[m];
+    public param palette @ "palette": Keyed<SurfaceMaterial> = keyed<SurfaceMaterial> {
+        "bottom": surface_material(rgba(0.3, 0.35, 0.4, 1), 0.1, 0.65),
+        "side": surface_material(rgba(0.7, 0.3, 0.1, 1), 0.1, 0.65),
+        "top": surface_material(rgba(0.1, 0.5, 0.8, 1), 0.1, 0.65)
+    };
+    geometry = extrude(self.outline, self.palette, self.depth, "bottom", "top");
+    physical = no_body();
+}
+
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object shape @ "shape": Shape {
+        placement = pose(world, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+    }
+    action travel @ "travel" = move(shape, vector(world, 0[m/s], 0.5[m/s], 0[m/s]), 1[s]);
+    at 0[s] sequence { start travel; }
+}
