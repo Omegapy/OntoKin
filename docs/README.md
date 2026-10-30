@@ -1,5 +1,7 @@
 # OntoKin documentation guide
 
+For C070's writer-angular event map, retained whole-group miss counts and bounded P11/L03 rescue rejection, read [C070](engineering/reach-angular-reuse-2026-10-29-c070/README.md). The next source task is the existing whole-group key's unused source-speed projection; no runtime change or complete-request improvement is established.
+
 For C069's producer-to-reader ownership trace, bounded existing-list receipt rejection and the proposed writer-angular reuse feasibility task, read [C069](engineering/reach-producer-ownership-2026-10-29-c069/README.md). No runtime change or complete-request improvement is established.
 
 For C068 cold-reader admission, the every-entry-seam eager-prefix cost rejection and the unadopted producer-authority proposal, read [C068](engineering/reach-cold-admission-2026-10-29-c068/README.md). The native list lifetime and positive complete-request premise remain unresolved; no runtime implementation is selected.
