@@ -1,0 +1,37 @@
+ontokin "0.10";
+module RingLoftArray @ "ring-loft-array";
+profile "polygon-loft-0.1";
+
+import libparts @ "ring-loft-parts" from "fixture.ring-loft-parts" version "1.0.0"
+    digest "sha256:19a3f8810af05bbb1fa9c1e5f3826a95c07a1e91307ec727a4125f807af125c7";
+
+public class Mounted @ "mounted" extends libparts.Shape {
+    public param parent_frame @ "parent-frame": FrameRef = world;
+    public param mount_x @ "mount-x": Length = 0[m];
+    public follow mounting @ "mounting" {
+        parent = self.parent_frame;
+        child = self;
+        offset = pose(self.parent_frame, vec3(self.mount_x, 0[m], 0[m]), quat(1, 0, 0, 0));
+    }
+}
+public class Array @ "array-type" {
+    public param heights @ "heights": Keyed<Length> = keyed<Length> {
+        "left": 1[m], "middle": 2[m], "right": 3[m]
+    };
+    geometry = empty();
+    physical = no_body();
+    public parts ducts @ "ducts": Mounted for (key, value) in self.heights {
+        parent_frame = self.frame;
+        mount_x = 5 * value;
+        height = value;
+    }
+}
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object array @ "array": Array {
+        placement = pose(world, vec3(-10[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+    }
+    action travel @ "travel" = move(array, vector(world, 0[m/s], 0.5[m/s], 0[m/s]), 1[s]);
+    at 0[s] sequence { start travel; }
+}

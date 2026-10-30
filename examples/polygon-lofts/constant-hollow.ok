@@ -1,0 +1,54 @@
+ontokin "0.10";
+module RingLoftCase @ "ring-loft-case";
+profile "polygon-loft-0.1";
+
+public class Shape @ "shape" {
+    public param sections @ "sections": Keyed<PolygonSection> = keyed<PolygonSection> {
+        "s0": polygon_section(10, 0[m], keyed<PolygonRing> {
+            "outer": polygon_ring(20, "outer", keyed<PolygonVertex> {
+                "v0": polygon_vertex(0, planar_point(-2[m], -2[m]), "outer"),
+                "v1": polygon_vertex(10, planar_point(2[m], -2[m]), "outer"),
+                "v2": polygon_vertex(20, planar_point(2[m], 2[m]), "outer"),
+                "v3": polygon_vertex(30, planar_point(-2[m], 2[m]), "outer")
+            }),
+            "opening": polygon_ring(40, "hole", keyed<PolygonVertex> {
+                "v0": polygon_vertex(0, planar_point(-1[m], 1[m]), "inner"),
+                "v1": polygon_vertex(10, planar_point(1[m], 1[m]), "inner"),
+                "v2": polygon_vertex(20, planar_point(1[m], -1[m]), "inner"),
+                "v3": polygon_vertex(30, planar_point(-1[m], -1[m]), "inner")
+            })
+        }),
+        "s1": polygon_section(20, 3[m], keyed<PolygonRing> {
+            "outer": polygon_ring(20, "outer", keyed<PolygonVertex> {
+                "v0": polygon_vertex(0, planar_point(-2[m], -2[m]), "outer"),
+                "v1": polygon_vertex(10, planar_point(2[m], -2[m]), "outer"),
+                "v2": polygon_vertex(20, planar_point(2[m], 2[m]), "outer"),
+                "v3": polygon_vertex(30, planar_point(-2[m], 2[m]), "outer")
+            }),
+            "opening": polygon_ring(40, "hole", keyed<PolygonVertex> {
+                "v0": polygon_vertex(0, planar_point(-1[m], 1[m]), "inner"),
+                "v1": polygon_vertex(10, planar_point(1[m], 1[m]), "inner"),
+                "v2": polygon_vertex(20, planar_point(1[m], -1[m]), "inner"),
+                "v3": polygon_vertex(30, planar_point(-1[m], -1[m]), "inner")
+            })
+        })
+    };
+    public param palette @ "palette": Keyed<SurfaceMaterial> = keyed<SurfaceMaterial> {
+        "bottom": surface_material(rgba(0.3, 0.35, 0.4, 1), 0.1, 0.65),
+        "inner": surface_material(rgba(0.15, 0.65, 0.3, 1), 0.1, 0.65),
+        "outer": surface_material(rgba(0.7, 0.3, 0.1, 1), 0.1, 0.65),
+        "top": surface_material(rgba(0.1, 0.5, 0.8, 1), 0.1, 0.65)
+    };
+    geometry = loft_rings(self.sections, self.palette, "bottom", "top");
+    physical = no_body();
+}
+
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object shape @ "shape": Shape {
+        placement = pose(world, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+    }
+    action travel @ "travel" = move(shape, vector(world, 0[m/s], 0.5[m/s], 0[m/s]), 1[s]);
+    at 0[s] sequence { start travel; }
+}
