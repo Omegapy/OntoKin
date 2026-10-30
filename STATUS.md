@@ -26,7 +26,13 @@ C074 must implement the separately versioned Agent/0.7 discovery, candidate auth
 
 PR #71 merged evidence candidate `dd332d8241fd02448d79a63eddb0f6d9a4a5b803` as actual merge `42e2b8ed981af39ac5245914fb1019c183ae1f29`. The [integration record](docs/engineering/source-execution-budgets-2026-10-29-c073/integration.json) preserves ordered parents, current-main reconciliation and actual resulting-main checks. Only this C073 evidence directory and STATUS differ from the fully tested runtime candidate; all runtime/test/fixture/tool inputs are identical.
 
-This publication releases `interactive-source-budgets-20261029-c073-7of9`'s integration lease. **No main integration lease remains active.** The coordinator retains only final-main verification and portable handoff scope until an explicit [Issue #26](https://github.com/Omegapy/OntoKin/issues/26) delivery closure. Reconcile that closure and fresh live state before starting C074. No C074 worker, hosted job or continuation schedule is started here. The archive branch remains history-only at `e6917dae0be3a786c22e76be3de62e3c97784cf5`; never merge or develop from it.
+### Active C074 main integration lease
+
+**Owner:** `interactive-agent-execution-budgets-20261030-c074-2a264aad`. Acquired `2026-10-30T15:53:31.572092+00:00`; expires `2026-10-30T16:23:31.572092+00:00`. This lease is established only by the verified expected-head nonforce update from `f674eabec793e2dd31c9057a960bff7228a314cf` to the actual commit containing this STATUS.
+
+C073 scope closure was explicitly confirmed in Issue #26 comment 6515760191. C074 branch `work/agent-execution-budgets-20261030-c074` is declared in comment 6525604559 and reviewed in PR #72. Its runtime candidate `734992f832c0b824253e9b61acee9e734cfa0f4b` passed 3,187 unit tests and all 11 selected local-driver steps. Evidence publication `021fa4b93a9703f6a1510134902afe596be7b64d` passed exact-head documentation and input eligibility; only its C074 engineering records differ from that runtime. The actual Agent workflow, native/browser checks and six actual capture reviews also passed.
+
+This bounded lease permits merging that exact reviewed PR head, verifying actual ordered parents/tree and unchanged product inputs, running resulting-main checks, and publishing current C074 STATUS with lease release. C073 capability text above describes the premerge baseline; C074 is not claimed merged by this acquisition record. Independent nonoverlapping branch work remains permitted. No hosted workflow is dispatched. The history-only archive branch remains at `e6917dae0be3a786c22e76be3de62e3c97784cf5`; never merge or develop from it.
 
 ## Storage and full product scope
 
