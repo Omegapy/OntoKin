@@ -14,7 +14,7 @@ from ontokin.agent_runtime import _Budget as LegacyBudget
 from ontokin.budget_runtime import execute_budgeted_export
 from ontokin.bundle import ProgramBundle, SourceUnit
 from ontokin.cli import capabilities, main, _write_export_transaction
-from ontokin.construction import ConstructionBudget, ConstructionCompiler, compile_construction
+from ontokin.construction import ConstructionBudget, ExecutionConstructionBudget, ConstructionCompiler, compile_construction
 from ontokin.diagnostics import OntoKinError
 from ontokin.execution_budget import HostPolicy, SharedExecutionBudget, admit_entry_budget
 from ontokin.json_limits import JSONLimitError
@@ -177,6 +177,38 @@ class ExecutionBudgetRuntimeTests(unittest.TestCase):
             compile_construction(bundle())
         self.assertEqual(caught.exception.diagnostic.details["budget_reason"], "execution_context_required")
 
+    def test_EB21_legacy_native_budget_and_explicit_adapter_stay_separate(self):
+        from ontokin import reach_conformance as reader
+        text = TEXT.replace('ontokin "0.7";', 'ontokin "0.6";').replace(
+            'profile "planar-reach-budget-0.1";', 'profile "planar-reach-0.1";').replace(
+            'execution { max_operations = 200000; max_elapsed = 60[s]; }\n', '')
+        ordinary = compile_construction(bundle(text))
+        self.assertIs(type(ordinary.budget), ConstructionBudget)
+        self.assertIs(type(ordinary.budget.__dict__["operations"]), int)
+        self.assertNotIn("execution_budget", ordinary.budget.__dict__)
+        self.assertNotIn("operations", ConstructionBudget.__dict__)
+        legacy_decode = reader._CertificateFieldDecodes.create(
+            reader._Bounds(ordinary.reach_work), (1.0, 1.0, 1.0))
+        self.assertIsNotNone(legacy_decode)
+        source = bundle()
+        ledger = SharedExecutionBudget(POLICY, clock=lambda: 0.0)
+        admit_entry_budget(source.entry, ledger)
+        explicit = compile_construction(source, execution_budget=ledger)
+        self.assertIs(type(explicit.budget), ExecutionConstructionBudget)
+        self.assertIs(explicit.budget.execution_budget, ledger)
+        self.assertIs(explicit.reach_work.execution_budget, ledger)
+        self.assertIsNone(reader._CertificateFieldDecodes.create(
+            reader._Bounds(explicit.reach_work), (1.0, 1.0, 1.0)))
+        before = ledger.operations
+        explicit.budget.tick(amount=2)
+        explicit.reach_work.tick()
+        self.assertEqual(ledger.operations, before + 3)
+        self.assertEqual(explicit.budget.operations, ledger.operations)
+        self.assertEqual(explicit.budget.report()["operations"], ledger.operations)
+        self.assertEqual(explicit.budget.started, ledger.started)
+        self.assertEqual(explicit.budget.limits["max_objects"], 1000)
+        self.assertEqual(explicit.budget.limits["max_value_entries"], 100000)
+
     def test_EB23_an_admission_cannot_compile_different_entry_bytes(self):
         source = bundle()
         ledger = SharedExecutionBudget(POLICY)
@@ -186,12 +218,28 @@ class ExecutionBudgetRuntimeTests(unittest.TestCase):
         self.assertEqual(caught.exception.diagnostic.details["budget_reason"], "execution_context_required")
 
     def test_EB26_discovery_separates_defaults_from_host_ceilings(self):
-        ordinary = capabilities()["execution_budget_interface"]
-        large = capabilities(host_policy=POLICY)["execution_budget_interface"]
+        ordinary_capabilities = capabilities()
+        large_capabilities = capabilities(host_policy=POLICY)
+        ordinary = ordinary_capabilities["execution_budget_interface"]
+        large = large_capabilities["execution_budget_interface"]
         self.assertEqual(ordinary["defaults"], large["defaults"])
         self.assertEqual(ordinary["host_ceilings"], ordinary["defaults"])
         self.assertEqual(large["host_ceilings"], POLICY.ceilings)
         self.assertIsNone(large["agent_contract"])
+        self.assertEqual(set(large["export_targets"]), {"ontokin.glb/0.7"})
+        self.assertEqual(ordinary["export_targets"], large["export_targets"])
+        self.assertEqual(large["export_targets"]["ontokin.glb/0.7"]["profile"],
+                         "planar-reach-budget-0.1")
+        self.assertEqual(large["delivery_contract"], "ontokin.glb/0.7")
+        legacy_targets = ordinary_capabilities["export_targets"]
+        self.assertEqual(set(legacy_targets), {"ontokin.glb/0.1", "ontokin.glb/0.2",
+                         "ontokin.glb/0.3", "ontokin.glb/0.4", "ontokin.glb/0.5", "ontokin.glb/0.6"})
+        self.assertEqual(legacy_targets, large_capabilities["export_targets"])
+        # Freeze every legacy descriptor value from the verified C072 baseline,
+        # commit 6277e57915c943ea933cd306956181ee18cdd084, as canonical JSON.
+        self.assertEqual(hashlib.sha256(json.dumps(legacy_targets, sort_keys=True,
+                         separators=(",", ":")).encode("utf-8")).hexdigest(),
+                         "ed7a32850811969a7943923965eb1543e3a8db4593364bd31ce9aa182cf918d6")
 
     def test_EB27_computation_timeout_does_not_change_recorded_time(self):
         first = self.run_source()

@@ -78,7 +78,7 @@ raise SystemExit(main(host_policy=HostPolicy(400000, 80000)))
 
 The host controls this launcher and its policy. `python3 -m ontokin` retains the default host ceilings. There is no command flag that grants a larger ceiling. The new `--max-operations` and `--max-elapsed-ms` flags supply caller reductions only, and are rejected for older destination selections. A source requesting 400,000 operations cannot obtain them by merely passing the same number as a caller cap on an ordinary host.
 
-`capabilities(host_policy=...)` reports the defaults, current ceilings, policy identity, supported fields and experimental source/CLI status separately. Earlier command defaults and Agent selections retain their meanings. The newly reserved Agent contract is not advertised as available.
+`capabilities(host_policy=...)` reports the defaults, current ceilings, policy identity, supported fields and experimental source/CLI status under `execution_budget_interface`. Its `execution_budget_interface.export_targets` map describes `ontokin.glb/0.7`. The top-level `export_targets` map retains exactly the six original `ontokin.glb/0.1` through `ontokin.glb/0.6` keys and their descriptor values. Earlier command defaults and Agent selections retain their meanings. The newly reserved Agent contract is not advertised as available.
 
 ## 5. Shared computation, reporting and failure
 

@@ -267,6 +267,14 @@ def capabilities(*, host_policy=None) -> dict:
             "status": "experimental_source_cli_increment",
             "language_version": "0.7", "profile": "planar-reach-budget-0.1",
             "delivery_contract": "ontokin.glb/0.7", "agent_contract": None,
+            "export_targets": {
+                "ontokin.glb/0.7": {
+                    "format": "glTF 2.0 binary (.glb)", "profile": "planar-reach-budget-0.1",
+                    "selection": "Explicit source 0.7 and host-authorized source/CLI execution",
+                    "validation": "Inherited geometry, physical history and independent supplied-byte checks under the same remaining allowance",
+                    "limitations": "Experimental source/CLI increment; no Agent/0.7 lifecycle or live destination physics",
+                },
+            },
             "defaults": dict(DEFAULT_LIMITS), "host_ceilings": policy.ceilings,
             "policy_id": policy.policy_id, "max_representable_limit": MAX_LIMIT,
             "source_fields": ["max_operations", "max_elapsed"],
@@ -367,12 +375,6 @@ def capabilities(*, host_policy=None) -> dict:
                 "histories": "complete before/after joints, actions, authorities, impulses, forces, reaches and incoming releases",
                 "validation": "independent supplied-byte clocks, complete geometry/PBR, source phases and continuous error certificates",
                 "limitations": "experimental development implementation; planar-reach-0.1 release acceptance is incomplete; bounded recorded motion with explicit destination numerical identity and no embedded live solver",
-            },
-            "ontokin.glb/0.7": {
-                "format": "glTF 2.0 binary (.glb)", "profile": "planar-reach-budget-0.1",
-                "selection": "Explicit source 0.7 and host-authorized source/CLI execution",
-                "validation": "Inherited geometry, physical history and independent supplied-byte checks under the same remaining allowance",
-                "limitations": "Experimental source/CLI increment; no Agent/0.7 lifecycle or live destination physics",
             },
         },
         "limitations": ["General correctly rounded transcendental functions are not certified.",

@@ -57,60 +57,30 @@ LIMITS = {"max_objects": 1000, "max_operations": 100000,
 class ConstructionBudget:
     """One work/value counter for the whole linked compilation attempt."""
 
-    def __init__(self, budgets: dict | None = None, check: Check[[], None] | None = None,
-                 *, execution_budget=None):
+    def __init__(self, budgets: dict | None = None, check: Check[[], None] | None = None):
         if budgets is not None and (not isinstance(budgets, dict) or set(budgets) - set(LIMITS)):
             fail("OKL-E-RESOURCE", "Unknown construction budget field.", phase="support")
         self.limits = dict(LIMITS)
-        self.execution_budget = execution_budget
-        if execution_budget is not None:
-            from .execution_budget import SharedExecutionBudget
-            if (not isinstance(execution_budget, SharedExecutionBudget)
-                    or execution_budget.resolved is None or check is not None):
-                fail("OKL-E-RESOURCE", "Construction requires one admitted execution context.",
-                     phase="support", details={"budget_reason": "execution_context_required"})
-            if set(budgets or {}) & {"max_operations", "max_elapsed_ms"}:
-                fail("OKL-E-RESOURCE", "Execution limits were already resolved at entry admission.",
-                     phase="support", details={"budget_reason": "execution_context_required"})
-            self.limits.update(execution_budget.limits)
         for name, value in (budgets or {}).items():
             if type(value) is not int or not 1 <= value <= LIMITS[name]:
                 fail("OKL-E-RESOURCE", f"{name} must be an integer from 1 through {LIMITS[name]}.",
                      phase="support", details={"budget": name, "limit": LIMITS[name]})
             self.limits[name] = value
-        self._operations = 0
+        self.operations = 0
         self.value_entries = 0
-        self.started = time.monotonic() if execution_budget is None else execution_budget.started
+        self.started = time.monotonic()
         self.check = check
         self.profile = PROFILE
         self.callback_error: BaseException | None = None
 
-    @property
-    def operations(self):
-        return self._operations if self.execution_budget is None else self.execution_budget.operations
-
-    @operations.setter
-    def operations(self, value):
-        if self.execution_budget is not None:
-            raise AttributeError("Shared execution operations belong to the admitted ledger.")
-        self._operations = value
-
     def tick(self, node: Any = None, amount: int = 1) -> None:
-        if self.execution_budget is not None:
-            try:
-                self.execution_budget.tick(node, amount=amount)
-            except BaseException as error:
-                if error is self.execution_budget.callback_error:
-                    self.callback_error = error
-                raise
-            return
         if self.check is not None:
             try:
                 self.check()
             except BaseException as error:
                 self.callback_error = error
                 raise
-        self._operations += amount
+        self.operations += amount
         if self.operations > self.limits["max_operations"]:
             self.exceeded("max_operations", self.operations, node)
         elapsed = (time.monotonic() - self.started) * 1000
@@ -152,8 +122,54 @@ class ConstructionBudget:
     def report(self) -> dict:
         return {"limits": dict(self.limits), "operations": self.operations,
                 "value_entries": self.value_entries,
-                "elapsed_ms": ((time.monotonic() - self.started) * 1000
-                               if self.execution_budget is None else self.execution_budget.elapsed_ms())}
+                "elapsed_ms": (time.monotonic() - self.started) * 1000}
+
+
+class ExecutionConstructionBudget(ConstructionBudget):
+    """Adapt one admitted source/CLI ledger without changing legacy storage."""
+
+    def __init__(self, budgets: dict | None = None, check: Check[[], None] | None = None,
+                 *, execution_budget):
+        if budgets is not None and (not isinstance(budgets, dict) or set(budgets) - set(LIMITS)):
+            fail("OKL-E-RESOURCE", "Unknown construction budget field.", phase="support")
+        from .execution_budget import SharedExecutionBudget
+        if (not isinstance(execution_budget, SharedExecutionBudget)
+                or execution_budget.resolved is None or check is not None):
+            fail("OKL-E-RESOURCE", "Construction requires one admitted execution context.",
+                 phase="support", details={"budget_reason": "execution_context_required"})
+        if set(budgets or {}) & {"max_operations", "max_elapsed_ms"}:
+            fail("OKL-E-RESOURCE", "Execution limits were already resolved at entry admission.",
+                 phase="support", details={"budget_reason": "execution_context_required"})
+        self.limits = dict(LIMITS)
+        self.limits.update(execution_budget.limits)
+        for name, value in (budgets or {}).items():
+            if type(value) is not int or not 1 <= value <= LIMITS[name]:
+                fail("OKL-E-RESOURCE", f"{name} must be an integer from 1 through {LIMITS[name]}.",
+                     phase="support", details={"budget": name, "limit": LIMITS[name]})
+            self.limits[name] = value
+        self.execution_budget = execution_budget
+        self.value_entries = 0
+        self.started = execution_budget.started
+        self.check = None
+        self.profile = PROFILE
+        self.callback_error: BaseException | None = None
+
+    @property
+    def operations(self):
+        return self.execution_budget.operations
+
+    def tick(self, node: Any = None, amount: int = 1) -> None:
+        try:
+            self.execution_budget.tick(node, amount=amount)
+        except BaseException as error:
+            if error is self.execution_budget.callback_error:
+                self.callback_error = error
+            raise
+
+    def report(self) -> dict:
+        return {"limits": dict(self.limits), "operations": self.operations,
+                "value_entries": self.value_entries,
+                "elapsed_ms": self.execution_budget.elapsed_ms()}
 
 
 def _steps(path) -> tuple:
@@ -1770,7 +1786,8 @@ def compile_construction(bundle, *, level: str = "represented", budgets: dict | 
         if getattr(execution_budget, "admitted_entry_revision", None) != bundle.entry.revision:
             fail("OKL-E-RESOURCE", "The execution context was not admitted for this entry revision.",
                  phase="support", details={"budget_reason": "execution_context_required"})
-    budget = ConstructionBudget(budgets, check, execution_budget=execution_budget)
+    budget = (ConstructionBudget(budgets, check) if execution_budget is None else
+              ExecutionConstructionBudget(budgets, check, execution_budget=execution_budget))
     budget.tick()
     linked = link_program(bundle, check=budget.tick)
     if (linked.entry.ast.profile == BUDGET_PROFILE) != (execution_budget is not None):
