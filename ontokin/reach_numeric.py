@@ -44,18 +44,31 @@ class ReachExecutionWork:
     """
     def __init__(self, check: Callable[[], None] | None = None, *,
                  max_operations=MAX_OPERATIONS, max_elapsed_ms=30000,
-                 max_operand_bits=MAX_OPERAND_BITS, max_cache_entries=256):
-        limits = ((max_operations, MAX_OPERATIONS), (max_elapsed_ms, 30000),
-                  (max_operand_bits, MAX_OPERAND_BITS), (max_cache_entries, 256))
+                 max_operand_bits=MAX_OPERAND_BITS, max_cache_entries=256,
+                 execution_budget=None):
+        limits = ((max_operand_bits, MAX_OPERAND_BITS), (max_cache_entries, 256))
+        if execution_budget is None:
+            limits += ((max_operations, MAX_OPERATIONS), (max_elapsed_ms, 30000))
+        else:
+            from .execution_budget import SharedExecutionBudget
+            if (not isinstance(execution_budget, SharedExecutionBudget)
+                    or execution_budget.resolved is None):
+                raise ValueError("Reach work requires an admitted execution budget")
+            if check is not None or max_operations != MAX_OPERATIONS or max_elapsed_ms != 30000:
+                raise ValueError("An execution budget supplies the sole work callback and limits")
+            max_operations = execution_budget.limits["max_operations"]
+            max_elapsed_ms = execution_budget.limits["max_elapsed_ms"]
+            check = execution_budget.tick
         if any(type(value) is not int or not 1 <= value <= maximum for value, maximum in limits):
             raise ValueError("Reach work limits may only lower the fixed positive maxima")
+        self.execution_budget = execution_budget
         self.external_check = check
         self.max_operations = max_operations
         self.max_elapsed_ms = max_elapsed_ms
         self.max_operand_bits = max_operand_bits
         self.max_cache_entries = max_cache_entries
         self.operations = 0
-        self.started = monotonic()
+        self.started = monotonic() if execution_budget is None else execution_budget.started
         self.counts: dict[str, int] = {}
         self.callback_error: BaseException | None = None
         self._cache: OrderedDict[tuple, object] = OrderedDict()
@@ -79,11 +92,14 @@ class ReachExecutionWork:
                 except BaseException as error:
                     self.callback_error = error
                     raise
-            if self.operations >= self.max_operations:
-                self.resource("max_operations", self.max_operations, self.operations + 1)
-            if (monotonic() - self.started) * 1000 > self.max_elapsed_ms:
-                self.resource("max_elapsed_ms", self.max_elapsed_ms,
-                              (monotonic() - self.started) * 1000)
+            # The explicit budget route has already paid the shared ledger.
+            # This counter reports numerical categories and grants no allowance.
+            if self.execution_budget is None:
+                if self.operations >= self.max_operations:
+                    self.resource("max_operations", self.max_operations, self.operations + 1)
+                if (monotonic() - self.started) * 1000 > self.max_elapsed_ms:
+                    self.resource("max_elapsed_ms", self.max_elapsed_ms,
+                                  (monotonic() - self.started) * 1000)
             self.operations += 1
             self.counts[kind] = self.counts.get(kind, 0) + 1
             # Capture before the unchanged callback, then observe only after
@@ -263,6 +279,30 @@ class ReachExecutionWork:
     def record(self):
         return {"operations": self.operations, "counts": dict(self.counts),
                 "cache_entries": len(self._cache)}
+
+
+def require_execution_work(work):
+    """Require caller authority for the explicit budget destination path.
+
+    Artifact metadata is never consulted to construct or enlarge this context.
+    """
+    from .diagnostics import OntoKinError
+    from .execution_budget import SharedExecutionBudget
+    ledger = getattr(work, "execution_budget", None)
+    if (not isinstance(work, ReachExecutionWork)
+            or not isinstance(ledger, SharedExecutionBudget) or ledger.resolved is None
+            or work.external_check != ledger.tick):
+        raise OntoKinError("OKL-E-RESOURCE", "GLB/0.7 requires the admitted shared execution context.",
+                           category="resource_limit", phase="support",
+                           details={"budget_reason": "execution_context_required",
+                                    "target_contract": "ontokin.glb/0.7"})
+    try:
+        ledger.checkpoint()
+    except BaseException as error:
+        if error is ledger.callback_error:
+            work.callback_error = error
+        raise
+    return work
 
 
 class AdmissionWork:

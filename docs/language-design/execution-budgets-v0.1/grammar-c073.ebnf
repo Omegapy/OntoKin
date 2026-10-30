@@ -1,0 +1,26 @@
+(* OK-LANG-007/0.1.0-experimental.1 -- explicit C073 source binding *)
+(* Source 0.7 / planar-reach-budget-0.1; Agent/0.7 remains unavailable *)
+(* Existing declaration/scene productions are inherited explicitly *)
+
+entry_program = language_header, module_header, profile_header,
+                { requires_decl }, [ execution_decl ],
+                { import_decl }, { definition }, scene, EOF ;
+
+execution_decl = "execution", "{", budget_field, [ budget_field ], "}" ;
+budget_field = operations_field | elapsed_field ;
+operations_field = "max_operations", "=", positive_integer_literal, ";" ;
+elapsed_field = "max_elapsed", "=", positive_decimal_literal, "[", "s", "]", ";" ;
+
+(* Semantic restrictions: at most one field of each kind; at least one field *)
+(* Entry source only; imported modules reject execution_decl *)
+(* The entry has exactly one scene; imported-module productions stay separate *)
+(* Seconds convert exactly to positive whole milliseconds; no rounding *)
+(* Positive literals exclude sign tokens, exponents, expressions and names *)
+(* execution is contextual in this new header; legacy reserved words stay fixed *)
+(* Source literal tokens have at most 32 characters before conversion *)
+(* Positive operation and converted millisecond values are <= 2^53 - 1 *)
+(* Admission scans <= 65536 UTF-8 prefix bytes, including initial lookahead *)
+(* Header identifiers and decoded strings have at most 256 characters *)
+(* Every started 64-byte prefix group and every emitted token costs one operation *)
+(* The full parser subsequently reparses the source under the same remaining budget *)
+

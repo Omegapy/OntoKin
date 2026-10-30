@@ -81,6 +81,7 @@ class Parser02(Parser):
             value = self.take("STRING").value
             self.take(";")
             requires.append(self.node("capability", token, value=value))
+        execution = self.execution_declaration()
         imports = []
         while self.token.kind == "import":
             imports.append(self.import_decl())
@@ -98,11 +99,19 @@ class Parser02(Parser):
             definitions.append(item)
         scene = self.scene() if self.token.kind == "scene" else None
         self.take("EOF")
-        return self.node("program", start, version=version_node.value,
+        result = self.node("program", start, version=version_node.value,
                          module_name=name, module_key=key, profile=profile_node.value,
                          version_node=version_node, profile_node=profile_node,
                          requires=requires, imports=imports, classes=classes,
                          functions=functions, definitions=definitions, scene=scene)
+        if self.expected_version == "0.7":
+            result.data["execution"] = execution
+        return result
+
+    def execution_declaration(self):
+        # The legacy grammar and node/work counts retain their exact behavior.
+        # Only Parser07 overrides this contextual header extension point.
+        return None
 
     def import_decl(self) -> Node:
         start = self.take("import")
@@ -292,7 +301,10 @@ def parse_source_unit(unit: SourceUnit, *, check: Callable[[], None] | None = No
         declared = (tokens[1].value if len(tokens) > 2 and tokens[0].kind == "ontokin"
                     and tokens[1].kind == "STRING" else None)
         callback = checkpoint if check is not None else None
-        if declared == "0.6":
+        if declared == "0.7":
+            from .syntax07 import Parser07
+            result = Parser07(tokens, unit.source_id, callback).program()
+        elif declared == "0.6":
             from .syntax06 import Parser06
             result = Parser06(tokens, unit.source_id, callback).program()
         elif declared == "0.5":

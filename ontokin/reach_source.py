@@ -13,6 +13,7 @@ from typing import Any
 
 from .diagnostics import OntoKinError
 from .model import ReachPayload, ReachSourceLocation
+from .profile_capabilities import REACH_PROFILES
 from .values import LENGTH, TIME, Type, Value, quantity_type
 
 
@@ -46,7 +47,7 @@ def reach_error(code: str, message: str, node: Any = None, *,
 
 
 def declaring(compiler, node) -> bool:
-    return compiler.linked.modules[node.source_id].ast.profile == PROFILE
+    return compiler.linked.modules[node.source_id].ast.profile in REACH_PROFILES
 
 
 def source_location(compiler, node) -> ReachSourceLocation:

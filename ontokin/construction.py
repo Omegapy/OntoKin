@@ -21,6 +21,8 @@ from .json_limits import JSONLimitError
 from .model import Event, EventBlock, ImpulsePayload, ObjectModel, Pose, SiteModel
 from .surface_runtime import SURFACE_CALLS, SURFACE_TYPES, SURFACE_PROFILE, surface_builtin, materialize_surface
 from .surface import SurfaceError
+from .profile_capabilities import (BUDGET_PROFILE, REACH_PROFILES, IMPULSE_PROFILES,
+                                   SURFACE_PROFILES)
 from .validator import (BUILTIN_TYPES, FIELD_TYPES,
                         PREDEFINED, READONLY_FIELDS, BoundExpression, Callable,
                         Context, EffectiveClass, Instance, Member, Validator,
@@ -33,7 +35,6 @@ PROFILE = "construction-0.1"
 IMPULSE_PROFILE = "impulse-0.1"
 FORCE_PROFILE = "force-0.1"
 REACH_PROFILE = "planar-reach-0.1"
-SURFACE_PROFILES = frozenset({SURFACE_PROFILE, IMPULSE_PROFILE, FORCE_PROFILE, REACH_PROFILE})
 IMPULSE_DIMENSION = (1, 1, -1, 0)
 PREDEFINED_02 = PREDEFINED | {"Keyed", "len"}
 MAX_KEYED_ENTRIES = 256
@@ -56,30 +57,60 @@ LIMITS = {"max_objects": 1000, "max_operations": 100000,
 class ConstructionBudget:
     """One work/value counter for the whole linked compilation attempt."""
 
-    def __init__(self, budgets: dict | None = None, check: Check[[], None] | None = None):
+    def __init__(self, budgets: dict | None = None, check: Check[[], None] | None = None,
+                 *, execution_budget=None):
         if budgets is not None and (not isinstance(budgets, dict) or set(budgets) - set(LIMITS)):
             fail("OKL-E-RESOURCE", "Unknown construction budget field.", phase="support")
         self.limits = dict(LIMITS)
+        self.execution_budget = execution_budget
+        if execution_budget is not None:
+            from .execution_budget import SharedExecutionBudget
+            if (not isinstance(execution_budget, SharedExecutionBudget)
+                    or execution_budget.resolved is None or check is not None):
+                fail("OKL-E-RESOURCE", "Construction requires one admitted execution context.",
+                     phase="support", details={"budget_reason": "execution_context_required"})
+            if set(budgets or {}) & {"max_operations", "max_elapsed_ms"}:
+                fail("OKL-E-RESOURCE", "Execution limits were already resolved at entry admission.",
+                     phase="support", details={"budget_reason": "execution_context_required"})
+            self.limits.update(execution_budget.limits)
         for name, value in (budgets or {}).items():
             if type(value) is not int or not 1 <= value <= LIMITS[name]:
                 fail("OKL-E-RESOURCE", f"{name} must be an integer from 1 through {LIMITS[name]}.",
                      phase="support", details={"budget": name, "limit": LIMITS[name]})
             self.limits[name] = value
-        self.operations = 0
+        self._operations = 0
         self.value_entries = 0
-        self.started = time.monotonic()
+        self.started = time.monotonic() if execution_budget is None else execution_budget.started
         self.check = check
         self.profile = PROFILE
         self.callback_error: BaseException | None = None
 
+    @property
+    def operations(self):
+        return self._operations if self.execution_budget is None else self.execution_budget.operations
+
+    @operations.setter
+    def operations(self, value):
+        if self.execution_budget is not None:
+            raise AttributeError("Shared execution operations belong to the admitted ledger.")
+        self._operations = value
+
     def tick(self, node: Any = None, amount: int = 1) -> None:
+        if self.execution_budget is not None:
+            try:
+                self.execution_budget.tick(node, amount=amount)
+            except BaseException as error:
+                if error is self.execution_budget.callback_error:
+                    self.callback_error = error
+                raise
+            return
         if self.check is not None:
             try:
                 self.check()
             except BaseException as error:
                 self.callback_error = error
                 raise
-        self.operations += amount
+        self._operations += amount
         if self.operations > self.limits["max_operations"]:
             self.exceeded("max_operations", self.operations, node)
         elapsed = (time.monotonic() - self.started) * 1000
@@ -121,7 +152,8 @@ class ConstructionBudget:
     def report(self) -> dict:
         return {"limits": dict(self.limits), "operations": self.operations,
                 "value_entries": self.value_entries,
-                "elapsed_ms": (time.monotonic() - self.started) * 1000}
+                "elapsed_ms": ((time.monotonic() - self.started) * 1000
+                               if self.execution_budget is None else self.execution_budget.elapsed_ms())}
 
 
 def _steps(path) -> tuple:
@@ -197,15 +229,16 @@ class ConstructionCompiler(Validator):
     def __init__(self, linked, level: str, budget: ConstructionBudget):
         super().__init__(linked.entry.ast, level)
         self.linked, self.bundle, self.budget = linked, linked.bundle, budget
-        if self.model.profile in {IMPULSE_PROFILE, FORCE_PROFILE, REACH_PROFILE}:
+        if self.model.profile in IMPULSE_PROFILES:
             self.budget.profile = self.model.profile
         self.reach_work = None
         self._reach_descriptions = {}
-        if self.model.profile == REACH_PROFILE:
+        if self.model.profile in REACH_PROFILES:
             from .reach_numeric import ReachExecutionWork
-            self.reach_work = ReachExecutionWork(
-                check=budget.tick, max_operations=budget.limits["max_operations"],
-                max_elapsed_ms=budget.limits["max_elapsed_ms"])
+            self.reach_work = (ReachExecutionWork(execution_budget=budget.execution_budget)
+                if self.model.profile == BUDGET_PROFILE else ReachExecutionWork(
+                    check=budget.tick, max_operations=budget.limits["max_operations"],
+                    max_elapsed_ms=budget.limits["max_elapsed_ms"]))
         self.linked_program = linked
         self.surface_meshes: dict[str, dict] = {}
         self.source_registry = linked.source_registry
@@ -302,7 +335,7 @@ class ConstructionCompiler(Validator):
             keys.add(node.key)
 
     def predefined(self, node: Any) -> frozenset | set:
-        if self.linked.modules[node.source_id].ast.profile == REACH_PROFILE:
+        if self.linked.modules[node.source_id].ast.profile in REACH_PROFILES:
             from .reach_source import NAMES
             return PREDEFINED_02 | NAMES
         return PREDEFINED_02
@@ -322,7 +355,7 @@ class ConstructionCompiler(Validator):
                 element = self.parse_type(args[0])
                 self._keyed_leaf(element, node)
                 result = Type("Keyed", element=element)
-            elif name == "ReachBranch" and self.linked.modules[node.source_id].ast.profile == REACH_PROFILE:
+            elif name == "ReachBranch" and self.linked.modules[node.source_id].ast.profile in REACH_PROFILES:
                 if args:
                     from .reach_source import reach_error
                     raise reach_error("reach_type", "ReachBranch takes no type arguments.", node)
@@ -675,7 +708,7 @@ class ConstructionCompiler(Validator):
                     stack.append((child, iter(self.call_edges.get(child, ()))))
 
     def name(self, name: str, ctx: Context, node: Any) -> Value:
-        if self.linked.modules[node.source_id].ast.profile == REACH_PROFILE and name not in ctx.locals:
+        if self.linked.modules[node.source_id].ast.profile in REACH_PROFILES and name not in ctx.locals:
             from .reach_source import BRANCHES
             if name in BRANCHES:
                 return Value(Type("ReachBranch"), name)
@@ -1489,7 +1522,7 @@ class ConstructionCompiler(Validator):
 
     def impulse_values(self, event: Any, context: Context) -> tuple[Value, Value, Value]:
         """Check pure source operands under their actual declaring profile."""
-        if self.linked.modules[event.source_id].ast.profile not in {IMPULSE_PROFILE, FORCE_PROFILE, REACH_PROFILE}:
+        if self.linked.modules[event.source_id].ast.profile not in IMPULSE_PROFILES:
             raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED", "Source impulses require impulse-0.1.",
                                event, phase="support", category="unsupported", rule_ids=["IMP-001"])
 
@@ -1680,7 +1713,7 @@ class ConstructionCompiler(Validator):
             self.action_value(path)
         self.assertions()
         self.relation_validation()
-        if self.model.profile == REACH_PROFILE:
+        if self.model.profile in REACH_PROFILES:
             from .reach_source import bind_reaches
             bind_reaches(self)
         self.event_blocks()
@@ -1690,7 +1723,8 @@ class ConstructionCompiler(Validator):
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "Required capabilities are not supplied by " + self.model.profile + ": " +
                  ", ".join(self.model.requested_capabilities), requires[0], phase="support")
         if self.level == "delivered":
-            target = ("ontokin.glb/0.6" if self.model.profile == REACH_PROFILE else
+            target = ("ontokin.glb/0.7" if self.model.profile == BUDGET_PROFILE else
+                      "ontokin.glb/0.6" if self.model.profile == REACH_PROFILE else
                       "ontokin.glb/0.5" if self.model.profile == FORCE_PROFILE else
                       "ontokin.glb/0.4" if self.model.profile == IMPULSE_PROFILE else
                       "ontokin.glb/0.3" if self.model.profile == "surface-0.1" else "ontokin.glb/0.2")
@@ -1701,7 +1735,7 @@ class ConstructionCompiler(Validator):
 
     def action_value(self, path: str) -> Value:
         value = super().action_value(path)
-        if self.model.profile == REACH_PROFILE:
+        if self.model.profile in REACH_PROFILES:
             from .reach_source import bind_description
             bind_description(self, path, value)
         return value
@@ -1724,7 +1758,7 @@ class ConstructionCompiler(Validator):
 
 
 def compile_construction(bundle, *, level: str = "represented", budgets: dict | None = None,
-                         check: Check[[], None] | None = None) -> ConstructionCompiler:
+                         check: Check[[], None] | None = None, execution_budget=None) -> ConstructionCompiler:
     """Compile a sealed bundle; timeline validation remains an explicit step.
 
     No filesystem/network effects occur. Cancellation/deadline exceptions from
@@ -1732,20 +1766,29 @@ def compile_construction(bundle, *, level: str = "represented", budgets: dict | 
     OntoKin diagnostics with original source nodes and stable known identities.
     """
     from .linker import link_program
-    budget = ConstructionBudget(budgets, check)
+    if execution_budget is not None:
+        if getattr(execution_budget, "admitted_entry_revision", None) != bundle.entry.revision:
+            fail("OKL-E-RESOURCE", "The execution context was not admitted for this entry revision.",
+                 phase="support", details={"budget_reason": "execution_context_required"})
+    budget = ConstructionBudget(budgets, check, execution_budget=execution_budget)
     budget.tick()
     linked = link_program(bundle, check=budget.tick)
+    if (linked.entry.ast.profile == BUDGET_PROFILE) != (execution_budget is not None):
+        fail("OKL-E-RESOURCE", "Source 0.7 requires its explicitly admitted execution context.",
+             linked.entry.ast, phase="support", details={"budget_reason": "execution_context_required"})
     compiler = ConstructionCompiler(linked, level, budget)
     try:
         compiler.run()
         return compiler
     except OntoKinError as error:
-        if error is budget.callback_error:
+        if error is budget.callback_error or (execution_budget is not None
+                and error is execution_budget.callback_error):
             raise
         compiler.annotate(error)
         raise
     except RecursionError as error:
-        if error is budget.callback_error:
+        if error is budget.callback_error or (execution_budget is not None
+                and error is execution_budget.callback_error):
             raise
         fail("OKL-E-RESOURCE", "Construction exceeded bounded host recursion work.", compiler.program,
              phase="support", details={"budget": "host_recursion", "profile": compiler.budget.profile})
