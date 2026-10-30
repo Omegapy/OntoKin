@@ -15,7 +15,7 @@ from .construction import compile_construction
 from .diagnostics import OntoKinError
 from .execution_budget import HostPolicy, SharedExecutionBudget, admit_entry_budget
 from .json_limits import JSONLimitError, measure_json
-from .profile_capabilities import BUDGET_PROFILE
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, EXECUTION_PROFILES
 from .program_diagnostics import diagnostic_dict
 from .scene import ExportOptions
 
@@ -42,13 +42,17 @@ def execute_budgeted_export(source: ProgramBundle, *, policy: HostPolicy | None 
                             caller_caps: dict | None = None,
                             options: ExportOptions | None = None,
                             check: Callable[[], None] | None = None,
-                            clock=None) -> BudgetedExport:
+                            clock=None, profile=BUDGET_PROFILE) -> BudgetedExport:
     """Run one immutable entry under an independently supplied host policy.
 
 Caller cancellation propagates with the original exception identity. Expected
 source, authorization, numeric and resource failures return no artifact bytes.
 The receipt never authorizes a later execution or an independent reader.
 """
+    if not isinstance(profile, str) or profile not in EXECUTION_PROFILES:
+        raise ValueError("Unknown execution-budget source profile.")
+    target = "ontokin.glb/0.8" if profile == EXTRUSION_PROFILE else TARGET
+    language_version = "0.8" if profile == EXTRUSION_PROFILE else "0.7"
     if not isinstance(source, ProgramBundle):
         raise TypeError("source must be a sealed ProgramBundle.")
     ledger = None
@@ -57,8 +61,8 @@ The receipt never authorizes a later execution or an independent reader.
     from .agent import implementation_identity
     identity = {"schema_version": "ontokin.source-execution/0.1",
                 "implementation": "ontokin-reference", "version": __version__,
-                "language_version": "0.7", "profile": BUDGET_PROFILE,
-                "target_contract": TARGET, "requested_level": "delivered",
+                "language_version": language_version, "profile": profile,
+                "target_contract": target, "requested_level": "delivered",
                 "source_revision": source.entry.revision,
                 "program_revision": source.program_revision,
                 "implementation_identity": implementation_identity()}
@@ -80,7 +84,7 @@ The receipt never authorizes a later execution or an independent reader.
     try:
         ledger = SharedExecutionBudget(policy, caller_caps,
                                        check=caller_check if check is not None else None, clock=clock)
-        admit_entry_budget(source.entry, ledger)
+        admit_entry_budget(source.entry, ledger, profile=profile)
         ledger.stage = "construction"
         compiler = compile_construction(source, execution_budget=ledger)
         achieved = "represented"
@@ -106,7 +110,7 @@ The receipt never authorizes a later execution or an independent reader.
         exported = export_glb(compiler.model, options=options,
                               source_uri=source.entry.filename,
                               source_sha256=source.entry.revision,
-                              target_contract=TARGET, work=compiler.reach_work,
+                              target_contract=target, work=compiler.reach_work,
                               reach_plan=plan)
         report = {**exported.report, **identity, "achieved_level": "delivered",
                   "source_diagnostics": [diagnostic_dict(d, source)
@@ -155,3 +159,10 @@ The receipt never authorizes a later execution or an independent reader.
             "execution_budget": None if ledger is None else ledger.report(status="failed"),
             "error": {"code": "OKL-E-RESOURCE", "message": str(error),
                       "details": error.details}})
+
+
+def execute_extrusion_export(source: ProgramBundle, **kwargs) -> BudgetedExport:
+    """Explicit .8 entry with the same source-authorized cumulative allowance."""
+    if "profile" in kwargs:
+        raise TypeError("execute_extrusion_export fixes polygon-extrusion-0.1 explicitly.")
+    return execute_budgeted_export(source, profile=EXTRUSION_PROFILE, **kwargs)

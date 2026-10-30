@@ -18,7 +18,7 @@ from .json_limits import measure_json, JSONLimitError
 from .program_diagnostics import diagnostic_dict
 from .program_protocol import MAX_BUDGETS
 from .program_bindings import PROFILE_BINDINGS
-from .profile_capabilities import BUDGET_PROFILE
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, EXECUTION_PROFILES, REACH_PROFILES
 from .syntax import Node
 from .validator import FIELD_TYPES, optional
 from .values import Value, bounded_data
@@ -88,15 +88,15 @@ class _Budget(core._Budget):
 
 def _request_budget(budgets=None, check=None, profile=CONSTRUCTION_PROFILE):
     """Select the explicit .7 adapter without changing legacy budget owners."""
-    if profile == BUDGET_PROFILE:
+    if isinstance(profile, str) and profile in EXECUTION_PROFILES:
         from .budget_program_runtime import ExecutionProgramBudget
-        return ExecutionProgramBudget(budgets, check)
+        return ExecutionProgramBudget(budgets, check, profile=profile)
     return _Budget(budgets, check, profile)
 
 
 def _compile(source: ProgramBundle, budget: _Budget):
     from .construction import compile_construction
-    if budget.profile == BUDGET_PROFILE:
+    if budget.profile in EXECUTION_PROFILES:
         ledger = budget.execution_budget
         try:
             budget.context.admit(source)
@@ -123,7 +123,7 @@ def _compile(source: ProgramBundle, budget: _Budget):
 
 def _reach_work(compiler):
     """Keep the explicit 0.6 request's bounded numerical context transient."""
-    return {"work": compiler.reach_work} if compiler.model.profile in (REACH_PROFILE, BUDGET_PROFILE) else {}
+    return {"work": compiler.reach_work} if compiler.model.profile in REACH_PROFILES else {}
 
 
 def compile_program(source, *, budgets=None, check=None, profile=CONSTRUCTION_PROFILE):
@@ -221,7 +221,7 @@ def validate_revision(source: ProgramBundle, *, level: str = "represented", budg
             raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED", "A delivered request requires an explicit supported destination contract.",
                                compiler.program, category="unsupported", phase="support", blocks=["delivered"])
         _support(compiler)
-        if profile == BUDGET_PROFILE:
+        if profile in EXECUTION_PROFILES:
             budget.execution_budget.stage = "evaluation"
         prefix = evaluate_prefix(compiler.model, "0", side="before", check=budget.tick, **_reach_work(compiler))
         if prefix["failure"] is not None:
@@ -269,7 +269,7 @@ def _evaluate_compiled(source, compiler, budget, until, *, side="after", previou
     achieved = "represented"
     diagnostics = [diagnostic_dict(d, source) for d in compiler.model.diagnostics]
     _support(compiler)
-    if budget.profile == BUDGET_PROFILE:
+    if budget.profile in EXECUTION_PROFILES:
         budget.execution_budget.stage = "evaluation"
     endpoint = exact_time(until)
     if side not in ("before", "after"):
@@ -310,7 +310,7 @@ def prepare_delivery(source, *, until=None, budgets=None, check=None, profile=RE
         diagnostics = [diagnostic_dict(d, source) for d in compiler.model.diagnostics]
         endpoint = compiler.model.duration if until is None else until
         capture = None
-        if profile in (REACH_PROFILE, BUDGET_PROFILE):
+        if profile in REACH_PROFILES:
             from .reach_delivery import ReachDeliveryCapture
             capture = ReachDeliveryCapture(compiler.model, exact_time(endpoint), work=compiler.reach_work)
         result = _evaluate_compiled(source, compiler, budget, endpoint, capture_observer=capture)
@@ -385,7 +385,7 @@ def _target(program, compiler, path, name):
         return {"available": False, "reason": target.get("reason", "No public occurrence initializer is available.")}
     scope = _span(program, target["root_node"])
     element_id = (["sources", scope["source_id"]]
-                  if compiler.model.profile == BUDGET_PROFILE and scope is not None
+                  if compiler.model.profile in EXECUTION_PROFILES and scope is not None
                   else list(target["element_id"]))
     return {"available": target["available"], "reason": target.get("reason"),
             "element_id": element_id,
@@ -396,7 +396,7 @@ def _target(program, compiler, path, name):
 
 
 def _index(program, compiler, budget):
-    records = _file_records(program, budget if budget.profile == BUDGET_PROFILE else None)
+    records = _file_records(program, budget if budget.profile in EXECUTION_PROFILES else None)
     model = compiler.model
     scene_ids = (model.module_key, model.scene_key)
     entry_ast = compiler.program
@@ -491,7 +491,7 @@ def _index(program, compiler, budget):
         owner = record["identity"]["owner"]
         if owner is not None and tuple(owner) in by_id:
             by_id[tuple(owner)]["identity"]["children"].append(record["element_id"])
-    if budget.profile == BUDGET_PROFILE:
+    if budget.profile in EXECUTION_PROFILES:
         # Agent/0.7 patches exact bytes through immutable source-unit scopes.
         # Definition and generated-instance identities remain inspection data.
         for record in records:
@@ -509,7 +509,7 @@ def _index_context(program, budget):
         if exc.diagnostic.category == "resource_limit":
             raise
         # Invalid units still have exact source scopes and revision-bound diagnostics.
-        return _file_records(program, budget if budget.profile == BUDGET_PROFILE else None), None, [diagnostic_dict(exc.diagnostic, program)], False
+        return _file_records(program, budget if budget.profile in EXECUTION_PROFILES else None), None, [diagnostic_dict(exc.diagnostic, program)], False
 
 
 def source_index(program, *, budgets=None, check=None, profile=CONSTRUCTION_PROFILE):
@@ -521,7 +521,7 @@ def apply_patches(program, patches, *, module_changes=None, budgets=None, check=
     """Form one atomic candidate after checking all original-unit byte scopes."""
     try:
         budget = _request_budget(budgets, check, profile)
-        if profile == BUDGET_PROFILE:
+        if profile in EXECUTION_PROFILES:
             # Preparing replacement bytes does not execute the old entry or
             # authorize its declaration. The service admits the resulting
             # candidate with this same provisional ledger before validation.
@@ -657,16 +657,17 @@ def _project(program, record, fields, compiler, sample, run, frame, budget):
     # Geometry, mass, and mechanical projections are the same normalized model
     # operations as core0.1. Source, values, support, and state context are versioned.
     specialized = {"values", "state", "support"}
-    if budget.profile in (REACH_PROFILE, BUDGET_PROFILE):
+    if budget.profile in REACH_PROFILES:
         specialized.add("actions")
     shared = [field for field in fields if field not in specialized]
     result = core._project(program.entry.to_source(), record, shared, compiler, sample, run, frame, budget)
     if "support" in fields:
         result["support"] = core._support_record(compiler, budget)
         result["support"]["profile"] = budget.profile
-        result["support"]["named_destination"] = ("ontokin.glb/0.7" if budget.profile == BUDGET_PROFILE
-                                                   else PROFILE_BINDINGS[budget.profile].destination)
-        if budget.profile != BUDGET_PROFILE and not PROFILE_BINDINGS[budget.profile].delivery_available:
+        result["support"]["named_destination"] = ("ontokin.glb/0.8" if budget.profile == EXTRUSION_PROFILE else
+                                                   "ontokin.glb/0.7" if budget.profile == BUDGET_PROFILE else
+                                                   PROFILE_BINDINGS[budget.profile].destination)
+        if budget.profile not in EXECUTION_PROFILES and not PROFILE_BINDINGS[budget.profile].delivery_available:
             result["support"]["destination_support"] = "unsupported"
             result["support"]["delivery_targets"] = []
     if compiler is None or record["_definition"]:
@@ -675,9 +676,9 @@ def _project(program, record, fields, compiler, sample, run, frame, budget):
                 result[field] = {"available": False, "reason": "definition_has_no_occurrence_state" if record["_definition"] else "source_is_unresolved"}
         return result
     path = record.get("_object_path")
-    if "actions" in fields and budget.profile in (REACH_PROFILE, BUDGET_PROFILE):
+    if "actions" in fields and budget.profile in REACH_PROFILES:
         result["actions"] = _reach_actions(compiler, record, path, sample, budget)
-    if "geometry" in fields and path is not None and compiler.model.objects[path].geometry["kind"] in ("loft", "placed"):
+    if "geometry" in fields and path is not None and compiler.model.objects[path].geometry["kind"] in ("loft", "extrusion", "placed"):
         from .program_surface import surface_summary
         result["geometry"]["representation"] = "native_parameterized_exterior_surface"
         result["geometry"]["surface"] = surface_summary(compiler.model.objects[path].geometry, check=budget.tick)
@@ -748,7 +749,7 @@ def inspect_revision(program, *, selector=None, fields=None, limit=100, offset=0
         base_selector = {k: v for k, v in selector.items() if k != "source_id"}
         base_selector, fields = core._query(base_selector, fields, limit, offset, budget)
         records, compiler, diagnostics, complete = _index_context(program, budget)
-        if profile == BUDGET_PROFILE:
+        if profile in EXECUTION_PROFILES:
             budget.execution_budget.stage = "inspection"
         achieved = "represented" if compiler is not None else None
         context = {"program_revision": program.program_revision, "run_id": None if run is None else run.get("run_id"),

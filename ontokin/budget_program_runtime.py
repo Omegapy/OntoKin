@@ -9,13 +9,15 @@ from __future__ import annotations
 from . import program_runtime as runtime
 from .agent_runtime import _Interrupt
 from .execution_budget import DEFAULT_LIMITS, SharedExecutionBudget, budget_error
-from .profile_capabilities import BUDGET_PROFILE
+from .profile_capabilities import BUDGET_PROFILE, EXECUTION_PROFILES
 
 
 class ExecutionProgramBudget(runtime._Budget):
     """Keep fixed output limits while forwarding every work charge."""
 
-    def __init__(self, budgets=None, check=None):
+    def __init__(self, budgets=None, check=None, *, profile=BUDGET_PROFILE):
+        if not isinstance(profile, str) or profile not in EXECUTION_PROFILES:
+            raise ValueError("Unknown execution-budget program profile.")
         ledger = getattr(check, "execution_budget", None)
         if not isinstance(ledger, SharedExecutionBudget) or not callable(getattr(check, "admit", None)):
             budget_error("execution_context_required",
@@ -29,7 +31,7 @@ class ExecutionProgramBudget(runtime._Budget):
                          "Runtime execution caps must match the request's admitted context.")
         self.context = check
         self.execution_budget = ledger
-        self.profile = BUDGET_PROFILE
+        self.profile = profile
         self.started = ledger.started
         self.limits = {**runtime.MAX_BUDGETS, **ledger.limits}
         for name, value in incoming.items():
@@ -104,11 +106,12 @@ class BudgetProgramRuntime:
         Fixed object/value limits and the request's actual ledger still apply.
         """
         try:
-            budget = ExecutionProgramBudget(budgets, check)
+            budget = ExecutionProgramBudget(budgets, check, profile=self.profile)
             check.admit(source)
             budget.limits.update(budget.execution_budget.limits)
             cached = getattr(check, "_budget_program_compiler", None)
             compiler = (cached[1] if cached is not None and cached[0] == source.program_revision
+                        and cached[1].model.profile == self.profile
                         else runtime._compile(source, budget))
             budget.execution_budget.stage = "identity_validation"
             records = []

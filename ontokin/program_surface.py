@@ -15,6 +15,7 @@ from .agent_protocol import ProtocolError
 from .diagnostics import OntoKinError
 from .scene import MAX_MESH_VERTICES, SurfaceMesh, build_surface_mesh
 from .surface import SurfaceError
+from .profile_capabilities import EXTRUSION_PROFILE, EXECUTION_PROFILES
 from .values import bounded_data
 
 
@@ -30,6 +31,8 @@ def surface_summary(geometry, *, check=None):
     if check is not None:
         check()
     recipe = geometry.get("surface", geometry)
+    if recipe["kind"] == "extrusion":
+        return extrusion_summary(geometry, check=check)
     ordered = sorted(recipe["sections"], key=lambda section: section.station_m)
     facets, caps = recipe["facets"], recipe["caps"]
     counts = {material.key: 0 for material in recipe["materials"]}
@@ -55,6 +58,42 @@ def surface_summary(geometry, *, check=None):
             "physical_participation": "none",
             "motion_authority": "carrier_evaluated_world_pose"}
 
+
+
+def extrusion_summary(geometry, *, check=None):
+    """Expose ordered authored points and regional counts, never editable corners."""
+    recipe = geometry.get("surface", geometry)
+    vertices = sorted(recipe["vertices"], key=lambda vertex: vertex.order)
+    counts = {}
+    for material in recipe["materials"]:
+        if check is not None:
+            check()
+        counts[material.key] = 0
+    keys, orders, points = [], [], []
+    for vertex in vertices:
+        if check is not None:
+            check()
+        keys.append(vertex.key)
+        orders.append(vertex.order)
+        points.append(list(vertex.point_m))
+        counts[vertex.region] += 2
+    counts[recipe["bottom_region"]] += len(vertices) - 2
+    counts[recipe["top_region"]] += len(vertices) - 2
+    triangles = 4 * len(vertices) - 4
+    return {"schema_version": "ontokin.polygon-extrusion-summary/0.1",
+            "profile": EXTRUSION_PROFILE, "family": "polygon_extrusion",
+            "vertex_keys": keys, "orders": orders, "points_m": points,
+            "depth_m": recipe["depth_m"], "bottom_region": recipe["bottom_region"],
+            "top_region": recipe["top_region"], "palette_keys": sorted(counts),
+            "triangle_count": triangles, "vertex_count": 3 * triangles,
+            "regions": [{"key": key, "material_key": key, "triangle_count": counts[key]}
+                        for key in sorted(counts) if counts[key]],
+            "local_visual_placement": {
+                "frame": "carrier_self_frame",
+                "position_m": list(geometry.get("local_position", (0., 0., 0.))),
+                "orientation_wxyz": list(geometry.get("local_rotation", (1., 0., 0., 0.)))},
+            "physical_participation": "none",
+            "motion_authority": "carrier_evaluated_world_pose"}
 
 def _mesh_digest(geometry, mesh, *, check):
     """Implementation-scoped fingerprint, streamed with bounded work callbacks.
@@ -98,10 +137,11 @@ class SurfacePageContext:
     ordinals: list[int]
     region_keys: list[str]
     budget: object
+    profile: str = PROFILE
 
     def binding(self):
         return {"program_revision": self.program_revision, "element_id": self.element_id,
-                "profile": PROFILE, "region": self.region,
+                "profile": self.profile, "region": self.region,
                 "geometry_sha256": self.geometry_sha256,
                 "ordering": ORDERING, "coordinate_system": COORDINATE_SYSTEM}
 
@@ -138,9 +178,8 @@ def prepare_surface_page(program, element_id, *, region=None, count=256, budgets
     from .program_runtime import _request_budget, _Interrupt, _compile, _support
     try:
         from .program_bindings import PROFILE_BINDINGS
-        from .profile_capabilities import BUDGET_PROFILE
-        if (profile != BUDGET_PROFILE and (not isinstance(profile, str)
-                or profile not in PROFILE_BINDINGS or not PROFILE_BINDINGS[profile].native_surfaces)):
+        if (not isinstance(profile, str) or profile not in EXECUTION_PROFILES and
+                (profile not in PROFILE_BINDINGS or not PROFILE_BINDINGS[profile].native_surfaces)):
             raise ProtocolError("OKA-E-REQUEST", "This program profile does not supply native mesh inspection.")
         budget = _request_budget(budgets, check, profile)
         if count > budget.limits["max_result_items"]:
@@ -158,8 +197,8 @@ def prepare_surface_page(program, element_id, *, region=None, count=256, budgets
                                category="unsupported" if code == "OKL-E-CAPABILITY-UNSUPPORTED" else
                                "resource_limit" if code == "OKL-E-RESOURCE" else "invalid",
                                element_id=list(obj.element_id), details={"object_path": obj.path, **details})
-        if obj.geometry["kind"] not in ("loft", "placed"):
-            error("OKL-E-CAPABILITY-UNSUPPORTED", "Surface mesh pages require native loft geometry.",
+        if obj.geometry["kind"] not in ("loft", "extrusion", "placed"):
+            error("OKL-E-CAPABILITY-UNSUPPORTED", "Surface mesh pages require supported native exterior geometry.",
                   geometry_kind=obj.geometry["kind"])
         recipe = obj.geometry.get("surface", obj.geometry)
         palette = {material.key for material in recipe["materials"]}
@@ -184,6 +223,7 @@ def prepare_surface_page(program, element_id, *, region=None, count=256, budgets
             if region is None or key == region:
                 selected.append(ordinal)
         return SurfacePageContext(program.program_revision, list(obj.element_id), obj.path,
-                                  region, mesh, fingerprint, selected, keys, budget)
+                                  region, mesh, fingerprint, selected, keys, budget,
+                                  EXTRUSION_PROFILE if profile == EXTRUSION_PROFILE else PROFILE)
     except _Interrupt as exc:
         raise exc.error

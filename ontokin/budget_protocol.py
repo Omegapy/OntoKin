@@ -27,22 +27,22 @@ class BudgetProtocol:
     OPERATIONS = OPERATIONS
     canonical_request = staticmethod(legacy.canonical_request)
 
-    @staticmethod
-    def validate_request(request):
-        if request.get("schema_version") != SCHEMA_VERSION:
-            _bad("This service requires explicit ontokin.agent/0.7.")
+    @classmethod
+    def validate_request(cls, request):
+        if request.get("schema_version") != cls.SCHEMA_VERSION:
+            _bad("This service requires explicit " + cls.SCHEMA_VERSION + ".")
         operation = request.get("operation")
-        if not isinstance(operation, str) or operation not in OPERATIONS:
-            _bad("Unknown Agent/0.7 operation.", operations=sorted(OPERATIONS))
-        required, optional = OPERATIONS[operation]
+        if not isinstance(operation, str) or operation not in cls.OPERATIONS:
+            _bad("Unknown " + cls.SCHEMA_VERSION + " operation.", operations=sorted(cls.OPERATIONS))
+        required, optional = cls.OPERATIONS[operation]
         _object(request, "request", legacy.COMMON | required | optional,
                 legacy.COMMON | required)
         if "budgets" in request:
-            _object(request["budgets"], "budgets", set(MAX_BUDGETS))
+            _object(request["budgets"], "budgets", set(cls.MAX_BUDGETS))
             for name, value in request["budgets"].items():
-                _integer(value, "budgets." + name, 1, MAX_BUDGETS[name])
-        if "destination" in request and request["destination"] != DEFINITION.destination:
-            _bad("Agent/0.7 requires the explicit ontokin.glb/0.7 destination.")
+                _integer(value, "budgets." + name, 1, cls.MAX_BUDGETS[name])
+        if "destination" in request and request["destination"] != cls.definition.destination:
+            _bad(cls.SCHEMA_VERSION + " requires the explicit " + cls.destination + " destination.")
         # Validate every inherited shape without registering a new legacy route.
         # Only execution caps, version selectors and the artifact cap field differ.
         projected = copy.deepcopy(request)
@@ -57,14 +57,14 @@ class BudgetProtocol:
         legacy.validate_request(projected, schema_version=legacy.REACH_SCHEMA_VERSION)
         for patch in request.get("patches", []):
             if patch["element_id"] != ["sources", patch["source_id"]]:
-                _bad("Agent/0.7 patches require the exact file source scope.",
+                _bad(cls.SCHEMA_VERSION + " patches require the exact file source scope.",
                      required_element_id=["sources", patch["source_id"]])
 
-    @staticmethod
-    def envelope(request, status, accepted=None):
+    @classmethod
+    def envelope(cls, request, status, accepted=None):
         result = legacy.envelope(request, status, accepted,
                                  schema_version=legacy.REACH_SCHEMA_VERSION)
-        result["schema_version"] = SCHEMA_VERSION
+        result["schema_version"] = cls.SCHEMA_VERSION
         result["execution_budget"] = None
         return result
 

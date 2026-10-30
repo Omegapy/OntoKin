@@ -22,7 +22,7 @@ import math
 import struct
 from types import MappingProxyType
 
-from .profile_capabilities import BUDGET_PROFILE, REACH_PROFILES
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, EXECUTION_PROFILES, REACH_PROFILES
 
 
 MAX_OPERAND_BITS = 32768
@@ -3689,7 +3689,7 @@ class ReachReference:
         ideal_lever = self.p.rotate(ideal.orientation, payload.point_self_m)
         lever_error = self.a.exact(self.a.exact(bound.source_numeric_rotation_error,
             self._l1(payload.point_self_m), "mul"), F(1, 1 << 96), "add")
-        if (self.model.profile == BUDGET_PROFILE and len(payload.point_self_m) == 3
+        if (self.model.profile in EXECUTION_PROFILES and len(payload.point_self_m) == 3
                 and all(type(value) in (int, float, F) and value == 0
                         for value in payload.point_self_m)):
             # The new reader retains the exact identity R * 0 = 0. Every
