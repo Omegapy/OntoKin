@@ -25,7 +25,7 @@ from .model import SceneModel
 from .json_limits import JSONLimitError, measure_json
 from .values import bounded_data
 from .scene import (MAX_GLB_BYTES, MAX_VALIDATION_POSES, MAX_KEYFRAMES, MAX_BAKED_POSES, TARGET_CONTRACT,
-                    CONSTRUCTION_TARGET, SURFACE_TARGET, IMPULSE_TARGET, FORCE_TARGET, REACH_TARGET, BUDGET_REACH_TARGET, EXTRUSION_TARGET, HOLES_TARGET, EXECUTION_TARGETS, REACH_TARGETS, NATIVE_TARGETS, PROGRAM_TARGETS, MAX_MESH_VERTICES,
+                    CONSTRUCTION_TARGET, SURFACE_TARGET, IMPULSE_TARGET, FORCE_TARGET, REACH_TARGET, BUDGET_REACH_TARGET, EXTRUSION_TARGET, HOLES_TARGET, RING_LOFT_TARGET, EXECUTION_TARGETS, REACH_TARGETS, NATIVE_TARGETS, PROGRAM_TARGETS, MAX_MESH_VERTICES,
                     SurfaceMesh, build_surface_mesh, geometry_metadata, surface_metadata,
                     checked_contract, program_metadata,
                     BakedScene, ExportOptions, build_scene, export_error,
@@ -581,6 +581,19 @@ def read_glb(source: bytes | bytearray | str | Path, *, check=None, target_contr
                     if check and start % 768 == 0:
                         check()
                     a, b, c = (positions[i] for i in indices[start:start + 3])
+                    if target_contract == RING_LOFT_TARGET:
+                        # Binary32 inputs are exact rationals. Rounded scaled crosses
+                        # can reverse a thin face or erase a nonzero determinant.
+                        a, b, c = (tuple(Fraction(value) for value in point) for point in (a, b, c))
+                        u, v = tuple(y - x for x, y in zip(a, b)), tuple(y - x for x, y in zip(a, c))
+                        cross = (u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2],
+                                 u[0] * v[1] - u[1] * v[0])
+                        if not any(cross):
+                            _format_error("Binary32 geometry contains a degenerate triangle.")
+                        if any(sum(Fraction(n) * component for n, component in zip(normals[i], cross)) <= 0
+                               for i in indices[start:start + 3]):
+                            _format_error("Triangle winding disagrees with its outward vertex normals.")
+                        continue
                     u, v = tuple(y - x for x, y in zip(a, b)), tuple(y - x for x, y in zip(a, c))
                     scale = max(abs(component) for component in (*u, *v))
                     if scale == 0:
@@ -717,6 +730,13 @@ def _validate_surface(decoded: DecodedGLB, node: dict, obj, model: SceneModel,
                 if (position != tuple(float32(v) for v in source_position) or
                         normal != tuple(float32(v) for v in source_normal)):
                     _format_error("Surface positions and normals must match the source geometry and single local placement.")
+            if expected.name == "ring_loft":
+                from .ring_loft_delivery import validate_ring_loft_delivery
+                try:
+                    validate_ring_loft_delivery(expected.corner_vertex_ids, positions, normals=normals, check=check)
+                except SurfaceError as error:
+                    export_error("OKE-E-GEOMETRY-PRECISION", str(error), model,
+                                 details={"cause": error.code, **error.details})
             if expected.name == "holes":
                 from .holes import validate_holes_delivery
                 try:
@@ -768,11 +788,14 @@ def _validate_geometry(decoded, model, options, target_contract, program, *, che
             paths.add(path)
             frames[index] = path + ".frame"
             obj = model.objects[path]
+            if (obj.geometry.get("surface", obj.geometry).get("kind") == "ring_loft"
+                    and target_contract != RING_LOFT_TARGET):
+                _format_error("Polygon lofts require their explicit GLB/0.10 destination.")
             if (obj.geometry.get("surface", obj.geometry).get("kind") == "holes"
-                    and target_contract != HOLES_TARGET):
+                    and target_contract not in (HOLES_TARGET, RING_LOFT_TARGET)):
                 _format_error("Polygon holes require their explicit GLB/0.9 destination.")
             if (obj.geometry.get("surface", obj.geometry).get("kind") == "extrusion"
-                    and target_contract not in (EXTRUSION_TARGET, HOLES_TARGET)):
+                    and target_contract not in (EXTRUSION_TARGET, HOLES_TARGET, RING_LOFT_TARGET)):
                 _format_error("Polygon source geometry requires its explicit GLB/0.8 destination.")
             for key, expected in (("class_name", obj.class_name), ("geometry", geometry_metadata(obj.geometry, check=check)
                                   if target_contract in NATIVE_TARGETS else obj.geometry),
@@ -789,7 +812,7 @@ def _validate_geometry(decoded, model, options, target_contract, program, *, che
             if obj.geometry["kind"] == "empty":
                 if "mesh" in node:
                     _format_error("An empty source object cannot acquire untagged helper geometry.")
-            elif obj.geometry["kind"] in ("loft", "placed", "extrusion", "holes") and target_contract in NATIVE_TARGETS:
+            elif obj.geometry["kind"] in ("loft", "placed", "extrusion", "holes", "ring_loft") and target_contract in NATIVE_TARGETS:
                 if "mesh" not in node:
                     _format_error("A native surface must have an actual mesh.")
                 error, vertex_count = _validate_surface(decoded, node, obj, model,

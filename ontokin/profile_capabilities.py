@@ -7,7 +7,9 @@ infer compatibility from a numeric version.
 BUDGET_PROFILE = "planar-reach-budget-0.1"
 EXTRUSION_PROFILE = "polygon-extrusion-0.1"
 HOLES_PROFILE = "polygon-holes-0.1"
-EXTRUSION_PROFILES = frozenset({EXTRUSION_PROFILE, HOLES_PROFILE})
+RING_LOFT_PROFILE = "polygon-loft-0.1"
+HOLES_PROFILES = frozenset({HOLES_PROFILE, RING_LOFT_PROFILE})
+EXTRUSION_PROFILES = frozenset({EXTRUSION_PROFILE, *HOLES_PROFILES})
 EXECUTION_PROFILES = frozenset({BUDGET_PROFILE, *EXTRUSION_PROFILES})
 REACH_PROFILES = frozenset({"planar-reach-0.1", *EXECUTION_PROFILES})
 FORCE_PROFILES = frozenset({"force-0.1", *REACH_PROFILES})

@@ -10,6 +10,17 @@ The current direction begins with exterior 3D models and short animations. Those
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
 
+### Author tapered polygon forms and hollow ducts
+
+Explicit source `0.10` / `polygon-loft-0.1` connects 2–8 keyed polygon sections at increasing Z stations. Matching ring and vertex identities support changing cross-sections, concave forms and up to eight through-holes, with separate cap and strip materials. The [versioned decision](docs/language-design/polygon-loft-v0.1/ADOPTION.md) defines the actual fixed diagonal triangles; it does not promise linear interpolation of planar cross-sections.
+
+```bash
+python3 -m ontokin export examples/polygon-lofts/hollow-frustum.ok --target ontokin.glb/0.10 --output /tmp/ontokin-duct.glb
+python3 -m ontokin agent --protocol ontokin.agent/0.10 --store /tmp/ontokin-loft-agent
+```
+
+The [authoring guide](docs/language-design/polygon-loft-v0.1/README.md), [frozen examples](examples/polygon-lofts/README.md) and [Agent/0.10 interface](docs/language-design/agent-v0.10/README.md) describe the contract. `RingLoftAgentService` supports exact source edits, bounded section and triangle inspection and recorded GLB retrieval. Limits are 64 vertices per section and 256 across all sections. Each source mesh and its delivered binary32 coordinates must retain a closed, nonintersecting surface and outward normals. Defaults remain 100,000 operations / 30,000 ms; the largest examples explicitly request separately authorized higher budgets. This is experimental visual geometry, with no implicit mass, collision shape or live destination physics.
+
 ### Author plates, slots and through-holes
 
 Explicit source `0.9` / `polygon-holes-0.1` adds one keyed outer ring and up to eight keyed inner rings. Use it for slotted plates, bolt holes and hollow cross-sections, with separate cap and wall materials, reusable parts and rigid local placement. The [versioned decision](docs/language-design/polygon-holes-v0.1/ADOPTION.md) requires counterclockwise outer boundaries, clockwise holes, strict separation and at most 64 vertices across all rings. Coordinates remain within ±100 meters and depth within 0.001–100 meters.

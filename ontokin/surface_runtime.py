@@ -7,7 +7,7 @@ not introduce a node or action authority. GLB/0.3 delivery is separate.
 from __future__ import annotations
 
 from .model import Pose
-from .profile_capabilities import EXTRUSION_PROFILE, HOLES_PROFILE, EXTRUSION_PROFILES
+from .profile_capabilities import EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, HOLES_PROFILES, EXTRUSION_PROFILES
 from .surface import LoftSection, SurfaceMaterial, SurfaceError, triangulate_loft
 from .validator import fail
 from .values import INT, REAL, STRING, LENGTH, Type, Value, quantity_type
@@ -75,11 +75,15 @@ def surface_builtin(compiler, name, args, node, ctx):
         allowed = {"loft"}
         if compiler.linked.modules[node.source_id].ast.profile in EXTRUSION_PROFILES:
             allowed.add("extrusion")
-        if compiler.linked.modules[node.source_id].ast.profile == HOLES_PROFILE:
+        if compiler.linked.modules[node.source_id].ast.profile in HOLES_PROFILES:
             allowed.add("holes")
+        if compiler.linked.modules[node.source_id].ast.profile == RING_LOFT_PROFILE:
+            allowed.add("ring_loft")
         if not isinstance(geometry, dict) or geometry.get("kind") not in allowed:
             fail("OKL-E-SURFACE-PLACEMENT",
-                 ("placed() requires one unplaced loft, simple extrusion or ring extrusion."
+                 ("placed() requires one unplaced native loft or polygon geometry."
+                  if compiler.linked.modules[node.source_id].ast.profile == RING_LOFT_PROFILE else
+                  "placed() requires one unplaced loft, simple extrusion or ring extrusion."
                   if compiler.linked.modules[node.source_id].ast.profile == HOLES_PROFILE else
                   "placed() requires one native loft or extrusion, not a nested placement."
                   if compiler.linked.modules[node.source_id].ast.profile == EXTRUSION_PROFILE else
@@ -112,6 +116,12 @@ def materialize_surface(recipe, *, max_vertices: int, check=None):
     else:
         surface = recipe
         placement = Pose("self")
+    if surface["kind"] == "ring_loft":
+        from .ring_loft import triangulate_ring_loft
+        mesh = triangulate_ring_loft(surface["sections"], surface["materials"],
+                                     surface["bottom_region"], surface["top_region"],
+                                     max_vertices=max_vertices, check=check)
+        return mesh, placement
     if surface["kind"] == "holes":
         from .holes import triangulate_holes
         mesh = triangulate_holes(surface["rings"], surface["materials"],

@@ -18,7 +18,7 @@ from .json_limits import measure_json, JSONLimitError
 from .program_diagnostics import diagnostic_dict
 from .program_protocol import MAX_BUDGETS
 from .program_bindings import PROFILE_BINDINGS
-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, EXECUTION_PROFILES, REACH_PROFILES
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, EXECUTION_PROFILES, REACH_PROFILES
 from .syntax import Node
 from .validator import FIELD_TYPES, optional
 from .values import Value, bounded_data
@@ -664,7 +664,8 @@ def _project(program, record, fields, compiler, sample, run, frame, budget):
     if "support" in fields:
         result["support"] = core._support_record(compiler, budget)
         result["support"]["profile"] = budget.profile
-        result["support"]["named_destination"] = ("ontokin.glb/0.9" if budget.profile == HOLES_PROFILE else
+        result["support"]["named_destination"] = ("ontokin.glb/0.10" if budget.profile == RING_LOFT_PROFILE else
+                                                   "ontokin.glb/0.9" if budget.profile == HOLES_PROFILE else
                                                    "ontokin.glb/0.8" if budget.profile == EXTRUSION_PROFILE else
                                                    "ontokin.glb/0.7" if budget.profile == BUDGET_PROFILE else
                                                    PROFILE_BINDINGS[budget.profile].destination)
@@ -679,7 +680,7 @@ def _project(program, record, fields, compiler, sample, run, frame, budget):
     path = record.get("_object_path")
     if "actions" in fields and budget.profile in REACH_PROFILES:
         result["actions"] = _reach_actions(compiler, record, path, sample, budget)
-    if "geometry" in fields and path is not None and compiler.model.objects[path].geometry["kind"] in ("loft", "extrusion", "placed", "holes"):
+    if "geometry" in fields and path is not None and compiler.model.objects[path].geometry["kind"] in ("loft", "extrusion", "placed", "holes", "ring_loft"):
         from .program_surface import surface_summary
         result["geometry"]["representation"] = "native_parameterized_exterior_surface"
         result["geometry"]["surface"] = surface_summary(compiler.model.objects[path].geometry, check=budget.tick)

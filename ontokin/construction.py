@@ -23,7 +23,8 @@ from .surface_runtime import SURFACE_CALLS, SURFACE_TYPES, SURFACE_PROFILE, surf
 from .surface import SurfaceError
 from .extrusion_runtime import EXTRUSION_CALLS, EXTRUSION_TYPES, extrusion_builtin
 from .holes_runtime import HOLES_CALLS, HOLES_TYPES, holes_builtin
-from .profile_capabilities import (BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, IMPULSE_PROFILES,
+from .ring_loft_runtime import RING_LOFT_CALLS, RING_LOFT_TYPES, ring_loft_builtin
+from .profile_capabilities import (BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, HOLES_PROFILES, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, IMPULSE_PROFILES,
                                    SURFACE_PROFILES)
 from .validator import (BUILTIN_TYPES, FIELD_TYPES,
                         PREDEFINED, READONLY_FIELDS, BoundExpression, Callable,
@@ -378,7 +379,11 @@ class ConstructionCompiler(Validator):
                     from .reach_source import reach_error
                     raise reach_error("reach_type", "ReachBranch takes no type arguments.", node)
                 result = Type("ReachBranch")
-            elif name in HOLES_TYPES and self.linked.modules[node.source_id].ast.profile == HOLES_PROFILE:
+            elif name in RING_LOFT_TYPES and self.linked.modules[node.source_id].ast.profile == RING_LOFT_PROFILE:
+                if args:
+                    fail("OKL-E-TYPE", f"Polygon section type '{name}' takes no type arguments.", node, phase="type")
+                result = Type(name)
+            elif name in HOLES_TYPES and self.linked.modules[node.source_id].ast.profile in HOLES_PROFILES:
                 if args:
                     fail("OKL-E-TYPE", f"Ring type '{name}' takes no type arguments.", node, phase="type")
                 result = Type(name)
@@ -412,7 +417,9 @@ class ConstructionCompiler(Validator):
         declaring_profile = self.linked.modules[node.source_id].ast.profile
         if declaring_profile in SURFACE_PROFILES:
             allowed |= SURFACE_TYPES
-        if declaring_profile == HOLES_PROFILE:
+        if declaring_profile == RING_LOFT_PROFILE:
+            allowed |= RING_LOFT_TYPES
+        if declaring_profile in HOLES_PROFILES:
             allowed |= HOLES_TYPES
         if declaring_profile in EXTRUSION_PROFILES:
             allowed |= EXTRUSION_TYPES
@@ -744,7 +751,10 @@ class ConstructionCompiler(Validator):
                 return Value(Type("ReachBranch"), name)
             if name == "reach_planar":
                 return Value(Type("BuiltinCallable"), name)
-        if (name in HOLES_CALLS and self.linked.modules[node.source_id].ast.profile == HOLES_PROFILE
+        if (name in RING_LOFT_CALLS and self.linked.modules[node.source_id].ast.profile == RING_LOFT_PROFILE
+                and name not in ctx.locals):
+            return Value(Type("BuiltinCallable"), name)
+        if (name in HOLES_CALLS and self.linked.modules[node.source_id].ast.profile in HOLES_PROFILES
                 and name not in ctx.locals):
             return Value(Type("BuiltinCallable"), name)
         if (name in EXTRUSION_CALLS and self.linked.modules[node.source_id].ast.profile in EXTRUSION_PROFILES
@@ -1209,8 +1219,13 @@ class ConstructionCompiler(Validator):
         if name == "reach_planar":
             from .reach_source import reach_builtin
             return reach_builtin(self, args, node, ctx)
+        if name in RING_LOFT_CALLS:
+            if self.linked.modules[node.source_id].ast.profile != RING_LOFT_PROFILE:
+                fail("OKL-E-CAPABILITY-UNSUPPORTED", "Polygon section constructors require polygon-loft-0.1.",
+                     node, phase="support")
+            return ring_loft_builtin(self, name, args, node, ctx)
         if name in HOLES_CALLS:
-            if self.linked.modules[node.source_id].ast.profile != HOLES_PROFILE:
+            if self.linked.modules[node.source_id].ast.profile not in HOLES_PROFILES:
                 fail("OKL-E-CAPABILITY-UNSUPPORTED", "Ring constructors require polygon-holes-0.1.",
                      node, phase="support")
             return holes_builtin(self, name, args, node, ctx)
@@ -1513,7 +1528,7 @@ class ConstructionCompiler(Validator):
         remaining_vertices = 250_000
         for path, obj in self.model.objects.items():
             recipe = obj.geometry
-            if not isinstance(recipe, dict) or recipe.get("kind") not in ("loft", "placed", "extrusion", "holes"):
+            if not isinstance(recipe, dict) or recipe.get("kind") not in ("loft", "placed", "extrusion", "holes", "ring_loft"):
                 continue
             surface = recipe.get("surface", recipe)
             location = Node("span", surface["start"], surface["end"],
@@ -1769,7 +1784,8 @@ class ConstructionCompiler(Validator):
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "Required capabilities are not supplied by " + self.model.profile + ": " +
                  ", ".join(self.model.requested_capabilities), requires[0], phase="support")
         if self.level == "delivered":
-            target = ("ontokin.glb/0.9" if self.model.profile == HOLES_PROFILE else
+            target = ("ontokin.glb/0.10" if self.model.profile == RING_LOFT_PROFILE else
+                                                   "ontokin.glb/0.9" if self.model.profile == HOLES_PROFILE else
                       "ontokin.glb/0.8" if self.model.profile == EXTRUSION_PROFILE else
                       "ontokin.glb/0.7" if self.model.profile == BUDGET_PROFILE else
                       "ontokin.glb/0.6" if self.model.profile == REACH_PROFILE else
