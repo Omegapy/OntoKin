@@ -1,0 +1,314 @@
+{
+  "schema_version": "ontokin.c074-frozen-lifecycle-schema-probe/0.1",
+  "status": "passed",
+  "started_utc": "2026-10-30T15:40:51.272704+00:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/workspace/scratch/2a264aad6534/validation-deps/python/bin/python",
+  "repository": "/workspace/scratch/2a264aad6534/OntoKin",
+  "output_directory": "/tmp/c074-final-lifecycle-schema-734992f",
+  "candidate_expected": {
+    "commit": "734992f832c0b824253e9b61acee9e734cfa0f4b",
+    "tree": "800a49b1c0149ffe73f73218915e34ba1dd48612"
+  },
+  "probe": {
+    "path": "/workspace/scratch/2a264aad6534/c074-test-evidence/run_frozen_schema_probe.py",
+    "bytes": 18064,
+    "sha256": "c192e1b3a72c8b60a2db5c4b86a1fa3e534842833ebd1d60f752c0c64985857a"
+  },
+  "scope": {
+    "test_file": "tests/test_budget_agent_lifecycle.py",
+    "test_class": "BudgetAgentLifecycleTests",
+    "expected_test_methods": 34,
+    "expected_captured_records": 202,
+    "capture_points": [
+      "BudgetAgentService.handle",
+      "BudgetAgentService.submit"
+    ],
+    "includes_intermediate_and_repeated_observations": true,
+    "capture_is_202_independent_wire_requests": false,
+    "subprocess_responses_are_captured": false,
+    "expected_operations": [
+      "artifact",
+      "cancel",
+      "create",
+      "discover",
+      "edit",
+      "evaluate",
+      "export",
+      "inspect",
+      "reset",
+      "status",
+      "surface.mesh_page",
+      "validate"
+    ],
+    "full_regression_suite": false,
+    "larger_workload_acceptance": false,
+    "historical_original28_acceptance": false,
+    "release_acceptance": false
+  },
+  "product_tests_started": true,
+  "tests": 34,
+  "captured_exchanges": 202,
+  "schema_errors": [],
+  "verification_errors": [],
+  "network_schema_retrieval_enabled": false,
+  "candidate_before_matches": true,
+  "verification_dependencies": {
+    "jsonschema": {
+      "expected": "4.26.0",
+      "actual": "4.26.0"
+    },
+    "referencing": {
+      "expected": "0.37.0",
+      "actual": "0.37.0"
+    },
+    "attrs": {
+      "expected": "26.1.0",
+      "actual": "26.1.0"
+    },
+    "jsonschema-specifications": {
+      "expected": "2025.9.1",
+      "actual": "2025.9.1"
+    },
+    "rpds-py": {
+      "expected": "2026.5.1",
+      "actual": "2026.5.1"
+    },
+    "typing_extensions": {
+      "expected": "4.16.0",
+      "actual": "4.16.0"
+    }
+  },
+  "verification_requirements": {
+    "bytes": 270,
+    "sha256": "6d5fefcbd7ccced7d39bf8d20e87ec1c4401fc6b252aea41677d41d9124555d1"
+  },
+  "offline_schema_resource_count": 16,
+  "schemas": {
+    "docs/language-design/planar-reach-v0.1/schema-drafts/agent-request.schema.json": {
+      "sha256": "5dc903077f9af439b2d34c4a976faa7cc39120bd5fdbb4eeee52990337364e1f",
+      "bytes": 35348,
+      "$id": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/agent-request.schema.json"
+    },
+    "docs/language-design/planar-reach-v0.1/schema-drafts/agent-response.schema.json": {
+      "sha256": "2eab9ca65203ee0dad462196355f25f31907117b4ae6f08aef9d68f1a9091fde",
+      "bytes": 24127,
+      "$id": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/agent-response.schema.json"
+    },
+    "docs/language-design/planar-reach-v0.1/schema-drafts/common.schema.json": {
+      "sha256": "dd7ec6ae242ec4e7ec8e2fde391c6fbd458a8170ae28a5947323559cac07eb0f",
+      "bytes": 28800,
+      "$id": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/common.schema.json"
+    },
+    "docs/language-design/planar-reach-v0.1/schema-drafts/glb-metadata.schema.json": {
+      "sha256": "a9e89aac28e129b93f9ca013a2bead45ac29613583ac495d9096cf1494bfc7d8",
+      "bytes": 8615,
+      "$id": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/glb-metadata.schema.json"
+    },
+    "docs/language-design/planar-reach-v0.1/schema-drafts/quantization.schema.json": {
+      "sha256": "3158a44c0161119a775d8ce6a88d182870b7b55b18e198251baa32a1daf6c992",
+      "bytes": 9542,
+      "$id": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/quantization.schema.json"
+    },
+    "docs/language-design/planar-reach-v0.1/schema-drafts/reach-diagnostic.schema.json": {
+      "sha256": "62c6de1807ad491d7f94fc17dc6bb4563180044af5b3959496a146f4c83b55b5",
+      "bytes": 12533,
+      "$id": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/reach-diagnostic.schema.json"
+    },
+    "docs/language-design/planar-reach-v0.1/schema-drafts/reach-projection.schema.json": {
+      "sha256": "5f986912d4d16c0c1c3787385e44bfef5ce08be385851a4d299a99cab525c33c",
+      "bytes": 5989,
+      "$id": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/reach-projection.schema.json"
+    },
+    "docs/language-design/agent-v0.5/request.schema.json": {
+      "sha256": "98f9e9d7c971449e08d9468db315f59505f0540e085a41420b344476ffe2caed",
+      "bytes": 35225,
+      "$id": "https://omegapy.github.io/OntoKin/schemas/ontokin.agent-request-0.5.json"
+    },
+    "docs/language-design/agent-v0.5/response.schema.json": {
+      "sha256": "b59cc4b55e25d3fb6f67dd5692a4d8c98613471e81fa73bcb3b6810379947dc8",
+      "bytes": 16385,
+      "$id": "https://omegapy.github.io/OntoKin/schemas/ontokin.agent-response-0.5.json"
+    },
+    "docs/language-design/agent-v0.2/diagnostic.schema.json": {
+      "sha256": "50da3f078f97ae5da0a85ee2e30781c7f22dcaca163d31f9e2d5f7b3ded3dcaa",
+      "bytes": 5158,
+      "$id": "https://omegapy.github.io/OntoKin/schemas/ontokin.diagnostic-0.2.json"
+    },
+    "docs/language-design/construction-v0.1/bundle.schema.json": {
+      "sha256": "80b36917ec713508c1a64d5d0dd70d842fa2794eaa958ccdcfefc0bf8982a7ec",
+      "bytes": 2669,
+      "$id": "https://omegapy.github.io/OntoKin/schemas/ontokin.bundle-0.1.json"
+    },
+    "docs/language-design/force-v0.1/forces.schema.json": {
+      "sha256": "68f95cd45b2470964398ec0b0782aba45ce992c28429a201b9050cc2ecec9d5e",
+      "bytes": 7238,
+      "$id": "https://ontokin.org/schemas/force-v0.1/forces.schema.json"
+    },
+    "docs/language-design/impulse-v0.1/impulses.schema.json": {
+      "sha256": "554123f801e13d265275c4582628d700785677434d374f13ec397296a2780f06",
+      "bytes": 4155,
+      "$id": "https://ontokin.org/schemas/impulse-v0.1/impulses.schema.json"
+    },
+    "docs/language-design/agent-v0.7/request.schema.json": {
+      "sha256": "b61d3a75282cec44844bfff43f2604271c0888cae83fce706eb8f73fa719eed6",
+      "bytes": 38144,
+      "$id": "https://omegapy.github.io/OntoKin/schemas/ontokin.agent-request-0.7.json"
+    },
+    "docs/language-design/agent-v0.7/response.schema.json": {
+      "sha256": "f88a3e00c991b08eea9443cc7ed263b661fb4551ca7743c83388591f1212c933",
+      "bytes": 29367,
+      "$id": "https://omegapy.github.io/OntoKin/schemas/ontokin.agent-response-0.7.json"
+    },
+    "docs/language-design/agent-v0.7/diagnostic.schema.json": {
+      "sha256": "5a95af3d4911e1509daf0997e156ca844916cde86ca18171cb5ff7154e44cfa6",
+      "bytes": 458,
+      "$id": "https://omegapy.github.io/OntoKin/schemas/ontokin.agent-diagnostic-0.7.json"
+    }
+  },
+  "schema_manifest": {
+    "bytes": 2639,
+    "sha256": "180915f5e51d2ac4b0da826709e22e5e61b4ef8aa64219e036d22576a3b01062"
+  },
+  "test_source": {
+    "path": "/workspace/scratch/2a264aad6534/OntoKin/tests/test_budget_agent_lifecycle.py",
+    "bytes": 35330,
+    "sha256": "1bcf086a4ce24f555cfd19fd238cd804a544f6d21f676b49a5086e0cd4053a9b"
+  },
+  "test_method_ids": [
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB15_candidate_construction_exhaustion_keeps_prior_acceptance",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB15_candidate_header_changes_revision_and_effective_request",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB15_exact_utf8_preconditions_and_source_scope_are_atomic",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB15_failed_new_project_retains_no_accepted_revision",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB15_lowering_source_budget_repairs_under_lower_current_host",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB15_nominal_occurrence_identity_cannot_change_silently",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB15_unauthorized_candidate_preserves_source_run_and_artifact",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB16_artifact_retrieval_uses_its_source_and_current_host",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB16_new_inspection_and_reset_reauthorize_saved_source",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB16_saved_program_requires_current_policy_or_explicit_caps",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB16_saved_run_reauthorizes_and_preserves_failed_advancement",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB18_cancel_after_actual_computation_prevents_all_new_effects",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB18_cancelled_extension_preserves_original_run_bytes",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB18_concurrent_workers_keep_distinct_ledgers_and_policy_snapshots",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB18_pending_limit_preserves_retries_and_control_requests",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB18_queued_work_uses_policy_when_worker_admits",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB18_running_limit_leaves_second_request_queued",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB24_changed_budget_under_used_request_id_conflicts",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB24_expired_result_is_not_reexecuted",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB24_retry_after_reopening_retains_old_receipt_without_reauthorization",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB24_same_payload_returns_original_receipt_after_policy_change",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB24_work_failure_is_not_automatically_retried",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB29_cli_selects_only_explicit_budget_protocol",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB29_complete_discover_create_inspect_evaluate_export_retrieve_status_cycle",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB29_discovery_reports_authority_and_preserves_legacy_registry",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB29_execution_fields_cannot_grant_host_authority",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB29_final_transaction_deadline_uses_original_clock_and_rolls_back",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB29_final_transaction_work_exhaustion_rolls_back_all_tentative_effects",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB29_frozen_c073_source_mesh_pages_remain_bounded_and_revision_bound",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB29_large_host_does_not_raise_omitted_source_defaults",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB29_requested_delivery_without_target_cannot_return_lower_level_success",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB29_small_output_budget_returns_failure_without_acceptance",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB29_success_receipt_keeps_original_clock_and_complete_identity",
+    "test_budget_agent_lifecycle.BudgetAgentLifecycleTests.test_EB29_trusted_callback_exception_identity_survives_durable_cancellation"
+  ],
+  "operations": [
+    "artifact",
+    "cancel",
+    "create",
+    "discover",
+    "edit",
+    "evaluate",
+    "export",
+    "inspect",
+    "reset",
+    "status",
+    "surface.mesh_page",
+    "validate"
+  ],
+  "response_statuses": [
+    "cancelled",
+    "failed",
+    "queued",
+    "rejected",
+    "succeeded",
+    "unknown_outcome"
+  ],
+  "operation_capture_counts": {
+    "artifact": 12,
+    "cancel": 6,
+    "create": 110,
+    "discover": 4,
+    "edit": 20,
+    "evaluate": 14,
+    "export": 6,
+    "inspect": 6,
+    "reset": 4,
+    "status": 4,
+    "surface.mesh_page": 2,
+    "validate": 14
+  },
+  "response_status_capture_counts": {
+    "cancelled": 12,
+    "failed": 17,
+    "queued": 79,
+    "rejected": 25,
+    "succeeded": 67,
+    "unknown_outcome": 2
+  },
+  "capture_entry_counts": {
+    "submit": 107,
+    "handle": 95
+  },
+  "request_disposition_counts": {
+    "valid": 186,
+    "expected_rejection": 16
+  },
+  "source_unchanged": true,
+  "git_unchanged": true,
+  "candidate_after_matches": true,
+  "source_inventory_sha256_before": "sha256:c276b80b153dd630724b67287a8b477f47a59a007c9a3c48c932155d9ae9e74a",
+  "source_inventory_sha256_after": "sha256:c276b80b153dd630724b67287a8b477f47a59a007c9a3c48c932155d9ae9e74a",
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "schema_error_count": 0,
+  "test_failures": [],
+  "test_errors": [],
+  "test_skips": [],
+  "finished_utc": "2026-10-30T15:40:56.001593+00:00",
+  "elapsed_seconds": 4.728917337999519,
+  "output_identities": {
+    "exchanges.json": {
+      "bytes": 1275635,
+      "sha256": "d3dac3fc7669a043020a5357da87d46402dcdfffca1fa5a16450fa6cf5fbf8ee"
+    },
+    "git-after.json": {
+      "bytes": 328,
+      "sha256": "73eb05279989b3ff7c81561b78e557c2ce336cf85eadc28b3843fa7351dafc79"
+    },
+    "git-before.json": {
+      "bytes": 328,
+      "sha256": "73eb05279989b3ff7c81561b78e557c2ce336cf85eadc28b3843fa7351dafc79"
+    },
+    "request-validation.json": {
+      "bytes": 69261,
+      "sha256": "4140a81123fcb6bbbf9b6f9c736715728f5c5ee7e1d996bac4f885c606bab6ad"
+    },
+    "schema-inputs.json": {
+      "bytes": 4601,
+      "sha256": "5a22e23ca55f202940156f067c017de9603a6a27992bed8f3b4afc5df91922da"
+    },
+    "source-after.json": {
+      "bytes": 875357,
+      "sha256": "1bd31a5d225018d3b9608d13b062726199f159c7fdd7d964038fdaa1f93fe6b3"
+    },
+    "source-before.json": {
+      "bytes": 875357,
+      "sha256": "1bd31a5d225018d3b9608d13b062726199f159c7fdd7d964038fdaa1f93fe6b3"
+    },
+    "unittest.log": {
+      "bytes": 6623,
+      "sha256": "f1374dc6dd5f6a5fd818606d22627f6a16373a56e2190eccdef0123f5fb76ecc"
+    }
+  }
+}

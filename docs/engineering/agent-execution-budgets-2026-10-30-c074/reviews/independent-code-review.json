@@ -1,0 +1,220 @@
+{
+  "captured_utc": "2026-10-30T15:11:36.575474+00:00",
+  "catalog": {
+    "linked_repository_paths_checked": 32,
+    "missing_paths": [],
+    "protocol": {
+      "availability": "available_in_bounded_profile",
+      "available_levels": [
+        "represented",
+        "constructed",
+        "evaluated"
+      ],
+      "capability": "persistent_agent_editing_service",
+      "defaults": {},
+      "description": "Explicit source-authoritative budgets with current host policy and atomic local Agent requests.",
+      "diagnostic_contract": "ontokin.diagnostic/0.2",
+      "domains": [
+        "Explicit source 0.7 / planar-reach-budget-0.1 entries and compatible pinned definitions",
+        "Earlier Python and CLI defaults retain their bindings",
+        "Only complete-file source identities authorize exact UTF-8 byte patches",
+        "Current worker policy authorizes a fresh shared request ledger",
+        "Saved artifacts and run descriptors grant no execution authority",
+        "Final response checks precede atomic source, run and artifact publication"
+      ],
+      "effects": [
+        "pure definition-time description"
+      ],
+      "examples": [],
+      "id": "planar-reach-budget-0.1/protocol/ontokin.agent/0.7",
+      "inherited_from": "force-0.1/protocol/ontokin.agent/0.5",
+      "kind": "protocol",
+      "language_rules": [
+        "CON-011",
+        "CON-013"
+      ],
+      "name": "ontokin.agent/0.7",
+      "profile": "planar-reach-budget-0.1",
+      "signature": "BudgetAgentService(store, host_policy=HostPolicy(...))",
+      "specification": "docs/language-design/agent-v0.7/ADOPTION.md",
+      "store_filename": "budget-program-agent.sqlite3",
+      "store_schema": "ontokin.budget-program-agent-store/0.1"
+    },
+    "receipt": {
+      "budget_reason": null,
+      "caller_caps": {},
+      "consumed_operations": 45246,
+      "deadline_monotonic_seconds": 6380.249378553,
+      "defaults": {
+        "max_elapsed_ms": 30000,
+        "max_operations": 100000
+      },
+      "effective": null,
+      "elapsed_ms": 143.5771950000344,
+      "entry_revision": null,
+      "host_ceilings": {
+        "max_elapsed_ms": 80000,
+        "max_operations": 400000
+      },
+      "implementation": {
+        "name": "ontokin-reference",
+        "source_code_sha256": "sha256:e3c0fb357f8658a6121640790ab5932f02177651ec7847726790aaaece1bbc4b",
+        "version": "0.4.0"
+      },
+      "policy_id": "sha256:d0124486c82f41e4ee0d7f9e99889c03a58551779af2f19d4f40e43ad1653ed4",
+      "program_revision": null,
+      "provisional": true,
+      "request_id": "catalog",
+      "schema_version": "ontokin.execution-budget/0.1",
+      "source_request": null,
+      "stage": "publication",
+      "started_monotonic_seconds": 6350.249378553,
+      "status": "succeeded"
+    },
+    "revision": "sha256:f6097bb843526291c9513e7fdcc96fa40039c12b092dfb4d64732694b9e7cdbd",
+    "schema_valid": true
+  },
+  "clock_cases": [
+    {
+      "execution_budget": null,
+      "fail_at": 1,
+      "incomplete_requests": 0,
+      "original_exception_identity": true,
+      "status": "cancelled"
+    },
+    {
+      "execution_budget": {
+        "budget_reason": "host_clock_failed",
+        "caller_caps": {},
+        "consumed_operations": 2,
+        "deadline_monotonic_seconds": 47.0,
+        "defaults": {
+          "max_elapsed_ms": 30000,
+          "max_operations": 100000
+        },
+        "effective": null,
+        "elapsed_ms": 0.0,
+        "entry_revision": null,
+        "host_ceilings": {
+          "max_elapsed_ms": 30000,
+          "max_operations": 100000
+        },
+        "implementation": {
+          "name": "ontokin-reference",
+          "source_code_sha256": "sha256:e3c0fb357f8658a6121640790ab5932f02177651ec7847726790aaaece1bbc4b",
+          "version": "0.4.0"
+        },
+        "policy_id": "sha256:f5c7685c52ca1c3cdded05bbc376e06cdbd6962c5196fe13d47f89f8c8d331ef",
+        "program_revision": null,
+        "provisional": true,
+        "request_id": "clock-3",
+        "schema_version": "ontokin.execution-budget/0.1",
+        "source_request": null,
+        "stage": "header_admission",
+        "started_monotonic_seconds": 17.0,
+        "status": "cancelled"
+      },
+      "fail_at": 3,
+      "incomplete_requests": 0,
+      "original_exception_identity": true,
+      "status": "cancelled"
+    }
+  ],
+  "findings": [
+    {
+      "correction": "The .7 final publication check removes tentative artifact claims and retains only an established evaluated prefix on rejection.",
+      "finding": "A stale source-acceptance race could return a nonexistent artifact as delivered; nominal identity failure also retained achieved delivered.",
+      "id": "C074-REVIEW-01",
+      "priority": "high",
+      "status": "fixed_and_reproduced"
+    },
+    {
+      "correction": "Explicit .7 metadata, inherited examples labeled, real .7 example, fixed/default/host limits distinguished, all advertised repository paths exist.",
+      "finding": "Inherited catalog transformation advertised source0.6, unsupported Python constructor/store identity, and ambiguous execution ceilings.",
+      "id": "C074-REVIEW-02",
+      "priority": "medium",
+      "status": "fixed_and_checked"
+    }
+  ],
+  "independent_review_status": "No remaining concrete blocker found in reviewed code and focused probes; full gates and exact-head evidence remain root-owned.",
+  "publication_rollback_probe": "both corrected responses schema-valid; no delivered or artifact claim",
+  "schema_definitions_valid": true,
+  "scope": "Focused independent read-only review; not the complete regression gate",
+  "source_snapshot": [
+    {
+      "bytes": 39620,
+      "path": "ontokin/agent.py",
+      "sha256": "a19f71b9ffad298624387c6c81222bc85683037689c877ccbf56fd310a8cd590"
+    },
+    {
+      "bytes": 26254,
+      "path": "ontokin/budget_agent.py",
+      "sha256": "d8939de97fc78099a9494dca40e0e9b19231bfd7da533e3dc1edb0b5b36d71de"
+    },
+    {
+      "bytes": 3460,
+      "path": "ontokin/budget_protocol.py",
+      "sha256": "63f7a1332330c9428bbe33914fa25eb6b6f4f40fe21b5437513671778973e5d5"
+    },
+    {
+      "bytes": 8491,
+      "path": "ontokin/budget_agent_catalog.py",
+      "sha256": "a34558f6ad722b9436e2792b1f248a1a5b36785b03ceb01073f6ed03a1963187"
+    },
+    {
+      "bytes": 5679,
+      "path": "ontokin/budget_program_runtime.py",
+      "sha256": "06488ffa4c1dff449eda9bb17abb7c2bd5054b69be6ac0ddcd31a772b2ae9703"
+    },
+    {
+      "bytes": 49549,
+      "path": "ontokin/program_runtime.py",
+      "sha256": "81b96b7ce0ac3071fdaa7d05bbcb91f3220c3481cc6309c586c812a1f6a5a536"
+    },
+    {
+      "bytes": 9929,
+      "path": "ontokin/program_surface.py",
+      "sha256": "c9a78cfc01f7e650ba0b6ff19db031dffdc5813c2cfe0219044c8378ada4f9fa"
+    },
+    {
+      "bytes": 4806,
+      "path": "ontokin/agent_cli.py",
+      "sha256": "91ecac303262452133e26095a161c607f99528d5894a653aa88b603c0393bf86"
+    },
+    {
+      "bytes": 43286,
+      "path": "ontokin/cli.py",
+      "sha256": "0af23c2f7ea9a08cb41154639e8ff6bed9dfebccda88277eb12f3d4f783f3de3"
+    },
+    {
+      "bytes": 18200,
+      "path": "ontokin/execution_budget.py",
+      "sha256": "8248a4a280c0b058f1bccec5c7d838135f729852c98ce5b45ad90c6680851c11"
+    },
+    {
+      "bytes": 2198,
+      "path": "ontokin/program_store.py",
+      "sha256": "ff3882a60713476e3aad9c77d3d9789d84a3676ebadc5bdddd85a7a99e37ce2a"
+    },
+    {
+      "bytes": 11374,
+      "path": "ontokin/agent_store.py",
+      "sha256": "6a0b0a0a739066b7ecf882f9074d067cf4c0e37a05497b9035113228b6f4598a"
+    },
+    {
+      "bytes": 14336,
+      "path": "docs/language-design/agent-v0.7/ADOPTION.md",
+      "sha256": "21004958f50dab7bb925398d34bc10248f6cf1c85688060b90694ee8c063b8b9"
+    },
+    {
+      "bytes": 38144,
+      "path": "docs/language-design/agent-v0.7/request.schema.json",
+      "sha256": "b61d3a75282cec44844bfff43f2604271c0888cae83fce706eb8f73fa719eed6"
+    },
+    {
+      "bytes": 29367,
+      "path": "docs/language-design/agent-v0.7/response.schema.json",
+      "sha256": "f88a3e00c991b08eea9443cc7ed263b661fb4551ca7743c83388591f1212c933"
+    }
+  ]
+}
