@@ -1,0 +1,344 @@
+{
+  "schema_version": "ontokin.c075-integration/0.1",
+  "status": "passed",
+  "recorded_utc": "2026-10-30T17:24:26.250443+00:00",
+  "pull_request": 73,
+  "pull_request_url": "https://github.com/Omegapy/OntoKin/pull/73",
+  "baseline": {
+    "commit": "9b9b0c242d8ee02ea7d75ac1805341c1d30d3223",
+    "tree": "ae0861e94c0e0c1baea3ea938532791f9b9134ca"
+  },
+  "candidate": {
+    "commit": "d3f0d69b953550b60b5eb0a0b41bc390ba934985",
+    "tree": "ea880242abd9e323c1d80a46c2b01bdbd35a2aa8"
+  },
+  "evidence": {
+    "commit": "edbe52cf5e7a801940e96a784cf8fb71c13ed2d9",
+    "tree": "5293b9d65fb26b9dc0a1025906320554511c2595"
+  },
+  "lease": {
+    "commit": "791c0426bc22f344aa9ba09b726aef2971fa9949",
+    "tree": "3750ed8c825dabd2f316a218174ca26a2dd7a7b0",
+    "owner": "interactive-polygon-extrusions-20261030-c075-22a257e3",
+    "issue_comment": 6528913291,
+    "expires_utc": "2026-10-30T17:49:38Z",
+    "disposition": "released by the STATUS publication containing this record"
+  },
+  "merge": {
+    "commit": "9873d89bd5303c8cf522d89329f43e6f8b4b4e51",
+    "tree": "09215140ae218ec9829c9e356474ccccd619e01a",
+    "parents": [
+      "791c0426bc22f344aa9ba09b726aef2971fa9949",
+      "edbe52cf5e7a801940e96a784cf8fb71c13ed2d9"
+    ],
+    "actual_tree_matches_independently_constructed_tree": true,
+    "remote_main_readback_verified": true,
+    "actual_raw_commit_bytes": 1438
+  },
+  "evidence_checks": {
+    "schema_version": "ontokin.c075-focused-checks/0.1",
+    "role": "evidence",
+    "status": "passed",
+    "started_utc": "2026-10-30T17:18:46.327050+00:00",
+    "git": {
+      "commit": "edbe52cf5e7a801940e96a784cf8fb71c13ed2d9",
+      "tree": "5293b9d65fb26b9dc0a1025906320554511c2595",
+      "tracked_status": ""
+    },
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.39",
+    "steps": [
+      {
+        "id": "documents",
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+        ],
+        "started_utc": "2026-10-30T17:18:46.343257+00:00",
+        "finished_utc": "2026-10-30T17:18:47.340308+00:00",
+        "returncode": 0,
+        "status": "passed",
+        "log": {
+          "path": "documents.log",
+          "bytes": 6606,
+          "sha256": "30ba99b22e2fb496cc5090d21125cb316dcb1c6df1946c1f03e9edf1099772ae"
+        }
+      },
+      {
+        "id": "input-eligibility",
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "/workspace/scratch/22a257e3e857/work/c075-check-eligibility.py",
+          "--repo",
+          "/tmp/ontokin-c075",
+          "--candidate",
+          "d3f0d69b953550b60b5eb0a0b41bc390ba934985",
+          "--observed",
+          "edbe52cf5e7a801940e96a784cf8fb71c13ed2d9",
+          "--output",
+          "/tmp/c075-evidence-checks/eligibility.json"
+        ],
+        "started_utc": "2026-10-30T17:18:47.340503+00:00",
+        "finished_utc": "2026-10-30T17:18:47.445757+00:00",
+        "returncode": 0,
+        "status": "passed",
+        "log": {
+          "path": "input-eligibility.log",
+          "bytes": 227,
+          "sha256": "5ae39775507eab910ec71645e53de142b19d2584ffc30928a6060180c2d5ec4a"
+        }
+      }
+    ],
+    "scope": "Focused checks on the actual named source role; no claim of another complete regression run.",
+    "source_unchanged": true,
+    "finished_utc": "2026-10-30T17:18:47.459115+00:00"
+  },
+  "merge_checks": {
+    "schema_version": "ontokin.c075-focused-checks/0.1",
+    "role": "merge",
+    "status": "passed",
+    "started_utc": "2026-10-30T17:22:43.447904+00:00",
+    "git": {
+      "commit": "9873d89bd5303c8cf522d89329f43e6f8b4b4e51",
+      "tree": "09215140ae218ec9829c9e356474ccccd619e01a",
+      "tracked_status": ""
+    },
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.39",
+    "steps": [
+      {
+        "id": "new-tests",
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-p",
+          "test_extrusion*.py",
+          "-v"
+        ],
+        "started_utc": "2026-10-30T17:22:43.468926+00:00",
+        "finished_utc": "2026-10-30T17:22:49.228960+00:00",
+        "returncode": 0,
+        "status": "passed",
+        "log": {
+          "path": "new-tests.log",
+          "bytes": 10481,
+          "sha256": "3912970508161935b58392e9fb32eb7f9b27986b377a47ca3895efbbdcf1e10f"
+        },
+        "tests": 62,
+        "seconds": 5.585
+      },
+      {
+        "id": "original-source",
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-m",
+          "ontokin",
+          "conformance",
+          "--output",
+          "/tmp/c075-merge-checks-002/source.json"
+        ],
+        "started_utc": "2026-10-30T17:22:49.229721+00:00",
+        "finished_utc": "2026-10-30T17:22:50.013773+00:00",
+        "returncode": 0,
+        "status": "passed",
+        "log": {
+          "path": "original-source.log",
+          "bytes": 251,
+          "sha256": "0fbb8bca4c08feeaed8899f229322f6365d7de69d0167c7392960d84b60f08b6"
+        }
+      },
+      {
+        "id": "documents",
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+        ],
+        "started_utc": "2026-10-30T17:22:50.014034+00:00",
+        "finished_utc": "2026-10-30T17:22:51.087301+00:00",
+        "returncode": 0,
+        "status": "passed",
+        "log": {
+          "path": "documents.log",
+          "bytes": 6606,
+          "sha256": "93a479e9084546ec375871f07526331f323f85135c0cb35b0c7e899b3f42a1e0"
+        }
+      },
+      {
+        "id": "input-eligibility",
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "/workspace/scratch/22a257e3e857/work/c075-check-eligibility.py",
+          "--repo",
+          "/tmp/ontokin-c075",
+          "--candidate",
+          "d3f0d69b953550b60b5eb0a0b41bc390ba934985",
+          "--observed",
+          "9873d89bd5303c8cf522d89329f43e6f8b4b4e51",
+          "--output",
+          "/tmp/c075-merge-checks-002/eligibility.json"
+        ],
+        "started_utc": "2026-10-30T17:22:51.087448+00:00",
+        "finished_utc": "2026-10-30T17:22:51.179818+00:00",
+        "returncode": 0,
+        "status": "passed",
+        "log": {
+          "path": "input-eligibility.log",
+          "bytes": 227,
+          "sha256": "c6c35c20656569a883f10636e1d8abcedab3fc1e75d4e14e152a296bcffa837f"
+        }
+      }
+    ],
+    "scope": "Focused checks on the actual named source role; no claim of another complete regression run.",
+    "source_conformance": {
+      "passed": 43,
+      "failed": 0,
+      "total": 43,
+      "assertions": 694,
+      "expected_valid": 12,
+      "expected_invalid_or_conflicting": 29,
+      "expected_unsupported": 2
+    },
+    "source_unchanged": true,
+    "finished_utc": "2026-10-30T17:22:51.195427+00:00"
+  },
+  "complete_input_eligibility": {
+    "evidence": {
+      "schema_version": "ontokin.c075-complete-input-eligibility/0.1",
+      "checked_utc": "2026-10-30T17:18:47.425094+00:00",
+      "status": "passed",
+      "candidate_commit": "d3f0d69b953550b60b5eb0a0b41bc390ba934985",
+      "candidate_tree": "ea880242abd9e323c1d80a46c2b01bdbd35a2aa8",
+      "observed_commit": "edbe52cf5e7a801940e96a784cf8fb71c13ed2d9",
+      "observed_tree": "5293b9d65fb26b9dc0a1025906320554511c2595",
+      "tracked_status": "",
+      "candidate_tracked_files": 3979,
+      "observed_tracked_files": 3989,
+      "eligible_input_count": 3975,
+      "candidate_eligible_inventory_sha256": "3538abfab9c76c91112271d274ab4624f25f6b2758077cc305d64bfb517d09e8",
+      "observed_eligible_inventory_sha256": "3538abfab9c76c91112271d274ab4624f25f6b2758077cc305d64bfb517d09e8",
+      "eligible_inputs_equal": true,
+      "navigation_change_only_reviewed_blank_line": true,
+      "differences": [
+        "docs/README.md",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/DEVELOPMENT-RECONCILIATION.md",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/README.md",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/SOURCE-REVIEW.md",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/c075-core-review.json",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/c075-core-review.md",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/c075-evidence-review.json",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/c075-evidence-review.md",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/evidence-archive.json",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/source-review-binding.json",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/validation-summary.json",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/visual-review.json"
+      ],
+      "unapproved_differences": [],
+      "permitted_exact_paths": [
+        "STATUS.md",
+        "docs/README.md"
+      ],
+      "permitted_prefixes": [
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/"
+      ],
+      "scope": "Complete tracked Git blob/mode equality outside current C075 engineering records, STATUS and the exact reviewed docs table newline correction. This is source eligibility for reusing candidate evidence, not another product-test execution."
+    },
+    "merge": {
+      "schema_version": "ontokin.c075-complete-input-eligibility/0.1",
+      "checked_utc": "2026-10-30T17:22:51.161897+00:00",
+      "status": "passed",
+      "candidate_commit": "d3f0d69b953550b60b5eb0a0b41bc390ba934985",
+      "candidate_tree": "ea880242abd9e323c1d80a46c2b01bdbd35a2aa8",
+      "observed_commit": "9873d89bd5303c8cf522d89329f43e6f8b4b4e51",
+      "observed_tree": "09215140ae218ec9829c9e356474ccccd619e01a",
+      "tracked_status": "",
+      "candidate_tracked_files": 3979,
+      "observed_tracked_files": 3989,
+      "eligible_input_count": 3975,
+      "candidate_eligible_inventory_sha256": "3538abfab9c76c91112271d274ab4624f25f6b2758077cc305d64bfb517d09e8",
+      "observed_eligible_inventory_sha256": "3538abfab9c76c91112271d274ab4624f25f6b2758077cc305d64bfb517d09e8",
+      "eligible_inputs_equal": true,
+      "navigation_change_only_reviewed_blank_line": true,
+      "differences": [
+        "STATUS.md",
+        "docs/README.md",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/DEVELOPMENT-RECONCILIATION.md",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/README.md",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/SOURCE-REVIEW.md",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/c075-core-review.json",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/c075-core-review.md",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/c075-evidence-review.json",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/c075-evidence-review.md",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/evidence-archive.json",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/source-review-binding.json",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/validation-summary.json",
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/visual-review.json"
+      ],
+      "unapproved_differences": [],
+      "permitted_exact_paths": [
+        "STATUS.md",
+        "docs/README.md"
+      ],
+      "permitted_prefixes": [
+        "docs/engineering/polygon-extrusions-2026-10-30-c075/"
+      ],
+      "scope": "Complete tracked Git blob/mode equality outside current C075 engineering records, STATUS and the exact reviewed docs table newline correction. This is source eligibility for reusing candidate evidence, not another product-test execution."
+    }
+  },
+  "preparation": {
+    "schema_version": "ontokin.c075-integration-preparation/0.1",
+    "status": "resolved",
+    "scope": "Preparation and source-identity guards, not product-test failures. No full-suite result was replaced.",
+    "observations": [
+      {
+        "event": "raw-evidence upload attempt 001",
+        "result": "The default-network helper stopped at hosted apps tools/list with a network error before preparing any upload. The same helper subsequently succeeded with authorized network access; no duplicate write was issued.",
+        "saved_library_file_id": "libfile_fe8f92a90764819196ac56083078da6f"
+      },
+      {
+        "event": "PR base snapshot discrepancy",
+        "result": "After acquiring the lease, two live branch views showed 791c0426bc22f344aa9ba09b726aef2971fa9949, while PR metadata still named original base 9b9b0c242d8ee02ea7d75ac1805341c1d30d3223. The first guard stopped before any merge call. The snapshot discrepancy cause is not established. The actual protected merge subsequently produced ordered parents [lease,evidence] and the independently calculated tree."
+      },
+      {
+        "event": "signed merge raw-object import",
+        "result": "The initial formatter omitted the trailing empty continuation line in GitHub signature data and refused to write an object because its SHA1 did not match. A first focused invocation then stopped at its source-identity precondition, before executing tests. Preserving signature.split(\\n) rather than splitlines() reconstructed the exact 1,438-byte raw body with SHA1 9873d89bd5303c8cf522d89329f43e6f8b4b4e51. The actual commit was imported, checked out and the separate attempt002 passed all focused gates. No synthetic merge identity was substituted.",
+        "failed_focused_log": {
+          "path": "/tmp/c075-merge-checks.log",
+          "bytes": 466,
+          "sha256": "d1537613b08c23728d4ed77497bf04ea1309c9810494683897d0b5d1e6d5cfbe"
+        },
+        "initial_formatter": {
+          "path": "/workspace/scratch/22a257e3e857/work/c075-import-preparation-001.py",
+          "bytes": 1701,
+          "sha256": "6c7d8682bab6f4a0db437f5023fa4fd067e6c5aad58309d866d2c4a0e978df72"
+        },
+        "corrected_formatter": {
+          "path": "/workspace/scratch/22a257e3e857/work/import_commit.py",
+          "bytes": 1700,
+          "sha256": "f67c5bb5a1cc7a0be818a12996e9eb8698b4f9e8ef722557942afa3de4c2c6e8"
+        }
+      }
+    ]
+  },
+  "remote_branch": {
+    "name": "work/polygon-extrusions-20261030-c075",
+    "head": "edbe52cf5e7a801940e96a784cf8fb71c13ed2d9",
+    "tree": "5293b9d65fb26b9dc0a1025906320554511c2595",
+    "disposition": "integrated and observed removed after merge",
+    "retention": "exact second parent of actual merge",
+    "active_owner": false
+  },
+  "archive_branch": {
+    "name": "archive/pre-consolidation-20261028",
+    "head": "e6917dae0be3a786c22e76be3de62e3c97784cf5",
+    "disposition": "unchanged history only"
+  },
+  "remaining_scope": "Only final-main verification, portable handoff/checker/delivery and explicit Issue26 closure remain after this lease release.",
+  "release_acceptance": false,
+  "full_product_conformance_certified": false,
+  "hosted_execution_dispatched": false,
+  "attribution": "The complete3249-test run belongs to the candidate. The actual merge ran62new tests,43source cases/694assertions,documents and complete-input eligibility. Later focused checks are not another complete regression run. Final commit identity and final checks are external later records, not self-asserted here."
+}
