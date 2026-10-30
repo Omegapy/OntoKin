@@ -21,7 +21,8 @@ from .json_limits import JSONLimitError
 from .model import Event, EventBlock, ImpulsePayload, ObjectModel, Pose, SiteModel
 from .surface_runtime import SURFACE_CALLS, SURFACE_TYPES, SURFACE_PROFILE, surface_builtin, materialize_surface
 from .surface import SurfaceError
-from .profile_capabilities import (BUDGET_PROFILE, REACH_PROFILES, IMPULSE_PROFILES,
+from .extrusion_runtime import EXTRUSION_CALLS, EXTRUSION_TYPES, extrusion_builtin
+from .profile_capabilities import (BUDGET_PROFILE, EXTRUSION_PROFILE, EXECUTION_PROFILES, REACH_PROFILES, IMPULSE_PROFILES,
                                    SURFACE_PROFILES)
 from .validator import (BUILTIN_TYPES, FIELD_TYPES,
                         PREDEFINED, READONLY_FIELDS, BoundExpression, Callable,
@@ -252,7 +253,7 @@ class ConstructionCompiler(Validator):
         if self.model.profile in REACH_PROFILES:
             from .reach_numeric import ReachExecutionWork
             self.reach_work = (ReachExecutionWork(execution_budget=budget.execution_budget)
-                if self.model.profile == BUDGET_PROFILE else ReachExecutionWork(
+                if self.model.profile in EXECUTION_PROFILES else ReachExecutionWork(
                     check=budget.tick, max_operations=budget.limits["max_operations"],
                     max_elapsed_ms=budget.limits["max_elapsed_ms"]))
         self.linked_program = linked
@@ -376,6 +377,10 @@ class ConstructionCompiler(Validator):
                     from .reach_source import reach_error
                     raise reach_error("reach_type", "ReachBranch takes no type arguments.", node)
                 result = Type("ReachBranch")
+            elif name in EXTRUSION_TYPES and self.linked.modules[node.source_id].ast.profile == EXTRUSION_PROFILE:
+                if args:
+                    fail("OKL-E-TYPE", f"Extrusion type '{name}' takes no type arguments.", node, phase="type")
+                result = Type(name)
             elif name in SURFACE_TYPES and self.linked.modules[node.source_id].ast.profile in SURFACE_PROFILES:
                 if args:
                     fail("OKL-E-TYPE", f"Surface type '{name}' takes no type arguments.", node, phase="type")
@@ -402,6 +407,8 @@ class ConstructionCompiler(Validator):
         declaring_profile = self.linked.modules[node.source_id].ast.profile
         if declaring_profile in SURFACE_PROFILES:
             allowed |= SURFACE_TYPES
+        if declaring_profile == EXTRUSION_PROFILE:
+            allowed |= EXTRUSION_TYPES
         if element.kind not in allowed:
             fail("OKL-E-CAPABILITY-UNSUPPORTED", f"Authored Keyed<{element}> is outside the flat immutable leaf profile.",
                  node, phase="support", details={"profile": IMPULSE_PROFILE if declaring_profile == IMPULSE_PROFILE else PROFILE,
@@ -730,6 +737,9 @@ class ConstructionCompiler(Validator):
                 return Value(Type("ReachBranch"), name)
             if name == "reach_planar":
                 return Value(Type("BuiltinCallable"), name)
+        if (name in EXTRUSION_CALLS and self.linked.modules[node.source_id].ast.profile == EXTRUSION_PROFILE
+                and name not in ctx.locals):
+            return Value(Type("BuiltinCallable"), name)
         if (name in SURFACE_CALLS and self.linked.modules[node.source_id].ast.profile in SURFACE_PROFILES
                 and name not in ctx.locals):
             return Value(Type("BuiltinCallable"), name)
@@ -1189,6 +1199,11 @@ class ConstructionCompiler(Validator):
         if name == "reach_planar":
             from .reach_source import reach_builtin
             return reach_builtin(self, args, node, ctx)
+        if name in EXTRUSION_CALLS:
+            if self.linked.modules[node.source_id].ast.profile != EXTRUSION_PROFILE:
+                fail("OKL-E-CAPABILITY-UNSUPPORTED", "Extrusion constructors require polygon-extrusion-0.1.",
+                     node, phase="support")
+            return extrusion_builtin(self, name, args, node, ctx)
         if name in SURFACE_CALLS:
             if self.linked.modules[node.source_id].ast.profile not in SURFACE_PROFILES:
                 fail("OKL-E-CAPABILITY-UNSUPPORTED", "Surface constructors need the surface-0.1 profile.",
@@ -1483,7 +1498,7 @@ class ConstructionCompiler(Validator):
         remaining_vertices = 250_000
         for path, obj in self.model.objects.items():
             recipe = obj.geometry
-            if not isinstance(recipe, dict) or recipe.get("kind") not in ("loft", "placed"):
+            if not isinstance(recipe, dict) or recipe.get("kind") not in ("loft", "placed", "extrusion"):
                 continue
             surface = recipe.get("surface", recipe)
             location = Node("span", surface["start"], surface["end"],
@@ -1739,7 +1754,8 @@ class ConstructionCompiler(Validator):
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "Required capabilities are not supplied by " + self.model.profile + ": " +
                  ", ".join(self.model.requested_capabilities), requires[0], phase="support")
         if self.level == "delivered":
-            target = ("ontokin.glb/0.7" if self.model.profile == BUDGET_PROFILE else
+            target = ("ontokin.glb/0.8" if self.model.profile == EXTRUSION_PROFILE else
+                      "ontokin.glb/0.7" if self.model.profile == BUDGET_PROFILE else
                       "ontokin.glb/0.6" if self.model.profile == REACH_PROFILE else
                       "ontokin.glb/0.5" if self.model.profile == FORCE_PROFILE else
                       "ontokin.glb/0.4" if self.model.profile == IMPULSE_PROFILE else
@@ -1790,8 +1806,8 @@ def compile_construction(bundle, *, level: str = "represented", budgets: dict | 
               ExecutionConstructionBudget(budgets, check, execution_budget=execution_budget))
     budget.tick()
     linked = link_program(bundle, check=budget.tick)
-    if (linked.entry.ast.profile == BUDGET_PROFILE) != (execution_budget is not None):
-        fail("OKL-E-RESOURCE", "Source 0.7 requires its explicitly admitted execution context.",
+    if (linked.entry.ast.profile in EXECUTION_PROFILES) != (execution_budget is not None):
+        fail("OKL-E-RESOURCE", "This source profile requires its explicitly admitted execution context.",
              linked.entry.ast, phase="support", details={"budget_reason": "execution_context_required"})
     compiler = ConstructionCompiler(linked, level, budget)
     try:

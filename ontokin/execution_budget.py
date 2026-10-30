@@ -16,7 +16,7 @@ from typing import Callable, Mapping
 
 from .bundle import SourceUnit
 from .diagnostics import OntoKinError
-from .profile_capabilities import BUDGET_PROFILE
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE
 from .syntax import Node, Token
 
 
@@ -317,7 +317,7 @@ class _HeaderScanner:
         return token
 
 
-def _admit_entry_budget(unit: SourceUnit, ledger: SharedExecutionBudget) -> ResolvedBudget:
+def _admit_entry_budget(unit: SourceUnit, ledger: SharedExecutionBudget, *, profile=BUDGET_PROFILE) -> ResolvedBudget:
     """Resolve only the immutable entry header, before linking or body lexing."""
     if not isinstance(unit, SourceUnit) or unit.source_id != "entry":
         raise TypeError("Budget admission requires the immutable entry SourceUnit.")
@@ -325,9 +325,12 @@ def _admit_entry_budget(unit: SourceUnit, ledger: SharedExecutionBudget) -> Reso
         raise TypeError("Budget admission requires a SharedExecutionBudget.")
     if ledger.resolved is not None:
         raise ValueError("This execution has already admitted an entry source.")
+    versions = {BUDGET_PROFILE: "0.7", EXTRUSION_PROFILE: "0.8"}
+    if profile not in versions:
+        budget_error("invalid_declaration", "Unsupported execution-budget source profile.")
     scanner = _HeaderScanner(unit, ledger)
     scanner.take("IDENT", "ontokin")
-    scanner.take("STRING", "0.7")
+    scanner.take("STRING", versions[profile])
     scanner.take(";")
     scanner.take("IDENT", "module")
     module_name = scanner.take("IDENT")
@@ -338,7 +341,7 @@ def _admit_entry_budget(unit: SourceUnit, ledger: SharedExecutionBudget) -> Reso
     scanner.take("STRING")
     scanner.take(";")
     scanner.take("IDENT", "profile")
-    scanner.take("STRING", BUDGET_PROFILE)
+    scanner.take("STRING", profile)
     scanner.take(";")
     while scanner.peek().value == "requires" and scanner.peek().kind == "IDENT":
         scanner.take("IDENT", "requires")
@@ -375,10 +378,10 @@ def _admit_entry_budget(unit: SourceUnit, ledger: SharedExecutionBudget) -> Reso
     return ledger.promote(request, entry_revision=unit.revision)
 
 
-def admit_entry_budget(unit: SourceUnit, ledger: SharedExecutionBudget) -> ResolvedBudget:
+def admit_entry_budget(unit: SourceUnit, ledger: SharedExecutionBudget, *, profile=BUDGET_PROFILE) -> ResolvedBudget:
     """Admit a header and preserve its bounded failure reason for reporting."""
     try:
-        return _admit_entry_budget(unit, ledger)
+        return _admit_entry_budget(unit, ledger, profile=profile)
     except OntoKinError as exc:
         if isinstance(ledger, SharedExecutionBudget) and exc is not ledger.callback_error:
             ledger.budget_reason = exc.diagnostic.details.get("budget_reason")

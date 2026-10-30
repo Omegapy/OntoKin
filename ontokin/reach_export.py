@@ -17,7 +17,7 @@ from pathlib import Path
 import struct
 from typing import Any
 
-from .profile_capabilities import BUDGET_PROFILE, REACH_PROFILES
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, EXECUTION_PROFILES, REACH_PROFILES
 
 
 REACH_TARGET = "ontokin.glb/0.6"
@@ -1294,7 +1294,7 @@ def interval_certificates(model, options, plan, nodes, geometry_bounds, exact, t
             if len(exact) - 1 in group["keys"]:
                 nsp = max(nsp, final_source[frame].position_error_m)
                 nsr = max(nsr, final_source[frame].rotation_error_rad)
-            if model.profile == BUDGET_PROFILE:
+            if model.profile in EXECUTION_PROFILES:
                 nsp = _exact(nsp, BUDGET_SOURCE_ERROR_RESERVE, "mul", work)
                 nsr = _exact(nsr, BUDGET_SOURCE_ERROR_RESERVE, "mul", work)
                 def derivative_reserve(value):
@@ -1660,7 +1660,7 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach
     from .scene import (BakedScene, ExportOptions, SurfaceMesh, MAX_KEYFRAMES, MAX_BAKED_POSES,
                         MAX_VALIDATION_POSES, MAX_MESH_VERTICES, MAX_GLB_BYTES,
                         _nodes, checked_contract, program_metadata, relationship_metadata,
-                        force_profile_metadata)
+                        force_profile_metadata, extrusion_profile_metadata)
 
     version = checked_contract(model, target_contract)
     options = options or ExportOptions()
@@ -1731,6 +1731,8 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach
         "motion_authority": "OntoKin semantic evaluator; playback contains no live solver",
         "program": program, "force_profile": force_profile_metadata(), "surface_profile": surface_profile,
         "reach_profile": reach_profile_metadata(model.profile), "reach_quantization": quantization}
+    if model.profile == EXTRUSION_PROFILE:
+        metadata["polygon_extrusion_profile"] = extrusion_profile_metadata()
     report = {"schema_version": "ontokin.glb-report/" + version, "target_contract": target_contract,
         "outcome": "baked_pending_binary_validation",
         "exporter": {"name": "OntoKin reference GLB exporter", "version": __version__},
@@ -1773,6 +1775,8 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach
             "boundary_accounting": "H06 complete both-side weighted source histories plus incoming releases",
             "mesh_accounting": "every occurrence, including repeated geometry and requested helpers"},
         "reach_profile": metadata["reach_profile"], "reach_quantization": quantization}
+    if model.profile == EXTRUSION_PROFILE:
+        report["geometry"]["polygon_extrusion_profile"] = metadata["polygon_extrusion_profile"]
     return BakedScene(model.module_name, model.scene_name, exact, times, list(plan.boundaries), nodes,
                       metadata, report, options, contract=target_contract, schema_version=version)
 
@@ -1780,11 +1784,11 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach
 def build_reach_scene(model, *, options=None, source_uri=None, source_sha256=None,
                       check=None, work=None, reach_plan=None, target_contract=REACH_TARGET):
     from .reach_numeric import ReachExecutionWork, ReachAdmissionError, require_execution_work
-    from .scene import BUDGET_REACH_TARGET, REACH_TARGETS
+    from .scene import EXECUTION_TARGETS, REACH_TARGETS
     if target_contract not in REACH_TARGETS:
         raise ValueError("A reach recording requires an explicit reach destination")
-    if target_contract == BUDGET_REACH_TARGET:
-        require_execution_work(work)
+    if target_contract in EXECUTION_TARGETS:
+        require_execution_work(work, target_contract=target_contract)
     from .reach_source import reach_error
     work = work if work is not None else ReachExecutionWork(check=check)
     try:

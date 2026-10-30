@@ -117,7 +117,7 @@ class _BudgetCheck:
         if ledger.resolved is None:
             self.program_revision = source.program_revision
             self.entry_revision = source.entry.revision
-            admit_entry_budget(source.entry, ledger)
+            admit_entry_budget(source.entry, ledger, profile=self.service._profile)
         elif (source.program_revision != self.program_revision
               or source.entry.revision != self.entry_revision):
             budget_error("execution_context_required",
@@ -139,10 +139,19 @@ class _BudgetCheck:
 class BudgetAgentService(ProgramAgentService):
     """Explicit local budget service; host configuration is never JSON authority."""
 
+    protocol_type = BudgetProtocol
+    runtime_type = BudgetProgramRuntime
+
+    @staticmethod
+    def catalog(**kwargs):
+        from .budget_agent_catalog import catalog
+        return catalog(**kwargs)
+
     def __init__(self, store_path, *, host_policy=None, protocol=SCHEMA_VERSION,
                  max_running_requests=4, max_pending_requests=256, check=None, clock=None):
-        if protocol != SCHEMA_VERSION:
-            raise ProtocolError("OKA-E-REQUEST", "BudgetAgentService requires ontokin.agent/0.7.")
+        if protocol != self.protocol_type.SCHEMA_VERSION:
+            raise ProtocolError("OKA-E-REQUEST", type(self).__name__ + " requires " +
+                                self.protocol_type.SCHEMA_VERSION + ".")
         self.host_policy = HostPolicy() if host_policy is None else host_policy
         for name, value in (("max_running_requests", max_running_requests),
                             ("max_pending_requests", max_pending_requests)):
@@ -154,10 +163,10 @@ class BudgetAgentService(ProgramAgentService):
         if clock is not None and not callable(clock):
             raise TypeError("clock must be a trusted monotonic callable.")
         self._host_check, self._clock = check, clock
-        self._protocol = BudgetProtocol()
-        self._profile = BUDGET_PROFILE
+        self._protocol = self.protocol_type()
+        self._profile = self._protocol.profile
         self._destination = self._protocol.destination
-        self._runtime = BudgetProgramRuntime()
+        self._runtime = self.runtime_type()
         self._store_type = partial(BudgetProgramStore, protocol=self._protocol)
         AgentService.__init__(self, store_path)
 
@@ -218,7 +227,7 @@ class BudgetAgentService(ProgramAgentService):
         check.admit(task.source)
 
     def _context_binding(self):
-        return {"implementation": self.implementation, "protocol": SCHEMA_VERSION,
+        return {"implementation": self.implementation, "protocol": self._protocol.SCHEMA_VERSION,
                 "entry_profile": self._profile}
 
     def _absorb(self, task, result, *, origin=None):
@@ -386,10 +395,10 @@ class BudgetAgentService(ProgramAgentService):
                     "producer_request_id": report["producer_request_id"]})
 
     def _discover(self, task, check=None):
-        from .budget_agent_catalog import catalog
         request = task.request
-        if request["profile"] != BUDGET_PROFILE:
-            raise ProtocolError("OKL-E-CAPABILITY-UNSUPPORTED", "Agent/0.7 requires planar-reach-budget-0.1.")
+        if request["profile"] != self._profile:
+            raise ProtocolError("OKL-E-CAPABILITY-UNSUPPORTED", self._protocol.SCHEMA_VERSION +
+                                " requires " + self._profile + ".")
         if request["limit"] > request.get("budgets", {}).get("max_result_items", 1000):
             raise ProtocolError("OKA-E-RESOURCE", "Discovery exceeds the requested item limit.")
         if "bundle" in request:
@@ -406,12 +415,12 @@ class BudgetAgentService(ProgramAgentService):
             for key, value in check.execution_budget.caller_caps.items():
                 if value > DEFAULT_LIMITS[key]:
                     budget_error("request_cap_exceeds_source", "Source-free discovery cannot enlarge default work.")
-        result = catalog(policy=check.policy, linked_program=linked, check=check,
+        result = self.catalog(policy=check.policy, linked_program=linked, check=check,
                          aggregate_limits=self.aggregate_limits())
         context = {"project_id": request["project_id"], "operation": "discover",
                    "catalog_revision": result["revision"],
                    "program_revision": None if task.source is None else task.source.program_revision,
-                   "profile": BUDGET_PROFILE, "filter": request.get("filter"), **self._context_binding()}
+                   "profile": self._profile, "filter": request.get("filter"), **self._context_binding()}
         offset = self._offset(request.get("cursor"), context)
         items, selected = result["items"], []
         filter_ = request.get("filter")

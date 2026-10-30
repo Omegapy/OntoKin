@@ -873,7 +873,7 @@ def _geometry_bounds(decoded, model, options, *, work):
             kind = obj.geometry["kind"]
             if kind == "empty":
                 mesh = None
-            elif kind in ("loft", "placed"):
+            elif kind in ("loft", "placed", "extrusion"):
                 mesh = _source_surface_mesh(obj.geometry, max_vertices=remaining,
                                             work=work, namespace="reach_independent_source")
             elif kind in ("box", "sphere"):
@@ -961,7 +961,8 @@ _NUMERIC_CERTIFICATE_KEYS = tuple(sorted(_CERTIFICATE_KEYS - {"left_key_index", 
 
 
 def _verify_metadata(decoded, model, options, program, boundary_records, *, work, target_contract=TARGET):
-    from .scene import force_profile_metadata, relationship_metadata, checked_contract
+    from .scene import force_profile_metadata, relationship_metadata, checked_contract, extrusion_profile_metadata
+    from .profile_capabilities import EXTRUSION_PROFILE
     from .values import bounded_data
     metadata = decoded.document["extras"]["ontokin"]
     expected = {"target_contract": target_contract, "schema_version": checked_contract(model, target_contract), "module": model.module_name,
@@ -981,6 +982,8 @@ def _verify_metadata(decoded, model, options, program, boundary_records, *, work
             "motion_model": "two_prescribed_planar_hinges", "rotation_interpolation": "shortest_arc_slerp",
             "goal_residual_max_m": 1e-9, "bound_chain_tuple_max": 32,
             "named_reach_action_max": 128, "live_solver_embedded": False}}
+    if model.profile == EXTRUSION_PROFILE:
+        expected["polygon_extrusion_profile"] = extrusion_profile_metadata()
     for key, value in expected.items():
         _tick(work, "independent_metadata_identity")
         if metadata.get(key) != value:
@@ -3513,12 +3516,12 @@ def validate_reach_export(data, model, *, options=None, check=None, work=None, t
     """
     from .gltf import read_glb, _validate_geometry
     from .reach_reference import ReferenceError, build_reference
-    from .scene import ExportOptions, MAX_BAKED_POSES, checked_contract, program_metadata, BUDGET_REACH_TARGET, REACH_TARGETS
+    from .scene import ExportOptions, MAX_BAKED_POSES, checked_contract, program_metadata, EXECUTION_TARGETS, REACH_TARGETS
     if target_contract not in REACH_TARGETS:
         raise ValueError("A reach recording requires an explicit reach destination")
-    if target_contract == BUDGET_REACH_TARGET:
+    if target_contract in EXECUTION_TARGETS:
         from .reach_numeric import require_execution_work
-        require_execution_work(work)
+        require_execution_work(work, target_contract=target_contract)
     if work is None:
         raise ValueError("Reach supplied-byte validation requires the existing request work context")
     checked_contract(model, target_contract)

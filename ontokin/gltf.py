@@ -24,7 +24,7 @@ from .model import SceneModel
 from .json_limits import JSONLimitError, measure_json
 from .values import bounded_data
 from .scene import (MAX_GLB_BYTES, MAX_VALIDATION_POSES, MAX_KEYFRAMES, MAX_BAKED_POSES, TARGET_CONTRACT,
-                    CONSTRUCTION_TARGET, SURFACE_TARGET, IMPULSE_TARGET, FORCE_TARGET, REACH_TARGET, BUDGET_REACH_TARGET, REACH_TARGETS, NATIVE_TARGETS, PROGRAM_TARGETS, MAX_MESH_VERTICES,
+                    CONSTRUCTION_TARGET, SURFACE_TARGET, IMPULSE_TARGET, FORCE_TARGET, REACH_TARGET, BUDGET_REACH_TARGET, EXTRUSION_TARGET, EXECUTION_TARGETS, REACH_TARGETS, NATIVE_TARGETS, PROGRAM_TARGETS, MAX_MESH_VERTICES,
                     SurfaceMesh, build_surface_mesh, geometry_metadata, surface_metadata,
                     checked_contract, program_metadata,
                     BakedScene, ExportOptions, build_scene, export_error,
@@ -76,7 +76,7 @@ def _budget_callback_snapshot(work):
 
 def _raise_budget_callback(error, work, target_contract, callback_before):
     """Restore a caller error only when it belongs to this active 0.7 failure."""
-    if target_contract != BUDGET_REACH_TARGET or work is None:
+    if target_contract not in EXECUTION_TARGETS or work is None:
         return
     marker = work.callback_error
     if (marker is None or
@@ -470,10 +470,10 @@ def _preflight_reach_expansion(document, *, check=None) -> None:
 def read_glb(source: bytes | bytearray | str | Path, *, check=None, target_contract=None, work=None) -> DecodedGLB:
     """Decode and structurally check the adapter's embedded, flat GLB subset."""
     callback_before = (_budget_callback_snapshot(work)
-                       if target_contract == BUDGET_REACH_TARGET else None)
-    if target_contract == BUDGET_REACH_TARGET:
+                       if target_contract in EXECUTION_TARGETS else None)
+    if target_contract in EXECUTION_TARGETS:
         from .reach_numeric import require_execution_work
-        require_execution_work(work)
+        require_execution_work(work, target_contract=target_contract)
         check = work.tick
     if check:
         check()
@@ -518,9 +518,9 @@ def read_glb(source: bytes | bytearray | str | Path, *, check=None, target_contr
         extras = document.get("extras") if type(document) is dict else None
         metadata = extras.get("ontokin") if type(extras) is dict else None
         declared_contract = metadata.get("target_contract") if type(metadata) is dict else None
-        if BUDGET_REACH_TARGET in (declared_contract, target_contract):
-            if declared_contract != BUDGET_REACH_TARGET or target_contract != BUDGET_REACH_TARGET:
-                _format_error("GLB/0.7 requires its explicit destination selection and matching artifact.")
+        if declared_contract in EXECUTION_TARGETS or target_contract in EXECUTION_TARGETS:
+            if declared_contract != target_contract:
+                _format_error("Budgeted GLB requires its explicit destination selection and matching artifact.")
         if document["asset"]["version"] != "2.0" or document.get("extensionsRequired"):
             _format_error("The adapter requires plain glTF 2.0 without required extensions.")
         binary = chunks[1][1]
@@ -629,7 +629,7 @@ def read_glb(source: bytes | bytearray | str | Path, *, check=None, target_contr
             _format_error("Every exported node must have translation and rotation animation channels.")
         return decoded
     except (KeyError, IndexError, TypeError, ValueError, AttributeError, struct.error, OverflowError, UnicodeError) as exc:
-        if target_contract == BUDGET_REACH_TARGET and exc is work.callback_error:
+        if target_contract in EXECUTION_TARGETS and exc is work.callback_error:
             raise
         _format_error("Malformed or unsupported data in the bounded GLB structure: " + str(exc))
 
@@ -760,6 +760,9 @@ def _validate_geometry(decoded, model, options, target_contract, program, *, che
             paths.add(path)
             frames[index] = path + ".frame"
             obj = model.objects[path]
+            if (obj.geometry.get("surface", obj.geometry).get("kind") == "extrusion"
+                    and target_contract != EXTRUSION_TARGET):
+                _format_error("Polygon source geometry requires its explicit GLB/0.8 destination.")
             for key, expected in (("class_name", obj.class_name), ("geometry", geometry_metadata(obj.geometry, check=check)
                                   if target_contract in NATIVE_TARGETS else obj.geometry),
                                   ("physical", obj.physical), ("collision", obj.collision),
@@ -775,7 +778,7 @@ def _validate_geometry(decoded, model, options, target_contract, program, *, che
             if obj.geometry["kind"] == "empty":
                 if "mesh" in node:
                     _format_error("An empty source object cannot acquire untagged helper geometry.")
-            elif obj.geometry["kind"] in ("loft", "placed") and target_contract in NATIVE_TARGETS:
+            elif obj.geometry["kind"] in ("loft", "placed", "extrusion") and target_contract in NATIVE_TARGETS:
                 if "mesh" not in node:
                     _format_error("A native surface must have an actual mesh.")
                 error, vertex_count = _validate_surface(decoded, node, obj, model,
@@ -1020,11 +1023,11 @@ def validate_export(data: bytes, model: SceneModel, *, options: ExportOptions | 
                     target_contract: str = TARGET_CONTRACT, check=None, work=None) -> dict[str, Any]:
     """Return measured byte-validation results, or a structured malformed-data error."""
     callback_before = (_budget_callback_snapshot(work)
-                       if target_contract == BUDGET_REACH_TARGET else None)
+                       if target_contract in EXECUTION_TARGETS else None)
     if target_contract in REACH_TARGETS:
         from .reach_numeric import ReachExecutionWork, require_execution_work
-        if target_contract == BUDGET_REACH_TARGET:
-            require_execution_work(work)
+        if target_contract in EXECUTION_TARGETS:
+            require_execution_work(work, target_contract=target_contract)
         if work is None:
             work = ReachExecutionWork(check=_guard_check(check))
         check = work.tick
@@ -1117,11 +1120,11 @@ def export_glb(model: SceneModel, *, options: ExportOptions | None = None,
                target_contract: str = TARGET_CONTRACT, check=None, work=None, reach_plan=None) -> ExportResult:
     """Produce verified bytes with an explicit profile and cooperative cancellation."""
     callback_before = (_budget_callback_snapshot(work)
-                       if target_contract == BUDGET_REACH_TARGET else None)
+                       if target_contract in EXECUTION_TARGETS else None)
     if target_contract in REACH_TARGETS:
         from .reach_numeric import ReachExecutionWork, require_execution_work
-        if target_contract == BUDGET_REACH_TARGET:
-            require_execution_work(work)
+        if target_contract in EXECUTION_TARGETS:
+            require_execution_work(work, target_contract=target_contract)
         if work is None:
             work = ReachExecutionWork(check=_guard_check(check))
         check = work.tick

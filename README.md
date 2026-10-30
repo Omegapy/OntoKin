@@ -10,6 +10,17 @@ The current direction begins with exterior 3D models and short animations. Those
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
 
+### Author polygon plates and concave brackets
+
+Explicit source `0.8` / `polygon-extrusion-0.1` adds closed extrusions from typed, keyed XY outlines. An agent can author a rectangular plate or concave bracket, reuse a class with different dimensions, edit one instance, inspect its triangles and retrieve recorded GLB/0.8 output. Separate cap and side materials and rigid local placement are supported. The [versioned decision](docs/language-design/polygon-extrusion-v0.1/ADOPTION.md) fixes 3–64 vertices, coordinates within 100 meters and depth from 0.001 to 100 meters. Self-intersections, holes, bevels and implicit mass/inertia are excluded.
+
+```bash
+python3 -m ontokin export examples/polygon-extrusions/concave-bracket.ok --target ontokin.glb/0.8 --output /tmp/ontokin-bracket.glb
+python3 -m ontokin agent --protocol ontokin.agent/0.8 --store /tmp/ontokin-extrusion-agent
+```
+
+The [examples](examples/polygon-extrusions/README.md), [Agent/0.8 schemas](docs/language-design/agent-v0.8/README.md) and [C075 engineering record](docs/engineering/polygon-extrusions-2026-10-30-c075/README.md) distinguish the selected contract from actual verification and integration. The Python service is `ontokin.extrusion_agent.ExtrusionAgentService`. It inherits source-requested execution budgets, host authorization, exact source edits and atomic publication. The ordinary 100,000-operation / 30,000-ms defaults stay unchanged. This is experimental development; recorded playback does not establish live engine physics.
+
 ### Configurable execution budgets: source, CLI and Agent workflows
 
 Explicit source `0.7` / `planar-reach-budget-0.1` can request more computation time and operations within ceilings independently authorized by its execution environment. Ordinary defaults remain **100,000 operations and 30,000 ms**; existing acceptance tests retain their original limits. A larger host ceiling does not silently increase an omitted program budget. Computation time and the animation's modeled duration are separate values.

@@ -281,7 +281,7 @@ class ReachExecutionWork:
                 "cache_entries": len(self._cache)}
 
 
-def require_execution_work(work):
+def require_execution_work(work, *, target_contract="ontokin.glb/0.7"):
     """Require caller authority for the explicit budget destination path.
 
     Artifact metadata is never consulted to construct or enlarge this context.
@@ -292,10 +292,10 @@ def require_execution_work(work):
     if (not isinstance(work, ReachExecutionWork)
             or not isinstance(ledger, SharedExecutionBudget) or ledger.resolved is None
             or work.external_check != ledger.tick):
-        raise OntoKinError("OKL-E-RESOURCE", "GLB/0.7 requires the admitted shared execution context.",
+        raise OntoKinError("OKL-E-RESOURCE", target_contract + " requires the admitted shared execution context.",
                            category="resource_limit", phase="support",
                            details={"budget_reason": "execution_context_required",
-                                    "target_contract": "ontokin.glb/0.7"})
+                                    "target_contract": target_contract})
     try:
         ledger.checkpoint()
     except BaseException as error:

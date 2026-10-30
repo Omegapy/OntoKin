@@ -52,6 +52,11 @@ def run(args, *, host_policy=None) -> int:
         from .budget_protocol import BudgetProtocol
         service_type, envelope_fn = BudgetAgentService, BudgetProtocol.envelope
         service_options = {"protocol": selected_protocol, "host_policy": host_policy}
+    elif selected_protocol == "ontokin.agent/0.8":
+        from .extrusion_agent import ExtrusionAgentService
+        from .extrusion_protocol import ExtrusionProtocol
+        service_type, envelope_fn = ExtrusionAgentService, ExtrusionProtocol.envelope
+        service_options = {"protocol": selected_protocol, "host_policy": host_policy}
     def error_response(error):
         return _error(error, envelope_fn)
     try:
