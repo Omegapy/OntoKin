@@ -34,9 +34,11 @@ Preserve 100,000 shared operations, 30,000 ms, 32,768 operand bits, 256 numerica
 
 ## Repository lifecycle and ownership
 
-[OK-ENG-009](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) separates development integration from release acceptance. C069 integration is complete. This publication releases the main integration lease held by `interactive-producer-ownership-20261029-c069-7of9`. **No main integration lease remains active.** Root retains the separate C069 documentation-check/packet/archive window until explicit Issue #26 closure after final verification and delivery. Reconcile that closure and live state before starting another scope.
+[OK-ENG-009](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) separates development integration from release acceptance. C069 explicitly closed its scope in [Issue #26 comment 6512013418](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6512013418). C070 owns the bounded angular-reuse source record on `work/reach-angular-reuse-20261029-c070`, starting at `20977e92945d767bc8047b36e0e697f53d2a886e`.
 
-The merged candidate remains the actual merge's second parent even if its work branch is automatically removed. The archive-retention branch remains history-only at `e6917dae0be3a786c22e76be3de62e3c97784cf5`. Never merge or develop from it. No hosted execution was dispatched.
+**Active main integration lease:** owner `interactive-angular-reuse-20261029-c070-7of9`, scope C070 source-only documentation integration, expiration `2026-10-30T01:35:00+00:00`. The observed-head acquisition is recorded separately after actual remote readback. Root also owns C070 documentation-check/packet/archive work until explicit Issue #26 closure. Three scoped source reviews approved the record; no runtime optimization, instrumentation, semantic-unit adoption or product experiment is selected.
+
+The archive-retention branch remains history-only at `e6917dae0be3a786c22e76be3de62e3c97784cf5`. Never merge or develop from it. Preserve all runtime/test/fixture/contract/default/limit/workflow bytes. No hosted execution is dispatched.
 
 ## Git LFS
 
