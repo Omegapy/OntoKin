@@ -873,7 +873,7 @@ def _geometry_bounds(decoded, model, options, *, work):
             kind = obj.geometry["kind"]
             if kind == "empty":
                 mesh = None
-            elif kind in ("loft", "placed", "extrusion"):
+            elif kind in ("loft", "placed", "extrusion", "holes"):
                 mesh = _source_surface_mesh(obj.geometry, max_vertices=remaining,
                                             work=work, namespace="reach_independent_source")
             elif kind in ("box", "sphere"):
@@ -961,8 +961,8 @@ _NUMERIC_CERTIFICATE_KEYS = tuple(sorted(_CERTIFICATE_KEYS - {"left_key_index", 
 
 
 def _verify_metadata(decoded, model, options, program, boundary_records, *, work, target_contract=TARGET):
-    from .scene import force_profile_metadata, relationship_metadata, checked_contract, extrusion_profile_metadata
-    from .profile_capabilities import EXTRUSION_PROFILE
+    from .scene import force_profile_metadata, relationship_metadata, checked_contract, extrusion_profile_metadata, holes_profile_metadata
+    from .profile_capabilities import EXTRUSION_PROFILE, HOLES_PROFILE
     from .values import bounded_data
     metadata = decoded.document["extras"]["ontokin"]
     expected = {"target_contract": target_contract, "schema_version": checked_contract(model, target_contract), "module": model.module_name,
@@ -984,6 +984,8 @@ def _verify_metadata(decoded, model, options, program, boundary_records, *, work
             "named_reach_action_max": 128, "live_solver_embedded": False}}
     if model.profile == EXTRUSION_PROFILE:
         expected["polygon_extrusion_profile"] = extrusion_profile_metadata()
+    if model.profile == HOLES_PROFILE:
+        expected["polygon_holes_profile"] = holes_profile_metadata()
     for key, value in expected.items():
         _tick(work, "independent_metadata_identity")
         if metadata.get(key) != value:

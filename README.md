@@ -10,6 +10,17 @@ The current direction begins with exterior 3D models and short animations. Those
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
 
+### Author plates, slots and through-holes
+
+Explicit source `0.9` / `polygon-holes-0.1` adds one keyed outer ring and up to eight keyed inner rings. Use it for slotted plates, bolt holes and hollow cross-sections, with separate cap and wall materials, reusable parts and rigid local placement. The [versioned decision](docs/language-design/polygon-holes-v0.1/ADOPTION.md) requires counterclockwise outer boundaries, clockwise holes, strict separation and at most 64 vertices across all rings. Coordinates remain within ±100 meters and depth within 0.001–100 meters.
+
+```bash
+python3 -m ontokin export examples/polygon-holes/slotted-bracket.ok --target ontokin.glb/0.9 --output /tmp/ontokin-slot.glb
+python3 -m ontokin agent --protocol ontokin.agent/0.9 --store /tmp/ontokin-holes-agent
+```
+
+The [source examples](examples/polygon-holes/README.md), [Agent/0.9 schemas](docs/language-design/agent-v0.9/README.md) and [C076 engineering record](docs/engineering/polygon-holes-2026-10-30-c076/README.md) identify the contract and measured verification separately. `ontokin.holes_agent.HolesAgentService` supports source repair, bounded ring/triangle inspection and exact GLB retrieval. Source-valid geometry whose openings cannot survive delivered 32-bit coordinates fails export explicitly. The ordinary 100,000-operation / 30,000-ms defaults remain unchanged; the largest fixture requests a separately authorized higher budget. This is experimental visual geometry and recorded animation, with no implicit mass or collision shape.
+
 ### Author polygon plates and concave brackets
 
 Explicit source `0.8` / `polygon-extrusion-0.1` adds closed extrusions from typed, keyed XY outlines. An agent can author a rectangular plate or concave bracket, reuse a class with different dimensions, edit one instance, inspect its triangles and retrieve recorded GLB/0.8 output. Separate cap and side materials and rigid local placement are supported. The [versioned decision](docs/language-design/polygon-extrusion-v0.1/ADOPTION.md) fixes 3–64 vertices, coordinates within 100 meters and depth from 0.001 to 100 meters. Self-intersections, holes, bevels and implicit mass/inertia are excluded.

@@ -1,0 +1,110 @@
+ontokin "0.9";
+module HoleCase @ "hole-case";
+profile "polygon-holes-0.1";
+
+public class Shape @ "shape" {
+    public param rings @ "rings": Keyed<PolygonRing> = keyed<PolygonRing> {
+        "outer": polygon_ring(0, "outer", keyed<PolygonVertex> {
+            "v0": polygon_vertex(0, planar_point(90.0[m], 0.0[m]), "outer"),
+            "v1": polygon_vertex(10, planar_point(88.3735827536436[m], 17.032611992436916[m]), "outer"),
+            "v2": polygon_vertex(20, planar_point(83.55311397144654[m], 33.44962100942948[m]), "outer"),
+            "v3": polygon_vertex(30, planar_point(75.71281795480631[m], 48.65767357100378[m]), "outer"),
+            "v4": polygon_vertex(40, planar_point(65.13606342945631[m], 62.107111033390076[m]), "outer"),
+            "v5": polygon_vertex(50, planar_point(52.20512186140783[m], 73.31183568453021[m]), "outer"),
+            "v6": polygon_vertex(60, planar_point(37.38735117016978[m], 81.86687958190664[m]), "outer"),
+            "v7": polygon_vertex(70, planar_point(21.218304195848454[m], 87.46304114911875[m]), "outer"),
+            "v8": polygon_vertex(80, planar_point(4.282372424136816[m], 89.89806052647072[m]), "outer"),
+            "v9": polygon_vertex(90, planar_point(-12.80833544459565[m], 89.08392976928396[m]), "outer"),
+            "v10": polygon_vertex(100, planar_point(-29.43611669856795[m], 85.05007368432017[m]), "outer"),
+            "v11": polygon_vertex(110, planar_point(-44.99999999999998[m], 77.94228634059948[m]), "outer"),
+            "v12": polygon_vertex(120, planar_point(-58.937466055075646[m], 68.01746169188324[m]), "outer"),
+            "v13": polygon_vertex(130, planar_point(-70.74477852685088[m], 55.634308759854456[m]), "outer"),
+            "v14": polygon_vertex(140, planar_point(-79.99519037894311[m], 41.240386955466946[m]), "outer"),
+            "v15": polygon_vertex(150, planar_point(-86.35436762530475[m], 25.355930115728704[m]), "outer"),
+            "v16": polygon_vertex(160, planar_point(-89.59247303157761[m], 8.555043897376459[m]), "outer"),
+            "v17": polygon_vertex(170, planar_point(-89.59247303157761[m], -8.555043897376438[m]), "outer"),
+            "v18": polygon_vertex(180, planar_point(-86.35436762530477[m], -25.355930115728647[m]), "outer"),
+            "v19": polygon_vertex(190, planar_point(-79.99519037894314[m], -41.24038695546689[m]), "outer"),
+            "v20": polygon_vertex(200, planar_point(-70.74477852685087[m], -55.63430875985448[m]), "outer"),
+            "v21": polygon_vertex(210, planar_point(-58.93746605507564[m], -68.01746169188327[m]), "outer"),
+            "v22": polygon_vertex(220, planar_point(-45.00000000000004[m], -77.94228634059945[m]), "outer"),
+            "v23": polygon_vertex(230, planar_point(-29.436116698567968[m], -85.05007368432015[m]), "outer"),
+            "v24": polygon_vertex(240, planar_point(-12.80833544459567[m], -89.08392976928394[m]), "outer"),
+            "v25": polygon_vertex(250, planar_point(4.282372424136814[m], -89.89806052647072[m]), "outer"),
+            "v26": polygon_vertex(260, planar_point(21.21830419584847[m], -87.46304114911875[m]), "outer"),
+            "v27": polygon_vertex(270, planar_point(37.387351170169744[m], -81.86687958190667[m]), "outer"),
+            "v28": polygon_vertex(280, planar_point(52.20512186140781[m], -73.31183568453022[m]), "outer"),
+            "v29": polygon_vertex(290, planar_point(65.13606342945631[m], -62.10711103339008[m]), "outer"),
+            "v30": polygon_vertex(300, planar_point(75.71281795480627[m], -48.65767357100384[m]), "outer"),
+            "v31": polygon_vertex(310, planar_point(83.5531139714465[m], -33.44962100942953[m]), "outer"),
+            "v32": polygon_vertex(320, planar_point(88.37358275364359[m], -17.032611992436955[m]), "outer")
+        }),
+        "opening-0": polygon_ring(10, "hole", keyed<PolygonVertex> {
+            "v0": polygon_vertex(0, planar_point(-41[m], -39[m]), "inner"),
+            "v1": polygon_vertex(10, planar_point(-39[m], -39[m]), "inner"),
+            "v2": polygon_vertex(20, planar_point(-39[m], -41[m]), "inner"),
+            "v3": polygon_vertex(30, planar_point(-41[m], -41[m]), "inner")
+        }),
+        "opening-1": polygon_ring(20, "hole", keyed<PolygonVertex> {
+            "v0": polygon_vertex(0, planar_point(-11[m], -39[m]), "inner"),
+            "v1": polygon_vertex(10, planar_point(-9[m], -39[m]), "inner"),
+            "v2": polygon_vertex(20, planar_point(-9[m], -41[m]), "inner"),
+            "v3": polygon_vertex(30, planar_point(-11[m], -41[m]), "inner")
+        }),
+        "opening-2": polygon_ring(30, "hole", keyed<PolygonVertex> {
+            "v0": polygon_vertex(0, planar_point(19[m], -39[m]), "inner"),
+            "v1": polygon_vertex(10, planar_point(21[m], -39[m]), "inner"),
+            "v2": polygon_vertex(20, planar_point(21[m], -41[m]), "inner"),
+            "v3": polygon_vertex(30, planar_point(19[m], -41[m]), "inner")
+        }),
+        "opening-3": polygon_ring(40, "hole", keyed<PolygonVertex> {
+            "v0": polygon_vertex(0, planar_point(44[m], -9[m]), "inner"),
+            "v1": polygon_vertex(10, planar_point(46[m], -9[m]), "inner"),
+            "v2": polygon_vertex(20, planar_point(46[m], -11[m]), "inner"),
+            "v3": polygon_vertex(30, planar_point(44[m], -11[m]), "inner")
+        }),
+        "opening-4": polygon_ring(50, "hole", keyed<PolygonVertex> {
+            "v0": polygon_vertex(0, planar_point(39[m], 31[m]), "inner"),
+            "v1": polygon_vertex(10, planar_point(41[m], 31[m]), "inner"),
+            "v2": polygon_vertex(20, planar_point(41[m], 29[m]), "inner"),
+            "v3": polygon_vertex(30, planar_point(39[m], 29[m]), "inner")
+        }),
+        "opening-5": polygon_ring(60, "hole", keyed<PolygonVertex> {
+            "v0": polygon_vertex(0, planar_point(9[m], 41[m]), "inner"),
+            "v1": polygon_vertex(10, planar_point(11[m], 41[m]), "inner"),
+            "v2": polygon_vertex(20, planar_point(11[m], 39[m]), "inner"),
+            "v3": polygon_vertex(30, planar_point(9[m], 39[m]), "inner")
+        }),
+        "opening-6": polygon_ring(70, "hole", keyed<PolygonVertex> {
+            "v0": polygon_vertex(0, planar_point(-21[m], 41[m]), "inner"),
+            "v1": polygon_vertex(10, planar_point(-19[m], 41[m]), "inner"),
+            "v2": polygon_vertex(20, planar_point(-19[m], 39[m]), "inner"),
+            "v3": polygon_vertex(30, planar_point(-21[m], 39[m]), "inner")
+        }),
+        "opening-7": polygon_ring(80, "hole", keyed<PolygonVertex> {
+            "v0": polygon_vertex(0, planar_point(-46[m], 11[m]), "inner"),
+            "v1": polygon_vertex(10, planar_point(-44[m], 11[m]), "inner"),
+            "v2": polygon_vertex(20, planar_point(-44[m], 9[m]), "inner"),
+            "v3": polygon_vertex(30, planar_point(-46[m], 9[m]), "inner")
+        })
+    };
+    public param depth @ "depth": Length = 0.5[m];
+    public param palette @ "palette": Keyed<SurfaceMaterial> = keyed<SurfaceMaterial> {
+        "bottom": surface_material(rgba(0.3, 0.35, 0.4, 1), 0.1, 0.65),
+        "inner": surface_material(rgba(0.15, 0.65, 0.3, 1), 0.1, 0.65),
+        "outer": surface_material(rgba(0.7, 0.3, 0.1, 1), 0.1, 0.65),
+        "top": surface_material(rgba(0.1, 0.5, 0.8, 1), 0.1, 0.65)
+    };
+    geometry = extrude_rings(self.rings, self.palette, self.depth, "bottom", "top");
+    physical = no_body();
+}
+
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object shape @ "shape": Shape {
+        placement = pose(world, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+    }
+    action travel @ "travel" = move(shape, vector(world, 0[m/s], 0.5[m/s], 0[m/s]), 1[s]);
+    at 0[s] sequence { start travel; }
+}

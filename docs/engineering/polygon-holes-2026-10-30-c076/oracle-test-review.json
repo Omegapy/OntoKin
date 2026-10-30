@@ -1,0 +1,79 @@
+{
+  "additional_probes_recommended": [],
+  "conclusion": "No new test-design blocker for the finite frozen C076 scope. Actual execution, inherited and integration evidence remain separate.",
+  "created_utc": "2026-10-30T18:47:34.291047+00:00",
+  "files": [
+    {
+      "git_blob_sha1": "67672d7aec94ca7ef3615160d97de87f197c2716",
+      "path": "tests/test_holes_oracles.py",
+      "sha256": "0ff0e0fd8da41318297ada6c6faf25626db1c76fc7f635ba5c8f4fb39c140f7f",
+      "size": 10630
+    },
+    {
+      "git_blob_sha1": "218718708425e6bc4a0dbde12138087f385b0277",
+      "path": "tools/holes_oracles.py",
+      "sha256": "a0f69fd08a1fe5d0196a336f28588fbe48387e6fc41c2fb0892a683fe86e397f",
+      "size": 16205
+    },
+    {
+      "git_blob_sha1": "0175550f8756a2f7837ccc08ae1f8107c0f1176e",
+      "path": "tools/run_holes_acceptance.py",
+      "sha256": "70d119e35bda06b098d763926d89c5569b506fa805c09a5f7890a480f8355b21",
+      "size": 14838
+    },
+    {
+      "git_blob_sha1": "5c1589337bddc9e9ca61333102117f1cbbabc5ca",
+      "path": "tools/extrusion_oracles.py",
+      "sha256": "85ef6763b6d84ebae61055d53603a470fe5e3703e2328b0e2807d0787bf033ef",
+      "size": 6834
+    },
+    {
+      "git_blob_sha1": "fc8be11f48d4c318810a3777eb94e7b1fcc53df3",
+      "path": "examples/polygon-holes/acceptance-freeze.json",
+      "sha256": "830c64c617995c5389aa623df3bc47ddb08c49ac7e1a591d973ff66b3df2d7de",
+      "size": 8918
+    },
+    {
+      "git_blob_sha1": "6e038632a0957c03ea723ed7f7f4601e8cb418cc",
+      "path": "examples/polygon-holes/expected.json",
+      "sha256": "c7977ff69db7ec5642efc0bf991f6617e57f344bc1270b29909f459a704119f9",
+      "size": 115895
+    }
+  ],
+  "independence_exclusions": [
+    "ontokin/holes.py",
+    "ontokin/holes_delivery.py",
+    "tests/test_holes_geometry.py"
+  ],
+  "narrative_sha256": "5ebb15c881b11ba8fda0bee7c12fb9ac8b45dd57cfa6a79c4498dfae2cef1628",
+  "new_blockers": [],
+  "oracle_test_method_count": 20,
+  "oracle_test_methods": [
+    "test_hand_divided_square_opening_passes",
+    "test_known_rigid_placement_is_removed_once",
+    "test_missing_triangle_rejects",
+    "test_duplicate_equal_area_cap_rejects_overlap",
+    "test_cap_filling_part_of_hole_rejects_when_centroid_is_material",
+    "test_inner_wall_with_reversed_face_and_normals_rejects",
+    "test_wall_material_must_follow_outgoing_ring_edge",
+    "test_wrong_pbr_color_rejects",
+    "test_wrong_pbr_roughness_rejects",
+    "test_tilted_unit_normal_rejects",
+    "test_inconsistent_duplicate_corner_rejects_inside_error_tolerance",
+    "test_non_authored_corner_rejects",
+    "test_reversed_cap_face_and_normals_rejects",
+    "test_unclosed_wall_rejects",
+    "test_exact_clipping_detects_containment_without_crossing_edges",
+    "test_exact_clipping_permits_shared_edges",
+    "test_exact_clipping_detects_crossing_triangles_without_containment",
+    "test_decoder_requires_explicit_dot9_binding",
+    "test_decoder_refuses_static_scale_that_local_geometry_cannot_detect",
+    "test_decoder_refuses_animated_scale_before_pose_interpolation"
+  ],
+  "product_tests_executed": false,
+  "review_type": "independent_oracle_and_acceptance_test_adequacy",
+  "reviewer": "geometry_review",
+  "schema_version": "ontokin.c076-source-review/0.1",
+  "source_commit": "15c45f3ee3ed39883188e71bbde0e4d1482f8757",
+  "source_tree": "1eda7611fdd1294aaf7d9764e881dfdd8f41725e"
+}

@@ -15,7 +15,7 @@ from .construction import compile_construction
 from .diagnostics import OntoKinError
 from .execution_budget import HostPolicy, SharedExecutionBudget, admit_entry_budget
 from .json_limits import JSONLimitError, measure_json
-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, EXECUTION_PROFILES
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, EXECUTION_PROFILES
 from .program_diagnostics import diagnostic_dict
 from .scene import ExportOptions
 
@@ -51,8 +51,9 @@ The receipt never authorizes a later execution or an independent reader.
 """
     if not isinstance(profile, str) or profile not in EXECUTION_PROFILES:
         raise ValueError("Unknown execution-budget source profile.")
-    target = "ontokin.glb/0.8" if profile == EXTRUSION_PROFILE else TARGET
-    language_version = "0.8" if profile == EXTRUSION_PROFILE else "0.7"
+    target = {BUDGET_PROFILE: TARGET, EXTRUSION_PROFILE: "ontokin.glb/0.8",
+              HOLES_PROFILE: "ontokin.glb/0.9"}[profile]
+    language_version = {BUDGET_PROFILE: "0.7", EXTRUSION_PROFILE: "0.8", HOLES_PROFILE: "0.9"}[profile]
     if not isinstance(source, ProgramBundle):
         raise TypeError("source must be a sealed ProgramBundle.")
     ledger = None
@@ -166,3 +167,8 @@ def execute_extrusion_export(source: ProgramBundle, **kwargs) -> BudgetedExport:
     if "profile" in kwargs:
         raise TypeError("execute_extrusion_export fixes polygon-extrusion-0.1 explicitly.")
     return execute_budgeted_export(source, profile=EXTRUSION_PROFILE, **kwargs)
+
+
+def execute_holes_export(source: ProgramBundle, **kwargs) -> BudgetedExport:
+    """Execute the explicit .9 source/GLB binding under the original request ledger."""
+    return execute_budgeted_export(source, profile=HOLES_PROFILE, **kwargs)

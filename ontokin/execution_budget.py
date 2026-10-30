@@ -16,7 +16,7 @@ from typing import Callable, Mapping
 
 from .bundle import SourceUnit
 from .diagnostics import OntoKinError
-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE
 from .syntax import Node, Token
 
 
@@ -325,7 +325,7 @@ def _admit_entry_budget(unit: SourceUnit, ledger: SharedExecutionBudget, *, prof
         raise TypeError("Budget admission requires a SharedExecutionBudget.")
     if ledger.resolved is not None:
         raise ValueError("This execution has already admitted an entry source.")
-    versions = {BUDGET_PROFILE: "0.7", EXTRUSION_PROFILE: "0.8"}
+    versions = {BUDGET_PROFILE: "0.7", EXTRUSION_PROFILE: "0.8", HOLES_PROFILE: "0.9"}
     if profile not in versions:
         budget_error("invalid_declaration", "Unsupported execution-budget source profile.")
     scanner = _HeaderScanner(unit, ledger)
