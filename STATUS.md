@@ -38,7 +38,9 @@ Preserve 100,000 shared operations, 30,000 ms, 32,768 operand bits, 256 numerica
 
 ## Repository lifecycle and ownership
 
-[OK-ENG-009](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) separates development integration from release acceptance. C071 integration is complete. This publication releases the main integration lease held by `interactive-group-key-projection-20261029-c071-7of9`. **No main integration lease remains active.** Root retains the separate C071 documentation-check/packet/archive window until explicit Issue #26 closure after final verification and delivery. Reconcile that closure and live state before starting another scope.
+[OK-ENG-009](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) separates development integration from release acceptance. C071 integration and its later technical/checker/packet scope are complete; [Issue #26 comment 6512937667](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6512937667) explicitly closed them.
+
+**Active main integration lease:** `interactive-language-budgets-20261029-c072-7of9`, expiring `2026-10-30T03:14:00Z`. The lease covers reviewed C072 execution-budget design/checkpoint additions and active GOAL/STATUS/README/documentation-navigation updates. The owner has redirected the next priority to language-level configurable execution budgets with unchanged defaults and original acceptance limits. Runtime, existing tests/fixtures/contracts and workflows are outside this documentation change. [Scope declaration](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6513542199).
 
 The merged candidate remains the actual merge's second parent even if its work branch is automatically removed. The archive-retention branch remains history-only at `e6917dae0be3a786c22e76be3de62e3c97784cf5`. Never merge or develop from it. No hosted execution was dispatched.
 
