@@ -1,5 +1,7 @@
 # OntoKin documentation guide
 
+For C069's producer-to-reader ownership trace, bounded existing-list receipt rejection and the proposed writer-angular reuse feasibility task, read [C069](engineering/reach-producer-ownership-2026-10-29-c069/README.md). No runtime change or complete-request improvement is established.
+
 For C068 cold-reader admission, the every-entry-seam eager-prefix cost rejection and the unadopted producer-authority proposal, read [C068](engineering/reach-cold-admission-2026-10-29-c068/README.md). The native list lifetime and positive complete-request premise remain unresolved; no runtime implementation is selected.
 
 For C067 actual-point lower-bound screening, visited-seed redundancy and the conditional future-seed prefix proof, read [C067](engineering/reach-actual-point-bound-2026-10-29-c067/README.md). Native list authority and positive complete-request costs remain unproved; no runtime implementation is approved.
