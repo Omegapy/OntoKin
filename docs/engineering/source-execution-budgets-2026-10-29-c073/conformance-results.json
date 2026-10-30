@@ -1,0 +1,1257 @@
+{
+  "schema_version": "ontokin.execution-budget-conformance-results/0.1",
+  "contract": "OK-LANG-007/0.1.0-experimental.1",
+  "status": "passed_C073_source_cli_increment",
+  "candidate": {
+    "commit": "e072906f664cd605bc3052b786961b9a292d4d9b",
+    "tree": "7bef230867bb876f3a26a85b01c872d5299a05d1"
+  },
+  "baseline": "6277e57915c943ea933cd306956181ee18cdd084",
+  "core_role": "compatibility-candidate-core-recovery",
+  "acceptance_recovery_eligibility": {
+    "schema_version": "ontokin.c073-acceptance-recovery-eligibility/0.1",
+    "status": "eligible_same_immutable_inputs",
+    "candidate": {
+      "commit": "e072906f664cd605bc3052b786961b9a292d4d9b",
+      "tree": "7bef230867bb876f3a26a85b01c872d5299a05d1"
+    },
+    "observed_utc": "2026-10-30T04:51:40.127975+00:00",
+    "prior_core_role": "compatibility-candidate-core",
+    "recovery_core_role": "compatibility-candidate-core-recovery",
+    "recovery_start": {
+      "started_at": "2026-10-30T04:48:40.744721+00:00",
+      "git": {
+        "available": true,
+        "local_head": "e072906f664cd605bc3052b786961b9a292d4d9b",
+        "local_tree": "7bef230867bb876f3a26a85b01c872d5299a05d1",
+        "tracked_worktree_status": "",
+        "untracked_source_files": [],
+        "head_is_base_revision": true,
+        "source_inventory_includes_untracked_files": true,
+        "remote_head_verified": false
+      },
+      "source_inventory": {
+        "sha256": "sha256:4d29cd1201eec569092208ec1b778e2c3dae9ea33887e5e37e702b207062aabe",
+        "bytes": 866347,
+        "inventory_sha256": "sha256:957eafff46762231c121c80f5a71ea2304d0d97aa63d15e90152264ecdffc42d",
+        "file_count": 3854
+      },
+      "environment": {
+        "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+        "executable": "/workspace/scratch/fe6a0ccd384a/c073-validation/tools/python/bin/python",
+        "platform": "Linux-6.18.55-x86_64-with-glibc2.39"
+      },
+      "runner": {
+        "sha256": "sha256:12c640c8c3b8264659dcf3f35d0e67cb09460bd3661a217cd255f43706ac3d74",
+        "bytes": 6019
+      },
+      "original_driver": {
+        "sha256": "sha256:1b64398d9a5a724dcec964017d8e1d86ffdef31e6d158c2175c8ccf35fb98381",
+        "bytes": 32839
+      },
+      "selected_roles": [
+        "core",
+        "force-agent"
+      ],
+      "planned_steps": [
+        "force-agent-tools",
+        "unit-tests",
+        "source",
+        "agent",
+        "construction",
+        "surface",
+        "impulse",
+        "documents",
+        "force-agent-tests",
+        "force-agent-build",
+        "force-agent-audit"
+      ]
+    },
+    "recovery_status_when_recorded": "running",
+    "old_core_start_utc": "2026-10-30T04:32:35.149019+00:00",
+    "source_inventory_sha256": "sha256:957eafff46762231c121c80f5a71ea2304d0d97aa63d15e90152264ecdffc42d",
+    "source_file_count": 3854,
+    "comparisons": {
+      "old_start_equals_reconciliation_equals_recovery_start": true,
+      "every_inventory_file_matches_exact_candidate_audit": true,
+      "acceptance_source_binding_matches_all_three_inventories": true,
+      "native_and_visual_bind_same_candidate": true,
+      "recovery_driver_and_selected_roles_unchanged": true
+    },
+    "timing": {
+      "acceptance_started_utc": "2026-10-30T04:35:45.679020+00:00",
+      "acceptance_finished_utc": "2026-10-30T04:35:48.705797+00:00",
+      "native_finished_utc": "2026-10-30T04:36:12.559Z",
+      "visual_reviewed_utc": "2026-10-30T04:36:47.949338+00:00",
+      "interruption_observed_utc": "2026-10-30T04:48:40.679507+00:00",
+      "recovery_started_utc": "2026-10-30T04:48:40.744721+00:00",
+      "recovery_brackets_earlier_acceptance": false
+    },
+    "retained_interruption": {
+      "status": "interrupted",
+      "completed_ok_lines": 2831,
+      "observed_test_failures": [],
+      "full_regression_passed": false
+    },
+    "inputs": [
+      {
+        "role": "retained_interrupted_core_summary",
+        "path": "compatibility-candidate-core/summary.json",
+        "bytes": 3578,
+        "sha256": "sha256:dd5268f8db017109888691d4b205ca08c6904af14d2c5b0d0960b0105d38c81d"
+      },
+      {
+        "role": "terminal_transport_observation",
+        "path": "compatibility-candidate-core/transport-interruption.json",
+        "bytes": 1130,
+        "sha256": "sha256:f4e45fed976c53009e944b766a01ea179ce0385951cef618fc67f5c5b6cb1c6d"
+      },
+      {
+        "role": "old_core_start_inventory",
+        "path": "compatibility-candidate-core/source-before.json",
+        "bytes": 866347,
+        "sha256": "sha256:4d29cd1201eec569092208ec1b778e2c3dae9ea33887e5e37e702b207062aabe"
+      },
+      {
+        "role": "reconciliation_inventory",
+        "path": "compatibility-candidate-core/source-at-reconciliation.json",
+        "bytes": 866347,
+        "sha256": "sha256:4d29cd1201eec569092208ec1b778e2c3dae9ea33887e5e37e702b207062aabe"
+      },
+      {
+        "role": "recovery_core_start_inventory",
+        "path": "compatibility-candidate-core-recovery/source-before.json",
+        "bytes": 866347,
+        "sha256": "sha256:4d29cd1201eec569092208ec1b778e2c3dae9ea33887e5e37e702b207062aabe"
+      },
+      {
+        "role": "exact_candidate_input_audit",
+        "path": "input-audit-e072906f.json",
+        "bytes": 3216799,
+        "sha256": "sha256:bb098f66da150bb118e86364f7aa1a64df4c3152b6c50c9e5c3451d33e62a026"
+      },
+      {
+        "role": "acceptance_start",
+        "path": "compatibility-candidate-acceptance/inputs.json",
+        "bytes": 990,
+        "sha256": "sha256:eb8c4a72f4d0775341272adcd7e01280c2b4fd53eae452f119d8eda755ef876c"
+      },
+      {
+        "role": "completed_acceptance",
+        "path": "compatibility-candidate-acceptance/summary.json",
+        "bytes": 2616,
+        "sha256": "sha256:5411ec1b8968134a32ba1a9f05d53466cc8b8905d056e6992133ad370b6ceb45"
+      },
+      {
+        "role": "original_acceptance_source_binding",
+        "path": "compatibility-candidate-acceptance/source-binding.json",
+        "bytes": 1305,
+        "sha256": "sha256:df9ada5e9b16a2eec0755d4419d4201dc00e46588181136d7cd07f46ec54e666"
+      },
+      {
+        "role": "completed_native_browser",
+        "path": "compatibility-candidate-independent/validation.json",
+        "bytes": 61612,
+        "sha256": "sha256:5e910d8236b260ed8cf9402272e2f5bf3ebb27e2de5801c8de575bf04ec104c5"
+      },
+      {
+        "role": "completed_actual_visual_review",
+        "path": "compatibility-candidate-independent/visual-review.json",
+        "bytes": 3178,
+        "sha256": "sha256:06ce7d0458d7661506d663d932144dc7aa67e4821ae6f25f027b340f85967ca8"
+      },
+      {
+        "role": "retained_partial_unit_log",
+        "path": "compatibility-candidate-core/logs/unit-tests.log",
+        "bytes": 552985,
+        "sha256": "sha256:28fbd7037d11bf11e18685dc0999f0eb2dbf6dcced9e21045a5389f56e9a7b60"
+      }
+    ],
+    "boundary": "The recovery run starts after the completed acceptance, native/browser checks and actual visual review; it does not bracket those earlier executions. Reuse is justified by the identical immutable candidate and complete source inventories at old start, reconciliation and recovery start, plus the existing acceptance source binding. The interrupted run remains incomplete. A fresh complete recovery run and its unchanged final source inventory are still required; partial test counts cannot substitute.",
+    "product_executions": 0,
+    "release_acceptance": false,
+    "generator_sha256": "sha256:633ee41f7c8d791128fefc6a929561cb78e316e66b70b5c4e7219c4a0430b3e8"
+  },
+  "retained_transport_interruption": {
+    "schema_version": "ontokin.c073-transport-interruption/0.1",
+    "status": "interrupted",
+    "reason": "exec-server transport disconnected; former exec session could not be resumed and escalated process reconciliation found no running core runner or unittest process",
+    "observed_utc": "2026-10-30T04:48:40.679507+00:00",
+    "source_commit": "e072906f664cd605bc3052b786961b9a292d4d9b",
+    "source_tree": "7bef230867bb876f3a26a85b01c872d5299a05d1",
+    "clean_source": true,
+    "returncode": null,
+    "original_summary_preserved": "summary.json",
+    "original_summary_status": "running",
+    "completed_ok_lines": 2831,
+    "observed_test_failures": [],
+    "log_sha256": "28fbd7037d11bf11e18685dc0999f0eb2dbf6dcced9e21045a5389f56e9a7b60",
+    "log_bytes": 552985,
+    "last_log_write_utc": "2026-10-30T04:46:12.542113+00:00",
+    "source_inventory_unchanged_at_reconciliation": true,
+    "source_inventory_sha256": "sha256:957eafff46762231c121c80f5a71ea2304d0d97aa63d15e90152264ecdffc42d",
+    "source_file_count": 3854,
+    "full_regression_passed": false,
+    "recovery": "New complete run on the exact same candidate; no partial-count substitution."
+  },
+  "generated_utc": "2026-10-30T05:07:13.693536+00:00",
+  "aggregation_runs_product_code": false,
+  "summary": {
+    "C073_passed": 24,
+    "C073_failed": 0,
+    "C074_deferred": 5,
+    "new_test_methods_passed": 64,
+    "core_unit_tests": 3129,
+    "selected_local_steps_passed": 11,
+    "default_control_attempted_operations": 100001,
+    "authorized_consumed_operations": 193424,
+    "lofts": 6,
+    "native_pose_comparisons": 78,
+    "browser_pose_comparisons": 78,
+    "khronos_errors": 0,
+    "khronos_warnings": 0,
+    "actually_reviewed_captures": 6
+  },
+  "cases": [
+    {
+      "id": "EB01",
+      "title": "Omitted declaration and omitted fields",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "A host ceiling of 400000 operations / 80000 ms still selects 100000 / 30000 for omitted fields",
+      "test_methods": [
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB01_omission_retains_language_defaults_on_large_host"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort"
+      ],
+      "coverage_rationale": "Omitted declaration and individually omitted fields resolve to the language defaults under the larger host policy.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB02",
+      "title": "Authorized 60-second request",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "Source 200000 operations / 60[s] is admitted only when host policy permits both limits",
+      "test_methods": [
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB02_EB03_EB04_exact_authorized_example_requests",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetRuntimeTests.test_EB02_actual_source_to_independent_output_has_complete_identity"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort"
+      ],
+      "coverage_rationale": "Admission and actual source-to-export execution with independent readback select exactly 200000 operations and 60000 ms.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB03",
+      "title": "Authorized 75-second request",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "Source 400000 operations / 75[s] resolves exactly to 400000 / 75000",
+      "test_methods": [
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB02_EB03_EB04_exact_authorized_example_requests",
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB11_selected_deadlines_keep_original_start_and_inclusive_boundary",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetRuntimeTests.test_EB03_EB04_actual_75_and_80_second_source_paths"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort"
+      ],
+      "coverage_rationale": "Admission, controlled-clock boundaries and actual source-to-export execution with independent readback select exactly 400000 operations and 75000 ms.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB04",
+      "title": "Authorized 80-second request",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "Source 400000 operations / 80[s] resolves exactly to 400000 / 80000",
+      "test_methods": [
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB02_EB03_EB04_exact_authorized_example_requests",
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb12_compile_record_export_and_readback_share_the_remaining_work",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetRuntimeTests.test_EB03_EB04_actual_75_and_80_second_source_paths",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetRuntimeTests.test_EB27_computation_timeout_does_not_change_recorded_time"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort"
+      ],
+      "coverage_rationale": "Admission, controlled-clock boundaries and actual source-to-export execution with independent readback select exactly 400000 operations and 80000 ms. The separate frozen larger workload remains an external acceptance role.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB05",
+      "title": "Host authority refusal",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "A source/request/artifact cannot enlarge ordinary 100000 / 30000 host ceilings; reject before body evaluation",
+      "test_methods": [
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB05_source_cannot_authorize_larger_host_ceiling",
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb23_budget_metadata_cannot_create_reader_authority",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetCLITests.test_EB05_default_cli_refuses_source_increase_before_creating_outputs"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort"
+      ],
+      "coverage_rationale": "Admission rejects excess source authority; the ordinary CLI refuses before creating outputs. Artifact metadata cannot supply host authority.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB06",
+      "title": "Invalid fields and literals",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "Reject zero, negative, boolean, null, nonfinite, exponent, expression, unknown, duplicate and oversized literal forms before unbounded conversion",
+      "test_methods": [
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB06_invalid_host_values_and_unknown_caller_fields",
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB06_invalid_operation_literals_and_fields",
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB09_oversized_prefix_tokens_reject_before_conversion"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort"
+      ],
+      "coverage_rationale": "Bounded source literals and closed field sets reject invalid representations before conversion. Host and caller values require positive exact integers, excluding booleans.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB07",
+      "title": "Exact time units",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "0.5[s] resolves to 500 ms; submillisecond, wrong-unit and nonintegral-millisecond values reject without rounding",
+      "test_methods": [
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB07_exact_seconds_without_rounding"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort"
+      ],
+      "coverage_rationale": "Exact rational decimal conversion accepts whole milliseconds and rejects submillisecond, wrong-unit and inexact requests without rounding.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB08",
+      "title": "Entry ownership and placement",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "One optional contextual entry-header block only; imported, repeated, empty and misplaced declarations reject",
+      "test_methods": [
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB08_empty_repeated_and_misplaced_declarations",
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB08_imported_declaration_is_rejected_even_when_smaller"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort"
+      ],
+      "coverage_rationale": "Only one nonempty entry-header declaration is accepted. Duplicate, imported and misplaced declarations are rejected by explicit parser rules.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB09",
+      "title": "Bounded header admission",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "Long comments, strings with fake declarations and oversized prefix tokens remain bounded; keep original start time and charged work on promotion",
+      "test_methods": [
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB09_body_is_not_lexed_to_discover_authority",
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB09_fake_comment_and_string_declarations_do_not_grant_authority",
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB09_oversized_prefix_tokens_reject_before_conversion",
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB09_prefix_comments_are_bounded_and_paid",
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB09_prefix_uses_the_full_parser_identifier_rule",
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB09_utf8_prefix_charges_bytes_and_preserves_error_span",
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB10_promotion_preserves_consumed_header_work",
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB11_promotion_does_not_restart_clock"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort"
+      ],
+      "coverage_rationale": "The grammar-aware prefix is bounded in UTF-8 bytes and token width and charges scanning work. It does not scan the whole body for authority. Promotion keeps original work and start time.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB10",
+      "title": "Operation boundary",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "A known counted workload succeeds at its exact authorized boundary and refuses the next charge without publishing invalid results",
+      "test_methods": [
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB10_exact_operation_boundary_and_next_charge",
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB10_promotion_preserves_consumed_header_work",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetRuntimeTests.test_EB10_complete_request_succeeds_at_exact_count_and_fails_one_lower"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort"
+      ],
+      "coverage_rationale": "The ledger and a complete real request both accept the exact counted boundary and reject the next charge. The lower allowance returns no artifact.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB11",
+      "title": "Deadline boundary",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "Controlled monotonic clock proves selected deadline, original start retention, valid equality boundary and refusal after elapsed limit",
+      "test_methods": [
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB11_promotion_does_not_restart_clock",
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB11_provisional_deadline_applies_before_authorization",
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB11_selected_deadlines_keep_original_start_and_inclusive_boundary",
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb12_numeric_adapter_keeps_original_deadline_and_debits_once",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetCLITests.test_EB20_deadline_failure_does_not_publish_or_retry"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort"
+      ],
+      "coverage_rationale": "Controlled clocks cover the 60-, 75- and 80-second deadlines, inclusive equality, provisional expiry, retained start time and expiry through the nested numerical adapter.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB12",
+      "title": "No nested replenishment",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "Linking, simulation, multiple frames, helpers, export and in-request independent readback consume one remaining allowance",
+      "test_methods": [
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB12_no_second_promotion_or_mutable_authority",
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb12_compile_record_export_and_readback_share_the_remaining_work",
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb12_numeric_adapter_keeps_original_deadline_and_debits_once",
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb22_inherited_reach_surface_impulse_and_force_semantics"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort"
+      ],
+      "coverage_rationale": "The same ledger spans compilation, numerical work, recording, export and readback. Tests forbid the standalone arithmetic fallback, check one debit per adapter unit and preserve the original start time. Imported physics uses the same compiler context.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB13",
+      "title": "Other resource limits",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "Larger operation/time limits do not enlarge operand bits, caches, cursors, objects, values, output bytes, key/certificate counts or local numerical caps",
+      "test_methods": [
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb13_numeric_local_limits_stay_separate_from_execution_limits",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetRuntimeTests.test_EB13_larger_execution_still_rejects_object_and_keyed_limits"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort",
+        "preservation_audit",
+        "inherited_resource_cohort"
+      ],
+      "coverage_rationale": "The new path directly rejects object 1001 and keyed entry 257 and retains the 32768-bit operand, 256-entry cache and 100000-operation local interval limits. Source ingress, logical values, JSON/output bounds and recording cardinalities retain their existing guards. Their unchanged definitions, the independent numerical cursor reseed rules and the inherited regression cohort are separate evidence roles. Agent cursor services are not exposed by the C073 path.",
+      "coverage_limits": [
+        "The new tests do not independently cross every inherited output, certificate, keyframe, source-byte or logical-value boundary under profile 0.7. Preservation is supported by shared unchanged guards, baseline source comparison and the inherited regression cohort.",
+        "The independent numerical reference retains its 64-step cursor reseed bound, covered by the inherited phase-plan regression. Agent cursor services are separate and no Agent/0.7 cursor route is exposed; C074 owns that integration."
+      ]
+    },
+    {
+      "id": "EB14",
+      "title": "Actual larger workload",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "Freeze new source, policy and expected geometry/physics first; preserve a 100000-operation failure and authorized larger-budget source-to-export/readback success",
+      "test_methods": [],
+      "evidence_roles": [
+        "frozen_control_and_authorized_execution",
+        "independent_native_browser",
+        "actual_visual_review"
+      ],
+      "coverage_rationale": "Source, policy, expected geometry and expected physics were frozen first. The Python runner requires the default operation-budget failure and authorized complete output; the separate destination checker verifies frozen geometry, physics and views. Exact-candidate executions remain external evidence.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB15",
+      "title": "Candidate source and revision",
+      "first_increment": "C074",
+      "status": "deferred_not_executed",
+      "expected": "Candidate declaration participates in source hash and determines the candidate request; current host policy authorizes its execution; a failed candidate preserves accepted source/run/artifact state",
+      "reason": "Agent/0.7 lifecycle is outside the adopted C073 source/CLI increment and remains unavailable."
+    },
+    {
+      "id": "EB16",
+      "title": "Saved program reauthorization",
+      "first_increment": "C074",
+      "status": "deferred_not_executed",
+      "expected": "New execution under a lower current host ceiling rejects unless source or explicit caller cap fits; old receipt grants no authority",
+      "reason": "Agent/0.7 lifecycle is outside the adopted C073 source/CLI increment and remains unavailable."
+    },
+    {
+      "id": "EB17",
+      "title": "Explicit caller reductions",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "Caller cap <= source request selects that exact cap; caller cap > source request rejects even if host ceiling is larger",
+      "test_methods": [
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB17_explicit_caller_reductions_and_conflict",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetCLITests.test_EB17_trusted_host_and_caller_reduction_execute_actual_cli"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort"
+      ],
+      "coverage_rationale": "Explicit caller reductions are checked against the source request and host ceilings. An increase over the selected source/default request is rejected. The trusted CLI exercises actual export under reduced limits.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB18",
+      "title": "Request isolation and policy snapshot",
+      "first_increment": "C074",
+      "status": "deferred_not_executed",
+      "expected": "Concurrent requests do not share mutable maxima; policy changes affect new worker admissions, while explicit cancellation can revoke active work",
+      "reason": "Agent/0.7 lifecycle is outside the adopted C073 source/CLI increment and remains unavailable."
+    },
+    {
+      "id": "EB19",
+      "title": "Cancellation and callbacks",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "Preserve caller exception identity, cancellation ordering, paid checkpoints and stopped-request outcome; do not claim preemption of blocking callbacks",
+      "test_methods": [
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB19_callback_identity_and_order",
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb19_direct_output_boundaries_restore_callback_identity",
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb19_nested_context_checkpoint_preserves_caller_identity_and_details",
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb19_new_raise_of_same_callback_marker_keeps_its_identity",
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb19_prior_callback_context_does_not_replace_new_product_failure",
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb19_reader_preserves_caller_exception_identity",
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb19_stale_callback_marker_does_not_replace_product_error",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetRuntimeTests.test_EB19_field_and_provenance_callbacks_keep_identity_and_details",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetRuntimeTests.test_EB19_header_callback_json_error_is_not_a_product_failure",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetRuntimeTests.test_EB19_numerical_callbacks_keep_exception_identity_and_diagnostic"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort"
+      ],
+      "coverage_rationale": "Header, field/provenance, numerical and output callbacks preserve their original exception object and details. New direct-output tests cover JSONLimitError/ValueError wrappers, a stale marker absent or present in the active context chain, and a fresh raise of the same sentinel.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB20",
+      "title": "Failure atomicity and valid prefix",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "Exhaustion/timeout publishes only explicitly valid state and no uncommitted source or artifact; no hidden automatic retry",
+      "test_methods": [
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetCLITests.test_EB20_deadline_failure_does_not_publish_or_retry",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetCLITests.test_EB20_failed_restore_retains_original_recovery_bytes",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetCLITests.test_EB20_output_unlink_failure_does_not_prevent_original_restoration",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetCLITests.test_EB20_resource_failure_keeps_existing_destinations",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetCLITests.test_EB20_second_publication_error_restores_both_original_files",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetRuntimeTests.test_EB10_complete_request_succeeds_at_exact_count_and_fails_one_lower",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetRuntimeTests.test_EB20_failed_later_boundary_preserves_only_the_valid_prefix"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort"
+      ],
+      "coverage_rationale": "Direct tests cover the valid semantic prefix, operation exhaustion, deadline exhaustion before export, one attempt without automatic retry, existing-output preservation, second-file publication failure, recovery-backup retention and restoration even when output unlink fails.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB21",
+      "title": "Legacy compatibility",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "All preexisting tests and fixtures remain unchanged; old bindings still reject raised limits and preserve original defaults, counts and diagnostics",
+      "test_methods": [
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB21_legacy_lexer_and_parser_do_not_accept_new_declaration",
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb21_earlier_or_implicit_reader_selection_rejects_budget_artifact",
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb21_legacy_malformed_shapes_keep_materialization_checkpoint",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetRuntimeTests.test_EB21_legacy_limits_and_agent_routes_stay_closed",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetRuntimeTests.test_EB21_legacy_native_budget_and_explicit_adapter_stay_separate"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort",
+        "preservation_audit",
+        "complete_core_force_agent"
+      ],
+      "coverage_rationale": "New tests cover legacy lexer/parser rejection, fixed legacy constructor maxima, explicit destination selection, unavailable Agent/0.7 and malformed legacy metadata checkpoint ordering. Full inherited regression and original test/fixture preservation remain exact-candidate evidence roles. The added adapter regression proves the legacy class has ordinary integer storage and native admission, while the admitted .7 adapter stays separate and reports the same shared ledger. EB26 also preserves the original six-descriptor capability map.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB22",
+      "title": "Inherited physical semantics",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "Explicit new binding retains construction, surface, impulse, force and reach behaviors; no skipped profile branches or inferred version ordering",
+      "test_methods": [
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB22_explicit_import_compatibility",
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb22_exact_center_impulse_preserves_prior_spin_and_noncenter_adds_torque",
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb22_explicit_output_identity_and_exact_native_box_dimensions",
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb22_inherited_reach_surface_impulse_and_force_semantics"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort"
+      ],
+      "coverage_rationale": "Tests exercise explicit profile/import compatibility, native geometry, loft surfaces, reach, force and impulse semantics, including exact-center impulses that preserve earlier spin and noncenter impulses that add torque.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB23",
+      "title": "Independent supplied-byte authority",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "Reader validates actual output claims under its real context; altered budget metadata or self-asserted trust cannot authorize resources or bypass validation",
+      "test_methods": [
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb23_budget_metadata_cannot_create_reader_authority",
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb23_conservative_reserve_preserves_exact_inequalities_and_tolerances",
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb23_structurally_valid_changed_vertices_fail_the_source_oracle",
+        "tests/test_execution_budget_export.py::BudgetExportTests.test_eb23_tampered_source_identity_is_rejected_by_independent_readback",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetRuntimeTests.test_EB23_an_admission_cannot_compile_different_entry_bytes"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort"
+      ],
+      "coverage_rationale": "A real admitted host context is required despite artifact metadata. Source identity, geometry and certificate tampering are rejected, and an admitted entry revision cannot authorize different source bytes.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB24",
+      "title": "Idempotency and resume",
+      "first_increment": "C074",
+      "status": "deferred_not_executed",
+      "expected": "Same request identity/payload returns its prior receipt; changed budget conflicts; new explicit execution reauthorizes; internal resume never resets allowance",
+      "reason": "Agent/0.7 lifecycle is outside the adopted C073 source/CLI increment and remains unavailable."
+    },
+    {
+      "id": "EB25",
+      "title": "Host ceiling below defaults",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "Omitted source/caller values reject below defaults; an explicitly lower source/request cap can succeed without silently changing defaults",
+      "test_methods": [
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB25_host_below_defaults_requires_explicit_lower_request"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort"
+      ],
+      "coverage_rationale": "Host ceilings below the defaults reject omitted requests and permit explicit lower source or caller limits without changing language defaults.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB26",
+      "title": "Inspectable execution result",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "Bounded receipt identifies source, implementation, policy, source request, caller cap, ceilings, effective/consumed work, elapsed time and terminal reason",
+      "test_methods": [
+        "tests/test_execution_budget_admission.py::ExecutionBudgetAdmissionTests.test_EB26_receipt_is_bounded_and_unresolved_fields_are_null",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetRuntimeTests.test_EB02_actual_source_to_independent_output_has_complete_identity",
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetRuntimeTests.test_EB26_discovery_separates_defaults_from_host_ceilings"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort"
+      ],
+      "coverage_rationale": "Tests cover receipt and discovery identities, unresolved null fields, artifact SHA-256, selected limits and cumulative work. The runtime and publication path use the existing JSON guards. The nested execution_budget_interface.export_targets entry is policy-independent; every legacy top-level descriptor key and value is checked against the baseline canonical digest.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB27",
+      "title": "Modeled time stays independent",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "Execution timeout changes do not change authored scene.duration, requested evaluation horizon, export end or sampling rate",
+      "test_methods": [
+        "tests/test_execution_budget_runtime.py::ExecutionBudgetRuntimeTests.test_EB27_computation_timeout_does_not_change_recorded_time"
+      ],
+      "evidence_roles": [
+        "complete_unit_cohort"
+      ],
+      "coverage_rationale": "Changing the computation allowance from 60 to 80 seconds preserves the requested 0.25-second endpoint and complete sampling record.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB28",
+      "title": "Original acceptance identity",
+      "first_increment": "C073",
+      "status": "passed",
+      "expected": "Original builder/fixtures/limits remain unchanged; no new higher-budget success is counted as passing the historical original28 gate",
+      "test_methods": [],
+      "evidence_roles": [
+        "preservation_audit",
+        "unchanged_historical_original28"
+      ],
+      "coverage_rationale": "The exact-candidate audit compares every original tracked path, mode and byte hash against the baseline. Original tests, examples, language contracts, fixtures, verification tools, builders and workflows are identical; the new frozen cohort remains separate. This does not change the historical original-28 outcome.",
+      "coverage_limits": []
+    },
+    {
+      "id": "EB29",
+      "title": "Actual Agent protocol path",
+      "first_increment": "C074",
+      "status": "deferred_not_executed",
+      "expected": "Explicit Agent/0.7 discovery, create/edit, evaluate, export/retrieve, status, cancel, hostile input and retry cases execute before that interface is advertised",
+      "reason": "Agent/0.7 lifecycle is outside the adopted C073 source/CLI increment and remains unavailable."
+    }
+  ],
+  "artifact": {
+    "media_type": "model/gltf-binary",
+    "gltf_version": "2.0",
+    "byte_length": 1737552,
+    "sha256": "sha256:c6a1e94dab7c1536aa8749e0e34132effc9f8fc27650bbafa70ed6567a91f8b1"
+  },
+  "core_roles": [
+    {
+      "id": "force-agent-tools",
+      "status": "passed",
+      "test_execution": null
+    },
+    {
+      "id": "unit-tests",
+      "status": "passed",
+      "test_execution": {
+        "tests_run": 3129,
+        "skipped": 0,
+        "expected_failures": 0,
+        "executed_without_skips": 3129,
+        "complete_regression_passed": true
+      }
+    },
+    {
+      "id": "source",
+      "status": "passed",
+      "test_execution": null
+    },
+    {
+      "id": "agent",
+      "status": "passed",
+      "test_execution": null
+    },
+    {
+      "id": "construction",
+      "status": "passed",
+      "test_execution": null
+    },
+    {
+      "id": "surface",
+      "status": "passed",
+      "test_execution": null
+    },
+    {
+      "id": "impulse",
+      "status": "passed",
+      "test_execution": null
+    },
+    {
+      "id": "documents",
+      "status": "passed",
+      "test_execution": null
+    },
+    {
+      "id": "force-agent-tests",
+      "status": "passed",
+      "test_execution": {
+        "tests_run": 106,
+        "skipped": 0,
+        "expected_failures": 0,
+        "executed_without_skips": 106,
+        "complete_cohort_passed": true
+      }
+    },
+    {
+      "id": "force-agent-build",
+      "status": "passed",
+      "test_execution": null
+    },
+    {
+      "id": "force-agent-audit",
+      "status": "passed",
+      "test_execution": null
+    }
+  ],
+  "environment": {
+    "core": {
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "executable": "/workspace/scratch/fe6a0ccd384a/c073-validation/tools/python/bin/python",
+      "platform": "Linux-6.18.55-x86_64-with-glibc2.39"
+    },
+    "destination": {
+      "node": "v22.23.4",
+      "three_revision": "180",
+      "platform": "linux",
+      "architecture": "x64",
+      "dependencies": {
+        "three": "0.180.0",
+        "gltf-validator": "2.0.0-dev.3.10",
+        "playwright": "1.56.1",
+        "esbuild": "0.25.10"
+      }
+    },
+    "browser": "141.0.7390.37"
+  },
+  "preservation": {
+    "baseline_files": 3834,
+    "candidate_files": 3854,
+    "original_identical": 3818,
+    "protected_originals": 3817,
+    "protected_originals_identical": 3817,
+    "permitted_runtime_changes": 13,
+    "handoff_updates": 3,
+    "additions": 20,
+    "resource_definitions_checked": 65,
+    "existing_parameter_defaults_checked": 934,
+    "new_test_methods": 64,
+    "C073_cases": 24,
+    "failures": 0
+  },
+  "static_binding_reviewer": "/root/budget_parser",
+  "static_binding_reviewer_contribution_exclusions": [
+    "Admission/parser/profile helper/linker changes and their tests",
+    "Original adoption/grammar/diagnostics documentation",
+    "GLB callback identity/snapshot repair and tests",
+    "Construction adapter repair, EB21 test and debit-map wording"
+  ],
+  "retained_failed_candidate": {
+    "candidate": "a23b0b2132249ae79f3a6a326d47befd1a472db3",
+    "status": "failed",
+    "unit_tests": 3128,
+    "failures": 9,
+    "errors": 1,
+    "other_selected_steps_passed": 10,
+    "summary": {
+      "path": "final-candidate-core/summary.json",
+      "bytes": 25798,
+      "sha256": "33d957ca27e95d0d157b2ac11f200ae3327c8bb64e913f65132163e80cc22ba5"
+    },
+    "unit_log": {
+      "path": "final-candidate-core/logs/unit-tests.log",
+      "bytes": 625104,
+      "sha256": "de22b83c95d634e229e226486edb824f644bab8d64c75904388faba2e000d352"
+    },
+    "classification": "Eight failures and one error came from the changed ConstructionBudget storage; one failure came from the added top-level export target. This completed failed run remains separate evidence and is not a successful compatibility receipt."
+  },
+  "inherited_pending_external_cases": [
+    {
+      "step": "construction",
+      "report": "reports/construction.json",
+      "id": "C20",
+      "reasons": [
+        "The identified independent visual-delivery gate is pending."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M01",
+      "reasons": [
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M02",
+      "reasons": [
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M03",
+      "reasons": [
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M04",
+      "reasons": [
+        "destination: No identified surface release evidence manifest was supplied.",
+        "workflow: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M05",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M06",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M07",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M08",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M09",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M11",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied.",
+        "browser: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M12",
+      "reasons": [
+        "regression: No identified surface release evidence manifest was supplied.",
+        "ci: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "impulse",
+      "report": "reports/impulse.json",
+      "id": "I07",
+      "reasons": [
+        "workflow: No identified impulse release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "impulse",
+      "report": "reports/impulse.json",
+      "id": "I09",
+      "reasons": [
+        "workflow: No identified impulse release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "impulse",
+      "report": "reports/impulse.json",
+      "id": "I11",
+      "reasons": [
+        "workflow: No identified impulse release evidence manifest was supplied.",
+        "destination: No identified impulse release evidence manifest was supplied.",
+        "browser: No identified impulse release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "impulse",
+      "report": "reports/impulse.json",
+      "id": "I12",
+      "reasons": [
+        "regression: No identified impulse release evidence manifest was supplied.",
+        "ci: No identified impulse release evidence manifest was supplied."
+      ]
+    }
+  ],
+  "original28": {
+    "status": "failed",
+    "passed": 24,
+    "total": 28,
+    "unresolved": [
+      "P11",
+      "P16",
+      "P23",
+      "L03"
+    ],
+    "changed_by_C073": false
+  },
+  "held_scope": [
+    "M1 rejected",
+    "Comparison accounting/passive authority open",
+    "C035 held including adverse timing",
+    "C068 unadopted",
+    "C069 existing-list receipt rejected",
+    "C070 isolated angular-cache proposal unselected",
+    "C057 open",
+    "Complete reach acceptance open",
+    "Historical LFS migration open",
+    "Full GOAL open",
+    "Agent/0.7 unavailable"
+  ],
+  "release_acceptance": false,
+  "full_product_conformance_certified": false,
+  "limits": [
+    "Evidence covers this finite C073 increment and frozen workload, not universal numerical or delivery correctness.",
+    "Native and browser playback use the same pinned Three.js implementation; actual image review covers six named views/times.",
+    "Existing pending release obligations retain their original status. The historical fixed-budget cohort is unchanged."
+  ],
+  "source_inputs": {
+    "docs/language-design/execution-budgets-v0.1/conformance-plan.json": "sha256:7ead919cc36b0a4e122f88ecfddb1e78310eb6f731b4f8aee5fc59866575f077",
+    "examples/execution-budgets/acceptance-freeze.json": "sha256:21b495b2604bc862ee0c61b10199f0a90d61a0371376cbc12be6630c3e7f47a4"
+  },
+  "evidence_files": [
+    {
+      "path": "compatibility-candidate-core-recovery/summary.json",
+      "bytes": 25816,
+      "sha256": "sha256:8059859d468cd76291f3dc37c55b06197ea23fb1980731f9002b0f039243e924"
+    },
+    {
+      "path": "compatibility-candidate-core-recovery/logs/force-agent-tools.log",
+      "bytes": 0,
+      "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "compatibility-candidate-core-recovery/reports/force-agent-tools.json",
+      "bytes": 1108,
+      "sha256": "sha256:00216f16cf9b2c80913377a813f2dbf51b717f200e6d4f69d27787f31307879e"
+    },
+    {
+      "path": "compatibility-candidate-core-recovery/logs/unit-tests.log",
+      "bytes": 616060,
+      "sha256": "sha256:0d8d1b3bf6e910a4bc3e5e4f203fb2a3a61046be743169ce1c2905e9075f3cef"
+    },
+    {
+      "path": "compatibility-candidate-core-recovery/logs/source.log",
+      "bytes": 318,
+      "sha256": "sha256:25ee67a06710eb2894f1ae2641333f6d37ffb9648eef139eebf1816761d8fa44"
+    },
+    {
+      "path": "compatibility-candidate-core-recovery/reports/source.json",
+      "bytes": 230305,
+      "sha256": "sha256:0d446f83ee1735606213f2ecc1b4e5aa06c1bcdab650c4e514d816e27c786dfa"
+    },
+    {
+      "path": "compatibility-candidate-core-recovery/logs/agent.log",
+      "bytes": 194,
+      "sha256": "sha256:3a0fd854600eb13a67425717998ddaf7673e3f8c4ae8d65af886d09a8ad92e48"
+    },
+    {
+      "path": "compatibility-candidate-core-recovery/reports/agent.json",
+      "bytes": 257723,
+      "sha256": "sha256:c0b7f3cfd903bead6dedccfeda1339c06455562b1afdb2184872f64e91041edc"
+    },
+    {
+      "path": "compatibility-candidate-core-recovery/logs/construction.log",
+      "bytes": 537,
+      "sha256": "sha256:942a63a908e6294099b9939cc594a01d54a71d3871b8781fd46400e5de220e19"
+    },
+    {
+      "path": "compatibility-candidate-core-recovery/reports/construction.json",
+      "bytes": 145259,
+      "sha256": "sha256:d3e6c1e562bd8f24615f33ce66bd36c4de8d8ee76dbd8867300726968ac978a2"
+    },
+    {
+      "path": "compatibility-candidate-core-recovery/logs/surface.log",
+      "bytes": 287,
+      "sha256": "sha256:27311a845e69d26ce1f854c8d049579f71bd67f3ca1486c63accf28b32509b1f"
+    },
+    {
+      "path": "compatibility-candidate-core-recovery/reports/surface.json",
+      "bytes": 111894,
+      "sha256": "sha256:138bf59685e1c5347cb71f630046b4c21029e0d920a6231dd25c5381f0fee4bf"
+    },
+    {
+      "path": "compatibility-candidate-core-recovery/logs/impulse.log",
+      "bytes": 157,
+      "sha256": "sha256:82160c6e197af610b7f5228784d297908afc81d25f253f9bc2a114cdcbbf4dca"
+    },
+    {
+      "path": "compatibility-candidate-core-recovery/reports/impulse.json",
+      "bytes": 414953,
+      "sha256": "sha256:b9806fe042d393c9f6ca26cd74daa488e7316b1e477335a1372bde5d57959633"
+    },
+    {
+      "path": "compatibility-candidate-core-recovery/logs/documents.log",
+      "bytes": 6606,
+      "sha256": "sha256:395338e88cac75be59dad392a0836f454c8a310820251335b7576e6aa4e19a47"
+    },
+    {
+      "path": "compatibility-candidate-core-recovery/logs/force-agent-tests.log",
+      "bytes": 19531,
+      "sha256": "sha256:2ca1960579813c5a689a04f31d9fd5408aad170ca1667e5070c4c02589b74fd1"
+    },
+    {
+      "path": "compatibility-candidate-core-recovery/logs/force-agent-build.log",
+      "bytes": 283,
+      "sha256": "sha256:45d58820385a4cbc637920f58967d98034ae467484d3852770f97bd5011d7ff6"
+    },
+    {
+      "path": "compatibility-candidate-core-recovery/artifacts/force-agent-workflow/workflow.json",
+      "bytes": 176843,
+      "sha256": "sha256:32d962071acff6c3ad73f2d1f27d20689c1c8b331e0f94f749e98c872a832934"
+    },
+    {
+      "path": "compatibility-candidate-core-recovery/logs/force-agent-audit.log",
+      "bytes": 2049,
+      "sha256": "sha256:26b4131c188ef2b3e8cd60b10a25bc29bed9537178742ed9ea534d2148d615ce"
+    },
+    {
+      "path": "compatibility-candidate-core-recovery/reports/force-agent-audit.json",
+      "bytes": 2049,
+      "sha256": "sha256:919b6d6eba3401a7ff33e507f0da6813257aa14a5d9fdf4b300908035767bf64"
+    },
+    {
+      "path": "input-audit-e072906f.json",
+      "bytes": 3216799,
+      "sha256": "sha256:bb098f66da150bb118e86364f7aa1a64df4c3152b6c50c9e5c3451d33e62a026"
+    },
+    {
+      "path": "conformance-coverage-e072906f.json",
+      "bytes": 52575,
+      "sha256": "sha256:166857d6ebab9268d0a3c4713c7d81205144310ec5c7f93b5fb335e5bac72789"
+    },
+    {
+      "path": "review-bindings-e072906f.json",
+      "bytes": 6092,
+      "sha256": "sha256:a65048b3e378addbeecc0566550f2c2dd66ffec95b0c22e7a773ab1e2fa0c039"
+    },
+    {
+      "path": "export-review-e072906f.json",
+      "bytes": 18515,
+      "sha256": "sha256:ff59a8a18dc3d07692693649ab86acd2f0481fb76a097bc9ec0d8b751dbd8e3a"
+    },
+    {
+      "path": "export-review-e072906f.md",
+      "bytes": 2098,
+      "sha256": "sha256:0e17ed85f8faa76cbd63e8a3c175cbf4ccfb9b9cf6bd652b348513b9e036be67"
+    },
+    {
+      "path": "reviews/execution-budget-discovery-review-e072906f.json",
+      "bytes": 6999,
+      "sha256": "sha256:240fa0f3d608c776dc400c56d80901773ad3473d3a4b4184f6f95794746b9068"
+    },
+    {
+      "path": "reviews/execution-budget-discovery-review-e072906f.md",
+      "bytes": 1338,
+      "sha256": "sha256:84993c6b87064952a56ab4c4b9db034fb8b419104025c4cb6ecb06efcb23a2f4"
+    },
+    {
+      "path": "frozen-oracle-derivation-e072906f.json",
+      "bytes": 12850,
+      "sha256": "sha256:62f83ec37c6a35eae590d850ef12ca77f0c9fed5e710982a260f26ecfd905c9b"
+    },
+    {
+      "path": "frozen-checker-review-e072906f.json",
+      "bytes": 7176,
+      "sha256": "sha256:0de824e5a6c60ad440d39f1fd4bbc3a3fd779c0d53047c992f23a56975643fdd"
+    },
+    {
+      "path": "frozen-checker-review-e072906f.md",
+      "bytes": 2035,
+      "sha256": "sha256:6aaffd8dca0da720dbeeb5f30d0debbf3efcbbf402a2151ab95c5b4e26b405b5"
+    },
+    {
+      "path": "compatibility-candidate-acceptance/inputs.json",
+      "bytes": 990,
+      "sha256": "sha256:eb8c4a72f4d0775341272adcd7e01280c2b4fd53eae452f119d8eda755ef876c"
+    },
+    {
+      "path": "compatibility-candidate-acceptance/source-binding.json",
+      "bytes": 1305,
+      "sha256": "sha256:df9ada5e9b16a2eec0755d4419d4201dc00e46588181136d7cd07f46ec54e666"
+    },
+    {
+      "path": "compatibility-candidate-acceptance/default-control.receipt.json",
+      "bytes": 2829,
+      "sha256": "sha256:1382f66a58a9e9548cfac67b5012304d3fdf7c1a8e1971a29a8223b1c1662352"
+    },
+    {
+      "path": "compatibility-candidate-acceptance/authorized-large.receipt.json",
+      "bytes": 2059884,
+      "sha256": "sha256:53cc61f75eb51f84c7ad30f48fe41188850af6617981ecfab7c0da9b6e17482d"
+    },
+    {
+      "path": "compatibility-candidate-acceptance/summary.json",
+      "bytes": 2616,
+      "sha256": "sha256:5411ec1b8968134a32ba1a9f05d53466cc8b8905d056e6992133ad370b6ceb45"
+    },
+    {
+      "path": "compatibility-candidate-acceptance/authorized-large.glb",
+      "bytes": 1737552,
+      "sha256": "sha256:c6a1e94dab7c1536aa8749e0e34132effc9f8fc27650bbafa70ed6567a91f8b1"
+    },
+    {
+      "path": "compatibility-candidate-independent/validation.json",
+      "bytes": 61612,
+      "sha256": "sha256:5e910d8236b260ed8cf9402272e2f5bf3ebb27e2de5801c8de575bf04ec104c5"
+    },
+    {
+      "path": "compatibility-candidate-independent/visual-review.json",
+      "bytes": 3178,
+      "sha256": "sha256:06ce7d0458d7661506d663d932144dc7aa67e4821ae6f25f027b340f85967ca8"
+    },
+    {
+      "path": "compatibility-candidate-independent/front-start.png",
+      "bytes": 17796,
+      "sha256": "sha256:d20f5472138d289b1c6518f7dd6b221c13ea37aa476adce604569b8d3316beb8"
+    },
+    {
+      "path": "compatibility-candidate-independent/front-middle.png",
+      "bytes": 17720,
+      "sha256": "sha256:e62e382c280edf29a3f26d8619dbb28d1b0a959722bd29804282053b0fe01692"
+    },
+    {
+      "path": "compatibility-candidate-independent/front-end.png",
+      "bytes": 17752,
+      "sha256": "sha256:37c48ca54d8546a5540dc40bfb44f7c9a6efe4003e6a0a29ef671a7c054f1ff6"
+    },
+    {
+      "path": "compatibility-candidate-independent/side-start.png",
+      "bytes": 14766,
+      "sha256": "sha256:3192d56007fb98d10b5332023a4ce981143813cb1fafc000650ffa8214d576ef"
+    },
+    {
+      "path": "compatibility-candidate-independent/side-middle.png",
+      "bytes": 14968,
+      "sha256": "sha256:e67baec8b08e9991457c2e2286fc13859d3d76f322d1acf94994c69e15fac209"
+    },
+    {
+      "path": "compatibility-candidate-independent/side-end.png",
+      "bytes": 14595,
+      "sha256": "sha256:d87518efecc1e95660e29631845cd86b9d83bc55735b596687bbc4b8e8ba1c93"
+    },
+    {
+      "path": "compatibility-candidate-acceptance/recovery-eligibility.json",
+      "bytes": 6726,
+      "sha256": "sha256:fad4f68b85de3ce1a7c41a5b14b6327ac9db3ea2d36bea64c306269f24330589"
+    },
+    {
+      "path": "compatibility-candidate-core/summary.json",
+      "bytes": 3578,
+      "sha256": "sha256:dd5268f8db017109888691d4b205ca08c6904af14d2c5b0d0960b0105d38c81d"
+    },
+    {
+      "path": "compatibility-candidate-core/transport-interruption.json",
+      "bytes": 1130,
+      "sha256": "sha256:f4e45fed976c53009e944b766a01ea179ce0385951cef618fc67f5c5b6cb1c6d"
+    },
+    {
+      "path": "compatibility-candidate-core/source-before.json",
+      "bytes": 866347,
+      "sha256": "sha256:4d29cd1201eec569092208ec1b778e2c3dae9ea33887e5e37e702b207062aabe"
+    },
+    {
+      "path": "compatibility-candidate-core/source-at-reconciliation.json",
+      "bytes": 866347,
+      "sha256": "sha256:4d29cd1201eec569092208ec1b778e2c3dae9ea33887e5e37e702b207062aabe"
+    },
+    {
+      "path": "compatibility-candidate-core-recovery/source-before.json",
+      "bytes": 866347,
+      "sha256": "sha256:4d29cd1201eec569092208ec1b778e2c3dae9ea33887e5e37e702b207062aabe"
+    },
+    {
+      "path": "compatibility-candidate-core/logs/unit-tests.log",
+      "bytes": 552985,
+      "sha256": "sha256:28fbd7037d11bf11e18685dc0999f0eb2dbf6dcced9e21045a5389f56e9a7b60"
+    },
+    {
+      "path": "compatibility-candidate-core-recovery/source-after.json",
+      "bytes": 866347,
+      "sha256": "sha256:4d29cd1201eec569092208ec1b778e2c3dae9ea33887e5e37e702b207062aabe"
+    }
+  ],
+  "aggregator_sha256": "sha256:b1107f7bbb7abd6dc95c8c13096b61bee92f410ae0590adaefef78a930affc74"
+}
