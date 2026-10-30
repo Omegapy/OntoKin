@@ -14,6 +14,14 @@ Start with complete exterior models, characters, props, mechanisms, and short an
 
 The [capability definition](docs/product/OK-CAP-001-modeling-motion-and-object-structure.md) supplies this modeling emphasis. The [PRD](docs/product/OK-PRD-001-product-requirements.md) retains the broader product ambition. Their historical review statuses remain visible; adopted language rules and measured implementation claims have separate records.
 
+## Development priority: flexible execution budgets
+
+The owner's October 29, 2026 direction prioritizes developing the language's capabilities and enabling increasingly complex 3D objects, animations and simulations. Keep the ordinary execution defaults of 100,000 operations and 30,000 ms, while adding an explicit language feature through which an entry program requests higher limits within resource ceilings authorized by its execution environment. Examples include 200,000 or 400,000 operations and 60, 75 or 80 seconds of computation time. Modeled animation duration remains a separate source value.
+
+[C072](docs/engineering/language-execution-budgets-2026-10-29-c072/README.md) records the source evaluation and [OK-LANG-007 proposal](docs/language-design/OK-LANG-007-configurable-execution-budgets.md). The next task is [C073 implementation](docs/engineering/language-execution-budgets-2026-10-29-c072/NEXT-TASK.md), beginning with one authorized source-to-export path and independent output verification. The proposed syntax and higher-budget bindings are not implemented by this planning checkpoint.
+
+Original tests, fixtures and acceptance gates retain their current limits. New demanding workloads use separately identified, explicitly authorized higher-budget settings; their results cannot retroactively pass an old fixed-budget gate. Preserve bounded work, cancellation, failure atomicity, independent validation and all unrelated resource caps. Efficiency improvements remain part of development, but extensive optimization investigations must not become a prerequisite for extending the language.
+
 ## Preserve the full product scope
 
 PRD section 9.2 identifies the following required areas. A limited release may defer them, but they remain part of the goal.
@@ -90,9 +98,9 @@ The [durable release evidence](docs/engineering/force-release-validation/README.
 
 This closes the adopted finite center-of-mass force scope. Continuous torque, contacts, general rigid dynamics, deformable matter, live destination physics and all remaining product domains still need their own evidence. No measured authoring benefit or full-product completion is inferred from this release.
 
-## Next development direction: reusable purposeful actions
+## Continuing capability work: reusable purposeful actions
 
-Implement and validate the adopted [OK-LANG-006/0.1.0 contract](docs/language-design/planar-reach-v0.1/ADOPTION.md). [PR #19](https://github.com/Omegapy/OntoKin/pull/19) integrated its separate adoption and exact reviewed inputs as main merge `349ac15ce92502673aff05ecd2c7aabc4912d17b`. The original 41-case source/expected corpus remains unchanged; the adopted supplements define both-moving lifecycle, bounded numerical admission, simultaneous claims, complete Agent projections, failed-prefix recovery, scoped repair and bounded recorded delivery. Draft labels in frozen preparation files retain their historical identities; the separate adoption record establishes current authority.
+Continue implementing and validating the adopted [OK-LANG-006/0.1.0 contract](docs/language-design/planar-reach-v0.1/ADOPTION.md) alongside the execution-budget priority above. [PR #19](https://github.com/Omegapy/OntoKin/pull/19) integrated its separate adoption and exact reviewed inputs as main merge `349ac15ce92502673aff05ecd2c7aabc4912d17b`. The original 41-case source/expected corpus remains unchanged; the adopted supplements define both-moving lifecycle, bounded numerical admission, simultaneous claims, complete Agent projections, failed-prefix recovery, scoped repair and bounded recorded delivery. Draft labels in frozen preparation files retain their historical identities; the separate adoption record establishes current authority.
 
 The finite runtime and release gate remain open. Source `0.6` / `planar-reach-0.1`, explicit Agent/0.6 and recorded GLB/0.6 must satisfy all adopted source, protocol, numerical, destination, browser, compatibility and inherited obligations. The [integration record](docs/language-design/planar-reach-v0.1/contract-review/integration18.json) reports only contract preparation, adoption and resulting-main checks; it does not establish runtime support, an authoring improvement or full-product completion.
 

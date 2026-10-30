@@ -10,6 +10,12 @@ The current direction begins with exterior 3D models and short animations. Those
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
 
+### Next language feature: configurable execution budgets
+
+The owner has selected flexible execution budgets as the next implementation priority. Programs will be able to request more computation time and operations within ceilings independently authorized by their execution environment. Ordinary defaults remain **100,000 operations and 30,000 ms**; existing acceptance tests retain their original limits. A larger host ceiling does not silently increase an omitted program budget. Computation time and the animation's modeled duration are separate values.
+
+[C072](docs/engineering/language-execution-budgets-2026-10-29-c072/README.md) evaluates the current fixed-limit boundaries and publishes [the proposed language contract](docs/language-design/OK-LANG-007-configurable-execution-budgets.md). **The new syntax is proposed, not implemented.** [C073](docs/engineering/language-execution-budgets-2026-10-29-c072/NEXT-TASK.md) implements one complete source/CLI path through authorized budget selection, execution, export and independent output validation. Efficiency work continues without making another optimization investigation a prerequisite for this language feature.
+
 ### Current development: experimental planar reach
 
 The C059 reconciliation selects the reviewed C032 development runtime, preserves the later C058 evidence, and excludes the held C035 runtime experiment. Source `0.6` / `planar-reach-0.1`, Agent/0.6 and recorded GLB/0.6 require explicit selection and are marked experimental in capabilities and discovery. Earlier bindings and defaults retain their meanings. [Current integration status](STATUS.md) and the [reconciliation record](docs/engineering/repository-reconciliation-2026-10-28/README.md) distinguish the actual candidate, checks and resulting main from release acceptance.

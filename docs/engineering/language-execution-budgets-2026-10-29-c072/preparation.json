@@ -1,0 +1,66 @@
+{
+  "schema_version": "ontokin.c072-preparation/0.1",
+  "baseline_commit": "814a0d84ff49b9fe28af9564d4e07314eb955de4",
+  "observations": [
+    {
+      "action": "ordinary HTTPS git clone",
+      "result": "failed",
+      "reason": "sandbox network proxy connection refused; no source checkout created"
+    },
+    {
+      "action": "approved retry of HTTPS git clone",
+      "result": "failed",
+      "reason": "private repository requires an unavailable git HTTPS credential; connected GitHub API reads/writes remain available"
+    },
+    {
+      "action": "fresh Library download helper initial invocation",
+      "result": "failed",
+      "reason": "required hosted-apps companion was missing; fetched unchanged current companion before retry"
+    },
+    {
+      "action": "complete helper sandbox invocation",
+      "result": "failed",
+      "reason": "hosted tools-list network unavailable"
+    },
+    {
+      "action": "approved identical complete helper retry",
+      "result": "passed",
+      "files": [
+        "OntoKin_C071_Handoff_2026-10-29.zip"
+      ]
+    },
+    {
+      "action": "original C071 ZIP SHA-256 check and safe extraction",
+      "result": "passed",
+      "sha256": "cc54aa5c42f046c310fbbd18ecfa63830111e2ec1ffdb36767a1878404e35410",
+      "bytes": 476746311,
+      "members": 3835
+    },
+    {
+      "action": "unchanged C071 verify_handoff.py on extracted packet",
+      "result": "passed",
+      "source_files": 3804,
+      "source_bytes": 623146522,
+      "manifest_sha256": "a389eb20f1b4f45b5695bf625b65820d904ab21b78f0ecca4b13c7c56decbbe9"
+    },
+    {
+      "action": "native local source object materialization",
+      "result": "passed",
+      "head": "814a0d84ff49b9fe28af9564d4e07314eb955de4",
+      "tree": "3d930c608136e138b53f4d5bf73d65c76eca3c65",
+      "tracked_files": 3804,
+      "working_status": "clean",
+      "full_history_clone": false
+    },
+    {
+      "action": "initial git diff --cached --check",
+      "result": "failed",
+      "reason": "two Markdown hard-line-break trailing spaces in new specification metadata; replaced by blank lines before publication"
+    }
+  ],
+  "product_imports": 0,
+  "product_requests": 0,
+  "product_suites": 0,
+  "hosted_jobs_dispatched": 0,
+  "scope_note": "Preparation outcomes, not runtime acceptance evidence; baseline full packet is unchanged."
+}
