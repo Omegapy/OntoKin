@@ -51,7 +51,15 @@ The [raw archive descriptor](evidence-archive.json) identifies 1,512 immutable m
 
 [Preservation](preservation.json) confirms all 3,990 baseline paths remain. All 975 protected old test/example/schema/workflow/language-design files and all 64 original C076 adoption/fixture paths retain their exact Git blobs and modes. Nineteen deliberate baseline changes are listed: shared runtime adapters and three navigation/goal files. Earlier behavior, defaults, acceptance limits and adoption records retain their meanings.
 
-Coordinator `interactive-polygon-holes-20261030-c076-57d0170e` owns the bounded scope declared in [Issue #26](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6530373184). Main integration requires a separately verified expected-head lease. Current [STATUS](../../../STATUS.md) and PR #74 identify the actual ownership/integration state; this evidence publication asserts no future merge.
+Coordinator `interactive-polygon-holes-20261030-c076-57d0170e` owns the bounded scope declared in [Issue #26](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6530373184). The evidence publication preserved candidate results before main integration. The later [integration record](integration.json), current [STATUS](../../../STATUS.md) and PR #74 identify the actual merged state and lease release. Portable delivery and explicit scope closure retain their subsequent external records.
+
+## Verified main integration
+
+[PR #74](https://github.com/Omegapy/OntoKin/pull/74) merged as `bb9322f013d71b90c154a909e1e76c7651eb4995`, tree `d18802d043d2a151944d6e0ac74b76fc72a4635e`. Its ordered parents are lease `d344cb35845a2a03fd7251780d1cb22363442191` and evidence `89e9b7222fc2a0ba66eb49020940e6895a4fde40`. The remotely observed tree exactly matches the independent local merge calculation. The completed work branch was removed after the incoming history became the merge's second parent; the history-only archive is unchanged.
+
+Fresh checks on that actual clean merge passed **80 new tests**, **43 inherited source cases / 694 assertions**, **55 new source cases / 308 assertions**, the actual **62-exchange / 60-identity Agent workflow**, documentation and complete input eligibility. The [focused receipt](merge-checks.json) and [equality record](merge-input-equality.json) preserve exact inputs, commands, times and log hashes. All **4,071 eligible files** match the full-suite candidate in both Git blobs and modes; only STATUS and this C076 engineering directory differ. The [independent integration review](integration-review.md) checked the publication, composition, preservation and resulting-main receipts.
+
+These checks establish the finite development integration. They do not relabel candidate full regression or destination/browser observations as new runs. The [integration record](integration.json) pins the subsequent raw receipts retained separately in the portable packet. The publication containing this section releases the main lease; its final commit, fresh final documentation/equality checks, portable verification and delivery are necessarily recorded afterward.
 
 ## Remaining boundaries and continuation
 
