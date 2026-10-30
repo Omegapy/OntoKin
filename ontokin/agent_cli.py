@@ -67,6 +67,11 @@ def run(args, *, host_policy=None) -> int:
         from .ring_loft_protocol import RingLoftProtocol
         service_type, envelope_fn = RingLoftAgentService, RingLoftProtocol.envelope
         service_options = {"protocol": selected_protocol, "host_policy": host_policy}
+    elif selected_protocol == "ontokin.agent/0.11":
+        from .framed_loft_agent import FramedLoftAgentService
+        from .framed_loft_protocol import FramedLoftProtocol
+        service_type, envelope_fn = FramedLoftAgentService, FramedLoftProtocol.envelope
+        service_options = {"protocol": selected_protocol, "host_policy": host_policy}
     def error_response(error):
         return _error(error, envelope_fn)
     try:

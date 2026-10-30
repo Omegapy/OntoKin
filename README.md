@@ -10,6 +10,17 @@ The current direction begins with exterior 3D models and short animations. Those
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
 
+### Author bent ducts and handles with explicit section frames
+
+Explicit source `0.11` / `framed-polygon-loft-0.1` places each keyed polygon section in its own rigid `Pose` within the consuming object's frame. Matching ring and vertex identities can form bent solid bodies, hollow elbows and finite handles. The [versioned decision](docs/language-design/framed-polygon-loft-v0.1/ADOPTION.md) defines exact section transforms, fixed strip triangles, endpoint caps and complete source and delivered-mesh checks. Each frame is authored; the language does not infer a path or transport its orientation.
+
+```bash
+python3 -m ontokin export examples/framed-polygon-lofts/hollow-elbow.ok --target ontokin.glb/0.11 --output /tmp/ontokin-elbow.glb
+python3 -m ontokin agent --protocol ontokin.agent/0.11 --store /tmp/ontokin-framed-loft-agent
+```
+
+The [authoring guide](docs/language-design/framed-polygon-loft-v0.1/README.md), [frozen inputs](examples/framed-polygon-lofts/README.md) and [Agent/0.11 interface](docs/language-design/agent-v0.11/README.md) describe source repair, bounded inspection and recorded delivery. Limits remain 2–8 sections, up to eight holes, 64 vertices per section and 256 total. Origins and authored XY components stay within ±100 meters; adjacent origins must advance along both neighboring frames' positive Z axes. `FramedLoftAgentService` uses a separate durable store. Ordinary defaults remain 100,000 operations / 30,000 ms. This is experimental visual geometry and recorded carrier motion; the full product and release gates remain in [STATUS](STATUS.md).
+
 ### Author tapered polygon forms and hollow ducts
 
 Explicit source `0.10` / `polygon-loft-0.1` connects 2–8 keyed polygon sections at increasing Z stations. Matching ring and vertex identities support changing cross-sections, concave forms and up to eight through-holes, with separate cap and strip materials. The [versioned decision](docs/language-design/polygon-loft-v0.1/ADOPTION.md) defines the actual fixed diagonal triangles; it does not promise linear interpolation of planar cross-sections.

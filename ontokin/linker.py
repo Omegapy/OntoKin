@@ -15,7 +15,7 @@ from .bundle import (DIGEST_RE, BundleError, ProgramBundle, SourceUnit,
 from .diagnostics import OntoKinError, Source
 from .syntax import MAX_TOKENS, Node
 from .syntax02 import parse_source_unit
-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, HOLES_PROFILES, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, FORCE_PROFILES, IMPULSE_PROFILES
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, FORCE_PROFILES, IMPULSE_PROFILES
 from .validator import KEY_RE, PREDEFINED
 
 
@@ -216,7 +216,14 @@ def link_program(bundle: ProgramBundle, *, check: Callable[[], None] | None = No
             if target not in modules:
                 _error("OKL-E-NAME", "The explicitly imported package version is not supplied in this bundle.",
                        node, rule="CON-002", reason="missing_dependency", source_id=target)
-            if modules[target].ast.profile == RING_LOFT_PROFILE and module.ast.profile != RING_LOFT_PROFILE:
+            if modules[target].ast.profile == FRAMED_LOFT_PROFILE and module.ast.profile != FRAMED_LOFT_PROFILE:
+                raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED",
+                                   "An earlier declaring module cannot import a source 0.11 dependency.",
+                                   node, phase="support", category="unsupported",
+                                   details={"declaring_profile": module.ast.profile,
+                                            "dependency_profile": modules[target].ast.profile,
+                                            "dependency_source_id": target})
+            if modules[target].ast.profile == RING_LOFT_PROFILE and module.ast.profile not in RING_LOFT_PROFILES:
                 raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED",
                                    "An earlier declaring module cannot import a source 0.10 dependency.",
                                    node, phase="support", category="unsupported",
