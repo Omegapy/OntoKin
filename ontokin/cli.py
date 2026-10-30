@@ -80,7 +80,96 @@ def _write_export(output: Path, data: bytes, report_path: Path, report: dict) ->
             temporary.unlink(missing_ok=True)
 
 
-def capabilities() -> dict:
+def _write_export_transaction(output: Path, data: bytes, report_path: Path, report: dict) -> None:
+    """Publish a new-profile pair, restoring both destinations on a handled error.
+
+The computation has already completed its shared allowance. Persistence is a
+transport step. A process crash between two filesystem replacements still needs
+the report's exact artifact hash to detect an incomplete pair.
+"""
+    from .json_limits import JSONLimitError, MAX_JSON_BYTES, measure_json
+    try:
+        measure_json(report)
+        report_bytes = (json.dumps(report, indent=2, ensure_ascii=False, allow_nan=False) + "\n").encode("utf-8")
+        if len(report_bytes) > MAX_JSON_BYTES:
+            raise JSONLimitError("encoded_json_bytes", MAX_JSON_BYTES, len(report_bytes))
+    except JSONLimitError as error:
+        raise OntoKinError("OKL-E-RESOURCE", "The export receipt exceeds its output limit.",
+                           category="resource_limit", phase="support", details=error.details) from error
+    payloads = ((output, data), (report_path, report_bytes))
+    staged = []
+    backups = []
+    published = []
+    complete = False
+    try:
+        for destination, content in payloads:
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            with tempfile.NamedTemporaryFile(dir=destination.parent, prefix=".ontokin-",
+                                             suffix=".tmp", delete=False) as stream:
+                temporary = Path(stream.name)
+                staged.append((temporary, destination))
+                stream.write(content)
+                stream.flush()
+                os.fsync(stream.fileno())
+        for _, destination in staged:
+            if destination.exists() or destination.is_symlink():
+                with tempfile.NamedTemporaryFile(dir=destination.parent, prefix=".ontokin-",
+                                                 suffix=".backup", delete=False) as stream:
+                    backup = Path(stream.name)
+                backups.append((backup, destination, False))
+                os.replace(destination, backup)
+                backups[-1] = (backup, destination, True)
+        for temporary, destination in staged:
+            os.replace(temporary, destination)
+            published.append(destination)
+        complete = True
+    except BaseException as original_error:
+        # Restore an old file directly over a newly published one. Unlinking
+        # first is unnecessary and can prevent every later restoration.
+        original_destinations = {destination for _, destination, moved in backups if moved}
+        recovery_backups = []
+        for index in reversed(range(len(backups))):
+            backup, destination, moved = backups[index]
+            if moved:
+                try:
+                    os.replace(backup, destination)
+                    backups[index] = (backup, destination, False)
+                except OSError:
+                    recovery_backups.append(str(backup))
+        unremoved_outputs = []
+        for destination in reversed(published):
+            if destination not in original_destinations:
+                try:
+                    destination.unlink(missing_ok=True)
+                except OSError:
+                    unremoved_outputs.append(str(destination))
+        if recovery_backups or unremoved_outputs:
+            details = []
+            if recovery_backups:
+                details.append("original files remain in recovery backups: " + ", ".join(recovery_backups))
+            if unremoved_outputs:
+                details.append("new outputs could not be removed: " + ", ".join(unremoved_outputs))
+            raise OSError("Export failed; " + "; ".join(details)) from original_error
+        raise
+    finally:
+        for temporary, _ in staged:
+            try:
+                temporary.unlink(missing_ok=True)
+            except OSError:
+                pass  # A leftover staging file must not suppress recovery details.
+        for backup, _, moved in backups:
+            if complete or not moved:
+                try:
+                    backup.unlink(missing_ok=True)
+                except OSError:
+                    pass  # The delivered pair or the restored originals are intact.
+
+
+def capabilities(*, host_policy=None) -> dict:
+    from .execution_budget import HostPolicy, DEFAULT_LIMITS, MAX_LIMIT
+    policy = HostPolicy() if host_policy is None else host_policy
+    if not isinstance(policy, HostPolicy):
+        raise TypeError("host_policy must be supplied as a HostPolicy by the embedding host.")
     return {
         "implementation": "ontokin-reference", "version": __version__,
         "language_version": "0.1", "profile": "core-0.1",
@@ -173,6 +262,30 @@ def capabilities() -> dict:
             "limitations": ["Finite planar prescribed motion; no torque actuator, obstacle avoidance or contact solver.",
                             "Recorded playback is bound to the identified destination numerical method.",
                             "Experimental development implementation; planar-reach-0.1 release acceptance is incomplete."],
+        },
+        "execution_budget_interface": {
+            "status": "experimental_source_cli_increment",
+            "language_version": "0.7", "profile": "planar-reach-budget-0.1",
+            "delivery_contract": "ontokin.glb/0.7", "agent_contract": None,
+            "export_targets": {
+                "ontokin.glb/0.7": {
+                    "format": "glTF 2.0 binary (.glb)", "profile": "planar-reach-budget-0.1",
+                    "selection": "Explicit source 0.7 and host-authorized source/CLI execution",
+                    "validation": "Inherited geometry, physical history and independent supplied-byte checks under the same remaining allowance",
+                    "limitations": "Experimental source/CLI increment; no Agent/0.7 lifecycle or live destination physics",
+                },
+            },
+            "defaults": dict(DEFAULT_LIMITS), "host_ceilings": policy.ceilings,
+            "policy_id": policy.policy_id, "max_representable_limit": MAX_LIMIT,
+            "source_fields": ["max_operations", "max_elapsed"],
+            "caller_caps": ["max_operations", "max_elapsed_ms"],
+            "host_configuration": "Trusted Python HostPolicy passed to cli.main(host_policy=...) or execute_budgeted_export(policy=...)",
+            "single_source_command": "export SOURCE.ok --target ontokin.glb/0.7 --output MODEL.glb",
+            "accounting": "One original deadline and shared operation allowance through header, construction, evaluation, recording, export and independent readback",
+            "limitations": ["Agent/0.7 is unavailable.",
+                            "Computation timeout does not change scene.duration or recording options.",
+                            "Host policy is configured by the embedding host; caller flags only reduce source requests.",
+                            "Other source, object, numerical, cache and output limits remain in force."],
         },
         "operations": ["check", "evaluate", "export", "agent", "conformance", "capabilities"],
         "output_levels": ["represented", "constructed", "evaluated"],
@@ -272,7 +385,7 @@ def capabilities() -> dict:
     }
 
 
-def _program_export(args) -> int:
+def _program_export(args, *, host_policy=None) -> int:
     """Export explicitly selected newer profiles from exact offline source files."""
     from .bundle import BundleError, MAX_MANIFEST_BYTES, load_bundle, load_file_manifest
     from .construction import compile_construction
@@ -304,6 +417,28 @@ def _program_export(args) -> int:
                 raise BundleError("OKA-E-REQUEST", "The source file must contain valid UTF-8.") from None
             program = load_bundle({"schema_version": "ontokin.bundle/0.1",
                 "entry": {"filename": str(args.file), "source": source_text}, "modules": []})
+        if args.target == "ontokin.glb/0.7":
+            from .budget_runtime import execute_budgeted_export
+            output, report_path = _export_paths(args.file, args.output, args.report,
+                target_contract=args.target, protected_sources=tuple(protected))
+            caps = {name: value for name, value in (
+                ("max_operations", args.max_operations), ("max_elapsed_ms", args.max_elapsed_ms))
+                if value is not None}
+            result = execute_budgeted_export(program, policy=host_policy, caller_caps=caps,
+                options=ExportOptions(fps=args.fps, end=args.end,
+                    position_tolerance_m=args.position_tolerance,
+                    rotation_tolerance_rad=args.rotation_tolerance,
+                    time_tolerance_s=args.time_tolerance, helpers=not args.no_helpers))
+            report = dict(result.report)
+            if result.data is None:
+                _print(report)
+                return 3 if report["outcome"] == "unsupported" else 2
+            report.update(operation="export", output=str(output), report=str(report_path))
+            _write_export_transaction(output, result.data, report_path, report)
+            _print(report)
+            return 0
+        if args.max_operations is not None or args.max_elapsed_ms is not None:
+            raise BundleError("OKA-E-REQUEST", "Execution caller caps require explicit GLB/0.7.")
         compiler = compile_construction(program, level="evaluated")
         output, report_path = _export_paths(args.file, args.output, args.report,
             target_contract=args.target, protected_sources=tuple(protected))
@@ -341,7 +476,11 @@ def _program_export(args) -> int:
         return 2
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None, *, host_policy=None) -> int:
+    """Run the CLI; only a trusted launcher supplies an increased host policy."""
+    from .execution_budget import HostPolicy
+    if host_policy is not None and not isinstance(host_policy, HostPolicy):
+        raise TypeError("host_policy must be supplied as a HostPolicy by the embedding host.")
     parser = argparse.ArgumentParser(prog="ontokin", description="OntoKin reference evaluator, animation exporter, and versioned agent interfaces")
     parser.add_argument("--version", action="version", version=__version__)
     commands = parser.add_subparsers(dest="command", required=True)
@@ -357,7 +496,7 @@ def main(argv: list[str] | None = None) -> int:
     evaluate_parser.add_argument("--frame", default="world", help="Frame for --object inspection, for example first.frame")
     export_parser = commands.add_parser("export", help="Bake and verify an animation in a self-contained .glb file")
     export_parser.add_argument("file", type=Path)
-    export_parser.add_argument("--target", choices=["ontokin.glb/0.1", "ontokin.glb/0.2", "ontokin.glb/0.3", "ontokin.glb/0.4", "ontokin.glb/0.5", "ontokin.glb/0.6"],
+    export_parser.add_argument("--target", choices=["ontokin.glb/0.1", "ontokin.glb/0.2", "ontokin.glb/0.3", "ontokin.glb/0.4", "ontokin.glb/0.5", "ontokin.glb/0.6", "ontokin.glb/0.7"],
                                default="ontokin.glb/0.1", help="Explicit delivery profile; old source is never migrated")
     export_parser.add_argument("--bundle", action="store_true",
                                help="Read FILE as an ontokin.files/0.1 manifest of pinned offline .ok files")
@@ -369,6 +508,10 @@ def main(argv: list[str] | None = None) -> int:
     export_parser.add_argument("--rotation-tolerance", type=float, default=0.001, metavar="RADIANS")
     export_parser.add_argument("--time-tolerance", type=float, default=0.000001, metavar="SECONDS")
     export_parser.add_argument("--no-helpers", action="store_true", help="Omit the display-only assembly and joint markers")
+    export_parser.add_argument("--max-operations", type=int,
+                               help="GLB/0.7 caller reduction of the source operation request; grants no host authority")
+    export_parser.add_argument("--max-elapsed-ms", type=int,
+                               help="GLB/0.7 caller reduction of the source computation timeout in milliseconds")
     suite = commands.add_parser("conformance", help="Execute the published source cases and expected observations")
     suite.add_argument("--fixtures", type=Path, default=DEFAULT_FIXTURES)
     suite.add_argument("--output", type=Path, help="Write the complete JSON report to this path")
@@ -382,10 +525,14 @@ def main(argv: list[str] | None = None) -> int:
         from .agent_cli import run
         return run(args)
     if args.command == "capabilities":
-        _print(capabilities())
+        _print(capabilities(host_policy=host_policy))
         return 0
     if args.command == "export" and (args.bundle or args.target != "ontokin.glb/0.1"):
-        return _program_export(args)
+        return _program_export(args, host_policy=host_policy)
+    if args.command == "export" and (args.max_operations is not None or args.max_elapsed_ms is not None):
+        _print({"outcome": "invalid_request", "error": {"code": "OKA-E-REQUEST",
+                "message": "Execution caller caps require explicit GLB/0.7."}})
+        return 2
     if args.command == "conformance":
         from .conformance import run_conformance
         try:

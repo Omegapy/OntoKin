@@ -1,0 +1,85 @@
+{
+  "schema_version": "ontokin.c073-frozen-checker-review/0.1",
+  "status": "approved_scoped_read_only_review",
+  "reviewer": "/root/budget_parser",
+  "candidate": "e072906f664cd605bc3052b786961b9a292d4d9b",
+  "tree": "7bef230867bb876f3a26a85b01c872d5299a05d1",
+  "reviewed_utc": "2026-10-30T04:21:05.539935+00:00",
+  "contribution_boundaries": {
+    "authored_reviewed_inputs": false,
+    "independently_reviewed": "Frozen source, expected observations, freeze record, acceptance runner and native/browser checker were authored by root/recovery. This reviewer authored admission/parser documentation and later GLB callback fixes, not these checked inputs or the checker. The reviewer later authored the construction adapter repair; it too is excluded from this independent frozen-input/checker approval.",
+    "new_execution": "Static exact-rational source rederivation only; no OntoKin import/evaluation/export, checker execution, browser launch or screenshot review."
+  },
+  "input_sha256": {
+    "examples/execution-budgets/larger-workload.ok": "d2ce286de3828252a70bc43ea42c1154e572225b7c5192a72a822f3cd18bee1b",
+    "examples/execution-budgets/larger-workload.expected.json": "b3fa0606ff424431ba6ee4f23ed4810adc9de08fe83126272a98f90711b5336f",
+    "examples/execution-budgets/acceptance-freeze.json": "21b495b2604bc862ee0c61b10199f0a90d61a0371376cbc12be6630c3e7f47a4",
+    "examples/execution-budgets/README.md": "ce4a3bcd8542718682362a0a3a87b80c116604f21c22f7c4d4557d97351c697c",
+    "tools/verify_budget_glb.mjs": "961d7fbb52df9374de792903bdf7229dffb3b84db08b008f466dec4179a289a1",
+    "tools/run_budget_acceptance.py": "38e718f4f10a57798b1b693ea364cf3dd2690d4f868bbb6fdce836abeb1df330",
+    "docs/language-design/OK-LANG-003-parameterized-exterior-surfaces-and-material-regions.md": "334ef999f0bb1e013a84de00dd4c0d2bfe3ccd2a40fdca369cf1a1c1994e7a83"
+  },
+  "findings": [],
+  "derivation_evidence": {
+    "path": "frozen-oracle-derivation-e072906f.json",
+    "sha256": "62f83ec37c6a35eae590d850ef12ca77f0c9fed5e710982a260f26ecfd905c9b",
+    "pose_samples": 78,
+    "all_exactly_equal": true,
+    "geometry_per_carrier": {
+      "triangles": 96,
+      "clay_triangles": 48,
+      "paint_triangles": 48,
+      "local_bounds_min_m": [
+        -0.5,
+        -0.35,
+        0.1
+      ],
+      "local_bounds_max_m": [
+        0.5,
+        0.35,
+        1.6
+      ]
+    }
+  },
+  "assessments": {
+    "physics": "Six initially resting 2 kg spheres receive 2 N in +Y for two seconds, so ay=1; 4 N*s at t=1 gives delta_vx=2. Therefore x=x0+2 max(t-1,0), y=t^2/2 through t=2 then 2+2(t-2), z=0. Center impulses and center forces add no spin; every frozen quaternion is identity. The visual local +0.1 Z placement is not a physical carrier translation.",
+    "geometry": "The checker derives +Z elliptical rings from authored section stations, centers and radii, creates the specified outward two-triangle side pattern and opposite cap fans, applies the source local placement, and checks every actual decoded triangle with orientation and region preserved. Lower-station side regions and endpoint cap regions give 48 clay and 48 paint triangles per vessel. Actual decoded RGBA, metallic and roughness factors are compared.",
+    "byte_consumption": "Khronos and native Three.js consume the supplied file bytes. The checker validates explicit target/profile/schema, flat node inventory, actual source-manifest revision and frozen entry hash, then decodes mesh buffers and animation. Expected poses remain in the controlling process; the browser receives artifact bytes and requested observation times only. Artifact/expected hashes are recorded and reread before success.",
+    "native_and_browser": "Native Three.js checks geometry/PBR and 78 actual sampled poses. Browser Three.js independently loads the same supplied bytes, returns 78 actual AnimationMixer poses for comparison, renders six front/side start/middle/end captures and records image hashes. Both execution contexts intentionally use the same pinned Three.js decoder; they are not two distinct implementation libraries.",
+    "fit_and_visual_scope": "Fit checks project actual mesh bounding-box corners and constrain their X/Y normalized-device coordinates at the sampled/captured times. For this fixed monotone translation and identity rotation, start/middle/end union bounds contain the motion and the chosen camera near/far ranges cover the geometry. Visual review remains explicitly pending_actual_image_inspection. No screenshot is treated as already reviewed.",
+    "freeze": "Both source/expected file hashes match the committed freeze. Freeze time 2026-10-30T03:40:31.860934+00:00 precedes the earliest retained rehearsal input record at 03:44:25.367076+00:00, which binds the same hashes. The runner verifies the freeze before either attempt, requires operation_budget_exhausted for the default control and supplied-byte validation success for the authorized attempt."
+  },
+  "limits": [
+    "Analytic geometry/PBR comparison is performed in the native checker. Browser evidence renders those same bytes and separately compares poses; it does not repeat the analytic triangle oracle.",
+    "The 78 observations are fixed timestamp samples, not a new continuous external trajectory proof. The source pipeline independent continuous certificate check is a separate role.",
+    "This checker does not independently recompute flat face normals; topology/winding and the recorded geometry/PBR are checked. The source supplied-byte validator and actual screenshot review supply their own evidence.",
+    "The checker records and validates the supplied expected file; the evidence reviewer must match its reported hash to the committed freeze.",
+    "This review certifies no actual candidate checker execution, image inspection, complete release, live destination physics or extra engine compatibility."
+  ],
+  "bound_utc": "2026-10-30T04:35:04.834946+00:00",
+  "prior_review": {
+    "path": "frozen-checker-review-a23b0b21.json",
+    "bytes": 5741,
+    "sha256": "24d7e72e74a36731b57d883c9ea523424de50fa51f60205cb7f378a8660e8c6c"
+  },
+  "binding_method": "All seven reviewed source/oracle/checker/contract inputs have the same SHA-256 at the current Git commit. Review conclusions carry forward on identical inputs; no checker or browser rerun is claimed.",
+  "superseded_failed_candidate": {
+    "candidate": "a23b0b2132249ae79f3a6a326d47befd1a472db3",
+    "status": "failed",
+    "unit_tests": 3128,
+    "failures": 9,
+    "errors": 1,
+    "other_selected_steps_passed": 10,
+    "summary": {
+      "path": "final-candidate-core/summary.json",
+      "bytes": 25798,
+      "sha256": "33d957ca27e95d0d157b2ac11f200ae3327c8bb64e913f65132163e80cc22ba5"
+    },
+    "unit_log": {
+      "path": "final-candidate-core/logs/unit-tests.log",
+      "bytes": 625104,
+      "sha256": "de22b83c95d634e229e226486edb824f644bab8d64c75904388faba2e000d352"
+    },
+    "classification": "Eight failures and one error came from the changed ConstructionBudget storage; one failure came from the added top-level export target. This completed failed run remains separate evidence and is not a successful compatibility receipt."
+  }
+}

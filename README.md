@@ -10,11 +10,13 @@ The current direction begins with exterior 3D models and short animations. Those
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
 
-### Next language feature: configurable execution budgets
+### Configurable execution budgets: experimental source and CLI path
 
-The owner has selected flexible execution budgets as the next implementation priority. Programs will be able to request more computation time and operations within ceilings independently authorized by their execution environment. Ordinary defaults remain **100,000 operations and 30,000 ms**; existing acceptance tests retain their original limits. A larger host ceiling does not silently increase an omitted program budget. Computation time and the animation's modeled duration are separate values.
+Explicit source `0.7` / `planar-reach-budget-0.1` can request more computation time and operations within ceilings independently authorized by its execution environment. Ordinary defaults remain **100,000 operations and 30,000 ms**; existing acceptance tests retain their original limits. A larger host ceiling does not silently increase an omitted program budget. Computation time and the animation's modeled duration are separate values.
 
-[C072](docs/engineering/language-execution-budgets-2026-10-29-c072/README.md) evaluates the current fixed-limit boundaries and publishes [the proposed language contract](docs/language-design/OK-LANG-007-configurable-execution-budgets.md). **The new syntax is proposed, not implemented.** [C073](docs/engineering/language-execution-budgets-2026-10-29-c072/NEXT-TASK.md) implements one complete source/CLI path through authorized budget selection, execution, export and independent output validation. Efficiency work continues without making another optimization investigation a prerequisite for this language feature.
+[The C073 adoption](docs/language-design/execution-budgets-v0.1/ADOPTION-C073.md) defines the implemented grammar, trusted host API, bounded admission and explicit GLB/0.7 output. One counter and original deadline cover admission, compilation, simulation, export and independent output validation. [The example guide](examples/execution-budgets/README.md) provides an operator-controlled launcher and a frozen six-vessel force/impulse workload. Command-line caps can reduce a request; they cannot authorize a larger host ceiling.
+
+[The C073 engineering record](docs/engineering/source-execution-budgets-2026-10-29-c073/README.md) identifies the actual checks and integration state. **Agent/0.7 remains unavailable**; its source-edit, saved-program and retry lifecycle is the [next increment](docs/engineering/source-execution-budgets-2026-10-29-c073/NEXT-TASK.md). [C072](docs/engineering/language-execution-budgets-2026-10-29-c072/README.md) retains the original proposal and source evaluation. Efficiency work continues alongside language capability development.
 
 ### Current development: experimental planar reach
 

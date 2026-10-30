@@ -15,6 +15,7 @@ from .bundle import (DIGEST_RE, BundleError, ProgramBundle, SourceUnit,
 from .diagnostics import OntoKinError, Source
 from .syntax import MAX_TOKENS, Node
 from .syntax02 import parse_source_unit
+from .profile_capabilities import BUDGET_PROFILE, REACH_PROFILES, FORCE_PROFILES, IMPULSE_PROFILES
 from .validator import KEY_RE, PREDEFINED
 
 
@@ -124,7 +125,7 @@ def _bindings(module: LinkedModule, check: Callable[[], None]) -> None:
             _error("OKL-E-ID", "A module declaration key is outside the stable-key grammar.", node,
                    rule="CON-003")
         predefined = PREDEFINED_02
-        if module.ast.profile == "planar-reach-0.1":
+        if module.ast.profile in REACH_PROFILES:
             from .reach_source import NAMES
             predefined = predefined | NAMES
         if node.name in predefined or node.name in names:
@@ -215,21 +216,28 @@ def link_program(bundle: ProgramBundle, *, check: Callable[[], None] | None = No
             if target not in modules:
                 _error("OKL-E-NAME", "The explicitly imported package version is not supplied in this bundle.",
                        node, rule="CON-002", reason="missing_dependency", source_id=target)
-            if modules[target].ast.profile == "planar-reach-0.1" and module.ast.profile != "planar-reach-0.1":
+            if modules[target].ast.profile == BUDGET_PROFILE and module.ast.profile != BUDGET_PROFILE:
+                raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED",
+                                   "An earlier declaring module cannot import a source 0.7 dependency.",
+                                   node, phase="support", category="unsupported", rule_ids=["REA-001"],
+                                   details={"declaring_profile": module.ast.profile,
+                                            "dependency_profile": modules[target].ast.profile,
+                                            "dependency_source_id": target})
+            if modules[target].ast.profile == "planar-reach-0.1" and module.ast.profile not in REACH_PROFILES:
                 raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED",
                                    "An older declaring module cannot import a planar-reach-0.1 dependency.",
                                    node, phase="support", category="unsupported", rule_ids=["REA-001"],
                                    details={"declaring_profile": module.ast.profile,
                                             "dependency_profile": modules[target].ast.profile,
                                             "dependency_source_id": target})
-            if modules[target].ast.profile == "force-0.1" and module.ast.profile not in {"force-0.1", "planar-reach-0.1"}:
+            if modules[target].ast.profile == "force-0.1" and module.ast.profile not in FORCE_PROFILES:
                 raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED",
                                    "An older declaring module cannot import a force-0.1 dependency.",
                                    node, phase="support", category="unsupported", rule_ids=["FOR-001"],
                                    details={"declaring_profile": module.ast.profile,
                                             "dependency_profile": modules[target].ast.profile,
                                             "dependency_source_id": target})
-            if modules[target].ast.profile == "impulse-0.1" and module.ast.profile not in {"impulse-0.1", "force-0.1", "planar-reach-0.1"}:
+            if modules[target].ast.profile == "impulse-0.1" and module.ast.profile not in IMPULSE_PROFILES:
                 raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED",
                                    "An older declaring module cannot import an impulse-0.1 dependency.",
                                    node, phase="support", category="unsupported", rule_ids=["IMP-001"],

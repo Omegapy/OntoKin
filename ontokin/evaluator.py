@@ -31,8 +31,7 @@ MAX_OUTPUT_RECORDS = 100000
 IMPULSE_PROFILE = "impulse-0.1"
 FORCE_PROFILE = "force-0.1"
 REACH_PROFILE = "planar-reach-0.1"
-FORCE_PROFILES = frozenset({FORCE_PROFILE, REACH_PROFILE})
-IMPULSE_PROFILES = frozenset({IMPULSE_PROFILE, *FORCE_PROFILES})
+from .profile_capabilities import BUDGET_PROFILE, REACH_PROFILES, FORCE_PROFILES, IMPULSE_PROFILES
 
 
 class _NumericFault(Exception):
@@ -772,7 +771,7 @@ class _Simulator:
 
 
 def _simulator(model, check=None, *, work=None):
-    if model.profile == REACH_PROFILE:
+    if model.profile in REACH_PROFILES:
         from .reach_runtime import ReachSimulator
         return ReachSimulator(model, check=check, work=work)
     if model.profile == FORCE_PROFILE:
@@ -788,7 +787,10 @@ def _request_work(model, check, work):
     single combined request. A separate call without it starts a fresh context;
     no counters or cache are retained in the reusable source model.
     """
-    if model.profile == REACH_PROFILE:
+    if model.profile in REACH_PROFILES:
+        if model.profile == BUDGET_PROFILE:
+            from .reach_numeric import require_execution_work
+            require_execution_work(work)
         if work is None:
             from .reach_numeric import ReachExecutionWork
             work = ReachExecutionWork(check=check)
@@ -837,7 +839,7 @@ def _records_per_sample(model: SceneModel, *, constructing: bool = False,
     if model.profile in FORCE_PROFILES:
         from .force_runtime import force_record_bound
         base += force_record_bound(model, constructing=constructing, horizon=horizon, side=side, check=check)
-    if model.profile == REACH_PROFILE:
+    if model.profile in REACH_PROFILES:
         from .reach_projection import reach_record_bound
         base += reach_record_bound(model, check=check)
     if constructing:
@@ -892,7 +894,7 @@ def construct(model: SceneModel, *, check=None, work=None) -> dict[str, Any]:
     _output_budget(model, 1, constructing=True, check=check)
     try:
         simulator = _simulator(model, check=check, work=work)
-        if model.profile == REACH_PROFILE:
+        if model.profile in REACH_PROFILES:
             simulator.context_kind = "constructed_initial"
         initial = simulator.advance(Fraction(0), "before")
     except OntoKinError as exc:
@@ -1031,7 +1033,7 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
                     reason = "action_has_not_started"
                 else:
                     try:
-                        if model.profile == REACH_PROFILE:
+                        if model.profile in REACH_PROFILES:
                             target = simulator.ordinary_target(path, time)
                         else:
                             target = (_affine(runtime.initial, action.vector, action.duration) if action.kind == "move"
@@ -1046,7 +1048,7 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
 
     try:
         simulator = _simulator(model, check=check, work=work)
-        if model.profile == REACH_PROFILE:
+        if model.profile in REACH_PROFILES:
             simulator.context_kind = context_kind
         last = capture(Fraction(0), "before")
         while True:
@@ -1069,7 +1071,7 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
         if check is not None:
             check()
     except OntoKinError as exc:
-        if model.profile == REACH_PROFILE and work is not None and exc is work.callback_error:
+        if model.profile in REACH_PROFILES and work is not None and exc is work.callback_error:
             raise
         failure = exc
     return {"valid_until_seconds": None if last is None else last["time_seconds"],

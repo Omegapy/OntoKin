@@ -1,0 +1,40 @@
+{
+  "schema_version": "ontokin.execution-budget-acceptance-freeze/0.1",
+  "case_id": "EB14-force-workshop-v1",
+  "frozen_utc": "2026-10-30T03:40:31.860934+00:00",
+  "execution_status": "not_run_at_freeze",
+  "files": {
+    "larger-workload.ok": {
+      "sha256": "d2ce286de3828252a70bc43ea42c1154e572225b7c5192a72a822f3cd18bee1b",
+      "bytes": 3053
+    },
+    "larger-workload.expected.json": {
+      "sha256": "b3fa0606ff424431ba6ee4f23ed4810adc9de08fe83126272a98f90711b5336f",
+      "bytes": 29982
+    }
+  },
+  "attempts": [
+    {
+      "name": "default-control",
+      "policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "caller_caps": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "expected": "operation_budget_exhausted"
+    },
+    {
+      "name": "authorized-large",
+      "policy": {
+        "max_operations": 400000,
+        "max_elapsed_ms": 80000
+      },
+      "caller_caps": {},
+      "expected": "source_to_independent_readback_success"
+    }
+  ],
+  "original_acceptance_gate_changed": false
+}

@@ -22,6 +22,8 @@ import math
 import struct
 from types import MappingProxyType
 
+from .profile_capabilities import BUDGET_PROFILE, REACH_PROFILES
+
 
 MAX_OPERAND_BITS = 32768
 MAX_BOUNDARIES = 10000
@@ -2245,7 +2247,7 @@ class ReachReference:
     alter later independent expectations.
     """
     def __init__(self, model, *, end, arithmetic, end_side="after", mode="recording"):
-        if (model.profile != "planar-reach-0.1" or end < 0 or end > model.duration
+        if (model.profile not in REACH_PROFILES or end < 0 or end > model.duration
                 or end_side not in ("before", "after") or mode not in ("recording", "observation")):
             raise ReferenceError("unsupported", "Independent reference requires a valid planar reach prefix")
         self.a, self.p = arithmetic, _PoseArithmetic(arithmetic)
@@ -3687,6 +3689,14 @@ class ReachReference:
         ideal_lever = self.p.rotate(ideal.orientation, payload.point_self_m)
         lever_error = self.a.exact(self.a.exact(bound.source_numeric_rotation_error,
             self._l1(payload.point_self_m), "mul"), F(1, 1 << 96), "add")
+        if (self.model.profile == BUDGET_PROFILE and len(payload.point_self_m) == 3
+                and all(type(value) in (int, float, F) and value == 0
+                        for value in payload.point_self_m)):
+            # The new reader retains the exact identity R * 0 = 0. Every
+            # product and sum in the production rotation is also exactly zero,
+            # so a central impulse has no angular impulse for any orientation.
+            # Keep the existing nonzero-lever bound and all legacy counts.
+            lever_error = F(0)
         lever = self._expand_vector(ideal_lever, lever_error, rounded=True)
         point = self._round_vector(self.p.add(position, lever))
         angular = self._round_vector(self.p.cross(lever, self.p.vector(payload.impulse_world_n_s)))

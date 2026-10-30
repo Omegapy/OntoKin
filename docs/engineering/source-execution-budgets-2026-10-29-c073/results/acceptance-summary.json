@@ -1,0 +1,85 @@
+{
+  "schema_version": "ontokin.execution-budget-acceptance/0.1",
+  "case_id": "EB14-force-workshop-v1",
+  "status": "passed",
+  "attempts": [
+    {
+      "attempt": "default-control",
+      "expected": "operation_budget_exhausted",
+      "passed": true,
+      "outcome": "resource_limit",
+      "budget_reason": "operation_budget_exhausted",
+      "execution_budget": {
+        "schema_version": "ontokin.execution-budget/0.1",
+        "defaults": {
+          "max_operations": 100000,
+          "max_elapsed_ms": 30000
+        },
+        "policy_id": "sha256:f5c7685c52ca1c3cdded05bbc376e06cdbd6962c5196fe13d47f89f8c8d331ef",
+        "host_ceilings": {
+          "max_operations": 100000,
+          "max_elapsed_ms": 30000
+        },
+        "source_request": {
+          "max_operations": 400000,
+          "max_elapsed_ms": 80000
+        },
+        "caller_caps": {
+          "max_operations": 100000,
+          "max_elapsed_ms": 30000
+        },
+        "effective": {
+          "max_operations": 100000,
+          "max_elapsed_ms": 30000
+        },
+        "consumed_operations": 100001,
+        "elapsed_ms": 489.8634609999135,
+        "stage": "recording_export_readback",
+        "status": "failed",
+        "budget_reason": "operation_budget_exhausted"
+      },
+      "artifact": null
+    },
+    {
+      "attempt": "authorized-large",
+      "expected": "source_to_independent_readback_success",
+      "passed": true,
+      "outcome": "valid",
+      "budget_reason": null,
+      "execution_budget": {
+        "schema_version": "ontokin.execution-budget/0.1",
+        "defaults": {
+          "max_operations": 100000,
+          "max_elapsed_ms": 30000
+        },
+        "policy_id": "sha256:d0124486c82f41e4ee0d7f9e99889c03a58551779af2f19d4f40e43ad1653ed4",
+        "host_ceilings": {
+          "max_operations": 400000,
+          "max_elapsed_ms": 80000
+        },
+        "source_request": {
+          "max_operations": 400000,
+          "max_elapsed_ms": 80000
+        },
+        "caller_caps": {},
+        "effective": {
+          "max_operations": 400000,
+          "max_elapsed_ms": 80000
+        },
+        "consumed_operations": 193424,
+        "elapsed_ms": 2483.0303429989726,
+        "stage": "result",
+        "status": "valid",
+        "budget_reason": null
+      },
+      "artifact": {
+        "media_type": "model/gltf-binary",
+        "gltf_version": "2.0",
+        "byte_length": 1737552,
+        "sha256": "sha256:c6a1e94dab7c1536aa8749e0e34132effc9f8fc27650bbafa70ed6567a91f8b1"
+      }
+    }
+  ],
+  "original28_gate_changed": false,
+  "finished_utc": "2026-10-30T04:35:48.705797+00:00"
+}

@@ -17,6 +17,8 @@ from pathlib import Path
 import struct
 from typing import Any
 
+from .profile_capabilities import BUDGET_PROFILE, REACH_PROFILES
+
 
 REACH_TARGET = "ontokin.glb/0.6"
 CLOCK_CONVERSION = "binary32_rne_ties_to_even_from_exact_rational"
@@ -28,6 +30,16 @@ DESTINATION_NAME = "ontokin-controlled-three-recording"
 DESTINATION_VERSION = "0.1.0"
 DESTINATION_COMPONENT_LIMIT = Fraction(1 << 400)
 NORMALIZATION_ERROR = Fraction(1, 1 << 51)
+# The .07 writer publishes wider error enclosures than the production kernel's
+# actual-anchor bounds. An independent reader propagates intervals, including
+# an incoming vector error on every component, so its error-width minimum can
+# exceed the production minimum by more than a rounding ULP. Derivative bounds
+# describe physical magnitudes and receive a separate small relative reserve.
+# These finite reserves only increase upper bounds. They do not guarantee that
+# arbitrary histories become deliverable: the unchanged reader still proves
+# every supplied minimum and every complete inequality at the fixed tolerance.
+BUDGET_SOURCE_ERROR_RESERVE = Fraction(2)
+BUDGET_DERIVATIVE_RESERVE = Fraction((1 << 48) + 1, 1 << 48)
 
 
 class _LocalArithmeticWork:
@@ -483,8 +495,10 @@ def recording_stage(name, *, work=None, check=None):
         check()
 
 
-def reach_profile_metadata():
-    return {"schema_version": "ontokin.reach-recording/0.1", "source_profile": "planar-reach-0.1",
+def reach_profile_metadata(profile="planar-reach-0.1"):
+    if profile not in REACH_PROFILES:
+        raise ValueError("Unsupported recorded reach source profile")
+    return {"schema_version": "ontokin.reach-recording/0.1", "source_profile": profile,
             "motion_model": "two_prescribed_planar_hinges", "rotation_interpolation": "shortest_arc_slerp",
             "goal_residual_max_m": 1e-9, "bound_chain_tuple_max": 32,
             "named_reach_action_max": 128, "live_solver_embedded": False}
@@ -1280,6 +1294,19 @@ def interval_certificates(model, options, plan, nodes, geometry_bounds, exact, t
             if len(exact) - 1 in group["keys"]:
                 nsp = max(nsp, final_source[frame].position_error_m)
                 nsr = max(nsr, final_source[frame].rotation_error_rad)
+            if model.profile == BUDGET_PROFILE:
+                nsp = _exact(nsp, BUDGET_SOURCE_ERROR_RESERVE, "mul", work)
+                nsr = _exact(nsr, BUDGET_SOURCE_ERROR_RESERVE, "mul", work)
+                def derivative_reserve(value):
+                    _charge(work, "recording_budget_reserve")
+                    # Keep certified zero derivatives exact; no artificial
+                    # motion or acceleration is introduced by publication.
+                    return (_exact(value, BUDGET_DERIVATIVE_RESERVE, "mul", work)
+                            if value else value)
+                bound = MotionBound(bound.speed, derivative_reserve(bound.acceleration),
+                                    derivative_reserve(bound.angular_speed))
+                enclosing = MotionBound(derivative_reserve(enclosing.speed),
+                    derivative_reserve(enclosing.acceleration), derivative_reserve(enclosing.angular_speed))
             ep, eq, magnitude = endpoint_maxima[carrier]
             extra_position = extra_rotation = Fraction(0)
             for phase_index in sorted(group["numeric_selected"]):
@@ -1625,7 +1652,8 @@ def _sample_recording_nodes(plan, nodes, exact, *, work, allow_fast=True,
 
 
 
-def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach_plan=None):
+def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach_plan=None,
+                       target_contract=REACH_TARGET):
     from . import __version__
     from .evaluator import time_text
     from .reach_pose import source_numeric_basis
@@ -1634,7 +1662,7 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach
                         _nodes, checked_contract, program_metadata, relationship_metadata,
                         force_profile_metadata)
 
-    checked_contract(model, REACH_TARGET)
+    version = checked_contract(model, target_contract)
     options = options or ExportOptions()
     end = options.checked_end(model)
     if options.time_tolerance_s > 1e-6:
@@ -1695,15 +1723,15 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach
         "quantization_tolerance_m": min(1e-5, options.position_tolerance_m),
         "limitations": ["flat_shading", "polygonal_elliptical_sections", "no_textures_or_skin_deformation",
                         "no_automatic_collision_or_mass", "recorded_rigid_animation_only"]}
-    metadata = {"target_contract": REACH_TARGET, "schema_version": "0.6", "source": source,
+    metadata = {"target_contract": target_contract, "schema_version": version, "source": source,
         "module": model.module_name, "scene": model.scene_name, "profile": model.profile,
         "coordinates": {"handedness": "right", "up": "+Y", "length_unit": "m", "time_unit": "s"},
         "transform_policy": "all_nodes_are_roots_with_baked_world_poses", **relationship_metadata(model),
         "boundary_states": list(plan.boundary_records), "gravity_m_per_s2": list(model.gravity),
         "motion_authority": "OntoKin semantic evaluator; playback contains no live solver",
         "program": program, "force_profile": force_profile_metadata(), "surface_profile": surface_profile,
-        "reach_profile": reach_profile_metadata(), "reach_quantization": quantization}
-    report = {"schema_version": "ontokin.glb-report/0.6", "target_contract": REACH_TARGET,
+        "reach_profile": reach_profile_metadata(model.profile), "reach_quantization": quantization}
+    report = {"schema_version": "ontokin.glb-report/" + version, "target_contract": target_contract,
         "outcome": "baked_pending_binary_validation",
         "exporter": {"name": "OntoKin reference GLB exporter", "version": __version__},
         "source": source, "program_revision": model.program_revision, "program": program,
@@ -1746,17 +1774,23 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach
             "mesh_accounting": "every occurrence, including repeated geometry and requested helpers"},
         "reach_profile": metadata["reach_profile"], "reach_quantization": quantization}
     return BakedScene(model.module_name, model.scene_name, exact, times, list(plan.boundaries), nodes,
-                      metadata, report, options, contract=REACH_TARGET, schema_version="0.6")
+                      metadata, report, options, contract=target_contract, schema_version=version)
 
 
 def build_reach_scene(model, *, options=None, source_uri=None, source_sha256=None,
-                      check=None, work=None, reach_plan=None):
-    from .reach_numeric import ReachExecutionWork, ReachAdmissionError
+                      check=None, work=None, reach_plan=None, target_contract=REACH_TARGET):
+    from .reach_numeric import ReachExecutionWork, ReachAdmissionError, require_execution_work
+    from .scene import BUDGET_REACH_TARGET, REACH_TARGETS
+    if target_contract not in REACH_TARGETS:
+        raise ValueError("A reach recording requires an explicit reach destination")
+    if target_contract == BUDGET_REACH_TARGET:
+        require_execution_work(work)
     from .reach_source import reach_error
     work = work if work is not None else ReachExecutionWork(check=check)
     try:
         return _build_reach_scene(model, options=options, source_uri=source_uri,
-                                  source_sha256=source_sha256, work=work, reach_plan=reach_plan)
+                                  source_sha256=source_sha256, work=work, reach_plan=reach_plan,
+                                  target_contract=target_contract)
     except ReachAdmissionError as error:
         if error is work.callback_error:
             raise

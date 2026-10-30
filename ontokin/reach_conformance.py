@@ -960,11 +960,11 @@ _NUMERIC_CERTIFICATE_KEYS = tuple(sorted(_CERTIFICATE_KEYS - {"left_key_index", 
     "source_phase_indices", "h_authored_seconds", "h_stored_seconds"}))
 
 
-def _verify_metadata(decoded, model, options, program, boundary_records, *, work):
-    from .scene import force_profile_metadata, relationship_metadata
+def _verify_metadata(decoded, model, options, program, boundary_records, *, work, target_contract=TARGET):
+    from .scene import force_profile_metadata, relationship_metadata, checked_contract
     from .values import bounded_data
     metadata = decoded.document["extras"]["ontokin"]
-    expected = {"target_contract": TARGET, "schema_version": "0.6", "module": model.module_name,
+    expected = {"target_contract": target_contract, "schema_version": checked_contract(model, target_contract), "module": model.module_name,
         "scene": model.scene_name, "profile": model.profile, "gravity_m_per_s2": list(model.gravity),
         "coordinates": {"handedness": "right", "up": "+Y", "length_unit": "m", "time_unit": "s"},
         "transform_policy": "all_nodes_are_roots_with_baked_world_poses", "program": program,
@@ -977,7 +977,7 @@ def _verify_metadata(decoded, model, options, program, boundary_records, *, work
             "limitations": ["flat_shading", "polygonal_elliptical_sections", "no_textures_or_skin_deformation",
                             "no_automatic_collision_or_mass", "recorded_rigid_animation_only"]},
         "motion_authority": "OntoKin semantic evaluator; playback contains no live solver",
-        "reach_profile": {"schema_version": "ontokin.reach-recording/0.1", "source_profile": "planar-reach-0.1",
+        "reach_profile": {"schema_version": "ontokin.reach-recording/0.1", "source_profile": model.profile,
             "motion_model": "two_prescribed_planar_hinges", "rotation_interpolation": "shortest_arc_slerp",
             "goal_residual_max_m": 1e-9, "bound_chain_tuple_max": 32,
             "named_reach_action_max": 128, "live_solver_embedded": False}}
@@ -1007,7 +1007,7 @@ def _verify_metadata(decoded, model, options, program, boundary_records, *, work
     if type(quantization["all_values_independently_recomputed"]) is not bool:
         _error("OKE-E-CERTIFICATE", "The independent-recomputation assertion must be Boolean.")
     animation_metadata = decoded.document["animations"][0]["extras"]["ontokin"]
-    if animation_metadata.get("target_contract") != TARGET:
+    if animation_metadata.get("target_contract") != target_contract:
         _error("OKE-E-PROVENANCE", "Animation metadata must preserve the requested delivery contract.")
     # Formatting a boundary is independent of the writer's time formatter.
     expected_times = [record["source_seconds"] for record in boundary_records]
@@ -3504,7 +3504,7 @@ def _verify_certificates(decoded, reference, geometry, tables, endpoint_phases, 
             recording_context = object()
 
 
-def validate_reach_export(data, model, *, options=None, check=None, work=None):
+def validate_reach_export(data, model, *, options=None, check=None, work=None, target_contract=TARGET):
     """Verify the complete source/byte proof with the caller's existing work.
 
     Missing independent source behavior rejects delivery. Additional fixed,
@@ -3513,11 +3513,16 @@ def validate_reach_export(data, model, *, options=None, check=None, work=None):
     """
     from .gltf import read_glb, _validate_geometry
     from .reach_reference import ReferenceError, build_reference
-    from .scene import ExportOptions, MAX_BAKED_POSES, checked_contract, program_metadata
+    from .scene import ExportOptions, MAX_BAKED_POSES, checked_contract, program_metadata, BUDGET_REACH_TARGET, REACH_TARGETS
+    if target_contract not in REACH_TARGETS:
+        raise ValueError("A reach recording requires an explicit reach destination")
+    if target_contract == BUDGET_REACH_TARGET:
+        from .reach_numeric import require_execution_work
+        require_execution_work(work)
     if work is None:
         raise ValueError("Reach supplied-byte validation requires the existing request work context")
-    checked_contract(model, TARGET)
-    decoded = read_glb(data, check=work.tick, target_contract=TARGET, work=work)
+    checked_contract(model, target_contract)
+    decoded = read_glb(data, check=work.tick, target_contract=target_contract, work=work)
     nodes = decoded.document["nodes"]
     metadata = decoded.document.get("extras", {}).get("ontokin", {})
     animation = decoded.document["animations"][0]
@@ -3544,11 +3549,12 @@ def validate_reach_export(data, model, *, options=None, check=None, work=None):
     try:
         reference = build_reference(model, end=end, work=work)
         boundary_records = reference.boundary_states()
-        quantization = _verify_metadata(decoded, model, options, program, boundary_records, work=work)
+        quantization = _verify_metadata(decoded, model, options, program, boundary_records, work=work,
+                                        target_contract=target_contract)
         authored, times, shift = verify_retained_clocks(decoded, quantization, authored_records,
             reference.boundaries, end, time_tolerance=options.time_tolerance_s, work=work)
         geometry, meshes = _geometry_bounds(decoded, model, options, work=work)
-        frames, geometry_error, surface_error = _validate_geometry(decoded, model, options, TARGET, program,
+        frames, geometry_error, surface_error = _validate_geometry(decoded, model, options, target_contract, program,
             check=work.tick, source_meshes=meshes)
         if any(frames[index] != value["frame"] for index, value in geometry.items()):
             _error("OKE-E-PROVENANCE", "The native geometry and independent source carrier frames disagree.")
