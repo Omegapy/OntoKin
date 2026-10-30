@@ -69,6 +69,25 @@ def _guard_check(check):
     return guarded
 
 
+def _raise_budget_callback(error, work, target_contract):
+    """Restore a caller error only when it belongs to this active 0.7 failure."""
+    if target_contract != BUDGET_REACH_TARGET or work is None:
+        return
+    marker = work.callback_error
+    if marker is None:
+        return
+    pending, seen = [error], set()
+    while pending:
+        current = pending.pop()
+        if current is marker:
+            raise marker
+        if id(current) in seen:
+            continue
+        seen.add(id(current))
+        pending.extend(value for value in (current.__cause__, current.__context__)
+                       if value is not None)
+
+
 class _BufferBuilder:
     def __init__(self, check=None) -> None:
         self.binary = bytearray()
@@ -482,6 +501,7 @@ def read_glb(source: bytes | bytearray | str | Path, *, check=None, target_contr
         try:
             measure_json(document, max_bytes=MAX_GLB_BYTES, max_entries=MAX_GLB_BYTES, check=check, work=work)
         except JSONLimitError as error:
+            _raise_budget_callback(error, work, target_contract)
             export_error("OKE-E-METADATA-BUDGET", "Supplied glTF JSON exceeds bounded metadata materialization.",
                          kind="resource", details=error.details)
         # Inspect the new destination only after the inherited materialization
@@ -1010,19 +1030,23 @@ def validate_export(data: bytes, model: SceneModel, *, options: ExportOptions | 
             _translate_reach_work_failure(failure.error, work, model)
         raise failure.error
     except OntoKinError as error:
+        _raise_budget_callback(error, work, target_contract)
         if work is not None and error is work.callback_error:
             raise
         error.diagnostic.details["target_contract"] = target_contract
         raise
     except JSONLimitError as error:
+        _raise_budget_callback(error, work, target_contract)
         export_error("OKE-E-METADATA-BUDGET", "Supplied program values exceed bounded validation materialization.",
                      model, kind="resource", details=error.details)
     except (KeyError, IndexError, TypeError, ValueError, AttributeError, OverflowError) as exc:
+        _raise_budget_callback(exc, work, target_contract)
         if work is not None and exc is work.callback_error:
             raise
         export_error("OKE-E-GLB-STRUCTURE", "Malformed source mapping or validation data in the bounded GLB contract: " + str(exc),
                      model, kind="unsupported", details={"target_contract": target_contract})
     except Exception as error:
+        _raise_budget_callback(error, work, target_contract)
         if target_contract in REACH_TARGETS:
             _translate_reach_work_failure(error, work, model)
         raise
@@ -1097,11 +1121,13 @@ def export_glb(model: SceneModel, *, options: ExportOptions | None = None,
             _translate_reach_work_failure(failure.error, work, model)
         raise failure.error
     except OntoKinError as error:
+        _raise_budget_callback(error, work, target_contract)
         if work is not None and error is work.callback_error:
             raise
         error.diagnostic.details["target_contract"] = target_contract
         raise
     except Exception as error:
+        _raise_budget_callback(error, work, target_contract)
         if target_contract in REACH_TARGETS:
             _translate_reach_work_failure(error, work, model)
         raise

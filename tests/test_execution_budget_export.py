@@ -14,6 +14,7 @@ from ontokin.diagnostics import OntoKinError
 from ontokin.evaluator import evaluate_prefix
 from ontokin.execution_budget import HostPolicy, SharedExecutionBudget, admit_entry_budget
 from ontokin.gltf import export_glb, read_glb, validate_export
+from ontokin.json_limits import JSONLimitError
 from ontokin.profile_capabilities import BUDGET_PROFILE
 from ontokin.reach_numeric import ReachAdmissionError, ReachExecutionWork
 from ontokin.reach_conformance import check_complete_inequalities
@@ -301,6 +302,65 @@ class BudgetExportTests(unittest.TestCase):
                 self.assertIs(work.callback_error, marker)
                 if before is not None:
                     self.assertEqual(marker.diagnostic.details, before)
+
+    def test_eb19_direct_output_boundaries_restore_callback_identity(self):
+        import importlib
+        seams = (("reader", "ontokin.gltf", "measure_json"),
+                 ("validator", "ontokin.scene", "program_metadata"),
+                 ("validator", "ontokin.reach_conformance", "validate_reach_export"),
+                 ("exporter", "ontokin.scene", "program_metadata"),
+                 ("exporter", "ontokin.gltf", "measure_json"))
+        for route, module_name, function_name in seams:
+            for marker in (JSONLimitError("caller_stop", 1, 2), ValueError("caller stop")):
+                with self.subTest(route=route, seam=function_name, error=type(marker).__name__):
+                    active = {"inside": False, "calls": 0}
+                    before = dict(marker.details) if isinstance(marker, JSONLimitError) else None
+                    def cancel():
+                        if active["inside"]:
+                            active["calls"] += 1
+                            raise marker
+                    _, compiler, _ = compile_source(check=cancel)
+                    work = compiler.reach_work
+                    module = importlib.import_module(module_name)
+                    original = getattr(module, function_name)
+                    def enter(*args, **kwargs):
+                        active["inside"] = True
+                        try:
+                            return original(*args, **kwargs)
+                        finally:
+                            active["inside"] = False
+                    with patch.object(module, function_name, enter), self.assertRaises(type(marker)) as caught:
+                        if route == "reader":
+                            read_glb(self.result.data, target_contract=BUDGET_REACH_TARGET, work=work)
+                        elif route == "validator":
+                            validate_export(self.result.data, compiler.model, options=OPTIONS,
+                                            target_contract=BUDGET_REACH_TARGET, work=work)
+                        else:
+                            export_glb(compiler.model, options=OPTIONS,
+                                       target_contract=BUDGET_REACH_TARGET, work=work)
+                    self.assertIs(caught.exception, marker)
+                    self.assertIs(work.callback_error, marker)
+                    self.assertEqual(active["calls"], 1)
+                    if before is not None:
+                        self.assertEqual(marker.details, before)
+
+    def test_eb19_stale_callback_marker_does_not_replace_product_error(self):
+        for route in ("validator", "exporter"):
+            with self.subTest(route=route):
+                _, compiler, _ = compile_source()
+                marker = JSONLimitError("old_caller_stop", 1, 2)
+                compiler.reach_work.callback_error = marker
+                compiler.model.program_revision = "sha256:" + "0" * 64
+                with self.assertRaises(OntoKinError) as caught:
+                    if route == "validator":
+                        validate_export(self.result.data, compiler.model, options=OPTIONS,
+                                        target_contract=BUDGET_REACH_TARGET, work=compiler.reach_work)
+                    else:
+                        export_glb(compiler.model, options=OPTIONS,
+                                   target_contract=BUDGET_REACH_TARGET, work=compiler.reach_work)
+                self.assertIsNot(caught.exception, marker)
+                self.assertEqual(caught.exception.diagnostic.details["export_code"], "OKE-E-PROVENANCE")
+                self.assertEqual(marker.details, {"budget": "old_caller_stop", "limit": 1, "consumed": 2})
 
     def test_eb13_numeric_local_limits_stay_separate_from_execution_limits(self):
         ledger, work = self.reader_work()
