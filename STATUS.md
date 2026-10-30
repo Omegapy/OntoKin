@@ -36,9 +36,11 @@ Preserve 100,000 shared operations, 30,000 ms, 32,768 operand bits, 256 numerica
 
 ## Repository lifecycle and ownership
 
-[OK-ENG-009](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) separates development integration from release acceptance. C070 integration is complete. This publication releases the main integration lease held by `interactive-angular-reuse-20261029-c070-7of9`. **No main integration lease remains active.** Root retains the separate C070 documentation-check/packet/archive window until explicit Issue #26 closure after final verification and delivery. Reconcile that closure and live state before starting another scope.
+[OK-ENG-009](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) separates development integration from release acceptance. **Main integration lease is active** for `interactive-group-key-projection-20261029-c071-7of9`, C071 existing complete-group source-speed key projection. Acquired from observed C070 main `ff71faa05503245b553621ba390cad080276e732` by expected-head nonforce update. Lease began `2026-10-30T01:37:10.934165+00:00` and expires `2026-10-30T02:07:10.934165+00:00`. C070 explicitly closed all scope in Issue #26 comment 6512520085; C071 scope is comment 6512705757.
 
-The merged candidate remains the actual merge's second parent even if its work branch is automatically removed. The archive-retention branch remains history-only at `e6917dae0be3a786c22e76be3de62e3c97784cf5`. Never merge or develop from it. No hosted execution was dispatched.
+The owned integration changes are C071 source/evidence additions and concise STATUS/docs navigation. No runtime, test, fixture, contract, default, limit or workflow change is selected. Root holds the exclusive documentation-check, publication, packet and archive window; reviewers must explicitly pause before actual checks. Historical 24/28 failed status and every remaining gate remain unchanged. Final publication will release this main lease; packet/checker/archive scope will close separately after verification and delivery.
+
+The archive-retention branch remains history-only at `e6917dae0be3a786c22e76be3de62e3c97784cf5`. Never merge or develop from it. No hosted execution is selected.
 
 ## Git LFS
 
