@@ -1,0 +1,172 @@
+{
+  "actual_ordered_parents_verified": true,
+  "baseline_paths_retained": 4098,
+  "candidate": {
+    "commit": "ece7904ffbca102e05c113049de5dfef4e9f3afe",
+    "tree": "7072ddac0b0e8142ee4a4b0a8423dc291231382d"
+  },
+  "commands": {
+    "merge-acceptance-command": {
+      "command": [
+        "/workspace/scratch/8c3c836c21db/verification-env/bin/python",
+        "tools/run_ring_loft_acceptance.py",
+        "--output-dir",
+        "/workspace/scratch/8c3c836c21db/post_c077/merge-acceptance"
+      ],
+      "elapsed_seconds": 35.99817499599885,
+      "receipt": {
+        "bytes": 1944,
+        "path": "merge-acceptance-command/summary.json",
+        "sha256": "a442533c986153f4e3bc412f4ee231ed7bd8b40da9796c17b782706c07faee72"
+      }
+    },
+    "merge-docs": {
+      "command": [
+        "/workspace/scratch/8c3c836c21db/verification-env/bin/python",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "elapsed_seconds": 1.6843918740014487,
+      "receipt": {
+        "bytes": 1894,
+        "path": "merge-docs/summary.json",
+        "sha256": "498b79e2ab08d07eaa14b72d9dc2072da46d4cb647aa3668f3bd9fb6ce4751ec"
+      }
+    },
+    "merge-focused": {
+      "command": [
+        "/workspace/scratch/8c3c836c21db/verification-env/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_ring_loft*.py",
+        "-v"
+      ],
+      "elapsed_seconds": 29.750911497001653,
+      "receipt": {
+        "bytes": 1931,
+        "path": "merge-focused/summary.json",
+        "sha256": "80c5cbd79a0c7f04e6c1a491e7362e0db503461323580723eb3b2a6ad902c24b"
+      }
+    },
+    "merge-source": {
+      "command": [
+        "/workspace/scratch/8c3c836c21db/verification-env/bin/python",
+        "-m",
+        "ontokin",
+        "conformance",
+        "--output",
+        "/workspace/scratch/8c3c836c21db/post_c077/merge-source-conformance.json"
+      ],
+      "elapsed_seconds": 1.3000138470015372,
+      "receipt": {
+        "bytes": 1957,
+        "path": "merge-source/summary.json",
+        "sha256": "0b70ad06e1c91326c1b9cec853f89cf6aa2f206af468c9786e5e9d98b842b539"
+      }
+    }
+  },
+  "eligible_input_equality": {
+    "count": 4202,
+    "exclusions": {
+      "exact_files": [
+        "STATUS.md"
+      ],
+      "prefixes": [
+        "docs/engineering/polygon-lofts-2026-10-30-c077/"
+      ]
+    },
+    "receipt": {
+      "bytes": 67320,
+      "path": "merge-inputs.json",
+      "sha256": "f25880929b3c116e40076e1ebc628168d43f96f9d809c3e1561796ce76d288ae"
+    }
+  },
+  "evidence": {
+    "commit": "ca9978dcc1fce276ac92baaffd12f4ddc783237d",
+    "parents": [
+      "ece7904ffbca102e05c113049de5dfef4e9f3afe"
+    ],
+    "tree": "97d82b14d6167d9400b082009ae0892b1c4e28d3"
+  },
+  "focused_tests": {
+    "errors": 0,
+    "failures": 0,
+    "log": {
+      "bytes": 20181,
+      "path": "merge-focused/stderr.log",
+      "sha256": "064414e76c7e336d7c4919f2d3237f3e581463c8b2fb5746d22c04c81185b38e"
+    },
+    "passed": 119,
+    "seconds": 28.955,
+    "skips": 0
+  },
+  "independently_calculated_tree_verified": true,
+  "inherited_source_conformance": {
+    "receipt": {
+      "bytes": 230305,
+      "path": "merge-source-conformance.json",
+      "sha256": "18a6be04df5a5a217eaea41e650e576518e71bbfb5143db6137ac907e4c51bf8"
+    },
+    "summary": {
+      "assertions": 694,
+      "expected_invalid_or_conflicting": 29,
+      "expected_unsupported": 2,
+      "expected_valid": 12,
+      "failed": 0,
+      "passed": 43,
+      "total": 43
+    }
+  },
+  "latest_observed_action_run_id": 39280169583,
+  "lease": {
+    "commit": "ad3a8d70a74b940d5a995795b67290d069993e52",
+    "parents": [
+      "6c28722b6a6b67e44f7e4ba1617ca6e5fad22f26"
+    ],
+    "tree": "60892169d93d52fea1fde034ea35b4142507295e"
+  },
+  "merge": {
+    "commit": "2330527aa4b711ee383be7c67bb77dbb89cf6993",
+    "parents": [
+      "ad3a8d70a74b940d5a995795b67290d069993e52",
+      "ca9978dcc1fce276ac92baaffd12f4ddc783237d"
+    ],
+    "tree": "d61583b3aa236fa419a49b198b2ebfedbf139b96"
+  },
+  "new_acceptance": {
+    "artifacts": 25,
+    "assertions": 418,
+    "cases": 74,
+    "durable_requests": 66,
+    "exchanges": 68,
+    "receipt": {
+      "bytes": 91095,
+      "path": "merge-acceptance/summary.json",
+      "sha256": "5dad7e2d9d4a0976bff2f7aa45f68361abf9b982876e20eb76647a5bb15a7dcf"
+    },
+    "schema_validated_exchanges": 68
+  },
+  "no_hosted_execution_dispatched": true,
+  "observed_actions_total": 198,
+  "pr": 75,
+  "prepared_utc": "2026-10-30T21:19:22.500120+00:00",
+  "preserved_frozen_inputs": 85,
+  "protected_baseline_paths_unchanged": 1046,
+  "publication_boundary": "This record precedes its containing final main publication, exact-final checks and portable packet verification, restoration, delivery and explicit scope closure.",
+  "release_acceptance": false,
+  "remote_identity": {
+    "archive_branch_unchanged": true,
+    "receipt": {
+      "bytes": 894,
+      "path": "merge-identity.json",
+      "sha256": "ae5406f4224427115b839ceb925940916c5595bc4ef9e0f94b17398a75a006cb"
+    },
+    "work_branch_removed": true
+  },
+  "schema_version": "ontokin.c077-main-integration/0.1",
+  "source_evidence_boundary": "Complete 3448-test/11-step execution and browser capture review remain attributed to the candidate. The actual merge received the separately recorded focused/source/Agent/documentation and complete-input checks above.",
+  "status": "passed"
+}

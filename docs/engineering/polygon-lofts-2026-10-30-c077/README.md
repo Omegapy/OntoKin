@@ -1,6 +1,6 @@
 # C077: matched-topology polygon ring lofts
 
-This increment adds source-authored matched polygon sections for tapered housings, chamfered profiles and hollow ducts. Candidate `ece7904ffbca102e05c113049de5dfef4e9f3afe` passed the frozen source and Agent workflow, independent delivered-geometry and destination checks, actual capture review, durable evidence reconciliation and input preservation described below. Complete inherited local-driver result: `passed all 11 selected steps on candidate ece7904ffbca102e05c113049de5dfef4e9f3afe`. Evidence publication and verified main integration have separate boundaries.
+This increment adds source-authored matched polygon sections for tapered housings, chamfered profiles and hollow ducts. Candidate `ece7904ffbca102e05c113049de5dfef4e9f3afe` passed the frozen source and Agent workflow, independent delivered-geometry and destination checks, actual capture review, durable evidence reconciliation and input preservation described below. Complete inherited local-driver result: `passed all 11 selected steps on the exact candidate`. Evidence publication and verified main integration have separate boundaries.
 
 The increment implements the [C076 continuation](../polygon-holes-2026-10-30-c076/NEXT-TASK.md) while preserving the complete [GOAL](../../../GOAL.md). The separately selected source/Agent/GLB `.10` capability remains experimental development under [OK-ENG-009](../OK-ENG-009-development-integration-and-branch-lifecycle.md). Candidate evidence does not certify a completed development integration or release.
 
@@ -12,9 +12,9 @@ The increment implements the [C076 continuation](../polygon-holes-2026-10-30-c07
 | Published versioned adoption | `4d1b15f5859e7f08feb8041b67c112d9f1485174` | `c1ba1cb22b8c3cc6126a6688813dd7bbbced9f97` |
 | Published independent input freeze | `3dd722dcacadbb51860cf8d7b768cd9d664f41f7` | `ac5dc85b631e2189ac4c535e515983ea1ff72122` |
 | Executed and reviewed candidate | `ece7904ffbca102e05c113049de5dfef4e9f3afe` | `7072ddac0b0e8142ee4a4b0a8423dc291231382d` |
-| Evidence publication | `pending publication; actual identity will be recorded separately` | `pending publication` |
-| Main integration lease | `not yet acquired` | `not yet acquired` |
-| Actual merge | `not yet merged` | `not yet merged`; PR `https://github.com/Omegapy/OntoKin/pull/75` |
+| Evidence publication | `ca9978dcc1fce276ac92baaffd12f4ddc783237d` | `97d82b14d6167d9400b082009ae0892b1c4e28d3` |
+| Main integration lease | `ad3a8d70a74b940d5a995795b67290d069993e52` | `60892169d93d52fea1fde034ea35b4142507295e` |
+| Actual merge | `2330527aa4b711ee383be7c67bb77dbb89cf6993` | `d61583b3aa236fa419a49b198b2ebfedbf139b96`; PR `https://github.com/Omegapy/OntoKin/pull/75` |
 
 The [adopted decision](../../language-design/polygon-loft-v0.1/ADOPTION.md) is OK-LANG-010/0.1.0 and OK-AGENT-010/0.1.0. It and the independent [fixture freeze](../../../examples/polygon-lofts/acceptance-freeze.json) were published before runtime implementation. The manifest identifies 83 input files, including 79 `.ok` sources. Its 74 case records comprise **23 valid cases, 47 invalid cases and four source-valid delivery refusals**. The additional source files supply the pinned reusable library, composition, generated occurrences and exact repair variants. All 74 predetermined outcomes were subsequently checked on the identified candidate; the frozen expectations were not regenerated from product results.
 
@@ -80,7 +80,7 @@ The [validation summary](validation-summary.json) binds the exact receipts and e
 | Check | Observed result |
 | --- | --- |
 | Complete unit suite | `3448` methods; failures `0`, errors `0`, skips `0`; CPython 3.12.14 |
-| Selected complete local driver | `11 / 11`; source and Git identity `unchanged`; result `passed all 11 selected steps on candidate ece7904ffbca102e05c113049de5dfef4e9f3afe` |
+| Selected complete local driver | `11 / 11`; source and Git identity `unchanged`; result `passed all 11 selected steps on the exact candidate` |
 | Frozen source acceptance | All 74 cases / 418 assertions passed: 23 valid, 47 invalid and four source-valid delivery refusals |
 | Actual Agent workflow | 68 exchanges / 66 durable request identities; all twelve operations exercised, including a successful constructed-level validation and queued cancellation |
 | Wire schemas | All 68 actual request/response exchanges validated, including rejection and failure envelopes |
@@ -112,7 +112,11 @@ The [archive descriptor](evidence-archive.json) is `saved and byte-verified: 159
 
 The [preservation comparison](candidate-input-preservation.json) accounts for all 4,203 candidate paths: 4,080 unchanged baseline files, 18 deliberate modified baseline files, 105 additions and zero removals. The 18 changes are the two navigation files and 16 shared adapters, all listed in the record. All 1,046 baseline files under tests, examples, schemas, workflows and language-design prefixes retain exact bytes and modes. All 85 adoption/freeze paths are unchanged, including each of the 83 manifest-bound inputs. Both candidate command inventories bind all 4,203 paths to verified Git blobs, modes, byte sizes and SHA256 contents.
 
-The evidence publication leaves STATUS unchanged. A main integration lease is appended separately. Actual parent order, independently calculated merge tree, eligible-input equality and fresh resulting-main checks belong in the later plain record path `integration.json`: `pending actual merge and focused checks`. Only after those checks may the final STATUS publication replace the current checkpoint and release the lease. Final-main verification, portable delivery and explicit scope closure remain `pending separate final-main, packet, delivery and closure receipts`. These pending roles are not implied by the candidate checks, and focused merge checks will not be labeled as a second full regression or browser execution. Hosted workflows retain their manual-only, default-false policy; no hosted execution is claimed here.
+The evidence publication preserved STATUS, then an expected-head update acquired the bounded main lease. PR #75 merged as `2330527aa4b711ee383be7c67bb77dbb89cf6993`. The [integration record](integration.json) verifies ordered parents `[ad3a8d70a74b940d5a995795b67290d069993e52, ca9978dcc1fce276ac92baaffd12f4ddc783237d]`, the independently calculated tree `d61583b3aa236fa419a49b198b2ebfedbf139b96` and the actual remote result. The merged work branch was removed after its exact head was retained as the second parent; the history-only archive branch remains unchanged.
+
+Fresh resulting-main checks passed 119 new tests, 43 inherited source cases / 694 assertions, all 74 C077 cases / 418 assertions and the complete actual Agent workflow, documentation and complete equality of all 4,202 eligible candidate files. Only STATUS and this C077 engineering directory are excluded. These are separately executed focused checks; they are not another complete regression or browser run.
+
+The containing final STATUS publication releases the C077 main lease. Exact-final documentation/input verification and portable packet verification, fresh restoration, durable delivery and Issue #26 closure require their own subsequent external receipts. The frozen raw ZIP remains unchanged. No hosted execution was dispatched; workflows remain manual-only with default-false opt-in.
 
 ## Remaining gates and continuation
 
