@@ -23,7 +23,7 @@ from .force_export import ForcePrefixPlan, force_interval_violation, force_prefi
 from .geometry import (SPHERE_RINGS, SPHERE_SEGMENTS, Mesh, assembly_marker,
                        box_mesh, joint_marker, sphere_mesh)
 from .model import SceneModel, Vec
-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, SURFACE_PROFILES, CONSTRUCTION_PROFILES
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, EXTRUSION_PROFILES, SURFACE_PROFILES, CONSTRUCTION_PROFILES
 from .json_limits import JSONLimitError
 from .surface import (LoftSection, SurfaceMaterial, RegionTriangles, SurfaceError,
                       MAX_SECTIONS, MAX_MATERIALS,
@@ -40,7 +40,8 @@ FORCE_TARGET = "ontokin.glb/0.5"
 REACH_TARGET = "ontokin.glb/0.6"
 BUDGET_REACH_TARGET = "ontokin.glb/0.7"
 EXTRUSION_TARGET = "ontokin.glb/0.8"
-EXECUTION_TARGETS = (BUDGET_REACH_TARGET, EXTRUSION_TARGET)
+HOLES_TARGET = "ontokin.glb/0.9"
+EXECUTION_TARGETS = (BUDGET_REACH_TARGET, EXTRUSION_TARGET, HOLES_TARGET)
 REACH_TARGETS = (REACH_TARGET, *EXECUTION_TARGETS)
 NATIVE_TARGETS = (SURFACE_TARGET, IMPULSE_TARGET, FORCE_TARGET, *REACH_TARGETS)
 PROGRAM_TARGETS = (CONSTRUCTION_TARGET, *NATIVE_TARGETS)
@@ -89,7 +90,8 @@ def export_error(export_code: str, message: str, model: SceneModel | None = None
                                                      "impulse-0.1": IMPULSE_TARGET,
                                                      "force-0.1": FORCE_TARGET,
                                                      "planar-reach-0.1": REACH_TARGET,
-                                                     BUDGET_PROFILE: BUDGET_REACH_TARGET, EXTRUSION_PROFILE: EXTRUSION_TARGET}.get(model.profile, TARGET_CONTRACT)
+                                                     BUDGET_PROFILE: BUDGET_REACH_TARGET, EXTRUSION_PROFILE: EXTRUSION_TARGET,
+                                                     HOLES_PROFILE: HOLES_TARGET}.get(model.profile, TARGET_CONTRACT)
                                                     if model is not None else TARGET_CONTRACT),
                                 "export_code": export_code, **(details or {})},
                        repair=("Use supported visual geometry and the explicitly matching model/delivery profile." if kind == "unsupported" else
@@ -174,6 +176,13 @@ class SurfaceMesh:
         return sum(len(region.indices) // 3 for region in self.regions)
 
 
+@dataclass(frozen=True)
+class HolesSurfaceMesh(SurfaceMesh):
+    """Keep authored corner identities through placement and destination conversion."""
+
+    corner_vertex_ids: tuple[int, ...] = ()
+
+
 def geometry_metadata(geometry: dict[str, Any], *,
                       check: Callable[[], None] | None = None) -> dict[str, Any]:
     """Return the exact recipe as bounded JSON values, without derived arrays."""
@@ -237,6 +246,10 @@ def build_surface_mesh(geometry: dict[str, Any], *, max_vertices: int = MAX_MESH
     if check is not None:
         check()
     from .extrusion import ExtrusionMesh
+    from .holes import HolesMesh
+    if isinstance(mesh, HolesMesh):
+        return HolesSurfaceMesh("holes", tuple(positions), tuple(normals), mesh.regions,
+                                (), 0, "flat", (), mesh.depth_m, mesh.corner_vertex_ids)
     if isinstance(mesh, ExtrusionMesh):
         return SurfaceMesh("extrusion", tuple(positions), tuple(normals), mesh.regions,
                            (), 0, "flat", mesh.vertex_keys, mesh.depth_m)
@@ -440,12 +453,35 @@ def extrusion_profile_metadata():
                             "recorded_rigid_animation_only"]}
 
 
+def holes_profile_metadata():
+    """Describe the explicitly selected ring geometry and its finite limits."""
+    return {"name": HOLES_PROFILE, "family": "polygon_holes", "local_extrusion_axis": "+Z",
+            "outline_plane": "XY", "outer_winding": "counterclockwise_from_positive_Z",
+            "hole_winding": "clockwise_from_positive_Z", "max_holes": 8, "max_total_vertices": 64,
+            "clearance": "strict_non_touching_exact_binary64_predicates",
+            "local_placement": "baked_once_into_vertices_and_normals_in_carrier_frame",
+            "regional_materials": "explicit_linear_rgba_metallic_roughness",
+            "physical_participation": "visual_meshes_add_no_matter_or_motion_authority",
+            "limitations": ["simple_nonintersecting_rings", "no_nested_holes", "flat_shading",
+                            "no_bevels_or_general_booleans", "no_textures_or_skin_deformation",
+                            "no_automatic_collision_or_mass", "recorded_rigid_animation_only"]}
+
+
 def surface_metadata(geometry: dict[str, Any], mesh: SurfaceMesh, *,
                      check: Callable[[], None] | None = None) -> dict[str, Any]:
     """Describe authored surface identities and the actual derived counts."""
     if check is not None:
         check()
     surface = geometry.get("surface", geometry)
+    if surface["kind"] == "holes":
+        from .holes_inspection import holes_summary
+        result = holes_summary(geometry, check=check)
+        result.update(triangle_count=mesh.triangle_count, vertex_count=len(mesh.positions),
+            source_location={"source_id": surface["source_id"],
+                             "start_byte": surface["start"], "end_byte": surface["end"]},
+            normal_policy="flat_outward_triangle_normals",
+            topology="geometrically_edge_matched_unwelded_triangle_corners")
+        return bounded_data(result, check=check)
     if surface["kind"] == "extrusion":
         vertices = sorted(surface["vertices"], key=lambda vertex: vertex.order)
         return bounded_data({
@@ -516,7 +552,8 @@ class BakedScene:
 def checked_contract(model: SceneModel, target_contract: str) -> str:
     expected = {TARGET_CONTRACT: "core-0.1", CONSTRUCTION_TARGET: "construction-0.1",
                 SURFACE_TARGET: "surface-0.1", IMPULSE_TARGET: "impulse-0.1", FORCE_TARGET: "force-0.1",
-                REACH_TARGET: "planar-reach-0.1", BUDGET_REACH_TARGET: BUDGET_PROFILE, EXTRUSION_TARGET: EXTRUSION_PROFILE}
+                REACH_TARGET: "planar-reach-0.1", BUDGET_REACH_TARGET: BUDGET_PROFILE, EXTRUSION_TARGET: EXTRUSION_PROFILE,
+                HOLES_TARGET: HOLES_PROFILE}
     if target_contract not in expected or model.profile != expected[target_contract]:
         export_error("OKE-E-SUPPORT", "The named GLB contract must explicitly match the authored semantic profile.",
                      model, kind="unsupported", details={"target_contract": target_contract,
@@ -525,7 +562,7 @@ def checked_contract(model: SceneModel, target_contract: str) -> str:
         export_error("OKE-E-SUPPORT", "The GLB adapter requires a supported, validated model.", model, kind="unsupported")
     return {TARGET_CONTRACT: "0.1", CONSTRUCTION_TARGET: "0.2", SURFACE_TARGET: "0.3",
             IMPULSE_TARGET: "0.4", FORCE_TARGET: "0.5", REACH_TARGET: "0.6",
-            BUDGET_REACH_TARGET: "0.7", EXTRUSION_TARGET: "0.8"}[target_contract]
+            BUDGET_REACH_TARGET: "0.7", EXTRUSION_TARGET: "0.8", HOLES_TARGET: "0.9"}[target_contract]
 
 
 def program_metadata(model: SceneModel, *, check: Callable[[], None] | None = None) -> dict[str, Any]:
@@ -570,7 +607,7 @@ def program_metadata(model: SceneModel, *, check: Callable[[], None] | None = No
                     source = model.source_provenance[location["source_id"]]
                     if location["source_revision"] != source["source_revision"] or location["filename"] != source["filename"] or not 0 <= location["start_byte"] <= location["end_byte"]:
                         raise ValueError("Occurrence source location differs from its source identity.")
-            if model.profile in SURFACE_PROFILES and obj.geometry.get("kind") in ("loft", "placed", "extrusion"):
+            if model.profile in SURFACE_PROFILES and obj.geometry.get("kind") in ("loft", "placed", "extrusion", "holes"):
                 recipes = [obj.geometry]
                 if obj.geometry["kind"] == "placed":
                     recipes.append(obj.geometry["surface"])
@@ -952,10 +989,19 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
                 check()
             geometry = obj.geometry
             kind = geometry["kind"]
-            if kind in ("loft", "placed", "extrusion"):
+            if kind in ("loft", "placed", "extrusion", "holes"):
                 surface = geometry.get("surface", geometry)
-                predicted += (12 * len(surface["vertices"]) - 12 if surface["kind"] == "extrusion"
-                              else 6 * (len(surface["sections"]) - (surface["caps"] == "none")) * surface["facets"])
+                if surface["kind"] == "holes":
+                    authored = holes = 0
+                    for ring in surface["rings"]:
+                        if check is not None:
+                            check()
+                        authored += len(ring.vertices)
+                        holes += ring.role == "hole"
+                    predicted += 12 * authored + 12 * holes - 12
+                else:
+                    predicted += (12 * len(surface["vertices"]) - 12 if surface["kind"] == "extrusion"
+                                  else 6 * (len(surface["sections"]) - (surface["caps"] == "none")) * surface["facets"])
             elif kind == "sphere":
                 predicted += SPHERE_SEGMENTS * (SPHERE_RINGS - 1) + 2
             elif kind == "box":
@@ -983,13 +1029,17 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
         if check is not None:
             check()
         kind = geometry.get("kind")
+        if (geometry.get("surface", geometry).get("kind") == "holes"
+                and model.profile != HOLES_PROFILE):
+            export_error("OKE-E-GEOMETRY", "Polygon holes require their explicit source and destination profile.",
+                         model, kind="unsupported")
         if (geometry.get("surface", geometry).get("kind") == "extrusion"
-                and model.profile != EXTRUSION_PROFILE):
+                and model.profile not in EXTRUSION_PROFILES):
             export_error("OKE-E-GEOMETRY", "Polygon extrusion requires its explicit source and destination profile.",
                          model, kind="unsupported")
         if kind == "empty":
             return None
-        if kind in ("loft", "placed", "extrusion") and native:
+        if kind in ("loft", "placed", "extrusion", "holes") and native:
             try:
                 remaining = MAX_MESH_VERTICES - vertex_count
                 mesh = (build_surface_mesh(geometry, max_vertices=remaining, check=check)
@@ -1002,7 +1052,8 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
                                    details={"target_contract": {"impulse-0.1": IMPULSE_TARGET,
                                                                 "force-0.1": FORCE_TARGET,
                                                                 "planar-reach-0.1": REACH_TARGET,
-                                                                BUDGET_PROFILE: BUDGET_REACH_TARGET, EXTRUSION_PROFILE: EXTRUSION_TARGET}.get(model.profile, SURFACE_TARGET),
+                                                                BUDGET_PROFILE: BUDGET_REACH_TARGET, EXTRUSION_PROFILE: EXTRUSION_TARGET,
+                                                                HOLES_PROFILE: HOLES_TARGET}.get(model.profile, SURFACE_TARGET),
                                             "object_path": obj.path, **error.details}) from error
             charge(mesh)
             return mesh

@@ -17,7 +17,7 @@ from pathlib import Path
 import struct
 from typing import Any
 
-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, EXECUTION_PROFILES, REACH_PROFILES
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, EXECUTION_PROFILES, REACH_PROFILES
 
 
 REACH_TARGET = "ontokin.glb/0.6"
@@ -1660,7 +1660,7 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach
     from .scene import (BakedScene, ExportOptions, SurfaceMesh, MAX_KEYFRAMES, MAX_BAKED_POSES,
                         MAX_VALIDATION_POSES, MAX_MESH_VERTICES, MAX_GLB_BYTES,
                         _nodes, checked_contract, program_metadata, relationship_metadata,
-                        force_profile_metadata, extrusion_profile_metadata)
+                        force_profile_metadata, extrusion_profile_metadata, holes_profile_metadata)
 
     version = checked_contract(model, target_contract)
     options = options or ExportOptions()
@@ -1733,6 +1733,8 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach
         "reach_profile": reach_profile_metadata(model.profile), "reach_quantization": quantization}
     if model.profile == EXTRUSION_PROFILE:
         metadata["polygon_extrusion_profile"] = extrusion_profile_metadata()
+    if model.profile == HOLES_PROFILE:
+        metadata["polygon_holes_profile"] = holes_profile_metadata()
     report = {"schema_version": "ontokin.glb-report/" + version, "target_contract": target_contract,
         "outcome": "baked_pending_binary_validation",
         "exporter": {"name": "OntoKin reference GLB exporter", "version": __version__},
@@ -1777,6 +1779,8 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach
         "reach_profile": metadata["reach_profile"], "reach_quantization": quantization}
     if model.profile == EXTRUSION_PROFILE:
         report["geometry"]["polygon_extrusion_profile"] = metadata["polygon_extrusion_profile"]
+    if model.profile == HOLES_PROFILE:
+        report["geometry"]["polygon_holes_profile"] = metadata["polygon_holes_profile"]
     return BakedScene(model.module_name, model.scene_name, exact, times, list(plan.boundaries), nodes,
                       metadata, report, options, contract=target_contract, schema_version=version)
 

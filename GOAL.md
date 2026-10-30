@@ -22,6 +22,8 @@ The owner's October 29, 2026 direction prioritizes developing the language's cap
 
 Original tests, fixtures and acceptance gates retain their current limits. New demanding workloads use separately identified, explicitly authorized higher-budget settings; their results cannot retroactively pass an old fixed-budget gate. Preserve bounded work, cancellation, failure atomicity, independent validation and all unrelated resource caps. Efficiency improvements remain part of development, but extensive optimization investigations must not become a prerequisite for extending the language.
 
+[C076](docs/engineering/polygon-holes-2026-10-30-c076/README.md) extends useful exterior modeling with source-authored through-holes under its explicit [source/Agent/GLB .9 decision](docs/language-design/polygon-holes-v0.1/ADOPTION.md). Frozen ring, composition and repair cases, independent delivered-geometry checks and actual playback evidence remain distinct from implementation and integration. All broader product and release requirements below remain open unless separately completed.
+
 ## Preserve the full product scope
 
 PRD section 9.2 identifies the following required areas. A limited release may defer them, but they remain part of the goal.

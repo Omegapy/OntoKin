@@ -7,7 +7,7 @@ not introduce a node or action authority. GLB/0.3 delivery is separate.
 from __future__ import annotations
 
 from .model import Pose
-from .profile_capabilities import EXTRUSION_PROFILE
+from .profile_capabilities import EXTRUSION_PROFILE, HOLES_PROFILE, EXTRUSION_PROFILES
 from .surface import LoftSection, SurfaceMaterial, SurfaceError, triangulate_loft
 from .validator import fail
 from .values import INT, REAL, STRING, LENGTH, Type, Value, quantity_type
@@ -73,11 +73,15 @@ def surface_builtin(compiler, name, args, node, ctx):
     if name == "placed":
         geometry, pose = raw
         allowed = {"loft"}
-        if compiler.linked.modules[node.source_id].ast.profile == EXTRUSION_PROFILE:
+        if compiler.linked.modules[node.source_id].ast.profile in EXTRUSION_PROFILES:
             allowed.add("extrusion")
+        if compiler.linked.modules[node.source_id].ast.profile == HOLES_PROFILE:
+            allowed.add("holes")
         if not isinstance(geometry, dict) or geometry.get("kind") not in allowed:
             fail("OKL-E-SURFACE-PLACEMENT",
-                 ("placed() requires one native loft or extrusion, not a nested placement."
+                 ("placed() requires one unplaced loft, simple extrusion or ring extrusion."
+                  if compiler.linked.modules[node.source_id].ast.profile == HOLES_PROFILE else
+                  "placed() requires one native loft or extrusion, not a nested placement."
                   if compiler.linked.modules[node.source_id].ast.profile == EXTRUSION_PROFILE else
                   "placed() requires one native loft, not a nested placement."),
                  node, phase="type")
@@ -108,6 +112,12 @@ def materialize_surface(recipe, *, max_vertices: int, check=None):
     else:
         surface = recipe
         placement = Pose("self")
+    if surface["kind"] == "holes":
+        from .holes import triangulate_holes
+        mesh = triangulate_holes(surface["rings"], surface["materials"],
+                                 surface["depth_m"], surface["bottom_region"], surface["top_region"],
+                                 max_vertices=max_vertices, check=check)
+        return mesh, placement
     if surface["kind"] == "extrusion":
         from .extrusion import triangulate_extrusion
         mesh = triangulate_extrusion(surface["vertices"], surface["materials"],

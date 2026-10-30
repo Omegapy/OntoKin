@@ -22,7 +22,8 @@ from .model import Event, EventBlock, ImpulsePayload, ObjectModel, Pose, SiteMod
 from .surface_runtime import SURFACE_CALLS, SURFACE_TYPES, SURFACE_PROFILE, surface_builtin, materialize_surface
 from .surface import SurfaceError
 from .extrusion_runtime import EXTRUSION_CALLS, EXTRUSION_TYPES, extrusion_builtin
-from .profile_capabilities import (BUDGET_PROFILE, EXTRUSION_PROFILE, EXECUTION_PROFILES, REACH_PROFILES, IMPULSE_PROFILES,
+from .holes_runtime import HOLES_CALLS, HOLES_TYPES, holes_builtin
+from .profile_capabilities import (BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, IMPULSE_PROFILES,
                                    SURFACE_PROFILES)
 from .validator import (BUILTIN_TYPES, FIELD_TYPES,
                         PREDEFINED, READONLY_FIELDS, BoundExpression, Callable,
@@ -377,7 +378,11 @@ class ConstructionCompiler(Validator):
                     from .reach_source import reach_error
                     raise reach_error("reach_type", "ReachBranch takes no type arguments.", node)
                 result = Type("ReachBranch")
-            elif name in EXTRUSION_TYPES and self.linked.modules[node.source_id].ast.profile == EXTRUSION_PROFILE:
+            elif name in HOLES_TYPES and self.linked.modules[node.source_id].ast.profile == HOLES_PROFILE:
+                if args:
+                    fail("OKL-E-TYPE", f"Ring type '{name}' takes no type arguments.", node, phase="type")
+                result = Type(name)
+            elif name in EXTRUSION_TYPES and self.linked.modules[node.source_id].ast.profile in EXTRUSION_PROFILES:
                 if args:
                     fail("OKL-E-TYPE", f"Extrusion type '{name}' takes no type arguments.", node, phase="type")
                 result = Type(name)
@@ -407,7 +412,9 @@ class ConstructionCompiler(Validator):
         declaring_profile = self.linked.modules[node.source_id].ast.profile
         if declaring_profile in SURFACE_PROFILES:
             allowed |= SURFACE_TYPES
-        if declaring_profile == EXTRUSION_PROFILE:
+        if declaring_profile == HOLES_PROFILE:
+            allowed |= HOLES_TYPES
+        if declaring_profile in EXTRUSION_PROFILES:
             allowed |= EXTRUSION_TYPES
         if element.kind not in allowed:
             fail("OKL-E-CAPABILITY-UNSUPPORTED", f"Authored Keyed<{element}> is outside the flat immutable leaf profile.",
@@ -737,7 +744,10 @@ class ConstructionCompiler(Validator):
                 return Value(Type("ReachBranch"), name)
             if name == "reach_planar":
                 return Value(Type("BuiltinCallable"), name)
-        if (name in EXTRUSION_CALLS and self.linked.modules[node.source_id].ast.profile == EXTRUSION_PROFILE
+        if (name in HOLES_CALLS and self.linked.modules[node.source_id].ast.profile == HOLES_PROFILE
+                and name not in ctx.locals):
+            return Value(Type("BuiltinCallable"), name)
+        if (name in EXTRUSION_CALLS and self.linked.modules[node.source_id].ast.profile in EXTRUSION_PROFILES
                 and name not in ctx.locals):
             return Value(Type("BuiltinCallable"), name)
         if (name in SURFACE_CALLS and self.linked.modules[node.source_id].ast.profile in SURFACE_PROFILES
@@ -1199,8 +1209,13 @@ class ConstructionCompiler(Validator):
         if name == "reach_planar":
             from .reach_source import reach_builtin
             return reach_builtin(self, args, node, ctx)
+        if name in HOLES_CALLS:
+            if self.linked.modules[node.source_id].ast.profile != HOLES_PROFILE:
+                fail("OKL-E-CAPABILITY-UNSUPPORTED", "Ring constructors require polygon-holes-0.1.",
+                     node, phase="support")
+            return holes_builtin(self, name, args, node, ctx)
         if name in EXTRUSION_CALLS:
-            if self.linked.modules[node.source_id].ast.profile != EXTRUSION_PROFILE:
+            if self.linked.modules[node.source_id].ast.profile not in EXTRUSION_PROFILES:
                 fail("OKL-E-CAPABILITY-UNSUPPORTED", "Extrusion constructors require polygon-extrusion-0.1.",
                      node, phase="support")
             return extrusion_builtin(self, name, args, node, ctx)
@@ -1498,7 +1513,7 @@ class ConstructionCompiler(Validator):
         remaining_vertices = 250_000
         for path, obj in self.model.objects.items():
             recipe = obj.geometry
-            if not isinstance(recipe, dict) or recipe.get("kind") not in ("loft", "placed", "extrusion"):
+            if not isinstance(recipe, dict) or recipe.get("kind") not in ("loft", "placed", "extrusion", "holes"):
                 continue
             surface = recipe.get("surface", recipe)
             location = Node("span", surface["start"], surface["end"],
@@ -1754,7 +1769,8 @@ class ConstructionCompiler(Validator):
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "Required capabilities are not supplied by " + self.model.profile + ": " +
                  ", ".join(self.model.requested_capabilities), requires[0], phase="support")
         if self.level == "delivered":
-            target = ("ontokin.glb/0.8" if self.model.profile == EXTRUSION_PROFILE else
+            target = ("ontokin.glb/0.9" if self.model.profile == HOLES_PROFILE else
+                      "ontokin.glb/0.8" if self.model.profile == EXTRUSION_PROFILE else
                       "ontokin.glb/0.7" if self.model.profile == BUDGET_PROFILE else
                       "ontokin.glb/0.6" if self.model.profile == REACH_PROFILE else
                       "ontokin.glb/0.5" if self.model.profile == FORCE_PROFILE else

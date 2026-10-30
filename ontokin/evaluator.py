@@ -31,7 +31,7 @@ MAX_OUTPUT_RECORDS = 100000
 IMPULSE_PROFILE = "impulse-0.1"
 FORCE_PROFILE = "force-0.1"
 REACH_PROFILE = "planar-reach-0.1"
-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, EXECUTION_PROFILES, REACH_PROFILES, FORCE_PROFILES, IMPULSE_PROFILES
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, EXECUTION_PROFILES, REACH_PROFILES, FORCE_PROFILES, IMPULSE_PROFILES
 
 
 class _NumericFault(Exception):
@@ -790,7 +790,8 @@ def _request_work(model, check, work):
     if model.profile in REACH_PROFILES:
         if model.profile in EXECUTION_PROFILES:
             from .reach_numeric import require_execution_work
-            require_execution_work(work, target_contract=("ontokin.glb/0.8" if model.profile == EXTRUSION_PROFILE else "ontokin.glb/0.7"))
+            require_execution_work(work, target_contract=("ontokin.glb/0.9" if model.profile == HOLES_PROFILE else
+                                                         "ontokin.glb/0.8" if model.profile == EXTRUSION_PROFILE else "ontokin.glb/0.7"))
         if work is None:
             from .reach_numeric import ReachExecutionWork
             work = ReachExecutionWork(check=check)

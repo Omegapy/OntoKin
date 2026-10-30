@@ -57,6 +57,11 @@ def run(args, *, host_policy=None) -> int:
         from .extrusion_protocol import ExtrusionProtocol
         service_type, envelope_fn = ExtrusionAgentService, ExtrusionProtocol.envelope
         service_options = {"protocol": selected_protocol, "host_policy": host_policy}
+    elif selected_protocol == "ontokin.agent/0.9":
+        from .holes_agent import HolesAgentService
+        from .holes_protocol import HolesProtocol
+        service_type, envelope_fn = HolesAgentService, HolesProtocol.envelope
+        service_options = {"protocol": selected_protocol, "host_policy": host_policy}
     def error_response(error):
         return _error(error, envelope_fn)
     try:

@@ -15,7 +15,7 @@ from .agent_protocol import ProtocolError
 from .diagnostics import OntoKinError
 from .scene import MAX_MESH_VERTICES, SurfaceMesh, build_surface_mesh
 from .surface import SurfaceError
-from .profile_capabilities import EXTRUSION_PROFILE, EXECUTION_PROFILES
+from .profile_capabilities import EXTRUSION_PROFILE, EXTRUSION_PROFILES, EXECUTION_PROFILES
 from .values import bounded_data
 
 
@@ -31,6 +31,9 @@ def surface_summary(geometry, *, check=None):
     if check is not None:
         check()
     recipe = geometry.get("surface", geometry)
+    if recipe["kind"] == "holes":
+        from .holes_inspection import holes_summary
+        return holes_summary(geometry, check=check)
     if recipe["kind"] == "extrusion":
         return extrusion_summary(geometry, check=check)
     ordered = sorted(recipe["sections"], key=lambda section: section.station_m)
@@ -197,7 +200,7 @@ def prepare_surface_page(program, element_id, *, region=None, count=256, budgets
                                category="unsupported" if code == "OKL-E-CAPABILITY-UNSUPPORTED" else
                                "resource_limit" if code == "OKL-E-RESOURCE" else "invalid",
                                element_id=list(obj.element_id), details={"object_path": obj.path, **details})
-        if obj.geometry["kind"] not in ("loft", "extrusion", "placed"):
+        if obj.geometry["kind"] not in ("loft", "extrusion", "placed", "holes"):
             error("OKL-E-CAPABILITY-UNSUPPORTED", "Surface mesh pages require supported native exterior geometry.",
                   geometry_kind=obj.geometry["kind"])
         recipe = obj.geometry.get("surface", obj.geometry)
@@ -224,6 +227,6 @@ def prepare_surface_page(program, element_id, *, region=None, count=256, budgets
                 selected.append(ordinal)
         return SurfacePageContext(program.program_revision, list(obj.element_id), obj.path,
                                   region, mesh, fingerprint, selected, keys, budget,
-                                  EXTRUSION_PROFILE if profile == EXTRUSION_PROFILE else PROFILE)
+                                  profile if profile in EXTRUSION_PROFILES else PROFILE)
     except _Interrupt as exc:
         raise exc.error
