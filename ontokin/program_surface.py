@@ -135,12 +135,14 @@ class SurfacePageContext:
 
 def prepare_surface_page(program, element_id, *, region=None, count=256, budgets=None, check=None, profile=PROFILE):
     """Compile a bounded native occurrence and prepare stable-order page state."""
-    from .program_runtime import _Budget, _Interrupt, _compile, _support
+    from .program_runtime import _request_budget, _Interrupt, _compile, _support
     try:
         from .program_bindings import PROFILE_BINDINGS
-        if not isinstance(profile, str) or profile not in PROFILE_BINDINGS or not PROFILE_BINDINGS[profile].native_surfaces:
+        from .profile_capabilities import BUDGET_PROFILE
+        if (profile != BUDGET_PROFILE and (not isinstance(profile, str)
+                or profile not in PROFILE_BINDINGS or not PROFILE_BINDINGS[profile].native_surfaces)):
             raise ProtocolError("OKA-E-REQUEST", "This program profile does not supply native mesh inspection.")
-        budget = _Budget(budgets, check, profile)
+        budget = _request_budget(budgets, check, profile)
         if count > budget.limits["max_result_items"]:
             raise OntoKinError("OKL-E-RESOURCE", "Surface page count exceeds its result-item budget.",
                                category="resource_limit", phase="inspection",

@@ -10,13 +10,20 @@ The current direction begins with exterior 3D models and short animations. Those
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
 
-### Configurable execution budgets: experimental source and CLI path
+### Configurable execution budgets: source, CLI and Agent workflows
 
 Explicit source `0.7` / `planar-reach-budget-0.1` can request more computation time and operations within ceilings independently authorized by its execution environment. Ordinary defaults remain **100,000 operations and 30,000 ms**; existing acceptance tests retain their original limits. A larger host ceiling does not silently increase an omitted program budget. Computation time and the animation's modeled duration are separate values.
 
 [The C073 adoption](docs/language-design/execution-budgets-v0.1/ADOPTION-C073.md) defines the implemented grammar, trusted host API, bounded admission and explicit GLB/0.7 output. One counter and original deadline cover admission, compilation, simulation, export and independent output validation. [The example guide](examples/execution-budgets/README.md) provides an operator-controlled launcher and a frozen six-vessel force/impulse workload. Command-line caps can reduce a request; they cannot authorize a larger host ceiling.
 
-[The C073 engineering record](docs/engineering/source-execution-budgets-2026-10-29-c073/README.md) identifies the actual checks and integration state. **Agent/0.7 remains unavailable**; its source-edit, saved-program and retry lifecycle is the [next increment](docs/engineering/source-execution-budgets-2026-10-29-c073/NEXT-TASK.md). [C072](docs/engineering/language-execution-budgets-2026-10-29-c072/README.md) retains the original proposal and source evaluation. Efficiency work continues alongside language capability development.
+[The C073 engineering record](docs/engineering/source-execution-budgets-2026-10-29-c073/README.md) identifies the source/CLI checks and integration. [C074](docs/engineering/agent-execution-budgets-2026-10-30-c074/README.md) adds the separately selected **Agent/0.7** service for discovery, exact source edits, saved-program authorization, evaluation, export, retrieval, cancellation and retries. Its [versioned contract and schemas](docs/language-design/agent-v0.7/README.md) preserve earlier Agent defaults and stores. [C072](docs/engineering/language-execution-budgets-2026-10-29-c072/README.md) retains the original proposal and source evaluation.
+
+```bash
+python3 -m ontokin agent --protocol ontokin.agent/0.7 --store /tmp/ontokin-budget-agent
+python3 tools/run_budget_agent_acceptance.py --output-dir /tmp/ontokin-budget-agent-evidence
+```
+
+The ordinary CLI host permits the default ceilings. An embedding host can use `BudgetAgentService(store, host_policy=HostPolicy(400000, 80000))` from `ontokin.budget_agent` and `ontokin.execution_budget`, or pass that policy to `cli.main`. Request JSON never grants host authority. Agent/0.7 patches use exact UTF-8 spans within an identified source file; earlier finer edit scopes keep their own contracts. Successful artifact production and later retrieval have separate current-policy requests and receipts. C074 remains an experimental development increment; its complete verification and integration are recorded separately.
 
 ### Current development: experimental planar reach
 

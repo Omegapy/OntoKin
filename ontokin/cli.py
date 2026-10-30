@@ -166,6 +166,7 @@ the report's exact artifact hash to detect an incomplete pair.
 
 
 def capabilities(*, host_policy=None) -> dict:
+    from .budget_agent_catalog import interface as budget_agent_interface
     from .execution_budget import HostPolicy, DEFAULT_LIMITS, MAX_LIMIT
     policy = HostPolicy() if host_policy is None else host_policy
     if not isinstance(policy, HostPolicy):
@@ -272,7 +273,7 @@ def capabilities(*, host_policy=None) -> dict:
                     "format": "glTF 2.0 binary (.glb)", "profile": "planar-reach-budget-0.1",
                     "selection": "Explicit source 0.7 and host-authorized source/CLI execution",
                     "validation": "Inherited geometry, physical history and independent supplied-byte checks under the same remaining allowance",
-                    "limitations": "Experimental source/CLI increment; no Agent/0.7 lifecycle or live destination physics",
+                    "limitations": "Experimental source/CLI increment; Agent lifecycle is a separate binding; no live destination physics",
                 },
             },
             "defaults": dict(DEFAULT_LIMITS), "host_ceilings": policy.ceilings,
@@ -282,11 +283,12 @@ def capabilities(*, host_policy=None) -> dict:
             "host_configuration": "Trusted Python HostPolicy passed to cli.main(host_policy=...) or execute_budgeted_export(policy=...)",
             "single_source_command": "export SOURCE.ok --target ontokin.glb/0.7 --output MODEL.glb",
             "accounting": "One original deadline and shared operation allowance through header, construction, evaluation, recording, export and independent readback",
-            "limitations": ["Agent/0.7 is unavailable.",
+            "limitations": ["This source/CLI interface has no Agent lifecycle; see budget_agent_interface for the separate Agent/0.7 binding.",
                             "Computation timeout does not change scene.duration or recording options.",
                             "Host policy is configured by the embedding host; caller flags only reduce source requests.",
                             "Other source, object, numerical, cache and output limits remain in force."],
         },
+        "budget_agent_interface": budget_agent_interface(policy),
         "operations": ["check", "evaluate", "export", "agent", "conformance", "capabilities"],
         "output_levels": ["represented", "constructed", "evaluated"],
         "source_features": ["classes", "single_inheritance", "pure_functions_and_methods",
@@ -516,14 +518,14 @@ def main(argv: list[str] | None = None, *, host_policy=None) -> int:
     suite.add_argument("--fixtures", type=Path, default=DEFAULT_FIXTURES)
     suite.add_argument("--output", type=Path, help="Write the complete JSON report to this path")
     agent = commands.add_parser("agent", help="Serve an explicitly selected durable agent contract as local JSONL")
-    agent.add_argument("--protocol", choices=["ontokin.agent/0.1", "ontokin.agent/0.2", "ontokin.agent/0.3", "ontokin.agent/0.4", "ontokin.agent/0.5", "ontokin.agent/0.6"], default="ontokin.agent/0.1", help="Select the explicit core, construction, surface, impulse, force or planar reach agent contract")
+    agent.add_argument("--protocol", choices=["ontokin.agent/0.1", "ontokin.agent/0.2", "ontokin.agent/0.3", "ontokin.agent/0.4", "ontokin.agent/0.5", "ontokin.agent/0.6", "ontokin.agent/0.7"], default="ontokin.agent/0.1", help="Select the explicit core, construction, surface, impulse, force, reach or execution-budget agent contract")
     agent.add_argument("--store", type=Path, required=True, help="Directory for immutable snapshots and durable request/run state")
     agent.add_argument("--request", type=Path, help="Read one JSON request, emit its receipt, and exit")
     agent.add_argument("--wait", action="store_true", help="Wait for this request's terminal result instead of returning a queued receipt")
     args = parser.parse_args(argv)
     if args.command == "agent":
         from .agent_cli import run
-        return run(args)
+        return run(args, host_policy=host_policy)
     if args.command == "capabilities":
         _print(capabilities(host_policy=host_policy))
         return 0

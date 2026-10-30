@@ -38,7 +38,7 @@ def _emit(response):
     print(json.dumps(response, ensure_ascii=False, separators=(",", ":"), allow_nan=False), flush=True)
 
 
-def run(args) -> int:
+def run(args, *, host_policy=None) -> int:
     service_type, envelope_fn = AgentService, envelope
     service_options = {}
     selected_protocol = getattr(args, "protocol", "ontokin.agent/0.1")
@@ -47,6 +47,11 @@ def run(args) -> int:
         from .program_protocol import bind
         service_type, envelope_fn = ProgramAgentService, bind(selected_protocol).envelope
         service_options = {"protocol": selected_protocol}
+    elif selected_protocol == "ontokin.agent/0.7":
+        from .budget_agent import BudgetAgentService
+        from .budget_protocol import BudgetProtocol
+        service_type, envelope_fn = BudgetAgentService, BudgetProtocol.envelope
+        service_options = {"protocol": selected_protocol, "host_policy": host_policy}
     def error_response(error):
         return _error(error, envelope_fn)
     try:

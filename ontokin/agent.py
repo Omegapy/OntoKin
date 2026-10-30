@@ -111,6 +111,18 @@ class AgentService:
     def _check_response(self, response):
         """A version binding may impose an additional encoded result limit."""
 
+    def _admit_request(self, db, request):
+        """An explicit binding may impose independent service admission limits."""
+
+    def _next_request(self, db):
+        return db.execute("SELECT * FROM requests WHERE state='queued' ORDER BY sequence LIMIT 1").fetchone()
+
+    def _make_check(self, task):
+        return _Check(self, task.request)
+
+    def _persist_task_metadata(self, db, task):
+        """Persist versioned metadata inside the same effects transaction."""
+
     def _check_task_response(self, task):
         """Check a proposed publication with its immutable request context."""
         self._check_response(task.response)
@@ -178,6 +190,7 @@ class AgentService:
                 return json.loads(existing["response"])
             try:
                 self._protocol.validate_request(request)
+                self._admit_request(db, request)
             except ProtocolError as exc:
                 response = self._protocol_response(request, exc, accepted=accepted)
                 # Even a malformed operation with a usable identity cannot later be repurposed.
@@ -252,7 +265,7 @@ class AgentService:
             return False
         with self._store.transaction() as db:
             self._store.recover(db)
-            row = db.execute("SELECT * FROM requests WHERE state='queued' ORDER BY sequence LIMIT 1").fetchone()
+            row = self._next_request(db)
             if row is None:
                 return False
             request = json.loads(row["payload"])
@@ -270,8 +283,8 @@ class AgentService:
             self._store.update_response(db, row["project_id"], row["id"], response)
             db.execute("UPDATE requests SET owner=? WHERE sequence=?", (self._store.owner, row["sequence"]))
         task = _Task(request, response)
-        check = _Check(self, request)
         try:
+            check = self._make_check(task)
             check()
             self._execute(task, check)
             check()
@@ -615,6 +628,7 @@ class AgentService:
                 task.accept or self._source_accepted_db(db, project, self._revision(task.source)))
             self._bind_publication_context(task, accepted_revision=response[self._accepted_key],
                                            source_accepted_once=bool(source_accepted))
+            self._persist_task_metadata(db, task)
             if task.run is not None:
                 db.execute("INSERT INTO runs VALUES (?,?,?,?,?) ON CONFLICT(project_id,id) DO UPDATE SET descriptor=excluded.descriptor,version=excluded.version",
                            (project, task.run["run_id"], self._revision(task.source), dumps(task.run), run_version))
