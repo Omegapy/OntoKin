@@ -1,0 +1,230 @@
+#!/usr/bin/env python3
+"""Derive C070 source facts and finite bounds without importing product code."""
+import ast
+import hashlib
+import json
+from collections import Counter
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[2]
+HISTORY = 'docs/engineering/reach-recording-validation-2026-10-28-c060/evidence'
+
+
+def digest(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def blob(raw):
+    return hashlib.sha1(b'blob ' + str(len(raw)).encode() + b'\0' + raw).hexdigest()
+
+
+def definition(tree, name, owner=None):
+    nodes = tree.body
+    if owner is not None:
+        nodes = next(n for n in nodes if isinstance(n, ast.ClassDef) and n.name == owner).body
+    return next(n for n in nodes if isinstance(n, (ast.FunctionDef, ast.ClassDef)) and n.name == name)
+
+
+def main():
+    binding = json.loads((HERE / 'source-binding.json').read_text())
+    sources, trees, verified = {}, {}, []
+    for item in binding['sources']:
+        raw = (ROOT / item['path']).read_bytes()
+        assert len(raw) == item['size'] and blob(raw) == item['sha'], item['path']
+        sources[item['path']] = raw.decode()
+        if item['path'].endswith('.py'):
+            trees[item['path']] = ast.parse(raw, filename=item['path'])
+        verified.append({**item, 'sha256': digest(raw)})
+    checks = []
+
+    def require(name, condition):
+        assert condition, name
+        checks.append(name)
+
+    def segment(path, name, owner=None):
+        return ast.get_source_segment(sources[path], definition(trees[path], name, owner))
+
+    export = 'ontokin/reach_export.py'
+    numeric = 'ontokin/reach_numeric.py'
+    reader = 'ontokin/reach_conformance.py'
+    node = definition(trees[export], '_certificate_quantities')
+    assignments = [n for n in node.body if isinstance(n, ast.Assign)]
+    require('positional_addition_is_first_statement_after_docstring',
+            ast.unparse(assignments[0]) == "ep = _exact(ep, nsp, 'add', work)")
+    selected = [n for n in assignments if any(isinstance(t, ast.Name) and t.id in {'eq', 'chord', 'arc'} for t in n.targets)]
+    require('selected_angular_assignments', [ast.unparse(n.targets[0]) for n in selected] == ['eq', 'chord', 'arc'])
+    events = []
+
+    def visit_in_evaluation_order(expr):
+        if isinstance(expr, ast.Call):
+            visit_in_evaluation_order(expr.func)
+            for arg in expr.args:
+                visit_in_evaluation_order(arg)
+            for keyword in expr.keywords:
+                visit_in_evaluation_order(keyword.value)
+            if isinstance(expr.func, ast.Name) and expr.func.id == '_exact':
+                events.append({'event': 'A' + str(len(events) + 1),
+                    'operation': expr.args[2].value, 'first_line': expr.lineno,
+                    'last_line': expr.end_lineno, 'expression': ast.unparse(expr)})
+        else:
+            for child in ast.iter_child_nodes(expr):
+                visit_in_evaluation_order(child)
+
+    for statement in selected:
+        visit_in_evaluation_order(statement.value)
+    operations = [e['operation'] for e in events]
+    require('nine_calls_in_actual_nested_evaluation_order',
+            operations == ['add', 'mul', 'div', 'mul', 'add', 'mul', 'div', 'sub', 'div'])
+    categories = dict(Counter(operations))
+    require('category_totals', categories == {'add': 2, 'mul': 3, 'div': 3, 'sub': 1})
+    range_nodes = [n for n in node.body if isinstance(n, ast.If)]
+    require('three_original_range_checks', [ast.unparse(n.test) for n in range_nodes] ==
+            ['eq > Fraction(1, 2)', 'chord > Fraction(1, 2)', 'arc > ANGULAR_STEP'])
+    angular_names = {n.id for statement in selected for n in ast.walk(statement.value) if isinstance(n, ast.Name)}
+    require('angular_numeric_inputs_exclude_positional_geometry_terms',
+            not ({'ep', 'nsp', 'radius', 'vertex_error', 'shift', 'magnitude', 'enclosing'} & angular_names))
+    angular_attr = [n for statement in selected for n in ast.walk(statement.value) if isinstance(n, ast.Attribute)]
+    require('angular_bound_field_is_speed_of_rotation_only',
+            [ast.unparse(n) for n in angular_attr] == ['bound.angular_speed'])
+    require('eq_range_precedes_first_angular_speed_read', range_nodes[0].end_lineno < angular_attr[0].lineno)
+    exact = segment(export, '_exact')
+    ordered = ['_charge(work, "recording_exact_" + operation)', 'work.guard(left, right)',
+               'an, ad =', '_guard_bits(width, work)', 'result =', '_guard(result, work)']
+    positions = [exact.index(text) for text in ordered]
+    require('original_exact_charge_guard_width_operation_result_order', positions == sorted(positions))
+    require('division_zero_check_precedes_width_guard', exact.index('if not right:') < exact.index('_guard_bits(width, work)'))
+    reuse = segment(export, '_reuse')
+    require('existing_reuse_lookup_calculate_then_remember',
+            reuse.index('result = work.lookup(key)') < reuse.index('result = calculate()') < reuse.index('work.remember(key, result)'))
+    group = segment(export, 'interval_certificates')
+    require('whole_group_cache_encloses_angular_calculation',
+            '("certificate_group", bound, enclosing, radius, vertex_error, nsp, nsr,' in group and
+            '_reuse(work, key, lambda: _certificate_quantities(' in group)
+    lookup = segment(numeric, 'lookup', 'ReachExecutionWork')
+    require('lookup_and_promotion_are_charged', 'self.charge("cache_lookup")' in lookup and 'self.charge("cache_promote")' in lookup)
+    require('lookup_rechecks_domain_and_presence_after_promotion',
+            lookup.index('self.charge("cache_promote")') < lookup.index('if self._sync_cache_operand_limit() or operand_bits != self.max_operand_bits:') < lookup.rindex('if key not in self._cache:'))
+    remember = segment(numeric, 'remember', 'ReachExecutionWork')
+    require('insertion_and_eviction_are_charged', 'self.charge("cache_insert")' in remember and 'self.charge("cache_evict")' in remember)
+    require('publication_checks_generation', 'generation != self._cache_generation' in remember)
+    sync = segment(numeric, '_sync_cache_operand_limit', 'ReachExecutionWork')
+    require('changed_operand_scope_clears_cache', 'self.charge("cache_operand_scope_reset")' in sync and 'self._cache.clear()' in sync)
+    charge = segment(numeric, 'charge', 'ReachExecutionWork')
+    order = ['observer = self._source_after_charge', 'self.external_check()', 'if self.operations >= self.max_operations:',
+             'self.operations += 1', 'self.counts[kind] =', 'observer()']
+    positions = [charge.index(text) for text in order]
+    require('callback_budget_counter_observer_order', positions == sorted(positions))
+    require('fixed_cache_maximum_preserved', '(max_operand_bits, MAX_OPERAND_BITS), (max_cache_entries, 256)' in sources[numeric])
+    destination = segment(export, 'destination_numeric_bounds')
+    require('one_destination_bound_charge_per_completed_calculation', destination.count('_charge(work, "destination_bound")') == 1)
+    runtime_paths = sorted(p.relative_to(ROOT).as_posix() for p in (ROOT / 'ontokin').glob('*.py'))
+    destination_calls = []
+    for path in runtime_paths:
+        tree = ast.parse((ROOT / path).read_bytes(), filename=path)
+        for call in ast.walk(tree):
+            if isinstance(call, ast.Call) and isinstance(call.func, ast.Name) and call.func.id == 'destination_numeric_bounds':
+                destination_calls.append({'path': path, 'line': call.lineno})
+    require('single_runtime_destination_bound_callsite', len(destination_calls) == 1 and
+            destination_calls[0]['path'] == export and node.lineno < destination_calls[0]['line'] < node.end_lineno)
+    require('writer_and_reader_share_request_work',
+            'validate_export(data, model, options=scene.options, target_contract=target_contract, check=check, work=work)' in sources['ontokin/gltf.py'] and
+            'validate_reach_export(data, model, options=options, check=_guard_check(check), work=work)' in sources['ontokin/gltf.py'])
+    key_proof = segment(reader, '_key_comparisons')
+    require('every_key_has_per_carrier_pose_admission',
+            'for carrier, item in geometry.items():\n        arithmetic.tick("independent_key_pose")' in key_proof)
+    member = segment(reader, 'add', '_CertificateBatch')
+    require('each_certificate_member_retains_admission', 'arithmetic.tick("independent_certificate_member")' in member)
+    validation = segment(reader, '_verify_certificates')
+    require('reader_visits_all_remaining_keys_and_members',
+            'for key, (left, right) in enumerate(zip(authored, authored[1:])):' in validation and
+            'batch.add(record, width, stored_width, minima, magnitude)' in validation)
+    historical = json.loads(sources[HISTORY + '/inputs-before.json'])
+    historical_runtime = [r for r in historical['files'] if r['path'].startswith('ontokin/') and r['path'].endswith('.py')]
+    require('historical_runtime_inventory_is_complete_current_65', len(historical_runtime) == 65 and
+            sorted(r['path'] for r in historical_runtime) == runtime_paths)
+    for row in historical_runtime:
+        raw = (ROOT / row['path']).read_bytes()
+        assert len(raw) == row['bytes'] and 'sha256:' + digest(raw) == row['sha256'] and blob(raw) == row['git_blob'], row['path']
+    require('all_65_runtime_files_match_c060_bytes', True)
+    cases = []
+    for case, expected in [('P11', (40, 23, 15, 20, 320)), ('L03', (18, 12, 24, 6, 150))]:
+        summary = json.loads(sources[f'{HISTORY}/{case}/summary.json'])
+        ledger = json.loads(sources[f'{HISTORY}/{case}/work-ledger.json'])
+        segments = [s for s in ledger['segments'] if s.get('after_marker') == 'certification' and s.get('before_marker') == 'encoding']
+        require(case + '_unique_completed_producer_certification_span', len(segments) == 1 and segments[0]['shared_minus_reach'] == 0)
+        segment_ = segments[0]
+        visits = segment_['reach_category_delta']['recording_certificate_group']
+        misses = segment_['reach_category_delta']['destination_bound']
+        unvisited = summary['unvisited_keys']
+        carriers = summary['carrier_count']
+        rows = summary['interval_rows_not_yet_traversed']
+        require(case + '_exact_retained_counters', (visits, misses, unvisited, carriers, rows) == expected)
+        require(case + '_summary_ledger_tail_agree', unvisited == len(ledger['unvisited_key_indices']) and
+                rows == ledger['interval_rows_not_yet_traversed'] and
+                rows == summary['certificate_count'] - summary['provisional_interval_rows_traversed'])
+        require(case + '_historical_failure_scope_preserved', summary['product_request_status'] == 'failed' and
+                summary['accepted_artifact'] is False and summary['complete_stock_harness'] is False and
+                summary['final_shared_operations'] == 100001 and summary['source_batch_finalized_at_refusal'] is False)
+        gross = 9 * (misses - 1)
+        tail = unvisited * carriers + rows
+        require(case + '_direct_angular_ceiling_below_mandatory_tail', gross < tail)
+        cases.append({'case': case, 'historical_source_commit': summary['source_commit'],
+            'historical_source_tree': summary['source_tree'], 'ledger_segment_ordinal': segment_['ordinal'],
+            'whole_group_visits': visits, 'actual_whole_group_calculations': misses,
+            'existing_whole_group_hits': visits - misses,
+            'exact_duplicate_tuple_count': None, 'ordered_lru_events': None,
+            'gross_angular_ceiling': gross, 'stable_cache_only_ceiling': gross - 2 * misses,
+            'unvisited_keys': unvisited, 'carriers': carriers, 'untraversed_certificate_members': rows,
+            'mandatory_remaining_charge_floor': tail,
+            'optimistic_matched_request_operation_floor': 100000 - gross + tail,
+            'counterfactual_path_assumptions': 'Only this nine-call region changes; all other outputs, paths, outer-group/cache/reader work matched',
+            'complete_tail_cost': None, 'measured_saving': None})
+    funding = json.loads((HERE / 'funding.json').read_text())
+    require('unknown_costs_not_assigned_zero', funding['unknown_cost_is_zero'] is False and
+            funding['complete_request_equation']['delta_other_value'] is None and
+            funding['complete_request_equation']['A_value'] is None)
+    require('implementation_and_instrumentation_gates_unmet', funding['authority_safe_schedule'] is False and
+            funding['positive_complete_request_premise'] is False and funding['runtime_optimization_selected'] is False)
+    for case in cases:
+        declared = funding['bounded_rescue_screen'][case['case']]
+        require(case['case'] + '_funding_matches_derived_values',
+                declared['gross_angular_ceiling'] == case['gross_angular_ceiling'] and
+                declared['mandatory_tail_floor'] == case['mandatory_remaining_charge_floor'] and
+                declared['optimistic_required_operations_floor'] == case['optimistic_matched_request_operation_floor'])
+    bound_speed = [n for n in ast.walk(node) if isinstance(n, ast.Attribute) and ast.unparse(n) == 'bound.speed']
+    require('next_target_source_speed_only_forwarded_once', len(bound_speed) == 1 and
+            'rounded_bound = MotionBound(bound.speed,' in segment(export, '_certificate_quantities'))
+    interval = definition(trees[export], 'complete_interval_bounds')
+    used_bound_fields = sorted({ast.unparse(n) for n in ast.walk(interval) if isinstance(n, ast.Attribute) and
+                              isinstance(n.value, ast.Name) and n.value.id in {'bound', 'enclosing'}})
+    require('next_target_numeric_interval_ignores_source_speed', used_bound_fields ==
+            ['bound.acceleration', 'bound.angular_speed', 'enclosing.angular_speed', 'enclosing.speed'])
+    definition_requests = [(export, name, None) for name in ['_certificate_quantities', '_exact', '_reuse',
+        'interval_certificates', 'destination_numeric_bounds', 'complete_interval_bounds', 'MotionBound']]
+    definition_requests += [(numeric, name, 'ReachExecutionWork') for name in
+        ['charge', 'lookup', 'remember', '_sync_cache_operand_limit']]
+    definition_requests += [(reader, '_key_comparisons', None), (reader, 'add', '_CertificateBatch'),
+                            (reader, '_verify_certificates', None)]
+    definitions = []
+    for path, name, owner in definition_requests:
+        n = definition(trees[path], name, owner)
+        definitions.append({'path': path, 'name': name, 'owner': owner, 'first_line': n.lineno,
+            'last_line': n.end_lineno, 'sha256': digest(ast.get_source_segment(sources[path], n).encode())})
+    result = {'schema_version': 'ontokin.c070-static-derivation/0.1', 'status': 'passed',
+        'baseline_commit': binding['baseline_commit'], 'baseline_tree': binding['baseline_tree'],
+        'source_bindings': verified, 'definitions': definitions, 'checks': checks, 'check_count': len(checks),
+        'angular_events': events, 'angular_categories': categories,
+        'runtime_files_equal_to_historical_c060': len(historical_runtime),
+        'actual_destination_bound_callsites': destination_calls, 'retained_cases': cases,
+        'next_target_used_motion_fields': used_bound_fields,
+        'source_only': True, 'product_imports_executed': 0, 'product_requests_executed': 0,
+        'runtime_suites_executed': 0, 'native_trigonometric_evaluations': 0, 'generated_meshes': 0,
+        'fresh_c060_audit_executed': False, 'exact_tuple_incidence_known': False,
+        'universal_no_saving_theorem': False, 'authority_safe_schedule': False,
+        'positive_complete_request_premise': False}
+    print(json.dumps(result, indent=2, sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()

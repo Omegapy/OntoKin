@@ -1,0 +1,15 @@
+# C070 recovery and source identity
+
+The uploaded README was read first. The six uploaded C069 metadata files match the corresponding original packet bytes. The complete original C069 ZIP was recovered and freshly verified with its unchanged verifier, including the ZIP itself. The [receipt](preparation/c069-verification.json), [command](preparation/c069-verification-command.json) and [attachment comparison](preparation/c069-upload-comparison.json) retain the results.
+
+The baseline is `20977e92945d767bc8047b36e0e697f53d2a886e`, tree `d476d2f434c3b931255f0588cb734c6abddb588b`: 3,703 files / 622,391,551 bytes, no omissions. The original archive has 3,735 members / 476,424,021 bytes and SHA-256 `9b813b4c9ecac485eb4d13fbf133f63db96ec2e75d38862283a9572d568578fd`.
+
+Initial ordinary network access failed: a Git remote lookup could not reach the configured browser proxy, and the current official file-transfer helper could not complete its initial network request. The same authorized transfer helper succeeded after approved network escalation. These are preparation/environment failures, not product or repository-integrity failures. No clone success is claimed.
+
+The working checkout was copied from the verified source snapshot. Every original indexed blob was installed without filters using its original mode/path; its tree matched the baseline. The actual raw final commit was installed with an explicit shallow boundary. [Checkout recovery](preparation/checkout-recovery.json) records a clean working tree. This is complete source, not a full-history clone. The frozen recovered packet remains untouched.
+
+[Initial live state](preparation/initial-live-state.json) identifies main, the unchanged history-only archive branch, no open PRs and completed listed historical workflows. Dedicated live queries found zero queued and zero in-progress runs. [C069 closure](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6512013418) explicitly released all earlier scope. [C070 scope](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6512217367) owns the new C070 directory on `work/reach-angular-reuse-20261029-c070`. Shared STATUS/navigation require the separate main lease.
+
+Fresh C069 verification retains historical C068 and C067 packet/ZIP verification. Historical C066 original-packet unavailability and complete-source recovery retain their original meanings. Reading C060 evidence in this checkpoint is not a fresh execution of its product calls or historical auditor. C060 itself used an explicitly partial checkout; comparing its 65 runtime hashes with current source does not retrospectively make that checkout complete.
+
+The first new static derivation failed its reader-traversal assertion because it inspected `validate_reach_export` instead of the actual owning function `_verify_certificates`. The assertion and product source were not weakened. The inspected owner was corrected, and the failed command, stderr and [original derivation bytes](preparation/derive-before-owner-fix.txt) remain preserved. Later successful derivations are separate attempts.
