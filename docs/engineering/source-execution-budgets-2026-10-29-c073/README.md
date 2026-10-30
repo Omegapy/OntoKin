@@ -8,7 +8,7 @@ October 29, 2026, America/Denver; executions dated October 30 UTC. This implemen
 **Immutable validation ZIP:** `OntoKin_C073_Validation_Evidence_2026-10-29.zip`  
 **ZIP SHA-256:** `476b84584161e6b4a4779254fe8a0c1ae3d04dcd5f52ccfbbfc3e694c6903ec9`
 
-The [archive descriptor](evidence-archive.json), [complete core record](results/core-summary.json), [acceptance record](results/acceptance-summary.json), [destination record](results/destination-summary.json), and [review index](reviews.json) identify the evidence. The complete portable handoff will also include this archive. Final delivery links will be recorded in [PR #71](https://github.com/Omegapy/OntoKin/pull/71). Development integration remains separate from complete feature release; the later integration record identifies the actual merge and resulting-main checks.
+The [archive descriptor](evidence-archive.json), [complete core record](results/core-summary.json), [acceptance record](results/acceptance-summary.json), [destination record](results/destination-summary.json), and [review index](reviews.json) identify the evidence. The complete portable handoff will also include this archive. Final delivery links will be recorded in [PR #71](https://github.com/Omegapy/OntoKin/pull/71). PR #71 merged the reviewed evidence head as `42e2b8ed981af39ac5245914fb1019c183ae1f29`. The [integration record](integration.json) identifies its ordered parents, unchanged product inputs and fresh resulting-main checks. Development integration remains separate from complete feature release.
 
 ## Implemented contract
 
