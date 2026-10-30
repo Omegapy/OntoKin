@@ -1,0 +1,307 @@
+{
+  "schema_version": "ontokin.c071-publication-final-review/0.1",
+  "reviewer": "packet_recovery",
+  "reviewed_at_utc": "2026-10-30T01:43:54.040489+00:00",
+  "status": "approved_for_final_publication",
+  "scope": "Read/hash review of current final-publication STATUS and C071 integration/preparation records against actual API/raw identities and complete candidate/merge role inventories",
+  "distinct_from_prior_review": "Earlier packet-source-review.json remains a separate exact source review; this record covers later integration evidence",
+  "contributions_disclosed": "Reviewer authored C070 recovery and C071 packet tooling, but did not author root STATUS/integration/signed-commit correction/documentation wrapper or execute these documentation roles; own tooling is not independently certified here",
+  "checks": [
+    {
+      "name": "candidate_actual_raw_identity",
+      "status": "passed",
+      "detail": "Raw Git object hash, API identity, tree and ordered parents agree with integration"
+    },
+    {
+      "name": "lease_actual_raw_identity",
+      "status": "passed",
+      "detail": "Raw Git object hash, API identity, tree and ordered parents agree with integration"
+    },
+    {
+      "name": "merge_actual_raw_identity",
+      "status": "passed",
+      "detail": "Raw Git object hash, API identity, tree and ordered parents agree with integration"
+    },
+    {
+      "name": "integration_parent_graph",
+      "status": "passed",
+      "detail": "Actual candidate/lease descend from baseline; actual merge parents retain lease then reviewed candidate"
+    },
+    {
+      "name": "signed_merge_exact_api_payload_and_signature",
+      "status": "passed",
+      "detail": "Exact signature continuation bytes, unsigned payload and timezone bytes agree; this is object identity verification, not a local cryptographic signature-verification claim"
+    },
+    {
+      "name": "published-candidate_complete_stable_inventory",
+      "status": "passed",
+      "detail": "Complete before/after inventory hashes and reconstructed Git tree bind all 3,791 checked inputs"
+    },
+    {
+      "name": "published-candidate_actual_checker_receipt",
+      "status": "passed",
+      "detail": "Recorded successful command and streams identify the actual committed clean source; no checker rerun here"
+    },
+    {
+      "name": "published-candidate_retained_copies_and_counts",
+      "status": "passed",
+      "detail": "Retained command/stream copies and reported preservation/navigation counts match actual role records"
+    },
+    {
+      "name": "resulting-merge_complete_stable_inventory",
+      "status": "passed",
+      "detail": "Complete before/after inventory hashes and reconstructed Git tree bind all 3,791 checked inputs"
+    },
+    {
+      "name": "resulting-merge_actual_checker_receipt",
+      "status": "passed",
+      "detail": "Recorded successful command and streams identify the actual committed clean source; no checker rerun here"
+    },
+    {
+      "name": "resulting-merge_retained_copies_and_counts",
+      "status": "passed",
+      "detail": "Retained command/stream copies and reported preservation/navigation counts match actual role records"
+    },
+    {
+      "name": "merge_diff_is_only_status",
+      "status": "passed",
+      "detail": "Full role inventories show no candidate/merge difference beyond the exact leased STATUS update"
+    },
+    {
+      "name": "published-candidate_preserves_baseline_sources",
+      "status": "passed",
+      "detail": "All 3,749 original identities/modes are preserved except allowed shared documentation; additions are confined to C071 and the checker is unchanged"
+    },
+    {
+      "name": "resulting-merge_preserves_baseline_sources",
+      "status": "passed",
+      "detail": "All 3,749 original identities/modes are preserved except allowed shared documentation; additions are confined to C071 and the checker is unchanged"
+    },
+    {
+      "name": "preparation_failure_preserved_separately",
+      "status": "passed",
+      "detail": "Initial unsigned-only helper and command-sequence/summary evidence remain separate from the later successful checker role"
+    },
+    {
+      "name": "wrapper_stops_before_checker_on_dirty_source",
+      "status": "passed",
+      "detail": "Read source confirms dirty STATUS assertion precedes checker subprocess invocation; failure details are preserved as a summary, not relabeled raw streams"
+    },
+    {
+      "name": "correction_requires_actual_remote_hash",
+      "status": "passed",
+      "detail": "Corrected helper accepts reconstructed raw bytes only at the actual recorded remote identity; no expected hash was changed"
+    },
+    {
+      "name": "status_release_and_packet_scope_are_distinct",
+      "status": "passed",
+      "detail": "Reviewed release becomes effective with final publication; packet/checker/archive ownership and later final-main check remain explicit"
+    },
+    {
+      "name": "integration_and_product_claims_separated",
+      "status": "passed",
+      "detail": "Development integration does not assert runtime improvement, new recording success or release acceptance"
+    }
+  ],
+  "unresolved_findings": [],
+  "reviewed_files": [
+    {
+      "path": "OntoKin/STATUS.md",
+      "bytes": 9293,
+      "sha256": "abd43be63367eb71213784c26e08f66b0749fe269a0a8af5ad99accf58d9ef86"
+    },
+    {
+      "path": "OntoKin/docs/engineering/reach-group-key-projection-2026-10-29-c071/INTEGRATION-PREPARATION.md",
+      "bytes": 2194,
+      "sha256": "5621b4cf6cc5723204a6a04b3a197c1941b01ccf60032de15ba2557bcafe65d7"
+    },
+    {
+      "path": "OntoKin/docs/engineering/reach-group-key-projection-2026-10-29-c071/integration-checks/published-candidate/command.json",
+      "bytes": 1208,
+      "sha256": "bf49976436f31b53428a9dc5dba26d2dba058b13166bb79369a62ba34340cbcf"
+    },
+    {
+      "path": "OntoKin/docs/engineering/reach-group-key-projection-2026-10-29-c071/integration-checks/published-candidate/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "OntoKin/docs/engineering/reach-group-key-projection-2026-10-29-c071/integration-checks/published-candidate/stdout.txt",
+      "bytes": 6606,
+      "sha256": "6972abd1f5157e7450689ed964b173ad6bfd3f1f134dbab7f085739815a853e5"
+    },
+    {
+      "path": "OntoKin/docs/engineering/reach-group-key-projection-2026-10-29-c071/integration-checks/resulting-merge/command.json",
+      "bytes": 1208,
+      "sha256": "cf2aca7da9517c1cc3868241a425f59070a6a993267752604b78590306d13dda"
+    },
+    {
+      "path": "OntoKin/docs/engineering/reach-group-key-projection-2026-10-29-c071/integration-checks/resulting-merge/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "OntoKin/docs/engineering/reach-group-key-projection-2026-10-29-c071/integration-checks/resulting-merge/stdout.txt",
+      "bytes": 6606,
+      "sha256": "6972abd1f5157e7450689ed964b173ad6bfd3f1f134dbab7f085739815a853e5"
+    },
+    {
+      "path": "OntoKin/docs/engineering/reach-group-key-projection-2026-10-29-c071/integration-preparation/install_commit.py",
+      "bytes": 3253,
+      "sha256": "b8ddfa1ced0cd666fea758edf5014a57f2ca34f46d4b18cae6938d8e26703ab1"
+    },
+    {
+      "path": "OntoKin/docs/engineering/reach-group-key-projection-2026-10-29-c071/integration-preparation/merge-materialization-001/command.json",
+      "bytes": 1039,
+      "sha256": "7c064191c978f5185695ac71b95d520cecd9cc1ee531d4e6b142ebab603eea98"
+    },
+    {
+      "path": "OntoKin/docs/engineering/reach-group-key-projection-2026-10-29-c071/integration-preparation/merge-materialization-001/install_commit.py",
+      "bytes": 2322,
+      "sha256": "2f3b83ecc3664384f4e3452deae78f1f56a1812a688399846b766e4ef0ae085f"
+    },
+    {
+      "path": "OntoKin/docs/engineering/reach-group-key-projection-2026-10-29-c071/integration-preparation/merge-materialization-001/stderr-summary.txt",
+      "bytes": 302,
+      "sha256": "bbfb89aa8ad185189f8eb2830a75fcbdcba697945bf6d5eadf72e75a1a5a8327"
+    },
+    {
+      "path": "OntoKin/docs/engineering/reach-group-key-projection-2026-10-29-c071/integration.json",
+      "bytes": 2836,
+      "sha256": "e487af20a981727cca24ec6c99238377d83534f3259d379751ae035aeaf80ba4"
+    },
+    {
+      "path": "records/api/candidate-commit.json",
+      "bytes": 1337,
+      "sha256": "af4bdd426eda30084e15222e0caaf33217179118c275e86b31364785c62cecff"
+    },
+    {
+      "path": "records/api/lease-commit.json",
+      "bytes": 1317,
+      "sha256": "0e3432c66cfc0d81fb6938f903ef16f01070d203f9cb7e633cade88126ddc647"
+    },
+    {
+      "path": "records/api/merge-commit.json",
+      "bytes": 2987,
+      "sha256": "2fbdba1b1b94ac8a7b93524180f05f08d51c168412c33fd07b5312743d01accf"
+    },
+    {
+      "path": "records/git-identities/candidate-commit.raw",
+      "bytes": 316,
+      "sha256": "f3c8b5c6ac501721caa3a9715729a6809357e169c114a90e3e8b034abcc6aa0b"
+    },
+    {
+      "path": "records/git-identities/lease-commit.raw",
+      "bytes": 296,
+      "sha256": "f85c6ea15b8c212305ca16a419092722aa8f54077ebf40a6be6a274e10f3550d"
+    },
+    {
+      "path": "records/git-identities/merge-commit.raw",
+      "bytes": 1270,
+      "sha256": "f90c55d8d59acbdaa0f244bde3dec37627d726d33fadba61d2469c75546b763e"
+    },
+    {
+      "path": "records/validation/published-candidate/command.json",
+      "bytes": 1208,
+      "sha256": "bf49976436f31b53428a9dc5dba26d2dba058b13166bb79369a62ba34340cbcf"
+    },
+    {
+      "path": "records/validation/published-candidate/inputs-after.json",
+      "bytes": 1098927,
+      "sha256": "3bc43e570dda2668b35a351a86233d62da5d211a19bb5b37502f7ffea6b207df"
+    },
+    {
+      "path": "records/validation/published-candidate/inputs-before.json",
+      "bytes": 1098927,
+      "sha256": "3bc43e570dda2668b35a351a86233d62da5d211a19bb5b37502f7ffea6b207df"
+    },
+    {
+      "path": "records/validation/published-candidate/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "records/validation/published-candidate/stdout.txt",
+      "bytes": 6606,
+      "sha256": "6972abd1f5157e7450689ed964b173ad6bfd3f1f134dbab7f085739815a853e5"
+    },
+    {
+      "path": "records/validation/resulting-merge/command.json",
+      "bytes": 1208,
+      "sha256": "cf2aca7da9517c1cc3868241a425f59070a6a993267752604b78590306d13dda"
+    },
+    {
+      "path": "records/validation/resulting-merge/inputs-after.json",
+      "bytes": 1098927,
+      "sha256": "45a636efece4024dd9422d218c2cd002b98049384fe4f748ecabe96957315768"
+    },
+    {
+      "path": "records/validation/resulting-merge/inputs-before.json",
+      "bytes": 1098927,
+      "sha256": "45a636efece4024dd9422d218c2cd002b98049384fe4f748ecabe96957315768"
+    },
+    {
+      "path": "records/validation/resulting-merge/stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "records/validation/resulting-merge/stdout.txt",
+      "bytes": 6606,
+      "sha256": "6972abd1f5157e7450689ed964b173ad6bfd3f1f134dbab7f085739815a853e5"
+    },
+    {
+      "path": "recovery/c070-packet/SOURCE-INDEX.json",
+      "bytes": 1223462,
+      "sha256": "9120c62e88e826e4ddf430e86069025ed5851f52b7de3128db73b836e4afee0d"
+    },
+    {
+      "path": "work/run_documentation_check.py",
+      "bytes": 4265,
+      "sha256": "be8b209654ccf8016630eed9d8e5fac3a759272f69174d81e1e30fbfafb93855"
+    }
+  ],
+  "actual_graph": {
+    "candidate": {
+      "commit": "f1a1bb41b0000453d9bf8d3371c35f9c529b519f",
+      "tree": "d8e99409e07de83efaa4f1e11d4ef8645f4a691d",
+      "parents": [
+        "ff71faa05503245b553621ba390cad080276e732"
+      ]
+    },
+    "lease": {
+      "commit": "b881f319f3602d94db90e252ded24fd64b256b36",
+      "tree": "5c598b26bef60dcba68511a86343c774792b3417",
+      "parents": [
+        "ff71faa05503245b553621ba390cad080276e732"
+      ]
+    },
+    "merge": {
+      "commit": "1a3f13beda56dd94e5aa53d06d1ea5083a183307",
+      "tree": "34f984a43ca41cfec1aa443cb2d67fa1e728eb94",
+      "parents": [
+        "b881f319f3602d94db90e252ded24fd64b256b36",
+        "f1a1bb41b0000453d9bf8d3371c35f9c529b519f"
+      ]
+    }
+  },
+  "candidate_merge_difference": [
+    "STATUS.md"
+  ],
+  "pending_boundaries": [
+    "Final publication identity and fresh final-main documentation role",
+    "Portable packet/ZIP final verification",
+    "Delivery and explicit Issue26 packet/checker/archive closure"
+  ],
+  "signature_review_limit": "Raw commit hash and exact API payload/signature bytes checked; no local PGP cryptographic verification performed",
+  "execution": {
+    "product_imports": 0,
+    "product_requests": 0,
+    "runtime_suites": 0,
+    "documentation_checker_runs": 0,
+    "archive_executions": 0,
+    "git_mutations": 0,
+    "github_mutations": 0
+  },
+  "commands_and_writes_paused_after_review": true
+}

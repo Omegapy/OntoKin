@@ -1,0 +1,21 @@
+{
+  "schema_version": "ontokin.c071-preparation-failure/0.1",
+  "actual_merge": "1a3f13beda56dd94e5aa53d06d1ea5083a183307",
+  "actual_merge_tree": "34f984a43ca41cfec1aa443cb2d67fa1e728eb94",
+  "command_sequence": [
+    "python3 -B work/install_commit.py OntoKin records/api/merge-commit.json records/git-identities/merge-commit.raw",
+    "local STATUS stage and actual main ref update",
+    "python3 -B work/run_documentation_check.py OntoKin records/validation/resulting-merge"
+  ],
+  "returncode": 1,
+  "cause": "Local helper supported unsigned commits only; actual merge has GitHub GPG signature",
+  "subsequent_local_outcomes": [
+    "STATUS bytes staged, exact merge tree verified",
+    "main ref update rejected nonexistent commit object",
+    "documentation wrapper rejected uncommitted STATUS before checker invocation"
+  ],
+  "documentation_checker_executed": false,
+  "product_code_executed": false,
+  "script_sha256": "2f3b83ecc3664384f4e3452deae78f1f56a1812a688399846b766e4ef0ae085f",
+  "remote_merge_result_unchanged": true
+}
