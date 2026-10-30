@@ -31,6 +31,9 @@ def surface_summary(geometry, *, check=None):
     if check is not None:
         check()
     recipe = geometry.get("surface", geometry)
+    if recipe["kind"] == "ring_loft":
+        from .ring_loft_inspection import ring_loft_summary
+        return ring_loft_summary(geometry, check=check)
     if recipe["kind"] == "holes":
         from .holes_inspection import holes_summary
         return holes_summary(geometry, check=check)
@@ -200,7 +203,7 @@ def prepare_surface_page(program, element_id, *, region=None, count=256, budgets
                                category="unsupported" if code == "OKL-E-CAPABILITY-UNSUPPORTED" else
                                "resource_limit" if code == "OKL-E-RESOURCE" else "invalid",
                                element_id=list(obj.element_id), details={"object_path": obj.path, **details})
-        if obj.geometry["kind"] not in ("loft", "extrusion", "placed", "holes"):
+        if obj.geometry["kind"] not in ("loft", "extrusion", "placed", "holes", "ring_loft"):
             error("OKL-E-CAPABILITY-UNSUPPORTED", "Surface mesh pages require supported native exterior geometry.",
                   geometry_kind=obj.geometry["kind"])
         recipe = obj.geometry.get("surface", obj.geometry)

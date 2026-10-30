@@ -169,6 +169,7 @@ def capabilities(*, host_policy=None) -> dict:
     from .budget_agent_catalog import interface as budget_agent_interface
     from .extrusion_agent_catalog import interface as extrusion_agent_interface
     from .holes_agent_catalog import interface as holes_agent_interface
+    from .ring_loft_agent_catalog import interface as ring_loft_agent_interface
     from .execution_budget import HostPolicy, DEFAULT_LIMITS, MAX_LIMIT
     policy = HostPolicy() if host_policy is None else host_policy
     if not isinstance(policy, HostPolicy):
@@ -293,6 +294,7 @@ def capabilities(*, host_policy=None) -> dict:
         "budget_agent_interface": budget_agent_interface(policy),
         "polygon_extrusion_interface": extrusion_agent_interface(policy),
         "polygon_holes_interface": holes_agent_interface(policy),
+        "polygon_loft_interface": ring_loft_agent_interface(policy),
         "operations": ["check", "evaluate", "export", "agent", "conformance", "capabilities"],
         "output_levels": ["represented", "constructed", "evaluated"],
         "source_features": ["classes", "single_inheritance", "pure_functions_and_methods",
@@ -423,10 +425,10 @@ def _program_export(args, *, host_policy=None) -> int:
                 raise BundleError("OKA-E-REQUEST", "The source file must contain valid UTF-8.") from None
             program = load_bundle({"schema_version": "ontokin.bundle/0.1",
                 "entry": {"filename": str(args.file), "source": source_text}, "modules": []})
-        if args.target in ("ontokin.glb/0.7", "ontokin.glb/0.8", "ontokin.glb/0.9"):
-            from .budget_runtime import execute_budgeted_export, execute_extrusion_export, execute_holes_export
+        if args.target in ("ontokin.glb/0.7", "ontokin.glb/0.8", "ontokin.glb/0.9", "ontokin.glb/0.10"):
+            from .budget_runtime import execute_budgeted_export, execute_extrusion_export, execute_holes_export, execute_ring_loft_export
             execute = {"ontokin.glb/0.7": execute_budgeted_export, "ontokin.glb/0.8": execute_extrusion_export,
-                       "ontokin.glb/0.9": execute_holes_export}[args.target]
+                       "ontokin.glb/0.9": execute_holes_export, "ontokin.glb/0.10": execute_ring_loft_export}[args.target]
             output, report_path = _export_paths(args.file, args.output, args.report,
                 target_contract=args.target, protected_sources=tuple(protected))
             caps = {name: value for name, value in (
@@ -446,7 +448,7 @@ def _program_export(args, *, host_policy=None) -> int:
             _print(report)
             return 0
         if args.max_operations is not None or args.max_elapsed_ms is not None:
-            raise BundleError("OKA-E-REQUEST", "Execution caller caps require explicit GLB/0.7, GLB/0.8 or GLB/0.9.")
+            raise BundleError("OKA-E-REQUEST", "Execution caller caps require explicit GLB/0.7, GLB/0.8, GLB/0.9 or GLB/0.10.")
         compiler = compile_construction(program, level="evaluated")
         output, report_path = _export_paths(args.file, args.output, args.report,
             target_contract=args.target, protected_sources=tuple(protected))
@@ -504,7 +506,7 @@ def main(argv: list[str] | None = None, *, host_policy=None) -> int:
     evaluate_parser.add_argument("--frame", default="world", help="Frame for --object inspection, for example first.frame")
     export_parser = commands.add_parser("export", help="Bake and verify an animation in a self-contained .glb file")
     export_parser.add_argument("file", type=Path)
-    export_parser.add_argument("--target", choices=["ontokin.glb/0.1", "ontokin.glb/0.2", "ontokin.glb/0.3", "ontokin.glb/0.4", "ontokin.glb/0.5", "ontokin.glb/0.6", "ontokin.glb/0.7", "ontokin.glb/0.8", "ontokin.glb/0.9"],
+    export_parser.add_argument("--target", choices=["ontokin.glb/0.1", "ontokin.glb/0.2", "ontokin.glb/0.3", "ontokin.glb/0.4", "ontokin.glb/0.5", "ontokin.glb/0.6", "ontokin.glb/0.7", "ontokin.glb/0.8", "ontokin.glb/0.9", "ontokin.glb/0.10"],
                                default="ontokin.glb/0.1", help="Explicit delivery profile; old source is never migrated")
     export_parser.add_argument("--bundle", action="store_true",
                                help="Read FILE as an ontokin.files/0.1 manifest of pinned offline .ok files")
@@ -517,14 +519,14 @@ def main(argv: list[str] | None = None, *, host_policy=None) -> int:
     export_parser.add_argument("--time-tolerance", type=float, default=0.000001, metavar="SECONDS")
     export_parser.add_argument("--no-helpers", action="store_true", help="Omit the display-only assembly and joint markers")
     export_parser.add_argument("--max-operations", type=int,
-                               help="GLB/0.7, GLB/0.8 or GLB/0.9 caller reduction of the source operation request; grants no host authority")
+                               help="GLB/0.7, GLB/0.8, GLB/0.9 or GLB/0.10 caller reduction of the source operation request; grants no host authority")
     export_parser.add_argument("--max-elapsed-ms", type=int,
-                               help="GLB/0.7, GLB/0.8 or GLB/0.9 caller reduction of the source computation timeout in milliseconds")
+                               help="GLB/0.7, GLB/0.8, GLB/0.9 or GLB/0.10 caller reduction of the source computation timeout in milliseconds")
     suite = commands.add_parser("conformance", help="Execute the published source cases and expected observations")
     suite.add_argument("--fixtures", type=Path, default=DEFAULT_FIXTURES)
     suite.add_argument("--output", type=Path, help="Write the complete JSON report to this path")
     agent = commands.add_parser("agent", help="Serve an explicitly selected durable agent contract as local JSONL")
-    agent.add_argument("--protocol", choices=["ontokin.agent/0.1", "ontokin.agent/0.2", "ontokin.agent/0.3", "ontokin.agent/0.4", "ontokin.agent/0.5", "ontokin.agent/0.6", "ontokin.agent/0.7", "ontokin.agent/0.8", "ontokin.agent/0.9"], default="ontokin.agent/0.1", help="Select the explicit core, construction, surface, impulse, force, reach, execution-budget, polygon-extrusion or polygon-holes agent contract")
+    agent.add_argument("--protocol", choices=["ontokin.agent/0.1", "ontokin.agent/0.2", "ontokin.agent/0.3", "ontokin.agent/0.4", "ontokin.agent/0.5", "ontokin.agent/0.6", "ontokin.agent/0.7", "ontokin.agent/0.8", "ontokin.agent/0.9", "ontokin.agent/0.10"], default="ontokin.agent/0.1", help="Select the explicit core, construction, surface, impulse, force, reach, execution-budget, polygon-extrusion, polygon-holes or polygon-loft agent contract")
     agent.add_argument("--store", type=Path, required=True, help="Directory for immutable snapshots and durable request/run state")
     agent.add_argument("--request", type=Path, help="Read one JSON request, emit its receipt, and exit")
     agent.add_argument("--wait", action="store_true", help="Wait for this request's terminal result instead of returning a queued receipt")
@@ -539,7 +541,7 @@ def main(argv: list[str] | None = None, *, host_policy=None) -> int:
         return _program_export(args, host_policy=host_policy)
     if args.command == "export" and (args.max_operations is not None or args.max_elapsed_ms is not None):
         _print({"outcome": "invalid_request", "error": {"code": "OKA-E-REQUEST",
-                "message": "Execution caller caps require explicit GLB/0.7, GLB/0.8 or GLB/0.9."}})
+                "message": "Execution caller caps require explicit GLB/0.7, GLB/0.8, GLB/0.9 or GLB/0.10."}})
         return 2
     if args.command == "conformance":
         from .conformance import run_conformance
