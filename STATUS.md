@@ -1,5 +1,13 @@
 # OntoKin status
 
+## Active C073 main integration lease
+
+Owner: `interactive-source-budgets-20261029-c073-7of9`. Acquired from observed main `6277e57915c943ea933cd306956181ee18cdd084`; expires **2026-10-30T05:42:47.871941Z**. This lease serializes main writes for reviewed [PR #71](https://github.com/Omegapy/OntoKin/pull/71). The source remains the C072 baseline until that merge.
+
+Evidence candidate `dd332d8241fd02448d79a63eddb0f6d9a4a5b803` has the same runtime/test/fixture/tool inputs as fully tested `e072906f664cd605bc3052b786961b9a292d4d9b`. All 3,129 unit tests and all 11 selected local roles passed on CPython 3.12.14; the 106-test Agent cohort overlaps the full suite. All 24 C073 cases, the frozen default/authorized workload, native/browser checks and six actual image reviews passed. The evidence candidate's actual documentation and input-eligibility checks passed. The 16 inherited external cases, Agent/0.7, original28 and complete-release obligations remain open. No hosted job was dispatched.
+
+Next action: merge the exact PR head through the expected-head API, verify actual ordered parents/tree and unchanged product inputs, execute resulting-main checks, then publish current C073 STATUS and release this lease. Independent nonoverlapping branch work remains permitted under AGENTS.
+
 Checkpoint: October 29, 2026, **C072 execution-budget direction and design are complete and integrated through [PR #70](https://github.com/Omegapy/OntoKin/pull/70)**. The [source evaluation and design](docs/engineering/language-execution-budgets-2026-10-29-c072/README.md) keep defaults at 100,000 operations / 30,000 ms and allow a future explicit language binding to request higher budgets within independently authorized host ceilings. The proposal is not implemented. The next task is [C073 source/CLI implementation](docs/engineering/language-execution-budgets-2026-10-29-c072/NEXT-TASK.md), through execution, export and independent readback. The full [GOAL](GOAL.md) remains an AI-agent language for editable 3D objects, animation and simulations, with validated engine delivery including Unreal Engine.
 
 ## Current priority and limits
@@ -48,7 +56,7 @@ Preserve 100,000 shared operations and 30,000 ms for legacy/default execution an
 
 C072 merged through [PR #70](https://github.com/Omegapy/OntoKin/pull/70) as `c5339b629d121270f2be40dfb59a174e12ec3648`, tree `32745e9d1a8af60bdf802b975a6db5612282de91`, identical to reviewed candidate `091c9d165eab0297dd45ac3585bf0d28fe841f17`. [The integration record](docs/engineering/language-execution-budgets-2026-10-29-c072/integration.json) retains exact source identities, preparation failures and fresh passing candidate/merge documentation checks: 29 preserved sources, 233 sections, 360 documents, 2,436 local links, 94 anchors and zero failures on CPython 3.12.14. Three scoped read-only reviews approved with zero unresolved findings. No product execution or new conformance case was run.
 
-This publication releases `interactive-language-budgets-20261029-c072-7of9`'s main integration lease. **No main integration lease remains active.** Root retains only the separate final documentation-check/handoff-packet scope until explicit Issue #26 closure after delivery. Reconcile that later closure and live state before beginning C073; no C073 worker or schedule is started by this handoff.
+The C072 integration lease and its later packet/checker scope were explicitly closed in [Issue #26 comment 6513868286](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6513868286). The active C073 integration lease is recorded at the top of this file.
 
 The merged candidate remains the actual merge's second parent even if its work branch is automatically removed. The archive-retention branch remains history-only at `e6917dae0be3a786c22e76be3de62e3c97784cf5`. Never merge or develop from it. No hosted execution was dispatched.
 
