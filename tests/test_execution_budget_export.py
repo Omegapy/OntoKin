@@ -362,6 +362,99 @@ class BudgetExportTests(unittest.TestCase):
                 self.assertEqual(caught.exception.diagnostic.details["export_code"], "OKE-E-PROVENANCE")
                 self.assertEqual(marker.details, {"budget": "old_caller_stop", "limit": 1, "consumed": 2})
 
+    def test_eb19_prior_callback_context_does_not_replace_new_product_failure(self):
+        import ontokin.gltf as gltf
+        for route in ("reader", "validator", "exporter"):
+            with self.subTest(route=route):
+                state = {"stop": False, "stops": 0}
+                marker = JSONLimitError("previous_caller_stop", 1, 2)
+                before = dict(marker.details)
+                def cancel():
+                    if state["stop"]:
+                        state["stops"] += 1
+                        raise marker
+                _, compiler, _ = compile_source(check=cancel)
+                def call():
+                    if route == "reader":
+                        return read_glb(self.result.data, target_contract=BUDGET_REACH_TARGET,
+                                        work=compiler.reach_work)
+                    if route == "validator":
+                        return validate_export(self.result.data, compiler.model, options=OPTIONS,
+                                               target_contract=BUDGET_REACH_TARGET, work=compiler.reach_work)
+                    return export_glb(compiler.model, options=OPTIONS,
+                                      target_contract=BUDGET_REACH_TARGET, work=compiler.reach_work)
+                state["stop"] = True
+                try:
+                    call()
+                except JSONLimitError as previous:
+                    self.assertIs(previous, marker)
+                    state["stop"] = False
+                    if route == "reader":
+                        original = gltf.measure_json
+                        def narrow(*args, **kwargs):
+                            kwargs["max_entries"] = 1
+                            return original(*args, **kwargs)
+                        with patch.object(gltf, "measure_json", narrow), self.assertRaises(OntoKinError) as caught:
+                            call()
+                        expected = "OKE-E-METADATA-BUDGET"
+                    else:
+                        compiler.model.program_revision = "sha256:" + "0" * 64
+                        with self.assertRaises(OntoKinError) as caught:
+                            call()
+                        expected = "OKE-E-PROVENANCE"
+                    self.assertIsNot(caught.exception, marker)
+                    self.assertEqual(caught.exception.diagnostic.details["export_code"], expected)
+                    self.assertEqual(state["stops"], 1)
+                    self.assertEqual(marker.details, before)
+                else:
+                    self.fail("The first caller cancellation was not propagated")
+
+    def test_eb19_new_raise_of_same_callback_marker_keeps_its_identity(self):
+        import importlib
+        for route, module_name, function_name in (("reader", "ontokin.gltf", "measure_json"),
+                ("validator", "ontokin.scene", "program_metadata"),
+                ("exporter", "ontokin.scene", "program_metadata")):
+            with self.subTest(route=route):
+                state = {"stop": False, "stops": 0}
+                marker = JSONLimitError("repeated_caller_stop", 1, 2)
+                before = dict(marker.details)
+                def cancel():
+                    if state["stop"]:
+                        state["stops"] += 1
+                        raise marker
+                _, compiler, _ = compile_source(check=cancel)
+                def call():
+                    if route == "reader":
+                        return read_glb(self.result.data, target_contract=BUDGET_REACH_TARGET,
+                                        work=compiler.reach_work)
+                    if route == "validator":
+                        return validate_export(self.result.data, compiler.model, options=OPTIONS,
+                                               target_contract=BUDGET_REACH_TARGET, work=compiler.reach_work)
+                    return export_glb(compiler.model, options=OPTIONS,
+                                      target_contract=BUDGET_REACH_TARGET, work=compiler.reach_work)
+                state["stop"] = True
+                try:
+                    call()
+                except JSONLimitError as previous:
+                    self.assertIs(previous, marker)
+                    state["stop"] = False
+                    module = importlib.import_module(module_name)
+                    original = getattr(module, function_name)
+                    def enter(*args, **kwargs):
+                        state["stop"] = True
+                        try:
+                            return original(*args, **kwargs)
+                        finally:
+                            state["stop"] = False
+                    with patch.object(module, function_name, enter), self.assertRaises(JSONLimitError) as caught:
+                        call()
+                    self.assertIs(caught.exception, marker)
+                    self.assertIs(compiler.reach_work.callback_error, marker)
+                    self.assertEqual(state["stops"], 2)
+                    self.assertEqual(marker.details, before)
+                else:
+                    self.fail("The first caller cancellation was not propagated")
+
     def test_eb13_numeric_local_limits_stay_separate_from_execution_limits(self):
         ledger, work = self.reader_work()
         self.assertEqual(work.max_operations, 400000)

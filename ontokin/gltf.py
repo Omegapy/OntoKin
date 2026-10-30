@@ -69,12 +69,18 @@ def _guard_check(check):
     return guarded
 
 
-def _raise_budget_callback(error, work, target_contract):
+def _budget_callback_snapshot(work):
+    marker = getattr(work, "callback_error", None)
+    return marker, getattr(marker, "__traceback__", None)
+
+
+def _raise_budget_callback(error, work, target_contract, callback_before):
     """Restore a caller error only when it belongs to this active 0.7 failure."""
     if target_contract != BUDGET_REACH_TARGET or work is None:
         return
     marker = work.callback_error
-    if marker is None:
+    if (marker is None or
+            marker is callback_before[0] and marker.__traceback__ is callback_before[1]):
         return
     pending, seen = [error], set()
     while pending:
@@ -463,6 +469,8 @@ def _preflight_reach_expansion(document, *, check=None) -> None:
 
 def read_glb(source: bytes | bytearray | str | Path, *, check=None, target_contract=None, work=None) -> DecodedGLB:
     """Decode and structurally check the adapter's embedded, flat GLB subset."""
+    callback_before = (_budget_callback_snapshot(work)
+                       if target_contract == BUDGET_REACH_TARGET else None)
     if target_contract == BUDGET_REACH_TARGET:
         from .reach_numeric import require_execution_work
         require_execution_work(work)
@@ -501,7 +509,7 @@ def read_glb(source: bytes | bytearray | str | Path, *, check=None, target_contr
         try:
             measure_json(document, max_bytes=MAX_GLB_BYTES, max_entries=MAX_GLB_BYTES, check=check, work=work)
         except JSONLimitError as error:
-            _raise_budget_callback(error, work, target_contract)
+            _raise_budget_callback(error, work, target_contract, callback_before)
             export_error("OKE-E-METADATA-BUDGET", "Supplied glTF JSON exceeds bounded metadata materialization.",
                          kind="resource", details=error.details)
         # Inspect the new destination only after the inherited materialization
@@ -1011,6 +1019,8 @@ def _validate_export(data: bytes, model: SceneModel, *, options: ExportOptions |
 def validate_export(data: bytes, model: SceneModel, *, options: ExportOptions | None = None,
                     target_contract: str = TARGET_CONTRACT, check=None, work=None) -> dict[str, Any]:
     """Return measured byte-validation results, or a structured malformed-data error."""
+    callback_before = (_budget_callback_snapshot(work)
+                       if target_contract == BUDGET_REACH_TARGET else None)
     if target_contract in REACH_TARGETS:
         from .reach_numeric import ReachExecutionWork, require_execution_work
         if target_contract == BUDGET_REACH_TARGET:
@@ -1030,23 +1040,23 @@ def validate_export(data: bytes, model: SceneModel, *, options: ExportOptions | 
             _translate_reach_work_failure(failure.error, work, model)
         raise failure.error
     except OntoKinError as error:
-        _raise_budget_callback(error, work, target_contract)
+        _raise_budget_callback(error, work, target_contract, callback_before)
         if work is not None and error is work.callback_error:
             raise
         error.diagnostic.details["target_contract"] = target_contract
         raise
     except JSONLimitError as error:
-        _raise_budget_callback(error, work, target_contract)
+        _raise_budget_callback(error, work, target_contract, callback_before)
         export_error("OKE-E-METADATA-BUDGET", "Supplied program values exceed bounded validation materialization.",
                      model, kind="resource", details=error.details)
     except (KeyError, IndexError, TypeError, ValueError, AttributeError, OverflowError) as exc:
-        _raise_budget_callback(exc, work, target_contract)
+        _raise_budget_callback(exc, work, target_contract, callback_before)
         if work is not None and exc is work.callback_error:
             raise
         export_error("OKE-E-GLB-STRUCTURE", "Malformed source mapping or validation data in the bounded GLB contract: " + str(exc),
                      model, kind="unsupported", details={"target_contract": target_contract})
     except Exception as error:
-        _raise_budget_callback(error, work, target_contract)
+        _raise_budget_callback(error, work, target_contract, callback_before)
         if target_contract in REACH_TARGETS:
             _translate_reach_work_failure(error, work, model)
         raise
@@ -1106,6 +1116,8 @@ def export_glb(model: SceneModel, *, options: ExportOptions | None = None,
                source_uri: str | None = None, source_sha256: str | None = None,
                target_contract: str = TARGET_CONTRACT, check=None, work=None, reach_plan=None) -> ExportResult:
     """Produce verified bytes with an explicit profile and cooperative cancellation."""
+    callback_before = (_budget_callback_snapshot(work)
+                       if target_contract == BUDGET_REACH_TARGET else None)
     if target_contract in REACH_TARGETS:
         from .reach_numeric import ReachExecutionWork, require_execution_work
         if target_contract == BUDGET_REACH_TARGET:
@@ -1121,13 +1133,13 @@ def export_glb(model: SceneModel, *, options: ExportOptions | None = None,
             _translate_reach_work_failure(failure.error, work, model)
         raise failure.error
     except OntoKinError as error:
-        _raise_budget_callback(error, work, target_contract)
+        _raise_budget_callback(error, work, target_contract, callback_before)
         if work is not None and error is work.callback_error:
             raise
         error.diagnostic.details["target_contract"] = target_contract
         raise
     except Exception as error:
-        _raise_budget_callback(error, work, target_contract)
+        _raise_budget_callback(error, work, target_contract, callback_before)
         if target_contract in REACH_TARGETS:
             _translate_reach_work_failure(error, work, model)
         raise
