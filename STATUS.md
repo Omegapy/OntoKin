@@ -30,13 +30,15 @@ Historical original recordings remain **24/28, failed**, with **P11/P16/P23/L03 
 
 Preserve 100,000 shared operations, 30,000 ms, 32,768 operand bits, 256 numerical-cache entries, 64 cursor updates and every original fixture, horizon/fps/helper, equation, independent oracle and tolerance. Reach still requires all 28 source recordings and ten Agent artifacts, CPython 3.11/3.12/3.13, independent rates/native/browser/visual and hostile/inherited roles, formal input closure, and every R01–R12/Q01–Q22 obligation.
 
-[Proposed C069](docs/engineering/reach-cold-admission-2026-10-29-c068/NEXT-TASK.md) must resolve the concrete producer-to-reader ownership and paid native router on the original source-artifact request path. It must identify an actual authority root, immutable-source receipt, cached-list aliases, callback transitions and lifetime, then establish a complete positive request premise before instrumentation. A flag or unchecked epoch cannot authenticate itself. No C069 worker, schedule or experiment has started.
+[Proposed C069](docs/engineering/reach-cold-admission-2026-10-29-c068/NEXT-TASK.md) must resolve the concrete producer-to-reader ownership and paid native router on the original source-artifact request path. It must identify an actual authority root, immutable-source receipt, cached-list aliases, callback transitions and lifetime, then establish a complete positive request premise before instrumentation. A flag or unchecked epoch cannot authenticate itself. That C068 handoff did not start C069. The separately declared C069 source-only scope is now active under the lease below.
 
 ## Repository lifecycle and ownership
 
-[OK-ENG-009](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) separates development integration from release acceptance. C068 integration is complete. This publication releases the main integration lease held by `interactive-cold-admission-20261029-c068-7of9`. **No main integration lease remains active.** Root retains the separate C068 documentation-check/packet/archive window until explicit Issue #26 closure after final verification and delivery. Reconcile that closure and live state before starting another scope.
+**Active main integration lease:** `interactive-producer-ownership-20261029-c069-7of9`. Started `2026-10-30T00:28:05.481503+00:00`; expires `2026-10-30T00:58:05.481503+00:00`. Acquired from observed main `7c0bf98e48a641e30627b7fd261b6713d79e223c` for C069's source-only producer-to-reader ownership decision and next-task record. Scope: [Issue #26 comment 6511706076](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6511706076).
 
-The merged work branch may be removed automatically; its exact candidate remains the actual merge's second parent. The archive-retention branch remains history-only at `e6917dae0be3a786c22e76be3de62e3c97784cf5`. Never merge or develop from it. No hosted execution was dispatched.
+C068 explicitly released its remaining scope/window in [comment 6511535756](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6511535756). C069 owns the new engineering directory, documentation navigation, actual candidate/merge checks and final publication. Root also owns the packet/checker/archive scope until explicit closure. No runtime implementation, semantic adoption or product experiment is selected. Other nonoverlapping development remains permitted under AGENTS.
+
+The history-only archive branch remains at `e6917dae0be3a786c22e76be3de62e3c97784cf5`; never merge or develop from it. Hosted workflows remain manual-only; no hosted job is dispatched.
 
 ## Git LFS
 
