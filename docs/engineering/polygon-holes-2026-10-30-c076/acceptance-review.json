@@ -1,0 +1,84 @@
+{
+  "schema_version": "ontokin.c076-independent-acceptance-review/0.1",
+  "reviewer": "agent_binding",
+  "source_commit": "c5d03f939bc26cde5b79c713958880cbca84a00e",
+  "source_tree": "9b2eabf47ff077bc614ea37cfb26d99370e820b1",
+  "scope": "Static independent review of source/Agent acceptance and Python/Khronos/Three/browser verification; no product requests or tests in this review",
+  "inputs": [
+    {
+      "path": "tools/run_holes_acceptance.py",
+      "size": 14635,
+      "sha256": "7a7a62748245a0419bc8765d82afb47043c3dfc1fd9b554437687db795a90aff",
+      "git_blob": "30c38a75ac7f5393cc8b98f105254cbf8d490318"
+    },
+    {
+      "path": "tools/verify_holes_glb.mjs",
+      "size": 12146,
+      "sha256": "4630e89aae947fe5c061e646d203dbc72b661b7021ea3f31da87719a7f63991f",
+      "git_blob": "5372eb68b1d6bd543f319d5eb57a843c53866997"
+    },
+    {
+      "path": "tools/holes_oracles.py",
+      "size": 15688,
+      "sha256": "7db87b6442dd1287410efc4f0d090f0be9cc7b5ca240b1ec9de7b26b0c99de93",
+      "git_blob": "96b2a88e26b2ed81ba1751267434d1c66186ebeb"
+    },
+    {
+      "path": "tools/extrusion_oracles.py",
+      "size": 6834,
+      "sha256": "85ef6763b6d84ebae61055d53603a470fe5e3703e2328b0e2807d0787bf033ef",
+      "git_blob": "5c1589337bddc9e9ca61333102117f1cbbabc5ca"
+    },
+    {
+      "path": "tests/test_holes_oracles.py",
+      "size": 9099,
+      "sha256": "2309c1232bf68f80abda1ae7b7cf55796be6477cf62444a87f0a610eaf4c9273",
+      "git_blob": "0d3a6a3147c8e88ff58e0e9702241a40d8a1e407"
+    },
+    {
+      "path": "examples/polygon-holes/expected.json",
+      "size": 115895,
+      "sha256": "c7977ff69db7ec5642efc0bf991f6617e57f344bc1270b29909f459a704119f9",
+      "git_blob": "6e038632a0957c03ea723ed7f7f4601e8cb418cc"
+    },
+    {
+      "path": "examples/polygon-holes/acceptance-freeze.json",
+      "size": 8918,
+      "sha256": "830c64c617995c5389aa623df3bc47ddb08c49ac7e1a591d973ff66b3df2d7de",
+      "git_blob": "fc8be11f48d4c318810a3777eb94e7b1fcc53df3"
+    }
+  ],
+  "frozen_case_count": 55,
+  "frozen_outcomes": {
+    "valid": 17,
+    "invalid": 34,
+    "source_valid_delivery_rejected": 4
+  },
+  "findings": [
+    {
+      "id": "AR-01",
+      "severity": "blocking",
+      "status": "open",
+      "title": "Unintended carrier scaling can evade destination checks",
+      "evidence": "Inherited Decoded.pose ignores node.scale and scale animation channels. Both acceptance artifact checks and Three/browser compare translation and rotation only. Native geometry multiplication by inverse carrier.matrixWorld removes carrier scaling before corner checks. A uniform carrier scale of2 leaves local corners, materials, counts and motion assertions unchanged while doubling visible geometry.",
+      "action": "Require identity node/world scale and forbid scale channels at .9 independent boundaries; add independent synthetic tamper control."
+    },
+    {
+      "id": "AR-02",
+      "severity": "evidence-correction",
+      "status": "open",
+      "title": "Pinned-library assertion compares local bundles rather than accepted stored source",
+      "evidence": "run_holes_acceptance constructs repaired_source with original_source.modules, then compares those same raw module bytes. The assertion alone does not inspect actual accepted durable source. The separate focused Agent cohort already does inspect service.read_program.",
+      "action": "Read the accepted repaired bundle through service.read_program and compare its entry/revision/module bytes with frozen expected source and original library."
+    }
+  ],
+  "nonblocking_assessments": [
+    "All55frozen source rows are iterated and hashed against acceptance-freeze before execution;17valid,34invalid,4source-valid-delivery-rejected cases.",
+    "Analytic geometry checks import no production runtime or triangulator and use independent convex clipping plus complete authored boundary and opposite directed-edge incidence.",
+    "All cap corners bind uniquely to independently authored identities within1e-5m; inner walls retain outgoing material and outward-normal checks; decoded area, volume, perimeter and PBRvalues are measured.",
+    "Agent workflow executes all12operations with separate schema and durability checks, scoped repair, sibling mesh preservation, stale cursor refusal and current lower policy failure.",
+    "Destination checker requires passed acceptance, exact artifact SHA256, matching program revision, pinned verifier dependencies, zero Khronos errors/warnings and Three/browser recorded motion; seven representative artifacts request14captures whose visual inspection remains separate."
+  ],
+  "status": "changes_requested",
+  "product_tests_executed": 0
+}

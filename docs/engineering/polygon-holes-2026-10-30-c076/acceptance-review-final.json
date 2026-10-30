@@ -1,0 +1,87 @@
+{
+  "schema_version": "ontokin.c076-independent-acceptance-review/0.1",
+  "reviewer": "agent_binding",
+  "source_commit": "32e03a8778370674b8eb6aa78be799cfe8591d8a",
+  "source_tree": "1eda7611fdd1294aaf7d9764e881dfdd8f41725e",
+  "scope": "Static independent review of source/Agent acceptance and Python/Khronos/Three/browser verification; no product requests or tests in this review",
+  "inputs": [
+    {
+      "path": "tools/run_holes_acceptance.py",
+      "size": 14838,
+      "sha256": "70d119e35bda06b098d763926d89c5569b506fa805c09a5f7890a480f8355b21",
+      "git_blob": "0175550f8756a2f7837ccc08ae1f8107c0f1176e"
+    },
+    {
+      "path": "tools/verify_holes_glb.mjs",
+      "size": 12311,
+      "sha256": "c5ef3351416026c99c2e746a98632bae76e060c9b9c6744b0457d34482ad924d",
+      "git_blob": "0165271f7cfdda5b23251e9c17fdaeba8e7d1422"
+    },
+    {
+      "path": "tools/holes_oracles.py",
+      "size": 16205,
+      "sha256": "a0f69fd08a1fe5d0196a336f28588fbe48387e6fc41c2fb0892a683fe86e397f",
+      "git_blob": "218718708425e6bc4a0dbde12138087f385b0277"
+    },
+    {
+      "path": "tools/extrusion_oracles.py",
+      "size": 6834,
+      "sha256": "85ef6763b6d84ebae61055d53603a470fe5e3703e2328b0e2807d0787bf033ef",
+      "git_blob": "5c1589337bddc9e9ca61333102117f1cbbabc5ca"
+    },
+    {
+      "path": "tests/test_holes_oracles.py",
+      "size": 10630,
+      "sha256": "0ff0e0fd8da41318297ada6c6faf25626db1c76fc7f635ba5c8f4fb39c140f7f",
+      "git_blob": "67672d7aec94ca7ef3615160d97de87f197c2716"
+    },
+    {
+      "path": "examples/polygon-holes/expected.json",
+      "size": 115895,
+      "sha256": "c7977ff69db7ec5642efc0bf991f6617e57f344bc1270b29909f459a704119f9",
+      "git_blob": "6e038632a0957c03ea723ed7f7f4601e8cb418cc"
+    },
+    {
+      "path": "examples/polygon-holes/acceptance-freeze.json",
+      "size": 8918,
+      "sha256": "830c64c617995c5389aa623df3bc47ddb08c49ac7e1a591d973ff66b3df2d7de",
+      "git_blob": "fc8be11f48d4c318810a3777eb94e7b1fcc53df3"
+    }
+  ],
+  "prior_review": {
+    "path": "acceptance-review.json",
+    "sha256": "d48c5ef3173a51ee3ad730f9d5e481fe568e89a091240067244a29f42153cc0a",
+    "source_commit": "c5d03f939bc26cde5b79c713958880cbca84a00e"
+  },
+  "frozen_case_count": 55,
+  "frozen_outcomes": {
+    "valid": 17,
+    "invalid": 34,
+    "source_valid_delivery_rejected": 4
+  },
+  "status": "approved_static_scope",
+  "unresolved_blockers": 0,
+  "findings": [
+    {
+      "id": "AR-01",
+      "status": "closed_by_source_review",
+      "repair_commit": "32e03a8778370674b8eb6aa78be799cfe8591d8a",
+      "resolution": "The .9 independent reader rejects nonidentity node scale, matrix transforms, and animation channels other than translation/rotation. Two independent synthetic test methods cover uniform/nonuniform/reflected static scales, scale-bearing matrices, scale animation and weights. Both native Three.js and browser observations now record and compare identity world scale at every sampled pose."
+    },
+    {
+      "id": "AR-02",
+      "status": "closed_by_source_review",
+      "repair_commit": "32e03a8778370674b8eb6aa78be799cfe8591d8a",
+      "resolution": "The acceptance workflow reads the actually accepted repaired bundle through service.read_program, then compares stored entry bytes to frozen repaired source and stored module bytes to the original pinned library."
+    }
+  ],
+  "nonblocking_assessments": [
+    "All55frozen source rows are iterated and hashed against acceptance-freeze before execution;17valid,34invalid,4source-valid-delivery-rejected cases.",
+    "Analytic geometry checks import no production runtime or triangulator and use independent convex clipping plus complete authored boundary and opposite directed-edge incidence.",
+    "All cap corners bind uniquely to independently authored identities within1e-5m; inner walls retain outgoing material and outward-normal checks; decoded area, volume, perimeter and PBRvalues are measured.",
+    "Agent workflow executes all12operations with separate schema and durability checks, scoped repair, sibling mesh preservation, stale cursor refusal and current lower policy failure.",
+    "Destination checker requires passed acceptance, exact artifact SHA256, matching program revision, pinned verifier dependencies, zero Khronos errors/warnings and Three/browser recorded motion; seven representative artifacts request14captures whose visual inspection remains separate."
+  ],
+  "product_tests_executed": 0,
+  "execution_boundary": "This record establishes reviewed code changes and fixed inputs only. Root must execute the new20-method oracle cohort and final source/Agent/destination checks on their actual candidate. It does not relabel earlier acceptance evidence as execution of this repaired checker."
+}
