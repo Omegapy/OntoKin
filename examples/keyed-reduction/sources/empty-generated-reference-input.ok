@@ -1,0 +1,20 @@
+ontokin "0.15";
+module Dependencies @ "dependencies";
+profile "keyed-reduction-0.1";
+public class Leaf @ "leaf" {
+ public param size @ "size": Length = 0.25[m];
+ geometry = sphere(self.size);
+ physical = no_body();
+}
+public class Family @ "family" {
+ public param sizes @ "sizes": Keyed<Length> = keyed<Length>{};
+ public derive total @ "total": Length = reduce_keyed<Length>(self.leaves, 0[m], (acc, k, v) -> acc + v.size);
+ public parts leaves @ "leaves": Leaf for (child_key, child_value) in self.sizes { size = child_value; }
+ geometry = if self.total >= 0[m] then empty() else empty();
+ physical = no_body();
+}
+scene Demo @ "demo" {
+ duration = 1[s];
+ gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+ object rig @ "rig": Family {}
+}
