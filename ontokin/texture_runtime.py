@@ -15,6 +15,7 @@ from typing import Any, Callable
 
 from .bundle import BundleError
 from .diagnostics import OntoKinError
+from .profile_capabilities import TEXTURE_PROFILES
 from .surface import SurfaceError
 from .syntax import Node
 from .texture_bundle import TextureBundle, validate_asset_digest, validate_asset_id
@@ -119,7 +120,7 @@ def validate_texture_closure(compiler) -> dict[str, tuple[Node, ...]]:
     survives the compilation.  Returns declaration nodes by stable asset ID.
     """
     entry = compiler.linked.entry.ast
-    if entry.profile != TEXTURE_PROFILE:
+    if entry.profile not in TEXTURE_PROFILES:
         if isinstance(compiler.bundle, TextureBundle):
             fail("OKL-E-ASSET-CLOSURE", "A texture bundle requires an explicit textured-surfaces-0.1 entry.",
                  entry, phase="binding")
@@ -135,7 +136,7 @@ def validate_texture_closure(compiler) -> dict[str, tuple[Node, ...]]:
     requirements: dict[str, tuple[str, list[Node]]] = {}
     for source_id in sorted(compiler.linked.modules):
         module = compiler.linked.modules[source_id]
-        if module.ast.profile != TEXTURE_PROFILE:
+        if module.ast.profile not in TEXTURE_PROFILES:
             continue
         for node in _walk_ast(module.ast, compiler.budget.tick):
             if (node.kind != "call" or node.callee.kind != "name"

@@ -77,12 +77,17 @@ def run(args, *, host_policy=None) -> int:
         from .pockets_protocol import PocketsProtocol
         service_type, envelope_fn = PocketsAgentService, PocketsProtocol.envelope
         service_options = {"protocol": selected_protocol, "host_policy": host_policy}
+    elif selected_protocol == "ontokin.agent/0.14":
+        from .keyed_transform_agent import KeyedTransformAgentService
+        from .keyed_transform_protocol import KeyedTransformProtocol
+        service_type, envelope_fn = KeyedTransformAgentService, KeyedTransformProtocol.envelope
+        service_options = {"protocol": selected_protocol, "host_policy": host_policy}
     elif selected_protocol == "ontokin.agent/0.13":
         from .texture_agent import TextureAgentService
         from .texture_protocol import TextureProtocol
         service_type, envelope_fn = TextureAgentService, TextureProtocol.envelope
         service_options = {"protocol": selected_protocol, "host_policy": host_policy}
-    max_request_bytes = 8 * 1024 * 1024 if selected_protocol == "ontokin.agent/0.13" else MAX_REQUEST_BYTES
+    max_request_bytes = 8 * 1024 * 1024 if selected_protocol in ("ontokin.agent/0.13", "ontokin.agent/0.14") else MAX_REQUEST_BYTES
     def error_response(error):
         return _error(error, envelope_fn)
     try:

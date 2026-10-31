@@ -104,7 +104,7 @@ class Parser02(Parser):
                          version_node=version_node, profile_node=profile_node,
                          requires=requires, imports=imports, classes=classes,
                          functions=functions, definitions=definitions, scene=scene)
-        if self.expected_version in {"0.7", "0.8", "0.9", "0.10", "0.11", "0.12", "0.13"}:
+        if self.expected_version in {"0.7", "0.8", "0.9", "0.10", "0.11", "0.12", "0.13", "0.14"}:
             result.data["execution"] = execution
         return result
 
@@ -301,7 +301,10 @@ def parse_source_unit(unit: SourceUnit, *, check: Callable[[], None] | None = No
         declared = (tokens[1].value if len(tokens) > 2 and tokens[0].kind == "ontokin"
                     and tokens[1].kind == "STRING" else None)
         callback = checkpoint if check is not None else None
-        if declared == "0.13":
+        if declared == "0.14":
+            from .syntax14 import Parser14
+            result = Parser14(tokens, unit.source_id, callback).program()
+        elif declared == "0.13":
             from .syntax13 import Parser13
             result = Parser13(tokens, unit.source_id, callback).program()
         elif declared == "0.12":

@@ -7,12 +7,14 @@ from __future__ import annotations
 
 import hashlib
 import struct
+from contextvars import ContextVar
 
 from .surface_runtime import materialize_surface
 from .texture_runtime import texture_coordinates, texture_metadata
 
 
 SAMPLER = {"magFilter": 9728, "minFilter": 9728, "wrapS": 33071, "wrapT": 33071}
+_ACTIVE_TARGET = ContextVar("ontokin_texture_delivery_target", default="ontokin.glb/0.13")
 
 
 def profile_metadata():
@@ -27,7 +29,7 @@ def profile_metadata():
 
 def _fail(message, **details):
     from .scene import export_error
-    export_error("OKE-E-TEXTURE", message, kind="unsupported", details={"target_contract": "ontokin.glb/0.13", **details})
+    export_error("OKE-E-TEXTURE", message, kind="unsupported", details={"target_contract": _ACTIVE_TARGET.get(), **details})
 
 
 def _bytes_work(length, check):
@@ -55,13 +57,15 @@ def prepare_node_textures(geometry, model, *, check=None):
         binding = metadata[region.key]
         asset = model.texture_assets.get(binding["asset_id"])
         if asset is None or asset.sha256 != binding["sha256"]:
-            _fail("A source texture binding must retain its admitted immutable image.")
+            from .profile_capabilities import KEYED_TRANSFORM_PROFILE
+            _fail("A source texture binding must retain its admitted immutable image.",
+                  target_contract="ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else "ontokin.glb/0.13")
         result[region.key] = {"uv": coordinates[region.key], "binding": binding,
                               "asset": asset, "material": region.material, "program_revision": model.program_revision}
     return result
 
 
-def append_texture_buffers(builder, pending, *, check=None):
+def append_texture_buffers(builder, pending, *, check=None, target_contract="ontokin.glb/0.13"):
     """Add UV/PNG data only after every preexisting accessor has been written."""
     if not pending:
         return {}
@@ -72,7 +76,7 @@ def append_texture_buffers(builder, pending, *, check=None):
         asset = texture["asset"]
         previous = used.setdefault(asset.asset_id, texture)
         if previous["asset"].sha256 != asset.sha256:
-            _fail("One image identity cannot alias different bytes.")
+            _fail("One image identity cannot alias different bytes.", target_contract=target_contract)
         primitive["attributes"]["TEXCOORD_0"] = builder.add(texture["uv"], 2, target=34962)
     identities = sorted(used)
     image_indices = {name: index for index, name in enumerate(identities)}
@@ -176,6 +180,16 @@ def validate_texture_shapes(document, *, check=None):
 
 def validate_texture_delivery(decoded, model, *, check=None):
     """Compare supplied image, UV and reference bytes with fresh source facts."""
+    from .profile_capabilities import KEYED_TRANSFORM_PROFILE
+    target = "ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else "ontokin.glb/0.13"
+    token = _ACTIVE_TARGET.set(target)
+    try:
+        return _validate_texture_delivery(decoded, model, check=check)
+    finally:
+        _ACTIVE_TARGET.reset(token)
+
+
+def _validate_texture_delivery(decoded, model, *, check=None):
     doc = decoded.document
     validate_texture_shapes(doc, check=check)
     images, textures, samplers = (doc.get(name, []) for name in ("images", "textures", "samplers"))

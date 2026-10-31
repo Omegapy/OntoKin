@@ -1,0 +1,257 @@
+{
+  "schema_version": "ontokin.c081-workflows/0.1",
+  "status": "predetermined_requirements_not_execution",
+  "workflows": [
+    {
+      "id": "A01",
+      "name": "two-occurrence-repair",
+      "base": "panel-task",
+      "candidate": "panel-task-repaired",
+      "operations": [
+        "discover",
+        "create",
+        "validate",
+        "inspect",
+        "surface.mesh_page",
+        "evaluate",
+        "export",
+        "artifact",
+        "edit"
+      ],
+      "expected": {
+        "changed_paths": [
+          "first.panels[\"left\"]",
+          "first.panels[\"right\"]"
+        ],
+        "unchanged_paths": [
+          "sibling",
+          "sibling.panels[\"left\"]",
+          "sibling.panels[\"right\"]",
+          "marker"
+        ],
+        "asset_ids": [
+          "label"
+        ],
+        "unchanged_motion_paths": [
+          "marker",
+          "sibling",
+          "sibling.panels[\"left\"]",
+          "sibling.panels[\"right\"]"
+        ],
+        "unchanged_files": [
+          "modules/panels.ok",
+          "assets/label.png"
+        ],
+        "repair_source_id": "entry",
+        "repair_expected_text": "scale = 1[m];",
+        "repair_replacement": "scale = 1.5[m];",
+        "repair_occurrence": [
+          "panel-task",
+          "demo",
+          "first"
+        ],
+        "stable_generated_keys": [
+          "left",
+          "right"
+        ],
+        "read_only_transform_provenance": true,
+        "source_origins": "Exact spans and source revisions in each case expected.transform_provenance; unknown origins must be null",
+        "artifact_retrieval": "Actual complete GLB bytes from bounded artifact operation, matching stored hash"
+      }
+    },
+    {
+      "id": "A02",
+      "name": "invalid-candidate-rollback",
+      "base": "panel-task",
+      "candidate": "panel-task-invalid",
+      "operations": [
+        "create",
+        "edit",
+        "status",
+        "inspect"
+      ],
+      "expected": {
+        "candidate_status": "rejected",
+        "expected_code": "OKL-E-EXTRUSION-WINDING",
+        "accepted_program_unchanged": true,
+        "library_and_assets_unchanged": true,
+        "candidate_source_retained": true,
+        "stale_expected_revision": "A source edit using the old accepted revision after a valid repair must fail without replacing the repaired head"
+      }
+    },
+    {
+      "id": "A03",
+      "name": "stale-surface-and-element-cursors",
+      "base": "panel-task",
+      "candidate": "panel-task-repaired",
+      "operations": [
+        "inspect",
+        "surface.mesh_page",
+        "edit",
+        "inspect",
+        "surface.mesh_page"
+      ],
+      "expected": {
+        "capture_real_paginated_cursors": true,
+        "reuse_after_repair": "refused",
+        "old_revision_not_relabelled": true,
+        "ordinary_inspection_and_mesh_cursor_scopes_separate": true
+      }
+    },
+    {
+      "id": "A04",
+      "name": "reopen-and-request-identity",
+      "base": "panel-task",
+      "operations": [
+        "create",
+        "validate",
+        "status",
+        "export",
+        "artifact"
+      ],
+      "expected": {
+        "reopen_in_new_service_instance": true,
+        "same_id_same_payload": "same durable outcome and artifact identity",
+        "same_id_changed_payload": "refused",
+        "no_duplicate_effects": true
+      }
+    },
+    {
+      "id": "A05",
+      "name": "current-host-authority",
+      "base": "panel-task-higher-budget",
+      "operations": [
+        "create",
+        "validate",
+        "inspect",
+        "evaluate",
+        "export",
+        "artifact"
+      ],
+      "expected": {
+        "initial_host_policy": {
+          "max_operations": 400000,
+          "max_elapsed_ms": 80000
+        },
+        "reopened_host_policy": {
+          "max_operations": 100000,
+          "max_elapsed_ms": 30000
+        },
+        "reduced_policy_operations": [
+          "validate",
+          "inspect",
+          "surface.mesh_page",
+          "evaluate",
+          "export",
+          "artifact",
+          "asset-slice"
+        ],
+        "prior_result_or_stored_bytes_grant_authority": false,
+        "reduced_policy": "Every attempted operation requiring admitted source work must refuse the outstanding larger source request; acceptance state remains unchanged"
+      }
+    },
+    {
+      "id": "A06",
+      "name": "caller-caps-and-output-exhaustion",
+      "base": "panel-task",
+      "secondary": "maximum-256",
+      "operations": [
+        "validate",
+        "inspect",
+        "surface.mesh_page",
+        "export",
+        "artifact"
+      ],
+      "expected": {
+        "lower_operations_cap": 1,
+        "lower_result_items_cap": 1,
+        "lower_json_or_byte_cap": "Use smallest valid supported caller cap below the actual required response; preserve raw request and exact exhausted bound",
+        "caller_can_raise_host_authority": false,
+        "failures_publish_partial_results": false,
+        "complete_request_ledger": "Input, abstract body, selections, copies, construction and delivery share current admitted authority",
+        "map_input_evaluations_per_dynamic_map": 1
+      }
+    },
+    {
+      "id": "A07",
+      "name": "cancel-during-transform",
+      "base": "maximum-256",
+      "operations": [
+        "validate",
+        "status",
+        "cancel"
+      ],
+      "expected": {
+        "reached_actual_map_work_before_cancel": true,
+        "test_intervention": "A synchronization gate may pause an actual metered map checkpoint; record the intervention and reached stage",
+        "cancel_outcome": "cancelled under the original request identity",
+        "partial_transformed_value_accepted": false,
+        "cancel_callback_relabelled_as_type_error": false,
+        "accepted_source_unchanged": true
+      }
+    },
+    {
+      "id": "A08",
+      "name": "interrupted-artifact-publication",
+      "base": "panel-task",
+      "operations": [
+        "export",
+        "status",
+        "artifact",
+        "export"
+      ],
+      "expected": {
+        "actual_glb_prepared_before_interruption": true,
+        "injection": "Raise a recorded BaseException during the real store publication boundary in an isolated new store",
+        "reopen_in_new_service_instance": true,
+        "interrupted_artifact_visible_as_success": false,
+        "status_reports_truthful_unknown_or_terminal_state": true,
+        "new_request_id_can_retry": true
+      }
+    },
+    {
+      "id": "A09",
+      "name": "exact-attachment-slices",
+      "base": "panel-task",
+      "operations": [
+        "inspect"
+      ],
+      "expected": {
+        "asset_id": "label",
+        "assemble_complete_slices_and_check_whole_hash": true,
+        "compare_to_frozen_png_bytes": true,
+        "eof_slice": "empty and complete",
+        "offset_past_eof": "refused",
+        "revision_and_asset_identity_on_each_slice": true
+      }
+    },
+    {
+      "id": "A10",
+      "name": "identity-and-explicit-c080-delivery",
+      "base": "panel-identity",
+      "operations": [
+        "validate",
+        "evaluate",
+        "export",
+        "artifact"
+      ],
+      "expected": {
+        "explicit_control": "control-panel-identity.files.json",
+        "complete_bin_chunk_equal": true,
+        "all_accessor_layout_and_bytes_equal": true,
+        "materials_images_textures_samplers_equal": true,
+        "stable_occurrence_identities_equal": true,
+        "recorded_motion_equal": true,
+        "png_bytes_equal": true,
+        "permitted_json_differences": [
+          "explicit contract and authored profile",
+          "program/source revisions and their exact provenance",
+          "source spans and transform provenance",
+          "independently recomputed implementation fingerprint"
+        ],
+        "arbitrary_json_difference_suppression": false,
+        "native_destination_and_reviewed_captures_required": true
+      }
+    }
+  ]
+}

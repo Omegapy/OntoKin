@@ -29,7 +29,7 @@ from .pockets_runtime import POCKETS_CALLS, POCKETS_TYPES, pockets_builtin
 from .texture_bundle import TextureBundle
 from .texture_runtime import (TEXTURE_CALLS, TEXTURE_TYPES, texture_builtin,
                               validate_texture_closure, texture_coordinates)
-from .profile_capabilities import (BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, IMPULSE_PROFILES,
+from .profile_capabilities import (BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, TEXTURE_PROFILES, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, IMPULSE_PROFILES,
                                    SURFACE_PROFILES)
 from .validator import (BUILTIN_TYPES, FIELD_TYPES,
                         PREDEFINED, READONLY_FIELDS, BoundExpression, Callable,
@@ -211,6 +211,19 @@ class InitializerBinding:
     origin_path: str
 
 
+@dataclass(frozen=True)
+class KeyedTransformOrigin:
+    """Source derivation only, with no writable occurrence or iteration ID."""
+
+    expression: Any
+    body: Any
+    input: Any
+    input_type: Type
+    output_type: Type
+    key: str | None = None
+    input_entry: Any = None
+
+
 def _materialize_reach_surface(recipe, *, max_vertices, work, check):
     """Reuse immutable loft construction, retaining each occurrence's limit.
 
@@ -282,6 +295,9 @@ class ConstructionCompiler(Validator):
         self._collection_state: dict[str, str] = {}
         self._keyed_origins: dict[int, dict[str, Any]] = {}
         self._keyed_payloads: dict[int, KeyedValue] = {}
+        self._keyed_transforms: dict[int, tuple[KeyedTransformOrigin, ...]] = {}
+        self._value_transforms: dict[int, tuple[Value, tuple[KeyedTransformOrigin, ...]]] = {}
+        self._expression_flows: list[dict] = []
         self._shape_stack: list[str] = []
         self._value_taints: dict[int, set[str]] = {}
         self._tainted_values: dict[int, Value] = {}
@@ -359,9 +375,12 @@ class ConstructionCompiler(Validator):
             keys.add(node.key)
 
     def predefined(self, node: Any) -> frozenset | set:
-        if self.linked.modules[node.source_id].ast.profile == TEXTURE_PROFILE:
+        if self.linked.modules[node.source_id].ast.profile in TEXTURE_PROFILES:
             from .reach_source import NAMES
-            return PREDEFINED_02 | NAMES | TEXTURE_CALLS | TEXTURE_TYPES
+            result = PREDEFINED_02 | NAMES | TEXTURE_CALLS | TEXTURE_TYPES
+            if self.linked.modules[node.source_id].ast.profile == KEYED_TRANSFORM_PROFILE:
+                result = result | {"map_keyed"}
+            return result
         if self.linked.modules[node.source_id].ast.profile in REACH_PROFILES:
             from .reach_source import NAMES
             return PREDEFINED_02 | NAMES
@@ -387,7 +406,7 @@ class ConstructionCompiler(Validator):
                     from .reach_source import reach_error
                     raise reach_error("reach_type", "ReachBranch takes no type arguments.", node)
                 result = Type("ReachBranch")
-            elif name in TEXTURE_TYPES and self.linked.modules[node.source_id].ast.profile == TEXTURE_PROFILE:
+            elif name in TEXTURE_TYPES and self.linked.modules[node.source_id].ast.profile in TEXTURE_PROFILES:
                 if args:
                     fail("OKL-E-TYPE", f"Texture type '{name}' takes no type arguments.", node, phase="type")
                 result = Type(name)
@@ -437,7 +456,7 @@ class ConstructionCompiler(Validator):
         declaring_profile = self.linked.modules[node.source_id].ast.profile
         if declaring_profile in SURFACE_PROFILES:
             allowed |= SURFACE_TYPES
-        if declaring_profile == TEXTURE_PROFILE:
+        if declaring_profile in TEXTURE_PROFILES:
             allowed |= TEXTURE_TYPES
         if declaring_profile in POCKETS_PROFILES:
             allowed |= POCKETS_TYPES
@@ -474,7 +493,220 @@ class ConstructionCompiler(Validator):
         if self._value_taints.get(id(original)):
             self._value_taints[id(result)] = set(self._value_taints[id(original)])
             self._tainted_values[id(result)] = result
+        transforms = self._transform_records(original)
+        if transforms:
+            self._value_transforms[id(result)] = (result, transforms)
         return result
+
+    def _transform_records(self, value: Value) -> tuple[KeyedTransformOrigin, ...]:
+        retained = self._value_transforms.get(id(value))
+        if retained is not None and retained[0] is value:
+            return retained[1]
+        if (value.type.kind == "Keyed" and value.known
+                and self._keyed_payloads.get(id(value.value)) is value.value):
+            return self._keyed_transforms.get(id(value.value), ())
+        return ()
+
+    def transform_provenance(self, value: Value) -> list[dict]:
+        """Return detached source locations for an actual transformed value."""
+        result = []
+        for origin in self._transform_records(value):
+            self.budget.tick(origin.expression)
+            record = {"expression": self.location(origin.expression),
+                      "body": self.location(origin.body),
+                      "input": self.location(origin.input),
+                      "input_element_type": str(origin.input_type),
+                      "output_element_type": str(origin.output_type)}
+            if origin.key is not None:
+                record.update(key=origin.key, input_entry=self.location(origin.input_entry))
+            result.append(record)
+        return result
+
+    def _merge_transform_records(self, *groups) -> tuple[KeyedTransformOrigin, ...]:
+        # Repeated references describe the same source derivation once
+        # Keep selected inner keys distinct from the current outer key
+        records, seen = [], set()
+        for group in groups:
+            for record in group:
+                self.budget.tick(record.expression)
+                identity = (id(record.expression), id(record.body), id(record.input),
+                            record.input_type, record.output_type,
+                            record.key, id(record.input_entry))
+                if identity not in seen:
+                    records.append(record)
+                    seen.add(identity)
+        return tuple(records)
+
+    def _observe_value_flow(self, value: Value, frame=None) -> None:
+        if frame is None:
+            if not self._expression_flows:
+                return
+            frame = self._expression_flows[-1]
+        transforms = self._transform_records(value)
+        if transforms:
+            frame["transforms"].append(transforms)
+        frame["taints"].update(self._value_taints.get(id(value), ()))
+
+    def _finish_value_flow(self, value: Value, node: Any, tracking: bool) -> Value:
+        if not tracking:
+            return value
+        frame = self._expression_flows[-1]
+        own = self._transform_records(value)
+        # A map builds its aggregate derivation explicitly. Ordinary pure
+        # expressions retain only the values their selected execution reads.
+        transforms = (own if node.kind == "map_keyed" else
+                      self._merge_transform_records(*frame["transforms"], own))
+        if value.type.kind == "Keyed":
+            if any(record.key is not None for record in transforms):
+                transforms = self._merge_transform_records(tuple(
+                    replace(record, key=None, input_entry=None) for record in transforms))
+        else:
+            # An actual indexed leaf refines its aggregate source record.
+            # Passing that collection through a helper must not add a second
+            # keyless copy of the same derivation to the returned leaf.
+            selected = {(id(record.expression), id(record.body), id(record.input))
+                        for record in transforms if record.key is not None}
+            transforms = tuple(record for record in transforms if record.key is not None
+                               or (id(record.expression), id(record.body), id(record.input)) not in selected)
+        taints = frame["taints"] | self._value_taints.get(id(value), set())
+        if transforms != own or taints != self._value_taints.get(id(value), set()):
+            value = self._inherit_value_info(value, Value(value.type, value.value, value.frame, value.hint))
+            self.budget.charge_value(value, node)
+            if transforms:
+                self._value_transforms[id(value)] = (value, transforms)
+            if taints:
+                self._value_taints[id(value)] = set(taints)
+                self._tainted_values[id(value)] = value
+        if len(self._expression_flows) > 1:
+            self._observe_value_flow(value, self._expression_flows[-2])
+        return value
+
+    def _unknown_local_context(self, ctx: Context, node: Any) -> Context:
+        locals_ = {}
+        for name, value in ctx.locals.items():
+            self.budget.tick(node)
+            locals_[name] = Value(value.type, frame=value.frame, hint=value.hint)
+        return replace(ctx, locals=locals_, abstract=True)
+
+    def _map_binders(self, node: Any, ctx: Context) -> None:
+        module = self.linked.modules[node.source_id]
+        forbidden = self.predefined(node) | set(ctx.locals) | set(module.imports) | set(module.symbols)
+        # Older declaration scopes retain their historical name rules. This
+        # new lexical binder cannot hide any builtin inherited by .14.
+        forbidden |= (SURFACE_CALLS | SURFACE_TYPES | EXTRUSION_CALLS | EXTRUSION_TYPES
+                      | HOLES_CALLS | HOLES_TYPES | RING_LOFT_CALLS | RING_LOFT_TYPES
+                      | FRAMED_LOFT_CALLS | FRAMED_LOFT_TYPES | POCKETS_CALLS | POCKETS_TYPES)
+        if ctx.self_type is not None:
+            forbidden |= set(self.effective(ctx.self_type).members) | set(FIELD_TYPES) | READONLY_FIELDS
+        if ctx.scene:
+            forbidden |= set(self.scene_names)
+        for name, binder in ((node.key_name, node.key_node), (node.value_name, node.value_node)):
+            self.budget.tick(binder)
+            if name in forbidden:
+                fail("OKL-E-NAME", f"Map binder '{name}' duplicates or shadows a visible name.",
+                     binder, phase="binding")
+            forbidden.add(name)
+
+    def _expect_map_output(self, value: Value, output_type: Type, node: Any) -> Value:
+        actual, expected = value.type, output_type
+        while actual.kind == expected.kind and actual.kind in {"Vec3", "Vector3", "Range"}:
+            actual, expected = actual.element, expected.element
+        numeric = {"Int", "Real", "Quantity"}
+        if (actual != expected and (actual.kind == "Quantity" or expected.kind == "Quantity")
+                and not (actual.kind in numeric and expected.kind in numeric)):
+            fail("OKL-E-TYPE", f"Expected {output_type}, received {value.type}.", node,
+                 phase="type", details={"expected": str(output_type), "actual": str(value.type)})
+        return self.expect(value, output_type, node)
+
+    def _map_keyed_expression(self, node: Any, ctx: Context) -> Value:
+        if self.linked.modules[node.source_id].ast.profile != KEYED_TRANSFORM_PROFILE:
+            fail("OKL-E-CAPABILITY-UNSUPPORTED", "map_keyed requires keyed-transform-0.1.",
+                 node, phase="support")
+        output_type = self.parse_type(node.element_type)
+        self._keyed_leaf(output_type, node.element_type)
+        self._map_binders(node, ctx)
+        source = self.expression(node.input, ctx)
+        if source.type.kind != "Keyed":
+            fail("OKL-E-TYPE", "map_keyed input must be a flat Keyed value.", node.input, phase="type")
+        input_type = source.type.element
+        self._keyed_leaf(input_type, node.input)
+        result_type = Type("Keyed", element=output_type)
+        abstract = self._unknown_local_context(ctx, node.body)
+        abstract.locals[node.key_name] = Value(STRING)
+        abstract.locals[node.value_name] = Value(input_type)
+        self._expect_map_output(self.expression(node.body, abstract), output_type, node.body)
+        if ctx.abstract:
+            return Value(result_type)
+        if not source.known or not isinstance(source.value, KeyedValue):
+            fail("OKL-E-TYPE", "map_keyed input must resolve to an immutable keyed value.", node.input, phase="type")
+        if len(source.value.entries) > MAX_KEYED_ENTRIES:
+            fail("OKL-E-RESOURCE", "Map input exceeds 256 entries.", node.input, phase="support",
+                 details={"budget": "keyed_entries", "limit": MAX_KEYED_ENTRIES,
+                          "consumed": len(source.value.entries)})
+        taints = set(self._value_taints.get(id(source), ()))
+        for path in taints:
+            self._mark_generated(path, node.input)
+        # Copy the enclosing scope once. Replacing these two immutable values
+        # cannot make a previous iteration or a surrounding scope writable.
+        locals_ = {}
+        for name, value in ctx.locals.items():
+            self.budget.tick(node)
+            locals_[name] = value
+        body_ctx = replace(ctx, locals=locals_)
+        origins = self._keyed_origins.get(id(source.value), {})
+        input_transforms = self._transform_records(source)
+        current = KeyedTransformOrigin(node, node.body, node.input, input_type, output_type)
+        aggregate_groups, entries = [input_transforms], []
+        prior_key = None
+        for key, leaf in source.value.entries:
+            ledger = getattr(self.budget, "execution_budget", None)
+            previous_stage = ledger.stage if ledger is not None else None
+            try:
+                if ledger is not None:
+                    ledger.stage = "keyed_transform_iteration"
+                self.budget.tick(node)
+            finally:
+                if ledger is not None:
+                    ledger.stage = previous_stage
+            self.key(node.input, key)
+            if prior_key is not None and key <= prior_key:
+                fail("OKL-E-ID", "Map input keys must be unique canonical stable keys.", node.input, phase="binding")
+            prior_key = key
+            bound_key = Value(STRING, key)
+            bound_value = self._inherit_value_info(leaf, Value(leaf.type, leaf.value, leaf.frame, leaf.hint))
+            self.budget.charge_value(bound_key, node.key_node)
+            self.budget.charge_value(bound_value, node.value_node)
+            locals_[node.key_name], locals_[node.value_name] = bound_key, bound_value
+            computed = self._expect_map_output(self.expression(node.body, body_ctx), output_type, node.body)
+            result = self._inherit_value_info(computed, Value(computed.type, computed.value, computed.frame, computed.hint))
+            self.budget.charge_value(result, node.body)
+            source_records = tuple(replace(record, key=key, input_entry=origins.get(key))
+                                   if record.key is None else record for record in input_transforms)
+            body_records = self._transform_records(computed)
+            records = self._merge_transform_records(source_records, self._transform_records(leaf),
+                        body_records, (replace(current, key=key, input_entry=origins.get(key)),))
+            self._value_transforms[id(result)] = (result, records)
+            leaf_taints = taints | self._value_taints.get(id(leaf), set()) | self._value_taints.get(id(computed), set())
+            if leaf_taints:
+                self._value_taints[id(result)] = set(leaf_taints)
+                self._tainted_values[id(result)] = result
+                taints.update(leaf_taints)
+            # Aggregate derivation describes the source expressions; selected
+            # output leaves retain their actual nested keys separately.
+            aggregate_groups.append(tuple(replace(record, key=None, input_entry=None) for record in body_records))
+            entries.append((key, result))
+        payload = KeyedValue(tuple(entries))
+        value = Value(result_type, payload)
+        self.budget.charge_value(value, node)
+        transforms = self._merge_transform_records(*aggregate_groups, (current,))
+        self._keyed_payloads[id(payload)] = payload
+        self._keyed_origins[id(payload)] = dict(origins)
+        self._keyed_transforms[id(payload)] = transforms
+        self._value_transforms[id(value)] = (value, transforms)
+        if taints:
+            self._value_taints[id(value)] = taints
+            self._tainted_values[id(value)] = value
+        return value
 
     def expect(self, value: Value, typ: Type, node: Any) -> Value:
         if typ.kind == "ReachBranch" and value.type != typ:
@@ -777,7 +1009,7 @@ class ConstructionCompiler(Validator):
                 return Value(Type("ReachBranch"), name)
             if name == "reach_planar":
                 return Value(Type("BuiltinCallable"), name)
-        if (name in TEXTURE_CALLS and self.linked.modules[node.source_id].ast.profile == TEXTURE_PROFILE
+        if (name in TEXTURE_CALLS and self.linked.modules[node.source_id].ast.profile in TEXTURE_PROFILES
                 and name not in ctx.locals):
             return Value(Type("BuiltinCallable"), name)
         if (name in POCKETS_CALLS and self.linked.modules[node.source_id].ast.profile in POCKETS_PROFILES
@@ -897,6 +1129,16 @@ class ConstructionCompiler(Validator):
         except KeyError:
             fail("OKL-E-NAME", f"Keyed value has no entry '{index.value}'.", node, phase="binding",
                  details={"missing_key": index.value})
+        transforms = self._transform_records(result)
+        if not transforms:
+            origin = self._keyed_origins.get(id(value.value), {}).get(index.value)
+            transforms = tuple(replace(record, key=index.value, input_entry=origin)
+                               if record.key is None else record
+                               for record in self._transform_records(value))
+        if transforms:
+            result = self._inherit_value_info(result, Value(result.type, result.value, result.frame, result.hint))
+            self.budget.charge_value(result, node)
+            self._value_transforms[id(result)] = (result, transforms)
         taints = self._value_taints.get(id(value), set())
         for path in taints:
             self._mark_generated(path, node)
@@ -1138,6 +1380,7 @@ class ConstructionCompiler(Validator):
             else:
                 target = self.name("self", ctx, read.target)
                 value = self.member(target, read.name, ctx, read)
+            self._observe_value_flow(value)
             if self._parameter_value_key(value, name=kind == "name") != wanted:
                 # Do not inspect later parameters: the ordinary arithmetic
                 # following this changed read may fail before reaching them.
@@ -1174,9 +1417,19 @@ class ConstructionCompiler(Validator):
 
     def expression(self, node: Any, ctx: Context) -> Value:
         self.budget.tick(node)
+        if (ctx.abstract and self.linked.modules[node.source_id].ast.profile == KEYED_TRANSFORM_PROFILE
+                and any(value.known for value in ctx.locals.values())):
+            ctx = self._unknown_local_context(ctx, node)
+        tracking = self.model.profile == KEYED_TRANSFORM_PROFILE and not ctx.abstract
+        if tracking:
+            self._expression_flows.append({"transforms": [], "taints": set()})
         self._expression_depth += 1
         try:
             if self._expression_depth > 128:
+                if self.model.profile == KEYED_TRANSFORM_PROFILE:
+                    fail("OKL-E-RESOURCE", "Pure expression/call nesting exceeds bounded construction work.",
+                         node, phase="support", details={"budget": "expression_depth", "limit": 128,
+                                                        "consumed": self._expression_depth})
                 fail("OKL-E-RESOURCE", "Pure expression/call nesting exceeds bounded construction work.", node, phase="support")
             constant_names = (self._constant_names(node) if self.reach_work is not None
                               and node.kind in {"call", "binary"} else None)
@@ -1189,7 +1442,7 @@ class ConstructionCompiler(Validator):
                         and constant_key[-1] == ctx.abstract):
                     # A binding can attach its own dependency/taint route to a
                     # wrapper. Never return the retained wrapper to that code.
-                    return Value(cached.type, cached.value, cached.frame, cached.hint)
+                    return self._finish_value_flow(Value(cached.type, cached.value, cached.frame, cached.hint), node, tracking)
             parameter_key = parameter_plan = parameter_context = capture = None
             if (self.reach_work is not None and constant_names is None and not ctx.abstract
                     and self._parameter_capture is None and node.kind in {"call", "binary", "keyed"}):
@@ -1214,6 +1467,8 @@ class ConstructionCompiler(Validator):
                                 and (node.kind != "keyed" or keyed_type == cached[2].type)
                                 and self._parameter_context(ctx, reads, names, node) == parameter_context
                                 and self._parameter_replay(ctx, reads, cached[1])
+                                and not (tracking and (self._expression_flows[-1]["transforms"]
+                                                       or self._expression_flows[-1]["taints"]))
                                 and self._parameter_context(ctx, reads, names, node) == parameter_context):
                             value = self._parameter_copy(cached[2])
                             if node.kind == "keyed":
@@ -1221,11 +1476,13 @@ class ConstructionCompiler(Validator):
                                 self._keyed_origins[id(value.value)] = {
                                     entry.key: entry for entry in node.entries}
                                 self._keyed_payloads[id(value.value)] = value.value
-                            return value
+                            return self._finish_value_flow(value, node, tracking)
                         capture = [{id(read) for _, read in reads}, reads, []]
                         self._parameter_capture = capture
             try:
-                if node.kind == "keyed":
+                if node.kind == "map_keyed":
+                    result = self._map_keyed_expression(node, ctx)
+                elif node.kind == "keyed":
                     result = self._keyed_expression(node, ctx)
                 elif node.kind == "index":
                     value = self.expression(node.target, ctx)
@@ -1242,11 +1499,16 @@ class ConstructionCompiler(Validator):
                 self.reach_work.remember(constant_key, result)
             if (capture is not None and capture[2] is not None and len(capture[2]) == len(reads)
                     and self._parameter_result_immutable(result)
+                    # A new derivation-bearing read is not a cache identity.
+                    # Keep its real wrappers; older/plain reads still retain
+                    # the exact existing cache replay and charging path.
+                    and not (tracking and (self._expression_flows[-1]["transforms"]
+                                           or self._expression_flows[-1]["taints"]))
                     and self._parameter_context(ctx, reads, names, node) == parameter_context):
                 value = self._parameter_copy(result)
                 self.reach_work.remember(parameter_key, (node, tuple(capture[2]), value),
                     admission=lambda: self._parameter_context(ctx, reads, names, node) == parameter_context)
-            return result
+            return self._finish_value_flow(result, node, tracking)
         except OntoKinError as error:
             # A heterogeneous vector can fail while evaluating planar_uv's
             # arguments, before its typed builtin is reached. Keep this new
@@ -1254,7 +1516,7 @@ class ConstructionCompiler(Validator):
             location = error.diagnostic.node
             if (error.code == "OKL-E-UNIT" and node.kind == "call"
                     and node.callee.kind == "name" and node.callee.name == "planar_uv"
-                    and self.linked.modules[node.source_id].ast.profile == TEXTURE_PROFILE
+                    and self.linked.modules[node.source_id].ast.profile in TEXTURE_PROFILES
                     and error is not self.budget.callback_error
                     and error is not getattr(getattr(self.budget, "execution_budget", None), "callback_error", None)
                     and getattr(location, "source_id", None) == node.source_id
@@ -1263,9 +1525,11 @@ class ConstructionCompiler(Validator):
             raise
         finally:
             self._expression_depth -= 1
+            if tracking:
+                self._expression_flows.pop()
 
     def builtin(self, name: str, args: list[Value], node: Any, ctx: Context) -> Value:
-        if name in TEXTURE_CALLS and self.linked.modules[node.source_id].ast.profile == TEXTURE_PROFILE:
+        if name in TEXTURE_CALLS and self.linked.modules[node.source_id].ast.profile in TEXTURE_PROFILES:
             return texture_builtin(self, name, args, node, ctx)
         if name == "reach_planar":
             from .reach_source import reach_builtin
@@ -1493,6 +1757,8 @@ class ConstructionCompiler(Validator):
                 "collection_definition_id": collection["definition_id"], "key": key,
                 "input_node": node.input, "input_entry_node": origins.get(key),
             }
+            if self._transform_records(leaf):
+                generated["input_transforms"] = self.transform_provenance(leaf)
             self._register_tree(node, child_path, owner, collection["entry_ids"][key], child_context,
                                 forwarded, steps=collection["path_steps"] + (PathStep("key", key, node.start, node.end),),
                                 depth=collection["ownership_depth"] + 1, generated=generated,
@@ -1608,11 +1874,11 @@ class ConstructionCompiler(Validator):
                     mesh, local_pose = _materialize_reach_surface(
                         recipe, max_vertices=remaining_vertices, work=self.reach_work,
                         check=lambda: self.budget.tick(location))
-                if self.model.profile == TEXTURE_PROFILE:
+                if self.model.profile in TEXTURE_PROFILES:
                     texture_coordinates(recipe, mesh, charge=lambda n: self.budget.tick(location, amount=n),
                                         check=lambda: self.budget.tick(location))
             except SurfaceError as error:
-                if self.model.profile == TEXTURE_PROFILE and (
+                if self.model.profile in TEXTURE_PROFILES and (
                         error is self.budget.callback_error or
                         error is getattr(getattr(self.budget, "execution_budget", None), "callback_error", None)):
                     raise
@@ -1785,6 +2051,8 @@ class ConstructionCompiler(Validator):
                     "key": generated["key"], "input": self.location(generated["input_node"]),
                     "input_entry": self.location(generated["input_entry_node"]),
                     "unique_declaration_span": False,
+                    **({"input_transforms": generated["input_transforms"]}
+                       if "input_transforms" in generated else {}),
                 },
                 "generated_ancestor": record["generated_ancestor"],
             }
@@ -1857,7 +2125,8 @@ class ConstructionCompiler(Validator):
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "Required capabilities are not supplied by " + self.model.profile + ": " +
                  ", ".join(self.model.requested_capabilities), requires[0], phase="support")
         if self.level == "delivered":
-            target = ("ontokin.glb/0.13" if self.model.profile == TEXTURE_PROFILE else
+            target = ("ontokin.glb/0.14" if self.model.profile == KEYED_TRANSFORM_PROFILE else
+                      "ontokin.glb/0.13" if self.model.profile == TEXTURE_PROFILE else
                       "ontokin.glb/0.12" if self.model.profile == POCKETS_PROFILE else
                       "ontokin.glb/0.11" if self.model.profile == FRAMED_LOFT_PROFILE else
                       "ontokin.glb/0.10" if self.model.profile == RING_LOFT_PROFILE else
@@ -1919,7 +2188,7 @@ def compile_construction(bundle, *, level: str = "represented", budgets: dict | 
              linked.entry.ast, phase="support", details={"budget_reason": "execution_context_required"})
     compiler = ConstructionCompiler(linked, level, budget)
     try:
-        if linked.entry.ast.profile == TEXTURE_PROFILE or isinstance(bundle, TextureBundle):
+        if linked.entry.ast.profile in TEXTURE_PROFILES or isinstance(bundle, TextureBundle):
             validate_texture_closure(compiler)
         compiler.run()
         return compiler

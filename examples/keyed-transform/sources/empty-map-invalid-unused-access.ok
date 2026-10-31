@@ -1,0 +1,20 @@
+ontokin "0.14";
+module Dependencies @ "dependencies";
+profile "keyed-transform-0.1";
+public class Leaf @ "leaf" {
+ public param size @ "size": Length = 0.25[m];
+ geometry = sphere(self.size);
+ physical = no_body();
+}
+public class Family @ "family" {
+ public param sizes @ "sizes": Keyed<Length> = keyed<Length>{"a": 0.25[m], "z": 0.5[m]};
+ 
+ public parts leaves @ "leaves": Leaf for (child_key, child_value) in map_keyed<Length>(keyed<Length>{}, (k, v) -> if true then v else self.leaves["a"].missing) { size = child_value; }
+ geometry = empty();
+ physical = no_body();
+}
+scene Demo @ "demo" {
+ duration = 1[s];
+ gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+ object rig @ "rig": Family {}
+}
