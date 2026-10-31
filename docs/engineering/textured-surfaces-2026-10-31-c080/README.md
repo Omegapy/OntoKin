@@ -62,3 +62,37 @@ No hosted execution was dispatched by these checks. Workflows remain manual-only
 The [archive descriptor](evidence-archive.json) identifies the completed local raw freeze: **5,350 members / 63,927,372 bytes**, with complete readback and unchanged original inputs. The portable handoff retains this archive, all 13 complete source-role indices and actual raw commits, the complete C079 predecessor packet, and separately recorded later integration and delivery outcomes. The original engineering draft and every failed or interrupted attempt remain in the frozen evidence.
 
 After actual resulting-main verification, exact-final checks, complete portable delivery and explicit C080 scope closure, the [next bounded proposal](NEXT-TASK.md) is pure key-preserving construction transformations. It requires a new decision and independent freeze before implementation.
+
+## Actual resulting-main verification and final publication
+
+[PR #78](https://github.com/Omegapy/OntoKin/pull/78) actually merged at `2026-10-31T07:18:59Z`. The [integration record](integration.json) binds the separately observed roles:
+
+| Role | Actual commit | Tree |
+| --- | --- | --- |
+| Tested candidate C | `9ee7f115a0bc0a56e61ac726b6f20753ca46b0bb` | `01be77b0a7f8b0179e5b16f3172bdaedb81e5f9a` |
+| Evidence publication E | `3c5e4e0960125c353dce8e564e4f00d437040d7a` | `43734b55f456685fe38593990e117b816dca5854` |
+| Main lease L | `8005a6d69d8cb566bcf4ef1443dde8a5ba896036` | `af96bb12d1f1a0a5b029958866ad8492190155b9` |
+| Resulting main M | `3ed3aab39e80a2d43296bbdceca6db9fe5861142` | `0d6be52a912badc03e1398de906137f5dbf6838d` |
+
+M has the exact ordered parents **L, then E**. Its tree equals the independently composed E tree with the exact lease STATUS substituted. E has C as its sole parent. Published E passed its own documentation and complete source-preservation checks before lease acquisition. The remote work branch was observed absent after merge; its exact reviewed E head remains M’s second parent.
+
+Actual clean M completed its resulting-main sequence at **2026-10-31T07:20:05.779660+00:00**: **all eight steps passed**, with no failed step. The six product/document commands each retain their complete before/after input inventories, command, stdout, stderr and terminal receipt. Both inventories match M exactly and record no source change.
+
+| Fresh M scope | Actual result |
+| --- | --- |
+| Focused texture suite | **62 methods**, zero failures, errors, skips or expected failures. |
+| Original source conformance | **43 cases / 694 assertions**, all passed. |
+| Corrected texture producer | **102 expected case outcomes**, 45 source artifacts, 9 Agent artifacts, 18 workflows, 16 slice probes, 2 envelope boundaries and 19 hostile GLBs. |
+| Independent texture reader | All 102 source outcomes, 45 source artifacts, 9 Agent artifacts and 19 hostile controls passed. |
+| Independent raw Agent audit | **119 exchanges / 116 durable request identities**, 46 snapshots, 9 artifacts and 11 runs; all twelve operations covered. |
+| Documentation | Passed on actual M with unchanged source. |
+| Complete source preservation | All **4,460** predecessor paths remain; all **4,826** eligible candidate paths match by exact set, bytes and modes. |
+| Candidate-to-M artifact comparison | All **54 delivered GLBs** are byte-identical; no JSON exception or numerical tolerance was needed. |
+
+The strict comparison includes all 102 source-case rows, all nine Agent artifact rows and all sixteen legacy-control rows. It also preserves and compares the one interrupted prepared-only GLB as a separate negative-publication observation. That file is not counted as delivered or native-validated. The only input-equality exclusions are `STATUS.md` and this current C080 engineering directory; old engineering evidence, GOAL, tests, tools, adopted contracts and both immutable input corpora remain in the compared scope.
+
+The full 3,759-test / 34-role run, candidate browser observations and both direct image reviews remain attributed to **C**. M’s fresh checks and exact input/artifact equality establish the stated reuse. They do not claim another complete full-suite or browser invocation.
+
+This record is prepared for final publication **F** after the actual M checks. The intended effect of the final STATUS publication is release of `interactive-textures-20261031-c080-146e`’s bounded main integration lease; the successful expected-head update and remote readback establish that effect. F’s own commit, tree, parent, readback, documentation check and complete C→F / M→F source equality are recorded afterward in external receipts, avoiding a self-referential commit claim.
+
+Complete portable construction, extraction/native restoration, durable save and explicit finite C080 scope closure still require their separate later receipts. Preparing these documents does not claim that delivery succeeded. The original frozen candidate evidence and failed attempts remain unchanged; later E/L/M/F observations are retained separately. The broader Issue #26, retained gates, experimental status and full GOAL remain open.
