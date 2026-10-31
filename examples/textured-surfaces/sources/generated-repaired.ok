@@ -1,0 +1,31 @@
+ontokin "0.13";
+module Assembly @ "assembly";
+profile "textured-surfaces-0.1";
+import lib @ "label-library" from "fixture.label-parts" version "1.0.0" digest "sha256:427282b1d468e0a45414ae6524aaecab6b6f7e711354c7d75e659503347bd24d";
+
+public class Mounted @ "mounted" extends lib.Shape {
+    public param parent_frame @ "parent-frame": FrameRef = world;
+    public param mount_x @ "mount-x": Length = 0[m];
+    public follow mounting @ "mounting" {
+        parent = self.parent_frame;
+        child = self;
+        offset = pose(self.parent_frame, vec3(self.mount_x, 0[m], 0[m]), quat(1, 0, 0, 0));
+    }
+}
+public class Array @ "array-type" {
+    public param offsets @ "offsets": Keyed<Real> = keyed<Real> { "left": 0.0, "middle": 0.375, "right": 0.5 };
+    geometry = empty();
+    physical = no_body();
+    public parts panels @ "panels": Mounted for (key, value) in self.offsets {
+        parent_frame = self.frame;
+        mount_x = value * 20[m];
+        offset_u = value;
+    }
+}
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object array @ "array": Array { placement = pose(world, vec3(-5[m], 0[m], 0[m]), quat(1, 0, 0, 0)); }
+    action travel @ "travel" = move(array, vector(world, 0[m/s], 0.5[m/s], 0[m/s]), 1[s]);
+    at 0[s] sequence { start travel; }
+}
