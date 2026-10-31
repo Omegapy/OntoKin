@@ -1,13 +1,169 @@
 {
-  "boundary": "This evidence publication precedes the actual main lease, merge, resulting-main checks and final publication. Those events are not asserted here.",
   "candidate": {
     "commit": "853b369a6de2a123d5ef679b99c69f1f0c6aea23",
     "tree": "beb291f518fc575a965d84f3ae304b7a89ba1656"
   },
-  "main_lease": null,
-  "observed_baseline": "cac8b9f81a39ff8a9343caf6e8881bdc67e3ea93",
+  "evidence": {
+    "commit": "c5d60d1d6cd27b94cd833feed6db2932ea3308b4",
+    "tree": "4bd1c9b3aebbb96463abd6c3493ba38c7616f722"
+  },
+  "final_verification_boundary": "Exact-final documentation/input checks and complete portable-packet extraction/restoration/delivery follow this publication and are not asserted here.",
+  "lease_release": {
+    "method": "Conditional nonforce update from the verified merge; actual final commit/readback is a later external receipt",
+    "owner": "interactive-c078-recovery-20261030-c77776cf08e8",
+    "state": "released_by_this_final_publication"
+  },
+  "merge": {
+    "actual_main": "1a2ea0203d0fa6c1996719bf02e41b2c42a51c71",
+    "commit": "1a2ea0203d0fa6c1996719bf02e41b2c42a51c71",
+    "lease": {
+      "commit": "8dd9249ebff6ac34a567d17798002b310b485ca1",
+      "conditional_update": {
+        "success": true
+      },
+      "evidence_head": "c5d60d1d6cd27b94cd833feed6db2932ea3308b4",
+      "expected_main": "cac8b9f81a39ff8a9343caf6e8881bdc67e3ea93",
+      "expires_utc": "2026-10-31T01:12:56.880Z",
+      "issued_utc": "2026-10-31T00:42:56.880Z",
+      "main_ref": {
+        "node_id": "REF_kwDOVMxbbq9yZWZzL2hlYWRzL21haW4",
+        "object": {
+          "sha": "8dd9249ebff6ac34a567d17798002b310b485ca1",
+          "type": "commit",
+          "url": "https://api.github.com/repos/Omegapy/OntoKin/git/commits/8dd9249ebff6ac34a567d17798002b310b485ca1"
+        },
+        "ref": "refs/heads/main",
+        "url": "https://api.github.com/repos/Omegapy/OntoKin/git/refs/heads/main"
+      },
+      "owner": "interactive-c078-recovery-20261030-c77776cf08e8",
+      "readback_utc": "2026-10-31T00:43:16.417Z",
+      "state": "acquired_verified",
+      "status_before_blob": "2c6da78905008c21077d7a815518376be6c6996f",
+      "status_blob": "35ee3112390e75344e0b2c8813d7ce2d8011723e",
+      "task": "C078 reviewed development integration",
+      "tree": "4bdff79428c9f9b39feee61f3e3139de2996ef06"
+    },
+    "observed_utc": "2026-10-31T00:44:17.398Z",
+    "ordered_parents": [
+      "8dd9249ebff6ac34a567d17798002b310b485ca1",
+      "c5d60d1d6cd27b94cd833feed6db2932ea3308b4"
+    ],
+    "pr": 76,
+    "pr_merged": true,
+    "pr_state": "closed",
+    "release_acceptance": false,
+    "status": "passed",
+    "tree": "174b53ff7e8458289a1b27375af654b2a83ea28e",
+    "tree_independently_reproduced": true
+  },
+  "merge_readback": {
+    "bytes": 1657,
+    "path": "merge-verification.json",
+    "sha256": "a3401784dd7690869c44c5c14e7f07b272534d02bbc552de19f4b5a8843ac86c"
+  },
+  "merge_response": {
+    "bytes": 266,
+    "path": "merge-response.json",
+    "sha256": "f8e284c095c0164c20e15e636c9288c5c55fe2d22a680e5e08a85bc069a7e000"
+  },
   "pr": 76,
+  "pr_merged": true,
+  "pr_state": "closed",
+  "premerge_reconciliation": {
+    "bytes": 989,
+    "path": "premerge-verification.json",
+    "sha256": "885aadcdc7bb05477a58254314d52f06d9f8212ba55ce409659b9a4606c428b5"
+  },
   "release_acceptance": false,
+  "resulting_main": {
+    "candidate_input_equality": {
+      "differences": [],
+      "eligible_path_count": 4315,
+      "exact_path_exclusions": [
+        "STATUS.md"
+      ],
+      "prefix_exclusions": [
+        "docs/engineering/framed-polygon-lofts-2026-10-30-c078/"
+      ],
+      "source": {
+        "bytes": 629338896,
+        "commit": "853b369a6de2a123d5ef679b99c69f1f0c6aea23",
+        "commit_sha256": "7980f7587c61087d29091c7a95249a876a5d4ea116423e3dbf6e97f207316503",
+        "inventory_sha256": "602a745cf3d330adcba9088f0dcee57973891dc999d5cbbbd86d7d9ae883d98d",
+        "parents": [
+          "b33775bee88819aed02157a5edf4c15f59eb71cb"
+        ],
+        "path_count": 4316,
+        "root_tree_sha256": "d32d189073a645e53dbdd172e1a1f9cdaa53a42b332164fd0a48cf0447fe63f0",
+        "tree": "beb291f518fc575a965d84f3ae304b7a89ba1656"
+      }
+    },
+    "documentation": {
+      "bytes": 1966,
+      "path": "post-candidate/merge/documents/summary.json",
+      "sha256": "b7a60e48ee49ed784c9313e74508ebf263b30543fa6e03f160712766de060a47"
+    },
+    "environment": "CPython 3.12.14; actual command/interpreter/platform receipts retained",
+    "focused_tests": {
+      "errors": 0,
+      "failures": 0,
+      "log": {
+        "bytes": 23409,
+        "path": "post-candidate/merge/focused/stderr.log",
+        "sha256": "268e05ecb0e0a271d96e32a4cd8be0b959b9ecd44c3788ae3314a643430fb36d"
+      },
+      "passed": 137,
+      "seconds": 25.212,
+      "skips": 0
+    },
+    "framed_acceptance": {
+      "assertions": 1036,
+      "durable_request_identities": 123,
+      "operations": 46027,
+      "passed_cases": 69,
+      "receipt": {
+        "bytes": 235239,
+        "path": "post-candidate/merge/acceptance-results/summary.json",
+        "sha256": "7e6f0618be9e7518389d1864732ee591c396ae8414e3372eccb11de04efd0dbc"
+      },
+      "schema_validated_exchanges": 127
+    },
+    "original_source": {
+      "assertions": 694,
+      "failed": 0,
+      "passed_cases": 43,
+      "receipt": {
+        "bytes": 230305,
+        "path": "post-candidate/merge/source-conformance.json",
+        "sha256": "168d92caa5ba6cc4d4a4026242747a21503ae5cba4c580769b21f32fdf075ab6"
+      }
+    },
+    "preservation": {
+      "bytes": 3096584,
+      "path": "post-candidate/merge/source-preservation.json",
+      "sha256": "28db73ea348f6c2c4e29b38eff424f6eb5a928141f91cd066c8307a74c784a61"
+    },
+    "receipt": {
+      "bytes": 1827,
+      "path": "post-candidate/merge/summary.json",
+      "sha256": "ad08c31a2891300d3a2e72cba9974f9791c395743108e53d8ac316c9426939a5"
+    },
+    "release_acceptance": false,
+    "schema_version": "ontokin.c078-resulting-main-checks/0.1",
+    "scope": "Fresh focused tests, original source, complete C078 source/Agent acceptance, documentation and input equality on the actual merge. No repeated full regression or browser execution.",
+    "source": {
+      "commit": "1a2ea0203d0fa6c1996719bf02e41b2c42a51c71",
+      "tree": "174b53ff7e8458289a1b27375af654b2a83ea28e"
+    },
+    "status": "passed"
+  },
   "schema_version": "ontokin.c078-integration/0.1",
-  "status": "pending_verified_main_integration"
+  "status": "merged_resulting_main_verified",
+  "work_branch": {
+    "name": "work/framed-polygon-lofts-20261030-c078-e0d73b0b",
+    "observation": "Current branch listing contains only main and the unchanged history-only archive branch",
+    "retained_head": "c5d60d1d6cd27b94cd833feed6db2932ea3308b4",
+    "retention": "Exact second parent of actual verified merge",
+    "state": "observed_absent_after_merge"
+  }
 }
