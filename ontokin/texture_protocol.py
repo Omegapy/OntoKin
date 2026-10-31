@@ -81,7 +81,7 @@ class TextureProtocol(BudgetProtocol):
         op = request.get("operation")
         if (request.get("schema_version") != cls.SCHEMA_VERSION
                 or not isinstance(op, str) or op not in cls.OPERATIONS):
-            _bad("Unknown Agent/0.13 schema or operation.", operations=sorted(cls.OPERATIONS))
+            _bad(f"Unknown Agent/{cls.definition.language_version} schema or operation.", operations=sorted(cls.OPERATIONS))
         required, optional = cls.OPERATIONS[op]
         _object(request, "request", legacy.COMMON | required | optional, legacy.COMMON | required)
         for name in ("project_id", "request_id", "target_request_id", "artifact_id"):
@@ -170,7 +170,7 @@ class TextureProtocol(BudgetProtocol):
                 _text(patch["source_id"], "patch.source_id", limit=200)
                 legacy._revision(patch["source_revision"], "patch.source_revision")
                 if patch["element_id"] != ["sources", patch["source_id"]]:
-                    _bad("Agent/0.13 patches require the exact source-file scope.")
+                    _bad(f"Agent/{cls.definition.language_version} patches require the exact source-file scope.")
                 for key in ("start_byte", "end_byte"):
                     _integer(patch[key], "patch." + key, 0, 2000000)
                 for key in ("expected_text", "replacement"):
@@ -217,11 +217,11 @@ class TextureProtocol(BudgetProtocol):
                 for key, value in request["filter"].items():
                     _text(value, "filter." + key, limit=1024)
         if "destination" in request and request["destination"] != cls.destination:
-            _bad("Agent/0.13 requires the explicit " + cls.destination + " destination.")
+            _bad(f"Agent/{cls.definition.language_version} requires the explicit " + cls.destination + " destination.")
         if "options" in request:
             _options(request["options"])
             if request["options"].get("time_tolerance_s", 1e-6) > 1e-6:
-                _bad("Agent/0.13 time_tolerance_s must be at most 1e-6.")
+                _bad(f"Agent/{cls.definition.language_version} time_tolerance_s must be at most 1e-6.")
             if "destination" not in request:
                 _bad("Export options require an explicit destination contract.")
         if (op in {"create", "edit", "validate"} and ("destination" in request or "options" in request)

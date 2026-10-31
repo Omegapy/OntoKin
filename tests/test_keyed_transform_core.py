@@ -9,6 +9,9 @@ from ontokin.construction import ConstructionCompiler, compile_construction
 from ontokin.diagnostics import OntoKinError
 from ontokin.execution_budget import HostPolicy, SharedExecutionBudget, admit_entry_budget
 from ontokin.profile_capabilities import KEYED_TRANSFORM_PROFILE, TEXTURE_PROFILE
+from ontokin.syntax import Node, Token
+from ontokin.syntax02 import parse_source_unit
+from ontokin.syntax14 import Parser14
 from ontokin.texture_bundle import TextureBundle, load_texture_file_manifest
 from ontokin.validator import Context
 
@@ -64,6 +67,69 @@ def context(compiler):
 
 
 class KeyedTransformCoreTests(unittest.TestCase):
+    def test_new_parser_preserves_inherited_operator_trees_and_exact_spans(self):
+        def shape(value, origin):
+            if isinstance(value, Node):
+                return (value.kind, value.start - origin, value.end - origin, shape(value.data, origin))
+            if isinstance(value, Token):
+                return (value.kind, value.value, value.start - origin, value.end - origin)
+            if isinstance(value, dict):
+                return {key: shape(item, origin) for key, item in value.items()}
+            if isinstance(value, (tuple, list)):
+                return [shape(item, origin) for item in value]
+            return value
+        expressions = ("1 + 2 * 3 - 4 / 2", "1 < 2 == true", "1 == 2 < 3",
+                       "not false or true and true", "---1", "(1 + 2) * (3 - 4)",
+                       "real(1 + 2) * 3", 'keyed<Int>{"inner": 1}["inner"] + 2',
+                       "if true then 1 else if false then 2 else 3", "1 <= 2 and 3 >= 2")
+        for expression in expressions:
+            with self.subTest(expression=expression):
+                current = program('keyed<Int>{"entry": ' + expression + '}')
+                older = current.replace('"0.14"', '"0.13"').replace(KEYED_TRANSFORM_PROFILE, TEXTURE_PROFILE)
+                trees = []
+                for text in (older, current):
+                    ast = parse_source_unit(SourceUnit("entry", "main.ok", text.encode()))
+                    node = ast.definitions[0].members[0].value.entries[0].value
+                    trees.append(shape(node, node.start))
+                self.assertEqual(trees[0], trees[1])
+        for expression in ("1 < 2 < 3", "1 == 2 != 3"):
+            for version, profile in (("0.13", TEXTURE_PROFILE), ("0.14", KEYED_TRANSFORM_PROFILE)):
+                with self.subTest(expression=expression, version=version):
+                    text = program('keyed<Int>{"entry": ' + expression + '}')
+                    text = text.replace('"0.14"', '"' + version + '"').replace(KEYED_TRANSFORM_PROFILE, profile)
+                    with self.assertRaises(OntoKinError) as caught:
+                        parse_source_unit(SourceUnit("entry", "main.ok", text.encode()))
+                    self.assertEqual(caught.exception.code, "OKL-E-SYNTAX")
+
+    def test_parser_refuses_depth_before_starving_wrapper_callbacks(self):
+        def wrapper(depth):
+            return wrapper(depth - 1) if depth else compile_case("excessive-expression-depth")
+        with self.assertRaises(OntoKinError) as caught:
+            wrapper(100)
+        self.assertEqual(caught.exception.code, "OKL-E-RESOURCE")
+        self.assertEqual(caught.exception.diagnostic.details["budget"], "parser_expression_depth")
+        self.assertEqual(caught.exception.diagnostic.details["limit"], 128)
+
+    def test_genuine_parser_node_callback_exceptions_keep_identity(self):
+        text = program('map_keyed<Int>(keyed<Int>{"a": 1}, (k, v) -> v)')
+        unit = SourceUnit("entry", "main.ok", text.encode())
+        original = Parser14.node
+        for marker in (RecursionError("host callback"), OntoKinError("OKL-E-UNIT", "host callback")):
+            entered = []
+            def callback():
+                if entered:
+                    raise marker
+            def node(parser, *args, **kwargs):
+                entered.append(True)
+                try:
+                    return original(parser, *args, **kwargs)
+                finally:
+                    entered.pop()
+            with self.subTest(exception=type(marker).__name__), patch.object(Parser14, "node", node):
+                with self.assertRaises(type(marker)) as caught:
+                    parse_source_unit(unit, check=callback)
+                self.assertIs(caught.exception, marker)
+
     def test_all_97_predetermined_represented_outcomes_and_values(self):
         self.assertEqual(len(CASES), 97)
         for case in CASES:

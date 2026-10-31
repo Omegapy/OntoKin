@@ -251,7 +251,7 @@ def prepare_surface_page(program, element_id, *, region=None, count=256, budgets
         except SurfaceError as exc:
             error(exc.code, str(exc), **exc.details)
         texture_uvs = texture_bindings = None
-        if profile == "textured-surfaces-0.1":
+        if profile in {"textured-surfaces-0.1", "keyed-transform-0.1"}:
             from .texture_runtime import texture_coordinates, texture_metadata
             texture_bindings = texture_metadata(obj.geometry, check=budget.tick)
             raw_mesh = compiler.surface_meshes[obj.path]["mesh"]

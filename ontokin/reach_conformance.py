@@ -962,7 +962,7 @@ _NUMERIC_CERTIFICATE_KEYS = tuple(sorted(_CERTIFICATE_KEYS - {"left_key_index", 
 
 def _verify_metadata(decoded, model, options, program, boundary_records, *, work, target_contract=TARGET):
     from .scene import force_profile_metadata, relationship_metadata, checked_contract, extrusion_profile_metadata, holes_profile_metadata, ring_loft_profile_metadata, framed_loft_profile_metadata, pockets_profile_metadata
-    from .profile_capabilities import EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, POCKETS_PROFILES
+    from .profile_capabilities import EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, TEXTURE_PROFILES, POCKETS_PROFILES
     from .values import bounded_data
     metadata = decoded.document["extras"]["ontokin"]
     expected = {"target_contract": target_contract, "schema_version": checked_contract(model, target_contract), "module": model.module_name,
@@ -982,7 +982,7 @@ def _verify_metadata(decoded, model, options, program, boundary_records, *, work
             "motion_model": "two_prescribed_planar_hinges", "rotation_interpolation": "shortest_arc_slerp",
             "goal_residual_max_m": 1e-9, "bound_chain_tuple_max": 32,
             "named_reach_action_max": 128, "live_solver_embedded": False}}
-    if model.profile == TEXTURE_PROFILE:
+    if model.profile in TEXTURE_PROFILES:
         from .texture_gltf import profile_metadata
         expected["texture_profile"] = profile_metadata()
     if model.profile == EXTRUSION_PROFILE:
