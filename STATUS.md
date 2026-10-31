@@ -1,5 +1,11 @@
 # OntoKin status
 
+## Active main integration lease
+
+Owner: `interactive-pockets-20261030-c079-f970`. Task: C079 reviewed blind polygon pocket development integration. Issued: **2026-10-31T05:08:49.179Z**. Expires: **2026-10-31T05:38:49.179Z**. This bounded lease reserves writes to main, `STATUS.md`, and the current C079 engineering directory. Expected starting main is `50998106fe468e6630f17c79d88f7810da81bc32`; reviewed evidence head is `a72158f5972a489dd3a21714f6be29859450bdd5` (PR #77). Independent nonoverlapping branch work remains allowed.
+
+The actual candidate passed the required Python cohort and all 34 selected local roles across the original 27 passing roles and separate seven-role browser recovery. Original failed/interrupted records remain intact. This integration is experimental development. The evidence archive is locally frozen and fully read back; automatic approval review blocked its durable save pending explicit user authorization. Complete local handoff preparation and eventual durable delivery/scope closure have separate receipts. No hosted paid execution is authorized.
+
 Checkpoint: October 30, 2026, **C078 explicitly framed polygon lofts are implemented, independently checked and integrated through [PR #76](https://github.com/Omegapy/OntoKin/pull/76)**. The [engineering record](docs/engineering/framed-polygon-lofts-2026-10-30-c078/README.md) preserves exact source roles, actual checks, failures, recovery and integration. The next bounded task is [C079 source-authored blind polygon pockets](docs/engineering/framed-polygon-lofts-2026-10-30-c078/NEXT-TASK.md), after final handoff delivery and explicit C078 scope closure. The full [GOAL](GOAL.md) remains an AI-agent language for editable meaningful 3D objects, animation and simulation, with validated engine delivery including Unreal Engine.
 
 ## Current capability and evidence
@@ -39,3 +45,4 @@ C068 remains unadopted, C069 rejected, C070 unselected and C071 rejected. C059's
 Historical Git LFS migration remains unfinished. [PR #57](https://github.com/Omegapy/OntoKin/pull/57) configured future tracking/archive inclusion; it did not migrate old payloads. Follow [OK-ENG-010](docs/engineering/OK-ENG-010-git-lfs-archive-storage.md) from a fresh clean inventory. No unuploaded pointer substitution or history rewrite occurred. Portable source preservation uses actual selected Git identities and an explicit shallow-history boundary; worker/author identities remain distinct from published identities.
 
 Retain the full GOAL: richer typed algorithms/libraries and replacement; textures/mapping/skin deformation; continuous torques, contacts/collisions and general rigid dynamics; mechanisms/vehicles; articulated creatures and purposeful movement; flight/swimming and medium forces; vegetation/flexibility/wind; terrain/buildings; liquids/deformable solids; animation transitions/live engines; measured scale/performance; and a direct-tool authoring comparison. Budgets, geometry increments and reach do not complete these domains.
+
