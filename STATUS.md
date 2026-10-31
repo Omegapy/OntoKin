@@ -1,20 +1,10 @@
 # OntoKin status
 
-## Active main integration lease
-
-**Owner:** `interactive-c082-keyed-reduction-20261031-7d4a`  
-**Task:** Integrate C082 PR81, verify resulting main and release ownership.  
-**Acquired UTC:** `2026-10-31T20:51:39.415974+00:00`  
-**Expires UTC:** `2026-10-31T21:21:39.415974+00:00`  
-**Expected prior main:** `838581854b9a7f6a3260cedff6fd00914be544b8`
-
-Only this verified holder writes main or shared integration state while the lease is live. Nonoverlapping scoped branches may continue independently.
-
 ## Current development baseline
 
 OntoKin's [GOAL](GOAL.md) is an AI-agent language for editable meaningful 3D objects, animation and simulation through authoritative `.ok` source. Finite increments do not complete that mission.
 
-**C082 pure keyed reduction is the reviewed experimental increment in [PR #81](https://github.com/Omegapy/OntoKin/pull/81).** The explicit bindings are source `0.15` / `keyed-reduction-0.1`, Agent/0.15 and recorded GLB/0.15; immutable bundle/files remain `0.2`. Complete feature release and full-product acceptance remain false. See the [adoption and frozen language inputs](docs/language-design/keyed-reduction-v0.1/README.md), [.15 Agent guide](docs/language-design/agent-v0.15/README.md), [engineering record](docs/engineering/keyed-reduction-2026-10-31-c082/README.md), [validation summary](docs/engineering/keyed-reduction-2026-10-31-c082/VALIDATION-SUMMARY.json) and [integration record](docs/engineering/keyed-reduction-2026-10-31-c082/integration.json).
+**C082 pure keyed reduction is integrated experimental development through [PR #81](https://github.com/Omegapy/OntoKin/pull/81).** The explicit bindings are source `0.15` / `keyed-reduction-0.1`, Agent/0.15 and recorded GLB/0.15; immutable bundle/files remain `0.2`. Complete feature release and full-product acceptance remain false. See the [adoption and frozen language inputs](docs/language-design/keyed-reduction-v0.1/README.md), [.15 Agent guide](docs/language-design/agent-v0.15/README.md), [engineering record](docs/engineering/keyed-reduction-2026-10-31-c082/README.md), [validation summary](docs/engineering/keyed-reduction-2026-10-31-c082/VALIDATION-SUMMARY.json) and [integration record](docs/engineering/keyed-reduction-2026-10-31-c082/integration.json).
 
 `reduce_keyed<Acc>(input, seed, (acc, key, value) -> body)` computes one typed pure aggregate. Input admission precedes seed evaluation; both run once. It processes canonical ASCII keys as a sequential left fold over at most 256 entries, using the 24 adopted immutable leaf families. Empty input receives static body checking and returns a detached seed. Every actual selection, fresh binding/copy, selected body and materialization is charged. Intermediate failures, current host authority, cancellation and actual dependency/provenance/taint retention remain explicit. Detached `derived_reductions` and generated `input_reductions` preserve source repair authority without inventing writable identities. The operation creates no mass, body, connection, event or motion authority. Older declaring units and default entry points retain their meanings.
 
@@ -32,7 +22,9 @@ Fresh .14 predecessor evidence passed **97 source outcomes**, **50 explicit cont
 
 ## Integration, ownership and delivery
 
-The actual full-validation publication is `5c534363a27d123673e9cc6a4e237fe86a64875c`, tree `ff17be49cc3cae9ac44fee0e747f7604276f2741`. Runtime, verifiers, schemas, tests, fixtures and frozen inputs remain unchanged as integration documentation is prepared. The verified holder will merge the exact reviewed head, verify real parents/tree and run fresh relevant resulting-main checks before releasing the bounded lease. No merge or delivery is claimed by this candidate status.
+Reviewed candidate `4d56e1364d2ebf96324292c9843fa945adfbabf1`, tree `e397eafa3ce8ff5c36b60ca4c6ba6c1b4f22ae37`, merged as actual main `46b3c3c1941d9ba76bec33f196d6b5c793cd371b`, tree `e397eafa3ce8ff5c36b60ca4c6ba6c1b4f22ae37`. Both actual parents and the expected merge tree were verified. All runtime, verifier, schema, test, fixture and frozen inputs match the fully validated cut. Fresh resulting-main checks passed 35 focused tests, 43 source cases / 694 assertions and documentation preservation/navigation, with source/Git unchanged throughout.
+
+This expected-head publication releases **interactive-c082-keyed-reduction-20261031-7d4a**'s bounded main integration lease. **No main integration lease remains active** after successful publication and actual readback. The merged remote work branch is observed absent, its exact head is retained in main's merge parents, and the historical archive branch remains unchanged. No hosted execution was dispatched; the observed run inventory remains 198, with the last run from October 19. Final publication identity, exact offline restoration, final ZIP save/readback and finite delivery completion are separately recorded through the [C082 scope entry](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6548550187). This source status alone does not establish post-package delivery outcomes. Broader Issue #26 stays open.
 
 The handoff preserves independent authoring preflights, original source-harness and provenance failures, review-discovered CLI host-policy forwarding, narrow reader/schema/alias/span corrections, actual native images and performed independent reviews. Frozen inputs, expected outcomes and product budgets were not changed. Initial unexpected C081 extraction bytes retain exact prefix-reconstruction evidence; their creation cause remains unestablished. Fresh C081 extraction and exact native Git restoration passed.
 
