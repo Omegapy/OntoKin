@@ -1,0 +1,2766 @@
+{
+  "schema_version": "ontokin.c083-independent-input-freeze/0.1",
+  "checkpoint": "C083",
+  "status": "frozen_before_runtime_implementation",
+  "source_baseline_commit": "753bed5ff53c5a11bffe1913b9ceddb9b9624011",
+  "source_baseline_tree": "4577451cde3552da35d163d9278cbce9eba12339",
+  "decision_id": "OK-DEC-KEYED-FILTER/0.1.0",
+  "adoption_sha256": "b8addbbacebe6966ec309ddde275ebaf96639d8365c27815fda844f81fd9b925",
+  "grammar_sha256": "f583533989cceb1c047d77d5172360abfd5fe43114ff4faa07033dc3a0e1e2c4",
+  "independent_review_sha256": "0bfae00101ed34bcc2e25fb7953f3394a751dbca1ddf9b54f2b3d8fa20b79534",
+  "source_cases": 141,
+  "intended_valid": 75,
+  "intended_invalid": 66,
+  "leaf_families": 24,
+  "agent_workflows": 10,
+  "file_count": 453,
+  "total_bytes": 964013,
+  "files": [
+    {
+      "path": "docs/language-design/agent-v0.16/README.md",
+      "mode": "100644",
+      "size": 2246,
+      "sha256": "9a463a5b7148b36e53af464fc34170712ffce1e12e3472dab0f7cfa639992b8c"
+    },
+    {
+      "path": "docs/language-design/agent-v0.16/diagnostic.schema.json",
+      "mode": "100644",
+      "size": 405,
+      "sha256": "f03ca251bd71ad09a113695f34121d92a225332671bdf661a72358abde696838"
+    },
+    {
+      "path": "docs/language-design/agent-v0.16/request.schema.json",
+      "mode": "100644",
+      "size": 45310,
+      "sha256": "a8698d63693d369ae59bc13c7c9451ba4943a3ae876e1669a1e7e8e9d7cc1339"
+    },
+    {
+      "path": "docs/language-design/agent-v0.16/response.schema.json",
+      "mode": "100644",
+      "size": 80082,
+      "sha256": "2348857bd64db17ac263db12bf01a66e9ba85d9bc707ef2bfa49b2b14884e213"
+    },
+    {
+      "path": "docs/language-design/keyed-filter-v0.1/ADOPTION.md",
+      "mode": "100644",
+      "size": 17130,
+      "sha256": "b8addbbacebe6966ec309ddde275ebaf96639d8365c27815fda844f81fd9b925"
+    },
+    {
+      "path": "docs/language-design/keyed-filter-v0.1/INDEPENDENT-REVIEW.md",
+      "mode": "100644",
+      "size": 10329,
+      "sha256": "0bfae00101ed34bcc2e25fb7953f3394a751dbca1ddf9b54f2b3d8fa20b79534"
+    },
+    {
+      "path": "docs/language-design/keyed-filter-v0.1/README.md",
+      "mode": "100644",
+      "size": 1007,
+      "sha256": "243a71d11644905fe99100f46378aab8d615d98ce65ff43589b68319aa804a9e"
+    },
+    {
+      "path": "docs/language-design/keyed-filter-v0.1/acceptance.json",
+      "mode": "100644",
+      "size": 27015,
+      "sha256": "ca7c2ad05abdf6287af2c6d8d3769d78a8bbc1eca435bda803b9ace16eedd546"
+    },
+    {
+      "path": "docs/language-design/keyed-filter-v0.1/ontokin-keyed-filter.ebnf",
+      "mode": "100644",
+      "size": 539,
+      "sha256": "f583533989cceb1c047d77d5172360abfd5fe43114ff4faa07033dc3a0e1e2c4"
+    },
+    {
+      "path": "examples/keyed-filter/DERIVATION.json",
+      "mode": "100644",
+      "size": 9260,
+      "sha256": "24169ba4c81e868432c779d29438e002649c6db7adeb840f68cde28b0ab826e4"
+    },
+    {
+      "path": "examples/keyed-filter/README.md",
+      "mode": "100644",
+      "size": 2944,
+      "sha256": "0c156a61071281532343b58d62dd405cc96d8d0fa6428164e6148eeed8731668"
+    },
+    {
+      "path": "examples/keyed-filter/absent-key-override.files.json",
+      "mode": "100644",
+      "size": 167,
+      "sha256": "e1a136a531db9b0923f2496bf40ef3e6cd2ab687cf787d9b11b51800eb48bce1"
+    },
+    {
+      "path": "examples/keyed-filter/absent-key-reference.files.json",
+      "mode": "100644",
+      "size": 168,
+      "sha256": "c5400dd542becda0465b1dd1d783b437ba4420382698827dbc90e70de283b0f8"
+    },
+    {
+      "path": "examples/keyed-filter/action-input.files.json",
+      "mode": "100644",
+      "size": 160,
+      "sha256": "84d4bd91f2bf5df8140c35e1cd22a1b195fe9b9cba6c41d468780b44a31870a9"
+    },
+    {
+      "path": "examples/keyed-filter/admission-before-predicate-domain.files.json",
+      "mode": "100644",
+      "size": 181,
+      "sha256": "bf0119d9066d6359349353c3ab4efc9bbc161545660d0a665306792415aed62c"
+    },
+    {
+      "path": "examples/keyed-filter/ascii-and-punctuation-keys.files.json",
+      "mode": "100644",
+      "size": 174,
+      "sha256": "73bd03d1c2dffff902bdc6ad3533579084d3c60ffa8c1a9d08d17f63460e4ff4"
+    },
+    {
+      "path": "examples/keyed-filter/assets/label.png",
+      "mode": "100644",
+      "size": 89,
+      "sha256": "5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+    },
+    {
+      "path": "examples/keyed-filter/binder-escapes-predicate.files.json",
+      "mode": "100644",
+      "size": 172,
+      "sha256": "2d3e65020fd7270758c7acc6b9f3ec610577b13583f59171e0073c970b5a9acf"
+    },
+    {
+      "path": "examples/keyed-filter/body-model-input.files.json",
+      "mode": "100644",
+      "size": 164,
+      "sha256": "e60a2d3ee863fe1bc7ff80b289a95ee6be9bdccd5cb9219a50f4d9c11fb16184"
+    },
+    {
+      "path": "examples/keyed-filter/cached-generated-input-dropped.files.json",
+      "mode": "100644",
+      "size": 178,
+      "sha256": "60f6d9cfa65170c0f91037abc01ac5b7e3ac8162fae9b9b969f09479f9519b7e"
+    },
+    {
+      "path": "examples/keyed-filter/class-binder.files.json",
+      "mode": "100644",
+      "size": 160,
+      "sha256": "6404e6ccb2d32dda5bbc325db6a4613a98e60156f57abd4d681777d78e4e4e71"
+    },
+    {
+      "path": "examples/keyed-filter/condition-retains-filter.files.json",
+      "mode": "100644",
+      "size": 172,
+      "sha256": "acfb9d588abcd0abf0631782e36377b5ffb26c4f1f3057c863a889068955d72e"
+    },
+    {
+      "path": "examples/keyed-filter/control-ascii-and-punctuation-keys.files.json",
+      "mode": "100644",
+      "size": 175,
+      "sha256": "38685297886c3552338f0ba46433539a432d62afeb91ad5350ebb957dbf8acb5"
+    },
+    {
+      "path": "examples/keyed-filter/control-condition-retains-filter.files.json",
+      "mode": "100644",
+      "size": 173,
+      "sha256": "be23229dd332a5fc113a94c80cee439b60373bb03329379f0f46be8fd6561594"
+    },
+    {
+      "path": "examples/keyed-filter/control-drop-all-retains-image-declaration.files.json",
+      "mode": "100644",
+      "size": 382,
+      "sha256": "a56cc2882f977d4ef0b7586710509840a6703d531855dfe3bb06cc9aff92441f"
+    },
+    {
+      "path": "examples/keyed-filter/control-drop-all.files.json",
+      "mode": "100644",
+      "size": 157,
+      "sha256": "0e409a0891b765907d8a65f6b3ca30953662e3d62b5f1ac5fc35fc4d2e725091"
+    },
+    {
+      "path": "examples/keyed-filter/control-dropped-predicate-dependency.files.json",
+      "mode": "100644",
+      "size": 177,
+      "sha256": "57a60fb75a8f55e175087bc8408019f9e274a214a7fcab8b8dbfcf1629eb8660"
+    },
+    {
+      "path": "examples/keyed-filter/control-empty-captured-zero.files.json",
+      "mode": "100644",
+      "size": 168,
+      "sha256": "5fb42ae8c3bbacc231f11e96cc0cde4803023189d51514f2286b8c78b8bd670e"
+    },
+    {
+      "path": "examples/keyed-filter/control-empty-domain-predicate.files.json",
+      "mode": "100644",
+      "size": 171,
+      "sha256": "68be498421ae7b72c8fd9bbf96e3d5bf3194391e5f663809ec75f3cb4111f13a"
+    },
+    {
+      "path": "examples/keyed-filter/control-empty-input-dependency.files.json",
+      "mode": "100644",
+      "size": 171,
+      "sha256": "a46901786e501c38fd9c2283e57385790b803199142d89aadb3b1929b27d8f33"
+    },
+    {
+      "path": "examples/keyed-filter/control-empty-length.files.json",
+      "mode": "100644",
+      "size": 161,
+      "sha256": "cdec29421a6dae048807482c93a0df2045f25f8c3ba4033c762dab336fc36b3d"
+    },
+    {
+      "path": "examples/keyed-filter/control-empty-map-retains-filter.files.json",
+      "mode": "100644",
+      "size": 173,
+      "sha256": "9585c446b87243f47800983da2c6dd4e3d9703bff5ac21b69bb60debc1275be6"
+    },
+    {
+      "path": "examples/keyed-filter/control-empty-reduce-retains-filter.files.json",
+      "mode": "100644",
+      "size": 176,
+      "sha256": "b710903f9f79189763693aedd008d9f26352d679285da450185847781685ad26"
+    },
+    {
+      "path": "examples/keyed-filter/control-empty-retains-image-declaration.files.json",
+      "mode": "100644",
+      "size": 379,
+      "sha256": "c5ca917fb6b0d95e2c041802c0688743a1c9830958a81cd73b7616269566d2c5"
+    },
+    {
+      "path": "examples/keyed-filter/control-equal-valued-plain-filtered-occurrences.files.json",
+      "mode": "100644",
+      "size": 188,
+      "sha256": "2232de47a4d481a11b308ee4d077e5a7465980d5b01a1c7bfc28907c0769a78f"
+    },
+    {
+      "path": "examples/keyed-filter/control-equivalent-quantity-alias.files.json",
+      "mode": "100644",
+      "size": 174,
+      "sha256": "e243a0c4ef431323d15766a0ad4cac11eedbb7a2f284f7e80f4844158747b8fe"
+    },
+    {
+      "path": "examples/keyed-filter/control-filter-in-map-body.files.json",
+      "mode": "100644",
+      "size": 167,
+      "sha256": "d4392e2e54dcdedc8d583d50b366b7e738b43e470150bb812bfa92035f4bc033"
+    },
+    {
+      "path": "examples/keyed-filter/control-filter-then-map.files.json",
+      "mode": "100644",
+      "size": 164,
+      "sha256": "17aa7e005f82d07c0c9588a3dc4e447292cd19c78131484a424ae3cc9b2ef13a"
+    },
+    {
+      "path": "examples/keyed-filter/control-filter-then-reduce.files.json",
+      "mode": "100644",
+      "size": 167,
+      "sha256": "a218d437cfbe89446410ab2fe19426f7edf886e9cde3bfeacdf46f80752b096c"
+    },
+    {
+      "path": "examples/keyed-filter/control-generated-condition-retains-filter.files.json",
+      "mode": "100644",
+      "size": 183,
+      "sha256": "48ad64299c701a4ecb82bb2a7a2ec820231bb0a81381e3039e080bb5a86fc7ee"
+    },
+    {
+      "path": "examples/keyed-filter/control-generated-mixed.files.json",
+      "mode": "100644",
+      "size": 164,
+      "sha256": "a5a9cce9a6f805a72bbea4d663722c0c4a3800ee4278e59598b8fa5a2b250450"
+    },
+    {
+      "path": "examples/keyed-filter/control-guarded-helper-replay.files.json",
+      "mode": "100644",
+      "size": 170,
+      "sha256": "0fcbb567b2f853f4c5af084578ce8f870ed4e778bf84b6f91632a57f5813b1fb"
+    },
+    {
+      "path": "examples/keyed-filter/control-imported-legacy-predicate.files.json",
+      "mode": "100644",
+      "size": 318,
+      "sha256": "f5de6d3926e0e41ee431ce552c58f706ee2ec297b2a6083535d7a6ffa425113e"
+    },
+    {
+      "path": "examples/keyed-filter/control-imported-new-filter-helper.files.json",
+      "mode": "100644",
+      "size": 342,
+      "sha256": "9b4c4ba324ec0f5b0f295e5a3a40e42746323a8cd7be6d59a2844706f75138b9"
+    },
+    {
+      "path": "examples/keyed-filter/control-imported-reduction-threshold.files.json",
+      "mode": "100644",
+      "size": 321,
+      "sha256": "74fd59098e01a997472501234ac78024c07f28026459bbe1455e1569a6578865"
+    },
+    {
+      "path": "examples/keyed-filter/control-keep-all.files.json",
+      "mode": "100644",
+      "size": 157,
+      "sha256": "050edc12e65eaad69889f1c07b51817ddd919033aa3dbdbd0644f3a84ba85bd4"
+    },
+    {
+      "path": "examples/keyed-filter/control-later-dropped-dependency.files.json",
+      "mode": "100644",
+      "size": 173,
+      "sha256": "7513db8844ecea8b5853a0926fa521badc8f111dbfead42eacd39c5314b4f648"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-bool.files.json",
+      "mode": "100644",
+      "size": 158,
+      "sha256": "af6c63318126de01806e9b4716dfa63c5bd8f01adfbc6f0d097663aaa9158a4b"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-color.files.json",
+      "mode": "100644",
+      "size": 159,
+      "sha256": "b360ca4c4009452fb3854fca7d8397d183482e701fe9fee0d2b8c120affc658c"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-frame.files.json",
+      "mode": "100644",
+      "size": 159,
+      "sha256": "92bc4c094e6000c2623a3ac23aecb1a713cd969838e01dbb0659d09416b83bd0"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-framed-section.files.json",
+      "mode": "100644",
+      "size": 168,
+      "sha256": "83c0c7700e0444e86781bdf61dc2619d47d6a60196ee3883d378122efdcafce2"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-int.files.json",
+      "mode": "100644",
+      "size": 157,
+      "sha256": "3c16a8c24d5a72add0aaa56a5c1975b3ef49db92e08eab65b1adbc1f6ab4a994"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-loft-section.files.json",
+      "mode": "100644",
+      "size": 166,
+      "sha256": "fe794d2e19deebfe3c6cde60fbb775c621b8a8679677c502464754060854a8ca"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-material.files.json",
+      "mode": "100644",
+      "size": 162,
+      "sha256": "7c5413324d434425f15cc0643c336840afcf163ea890a870475da561c0c82506"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-planar-point.files.json",
+      "mode": "100644",
+      "size": 166,
+      "sha256": "8da447dbb4f793e8c2fb2d53d443f3a87a3f26db45efa58b6ac3821f82195019"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-planar-uv.files.json",
+      "mode": "100644",
+      "size": 163,
+      "sha256": "05c98394d612ee7f6ea179052072f266315756c676e82194c0e29fd014a74599"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-point3.files.json",
+      "mode": "100644",
+      "size": 160,
+      "sha256": "8d15069ca106810ceae1d04558770e142e627129e2c6b522b1203202dae83114"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-polygon-pocket.files.json",
+      "mode": "100644",
+      "size": 168,
+      "sha256": "8f3588e743d448850a0cc6d7b6851ae226975fa4977794c877ed739de60d8fba"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-polygon-ring.files.json",
+      "mode": "100644",
+      "size": 166,
+      "sha256": "51618b6d05443e3cbecadf50e1b3fc47dda69286d445922f25cb8c5c642feb47"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-polygon-section.files.json",
+      "mode": "100644",
+      "size": 169,
+      "sha256": "076f54b69b1d1263ea6cf3e078d433d3646ed9a9dec035d921853a3134f9d47e"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-polygon-vertex.files.json",
+      "mode": "100644",
+      "size": 168,
+      "sha256": "e8ca4dbef0e467f02ea03b5deeb96cc579ec34b2555c64965b1ba4b270b66a43"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-pose.files.json",
+      "mode": "100644",
+      "size": 158,
+      "sha256": "6968d79a3360b3613bd8b90aa5c652c82c022cf59b691e64eebd2ff939050633"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-quantity.files.json",
+      "mode": "100644",
+      "size": 162,
+      "sha256": "2cf8e7b059c5a8fa76600066a9eccc27219e291e571a27308eedfbd20db923c0"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-range.files.json",
+      "mode": "100644",
+      "size": 159,
+      "sha256": "1567590361f9976a9e264e66d2a70b7c8af750c958eb98f69193c3502c9b5619"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-real.files.json",
+      "mode": "100644",
+      "size": 158,
+      "sha256": "a7cfee1caaed741d44ff513974eaab5c7908359b35e86580d7b40a275c22eef9"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-rotation.files.json",
+      "mode": "100644",
+      "size": 162,
+      "sha256": "d667730d7f2427ad308f934fddc14c35da07e943fddb9ec87eb4c71e680da1c2"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-string.files.json",
+      "mode": "100644",
+      "size": 160,
+      "sha256": "1b48e654b2b8bea6c0167e5fce4eae3e04cf80048a96da5c19ae10fb77d455ff"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-texture-binding.files.json",
+      "mode": "100644",
+      "size": 368,
+      "sha256": "268a424ddba9d48a20ccc733ec1e3e425d5934cb7a475ae3dad31e075391a3a7"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-texture-image.files.json",
+      "mode": "100644",
+      "size": 366,
+      "sha256": "3387cb00370e18fcc625018a2564b5c218b7682358a15ee432dd67836d609bb7"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-vec3.files.json",
+      "mode": "100644",
+      "size": 158,
+      "sha256": "c91abed554d881efe447f30ad03f227aa9849959f1f8d6cb88d132636578643a"
+    },
+    {
+      "path": "examples/keyed-filter/control-leaf-vector3.files.json",
+      "mode": "100644",
+      "size": 161,
+      "sha256": "b93477e49c90e8817e0e600eb3910075881a71735e634f68f8c882a2642193c5"
+    },
+    {
+      "path": "examples/keyed-filter/control-literal-reordered.files.json",
+      "mode": "100644",
+      "size": 166,
+      "sha256": "e1eca3d8754a06cdbf41529c71d564388d74c93f498b0e962db87d767adb5137"
+    },
+    {
+      "path": "examples/keyed-filter/control-map-constant-retains-filter.files.json",
+      "mode": "100644",
+      "size": 176,
+      "sha256": "46d23a88ab697e78af72995d993160bce1d42722dc7e627ab8c8702cf06424fe"
+    },
+    {
+      "path": "examples/keyed-filter/control-map-then-filter.files.json",
+      "mode": "100644",
+      "size": 164,
+      "sha256": "7a2cac1ab018a22c806617786e765e07da0041eb719216db88039acf63ea0b36"
+    },
+    {
+      "path": "examples/keyed-filter/control-maximum-256.files.json",
+      "mode": "100644",
+      "size": 160,
+      "sha256": "d4c18cd6617318e143ab453534b2bbe27542cb31105bec877c5e3f3957912ba1"
+    },
+    {
+      "path": "examples/keyed-filter/control-maximum-drop-all.files.json",
+      "mode": "100644",
+      "size": 165,
+      "sha256": "6a3e4dfd81beb8b8c692841dcf5aa697e9888cf84245a197cf405377457f4485"
+    },
+    {
+      "path": "examples/keyed-filter/control-maximum-keep-all.files.json",
+      "mode": "100644",
+      "size": 165,
+      "sha256": "4d36c1a110cb2f5960d1e3fc843f7c1953561ac68a4915fb11ea14a5493336b7"
+    },
+    {
+      "path": "examples/keyed-filter/control-maximum-key-length.files.json",
+      "mode": "100644",
+      "size": 167,
+      "sha256": "718a05f68261b0a95626efc6a720d64aefb5f276c7fc26b0c159d3bd8195b09e"
+    },
+    {
+      "path": "examples/keyed-filter/control-mixed-membership.files.json",
+      "mode": "100644",
+      "size": 165,
+      "sha256": "64fd0e404735a16fc5775acd0046f4cc4e2cda2b23750143e5f752ac4b24083a"
+    },
+    {
+      "path": "examples/keyed-filter/control-nested-filter.files.json",
+      "mode": "100644",
+      "size": 162,
+      "sha256": "7d9cbbe40ea573206e3f6f4229f2decfbac9ea2d4b27d9b67d37bf5969cf57c6"
+    },
+    {
+      "path": "examples/keyed-filter/control-panel-identity.files.json",
+      "mode": "100644",
+      "size": 522,
+      "sha256": "9b1ec75111ba8253a7c818e4c3093e7fa054299302d3871609674e9df796bbca"
+    },
+    {
+      "path": "examples/keyed-filter/control-panel-task-drop-all.files.json",
+      "mode": "100644",
+      "size": 527,
+      "sha256": "946af70560ee96a70974170bc67ca02edb06a54b0d94d5d7d33c8640bc2c83a7"
+    },
+    {
+      "path": "examples/keyed-filter/control-panel-task-higher-budget.files.json",
+      "mode": "100644",
+      "size": 532,
+      "sha256": "307242818195e5308684b12742cfcb9d28100f171c07cfcacb96cac47160640a"
+    },
+    {
+      "path": "examples/keyed-filter/control-panel-task-repaired.files.json",
+      "mode": "100644",
+      "size": 527,
+      "sha256": "13e550c48216dd3ab08e9bb3d2c700cd81977a19d4593dec6198ecdf5dde9ad0"
+    },
+    {
+      "path": "examples/keyed-filter/control-panel-task.files.json",
+      "mode": "100644",
+      "size": 518,
+      "sha256": "cbbab72b9880b4ccc0c242ad4d7afceb3b1de2f316f414e6fbcb67b02ae9d960"
+    },
+    {
+      "path": "examples/keyed-filter/control-predicate-map-origin-dropped.files.json",
+      "mode": "100644",
+      "size": 177,
+      "sha256": "98824b56d4229f640575f6ccc71514a8c49e1f6c59e11497453b38d506fc49e7"
+    },
+    {
+      "path": "examples/keyed-filter/control-predicate-reduce-origin-dropped.files.json",
+      "mode": "100644",
+      "size": 180,
+      "sha256": "1dca74b5ec421fa3c3a4529a7f30b8e59254d3ce65e0217a1abae2c28ae0a851"
+    },
+    {
+      "path": "examples/keyed-filter/control-qualified-legacy-filter-name.files.json",
+      "mode": "100644",
+      "size": 321,
+      "sha256": "7ac39bef2944e432452b2177fbae3d20848df267b6a2cbbfa4b1f25b2c931ddb"
+    },
+    {
+      "path": "examples/keyed-filter/control-reduce-constant-retains-filter.files.json",
+      "mode": "100644",
+      "size": 179,
+      "sha256": "3ca3cbaeb4b1ced0e6f712a0d16ec97c74bcfe5d2f75ca5f593a9d022c836d1e"
+    },
+    {
+      "path": "examples/keyed-filter/control-reduce-in-predicate.files.json",
+      "mode": "100644",
+      "size": 168,
+      "sha256": "b26ff9879c51d3a8bf1894e2689c3d9fdfa5cca5a976dc4593d301df71b6e23b"
+    },
+    {
+      "path": "examples/keyed-filter/control-singleton-drop.files.json",
+      "mode": "100644",
+      "size": 163,
+      "sha256": "f8b79d0abb273745e57a75d7e3b40cb3c82a08e52824833d3f7b773ad23676ef"
+    },
+    {
+      "path": "examples/keyed-filter/control-singleton-keep.files.json",
+      "mode": "100644",
+      "size": 163,
+      "sha256": "68f3cdf533a7cb78440fdcdd9eb52597c063ac1a5b7fbf44ccead3e87ab30884"
+    },
+    {
+      "path": "examples/keyed-filter/control-survivor-original-alias.files.json",
+      "mode": "100644",
+      "size": 172,
+      "sha256": "4daa232d6c670f086649fa052ceba5c49c8dd83a556b80344c1bc3808a38fc9d"
+    },
+    {
+      "path": "examples/keyed-filter/control-unselected-captured-zero.files.json",
+      "mode": "100644",
+      "size": 173,
+      "sha256": "65f8a99ac1cddc5e0a15946e58aec7ae8544431a0060f952f813071821e6871b"
+    },
+    {
+      "path": "examples/keyed-filter/control-unselected-domain-predicate.files.json",
+      "mode": "100644",
+      "size": 176,
+      "sha256": "d62c8dc2ce278c5a65067709750e3447bde239ece2898f2edc1ee45aa21ec3ea"
+    },
+    {
+      "path": "examples/keyed-filter/control-unselected-predicate-dependency.files.json",
+      "mode": "100644",
+      "size": 180,
+      "sha256": "d232c31dfa61ac5033cd91a3b2be9a886bcf88193e221cd27b495e12985a3d99"
+    },
+    {
+      "path": "examples/keyed-filter/control-unused-generated-read.files.json",
+      "mode": "100644",
+      "size": 170,
+      "sha256": "baeee2fc2405e4b2bc6d4d5f1c9f2a0c4adf788291edecf6b3702634b74673e6"
+    },
+    {
+      "path": "examples/keyed-filter/controls/ascii-and-punctuation-keys.ok",
+      "mode": "100644",
+      "size": 538,
+      "sha256": "c0346061044340eeab746c383f8dd0424a5eb2a3fdea4e4cb3e145877d3a393c"
+    },
+    {
+      "path": "examples/keyed-filter/controls/condition-retains-filter.ok",
+      "mode": "100644",
+      "size": 583,
+      "sha256": "6cc0ef76e0233dfa02e2fe7e41b57e5ae7ea90971f32a9b85c236f5a028ae1d9"
+    },
+    {
+      "path": "examples/keyed-filter/controls/drop-all-retains-image-declaration.ok",
+      "mode": "100644",
+      "size": 692,
+      "sha256": "18fd060d764193ad5c5a308ef4aed9de73ce05fcaf128ef1676ad28daea6f019"
+    },
+    {
+      "path": "examples/keyed-filter/controls/drop-all.ok",
+      "mode": "100644",
+      "size": 506,
+      "sha256": "bc3c61112a6f8aeca5bead9695f91f1aa6c5ad426b4c2609d5fe16cd627fd730"
+    },
+    {
+      "path": "examples/keyed-filter/controls/dropped-predicate-dependency.ok",
+      "mode": "100644",
+      "size": 611,
+      "sha256": "fc89ebd2bdc1f45f33eb9d5be103d13fa554c33a265003914f53fe71197090eb"
+    },
+    {
+      "path": "examples/keyed-filter/controls/empty-captured-zero.ok",
+      "mode": "100644",
+      "size": 593,
+      "sha256": "7103ef1489012252951e2d022637e0279a4e34d2f5fbfcd40f698cb0cd4da01e"
+    },
+    {
+      "path": "examples/keyed-filter/controls/empty-domain-predicate.ok",
+      "mode": "100644",
+      "size": 508,
+      "sha256": "2c0a742a193631ae785e97e34c2cf3aea69de8742a5e6c36ccbcb8bf24fab243"
+    },
+    {
+      "path": "examples/keyed-filter/controls/empty-input-dependency.ok",
+      "mode": "100644",
+      "size": 611,
+      "sha256": "fc89ebd2bdc1f45f33eb9d5be103d13fa554c33a265003914f53fe71197090eb"
+    },
+    {
+      "path": "examples/keyed-filter/controls/empty-length.ok",
+      "mode": "100644",
+      "size": 512,
+      "sha256": "662776d4c403cce00528cf69d7e99d0aac5d25322330728561638f74f2acedc0"
+    },
+    {
+      "path": "examples/keyed-filter/controls/empty-map-retains-filter.ok",
+      "mode": "100644",
+      "size": 506,
+      "sha256": "bc3c61112a6f8aeca5bead9695f91f1aa6c5ad426b4c2609d5fe16cd627fd730"
+    },
+    {
+      "path": "examples/keyed-filter/controls/empty-reduce-retains-filter.ok",
+      "mode": "100644",
+      "size": 510,
+      "sha256": "d9a64ad8cf327575eab87cb090123c2938507ad38f8e90ca218f3af3b4ee6719"
+    },
+    {
+      "path": "examples/keyed-filter/controls/empty-retains-image-declaration.ok",
+      "mode": "100644",
+      "size": 670,
+      "sha256": "6e7c35eca1e8f3b42d1d3ca0828eb7292dc9fd4fbaa2dbf091c0d90c18bbac32"
+    },
+    {
+      "path": "examples/keyed-filter/controls/equal-valued-plain-filtered-occurrences.ok",
+      "mode": "100644",
+      "size": 853,
+      "sha256": "9f004313ab3dfcb63581ab045d36c8cd7dd2ecab5f638434301469be8761a635"
+    },
+    {
+      "path": "examples/keyed-filter/controls/equivalent-quantity-alias.ok",
+      "mode": "100644",
+      "size": 523,
+      "sha256": "ab30790db1e1d1cbbfac66d08717b92b15154f5a1e9448a30dc5e703637659b4"
+    },
+    {
+      "path": "examples/keyed-filter/controls/filter-in-map-body.ok",
+      "mode": "100644",
+      "size": 520,
+      "sha256": "03a40df73b1f430abfcc7f7bc5377056c048b135022bfb074ffe3f65208ac36c"
+    },
+    {
+      "path": "examples/keyed-filter/controls/filter-then-map.ok",
+      "mode": "100644",
+      "size": 534,
+      "sha256": "c3f31e547e9318598ccf667dea26020399162eadf92cdf5acf6f74d39114af6c"
+    },
+    {
+      "path": "examples/keyed-filter/controls/filter-then-reduce.ok",
+      "mode": "100644",
+      "size": 510,
+      "sha256": "9255cc70f4244144eb541aded9b234f48a81c806cd1c29b111eab4b874ce1f4a"
+    },
+    {
+      "path": "examples/keyed-filter/controls/generated-condition-retains-filter.ok",
+      "mode": "100644",
+      "size": 722,
+      "sha256": "0f824ac800e9c8738077b1fb5ae6767fbf34db5971273ca3c26c9857606c5ecc"
+    },
+    {
+      "path": "examples/keyed-filter/controls/generated-mixed.ok",
+      "mode": "100644",
+      "size": 738,
+      "sha256": "ba01dcc7daecfa81a57311d5adc44e191b51a9130ce3a6298f1c9660b175e4ee"
+    },
+    {
+      "path": "examples/keyed-filter/controls/guarded-helper-replay.ok",
+      "mode": "100644",
+      "size": 945,
+      "sha256": "111a0c3b6cdeb46a570d102422b194fba2c8d36ff680e067d45e60e94dd6ffc4"
+    },
+    {
+      "path": "examples/keyed-filter/controls/imported-legacy-predicate.ok",
+      "mode": "100644",
+      "size": 669,
+      "sha256": "8d78b571374d8f0801d4eb877a39c504b83205b59a37cfe67b225606a7d82bd2"
+    },
+    {
+      "path": "examples/keyed-filter/controls/imported-new-filter-helper.ok",
+      "mode": "100644",
+      "size": 702,
+      "sha256": "9370f6721f5a474c54fc90cbd7dd0f0fda564c0b28ec0b85606b7bc34975cb5c"
+    },
+    {
+      "path": "examples/keyed-filter/controls/imported-reduction-threshold.ok",
+      "mode": "100644",
+      "size": 669,
+      "sha256": "8d78b571374d8f0801d4eb877a39c504b83205b59a37cfe67b225606a7d82bd2"
+    },
+    {
+      "path": "examples/keyed-filter/controls/keep-all.ok",
+      "mode": "100644",
+      "size": 528,
+      "sha256": "2065b00aed321ea26c51c19f3a48ddfe72b5429025895b0b8dd427f0546cfb8d"
+    },
+    {
+      "path": "examples/keyed-filter/controls/later-dropped-dependency.ok",
+      "mode": "100644",
+      "size": 617,
+      "sha256": "5a75c9238b522ee8f74fff1233a46f9842d0fd321547e21f3f8bc42d2340d00b"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-bool.ok",
+      "mode": "100644",
+      "size": 520,
+      "sha256": "686f8a483452d75f2c639239bbb2afa4734bedf76b21f768b6b6bc4689af7d57"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-color.ok",
+      "mode": "100644",
+      "size": 542,
+      "sha256": "8993eb0e8c6a86ab50fe0fe7f78a99292a12b794b998b410fc1642dd6381cafb"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-frame.ok",
+      "mode": "100644",
+      "size": 529,
+      "sha256": "fca1c80a2a45293639d97aa7b6cfde98fa84141084aa770b5c0587f4d031e9b5"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-framed-section.ok",
+      "mode": "100644",
+      "size": 884,
+      "sha256": "102cd372178f3abc56b60b255a4c2a14e4f9f66ea00f14673b9ddb880764709e"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-int.ok",
+      "mode": "100644",
+      "size": 515,
+      "sha256": "028ba1ba67265d3cf1924b7ad3d8e1cd80a0b4960ede2fab722687ffd4a58d25"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-loft-section.ok",
+      "mode": "100644",
+      "size": 592,
+      "sha256": "eb8867632c9f9f9f22cdb83d4f043c7d21e49d01c91d6cd9d16342734fe5b381"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-material.ok",
+      "mode": "100644",
+      "size": 588,
+      "sha256": "0650480fb416798ec42505a6778b690d15fe31f2b5211d3f9a3ff143c76dbaee"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-planar-point.ok",
+      "mode": "100644",
+      "size": 554,
+      "sha256": "ab89133ebef126594537896b0f438a258177537f6ef75cf163dc03ee63b04dfe"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-planar-uv.ok",
+      "mode": "100644",
+      "size": 629,
+      "sha256": "59cb77f16be81012bb18d5a016a618190a4a8788b5185bcc0007f778cb5a7288"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-point3.ok",
+      "mode": "100644",
+      "size": 550,
+      "sha256": "a2de87224d878f4a074f48c90c51b7d993cf9a39318f07723bea96786a3cbc36"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-polygon-pocket.ok",
+      "mode": "100644",
+      "size": 765,
+      "sha256": "be37b4723efccd9f84457f42ff24ccd745129bf89ab0b3979939c0c0ca1a0219"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-polygon-ring.ok",
+      "mode": "100644",
+      "size": 750,
+      "sha256": "87411ce29a30659e81928a1663e95a97dd25634a01083f19f5bac1d245c6f90e"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-polygon-section.ok",
+      "mode": "100644",
+      "size": 811,
+      "sha256": "c95788cdf526ff161ab954848ac4c32370e1246fe2c9b243da086e8c76cc0f1b"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-polygon-vertex.ok",
+      "mode": "100644",
+      "size": 585,
+      "sha256": "267cccbe2927f0a9a791e9631a709bfe4f0b308b1f3ab2bbdb718308e9660ecc"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-pose.ok",
+      "mode": "100644",
+      "size": 569,
+      "sha256": "8439081a546627662373b44f2f8fd291b1d9e5865cc0c6314999fcabf9ac6dff"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-quantity.ok",
+      "mode": "100644",
+      "size": 527,
+      "sha256": "542a1363e16f539ca577f120dc5f1b5bb30695c3b2f5d0fe1e961df2dd021b79"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-range.ok",
+      "mode": "100644",
+      "size": 551,
+      "sha256": "773970fd7fef0ce11c11d0f20bf339d268c95fa3fd5ca69d3e222a267dcb0343"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-real.ok",
+      "mode": "100644",
+      "size": 519,
+      "sha256": "77d260bfae564aa6a7452b41675631b3bc4c5ae88a2f7e7c133adf3e21567ba6"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-rotation.ok",
+      "mode": "100644",
+      "size": 540,
+      "sha256": "f3f2400bb5c931a5ba036d6d28f147aa47247fcb552fa29eaf1a27af12e979c0"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-string.ok",
+      "mode": "100644",
+      "size": 531,
+      "sha256": "a842d83e74efd02bf42a0d3cbc3d2501276587dbc493d5948bd37db4ffc33df5"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-texture-binding.ok",
+      "mode": "100644",
+      "size": 753,
+      "sha256": "e22c75edcd282b4d2565f55ed63c92ba4ac830d32726f0d4f25326d75dd91d0a"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-texture-image.ok",
+      "mode": "100644",
+      "size": 625,
+      "sha256": "c23a017cfc4a6eb22bc112e167c030d19775dbf9e4e1d5aac34dec361affbc3e"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-vec3.ok",
+      "mode": "100644",
+      "size": 554,
+      "sha256": "838fa43fb2e13713a927427747e00ef45c738fff868f972b92febdecd3c6a7d2"
+    },
+    {
+      "path": "examples/keyed-filter/controls/leaf-vector3.ok",
+      "mode": "100644",
+      "size": 569,
+      "sha256": "0a8ceec776c9da4bcba868e0ffe66f5b30b328ed0c839afe3b33e814e4703836"
+    },
+    {
+      "path": "examples/keyed-filter/controls/literal-reordered.ok",
+      "mode": "100644",
+      "size": 538,
+      "sha256": "c0346061044340eeab746c383f8dd0424a5eb2a3fdea4e4cb3e145877d3a393c"
+    },
+    {
+      "path": "examples/keyed-filter/controls/map-constant-retains-filter.ok",
+      "mode": "100644",
+      "size": 512,
+      "sha256": "cd2bbaf5fdf97aeea7ca0d751c522c80a5d28940c110dff951d67e83c3e5733f"
+    },
+    {
+      "path": "examples/keyed-filter/controls/map-then-filter.ok",
+      "mode": "100644",
+      "size": 534,
+      "sha256": "1c0d9cc9cb9531ca1b183b44b43232e5ac4a9cc497a1c53ac7e5275b05b5a00d"
+    },
+    {
+      "path": "examples/keyed-filter/controls/maximum-256.ok",
+      "mode": "100644",
+      "size": 2058,
+      "sha256": "55ffb4c378ed3745e45642890dcb109e2ca4e2293c32a285b67be845a321a4f3"
+    },
+    {
+      "path": "examples/keyed-filter/controls/maximum-drop-all.ok",
+      "mode": "100644",
+      "size": 506,
+      "sha256": "bc3c61112a6f8aeca5bead9695f91f1aa6c5ad426b4c2609d5fe16cd627fd730"
+    },
+    {
+      "path": "examples/keyed-filter/controls/maximum-keep-all.ok",
+      "mode": "100644",
+      "size": 3722,
+      "sha256": "90adf526a98a7f357abed1a51a1e18c5e1d1eb4614c6cfe5c67d51d6afd3146d"
+    },
+    {
+      "path": "examples/keyed-filter/controls/maximum-key-length.ok",
+      "mode": "100644",
+      "size": 575,
+      "sha256": "0d1529fe853af1e52de0df8f837d561f4e83f4123da968e0672757e92da43320"
+    },
+    {
+      "path": "examples/keyed-filter/controls/mixed-membership.ok",
+      "mode": "100644",
+      "size": 520,
+      "sha256": "a0fcc0778a8d33a74e0ad89fb8d13e752d8c875c75ad726ea7bf4948d21301bd"
+    },
+    {
+      "path": "examples/keyed-filter/controls/nested-filter.ok",
+      "mode": "100644",
+      "size": 512,
+      "sha256": "c0f88335b1d385b8c58814d31dd6f56158baef99cf844251f70fc5f12f6ae735"
+    },
+    {
+      "path": "examples/keyed-filter/controls/panel-identity.ok",
+      "mode": "100644",
+      "size": 1649,
+      "sha256": "6ff8ad1ff998968e061c5b5ceaf02474fcddf1ff54c1119fae5c99f538973d51"
+    },
+    {
+      "path": "examples/keyed-filter/controls/panel-task-drop-all.ok",
+      "mode": "100644",
+      "size": 1649,
+      "sha256": "499818ec71c4b8501684f671fb884ba46a47247c6c8bff75faf9ee075b6aaff8"
+    },
+    {
+      "path": "examples/keyed-filter/controls/panel-task-higher-budget.ok",
+      "mode": "100644",
+      "size": 1709,
+      "sha256": "4d50c87a201833f6f25f0a4c6d3e90c2116c783d2d73ea43a3311f8d87016bc2"
+    },
+    {
+      "path": "examples/keyed-filter/controls/panel-task-repaired.ok",
+      "mode": "100644",
+      "size": 1651,
+      "sha256": "4ef3a6d14116a66469d33e4602717026205e1f47de786c0a44e184610926f149"
+    },
+    {
+      "path": "examples/keyed-filter/controls/panel-task.ok",
+      "mode": "100644",
+      "size": 1649,
+      "sha256": "6ff8ad1ff998968e061c5b5ceaf02474fcddf1ff54c1119fae5c99f538973d51"
+    },
+    {
+      "path": "examples/keyed-filter/controls/predicate-map-origin-dropped.ok",
+      "mode": "100644",
+      "size": 506,
+      "sha256": "bc3c61112a6f8aeca5bead9695f91f1aa6c5ad426b4c2609d5fe16cd627fd730"
+    },
+    {
+      "path": "examples/keyed-filter/controls/predicate-reduce-origin-dropped.ok",
+      "mode": "100644",
+      "size": 506,
+      "sha256": "bc3c61112a6f8aeca5bead9695f91f1aa6c5ad426b4c2609d5fe16cd627fd730"
+    },
+    {
+      "path": "examples/keyed-filter/controls/qualified-legacy-filter-name.ok",
+      "mode": "100644",
+      "size": 669,
+      "sha256": "8d78b571374d8f0801d4eb877a39c504b83205b59a37cfe67b225606a7d82bd2"
+    },
+    {
+      "path": "examples/keyed-filter/controls/reduce-constant-retains-filter.ok",
+      "mode": "100644",
+      "size": 510,
+      "sha256": "3e4e84a88ea41ea234b93f6a7cba2ab426eeac9886e5e9a0e8fa41af08ba17cb"
+    },
+    {
+      "path": "examples/keyed-filter/controls/reduce-in-predicate.ok",
+      "mode": "100644",
+      "size": 520,
+      "sha256": "98ac3a643a549f915826f21e45cddbf8977d07a0572d09853673a2f992b90fcb"
+    },
+    {
+      "path": "examples/keyed-filter/controls/singleton-drop.ok",
+      "mode": "100644",
+      "size": 512,
+      "sha256": "662776d4c403cce00528cf69d7e99d0aac5d25322330728561638f74f2acedc0"
+    },
+    {
+      "path": "examples/keyed-filter/controls/singleton-keep.ok",
+      "mode": "100644",
+      "size": 526,
+      "sha256": "f8edb635878809d9831daac814e98e8ecd2584ea7c9a458ef4a5050af2712e59"
+    },
+    {
+      "path": "examples/keyed-filter/controls/survivor-original-alias.ok",
+      "mode": "100644",
+      "size": 654,
+      "sha256": "e1200fc5bc9bfcf35c983f6a3abe1a5898d0b1e622cca841b370324f3fa9dd83"
+    },
+    {
+      "path": "examples/keyed-filter/controls/unselected-captured-zero.ok",
+      "mode": "100644",
+      "size": 601,
+      "sha256": "32e4642c6293f1cfa2605e0f125bdc3ce4fbd8de0d8ed49f2eee6018c92dbcbd"
+    },
+    {
+      "path": "examples/keyed-filter/controls/unselected-domain-predicate.ok",
+      "mode": "100644",
+      "size": 516,
+      "sha256": "5c0cf62a19b2b595762e14f69f1e54b94043b995f9cd5fc333b911afafdee1b8"
+    },
+    {
+      "path": "examples/keyed-filter/controls/unselected-predicate-dependency.ok",
+      "mode": "100644",
+      "size": 617,
+      "sha256": "5a75c9238b522ee8f74fff1233a46f9842d0fd321547e21f3f8bc42d2340d00b"
+    },
+    {
+      "path": "examples/keyed-filter/controls/unused-generated-read.ok",
+      "mode": "100644",
+      "size": 752,
+      "sha256": "2b023f924711fe0c8616fef7c4dea70b33dc4f22dbff8b42bfb3d23be976442a"
+    },
+    {
+      "path": "examples/keyed-filter/delivery-comparison.json",
+      "mode": "100644",
+      "size": 3631,
+      "sha256": "b168977b7c67866f7e9587ab7769e155aa8f57248d7a763efba186539570e01d"
+    },
+    {
+      "path": "examples/keyed-filter/drop-all-generated-read.files.json",
+      "mode": "100644",
+      "size": 171,
+      "sha256": "711f24dcc96ff6ecd026be675a517cf6784d0ced57b1edef243cbd047970a416"
+    },
+    {
+      "path": "examples/keyed-filter/drop-all-missing-declared-image.files.json",
+      "mode": "100644",
+      "size": 179,
+      "sha256": "c5f42f1f3f1494012e8c8b1b22ff2f200ffabd39582b98464c38fdb43edb542d"
+    },
+    {
+      "path": "examples/keyed-filter/drop-all-retains-image-declaration.files.json",
+      "mode": "100644",
+      "size": 381,
+      "sha256": "e43116aa47151dc8c8d02cae2da953008039e94e0c6f5440c4ecd2a87758da6c"
+    },
+    {
+      "path": "examples/keyed-filter/drop-all.files.json",
+      "mode": "100644",
+      "size": 156,
+      "sha256": "ba3727c51c4686706ed6db48405e853095482e846fa9866f4dd560aad18ddd09"
+    },
+    {
+      "path": "examples/keyed-filter/dropped-predicate-dependency.files.json",
+      "mode": "100644",
+      "size": 176,
+      "sha256": "f5b34a0e168aaeabcc4b758ad3776038c7c96a5f2c24f2a56a1ad21d29944b9f"
+    },
+    {
+      "path": "examples/keyed-filter/duplicate-binders.files.json",
+      "mode": "100644",
+      "size": 165,
+      "sha256": "6604d81501bb6996104849fcd9d5dc06673200e5b222e368a60e8d67073e39b6"
+    },
+    {
+      "path": "examples/keyed-filter/duplicate-input-key.files.json",
+      "mode": "100644",
+      "size": 167,
+      "sha256": "90de104093476c0256a273b3ef6f6c79b0136703c648d6bddb2a36f5b49711ba"
+    },
+    {
+      "path": "examples/keyed-filter/empty-captured-zero.files.json",
+      "mode": "100644",
+      "size": 167,
+      "sha256": "9175dfe0425451bb63fd5eb166be44069e826cdc7babeb652515bb87a0d337c7"
+    },
+    {
+      "path": "examples/keyed-filter/empty-domain-predicate.files.json",
+      "mode": "100644",
+      "size": 170,
+      "sha256": "00c406eb4b23b58cbd40613353205170480d59d9493949b2fd04cb177deae1ce"
+    },
+    {
+      "path": "examples/keyed-filter/empty-dynamic-image-id.files.json",
+      "mode": "100644",
+      "size": 170,
+      "sha256": "91ae27a6b076a03e937e8be3fd98494b6469c29c7e7f7acc5bc4ce8beceb195b"
+    },
+    {
+      "path": "examples/keyed-filter/empty-exact-int-real-mismatch.files.json",
+      "mode": "100644",
+      "size": 177,
+      "sha256": "faf196c52aa619259c04704160c36e6640e21c59f997ebb849ba0199be364cc7"
+    },
+    {
+      "path": "examples/keyed-filter/empty-generated-reference-input.files.json",
+      "mode": "100644",
+      "size": 179,
+      "sha256": "6467439dbdc7dc5f051e73ff13df0391062977650ffde45108b7bf62363be17a"
+    },
+    {
+      "path": "examples/keyed-filter/empty-input-dependency.files.json",
+      "mode": "100644",
+      "size": 170,
+      "sha256": "c11a7a6bd0ba26c9b5840d273ea563f965aa9927c98fc3a1a4483ee0dfef3f18"
+    },
+    {
+      "path": "examples/keyed-filter/empty-input-key.files.json",
+      "mode": "100644",
+      "size": 163,
+      "sha256": "6f0c034caf58de594dc4668c88809ebc2886ac343d39613ba222f2d6c9536db4"
+    },
+    {
+      "path": "examples/keyed-filter/empty-invalid-generated-access.files.json",
+      "mode": "100644",
+      "size": 178,
+      "sha256": "c88c38f853361761692c1ae802c930a9674d0438192386103872ee9c474cf2df"
+    },
+    {
+      "path": "examples/keyed-filter/empty-invalid-unused-branch.files.json",
+      "mode": "100644",
+      "size": 175,
+      "sha256": "db2f3b7783bdeef361957933cdb40c7ec755d548fc94454233aae72cb47fcc70"
+    },
+    {
+      "path": "examples/keyed-filter/empty-length.files.json",
+      "mode": "100644",
+      "size": 160,
+      "sha256": "a1882b4a73af16a5fca0071a74091d60fbab3763451d9fe317e07d71afd26d3a"
+    },
+    {
+      "path": "examples/keyed-filter/empty-map-retains-filter.files.json",
+      "mode": "100644",
+      "size": 172,
+      "sha256": "3081ba6091a70139ed14151a5e7ae34169ca76fc1759ed0d22faa1feb7c50c0e"
+    },
+    {
+      "path": "examples/keyed-filter/empty-missing-declared-image.files.json",
+      "mode": "100644",
+      "size": 176,
+      "sha256": "741202568e62a9112ccbb0c4ca9909369feaf61446a0c72e7c56a3899b990e96"
+    },
+    {
+      "path": "examples/keyed-filter/empty-predicate-wrong-type.files.json",
+      "mode": "100644",
+      "size": 174,
+      "sha256": "4deb9f3b6200efa5837907b21def41d584f2714bdafba6efb5225383e81cf838"
+    },
+    {
+      "path": "examples/keyed-filter/empty-private-import-predicate.files.json",
+      "mode": "100644",
+      "size": 322,
+      "sha256": "4266f065da67e4d8f00b79a89ebd884615b5a77efa0b30c585cdfc9d82d8c199"
+    },
+    {
+      "path": "examples/keyed-filter/empty-reduce-retains-filter.files.json",
+      "mode": "100644",
+      "size": 175,
+      "sha256": "0598a30cb9f599f59b7b9c495c431c16cb05cd1e10d0fdb282b33e290793f666"
+    },
+    {
+      "path": "examples/keyed-filter/empty-retains-image-declaration.files.json",
+      "mode": "100644",
+      "size": 378,
+      "sha256": "ed051fa4d5e2715024afd78a5d7b1b60ebe456639e3bb316d26be0ccbbf86c1e"
+    },
+    {
+      "path": "examples/keyed-filter/empty-unknown-name.files.json",
+      "mode": "100644",
+      "size": 166,
+      "sha256": "1f2fee4af9f395931ca55562615718e2659a4dcb186e365281283510e8415a2f"
+    },
+    {
+      "path": "examples/keyed-filter/empty-wrong-unit.files.json",
+      "mode": "100644",
+      "size": 164,
+      "sha256": "c372f2ff4ded95c8ccb8620cfc06019ca4b8e51969fc07dcc9c53bc955fb7e00"
+    },
+    {
+      "path": "examples/keyed-filter/equal-valued-plain-filtered-occurrences.files.json",
+      "mode": "100644",
+      "size": 187,
+      "sha256": "c568fa0508618ca128c7285fefa98cddb21fd7e436548955722d03e3fdfbb808"
+    },
+    {
+      "path": "examples/keyed-filter/equivalent-quantity-alias.files.json",
+      "mode": "100644",
+      "size": 173,
+      "sha256": "083eca675d1339c3ff76ef5470a209911e6ff40faa8fde07f41296d80169ce24"
+    },
+    {
+      "path": "examples/keyed-filter/exact-int-real-mismatch.files.json",
+      "mode": "100644",
+      "size": 171,
+      "sha256": "6b1c2852b3922a06afe6650f46b20997289754a9b87400acf9186190559f38d5"
+    },
+    {
+      "path": "examples/keyed-filter/exact-quantity-mismatch.files.json",
+      "mode": "100644",
+      "size": 171,
+      "sha256": "8dc87c6b8541eb9e309a2b20510f29adc1939d1168e323c55efff41d0cfe47ab"
+    },
+    {
+      "path": "examples/keyed-filter/excessive-expression-depth.files.json",
+      "mode": "100644",
+      "size": 174,
+      "sha256": "cea98c658e1317d2fc0e186ce2076c1972fff48b97c14da677d1ea23ff98ee4f"
+    },
+    {
+      "path": "examples/keyed-filter/expected.json",
+      "mode": "100644",
+      "size": 533657,
+      "sha256": "9096ec9b97e0d038609a46746da751fa77b7141247476c72523c256433e21120"
+    },
+    {
+      "path": "examples/keyed-filter/extra-generic-type.files.json",
+      "mode": "100644",
+      "size": 166,
+      "sha256": "c1384fd9263c015d7fb51a730ec5534d6a25dd4d5cab23f92f1f040dfe9c3e4c"
+    },
+    {
+      "path": "examples/keyed-filter/filter-in-map-body.files.json",
+      "mode": "100644",
+      "size": 166,
+      "sha256": "151624ad97ce9009a5d7c1eb5b62cd8573359ce602fa4bed949119014fb351fa"
+    },
+    {
+      "path": "examples/keyed-filter/filter-then-map.files.json",
+      "mode": "100644",
+      "size": 163,
+      "sha256": "0d7f04df0168c99dbabe5c58bc98422875066d0077349e8f5364c309481c9fc7"
+    },
+    {
+      "path": "examples/keyed-filter/filter-then-reduce.files.json",
+      "mode": "100644",
+      "size": 166,
+      "sha256": "58f5a6f7c95375d24407c0cd285c510939cc571ee6a9c9966a14abc30dbcbf45"
+    },
+    {
+      "path": "examples/keyed-filter/generated-condition-retains-filter.files.json",
+      "mode": "100644",
+      "size": 182,
+      "sha256": "eb2a8047e68d8218c819b5be205d70d23a4541c3ab4ba47b83765be0634573cd"
+    },
+    {
+      "path": "examples/keyed-filter/generated-mixed.files.json",
+      "mode": "100644",
+      "size": 163,
+      "sha256": "e394602be7c2dd735f4c8259aebc6870ab82fc319c243b867c1af19bb60e62f9"
+    },
+    {
+      "path": "examples/keyed-filter/generated-reference-input.files.json",
+      "mode": "100644",
+      "size": 173,
+      "sha256": "b709dadc0769747e7161f65ea30a8f59da0d783adfc8ac7415ad996a46a484e4"
+    },
+    {
+      "path": "examples/keyed-filter/geometry-input.files.json",
+      "mode": "100644",
+      "size": 162,
+      "sha256": "3ae5d5d0fa3a78def6d7f2bb0c69a3903cad83482cb069e997fff27518cd6a24"
+    },
+    {
+      "path": "examples/keyed-filter/guarded-helper-replay.files.json",
+      "mode": "100644",
+      "size": 169,
+      "sha256": "c354a3572d8b6197d737a12a40f5c72f20bbcf9c9f91382a885ff0193bd255ab"
+    },
+    {
+      "path": "examples/keyed-filter/import-alias-binder.files.json",
+      "mode": "100644",
+      "size": 311,
+      "sha256": "c64625810c327ee9c6fa8197a4c55a5e50a2dc86e5f56f4f68431acb8dec7245"
+    },
+    {
+      "path": "examples/keyed-filter/imported-legacy-predicate.files.json",
+      "mode": "100644",
+      "size": 317,
+      "sha256": "9d2e449b2ad35d77228755d88d6edd090fcca4c5bc746017e1519a8e6ab2a93f"
+    },
+    {
+      "path": "examples/keyed-filter/imported-new-filter-helper.files.json",
+      "mode": "100644",
+      "size": 339,
+      "sha256": "38a370fd601e42f4350682426a50f34eef4d981a29763de533e7897b16c3cc3c"
+    },
+    {
+      "path": "examples/keyed-filter/imported-reduction-threshold.files.json",
+      "mode": "100644",
+      "size": 320,
+      "sha256": "61abcdef7e0543fa37a3ff644001c415f30903694121a49567f33f545a7ff848"
+    },
+    {
+      "path": "examples/keyed-filter/incompatible-vector-frame.files.json",
+      "mode": "100644",
+      "size": 173,
+      "sha256": "85f55ad3d45c9075668caa5dec5188ad269562e3773f25446bbd91a1c4dc68e7"
+    },
+    {
+      "path": "examples/keyed-filter/input-not-keyed.files.json",
+      "mode": "100644",
+      "size": 163,
+      "sha256": "5e507d91049b3ae331e17b96f5ce676041af9fc216c90c0e0bd033bead275c29"
+    },
+    {
+      "path": "examples/keyed-filter/input-outside-binder-scope.files.json",
+      "mode": "100644",
+      "size": 174,
+      "sha256": "a78e3c2168ecfdfc44ec0e85baed85275131d39009fffea5db52c0cf71383b5f"
+    },
+    {
+      "path": "examples/keyed-filter/invalid-input-domain-before-drop.files.json",
+      "mode": "100644",
+      "size": 180,
+      "sha256": "91439a3f5c58aef7c80e5e29c277a58b60098eb388b82b7380adcdc7a173dccd"
+    },
+    {
+      "path": "examples/keyed-filter/invalid-input-key.files.json",
+      "mode": "100644",
+      "size": 165,
+      "sha256": "b89aae42bf3dd5433e40878fc56e39616a9b0d4458be301a7db572286dee6bd1"
+    },
+    {
+      "path": "examples/keyed-filter/invalid-resulting-geometry.files.json",
+      "mode": "100644",
+      "size": 174,
+      "sha256": "08f97b5ec0751d1ba5414cebf1f2b6084e9b4d52fe05d4ebe62c8511433a1050"
+    },
+    {
+      "path": "examples/keyed-filter/keep-all.files.json",
+      "mode": "100644",
+      "size": 156,
+      "sha256": "38eafa9cd1c51ae97acd92accaf926deb91ed85f5e93329f1297137c01118cb2"
+    },
+    {
+      "path": "examples/keyed-filter/later-domain-failure.files.json",
+      "mode": "100644",
+      "size": 168,
+      "sha256": "373319a19fdc02bc5e02538c7550c4aaff1710b090b7f3ed1716fce4f30ad49d"
+    },
+    {
+      "path": "examples/keyed-filter/later-dropped-dependency.files.json",
+      "mode": "100644",
+      "size": 172,
+      "sha256": "dd2b487b96bcaabd60ee0e8f9f4cc31e63f604b8339c1378729688d1dbdc801f"
+    },
+    {
+      "path": "examples/keyed-filter/later-dropped-generated-read.files.json",
+      "mode": "100644",
+      "size": 176,
+      "sha256": "87a6853c9cb38b9f6b1dbbac84cbf0c41dcb1cd53845bc8797e8963344b0bbaf"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-bool.files.json",
+      "mode": "100644",
+      "size": 157,
+      "sha256": "60e6d50c8af36228b5d140bd6bcf1cb545a3978b44ab8c35d76ce0a585ab81ab"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-color.files.json",
+      "mode": "100644",
+      "size": 158,
+      "sha256": "c4df82ca1e203ae61d17617b5f33feb09e5686deca82e8e5c7bd3d0e9920302e"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-frame.files.json",
+      "mode": "100644",
+      "size": 158,
+      "sha256": "ec94afe805a7aab0600d785e07b3794e5d852ba8debddb05b8bd02b057726144"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-framed-section.files.json",
+      "mode": "100644",
+      "size": 167,
+      "sha256": "aea44846cc4d504007156698d372c3beedd78f2e1b4e1e0a98ccfd291b1ca633"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-int.files.json",
+      "mode": "100644",
+      "size": 156,
+      "sha256": "9aaa90488599abb906f436822c14685558a63b3ed7fd9767773730e7c3b6fc83"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-loft-section.files.json",
+      "mode": "100644",
+      "size": 165,
+      "sha256": "05094ddbadcb4c923466ebfc0ed4abe28a7e12d134e95a48d2fbc2a0b6e8d6d4"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-material.files.json",
+      "mode": "100644",
+      "size": 161,
+      "sha256": "df2215a850de438fb6bb42517eef138e82705f84f3f3417f0c32ef4be1d6ae12"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-planar-point.files.json",
+      "mode": "100644",
+      "size": 165,
+      "sha256": "415969f080281991edd8c2e1a4eabe0d8ed6e75e2fb4277ae0866e5ba534293f"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-planar-uv.files.json",
+      "mode": "100644",
+      "size": 162,
+      "sha256": "e4588d9a61c985d382567b63fbcc8f03170592a4570a564ae2f90549b0d8fe33"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-point3.files.json",
+      "mode": "100644",
+      "size": 159,
+      "sha256": "23570ef2fc9a573be2caf70d692acaeee74d50cb23feb3a5a5eb33f4da9a083e"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-polygon-pocket.files.json",
+      "mode": "100644",
+      "size": 167,
+      "sha256": "554f4ad101a5ec538c67d941596172817982b41f5a6df277276b44789f1ce1d1"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-polygon-ring.files.json",
+      "mode": "100644",
+      "size": 165,
+      "sha256": "9e61b39e89a160dc3a4f31473807127af562a25430d1b560cfe41dd3a92c59e7"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-polygon-section.files.json",
+      "mode": "100644",
+      "size": 168,
+      "sha256": "649f50a97784650f2df8f75787da54fcd5f6468b3784f7a58be0c536f5ec596f"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-polygon-vertex.files.json",
+      "mode": "100644",
+      "size": 167,
+      "sha256": "af840d386beae88c78f7189482621918edbeaf77f2fb5ce3bdf36ec1f3f628fd"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-pose.files.json",
+      "mode": "100644",
+      "size": 157,
+      "sha256": "147ef65e941d7ce1b0d581ac9f9ea33047359d0d51322204f30358544b51cb85"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-quantity.files.json",
+      "mode": "100644",
+      "size": 161,
+      "sha256": "123a7d5b2fb34af319b0ba4c6991a55b482e492673f150b88ac1288dcd11e1cd"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-range.files.json",
+      "mode": "100644",
+      "size": 158,
+      "sha256": "e77eece0ba4e6b7fdf539c012fde4fc901720c82f1bd758f842018a11648fcf1"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-real.files.json",
+      "mode": "100644",
+      "size": 157,
+      "sha256": "c8c8b06b95b6fdf4dd761ce86e6f2ceb642df0c83a4d28e942cb964e27406a57"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-rotation.files.json",
+      "mode": "100644",
+      "size": 161,
+      "sha256": "13f79cdb6dbd4b29ea40973fec895e7515a492fe4f28dbff133275c227ad0a56"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-string.files.json",
+      "mode": "100644",
+      "size": 159,
+      "sha256": "c35cb00eb43e6484f7f00665d4145bd5b26cd8b5c01df246b3edd946e60abcdc"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-texture-binding.files.json",
+      "mode": "100644",
+      "size": 367,
+      "sha256": "ab0c890e70d37067017204fb74aa27420404b41e49de230042c1820958363d41"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-texture-image.files.json",
+      "mode": "100644",
+      "size": 365,
+      "sha256": "33fd1bf6de353d07f7c2c5a2e8d89bbfb8f964366d85e1815632254cc0b6c85c"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-vec3.files.json",
+      "mode": "100644",
+      "size": 157,
+      "sha256": "74acfed77c381f4ee13b6bfe690c2c59559b9476010963092119d8a7ab5acfcc"
+    },
+    {
+      "path": "examples/keyed-filter/leaf-vector3.files.json",
+      "mode": "100644",
+      "size": 160,
+      "sha256": "f352647a928ff475b01f8551ca083ab7fec1b9bc43e46ec6e4f746210f0f9c52"
+    },
+    {
+      "path": "examples/keyed-filter/literal-reordered.files.json",
+      "mode": "100644",
+      "size": 165,
+      "sha256": "e3e9e912e079473a791384c482e37d5451c3c0c9469f16fa031b037619ccc690"
+    },
+    {
+      "path": "examples/keyed-filter/map-constant-retains-filter.files.json",
+      "mode": "100644",
+      "size": 175,
+      "sha256": "65df36eaf3e76d47f17ad30ed90f2e4ff73ac53fe6730b13fbd1cbfc69da529a"
+    },
+    {
+      "path": "examples/keyed-filter/map-then-filter.files.json",
+      "mode": "100644",
+      "size": 163,
+      "sha256": "e589075c0fba21d6e585bf6136761bf0e8ae8c6e765766182c3890d63f9a8c48"
+    },
+    {
+      "path": "examples/keyed-filter/maximum-256.files.json",
+      "mode": "100644",
+      "size": 159,
+      "sha256": "3b5594249f3ee66385fe32a197c807a11fd6603f81dbbdaa9e8c749fdb137599"
+    },
+    {
+      "path": "examples/keyed-filter/maximum-drop-all.files.json",
+      "mode": "100644",
+      "size": 164,
+      "sha256": "f0d76e7898994f7d7e1587f7c6179f7179992c6a1a1c12f1dce7ad1ee6a83a2a"
+    },
+    {
+      "path": "examples/keyed-filter/maximum-keep-all.files.json",
+      "mode": "100644",
+      "size": 164,
+      "sha256": "19100b08308082098ec3bc36b75d28482cbc8be03b22a2531612c47ef26a97f7"
+    },
+    {
+      "path": "examples/keyed-filter/maximum-key-length.files.json",
+      "mode": "100644",
+      "size": 166,
+      "sha256": "c6d3d05cb78e662e4427d5e3ffa40807bbbcdce9135c50549cf153c01ea14db2"
+    },
+    {
+      "path": "examples/keyed-filter/member-binder.files.json",
+      "mode": "100644",
+      "size": 161,
+      "sha256": "3e1f1c8563a20ba76f670725ce30bcca82f2db6ccfe26b14deb732d9adb1dc06"
+    },
+    {
+      "path": "examples/keyed-filter/missing-explicit-type.files.json",
+      "mode": "100644",
+      "size": 169,
+      "sha256": "fe9434ac8e1e633b71dccdd2d24bc2db59e3c04f82f58704ee8aca19cd79a906"
+    },
+    {
+      "path": "examples/keyed-filter/missing-predicate.files.json",
+      "mode": "100644",
+      "size": 165,
+      "sha256": "82b783126194024f0d268d674e5464c151d28ec17b9cacfb02d72cd56c1071a1"
+    },
+    {
+      "path": "examples/keyed-filter/mixed-membership.files.json",
+      "mode": "100644",
+      "size": 164,
+      "sha256": "54671ed804904d44bbd2bc70c08f7de0f7e23d6b51bfef0f2571cf4226eedb09"
+    },
+    {
+      "path": "examples/keyed-filter/modules/legacy.ok",
+      "mode": "100644",
+      "size": 444,
+      "sha256": "811fbd9058439e2d78f16fe06c345c13eaf6789d6b88d81cd57f52ecaf775355"
+    },
+    {
+      "path": "examples/keyed-filter/modules/panels-control.ok",
+      "mode": "100644",
+      "size": 2455,
+      "sha256": "b59c20ca53e4366fba4294da876b720b5ededec7cb86e72e0a982b18873ec406"
+    },
+    {
+      "path": "examples/keyed-filter/modules/panels.ok",
+      "mode": "100644",
+      "size": 2360,
+      "sha256": "3d6a59aa966387f794838cb17ccc88bd0f5b45a1dae86d9f760d916870d571f0"
+    },
+    {
+      "path": "examples/keyed-filter/modules/select-control.ok",
+      "mode": "100644",
+      "size": 203,
+      "sha256": "c38a8110785d8605eb57fbe2ac4c085c7031121705caef1604380c2597b51e9c"
+    },
+    {
+      "path": "examples/keyed-filter/modules/select-helper.ok",
+      "mode": "100644",
+      "size": 220,
+      "sha256": "7bbbade1961a968241da75e35f688c4a4dd33ad6beae236b91cedbd74e63f550"
+    },
+    {
+      "path": "examples/keyed-filter/nested-binder-shadow.files.json",
+      "mode": "100644",
+      "size": 168,
+      "sha256": "78cce60e98336009720cee0aec0e7a3b4579246b9cd41c01df14d2118319d60f"
+    },
+    {
+      "path": "examples/keyed-filter/nested-filter.files.json",
+      "mode": "100644",
+      "size": 161,
+      "sha256": "f72bb226d9a9d85a856781e9eff29fbd7f32e80c9be998ebd09284a4a69e841d"
+    },
+    {
+      "path": "examples/keyed-filter/nested-keyed-input.files.json",
+      "mode": "100644",
+      "size": 166,
+      "sha256": "6876f23c60ef0d9d2a5a804e28308d3efa70ddaf15a52618c76ab1b43e76385f"
+    },
+    {
+      "path": "examples/keyed-filter/new-profile-reserves-filter-name.files.json",
+      "mode": "100644",
+      "size": 180,
+      "sha256": "0c85a8ea41164dc472bc430970b5759301c86c2bd9111520cd1374d6d8587714"
+    },
+    {
+      "path": "examples/keyed-filter/nonascii-input-key.files.json",
+      "mode": "100644",
+      "size": 166,
+      "sha256": "a7b4fb7d57997d84ab35136100df9093d3f3bdf778a1c9d15672d7d2c1c39a25"
+    },
+    {
+      "path": "examples/keyed-filter/older-importer-rejects-new-unit.files.json",
+      "mode": "100644",
+      "size": 344,
+      "sha256": "4fdc3110612e92bc8b10b3553ac85a4cca49d5eb3affdec3ce77d7f642ffe884"
+    },
+    {
+      "path": "examples/keyed-filter/one-binder.files.json",
+      "mode": "100644",
+      "size": 158,
+      "sha256": "47ed6adcc6816ce10e7d9b29f16d20828eafaa9e85243c45765adc36f8221b91"
+    },
+    {
+      "path": "examples/keyed-filter/outer-local-binder.files.json",
+      "mode": "100644",
+      "size": 166,
+      "sha256": "f34b58f44dd24e685f84cc0b5da6226cff3b4c8716b878a974609770b5bcb6c9"
+    },
+    {
+      "path": "examples/keyed-filter/overbound-before-predicate-domain.files.json",
+      "mode": "100644",
+      "size": 181,
+      "sha256": "a58441957f995984cbce05e5c72213397fc2dfe9a16975bdab9a1a00608c286e"
+    },
+    {
+      "path": "examples/keyed-filter/panel-identity.files.json",
+      "mode": "100644",
+      "size": 505,
+      "sha256": "c19a74062073385525135ac749760b719a2426019f86b2b741753edbdbf756d4"
+    },
+    {
+      "path": "examples/keyed-filter/panel-task-drop-all.files.json",
+      "mode": "100644",
+      "size": 510,
+      "sha256": "f5be8b2976f059f8491208226e7cf08c10cb6416cb95fd63ed4a16da3c63a9d4"
+    },
+    {
+      "path": "examples/keyed-filter/panel-task-higher-budget.files.json",
+      "mode": "100644",
+      "size": 515,
+      "sha256": "15e4512db62f286776d876e305f17f137a99b19f6361b2328f3ab1f8c609ce16"
+    },
+    {
+      "path": "examples/keyed-filter/panel-task-invalid.files.json",
+      "mode": "100644",
+      "size": 509,
+      "sha256": "6c1e53de48e264a86c5208eac5bea9645c4553b904b60cc08f0fee26b6a84f6e"
+    },
+    {
+      "path": "examples/keyed-filter/panel-task-repaired.files.json",
+      "mode": "100644",
+      "size": 510,
+      "sha256": "a3536ccd11ec67946ce5a4d3af5de00681fa83dd6db079c66468691016eba53f"
+    },
+    {
+      "path": "examples/keyed-filter/panel-task-ungranted-budget.files.json",
+      "mode": "100644",
+      "size": 518,
+      "sha256": "e6bc4adb8bcc8c78bf1ddd6c5d6a1f562c9154047f2b8d507f00845aa281b9a0"
+    },
+    {
+      "path": "examples/keyed-filter/panel-task.files.json",
+      "mode": "100644",
+      "size": 501,
+      "sha256": "871be0cc7d1515092e6e709cd7b3572426fa21c477b514238e5bc55f18afbe4d"
+    },
+    {
+      "path": "examples/keyed-filter/predefined-binder.files.json",
+      "mode": "100644",
+      "size": 165,
+      "sha256": "784811545115e258c8c6328a43d0a41a12da13527a093e7bfedcc4d7002ddaa0"
+    },
+    {
+      "path": "examples/keyed-filter/predicate-int.files.json",
+      "mode": "100644",
+      "size": 161,
+      "sha256": "d6ee4db9aae66611776a9f96079b18b484b3dbb0c23326ea9230e1f3a8796469"
+    },
+    {
+      "path": "examples/keyed-filter/predicate-keyed.files.json",
+      "mode": "100644",
+      "size": 163,
+      "sha256": "44a24db63f424d45e468580d192b7570c927e1da6477759a277f037ee9783ae7"
+    },
+    {
+      "path": "examples/keyed-filter/predicate-map-origin-dropped.files.json",
+      "mode": "100644",
+      "size": 176,
+      "sha256": "23d88fac1e5e7bca484c0d92e1db9d13befce2e2e27f0769bee52e30dc08e431"
+    },
+    {
+      "path": "examples/keyed-filter/predicate-quantity.files.json",
+      "mode": "100644",
+      "size": 166,
+      "sha256": "363efced1973ce1472af982f65561de576d455fca5364f05ac5de75851100ccb"
+    },
+    {
+      "path": "examples/keyed-filter/predicate-real.files.json",
+      "mode": "100644",
+      "size": 162,
+      "sha256": "7023a309c941dfe02639d9a1c16afd4ad945b55b9a3aa024faa00bce5dc68f14"
+    },
+    {
+      "path": "examples/keyed-filter/predicate-reduce-origin-dropped.files.json",
+      "mode": "100644",
+      "size": 179,
+      "sha256": "44c328f8f9570479e76c954c28c537b10e72112fbc7873d373972d878574d1ca"
+    },
+    {
+      "path": "examples/keyed-filter/predicate-string.files.json",
+      "mode": "100644",
+      "size": 164,
+      "sha256": "6e19146f959b31ab83327de1c71f637c755628f504022b6e682bc07015fca9ec"
+    },
+    {
+      "path": "examples/keyed-filter/qualified-legacy-filter-name.files.json",
+      "mode": "100644",
+      "size": 320,
+      "sha256": "474a01613180abe03030002d73e2489598391634417b2844f478ee2b311b6ac1"
+    },
+    {
+      "path": "examples/keyed-filter/recursive-pure-helper.files.json",
+      "mode": "100644",
+      "size": 169,
+      "sha256": "5385b74ec47c575532452a9d6c76d98a99e04babfaea00693582f97619946b0d"
+    },
+    {
+      "path": "examples/keyed-filter/reduce-constant-retains-filter.files.json",
+      "mode": "100644",
+      "size": 178,
+      "sha256": "43b1e592ea99cd30bed157e778eeff443d290fd5259b7beb7eb241712b54284a"
+    },
+    {
+      "path": "examples/keyed-filter/reduce-in-predicate.files.json",
+      "mode": "100644",
+      "size": 167,
+      "sha256": "31a7d55a4e792d2d026bd8ef5bd971264ad9a09674cd6631e810293f07cebf0f"
+    },
+    {
+      "path": "examples/keyed-filter/selected-captured-zero.files.json",
+      "mode": "100644",
+      "size": 170,
+      "sha256": "a03f0d5a8b00420de52d9bff5e68837e7bb5d67524682b761b342a99f461e35c"
+    },
+    {
+      "path": "examples/keyed-filter/selected-invalid-material.files.json",
+      "mode": "100644",
+      "size": 173,
+      "sha256": "6423f93a8eb4d96f141c9fdb9b1eb6375cf13eba835781c6ff23f2805d86f9b4"
+    },
+    {
+      "path": "examples/keyed-filter/selected-zero-division.files.json",
+      "mode": "100644",
+      "size": 170,
+      "sha256": "7275e3bc5b5e4c6240590f823eefbaf82ecd7fefa867dfa39323ba72d7a3096f"
+    },
+    {
+      "path": "examples/keyed-filter/self-binder.files.json",
+      "mode": "100644",
+      "size": 159,
+      "sha256": "9e1132dbb5bf6a97e5a6e3a93cfe241e4b01815a7340e092d970df29974611fe"
+    },
+    {
+      "path": "examples/keyed-filter/singleton-drop.files.json",
+      "mode": "100644",
+      "size": 162,
+      "sha256": "0ae253e2a9178231975a7085a28858dd0f2e3ae1b9b3c9021be84ee780002c3b"
+    },
+    {
+      "path": "examples/keyed-filter/singleton-keep.files.json",
+      "mode": "100644",
+      "size": 162,
+      "sha256": "6db44d17b46e87d03ac79e6d5f809adfb72282cbf552616d5328b90f3f2306e5"
+    },
+    {
+      "path": "examples/keyed-filter/sources/absent-key-override.ok",
+      "mode": "100644",
+      "size": 785,
+      "sha256": "80c754f785afd4f40454f45ada35e76fd8498e13c243855c4d8315dd281b6fd7"
+    },
+    {
+      "path": "examples/keyed-filter/sources/absent-key-reference.ok",
+      "mode": "100644",
+      "size": 840,
+      "sha256": "087b688830d663f39dd3e3d8b7153040f75af148c41b38f2ecb4c23c1a687962"
+    },
+    {
+      "path": "examples/keyed-filter/sources/action-input.ok",
+      "mode": "100644",
+      "size": 548,
+      "sha256": "62301cf2532f6d37453a1b48a22e7a7f6cf7346df1d2f059c9a903d4959ba806"
+    },
+    {
+      "path": "examples/keyed-filter/sources/admission-before-predicate-domain.ok",
+      "mode": "100644",
+      "size": 536,
+      "sha256": "6a79c956b3afc44885be991ce423f2facdaf0853177d1dc2fef55b70671459f5"
+    },
+    {
+      "path": "examples/keyed-filter/sources/ascii-and-punctuation-keys.ok",
+      "mode": "100644",
+      "size": 584,
+      "sha256": "bdf2d03925d6bad48f628ab92c2ab9ea01300dbe6a622a814d1a91afd0bc28bb"
+    },
+    {
+      "path": "examples/keyed-filter/sources/binder-escapes-predicate.ok",
+      "mode": "100644",
+      "size": 581,
+      "sha256": "a877c19fef76bb54169907275e489eeded7ab9bb6aff4d2216b0f7a0ecb7a014"
+    },
+    {
+      "path": "examples/keyed-filter/sources/body-model-input.ok",
+      "mode": "100644",
+      "size": 557,
+      "sha256": "96f4a8f7a6794f261624cdc15169783f09fdad997e956674a05546239b7f05d6"
+    },
+    {
+      "path": "examples/keyed-filter/sources/cached-generated-input-dropped.ok",
+      "mode": "100644",
+      "size": 975,
+      "sha256": "b28049304b2bb01f1db2ce6ed6870a749c484b861b4189cd2bd5ef9900d8e9e3"
+    },
+    {
+      "path": "examples/keyed-filter/sources/class-binder.ok",
+      "mode": "100644",
+      "size": 553,
+      "sha256": "2b135760710a77169e0b086c27c4846446de1ad44506c8e337d21c2b0af10b32"
+    },
+    {
+      "path": "examples/keyed-filter/sources/condition-retains-filter.ok",
+      "mode": "100644",
+      "size": 668,
+      "sha256": "1f3f2890b37fd2acf4b79ca06b6c3e90d4a2a8f9830b95e8c933f21c513e48bc"
+    },
+    {
+      "path": "examples/keyed-filter/sources/drop-all-generated-read.ok",
+      "mode": "100644",
+      "size": 806,
+      "sha256": "9b0889090a7da0668d47219ba83b6027ce38ec26c11ce094886da9540bc01d68"
+    },
+    {
+      "path": "examples/keyed-filter/sources/drop-all-missing-declared-image.ok",
+      "mode": "100644",
+      "size": 667,
+      "sha256": "8eda4a4925b2d4fb20c308ef0a1dc949edf014767a4496d8157040fdff69ba50"
+    },
+    {
+      "path": "examples/keyed-filter/sources/drop-all-retains-image-declaration.ok",
+      "mode": "100644",
+      "size": 835,
+      "sha256": "48037ba369437f14b0824bd706d757d2e8a2eb049f75f0c72115dfb0f73204cf"
+    },
+    {
+      "path": "examples/keyed-filter/sources/drop-all.ok",
+      "mode": "100644",
+      "size": 561,
+      "sha256": "497efbccbd94923c38c457a74aac33f5210df4f2c9e558470722803740c99d8b"
+    },
+    {
+      "path": "examples/keyed-filter/sources/dropped-predicate-dependency.ok",
+      "mode": "100644",
+      "size": 671,
+      "sha256": "91466fefde824d83156bb8984c9715c613e7975a903076b639deb1a76ebe8310"
+    },
+    {
+      "path": "examples/keyed-filter/sources/duplicate-binders.ok",
+      "mode": "100644",
+      "size": 544,
+      "sha256": "0d88723c9fbcb74ec3dc1abc7a1dc20d0832eee6036e8bbb6f219b36b335cd3f"
+    },
+    {
+      "path": "examples/keyed-filter/sources/duplicate-input-key.ok",
+      "mode": "100644",
+      "size": 553,
+      "sha256": "3118d563ef6d222f8f9d0728f4238f5988f4284578bdc053bcc0177b50298a2d"
+    },
+    {
+      "path": "examples/keyed-filter/sources/empty-captured-zero.ok",
+      "mode": "100644",
+      "size": 642,
+      "sha256": "0fdca1f537af1ab2eafbdbf0c82a2073e5fb9c49ea66a94144b3c1d19503d99a"
+    },
+    {
+      "path": "examples/keyed-filter/sources/empty-domain-predicate.ok",
+      "mode": "100644",
+      "size": 548,
+      "sha256": "b73f4ea59b5782b5e6bf4273ed948fd29b7af06a435c610ac90f07356d783130"
+    },
+    {
+      "path": "examples/keyed-filter/sources/empty-dynamic-image-id.ok",
+      "mode": "100644",
+      "size": 709,
+      "sha256": "c7bc12435042a61baf9c0dd145b60edcb950ac2ca8768f37d8f81f33f1d0d0f0"
+    },
+    {
+      "path": "examples/keyed-filter/sources/empty-exact-int-real-mismatch.ok",
+      "mode": "100644",
+      "size": 541,
+      "sha256": "d0e1f1ba2b7a4cae388a66d07ef8f730f43d6c8c6de410c21e920b6848432ad7"
+    },
+    {
+      "path": "examples/keyed-filter/sources/empty-generated-reference-input.ok",
+      "mode": "100644",
+      "size": 769,
+      "sha256": "9ff1bf83edd0da5ca57cd2e035ff3a34c1f79beed926f1e3fc0b069b9aedf71a"
+    },
+    {
+      "path": "examples/keyed-filter/sources/empty-input-dependency.ok",
+      "mode": "100644",
+      "size": 642,
+      "sha256": "8333bf6e16ef4848d7de53481cb47de1c578e37b73ac63e052d88bb154a72b10"
+    },
+    {
+      "path": "examples/keyed-filter/sources/empty-input-key.ok",
+      "mode": "100644",
+      "size": 544,
+      "sha256": "55561569afab8f2b46b3a96732ace34b3000fd2144f0a21ab30bf36714ca7ac8"
+    },
+    {
+      "path": "examples/keyed-filter/sources/empty-invalid-generated-access.ok",
+      "mode": "100644",
+      "size": 813,
+      "sha256": "e262a8df23dfbb5b26039fd6c3098ff34064906615f32eb43d8106272d05c1d6"
+    },
+    {
+      "path": "examples/keyed-filter/sources/empty-invalid-unused-branch.ok",
+      "mode": "100644",
+      "size": 568,
+      "sha256": "85d0884d0f0c4a95b9291b1d13eb129a0603b85e59a8054093019085e75e5a69"
+    },
+    {
+      "path": "examples/keyed-filter/sources/empty-length.ok",
+      "mode": "100644",
+      "size": 551,
+      "sha256": "f8c046ba51d2edc79771ce94614b81ced05b7884e3449dd9ecf5df14ab3891c9"
+    },
+    {
+      "path": "examples/keyed-filter/sources/empty-map-retains-filter.ok",
+      "mode": "100644",
+      "size": 586,
+      "sha256": "89acf0834e8af2a35de5012ee6abbecd666aaf0c90a9fc9fc55eb773b1c94875"
+    },
+    {
+      "path": "examples/keyed-filter/sources/empty-missing-declared-image.ok",
+      "mode": "100644",
+      "size": 702,
+      "sha256": "cbc3567043c22ca3b219343414958f3b08325d1b9ec01d24c93ad1c49a331fba"
+    },
+    {
+      "path": "examples/keyed-filter/sources/empty-predicate-wrong-type.ok",
+      "mode": "100644",
+      "size": 535,
+      "sha256": "610f50471868bc835da36947f36bc1f6c2ee8ac13bf330f8d5ecdd96f4b80ab5"
+    },
+    {
+      "path": "examples/keyed-filter/sources/empty-private-import-predicate.ok",
+      "mode": "100644",
+      "size": 702,
+      "sha256": "aaba723381b84b496e0bf38b014602dbfef697599a7d9d53fe124eba116d079c"
+    },
+    {
+      "path": "examples/keyed-filter/sources/empty-reduce-retains-filter.ok",
+      "mode": "100644",
+      "size": 604,
+      "sha256": "8af50f7644d8fd48d75291ffd3771940f3e1be10750e264d5f08a131d902a334"
+    },
+    {
+      "path": "examples/keyed-filter/sources/empty-retains-image-declaration.ok",
+      "mode": "100644",
+      "size": 702,
+      "sha256": "cbc3567043c22ca3b219343414958f3b08325d1b9ec01d24c93ad1c49a331fba"
+    },
+    {
+      "path": "examples/keyed-filter/sources/empty-unknown-name.ok",
+      "mode": "100644",
+      "size": 545,
+      "sha256": "026f1dc96f7ce52e1249fa139c682c43f8376adef53afc208de733dfa10f8f90"
+    },
+    {
+      "path": "examples/keyed-filter/sources/empty-wrong-unit.ok",
+      "mode": "100644",
+      "size": 545,
+      "sha256": "3bef24639164117d05a59f2d8913808931ce969a9663e5bf5c0990621626508c"
+    },
+    {
+      "path": "examples/keyed-filter/sources/equal-valued-plain-filtered-occurrences.ok",
+      "mode": "100644",
+      "size": 928,
+      "sha256": "205053c52ae5f30beef09501dd736cd26f61d4d37c63f0e4f77845d77d12df7d"
+    },
+    {
+      "path": "examples/keyed-filter/sources/equivalent-quantity-alias.ok",
+      "mode": "100644",
+      "size": 563,
+      "sha256": "a5564d91e7db0f1f45622cd441c9c6171999f3e4cc50dfae2516513d43501592"
+    },
+    {
+      "path": "examples/keyed-filter/sources/exact-int-real-mismatch.ok",
+      "mode": "100644",
+      "size": 547,
+      "sha256": "aa88cd76ddbe08da12a06045bfe94e4f5767519e8d44a4387b067bde3e9cea1f"
+    },
+    {
+      "path": "examples/keyed-filter/sources/exact-quantity-mismatch.ok",
+      "mode": "100644",
+      "size": 555,
+      "sha256": "66106991a9700296384891e5afb76f4f22134446b4941d4b77c946558629f577"
+    },
+    {
+      "path": "examples/keyed-filter/sources/excessive-expression-depth.ok",
+      "mode": "100644",
+      "size": 824,
+      "sha256": "7f371c92773c0d6332b5386c7fbf4caaa59327fcb4974575124a58a31ed28903"
+    },
+    {
+      "path": "examples/keyed-filter/sources/extra-generic-type.ok",
+      "mode": "100644",
+      "size": 550,
+      "sha256": "5a1634a52ed30416f689a308e2195a708b513a1571a80cbc5f23c346602ae533"
+    },
+    {
+      "path": "examples/keyed-filter/sources/filter-in-map-body.ok",
+      "mode": "100644",
+      "size": 619,
+      "sha256": "ff3da06d46be223ae2b324d95670d348aa7e51e87d1dba5bffb0c35b02fc379c"
+    },
+    {
+      "path": "examples/keyed-filter/sources/filter-then-map.ok",
+      "mode": "100644",
+      "size": 612,
+      "sha256": "79b9ad76a14a7c51a09eb0064c3280c13285c87c862e617684e681fd0190d4d1"
+    },
+    {
+      "path": "examples/keyed-filter/sources/filter-then-reduce.ok",
+      "mode": "100644",
+      "size": 629,
+      "sha256": "14d1c3fd1debf2e10efc6738c66e6349d145bed3daf107cf20edd37e0e6c78d0"
+    },
+    {
+      "path": "examples/keyed-filter/sources/generated-condition-retains-filter.ok",
+      "mode": "100644",
+      "size": 810,
+      "sha256": "9fe811af302dde176715c7186bd32732666d619ec84d86a6424da967b69208b1"
+    },
+    {
+      "path": "examples/keyed-filter/sources/generated-mixed.ok",
+      "mode": "100644",
+      "size": 764,
+      "sha256": "cf84c61d59c2a4d81914b5ac66e68a48984d7ebc303a0c28ffc5c6cd25b0d47c"
+    },
+    {
+      "path": "examples/keyed-filter/sources/generated-reference-input.ok",
+      "mode": "100644",
+      "size": 762,
+      "sha256": "650d66135ff20392cef74d5f683bb84316ef1b9a02e5817daef9d3bb818e4cc7"
+    },
+    {
+      "path": "examples/keyed-filter/sources/geometry-input.ok",
+      "mode": "100644",
+      "size": 554,
+      "sha256": "f202b38e85c8a15e3c0aa551e72425cd687ed36e1ecaeaec7756a83c183da804"
+    },
+    {
+      "path": "examples/keyed-filter/sources/guarded-helper-replay.ok",
+      "mode": "100644",
+      "size": 922,
+      "sha256": "a165ba20d5cd9f4948b46cb9711a655b1a875e57eb0ab0f26364d5bb0df93aea"
+    },
+    {
+      "path": "examples/keyed-filter/sources/import-alias-binder.ok",
+      "mode": "100644",
+      "size": 720,
+      "sha256": "a42ec44896c0489e8e4ab33c57fe6a8b92806761de5ee25e278354cf05edb9ce"
+    },
+    {
+      "path": "examples/keyed-filter/sources/imported-legacy-predicate.ok",
+      "mode": "100644",
+      "size": 725,
+      "sha256": "ebde1592a94c6901555ff2a71e8d5ce5bc0ba15e2f43bf373c8dd314710df62a"
+    },
+    {
+      "path": "examples/keyed-filter/sources/imported-new-filter-helper.ok",
+      "mode": "100644",
+      "size": 699,
+      "sha256": "73eb4e9f7cb7f97992846e0a3421add9db485f6d58fbbf5eed61b6056a88e18d"
+    },
+    {
+      "path": "examples/keyed-filter/sources/imported-reduction-threshold.ok",
+      "mode": "100644",
+      "size": 734,
+      "sha256": "5c931cb7dd7d24e4f14e44ebec56d5a504299b9b3a014e3a4f3d25b0f005a2fb"
+    },
+    {
+      "path": "examples/keyed-filter/sources/incompatible-vector-frame.ok",
+      "mode": "100644",
+      "size": 684,
+      "sha256": "91c4d794b845cea541bcb7ad7fb565a7dbdb290600793995e517d45c8bfe2ed6"
+    },
+    {
+      "path": "examples/keyed-filter/sources/input-not-keyed.ok",
+      "mode": "100644",
+      "size": 528,
+      "sha256": "ad979afbee5322aa5cf3121cc7676bed28e5c3973155468e65269701fc2c0688"
+    },
+    {
+      "path": "examples/keyed-filter/sources/input-outside-binder-scope.ok",
+      "mode": "100644",
+      "size": 544,
+      "sha256": "560c040e4e054e8ad2773d74eade03cc105198a547e153c8da6fcdd76b0a554e"
+    },
+    {
+      "path": "examples/keyed-filter/sources/invalid-input-domain-before-drop.ok",
+      "mode": "100644",
+      "size": 622,
+      "sha256": "1a0e90383e49984357269e4e5c8dd7af692a04b3308a1d92f47a08524ee61999"
+    },
+    {
+      "path": "examples/keyed-filter/sources/invalid-input-key.ok",
+      "mode": "100644",
+      "size": 548,
+      "sha256": "819ca265836d0f29473d9ef26eb3b78f7bc29140415d1b23666fb01dbf581700"
+    },
+    {
+      "path": "examples/keyed-filter/sources/invalid-resulting-geometry.ok",
+      "mode": "100644",
+      "size": 903,
+      "sha256": "16680a56416416883b8ed8689c714cfae702e71818cf487e501f057ea9ee6f4d"
+    },
+    {
+      "path": "examples/keyed-filter/sources/keep-all.ok",
+      "mode": "100644",
+      "size": 560,
+      "sha256": "d408ed036e647288e952d7314a6b936bb2a96d67ae8931f826353735d1befe11"
+    },
+    {
+      "path": "examples/keyed-filter/sources/later-domain-failure.ok",
+      "mode": "100644",
+      "size": 559,
+      "sha256": "bcf2c9250b369b9da5fa4e58a62cacf6e3a73c529c2ad22acd597d0eb2eee75a"
+    },
+    {
+      "path": "examples/keyed-filter/sources/later-dropped-dependency.ok",
+      "mode": "100644",
+      "size": 698,
+      "sha256": "5ac866a6cd9fd0cd303cc722567319633b9567a3ebbf0ae48c646ca2dbacc151"
+    },
+    {
+      "path": "examples/keyed-filter/sources/later-dropped-generated-read.ok",
+      "mode": "100644",
+      "size": 808,
+      "sha256": "516fe8dd40ea351b24e5d382f91d8a6ff9a11f2e473032e0c8eefd072ab780fc"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-bool.ok",
+      "mode": "100644",
+      "size": 574,
+      "sha256": "3736315657509536293686e8c3cbf6737445794f7d9f334b558e869dd7d7cf50"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-color.ok",
+      "mode": "100644",
+      "size": 617,
+      "sha256": "6bb8ab69e79661184f3f504e1af6292bc6ad70f77f74503dbbb681d8dce26903"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-frame.ok",
+      "mode": "100644",
+      "size": 588,
+      "sha256": "62c14d6781f1e3ca60223024f8929b9a274e2cedd56b2ecec6f7451428adc494"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-framed-section.ok",
+      "mode": "100644",
+      "size": 1286,
+      "sha256": "82db4f4a099c7dedcf3ffe746cf5f34181b78a5b1f8501fbb7854e729507b835"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-int.ok",
+      "mode": "100644",
+      "size": 565,
+      "sha256": "91ce8bede5e1517860e937146cd7b3306cd7d75a69968084fbdc384e2bec7a37"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-loft-section.ok",
+      "mode": "100644",
+      "size": 711,
+      "sha256": "1fb3a3cf0b5b0be1619691ab50392fe8135f5b18a0d0f6788fe4be4663226ccb"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-material.ok",
+      "mode": "100644",
+      "size": 699,
+      "sha256": "1ebf7b7022a9c7487204e854eceb96241208ace67f937f2e1af442f3c926575e"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-planar-point.ok",
+      "mode": "100644",
+      "size": 635,
+      "sha256": "8765da0cd8e0c56ead1c996cb41131a1ded679993a4019000d15bc7c7cb6175a"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-planar-uv.ok",
+      "mode": "100644",
+      "size": 788,
+      "sha256": "53e4c77f422cd3f870149909623994f3bf27be3edae91617dee5f55beca33ec7"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-point3.ok",
+      "mode": "100644",
+      "size": 632,
+      "sha256": "18bfd66ecf3cb9ab7c0532bdc33c6e3b7bc9845f3f713432eb064ccf3d8b363c"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-polygon-pocket.ok",
+      "mode": "100644",
+      "size": 1055,
+      "sha256": "e9719fde813a8af5ddbe44a03be3d2e155f267419c2da1686758afc8f2c2ee0d"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-polygon-ring.ok",
+      "mode": "100644",
+      "size": 1027,
+      "sha256": "f3b721372d40018f157805e4245ba5a75120956548b238b8c246dbdd1eed48b9"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-polygon-section.ok",
+      "mode": "100644",
+      "size": 1146,
+      "sha256": "fa8004fe3fa04dfa9df66450668fd9c49d37c7c9610f7a81acb029417eec92a4"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-polygon-vertex.ok",
+      "mode": "100644",
+      "size": 695,
+      "sha256": "529187a89607eb7993aa742b4ac1df9e47bbd918cfa2195e2a4dff1a7b48caf8"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-pose.ok",
+      "mode": "100644",
+      "size": 672,
+      "sha256": "79b9bc431aef63b14f6f47d416c65f3ffb7dcac6614eda90004f2b3658805225"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-quantity.ok",
+      "mode": "100644",
+      "size": 586,
+      "sha256": "e524db3f6028eac139fbae8a8d06069d6966cca71cd7a0a61ff717776cc8508f"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-range.ok",
+      "mode": "100644",
+      "size": 627,
+      "sha256": "3f8246b330029d18212158c1a5ee11c1e513f0fbcd57ca707c347fc94757f7a8"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-real.ok",
+      "mode": "100644",
+      "size": 572,
+      "sha256": "f125d3c4540cdd5efc6edf09576daccca4440b9c3ec74e299341491a8d73ca38"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-rotation.ok",
+      "mode": "100644",
+      "size": 610,
+      "sha256": "ffb26a823b1118a972df5d3db40f09ae58df46938e8f358d74ff7c1da3ddd72b"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-string.ok",
+      "mode": "100644",
+      "size": 594,
+      "sha256": "e05f703174c2a339357eabc7c56ac67d3d43f5d76ab837624791e490377505bd"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-texture-binding.ok",
+      "mode": "100644",
+      "size": 1030,
+      "sha256": "0006baa80276608d506a948678b3074bf049b255d27a69a4e5712cdd52950145"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-texture-image.ok",
+      "mode": "100644",
+      "size": 776,
+      "sha256": "5f819e3146e6817cc6da34ef1f47f3f8d3b3886e59ba00f267dec4f711887617"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-vec3.ok",
+      "mode": "100644",
+      "size": 634,
+      "sha256": "3ebb6fc3f89493ce5903c4767f9519257bfb299014aaaaca6d935a803a3c2be1"
+    },
+    {
+      "path": "examples/keyed-filter/sources/leaf-vector3.ok",
+      "mode": "100644",
+      "size": 661,
+      "sha256": "3b6eff34eb899a5467db3ec6c1f4b2874b1ee916f001e4d90885e235d659dafe"
+    },
+    {
+      "path": "examples/keyed-filter/sources/literal-reordered.ok",
+      "mode": "100644",
+      "size": 584,
+      "sha256": "bc0a0c66bbabee1c3f588f71f155d4158ca3895ebe6628f8f071d8d7475dc0d8"
+    },
+    {
+      "path": "examples/keyed-filter/sources/map-constant-retains-filter.ok",
+      "mode": "100644",
+      "size": 588,
+      "sha256": "de2266cbdec19b071cb542467d0a1b0d702031848be8b3d1b66aa58a6a650aa3"
+    },
+    {
+      "path": "examples/keyed-filter/sources/map-then-filter.ok",
+      "mode": "100644",
+      "size": 618,
+      "sha256": "2b6c502a414b40a1662f244503a33e5aa4181f3c36591ae97e4b0e529f978209"
+    },
+    {
+      "path": "examples/keyed-filter/sources/maximum-256.ok",
+      "mode": "100644",
+      "size": 3757,
+      "sha256": "c3753877541cf2a02a372ead3019d5b29b6c14d37ba606712caf96295e85a967"
+    },
+    {
+      "path": "examples/keyed-filter/sources/maximum-drop-all.ok",
+      "mode": "100644",
+      "size": 3755,
+      "sha256": "f41bcd8930eb5d1e7b84ab60041e7ce6abb271cb5a1a865fba555a410f1e3dfe"
+    },
+    {
+      "path": "examples/keyed-filter/sources/maximum-keep-all.ok",
+      "mode": "100644",
+      "size": 3754,
+      "sha256": "82fe4acd540bde24f02d35e09424c44520483d2ab1b54ee686829c0e705651a7"
+    },
+    {
+      "path": "examples/keyed-filter/sources/maximum-key-length.ok",
+      "mode": "100644",
+      "size": 674,
+      "sha256": "6ab460ddaf823a6aa5a6ee1c3c8cd01c7d46365b2e3e98427999aad086b904b7"
+    },
+    {
+      "path": "examples/keyed-filter/sources/member-binder.ok",
+      "mode": "100644",
+      "size": 549,
+      "sha256": "cd35fefb4af55ebfc18db6c7f7f6f95c0f0a4b5f323ef2d31e764f5c11c9a8f5"
+    },
+    {
+      "path": "examples/keyed-filter/sources/missing-explicit-type.ok",
+      "mode": "100644",
+      "size": 539,
+      "sha256": "ef9984746fd15999ffa50f663153ed1cbad656e998016beced059a6d0d9c61af"
+    },
+    {
+      "path": "examples/keyed-filter/sources/missing-predicate.ok",
+      "mode": "100644",
+      "size": 536,
+      "sha256": "ee74e585473021a705f8b9e58ec67b8ca8109ef8404a2b58f2314830dc5e2bc5"
+    },
+    {
+      "path": "examples/keyed-filter/sources/mixed-membership.ok",
+      "mode": "100644",
+      "size": 562,
+      "sha256": "93e89993a5c647ed27a00ad9089033c92af902fd79eed4f42c9c3b7e876329a2"
+    },
+    {
+      "path": "examples/keyed-filter/sources/nested-binder-shadow.ok",
+      "mode": "100644",
+      "size": 602,
+      "sha256": "f85109cfeb2a089b7e925dc7866fd153ad92347400aeb1b54469cf465fcb2462"
+    },
+    {
+      "path": "examples/keyed-filter/sources/nested-filter.ok",
+      "mode": "100644",
+      "size": 605,
+      "sha256": "fb0e215f4d4d2e8f8da357fcb55c1fe9a654f83a5e787ff7ff2a5a8517faa8b7"
+    },
+    {
+      "path": "examples/keyed-filter/sources/nested-keyed-input.ok",
+      "mode": "100644",
+      "size": 560,
+      "sha256": "df5312dee8e8547a2ca7b80a0fcd72b5f2746f5cafe4c63ea57f04b51ef70c9c"
+    },
+    {
+      "path": "examples/keyed-filter/sources/new-profile-reserves-filter-name.ok",
+      "mode": "100644",
+      "size": 572,
+      "sha256": "e34366e2ddb9d44a5da6f1ab2507296752d5202ecffe07c7cc142609cffbe7c7"
+    },
+    {
+      "path": "examples/keyed-filter/sources/nonascii-input-key.ok",
+      "mode": "100644",
+      "size": 546,
+      "sha256": "e3e337a4176c5e4bb031c2858d44bb9a190c9fba74f57aa0d2a84d2bed295edb"
+    },
+    {
+      "path": "examples/keyed-filter/sources/older-importer-rejects-new-unit.ok",
+      "mode": "100644",
+      "size": 702,
+      "sha256": "86bbea7f926c09a6f723fe72d8ebc1bbe6cba3dc25869f5ad51fdccc6dd0b128"
+    },
+    {
+      "path": "examples/keyed-filter/sources/one-binder.ok",
+      "mode": "100644",
+      "size": 541,
+      "sha256": "b6a203979acc94b0f1b6c2f02722ef629f809a8b71e8cac94d2eb8d1b7ecd38f"
+    },
+    {
+      "path": "examples/keyed-filter/sources/outer-local-binder.ok",
+      "mode": "100644",
+      "size": 624,
+      "sha256": "0320c8598e6b5b08cf706d7b79a71269a4579473d0f9c2480495e70d8ab96b43"
+    },
+    {
+      "path": "examples/keyed-filter/sources/overbound-before-predicate-domain.ok",
+      "mode": "100644",
+      "size": 3776,
+      "sha256": "70c3f336f3cbb001b88bb1afca892b996756268b56c8e93f067efa209762934e"
+    },
+    {
+      "path": "examples/keyed-filter/sources/panel-identity.ok",
+      "mode": "100644",
+      "size": 1646,
+      "sha256": "b4abe8e4c1585dd5c742bbf9c033f052c9a8822f63136d12d8aea049bc303028"
+    },
+    {
+      "path": "examples/keyed-filter/sources/panel-task-drop-all.ok",
+      "mode": "100644",
+      "size": 1646,
+      "sha256": "7395d79d22e7c5ab0078778260c1cc44f12edc4f1c0764e3b311427b5acd2996"
+    },
+    {
+      "path": "examples/keyed-filter/sources/panel-task-higher-budget.ok",
+      "mode": "100644",
+      "size": 1706,
+      "sha256": "00bae13ed55e7c76d6f63429175afb3b7d6355be615f7c005e6fcc358aba4da8"
+    },
+    {
+      "path": "examples/keyed-filter/sources/panel-task-invalid.ok",
+      "mode": "100644",
+      "size": 1677,
+      "sha256": "dbe45092fab3a483376e4ac7b42aec150ec7b2f160210ae8c5ffb22e71f9a013"
+    },
+    {
+      "path": "examples/keyed-filter/sources/panel-task-repaired.ok",
+      "mode": "100644",
+      "size": 1648,
+      "sha256": "70afa99bde28779b3f865d9ed314ca0b2a3b6b4d7df6e91e9d5da21bc1116ff7"
+    },
+    {
+      "path": "examples/keyed-filter/sources/panel-task-ungranted-budget.ok",
+      "mode": "100644",
+      "size": 1706,
+      "sha256": "00bae13ed55e7c76d6f63429175afb3b7d6355be615f7c005e6fcc358aba4da8"
+    },
+    {
+      "path": "examples/keyed-filter/sources/panel-task.ok",
+      "mode": "100644",
+      "size": 1646,
+      "sha256": "b4abe8e4c1585dd5c742bbf9c033f052c9a8822f63136d12d8aea049bc303028"
+    },
+    {
+      "path": "examples/keyed-filter/sources/predefined-binder.ok",
+      "mode": "100644",
+      "size": 546,
+      "sha256": "2b5c4c119fc1d8aebf24845ac111db7d83118963064a9696c9ce69e6eae94ae8"
+    },
+    {
+      "path": "examples/keyed-filter/sources/predicate-int.ok",
+      "mode": "100644",
+      "size": 541,
+      "sha256": "a9a4764b58a025e3c8afadbf2826fd7710070b6ed3e6a0ca4758b9a2f8f29831"
+    },
+    {
+      "path": "examples/keyed-filter/sources/predicate-keyed.ok",
+      "mode": "100644",
+      "size": 562,
+      "sha256": "94c6a89d25816287fd75bfe11aa8b5074ceedebd062ed59ab01a00f8e74809bd"
+    },
+    {
+      "path": "examples/keyed-filter/sources/predicate-map-origin-dropped.ok",
+      "mode": "100644",
+      "size": 610,
+      "sha256": "ff6c7362f51db5ad2f0578833a6bbee82a4ebd8e1dce6cbadd2c7d029540a884"
+    },
+    {
+      "path": "examples/keyed-filter/sources/predicate-quantity.ok",
+      "mode": "100644",
+      "size": 544,
+      "sha256": "62804570e54c527efc8f7a66a955a1464866e9427e09750a9ae4eae77209114b"
+    },
+    {
+      "path": "examples/keyed-filter/sources/predicate-real.ok",
+      "mode": "100644",
+      "size": 543,
+      "sha256": "e448531f7523d8b266bc0a562ea9f7921beaefb1136f4b18056a8778678f0eb8"
+    },
+    {
+      "path": "examples/keyed-filter/sources/predicate-reduce-origin-dropped.ok",
+      "mode": "100644",
+      "size": 622,
+      "sha256": "c0ce55d57b5173f100bdd80edaaaabe0cacfb47d8aa09122e01eae94bc1ab47f"
+    },
+    {
+      "path": "examples/keyed-filter/sources/predicate-string.ok",
+      "mode": "100644",
+      "size": 545,
+      "sha256": "858e7a014f180bc93b8236082548560d37457cb036b348fe3985943b09fb0da6"
+    },
+    {
+      "path": "examples/keyed-filter/sources/qualified-legacy-filter-name.ok",
+      "mode": "100644",
+      "size": 733,
+      "sha256": "65bcde7667c7c2a37fa8b7e09064d1d3939e57e6ef576b7499d263dd85422b0f"
+    },
+    {
+      "path": "examples/keyed-filter/sources/recursive-pure-helper.ok",
+      "mode": "100644",
+      "size": 601,
+      "sha256": "b9398bf2c91400537e2f52340545cfa25b43e96633371564a4918273de30a438"
+    },
+    {
+      "path": "examples/keyed-filter/sources/reduce-constant-retains-filter.ok",
+      "mode": "100644",
+      "size": 614,
+      "sha256": "4d3995301b2c052d9dd63b42c68cb5d5a876f13b28a6ff65894cba73ee4825f4"
+    },
+    {
+      "path": "examples/keyed-filter/sources/reduce-in-predicate.ok",
+      "mode": "100644",
+      "size": 639,
+      "sha256": "8954b894c35e090fab8f374ff7fd9793c68caf65e7b019a22bf1ec4250ba669d"
+    },
+    {
+      "path": "examples/keyed-filter/sources/selected-captured-zero.ok",
+      "mode": "100644",
+      "size": 648,
+      "sha256": "4a7c469f4a7b75841757f2fbffdb45a09903a7a927964bf83b733a14fb9c36f9"
+    },
+    {
+      "path": "examples/keyed-filter/sources/selected-invalid-material.ok",
+      "mode": "100644",
+      "size": 620,
+      "sha256": "3312e2dfae6c2edd90fa2e7033e42b03d5ceef946a046066f5ffba8c7ac90c1b"
+    },
+    {
+      "path": "examples/keyed-filter/sources/selected-zero-division.ok",
+      "mode": "100644",
+      "size": 551,
+      "sha256": "8209fb76c30469fa19e0b68126f6a6e7f89aa619926576134678c2b8f02e8e00"
+    },
+    {
+      "path": "examples/keyed-filter/sources/self-binder.ok",
+      "mode": "100644",
+      "size": 547,
+      "sha256": "c1f03107d1747ff4e72e9c61fecef2e11053beee988430a2cded4a2af44110c2"
+    },
+    {
+      "path": "examples/keyed-filter/sources/singleton-drop.ok",
+      "mode": "100644",
+      "size": 567,
+      "sha256": "f75e37aa11348461114f40e87bcb1059fb8196670be3b77e17593b1e7af51a26"
+    },
+    {
+      "path": "examples/keyed-filter/sources/singleton-keep.ok",
+      "mode": "100644",
+      "size": 568,
+      "sha256": "5f998a3d2ef387cff329eaa83b8e2831eb285bd7db22fca00770c916b3c8a79a"
+    },
+    {
+      "path": "examples/keyed-filter/sources/survivor-original-alias.ok",
+      "mode": "100644",
+      "size": 683,
+      "sha256": "72fb73b1aba9345beae06c7875b7ebd9e9e289d03907accae954bb862ef0a8a6"
+    },
+    {
+      "path": "examples/keyed-filter/sources/three-binders.ok",
+      "mode": "100644",
+      "size": 547,
+      "sha256": "8c01caabbba5d2aec536068b4f936128153700ca0b1a8fab36903df0ba7075c7"
+    },
+    {
+      "path": "examples/keyed-filter/sources/too-long-input-key.ok",
+      "mode": "100644",
+      "size": 609,
+      "sha256": "009ae12c88369c304f56cbd754010a591e86916b1d4446c2c0bfa1ccee6499d4"
+    },
+    {
+      "path": "examples/keyed-filter/sources/too-many-257.ok",
+      "mode": "100644",
+      "size": 3768,
+      "sha256": "171ed313e6a50188d9730cc8b95902d88f99917407e50ccb0538d06fcab6d6bc"
+    },
+    {
+      "path": "examples/keyed-filter/sources/unselected-captured-zero.ok",
+      "mode": "100644",
+      "size": 674,
+      "sha256": "ae262cb43d9c24c58d8a371023c194fc4bc8ede47bc8b77e8ffd914845664153"
+    },
+    {
+      "path": "examples/keyed-filter/sources/unselected-domain-predicate.ok",
+      "mode": "100644",
+      "size": 582,
+      "sha256": "9fe7f3af807445df20485e9928a0960b5b1e42896ad04b9a6f8329111cf1f1e4"
+    },
+    {
+      "path": "examples/keyed-filter/sources/unselected-predicate-dependency.ok",
+      "mode": "100644",
+      "size": 686,
+      "sha256": "8b4c65805714593b71ef2b70a14906fc764e709f35e2c0cfcc60bee8844356da"
+    },
+    {
+      "path": "examples/keyed-filter/sources/unused-generated-read.ok",
+      "mode": "100644",
+      "size": 804,
+      "sha256": "4702a4da9c03e0655bf260efd968cc4fce33ed44055f64f68b793f03bf575aaf"
+    },
+    {
+      "path": "examples/keyed-filter/sources/wrong-import-pin.ok",
+      "mode": "100644",
+      "size": 725,
+      "sha256": "2c312ccc8e4044ced54bff3cf3fbb5dc4e72a338f09fde1ba2dcf6b09ec3fcff"
+    },
+    {
+      "path": "examples/keyed-filter/supplied-byte-adversaries.json",
+      "mode": "100644",
+      "size": 1909,
+      "sha256": "fd8dd7de89670b7686fbe80e31a6c9ffa12da1b1b650c9b2c3cf7cef7a7e5fc7"
+    },
+    {
+      "path": "examples/keyed-filter/survivor-original-alias.files.json",
+      "mode": "100644",
+      "size": 171,
+      "sha256": "d94b514def833f1ab678f3c9c5075ae93f1d10c27d1d4e55ecfd9b103bfc020f"
+    },
+    {
+      "path": "examples/keyed-filter/three-binders.files.json",
+      "mode": "100644",
+      "size": 161,
+      "sha256": "21228014abf641237f5547a0b6e0862ff38a4e695ea209f5d7dfacd28ce45cb7"
+    },
+    {
+      "path": "examples/keyed-filter/too-long-input-key.files.json",
+      "mode": "100644",
+      "size": 166,
+      "sha256": "d262cd77c69e33df1dffbfb3e6e9853a99c7012101c6e3cce29abc2c4d128290"
+    },
+    {
+      "path": "examples/keyed-filter/too-many-257.files.json",
+      "mode": "100644",
+      "size": 160,
+      "sha256": "e9affc5ae790dd3105584d0b085974d0d6ecb90746865d27016a70f4c6fd54e0"
+    },
+    {
+      "path": "examples/keyed-filter/unselected-captured-zero.files.json",
+      "mode": "100644",
+      "size": 172,
+      "sha256": "bcb2a6e0b4fca7c2869b9ae9c7c3a49517ef1f4b305b4ee0bdfc9d5557a118a4"
+    },
+    {
+      "path": "examples/keyed-filter/unselected-domain-predicate.files.json",
+      "mode": "100644",
+      "size": 175,
+      "sha256": "a4f855178154f18429837fea3d7f646391f0c6e985df8ef2638f8448df771549"
+    },
+    {
+      "path": "examples/keyed-filter/unselected-predicate-dependency.files.json",
+      "mode": "100644",
+      "size": 179,
+      "sha256": "75aef8091758632ea8c41494c51b318d566800448afd3d52af9becaae28e0d27"
+    },
+    {
+      "path": "examples/keyed-filter/unused-generated-read.files.json",
+      "mode": "100644",
+      "size": 169,
+      "sha256": "82f0192cbf2fcf046f72337e62dda791030e9dde9db075c5dacab80ee7b33bf3"
+    },
+    {
+      "path": "examples/keyed-filter/workflows.json",
+      "mode": "100644",
+      "size": 9254,
+      "sha256": "0518966f5ab87a0dadc88cb8d665e552018aae23013627c7eb29e924f524026c"
+    },
+    {
+      "path": "examples/keyed-filter/wrong-import-pin.files.json",
+      "mode": "100644",
+      "size": 308,
+      "sha256": "a80015212bb69b9503498f2afc8ce95eef9288697283bc6fb7689402a93aa4cf"
+    }
+  ],
+  "scope_exclusions": [
+    "This INPUT-FREEZE.json cannot include its own digest",
+    "External authoring/preflight receipts, failed attempts and snapshot are inventoried separately and retained in the complete handoff",
+    "No C083 runtime output or candidate-derived answer is included"
+  ],
+  "prefreeze_control_validation": {
+    "controls_passed": 75,
+    "scope": "Unchanged C082 explicit .15 controls: represented typed/membership probes plus five complete .15 delivered artifacts",
+    "receipt_sha256": "f0a8ee30deb017283f7d92d76dc7b498245e7bf6651546e467adb85a97756209",
+    "all_current_control_program_revisions_and_manifests_match_actual_executions": true,
+    "unchanged_clean_baseline_before_and_after": true
+  },
+  "external_prefreeze_evidence": [
+    {
+      "path": "authoring-evidence-inventory.json",
+      "bytes": 62633,
+      "sha256": "5cd75382d83288d56ed80acad4db355aaa9f9a9b5a1695623c146cd7e0f3fa02"
+    },
+    {
+      "path": "authoring-preflight/combined-final.json",
+      "bytes": 25569,
+      "sha256": "f0a8ee30deb017283f7d92d76dc7b498245e7bf6651546e467adb85a97756209"
+    }
+  ],
+  "frozen_acceptance_executed": false,
+  "full_feature_release_accepted": false,
+  "full_product_accepted": false,
+  "amendment_rule": "Preserve original frozen bytes and observed outcomes; any defective input requires a separately named correction and execution lineage"
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": "ontokin.c083-delivery-comparison/0.1",
+  "actual_target": "ontokin.glb/0.16",
+  "control_target": "ontokin.glb/0.15",
+  "complete_bin_equal": true,
+  "raw_json_member_order_and_encoding_compared": true,
+  "framing": "After individually verified metadata replacement, compact JSON bytes, padded JSON chunk, BIN chunk and complete framing must be identical",
+  "permitted_metadata_paths": [
+    {
+      "paths": [
+        "extras.ontokin.target_contract",
+        "animations[0].extras.ontokin.target_contract"
+      ],
+      "requirement": "Exactly .16 actual / .15 control"
+    },
+    {
+      "paths": [
+        "extras.ontokin.schema_version"
+      ],
+      "requirement": "Exactly 0.16 actual / 0.15 control"
+    },
+    {
+      "paths": [
+        "extras.ontokin.profile",
+        "extras.ontokin.reach_profile.source_profile"
+      ],
+      "requirement": "Exactly keyed-filter-0.1 actual / keyed-reduction-0.1 control"
+    },
+    {
+      "paths": [
+        "extras.ontokin.program.manifest",
+        "extras.ontokin.program.revision"
+      ],
+      "requirement": "Equal independently recomputed canonical supplied-file bundle identity before replacement"
+    },
+    {
+      "paths": [
+        "nodes[i].extras.ontokin.program_revision",
+        "materials[i].extras.ontokin.program_revision",
+        "images[i].extras.ontokin.program_revision"
+      ],
+      "requirement": "Exact independently recomputed actual/control program revision"
+    },
+    {
+      "paths": [
+        "extras.ontokin.source.entry_revision",
+        "extras.ontokin.program.sources[i].source_revision",
+        "extras.ontokin.program.sources[i].filename"
+      ],
+      "requirement": "Exact matching authored unit identity and filename"
+    },
+    {
+      "paths": [
+        "nodes[i].extras.ontokin.source_mapping.{declaration,definition,generated.input,generated.input_entry}",
+        "extras.ontokin.program.occurrences[id].{declaration,definition,generated.input,generated.input_entry}",
+        "extras.ontokin.program.collections[i].{declaration,input}",
+        "nodes[i].extras.ontokin.{geometry,surface.source_location}",
+        "nodes[i].extras.ontokin.geometry.texture_bindings[i][1]",
+        "nodes[i].extras.ontokin.geometry.texture_bindings[i][1].mapping"
+      ],
+      "requirement": "Only location filename, source_revision and exact byte offsets may differ; each source ID and span must independently bind authored original bytes"
+    },
+    {
+      "paths": [
+        "nodes[i].extras.ontokin.source_mapping.generated.{input_filters,input_transforms,input_reductions}",
+        "extras.ontokin.program.occurrences[id].generated.{input_filters,input_transforms,input_reductions}"
+      ],
+      "requirement": "Validate every record independently against actual source; .15 control has no input_filters; filter records exactly expression/input/predicate/element_type; inherited records retain types and source meaning"
+    },
+    {
+      "paths": [
+        "extras.ontokin.reach_quantization.source_numeric_bound_basis.implementation_sha256",
+        "extras.ontokin.reach_quantization.destination_numeric_bound_basis.implementation_sha256"
+      ],
+      "requirement": "Independently recompute each implementation digest from the inherited declared source/destination inventory for its exact source cut; derivation identities and all remaining numeric basis fields must compare exactly"
+    }
+  ],
+  "every_actual_changed_path_recorded": true,
+  "unknown_metadata_compared_exactly": true,
+  "arbitrary_extras_removal_forbidden": true,
+  "geometry_or_material_or_motion_values_never_normalized": true
+}

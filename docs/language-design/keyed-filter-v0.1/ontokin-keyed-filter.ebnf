@@ -1,0 +1,7 @@
+(* C083 supplement to the unchanged .15 grammar and lexical precedence *)
+(* Effective only for source 0.16 / keyed-filter-0.1 *)
+filter-keyed-expression = "filter_keyed", "<", type, ">", "(", expression, ",",
+                          "(", identifier, ",", identifier, ")", "->", expression, ")" ;
+(* Explicit type is both input Keyed leaf type and surviving output leaf type *)
+(* Predicate-only binders are String key and unchanged input leaf value *)
+(* Input evaluates once; strict Bool predicates run once per canonical ASCII key *)
