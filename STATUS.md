@@ -1,5 +1,15 @@
 # OntoKin status
 
+## Active C080 main integration lease
+
+Owner: **`interactive-textures-20261031-c080-146e`**. Task: verified integration of explicit opaque textured surfaces through [PR #78](https://github.com/Omegapy/OntoKin/pull/78). Prepared `2026-10-31T07:18:18+00:00`; expires **`2026-10-31T07:48:18+00:00`**. Acquisition is established by the separately recorded successful expected-head update from `94440862433b13f7cd0406c679ca9878d1a73255` and its actual readback, not by this text alone.
+
+The work branch is `work/textured-panels-20261031-c080-146e`. Exact tested candidate: `9ee7f115a0bc0a56e61ac726b6f20753ca46b0bb`. Reviewed evidence publication: `3c5e4e0960125c353dce8e564e4f00d437040d7a`. Main integration and `STATUS.md` / `docs/engineering/textured-surfaces-2026-10-31-c080/` publication are reserved to this owner while the lease is live. Independent nonoverlapping branch work remains permitted. The next gate is the protected expected-head PR merge, exact actual merge/tree verification, resulting-main checks and explicit lease release. No hosted execution is authorized or required by this lease.
+
+The historical C079 pending-save state below was resolved by the later successful delivery receipt and [Issue #26 closure comment 6539754967](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6539754967). Its original evidence remains unchanged. The text below records the prior checkpoint; this active coordination section takes precedence for current integration ownership.
+
+---
+
 Checkpoint: October 30, 2026 (America/Denver; execution receipts use October 31 UTC), **C079 source-authored blind polygon pockets are implemented, independently checked and integrated through [PR #77](https://github.com/Omegapy/OntoKin/pull/77)**. The [engineering record](docs/engineering/polygon-pockets-2026-10-30-c079/README.md) preserves exact source roles, checks, failures, browser recovery and integration. The proposed next bounded task is [C080 textured labels and panels](docs/engineering/polygon-pockets-2026-10-30-c079/NEXT-TASK.md), after final handoff delivery and explicit C079 scope closure in Issue #26. The full [GOAL](GOAL.md) remains an AI-agent language for editable meaningful 3D objects, animation and simulation, with validated engine delivery including Unreal Engine.
 
 ## Current capability and evidence
