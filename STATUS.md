@@ -1,5 +1,15 @@
 # OntoKin status
 
+## Active main integration lease
+
+- Owner: `interactive-c078-recovery-20261030-c77776cf08e8`.
+- Task: integrate reviewed C078 evidence head `c5d60d1d6cd27b94cd833feed6db2932ea3308b4` through PR #76, verify the actual merge, run resulting-main checks and publish the integration record.
+- Acquired UTC: `2026-10-31T00:42:56.880Z`.
+- Expires UTC: `2026-10-31T01:12:56.880Z`.
+- Observed main before acquisition: `cac8b9f81a39ff8a9343caf6e8881bdc67e3ea93`.
+- Tested candidate: `853b369a6de2a123d5ef679b99c69f1f0c6aea23`, tree `beb291f518fc575a965d84f3ae304b7a89ba1656`.
+- Scope: main and STATUS integration fields are exclusively reserved. Independent nonoverlapping work remains allowed. No hosted execution is authorized. This lease does not claim a completed merge, resulting-main validation, or release acceptance.
+
 Checkpoint: October 30, 2026, **C077 matched-topology polygon ring lofts are implemented, independently checked and integrated through [PR #75](https://github.com/Omegapy/OntoKin/pull/75)**. The [engineering record](docs/engineering/polygon-lofts-2026-10-30-c077/README.md) preserves actual source roles, measured checks, original failures, reviews and integration. Next is [C078: explicitly framed polygon ring lofts](docs/engineering/polygon-lofts-2026-10-30-c077/NEXT-TASK.md), beginning with its own versioned decision and independent freeze. The full [GOAL](GOAL.md) remains an AI-agent language for editable meaningful 3D objects, animation and simulations, with validated engine delivery including Unreal Engine.
 
 ## Current capability and evidence
@@ -22,7 +32,7 @@ The adopted decision and independent fixture freeze preceded runtime implementat
 
 PR #75 merged evidence publication `ca9978dcc1fce276ac92baaffd12f4ddc783237d` as actual merge `2330527aa4b711ee383be7c67bb77dbb89cf6993`, tree `d61583b3aa236fa419a49b198b2ebfedbf139b96`. The [integration record](docs/engineering/polygon-lofts-2026-10-30-c077/integration.json) verifies the ordered lease/evidence parents and independently calculated merge tree. Fresh resulting-main checks passed **119 new tests**, **43 inherited source cases / 694 assertions**, **74 C077 cases / 418 assertions and the actual Agent workflow**, documentation and complete eligible-input equality. All **4,202 eligible files** retain the candidate's path set, modes and bytes; only STATUS and the current C077 engineering directory are excluded. These focused checks are not a second complete regression or browser execution.
 
-This publication releases `interactive-polygon-lofts-20261030-c077-8c3c836c`'s main integration lease. **No main integration lease remains active.** The coordinator retains final-main verification, portable handoff/checker/restoration/delivery and explicit [Issue #26](https://github.com/Omegapy/OntoKin/issues/26) scope closure until their later receipts. Reconcile that closure and fresh live state before C078. No C078 worker or continuation schedule is started here. The remote work branch was observed removed only after its exact head was retained as the merge's second parent. The archive branch remains history-only at `e6917dae0be3a786c22e76be3de62e3c97784cf5`; never merge or develop from it.
+C077's integration lease was released and its complete final scope closed in [Issue #26 comment 6534051496](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6534051496). The current C078 integration owner and expiry appear above. The C077 work branch was removed only after its exact head was retained as the merge's second parent. The archive branch remains history-only at `e6917dae0be3a786c22e76be3de62e3c97784cf5`; never merge or develop from it.
 
 No hosted execution was dispatched; workflows remain manual-only with default-false opt-in. The final source publication, exact-final checks and portable delivery remain separately identified.
 
