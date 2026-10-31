@@ -10,6 +10,17 @@ The current direction begins with exterior 3D models and short animations. Those
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
 
+### Author recessed trays, panels and housings
+
+Explicit source `0.12` / `polygon-pockets-0.1` creates a constant polygon exterior with up to eight independently keyed blind pockets. Each pocket names its clockwise boundary, depth and floor material. The [versioned decision](docs/language-design/polygon-pockets-v0.1/ADOPTION.md) defines the exact remaining-base arithmetic, rounded floor, complete bottom/top/wall/floor surface, and actual delivered-coordinate checks.
+
+```bash
+python3 -m ontokin export examples/polygon-pockets/rectangular-pocket.ok --target ontokin.glb/0.12 --output /tmp/ontokin-pocket.glb
+python3 -m ontokin agent --protocol ontokin.agent/0.12 --store /tmp/ontokin-pockets-agent
+```
+
+The [authoring guide](docs/language-design/polygon-pockets-v0.1/README.md), [independent frozen inputs](examples/polygon-pockets/README.md) and [Agent/0.12 interface](docs/language-design/agent-v0.12/README.md) cover reusable definitions, one-instance depth repair, bounded inspection and recorded delivery. There are at most 64 authored vertices overall and 16 materials. Every pocket leaves at least canonical binary64 0.001 meter of base. Ordinary execution defaults remain 100,000 operations / 30,000 ms. Visual geometry adds no physical body or collision authority; measured checks and remaining gates are identified in [STATUS](STATUS.md).
+
 ### Author bent ducts and handles with explicit section frames
 
 Explicit source `0.11` / `framed-polygon-loft-0.1` places each keyed polygon section in its own rigid `Pose` within the consuming object's frame. Matching ring and vertex identities can form bent solid bodies, hollow elbows and finite handles. The [versioned decision](docs/language-design/framed-polygon-loft-v0.1/ADOPTION.md) defines exact section transforms, fixed strip triangles, endpoint caps and complete source and delivered-mesh checks. Each frame is authored; the language does not infer a path or transport its orientation.

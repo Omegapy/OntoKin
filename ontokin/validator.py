@@ -16,6 +16,7 @@ from typing import Any
 from .diagnostics import Diagnostic, OntoKinError
 from .model import (ActionModel, Event, EventBlock, FollowModel, JointModel,
                     ObjectModel, Pose, SceneModel, SiteModel)
+from .profile_capabilities import FRAMED_LOFT_PROFILES
 from .values import (ACCELERATION, ALIASES, ANGLE, ANGULAR_SPEED, BOOL, INT,
                      LENGTH, MASS, REAL, SPEED, STRING, TIME, UNKNOWN, ZERO,
                      Type, Value, binary, canonical, checked_int, coerce, common,
@@ -640,10 +641,10 @@ class Validator:
         try:
             context = Context(function.self_path, function.self_type, function.lexical_class,
                               locals_, call_owner=function.name)
-            # Only .11 constructors consume this carrier authority. Pure free
+            # Framed constructors and their descendants consume this carrier authority. Pure free
             # functions retain their lexical self rules while a passed Pose
             # must still name the eventual geometry owner's frame.
-            if self.model.profile == "framed-polygon-loft-0.1":
+            if self.model.profile in FRAMED_LOFT_PROFILES:
                 context.geometry_owner = caller.self_path or caller.geometry_owner
             for local in declaration.locals:
                 context.locals[local.name] = self.expect(self.expression(local.value, context), self.parse_type(local.type), local.value)
