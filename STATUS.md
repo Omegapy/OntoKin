@@ -1,5 +1,16 @@
 # OntoKin status
 
+## Active main integration lease
+
+**Owner:** `interactive-c082-keyed-reduction-20261031-7d4a`  
+**Task:** Integrate reviewed C082 PR81, verify resulting main, then release lease.  
+**Acquired UTC:** `2026-10-31T20:51:39.415974+00:00`  
+**Expires UTC:** `2026-10-31T21:21:39.415974+00:00`  
+**Expected prior main:** `838581854b9a7f6a3260cedff6fd00914be544b8`  
+**Reviewed and fully validated implementation:** `5c534363a27d123673e9cc6a4e237fe86a64875c`
+
+Only this verified holder changes main and shared integration state during this bounded lease. Independent nonoverlapping branches may continue. The preceding C081 lease was released; this C082 lease supersedes the prior no-active-lease statement. Acquisition is effective only after the expected-head update and actual readback.
+
 ## Current development baseline
 
 OntoKin's [GOAL](GOAL.md) is an AI-agent language for editable meaningful 3D objects, animation and simulation through authoritative `.ok` source. Finite increments do not complete that mission.
@@ -22,7 +33,7 @@ Fresh corrected .13 evidence passed **102 source outcomes**, **18 workflows**, i
 
 Reviewed candidate **44f74c9f3532dd7850bfc5b1187efb7e17665d23**, tree `ae0c20a3d523ac73b3134bfa11c224fb176ace01`, merged as actual main **2c1742c0e95f911491d50b85b4802a577490d6b7**, tree `2956991fc80d1cd4370d15d29dcce3a9d57dc959`. Both actual parents and the expected merge tree were verified. All runtime, verifier, schema, test, fixture and frozen inputs match the validated cut. Fresh resulting-main checks passed **36 focused tests**, **43 source cases / 694 assertions**, and documentation preservation/navigation, with source/Git unchanged throughout.
 
-This expected-head publication releases **interactive-c081-20261031-4af7fad29c18**'s bounded main integration lease. **No main integration lease remains active** after successful publication and actual readback. The merged work branch is observed absent, its exact head is retained in main's merge parents, and the historical archive branch remains unchanged. No hosted execution was dispatched; the observed run inventory remains 198, with the last run from October 19. Final publication identity, exact offline restoration, final ZIP save/readback and finite delivery completion are separately recorded through the [C081 scope entry](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6547419535). This source status alone does not establish post-package delivery outcomes. Broader Issue #26 stays open.
+This expected-head publication releases **interactive-c081-20261031-4af7fad29c18**'s bounded main integration lease. The prior C081 lease release remains recorded; the active C082 lease is identified above. The merged work branch is observed absent, its exact head is retained in main's merge parents, and the historical archive branch remains unchanged. No hosted execution was dispatched; the observed run inventory remains 198, with the last run from October 19. Final publication identity, exact offline restoration, final ZIP save/readback and finite delivery completion are separately recorded through the [C081 scope entry](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6547419535). This source status alone does not establish post-package delivery outcomes. Broader Issue #26 stays open.
 
 The handoff preserves original failed compiler/producer and setup attempts, review-discovered provenance correction, reader/harness corrections, the deliberately interrupted first inherited attempt, the successful complete run and the corrected standalone native continuation. Frozen expectations and product budgets were not changed. Initial unexpected extraction bytes retain exact prefix-reconstruction evidence; their creation cause remains unestablished.
 
