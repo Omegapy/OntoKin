@@ -18,7 +18,7 @@ from .json_limits import measure_json, JSONLimitError
 from .program_diagnostics import diagnostic_dict
 from .program_protocol import MAX_BUDGETS
 from .program_bindings import PROFILE_BINDINGS
-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_TRANSFORM_PROFILES, POCKETS_PROFILES, EXECUTION_PROFILES, REACH_PROFILES
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, POCKETS_PROFILES, EXECUTION_PROFILES, REACH_PROFILES
 from .syntax import Node
 from .validator import FIELD_TYPES, optional
 from .values import KeyedValue, Value, bounded_data
@@ -446,10 +446,14 @@ def _index(program, compiler, budget):
             transforms = model.occurrence_provenance[path].get("generated", {}).get("input_transforms")
             if transforms:
                 record["source"]["generated"]["input_transforms"] = budget.data(transforms)
-        if generated is not None and budget.profile == KEYED_REDUCTION_PROFILE:
+        if generated is not None and budget.profile in KEYED_REDUCTION_PROFILES:
             reductions = model.occurrence_provenance[path].get("generated", {}).get("input_reductions")
             if reductions:
                 record["source"]["generated"]["input_reductions"] = budget.data(reductions)
+        if generated is not None and budget.profile == KEYED_FILTER_PROFILE:
+            filters = model.occurrence_provenance[path].get("generated", {}).get("input_filters")
+            if filters:
+                record["source"]["generated"]["input_filters"] = budget.data(filters)
         record["_object_path"] = path
         records.append(record)
         names = list(FIELD_TYPES) + [name for name, member in cls.members.items() if member.node.kind in ("param", "derive")]
@@ -672,7 +676,7 @@ def _value_record(program, compiler, path, name, budget):
                 transforms = compiler.transform_provenance(leaf)
                 if transforms:
                     projected["value"]["derived_transforms"] = budget.data(transforms)
-    if budget.profile == KEYED_REDUCTION_PROFILE:
+    if budget.profile in KEYED_REDUCTION_PROFILES:
         reductions = compiler.reduction_provenance(value)
         if reductions:
             result["derived_reductions"] = budget.data(reductions)
@@ -682,6 +686,16 @@ def _value_record(program, compiler, path, name, budget):
                 reductions = compiler.reduction_provenance(leaf)
                 if reductions:
                     projected["value"]["derived_reductions"] = budget.data(reductions)
+    if budget.profile == KEYED_FILTER_PROFILE:
+        filters = compiler.filter_provenance(value)
+        if filters:
+            result["derived_filters"] = budget.data(filters)
+        if value.known and isinstance(value.value, KeyedValue):
+            for (_, leaf), projected in zip(value.value.entries, result["value"]):
+                budget.tick()
+                filters = compiler.filter_provenance(leaf)
+                if filters:
+                    projected["value"]["derived_filters"] = budget.data(filters)
     return result
 
 
@@ -696,7 +710,7 @@ def _project(program, record, fields, compiler, sample, run, frame, budget):
     if "support" in fields:
         result["support"] = core._support_record(compiler, budget)
         result["support"]["profile"] = budget.profile
-        result["support"]["named_destination"] = ("ontokin.glb/0.15" if budget.profile == KEYED_REDUCTION_PROFILE else
+        result["support"]["named_destination"] = ("ontokin.glb/0.16" if budget.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if budget.profile == KEYED_REDUCTION_PROFILE else
                        "ontokin.glb/0.14" if budget.profile == KEYED_TRANSFORM_PROFILE else
                       "ontokin.glb/0.13" if budget.profile == TEXTURE_PROFILE else
                       "ontokin.glb/0.12" if budget.profile == POCKETS_PROFILE else
