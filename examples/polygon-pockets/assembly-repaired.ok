@@ -1,0 +1,20 @@
+ontokin "0.12";
+module PocketAssembly @ "pocket-assembly";
+profile "polygon-pockets-0.1";
+
+import libparts @ "pocket-parts" from "fixture.pocket-parts" version "1.0.0"
+    digest "sha256:7279cc82a29799529632344f78a2c46d18a90195fdb83e6d82ac8be4814b8eae";
+
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object first @ "first": libparts.Shape {
+        placement = pose(world, vec3(-5[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+        pocket_depth = 0.75[m];
+    }
+    object sibling @ "sibling": libparts.Shape {
+        placement = pose(world, vec3(5[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+    }
+    action travel @ "travel" = move(first, vector(world, 0[m/s], 0.5[m/s], 0[m/s]), 1[s]);
+    at 0[s] sequence { start travel; }
+}

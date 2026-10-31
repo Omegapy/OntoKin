@@ -72,6 +72,11 @@ def run(args, *, host_policy=None) -> int:
         from .framed_loft_protocol import FramedLoftProtocol
         service_type, envelope_fn = FramedLoftAgentService, FramedLoftProtocol.envelope
         service_options = {"protocol": selected_protocol, "host_policy": host_policy}
+    elif selected_protocol == "ontokin.agent/0.12":
+        from .pockets_agent import PocketsAgentService
+        from .pockets_protocol import PocketsProtocol
+        service_type, envelope_fn = PocketsAgentService, PocketsProtocol.envelope
+        service_options = {"protocol": selected_protocol, "host_policy": host_policy}
     def error_response(error):
         return _error(error, envelope_fn)
     try:

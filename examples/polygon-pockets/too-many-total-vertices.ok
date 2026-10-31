@@ -1,0 +1,96 @@
+ontokin "0.12";
+module PocketCase @ "pocket-case";
+profile "polygon-pockets-0.1";
+
+public class Shape @ "shape" {
+    public param outer_vertices @ "outer-vertices": Keyed<PolygonVertex> = keyed<PolygonVertex> {
+        "v0": polygon_vertex(0, planar_point(10.0[m], 0[m]), "outer"),
+        "v1": polygon_vertex(10, planar_point(9.953316[m], 0.965139[m]), "outer"),
+        "v2": polygon_vertex(20, planar_point(9.813701[m], 1.921267[m]), "outer"),
+        "v3": polygon_vertex(30, planar_point(9.582458[m], 2.859457[m]), "outer"),
+        "v4": polygon_vertex(40, planar_point(9.261746[m], 3.770948[m]), "outer"),
+        "v5": polygon_vertex(50, planar_point(8.85456[m], 4.647232[m]), "outer"),
+        "v6": polygon_vertex(60, planar_point(8.364701[m], 5.480125[m]), "outer"),
+        "v7": polygon_vertex(70, planar_point(7.796744[m], 6.261852[m]), "outer"),
+        "v8": polygon_vertex(80, planar_point(7.15599[m], 6.985114[m]), "outer"),
+        "v9": polygon_vertex(90, planar_point(6.448422[m], 7.643157[m]), "outer"),
+        "v10": polygon_vertex(100, planar_point(5.680647[m], 8.229839[m]), "outer"),
+        "v11": polygon_vertex(110, planar_point(4.859834[m], 8.73968[m]), "outer"),
+        "v12": polygon_vertex(120, planar_point(3.993646[m], 9.167922[m]), "outer"),
+        "v13": polygon_vertex(130, planar_point(3.09017[m], 9.510565[m]), "outer"),
+        "v14": polygon_vertex(140, planar_point(2.157842[m], 9.764411[m]), "outer"),
+        "v15": polygon_vertex(150, planar_point(1.205367[m], 9.927089[m]), "outer"),
+        "v16": polygon_vertex(160, planar_point(0.241637[m], 9.99708[m]), "outer"),
+        "v17": polygon_vertex(170, planar_point(-0.724348[m], 9.973731[m]), "outer"),
+        "v18": polygon_vertex(180, planar_point(-1.68357[m], 9.857261[m]), "outer"),
+        "v19": polygon_vertex(190, planar_point(-2.627074[m], 9.648756[m]), "outer"),
+        "v20": polygon_vertex(200, planar_point(-3.546049[m], 9.350162[m]), "outer"),
+        "v21": polygon_vertex(210, planar_point(-4.431915[m], 8.964269[m]), "outer"),
+        "v22": polygon_vertex(220, planar_point(-5.276402[m], 8.494679[m]), "outer"),
+        "v23": polygon_vertex(230, planar_point(-6.071625[m], 7.945777[m]), "outer"),
+        "v24": polygon_vertex(240, planar_point(-6.810159[m], 7.322687[m]), "outer"),
+        "v25": polygon_vertex(250, planar_point(-7.485107[m], 6.631227[m]), "outer"),
+        "v26": polygon_vertex(260, planar_point(-8.09017[m], 5.877853[m]), "outer"),
+        "v27": polygon_vertex(270, planar_point(-8.619697[m], 5.069599[m]), "outer"),
+        "v28": polygon_vertex(280, planar_point(-9.068744[m], 4.214011[m]), "outer"),
+        "v29": polygon_vertex(290, planar_point(-9.433118[m], 3.319079[m]), "outer"),
+        "v30": polygon_vertex(300, planar_point(-9.709418[m], 2.393157[m]), "outer"),
+        "v31": polygon_vertex(310, planar_point(-9.895064[m], 1.44489[m]), "outer"),
+        "v32": polygon_vertex(320, planar_point(-9.988322[m], 0.483134[m]), "outer"),
+        "v33": polygon_vertex(330, planar_point(-9.988322[m], -0.483134[m]), "outer"),
+        "v34": polygon_vertex(340, planar_point(-9.895064[m], -1.44489[m]), "outer"),
+        "v35": polygon_vertex(350, planar_point(-9.709418[m], -2.393157[m]), "outer"),
+        "v36": polygon_vertex(360, planar_point(-9.433118[m], -3.319079[m]), "outer"),
+        "v37": polygon_vertex(370, planar_point(-9.068744[m], -4.214011[m]), "outer"),
+        "v38": polygon_vertex(380, planar_point(-8.619697[m], -5.069599[m]), "outer"),
+        "v39": polygon_vertex(390, planar_point(-8.09017[m], -5.877853[m]), "outer"),
+        "v40": polygon_vertex(400, planar_point(-7.485107[m], -6.631227[m]), "outer"),
+        "v41": polygon_vertex(410, planar_point(-6.810159[m], -7.322687[m]), "outer"),
+        "v42": polygon_vertex(420, planar_point(-6.071625[m], -7.945777[m]), "outer"),
+        "v43": polygon_vertex(430, planar_point(-5.276402[m], -8.494679[m]), "outer"),
+        "v44": polygon_vertex(440, planar_point(-4.431915[m], -8.964269[m]), "outer"),
+        "v45": polygon_vertex(450, planar_point(-3.546049[m], -9.350162[m]), "outer"),
+        "v46": polygon_vertex(460, planar_point(-2.627074[m], -9.648756[m]), "outer"),
+        "v47": polygon_vertex(470, planar_point(-1.68357[m], -9.857261[m]), "outer"),
+        "v48": polygon_vertex(480, planar_point(-0.724348[m], -9.973731[m]), "outer"),
+        "v49": polygon_vertex(490, planar_point(0.241637[m], -9.99708[m]), "outer"),
+        "v50": polygon_vertex(500, planar_point(1.205367[m], -9.927089[m]), "outer"),
+        "v51": polygon_vertex(510, planar_point(2.157842[m], -9.764411[m]), "outer"),
+        "v52": polygon_vertex(520, planar_point(3.09017[m], -9.510565[m]), "outer"),
+        "v53": polygon_vertex(530, planar_point(3.993646[m], -9.167922[m]), "outer"),
+        "v54": polygon_vertex(540, planar_point(4.859834[m], -8.73968[m]), "outer"),
+        "v55": polygon_vertex(550, planar_point(5.680647[m], -8.229839[m]), "outer"),
+        "v56": polygon_vertex(560, planar_point(6.448422[m], -7.643157[m]), "outer"),
+        "v57": polygon_vertex(570, planar_point(7.15599[m], -6.985114[m]), "outer"),
+        "v58": polygon_vertex(580, planar_point(7.796744[m], -6.261852[m]), "outer"),
+        "v59": polygon_vertex(590, planar_point(8.364701[m], -5.480125[m]), "outer"),
+        "v60": polygon_vertex(600, planar_point(8.85456[m], -4.647232[m]), "outer"),
+        "v61": polygon_vertex(610, planar_point(9.261746[m], -3.770948[m]), "outer"),
+        "v62": polygon_vertex(620, planar_point(9.582458[m], -2.859457[m]), "outer"),
+        "v63": polygon_vertex(630, planar_point(9.813701[m], -1.921267[m]), "outer"),
+        "v64": polygon_vertex(640, planar_point(9.953316[m], -0.965139[m]), "outer")
+    };
+    public param pockets @ "pockets": Keyed<PolygonPocket> = keyed<PolygonPocket> {
+
+    };
+    public param height @ "height": Length = 2[m];
+    public param palette @ "palette": Keyed<SurfaceMaterial> = keyed<SurfaceMaterial> {
+        "bottom": surface_material(rgba(0.3, 0.35, 0.4, 1), 0.1, 0.65),
+        "floor": surface_material(rgba(0.85, 0.65, 0.15, 1), 0.1, 0.65),
+        "inner": surface_material(rgba(0.15, 0.65, 0.3, 1), 0.1, 0.65),
+        "outer": surface_material(rgba(0.7, 0.3, 0.1, 1), 0.1, 0.65),
+        "top": surface_material(rgba(0.1, 0.5, 0.8, 1), 0.1, 0.65)
+    };
+    geometry = extrude_pockets(self.outer_vertices, self.pockets, self.palette, self.height, "bottom", "top");
+    physical = no_body();
+}
+
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object shape @ "shape": Shape {
+        placement = pose(world, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+    }
+    action travel @ "travel" = move(shape, vector(world, 0[m/s], 0.5[m/s], 0[m/s]), 1[s]);
+    at 0[s] sequence { start travel; }
+}

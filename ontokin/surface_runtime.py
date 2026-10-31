@@ -7,7 +7,7 @@ not introduce a node or action authority. GLB/0.3 delivery is separate.
 from __future__ import annotations
 
 from .model import Pose
-from .profile_capabilities import EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES
+from .profile_capabilities import EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES
 from .surface import LoftSection, SurfaceMaterial, SurfaceError, triangulate_loft
 from .validator import fail
 from .values import INT, REAL, STRING, LENGTH, Type, Value, quantity_type
@@ -79,7 +79,9 @@ def surface_builtin(compiler, name, args, node, ctx):
             allowed.add("holes")
         if compiler.linked.modules[node.source_id].ast.profile in RING_LOFT_PROFILES:
             allowed.add("ring_loft")
-        if compiler.linked.modules[node.source_id].ast.profile == FRAMED_LOFT_PROFILE:
+        if compiler.linked.modules[node.source_id].ast.profile == POCKETS_PROFILE:
+            allowed.add("pockets")
+        if compiler.linked.modules[node.source_id].ast.profile in FRAMED_LOFT_PROFILES:
             allowed.add("framed_loft")
         if not isinstance(geometry, dict) or geometry.get("kind") not in allowed:
             fail("OKL-E-SURFACE-PLACEMENT",
@@ -118,6 +120,12 @@ def materialize_surface(recipe, *, max_vertices: int, check=None):
     else:
         surface = recipe
         placement = Pose("self")
+    if surface["kind"] == "pockets":
+        from .pockets import triangulate_pockets
+        mesh = triangulate_pockets(surface["outer_vertices"], surface["pockets"], surface["materials"],
+                                   surface["height_m"], surface["bottom_region"], surface["top_region"],
+                                   max_vertices=max_vertices, check=check)
+        return mesh, placement
     if surface["kind"] == "framed_loft":
         from .framed_loft import triangulate_framed_loft
         mesh = triangulate_framed_loft(surface["sections"], surface["materials"],

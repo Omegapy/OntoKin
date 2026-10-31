@@ -1,0 +1,2407 @@
+{
+  "$defs": {
+    "element_id": {
+      "items": {
+        "maxLength": 200,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 256,
+      "minItems": 1,
+      "type": "array"
+    },
+    "force_object_state": {
+      "properties": {
+        "forces": {
+          "$ref": "https://ontokin.org/schemas/force-v0.1/forces.schema.json"
+        },
+        "impulses": {
+          "$ref": "#/$defs/impulses"
+        },
+        "pose_authority": {
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "const": "free_sphere"
+                  }
+                },
+                "required": [
+                  "kind"
+                ]
+              },
+              "then": {
+                "properties": {
+                  "since_seconds": {
+                    "pattern": "^[0-9]+(?:\\.[0-9]+)?$",
+                    "type": "string"
+                  },
+                  "trajectory_anchor_seconds": {
+                    "pattern": "^[0-9]+(?:\\.[0-9]+)?$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "since_seconds",
+                  "trajectory_anchor_seconds"
+                ]
+              }
+            }
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "impulses",
+        "pose_authority",
+        "forces"
+      ],
+      "type": "object"
+    },
+    "force_sample": {
+      "properties": {
+        "objects": {
+          "additionalProperties": {
+            "$ref": "#/$defs/force_object_state"
+          },
+          "type": "object"
+        },
+        "reaches": {
+          "additionalProperties": {
+            "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/reach-projection.schema.json"
+          },
+          "maxProperties": 128,
+          "type": "object"
+        }
+      },
+      "required": [
+        "objects",
+        "reaches"
+      ],
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "implementation": {
+      "additionalProperties": false,
+      "description": "Inherited durable service implementation identity. It identifies the loaded implementation, not a source program or output artifact.",
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "source_code_sha256": {
+          "$ref": "#/$defs/revision"
+        },
+        "version": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "version",
+        "source_code_sha256"
+      ],
+      "type": "object"
+    },
+    "impulses": {
+      "$ref": "https://ontokin.org/schemas/impulse-v0.1/impulses.schema.json"
+    },
+    "mesh_page_result": {
+      "additionalProperties": false,
+      "properties": {
+        "coordinate_system": {
+          "const": "carrier_local_after_placement/0.1"
+        },
+        "element_id": {
+          "$ref": "#/$defs/element_id"
+        },
+        "filtered_triangles": {
+          "maximum": 8192,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "geometry_sha256": {
+          "$ref": "#/$defs/revision"
+        },
+        "implementation": {
+          "$ref": "#/$defs/implementation"
+        },
+        "normals": {
+          "items": {
+            "$ref": "#/$defs/vector3"
+          },
+          "maxItems": 768,
+          "type": "array"
+        },
+        "offset": {
+          "maximum": 8192,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "ordering": {
+          "const": "native_triangle_ordinal/0.1"
+        },
+        "path": {
+          "maxLength": 32768,
+          "minLength": 1,
+          "type": "string"
+        },
+        "positions_m": {
+          "items": {
+            "$ref": "#/$defs/vector3"
+          },
+          "maxItems": 768,
+          "type": "array"
+        },
+        "profile": {
+          "const": "polygon-pockets-0.1"
+        },
+        "program_revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "region": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/stable_key"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "region_keys": {
+          "items": {
+            "$ref": "#/$defs/stable_key"
+          },
+          "maxItems": 256,
+          "type": "array"
+        },
+        "returned_triangles": {
+          "maximum": 256,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "schema_version": {
+          "const": "ontokin.surface-mesh-page/0.1"
+        },
+        "source_triangle_ordinals": {
+          "items": {
+            "maximum": 8191,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maxItems": 256,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "total_triangles": {
+          "maximum": 8192,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "triangles": {
+          "items": {
+            "items": {
+              "maximum": 767,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "maxItems": 3,
+            "minItems": 3,
+            "type": "array"
+          },
+          "maxItems": 256,
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "program_revision",
+        "element_id",
+        "path",
+        "profile",
+        "geometry_sha256",
+        "coordinate_system",
+        "ordering",
+        "region",
+        "total_triangles",
+        "filtered_triangles",
+        "offset",
+        "returned_triangles",
+        "positions_m",
+        "normals",
+        "triangles",
+        "source_triangle_ordinals",
+        "region_keys",
+        "implementation"
+      ],
+      "type": "object"
+    },
+    "quaternion_wxyz": {
+      "items": {
+        "type": "number"
+      },
+      "maxItems": 4,
+      "minItems": 4,
+      "type": "array"
+    },
+    "revision": {
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "stable_key": {
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+      "type": "string"
+    },
+    "surface_summary": {
+      "additionalProperties": false,
+      "properties": {
+        "caps": {
+          "enum": [
+            "flat",
+            "none"
+          ]
+        },
+        "facets": {
+          "maximum": 64,
+          "minimum": 8,
+          "multipleOf": 4,
+          "type": "integer"
+        },
+        "local_visual_placement": {
+          "additionalProperties": false,
+          "properties": {
+            "frame": {
+              "const": "carrier_self_frame"
+            },
+            "orientation_wxyz": {
+              "$ref": "#/$defs/quaternion_wxyz"
+            },
+            "position_m": {
+              "$ref": "#/$defs/vector3"
+            }
+          },
+          "required": [
+            "frame",
+            "position_m",
+            "orientation_wxyz"
+          ],
+          "type": "object"
+        },
+        "motion_authority": {
+          "const": "carrier_evaluated_world_pose"
+        },
+        "palette_keys": {
+          "items": {
+            "$ref": "#/$defs/stable_key"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "physical_participation": {
+          "const": "none"
+        },
+        "profile": {
+          "const": "surface-0.1"
+        },
+        "regions": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+                "type": "string"
+              },
+              "material_key": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+                "type": "string"
+              },
+              "triangle_count": {
+                "maximum": 8192,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "key",
+              "material_key",
+              "triangle_count"
+            ],
+            "type": "object"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "ontokin.surface-summary/0.1"
+        },
+        "section_keys": {
+          "items": {
+            "$ref": "#/$defs/stable_key"
+          },
+          "maxItems": 64,
+          "minItems": 2,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "stations_m": {
+          "items": {
+            "maximum": 100,
+            "minimum": -100,
+            "type": "number"
+          },
+          "maxItems": 64,
+          "minItems": 2,
+          "type": "array"
+        },
+        "triangle_count": {
+          "maximum": 8192,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "vertex_count": {
+          "maximum": 24576,
+          "minimum": 3,
+          "multipleOf": 3,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "profile",
+        "section_keys",
+        "stations_m",
+        "palette_keys",
+        "facets",
+        "caps",
+        "triangle_count",
+        "vertex_count",
+        "regions",
+        "local_visual_placement",
+        "physical_participation",
+        "motion_authority"
+      ],
+      "type": "object"
+    },
+    "vector3": {
+      "items": {
+        "type": "number"
+      },
+      "maxItems": 3,
+      "minItems": 3,
+      "type": "array"
+    },
+    "execution_budget": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "ontokin.execution-budget/0.1"
+        },
+        "defaults": {
+          "type": "object",
+          "properties": {
+            "max_operations": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "max_elapsed_ms": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "max_operations",
+            "max_elapsed_ms"
+          ],
+          "additionalProperties": false
+        },
+        "policy_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "host_ceilings": {
+          "type": "object",
+          "properties": {
+            "max_operations": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "max_elapsed_ms": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "max_operations",
+            "max_elapsed_ms"
+          ],
+          "additionalProperties": false
+        },
+        "source_request": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "max_operations": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "max_elapsed_ms": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "max_operations",
+                "max_elapsed_ms"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "caller_caps": {
+          "type": "object",
+          "properties": {
+            "max_operations": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "max_elapsed_ms": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "effective": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "max_operations": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                },
+                "max_elapsed_ms": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9007199254740991
+                }
+              },
+              "required": [
+                "max_operations",
+                "max_elapsed_ms"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "consumed_operations": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "elapsed_ms": {
+          "type": "number",
+          "minimum": 0
+        },
+        "stage": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "budget_reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "started_monotonic_seconds": {
+          "type": "number"
+        },
+        "deadline_monotonic_seconds": {
+          "type": "number"
+        },
+        "implementation": {
+          "$ref": "#/$defs/implementation"
+        },
+        "program_revision": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "entry_revision": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^sha256:[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "provisional": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "schema_version",
+        "defaults",
+        "policy_id",
+        "host_ceilings",
+        "source_request",
+        "caller_caps",
+        "effective",
+        "consumed_operations",
+        "elapsed_ms",
+        "stage",
+        "status",
+        "budget_reason",
+        "started_monotonic_seconds",
+        "deadline_monotonic_seconds",
+        "implementation",
+        "program_revision",
+        "entry_revision",
+        "request_id",
+        "provisional"
+      ],
+      "additionalProperties": false
+    },
+    "extrusion_summary": {
+      "additionalProperties": false,
+      "properties": {
+        "local_visual_placement": {
+          "additionalProperties": false,
+          "properties": {
+            "frame": {
+              "const": "carrier_self_frame"
+            },
+            "orientation_wxyz": {
+              "$ref": "#/$defs/quaternion_wxyz"
+            },
+            "position_m": {
+              "$ref": "#/$defs/vector3"
+            }
+          },
+          "required": [
+            "frame",
+            "position_m",
+            "orientation_wxyz"
+          ],
+          "type": "object"
+        },
+        "motion_authority": {
+          "const": "carrier_evaluated_world_pose"
+        },
+        "palette_keys": {
+          "items": {
+            "$ref": "#/$defs/stable_key"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "physical_participation": {
+          "const": "none"
+        },
+        "profile": {
+          "const": "polygon-extrusion-0.1"
+        },
+        "regions": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+                "type": "string"
+              },
+              "material_key": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+                "type": "string"
+              },
+              "triangle_count": {
+                "maximum": 8192,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "key",
+              "material_key",
+              "triangle_count"
+            ],
+            "type": "object"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "ontokin.polygon-extrusion-summary/0.1"
+        },
+        "triangle_count": {
+          "type": "integer",
+          "minimum": 8,
+          "maximum": 252
+        },
+        "vertex_count": {
+          "type": "integer",
+          "minimum": 24,
+          "maximum": 756,
+          "multipleOf": 3
+        },
+        "family": {
+          "const": "polygon_extrusion"
+        },
+        "vertex_keys": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/stable_key"
+          },
+          "minItems": 3,
+          "maxItems": 64,
+          "uniqueItems": true
+        },
+        "orders": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 65535
+          },
+          "minItems": 3,
+          "maxItems": 64,
+          "uniqueItems": true
+        },
+        "points_m": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "minItems": 3,
+          "maxItems": 64
+        },
+        "depth_m": {
+          "type": "number",
+          "minimum": 0.001,
+          "maximum": 100
+        },
+        "bottom_region": {
+          "$ref": "#/$defs/stable_key"
+        },
+        "top_region": {
+          "$ref": "#/$defs/stable_key"
+        }
+      },
+      "required": [
+        "local_visual_placement",
+        "motion_authority",
+        "palette_keys",
+        "physical_participation",
+        "profile",
+        "regions",
+        "schema_version",
+        "triangle_count",
+        "vertex_count",
+        "family",
+        "vertex_keys",
+        "orders",
+        "points_m",
+        "depth_m",
+        "bottom_region",
+        "top_region"
+      ],
+      "type": "object"
+    },
+    "holes_summary": {
+      "additionalProperties": false,
+      "properties": {
+        "local_visual_placement": {
+          "additionalProperties": false,
+          "properties": {
+            "frame": {
+              "const": "carrier_self_frame"
+            },
+            "orientation_wxyz": {
+              "$ref": "#/$defs/quaternion_wxyz"
+            },
+            "position_m": {
+              "$ref": "#/$defs/vector3"
+            }
+          },
+          "required": [
+            "frame",
+            "position_m",
+            "orientation_wxyz"
+          ],
+          "type": "object"
+        },
+        "motion_authority": {
+          "const": "carrier_evaluated_world_pose"
+        },
+        "palette_keys": {
+          "items": {
+            "$ref": "#/$defs/stable_key"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "physical_participation": {
+          "const": "none"
+        },
+        "profile": {
+          "const": "polygon-holes-0.1"
+        },
+        "regions": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+                "type": "string"
+              },
+              "material_key": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+                "type": "string"
+              },
+              "triangle_count": {
+                "maximum": 8192,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "key",
+              "material_key",
+              "triangle_count"
+            ],
+            "type": "object"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "ontokin.polygon-holes-summary/0.1"
+        },
+        "triangle_count": {
+          "type": "integer",
+          "minimum": 8,
+          "maximum": 284
+        },
+        "vertex_count": {
+          "type": "integer",
+          "minimum": 24,
+          "maximum": 852,
+          "multipleOf": 3
+        },
+        "family": {
+          "const": "polygon_holes"
+        },
+        "depth_m": {
+          "type": "number",
+          "minimum": 0.001,
+          "maximum": 100
+        },
+        "bottom_region": {
+          "$ref": "#/$defs/stable_key"
+        },
+        "top_region": {
+          "$ref": "#/$defs/stable_key"
+        },
+        "ring_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9
+        },
+        "hole_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8
+        },
+        "authored_vertex_count": {
+          "type": "integer",
+          "minimum": 3,
+          "maximum": 64
+        },
+        "rings": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 9,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "$ref": "#/$defs/stable_key"
+              },
+              "order": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 65535
+              },
+              "role": {
+                "enum": [
+                  "outer",
+                  "hole"
+                ]
+              },
+              "vertices": {
+                "type": "array",
+                "minItems": 3,
+                "maxItems": 64,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "key": {
+                      "$ref": "#/$defs/stable_key"
+                    },
+                    "order": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 65535
+                    },
+                    "point_m": {
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 2,
+                      "items": {
+                        "type": "number",
+                        "minimum": -100,
+                        "maximum": 100
+                      }
+                    },
+                    "side_region": {
+                      "$ref": "#/$defs/stable_key"
+                    }
+                  },
+                  "required": [
+                    "key",
+                    "order",
+                    "point_m",
+                    "side_region"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "key",
+              "order",
+              "role",
+              "vertices"
+            ]
+          }
+        },
+        "cap_triangle_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 78
+        },
+        "palette_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16
+        },
+        "used_region_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16
+        }
+      },
+      "required": [
+        "local_visual_placement",
+        "motion_authority",
+        "palette_keys",
+        "physical_participation",
+        "profile",
+        "regions",
+        "schema_version",
+        "triangle_count",
+        "vertex_count",
+        "family",
+        "depth_m",
+        "bottom_region",
+        "top_region",
+        "ring_count",
+        "hole_count",
+        "authored_vertex_count",
+        "rings",
+        "cap_triangle_count",
+        "palette_count",
+        "used_region_count"
+      ],
+      "type": "object"
+    },
+    "ring_loft_summary": {
+      "additionalProperties": false,
+      "properties": {
+        "local_visual_placement": {
+          "additionalProperties": false,
+          "properties": {
+            "frame": {
+              "const": "carrier_self_frame"
+            },
+            "orientation_wxyz": {
+              "$ref": "#/$defs/quaternion_wxyz"
+            },
+            "position_m": {
+              "$ref": "#/$defs/vector3"
+            }
+          },
+          "required": [
+            "frame",
+            "position_m",
+            "orientation_wxyz"
+          ],
+          "type": "object"
+        },
+        "motion_authority": {
+          "const": "carrier_evaluated_world_pose"
+        },
+        "palette_keys": {
+          "items": {
+            "$ref": "#/$defs/stable_key"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "physical_participation": {
+          "const": "none"
+        },
+        "profile": {
+          "const": "polygon-loft-0.1"
+        },
+        "regions": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+                "type": "string"
+              },
+              "material_key": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+                "type": "string"
+              },
+              "triangle_count": {
+                "maximum": 540,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "key",
+              "material_key",
+              "triangle_count"
+            ],
+            "type": "object"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "ontokin.polygon-loft-summary/0.1"
+        },
+        "triangle_count": {
+          "type": "integer",
+          "minimum": 8,
+          "maximum": 540
+        },
+        "vertex_count": {
+          "type": "integer",
+          "minimum": 24,
+          "maximum": 1620,
+          "multipleOf": 3
+        },
+        "family": {
+          "const": "polygon_loft"
+        },
+        "bottom_region": {
+          "$ref": "#/$defs/stable_key"
+        },
+        "top_region": {
+          "$ref": "#/$defs/stable_key"
+        },
+        "ring_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9
+        },
+        "hole_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8
+        },
+        "authored_vertex_count": {
+          "type": "integer",
+          "minimum": 6,
+          "maximum": 256
+        },
+        "cap_triangle_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 78
+        },
+        "palette_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16
+        },
+        "used_region_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16
+        },
+        "surface_rule": {
+          "const": "fixed-diagonal-triangles"
+        },
+        "section_count": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 8
+        },
+        "vertices_per_section": {
+          "type": "integer",
+          "minimum": 3,
+          "maximum": 64
+        },
+        "strip_triangle_count": {
+          "type": "integer",
+          "minimum": 6,
+          "maximum": 448
+        },
+        "station_range_m": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          }
+        },
+        "sections": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "$ref": "#/$defs/stable_key"
+              },
+              "order": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 65535
+              },
+              "station_m": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "rings": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 9,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "key": {
+                      "$ref": "#/$defs/stable_key"
+                    },
+                    "order": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 65535
+                    },
+                    "role": {
+                      "enum": [
+                        "outer",
+                        "hole"
+                      ]
+                    },
+                    "vertices": {
+                      "type": "array",
+                      "minItems": 3,
+                      "maxItems": 64,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "key": {
+                            "$ref": "#/$defs/stable_key"
+                          },
+                          "order": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                          },
+                          "point_m": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": {
+                              "type": "number",
+                              "minimum": -100,
+                              "maximum": 100
+                            }
+                          },
+                          "side_region": {
+                            "$ref": "#/$defs/stable_key"
+                          }
+                        },
+                        "required": [
+                          "key",
+                          "order",
+                          "point_m",
+                          "side_region"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "key",
+                    "order",
+                    "role",
+                    "vertices"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "key",
+              "order",
+              "station_m",
+              "rings"
+            ]
+          }
+        }
+      },
+      "required": [
+        "local_visual_placement",
+        "motion_authority",
+        "palette_keys",
+        "physical_participation",
+        "profile",
+        "regions",
+        "schema_version",
+        "triangle_count",
+        "vertex_count",
+        "family",
+        "bottom_region",
+        "top_region",
+        "ring_count",
+        "hole_count",
+        "authored_vertex_count",
+        "cap_triangle_count",
+        "palette_count",
+        "used_region_count",
+        "surface_rule",
+        "section_count",
+        "vertices_per_section",
+        "strip_triangle_count",
+        "station_range_m",
+        "sections"
+      ],
+      "type": "object"
+    },
+    "framed_loft_summary": {
+      "additionalProperties": false,
+      "properties": {
+        "local_visual_placement": {
+          "additionalProperties": false,
+          "properties": {
+            "frame": {
+              "const": "carrier_self_frame"
+            },
+            "orientation_wxyz": {
+              "$ref": "#/$defs/quaternion_wxyz"
+            },
+            "position_m": {
+              "$ref": "#/$defs/vector3"
+            }
+          },
+          "required": [
+            "frame",
+            "position_m",
+            "orientation_wxyz"
+          ],
+          "type": "object"
+        },
+        "motion_authority": {
+          "const": "carrier_evaluated_world_pose"
+        },
+        "palette_keys": {
+          "items": {
+            "$ref": "#/$defs/stable_key"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "physical_participation": {
+          "const": "none"
+        },
+        "profile": {
+          "const": "framed-polygon-loft-0.1"
+        },
+        "regions": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+                "type": "string"
+              },
+              "material_key": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+                "type": "string"
+              },
+              "triangle_count": {
+                "maximum": 540,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "key",
+              "material_key",
+              "triangle_count"
+            ],
+            "type": "object"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "ontokin.framed-polygon-loft-summary/0.1"
+        },
+        "triangle_count": {
+          "type": "integer",
+          "minimum": 8,
+          "maximum": 540
+        },
+        "vertex_count": {
+          "type": "integer",
+          "minimum": 24,
+          "maximum": 1620,
+          "multipleOf": 3
+        },
+        "family": {
+          "const": "framed_polygon_loft"
+        },
+        "bottom_region": {
+          "$ref": "#/$defs/stable_key"
+        },
+        "top_region": {
+          "$ref": "#/$defs/stable_key"
+        },
+        "ring_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9
+        },
+        "hole_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8
+        },
+        "authored_vertex_count": {
+          "type": "integer",
+          "minimum": 6,
+          "maximum": 256
+        },
+        "cap_triangle_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 78
+        },
+        "palette_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16
+        },
+        "used_region_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16
+        },
+        "surface_rule": {
+          "const": "fixed-diagonal-triangles"
+        },
+        "section_count": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 8
+        },
+        "vertices_per_section": {
+          "type": "integer",
+          "minimum": 3,
+          "maximum": 64
+        },
+        "strip_triangle_count": {
+          "type": "integer",
+          "minimum": 6,
+          "maximum": 448
+        },
+        "sections": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "$ref": "#/$defs/stable_key"
+              },
+              "order": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 65535
+              },
+              "rings": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 9,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "key": {
+                      "$ref": "#/$defs/stable_key"
+                    },
+                    "order": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 65535
+                    },
+                    "role": {
+                      "enum": [
+                        "outer",
+                        "hole"
+                      ]
+                    },
+                    "vertices": {
+                      "type": "array",
+                      "minItems": 3,
+                      "maxItems": 64,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "key": {
+                            "$ref": "#/$defs/stable_key"
+                          },
+                          "order": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                          },
+                          "point_m": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2,
+                            "items": {
+                              "type": "number",
+                              "minimum": -100,
+                              "maximum": 100
+                            }
+                          },
+                          "side_region": {
+                            "$ref": "#/$defs/stable_key"
+                          }
+                        },
+                        "required": [
+                          "key",
+                          "order",
+                          "point_m",
+                          "side_region"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "key",
+                    "order",
+                    "role",
+                    "vertices"
+                  ]
+                }
+              },
+              "frame": {
+                "const": "carrier_self_frame"
+              },
+              "origin_m": {
+                "type": "array",
+                "minItems": 3,
+                "maxItems": 3,
+                "items": {
+                  "type": "number",
+                  "minimum": -100,
+                  "maximum": 100
+                }
+              },
+              "orientation_wxyz": {
+                "$ref": "#/$defs/quaternion_wxyz"
+              }
+            },
+            "required": [
+              "key",
+              "order",
+              "rings",
+              "frame",
+              "origin_m",
+              "orientation_wxyz"
+            ]
+          }
+        },
+        "section_transform_rule": {
+          "const": "exact-rational-quaternion-single-round"
+        }
+      },
+      "required": [
+        "local_visual_placement",
+        "motion_authority",
+        "palette_keys",
+        "physical_participation",
+        "profile",
+        "regions",
+        "schema_version",
+        "triangle_count",
+        "vertex_count",
+        "family",
+        "bottom_region",
+        "top_region",
+        "ring_count",
+        "hole_count",
+        "authored_vertex_count",
+        "cap_triangle_count",
+        "palette_count",
+        "used_region_count",
+        "surface_rule",
+        "section_count",
+        "vertices_per_section",
+        "strip_triangle_count",
+        "sections",
+        "section_transform_rule"
+      ],
+      "type": "object"
+    },
+    "pockets_vertex": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "$ref": "#/$defs/stable_key"
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65535
+        },
+        "point_m": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number",
+            "minimum": -100,
+            "maximum": 100
+          }
+        },
+        "side_region": {
+          "$ref": "#/$defs/stable_key"
+        }
+      },
+      "required": [
+        "key",
+        "order",
+        "point_m",
+        "side_region"
+      ]
+    },
+    "pockets_exact_length": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "numerator": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "denominator": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      },
+      "required": [
+        "numerator",
+        "denominator"
+      ],
+      "description": "Positive exact length as decimal integers; reduction and numeric meaning are semantic checks."
+    },
+    "pockets_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "local_visual_placement": {
+          "additionalProperties": false,
+          "properties": {
+            "frame": {
+              "const": "carrier_self_frame"
+            },
+            "orientation_wxyz": {
+              "$ref": "#/$defs/quaternion_wxyz"
+            },
+            "position_m": {
+              "$ref": "#/$defs/vector3"
+            }
+          },
+          "required": [
+            "frame",
+            "position_m",
+            "orientation_wxyz"
+          ],
+          "type": "object"
+        },
+        "motion_authority": {
+          "const": "carrier_evaluated_world_pose"
+        },
+        "palette_keys": {
+          "items": {
+            "$ref": "#/$defs/stable_key"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "physical_participation": {
+          "const": "none"
+        },
+        "regions": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+                "type": "string"
+              },
+              "material_key": {
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$",
+                "type": "string"
+              },
+              "triangle_count": {
+                "maximum": 252,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "key",
+              "material_key",
+              "triangle_count"
+            ],
+            "type": "object"
+          },
+          "maxItems": 16,
+          "minItems": 1,
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "ontokin.polygon-pockets-summary/0.1"
+        },
+        "profile": {
+          "const": "polygon-pockets-0.1"
+        },
+        "family": {
+          "const": "polygon_pockets"
+        },
+        "height_m": {
+          "type": "number",
+          "minimum": 0.001,
+          "maximum": 100
+        },
+        "outer_vertices": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 64,
+          "items": {
+            "$ref": "#/$defs/pockets_vertex"
+          }
+        },
+        "pockets": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "key": {
+                "$ref": "#/$defs/stable_key"
+              },
+              "order": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 65535
+              },
+              "vertices": {
+                "type": "array",
+                "minItems": 3,
+                "maxItems": 64,
+                "items": {
+                  "$ref": "#/$defs/pockets_vertex"
+                }
+              },
+              "depth_m": {
+                "type": "number",
+                "minimum": 0.001,
+                "maximum": 100
+              },
+              "floor_region": {
+                "$ref": "#/$defs/stable_key"
+              },
+              "floor_m": {
+                "type": "number",
+                "minimum": 0.001,
+                "maximum": 100
+              },
+              "remaining_base_m": {
+                "type": "number",
+                "minimum": 0.001,
+                "maximum": 100
+              },
+              "exact_remaining_base_m": {
+                "$ref": "#/$defs/pockets_exact_length"
+              },
+              "effective_depth_m": {
+                "$ref": "#/$defs/pockets_exact_length"
+              }
+            },
+            "required": [
+              "key",
+              "order",
+              "vertices",
+              "depth_m",
+              "floor_region",
+              "floor_m",
+              "remaining_base_m",
+              "exact_remaining_base_m",
+              "effective_depth_m"
+            ]
+          }
+        },
+        "bottom_region": {
+          "$ref": "#/$defs/stable_key"
+        },
+        "top_region": {
+          "$ref": "#/$defs/stable_key"
+        },
+        "pocket_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8
+        },
+        "authored_vertex_count": {
+          "type": "integer",
+          "minimum": 3,
+          "maximum": 64
+        },
+        "logical_vertex_count": {
+          "type": "integer",
+          "minimum": 6,
+          "maximum": 128,
+          "multipleOf": 2
+        },
+        "bottom_triangle_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 62
+        },
+        "top_triangle_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 78
+        },
+        "floor_triangle_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 59
+        },
+        "wall_triangle_count": {
+          "type": "integer",
+          "minimum": 6,
+          "maximum": 128,
+          "multipleOf": 2
+        },
+        "triangle_count": {
+          "type": "integer",
+          "minimum": 8,
+          "maximum": 252,
+          "multipleOf": 4
+        },
+        "vertex_count": {
+          "type": "integer",
+          "minimum": 24,
+          "maximum": 756,
+          "multipleOf": 12
+        },
+        "palette_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16
+        },
+        "used_region_count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16
+        }
+      },
+      "required": [
+        "local_visual_placement",
+        "motion_authority",
+        "palette_keys",
+        "physical_participation",
+        "regions",
+        "schema_version",
+        "profile",
+        "family",
+        "height_m",
+        "outer_vertices",
+        "pockets",
+        "bottom_region",
+        "top_region",
+        "pocket_count",
+        "authored_vertex_count",
+        "logical_vertex_count",
+        "bottom_triangle_count",
+        "top_triangle_count",
+        "floor_triangle_count",
+        "wall_triangle_count",
+        "triangle_count",
+        "vertex_count",
+        "palette_count",
+        "used_region_count"
+      ]
+    }
+  },
+  "$id": "https://omegapy.github.io/OntoKin/schemas/ontokin.agent-response-0.12.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "surface.mesh_page"
+          },
+          "status": {
+            "const": "succeeded"
+          }
+        },
+        "required": [
+          "operation",
+          "status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "achieved_level": {
+            "const": "constructed"
+          },
+          "program_revision": {
+            "$ref": "#/$defs/revision"
+          },
+          "protocol_error": {
+            "type": "null"
+          },
+          "requested_level": {
+            "type": "null"
+          },
+          "result": {
+            "$ref": "#/$defs/mesh_page_result"
+          },
+          "run_id": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "inspect"
+          },
+          "status": {
+            "const": "succeeded"
+          }
+        },
+        "required": [
+          "operation",
+          "status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "properties": {
+              "items": {
+                "items": {
+                  "properties": {
+                    "actions": {
+                      "oneOf": [
+                        {
+                          "items": {
+                            "allOf": [
+                              {
+                                "if": {
+                                  "properties": {
+                                    "kind": {
+                                      "const": "reach_planar"
+                                    }
+                                  },
+                                  "required": [
+                                    "kind"
+                                  ]
+                                },
+                                "then": {
+                                  "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/reach-projection.schema.json"
+                                }
+                              }
+                            ],
+                            "required": [
+                              "kind"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 100000,
+                          "type": "array"
+                        },
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "available": {
+                              "const": false
+                            },
+                            "reason": {
+                              "enum": [
+                                "definition_has_no_occurrence_state",
+                                "source_is_unresolved"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "available",
+                            "reason"
+                          ],
+                          "type": "object"
+                        }
+                      ]
+                    },
+                    "geometry": {
+                      "properties": {
+                        "surface": {
+                          "oneOf": [
+                            {
+                              "$ref": "#/$defs/surface_summary"
+                            },
+                            {
+                              "$ref": "#/$defs/extrusion_summary"
+                            },
+                            {
+                              "$ref": "#/$defs/holes_summary"
+                            },
+                            {
+                              "$ref": "#/$defs/ring_loft_summary"
+                            },
+                            {
+                              "$ref": "#/$defs/framed_loft_summary"
+                            },
+                            {
+                              "$ref": "#/$defs/pockets_summary"
+                            }
+                          ]
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "state": {
+                      "allOf": [
+                        {
+                          "if": {
+                            "properties": {
+                              "available": {
+                                "const": true
+                              }
+                            },
+                            "required": [
+                              "available"
+                            ]
+                          },
+                          "then": {
+                            "$ref": "#/$defs/force_object_state"
+                          }
+                        }
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "result": {
+            "properties": {
+              "schema_version": {
+                "const": "ontokin.surface-mesh-page/0.1"
+              }
+            },
+            "required": [
+              "schema_version"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "result"
+        ],
+        "type": "object"
+      },
+      "then": {
+        "properties": {
+          "operation": {
+            "const": "surface.mesh_page"
+          },
+          "status": {
+            "const": "succeeded"
+          }
+        }
+      }
+    }
+  ],
+  "description": "OK-AGENT-011/0.1.0 envelope with descriptive per-request execution evidence. The receipt cannot authorize later work; complete shape validity is separate from runtime and destination verification.",
+  "properties": {
+    "accepted_program_revision": {
+      "oneOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "achieved_level": {
+      "enum": [
+        "represented",
+        "constructed",
+        "evaluated",
+        "delivered",
+        null
+      ]
+    },
+    "diagnostics": {
+      "items": {
+        "$ref": "https://omegapy.github.io/OntoKin/schemas/ontokin.diagnostic-0.2.json",
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "details": {
+                  "required": [
+                    "reach_code"
+                  ]
+                }
+              },
+              "required": [
+                "details"
+              ]
+            },
+            "then": {
+              "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/reach-diagnostic.schema.json"
+            }
+          }
+        ]
+      },
+      "type": "array"
+    },
+    "next_cursor": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "operation": {
+      "enum": [
+        "discover",
+        "create",
+        "edit",
+        "validate",
+        "inspect",
+        "evaluate",
+        "reset",
+        "status",
+        "cancel",
+        "export",
+        "artifact",
+        "surface.mesh_page",
+        null
+      ]
+    },
+    "program_revision": {
+      "oneOf": [
+        {
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "progress": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "project_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "protocol_error": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "code": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "details": {
+              "type": "object"
+            },
+            "message": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "details"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "request_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "requested_level": {
+      "enum": [
+        "represented",
+        "constructed",
+        "evaluated",
+        "delivered",
+        null
+      ]
+    },
+    "result": {
+      "properties": {
+        "diagnostics": {
+          "items": {
+            "$ref": "https://omegapy.github.io/OntoKin/schemas/ontokin.diagnostic-0.2.json",
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "details": {
+                      "required": [
+                        "reach_code"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "details"
+                  ]
+                },
+                "then": {
+                  "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/reach-diagnostic.schema.json"
+                }
+              }
+            ]
+          },
+          "type": "array"
+        },
+        "initial_state": {
+          "$ref": "#/$defs/force_sample",
+          "allOf": [
+            {
+              "properties": {
+                "reaches": {
+                  "additionalProperties": {
+                    "allOf": [
+                      {
+                        "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/reach-projection.schema.json"
+                      },
+                      {
+                        "properties": {
+                          "context_origin": {
+                            "const": "agent"
+                          },
+                          "current": {
+                            "properties": {
+                              "available": {
+                                "const": true
+                              },
+                              "value": {
+                                "properties": {
+                                  "observation": {
+                                    "properties": {
+                                      "context_kind": {
+                                        "const": "constructed_initial"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "side": {
+                  "const": "before"
+                },
+                "time_seconds": {
+                  "const": "0"
+                }
+              }
+            }
+          ]
+        },
+        "run_state": {
+          "properties": {
+            "failure": {
+              "properties": {
+                "diagnostic": {
+                  "$ref": "https://omegapy.github.io/OntoKin/schemas/ontokin.diagnostic-0.2.json",
+                  "allOf": [
+                    {
+                      "if": {
+                        "properties": {
+                          "details": {
+                            "required": [
+                              "reach_code"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "details"
+                        ]
+                      },
+                      "then": {
+                        "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/reach-diagnostic.schema.json"
+                      }
+                    }
+                  ]
+                }
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "last_valid_state": {
+              "$ref": "#/$defs/force_sample",
+              "allOf": [
+                {
+                  "properties": {
+                    "reaches": {
+                      "additionalProperties": {
+                        "allOf": [
+                          {
+                            "$ref": "https://omegapy.github.io/OntoKin/proposals/planar-reach-v0.1/reach-projection.schema.json"
+                          },
+                          {
+                            "properties": {
+                              "context_origin": {
+                                "const": "agent"
+                              },
+                              "current": {
+                                "properties": {
+                                  "available": {
+                                    "const": true
+                                  },
+                                  "value": {
+                                    "properties": {
+                                      "observation": {
+                                        "properties": {
+                                          "context_kind": {
+                                            "const": "run_sample"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        }
+      },
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "run_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "schema_version": {
+      "const": "ontokin.agent/0.12"
+    },
+    "status": {
+      "enum": [
+        "queued",
+        "running",
+        "succeeded",
+        "rejected",
+        "failed",
+        "cancelled",
+        "unknown_outcome"
+      ]
+    },
+    "truncated": {
+      "type": "boolean"
+    },
+    "execution_budget": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/execution_budget"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "project_id",
+    "request_id",
+    "operation",
+    "status",
+    "program_revision",
+    "accepted_program_revision",
+    "requested_level",
+    "achieved_level",
+    "run_id",
+    "diagnostics",
+    "result",
+    "progress",
+    "next_cursor",
+    "truncated",
+    "protocol_error",
+    "execution_budget"
+  ],
+  "title": "OntoKin blind polygon pockets Agent/0.12 response",
+  "type": "object"
+}
