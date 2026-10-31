@@ -1,0 +1,398 @@
+{
+  "schema_version": "ontokin.polygon-pockets-freeze/0.1",
+  "decision": "OK-LANG-012/0.1.0",
+  "decision_commit": "881c790cab0c1dbd7be05606e7cc149f47dc1191",
+  "decision_file": "docs/language-design/polygon-pockets-v0.1/ADOPTION.md",
+  "decision_sha256": "f94abe4603d324c388689ba43fbffa7a5f89eefa30a84884b024fba6db860d49",
+  "source_baseline_commit": "50998106fe468e6630f17c79d88f7810da81bc32",
+  "independent_author": "/root/pocket_fixtures",
+  "independent_method": "Standard-library boundary arithmetic without OntoKin imports or product requests",
+  "product_imports": 0,
+  "product_requests": 0,
+  "frozen_before_implementation": true,
+  "case_count": 82,
+  "outcome_counts": {
+    "valid": 27,
+    "invalid": 50,
+    "source_valid_delivery_rejected": 5
+  },
+  "source_count": 89,
+  "files": {
+    "ANALYTIC-CONTROLS.json": {
+      "bytes": 808,
+      "sha256": "1c4febeb53962f005f6ccbfa11200b28f30079d4922df12defc76cbd5238ed33"
+    },
+    "AUTHORING.md": {
+      "bytes": 5550,
+      "sha256": "73656a0cddd6a06834d75725c1a85aa49f925b2bd619dd1a1e220e3410f07ee4"
+    },
+    "README.md": {
+      "bytes": 3900,
+      "sha256": "1ee373273cbedba8c1d180e3b2caf4557d7b3a2a79bf44502dd100442c9fccb2"
+    },
+    "above-maximum-depth.ok": {
+      "bytes": 1955,
+      "sha256": "5faf08f6122128f8463df409f930cd397fae1ddeddbb9355ead70d9757afe671"
+    },
+    "above-maximum-height.ok": {
+      "bytes": 1580,
+      "sha256": "b96dae8252a340a2aca72a0d8b46acae8889633f48c31f3831ccb64f93fbc8db"
+    },
+    "above-minimum-base.ok": {
+      "bytes": 1975,
+      "sha256": "964141fd3c66daf20f37a4c683b47d070418452d9c2cd771600e0b70fc40e80c"
+    },
+    "adjacent-collinear.ok": {
+      "bytes": 2022,
+      "sha256": "dc17bdf5585dc1e61703faa5fa725bc14b4637ec3062ad63b4cc5bb18c2f0ae7"
+    },
+    "assembly-invalid.ok": {
+      "bytes": 775,
+      "sha256": "a8abeb75e845da72716d698a567082eb7b4c63aa3663cfe9d75cf12c02ea82bc"
+    },
+    "assembly-repaired.ok": {
+      "bytes": 778,
+      "sha256": "b99f0fe78f7f2038ea347948be855f89b0af39d50a9e627aecbad22df7f75187"
+    },
+    "assembly.ok": {
+      "bytes": 777,
+      "sha256": "d59b608c1af562c1f260439a0419a757d02e60bc70ebbd7138956ca528886837"
+    },
+    "below-minimum-base.ok": {
+      "bytes": 1975,
+      "sha256": "0f8b37d9b5d267f2e288a9abc29024c16250d00dd2d2c7e17a014f6699ea627f"
+    },
+    "below-minimum-depth.ok": {
+      "bytes": 1956,
+      "sha256": "20bd77c9eb7b048055760424c165c206f17829708a0a82e90bc98ba19adcdb2c"
+    },
+    "below-minimum-height.ok": {
+      "bytes": 1581,
+      "sha256": "a8116b5b09c0f2f49476e5d7795d666719cab5c1729484243cfe5af7c4ae335b"
+    },
+    "binary32-between-pockets.ok": {
+      "bytes": 2434,
+      "sha256": "132d807e57b11abafc3d3498908ed06f7fdbae622ed3987ce027611a2d0fea7a"
+    },
+    "binary32-boundary-clearance.ok": {
+      "bytes": 2033,
+      "sha256": "eea56f12b071672a7db8b9c96d033c42ab79215d4df1c83d9eb72f8da6991fc0"
+    },
+    "binary32-floor-collapse.ok": {
+      "bytes": 2093,
+      "sha256": "830195c255856ee8ef16218f57b8faad865a6b42592ff4be6160b1b4d886ff08"
+    },
+    "binary32-placed-clearance.ok": {
+      "bytes": 2091,
+      "sha256": "544127e906dea1e02ff42a022c70b1d3de33d95549cb4f4ac9c39b2e6f6a55cf"
+    },
+    "binary32-pocket-width-collapse.ok": {
+      "bytes": 2033,
+      "sha256": "fb788eccad4f615b5ae3b40f9152005f4cba3f7c50ed5b89c6d75832f5aee775"
+    },
+    "clockwise-outer.ok": {
+      "bytes": 1953,
+      "sha256": "647a79e1ecfbd8affe529880ca7c5e1878408efcbbea8a7ab3f66d9c4eeb7ce9"
+    },
+    "component-boundaries.ok": {
+      "bytes": 2048,
+      "sha256": "b1300dbefa5ed389337f33d426b146095cf8072bfa039a79644376000d7fae33"
+    },
+    "concave-outer.ok": {
+      "bytes": 2108,
+      "sha256": "094dee480b139d1636732a7081b0c658efeaaa3c4aec4cb1c6d32ebaf0d37269"
+    },
+    "concave-pocket.ok": {
+      "bytes": 2100,
+      "sha256": "533ef0cbc77f3571ae7e36b16db4acf6e91f85b5afa2b62f4222b02f65fcd64c"
+    },
+    "coordinate-outside.ok": {
+      "bytes": 1956,
+      "sha256": "23f45f6dd5dea355a9ee55d7ecb4b490970f7dd8d3a5f7a9f0653442029c3ce9"
+    },
+    "counterclockwise-pocket.ok": {
+      "bytes": 1953,
+      "sha256": "b400ed19c89bdbb44eb7f4fc229f2ee3cd688d341e8d084eb2ccc91bff7326f8"
+    },
+    "cross-boundary-collinearity.ok": {
+      "bytes": 2327,
+      "sha256": "355c0a81189feb6e98101166f69e73ddb11e266b87cf21d2b6d348f6a11bc706"
+    },
+    "declaration-reordering.ok": {
+      "bytes": 2413,
+      "sha256": "334d4b25acec1b47e91efc80fbb0ef7c81e0e4d02140eb9d5f06cf35856da781"
+    },
+    "depth-equals-height.ok": {
+      "bytes": 1951,
+      "sha256": "b6baeb9d2acd360e7d6e150ccde613ec709fa45aa75a96f068123d5ad570f12a"
+    },
+    "duplicate-outer-vertex-order.ok": {
+      "bytes": 1952,
+      "sha256": "f3cb99a5b613546d2d1cda3cfbf549954eb65ccec6fb2289d7d6d4662d8b690e"
+    },
+    "duplicate-pocket-key.ok": {
+      "bytes": 2412,
+      "sha256": "8ee732cb212361b8ba48a3f305fb3bb07748ddb65707be7173eb30e17e057250"
+    },
+    "duplicate-pocket-order.ok": {
+      "bytes": 2413,
+      "sha256": "16d284ed67c37fabf0796f8576d574d7f6cfafee74781ae3e2756b7e55d597d8"
+    },
+    "duplicate-pocket-vertex-order.ok": {
+      "bytes": 1952,
+      "sha256": "9a7023c7e84088965c319b1a32c5f5eb8ce235e8428ca5be1bca3f9305c956c8"
+    },
+    "duplicate-point.ok": {
+      "bytes": 1953,
+      "sha256": "bc82f10a375fada77cfc2b2d9b2f7a637f1a56f847a17e8fb8a8988c785f0608"
+    },
+    "duplicate-vertex-key.ok": {
+      "bytes": 1953,
+      "sha256": "fafb3137c8032278551de793ae5636f04099e493a6ac0995d454cf5d5948a7bd"
+    },
+    "earlier-version-rejection.ok": {
+      "bytes": 1957,
+      "sha256": "fbbf1b09718fd5223606a9496b8a3168af096798eb7875ead2cf73a31c2fa152"
+    },
+    "empty-outer.ok": {
+      "bytes": 1680,
+      "sha256": "5480f52c2d4027f583840bc43388f0ea8d10b7776a482abdef7edd129106af02"
+    },
+    "empty-palette.ok": {
+      "bytes": 1600,
+      "sha256": "a2dde9d867aec6d80e9579de8b82e2e71df315a5cd5c9b12313e32f4ecb3df6c"
+    },
+    "expected.json": {
+      "bytes": 518273,
+      "sha256": "fef49a66b7a462c21456a62ddfb2a012699ed5c512dd0530d92284b3cfe3b653"
+    },
+    "function-pocket-and-geometry.ok": {
+      "bytes": 2374,
+      "sha256": "fa7bdee048d0878fbf0a5d03ef53c03acd88c224763d2c30e21153f15a9ea56e"
+    },
+    "gapped-orders.ok": {
+      "bytes": 1965,
+      "sha256": "503d328a4281c99df814e81b64ccfa9c2988b85d5b43011bcf4528ded2163cf6"
+    },
+    "generate_fixtures.py": {
+      "bytes": 30678,
+      "sha256": "a1dc8be302849cfe4df9871bca50138fc1e5aa4fba3ffaa8b6c34f9be3dbb9b9"
+    },
+    "generated.ok": {
+      "bytes": 1379,
+      "sha256": "077b4b48c94e1277a5d85b879f2cca62c9f19c390df49bd8191639d81b4c161c"
+    },
+    "heldout-stepped-tray.ok": {
+      "bytes": 2169,
+      "sha256": "c01c15cb820569cf118c4cd263b6a0374612182cc9d77b8de6ed04c3395cddf6"
+    },
+    "maximum-palette.ok": {
+      "bytes": 2766,
+      "sha256": "e50623cc5974bf0ed1258b3de52be8c8b4285e3b803641a703aed6651104505d"
+    },
+    "maximum-pockets-and-vertices.ok": {
+      "bytes": 7550,
+      "sha256": "a8caa41de7a7889a1ef6388e431a6cbc66dc3ef1656da7c8eb433c2e27a207ec"
+    },
+    "maximum-vertices-zero-pockets.ok": {
+      "bytes": 6800,
+      "sha256": "ec7de086e014531fee6ea3d5b80bb977ec10923f7ca0127ed930c83d2dacacda"
+    },
+    "minimum-base.ok": {
+      "bytes": 1959,
+      "sha256": "a0ccf620ff0e30fd4ee71ffee3ec2c5313dd8346828879a66aa6968a8ec0a522"
+    },
+    "minimum-body-height.ok": {
+      "bytes": 1580,
+      "sha256": "8e12ac39908a1b6e768bbf5f6958178b45d171b533338f934f67b7bc8b45c190"
+    },
+    "minimum-pocket-depth.ok": {
+      "bytes": 1955,
+      "sha256": "636c04272b812a59edcae4a80b8ad89d1b5e48551e9ac7fefa43601ac54085b3"
+    },
+    "missing-bottom-region.ok": {
+      "bytes": 1953,
+      "sha256": "80c7113085b4fe7265703c43b6cebdfffb0043c2059d95bd7ad7e49bbc492dcf"
+    },
+    "missing-floor-region.ok": {
+      "bytes": 1954,
+      "sha256": "3bdd27706a2edb44beb10a1a3d1791a05dc800f407df3e9900443eff8e098a2f"
+    },
+    "missing-outer-wall-region.ok": {
+      "bytes": 1954,
+      "sha256": "3aa88b23a52681b42d508ad5e9a97d97e504eec6dc9471076a3bf63c32346b64"
+    },
+    "missing-pocket-wall-region.ok": {
+      "bytes": 1954,
+      "sha256": "595dd20ba021d99f1ec1d10656e09c1a924617b6d786e37d6fcc8a386997b51b"
+    },
+    "missing-top-region.ok": {
+      "bytes": 1956,
+      "sha256": "b2e06ab51ff0ee7c93b0cfe19eb852b179dd0bd6a09e33504cecd754bfcee983"
+    },
+    "mixed-wall-materials.ok": {
+      "bytes": 1951,
+      "sha256": "8db23442152307d5e7c3184bf9d4634f1b330aad56d0e7d5c8bb74e1d4ef9afc"
+    },
+    "negative-coordinates.ok": {
+      "bytes": 1965,
+      "sha256": "df5677063d1ecf0ca3d99644826b2732e9855785ec47fa9da35bed0f5191153a"
+    },
+    "negative-depth.ok": {
+      "bytes": 1952,
+      "sha256": "a93f5d4e7ea995beb9fbda6ede32dd14e18e366a248361a7a2c242290a738a62"
+    },
+    "negative-height.ok": {
+      "bytes": 1577,
+      "sha256": "0e3057daf3cd2db1a756ea35cf6c45b5e949db6d8deb9a1b16ee348607104018"
+    },
+    "negative-pocket-order.ok": {
+      "bytes": 1953,
+      "sha256": "e5600504c2f392dfc8e6b23b6223355f8116741421a242a129e65554b43c9d23"
+    },
+    "nested-pockets.ok": {
+      "bytes": 2349,
+      "sha256": "69c31b0c33802469448a27b2752a63de5e5da53e78ce14064c23e8ec574c769b"
+    },
+    "overlapping-pockets.ok": {
+      "bytes": 2357,
+      "sha256": "a60ece9876e36933315ae7c5ec338326c34cac486d32c888cc700093faa1add3"
+    },
+    "parts.ok": {
+      "bytes": 1679,
+      "sha256": "7279cc82a29799529632344f78a2c46d18a90195fdb83e6d82ac8be4814b8eae"
+    },
+    "penetrating-depth.ok": {
+      "bytes": 1953,
+      "sha256": "f1007afc765d22b5856770c2afc4985c7d3d6b5564aecfc035e50c0a7ff0d275"
+    },
+    "placed-rotated-pocket.ok": {
+      "bytes": 2029,
+      "sha256": "b1be1663f7f3a9e972b8b939f052f80d8488b05255bed949b0c4d2b9cbc9f45c"
+    },
+    "pocket-crossing-boundary.ok": {
+      "bytes": 1961,
+      "sha256": "b59ea71f1f1aa0a6ad9c187510903a0f2727b0d6636add59c8555de9139dc5f6"
+    },
+    "pocket-in-concave-notch.ok": {
+      "bytes": 2091,
+      "sha256": "28c0462515931e0d7469ff978632a3965886b54b41b0ca07c06b5606a9cc866b"
+    },
+    "pocket-key-outer.ok": {
+      "bytes": 1952,
+      "sha256": "896a984fdaf6f0e430e2b5dfc924e0d50fee8d9e39196f201d4e7313d02768e9"
+    },
+    "pocket-order-outside.ok": {
+      "bytes": 1956,
+      "sha256": "fc6a4a365924c143382b20e54e978ae16c2f40ceb55593e16c21417d1cdf5234"
+    },
+    "pocket-outside.ok": {
+      "bytes": 1953,
+      "sha256": "c07ac4ca2116913e2eb4f9489dee2e0db19416d02f81370b603bfa3b8700e242"
+    },
+    "pocket-touching-boundary.ok": {
+      "bytes": 1953,
+      "sha256": "fc61ec5175f12b03d30a42f54351bdf65c8db13edf529170c8be81eaee5e7202"
+    },
+    "rectangular-pocket.ok": {
+      "bytes": 1953,
+      "sha256": "11dce2ba641cb9970798d8648064bd2ff5fcb34a23f0cb6fbf601dfb74651cc2"
+    },
+    "repaired-rectangular-pocket.ok": {
+      "bytes": 1954,
+      "sha256": "747017122d58a471b60f825f88d640f6a82f254b5f6f2528928c323c4d6574e6"
+    },
+    "rounded-floor.ok": {
+      "bytes": 1955,
+      "sha256": "a213d6b87e762909653b239d17e5513223271304b9f0fe038d40d3787ad0e916"
+    },
+    "self-crossing-outer.ok": {
+      "bytes": 1953,
+      "sha256": "da16de5c4787984d6375ce50df4b2cbcf39b2d340acfbadfebbe2d6765069c7b"
+    },
+    "self-crossing-pocket.ok": {
+      "bytes": 1953,
+      "sha256": "f444c26d240ffc19787ea494f68ddca6d19a68da36e7862afc9cf484af980db8"
+    },
+    "too-few-outer-vertices.ok": {
+      "bytes": 1815,
+      "sha256": "081c874ee8e921f6879fb923e6add26e25497ef3b566f938f95b67effc3f3d04"
+    },
+    "too-few-pocket-vertices.ok": {
+      "bytes": 1807,
+      "sha256": "49af2d3165ae04eb0d95ac647ee96144241df81b280a66ec3e4cbb7b5e2c937a"
+    },
+    "too-many-materials.ok": {
+      "bytes": 2836,
+      "sha256": "005ea1230025c40d7ac27c0ef2199e997c06da454e172e27167139616f39e03f"
+    },
+    "too-many-pockets.ok": {
+      "bytes": 5030,
+      "sha256": "f040c82d9c9046e2deeed925981a871c48e98699b2d617cb9eb846cbbc2ee8f6"
+    },
+    "too-many-total-vertices.ok": {
+      "bytes": 6842,
+      "sha256": "7cc5053536199226d25ff449be777e3f335e354b6a616294c61fd7812c9d90a2"
+    },
+    "touching-pockets.ok": {
+      "bytes": 2353,
+      "sha256": "574896a2e9abea4fcffe53111bf7ec7f0943931148181d7a77af5beb05b1b5b6"
+    },
+    "triangular-body.ok": {
+      "bytes": 1811,
+      "sha256": "ca67fbeed2eadfaa17b4c098033574fec499065ec8c3ec7e5b01cc7779cf53e3"
+    },
+    "triangular-pocket.ok": {
+      "bytes": 1880,
+      "sha256": "1d702730cda954c9eec6cfe71e1fb5d77928a12dedf748f906c33011bf80c98a"
+    },
+    "unequal-depths.ok": {
+      "bytes": 2413,
+      "sha256": "556e1984a534da6cf6a082e99c1e021f491e00a663e5b047b6466f7c9c39e227"
+    },
+    "vertex-order-outside.ok": {
+      "bytes": 1956,
+      "sha256": "7a0c587c35b5e0f35fe683ba10051e7d07b51e6c7dbf178a44d78cae526fdc6a"
+    },
+    "wrong-depth-unit.ok": {
+      "bytes": 1953,
+      "sha256": "ce13d07a8cf44156067d2d79b03b482b5e463d15d08e094fbe0747479860c75d"
+    },
+    "wrong-floor-region-type.ok": {
+      "bytes": 1947,
+      "sha256": "80e0cd1c05c6d1aed47297cce79e9f2eb961cbca11e730018de1dddcdc7da1d1"
+    },
+    "wrong-height-unit.ok": {
+      "bytes": 1953,
+      "sha256": "2b22f0091d2e2adaa52069d0b72749708f908998b308b6f235ae32b31079d648"
+    },
+    "wrong-point-unit.ok": {
+      "bytes": 1953,
+      "sha256": "ac55e8f85574ebd30c198b23d2f1a3cb78a83e9fe0495a99355c4dbb33b5f51e"
+    },
+    "zero-depth.ok": {
+      "bytes": 1951,
+      "sha256": "22a73cacae766d76523569a32640d05ddfd7e1d465c8c6052e4a8965a1a33a5a"
+    },
+    "zero-height.ok": {
+      "bytes": 1576,
+      "sha256": "b15e731f448f9c6192b7214dc697ecd0262656ca299f9b75bbe883fa2b715b2c"
+    },
+    "zero-pockets-concave-legacy.ok": {
+      "bytes": 1601,
+      "sha256": "d427238ff578663ef7bdd9f1916a754237972effd689ad375345281e6e356a52"
+    },
+    "zero-pockets-concave.ok": {
+      "bytes": 1714,
+      "sha256": "969035f7f0fd2a8cd50eaa4b900c718e13923181ab3e63fddf78e0567cee2809"
+    },
+    "zero-pockets-legacy.ok": {
+      "bytes": 1463,
+      "sha256": "77c6fcbc6b1647cb6a9a04b9264aecefd40dc94805e13a6dd8251e4b4fd261e9"
+    },
+    "zero-pockets.ok": {
+      "bytes": 1576,
+      "sha256": "0b96e928995823910a078f877550ce2821c57a3b51309235c33ec1e55d079843"
+    }
+  }
+}

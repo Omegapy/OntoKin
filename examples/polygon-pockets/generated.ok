@@ -1,0 +1,37 @@
+ontokin "0.12";
+module PocketArray @ "pocket-array";
+profile "polygon-pockets-0.1";
+
+import libparts @ "pocket-parts" from "fixture.pocket-parts" version "1.0.0"
+    digest "sha256:7279cc82a29799529632344f78a2c46d18a90195fdb83e6d82ac8be4814b8eae";
+
+public class Mounted @ "mounted" extends libparts.Shape {
+    public param parent_frame @ "parent-frame": FrameRef = world;
+    public param mount_x @ "mount-x": Length = 0[m];
+    public follow mounting @ "mounting" {
+        parent = self.parent_frame;
+        child = self;
+        offset = pose(self.parent_frame, vec3(self.mount_x, 0[m], 0[m]), quat(1, 0, 0, 0));
+    }
+}
+public class Array @ "array-type" {
+    public param depths @ "depths": Keyed<Length> = keyed<Length> {
+        "left": 0.25[m], "middle": 0.5[m], "right": 0.75[m]
+    };
+    geometry = empty();
+    physical = no_body();
+    public parts trays @ "trays": Mounted for (key, value) in self.depths {
+        parent_frame = self.frame;
+        mount_x = 20 * value;
+        pocket_depth = value;
+    }
+}
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object array @ "array": Array {
+        placement = pose(world, vec3(-10[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+    }
+    action travel @ "travel" = move(array, vector(world, 0[m/s], 0.5[m/s], 0[m/s]), 1[s]);
+    at 0[s] sequence { start travel; }
+}
