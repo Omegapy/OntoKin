@@ -1,0 +1,15 @@
+ontokin "0.13";
+module Probe @ "probe";
+profile "textured-surfaces-0.1";
+
+public class ProbeShape @ "probe-shape" {
+    
+    public derive result @ "result": Keyed<Int> = keyed<Int>{"outer": 9};
+    geometry = if len(self.result) >= 0 then box(vec3(1[m], 1[m], 1[m])) else empty();
+    physical = no_body();
+}
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object shape @ "shape": ProbeShape {}
+}

@@ -1,0 +1,16 @@
+ontokin "0.14";
+module Probe @ "probe";
+profile "keyed-transform-0.1";
+import lib @ "lib-import" from "fixture.old-helper" version "1.0.0" digest "sha256:a1fbf0d1a984b66765c7e17502be2c301128852ca4392fc48fd449166335f773";
+
+public class ProbeShape @ "probe-shape" {
+    
+    public derive result @ "result": Keyed<Length> = map_keyed<Length>(keyed<Length> {"a": 0.25[m]}, (k, v) -> lib.twice(v));
+    geometry = if len(self.result) >= 0 then box(vec3(1[m], 1[m], 1[m])) else empty();
+    physical = no_body();
+}
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object shape @ "shape": ProbeShape {}
+}

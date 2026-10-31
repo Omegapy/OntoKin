@@ -1,0 +1,15 @@
+ontokin "0.14";
+module Probe @ "probe";
+profile "keyed-transform-0.1";
+
+public class ProbeShape @ "probe-shape" {
+    
+    public derive result @ "result": Keyed<PolygonRing> = map_keyed<PolygonRing>(keyed<PolygonRing> {"kept": polygon_ring(0, "outer", keyed<PolygonVertex>{"a": polygon_vertex(0, planar_point(0[m], 0[m]), "side"), "b": polygon_vertex(1, planar_point(1[m], 0[m]), "side"), "c": polygon_vertex(2, planar_point(0[m], 1[m]), "side")})}, (k, v) -> v);
+    geometry = if len(self.result) >= 0 then box(vec3(1[m], 1[m], 1[m])) else empty();
+    physical = no_body();
+}
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object shape @ "shape": ProbeShape {}
+}
