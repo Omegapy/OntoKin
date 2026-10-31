@@ -81,6 +81,7 @@ class Context:
     abstract: bool = False
     call_owner: str | None = None
     scene: bool = False
+    geometry_owner: str | None = None
 
 
 @dataclass
@@ -639,6 +640,11 @@ class Validator:
         try:
             context = Context(function.self_path, function.self_type, function.lexical_class,
                               locals_, call_owner=function.name)
+            # Only .11 constructors consume this carrier authority. Pure free
+            # functions retain their lexical self rules while a passed Pose
+            # must still name the eventual geometry owner's frame.
+            if self.model.profile == "framed-polygon-loft-0.1":
+                context.geometry_owner = caller.self_path or caller.geometry_owner
             for local in declaration.locals:
                 context.locals[local.name] = self.expect(self.expression(local.value, context), self.parse_type(local.type), local.value)
             return self.expect(self.expression(declaration.result, context), return_type, declaration.result)

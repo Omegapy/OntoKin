@@ -26,6 +26,8 @@ Original tests, fixtures and acceptance gates retain their current limits. New d
 
 ## Preserve the full product scope
 
+[C078's explicit frame decision](docs/language-design/framed-polygon-loft-v0.1/ADOPTION.md) extends the experimental polygon loft family to authored rigid section poses for bent bodies, hollow elbows and handles. It preserves the full mission and all unchanged release gates. Source/Agent/GLB `.11` implementation, independent frozen expectations, actual verification and integration remain separately identified in [STATUS](STATUS.md); this finite geometry increment does not establish general sweeps, branching, articulated mechanisms or live engine physics.
+
 PRD section 9.2 identifies the following required areas. A limited release may defer them, but they remain part of the goal.
 
 | Area | Required direction |

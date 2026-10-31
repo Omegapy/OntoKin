@@ -1,0 +1,20 @@
+ontokin "0.11";
+module FramedLoftAssembly @ "framed-loft-assembly";
+profile "framed-polygon-loft-0.1";
+
+import libparts @ "framed-loft-parts" from "fixture.framed-loft-parts" version "1.0.0"
+    digest "sha256:47354134814769cc803fbdc8aa2e3f1e2dd06f3e3f63448e9386fd613ab2d950";
+
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object first @ "first": libparts.Shape {
+        placement = pose(world, vec3(-6[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+        end_x = 5[m];
+    }
+    object sibling @ "sibling": libparts.Shape {
+        placement = pose(world, vec3(6[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+    }
+    action travel @ "travel" = move(first, vector(world, 0[m/s], 0.5[m/s], 0[m/s]), 1[s]);
+    at 0[s] sequence { start travel; }
+}

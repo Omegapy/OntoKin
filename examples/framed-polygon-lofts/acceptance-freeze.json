@@ -1,0 +1,338 @@
+{
+  "schema_version": "ontokin.framed-polygon-loft-freeze/0.1",
+  "decision": "OK-LANG-011/0.1.0",
+  "decision_commit": "69b80f683073b0c9b75f06014933f0e9939c1f5d",
+  "decision_file": "docs/language-design/framed-polygon-loft-v0.1/ADOPTION.md",
+  "decision_sha256": "d7ffa4e162fb29cfa2f2bbcee4133ea588272a33a52383e632425c70d1927370",
+  "source_baseline_commit": "cac8b9f81a39ff8a9343caf6e8881bdc67e3ea93",
+  "frozen_before_implementation": true,
+  "case_count": 69,
+  "outcome_counts": {
+    "valid": 26,
+    "invalid": 40,
+    "source_valid_delivery_rejected": 3
+  },
+  "source_count": 76,
+  "files": {
+    "AUTHORING.md": {
+      "bytes": 5799,
+      "sha256": "c5d947a8cb00bd9c8b5b7e61ce553c0405f14aa27c4083c262e17407b07e8a15"
+    },
+    "README.md": {
+      "bytes": 4941,
+      "sha256": "fd4ef0544f241104f96a4880cff3d26af54337d960acf7f6595f39d0d4ac7200"
+    },
+    "assembly-invalid.ok": {
+      "bytes": 792,
+      "sha256": "e8e495cbd68b7d2d064733b3bc0492b5e75024ea89501c7eb92936b5b8d8cf04"
+    },
+    "assembly-repaired.ok": {
+      "bytes": 791,
+      "sha256": "427c1253540601e793ee79da740286bf4f66d810ff5ec7f76c5698f7ff1a5fb5"
+    },
+    "assembly.ok": {
+      "bytes": 791,
+      "sha256": "68d87d60e63530dd1079a3a77342fecb2c52fce83121ad0d6e2d60b5ddb7b22e"
+    },
+    "authoritative-frame-quarter-turn.ok": {
+      "bytes": 2161,
+      "sha256": "2580ae562481d6ece3512069da5e76aebb6f3aa83ebbca5e2c1c3a6010541540"
+    },
+    "below-minimum-separation.ok": {
+      "bytes": 2134,
+      "sha256": "125cb6c9526985a821cc25bea408eac817dda1239127b7f7dc5c49bdd2feee8e"
+    },
+    "bent-distinct-identity-collapse.ok": {
+      "bytes": 2161,
+      "sha256": "71b10c91deb17e685b4f6660fb7b3372752a594417940dd6d331a7feb149de89"
+    },
+    "bent-solid.ok": {
+      "bytes": 2161,
+      "sha256": "8430d4401e7342cd11434d9b6d662537de715be3b6b7de06bb4e31771da83009"
+    },
+    "binary32-hole-collapse.ok": {
+      "bytes": 2953,
+      "sha256": "3df23092736efa50d644ee5623671f877a6878fe7c1dd77e25fa498b7f83398b"
+    },
+    "binary32-placed-clearance.ok": {
+      "bytes": 3017,
+      "sha256": "f7215150f34caef4f880972ec7bbc48deb8295d8575fb43a3a6a09fc69de8146"
+    },
+    "binary32-rotated-boundary-clearance.ok": {
+      "bytes": 2965,
+      "sha256": "d12e5bfb0a1b204a5c690728d245b2f5270b8e9da6a29befc9c07a30e1659e14"
+    },
+    "changed-vertex-key.ok": {
+      "bytes": 2130,
+      "sha256": "8c68e5a4d1fa0c26fc5c46adb2673a8cbf5a27ae8b7dbb5dedc73e7957a892ab"
+    },
+    "clockwise-outer.ok": {
+      "bytes": 2127,
+      "sha256": "217b1ece3f5c76da848e23f431b318ba8dadc77cb47b926a60b0d7469512bd60"
+    },
+    "coincident-origins.ok": {
+      "bytes": 2127,
+      "sha256": "33a62459883de0496dddcb2412b4db4647e63d6083496c3124ab82c3482e761d"
+    },
+    "component-boundaries.ok": {
+      "bytes": 2176,
+      "sha256": "146aa9a1afa5c2f2a9617dd167a4746bdd061f2d2689e72eb325c65dc7566035"
+    },
+    "concave-elbow.ok": {
+      "bytes": 2501,
+      "sha256": "a442b3cd5eb5ca9b1fd82e6d35d4b7fc7638dd039de8412ccf44a2e85f33d285"
+    },
+    "coordinate-outside.ok": {
+      "bytes": 2129,
+      "sha256": "f3421a3fe403be4b0fe78b23616a0f053e1ae468e1e7f7fad558cdfc04d64d8f"
+    },
+    "correspondence-edge-pinch.ok": {
+      "bytes": 2127,
+      "sha256": "418e94a841d77790a2dec926e29a5aa4f2042d2cb4e0a57880c55b19c0c7bfc8"
+    },
+    "cross-owner-section-escape.ok": {
+      "bytes": 2279,
+      "sha256": "9423610e81f36978111e01f08cd3e55673ecbebe3e9b1de82d1e62a9e3d93094"
+    },
+    "cyclic-rigid-rotation.ok": {
+      "bytes": 2143,
+      "sha256": "fe07631baed15e6695251ebc817f2b8cdce9c614972b3c673d184dcf43324f52"
+    },
+    "diagonal-origin-separation.ok": {
+      "bytes": 2137,
+      "sha256": "f23c013250eca6e8f74d633814fed7b11922c1d68a76bc0b5bcbdd1d25446eaa"
+    },
+    "duplicate-section-key.ok": {
+      "bytes": 2127,
+      "sha256": "032cafb2ab42ce8c074f118a2c4f2ca062ba79395105e7f06bed97fa60dfc0c7"
+    },
+    "duplicate-section-order.ok": {
+      "bytes": 2127,
+      "sha256": "fd692982b18f7fbf6b53ccc752ba7dcc0c76c72c0374c077dfedd8862636ce0f"
+    },
+    "earlier-version-rejection.ok": {
+      "bytes": 2120,
+      "sha256": "3daa0d3a574b807fd739f828def15eb836eaabbcae422c2f50797c97dc4b6cab"
+    },
+    "empty-sections.ok": {
+      "bytes": 1071,
+      "sha256": "0ab121ec5c0519848a7bbbdd7ccdf84e3ebb4077c79fc59bc19691d7b4d93f1f"
+    },
+    "equal-component-y90.ok": {
+      "bytes": 2196,
+      "sha256": "b3ca971714dd18525f42f3bba78ccb01aede8ff83a083de7baeac5dc0081e26c"
+    },
+    "expected.json": {
+      "bytes": 794349,
+      "sha256": "3460eb792f276ce18fb09f7e66b3d373731bb5685cffbdba3ae2f51a9656f5bc"
+    },
+    "function-cross-owner-escape.ok": {
+      "bytes": 2611,
+      "sha256": "f978ba46d1b0a9678a94c713406a2c19ca3093feac358c0aa241d4946e60f5d6"
+    },
+    "function-section-and-geometry.ok": {
+      "bytes": 2459,
+      "sha256": "3d47e7b8ffa8fb515243529d33a4ffca73a330f62c00d3e764ff312af989d39d"
+    },
+    "generate_fixtures.py": {
+      "bytes": 35423,
+      "sha256": "2ede9980eeba16f4672a181d2afdde889f70c6f17e53a36619d3bf95e2d51083"
+    },
+    "generated.ok": {
+      "bytes": 1380,
+      "sha256": "725759de4bf06c4cbc8b842092390c2afff8c6a9c58714c736ad22e4d9bfa4c8"
+    },
+    "hole-outside.ok": {
+      "bytes": 2959,
+      "sha256": "f2c2fdbfec562bf5c9b8b3cac030226e33d6e3ace96435e34289789004276861"
+    },
+    "hollow-elbow.ok": {
+      "bytes": 2987,
+      "sha256": "522d875a6da4264da2cfa922c9f27dc7ea6ac14711423e8a4d78755daba4eec3"
+    },
+    "hollow-handle.ok": {
+      "bytes": 3929,
+      "sha256": "6c141819be59853c1165c59bfc9ce59a959806131237f372293bd87dd8173d2f"
+    },
+    "identity-hollow-legacy.ok": {
+      "bytes": 2805,
+      "sha256": "9e31e52d1e38b9ba2d38ef05add774691d4d2196972e5d754fb8efe3b80d255a"
+    },
+    "identity-hollow.ok": {
+      "bytes": 2953,
+      "sha256": "ff77c66aa050689db9654d3b93ff3c76a241de2e2970562eea4da3482b7b32b6"
+    },
+    "identity-solid-legacy.ok": {
+      "bytes": 1979,
+      "sha256": "345b5933c57a4e9c20c485ffee565be9fa3a870a39e9bc659b548b77937eb1d2"
+    },
+    "identity-solid.ok": {
+      "bytes": 2127,
+      "sha256": "b75f95b0dc7f9b331335b6be9d02dea37a53d6a335de2be1bc947592feab1cab"
+    },
+    "maximum-palette.ok": {
+      "bytes": 3117,
+      "sha256": "d81ced5e98725ef72df401c7767b2938f247537d81ad84e4599f16d73d523938"
+    },
+    "maximum-sections-and-total.ok": {
+      "bytes": 28739,
+      "sha256": "17019d3a1fae580dc68b10fc7c2828a6b9484bf23b83124bf2b393b66603e985"
+    },
+    "maximum-vertices-and-total.ok": {
+      "bytes": 26899,
+      "sha256": "15fa7a6d2123ee2caace2ad6ce10d73a9ed2e7e235957cb006bedb3213d6672a"
+    },
+    "minimum-origin-separation.ok": {
+      "bytes": 2131,
+      "sha256": "c4405343b4124c0377462e4ed8bfdb50455223579253fd3cc75f4ed8d7f65218"
+    },
+    "missing-cap-region.ok": {
+      "bytes": 2131,
+      "sha256": "df5426882a1c43970904d4cc19649b9a28323794fb0cbfb12adae9b1a5f538ec"
+    },
+    "missing-ring.ok": {
+      "bytes": 2540,
+      "sha256": "dce58cca992a3c73ec505c46d4f6288e67a37a34b19fd2ea5bee3f2f4a7dd4be"
+    },
+    "missing-strip-region.ok": {
+      "bytes": 2129,
+      "sha256": "53cda8d2b067add2322a2f1629383603489a168262d319a45960ec8ff982329f"
+    },
+    "missing-terminal-region.ok": {
+      "bytes": 2129,
+      "sha256": "0b81516250dfa457b5ec56183a960ebe7e5bba418a1578fc35b4860f5c47e15a"
+    },
+    "mixed-strip-materials.ok": {
+      "bytes": 3935,
+      "sha256": "ef6f7f29b2f18c15400a10067a5fe4cdc0c9db47b4f606fc07e0d898aa3ca788"
+    },
+    "multiple-hole-elbow.ok": {
+      "bytes": 3819,
+      "sha256": "4c51ba717f4893331cfa69dfe59b9c532380d2acb1cd458bef926b0a6d534dac"
+    },
+    "near-half-turn-admitted.ok": {
+      "bytes": 2216,
+      "sha256": "fe4ef04c5dfbfb2c8bc15a3e1c6642a81ba74cd57c730b8a4787c26a9851bb4a"
+    },
+    "near-reversed-progression.ok": {
+      "bytes": 2136,
+      "sha256": "eefd531e2cd26204e6f55b990634442bacc25a8c15047b0f75a337bd67c32798"
+    },
+    "negative-origins.ok": {
+      "bytes": 2132,
+      "sha256": "7ea9a2b7ced43ddda77d1fa0bb5a90000efd38380e26c53f5e909af508a638f4"
+    },
+    "next-frame-reversed.ok": {
+      "bytes": 2127,
+      "sha256": "631867573fde326e0b24e57c3c3e830146a3dfef608c48e0877e925e30096714"
+    },
+    "nonadjacent-section-contact.ok": {
+      "bytes": 3786,
+      "sha256": "31578c81a17898771f519e520a2560b1c91e6e85036c2e6e55a8e524e8eaab3c"
+    },
+    "nonrigid-frame-substitute.ok": {
+      "bytes": 2082,
+      "sha256": "499a30c2f81767ccec90ce8abbc02dbdc58d3ba43125ba573cc3637b03fd9342"
+    },
+    "nonunit-quaternion.ok": {
+      "bytes": 2127,
+      "sha256": "25002f6648c61d32c3a244044526017bb37e3547f2327b21e31cbc24ad3767ac"
+    },
+    "one-section.ok": {
+      "bytes": 1598,
+      "sha256": "37ed1413f7aec90be64e41708a452875d58a55cc76be2b0556af2b84521e6643"
+    },
+    "origin-outside.ok": {
+      "bytes": 2133,
+      "sha256": "5b052ee04d5a62ba0f5f7c073c3a5a5b702aa1456801f95c3c013c625af57339"
+    },
+    "parts.ok": {
+      "bytes": 1846,
+      "sha256": "47354134814769cc803fbdc8aa2e3f1e2dd06f3e3f63448e9386fd613ab2d950"
+    },
+    "placed-hollow-handle.ok": {
+      "bytes": 4000,
+      "sha256": "3c50d98aff1b7ebbe8a3bb61a43ea5ccf5f05c320c7a72afd2dfca066704709b"
+    },
+    "reordered-sections-rings-vertices.ok": {
+      "bytes": 3819,
+      "sha256": "9484660cb4c22937416d259629d433de5978045bebb0da14fc4c70cb4aca1ae1"
+    },
+    "repaired-hollow-elbow.ok": {
+      "bytes": 2987,
+      "sha256": "b42ff1f94edd543c102965c9c451747ad8311bd0d1a84d456ad336a7458f97fb"
+    },
+    "reversed-progression.ok": {
+      "bytes": 2128,
+      "sha256": "b2aeccd58bb583537b2547c328425ffd7af59d3d0805949a6303c5bef36cb418"
+    },
+    "rounded-decimal-separation.ok": {
+      "bytes": 2131,
+      "sha256": "24e563167ac65454d816dbabdfe4e251b8f2c760bde6238b0005238588659c8f"
+    },
+    "rounded-nonplanar-caps.ok": {
+      "bytes": 2188,
+      "sha256": "beab30ccd150a706c387989f42d60c82d68c664dddae6cc98c8dad9934bcb79e"
+    },
+    "section-order-outside.ok": {
+      "bytes": 2130,
+      "sha256": "f8bb7527bfba2f8e7e9fb32ad71c50806e85f4bac6bdd6a722324b82c361cf6b"
+    },
+    "sideways-progression.ok": {
+      "bytes": 2127,
+      "sha256": "4392b7e6d217daa7ec788fdc5aa0fe6ac2040e47661146533e118e8035866cab"
+    },
+    "sign-equivalent-rotation.ok": {
+      "bytes": 2151,
+      "sha256": "42cca21192fb5019d0b112e90b67fe9370390cad634da8957aca891e7ae104ec"
+    },
+    "solid-handle.ok": {
+      "bytes": 2690,
+      "sha256": "f62afb8be0d201ee2f089293a7a8f9a76ce508d88170004c53d2080c85e59520"
+    },
+    "source-cap-rounding-collapse.ok": {
+      "bytes": 2191,
+      "sha256": "a56a9f510f00758d202034c5139fae785b39d3fd98e994bc5ab89df9ffd53d89"
+    },
+    "strip-diagonal-pinch.ok": {
+      "bytes": 2162,
+      "sha256": "7476e5008648cc800af7dbb22ad45b55ba363bd54d709b9036bdd6f77dc21eb2"
+    },
+    "swapped-hole-collision.ok": {
+      "bytes": 3785,
+      "sha256": "3ecd86b8933b50f4d4fdcda74e0de9772f513ba885c37c354ca8b5f4666a14a7"
+    },
+    "too-many-sections.ok": {
+      "bytes": 5830,
+      "sha256": "6503be165eac01c46296232ee5908f0558c0ddd0a07ad4a21dfcff2d8dd9c901"
+    },
+    "too-many-total-vertices.ok": {
+      "bytes": 33341,
+      "sha256": "f0ee4337d1297d04314fd72625b1f0aab884846214ff77c53e78e5395e15d3b6"
+    },
+    "too-many-vertices-per-section.ok": {
+      "bytes": 14185,
+      "sha256": "50702bd143fe326a1a96a854dd24612c00514bb8f1a25923e995551b3deeb071"
+    },
+    "world-frame.ok": {
+      "bytes": 2122,
+      "sha256": "e6bedf25f2ef159c12efd47c875dad8009e76f3ea39b0a7073e157ae5da669a0"
+    },
+    "wrong-frame-type.ok": {
+      "bytes": 2073,
+      "sha256": "f9b6072d72f90fad510b2cb9f05cb3ebe3e875ecbfedf4b495acd02ec4ca2e98"
+    },
+    "wrong-origin-type.ok": {
+      "bytes": 2113,
+      "sha256": "f7a62270f6ace931c93a175227506c04c1b2240d8fe3b4fae69abcf9b039dfe1"
+    },
+    "wrong-origin-unit.ok": {
+      "bytes": 2127,
+      "sha256": "b608ad85f726b5022578acd2c40a2771d21efb1efc518a171a1ce3cabac9ae03"
+    },
+    "zero-quaternion.ok": {
+      "bytes": 2127,
+      "sha256": "58446386fe9f2e217ffd484e30fe294d2ff81dc1a4c3b87f2103d44e575f47a3"
+    }
+  }
+}
