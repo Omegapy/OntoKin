@@ -1,0 +1,86 @@
+{
+  "schema_version": "ontokin.source-execution/0.1",
+  "implementation": "ontokin-reference",
+  "version": "0.4.0",
+  "language_version": "0.13",
+  "profile": "textured-surfaces-0.1",
+  "target_contract": "ontokin.glb/0.13",
+  "requested_level": "delivered",
+  "source_revision": "sha256:05c31ad959a7ba91f511328586ec79d4b7fff8f2ba14c73f529857c476bb0f3a",
+  "program_revision": "sha256:a8878d461ce5dffe7035cdccec7b70b71c2e17da6f00e4699d29c6c0fde2e002",
+  "implementation_identity": {
+    "name": "ontokin-reference",
+    "version": "0.4.0",
+    "source_code_sha256": "sha256:5f6190783a836c0befcb7862b2300d1c0934fc55da7ebf318c8cac4c5cf63a1d"
+  },
+  "outcome": "invalid",
+  "achieved_level": null,
+  "diagnostics": [
+    {
+      "schema_version": "ontokin.diagnostic/0.2",
+      "code": "OKL-E-SYNTAX",
+      "severity": "error",
+      "category": "invalid",
+      "phase": "syntax",
+      "message": "Expected 'IDENT'; found 'digest'.",
+      "source_revision": "sha256:1f79af97b5068cf34ac3dda79ca9621e0729668781f8938657a1c2cb4d23091f",
+      "run_id": null,
+      "time": null,
+      "primary": {
+        "source_id": "package:fixture.legacy-name@1.0.0",
+        "source_revision": "sha256:1f79af97b5068cf34ac3dda79ca9621e0729668781f8938657a1c2cb4d23091f",
+        "file": "legacy-name.ok",
+        "start_byte": 123,
+        "end_byte": 129,
+        "element_id": null
+      },
+      "related": [],
+      "rule_ids": [
+        "LANG-002"
+      ],
+      "details": {
+        "expected": "IDENT",
+        "found": "digest"
+      },
+      "repair": {
+        "summary": "Correct the source at this span using the core grammar.",
+        "patches": []
+      },
+      "blocks": [
+        "represented",
+        "constructed",
+        "evaluated",
+        "delivered"
+      ],
+      "program_revision": "sha256:a8878d461ce5dffe7035cdccec7b70b71c2e17da6f00e4699d29c6c0fde2e002",
+      "source_id": "package:fixture.legacy-name@1.0.0"
+    }
+  ],
+  "valid_prefix": null,
+  "execution_budget": {
+    "schema_version": "ontokin.execution-budget/0.1",
+    "defaults": {
+      "max_operations": 100000,
+      "max_elapsed_ms": 30000
+    },
+    "policy_id": "sha256:f5c7685c52ca1c3cdded05bbc376e06cdbd6962c5196fe13d47f89f8c8d331ef",
+    "host_ceilings": {
+      "max_operations": 100000,
+      "max_elapsed_ms": 30000
+    },
+    "source_request": {
+      "max_operations": 100000,
+      "max_elapsed_ms": 30000
+    },
+    "caller_caps": {},
+    "effective": {
+      "max_operations": 100000,
+      "max_elapsed_ms": 30000
+    },
+    "consumed_operations": 198,
+    "elapsed_ms": 2.0590690037352033,
+    "stage": "construction",
+    "status": "failed",
+    "budget_reason": null
+  }
+}
