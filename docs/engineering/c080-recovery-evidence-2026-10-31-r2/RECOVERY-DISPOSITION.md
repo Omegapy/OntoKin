@@ -42,7 +42,7 @@ Auxiliary comparison and review-formatting attempts retain their original failur
 
 ## Portable and durable completion boundary
 
-The new handoff contains the exact C080-R1 ZIP, including its unchanged complete C079 predecessor packet. Large unchanged test-workspace source files are represented by verified references to that retained base; every changed, generated or unexpected regular file has its own supplied bytes and complete index. Reproduction restores the inventoried regular working files. Git object packing, installed dependencies and inertly represented test symlinks are explicitly distinguished from byte-identical original filesystem layouts.
+The new handoff must contain the exact C080-R1 ZIP, including its unchanged complete C079 predecessor packet. Large unchanged test-workspace source files may use verified references to that retained base; every changed, generated or unexpected regular file must have its own supplied bytes and complete index. Reproduction must restore the inventoried regular working files. The packet must explicitly distinguish Git object packing, installed dependencies and inertly represented test symlinks from byte-identical original filesystem layouts.
 
 The archive must pass exact inventory, per-file hashes, ZIP integrity and one-command offline source/Git restoration. Source restoration preserves the actual final publication identity with explicit shallow boundaries and makes no claim of complete parent history. Actual save and independent whole-file readback must match the final ZIP's size and SHA256. The immutable archive precedes those external receipts, so its own digest and later completion entry are recorded outside it.
 
