@@ -1,5 +1,16 @@
 # OntoKin status
 
+## Active main integration lease — C081
+
+- Owner: **interactive-c081-20261031-4af7fad29c18**.
+- Task: reviewed C081 keyed-transform development integration through PR #80, resulting-main verification, and final status/lease release.
+- Acquired UTC: **2026-10-31T19:30:37.215708+00:00**.
+- Expires UTC: **2026-10-31T20:00:37.215708+00:00**.
+- Observed starting main: **2e51fc170a9db17e90cd7d97fd4c028b9afaefe9**.
+- Reviewed incoming candidate: **44f74c9f3532dd7850bfc5b1187efb7e17665d23**.
+
+Only this verified owner may write main or its integration fields during the bounded lease. Independent scoped branch work remains permitted. All finite checks and image reviews have passed; full feature and full-product release acceptance remain false. This lease starts no hosted job or continuation schedule. The remaining sections below describe the preceding C080-R2 baseline until the final C081 status publication.
+
 ## Current development baseline
 
 OntoKin’s [GOAL](GOAL.md) is an AI-agent language for editable meaningful 3D objects, animation and simulation through authoritative `.ok` source. Finite increments do not complete that mission.
@@ -22,7 +33,7 @@ The original **314-file freeze remains unchanged**. Its two original invalid inp
 
 R2 documentation candidate **2faf58e2d5022362c27ef60b541088ec001e4d25**, integrated by actual merge **4771fd47e286f98f6198673603320ba44ff61e2b**, changes only four new recovery records. The final status publication adds this fifth documentation change. Exact resulting-main restoration, documentation preservation/link checks and equality of every other original source path are recorded in the portable publication evidence. The original C080 integration and resulting-main checks remain identified in their unchanged [integration record](docs/engineering/textured-surfaces-2026-10-31-c080/integration.json).
 
-This publication releases **interactive-c080-r2-20261031-33c594a91448**’s bounded main integration lease. **No main integration lease remains active** after its successful expected-head publication and actual readback. The [recovery disposition](docs/engineering/c080-recovery-evidence-2026-10-31-r2/RECOVERY-DISPOSITION.md) accepts separately named replacement evidence only after the final ZIP passes offline restoration, actual durable save and whole-file readback, followed by finite closure. Those post-publication outcomes are recorded in [Issue #26](https://github.com/Omegapy/OntoKin/issues/26), linked from the [R2 scope entry](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6546856746); this text alone does not establish them. Broader Issue #26 stays open.
+This publication releases **interactive-c080-r2-20261031-33c594a91448**’s bounded main integration lease. Its historical lease release was verified after successful expected-head publication and actual readback; the current integration lease is stated above. The [recovery disposition](docs/engineering/c080-recovery-evidence-2026-10-31-r2/RECOVERY-DISPOSITION.md) accepts separately named replacement evidence only after the final ZIP passes offline restoration, actual durable save and whole-file readback, followed by finite closure. Those post-publication outcomes are recorded in [Issue #26](https://github.com/Omegapy/OntoKin/issues/26), linked from the [R2 scope entry](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6546856746); this text alone does not establish them. Broader Issue #26 stays open.
 
 The original C080 raw validation ZIP, final handoff and delivery receipt remain unavailable. Their exact prior sizes and hashes are preserved in the recovery disposition. R2 is new evidence with its own identity. The complete R1 packet and its unchanged C079 predecessor remain included in the replacement handoff. C079’s historical delivery remains resolved by [closure comment 6539754967](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6539754967).
 
