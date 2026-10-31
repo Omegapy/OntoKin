@@ -57,9 +57,9 @@ def prepare_node_textures(geometry, model, *, check=None):
         binding = metadata[region.key]
         asset = model.texture_assets.get(binding["asset_id"])
         if asset is None or asset.sha256 != binding["sha256"]:
-            from .profile_capabilities import KEYED_TRANSFORM_PROFILE
+            from .profile_capabilities import KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE
             _fail("A source texture binding must retain its admitted immutable image.",
-                  target_contract="ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else "ontokin.glb/0.13")
+                  target_contract="ontokin.glb/0.15" if model.profile == KEYED_REDUCTION_PROFILE else "ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else "ontokin.glb/0.13")
         result[region.key] = {"uv": coordinates[region.key], "binding": binding,
                               "asset": asset, "material": region.material, "program_revision": model.program_revision}
     return result
@@ -180,8 +180,8 @@ def validate_texture_shapes(document, *, check=None):
 
 def validate_texture_delivery(decoded, model, *, check=None):
     """Compare supplied image, UV and reference bytes with fresh source facts."""
-    from .profile_capabilities import KEYED_TRANSFORM_PROFILE
-    target = "ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else "ontokin.glb/0.13"
+    from .profile_capabilities import KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE
+    target = "ontokin.glb/0.15" if model.profile == KEYED_REDUCTION_PROFILE else "ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else "ontokin.glb/0.13"
     token = _ACTIVE_TARGET.set(target)
     try:
         return _validate_texture_delivery(decoded, model, check=check)

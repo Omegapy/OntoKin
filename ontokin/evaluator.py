@@ -31,7 +31,7 @@ MAX_OUTPUT_RECORDS = 100000
 IMPULSE_PROFILE = "impulse-0.1"
 FORCE_PROFILE = "force-0.1"
 REACH_PROFILE = "planar-reach-0.1"
-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, POCKETS_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, FORCE_PROFILES, IMPULSE_PROFILES
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_TRANSFORM_PROFILES, POCKETS_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, FORCE_PROFILES, IMPULSE_PROFILES
 
 
 class _NumericFault(Exception):
@@ -790,7 +790,8 @@ def _request_work(model, check, work):
     if model.profile in REACH_PROFILES:
         if model.profile in EXECUTION_PROFILES:
             from .reach_numeric import require_execution_work
-            require_execution_work(work, target_contract=("ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else
+            require_execution_work(work, target_contract=("ontokin.glb/0.15" if model.profile == KEYED_REDUCTION_PROFILE else
+                       "ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else
                       "ontokin.glb/0.13" if model.profile == TEXTURE_PROFILE else
                       "ontokin.glb/0.12" if model.profile == POCKETS_PROFILE else
                       "ontokin.glb/0.11" if model.profile == FRAMED_LOFT_PROFILE else
