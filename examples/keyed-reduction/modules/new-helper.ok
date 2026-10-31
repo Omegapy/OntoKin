@@ -1,0 +1,5 @@
+ontokin "0.15";
+module NewHelper @ "new-helper";
+profile "keyed-reduction-0.1";
+import lib @ "lib-import" from "fixture.old-helper" version "1.0.0" digest "sha256:f31bd747207c1938ab35639ceff49e804a8680ca040e38c7ce2b663d43b01774";
+public fn total @ "total"(input: Keyed<Length>) -> Length { return reduce_keyed<Length>(input, 0[m], (acc, k, v) -> acc + lib.twice(v)); }

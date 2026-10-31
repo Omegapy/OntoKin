@@ -1,0 +1,7 @@
+(* C082 supplement to the unchanged .14 grammar and lexical precedence *)
+(* Effective only for source 0.15 / keyed-reduction-0.1 *)
+reduce-keyed-expression = "reduce_keyed", "<", type, ">", "(", expression, ",", expression, ",",
+                          "(", identifier, ",", identifier, ",", identifier, ")", "->", expression, ")" ;
+(* First expression is the typed Keyed input; second is the typed seed *)
+(* Body-only binders are accumulator, String key, and input leaf value *)
+(* Dynamic input then seed evaluate once; body follows canonical ASCII key order *)

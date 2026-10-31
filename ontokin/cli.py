@@ -37,7 +37,7 @@ def _export_paths(source: Path, output: Path, report: Path | None, *,
                   target_contract: str = "ontokin.glb/0.1",
                   protected_sources: tuple[Path, ...] = ()) -> tuple[Path, Path]:
     report = report if report is not None else output.with_suffix(".export.json")
-    if target_contract in ("ontokin.glb/0.13", "ontokin.glb/0.14"):
+    if target_contract in ("ontokin.glb/0.13", "ontokin.glb/0.14", "ontokin.glb/0.15"):
         from .bundle import BundleError
         protected_pairs = [(path, destination) for path in (source, *protected_sources)
                            for destination in (output, report)] + [(output, report)]
@@ -420,7 +420,7 @@ def _program_export(args, *, host_policy=None) -> int:
             raise BundleError("OKA-E-REQUEST", "A program bundle requires explicit GLB/0.2 through GLB/0.6 delivery.")
         protected = []
         if args.bundle:
-            if args.target in ("ontokin.glb/0.13", "ontokin.glb/0.14"):
+            if args.target in ("ontokin.glb/0.13", "ontokin.glb/0.14", "ontokin.glb/0.15"):
                 from .texture_bundle import load_texture_file_manifest_transport
                 manifest_path = args.file.absolute()
                 program, manifest_bytes, relative_paths = load_texture_file_manifest_transport(manifest_path)
@@ -438,7 +438,7 @@ def _program_export(args, *, host_policy=None) -> int:
                 protected = [manifest_path.parent / descriptor["path"]
                              for descriptor in [manifest["entry"], *manifest["modules"]]]
         else:
-            if args.target in ("ontokin.glb/0.13", "ontokin.glb/0.14"):
+            if args.target in ("ontokin.glb/0.13", "ontokin.glb/0.14", "ontokin.glb/0.15"):
                 raise BundleError("OKA-E-REQUEST", args.target.replace("ontokin.glb/", "GLB/") + " requires an explicit files/0.2 manifest with --bundle.")
             source = _read_source(args.file)
             try:
@@ -447,12 +447,12 @@ def _program_export(args, *, host_policy=None) -> int:
                 raise BundleError("OKA-E-REQUEST", "The source file must contain valid UTF-8.") from None
             program = load_bundle({"schema_version": "ontokin.bundle/0.1",
                 "entry": {"filename": str(args.file), "source": source_text}, "modules": []})
-        if args.target in ("ontokin.glb/0.7", "ontokin.glb/0.8", "ontokin.glb/0.9", "ontokin.glb/0.10", "ontokin.glb/0.11", "ontokin.glb/0.12", "ontokin.glb/0.13", "ontokin.glb/0.14"):
-            from .budget_runtime import execute_budgeted_export, execute_extrusion_export, execute_holes_export, execute_ring_loft_export, execute_framed_loft_export, execute_pockets_export, execute_texture_export, execute_keyed_transform_export
+        if args.target in ("ontokin.glb/0.7", "ontokin.glb/0.8", "ontokin.glb/0.9", "ontokin.glb/0.10", "ontokin.glb/0.11", "ontokin.glb/0.12", "ontokin.glb/0.13", "ontokin.glb/0.14", "ontokin.glb/0.15"):
+            from .budget_runtime import execute_budgeted_export, execute_extrusion_export, execute_holes_export, execute_ring_loft_export, execute_framed_loft_export, execute_pockets_export, execute_texture_export, execute_keyed_transform_export, execute_keyed_reduction_export
             execute = {"ontokin.glb/0.7": execute_budgeted_export, "ontokin.glb/0.8": execute_extrusion_export,
                        "ontokin.glb/0.9": execute_holes_export, "ontokin.glb/0.10": execute_ring_loft_export,
                        "ontokin.glb/0.11": execute_framed_loft_export,
-                       "ontokin.glb/0.12": execute_pockets_export, "ontokin.glb/0.13": execute_texture_export, "ontokin.glb/0.14": execute_keyed_transform_export}[args.target]
+                       "ontokin.glb/0.12": execute_pockets_export, "ontokin.glb/0.13": execute_texture_export, "ontokin.glb/0.14": execute_keyed_transform_export, "ontokin.glb/0.15": execute_keyed_reduction_export}[args.target]
             output, report_path = _export_paths(args.file, args.output, args.report,
                 target_contract=args.target, protected_sources=tuple(protected))
             caps = {name: value for name, value in (
@@ -530,7 +530,7 @@ def main(argv: list[str] | None = None, *, host_policy=None) -> int:
     evaluate_parser.add_argument("--frame", default="world", help="Frame for --object inspection, for example first.frame")
     export_parser = commands.add_parser("export", help="Bake and verify an animation in a self-contained .glb file")
     export_parser.add_argument("file", type=Path)
-    export_parser.add_argument("--target", choices=["ontokin.glb/0.1", "ontokin.glb/0.2", "ontokin.glb/0.3", "ontokin.glb/0.4", "ontokin.glb/0.5", "ontokin.glb/0.6", "ontokin.glb/0.7", "ontokin.glb/0.8", "ontokin.glb/0.9", "ontokin.glb/0.10", "ontokin.glb/0.11", "ontokin.glb/0.12", "ontokin.glb/0.13", "ontokin.glb/0.14"],
+    export_parser.add_argument("--target", choices=["ontokin.glb/0.1", "ontokin.glb/0.2", "ontokin.glb/0.3", "ontokin.glb/0.4", "ontokin.glb/0.5", "ontokin.glb/0.6", "ontokin.glb/0.7", "ontokin.glb/0.8", "ontokin.glb/0.9", "ontokin.glb/0.10", "ontokin.glb/0.11", "ontokin.glb/0.12", "ontokin.glb/0.13", "ontokin.glb/0.14", "ontokin.glb/0.15"],
                                default="ontokin.glb/0.1", help="Explicit delivery profile; old source is never migrated")
     export_parser.add_argument("--bundle", action="store_true",
                                help="Read FILE as an explicit files/0.1 or files/0.2 manifest of pinned offline sources and assets")
@@ -543,14 +543,14 @@ def main(argv: list[str] | None = None, *, host_policy=None) -> int:
     export_parser.add_argument("--time-tolerance", type=float, default=0.000001, metavar="SECONDS")
     export_parser.add_argument("--no-helpers", action="store_true", help="Omit the display-only assembly and joint markers")
     export_parser.add_argument("--max-operations", type=int,
-                               help="GLB/0.7 through GLB/0.14 caller reduction of the source operation request; grants no host authority")
+                               help="GLB/0.7 through GLB/0.15 caller reduction of the source operation request; grants no host authority")
     export_parser.add_argument("--max-elapsed-ms", type=int,
-                               help="GLB/0.7 through GLB/0.14 caller reduction of the source computation timeout in milliseconds")
+                               help="GLB/0.7 through GLB/0.15 caller reduction of the source computation timeout in milliseconds")
     suite = commands.add_parser("conformance", help="Execute the published source cases and expected observations")
     suite.add_argument("--fixtures", type=Path, default=DEFAULT_FIXTURES)
     suite.add_argument("--output", type=Path, help="Write the complete JSON report to this path")
     agent = commands.add_parser("agent", help="Serve an explicitly selected durable agent contract as local JSONL")
-    agent.add_argument("--protocol", choices=["ontokin.agent/0.1", "ontokin.agent/0.2", "ontokin.agent/0.3", "ontokin.agent/0.4", "ontokin.agent/0.5", "ontokin.agent/0.6", "ontokin.agent/0.7", "ontokin.agent/0.8", "ontokin.agent/0.9", "ontokin.agent/0.10", "ontokin.agent/0.11", "ontokin.agent/0.12", "ontokin.agent/0.13", "ontokin.agent/0.14"], default="ontokin.agent/0.1", help="Select the explicit core, construction, surface, impulse, force, reach, execution-budget, polygon-extrusion, polygon-holes, polygon-loft, framed-polygon-loft, polygon-pockets, textured-surfaces or keyed-transform agent contract")
+    agent.add_argument("--protocol", choices=["ontokin.agent/0.1", "ontokin.agent/0.2", "ontokin.agent/0.3", "ontokin.agent/0.4", "ontokin.agent/0.5", "ontokin.agent/0.6", "ontokin.agent/0.7", "ontokin.agent/0.8", "ontokin.agent/0.9", "ontokin.agent/0.10", "ontokin.agent/0.11", "ontokin.agent/0.12", "ontokin.agent/0.13", "ontokin.agent/0.14", "ontokin.agent/0.15"], default="ontokin.agent/0.1", help="Select the explicit core, construction, surface, impulse, force, reach, execution-budget, polygon-extrusion, polygon-holes, polygon-loft, framed-polygon-loft, polygon-pockets, textured-surfaces, keyed-transform or keyed-reduction agent contract")
     agent.add_argument("--store", type=Path, required=True, help="Directory for immutable snapshots and durable request/run state")
     agent.add_argument("--request", type=Path, help="Read one JSON request, emit its receipt, and exit")
     agent.add_argument("--wait", action="store_true", help="Wait for this request's terminal result instead of returning a queued receipt")

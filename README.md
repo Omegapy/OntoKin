@@ -10,6 +10,23 @@ The current direction begins with exterior 3D models and short animations. Those
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
 
+### Compute reusable construction parameters from keyed values
+
+Explicit source `0.15` / `keyed-reduction-0.1` adds a bounded pure aggregate with an explicit typed seed:
+
+```ontokin
+reduce_keyed<Length>(dimensions, 0[m], (total, key, value) -> total + value)
+```
+
+The input is admitted once, then the seed is evaluated once. A pure body processes at most 256 entries sequentially in canonical ASCII key order, preserving every intermediate type, unit, frame, domain and resource check. Empty input returns a detached seed after static body checking. This composes with `map_keyed` to derive reusable dimensions, offsets and other admitted construction values.
+
+```bash
+python3 -m ontokin export examples/keyed-reduction/panel-task.files.json --bundle --target ontokin.glb/0.15 --output /tmp/ontokin-keyed-panels.glb
+python3 -m ontokin agent --protocol ontokin.agent/0.15 --store /tmp/ontokin-keyed-reduction-agent
+```
+
+The [versioned decision](docs/language-design/keyed-reduction-v0.1/ADOPTION.md), [frozen examples](examples/keyed-reduction/README.md) and [Agent/0.15 guide](docs/language-design/agent-v0.15/README.md) define the contract. Inspection preserves detached reduction provenance for exact source repair. The [C082 engineering record](docs/engineering/keyed-reduction-2026-10-31-c082/README.md) separates actual source, Agent, delivered-stream and native-view evidence from complete release acceptance. Ordinary defaults remain 100,000 operations / 30,000 ms; larger requests require current host authority. Older bindings and defaults retain their meanings. This experimental construction operation adds no physical or motion authority.
+
 ### Add opaque image labels to native surfaces
 
 Explicit source `0.13` / `textured-surfaces-0.1` attaches content-pinned offline PNG images to keyed material regions on existing native surfaces. Author an affine planar mapping in recipe-local coordinates, bind an image by stable asset ID and exact digest, and retain the underlying geometry, rigid placement and recorded motion. The [authoring guide](docs/language-design/textured-surfaces-v0.1/README.md) and [versioned decision](docs/language-design/textured-surfaces-v0.1/ADOPTION.md) define image orientation, color multiplication, immutable bundle/files `0.2`, and bounded decoding.
