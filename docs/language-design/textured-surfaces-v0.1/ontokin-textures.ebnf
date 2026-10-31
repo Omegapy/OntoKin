@@ -1,0 +1,10 @@
+(* C080 source 0.13 / textured-surfaces-0.1, additive to the .12 grammar *)
+image_reference = "png_asset", "(", string_literal, ",", string_literal, ")" ;
+planar_mapping = "planar_uv", "(", expression, ",", expression, ",", expression,
+                 ",", expression, ",", expression, ")" ;
+texture_binding = "texture_binding", "(", expression, ",", expression, ")" ;
+textured_geometry = "texture_surface", "(", expression, ",", expression, ")" ;
+(* Calls use ordinary expressions and existing Keyed<T> values. The adoption
+   supplies nominal types, literal-only image pins, dimensional and finite
+   bounds, declared closure, and the restriction to unplaced native surfaces.
+   No new header, statement, implicit filesystem lookup or ambient frame exists. *)
