@@ -25,7 +25,7 @@ from .model import SceneModel
 from .json_limits import JSONLimitError, measure_json
 from .values import bounded_data
 from .scene import (MAX_GLB_BYTES, MAX_VALIDATION_POSES, MAX_KEYFRAMES, MAX_BAKED_POSES, TARGET_CONTRACT,
-                    CONSTRUCTION_TARGET, SURFACE_TARGET, IMPULSE_TARGET, FORCE_TARGET, REACH_TARGET, BUDGET_REACH_TARGET, EXTRUSION_TARGET, HOLES_TARGET, RING_LOFT_TARGET, FRAMED_LOFT_TARGET, POCKETS_TARGET, EXECUTION_TARGETS, REACH_TARGETS, NATIVE_TARGETS, PROGRAM_TARGETS, MAX_MESH_VERTICES,
+                    CONSTRUCTION_TARGET, SURFACE_TARGET, IMPULSE_TARGET, FORCE_TARGET, REACH_TARGET, BUDGET_REACH_TARGET, EXTRUSION_TARGET, HOLES_TARGET, RING_LOFT_TARGET, FRAMED_LOFT_TARGET, POCKETS_TARGET, TEXTURE_TARGET, EXECUTION_TARGETS, REACH_TARGETS, NATIVE_TARGETS, PROGRAM_TARGETS, MAX_MESH_VERTICES,
                     SurfaceMesh, build_surface_mesh, geometry_metadata, surface_metadata,
                     checked_contract, program_metadata,
                     BakedScene, ExportOptions, build_scene, export_error,
@@ -158,6 +158,7 @@ def _encode(scene: BakedScene, *, check=None, work=None) -> tuple[bytes, float]:
     builder = _BufferBuilder(check)
     nodes, meshes, materials, samplers, channels = [], [], [], [], []
     geometry_cache, mesh_cache, material_cache = {}, {}, {}
+    pending_textures = []
     time_accessor = builder.add(scene.times, 1, bounds=True)
     for index, node in enumerate(scene.nodes):
         if check:
@@ -197,6 +198,10 @@ def _encode(scene: BakedScene, *, check=None, work=None) -> tuple[bytes, float]:
                 primitives.append({"attributes": {"POSITION": positions, "NORMAL": normals},
                                    "indices": indices, "material": material_id, "mode": 4,
                                    "extras": {"ontokin": {"region_key": region.key}}})
+            if scene.contract == TEXTURE_TARGET:
+                for primitive, region in zip(primitives, mesh.regions):
+                    if region.key in node.textures:
+                        pending_textures.append((primitive, materials[primitive["material"]], node.textures[region.key]))
             record["mesh"] = len(meshes)
             meshes.append({"name": mesh.name, "primitives": primitives})
         elif node.mesh is not None:
@@ -230,6 +235,10 @@ def _encode(scene: BakedScene, *, check=None, work=None) -> tuple[bytes, float]:
             output = builder.add(values, size)
             channels.append({"sampler": len(samplers), "target": {"node": index, "path": path}})
             samplers.append({"input": time_accessor, "output": output, "interpolation": "LINEAR"})
+    texture_document = {}
+    if scene.contract == TEXTURE_TARGET:
+        from .texture_gltf import append_texture_buffers
+        texture_document = append_texture_buffers(builder, pending_textures, check=check)
     if scene.contract in REACH_TARGETS:
         from .reach_export import rational_record
         exact_clocks = [rational_record(time, work=work) for time in scene.exact_times]
@@ -247,6 +256,7 @@ def _encode(scene: BakedScene, *, check=None, work=None) -> tuple[bytes, float]:
                                                "boundary_times_seconds": [time_text(t) for t in scene.boundaries]}}}],
         "extras": {"ontokin": scene.metadata},
     }
+    document.update(texture_document)
     if meshes:
         document["meshes"] = meshes
         document["materials"] = materials
@@ -324,7 +334,7 @@ def _referenced(table, index, name):
     return table[index]
 
 
-def _preflight_accessor_layout(document, *, check=None) -> None:
+def _preflight_accessor_layout(document, *, check=None, target_contract=None) -> None:
     """Bound all declared accessor expansion before allocating decoded rows."""
     buffers, views = document["buffers"], document["bufferViews"]
     for view in views:
@@ -335,6 +345,7 @@ def _preflight_accessor_layout(document, *, check=None) -> None:
         if (type(start) is not int or type(size) is not int or view["buffer"] != 0
                 or start < 0 or size <= 0 or start % 4 or start + size > buffers[0]["byteLength"]):
             _format_error("A buffer view is out of bounds or misaligned.")
+    max_components = MAX_DECODED_COMPONENTS + (32 * MAX_MESH_VERTICES if target_contract == TEXTURE_TARGET else 0)
     components = component_bytes = 0
     for accessor in document["accessors"]:
         if check:
@@ -355,9 +366,9 @@ def _preflight_accessor_layout(document, *, check=None) -> None:
             _format_error("An accessor is out of bounds or misaligned.")
         components += count * arity
         component_bytes += count * arity * component_size
-        if components > MAX_DECODED_COMPONENTS or component_bytes > MAX_GLB_BYTES:
+        if components > max_components or component_bytes > MAX_GLB_BYTES:
             export_error("OKE-E-ACCESSOR-BUDGET", "Declared accessors exceed the bounded decoded allocation budget.",
-                         kind="resource", details={"max_decoded_components": MAX_DECODED_COMPONENTS,
+                         kind="resource", details={"max_decoded_components": max_components,
                                                    "required_components": components,
                                                    "max_decoded_component_bytes": MAX_GLB_BYTES,
                                                    "required_component_bytes": component_bytes})
@@ -429,6 +440,8 @@ def _preflight_reach_expansion(document, *, check=None) -> None:
     """Count every used occurrence before shared accessors can hide expansion."""
     accessors, animation = document["accessors"], document["animations"][0]
     components = 0
+    textured = document.get("extras", {}).get("ontokin", {}).get("target_contract") == TEXTURE_TARGET
+    max_components = MAX_DECODED_COMPONENTS + (32 * MAX_MESH_VERTICES if textured else 0)
     carrier_counts = {}
 
     def charge(accessor_id):
@@ -438,10 +451,10 @@ def _preflight_reach_expansion(document, *, check=None) -> None:
         accessor = _referenced(accessors, accessor_id, "expanded accessor")
         arity = {"SCALAR": 1, "VEC2": 2, "VEC3": 3, "VEC4": 4}[accessor["type"]]
         components += accessor["count"] * arity
-        if components > MAX_DECODED_COMPONENTS:
+        if components > max_components:
             export_error("OKE-E-ACCESSOR-BUDGET", "Repeated reach accessor uses exceed the decoded component budget.",
                          kind="resource", details={"required_components": components,
-                         "max_decoded_components": MAX_DECODED_COMPONENTS,
+                         "max_decoded_components": max_components,
                          "counting": "every channel and primitive occurrence, including shared accessors"})
         return accessor["count"]
 
@@ -461,6 +474,8 @@ def _preflight_reach_expansion(document, *, check=None) -> None:
             for name in ("POSITION", "NORMAL"):
                 charge(primitive["attributes"][name])
             charge(primitive["indices"])
+            if textured and "TEXCOORD_0" in primitive["attributes"]:
+                charge(primitive["attributes"]["TEXCOORD_0"])
     quantization = document.get("extras", {}).get("ontokin", {}).get("reach_quantization", {})
     certificates = quantization.get("interval_certificates", [])
     if not isinstance(certificates, list) or len(certificates) > 100000:
@@ -528,7 +543,7 @@ def read_glb(source: bytes | bytearray | str | Path, *, check=None, target_contr
         buffers = document["buffers"]
         if len(buffers) != 1 or "uri" in buffers[0] or not 0 <= len(binary) - buffers[0]["byteLength"] <= 3:
             _format_error("GLB must have one embedded buffer with at most three padding bytes.")
-        _preflight_accessor_layout(document, check=check)
+        _preflight_accessor_layout(document, check=check, target_contract=target_contract)
         _preflight_scene_layout(document, target_contract=target_contract, check=check)
         decoded = DecodedGLB(document, binary, check=check)
         for index, accessor in enumerate(document["accessors"]):
@@ -581,7 +596,7 @@ def read_glb(source: bytes | bytearray | str | Path, *, check=None, target_contr
                     if check and start % 768 == 0:
                         check()
                     a, b, c = (positions[i] for i in indices[start:start + 3])
-                    if target_contract in (RING_LOFT_TARGET, FRAMED_LOFT_TARGET, POCKETS_TARGET):
+                    if target_contract in (RING_LOFT_TARGET, FRAMED_LOFT_TARGET, POCKETS_TARGET, TEXTURE_TARGET):
                         # Binary32 inputs are exact rationals. Rounded scaled crosses
                         # can reverse a thin face or erase a nonzero determinant.
                         a, b, c = (tuple(Fraction(value) for value in point) for point in (a, b, c))
@@ -771,9 +786,12 @@ def _validate_surface(decoded: DecodedGLB, node: dict, obj, model: SceneModel,
         materials.add(material_id)
         material = decoded.document["materials"][material_id]
         source = region.material
-        if (material.get("pbrMetallicRoughness") != {
-                "baseColorFactor": list(source.rgba), "metallicFactor": source.metallic,
-                "roughnessFactor": source.roughness} or
+        expected_pbr = {"baseColorFactor": list(source.rgba), "metallicFactor": source.metallic,
+                        "roughnessFactor": source.roughness}
+        if model.profile == "textured-surfaces-0.1" and "baseColorTexture" in material.get("pbrMetallicRoughness", {}):
+            # The independent supplied-byte texture graph was checked before geometry.
+            expected_pbr["baseColorTexture"] = material["pbrMetallicRoughness"]["baseColorTexture"]
+        if (material.get("pbrMetallicRoughness") != expected_pbr or
                 material.get("alphaMode", "OPAQUE") != ("BLEND" if source.rgba[3] < 1 else "OPAQUE")):
             _format_error("Surface PBR factors and transparency must match the authored regional material.")
         identity = {"source_region_key": region.key, "occurrence_path": obj.path,
@@ -787,6 +805,9 @@ def _validate_surface(decoded: DecodedGLB, node: dict, obj, model: SceneModel,
 
 def _validate_geometry(decoded, model, options, target_contract, program, *, check=None, source_meshes=None):
     """Preserve complete inherited geometry/PBR/identity byte obligations."""
+    if target_contract == TEXTURE_TARGET:
+        from .texture_gltf import validate_texture_delivery
+        validate_texture_delivery(decoded, model, check=check)
     nodes = decoded.document["nodes"]
     def plain(value):
         return json.loads(json.dumps(value, allow_nan=False))
@@ -807,19 +828,19 @@ def _validate_geometry(decoded, model, options, target_contract, program, *, che
             frames[index] = path + ".frame"
             obj = model.objects[path]
             if (obj.geometry.get("surface", obj.geometry).get("kind") == "pockets"
-                    and target_contract != POCKETS_TARGET):
+                    and target_contract not in (POCKETS_TARGET, TEXTURE_TARGET)):
                 _format_error("Polygon pockets require their explicit GLB/0.12 destination.")
             if (obj.geometry.get("surface", obj.geometry).get("kind") == "framed_loft"
-                    and target_contract not in (FRAMED_LOFT_TARGET, POCKETS_TARGET)):
+                    and target_contract not in (FRAMED_LOFT_TARGET, POCKETS_TARGET, TEXTURE_TARGET)):
                 _format_error("Framed polygon lofts require their explicit GLB/0.11 destination.")
             if (obj.geometry.get("surface", obj.geometry).get("kind") == "ring_loft"
-                    and target_contract not in (RING_LOFT_TARGET, FRAMED_LOFT_TARGET, POCKETS_TARGET)):
+                    and target_contract not in (RING_LOFT_TARGET, FRAMED_LOFT_TARGET, POCKETS_TARGET, TEXTURE_TARGET)):
                 _format_error("Polygon lofts require their explicit GLB/0.10 destination.")
             if (obj.geometry.get("surface", obj.geometry).get("kind") == "holes"
-                    and target_contract not in (HOLES_TARGET, RING_LOFT_TARGET, FRAMED_LOFT_TARGET, POCKETS_TARGET)):
+                    and target_contract not in (HOLES_TARGET, RING_LOFT_TARGET, FRAMED_LOFT_TARGET, POCKETS_TARGET, TEXTURE_TARGET)):
                 _format_error("Polygon holes require their explicit GLB/0.9 destination.")
             if (obj.geometry.get("surface", obj.geometry).get("kind") == "extrusion"
-                    and target_contract not in (EXTRUSION_TARGET, HOLES_TARGET, RING_LOFT_TARGET, FRAMED_LOFT_TARGET, POCKETS_TARGET)):
+                    and target_contract not in (EXTRUSION_TARGET, HOLES_TARGET, RING_LOFT_TARGET, FRAMED_LOFT_TARGET, POCKETS_TARGET, TEXTURE_TARGET)):
                 _format_error("Polygon source geometry requires its explicit GLB/0.8 destination.")
             for key, expected in (("class_name", obj.class_name), ("geometry", geometry_metadata(obj.geometry, check=check)
                                   if target_contract in NATIVE_TARGETS else obj.geometry),

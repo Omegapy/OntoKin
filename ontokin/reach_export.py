@@ -17,7 +17,7 @@ from pathlib import Path
 import struct
 from typing import Any
 
-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, EXECUTION_PROFILES, REACH_PROFILES
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, POCKETS_PROFILES, EXECUTION_PROFILES, REACH_PROFILES
 
 
 REACH_TARGET = "ontokin.glb/0.6"
@@ -1731,6 +1731,9 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach
         "motion_authority": "OntoKin semantic evaluator; playback contains no live solver",
         "program": program, "force_profile": force_profile_metadata(), "surface_profile": surface_profile,
         "reach_profile": reach_profile_metadata(model.profile), "reach_quantization": quantization}
+    if model.profile == TEXTURE_PROFILE:
+        from .texture_gltf import profile_metadata
+        metadata["texture_profile"] = profile_metadata()
     if model.profile == EXTRUSION_PROFILE:
         metadata["polygon_extrusion_profile"] = extrusion_profile_metadata()
     if model.profile == HOLES_PROFILE:
@@ -1783,6 +1786,8 @@ def _build_reach_scene(model, *, options, source_uri, source_sha256, work, reach
             "boundary_accounting": "H06 complete both-side weighted source histories plus incoming releases",
             "mesh_accounting": "every occurrence, including repeated geometry and requested helpers"},
         "reach_profile": metadata["reach_profile"], "reach_quantization": quantization}
+    if model.profile == TEXTURE_PROFILE:
+        report["geometry"]["texture_profile"] = metadata["texture_profile"]
     if model.profile == EXTRUSION_PROFILE:
         report["geometry"]["polygon_extrusion_profile"] = metadata["polygon_extrusion_profile"]
     if model.profile == HOLES_PROFILE:

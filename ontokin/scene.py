@@ -23,7 +23,7 @@ from .force_export import ForcePrefixPlan, force_interval_violation, force_prefi
 from .geometry import (SPHERE_RINGS, SPHERE_SEGMENTS, Mesh, assembly_marker,
                        box_mesh, joint_marker, sphere_mesh)
 from .model import SceneModel, Vec
-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, SURFACE_PROFILES, CONSTRUCTION_PROFILES
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, SURFACE_PROFILES, CONSTRUCTION_PROFILES
 from .json_limits import JSONLimitError
 from .surface import (LoftSection, SurfaceMaterial, RegionTriangles, SurfaceError,
                       MAX_SECTIONS, MAX_MATERIALS,
@@ -44,7 +44,8 @@ HOLES_TARGET = "ontokin.glb/0.9"
 RING_LOFT_TARGET = "ontokin.glb/0.10"
 FRAMED_LOFT_TARGET = "ontokin.glb/0.11"
 POCKETS_TARGET = "ontokin.glb/0.12"
-EXECUTION_TARGETS = (BUDGET_REACH_TARGET, EXTRUSION_TARGET, HOLES_TARGET, RING_LOFT_TARGET, FRAMED_LOFT_TARGET, POCKETS_TARGET)
+TEXTURE_TARGET = "ontokin.glb/0.13"
+EXECUTION_TARGETS = (BUDGET_REACH_TARGET, EXTRUSION_TARGET, HOLES_TARGET, RING_LOFT_TARGET, FRAMED_LOFT_TARGET, POCKETS_TARGET, TEXTURE_TARGET)
 REACH_TARGETS = (REACH_TARGET, *EXECUTION_TARGETS)
 NATIVE_TARGETS = (SURFACE_TARGET, IMPULSE_TARGET, FORCE_TARGET, *REACH_TARGETS)
 PROGRAM_TARGETS = (CONSTRUCTION_TARGET, *NATIVE_TARGETS)
@@ -94,7 +95,7 @@ def export_error(export_code: str, message: str, model: SceneModel | None = None
                                                      "force-0.1": FORCE_TARGET,
                                                      "planar-reach-0.1": REACH_TARGET,
                                                      BUDGET_PROFILE: BUDGET_REACH_TARGET, EXTRUSION_PROFILE: EXTRUSION_TARGET,
-                                                     HOLES_PROFILE: HOLES_TARGET, RING_LOFT_PROFILE: RING_LOFT_TARGET, FRAMED_LOFT_PROFILE: FRAMED_LOFT_TARGET, POCKETS_PROFILE: POCKETS_TARGET}.get(model.profile, TARGET_CONTRACT)
+                                                     HOLES_PROFILE: HOLES_TARGET, RING_LOFT_PROFILE: RING_LOFT_TARGET, FRAMED_LOFT_PROFILE: FRAMED_LOFT_TARGET, POCKETS_PROFILE: POCKETS_TARGET, TEXTURE_PROFILE: TEXTURE_TARGET}.get(model.profile, TARGET_CONTRACT)
                                                     if model is not None else TARGET_CONTRACT),
                                 "export_code": export_code, **(details or {})},
                        repair=("Use supported visual geometry and the explicitly matching model/delivery profile." if kind == "unsupported" else
@@ -656,6 +657,7 @@ class BakedNode:
     metadata: dict[str, Any]
     translations: list[Vec] = field(default_factory=list)
     rotations_xyzw: list[tuple[float, float, float, float]] = field(default_factory=list)
+    textures: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -677,7 +679,7 @@ def checked_contract(model: SceneModel, target_contract: str) -> str:
     expected = {TARGET_CONTRACT: "core-0.1", CONSTRUCTION_TARGET: "construction-0.1",
                 SURFACE_TARGET: "surface-0.1", IMPULSE_TARGET: "impulse-0.1", FORCE_TARGET: "force-0.1",
                 REACH_TARGET: "planar-reach-0.1", BUDGET_REACH_TARGET: BUDGET_PROFILE, EXTRUSION_TARGET: EXTRUSION_PROFILE,
-                HOLES_TARGET: HOLES_PROFILE, RING_LOFT_TARGET: RING_LOFT_PROFILE, FRAMED_LOFT_TARGET: FRAMED_LOFT_PROFILE, POCKETS_TARGET: POCKETS_PROFILE}
+                HOLES_TARGET: HOLES_PROFILE, RING_LOFT_TARGET: RING_LOFT_PROFILE, FRAMED_LOFT_TARGET: FRAMED_LOFT_PROFILE, POCKETS_TARGET: POCKETS_PROFILE, TEXTURE_TARGET: TEXTURE_PROFILE}
     if target_contract not in expected or model.profile != expected[target_contract]:
         export_error("OKE-E-SUPPORT", "The named GLB contract must explicitly match the authored semantic profile.",
                      model, kind="unsupported", details={"target_contract": target_contract,
@@ -686,7 +688,7 @@ def checked_contract(model: SceneModel, target_contract: str) -> str:
         export_error("OKE-E-SUPPORT", "The GLB adapter requires a supported, validated model.", model, kind="unsupported")
     return {TARGET_CONTRACT: "0.1", CONSTRUCTION_TARGET: "0.2", SURFACE_TARGET: "0.3",
             IMPULSE_TARGET: "0.4", FORCE_TARGET: "0.5", REACH_TARGET: "0.6",
-            BUDGET_REACH_TARGET: "0.7", EXTRUSION_TARGET: "0.8", HOLES_TARGET: "0.9", RING_LOFT_TARGET: "0.10", FRAMED_LOFT_TARGET: "0.11", POCKETS_TARGET: "0.12"}[target_contract]
+            BUDGET_REACH_TARGET: "0.7", EXTRUSION_TARGET: "0.8", HOLES_TARGET: "0.9", RING_LOFT_TARGET: "0.10", FRAMED_LOFT_TARGET: "0.11", POCKETS_TARGET: "0.12", TEXTURE_TARGET: "0.13"}[target_contract]
 
 
 def program_metadata(model: SceneModel, *, check: Callable[[], None] | None = None) -> dict[str, Any]:
@@ -700,13 +702,19 @@ def program_metadata(model: SceneModel, *, check: Callable[[], None] | None = No
         if check is not None:
             check()
         manifest = bounded_data(model.source_manifest, check=check)
-        if not isinstance(manifest, dict) or manifest.get("schema_version") != "ontokin.bundle/0.1" or manifest.get("entry_source_id") != "entry":
+        bundle_schema = "ontokin.bundle/0.2" if model.profile == TEXTURE_PROFILE else "ontokin.bundle/0.1"
+        if not isinstance(manifest, dict) or manifest.get("schema_version") != bundle_schema or manifest.get("entry_source_id") != "entry":
             raise ValueError("Missing canonical source manifest.")
         canonical = json.dumps(manifest, sort_keys=True, ensure_ascii=False,
                                separators=(",", ":"), allow_nan=False).encode("utf-8")
-        revision = "sha256:" + hashlib.sha256(b"ontokin.bundle/0.1\0" + canonical).hexdigest()
+        revision = "sha256:" + hashlib.sha256(bundle_schema.encode("ascii") + b"\0" + canonical).hexdigest()
         if model.program_revision != revision:
             raise ValueError("Program revision differs from its canonical manifest.")
+        if model.profile == TEXTURE_PROFILE:
+            assets = getattr(model, "texture_assets", None)
+            if (not isinstance(assets, dict) or len(assets) > 4
+                    or manifest.get("assets") != [assets[key].manifest() for key in sorted(assets)]):
+                raise ValueError("Image identities differ from the canonical source and asset manifest.")
         units = manifest["units"]
         source_ids = [unit["source_id"] for unit in units]
         if source_ids != sorted(set(source_ids)) or set(source_ids) != set(model.source_provenance) or "entry" not in source_ids:
@@ -1170,7 +1178,7 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
             check()
         kind = geometry.get("kind")
         if (geometry.get("surface", geometry).get("kind") == "pockets"
-                and model.profile != POCKETS_PROFILE):
+                and model.profile not in POCKETS_PROFILES):
             export_error("OKE-E-GEOMETRY", "Polygon pockets require their explicit source and destination profile.",
                          model, kind="unsupported")
         if (geometry.get("surface", geometry).get("kind") == "framed_loft"
@@ -1205,7 +1213,7 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
                                                                 "force-0.1": FORCE_TARGET,
                                                                 "planar-reach-0.1": REACH_TARGET,
                                                                 BUDGET_PROFILE: BUDGET_REACH_TARGET, EXTRUSION_PROFILE: EXTRUSION_TARGET,
-                                                                HOLES_PROFILE: HOLES_TARGET, RING_LOFT_PROFILE: RING_LOFT_TARGET, FRAMED_LOFT_PROFILE: FRAMED_LOFT_TARGET, POCKETS_PROFILE: POCKETS_TARGET}.get(model.profile, SURFACE_TARGET),
+                                                                HOLES_PROFILE: HOLES_TARGET, RING_LOFT_PROFILE: RING_LOFT_TARGET, FRAMED_LOFT_PROFILE: FRAMED_LOFT_TARGET, POCKETS_PROFILE: POCKETS_TARGET, TEXTURE_PROFILE: TEXTURE_TARGET}.get(model.profile, SURFACE_TARGET),
                                             "object_path": obj.path, **error.details}) from error
             charge(mesh)
             return mesh
@@ -1245,7 +1253,11 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
         mesh = mesh_for(obj.geometry, obj)
         if isinstance(mesh, SurfaceMesh):
             metadata["surface"] = surface_metadata(obj.geometry, mesh, check=check)
-        nodes.append(BakedNode(path, path + ".frame", mesh, obj.appearance, metadata))
+        baked_node = BakedNode(path, path + ".frame", mesh, obj.appearance, metadata)
+        if model.profile == TEXTURE_PROFILE:
+            from .texture_gltf import prepare_node_textures
+            baked_node.textures = prepare_node_textures(obj.geometry, model, check=check)
+        nodes.append(baked_node)
     if options.helpers:
         marker = None
         for path, obj in model.objects.items():

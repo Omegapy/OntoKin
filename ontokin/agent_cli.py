@@ -11,9 +11,9 @@ from .agent import AgentService
 from .agent_protocol import MAX_REQUEST_BYTES, ProtocolError, envelope
 
 
-def _decode(raw: bytes):
-    if len(raw) > MAX_REQUEST_BYTES:
-        raise ProtocolError("OKA-E-RESOURCE", "A JSON request exceeds the 4 MiB transport limit.")
+def _decode(raw: bytes, *, max_request_bytes=MAX_REQUEST_BYTES):
+    if len(raw) > max_request_bytes:
+        raise ProtocolError("OKA-E-RESOURCE", f"A JSON request exceeds the {max_request_bytes // (1024 * 1024)} MiB transport limit.")
     try:
         def pairs(items):
             result = {}
@@ -77,6 +77,12 @@ def run(args, *, host_policy=None) -> int:
         from .pockets_protocol import PocketsProtocol
         service_type, envelope_fn = PocketsAgentService, PocketsProtocol.envelope
         service_options = {"protocol": selected_protocol, "host_policy": host_policy}
+    elif selected_protocol == "ontokin.agent/0.13":
+        from .texture_agent import TextureAgentService
+        from .texture_protocol import TextureProtocol
+        service_type, envelope_fn = TextureAgentService, TextureProtocol.envelope
+        service_options = {"protocol": selected_protocol, "host_policy": host_policy}
+    max_request_bytes = 8 * 1024 * 1024 if selected_protocol == "ontokin.agent/0.13" else MAX_REQUEST_BYTES
     def error_response(error):
         return _error(error, envelope_fn)
     try:
@@ -88,7 +94,7 @@ def run(args, *, host_policy=None) -> int:
     if args.request is not None:
         try:
             with args.request.open("rb") as stream:
-                request = _decode(stream.read(MAX_REQUEST_BYTES + 1))
+                request = _decode(stream.read(max_request_bytes + 1), max_request_bytes=max_request_bytes)
             response = service.handle(request, wait=args.wait)
         except (OSError, ProtocolError) as exc:
             error = exc if isinstance(exc, ProtocolError) else ProtocolError("OKA-E-IO", "The request file could not be read.", reason=str(exc))
@@ -115,17 +121,17 @@ def run(args, *, host_policy=None) -> int:
         thread.start()
     try:
         while True:
-            raw = sys.stdin.buffer.readline(MAX_REQUEST_BYTES + 1)
+            raw = sys.stdin.buffer.readline(max_request_bytes + 1)
             if not raw:
                 break
-            if len(raw) > MAX_REQUEST_BYTES:
+            if len(raw) > max_request_bytes:
                 # Drain this one oversized line in bounded chunks; the next request remains usable.
                 while raw and not raw.endswith(b"\n"):
-                    raw = sys.stdin.buffer.readline(MAX_REQUEST_BYTES + 1)
-                response = error_response(ProtocolError("OKA-E-RESOURCE", "A JSONL request exceeds the 4 MiB transport limit."))
+                    raw = sys.stdin.buffer.readline(max_request_bytes + 1)
+                response = error_response(ProtocolError("OKA-E-RESOURCE", f"A JSONL request exceeds the {max_request_bytes // (1024 * 1024)} MiB transport limit."))
             else:
                 try:
-                    request = _decode(raw)
+                    request = _decode(raw, max_request_bytes=max_request_bytes)
                     response = service.handle(request, wait=args.wait)
                 except ProtocolError as exc:
                     response = error_response(exc)
