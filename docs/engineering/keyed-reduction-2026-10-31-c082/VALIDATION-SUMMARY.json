@@ -1,6 +1,6 @@
 {
   "schema_version": "ontokin.c082-validation-summary/1.0",
-  "recorded_utc": "2026-10-31T20:53:00.244747+00:00",
+  "recorded_utc": "2026-10-31T20:56:16.385055+00:00",
   "status": "passed_for_finite_development_scope",
   "scope": "Bounded pure keyed reduction in explicit source .15, Agent/0.15 and recorded GLB/0.15; bundle/files0.2 unchanged.",
   "source_cuts": {
@@ -373,8 +373,26 @@
     "inherited_visual_review": {
       "path_in_handoff": "evidence/records/inherited-visual-review.json",
       "bytes": 29830,
-      "sha256": "9c84b177f09d3923cba184c7f105bccddfa5af8281f54ab32a279a68b55d4832",
+      "sha256": "c528cb47e8b0b922b67b443019ee89d82db97b386249fa3908dce7b7c71d27eb",
       "status": "passed_finite_views"
+    },
+    "inherited_visual_receipt_correction": {
+      "path_in_handoff": "evidence/records/inherited-visual-receipt-correction.json",
+      "bytes": 2390,
+      "sha256": "46f657e7cfaa28134037b1f7213fe9106c42d89f2324914f7825be0ca73489a8",
+      "status": "corrected_and_exact_original_reconstructed"
+    },
+    "inherited_visual_receipt_history": {
+      "path_in_handoff": "evidence/records/inherited-visual-runtime-history.json",
+      "bytes": 2808,
+      "sha256": "7224bc68fdfa3c9c265fe84e070b65bc2a63189cf4b99ff2868f988538b07996",
+      "status": "exact_initial_receipt_reconstructed_and_retained_separately"
+    },
+    "blocked_initial_integration_review": {
+      "path_in_handoff": "evidence/independent-review/FINAL-INTEGRATION-REVIEW-01.json",
+      "bytes": 5014,
+      "sha256": "1518de5eb9a20705df5ae169d171d53bf11b3a20232e54f8718f9d63fa318535",
+      "status": "blocked_by_stale_visual_review_receipt_binding"
     },
     "predecessor_producer": {
       "path_in_handoff": "evidence/inherited-sequence/predecessor-producer/summary.json",
@@ -426,6 +444,7 @@
     }
   },
   "failure_preservation": [
+    "Final integration review blocked the first documentation candidate because the coordinator combined an initial visual-review receipt before its author announced completion; later shortening changed the receipt hash. The exact initial 59,064-byte receipt was reconstructed to its already-recorded SHA256 and retained separately with the original combined report, blocked review and source cut. The corrected combined report binds the frozen 32,990-byte final receipt. All 35 image identities/observations and six machine-report identities are unchanged; no product rerun is indicated.",
     "Initial C081 extraction had unexpected exact archive-prefix files; first inventory failure and prefix reconstruction retained. Creation cause unestablished; fresh extraction/restoration passed.",
     "Four independent authoring preflight versions and their exact snapshots/control receipts retained before immutable freeze; no preflight input failure claimed.",
     "Runtime source-harness Diagnostic.to_dict and older-profile-selection mistakes retained with original scripts, logs and source cuts; corrected harness preserves frozen expected outcomes.",
