@@ -26,7 +26,7 @@ COORDINATE_SYSTEM = "carrier_local_after_placement/0.1"
 ORDERING = "native_triangle_ordinal/0.1"
 
 
-def surface_summary(geometry, *, check=None):
+def _surface_summary(geometry, *, check=None):
     """Describe at most 64 sections and 16 regions without allocating vertices."""
     if check is not None:
         check()
@@ -72,6 +72,15 @@ def surface_summary(geometry, *, check=None):
 
 
 
+def surface_summary(geometry, *, check=None):
+    result = _surface_summary(geometry, check=check)
+    if geometry.get("surface", geometry).get("texture_bindings"):
+        from .texture_runtime import texture_metadata
+        result["texture_bindings"] = texture_metadata(geometry, check=check)
+        result["texture_coordinate_system"] = "raw_unplaced_recipe_local_affine"
+    return result
+
+
 def extrusion_summary(geometry, *, check=None):
     """Expose ordered authored points and regional counts, never editable corners."""
     recipe = geometry.get("surface", geometry)
@@ -107,7 +116,7 @@ def extrusion_summary(geometry, *, check=None):
             "physical_participation": "none",
             "motion_authority": "carrier_evaluated_world_pose"}
 
-def _mesh_digest(geometry, mesh, *, check):
+def _mesh_digest(geometry, mesh, *, check, texture_uvs=None):
     """Implementation-scoped fingerprint, streamed with bounded work callbacks.
 
 Domain, canonical recipe summary/palette, binary64 placed corner attributes,
@@ -135,6 +144,15 @@ opaque cursor binding, not a replacement for the canonical program revision.
             check()
             values = region.indices[start:start + 256]
             digest.update(struct.pack("<" + "I" * len(values), *values))
+    if texture_uvs:
+        digest.update(b"\0ontokin.texture-uv/0.1\0")
+        for key in sorted(texture_uvs):
+            check()
+            digest.update(key.encode("ascii") + b"\0")
+            for index, uv in enumerate(texture_uvs[key]):
+                if index % 64 == 0:
+                    check()
+                digest.update(struct.pack("<2d", *uv))
     return "sha256:" + digest.hexdigest()
 
 
@@ -150,6 +168,8 @@ class SurfacePageContext:
     region_keys: list[str]
     budget: object
     profile: str = PROFILE
+    texture_uvs: dict | None = None
+    texture_bindings: dict | None = None
 
     def binding(self):
         return {"program_revision": self.program_revision, "element_id": self.element_id,
@@ -180,6 +200,15 @@ class SurfacePageContext:
                   "offset": offset, "returned_triangles": len(selected),
                   "positions_m": positions, "normals": normals, "triangles": triangles,
                   "source_triangle_ordinals": selected, "region_keys": regions}
+        if self.texture_bindings is not None:
+            result["texture_bindings"] = self.texture_bindings
+            result["texture_coordinate_system"] = "raw_unplaced_recipe_local_affine"
+            result["texcoords_0"] = []
+            for ordinal in selected:
+                self.budget.tick()
+                key = self.region_keys[ordinal]
+                uv = self.texture_uvs.get(key) if self.texture_uvs else None
+                result["texcoords_0"].extend(uv[ordinal * 3:ordinal * 3 + 3] if uv else [None, None, None])
         result = self.budget.data(result)
         end = offset + len(selected)
         return result, end if end < len(self.ordinals) else None
@@ -221,7 +250,14 @@ def prepare_surface_page(program, element_id, *, region=None, count=256, budgets
             mesh = build_surface_mesh(obj.geometry, max_vertices=MAX_MESH_VERTICES, check=budget.tick)
         except SurfaceError as exc:
             error(exc.code, str(exc), **exc.details)
-        fingerprint = _mesh_digest(obj.geometry, mesh, check=budget.tick)
+        texture_uvs = texture_bindings = None
+        if profile == "textured-surfaces-0.1":
+            from .texture_runtime import texture_coordinates, texture_metadata
+            texture_bindings = texture_metadata(obj.geometry, check=budget.tick)
+            raw_mesh = compiler.surface_meshes[obj.path]["mesh"]
+            texture_uvs = texture_coordinates(obj.geometry, raw_mesh,
+                charge=lambda n: budget.execution_budget.tick(amount=n), check=budget.tick)
+        fingerprint = _mesh_digest(obj.geometry, mesh, check=budget.tick, texture_uvs=texture_uvs)
         keys = [""] * mesh.triangle_count
         for group in mesh.regions:
             for start in range(0, len(group.indices), 3):
@@ -236,6 +272,7 @@ def prepare_surface_page(program, element_id, *, region=None, count=256, budgets
                 selected.append(ordinal)
         return SurfacePageContext(program.program_revision, list(obj.element_id), obj.path,
                                   region, mesh, fingerprint, selected, keys, budget,
-                                  profile if profile in EXTRUSION_PROFILES else PROFILE)
+                                  profile if profile in EXTRUSION_PROFILES else PROFILE,
+                                  texture_uvs=texture_uvs, texture_bindings=texture_bindings)
     except _Interrupt as exc:
         raise exc.error

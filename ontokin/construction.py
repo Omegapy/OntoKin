@@ -26,7 +26,10 @@ from .holes_runtime import HOLES_CALLS, HOLES_TYPES, holes_builtin
 from .ring_loft_runtime import RING_LOFT_CALLS, RING_LOFT_TYPES, ring_loft_builtin
 from .framed_loft_runtime import FRAMED_LOFT_CALLS, FRAMED_LOFT_TYPES, framed_loft_builtin
 from .pockets_runtime import POCKETS_CALLS, POCKETS_TYPES, pockets_builtin
-from .profile_capabilities import (BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, IMPULSE_PROFILES,
+from .texture_bundle import TextureBundle
+from .texture_runtime import (TEXTURE_CALLS, TEXTURE_TYPES, texture_builtin,
+                              validate_texture_closure, texture_coordinates)
+from .profile_capabilities import (BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, IMPULSE_PROFILES,
                                    SURFACE_PROFILES)
 from .validator import (BUILTIN_TYPES, FIELD_TYPES,
                         PREDEFINED, READONLY_FIELDS, BoundExpression, Callable,
@@ -356,6 +359,9 @@ class ConstructionCompiler(Validator):
             keys.add(node.key)
 
     def predefined(self, node: Any) -> frozenset | set:
+        if self.linked.modules[node.source_id].ast.profile == TEXTURE_PROFILE:
+            from .reach_source import NAMES
+            return PREDEFINED_02 | NAMES | TEXTURE_CALLS | TEXTURE_TYPES
         if self.linked.modules[node.source_id].ast.profile in REACH_PROFILES:
             from .reach_source import NAMES
             return PREDEFINED_02 | NAMES
@@ -381,7 +387,11 @@ class ConstructionCompiler(Validator):
                     from .reach_source import reach_error
                     raise reach_error("reach_type", "ReachBranch takes no type arguments.", node)
                 result = Type("ReachBranch")
-            elif name in POCKETS_TYPES and self.linked.modules[node.source_id].ast.profile == POCKETS_PROFILE:
+            elif name in TEXTURE_TYPES and self.linked.modules[node.source_id].ast.profile == TEXTURE_PROFILE:
+                if args:
+                    fail("OKL-E-TYPE", f"Texture type '{name}' takes no type arguments.", node, phase="type")
+                result = Type(name)
+            elif name in POCKETS_TYPES and self.linked.modules[node.source_id].ast.profile in POCKETS_PROFILES:
                 if args:
                     fail("OKL-E-TYPE", f"Pocket type '{name}' takes no type arguments.", node, phase="type")
                 result = Type(name)
@@ -427,7 +437,9 @@ class ConstructionCompiler(Validator):
         declaring_profile = self.linked.modules[node.source_id].ast.profile
         if declaring_profile in SURFACE_PROFILES:
             allowed |= SURFACE_TYPES
-        if declaring_profile == POCKETS_PROFILE:
+        if declaring_profile == TEXTURE_PROFILE:
+            allowed |= TEXTURE_TYPES
+        if declaring_profile in POCKETS_PROFILES:
             allowed |= POCKETS_TYPES
         if declaring_profile in FRAMED_LOFT_PROFILES:
             allowed |= FRAMED_LOFT_TYPES
@@ -765,7 +777,10 @@ class ConstructionCompiler(Validator):
                 return Value(Type("ReachBranch"), name)
             if name == "reach_planar":
                 return Value(Type("BuiltinCallable"), name)
-        if (name in POCKETS_CALLS and self.linked.modules[node.source_id].ast.profile == POCKETS_PROFILE
+        if (name in TEXTURE_CALLS and self.linked.modules[node.source_id].ast.profile == TEXTURE_PROFILE
+                and name not in ctx.locals):
+            return Value(Type("BuiltinCallable"), name)
+        if (name in POCKETS_CALLS and self.linked.modules[node.source_id].ast.profile in POCKETS_PROFILES
                 and name not in ctx.locals):
             return Value(Type("BuiltinCallable"), name)
         if (name in FRAMED_LOFT_CALLS and self.linked.modules[node.source_id].ast.profile in FRAMED_LOFT_PROFILES
@@ -1232,15 +1247,31 @@ class ConstructionCompiler(Validator):
                 self.reach_work.remember(parameter_key, (node, tuple(capture[2]), value),
                     admission=lambda: self._parameter_context(ctx, reads, names, node) == parameter_context)
             return result
+        except OntoKinError as error:
+            # A heterogeneous vector can fail while evaluating planar_uv's
+            # arguments, before its typed builtin is reached. Keep this new
+            # signature diagnostic local to the actual .13 argument source.
+            location = error.diagnostic.node
+            if (error.code == "OKL-E-UNIT" and node.kind == "call"
+                    and node.callee.kind == "name" and node.callee.name == "planar_uv"
+                    and self.linked.modules[node.source_id].ast.profile == TEXTURE_PROFILE
+                    and error is not self.budget.callback_error
+                    and error is not getattr(getattr(self.budget, "execution_budget", None), "callback_error", None)
+                    and getattr(location, "source_id", None) == node.source_id
+                    and any(arg.start <= location.start <= location.end <= arg.end for arg in node.args[:3])):
+                fail("OKL-E-TYPE", str(error), location, phase="type", details=error.diagnostic.details)
+            raise
         finally:
             self._expression_depth -= 1
 
     def builtin(self, name: str, args: list[Value], node: Any, ctx: Context) -> Value:
+        if name in TEXTURE_CALLS and self.linked.modules[node.source_id].ast.profile == TEXTURE_PROFILE:
+            return texture_builtin(self, name, args, node, ctx)
         if name == "reach_planar":
             from .reach_source import reach_builtin
             return reach_builtin(self, args, node, ctx)
         if name in POCKETS_CALLS:
-            if self.linked.modules[node.source_id].ast.profile != POCKETS_PROFILE:
+            if self.linked.modules[node.source_id].ast.profile not in POCKETS_PROFILES:
                 fail("OKL-E-CAPABILITY-UNSUPPORTED", "Pocket constructors require polygon-pockets-0.1.",
                      node, phase="support")
             return pockets_builtin(self, name, args, node, ctx)
@@ -1577,7 +1608,14 @@ class ConstructionCompiler(Validator):
                     mesh, local_pose = _materialize_reach_surface(
                         recipe, max_vertices=remaining_vertices, work=self.reach_work,
                         check=lambda: self.budget.tick(location))
+                if self.model.profile == TEXTURE_PROFILE:
+                    texture_coordinates(recipe, mesh, charge=lambda n: self.budget.tick(location, amount=n),
+                                        check=lambda: self.budget.tick(location))
             except SurfaceError as error:
+                if self.model.profile == TEXTURE_PROFILE and (
+                        error is self.budget.callback_error or
+                        error is getattr(getattr(self.budget, "execution_budget", None), "callback_error", None)):
+                    raise
                 fail(error.code, str(error), location, details=error.details)
             remaining_vertices -= len(mesh.positions)
             self.surface_meshes[path] = {
@@ -1819,7 +1857,8 @@ class ConstructionCompiler(Validator):
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "Required capabilities are not supplied by " + self.model.profile + ": " +
                  ", ".join(self.model.requested_capabilities), requires[0], phase="support")
         if self.level == "delivered":
-            target = ("ontokin.glb/0.12" if self.model.profile == POCKETS_PROFILE else
+            target = ("ontokin.glb/0.13" if self.model.profile == TEXTURE_PROFILE else
+                      "ontokin.glb/0.12" if self.model.profile == POCKETS_PROFILE else
                       "ontokin.glb/0.11" if self.model.profile == FRAMED_LOFT_PROFILE else
                       "ontokin.glb/0.10" if self.model.profile == RING_LOFT_PROFILE else
                                                    "ontokin.glb/0.9" if self.model.profile == HOLES_PROFILE else
@@ -1880,6 +1919,8 @@ def compile_construction(bundle, *, level: str = "represented", budgets: dict | 
              linked.entry.ast, phase="support", details={"budget_reason": "execution_context_required"})
     compiler = ConstructionCompiler(linked, level, budget)
     try:
+        if linked.entry.ast.profile == TEXTURE_PROFILE or isinstance(bundle, TextureBundle):
+            validate_texture_closure(compiler)
         compiler.run()
         return compiler
     except OntoKinError as error:

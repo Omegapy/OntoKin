@@ -1,0 +1,90 @@
+{
+  "schema_version": "ontokin.source-execution/0.1",
+  "implementation": "ontokin-reference",
+  "version": "0.4.0",
+  "language_version": "0.13",
+  "profile": "textured-surfaces-0.1",
+  "target_contract": "ontokin.glb/0.13",
+  "requested_level": "delivered",
+  "source_revision": "sha256:558bbbfbab1c47adbdc9e1052b853110ef7bb5c8051905af472a0032f6bf17e8",
+  "program_revision": "sha256:e452edc4c65e59d028eef3caabff1788be35f824c7fd0f3a1b762cc97c5f138d",
+  "implementation_identity": {
+    "name": "ontokin-reference",
+    "version": "0.4.0",
+    "source_code_sha256": "sha256:5f6190783a836c0befcb7862b2300d1c0934fc55da7ebf318c8cac4c5cf63a1d"
+  },
+  "outcome": "invalid",
+  "achieved_level": null,
+  "diagnostics": [
+    {
+      "schema_version": "ontokin.diagnostic/0.2",
+      "code": "OKL-E-SURFACE-FACETS",
+      "severity": "error",
+      "category": "invalid",
+      "phase": "elaboration",
+      "message": "Facets must be divisible by four, from 8 through 64.",
+      "source_revision": "sha256:558bbbfbab1c47adbdc9e1052b853110ef7bb5c8051905af472a0032f6bf17e8",
+      "run_id": null,
+      "time": null,
+      "primary": {
+        "source_id": "entry",
+        "source_revision": "sha256:558bbbfbab1c47adbdc9e1052b853110ef7bb5c8051905af472a0032f6bf17e8",
+        "file": "main.ok",
+        "start_byte": 150,
+        "end_byte": 742,
+        "element_id": [
+          "entry",
+          "texture-case",
+          "definitions",
+          "shape"
+        ]
+      },
+      "related": [],
+      "rule_ids": [
+        "LANG-024"
+      ],
+      "details": {
+        "value": 4
+      },
+      "repair": {
+        "summary": "Revise the indicated declaration or expression to satisfy the stated core rule.",
+        "patches": []
+      },
+      "blocks": [
+        "represented",
+        "constructed",
+        "evaluated",
+        "delivered"
+      ],
+      "program_revision": "sha256:e452edc4c65e59d028eef3caabff1788be35f824c7fd0f3a1b762cc97c5f138d",
+      "source_id": "entry"
+    }
+  ],
+  "valid_prefix": null,
+  "execution_budget": {
+    "schema_version": "ontokin.execution-budget/0.1",
+    "defaults": {
+      "max_operations": 100000,
+      "max_elapsed_ms": 30000
+    },
+    "policy_id": "sha256:f5c7685c52ca1c3cdded05bbc376e06cdbd6962c5196fe13d47f89f8c8d331ef",
+    "host_ceilings": {
+      "max_operations": 100000,
+      "max_elapsed_ms": 30000
+    },
+    "source_request": {
+      "max_operations": 100000,
+      "max_elapsed_ms": 30000
+    },
+    "caller_caps": {},
+    "effective": {
+      "max_operations": 100000,
+      "max_elapsed_ms": 30000
+    },
+    "consumed_operations": 1136,
+    "elapsed_ms": 5.92435499856947,
+    "stage": "construction",
+    "status": "failed",
+    "budget_reason": null
+  }
+}

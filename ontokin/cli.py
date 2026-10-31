@@ -37,6 +37,12 @@ def _export_paths(source: Path, output: Path, report: Path | None, *,
                   target_contract: str = "ontokin.glb/0.1",
                   protected_sources: tuple[Path, ...] = ()) -> tuple[Path, Path]:
     report = report if report is not None else output.with_suffix(".export.json")
+    if target_contract == "ontokin.glb/0.13":
+        from .bundle import BundleError
+        protected_pairs = [(path, destination) for path in (source, *protected_sources)
+                           for destination in (output, report)] + [(output, report)]
+        if any(_same_path(a, b) for a, b in protected_pairs):
+            raise BundleError("OKA-E-REQUEST", "Texture export destinations must not alias source, asset or receipt inputs.")
     if output.suffix.lower() != ".glb" or report.suffix.lower() != ".json":
         raise OntoKinError(
             "OKL-E-CAPABILITY-UNSUPPORTED", "Export requires a .glb output and a .json report.",
@@ -172,6 +178,7 @@ def capabilities(*, host_policy=None) -> dict:
     from .ring_loft_agent_catalog import interface as ring_loft_agent_interface
     from .framed_loft_agent_catalog import interface as framed_loft_agent_interface
     from .pockets_agent_catalog import interface as pockets_agent_interface
+    from .texture_agent_catalog import interface as texture_agent_interface
     from .execution_budget import HostPolicy, DEFAULT_LIMITS, MAX_LIMIT
     policy = HostPolicy() if host_policy is None else host_policy
     if not isinstance(policy, HostPolicy):
@@ -299,6 +306,7 @@ def capabilities(*, host_policy=None) -> dict:
         "polygon_loft_interface": ring_loft_agent_interface(policy),
         "framed_polygon_loft_interface": framed_loft_agent_interface(policy),
         "polygon_pockets_interface": pockets_agent_interface(policy),
+        "textured_surfaces_interface": texture_agent_interface(policy),
         "operations": ["check", "evaluate", "export", "agent", "conformance", "capabilities"],
         "output_levels": ["represented", "constructed", "evaluated"],
         "source_features": ["classes", "single_inheritance", "pure_functions_and_methods",
@@ -410,18 +418,26 @@ def _program_export(args, *, host_policy=None) -> int:
             raise BundleError("OKA-E-REQUEST", "A program bundle requires explicit GLB/0.2 through GLB/0.6 delivery.")
         protected = []
         if args.bundle:
-            manifest_path = args.file.resolve(strict=True)
-            with manifest_path.open("rb") as stream:
-                manifest_bytes = stream.read(MAX_MANIFEST_BYTES + 1)
-            if len(manifest_bytes) > MAX_MANIFEST_BYTES:
-                raise BundleError("OKA-E-RESOURCE", "The file manifest exceeds its byte budget.")
-            program = load_file_manifest(manifest_path)
-            if manifest_path.read_bytes() != manifest_bytes:
-                raise BundleError("OKA-E-REQUEST", "The file manifest changed while its source snapshot was loaded.")
-            manifest = json.loads(manifest_bytes)
-            protected = [manifest_path.parent / descriptor["path"]
-                         for descriptor in [manifest["entry"], *manifest["modules"]]]
+            if args.target == "ontokin.glb/0.13":
+                from .texture_bundle import load_texture_file_manifest_transport
+                manifest_path = args.file.absolute()
+                program, manifest_bytes, relative_paths = load_texture_file_manifest_transport(manifest_path)
+                protected = [manifest_path.parent / path for path in relative_paths]
+            else:
+                manifest_path = args.file.resolve(strict=True)
+                with manifest_path.open("rb") as stream:
+                    manifest_bytes = stream.read(MAX_MANIFEST_BYTES + 1)
+                if len(manifest_bytes) > MAX_MANIFEST_BYTES:
+                    raise BundleError("OKA-E-RESOURCE", "The file manifest exceeds its byte budget.")
+                program = load_file_manifest(manifest_path)
+                if manifest_path.read_bytes() != manifest_bytes:
+                    raise BundleError("OKA-E-REQUEST", "The file manifest changed while its source snapshot was loaded.")
+                manifest = json.loads(manifest_bytes)
+                protected = [manifest_path.parent / descriptor["path"]
+                             for descriptor in [manifest["entry"], *manifest["modules"]]]
         else:
+            if args.target == "ontokin.glb/0.13":
+                raise BundleError("OKA-E-REQUEST", "GLB/0.13 requires an explicit files/0.2 manifest with --bundle.")
             source = _read_source(args.file)
             try:
                 source_text = source.raw.decode("utf-8", errors="strict")
@@ -429,12 +445,12 @@ def _program_export(args, *, host_policy=None) -> int:
                 raise BundleError("OKA-E-REQUEST", "The source file must contain valid UTF-8.") from None
             program = load_bundle({"schema_version": "ontokin.bundle/0.1",
                 "entry": {"filename": str(args.file), "source": source_text}, "modules": []})
-        if args.target in ("ontokin.glb/0.7", "ontokin.glb/0.8", "ontokin.glb/0.9", "ontokin.glb/0.10", "ontokin.glb/0.11", "ontokin.glb/0.12"):
-            from .budget_runtime import execute_budgeted_export, execute_extrusion_export, execute_holes_export, execute_ring_loft_export, execute_framed_loft_export, execute_pockets_export
+        if args.target in ("ontokin.glb/0.7", "ontokin.glb/0.8", "ontokin.glb/0.9", "ontokin.glb/0.10", "ontokin.glb/0.11", "ontokin.glb/0.12", "ontokin.glb/0.13"):
+            from .budget_runtime import execute_budgeted_export, execute_extrusion_export, execute_holes_export, execute_ring_loft_export, execute_framed_loft_export, execute_pockets_export, execute_texture_export
             execute = {"ontokin.glb/0.7": execute_budgeted_export, "ontokin.glb/0.8": execute_extrusion_export,
                        "ontokin.glb/0.9": execute_holes_export, "ontokin.glb/0.10": execute_ring_loft_export,
                        "ontokin.glb/0.11": execute_framed_loft_export,
-                       "ontokin.glb/0.12": execute_pockets_export}[args.target]
+                       "ontokin.glb/0.12": execute_pockets_export, "ontokin.glb/0.13": execute_texture_export}[args.target]
             output, report_path = _export_paths(args.file, args.output, args.report,
                 target_contract=args.target, protected_sources=tuple(protected))
             caps = {name: value for name, value in (
@@ -512,7 +528,7 @@ def main(argv: list[str] | None = None, *, host_policy=None) -> int:
     evaluate_parser.add_argument("--frame", default="world", help="Frame for --object inspection, for example first.frame")
     export_parser = commands.add_parser("export", help="Bake and verify an animation in a self-contained .glb file")
     export_parser.add_argument("file", type=Path)
-    export_parser.add_argument("--target", choices=["ontokin.glb/0.1", "ontokin.glb/0.2", "ontokin.glb/0.3", "ontokin.glb/0.4", "ontokin.glb/0.5", "ontokin.glb/0.6", "ontokin.glb/0.7", "ontokin.glb/0.8", "ontokin.glb/0.9", "ontokin.glb/0.10", "ontokin.glb/0.11", "ontokin.glb/0.12"],
+    export_parser.add_argument("--target", choices=["ontokin.glb/0.1", "ontokin.glb/0.2", "ontokin.glb/0.3", "ontokin.glb/0.4", "ontokin.glb/0.5", "ontokin.glb/0.6", "ontokin.glb/0.7", "ontokin.glb/0.8", "ontokin.glb/0.9", "ontokin.glb/0.10", "ontokin.glb/0.11", "ontokin.glb/0.12", "ontokin.glb/0.13"],
                                default="ontokin.glb/0.1", help="Explicit delivery profile; old source is never migrated")
     export_parser.add_argument("--bundle", action="store_true",
                                help="Read FILE as an ontokin.files/0.1 manifest of pinned offline .ok files")
@@ -532,7 +548,7 @@ def main(argv: list[str] | None = None, *, host_policy=None) -> int:
     suite.add_argument("--fixtures", type=Path, default=DEFAULT_FIXTURES)
     suite.add_argument("--output", type=Path, help="Write the complete JSON report to this path")
     agent = commands.add_parser("agent", help="Serve an explicitly selected durable agent contract as local JSONL")
-    agent.add_argument("--protocol", choices=["ontokin.agent/0.1", "ontokin.agent/0.2", "ontokin.agent/0.3", "ontokin.agent/0.4", "ontokin.agent/0.5", "ontokin.agent/0.6", "ontokin.agent/0.7", "ontokin.agent/0.8", "ontokin.agent/0.9", "ontokin.agent/0.10", "ontokin.agent/0.11", "ontokin.agent/0.12"], default="ontokin.agent/0.1", help="Select the explicit core, construction, surface, impulse, force, reach, execution-budget, polygon-extrusion, polygon-holes, polygon-loft, framed-polygon-loft or polygon-pockets agent contract")
+    agent.add_argument("--protocol", choices=["ontokin.agent/0.1", "ontokin.agent/0.2", "ontokin.agent/0.3", "ontokin.agent/0.4", "ontokin.agent/0.5", "ontokin.agent/0.6", "ontokin.agent/0.7", "ontokin.agent/0.8", "ontokin.agent/0.9", "ontokin.agent/0.10", "ontokin.agent/0.11", "ontokin.agent/0.12", "ontokin.agent/0.13"], default="ontokin.agent/0.1", help="Select the explicit core, construction, surface, impulse, force, reach, execution-budget, polygon-extrusion, polygon-holes, polygon-loft, framed-polygon-loft or polygon-pockets agent contract")
     agent.add_argument("--store", type=Path, required=True, help="Directory for immutable snapshots and durable request/run state")
     agent.add_argument("--request", type=Path, help="Read one JSON request, emit its receipt, and exit")
     agent.add_argument("--wait", action="store_true", help="Wait for this request's terminal result instead of returning a queued receipt")

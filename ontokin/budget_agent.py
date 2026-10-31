@@ -139,6 +139,7 @@ class _BudgetCheck:
 class BudgetAgentService(ProgramAgentService):
     """Explicit local budget service; host configuration is never JSON authority."""
 
+    store_type = BudgetProgramStore
     protocol_type = BudgetProtocol
     runtime_type = BudgetProgramRuntime
 
@@ -167,7 +168,7 @@ class BudgetAgentService(ProgramAgentService):
         self._profile = self._protocol.profile
         self._destination = self._protocol.destination
         self._runtime = self.runtime_type()
-        self._store_type = partial(BudgetProgramStore, protocol=self._protocol)
+        self._store_type = partial(self.store_type, protocol=self._protocol)
         AgentService.__init__(self, store_path)
 
     @property
@@ -402,7 +403,7 @@ class BudgetAgentService(ProgramAgentService):
         if request["limit"] > request.get("budgets", {}).get("max_result_items", 1000):
             raise ProtocolError("OKA-E-RESOURCE", "Discovery exceeds the requested item limit.")
         if "bundle" in request:
-            task.source = load_bundle(request["bundle"])
+            task.source = self._create_source(request)
         elif "program_revision" in request:
             task.source = self.read_program(request["project_id"], request["program_revision"])
         linked = None

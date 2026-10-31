@@ -10,6 +10,17 @@ The current direction begins with exterior 3D models and short animations. Those
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
 
+### Add opaque image labels to native surfaces
+
+Explicit source `0.13` / `textured-surfaces-0.1` attaches content-pinned offline PNG images to keyed material regions on existing native surfaces. Author an affine planar mapping in recipe-local coordinates, bind an image by stable asset ID and exact digest, and retain the underlying geometry, rigid placement and recorded motion. The [authoring guide](docs/language-design/textured-surfaces-v0.1/README.md) and [versioned decision](docs/language-design/textured-surfaces-v0.1/ADOPTION.md) define image orientation, color multiplication, immutable bundle/files `0.2`, and bounded decoding.
+
+```bash
+python3 -m ontokin export examples/textured-surfaces/rgb-panel.files.json --bundle --target ontokin.glb/0.13 --output /tmp/ontokin-textured-panel.glb
+python3 -m ontokin agent --protocol ontokin.agent/0.13 --store /tmp/ontokin-textures-agent
+```
+
+The [Agent/0.13 interface](docs/language-design/agent-v0.13/README.md) supports atomic source-and-image repair, exact image byte retrieval, and texture-aware surface inspection through a separate durable store. Bundles admit at most four opaque RGB/RGBA PNGs, each at most 256 by 256 pixels and 300,000 encoded bytes. Sampling is nearest with clamp-to-edge addressing. Ordinary limits remain 100,000 operations / 30,000 ms; larger requests require independent current host authorization. This experimental appearance scope adds no mass, collision, deformation or motion authority. [STATUS](STATUS.md) distinguishes actual verification and integration from the remaining release gates.
+
 ### Author recessed trays, panels and housings
 
 Explicit source `0.12` / `polygon-pockets-0.1` creates a constant polygon exterior with up to eight independently keyed blind pockets. Each pocket names its clockwise boundary, depth and floor material. The [versioned decision](docs/language-design/polygon-pockets-v0.1/ADOPTION.md) defines the exact remaining-base arithmetic, rounded floor, complete bottom/top/wall/floor surface, and actual delivered-coordinate checks.

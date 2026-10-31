@@ -18,7 +18,7 @@ from .json_limits import measure_json, JSONLimitError
 from .program_diagnostics import diagnostic_dict
 from .program_protocol import MAX_BUDGETS
 from .program_bindings import PROFILE_BINDINGS
-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, EXECUTION_PROFILES, REACH_PROFILES
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, POCKETS_PROFILES, EXECUTION_PROFILES, REACH_PROFILES
 from .syntax import Node
 from .validator import FIELD_TYPES, optional
 from .values import Value, bounded_data
@@ -664,7 +664,8 @@ def _project(program, record, fields, compiler, sample, run, frame, budget):
     if "support" in fields:
         result["support"] = core._support_record(compiler, budget)
         result["support"]["profile"] = budget.profile
-        result["support"]["named_destination"] = ("ontokin.glb/0.12" if budget.profile == POCKETS_PROFILE else
+        result["support"]["named_destination"] = ("ontokin.glb/0.13" if budget.profile == TEXTURE_PROFILE else
+                      "ontokin.glb/0.12" if budget.profile == POCKETS_PROFILE else
                       "ontokin.glb/0.11" if budget.profile == FRAMED_LOFT_PROFILE else
                       "ontokin.glb/0.10" if budget.profile == RING_LOFT_PROFILE else
                                                    "ontokin.glb/0.9" if budget.profile == HOLES_PROFILE else
