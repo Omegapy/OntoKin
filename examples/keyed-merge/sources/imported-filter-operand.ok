@@ -1,0 +1,19 @@
+ontokin "0.17";
+module Probe @ "probe";
+profile "keyed-merge-0.1";
+import lib @ "lib-import" from "fixture.legacy" version "1.0.0" digest "sha256:f4ce57e8e2d6b1dae988912c6e78c9599ddfe122397241cd6e6d1df71bf9ad1e";
+
+
+public class ProbeShape @ "probe-shape" {
+    
+    public derive result @ "result": Keyed<Int> = merge_keyed<Int>(lib.left_group(), keyed<Int>{"b": 2});
+    public derive forced @ "forced": Int = len(self.result);
+    
+    geometry = if self.forced >= 0 then box(vec3(1[m], 1[m], 1[m])) else empty();
+    physical = no_body();
+}
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object shape @ "shape": ProbeShape {}
+}

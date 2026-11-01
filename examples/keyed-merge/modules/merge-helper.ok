@@ -1,0 +1,5 @@
+ontokin "0.17";
+module MergeHelper @ "merge-helper";
+profile "keyed-merge-0.1";
+
+public fn combine @ "combine"(left_items: Keyed<Int>, right_items: Keyed<Int>) -> Keyed<Int> { return merge_keyed<Int>(left_items, right_items); }

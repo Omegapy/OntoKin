@@ -1,0 +1,18 @@
+ontokin "0.17";
+module Probe @ "probe";
+profile "keyed-merge-0.1";
+
+
+public class ProbeShape @ "probe-shape" {
+    
+    public derive result @ "result": Keyed<PolygonVertex> = merge_keyed<PolygonVertex>(keyed<PolygonVertex>{"left": polygon_vertex(0, planar_point(1[m], 2[m]), "side")}, keyed<PolygonVertex>{"right": polygon_vertex(0, planar_point(1[m], 2[m]), "side")});
+    public derive forced @ "forced": Int = len(self.result);
+    
+    geometry = if self.forced >= 0 then box(vec3(1[m], 1[m], 1[m])) else empty();
+    physical = no_body();
+}
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object shape @ "shape": ProbeShape {}
+}

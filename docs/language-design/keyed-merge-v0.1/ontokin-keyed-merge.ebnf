@@ -1,0 +1,8 @@
+(* C084 supplement to the unchanged .16 grammar and lexical precedence *)
+(* Effective only after reviewed adoption for source 0.17 / keyed-merge-0.1 *)
+merge-keyed-expression = "merge_keyed", "<", type, ">", "(", expression, ",",
+                         expression, ")" ;
+(* One explicit type is the exact resolved Keyed leaf type of both inputs/result *)
+(* No binders, implicit conversion, collision winner or first-class callable *)
+(* Left evaluates once and is admitted before right evaluates once and is admitted *)
+(* Canonical ASCII collision refusal precedes the disjoint 256-entry result bound *)

@@ -1,0 +1,2952 @@
+{
+  "schema_version": "ontokin.c084-independent-input-freeze/0.1",
+  "checkpoint": "C084",
+  "status": "frozen_before_runtime_implementation",
+  "recorded_utc": "2026-11-01T14:13:32.105016+00:00",
+  "source_baseline_commit": "c4451efe1f4d869b9644375f3a4ed52467304af0",
+  "source_baseline_tree": "1eed73f5f2a2af48cc5137ea14586e88e85bcc7e",
+  "decision_id": "OK-DEC-KEYED-MERGE/0.1.0",
+  "adoption_sha256": "5cd8fa463356aa67b91bbb8b5c664d223aa4a07d2fab80ec52d7501a10d3022d",
+  "grammar_sha256": "50ce0b7722498816bcd94473e65a9b84b372246ed898118a4a566e02cb80722d",
+  "independent_review": {
+    "path": "review/C084-COMBINED-INDEPENDENT-REVIEW.json",
+    "size": 5077,
+    "sha256": "906ab83137fcfd3188bfc1a2ac899f9c05fc7ad08a300ba7abf63ff1f6362aa8"
+  },
+  "source_cases": 144,
+  "intended_valid": 79,
+  "intended_invalid": 65,
+  "exact_protocol_outcomes": {
+    "invalid": 52,
+    "resource_limit": 6,
+    "unsupported": 7,
+    "valid": 79
+  },
+  "leaf_families": 24,
+  "agent_workflows": 10,
+  "supplied_byte_mutation_kinds": 19,
+  "supplied_byte_source_artifacts": 3,
+  "supplied_byte_required_mutations": 57,
+  "file_count": 467,
+  "total_bytes": 1168597,
+  "canonical_file_inventory_sha256": "2942c687ce8c1a92f53c6410bf03a8b489660feefc8b1d23fac90e477906df90",
+  "file_inventory_hash_encoding": "UTF-8 JSON of the files array, sort_keys=true, ensure_ascii=false, separators=(comma,colon), no trailing newline",
+  "files": [
+    {
+      "path": "docs/language-design/agent-v0.17/README.md",
+      "size": 4204,
+      "sha256": "73603e0ed104d30d0452a419371796bda873af537384fbac5b9826c79493e6fb",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/language-design/agent-v0.17/diagnostic.schema.json",
+      "size": 404,
+      "sha256": "498e8229f199442b38ebd5697931ce49f61edf5053857e4b77218c499378ad1e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/language-design/agent-v0.17/request.schema.json",
+      "size": 45308,
+      "sha256": "c94992d004ee40ee5ff69e37459d4c38b150f92a44dc5c44c935d01a37e8598d",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/language-design/agent-v0.17/response.schema.json",
+      "size": 81274,
+      "sha256": "09ef4f919d89996fda3ee8cc6d5ba5314f80ce3198235ab81b6212634d28486b",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/language-design/keyed-merge-v0.1/ADOPTION.md",
+      "size": 25806,
+      "sha256": "5cd8fa463356aa67b91bbb8b5c664d223aa4a07d2fab80ec52d7501a10d3022d",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/language-design/keyed-merge-v0.1/README.md",
+      "size": 860,
+      "sha256": "2432bcd6f22e693906d7a822d282354d81005f9aff905516d3011c3671b9b69d",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/language-design/keyed-merge-v0.1/acceptance.json",
+      "size": 28123,
+      "sha256": "fedb0d9cb3f5b7be7b47f4f4fc54aaafe8e47d1bba72e26196346a2d77827eb1",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/language-design/keyed-merge-v0.1/ontokin-keyed-merge.ebnf",
+      "size": 609,
+      "sha256": "50ce0b7722498816bcd94473e65a9b84b372246ed898118a4a566e02cb80722d",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/DERIVATION.json",
+      "size": 8247,
+      "sha256": "ae4e153f74730c691515ed1e2d725f7e9f7d67c44fabc7bfe356a9def5147aa9",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/README.md",
+      "size": 5438,
+      "sha256": "8404c14f1caa4285f2af34b503704d270f5020964149c9088c15257da65e71d5",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/absent-key-override.files.json",
+      "size": 167,
+      "sha256": "e1a136a531db9b0923f2496bf40ef3e6cd2ab687cf787d9b11b51800eb48bce1",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/absent-key-reference.files.json",
+      "size": 168,
+      "sha256": "c5400dd542becda0465b1dd1d783b437ba4420382698827dbc90e70de283b0f8",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/action-input.files.json",
+      "size": 160,
+      "sha256": "84d4bd91f2bf5df8140c35e1cd22a1b195fe9b9cba6c41d468780b44a31870a9",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/ascii-boundary-keys.files.json",
+      "size": 167,
+      "sha256": "d85802309bdcf4c6779a473445cb3a029b1dfd946f89c16accc43a9f9fd9e297",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/assets/label.png",
+      "size": 89,
+      "sha256": "5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/authored-entry-reordering.files.json",
+      "size": 173,
+      "sha256": "ee77ba0944ad33f618875b463a10908b4ea6b15247999f4505130abad035f591",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/body-model-input.files.json",
+      "size": 164,
+      "sha256": "e60a2d3ee863fe1bc7ff80b289a95ee6be9bdccd5cb9219a50f4d9c11fb16184",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/both-empty-generated-taint.files.json",
+      "size": 174,
+      "sha256": "dadb485160430093c23bfb5481c70156091bd480e0ff491da60a3f3033701973",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/both-empty.files.json",
+      "size": 158,
+      "sha256": "59d604dd76daca1e82d7af79e8f7464c6f6a16c681ae965ff17e4f17823810c8",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/both-types-invalid-left-first.files.json",
+      "size": 177,
+      "sha256": "d7a0bdc217ccb19211d732eee613474cee6f3eb7ea8bffd7a139e04587411699",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/budget-expectations.json",
+      "size": 3277,
+      "sha256": "5cd080ebf58e52db5a8ec9840050b4cc574fdf62b362f22d67cac6caa6b0d459",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/cached-empty-generated-taint.files.json",
+      "size": 176,
+      "sha256": "97c908658b3dc5f43c4bedbed82912e5a159a462b14360e22604ada95d7c8cca",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/collision-authored-reordering.files.json",
+      "size": 177,
+      "sha256": "d9947eb4622165ae9fe1c749104bc6b02d0904f7016586f9f3b522046dfe368e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/collision-before-result-bound.files.json",
+      "size": 177,
+      "sha256": "277c94cb42e2f8ad38bbe53650a562b4462e33104a0073666e7670cb7aeba43f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/collision-equal-values.files.json",
+      "size": 170,
+      "sha256": "7ec8d36e8f7c67e9f7f2de59c7b6a4e7f2eed5881787201039c40f6637c2e9f9",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/collision-grouped-operands.files.json",
+      "size": 174,
+      "sha256": "dd60a2f79a9f5ae7dff800d4fa9b8af0d0993133c9aa018dfbb60e8654ff5394",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/collision-multiple-canonical.files.json",
+      "size": 176,
+      "sha256": "07bee7b1f35fdb5f8aafb2b0e83424b7b43b0a93ab2e4770ad5b6ee025acf92e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/collision-unequal-values.files.json",
+      "size": 172,
+      "sha256": "db73e6b760782e663637f82d4c12d415fd591af52dac0a5a791a09f5e714cd2d",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/collision-utf8-prefix.files.json",
+      "size": 169,
+      "sha256": "ba88a18484308eeebb2618592c2d5012a939490ed6d678f3aae76153999429e3",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/condition-retains-merge.files.json",
+      "size": 171,
+      "sha256": "d6b62e6165545e986f85d1213e5d9afc14d30c98d4df8196393b125d56cbdd0e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-ascii-boundary-keys.files.json",
+      "size": 168,
+      "sha256": "17a02abba83857486e565c3603c5922ff06317696ae110455f56619b0ab3d967",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-authored-entry-reordering.files.json",
+      "size": 174,
+      "sha256": "baefb2c7726e4a4e2374dc63bd3e378305dce46c94cfc55d852c9a29a722865b",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-both-empty.files.json",
+      "size": 159,
+      "sha256": "f7fbf70b49baaa57342def02afd6db1b702953ab88d3c0372931f483e8a30831",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-condition-retains-merge.files.json",
+      "size": 172,
+      "sha256": "6f1ae71982e2a192ef5212292d486edd6dc77dc7b5337e819ff567b0de6eb4ce",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-drop-all-retains-merge.files.json",
+      "size": 171,
+      "sha256": "7b0949e8cc174134c23eb1ef8e9894eeea226b8c60e19f0f734feec44da7f70b",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-dropped-image-input-retains-declaration.files.json",
+      "size": 387,
+      "sha256": "5f7ca00449a179ee30369483ca7d73f7eca8a54f697b723a577ddc7db03db142",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-empty-input-reads-both.files.json",
+      "size": 171,
+      "sha256": "05014e7bb00befcb88c65156ebc8ef0add30c6e77fa143a3b2ee42359647ceae",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-empty-left-filter-read.files.json",
+      "size": 171,
+      "sha256": "0a1a17c571ba9f432c757418f36a0be2580964313cfbce8c6fe106e11c7c3144",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-empty-left.files.json",
+      "size": 159,
+      "sha256": "c4b84679f166b81c9ab02c6d67356b596a78b427ba4bdb649e17ba444ac84e0f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-empty-map-retains-merge.files.json",
+      "size": 172,
+      "sha256": "8f0d722b33899940736c0bb23a4303b92fa79601595ff8451d1416474b653c72",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-empty-reduce-retains-merge.files.json",
+      "size": 175,
+      "sha256": "4241ea9427d4a9fbd372522a64d1eee3e1a0a9297e7bdf0f4fe313d1200006af",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-empty-right-filter-read.files.json",
+      "size": 172,
+      "sha256": "561b1177cdc994ae93b1c8941f4403560044f7f9a855406638465521ba38a9e4",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-empty-right.files.json",
+      "size": 160,
+      "sha256": "afcbd5d77c4449d56d975652be9c3a052ff27928668a1c489a7927d37e629920",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-empty-union-retains-image-declaration.files.json",
+      "size": 385,
+      "sha256": "6dc976f1421ce1d8181d552ad32ac543098c709778a7c4b1d3baf339a842565f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-equal-valued-plain-merged-occurrences.files.json",
+      "size": 186,
+      "sha256": "ee63bff2ab5a2d224adf415edc8e120d8b6607f5ac2b00deb4fe9a5ed0df6c0f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-equal-values-distinct-keys.files.json",
+      "size": 175,
+      "sha256": "c5608f0558656054dd1e6cf55f308be2a56ab8a0574eb1683bd5921a16ef8404",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-equivalent-quantity-alias.files.json",
+      "size": 174,
+      "sha256": "e243a0c4ef431323d15766a0ad4cac11eedbb7a2f284f7e80f4844158747b8fe",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-filter-both-empty.files.json",
+      "size": 166,
+      "sha256": "36f11febd66ad9ed6875571aa7a4ff2f9743310fcc18c54142186766908ea5c3",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-generated-condition-retains-merge.files.json",
+      "size": 182,
+      "sha256": "24d7695677e73c3d7daf4ca7e77e0883ebb54de170e5f93f1afb6d4450719342",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-generated-union.files.json",
+      "size": 164,
+      "sha256": "117f72858e1701e6baf11bb1e7c3dad704ae84bd84982877495d77d4cd53ee74",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-guarded-helper-replay.files.json",
+      "size": 170,
+      "sha256": "0fcbb567b2f853f4c5af084578ce8f870ed4e778bf84b6f91632a57f5813b1fb",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-imported-filter-operand.files.json",
+      "size": 316,
+      "sha256": "f6cab5386c5bb70ee7a77d3a3fe4070afac82fc282598773b7f6c477da79afde",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-imported-new-merge-helper.files.json",
+      "size": 337,
+      "sha256": "b87a2c15018616ff4024c1be83873d61a881a1cd1dd4c659f49f3394996900e0",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-input-alias-remains-unmodified.files.json",
+      "size": 179,
+      "sha256": "dc5e2eefccf3c787a78c596ff3170c2f8db175ca9b1a37b79a384c3f0a53299f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-input-evaluation-once-and-order.files.json",
+      "size": 180,
+      "sha256": "9e5ae2819e70727655e2cb42440a2ad23e50e6911195340ab7d8e38dce89310f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-bool.files.json",
+      "size": 158,
+      "sha256": "af6c63318126de01806e9b4716dfa63c5bd8f01adfbc6f0d097663aaa9158a4b",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-color.files.json",
+      "size": 159,
+      "sha256": "b360ca4c4009452fb3854fca7d8397d183482e701fe9fee0d2b8c120affc658c",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-frame.files.json",
+      "size": 159,
+      "sha256": "92bc4c094e6000c2623a3ac23aecb1a713cd969838e01dbb0659d09416b83bd0",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-framed-section.files.json",
+      "size": 168,
+      "sha256": "83c0c7700e0444e86781bdf61dc2619d47d6a60196ee3883d378122efdcafce2",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-int.files.json",
+      "size": 157,
+      "sha256": "3c16a8c24d5a72add0aaa56a5c1975b3ef49db92e08eab65b1adbc1f6ab4a994",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-loft-section.files.json",
+      "size": 166,
+      "sha256": "fe794d2e19deebfe3c6cde60fbb775c621b8a8679677c502464754060854a8ca",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-material.files.json",
+      "size": 162,
+      "sha256": "7c5413324d434425f15cc0643c336840afcf163ea890a870475da561c0c82506",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-planar-point.files.json",
+      "size": 166,
+      "sha256": "8da447dbb4f793e8c2fb2d53d443f3a87a3f26db45efa58b6ac3821f82195019",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-planar-uv.files.json",
+      "size": 163,
+      "sha256": "05c98394d612ee7f6ea179052072f266315756c676e82194c0e29fd014a74599",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-point3.files.json",
+      "size": 160,
+      "sha256": "8d15069ca106810ceae1d04558770e142e627129e2c6b522b1203202dae83114",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-polygon-pocket.files.json",
+      "size": 168,
+      "sha256": "8f3588e743d448850a0cc6d7b6851ae226975fa4977794c877ed739de60d8fba",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-polygon-ring.files.json",
+      "size": 166,
+      "sha256": "51618b6d05443e3cbecadf50e1b3fc47dda69286d445922f25cb8c5c642feb47",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-polygon-section.files.json",
+      "size": 169,
+      "sha256": "076f54b69b1d1263ea6cf3e078d433d3646ed9a9dec035d921853a3134f9d47e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-polygon-vertex.files.json",
+      "size": 168,
+      "sha256": "e8ca4dbef0e467f02ea03b5deeb96cc579ec34b2555c64965b1ba4b270b66a43",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-pose.files.json",
+      "size": 158,
+      "sha256": "6968d79a3360b3613bd8b90aa5c652c82c022cf59b691e64eebd2ff939050633",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-quantity.files.json",
+      "size": 162,
+      "sha256": "2cf8e7b059c5a8fa76600066a9eccc27219e291e571a27308eedfbd20db923c0",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-range.files.json",
+      "size": 159,
+      "sha256": "1567590361f9976a9e264e66d2a70b7c8af750c958eb98f69193c3502c9b5619",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-real.files.json",
+      "size": 158,
+      "sha256": "a7cfee1caaed741d44ff513974eaab5c7908359b35e86580d7b40a275c22eef9",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-rotation.files.json",
+      "size": 162,
+      "sha256": "d667730d7f2427ad308f934fddc14c35da07e943fddb9ec87eb4c71e680da1c2",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-string.files.json",
+      "size": 160,
+      "sha256": "1b48e654b2b8bea6c0167e5fce4eae3e04cf80048a96da5c19ae10fb77d455ff",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-texture-binding.files.json",
+      "size": 368,
+      "sha256": "268a424ddba9d48a20ccc733ec1e3e425d5934cb7a475ae3dad31e075391a3a7",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-texture-image.files.json",
+      "size": 366,
+      "sha256": "3387cb00370e18fcc625018a2564b5c218b7682358a15ee432dd67836d609bb7",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-vec3.files.json",
+      "size": 158,
+      "sha256": "c91abed554d881efe447f30ad03f227aa9849959f1f8d6cb88d132636578643a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-leaf-vector3.files.json",
+      "size": 161,
+      "sha256": "b93477e49c90e8817e0e600eb3910075881a71735e634f68f8c882a2642193c5",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-map-constant-retains-merge.files.json",
+      "size": 175,
+      "sha256": "5992eedf5038368c34560981c6642253e08a4c47be89b54417c362cd9b7979ad",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-map-left-filter-right.files.json",
+      "size": 170,
+      "sha256": "e8854057a9f27d0999f3e61ef455d9819fcf8e0f9693ab9d96369df562641022",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-maximum-256.files.json",
+      "size": 160,
+      "sha256": "d4c18cd6617318e143ab453534b2bbe27542cb31105bec877c5e3f3957912ba1",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-maximum-key-length.files.json",
+      "size": 167,
+      "sha256": "718a05f68261b0a95626efc6a720d64aefb5f276c7fc26b0c159d3bd8195b09e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-maximum-one-sided.files.json",
+      "size": 166,
+      "sha256": "c0461990ceada98dbdededaeda3fddf8e59b01d925a1e92732471d18a2ea98e9",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-merge-in-filter.files.json",
+      "size": 164,
+      "sha256": "38b5d23e384b3b10041dc579856923161b046a52973abd04971a0c72dc6f9aa6",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-merge-in-map-body.files.json",
+      "size": 166,
+      "sha256": "1a00b32fd307f0c091d1451625a796755cd1bd0a493aee0c657393022882ae36",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-merge-in-reducer.files.json",
+      "size": 165,
+      "sha256": "68e28f34ab3adfaceb91dd7547c34ea69e837130b74da9f0837214f7d11004be",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-merge-then-filter.files.json",
+      "size": 166,
+      "sha256": "e4c4e49d32a65b7c9567e89255295093d0ecd7e2f407c1904f3ab943f6af8f4e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-merge-then-map.files.json",
+      "size": 163,
+      "sha256": "f23cb9ea4289566753c9fbc3ef9b1b891109a1e622e55d5b6c1c23b09febd9af",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-merge-then-reduce.files.json",
+      "size": 166,
+      "sha256": "ae80a3e660ccd45d524cfcf180e9d269b43b386a9e65f5e6ad9cddc3e1810e12",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-mixed-membership.files.json",
+      "size": 165,
+      "sha256": "64fd0e404735a16fc5775acd0046f4cc4e2cda2b23750143e5f752ac4b24083a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-nested-left-merge.files.json",
+      "size": 166,
+      "sha256": "af338dbcee7f9a165ad3ed0b41683a2f4310bd944a03e7032de12b99be068603",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-nested-merge-generated-contributions.files.json",
+      "size": 185,
+      "sha256": "816dbac50fbdf8ad70c3838ad1258665c0d7dbc9ac28f9444a011da3ea891822",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-nested-merge-indexed-scalar.files.json",
+      "size": 176,
+      "sha256": "8d8ffcb6decacabb66dd6b7391f32aace9031b1330cd6f7c0295e4026ea57879",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-nested-right-merge.files.json",
+      "size": 167,
+      "sha256": "7f55a6feaada505aaa5b461b0451fe95b058712c16e7d3b08ba4f6e39414cbdc",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-panel-identity.files.json",
+      "size": 514,
+      "sha256": "42094f5afca2a856ffaf0b10a240a3310f1dbcb77ded4ef9df53dc1766fdaa75",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-panel-task-higher-budget.files.json",
+      "size": 524,
+      "sha256": "f32e3c14b0b289b8894c27a19398b6238fa36576c5270f8eac16b683793b8e4d",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-panel-task-removed.files.json",
+      "size": 518,
+      "sha256": "f8d16aff2bc68c49674b7f91af78c93465151f3971575ba3d0a6cb4322f21f8a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-panel-task-repaired.files.json",
+      "size": 519,
+      "sha256": "441bf76a08743c2feac4b89804d5ef0dc37c72a5b6bc6279877f3914fcfa60b6",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-panel-task.files.json",
+      "size": 510,
+      "sha256": "7cacd73a83204358f551a5ada89c75a399e2d7488bdf96dece26201149180503",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-qualified-legacy-merge-name.files.json",
+      "size": 320,
+      "sha256": "6a76bee71e70191d08d503c3ce7c644003321a196974884b23c79b2072f60e99",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-reduce-constant-retains-merge.files.json",
+      "size": 178,
+      "sha256": "fb4c325828cab067e65ae5a4e711a639baf6598d5900d868096e2b5f5db1998a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-reduce-prepares-left.files.json",
+      "size": 169,
+      "sha256": "dd2442a5bf5cf3784fb9be276992506812cc415e0e00e0db28c9b72d889e97cd",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-selected-dynamic-read.files.json",
+      "size": 170,
+      "sha256": "d62dd99c3f01b102d571e51fb88a10665d3dadb452a416b3df9d64f383cb21d3",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-singleton-pair.files.json",
+      "size": 163,
+      "sha256": "1884fcbd3fc472f723f265c2d9ffcbff5822fbd28242dbd379b80c18d9b7e72f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-unselected-collision-not-evaluated.files.json",
+      "size": 183,
+      "sha256": "99ee77ea379029295094d8e33177da5625ba8f378ba08ec5c10589ee1ce574fb",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-unselected-dynamic-read.files.json",
+      "size": 172,
+      "sha256": "caa4d23e3aa4a57b8d56f48df1d1b4a771028ee238b43c32fff507b8bef7c788",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-unselected-generated-read.files.json",
+      "size": 174,
+      "sha256": "12facc441d4b6dedf7ff30a56c1fed0a2e3fc74888adfa8f8f33f6f1e4d9974f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/control-unselected-operand-domain-not-evaluated.files.json",
+      "size": 188,
+      "sha256": "b3c894f0057a3c3220258b620741aa3971361aed3639b235827982b4587d23cf",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/ascii-boundary-keys.ok",
+      "size": 552,
+      "sha256": "651154d895ec483e31e286e72727d1ce022a05ce2567093a2639b60c31cefc0a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/authored-entry-reordering.ok",
+      "size": 552,
+      "sha256": "651154d895ec483e31e286e72727d1ce022a05ce2567093a2639b60c31cefc0a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/both-empty.ok",
+      "size": 509,
+      "sha256": "1ba76856bc816a702d31f6ed578c9049e11c6193091e1bfbfb7f47a18993082d",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/condition-retains-merge.ok",
+      "size": 641,
+      "sha256": "3c508ee00e4aad1464fcecff02d4e667e70e5e030890a02609ab9941113cbcb8",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/drop-all-retains-merge.ok",
+      "size": 503,
+      "sha256": "44f2a26fb130e1b855b712bd375bd0dee6684817b94d96773a18dcd62f0f6674",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/dropped-image-input-retains-declaration.ok",
+      "size": 685,
+      "sha256": "d46e1d1020724a6504b7c1bbc3aeb3f3daf8b3fde880b49a99a8264557103356",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/empty-input-reads-both.ok",
+      "size": 734,
+      "sha256": "dc9475400743ede685d98365c2754ebe039d900cb2eeee023ef79bc6e51184e9",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/empty-left-filter-read.ok",
+      "size": 740,
+      "sha256": "bb4acff4ff841bd635d9d70d0ae793d3a070d4690b096e680128bd70294c96f9",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/empty-left.ok",
+      "size": 513,
+      "sha256": "34cdc4fb23d9f33dd45c6006f3246b97242c9320f59fd33f9155d8e707d00f32",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/empty-map-retains-merge.ok",
+      "size": 503,
+      "sha256": "44f2a26fb130e1b855b712bd375bd0dee6684817b94d96773a18dcd62f0f6674",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/empty-reduce-retains-merge.ok",
+      "size": 507,
+      "sha256": "407e91b6c886cfae586b8f5be049b66b2e471c2a4aa7395230d0a5021588df01",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/empty-right-filter-read.ok",
+      "size": 740,
+      "sha256": "5b347bbc9815e4390406643cd1f834430ad1e06d3bbbab18188f9822ce798ccd",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/empty-right.ok",
+      "size": 512,
+      "sha256": "a9ba7de416cfdb4d9019debb7b4f7fea8e6515757c99bf8e3c587db9ff1682bc",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/empty-union-retains-image-declaration.ok",
+      "size": 667,
+      "sha256": "69cf1770fba0e27dfc52650a882110c6c4b4e5e84b08a8308058b5c2d47096f9",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/equal-valued-plain-merged-occurrences.ok",
+      "size": 905,
+      "sha256": "d70c8af4a1c9f00cf52de13fd6750a096d5f3c0e72c15d939ddc54c1688f55e1",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/equal-values-distinct-keys.ok",
+      "size": 524,
+      "sha256": "73c5013f0add9650d08f8ba1830b74678a1e1523bd78b9967725a510406d48f0",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/equivalent-quantity-alias.ok",
+      "size": 533,
+      "sha256": "9b5514a85ec8245d80ec07611a277cac3e34de6dccd37d4c0a8f9d52a3fbbb73",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/filter-both-empty.ok",
+      "size": 503,
+      "sha256": "44f2a26fb130e1b855b712bd375bd0dee6684817b94d96773a18dcd62f0f6674",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/generated-condition-retains-merge.ok",
+      "size": 782,
+      "sha256": "8777fb9d6b3b6d41a05f78ec21c2be3a6111ea27a469daa2aa52f207ca6b808f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/generated-union.ok",
+      "size": 812,
+      "sha256": "51c88b4322e769bdfc1e5d1442e78930eec5111acdd0b778ffe1df15368def5e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/guarded-helper-replay.ok",
+      "size": 962,
+      "sha256": "dd574137f95d6fbe88f854e3ab8928df6f32c984be55019f802146cad1822462",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/imported-filter-operand.ok",
+      "size": 663,
+      "sha256": "21ab85b5e6795c39d46397621964f9bb4afe5efeccf136c44f9afc3e5033c8de",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/imported-new-merge-helper.ok",
+      "size": 694,
+      "sha256": "3bfcde93011319e938e77d6372578074a2d76a33ac73668bc955d2e779aa76a2",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/input-alias-remains-unmodified.ok",
+      "size": 720,
+      "sha256": "b8eef16e38d4e4c8e2744ab00360698a392b4397fa0441fbb8132ebdaa9dd37d",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/input-evaluation-once-and-order.ok",
+      "size": 763,
+      "sha256": "f768f07c1952c406fd981fec76316e4bb8769d4d86e0ea0a1b9453a370fbd141",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-bool.ok",
+      "size": 532,
+      "sha256": "d99fea94891a273d99623e282f237df991b19cf7239fd3c9baa2138766439cdc",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-color.ok",
+      "size": 574,
+      "sha256": "f83eb43acfd924d743c34de6716f9bbdda3387877bce18dec8df59966b937d4f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-frame.ok",
+      "size": 542,
+      "sha256": "75cb272b4a6e699f85729f82bfaea1478c7805414a5ba0032976ab643b646494",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-framed-section.ok",
+      "size": 1228,
+      "sha256": "edd5a737a11904935f3dec529af827088eaf36d7c71f82536577f94a7a8239a0",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-int.ok",
+      "size": 524,
+      "sha256": "73c5013f0add9650d08f8ba1830b74678a1e1523bd78b9967725a510406d48f0",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-loft-section.ok",
+      "size": 662,
+      "sha256": "9ae87b9a83a4774e1ccc1b3787464c901da616efde7a9f5c82e83acd1ef6f37e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-material.ok",
+      "size": 646,
+      "sha256": "800373c2f9acc146ce1da544bbd5aed612dba021acd83c00735f4a54371dd214",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-planar-point.ok",
+      "size": 586,
+      "sha256": "b9007b8cdec5e3e00419815424e2f1d18768a4ac1298e5b96e51d0fcbd91d249",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-planar-uv.ok",
+      "size": 742,
+      "sha256": "ffeb1918be628ad869d743cbf0d055ed8e25d21a623f210a64b44e5bb41a77d5",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-point3.ok",
+      "size": 588,
+      "sha256": "33cb750ac46a73323b85f37bc18057e15767103515c212c64c256f36dcf12833",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-polygon-pocket.ok",
+      "size": 1004,
+      "sha256": "592e5ee91af155ea56eb27a1b4d030550417d5751d62243895b573e263c4cb81",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-polygon-ring.ok",
+      "size": 978,
+      "sha256": "67c9c35eb4ba910b914f944937a895c5c9e62f3a5b48e16f9e2560e336acd847",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-polygon-section.ok",
+      "size": 1094,
+      "sha256": "3be2e1614f581f0cd7e98a41b04b50555972f14a25a1485e5453be0fc52d26dc",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-polygon-vertex.ok",
+      "size": 644,
+      "sha256": "6bcb523712b514dbf21bf22168f33ff2a4d66fbcc9fb909546e7dac0754848e0",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-pose.ok",
+      "size": 630,
+      "sha256": "9c4f64b43e18a58012c3e8f8cc72d51f37d19a6abc0375bd1ba85cc4ba74b22d",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-quantity.ok",
+      "size": 542,
+      "sha256": "5e2cbd1027af94f2cea1ba80f37a1692581b35821883082037eba56ca0a78e34",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-range.ok",
+      "size": 576,
+      "sha256": "8ee3514462a584ad29e5623c654fef3aef82062a7e746231224e1e1968867576",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-real.ok",
+      "size": 530,
+      "sha256": "5026955fc7a319f5dd30835115e505fc39fd3fe260d407fcb8e4090f354d8974",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-rotation.ok",
+      "size": 564,
+      "sha256": "9e63e9f8ac9b41778b90df0ef56bea4e51f1d8b9446dc173f9d923dcc9276991",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-string.ok",
+      "size": 550,
+      "sha256": "1b9d213f0412f419f5985b78daf2f16c18739424255a4bf709eb82e485ed4235",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-texture-binding.ok",
+      "size": 978,
+      "sha256": "2ed79cb012dffc3b31baa0c603b8e2d10feeeabe730222a9d79fa3c67536ff77",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-texture-image.ok",
+      "size": 726,
+      "sha256": "9d1cba62c88280c839af9382da1a3551cac306e3fd153b384b16c4e64cabf4ab",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-vec3.ok",
+      "size": 584,
+      "sha256": "6b8a7809e28dc6f478320f88010caeb19db136df3215ec9cf2ad62f95778dccb",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/leaf-vector3.ok",
+      "size": 608,
+      "sha256": "4b958656f564eb65c6cfb3f3757d2880cb5449e65e71841aa8da2722367b86b6",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/map-constant-retains-merge.ok",
+      "size": 517,
+      "sha256": "44fe24ab2c5c6e292f9798f26663b2329b38de00314c58bee2a24e11adab2dff",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/map-left-filter-right.ok",
+      "size": 542,
+      "sha256": "98c13048fb48ac3e5457ed84c1797c12b103a7dcfdd335bb79c97d17e1897f9c",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/maximum-256.ok",
+      "size": 3719,
+      "sha256": "04b6c8b34ac95bb25490844e0320d163a0dea5d69baaeb05693bbc1efbfb0553",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/maximum-key-length.ok",
+      "size": 580,
+      "sha256": "643d7374f3ee26f3305902c0ed8784e33d5c6afbbfac0eb0ca9354f6bf7aeb73",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/maximum-one-sided.ok",
+      "size": 3719,
+      "sha256": "04b6c8b34ac95bb25490844e0320d163a0dea5d69baaeb05693bbc1efbfb0553",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/merge-in-filter.ok",
+      "size": 509,
+      "sha256": "1f1b1a2d248797ad44bdc38d4542628323eb9700fc8f20b09f0a9f5ab7c1aa6d",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/merge-in-map-body.ok",
+      "size": 517,
+      "sha256": "a072935b607a577cc0d422db5ed0ae553a3667a274d0684d4d554cb4aa832f31",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/merge-in-reducer.ok",
+      "size": 507,
+      "sha256": "105e19ef93ae95bbe942ff9371441160baec537a41fc4300c104e04b0d012b98",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/merge-then-filter.ok",
+      "size": 517,
+      "sha256": "ca2aeab6bc5900aab4722c16f229d347b25f6935ef6a0b1c609abff73341f960",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/merge-then-map.ok",
+      "size": 533,
+      "sha256": "9b5514a85ec8245d80ec07611a277cac3e34de6dccd37d4c0a8f9d52a3fbbb73",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/merge-then-reduce.ok",
+      "size": 507,
+      "sha256": "4e4f19acf6a4c1719c15c7a8af8db72aa7b71c9c22c45789c92e3eb084451f0b",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/mixed-membership.ok",
+      "size": 535,
+      "sha256": "5cb96d14c4dd6bf8e24a5ea872409b706c8d4b602af2dec4988769de4e508bbe",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/nested-left-merge.ok",
+      "size": 525,
+      "sha256": "95db077b86d7372452809aee23efc371640b7de0d1939c8422acac082700dadb",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/nested-merge-generated-contributions.ok",
+      "size": 826,
+      "sha256": "80c88b3869575d2ca34061c166027280ab8f718ca40264342e78899893974936",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/nested-merge-indexed-scalar.ok",
+      "size": 507,
+      "sha256": "930ad6427c037ea4aab7c55ba76fa063aef14e8c2788790eb589b73e44802bb5",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/nested-right-merge.ok",
+      "size": 525,
+      "sha256": "95db077b86d7372452809aee23efc371640b7de0d1939c8422acac082700dadb",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/panel-identity.ok",
+      "size": 1650,
+      "sha256": "147912bb12eafe27bd2505a6e97add3049b658f4c07bd5ef4ac7aa3d28383716",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/panel-task-higher-budget.ok",
+      "size": 1710,
+      "sha256": "3b9e2ebbe8a2e812085affff29bc977ba1ebdaf90be46cd94db2853a61217e93",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/panel-task-removed.ok",
+      "size": 1650,
+      "sha256": "147912bb12eafe27bd2505a6e97add3049b658f4c07bd5ef4ac7aa3d28383716",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/panel-task-repaired.ok",
+      "size": 1649,
+      "sha256": "19f8fd5ce10d64aac079275c411b8c5a18964324e4fe110d6872826a665550fe",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/panel-task.ok",
+      "size": 1650,
+      "sha256": "147912bb12eafe27bd2505a6e97add3049b658f4c07bd5ef4ac7aa3d28383716",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/qualified-legacy-merge-name.ok",
+      "size": 655,
+      "sha256": "424d9c97e0744d799a82dcc122183c385a6f6fe97aa3767b71e2822bdd1726dc",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/reduce-constant-retains-merge.ok",
+      "size": 507,
+      "sha256": "a9be4b6f226316d7c92486772abcd5a048b8af5da88864639542f0c8fedbceac",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/reduce-prepares-left.ok",
+      "size": 517,
+      "sha256": "afbce2113aa40ef3af658581e64b5c1173a9da695d1c9b03f2449f1be44ee53f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/selected-dynamic-read.ok",
+      "size": 740,
+      "sha256": "bb4acff4ff841bd635d9d70d0ae793d3a070d4690b096e680128bd70294c96f9",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/singleton-pair.ok",
+      "size": 540,
+      "sha256": "02304270b71b13a5fce0c1d893b9cb10c2f8b19e743dad6e88571bc3a882a797",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/unselected-collision-not-evaluated.ok",
+      "size": 509,
+      "sha256": "1f1b1a2d248797ad44bdc38d4542628323eb9700fc8f20b09f0a9f5ab7c1aa6d",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/unselected-dynamic-read.ok",
+      "size": 740,
+      "sha256": "5b347bbc9815e4390406643cd1f834430ad1e06d3bbbab18188f9822ce798ccd",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/unselected-generated-read.ok",
+      "size": 812,
+      "sha256": "51c88b4322e769bdfc1e5d1442e78930eec5111acdd0b778ffe1df15368def5e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/controls/unselected-operand-domain-not-evaluated.ok",
+      "size": 513,
+      "sha256": "bf97a293b8b5a038835f6df55ca387ac9fc3f6f9592118c06bce288078439e67",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/delivery-comparison.json",
+      "size": 4101,
+      "sha256": "5f706e1cdaee7d481e688dbb9bafb940b3e3f93fe3c6f3f8c420b517d0e63129",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/disjoint-result-257.files.json",
+      "size": 167,
+      "sha256": "5b26a996f0287fca3e0b13f0b7384fc4b83d4aff49d5fcf8a91110ca48754490",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/disjoint-result-512.files.json",
+      "size": 167,
+      "sha256": "56fc20fa395fceaad49373816e71dcc1284fc78583e3dc2166e387e758781c62",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/drop-all-retains-merge.files.json",
+      "size": 170,
+      "sha256": "b07b7a7810d482abd83b2b94593b29c2bd3e17315d674998803ba3e295a88676",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/dropped-image-input-retains-declaration.files.json",
+      "size": 386,
+      "sha256": "82a63dcd15c1f17a4222e9a6981ae8002a807267549a3996416c213f55bad68e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/dropped-input-missing-image.files.json",
+      "size": 175,
+      "sha256": "712cb79e01b1f62128ba5172e8a9b45c756a49e8d3d41791fcee3448e1fccccc",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/duplicate-key-inside-left.files.json",
+      "size": 173,
+      "sha256": "865b614bd49b20b0d56b946cec028666c7cea3d803d4cddace9b2a0ea02ff03f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/duplicate-key-inside-right.files.json",
+      "size": 174,
+      "sha256": "98914c93b8451dd44eb04fde1c7ccaad627a83d05485ab2983bfceb9f760955a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/dynamic-image-id.files.json",
+      "size": 164,
+      "sha256": "1e19660fe233ed1816b4d555ea539dceeab05ef3b88909629b470361666202c8",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/empty-generated-reference-input.files.json",
+      "size": 179,
+      "sha256": "6467439dbdc7dc5f051e73ff13df0391062977650ffde45108b7bf62363be17a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/empty-input-key.files.json",
+      "size": 163,
+      "sha256": "6f0c034caf58de594dc4668c88809ebc2886ac343d39613ba222f2d6c9536db4",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/empty-input-reads-both.files.json",
+      "size": 170,
+      "sha256": "48a562b218a5ccd3d74724d4d613fe0c6daa0f1adec37fbbd957a9d89f76f950",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/empty-left-does-not-skip-right-domain.files.json",
+      "size": 185,
+      "sha256": "31f790c3e52010008ac6c99c6efd1171f0970cc78013cea49fe777606a724de8",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/empty-left-filter-read.files.json",
+      "size": 170,
+      "sha256": "7c62f71d99c38cd9c04071e04c07196adcd5b1da0f9e1c5c06137688c69a3f5d",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/empty-left-generated-taint.files.json",
+      "size": 174,
+      "sha256": "9c5529f381fc6bfc4da8119d5e0318be00f4786623d49503543ddecd12cb4af5",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/empty-left-int-real-mismatch.files.json",
+      "size": 176,
+      "sha256": "cdf71d1984379cdbf31d6bc43c64d605b1c170889290844da11848e3e99e0527",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/empty-left.files.json",
+      "size": 158,
+      "sha256": "c90f6b3fc65ec1e756ffb66696d01626cd3c42085c2350b84551c9e32bd6c766",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/empty-map-retains-merge.files.json",
+      "size": 171,
+      "sha256": "3eb41c28aea4ea9bc0f9b30ad2a75e208b7f0bfba73e250c84357d40eb130f2e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/empty-private-import-operand.files.json",
+      "size": 320,
+      "sha256": "47f0490e82f5bcb891b6d15f4dcbe6c89efda9590f38187b705cd0214a59014f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/empty-reduce-retains-merge.files.json",
+      "size": 174,
+      "sha256": "013b0595d05368b07fd661526f5cc96870c857a726d83568713a8544cc80e0e0",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/empty-right-filter-read.files.json",
+      "size": 171,
+      "sha256": "3e5c308dab60ad147bed772bc33f061f72164b535ebbcb8191fbe020e4fb3b62",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/empty-right-generated-taint.files.json",
+      "size": 175,
+      "sha256": "93d03a6e226380492770b8ae89de41edbb013fb3faf08103b12f778ab3b333a9",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/empty-right-int-real-mismatch.files.json",
+      "size": 177,
+      "sha256": "274c9e571cb04a8c0724fb468b9d9c712a93735211c556a79118ecc4564b2607",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/empty-right.files.json",
+      "size": 159,
+      "sha256": "f412d9d3f1ae728fc2ea57a1cc05f5587e69162599edba2996019debf1c35cda",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/empty-union-missing-image.files.json",
+      "size": 173,
+      "sha256": "b256cbd6cd5474a2940d76a0a90ddcac944dbfaa7a2b8711c43b51b10ce0a1fd",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/empty-union-retains-image-declaration.files.json",
+      "size": 384,
+      "sha256": "bc51a34627226f135f58ea96b11da16cf558732ad9bcb8fba811536e0c8d4263",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/equal-valued-plain-merged-occurrences.files.json",
+      "size": 185,
+      "sha256": "270ae91a50ebf6716dfeaf6bffa0bc20cba14722b2df9baebd63b08b7a3fa236",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/equal-values-distinct-keys.files.json",
+      "size": 174,
+      "sha256": "45d8d78b3ab51e42d2b6e0551b19d549cd2371802213a57aacd8604afa19c367",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/equivalent-quantity-alias.files.json",
+      "size": 173,
+      "sha256": "083eca675d1339c3ff76ef5470a209911e6ff40faa8fde07f41296d80169ce24",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/excessive-expression-depth.files.json",
+      "size": 174,
+      "sha256": "cea98c658e1317d2fc0e186ce2076c1972fff48b97c14da677d1ea23ff98ee4f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/expected.json",
+      "size": 704611,
+      "sha256": "d0d5d83f89284fa5f7698643e5d4994c4ff9c06116da1a8c03fa9cce50f44e88",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/extra-generic-type.files.json",
+      "size": 166,
+      "sha256": "c1384fd9263c015d7fb51a730ec5534d6a25dd4d5cab23f92f1f040dfe9c3e4c",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/filter-both-empty.files.json",
+      "size": 165,
+      "sha256": "9adeb422bb45bd0e92b18ed7bc3394dbcad9c11de1ab7e00b75ff9e62f2aafe6",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/generated-condition-retains-merge.files.json",
+      "size": 181,
+      "sha256": "515691fc46b7f4e6ce364b1bca6261a1c2f5f86a3fbde8ad14e2eeb56365927e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/generated-reference-input.files.json",
+      "size": 173,
+      "sha256": "b709dadc0769747e7161f65ea30a8f59da0d783adfc8ac7415ad996a46a484e4",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/generated-union.files.json",
+      "size": 163,
+      "sha256": "03d61371d399328086b2c31b71eeecb3b7416e0d00488206cb372c0f57c48e2e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/geometry-input.files.json",
+      "size": 162,
+      "sha256": "3ae5d5d0fa3a78def6d7f2bb0c69a3903cad83482cb069e997fff27518cd6a24",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/grouped-right-type-mismatch.files.json",
+      "size": 175,
+      "sha256": "ba5855afdaaf31fd1c7492ee7651878baefb05d9be5da665d978b0cd32e9bb4b",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/guarded-helper-replay.files.json",
+      "size": 169,
+      "sha256": "c354a3572d8b6197d737a12a40f5c72f20bbcf9c9f91382a885ff0193bd255ab",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/imported-filter-operand.files.json",
+      "size": 315,
+      "sha256": "71e86eee56605d569a5f1e808fc07afd99d0e478f7ef07c0dc1f848a6df1e0a5",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/imported-new-merge-helper.files.json",
+      "size": 335,
+      "sha256": "2324660325da7329d69deaf90819654171570cf305941d2bed03c45d2007a53c",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/incompatible-vector-frame.files.json",
+      "size": 173,
+      "sha256": "85f55ad3d45c9075668caa5dec5188ad269562e3773f25446bbd91a1c4dc68e7",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/input-alias-remains-unmodified.files.json",
+      "size": 178,
+      "sha256": "8e815e13506c38a3360a4b5ef90ef00168b7f8669ebb11bb42c6f6d35dc08bdc",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/input-evaluation-once-and-order.files.json",
+      "size": 179,
+      "sha256": "2f9704c874bab560a8915b24bfa2ac807c725050a8a94de856a4d0adc35420cc",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/invalid-input-key.files.json",
+      "size": 165,
+      "sha256": "b89aae42bf3dd5433e40878fc56e39616a9b0d4458be301a7db572286dee6bd1",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/invalid-resulting-geometry.files.json",
+      "size": 174,
+      "sha256": "08f97b5ec0751d1ba5414cebf1f2b6084e9b4d52fe05d4ebe62c8511433a1050",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/lambda-operand.files.json",
+      "size": 162,
+      "sha256": "f6ed6766baed2817767b80b7f848118d1a9a8148eb8ef30db18d2cad0eb63615",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-bool.files.json",
+      "size": 157,
+      "sha256": "60e6d50c8af36228b5d140bd6bcf1cb545a3978b44ab8c35d76ce0a585ab81ab",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-color.files.json",
+      "size": 158,
+      "sha256": "c4df82ca1e203ae61d17617b5f33feb09e5686deca82e8e5c7bd3d0e9920302e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-frame.files.json",
+      "size": 158,
+      "sha256": "ec94afe805a7aab0600d785e07b3794e5d852ba8debddb05b8bd02b057726144",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-framed-section.files.json",
+      "size": 167,
+      "sha256": "aea44846cc4d504007156698d372c3beedd78f2e1b4e1e0a98ccfd291b1ca633",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-int.files.json",
+      "size": 156,
+      "sha256": "9aaa90488599abb906f436822c14685558a63b3ed7fd9767773730e7c3b6fc83",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-loft-section.files.json",
+      "size": 165,
+      "sha256": "05094ddbadcb4c923466ebfc0ed4abe28a7e12d134e95a48d2fbc2a0b6e8d6d4",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-material.files.json",
+      "size": 161,
+      "sha256": "df2215a850de438fb6bb42517eef138e82705f84f3f3417f0c32ef4be1d6ae12",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-planar-point.files.json",
+      "size": 165,
+      "sha256": "415969f080281991edd8c2e1a4eabe0d8ed6e75e2fb4277ae0866e5ba534293f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-planar-uv.files.json",
+      "size": 162,
+      "sha256": "e4588d9a61c985d382567b63fbcc8f03170592a4570a564ae2f90549b0d8fe33",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-point3.files.json",
+      "size": 159,
+      "sha256": "23570ef2fc9a573be2caf70d692acaeee74d50cb23feb3a5a5eb33f4da9a083e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-polygon-pocket.files.json",
+      "size": 167,
+      "sha256": "554f4ad101a5ec538c67d941596172817982b41f5a6df277276b44789f1ce1d1",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-polygon-ring.files.json",
+      "size": 165,
+      "sha256": "9e61b39e89a160dc3a4f31473807127af562a25430d1b560cfe41dd3a92c59e7",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-polygon-section.files.json",
+      "size": 168,
+      "sha256": "649f50a97784650f2df8f75787da54fcd5f6468b3784f7a58be0c536f5ec596f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-polygon-vertex.files.json",
+      "size": 167,
+      "sha256": "af840d386beae88c78f7189482621918edbeaf77f2fb5ce3bdf36ec1f3f628fd",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-pose.files.json",
+      "size": 157,
+      "sha256": "147ef65e941d7ce1b0d581ac9f9ea33047359d0d51322204f30358544b51cb85",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-quantity.files.json",
+      "size": 161,
+      "sha256": "123a7d5b2fb34af319b0ba4c6991a55b482e492673f150b88ac1288dcd11e1cd",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-range.files.json",
+      "size": 158,
+      "sha256": "e77eece0ba4e6b7fdf539c012fde4fc901720c82f1bd758f842018a11648fcf1",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-real.files.json",
+      "size": 157,
+      "sha256": "c8c8b06b95b6fdf4dd761ce86e6f2ceb642df0c83a4d28e942cb964e27406a57",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-rotation.files.json",
+      "size": 161,
+      "sha256": "13f79cdb6dbd4b29ea40973fec895e7515a492fe4f28dbff133275c227ad0a56",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-string.files.json",
+      "size": 159,
+      "sha256": "c35cb00eb43e6484f7f00665d4145bd5b26cd8b5c01df246b3edd946e60abcdc",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-texture-binding.files.json",
+      "size": 367,
+      "sha256": "ab0c890e70d37067017204fb74aa27420404b41e49de230042c1820958363d41",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-texture-image.files.json",
+      "size": 365,
+      "sha256": "33fd1bf6de353d07f7c2c5a2e8d89bbfb8f964366d85e1815632254cc0b6c85c",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-vec3.files.json",
+      "size": 157,
+      "sha256": "74acfed77c381f4ee13b6bfe690c2c59559b9476010963092119d8a7ab5acfcc",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/leaf-vector3.files.json",
+      "size": 160,
+      "sha256": "f352647a928ff475b01f8551ca083ab7fec1b9bc43e46ec6e4f746210f0f9c52",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/left-domain-before-right-domain.files.json",
+      "size": 179,
+      "sha256": "adbfe7364677de960a964ce7b433b1cc862269a1ffe844b7df1cdc731b050d8c",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/left-dynamic-failure-stops-right.files.json",
+      "size": 180,
+      "sha256": "fcc32f1c40ce8fb1a8758791007b7ddef2febf1057136bdb5ece938891340d17",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/left-input-257.files.json",
+      "size": 162,
+      "sha256": "5b1ed59d91b15ec259fb16176b87efd38a7d53db11260de230bf6ec63f87318f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/left-int-real-mismatch.files.json",
+      "size": 170,
+      "sha256": "991c4f3d3abbf3577e51fcb971a46a818edf380e6dc200764ef31236e3b6c60e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/left-not-keyed.files.json",
+      "size": 162,
+      "sha256": "c0ad925f8d3e79bb3bafa74592e7f5dbca42e35eff576ad97c624e9508bdc705",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/left-quantity-mismatch.files.json",
+      "size": 170,
+      "sha256": "0f33ca26d183d3ade97eb81fd97c9b568e4d9a2f8b9bae71dca8132b835949bf",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/map-constant-retains-merge.files.json",
+      "size": 174,
+      "sha256": "95da54c440c8f6d9442168adc13134f119c34931b6b9305a3ade3d96c6886d58",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/map-left-filter-right.files.json",
+      "size": 169,
+      "sha256": "d4389bcb39a068557176475131cffd93671225843e7ff2a26bdb5e80486ece98",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/maximum-256.files.json",
+      "size": 159,
+      "sha256": "3b5594249f3ee66385fe32a197c807a11fd6603f81dbbdaa9e8c749fdb137599",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/maximum-key-length.files.json",
+      "size": 166,
+      "sha256": "c6d3d05cb78e662e4427d5e3ffa40807bbbcdce9135c50549cf153c01ea14db2",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/maximum-one-sided.files.json",
+      "size": 165,
+      "sha256": "eaff533a1d70110c997f571eb115c2085b8f003929e4383e55509d7fd8d4762a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/merge-in-filter.files.json",
+      "size": 163,
+      "sha256": "c08e31d2ffc03af3a6fe525c92941a8ce3514c5c7318a8891e921ec21952729a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/merge-in-map-body.files.json",
+      "size": 165,
+      "sha256": "39b08a6f97b41efaae6daec51a47ef2a32e3bddc964d794f12f9d60c2b42de64",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/merge-in-reducer.files.json",
+      "size": 164,
+      "sha256": "0975298d620753ac0731e8442d42037bbeba212da158fe2d53a51ccfebe8bae8",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/merge-then-filter.files.json",
+      "size": 165,
+      "sha256": "dcdc74c8f2d1814205997ea7f0cf5c42ba2f0eaa5e3ae66d779e23a80a2979be",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/merge-then-map.files.json",
+      "size": 162,
+      "sha256": "bfd7a9d74e6ed5c58cb4ab5ea4ace2702b65e6dd7e6e1aedae00892dcd5628d7",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/merge-then-reduce.files.json",
+      "size": 165,
+      "sha256": "0874b65505c43ebb3187867d05fd9c9ddc3a88288ffc9bcee6df9e40b7284483",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/missing-explicit-type.files.json",
+      "size": 169,
+      "sha256": "fe9434ac8e1e633b71dccdd2d24bc2db59e3c04f82f58704ee8aca19cd79a906",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/missing-right-operand.files.json",
+      "size": 169,
+      "sha256": "bc6c7d2c0380eb5553d2b32f2fe1e5d36c297f94790f8a8cdbb6fa6512bd74ec",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/mixed-membership.files.json",
+      "size": 164,
+      "sha256": "54671ed804904d44bbd2bc70c08f7de0f7e23d6b51bfef0f2571cf4226eedb09",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/modules/legacy.ok",
+      "size": 345,
+      "sha256": "f4ce57e8e2d6b1dae988912c6e78c9599ddfe122397241cd6e6d1df71bf9ad1e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/modules/merge-control.ok",
+      "size": 243,
+      "sha256": "68d17fb23d6b1bcefcca64c1f8ff145f0e1f37e2e671c4b25ff106034b0b6008",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/modules/merge-helper.ok",
+      "size": 228,
+      "sha256": "59a465e4b0a91da7a6b0431ca335520f65929a01de7cc9547661be61bbed3e41",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/modules/panels-control.ok",
+      "size": 2833,
+      "sha256": "fd92cc796bf42381086a0466415a121324a543c3b9622a38dd917614494f72fb",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/modules/panels.ok",
+      "size": 2745,
+      "sha256": "4f24b92139777126a1f09c99ddd53bec00fe545fea759cc1ae500f34084e8f19",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/nested-keyed-input.files.json",
+      "size": 166,
+      "sha256": "6876f23c60ef0d9d2a5a804e28308d3efa70ddaf15a52618c76ab1b43e76385f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/nested-left-merge.files.json",
+      "size": 165,
+      "sha256": "bea75e62e986b4a0293fdfba133344f500df0392e446102f1de1377288def8ac",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/nested-merge-generated-contributions.files.json",
+      "size": 184,
+      "sha256": "e050f46499a0abd7563458643163b4d9b66bb82b2cfe4138332df3e09231b0ba",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/nested-merge-indexed-scalar.files.json",
+      "size": 175,
+      "sha256": "95ab683964b5ba28fe51cd6811235c51ad8625da65e24df1e1f236df2c8390cd",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/nested-right-merge.files.json",
+      "size": 166,
+      "sha256": "7a0478f982f0033a61b73fe0315bce4813c02ece5d955d16a8a7342b70c28115",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/new-profile-reserves-merge-name.files.json",
+      "size": 179,
+      "sha256": "14dc7f839f393bad43ecd786a5e95f3ac749cd00607571bde4e918abf9aad424",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/nonascii-input-key.files.json",
+      "size": 166,
+      "sha256": "a7b4fb7d57997d84ab35136100df9093d3f3bdf778a1c9d15672d7d2c1c39a25",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/older-importer-rejects-new-unit.files.json",
+      "size": 341,
+      "sha256": "67ba7193754dec96f409d24abc73e38cb5c466293d04a2f72509f68688ec7690",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/panel-identity.files.json",
+      "size": 505,
+      "sha256": "c19a74062073385525135ac749760b719a2426019f86b2b741753edbdbf756d4",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/panel-task-collision.files.json",
+      "size": 511,
+      "sha256": "9aea7c4b0e67ba130ad90da4b98c43d4da5093c2e517d860f096a277971b3b2d",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/panel-task-higher-budget.files.json",
+      "size": 515,
+      "sha256": "15e4512db62f286776d876e305f17f137a99b19f6361b2328f3ab1f8c609ce16",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/panel-task-invalid.files.json",
+      "size": 509,
+      "sha256": "6c1e53de48e264a86c5208eac5bea9645c4553b904b60cc08f0fee26b6a84f6e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/panel-task-removed.files.json",
+      "size": 509,
+      "sha256": "2e0a3b15e4e1625868589d1bcfa158560b1ab5262b726da1dad4ca1419c7bb20",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/panel-task-repaired.files.json",
+      "size": 510,
+      "sha256": "a3536ccd11ec67946ce5a4d3af5de00681fa83dd6db079c66468691016eba53f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/panel-task-ungranted-budget.files.json",
+      "size": 518,
+      "sha256": "e6bc4adb8bcc8c78bf1ddd6c5d6a1f562c9154047f2b8d507f00845aa281b9a0",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/panel-task.files.json",
+      "size": 501,
+      "sha256": "871be0cc7d1515092e6e709cd7b3572426fa21c477b514238e5bc55f18afbe4d",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/qualified-legacy-merge-name.files.json",
+      "size": 319,
+      "sha256": "5ab91cd23e7cb5be201a16d52c09dd27b1b1a11b98a5375013784bfeb2d7e19a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/recursive-unused-helper.files.json",
+      "size": 171,
+      "sha256": "1e51e663c98ed8cf689ea56b749899e79edb7ff9cc20f90e372ecb50232ff439",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/reduce-constant-retains-merge.files.json",
+      "size": 177,
+      "sha256": "0d9521bfdb3dac7a4720ab28cf18966d0afdcf2b519cf7053efdf1122c0a8b1a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/reduce-prepares-left.files.json",
+      "size": 168,
+      "sha256": "2e3400c23bdbd1d287eca870aac7221ceb8f96f772af716261b27ca50a85abaf",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/right-domain-before-collision.files.json",
+      "size": 177,
+      "sha256": "e76f7b132a8ef707c97c738d209ccfd857bce72eb197d6fb5499a47657bab174",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/right-input-257.files.json",
+      "size": 163,
+      "sha256": "53140f3d1d458be2ea2dc34675af9b71b1d36086e5d6df0b7c594ab24044ce20",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/right-int-real-mismatch.files.json",
+      "size": 171,
+      "sha256": "db219a43c89ecac0a4564d8ffd25eb4a0aed1f2f8d950717e9324a93025d68e7",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/right-not-keyed.files.json",
+      "size": 163,
+      "sha256": "68cb8ca3cffa2d441f7506e624db95449a58db9c52c4ad0a0f383a91ad330a38",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/right-quantity-mismatch.files.json",
+      "size": 171,
+      "sha256": "c751028a3f4d272136422eca8d8165d1e6cc733ef28b36f51f6a232faba29072",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/right-static-name-not-hidden-by-empty-left.files.json",
+      "size": 190,
+      "sha256": "89a42bed55f45defa8bd9d0444db104d1abe0290db735cceb7db8bb8dfbc42cd",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/selected-dynamic-read.files.json",
+      "size": 169,
+      "sha256": "e4961753fe3fb2f85de163a42a1cf62585728b385a359b0c35ea4d8948ef51c3",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/singleton-pair.files.json",
+      "size": 162,
+      "sha256": "49767f11e147605af5e6c2840fb73cf1b2668bad0b66816dc0aac561b4b19058",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/absent-key-override.ok",
+      "size": 843,
+      "sha256": "db49f8611f3164892d24f5aaa476dd117819ff752e154a675d3ae21c77d90ff2",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/absent-key-reference.ok",
+      "size": 898,
+      "sha256": "0178cf9971ce161eab667f28d5b7a946f04eb3560d725b0c37c35883b3fd2209",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/action-input.ok",
+      "size": 546,
+      "sha256": "dcf2f10e17b5f6b3c269d0a95b2f19c6da456129117b621fa0ab389c474a5f2b",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/ascii-boundary-keys.ok",
+      "size": 581,
+      "sha256": "47eabf35b99499e2293d9174bd87bb57089e21eea7737e80a11aeb0a57a7063b",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/authored-entry-reordering.ok",
+      "size": 581,
+      "sha256": "4524efc251660e5b0f52e183fa12421082819ebdcbc96168986c5015eec137e6",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/body-model-input.ok",
+      "size": 558,
+      "sha256": "b1288b1c549a24b40171f4b81ec41256d78f1c76aa369d69574a8aef9dc14a86",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/both-empty-generated-taint.ok",
+      "size": 908,
+      "sha256": "345a0ff25ffd4931302a3491bad273bd24c775c8485954ef7a66b9a594787184",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/both-empty.ok",
+      "size": 546,
+      "sha256": "b1f946c89c413809f8129e89d1ec316868c0c65feaae832812b9173e0ddea732",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/both-types-invalid-left-first.ok",
+      "size": 536,
+      "sha256": "3f70e7b22e0373b21810ffba8a91e230f93ec16712b0209e4b466c927e38a158",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/cached-empty-generated-taint.ok",
+      "size": 1012,
+      "sha256": "6e62f36f42bc46214e5c936c2c4058bead180a4715c207d48d272bf6bdc4c935",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/collision-authored-reordering.ok",
+      "size": 581,
+      "sha256": "c57555752831040dcaa42b757376bb47df56c53e9365d80c94b85d4137be4aed",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/collision-before-result-bound.ok",
+      "size": 3769,
+      "sha256": "3a6b0fdcbefa44e32687ff11a36787114c9ccf6e6d4bc62249fdbe81d1cc2af1",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/collision-equal-values.ok",
+      "size": 552,
+      "sha256": "4e183765005e2f6f3ea3793ee00fd210911a8dfb5aa9e0cfaea88728f116da13",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/collision-grouped-operands.ok",
+      "size": 558,
+      "sha256": "8627d3779633dbd82c500f5ce755a0f57c5d58d7e6198b5af8408bd0b0a7dd32",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/collision-multiple-canonical.ok",
+      "size": 581,
+      "sha256": "812f9e6b8722f660a21159ddc823a439d7e6cf0206f30dc76c27f50e3c3349c0",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/collision-unequal-values.ok",
+      "size": 552,
+      "sha256": "2dd3137373e02872248365994056157066aaa5917603c67fbee355487b21bee6",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/collision-utf8-prefix.ok",
+      "size": 595,
+      "sha256": "38de06546c09a823e9b7e250e1852b8a3a385d0f9345501f4866108a80ce13ff",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/condition-retains-merge.ok",
+      "size": 722,
+      "sha256": "9133790ab4a8cd698e16d7199a22c532c0a9a18461a941242e5e341ef56bb04d",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/disjoint-result-257.ok",
+      "size": 3761,
+      "sha256": "7606fdfca15cc7e087c3b08cef9de35c29c728dc7699bcacf8fef5b69f472f52",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/disjoint-result-512.ok",
+      "size": 6966,
+      "sha256": "7cf127a6d2593fa500dd66a9e02cd48f31e059628c105f1cff14999677989036",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/drop-all-retains-merge.ok",
+      "size": 584,
+      "sha256": "557d90b8169f5117ab8f54b6077ef1abb4d71f4b8a2a0f6c1ca3b75d69c54b7d",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/dropped-image-input-retains-declaration.ok",
+      "size": 718,
+      "sha256": "d2fbf18ca0b00e364e5090e90f76ccb83e664de2285cf14b331fcac38e3ed8ad",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/dropped-input-missing-image.ok",
+      "size": 718,
+      "sha256": "d2fbf18ca0b00e364e5090e90f76ccb83e664de2285cf14b331fcac38e3ed8ad",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/duplicate-key-inside-left.ok",
+      "size": 548,
+      "sha256": "3feedc71890261025a8cdcbcb79660d5cf188d2b8e266abc0936bf842de3dfd2",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/duplicate-key-inside-right.ok",
+      "size": 548,
+      "sha256": "8c4ac66264ff3a93d3ee50b1eb03caad6efd66f3291e5dfbdb41148c55c5b690",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/dynamic-image-id.ok",
+      "size": 705,
+      "sha256": "cd9b2c1cf6aa3b97fc8126542dd6ff6eae63e1ca3f2506f389c1261de43f482c",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/empty-generated-reference-input.ok",
+      "size": 833,
+      "sha256": "f9839ba5ebd24992925b80a3013f241cef59734017064f40381ebb6ba2c3a0d8",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/empty-input-key.ok",
+      "size": 539,
+      "sha256": "19bb893353e04840468ef1940022f7b389cbaa97c3f13f05dde99cd0bcb1b8cd",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/empty-input-reads-both.ok",
+      "size": 772,
+      "sha256": "998dbf1b739a365b72b18d82deee103252699acbb7ee353410613b97f58b41bb",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/empty-left-does-not-skip-right-domain.ok",
+      "size": 552,
+      "sha256": "1191ba54bb20c8182c25f61f65a380d1a3ef49183ee2259376135890b79d1326",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/empty-left-filter-read.ok",
+      "size": 829,
+      "sha256": "79e1898b11a7bded8c2ff0c4d64cc3466e157bb8b6e373f9d4323af93fbaf0f8",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/empty-left-generated-taint.ok",
+      "size": 906,
+      "sha256": "fc873c5914c4bf0ebd9b50a56b81eeb8c95fd2d66d71b1e7bd724d800a53e17e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/empty-left-int-real-mismatch.ok",
+      "size": 537,
+      "sha256": "0d9bee438ecec35d86fd38969e0823577491850037d0615895c8369153405b97",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/empty-left.ok",
+      "size": 544,
+      "sha256": "37bffe92e121988ecd2ebfbe28a177dde64a0f8b35908866ea13b3d07d9a9a38",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/empty-map-retains-merge.ok",
+      "size": 565,
+      "sha256": "3e74b45a816881261d436add43939ec270dbfeadb55fbc0bb728e2e53cc9f8f6",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/empty-private-import-operand.ok",
+      "size": 680,
+      "sha256": "a128efed4b27392360578d8e83d21430edaf50e8240cfb057ec62d006438cbe3",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/empty-reduce-retains-merge.ok",
+      "size": 591,
+      "sha256": "5fc5f2bee2a89ab2d3a66af07668bb2ae7056a20473059e3f3ec7dcf9f7f71dd",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/empty-right-filter-read.ok",
+      "size": 829,
+      "sha256": "9cde850761d7365714f213df41478a26820c8cde0bd56b7ccf4e542a1e3bc282",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/empty-right-generated-taint.ok",
+      "size": 906,
+      "sha256": "fbc353dc1a7073a70c4de11e7f131f979ada5961d23847f802d005667e882e66",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/empty-right-int-real-mismatch.ok",
+      "size": 537,
+      "sha256": "22d8a8ce0681de0f5edc0c51a95bc864cfdbf986e55dec5433a760f4fc625733",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/empty-right.ok",
+      "size": 543,
+      "sha256": "8f4899f5afacd5dfb679558fe963a9344de555543d005d2b024f1f23f4ac9f3a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/empty-union-missing-image.ok",
+      "size": 698,
+      "sha256": "cec7da16cdf1a937b52d11a89dfa2f9648ef566301c2bb6c3f28c78b2b65b4e2",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/empty-union-retains-image-declaration.ok",
+      "size": 698,
+      "sha256": "cec7da16cdf1a937b52d11a89dfa2f9648ef566301c2bb6c3f28c78b2b65b4e2",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/equal-valued-plain-merged-occurrences.ok",
+      "size": 978,
+      "sha256": "a7b8537bef82be0b10fa0fe5db0297aa924f27cb06ca733cc52be3a2d7edd677",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/equal-values-distinct-keys.ok",
+      "size": 553,
+      "sha256": "c2c7fb67dce72675026e2a7232a28fee613187c358860fe7b4362ecb40c9fbc9",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/equivalent-quantity-alias.ok",
+      "size": 578,
+      "sha256": "3782f38f196bf8e15ce3ddde8448c566a996ba355da875c4912f438abd719eab",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/excessive-expression-depth.ok",
+      "size": 814,
+      "sha256": "7551c162ea35c91d688115e39de171613c88fb74d220ba7a2635355de4ee9686",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/extra-generic-type.ok",
+      "size": 540,
+      "sha256": "58389738b18351e80576da42b7c86261fa693bc414c431760d94c214c2cc0bee",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/filter-both-empty.ok",
+      "size": 622,
+      "sha256": "a1fe2c6011ab44fa33117e1c4fcea5710cb0902fd8e51502ddbedf0936ee4d30",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/generated-condition-retains-merge.ok",
+      "size": 869,
+      "sha256": "54ff68ab0ff62c3f32cd0c934e706287056b515151e8a571ccfbe353d3229b08",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/generated-reference-input.ok",
+      "size": 826,
+      "sha256": "e1e5475bf04f540f0d18ec8bbc390133f091faf75e56ea98a6b2e8afbe0116a3",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/generated-union.ok",
+      "size": 817,
+      "sha256": "9a353f7e2d237e9bc0718c5adea28facdd6a705c54f4e6a695b6f062a9a278b9",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/geometry-input.ok",
+      "size": 554,
+      "sha256": "9728d7b864ca3b6a2ce1e603750adf109afbc47f3493a756b228c483b0f4660f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/grouped-right-type-mismatch.ok",
+      "size": 539,
+      "sha256": "df9a3d9fdac90fdcef6e605f8cd48906cdb3b24b2f157723765456b308616bae",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/guarded-helper-replay.ok",
+      "size": 947,
+      "sha256": "487c5ada15486f875156c86e043335fd4334e3e0d30dac786fd7c790d4016214",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/imported-filter-operand.ok",
+      "size": 690,
+      "sha256": "1cd6555ea749aadb0e3f243e6fc7b7edb29632c82307f676fd91f98a85a317d1",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/imported-new-merge-helper.ok",
+      "size": 693,
+      "sha256": "47e20be27e45ad7a14dafef06d86de3e42de4c2cc44d6598277d65597fa29d42",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/incompatible-vector-frame.ok",
+      "size": 657,
+      "sha256": "a273b8ad1fc0afac70ca892b60e8e14c88006846fb605ae83a970bfa45ec3338",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/input-alias-remains-unmodified.ok",
+      "size": 739,
+      "sha256": "b0a9fc5893eb6a89e64860df8fa9a6503ccd3d28b01accb6726b80419692661d",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/input-evaluation-once-and-order.ok",
+      "size": 774,
+      "sha256": "51ca06d267cbddad6388b033d3d10fb68477b97899d7a6d4f9c606915f3b6324",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/invalid-input-key.ok",
+      "size": 543,
+      "sha256": "16ade838b274afe1c3c4c5033425bdb25246c1f4a513e9ebb1e14aee1cfceebf",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/invalid-resulting-geometry.ok",
+      "size": 845,
+      "sha256": "93f9ca036029eee806e0ea20332c65b97a5ebbf830e80b79993f434244f01425",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/lambda-operand.ok",
+      "size": 533,
+      "sha256": "5072a9cf294bd1e1efa0d69368944b8ebeb844f06f511f0e53c0bbd9c5fe5225",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-bool.ok",
+      "size": 563,
+      "sha256": "aa9457363b07de44d4b2e50267af586386bde0750613d70ef1b411e0c77a70f3",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-color.ok",
+      "size": 607,
+      "sha256": "344e0e27fb8ae36fb6eb9ff4253062d2cb0eb0abb0a933a1b9faace79cd3965e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-frame.ok",
+      "size": 581,
+      "sha256": "7e0a4837986e83290a038377a335452fc5cf978ceaea763ae9a5660bdcda4be2",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-framed-section.ok",
+      "size": 1291,
+      "sha256": "42cbd3639bbd6d600c41cced7490f049d9cd6e85fc57569c7ccf3f28811e27fd",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-int.ok",
+      "size": 553,
+      "sha256": "c2c7fb67dce72675026e2a7232a28fee613187c358860fe7b4362ecb40c9fbc9",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-loft-section.ok",
+      "size": 707,
+      "sha256": "1db0f17e61501a48decb19cc1061d20824492a7c35a4dec2a25b79230cbceff5",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-material.ok",
+      "size": 699,
+      "sha256": "018569a4581cc96c57a29dbe5ab749cc385f5bed9f30f0bdf9597c1793446a11",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-planar-point.ok",
+      "size": 631,
+      "sha256": "e956672c54ae6dd7ab7656213b7f05a466f510346da19aa352baca5517ffd237",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-planar-uv.ok",
+      "size": 781,
+      "sha256": "741109310712cd900e9a0fc3a08719f8f1935fb9727a6c886e22e77c52cde9c9",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-point3.ok",
+      "size": 623,
+      "sha256": "c2a5be0e2619902e5f643a13d4606fe05ef39a08e5666e059a75040e80858d74",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-polygon-pocket.ok",
+      "size": 1053,
+      "sha256": "986c21411ff7eceb04b7c93fcee30a4306a2a0a0cacaf035490c1cad47718035",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-polygon-ring.ok",
+      "size": 1023,
+      "sha256": "2687f5696cbd5b9b2e7f9cb6d80e3376c87ef581a17f41bb43bda18be121cf3f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-polygon-section.ok",
+      "size": 1145,
+      "sha256": "97a424572bc7688713646f85af5f6da13d6e2b28c2e5a25a7b25cb4866c4219b",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-polygon-vertex.ok",
+      "size": 693,
+      "sha256": "7a89b923bba7c30c675767ca30910be42e07fb329b32f16aaab8313228d23ca6",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-pose.ok",
+      "size": 661,
+      "sha256": "faadc5a7d22dc97423d6a7af9dd4c02801005992c704c0481f345253ffa7c4c2",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-quantity.ok",
+      "size": 577,
+      "sha256": "7c3c8bfa3acca69455e7b7a0d8b9268331dc8d49437320faa1e1d53d3ff9f759",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-range.ok",
+      "size": 625,
+      "sha256": "6f1d53a3a12b0969f93eb4fc5b3c56883be2ea1c1d5da173d1d5c360d0081715",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-real.ok",
+      "size": 561,
+      "sha256": "ce1684ff3825d6738ae6ee9c5d85f2457c84d41600dbf115062fee8c4fe34b19",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-rotation.ok",
+      "size": 603,
+      "sha256": "5f7e13e8316dd048d3be586e58142c92fbac51b0bc68de6d15c766dfab4e9857",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-string.ok",
+      "size": 585,
+      "sha256": "6411a522bfa874123394087a8a020e0a7b90400d7f4269d50765fd4bf43fc058",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-texture-binding.ok",
+      "size": 1029,
+      "sha256": "632097d7824723e1e9f6de8824436edb780e3eb8a17bbaf9c28621f27d58e733",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-texture-image.ok",
+      "size": 773,
+      "sha256": "dd55dcc11459b883a2bec6349e27f396bc61ee64a885cda74c10e79d07f4a2ce",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-vec3.ok",
+      "size": 631,
+      "sha256": "9501ea8351590916420303bc2060e9008eb5fc56e325c15ea5bacf29fa8348f8",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/leaf-vector3.ok",
+      "size": 661,
+      "sha256": "0ad2c4c169a560310fd3e5ad49cf1c0427e79118e285862b4eee681ae75d7209",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/left-domain-before-right-domain.ok",
+      "size": 682,
+      "sha256": "b24cf42ec7024a0a627ae2fd4a28cfd09d975d2898b6434b6e873af525deb888",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/left-dynamic-failure-stops-right.ok",
+      "size": 566,
+      "sha256": "590b288630e4fb7554301ab6c765ffee11b02ecab8bcc8a9e9ed4eaf42e23fd0",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/left-input-257.ok",
+      "size": 3763,
+      "sha256": "26249245b79bcb04d526f727fb30965752677b404ce54ad4a2c19c7177db1b9b",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/left-int-real-mismatch.ok",
+      "size": 551,
+      "sha256": "16e07ad24ddd89d2566c7eb4dfabb3d6fcf3fe8d77840049901f2cc6fb2c8636",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/left-not-keyed.ok",
+      "size": 523,
+      "sha256": "c096ac04022b9c7d4bdf7acee95c72b82d69478a19a9ac556cad8105019bce66",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/left-quantity-mismatch.ok",
+      "size": 553,
+      "sha256": "cb24485d24957bba177140db3e590b934fe1c55e0482496d3e278af23b50b8b8",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/map-constant-retains-merge.ok",
+      "size": 577,
+      "sha256": "1eb3c14e74c9b8730935d9f70d7f5cab9d6017d6cf3c575d0183c693b9995d1d",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/map-left-filter-right.ok",
+      "size": 670,
+      "sha256": "68809ab1de08661b30a26c878caaf7dee9a061f035332e7dd29f2606bee88a55",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/maximum-256.ok",
+      "size": 3748,
+      "sha256": "c5dd8c0a010b1bef96838468b50fba8641f4ff0946fb6f497383cd52769d243e",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/maximum-key-length.ok",
+      "size": 609,
+      "sha256": "b31f128b818108e5ede8fa1cf8b81c9db04477b4660dfd41e0db43e506beab4c",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/maximum-one-sided.ok",
+      "size": 3750,
+      "sha256": "e824a821b56db05beb12aa6e9aa48492079385891d247ca91cf5e4ddacbbd713",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/merge-in-filter.ok",
+      "size": 611,
+      "sha256": "ad5bc2948e043bbaec50c64f78ef2f32c0fcf486193acc8b14d96cb49a1c03b4",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/merge-in-map-body.ok",
+      "size": 608,
+      "sha256": "b1f0ab54b1a420d69da0718136c3516844d824b5dea5da6487d02bfd481c4b2f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/merge-in-reducer.ok",
+      "size": 640,
+      "sha256": "700c5664ce3f0b9263d5d6aa87130f8367d1f8fd8b8a3b3870f3121281427d65",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/merge-then-filter.ok",
+      "size": 594,
+      "sha256": "fb51606985cb583d8fc01ff62a40b0696bf01429c871d149cc9541d476570436",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/merge-then-map.ok",
+      "size": 593,
+      "sha256": "de6fc44a5cd8532e4ea80256a9c452b8cff0db1742bf6696b35310b23569982c",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/merge-then-reduce.ok",
+      "size": 618,
+      "sha256": "a0a1fd6f246f01d64e4a11c465cb65870171740ec0aa44528c6bc35fdf29173b",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/missing-explicit-type.ok",
+      "size": 529,
+      "sha256": "86493a395794bbece0148efd46943718412c032a9b5f243635385cc6d8bdd3e5",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/missing-right-operand.ok",
+      "size": 520,
+      "sha256": "4264310905c2352de809cdba45cd4186ad5c10cafa7542394ed2a95974967d97",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/mixed-membership.ok",
+      "size": 564,
+      "sha256": "8125654568f5afdd50c88a67a5da15cd8671d85c053a8146f5b6c0682fb35671",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/nested-keyed-input.ok",
+      "size": 562,
+      "sha256": "2586be111831026c20bc3a6a779ae0fccd8c77d6fe396b651de88aea8bd8af47",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/nested-left-merge.ok",
+      "size": 584,
+      "sha256": "a280082094940afbe3dd288c18ae9ade39a16e101741e295caa332026663d0b8",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/nested-merge-generated-contributions.ok",
+      "size": 897,
+      "sha256": "8a1b932fad916757de0c1748afc284756f7e55a5861f120fad710ab72589b38f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/nested-merge-indexed-scalar.ok",
+      "size": 606,
+      "sha256": "577db2361c163fe0b2db8e2e2733ac8c322f65b31e0048ef981a2f9cc729f390",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/nested-right-merge.ok",
+      "size": 584,
+      "sha256": "9fcfdf64c90d717fec107e61b39042bf2c47a2b9a9466b81c5354953026e6bd0",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/new-profile-reserves-merge-name.ok",
+      "size": 576,
+      "sha256": "831826cedfcb18c9f98aec91f2ed0905c375d41d27164419e03a4080e0b72308",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/nonascii-input-key.ok",
+      "size": 541,
+      "sha256": "d16aca690fc04f08890994c07815a50fbce62c9f5e65490ce91a60b4dd864ec7",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/older-importer-rejects-new-unit.ok",
+      "size": 694,
+      "sha256": "8b56272b221f5cbc715b214d1daabb60981ea2ae1edbcb0acb29538f2852c29a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/panel-identity.ok",
+      "size": 1649,
+      "sha256": "9b75fb6eda75b36cfc5c7cf3b199dbd7f502e7378e7f43a404465e08ab30111a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/panel-task-collision.ok",
+      "size": 1698,
+      "sha256": "2cb40fdbbcf626d8b64861ae7f646c4ea5dcb8cf6511b7d8bf6a1c14a040ad0a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/panel-task-higher-budget.ok",
+      "size": 1709,
+      "sha256": "23a4f3a41045f3f840388c4e81dc456f41bedbb2966da665a6dc011892cea68a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/panel-task-invalid.ok",
+      "size": 1678,
+      "sha256": "af647aeaaec97e5643a7e10bd402f9254b9227afe9417a6e4f5085549e12bd95",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/panel-task-removed.ok",
+      "size": 1649,
+      "sha256": "9b75fb6eda75b36cfc5c7cf3b199dbd7f502e7378e7f43a404465e08ab30111a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/panel-task-repaired.ok",
+      "size": 1648,
+      "sha256": "c1f6b6510ee80e062992e61273c3a2a16f5c6a1077fa8c68e30de1d17ca671ce",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/panel-task-ungranted-budget.ok",
+      "size": 1709,
+      "sha256": "23a4f3a41045f3f840388c4e81dc456f41bedbb2966da665a6dc011892cea68a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/panel-task.ok",
+      "size": 1649,
+      "sha256": "9b75fb6eda75b36cfc5c7cf3b199dbd7f502e7378e7f43a404465e08ab30111a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/qualified-legacy-merge-name.ok",
+      "size": 671,
+      "sha256": "525d521d85629171a58d6874a77a73950217a4f7459827662882a544d29b9eb5",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/recursive-unused-helper.ok",
+      "size": 593,
+      "sha256": "f4f2f68d85773bc5dd86c6c445272849e439ca4478855ef50bff3b4fa7ebd014",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/reduce-constant-retains-merge.ok",
+      "size": 603,
+      "sha256": "9827fb000787e9c26c181ead3b1b2414c9f9098282a778dbedefa82e76dfdc82",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/reduce-prepares-left.ok",
+      "size": 620,
+      "sha256": "f9ec694cb8f6a4c8584c9e16576b890eaac0c3bc9187ca310f1ff10b7d3d5a30",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/right-domain-before-collision.ok",
+      "size": 682,
+      "sha256": "5f6bd42c8490dfbddd7cf9ba8f5ef3029cd5c866a9118b0e8aeb63945d390f4b",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/right-input-257.ok",
+      "size": 3763,
+      "sha256": "597df6e28bc5cf6a6f7bdc349616284648d5928a4d6954bad5b7416f77b8d5ef",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/right-int-real-mismatch.ok",
+      "size": 551,
+      "sha256": "45651fcfe85ddc8b2bddd9ed4ac2f1597cffd7e6560b7ecb028dcba8c1363ed1",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/right-not-keyed.ok",
+      "size": 523,
+      "sha256": "826382fae30e10e89d9f4b2110d9049f5d23e206dca24f5f0d76c3f0639aae3b",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/right-quantity-mismatch.ok",
+      "size": 553,
+      "sha256": "fa44affc9bac626d5219d11c1b6d3677a3502a77ccfdd31e3a7adfc0b84c0d28",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/right-static-name-not-hidden-by-empty-left.ok",
+      "size": 546,
+      "sha256": "97567c3a6dd3adb4e2754669c6ec1823b331197c78bf0c5337ea354eae3eab6a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/selected-dynamic-read.ok",
+      "size": 833,
+      "sha256": "c9aec399b231f8e23ebee8df9cbfca0a33f3f7bb2bd2fe093e842c426df044b1",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/singleton-pair.ok",
+      "size": 575,
+      "sha256": "06fa79459c0f6777ee3033b7b167f3792ecf43fd84b23ab9ae32ac3d8ce66948",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/static-right-before-dynamic-left.ok",
+      "size": 557,
+      "sha256": "50f1d68beadc732b3d764e58b52b53a0970e4c114bc9050c7ca0920111fabc3a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/third-operand.ok",
+      "size": 548,
+      "sha256": "276fe301381563287ec7525555c6137e486566ee99b1d2be6a0328265553c21f",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/too-long-input-key.ok",
+      "size": 604,
+      "sha256": "5b00ea4e960ab03b3696f78a1ee578913776ff88278856394ce9dc89d7d2c177",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/unselected-collision-not-evaluated.ok",
+      "size": 589,
+      "sha256": "68abd752d51553419d9bdadfec999291d469b854693cdf0cc20e9e46ade8675a",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/unselected-dynamic-read.ok",
+      "size": 821,
+      "sha256": "a94b5bc9f5917891a96a2634b81d1029717d5000cd6838d9dc8b2de843d11800",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/unselected-generated-read.ok",
+      "size": 877,
+      "sha256": "70cfa557cb6f1163aed52f1c5c0c449bd2af2ff87b9ee56e36f5b190dcbf3533",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/unselected-operand-domain-not-evaluated.ok",
+      "size": 592,
+      "sha256": "40d9f2b1c31d2c7865628599cb2c497a7e03633153638ba270c09313321733ba",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/unselected-static-name-failure.ok",
+      "size": 577,
+      "sha256": "a4815ff32d94c217da4505098d58cc9fce7e5ec6045dcc14954b8504fa23c312",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/sources/wrong-import-pin.ok",
+      "size": 684,
+      "sha256": "c98a75f84b2c26a5b3692dcf5971df00bb5accc15457eb734bd1f4b1f1875877",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/static-right-before-dynamic-left.files.json",
+      "size": 180,
+      "sha256": "464a269c8fac5fab2cfb0735789eaeeada414cff52f6903950ce6d86125896b1",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/supplied-byte-adversaries.json",
+      "size": 3165,
+      "sha256": "554c992296ec79b696a08b65288dbce6599b6e27bab070da86879ded622a6cbb",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/third-operand.files.json",
+      "size": 161,
+      "sha256": "fdbb1aa37bc14f57e8405eb6ef516d059135bbfa538a56b79c372f5c68112b05",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/too-long-input-key.files.json",
+      "size": 166,
+      "sha256": "d262cd77c69e33df1dffbfb3e6e9853a99c7012101c6e3cce29abc2c4d128290",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/unselected-collision-not-evaluated.files.json",
+      "size": 182,
+      "sha256": "e04331fbd266467f81fd2f37a6eaa660226331893e81cb31eff7bc0562759a52",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/unselected-dynamic-read.files.json",
+      "size": 171,
+      "sha256": "28706680f0927491ee1c7b581d25b729b2495e3130581bab22ee3ad35331b9ff",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/unselected-generated-read.files.json",
+      "size": 173,
+      "sha256": "550cf328a172dd6f77d397b8e857ae49fd0ca2a0096ac4bb1ce410e0b8d408f5",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/unselected-operand-domain-not-evaluated.files.json",
+      "size": 187,
+      "sha256": "8c28e8e650c79e7e38cb63cb7205a35e834608e39d5e2fe55b8184d0cf1fa5d2",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/unselected-static-name-failure.files.json",
+      "size": 178,
+      "sha256": "22630c227b2b3684f23d6f103389f07d61c2d935f341cb5ebf521e8f9ddee8e2",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/workflows.json",
+      "size": 10925,
+      "sha256": "25410ac10241479a1a6a96d4e548f01c0123d3789429b38a1b411148587359b8",
+      "mode": "100644"
+    },
+    {
+      "path": "examples/keyed-merge/wrong-import-pin.files.json",
+      "size": 308,
+      "sha256": "a80015212bb69b9503498f2afc8ce95eef9288697283bc6fb7689402a93aa4cf",
+      "mode": "100644"
+    }
+  ],
+  "scope_exclusions": [
+    "This INPUT-FREEZE.json cannot include its own digest.",
+    "INDEPENDENT-REVIEW.md is created after this manifest and binds its digest; it is excluded to avoid a self-reference.",
+    "External authoring/preflight/review receipts, corrections and failed attempts are retained and inventoried separately in the complete handoff.",
+    "No .17 runtime output or candidate-derived answer is included."
+  ],
+  "prefreeze_control_validation": {
+    "controls_passed": 79,
+    "scope": "All79 explicit .16 controls validate;74 represented typed/member probes and five complete .16 delivered names representing three unique bundles. No .17 runtime, native reader or product-release acceptance is implied.",
+    "receipt": {
+      "path": "c084-fixture-draft/authoring/combined-final-control-validation.json",
+      "size": 1274,
+      "sha256": "a2ebc4894cb88a0b5b1624d9b3db12919e18422879deb9e18e69b690b638ad05"
+    },
+    "all_current_control_program_revisions_and_manifests_match_actual_executions": true,
+    "unchanged_clean_baseline_before_and_after": true
+  },
+  "external_prefreeze_evidence": [
+    {
+      "path": "review/C084-CONTRACT-REVIEW-R1.md",
+      "size": 6952,
+      "sha256": "f666d03b61f3d2d13246610fbb4b8b65d63ff4c2a6d7a00b8dcdaeae84729466"
+    },
+    {
+      "path": "review/C084-CONTRACT-FINAL-REVIEW.json",
+      "size": 5345,
+      "sha256": "7469d5b6955a3073503167484876cae373c09ea7aed882db1958179e68eb9b6a"
+    },
+    {
+      "path": "review/C084-INTERFACE-SCHEMA-REVIEW.json",
+      "size": 5454,
+      "sha256": "b7168bfeb219bd5513e1ad3039e5c465d0d868c92afa92958dce5bd80c5ac99b"
+    },
+    {
+      "path": "review/C084-FIXTURE-INPUT-AUDIT.json",
+      "size": 422035,
+      "sha256": "229cc40202050cd2b78e3cd29d3c5f4fe27437efe1e2790b6fd0f1b043e9dbf7"
+    },
+    {
+      "path": "review/C084-COMBINED-INDEPENDENT-REVIEW.md",
+      "size": 13271,
+      "sha256": "92c3d371f67b3ddf0d46945bdc71f1f6fc3a2ac1db8632f2b4e3e57ea6db05bc"
+    },
+    {
+      "path": "review/check_c084_fixture_inputs.py",
+      "size": 29510,
+      "sha256": "26abb4dc30d5cacb16f96a0987633c1acbd2cfc061d3add412f477da78c74334"
+    },
+    {
+      "path": "review/freeze_c084_inputs.py",
+      "size": 13067,
+      "sha256": "e36c73a1efd9087cc9fb1cd203a867dc189a84d8a3a9f44172663d0a092a197a"
+    },
+    {
+      "path": "review/C084-FIXTURE-INPUT-AUDIT-draft01.json",
+      "size": 374267,
+      "sha256": "a75353405007f24d7be42788848fd1f34e2daef07fe5a601cd97112825b4118e"
+    },
+    {
+      "path": "review/check_c084_fixture_inputs-draft01.py",
+      "size": 23255,
+      "sha256": "f9e2b7b1846c96555285f27a4c6d89e7332713a65e7662f60471a57a2e87ebd4"
+    },
+    {
+      "path": "review/C084-FIXTURE-INPUT-AUDIT-draft02.json",
+      "size": 370120,
+      "sha256": "6e27259b3b56293e2ac270456008feb5e28737b09acad2404d44ff234065d799"
+    },
+    {
+      "path": "review/check_c084_fixture_inputs-draft02.py",
+      "size": 23519,
+      "sha256": "e7715c2a404b6eb8ffe1552ec32dc8d2a2c4e60782574fe2357649b60b29c59d"
+    },
+    {
+      "path": "c084-fixture-draft/AUTHORING-REVIEW-READY.json",
+      "size": 97488,
+      "sha256": "237cc5317fdf0bbf9ea7351d57d84724ed5b5daa6bf3063c1bbe436a12599e3f"
+    },
+    {
+      "path": "c084-fixture-draft/authoring/authoring-evidence-inventory.json",
+      "size": 74023,
+      "sha256": "5b600039ec87ab45723ba5a5c0257886f631337ecbd0a42ea1864d0836e2e836"
+    },
+    {
+      "path": "c084-fixture-draft/authoring/combined-final-control-validation.json",
+      "size": 1274,
+      "sha256": "a2ebc4894cb88a0b5b1624d9b3db12919e18422879deb9e18e69b690b638ad05"
+    },
+    {
+      "path": "c084-fixture-draft/authoring/preflight-attempt01/summary.json",
+      "size": 64437,
+      "sha256": "bb2f6394335472123de000bdbc4a5c46333b53a498f308dede3be602795fa17d"
+    },
+    {
+      "path": "c084-fixture-draft/authoring/preflight-attempt02/summary.json",
+      "size": 67669,
+      "sha256": "c8a2a8a43c334b58ad823ea0e2cdb6d9d77feafadcca13b8a51257e87f36eac3"
+    },
+    {
+      "path": "c084-fixture-draft/authoring/prefreeze-correction01.json",
+      "size": 618,
+      "sha256": "15ff27cf52ee5e5a0d8a1627adf93f0a23ae619f45cb85d0bee0afaa6fb411ed"
+    },
+    {
+      "path": "c084-fixture-draft/authoring/prefreeze-correction02.json",
+      "size": 1788,
+      "sha256": "2217fc260243e9794642d88c134696fd1c38c59eab69592e970f5df3a28cb662"
+    }
+  ],
+  "publication_required_before_runtime": true,
+  "frozen_acceptance_executed": false,
+  "full_feature_release_accepted": false,
+  "full_product_accepted": false,
+  "amendment_rule": "Preserve original frozen bytes and observed outcomes; any defective input requires a separately named correction and execution lineage. Do not silently rewrite this freeze or tune expectations to candidate output."
+}
