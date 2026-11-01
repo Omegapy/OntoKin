@@ -1,0 +1,60 @@
+{
+  "schema_version": "ontokin.c086-independent-agent-metadata-review/0.1",
+  "status": "supported_before_runtime_subject_to_baseline_preflight",
+  "reviewer": "contract_review",
+  "candidate_runtime_used": false,
+  "files": [
+    {
+      "path": "budget-expectations.json",
+      "size": 2883,
+      "sha256": "2ab89900e200c9f13a11950669c1bf7ef1a8b3e9404d9653db63219963bb7bae"
+    },
+    {
+      "path": "delivery-comparison.json",
+      "size": 5213,
+      "sha256": "d0b3249e46d132b7cbea34f35f6a0fb639bd8ac7c0cb58baf75d0438a23c8bd0"
+    },
+    {
+      "path": "geometry-expectations.json",
+      "size": 2286,
+      "sha256": "5a3450d0325449b3b94d451d89cc3b0927165be06d6348a54245cdf11d65239e"
+    },
+    {
+      "path": "supplied-byte-adversaries.json",
+      "size": 4143,
+      "sha256": "6e2e82727eae651cd97bad4219c359abb2af7012050e4216a6863996b300c788"
+    }
+  ],
+  "checks": {
+    "five_mesh_geometry": "Each panel is an axis-aligned 4-vertex rectangular extrusion; two cap triangles per end plus eight side triangles =12. Widths 1/2m, height2m, depth0.25m follow literals and inherited helper maps. Marker0.5m cube has12 triangles.",
+    "motion": "First carrier translation (-8,0.5t,0); mounts x0 and4. Sibling carrier x2 plus mounts0/4; marker (0.25t,-3,0). Identity quaternion. No rename changes original payload geometry or motion.",
+    "appearance": "Side colors (0.25,0.5,0.75,1), white caps, unchanged exact PNG; marker (1,0.25,0.1,1).",
+    "asset": {
+      "bytes": 89,
+      "width": 4,
+      "height": 3,
+      "sha256": "5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+    },
+    "adversary_counts": {
+      "panel-task": 22,
+      "panel-task-repaired": 24,
+      "panel-task-higher-budget": 22
+    },
+    "exact_refusals_required": 68,
+    "metadata_allowances": "Source/version/origin/implementation fields only after independent original-source validation. Complete BIN, raw JSON member order, padding/framing and all unknown fields remain exact. Broad geometry containers are not permissions to normalize geometry values; only specified location fields qualify.",
+    "budget": "1-operation lower bound follows multiple separate admission/expression steps; maximum256 and panel400000/80000 are predetermined conservative fixture allowances, not measured candidate costs."
+  },
+  "reader_implementation_requirements": [
+    "H23 must target first occurrence changed left-to-front.left selected record so the swap actually changes bytes.",
+    "H24 must target that renamed occurrence's original selected zip key left, not a null aggregate or unchanged sibling key.",
+    "Literal .18 controls cover only their named authored states; do not extend them to arbitrary mapping behavior.",
+    "Every record absent from actual executed source must be rejected even if its origin family is enumerated as potentially comparable."
+  ],
+  "not_established": [
+    ".18 control execution",
+    "candidate implementation",
+    "native readers",
+    "capture review",
+    "complete release"
+  ]
+}

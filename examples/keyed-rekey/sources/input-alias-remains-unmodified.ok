@@ -1,0 +1,18 @@
+ontokin "0.19";
+module Probe @ "probe";
+profile "keyed-rekey-0.1";
+
+
+public class ProbeShape @ "probe-shape" {
+    public param items @ "items": Keyed<Int> = keyed<Int>{"b":22,"a":11}; public param names @ "names": Keyed<String> = keyed<String>{"a":"ns.a","b":"ns.b"};
+    public derive result @ "result": Keyed<Int> = rekey_keyed<Int>(self.items, (old_key, payload) -> self.names[old_key]);
+    public derive forced @ "forced": Int = len(self.result);
+    public derive untouched @ "untouched": Keyed<Int> = self.items;
+    geometry = if self.forced >= 0 then box(vec3(1[m], 1[m], 1[m])) else empty();
+    physical = no_body();
+}
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object shape @ "shape": ProbeShape {}
+}

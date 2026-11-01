@@ -1,5 +1,7 @@
 # OntoKin documentation guide
 
+C086’s [selected keyed-renaming decision](language-design/keyed-rekey-v0.1/README.md) and [independently reviewed input preparation](engineering/keyed-rekey-2026-11-01-c086-inputs/README.md) define the next experimental source/Agent/GLB .19 increment. Exact adoption publication precedes runtime work; baseline control passes are separate from candidate validation and release acceptance.
+
 C085's selected experimental [keyed-pair contract](language-design/keyed-zip-v0.1/README.md) adds exact complete key-set pairing through explicit source/Agent/GLB .18. The [engineering record](engineering/keyed-zip-2026-11-01-c085/README.md) keeps independent input publication, retained corrections, actual implementation checks, integration, and complete release acceptance separate.
 
 For C084's explicit source/Agent/GLB `.17` bounded pure keyed merge, read the [versioned decision](language-design/keyed-merge-v0.1/ADOPTION.md), [independent input freeze](language-design/keyed-merge-v0.1/INPUT-FREEZE.json), [Agent guide](language-design/agent-v0.17/README.md) and [engineering record](engineering/keyed-merge-2026-11-01-c084/README.md). Two exact typed inputs form a canonical disjoint union; every shared key is refused. Both inputs retain actual dependencies and detached origins, while original source remains the repair authority. Adoption, implementation, verification, integration and complete release acceptance remain separately identified.
