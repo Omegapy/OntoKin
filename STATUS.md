@@ -1,5 +1,11 @@
 # OntoKin status
 
+## Active main integration lease
+
+Owner: **interactive-c085-keyed-zip-20261101-47ae**. Prepared at **2026-11-01T18:59:55Z**, expires **2026-11-01T19:29:55Z**. The lease becomes effective only after the expected-head publication and actual readback recorded separately. Reserved scope: integration of reviewed C085 through PR #84, main and STATUS coordination, and the C085 engineering README, retained gates, validation summary and integration record. Observed starting main is `21b014a4fbaab1245f7bae27e454d9307b9cc5ab`; reviewed branch head is `67d3a3a6f8bdc16210c4e566ff00f03c08ce67a7`. Independent nonoverlapping work remains permitted.
+
+All C085 feature and immediate-predecessor observations have completed. The original inherited full invocation remains failed; the independently approved 31 original passing roles plus three same-source recovery roles complete all 34 inherited roles. All 3,934 unit tests and all 35 inherited image reviews passed within their recorded scope. Integration and resulting-main checks are the next steps. Complete feature-release and full-product acceptance remain false. No hosted execution or continuation schedule is authorized by this lease.
+
 ## Current development baseline
 
 OntoKin's [GOAL](GOAL.md) is an AI-agent language for editable meaningful 3D objects, animation and simulation through authoritative `.ok` source. Finite increments do not complete that mission.
