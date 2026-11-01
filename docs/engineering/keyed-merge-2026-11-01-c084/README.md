@@ -1,0 +1,9 @@
+# C084 bounded pure keyed merge
+
+The independently reviewed [decision](../../language-design/keyed-merge-v0.1/ADOPTION.md) and [input freeze](../../language-design/keyed-merge-v0.1/INPUT-FREEZE.json) were published in commit `29e06ebf4e57f0393935a376e696670964edce1c` before runtime work. The frozen corpus contains 144 source outcomes, 79 independently authored explicit .16 controls, ten Agent workflow groups and nineteen supplied-byte mutation requirements applied to three actual artifacts. Its 467 covered files remain immutable.
+
+The explicit source `0.17` / `keyed-merge-0.1`, Agent/0.17 and recorded GLB/0.17 paths implement bounded disjoint merge. Earlier defaults and profiles retain their meanings. Complete verification and independent candidate review are in progress at this source checkpoint; this document does not claim integration or complete release acceptance.
+
+The first complete producer observation retained all 144 source cases, 79 controls, ten Agent groups and 57 supplied-byte mutations. Independent readback exposed a generated-provenance omission: the selected contributor's map origin survived, but the other input's aggregate map origin did not. The failed actual artifacts and reports are retained. Separate review identified a downstream key-invention risk and a missing distinct JSON response-entry exhaustion exercise. Corrections must satisfy the same frozen contract and receive fresh execution.
+
+The complete final record will bind source commits/trees, actual reports, native captures, inherited validation, immediate .16 predecessor comparisons, integration, packaging and preserved failures separately. Complete experimental feature release and full-product acceptance remain false. [STATUS](../../../STATUS.md), [the retained gates](RETAINED-GATES.md) and [next proposed task](NEXT-TASK.md) preserve outstanding obligations and the full GOAL.
