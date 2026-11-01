@@ -253,6 +253,15 @@ class IndependentRekeyReaders(unittest.TestCase):
         receipt = {"source_manifest": copy.deepcopy(manifest)}
         expected = case["expected"]["expected_declared_png_ids"]
         self.assertEqual(check_source_manifest(receipt, manifest, expected), ["label"])
+        exported = {"schema_version": "ontokin.source-execution/0.1", "program_revision": case["program_revision"],
+                    "program": {"revision": case["program_revision"], "entry_source_id": "entry", "manifest": copy.deepcopy(manifest)}}
+        self.assertEqual(check_source_manifest(exported, manifest, expected, delivered=True), ["label"])
+        for mismatched, delivered in ((exported, False), (receipt, True)):
+            with self.assertRaises(ReferenceError):
+                check_source_manifest(mismatched, manifest, expected, delivered=delivered)
+        wrong_export = copy.deepcopy(exported); wrong_export["program"]["revision"] = "sha256:" + "0" * 64
+        with self.assertRaises(ReferenceError):
+            check_source_manifest(wrong_export, manifest, expected, delivered=True)
         for mutation in ("drop_asset", "change_hash", "change_unit", "invent_asset"):
             wrong = copy.deepcopy(receipt)
             if mutation == "drop_asset": wrong["source_manifest"]["assets"] = []

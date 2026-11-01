@@ -183,9 +183,17 @@ def check_budget(budget, case):
             "Source receipt omitted actual charged work")
 
 
-def check_source_manifest(receipt, expected_manifest, declared_png_ids=None):
-    """Bind the actual full registry even when callbacks/collections are empty."""
-    manifest = receipt.get("source_manifest")
+def check_source_manifest(receipt, expected_manifest, declared_png_ids=None, *, delivered=False):
+    """Bind the complete registry in its explicit validation/export receipt role."""
+    if delivered:
+        program = receipt.get("program", {})
+        require(receipt.get("schema_version") == "ontokin.source-execution/0.1" and
+                program.get("revision") == receipt.get("program_revision") and
+                program.get("entry_source_id") == expected_manifest["entry_source_id"],
+                "Delivered manifest is not bound to its inherited export receipt/program identity")
+        manifest = program.get("manifest")
+    else:
+        manifest = receipt.get("source_manifest")
     require(manifest == expected_manifest, "Actual source receipt changed its complete immutable unit/asset registry")
     png_ids = [asset["asset_id"] for asset in manifest["assets"] if asset["media_type"] == "image/png"]
     if declared_png_ids is not None:
@@ -204,7 +212,8 @@ def verify_case(case, record, control_record, fixtures, directory):
             "Actual source receipt names another immutable bundle")
     units = source_units(case_payload(fixtures, case))
     png_ids = check_source_manifest(receipt, case["canonical_manifest"],
-                                    (case.get("expected") or {}).get("expected_declared_png_ids"))
+                                    (case.get("expected") or {}).get("expected_declared_png_ids"),
+                                    delivered=case["expected_stage"] == "delivered")
     locations = check_all_locations(receipt, units)
     observed = codes(receipt)
     require(record["diagnostic_codes"] == observed and receipt.get("outcome") == case["expected_protocol_outcome"],
@@ -236,7 +245,8 @@ def verify_case(case, record, control_record, fixtures, directory):
     previous_envelope = read_json(directory, control_record["receipt"])
     previous = previous_envelope.get("result", previous_envelope)
     check_source_manifest(previous, case["explicit_c085_control"]["canonical_manifest"],
-                          (case.get("expected") or {}).get("expected_declared_png_ids"))
+                          (case.get("expected") or {}).get("expected_declared_png_ids"),
+                          delivered=case["expected_stage"] == "delivered")
     require(previous.get("outcome") == "valid" and previous["program_revision"] == control_record["program_revision"] and
             not any(code.startswith(("OKL-E-", "OKE-E-")) for code in observed + codes(previous)), "Valid source/control did not complete")
     inspection = check_inspection(read_json(directory, record["inspection"]), read_json(directory, control_record["inspection"]), case, fixtures)
