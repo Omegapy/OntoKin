@@ -18,7 +18,7 @@ from .json_limits import measure_json, JSONLimitError
 from .program_diagnostics import diagnostic_dict
 from .program_protocol import MAX_BUDGETS
 from .program_bindings import PROFILE_BINDINGS
-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_FILTER_PROFILES, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, POCKETS_PROFILES, EXECUTION_PROFILES, REACH_PROFILES
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_MERGE_PROFILES, KEYED_FILTER_PROFILES, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, POCKETS_PROFILES, EXECUTION_PROFILES, REACH_PROFILES
 from .syntax import Node
 from .validator import FIELD_TYPES, optional
 from .values import KeyedValue, Value, bounded_data
@@ -454,10 +454,14 @@ def _index(program, compiler, budget):
             filters = model.occurrence_provenance[path].get("generated", {}).get("input_filters")
             if filters:
                 record["source"]["generated"]["input_filters"] = budget.data(filters)
-        if generated is not None and budget.profile == KEYED_MERGE_PROFILE:
+        if generated is not None and budget.profile in KEYED_MERGE_PROFILES:
             merges = model.occurrence_provenance[path].get("generated", {}).get("input_merges")
             if merges:
                 record["source"]["generated"]["input_merges"] = budget.data(merges)
+        if generated is not None and budget.profile == KEYED_ZIP_PROFILE:
+            zips = model.occurrence_provenance[path].get("generated", {}).get("input_zips")
+            if zips:
+                record["source"]["generated"]["input_zips"] = budget.data(zips)
         record["_object_path"] = path
         records.append(record)
         names = list(FIELD_TYPES) + [name for name, member in cls.members.items() if member.node.kind in ("param", "derive")]
@@ -700,7 +704,7 @@ def _value_record(program, compiler, path, name, budget):
                 filters = compiler.filter_provenance(leaf)
                 if filters:
                     projected["value"]["derived_filters"] = budget.data(filters)
-    if budget.profile == KEYED_MERGE_PROFILE:
+    if budget.profile in KEYED_MERGE_PROFILES:
         merges = compiler.merge_provenance(value)
         if merges:
             result["derived_merges"] = budget.data(merges)
@@ -710,6 +714,16 @@ def _value_record(program, compiler, path, name, budget):
                 merges = compiler.merge_provenance(leaf)
                 if merges:
                     projected["value"]["derived_merges"] = budget.data(merges)
+    if budget.profile == KEYED_ZIP_PROFILE:
+        zips = compiler.zip_provenance(value)
+        if zips:
+            result["derived_zips"] = budget.data(zips)
+        if value.known and isinstance(value.value, KeyedValue):
+            for (_, leaf), projected in zip(value.value.entries, result["value"]):
+                budget.tick()
+                zips = compiler.zip_provenance(leaf, aggregate=value)
+                if zips:
+                    projected["value"]["derived_zips"] = budget.data(zips)
     return result
 
 
@@ -724,7 +738,7 @@ def _project(program, record, fields, compiler, sample, run, frame, budget):
     if "support" in fields:
         result["support"] = core._support_record(compiler, budget)
         result["support"]["profile"] = budget.profile
-        result["support"]["named_destination"] = ("ontokin.glb/0.17" if budget.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if budget.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if budget.profile == KEYED_REDUCTION_PROFILE else
+        result["support"]["named_destination"] = ("ontokin.glb/0.18" if budget.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if budget.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if budget.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if budget.profile == KEYED_REDUCTION_PROFILE else
                        "ontokin.glb/0.14" if budget.profile == KEYED_TRANSFORM_PROFILE else
                       "ontokin.glb/0.13" if budget.profile == TEXTURE_PROFILE else
                       "ontokin.glb/0.12" if budget.profile == POCKETS_PROFILE else

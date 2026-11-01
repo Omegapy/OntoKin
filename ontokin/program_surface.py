@@ -15,7 +15,7 @@ from .agent_protocol import ProtocolError
 from .diagnostics import OntoKinError
 from .scene import MAX_MESH_VERTICES, SurfaceMesh, build_surface_mesh
 from .surface import SurfaceError
-from .profile_capabilities import EXTRUSION_PROFILE, EXTRUSION_PROFILES, EXECUTION_PROFILES
+from .profile_capabilities import EXTRUSION_PROFILE, EXTRUSION_PROFILES, EXECUTION_PROFILES, TEXTURE_PROFILES
 from .values import bounded_data
 
 
@@ -251,7 +251,7 @@ def prepare_surface_page(program, element_id, *, region=None, count=256, budgets
         except SurfaceError as exc:
             error(exc.code, str(exc), **exc.details)
         texture_uvs = texture_bindings = None
-        if profile in {"textured-surfaces-0.1", "keyed-transform-0.1", "keyed-reduction-0.1", "keyed-filter-0.1", "keyed-merge-0.1"}:
+        if profile in TEXTURE_PROFILES:
             from .texture_runtime import texture_coordinates, texture_metadata
             texture_bindings = texture_metadata(obj.geometry, check=budget.tick)
             raw_mesh = compiler.surface_meshes[obj.path]["mesh"]

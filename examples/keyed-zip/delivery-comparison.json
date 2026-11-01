@@ -1,0 +1,85 @@
+{
+  "schema_version": "ontokin.c085-delivery-comparison/0.1",
+  "actual_target": "ontokin.glb/0.18",
+  "control_target": "ontokin.glb/0.17",
+  "complete_bin_equal": true,
+  "raw_json_member_order_and_encoding_compared": true,
+  "framing": "After individually verified metadata replacement, compact JSON bytes, padded JSON chunk, BIN chunk and complete framing must be identical",
+  "permitted_metadata_paths": [
+    {
+      "paths": [
+        "extras.ontokin.target_contract",
+        "animations[0].extras.ontokin.target_contract"
+      ],
+      "requirement": "Exactly .18 actual / .17 control"
+    },
+    {
+      "paths": [
+        "extras.ontokin.schema_version"
+      ],
+      "requirement": "Exactly 0.18 actual / 0.17 control"
+    },
+    {
+      "paths": [
+        "extras.ontokin.profile",
+        "extras.ontokin.reach_profile.source_profile"
+      ],
+      "requirement": "Exactly keyed-zip-0.1 actual / keyed-merge-0.1 control"
+    },
+    {
+      "paths": [
+        "extras.ontokin.program.manifest",
+        "extras.ontokin.program.revision"
+      ],
+      "requirement": "Equal independently recomputed canonical supplied-file bundle identity before replacement"
+    },
+    {
+      "paths": [
+        "nodes[i].extras.ontokin.program_revision",
+        "materials[i].extras.ontokin.program_revision",
+        "images[i].extras.ontokin.program_revision"
+      ],
+      "requirement": "Exact independently recomputed actual/control program revision"
+    },
+    {
+      "paths": [
+        "extras.ontokin.source.entry_revision",
+        "extras.ontokin.program.sources[i].source_revision",
+        "extras.ontokin.program.sources[i].filename"
+      ],
+      "requirement": "Exact matching authored unit identity and filename"
+    },
+    {
+      "paths": [
+        "nodes[i].extras.ontokin.source_mapping.{declaration,definition,generated.input,generated.input_entry}",
+        "extras.ontokin.program.occurrences[id].{declaration,definition,generated.input,generated.input_entry}",
+        "extras.ontokin.program.collections[i].{declaration,input}",
+        "nodes[i].extras.ontokin.{geometry,surface.source_location}",
+        "nodes[i].extras.ontokin.geometry.texture_bindings[i][1]",
+        "nodes[i].extras.ontokin.geometry.texture_bindings[i][1].mapping"
+      ],
+      "requirement": "Only location filename, source_revision and exact byte offsets may differ; each source ID and span must independently bind authored original bytes"
+    },
+    {
+      "paths": [
+        "nodes[i].extras.ontokin.source_mapping.generated.{input_zips,input_merges,input_filters,input_transforms,input_reductions}",
+        "extras.ontokin.program.occurrences[id].generated.{input_zips,input_merges,input_filters,input_transforms,input_reductions}"
+      ],
+      "requirement": "Independently validate every original record. New zip records have exactly expression,left,right,body,left_element_type,right_element_type,output_element_type,key,left_entry,right_entry. Aggregate last three fields are present and null; paired records retain correct key and both original entry spans. Verify source identities, inherited origins and exact evaluation/aggregate-before-leaf order before enumerated replacement. .17 controls have no input_zips; control inherited merges remain checked."
+    },
+    {
+      "paths": [
+        "extras.ontokin.reach_quantization.source_numeric_bound_basis.implementation_sha256",
+        "extras.ontokin.reach_quantization.destination_numeric_bound_basis.implementation_sha256"
+      ],
+      "requirement": "Independently recompute each implementation digest from the inherited declared source/destination inventory for its exact source cut; derivation identities and all remaining numeric basis fields must compare exactly"
+    }
+  ],
+  "every_actual_changed_path_recorded": true,
+  "unknown_metadata_compared_exactly": true,
+  "arbitrary_extras_removal_forbidden": true,
+  "geometry_or_material_or_motion_values_never_normalized": true,
+  "source_location_rule": "Only enumerated metadata locations may differ after original source ID/revision/UTF-8 spans are independently validated",
+  "pair_keys_and_origins_are_semantic_metadata": true,
+  "normalization_without_independent_exact_validation_forbidden": true
+}

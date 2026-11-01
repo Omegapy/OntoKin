@@ -1,0 +1,294 @@
+{
+  "schema_version": "ontokin.c085-agent-schema-derivation/0.1",
+  "baseline_commit": "21b014a4fbaab1245f7bae27e454d9307b9cc5ab",
+  "state": "pre-runtime exact-content review candidate",
+  "scope": "Inherited .17 request/response/diagnostic envelopes with .18 bindings, updated profile names, and only the adopted read-only zip provenance fields. No runtime or predecessor schema edits.",
+  "request_operations_unchanged": 12,
+  "schemas": [
+    {
+      "name": "diagnostic.schema.json",
+      "baseline_path": "docs/language-design/agent-v0.17/diagnostic.schema.json",
+      "baseline_bytes": 404,
+      "baseline_sha256": "498e8229f199442b38ebd5697931ce49f61edf5053857e4b77218c499378ad1e",
+      "candidate_path": "docs/language-design/agent-v0.18/diagnostic.schema.json",
+      "candidate_bytes": 403,
+      "candidate_sha256": "974ea7f84b1a6512931105168e0b3b8ebe0d066574072df09bc4a791b1ba629d",
+      "exact_structural_changes": [
+        {
+          "pointer": "/$id",
+          "before": "https://omegapy.github.io/OntoKin/schemas/ontokin.agent-diagnostic-0.17.json",
+          "after": "https://omegapy.github.io/OntoKin/schemas/ontokin.agent-diagnostic-0.18.json"
+        },
+        {
+          "pointer": "/title",
+          "before": "OntoKin keyed merge Agent/0.17 diagnostic",
+          "after": "OntoKin keyed pair Agent/0.18 diagnostic"
+        }
+      ]
+    },
+    {
+      "name": "request.schema.json",
+      "baseline_path": "docs/language-design/agent-v0.17/request.schema.json",
+      "baseline_bytes": 45308,
+      "baseline_sha256": "c94992d004ee40ee5ff69e37459d4c38b150f92a44dc5c44c935d01a37e8598d",
+      "candidate_path": "docs/language-design/agent-v0.18/request.schema.json",
+      "candidate_bytes": 45305,
+      "candidate_sha256": "744d142838a4d9a5a7a3fd65a2d889b5e34a995e98bff1ef31d1ecbdc22aa19e",
+      "exact_structural_changes": [
+        {
+          "pointer": "/$id",
+          "before": "https://omegapy.github.io/OntoKin/schemas/ontokin.agent-request-0.17.json",
+          "after": "https://omegapy.github.io/OntoKin/schemas/ontokin.agent-request-0.18.json"
+        },
+        {
+          "pointer": "/oneOf/0/properties/profile/const",
+          "before": "keyed-merge-0.1",
+          "after": "keyed-zip-0.1"
+        },
+        {
+          "pointer": "/oneOf/0/properties/schema_version/const",
+          "before": "ontokin.agent/0.17",
+          "after": "ontokin.agent/0.18"
+        },
+        {
+          "pointer": "/oneOf/1/properties/destination/const",
+          "before": "ontokin.glb/0.17",
+          "after": "ontokin.glb/0.18"
+        },
+        {
+          "pointer": "/oneOf/1/properties/schema_version/const",
+          "before": "ontokin.agent/0.17",
+          "after": "ontokin.agent/0.18"
+        },
+        {
+          "pointer": "/oneOf/10/properties/schema_version/const",
+          "before": "ontokin.agent/0.17",
+          "after": "ontokin.agent/0.18"
+        },
+        {
+          "pointer": "/oneOf/11/properties/schema_version/const",
+          "before": "ontokin.agent/0.17",
+          "after": "ontokin.agent/0.18"
+        },
+        {
+          "pointer": "/oneOf/2/properties/destination/const",
+          "before": "ontokin.glb/0.17",
+          "after": "ontokin.glb/0.18"
+        },
+        {
+          "pointer": "/oneOf/2/properties/schema_version/const",
+          "before": "ontokin.agent/0.17",
+          "after": "ontokin.agent/0.18"
+        },
+        {
+          "pointer": "/oneOf/3/properties/destination/const",
+          "before": "ontokin.glb/0.17",
+          "after": "ontokin.glb/0.18"
+        },
+        {
+          "pointer": "/oneOf/3/properties/schema_version/const",
+          "before": "ontokin.agent/0.17",
+          "after": "ontokin.agent/0.18"
+        },
+        {
+          "pointer": "/oneOf/4/properties/schema_version/const",
+          "before": "ontokin.agent/0.17",
+          "after": "ontokin.agent/0.18"
+        },
+        {
+          "pointer": "/oneOf/5/properties/schema_version/const",
+          "before": "ontokin.agent/0.17",
+          "after": "ontokin.agent/0.18"
+        },
+        {
+          "pointer": "/oneOf/6/properties/schema_version/const",
+          "before": "ontokin.agent/0.17",
+          "after": "ontokin.agent/0.18"
+        },
+        {
+          "pointer": "/oneOf/7/properties/schema_version/const",
+          "before": "ontokin.agent/0.17",
+          "after": "ontokin.agent/0.18"
+        },
+        {
+          "pointer": "/oneOf/8/properties/schema_version/const",
+          "before": "ontokin.agent/0.17",
+          "after": "ontokin.agent/0.18"
+        },
+        {
+          "pointer": "/oneOf/9/properties/destination/const",
+          "before": "ontokin.glb/0.17",
+          "after": "ontokin.glb/0.18"
+        },
+        {
+          "pointer": "/oneOf/9/properties/schema_version/const",
+          "before": "ontokin.agent/0.17",
+          "after": "ontokin.agent/0.18"
+        },
+        {
+          "pointer": "/title",
+          "before": "OntoKin keyed merge Agent/0.17 request",
+          "after": "OntoKin keyed pair Agent/0.18 request"
+        }
+      ]
+    },
+    {
+      "name": "response.schema.json",
+      "baseline_path": "docs/language-design/agent-v0.17/response.schema.json",
+      "baseline_bytes": 81274,
+      "baseline_sha256": "09ef4f919d89996fda3ee8cc6d5ba5314f80ce3198235ab81b6212634d28486b",
+      "candidate_path": "docs/language-design/agent-v0.18/response.schema.json",
+      "candidate_bytes": 83758,
+      "candidate_sha256": "1325157818750627eac5458130ab910bf23fadfbe3a5041972ce1c6506877ac8",
+      "exact_structural_changes": [
+        {
+          "pointer": "/$defs/derived_zip",
+          "added": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "expression",
+              "left",
+              "right",
+              "body",
+              "left_element_type",
+              "right_element_type",
+              "output_element_type",
+              "key",
+              "left_entry",
+              "right_entry"
+            ],
+            "properties": {
+              "expression": {
+                "$ref": "#/$defs/transform_source_location"
+              },
+              "left": {
+                "$ref": "#/$defs/transform_source_location"
+              },
+              "right": {
+                "$ref": "#/$defs/transform_source_location"
+              },
+              "body": {
+                "$ref": "#/$defs/transform_source_location"
+              },
+              "left_element_type": {
+                "type": "string",
+                "minLength": 1
+              },
+              "right_element_type": {
+                "type": "string",
+                "minLength": 1
+              },
+              "output_element_type": {
+                "type": "string",
+                "minLength": 1
+              },
+              "key": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/stable_key"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "left_entry": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/transform_source_location"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "right_entry": {
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/transform_source_location"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "key": {
+                      "type": "null"
+                    }
+                  },
+                  "required": [
+                    "key"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "left_entry": {
+                      "type": "null"
+                    },
+                    "right_entry": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "pointer": "/$defs/derived_zips",
+          "added": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 100000,
+            "items": {
+              "$ref": "#/$defs/derived_zip"
+            }
+          }
+        },
+        {
+          "pointer": "/$defs/mesh_page_result/properties/profile/const",
+          "before": "keyed-merge-0.1",
+          "after": "keyed-zip-0.1"
+        },
+        {
+          "pointer": "/$defs/transformed_value_projection/properties/derived_zips",
+          "added": {
+            "$ref": "#/$defs/derived_zips"
+          }
+        },
+        {
+          "pointer": "/$id",
+          "before": "https://omegapy.github.io/OntoKin/schemas/ontokin.agent-response-0.17.json",
+          "after": "https://omegapy.github.io/OntoKin/schemas/ontokin.agent-response-0.18.json"
+        },
+        {
+          "pointer": "/allOf/5/then/properties/result/properties/items/items/properties/source/properties/generated/properties/input_zips",
+          "added": {
+            "$ref": "#/$defs/derived_zips"
+          }
+        },
+        {
+          "pointer": "/description",
+          "before": "Explicit Agent/0.17 responses. Transform, reduction, filter and merge derivations are detached read-only source provenance and grant no new repair authority. Merge input_side records aggregate reads and the contributing input separately.",
+          "after": "Explicit Agent/0.18 responses. Transform, reduction, filter, merge and zip derivations are detached read-only source provenance and grant no new repair authority. Zip aggregate records have null key/entries; paired records preserve both original contributors."
+        },
+        {
+          "pointer": "/properties/schema_version/const",
+          "before": "ontokin.agent/0.17",
+          "after": "ontokin.agent/0.18"
+        },
+        {
+          "pointer": "/title",
+          "before": "OntoKin keyed merge Agent/0.17 response",
+          "after": "OntoKin keyed pair Agent/0.18 response"
+        }
+      ]
+    }
+  ]
+}

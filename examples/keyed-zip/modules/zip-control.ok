@@ -1,0 +1,5 @@
+ontokin "0.17";
+module ZipHelper @ "zip-helper";
+profile "keyed-merge-0.1";
+
+public fn combine @ "combine"(aa:Keyed<Int>,bb:Keyed<Int>)->Keyed<Int>{return keyed<Int>{"a":aa["a"]+bb["a"]};}

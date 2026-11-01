@@ -16,7 +16,7 @@ from typing import Callable, Mapping
 
 from .bundle import SourceUnit
 from .diagnostics import OntoKinError
-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES
 from .syntax import Node, Token
 
 
@@ -325,7 +325,7 @@ def _admit_entry_budget(unit: SourceUnit, ledger: SharedExecutionBudget, *, prof
         raise TypeError("Budget admission requires a SharedExecutionBudget.")
     if ledger.resolved is not None:
         raise ValueError("This execution has already admitted an entry source.")
-    versions = {BUDGET_PROFILE: "0.7", EXTRUSION_PROFILE: "0.8", HOLES_PROFILE: "0.9", RING_LOFT_PROFILE: "0.10", FRAMED_LOFT_PROFILE: "0.11", POCKETS_PROFILE: "0.12", TEXTURE_PROFILE: "0.13", KEYED_TRANSFORM_PROFILE: "0.14", KEYED_REDUCTION_PROFILE: "0.15", KEYED_FILTER_PROFILE: "0.16", KEYED_MERGE_PROFILE: "0.17"}
+    versions = {BUDGET_PROFILE: "0.7", EXTRUSION_PROFILE: "0.8", HOLES_PROFILE: "0.9", RING_LOFT_PROFILE: "0.10", FRAMED_LOFT_PROFILE: "0.11", POCKETS_PROFILE: "0.12", TEXTURE_PROFILE: "0.13", KEYED_TRANSFORM_PROFILE: "0.14", KEYED_REDUCTION_PROFILE: "0.15", KEYED_FILTER_PROFILE: "0.16", KEYED_MERGE_PROFILE: "0.17", KEYED_ZIP_PROFILE: "0.18"}
     if profile not in versions:
         budget_error("invalid_declaration", "Unsupported execution-budget source profile.")
     scanner = _HeaderScanner(unit, ledger)
