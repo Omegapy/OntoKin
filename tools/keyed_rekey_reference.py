@@ -26,6 +26,9 @@ PROFILE = "keyed-rekey-0.1"
 PROTOCOL = "ontokin.agent/0.19"
 TARGET = "ontokin.glb/0.19"
 STORE_SCHEMA = "ontokin.keyed-rekey-program-agent-store/0.1"
+AMENDMENTS = ({"id": "AMENDMENT-C086-001", "commit": "f058cd632e1ef8856d950e5a9d93f373a5ef2fac",
+    "sha256": "b87ad95c5c4499545373cbd1846d0c22e272fff8137e976490c61302f8bf488b",
+    "adoption_sha256": "dbd5b7aece83d016086c8f1ee1be37b429b03f632061e277f21832af84e59d09"},)
 DELIVERED_CASES = frozenset({"panel-task", "panel-task-repaired", "panel-task-restored", "panel-task-higher-budget"})
 AGENT_CASES = ("panel-task", "panel-task-repaired", "panel-task-restored", "panel-task-duplicate", "panel-task-invalid-width", "panel-task-higher-budget", "panel-task-ungranted-budget")
 DEFAULT_POLICY = {"max_operations": 100000, "max_elapsed_ms": 30000}
@@ -71,7 +74,43 @@ def load_fixtures(root=ROOT / "examples/keyed-rekey"):
     require(len(names) == freeze["file_count"] == 652 and size == freeze["total_bytes"],
             "Published freeze inventory is incomplete")
     expected_raw = ordinary_path(root, "expected.json").read_bytes()
-    expected = loads(expected_raw)
+    original_expected = loads(expected_raw)
+    expected = copy.deepcopy(original_expected)
+    amendment_root = "docs/language-design/keyed-rekey-amendments/"
+    identity = AMENDMENTS[0]
+    amendment_raw = ordinary_path(repository, amendment_root + identity["id"] + ".json").read_bytes()
+    adoption_raw = ordinary_path(repository, amendment_root + "ADOPTION-001.json").read_bytes()
+    require(sha(amendment_raw) == identity["sha256"] and sha(adoption_raw) == identity["adoption_sha256"],
+            "Published C086 amendment/adoption identity differs")
+    amendment, adoption = loads(amendment_raw), loads(adoption_raw)
+    require(amendment["frozen_input_commit"] == FREEZE_COMMIT and
+            amendment["frozen_manifest_sha256"] == FREEZE_SHA256 and
+            amendment["original_expected_sha256"] == sha(expected_raw) == adoption["original_expected_sha256"] and
+            adoption["amendment_sha256"] == identity["sha256"] and adoption["exact_replacements"] == 11,
+            "Point3 amendment names another original freeze")
+    replaced = set()
+    allowed_cases = {"leaf-point3-identity", "leaf-point3-renamed", "leaf-point3-empty"}
+    for change in amendment["changes"]:
+        pointer = change["json_pointer"]
+        require(pointer not in replaced and change["operation"] == "replace" and
+                change["before"] == "Point3" and change["after"] == "Point3<Length>",
+                "Unadopted canonical type replacement")
+        parts = [part.replace("~1", "/").replace("~0", "~") for part in pointer.split("/")[1:]]
+        require(parts[:1] == ["cases"] and expected["cases"][int(parts[1])]["name"] == change["case"] and
+                change["case"] in allowed_cases and (parts[2:] in (["source_rekey_records", "0", "element_type"],
+                ["source_rekey_binders", "0", "types", "1"], ["expected", "root_aggregate_rekey_record", "element_type"]) or
+                parts[2:4] == ["expected", "root_selected_rekey_records"] and parts[4:] in (["a", "element_type"], ["ns.a", "element_type"])),
+                "Amendment changes another expectation role")
+        parent = expected
+        for part in parts[:-1]:
+            parent = parent[int(part)] if isinstance(parent, list) else parent[part]
+        key = int(parts[-1]) if isinstance(parent, list) else parts[-1]
+        require(parent[key] == change["before"], "Canonical amendment original value differs")
+        parent[key] = change["after"]
+        replaced.add(pointer)
+    effective_sha = sha((json.dumps(expected, indent=2, ensure_ascii=False) + "\n").encode())
+    require(len(replaced) == 11 and effective_sha == amendment["effective_expected_sha256"] == adoption["effective_expected_sha256"],
+            "Effective C086 expectation identity differs")
     core = {case["name"]: case for case in expected["cases"]}
     require(len(core) == len(expected["cases"]) == expected["case_count"] == 177,
             "Frozen core source inventory differs")
@@ -79,10 +118,10 @@ def load_fixtures(root=ROOT / "examples/keyed-rekey"):
             "Frozen literal control count differs")
     agent_root = ordinary_path(root, "agent/workflows.json").parent
     result = {"root": root, "repository": repository, "agent_root": agent_root,
-              "freeze": freeze, "expected": expected, "core_cases": core,
+              "freeze": freeze, "expected": expected, "original_expected": original_expected, "core_cases": core,
               "agent_cases": {}, "cases": dict(core),
               "original_expected_sha256": sha(expected_raw),
-              "effective_expected_sha256": sha(expected_raw), "amendments": []}
+              "effective_expected_sha256": effective_sha, "amendments": copy.deepcopy(list(AMENDMENTS))}
     for name, filename in (("workflows", "workflows.json"), ("delivery", "delivery-comparison.json"),
                            ("budget", "budget-expectations.json"), ("geometry", "geometry-expectations.json"),
                            ("adversaries", "supplied-byte-adversaries.json")):
@@ -132,7 +171,7 @@ def load_fixtures(root=ROOT / "examples/keyed-rekey"):
 def input_lineage(fixtures):
     return {"frozen_input_commit": FREEZE_COMMIT, "frozen_manifest_sha256": FREEZE_SHA256,
             "original_expected_sha256": fixtures["original_expected_sha256"],
-            "effective_expected_sha256": fixtures["effective_expected_sha256"], "amendments": []}
+            "effective_expected_sha256": fixtures["effective_expected_sha256"], "amendments": copy.deepcopy(fixtures["amendments"])}
 
 
 def delivered_by_revision(fixtures):
@@ -203,3 +242,40 @@ from tools.keyed_zip_reference import (
     expected_occurrences, check_geometry, check_images, check_motion, implementation_basis,
     json_differences, compact_json_bytes, check_raw_framing, near,
 )
+
+from tools.keyed_rekey_source_reference import (
+    canonical_probe_type, source_units, codes, walk, check_location, same_location,
+    check_all_locations, original_keyed_entries, inspect_member, semantic_value,
+    check_keyed_membership, merge_location, exact_location, intrinsic_locations,
+    merge_source_shape, zip_source_shape, rekey_source_shape, check_transforms,
+    check_reductions, check_filters, check_merges, check_zips, check_rekeys,
+    enriched_zip_records, with_merge_side, diagnostic_anchor, check_origin_projection,
+    check_core_inspection, _location_identity, _source_tokens, _closing_delimiter,
+)
+
+
+def check_inspection(actual, control, case, fixtures):
+    if case["name"] in fixtures["agent_cases"]:
+        from tools.keyed_rekey_delivery_reference import check_agent_inspection
+        return check_agent_inspection(actual, control, case, fixtures)
+    return check_core_inspection(actual, control, case, fixtures)
+
+
+def check_artifact(raw, case, fixtures, control):
+    from tools.keyed_rekey_delivery_reference import check_artifact as read
+    return read(raw, case, fixtures, control)
+
+
+def panel_sources(case, fixtures, *, control=False):
+    from tools.keyed_rekey_delivery_reference import panel_sources as read
+    return read(case, fixtures, control=control)
+
+
+def check_program_metadata(glb, case, fixtures, *, control=False):
+    from tools.keyed_rekey_delivery_reference import check_program_metadata as read
+    return read(glb, case, fixtures, control=control)
+
+
+def check_panel_values(items, case, fixtures, units=None, *, control=False):
+    from tools.keyed_rekey_delivery_reference import check_panel_values as read
+    return read(items, case, fixtures, units, control=control)

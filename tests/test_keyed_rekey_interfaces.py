@@ -204,10 +204,13 @@ class KeyedRekeyInterfaceTests(unittest.TestCase):
         generated = item["source"]["generated"]
         current = generated["input_rekeys"][-1]
         self.assertEqual((current["old_key"], current["new_key"]), ("left", "front.left"))
-        self.assertEqual(generated["input_entry"], current["input_entry"])
-        self.assertEqual(current["input_entry"]["source_id"], "package:fixture.rekey-catalog@1.0.0")
-        catalog_source = next(unit for unit in program.units if unit.source_id == current["input_entry"]["source_id"])
         loc = current["input_entry"]
+        # The inherited generated span uses file; rekey lineage uses filename.
+        self.assertEqual(generated["input_entry_span"], {
+            "source_id": loc["source_id"], "source_revision": loc["source_revision"],
+            "file": loc["filename"], "start_byte": loc["start_byte"], "end_byte": loc["end_byte"]})
+        self.assertEqual(loc["source_id"], "package:fixture.rekey-catalog@1.0.0")
+        catalog_source = next(unit for unit in program.units if unit.source_id == loc["source_id"])
         self.assertEqual(catalog_source.raw[loc["start_byte"]:loc["end_byte"]], b'"left":"left"')
         self.assertTrue(any(row["key"] == "left" for row in generated["input_zips"]))
         self.assertFalse(any(row["key"] == "front.left" for row in generated["input_zips"]))
