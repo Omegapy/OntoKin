@@ -221,6 +221,11 @@ class IndependentRekeyReaders(unittest.TestCase):
         resolved = result_rekey_expression(case, units)
         self.assertEqual(resolved["start_byte"], 278)
         self.assertNotEqual(resolved, case["source_rekey_records"][0]["expression"])
+        for name in ("cached-empty-generated-taint", "condition-only-empty-generated-taint"):
+            non_probe = self.fixtures["core_cases"][name]
+            non_probe_units = source_units(case_payload(self.fixtures, non_probe))
+            self.assertEqual(result_rekey_expression(non_probe, non_probe_units),
+                             non_probe["source_rekey_records"][0]["expression"])
         dependency_case = self.fixtures["core_cases"]["explicit-namespace-map"]
         dependency_units = source_units(case_payload(self.fixtures, dependency_case))
         self.assertEqual(core_member_source_identity(dependency_units, "shape", "items"),
@@ -240,6 +245,44 @@ class IndependentRekeyReaders(unittest.TestCase):
             with self.subTest(wrong=wrong):
                 with self.assertRaises(ReferenceError):
                     exact_public_location(wrong, expected, units)
+
+    def test_complete_declared_png_registry_cannot_disappear_from_source_receipts(self):
+        from tools.verify_keyed_rekey import check_source_manifest
+        case = self.fixtures["core_cases"]["empty-retains-unused-image-declaration"]
+        manifest = copy.deepcopy(case["canonical_manifest"])
+        receipt = {"source_manifest": copy.deepcopy(manifest)}
+        expected = case["expected"]["expected_declared_png_ids"]
+        self.assertEqual(check_source_manifest(receipt, manifest, expected), ["label"])
+        for mutation in ("drop_asset", "change_hash", "change_unit", "invent_asset"):
+            wrong = copy.deepcopy(receipt)
+            if mutation == "drop_asset": wrong["source_manifest"]["assets"] = []
+            elif mutation == "change_hash": wrong["source_manifest"]["assets"][0]["sha256"] = "sha256:" + "0" * 64
+            elif mutation == "change_unit": wrong["source_manifest"]["units"][0]["source_revision"] = "sha256:" + "0" * 64
+            else: wrong["source_manifest"]["assets"].append(copy.deepcopy(manifest["assets"][0]))
+            with self.subTest(mutation=mutation):
+                with self.assertRaises(ReferenceError):
+                    check_source_manifest(wrong, manifest, expected)
+
+    def test_key_only_material_repair_requires_exact_old_and_new_source_ids(self):
+        from tools.verify_keyed_rekey_agent_evidence import check_renamed_material
+        old_path, new_path = 'first.panels["left"]', 'first.panels["front.left"]'
+        old_id = expected_source_projection(self.fixtures["cases"]["panel-task"], self.fixtures)["occurrences"][old_path]["element_id"]
+        new_id = expected_source_projection(self.fixtures["cases"]["panel-task-repaired"], self.fixtures)["occurrences"][new_path]["element_id"]
+        previous = {"name": old_path + ": side", "pbrMetallicRoughness": {"baseColorFactor": [.25, .5, .75, 1]},
+                    "extras": {"ontokin": {"source_region_key": "side", "occurrence_path": old_path, "element_id": old_id}}}
+        current = copy.deepcopy(previous); current["name"] = new_path + ": side"
+        current["extras"]["ontokin"].update(occurrence_path=new_path, element_id=new_id)
+        # Synthetic material-reader inputs, never claimed native destination output.
+        check_renamed_material(previous, current, old_path, new_path, old_id, new_id)
+        for mutation in ("old_id", "new_id", "color", "unknown_leaf"):
+            before, after = copy.deepcopy(previous), copy.deepcopy(current)
+            if mutation == "old_id": before["extras"]["ontokin"]["element_id"][-1] = "wrong"
+            elif mutation == "new_id": after["extras"]["ontokin"]["element_id"][-1] = "wrong"
+            elif mutation == "color": after["pbrMetallicRoughness"]["baseColorFactor"][0] += .1
+            else: after["extras"]["ontokin"]["unknown"] = "invented"
+            with self.subTest(mutation=mutation):
+                with self.assertRaises(ReferenceError):
+                    check_renamed_material(before, after, old_path, new_path, old_id, new_id)
 
     def test_empty_literal_control_has_source_derived_empty_keyset(self):
         from tools.keyed_rekey_source_reference import literal_control_keys

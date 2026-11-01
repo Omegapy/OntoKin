@@ -183,6 +183,16 @@ def check_budget(budget, case):
             "Source receipt omitted actual charged work")
 
 
+def check_source_manifest(receipt, expected_manifest, declared_png_ids=None):
+    """Bind the actual full registry even when callbacks/collections are empty."""
+    manifest = receipt.get("source_manifest")
+    require(manifest == expected_manifest, "Actual source receipt changed its complete immutable unit/asset registry")
+    png_ids = [asset["asset_id"] for asset in manifest["assets"] if asset["media_type"] == "image/png"]
+    if declared_png_ids is not None:
+        require(png_ids == declared_png_ids, "Actual declared PNG registry differs from the independent frozen expectation")
+    return png_ids
+
+
 def verify_case(case, record, control_record, fixtures, directory):
     require(record.get("input_lineage") == input_lineage(fixtures), "Source record names another input lineage")
     require(record["name"] == case["name"] and record["id"] == case["id"] and
@@ -193,6 +203,8 @@ def verify_case(case, record, control_record, fixtures, directory):
     require(record["program_revision"] == case["program_revision"] == receipt["program_revision"],
             "Actual source receipt names another immutable bundle")
     units = source_units(case_payload(fixtures, case))
+    png_ids = check_source_manifest(receipt, case["canonical_manifest"],
+                                    (case.get("expected") or {}).get("expected_declared_png_ids"))
     locations = check_all_locations(receipt, units)
     observed = codes(receipt)
     require(record["diagnostic_codes"] == observed and receipt.get("outcome") == case["expected_protocol_outcome"],
@@ -216,17 +228,20 @@ def verify_case(case, record, control_record, fixtures, directory):
             require("OKL-E-RESOURCE" not in observed, "Resource exhaustion substituted for frozen semantic refusal")
         anchor = diagnostic_anchor(receipt, case, units) if case["expected_code"] else None
         return {"case": case["name"], "status": "passed", "outcome": "refused", "expected_code": case["expected_code"],
-                "source_locations": locations, "diagnostic": anchor, "execution_trace": trace_report}
+                "source_locations": locations, "diagnostic": anchor, "execution_trace": trace_report,
+                "declared_png_ids": png_ids}
     require(control_record is not None and control_record["input_lineage"] == input_lineage(fixtures) and
             control_record["program_revision"] == case["explicit_c085_control"]["program_revision"],
             "Missing separately authored explicit .18 control")
     previous_envelope = read_json(directory, control_record["receipt"])
     previous = previous_envelope.get("result", previous_envelope)
+    check_source_manifest(previous, case["explicit_c085_control"]["canonical_manifest"],
+                          (case.get("expected") or {}).get("expected_declared_png_ids"))
     require(previous.get("outcome") == "valid" and previous["program_revision"] == control_record["program_revision"] and
             not any(code.startswith(("OKL-E-", "OKE-E-")) for code in observed + codes(previous)), "Valid source/control did not complete")
     inspection = check_inspection(read_json(directory, record["inspection"]), read_json(directory, control_record["inspection"]), case, fixtures)
     result = {"case": case["name"], "status": "passed", "outcome": "represented", "inspection": inspection,
-              "execution_trace": trace_report, "actual_operations": budget["consumed_operations"]}
+              "execution_trace": trace_report, "actual_operations": budget["consumed_operations"], "declared_png_ids": png_ids}
     if case["expected_stage"] == "delivered":
         require(record.get("delivered") and receipt.get("achieved_level") == "delivered", "Delivery did not publish its required bytes")
         raw = ordinary_path(directory, record["glb"]).read_bytes(); control = ordinary_path(directory, control_record["glb"]).read_bytes()

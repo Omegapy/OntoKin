@@ -792,6 +792,9 @@ def result_rekey_expression(case, units):
         return explicit["expression"]
     if not origins:
         return None
+    if len(origins) == 1:
+        # Generated-shape refusals and helper fixtures need not declare result.
+        return origins[0]["expression"]
     raw = units["entry"]["source"].encode()
     tokens = _source_tokens(raw)
     declarations = [i for i in range(len(tokens) - 5)
@@ -805,9 +808,6 @@ def result_rekey_expression(case, units):
                   first <= record["expression"]["start_byte"] < record["expression"]["end_byte"] <= end]
     outer = [item for item in candidates if not any(other != item and
              other["start_byte"] <= item["start_byte"] and item["end_byte"] <= other["end_byte"] for other in candidates)]
-    if not outer and len(origins) == 1:
-        # A sole helper expression is unambiguous; its exact frozen source remains checked.
-        outer = [origins[0]["expression"]]
     require(len(outer) == 1, "Trace result rekey expression cannot be resolved from authored source")
     return outer[0]
 

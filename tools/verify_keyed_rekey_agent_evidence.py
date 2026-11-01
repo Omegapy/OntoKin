@@ -196,6 +196,21 @@ def regional_materials(glb):
     return materials
 
 
+def check_renamed_material(previous, current, old_path, new_path, old_element_id, new_element_id):
+    """Permit only the source-prescribed occurrence name/path/ID substitution."""
+    old_origin, new_origin = previous["extras"]["ontokin"], current["extras"]["ontokin"]
+    require(old_origin["element_id"] == old_element_id and new_origin["element_id"] == new_element_id and
+            old_origin["occurrence_path"] == old_path and new_origin["occurrence_path"] == new_path,
+            "Renamed material occurrence identity differs from original source")
+    region = old_origin["source_region_key"]
+    require(previous["name"] == old_path + ": " + region, "Original material name lost its occurrence/region identity")
+    rebound = copy.deepcopy(previous)
+    rebound["name"] = new_path + ": " + region
+    rebound["extras"]["ontokin"]["occurrence_path"] = new_path
+    rebound["extras"]["ontokin"]["element_id"] = copy.deepcopy(new_element_id)
+    require(rebound == current, "Renamed material changed more than its prescribed occurrence identity")
+
+
 def inspect_source_pages(results, pages, payload):
     """Independently read the inherited complete-source pagination contract."""
     units, revision = source_units(payload), bundle_identity(payload)[0]
@@ -346,13 +361,12 @@ def audit_workflows(results, fixtures, summary, rows, sources, requests, artifac
             "Key repair changed another regional material identity")
     for key in set(old_materials) & set(new_materials):
         require(old_materials[key] == new_materials[key], "Key repair changed a surviving material")
+    from tools.keyed_rekey_delivery_reference import expected_source_projection
+    old_element_id = expected_source_projection(cases["panel-task"], fixtures)["occurrences"][old_path]["element_id"]
+    new_element_id = expected_source_projection(cases["panel-task-repaired"], fixtures)["occurrences"][new_path]["element_id"]
     for region in ("bottom", "side", "top"):
         previous, current = old_materials[(old_path, region)], new_materials[(new_path, region)]
-        rebound = copy.deepcopy(previous)
-        require(old_path in rebound["name"], "Original material name lost its occurrence identity")
-        rebound["name"] = rebound["name"].replace(old_path, new_path)
-        rebound["extras"]["ontokin"]["occurrence_path"] = new_path
-        require(rebound == current, "Renamed material changed more than its prescribed occurrence identity")
+        check_renamed_material(previous, current, old_path, new_path, old_element_id, new_element_id)
     for values, stage, path in ((old_materials, "before", old_path), (new_materials, "after", new_path)):
         require(values[(path, "side")]["pbrMetallicRoughness"]["baseColorFactor"] == spec["left_panel_color"][stage],
                 "Key repair changed the frozen original left-panel color")
