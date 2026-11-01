@@ -29,7 +29,7 @@ from .pockets_runtime import POCKETS_CALLS, POCKETS_TYPES, pockets_builtin
 from .texture_bundle import TextureBundle
 from .texture_runtime import (TEXTURE_CALLS, TEXTURE_TYPES, texture_builtin,
                               validate_texture_closure, texture_coordinates)
-from .profile_capabilities import (BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_FILTER_PROFILES, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, IMPULSE_PROFILES,
+from .profile_capabilities import (BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_MERGE_PROFILES, KEYED_FILTER_PROFILES, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, IMPULSE_PROFILES,
                                    SURFACE_PROFILES)
 from .validator import (BUILTIN_TYPES, FIELD_TYPES,
                         PREDEFINED, READONLY_FIELDS, BoundExpression, Callable,
@@ -257,6 +257,22 @@ class KeyedMergeOrigin:
     input_side: str
 
 
+@dataclass(frozen=True)
+class KeyedZipOrigin:
+    """An aggregate or actual paired source contribution; never edit authority."""
+
+    expression: Any
+    left: Any
+    right: Any
+    body: Any
+    left_type: Type
+    right_type: Type
+    output_type: Type
+    key: str | None = None
+    left_entry: Any = None
+    right_entry: Any = None
+
+
 def _materialize_reach_surface(recipe, *, max_vertices, work, check):
     """Reuse immutable loft construction, retaining each occurrence's limit.
 
@@ -333,6 +349,7 @@ class ConstructionCompiler(Validator):
         self._value_reductions: dict[int, tuple[Value, tuple[KeyedReductionOrigin, ...]]] = {}
         self._value_filters: dict[int, tuple[Value, tuple[KeyedFilterOrigin, ...]]] = {}
         self._value_merges: dict[int, tuple[Value, tuple[KeyedMergeOrigin, ...]]] = {}
+        self._value_zips: dict[int, tuple[Value, tuple[KeyedZipOrigin, ...]]] = {}
         self._expression_flows: list[dict] = []
         self._shape_stack: list[str] = []
         self._value_taints: dict[int, set[str]] = {}
@@ -420,8 +437,10 @@ class ConstructionCompiler(Validator):
                 result = result | {"reduce_keyed"}
             if self.linked.modules[node.source_id].ast.profile in KEYED_FILTER_PROFILES:
                 result = result | {"filter_keyed"}
-            if self.linked.modules[node.source_id].ast.profile == KEYED_MERGE_PROFILE:
+            if self.linked.modules[node.source_id].ast.profile in KEYED_MERGE_PROFILES:
                 result = result | {"merge_keyed"}
+            if self.linked.modules[node.source_id].ast.profile == KEYED_ZIP_PROFILE:
+                result = result | {"zip_keyed"}
             return result
         if self.linked.modules[node.source_id].ast.profile in REACH_PROFILES:
             from .reach_source import NAMES
@@ -547,6 +566,60 @@ class ConstructionCompiler(Validator):
         merges = self._merge_records(original)
         if merges:
             self._value_merges[id(result)] = (result, merges)
+        zips = self._zip_records(original)
+        if zips:
+            self._value_zips[id(result)] = (result, zips)
+        return result
+
+    def _zip_records(self, value: Value) -> tuple[KeyedZipOrigin, ...]:
+        retained = self._value_zips.get(id(value))
+        if retained is not None and retained[0] is value:
+            return retained[1]
+        return ()
+
+    def _combine_zip_records(self, *groups) -> tuple[KeyedZipOrigin, ...]:
+        """Deduplicate the complete detached meaning, preserving read order."""
+        records, seen = [], set()
+
+        def coordinates(node):
+            return None if node is None else (node.source_id, node.start, node.end)
+
+        for group in groups:
+            for record in group:
+                self.budget.tick(record.expression)
+                identity = (coordinates(record.expression), coordinates(record.left),
+                            coordinates(record.right), coordinates(record.body),
+                            record.left_type, record.right_type, record.output_type,
+                            record.key, coordinates(record.left_entry), coordinates(record.right_entry))
+                if identity not in seen:
+                    records.append(record)
+                    seen.add(identity)
+        return tuple(records)
+
+    def _aggregate_zip_records(self, *groups) -> tuple[KeyedZipOrigin, ...]:
+        normalized = []
+        for group in groups:
+            for record in group:
+                self.budget.tick(record.expression)
+                normalized.append(replace(record, key=None, left_entry=None, right_entry=None))
+        return self._combine_zip_records(normalized)
+
+    def zip_provenance(self, value: Value, *, aggregate: Value | None = None) -> list[dict]:
+        records = (self._zip_records(value) if aggregate is None else
+                   self._combine_zip_records(self._zip_records(aggregate), self._zip_records(value)))
+        result = []
+        for origin in records:
+            self.budget.tick(origin.expression)
+            result.append({"expression": self.location(origin.expression),
+                           "left": self.location(origin.left),
+                           "right": self.location(origin.right),
+                           "body": self.location(origin.body),
+                           "left_element_type": str(origin.left_type),
+                           "right_element_type": str(origin.right_type),
+                           "output_element_type": str(origin.output_type),
+                           "key": origin.key,
+                           "left_entry": self.location(origin.left_entry),
+                           "right_entry": self.location(origin.right_entry)})
         return result
 
     def _merge_records(self, value: Value) -> tuple[KeyedMergeOrigin, ...]:
@@ -700,6 +773,9 @@ class ConstructionCompiler(Validator):
         merges = self._merge_records(value)
         if merges:
             frame["merges"].append(merges)
+        zips = self._zip_records(value)
+        if zips:
+            frame["zips"].append(zips)
         frame["taints"].update(self._value_taints.get(id(value), ()))
 
     def _finish_value_flow(self, value: Value, node: Any, tracking: bool) -> Value:
@@ -709,7 +785,7 @@ class ConstructionCompiler(Validator):
         own = self._transform_records(value)
         # A map builds its aggregate derivation explicitly. Ordinary pure
         # expressions retain only the values their selected execution reads.
-        transforms = (own if node.kind in {"map_keyed", "reduce_keyed", "filter_keyed", "merge_keyed"} else
+        transforms = (own if node.kind in {"map_keyed", "reduce_keyed", "filter_keyed", "merge_keyed", "zip_keyed"} else
                       self._merge_transform_records(*frame["transforms"], own))
         if value.type.kind == "Keyed":
             if any(record.key is not None for record in transforms):
@@ -724,17 +800,22 @@ class ConstructionCompiler(Validator):
             transforms = tuple(record for record in transforms if record.key is not None
                                or (id(record.expression), id(record.body), id(record.input)) not in selected)
         own_reductions = self._reduction_records(value)
-        reductions = (own_reductions if node.kind in {"reduce_keyed", "filter_keyed", "merge_keyed"} else
+        reductions = (own_reductions if node.kind in {"reduce_keyed", "filter_keyed", "merge_keyed", "zip_keyed"} else
                       self._merge_reduction_records(*frame["reductions"], own_reductions))
         own_filters = self._filter_records(value)
-        filters = (own_filters if node.kind in {"filter_keyed", "merge_keyed"} else
+        filters = (own_filters if node.kind in {"filter_keyed", "merge_keyed", "zip_keyed"} else
                    self._merge_filter_records(*frame["filters"], own_filters))
         own_merges = self._merge_records(value)
-        merges = (own_merges if node.kind == "merge_keyed" else
+        merges = (own_merges if node.kind in {"merge_keyed", "zip_keyed"} else
                   self._combine_merge_records(*frame["merges"], own_merges))
+        own_zips = self._zip_records(value)
+        zips = (own_zips if node.kind == "zip_keyed" else
+                self._combine_zip_records(*frame["zips"], own_zips))
+        if value.type.kind == "Keyed" and zips:
+            zips = self._aggregate_zip_records(zips)
         taints = frame["taints"] | self._value_taints.get(id(value), set())
         if (transforms != own or reductions != own_reductions or filters != own_filters
-                or merges != own_merges
+                or merges != own_merges or zips != own_zips
                 or taints != self._value_taints.get(id(value), set())):
             value = self._inherit_value_info(value, Value(value.type, value.value, value.frame, value.hint))
             self.budget.charge_value(value, node)
@@ -746,6 +827,8 @@ class ConstructionCompiler(Validator):
                 self._value_filters[id(value)] = (value, filters)
             if merges:
                 self._value_merges[id(value)] = (value, merges)
+            if zips:
+                self._value_zips[id(value)] = (value, zips)
             if taints:
                 self._value_taints[id(value)] = set(taints)
                 self._tainted_values[id(value)] = value
@@ -772,13 +855,16 @@ class ConstructionCompiler(Validator):
             forbidden |= set(self.effective(ctx.self_type).members) | set(FIELD_TYPES) | READONLY_FIELDS
         if ctx.scene:
             forbidden |= set(self.scene_names)
-        binders = [(node.key_name, node.key_node), (node.value_name, node.value_node)]
+        binders = ([(node.key_name, node.key_node), (node.left_name, node.left_node),
+                    (node.right_name, node.right_node)] if node.kind == "zip_keyed" else
+                   [(node.key_name, node.key_node), (node.value_name, node.value_node)])
         if node.kind == "reduce_keyed":
             binders.insert(0, (node.accumulator_name, node.accumulator_node))
         for name, binder in binders:
             self.budget.tick(binder)
             if name in forbidden:
-                label = {"reduce_keyed": "Reduction", "filter_keyed": "Filter"}.get(node.kind, "Map")
+                label = {"reduce_keyed": "Reduction", "filter_keyed": "Filter",
+                         "zip_keyed": "Zip"}.get(node.kind, "Map")
                 fail("OKL-E-NAME", f"{label} binder '{name}' duplicates or shadows a visible name.",
                      binder, phase="binding")
             forbidden.add(name)
@@ -856,12 +942,12 @@ class ConstructionCompiler(Validator):
             computed = self._expect_map_output(self.expression(node.body, body_ctx), output_type, node.body)
             result = self._inherit_value_info(computed, Value(computed.type, computed.value, computed.frame, computed.hint))
             self.budget.charge_value(result, node.body)
-            source_records = (input_transforms if self.model.profile == KEYED_MERGE_PROFILE else
+            source_records = (input_transforms if self.model.profile in KEYED_MERGE_PROFILES else
                               tuple(replace(record, key=key, input_entry=origins.get(key))
                                     if record.key is None else record for record in input_transforms))
             body_records = self._transform_records(computed)
             merge_transforms = (self._selected_transform_records
-                                if self.model.profile == KEYED_MERGE_PROFILE else self._merge_transform_records)
+                                if self.model.profile in KEYED_MERGE_PROFILES else self._merge_transform_records)
             records = merge_transforms(source_records, self._transform_records(leaf),
                         body_records, (replace(current, key=key, input_entry=origins.get(key)),))
             self._value_transforms[id(result)] = (result, records)
@@ -877,6 +963,10 @@ class ConstructionCompiler(Validator):
                 self._merge_records(leaf), self._merge_records(computed))
             if merges:
                 self._value_merges[id(result)] = (result, merges)
+            zips = self._combine_zip_records(self._zip_records(source),
+                self._zip_records(leaf), self._zip_records(computed))
+            if zips:
+                self._value_zips[id(result)] = (result, zips)
             leaf_taints = taints | self._value_taints.get(id(leaf), set()) | self._value_taints.get(id(computed), set())
             if leaf_taints:
                 self._value_taints[id(result)] = set(leaf_taints)
@@ -939,6 +1029,7 @@ class ConstructionCompiler(Validator):
         transforms = [self._transform_records(source), self._transform_records(seed)]
         reductions = [self._reduction_records(source), self._reduction_records(seed)]
         filters = [self._filter_records(source), self._filter_records(seed)]
+        zips = [self._zip_records(source), self._zip_records(seed)]
         taints = set(self._value_taints.get(id(source), ())) | set(self._value_taints.get(id(seed), ()))
         locals_ = {}
         for name, value in ctx.locals.items():
@@ -973,6 +1064,7 @@ class ConstructionCompiler(Validator):
             transforms.extend((self._transform_records(leaf), self._transform_records(computed)))
             reductions.extend((self._reduction_records(leaf), self._reduction_records(computed)))
             filters.extend((self._filter_records(leaf), self._filter_records(computed)))
+            zips.extend((self._zip_records(leaf), self._zip_records(computed)))
             taints.update(self._value_taints.get(id(leaf), ()))
             taints.update(self._value_taints.get(id(computed), ()))
             # Earlier reads remain part of the aggregate even when this body
@@ -986,6 +1078,9 @@ class ConstructionCompiler(Validator):
             retained_filters = self._merge_filter_records(*filters)
             if retained_filters:
                 self._value_filters[id(accumulator)] = (accumulator, retained_filters)
+            retained_zips = self._combine_zip_records(*zips)
+            if retained_zips:
+                self._value_zips[id(accumulator)] = (accumulator, retained_zips)
             if taints:
                 self._value_taints[id(accumulator)] = set(taints)
                 self._tainted_values[id(accumulator)] = accumulator
@@ -999,6 +1094,9 @@ class ConstructionCompiler(Validator):
         retained_filters = self._merge_filter_records(*filters)
         if retained_filters:
             self._value_filters[id(result)] = (result, retained_filters)
+        retained_zips = self._combine_zip_records(*zips)
+        if retained_zips:
+            self._value_zips[id(result)] = (result, retained_zips)
         if taints:
             self._value_taints[id(result)] = set(taints)
             self._tainted_values[id(result)] = result
@@ -1090,11 +1188,11 @@ class ConstructionCompiler(Validator):
             if not predicate.value:
                 continue
             result = copied(leaf, node.predicate)
-            source_records = (input_transforms if self.model.profile == KEYED_MERGE_PROFILE else
+            source_records = (input_transforms if self.model.profile in KEYED_MERGE_PROFILES else
                               tuple(replace(record, key=key, input_entry=origins.get(key))
                                     if record.key is None else record for record in input_transforms))
             merge_transforms = (self._selected_transform_records
-                                if self.model.profile == KEYED_MERGE_PROFILE else self._merge_transform_records)
+                                if self.model.profile in KEYED_MERGE_PROFILES else self._merge_transform_records)
             leaf_transforms = merge_transforms(source_records,
                 self._transform_records(leaf), self._transform_records(predicate))
             leaf_reductions = self._merge_reduction_records(input_reductions,
@@ -1110,6 +1208,10 @@ class ConstructionCompiler(Validator):
                 self._merge_records(leaf), self._merge_records(predicate))
             if leaf_merges:
                 self._value_merges[id(result)] = (result, leaf_merges)
+            leaf_zips = self._combine_zip_records(self._zip_records(source),
+                self._zip_records(leaf), self._zip_records(predicate))
+            if leaf_zips:
+                self._value_zips[id(result)] = (result, leaf_zips)
             if taints:
                 self._value_taints[id(result)] = set(taints)
                 self._tainted_values[id(result)] = result
@@ -1186,7 +1288,7 @@ class ConstructionCompiler(Validator):
         return source
 
     def _merge_keyed_expression(self, node: Any, ctx: Context) -> Value:
-        if self.linked.modules[node.source_id].ast.profile != KEYED_MERGE_PROFILE:
+        if self.linked.modules[node.source_id].ast.profile not in KEYED_MERGE_PROFILES:
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "merge_keyed requires keyed-merge-0.1.",
                  node, phase="support")
         element_type = self.parse_type(node.element_type)
@@ -1274,6 +1376,198 @@ class ConstructionCompiler(Validator):
         if retained_filters:
             self._value_filters[id(result)] = (result, retained_filters)
         self._value_merges[id(result)] = (result, merged_origins)
+        if taints:
+            self._value_taints[id(result)] = set(taints)
+            self._tainted_values[id(result)] = result
+            for path in taints:
+                self._mark_generated(path, node)
+        return result
+
+    def _keyed_zip_checkpoint(self, node: Any, stage: str, key: str) -> None:
+        """Poll the real shared ledger without altering a callback exception."""
+        ledger = getattr(self.budget, "execution_budget", None)
+        previous_stage = ledger.stage if ledger is not None else None
+        try:
+            if ledger is not None:
+                ledger.stage = stage
+            self.budget.tick(node)
+        finally:
+            if ledger is not None:
+                ledger.stage = previous_stage
+
+    def _keyed_zip_input(self, operand: Any, token: Any, ctx: Context,
+                         element_type: Type) -> Value:
+        """Complete one operand's admission before evaluating the other."""
+        source = self.expression(operand, ctx)
+        required = Type("Keyed", element=element_type)
+        if source.type != required:
+            fail("OKL-E-TYPE", f"zip_keyed requires exactly {required}, received {source.type}.",
+                 token, phase="type", details={"expected": str(required), "actual": str(source.type)})
+        self._keyed_leaf(source.type.element, operand)
+        if ctx.abstract:
+            return source
+        if not source.known or not isinstance(source.value, KeyedValue):
+            fail("OKL-E-TYPE", "zip_keyed input must resolve to an immutable keyed value.",
+                 token, phase="type")
+        count = len(source.value.entries)
+        if count > MAX_KEYED_ENTRIES:
+            fail("OKL-E-RESOURCE", "Zip input exceeds 256 entries.", operand, phase="support",
+                 details={"budget": "keyed_entries", "limit": MAX_KEYED_ENTRIES, "consumed": count})
+        self.budget.charge_value(source, operand)
+        previous = None
+        for key, leaf in source.value.entries:
+            self.budget.tick(operand)
+            self.key(operand, key)
+            if previous is not None and key <= previous:
+                fail("OKL-E-ID", "Zip input keys must be unique canonical stable keys.",
+                     operand, phase="binding")
+            if leaf.type != element_type:
+                fail("OKL-E-TYPE", "Zip input entry has a different resolved leaf type.", token,
+                     phase="type", details={"expected": str(required),
+                                            "actual": str(Type("Keyed", element=leaf.type))})
+            previous = key
+        return source
+
+    def _zip_keyed_expression(self, node: Any, ctx: Context) -> Value:
+        if self.linked.modules[node.source_id].ast.profile != KEYED_ZIP_PROFILE:
+            fail("OKL-E-CAPABILITY-UNSUPPORTED", "zip_keyed requires keyed-zip-0.1.",
+                 node, phase="support")
+        types = []
+        for declaration in (node.left_type, node.right_type, node.output_type):
+            typ = self.parse_type(declaration)
+            self._keyed_leaf(typ, declaration)
+            types.append(typ)
+        left_type, right_type, output_type = types
+        self._map_binders(node, ctx)
+        left = self._keyed_zip_input(node.left, node.left_token, ctx, left_type)
+        right = self._keyed_zip_input(node.right, node.right_token, ctx, right_type)
+
+        def exact_output(value):
+            if value.type != output_type:
+                fail("OKL-E-TYPE", f"Zip body requires exactly {output_type}, received {value.type}.",
+                     node.body_token, phase="type",
+                     details={"expected": str(output_type), "actual": str(value.type)})
+            return value
+
+        abstract = self._unknown_local_context(ctx, node.body)
+        abstract.locals[node.key_name] = Value(STRING)
+        abstract.locals[node.left_name] = Value(left_type)
+        abstract.locals[node.right_name] = Value(right_type)
+        exact_output(self.expression(node.body, abstract))
+        result_type = Type("Keyed", element=output_type)
+        if ctx.abstract:
+            return Value(result_type)
+
+        # Bounded indexes and sorting are charged before their allocation.
+        # A complete key-set check precedes every callback and output copy.
+        input_count = len(left.value.entries) + len(right.value.entries)
+        self.budget.tick(node, max(1, input_count) * max(1, input_count.bit_length()))
+        left_keys = {key for key, _ in left.value.entries}
+        right_by_key = dict(right.value.entries)
+        all_keys = sorted(left_keys | right_by_key.keys())
+        for key in all_keys:
+            self._keyed_zip_checkpoint(node, "keyed_zip_keyset", key)
+            self.budget.tick(node, 2)
+            has_left, has_right = key in left_keys, key in right_by_key
+            if has_left != has_right:
+                missing_side = "right" if has_left else "left"
+                primary = node.right_token if has_left else node.left_token
+                related = node.left_token if has_left else node.right_token
+                raise OntoKinError("OKL-E-ID", "zip_keyed key " + json.dumps(key) +
+                                   " is missing from the " + missing_side + " input.",
+                                   primary, category="invalid", phase="elaboration",
+                                   rule_ids=["LANG-007"], related=[related],
+                                   details={"operation": "zip_keyed", "key": key,
+                                            "missing_side": missing_side})
+
+        transforms = [self._transform_records(left), self._transform_records(right)]
+        reductions = [self._reduction_records(left), self._reduction_records(right)]
+        filters = [self._filter_records(left), self._filter_records(right)]
+        merges = [self._merge_records(left), self._merge_records(right)]
+        zips = [self._zip_records(left), self._zip_records(right)]
+        taints = set(self._value_taints.get(id(left), ())) | set(self._value_taints.get(id(right), ()))
+        for source in (left, right):
+            for _, leaf in source.value.entries:
+                self.budget.tick(node)
+                transforms.append(self._transform_records(leaf))
+                reductions.append(self._reduction_records(leaf))
+                filters.append(self._filter_records(leaf))
+                merges.append(self._merge_records(leaf))
+                zips.append(self._zip_records(leaf))
+                taints.update(self._value_taints.get(id(leaf), ()))
+        current = KeyedZipOrigin(node, node.left, node.right, node.body,
+                                 left_type, right_type, output_type)
+        left_origins = self._keyed_origins.get(id(left.value), {})
+        right_origins = self._keyed_origins.get(id(right.value), {})
+        locals_ = {}
+        for name, value in ctx.locals.items():
+            self.budget.tick(node)
+            locals_[name] = value
+        body_ctx = replace(ctx, locals=locals_)
+        entries = []
+
+        def copied(value, origin):
+            result = self._inherit_value_info(value, Value(value.type, value.value, value.frame, value.hint))
+            self.budget.charge_value(result, origin)
+            return result
+
+        for key, left_leaf in left.value.entries:
+            self._keyed_zip_checkpoint(node, "keyed_zip_iteration", key)
+            self.budget.tick(node)
+            right_leaf = right_by_key[key]
+            bound_key = Value(STRING, key)
+            self.budget.charge_value(bound_key, node.key_node)
+            locals_[node.key_name] = bound_key
+            locals_[node.left_name] = copied(left_leaf, node.left_node)
+            locals_[node.right_name] = copied(right_leaf, node.right_node)
+            computed = exact_output(self.expression(node.body, body_ctx))
+            if not computed.known:
+                fail("OKL-E-TYPE", "zip_keyed body must resolve to an immutable leaf value.",
+                     node.body_token, phase="type")
+            result = copied(computed, node.body)
+            pair = replace(current, key=key, left_entry=left_origins.get(key), right_entry=right_origins.get(key))
+            self._value_zips[id(result)] = (result, self._combine_zip_records(
+                self._zip_records(left_leaf), self._zip_records(right_leaf), self._zip_records(computed), (pair,)))
+            selected_transforms = self._selected_transform_records(
+                self._transform_records(left), self._transform_records(right),
+                self._transform_records(left_leaf), self._transform_records(right_leaf),
+                self._transform_records(computed))
+            if selected_transforms:
+                self._value_transforms[id(result)] = (result, selected_transforms)
+            for field, reader, combine in (
+                    (self._value_reductions, self._reduction_records, self._merge_reduction_records),
+                    (self._value_filters, self._filter_records, self._merge_filter_records),
+                    (self._value_merges, self._merge_records, self._combine_merge_records)):
+                records = combine(reader(left), reader(right), reader(left_leaf), reader(right_leaf), reader(computed))
+                if records:
+                    field[id(result)] = (result, records)
+            leaf_taints = taints | self._value_taints.get(id(computed), set())
+            if leaf_taints:
+                self._value_taints[id(result)] = set(leaf_taints)
+                self._tainted_values[id(result)] = result
+                taints.update(leaf_taints)
+            transforms.append(self._transform_records(computed))
+            reductions.append(self._reduction_records(computed))
+            filters.append(self._filter_records(computed))
+            merges.append(self._merge_records(computed))
+            zips.append(self._zip_records(computed))
+            entries.append((key, result))
+
+        self.budget.tick(node)
+        payload = KeyedValue(tuple(entries))
+        result = Value(result_type, payload)
+        self.budget.charge_value(result, node)
+        self._keyed_payloads[id(payload)] = payload
+        self._keyed_origins[id(payload)] = dict(left_origins)
+        for field, combine, groups in (
+                (self._value_transforms, self._merge_transform_records, transforms),
+                (self._value_reductions, self._merge_reduction_records, reductions),
+                (self._value_filters, self._merge_filter_records, filters),
+                (self._value_merges, self._combine_merge_records, merges)):
+            records = combine(*groups)
+            if records:
+                field[id(result)] = (result, records)
+        self._value_zips[id(result)] = (result, self._aggregate_zip_records(*zips, (current,)))
         if taints:
             self._value_taints[id(result)] = set(taints)
             self._tainted_values[id(result)] = result
@@ -1704,7 +1998,7 @@ class ConstructionCompiler(Validator):
                  details={"missing_key": index.value})
         transforms = self._transform_records(result)
         if not transforms:
-            if self.model.profile == KEYED_MERGE_PROFILE:
+            if self.model.profile in KEYED_MERGE_PROFILES:
                 # Aggregate origins may come only from a condition or the
                 # other merge operand. The selected leaf alone establishes
                 # which map actually supplied this key.
@@ -2008,7 +2302,7 @@ class ConstructionCompiler(Validator):
         tracking = self.model.profile in KEYED_TRANSFORM_PROFILES and not ctx.abstract
         if tracking:
             self._expression_flows.append({"transforms": [], "reductions": [], "filters": [],
-                                           "merges": [], "taints": set()})
+                                           "merges": [], "zips": [], "taints": set()})
         self._expression_depth += 1
         try:
             if self._expression_depth > 128:
@@ -2056,6 +2350,7 @@ class ConstructionCompiler(Validator):
                                 and not (tracking and (self._expression_flows[-1]["transforms"]
                                                        or self._expression_flows[-1]["filters"]
                                                        or self._expression_flows[-1]["merges"]
+                                                       or self._expression_flows[-1]["zips"]
                                                        or self._expression_flows[-1]["reductions"]
                                                        or self._expression_flows[-1]["taints"]))
                                 and self._parameter_context(ctx, reads, names, node) == parameter_context):
@@ -2069,7 +2364,9 @@ class ConstructionCompiler(Validator):
                         capture = [{id(read) for _, read in reads}, reads, []]
                         self._parameter_capture = capture
             try:
-                if node.kind == "merge_keyed":
+                if node.kind == "zip_keyed":
+                    result = self._zip_keyed_expression(node, ctx)
+                elif node.kind == "merge_keyed":
                     result = self._merge_keyed_expression(node, ctx)
                 elif node.kind == "filter_keyed":
                     result = self._filter_keyed_expression(node, ctx)
@@ -2100,6 +2397,7 @@ class ConstructionCompiler(Validator):
                     and not (tracking and (self._expression_flows[-1]["transforms"]
                                            or self._expression_flows[-1]["filters"]
                                            or self._expression_flows[-1]["merges"]
+                                                       or self._expression_flows[-1]["zips"]
                                                        or self._expression_flows[-1]["reductions"]
                                                        or self._expression_flows[-1]["taints"]))
                     and self._parameter_context(ctx, reads, names, node) == parameter_context):
@@ -2355,7 +2653,7 @@ class ConstructionCompiler(Validator):
                 "collection_definition_id": collection["definition_id"], "key": key,
                 "input_node": node.input, "input_entry_node": origins.get(key),
             }
-            if self.model.profile == KEYED_MERGE_PROFILE:
+            if self.model.profile in KEYED_MERGE_PROFILES:
                 transforms = self._selected_transform_records(self._transform_records(value),
                                                                self._transform_records(leaf))
                 if transforms:
@@ -2399,6 +2697,15 @@ class ConstructionCompiler(Validator):
                 self._value_merges[id(derived_leaf)] = (derived_leaf, merges)
                 locals_[node.value_name] = derived_leaf
                 generated["input_merges"] = self.merge_provenance(derived_leaf)
+            zips = self._combine_zip_records(self._zip_records(value), self._zip_records(leaf))
+            if zips:
+                selected_leaf = locals_[node.value_name]
+                derived_leaf = self._inherit_value_info(selected_leaf, Value(
+                    selected_leaf.type, selected_leaf.value, selected_leaf.frame, selected_leaf.hint))
+                self.budget.charge_value(derived_leaf, node.input)
+                self._value_zips[id(derived_leaf)] = (derived_leaf, zips)
+                locals_[node.value_name] = derived_leaf
+                generated["input_zips"] = self.zip_provenance(derived_leaf)
             self._register_tree(node, child_path, owner, collection["entry_ids"][key], child_context,
                                 forwarded, steps=collection["path_steps"] + (PathStep("key", key, node.start, node.end),),
                                 depth=collection["ownership_depth"] + 1, generated=generated,
@@ -2699,6 +3006,8 @@ class ConstructionCompiler(Validator):
                        if "input_filters" in generated else {}),
                     **({"input_merges": generated["input_merges"]}
                        if "input_merges" in generated else {}),
+                    **({"input_zips": generated["input_zips"]}
+                       if "input_zips" in generated else {}),
                 },
                 "generated_ancestor": record["generated_ancestor"],
             }
@@ -2771,7 +3080,7 @@ class ConstructionCompiler(Validator):
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "Required capabilities are not supplied by " + self.model.profile + ": " +
                  ", ".join(self.model.requested_capabilities), requires[0], phase="support")
         if self.level == "delivered":
-            target = ("ontokin.glb/0.17" if self.model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if self.model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if self.model.profile == KEYED_REDUCTION_PROFILE else
+            target = ("ontokin.glb/0.18" if self.model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if self.model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if self.model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if self.model.profile == KEYED_REDUCTION_PROFILE else
                        "ontokin.glb/0.14" if self.model.profile == KEYED_TRANSFORM_PROFILE else
                       "ontokin.glb/0.13" if self.model.profile == TEXTURE_PROFILE else
                       "ontokin.glb/0.12" if self.model.profile == POCKETS_PROFILE else

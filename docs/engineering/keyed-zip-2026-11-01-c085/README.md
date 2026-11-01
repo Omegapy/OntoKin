@@ -1,0 +1,17 @@
+# C085: bounded pure keyed pair transformation
+
+The selected experimental increment adds exact-key pairing of two finite immutable keyed values. Source `0.18` / `keyed-zip-0.1`, Agent/0.18 and recorded GLB/0.18 are explicit choices; bundle/files remain `0.2`. Earlier defaults, ordinary 100,000-operation / 30,000-ms authority, caller reductions, and all retained release gates remain unchanged.
+
+## Contract and source lineage
+
+The [adoption](../../language-design/keyed-zip-v0.1/ADOPTION.md) and [independent input freeze](../../language-design/keyed-zip-v0.1/INPUT-FREEZE.json) were published at `92b1ee60a2b9439878b7124981d2896be858937f` before runtime work. The manifest SHA-256 is `4914fd1696bc0c441736684289a4c4422c9db30ba99091dfbbbf8d1eb1c8a2a9`: 856 immutable files, 254 source cases (160 valid and 94 intended refusals), 160 independently authored explicit .17 controls, ten Agent workflow groups, and 72 supplied-byte mutations. All 160 controls passed on unchanged C084 before implementation.
+
+Two separately reviewed amendments retain every original frozen byte. [Amendment 001](../../language-design/keyed-zip-v0.1/AMENDMENT-C085-001.md), adopted at `b03ca75f3138ea9a94e4734eaf2c44b6c327d52c`, narrowly binds primary generated-entry source-ID differences between the zip example and its explicit control. [Amendment 002](../../language-design/keyed-zip-v0.1/AMENDMENT-C085-002.md), adopted at `c4c756b430c6d2137986b1b780db6810300cbf71`, corrects five grouped operation spans using unchanged inherited parsing rules and original UTF-8 bytes. It applies 22 exact detached-copy replacements; effective expected SHA-256 is `d418ae53105698201b79c1ef4d75de64b53c9ed7a76c722a2a84ac384cbc365a`. Original failures, authoring defects and source cuts remain retained.
+
+## Implementation checkpoint
+
+The parser and compiler enforce explicit three-type, three-binder pure pairing. Static checking precedes dynamic work, complete left/right admissions precede key-set agreement, and the body visits agreed keys once in canonical order. Shared ledger checkpoints cover key-set and paired iteration work; callback exceptions preserve identity. Detached aggregate and contributor-specific provenance retain both operands, body reads, dependencies, and taints. Agent inspection, durable schema, current host authority, source pages, and GLB metadata are separately bound to .18.
+
+The first combined source observation completed all 254 outcomes. Twenty focused core, interface and independent-reader tests passed. A subsequent dedicated surface-page test verified inherited texture bindings, exact affine UVs, and UV-bearing mesh fingerprints; all six interface tests passed. These are exploratory observations on retained source cuts. Complete source/Agent/native/adversary readers, the .17 predecessor checks, inherited full validation, independent final review, integration, and delivery are pending at this checkpoint. Their actual results must be recorded separately before completion is claimed.
+
+Complete experimental feature release and full-product acceptance remain false. [C084 retained gates](../keyed-merge-2026-11-01-c084/RETAINED-GATES.md), both shallow history boundaries, all original failures, unavailable original C080 artifacts, and every domain of [GOAL](../../../GOAL.md) remain binding. Hosted workflows remain manual-only with default-false opt-in; this checkpoint dispatches no hosted work.

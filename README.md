@@ -10,6 +10,24 @@ The current direction begins with exterior 3D models and short animations. Those
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
 
+### Pair named attributes with exact key agreement
+
+Explicit source `0.18` / `keyed-zip-0.1` combines corresponding entries from two immutable keyed values:
+
+```ontokin
+zip_keyed<Length, Length, Area>(widths, heights,
+    (key, width, height) -> width * height)
+```
+
+Both inputs must have exactly the same complete key set. The operation admits the left input once, then the right, refuses the first missing partner in canonical ASCII order, and runs the pure body once per matched key. Input and result types are exact; at most 256 entries are allowed. Inspection retains both original contributors, aggregate dependencies, and detached paired provenance through later construction.
+
+```bash
+python3 -m ontokin export examples/keyed-zip/panel-task.files.json --bundle --target ontokin.glb/0.18 --output /tmp/ontokin-paired-panels.glb
+python3 -m ontokin agent --protocol ontokin.agent/0.18 --store /tmp/ontokin-keyed-zip-agent
+```
+
+The [versioned decision](docs/language-design/keyed-zip-v0.1/ADOPTION.md), [independent frozen examples](examples/keyed-zip/README.md), [Agent/0.18 guide](docs/language-design/agent-v0.18/README.md), and [C085 engineering record](docs/engineering/keyed-zip-2026-11-01-c085/README.md) distinguish the contract, actual execution, and integration. Separate keyed dimension and material libraries support an atomic repair of one textured occurrence while preserving its sibling and unrelated motion. Ordinary budgets and earlier defaults remain unchanged. This selected experimental capability adds no physical or motion authority; complete feature release and full-product acceptance remain open.
+
 ### Combine named part groups with explicit collision refusal
 
 Explicit source `0.17` / `keyed-merge-0.1` combines two immutable keyed values with the same exact element type:
