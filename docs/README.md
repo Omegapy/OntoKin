@@ -1,6 +1,6 @@
 # OntoKin documentation guide
 
-C086’s [selected keyed-renaming decision](language-design/keyed-rekey-v0.1/README.md) and [independently reviewed input preparation](engineering/keyed-rekey-2026-11-01-c086-inputs/README.md) define the next experimental source/Agent/GLB .19 increment. Exact adoption publication precedes runtime work; baseline control passes are separate from candidate validation and release acceptance.
+C086’s [selected keyed-renaming decision](language-design/keyed-rekey-v0.1/README.md) and [independently reviewed input preparation](engineering/keyed-rekey-2026-11-01-c086-inputs/README.md) define the next experimental source/Agent/GLB .19 increment. Exact adoption publication precedes runtime work; baseline control passes are separate from candidate validation and release acceptance. The [separate canonical-type correction](language-design/keyed-rekey-amendments/README.md) preserves the original frozen bytes.
 
 C085's selected experimental [keyed-pair contract](language-design/keyed-zip-v0.1/README.md) adds exact complete key-set pairing through explicit source/Agent/GLB .18. The [engineering record](engineering/keyed-zip-2026-11-01-c085/README.md) keeps independent input publication, retained corrections, actual implementation checks, integration, and complete release acceptance separate.
 
