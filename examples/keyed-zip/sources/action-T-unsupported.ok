@@ -1,0 +1,18 @@
+ontokin "0.18";
+module Probe @ "probe";
+profile "keyed-zip-0.1";
+
+
+public class ProbeShape @ "probe-shape" {
+    
+    public derive result @ "result": Keyed<Int> = zip_keyed<Action, Int, Int>(keyed<Action>{}, keyed<Int>{}, (key, lv, rv) -> 1);
+    public derive forced @ "forced": Int = len(self.result);
+    
+    geometry = if self.forced >= 0 then box(vec3(1[m], 1[m], 1[m])) else empty();
+    physical = no_body();
+}
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object shape @ "shape": ProbeShape {}
+}

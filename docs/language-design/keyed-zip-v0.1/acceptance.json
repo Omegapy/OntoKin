@@ -1,0 +1,2642 @@
+{
+  "schema_version": "ontokin.c085-acceptance/0.1",
+  "status": "prepared_for_independent_review_before_runtime",
+  "cases": [
+    {
+      "id": "Z001",
+      "name": "both-empty",
+      "groups": [
+        "empty",
+        "unknown-payload-static",
+        "heterogeneous-types"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z002",
+      "name": "singleton-add",
+      "groups": [
+        "singleton",
+        "arithmetic"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z003",
+      "name": "heterogeneous-units",
+      "groups": [
+        "units",
+        "heterogeneous-types",
+        "correspondence"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z004",
+      "name": "mixed-pairs",
+      "groups": [
+        "canonical-order",
+        "authored-reordering",
+        "key-not-position"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z005",
+      "name": "authored-entry-reordering",
+      "groups": [
+        "canonical-order",
+        "authored-reordering",
+        "key-not-position"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z006",
+      "name": "ascii-boundary-keys",
+      "groups": [
+        "ascii-order",
+        "case-sensitive",
+        "punctuation",
+        "key-binder"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z007",
+      "name": "maximum-key-length",
+      "groups": [
+        "64-byte-key"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z008",
+      "name": "maximum-256",
+      "groups": [
+        "maximum",
+        "both-inputs",
+        "bounded-work"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z009",
+      "name": "equivalent-quantity-alias",
+      "groups": [
+        "resolved-alias",
+        "exact-type"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z010",
+      "name": "leaf-bool-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-bool"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z011",
+      "name": "leaf-bool-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-bool"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z012",
+      "name": "leaf-bool-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-bool"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z013",
+      "name": "leaf-bool-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-bool"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z014",
+      "name": "leaf-color-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-color"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z015",
+      "name": "leaf-color-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-color"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z016",
+      "name": "leaf-color-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-color"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z017",
+      "name": "leaf-color-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-color"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z018",
+      "name": "leaf-frame-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-frame"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z019",
+      "name": "leaf-frame-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-frame"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z020",
+      "name": "leaf-frame-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-frame"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z021",
+      "name": "leaf-frame-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-frame"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z022",
+      "name": "leaf-framed-section-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-framed-section"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z023",
+      "name": "leaf-framed-section-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-framed-section"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z024",
+      "name": "leaf-framed-section-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-framed-section"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z025",
+      "name": "leaf-framed-section-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-framed-section"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z026",
+      "name": "leaf-int-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-int"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z027",
+      "name": "leaf-int-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-int"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z028",
+      "name": "leaf-int-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-int"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z029",
+      "name": "leaf-int-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-int"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z030",
+      "name": "leaf-loft-section-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-loft-section"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z031",
+      "name": "leaf-loft-section-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-loft-section"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z032",
+      "name": "leaf-loft-section-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-loft-section"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z033",
+      "name": "leaf-loft-section-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-loft-section"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z034",
+      "name": "leaf-material-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-material"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z035",
+      "name": "leaf-material-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-material"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z036",
+      "name": "leaf-material-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-material"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z037",
+      "name": "leaf-material-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-material"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z038",
+      "name": "leaf-planar-point-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-planar-point"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z039",
+      "name": "leaf-planar-point-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-planar-point"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z040",
+      "name": "leaf-planar-point-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-planar-point"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z041",
+      "name": "leaf-planar-point-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-planar-point"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z042",
+      "name": "leaf-planar-uv-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-planar-uv"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z043",
+      "name": "leaf-planar-uv-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-planar-uv"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z044",
+      "name": "leaf-planar-uv-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-planar-uv"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z045",
+      "name": "leaf-planar-uv-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-planar-uv"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z046",
+      "name": "leaf-point3-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-point3"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z047",
+      "name": "leaf-point3-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-point3"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z048",
+      "name": "leaf-point3-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-point3"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z049",
+      "name": "leaf-point3-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-point3"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z050",
+      "name": "leaf-polygon-pocket-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-polygon-pocket"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z051",
+      "name": "leaf-polygon-pocket-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-polygon-pocket"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z052",
+      "name": "leaf-polygon-pocket-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-polygon-pocket"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z053",
+      "name": "leaf-polygon-pocket-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-polygon-pocket"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z054",
+      "name": "leaf-polygon-ring-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-polygon-ring"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z055",
+      "name": "leaf-polygon-ring-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-polygon-ring"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z056",
+      "name": "leaf-polygon-ring-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-polygon-ring"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z057",
+      "name": "leaf-polygon-ring-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-polygon-ring"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z058",
+      "name": "leaf-polygon-section-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-polygon-section"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z059",
+      "name": "leaf-polygon-section-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-polygon-section"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z060",
+      "name": "leaf-polygon-section-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-polygon-section"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z061",
+      "name": "leaf-polygon-section-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-polygon-section"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z062",
+      "name": "leaf-polygon-vertex-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-polygon-vertex"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z063",
+      "name": "leaf-polygon-vertex-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-polygon-vertex"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z064",
+      "name": "leaf-polygon-vertex-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-polygon-vertex"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z065",
+      "name": "leaf-polygon-vertex-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-polygon-vertex"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z066",
+      "name": "leaf-pose-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-pose"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z067",
+      "name": "leaf-pose-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-pose"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z068",
+      "name": "leaf-pose-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-pose"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z069",
+      "name": "leaf-pose-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-pose"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z070",
+      "name": "leaf-quantity-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-quantity"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z071",
+      "name": "leaf-quantity-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-quantity"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z072",
+      "name": "leaf-quantity-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-quantity"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z073",
+      "name": "leaf-quantity-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-quantity"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z074",
+      "name": "leaf-range-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-range"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z075",
+      "name": "leaf-range-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-range"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z076",
+      "name": "leaf-range-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-range"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z077",
+      "name": "leaf-range-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-range"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z078",
+      "name": "leaf-real-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-real"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z079",
+      "name": "leaf-real-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-real"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z080",
+      "name": "leaf-real-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-real"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z081",
+      "name": "leaf-real-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-real"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z082",
+      "name": "leaf-rotation-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-rotation"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z083",
+      "name": "leaf-rotation-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-rotation"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z084",
+      "name": "leaf-rotation-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-rotation"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z085",
+      "name": "leaf-rotation-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-rotation"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z086",
+      "name": "leaf-string-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-string"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z087",
+      "name": "leaf-string-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-string"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z088",
+      "name": "leaf-string-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-string"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z089",
+      "name": "leaf-string-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-string"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z090",
+      "name": "leaf-texture-binding-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-texture-binding"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z091",
+      "name": "leaf-texture-binding-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-texture-binding"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z092",
+      "name": "leaf-texture-binding-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-texture-binding"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z093",
+      "name": "leaf-texture-binding-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-texture-binding"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z094",
+      "name": "leaf-texture-image-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-texture-image"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z095",
+      "name": "leaf-texture-image-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-texture-image"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z096",
+      "name": "leaf-texture-image-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-texture-image"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z097",
+      "name": "leaf-texture-image-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-texture-image"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z098",
+      "name": "leaf-vec3-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-vec3"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z099",
+      "name": "leaf-vec3-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-vec3"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z100",
+      "name": "leaf-vec3-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-vec3"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z101",
+      "name": "leaf-vec3-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-vec3"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z102",
+      "name": "leaf-vector3-all-boundaries",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "U",
+        "V",
+        "homogeneous",
+        "leaf-vector3"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z103",
+      "name": "leaf-vector3-left-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "T",
+        "ignored-left-binder",
+        "leaf-vector3"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z104",
+      "name": "leaf-vector3-right-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "U",
+        "ignored-right-binder",
+        "leaf-vector3"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z105",
+      "name": "leaf-vector3-output-boundary",
+      "groups": [
+        "leaf-whitelist",
+        "V",
+        "constructor-body",
+        "leaf-vector3"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z106",
+      "name": "map-prepares-left",
+      "groups": [
+        "composition",
+        "actual-provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z107",
+      "name": "filter-prepares-both",
+      "groups": [
+        "composition",
+        "actual-provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z108",
+      "name": "merge-prepares-both",
+      "groups": [
+        "composition",
+        "actual-provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z109",
+      "name": "reduce-prepares-left",
+      "groups": [
+        "composition",
+        "actual-provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z110",
+      "name": "zip-then-map",
+      "groups": [
+        "composition",
+        "actual-provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z111",
+      "name": "zip-then-filter",
+      "groups": [
+        "composition",
+        "actual-provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z112",
+      "name": "zip-then-reduce",
+      "groups": [
+        "composition",
+        "actual-provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z113",
+      "name": "map-constant-retains-zip",
+      "groups": [
+        "composition",
+        "actual-provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z114",
+      "name": "filter-all-retains-zip",
+      "groups": [
+        "composition",
+        "actual-provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z115",
+      "name": "reduce-constant-retains-zip",
+      "groups": [
+        "composition",
+        "actual-provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z116",
+      "name": "nested-left-zip",
+      "groups": [
+        "composition",
+        "actual-provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z117",
+      "name": "nested-right-zip",
+      "groups": [
+        "composition",
+        "actual-provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z118",
+      "name": "nested-zip-indexed-scalar",
+      "groups": [
+        "composition",
+        "actual-provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z119",
+      "name": "zip-in-map-body",
+      "groups": [
+        "composition",
+        "actual-provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z120",
+      "name": "zip-in-filter-body",
+      "groups": [
+        "composition",
+        "actual-provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z121",
+      "name": "zip-in-reducer-body",
+      "groups": [
+        "composition",
+        "actual-provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z122",
+      "name": "body-nested-map",
+      "groups": [
+        "composition",
+        "actual-provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z123",
+      "name": "body-nested-merge",
+      "groups": [
+        "composition",
+        "actual-provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z124",
+      "name": "body-nested-reduction",
+      "groups": [
+        "composition",
+        "actual-provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z125",
+      "name": "ignored-left-retains-input-read",
+      "groups": [
+        "actual-read",
+        "selected-branch",
+        "aggregate-origin"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z126",
+      "name": "ignored-right-retains-input-read",
+      "groups": [
+        "actual-read",
+        "selected-branch",
+        "aggregate-origin"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z127",
+      "name": "selected-dynamic-read",
+      "groups": [
+        "actual-read",
+        "selected-branch",
+        "aggregate-origin"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z128",
+      "name": "body-selected-dependency",
+      "groups": [
+        "actual-read",
+        "selected-branch",
+        "aggregate-origin"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z129",
+      "name": "condition-retains-zip",
+      "groups": [
+        "actual-read",
+        "selected-branch",
+        "aggregate-origin"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z130",
+      "name": "empty-reads-both",
+      "groups": [
+        "empty",
+        "dependency",
+        "provenance"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z131",
+      "name": "empty-map-retains-zip",
+      "groups": [
+        "empty",
+        "dependency",
+        "provenance"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z132",
+      "name": "empty-reduce-retains-zip",
+      "groups": [
+        "empty",
+        "dependency",
+        "provenance"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z133",
+      "name": "filtered-empty-retains-predicate-read",
+      "groups": [
+        "empty",
+        "filter-origin",
+        "actual-read"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z134",
+      "name": "guarded-helper-replay",
+      "groups": [
+        "helper-cache",
+        "current-authority",
+        "read-replay"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z135",
+      "name": "unselected-mismatch-not-evaluated",
+      "groups": [
+        "unselected",
+        "static-vs-dynamic"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z136",
+      "name": "generated-pairs",
+      "groups": [
+        "generation",
+        "paired-origins",
+        "stable-keys"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z137",
+      "name": "nested-generated-pairs",
+      "groups": [
+        "generation",
+        "nested-zip",
+        "exact-origin-order"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z138",
+      "name": "generated-condition-retains-zip",
+      "groups": [
+        "generation",
+        "condition",
+        "aggregate-origin"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z139",
+      "name": "unrelated-map-aggregate-not-contributor",
+      "groups": [
+        "generation",
+        "aggregate-vs-contributor",
+        "c084-defect-regression"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z140",
+      "name": "equal-valued-plain-paired-occurrences",
+      "groups": [
+        "shared-payload",
+        "no-contamination",
+        "two-occurrences"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z141",
+      "name": "both-empty-generated-taint",
+      "groups": [
+        "empty",
+        "generated-taint",
+        "no-laundering"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z142",
+      "name": "right-empty-generated-taint",
+      "groups": [
+        "empty",
+        "generated-taint",
+        "no-laundering"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z143",
+      "name": "body-generated-taint",
+      "groups": [
+        "body",
+        "generated-taint"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z144",
+      "name": "absent-key-override",
+      "groups": [
+        "shape-resolution",
+        "absent-key",
+        "rollback"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z145",
+      "name": "generated-reference-input",
+      "groups": [
+        "unsupported-leaf",
+        "generated-reference"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z146",
+      "name": "left-empty-right-one",
+      "groups": [
+        "keyset-mismatch",
+        "canonical-diagnostic",
+        "atomicity"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z147",
+      "name": "right-empty-left-one",
+      "groups": [
+        "keyset-mismatch",
+        "canonical-diagnostic",
+        "atomicity"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z148",
+      "name": "disjoint-singletons",
+      "groups": [
+        "keyset-mismatch",
+        "canonical-diagnostic",
+        "atomicity"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z149",
+      "name": "common-prefix-missing-right",
+      "groups": [
+        "keyset-mismatch",
+        "canonical-diagnostic",
+        "atomicity"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z150",
+      "name": "common-prefix-missing-left",
+      "groups": [
+        "keyset-mismatch",
+        "canonical-diagnostic",
+        "atomicity"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z151",
+      "name": "multiple-mismatches-lowest-ascii",
+      "groups": [
+        "keyset-mismatch",
+        "canonical-diagnostic",
+        "atomicity"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z152",
+      "name": "case-sensitive-key-mismatch",
+      "groups": [
+        "keyset-mismatch",
+        "canonical-diagnostic",
+        "atomicity"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z153",
+      "name": "equal-count-wrong-members",
+      "groups": [
+        "keyset-mismatch",
+        "canonical-diagnostic",
+        "atomicity"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z154",
+      "name": "maximum-unequal-keys",
+      "groups": [
+        "keyset-mismatch",
+        "canonical-diagnostic",
+        "atomicity"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z155",
+      "name": "grouped-missing-left",
+      "groups": [
+        "grouped-token",
+        "utf8",
+        "mismatch"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z156",
+      "name": "utf8-missing-right",
+      "groups": [
+        "grouped-token",
+        "utf8",
+        "mismatch"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z157",
+      "name": "mismatch-before-body-domain",
+      "groups": [
+        "diagnostic-precedence",
+        "body-not-executed"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z158",
+      "name": "left-not-keyed",
+      "groups": [
+        "exact-boundary",
+        "static",
+        "empty-body"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z159",
+      "name": "right-not-keyed",
+      "groups": [
+        "exact-boundary",
+        "static",
+        "empty-body"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z160",
+      "name": "left-no-int-real-widening",
+      "groups": [
+        "exact-boundary",
+        "static",
+        "nonempty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z161",
+      "name": "right-no-int-real-widening",
+      "groups": [
+        "exact-boundary",
+        "static",
+        "nonempty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z162",
+      "name": "empty-left-type-mismatch",
+      "groups": [
+        "exact-boundary",
+        "static",
+        "empty-body"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z163",
+      "name": "empty-right-type-mismatch",
+      "groups": [
+        "exact-boundary",
+        "static",
+        "empty-body"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z164",
+      "name": "left-quantity-dimension-mismatch",
+      "groups": [
+        "exact-boundary",
+        "static",
+        "empty-body"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z165",
+      "name": "right-quantity-dimension-mismatch",
+      "groups": [
+        "exact-boundary",
+        "static",
+        "empty-body"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z166",
+      "name": "body-no-int-real-widening",
+      "groups": [
+        "exact-boundary",
+        "static",
+        "nonempty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z167",
+      "name": "empty-body-no-int-real-widening",
+      "groups": [
+        "exact-boundary",
+        "static",
+        "empty-body"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z168",
+      "name": "body-quantity-mismatch",
+      "groups": [
+        "exact-boundary",
+        "static",
+        "empty-body"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z169",
+      "name": "body-bool-int-mismatch",
+      "groups": [
+        "exact-boundary",
+        "static",
+        "empty-body"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z170",
+      "name": "grouped-body-mismatch",
+      "groups": [
+        "exact-boundary",
+        "static",
+        "empty-body"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z171",
+      "name": "both-operands-invalid-left-first",
+      "groups": [
+        "exact-boundary",
+        "static",
+        "empty-body"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z172",
+      "name": "static-right-before-dynamic-left",
+      "groups": [
+        "exact-boundary",
+        "static",
+        "nonempty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z173",
+      "name": "static-body-before-dynamic-left",
+      "groups": [
+        "exact-boundary",
+        "static",
+        "nonempty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z174",
+      "name": "empty-body-unknown-name",
+      "groups": [
+        "static",
+        "unknown-name",
+        "precedence"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z175",
+      "name": "empty-body-unselected-unknown-name",
+      "groups": [
+        "static",
+        "unknown-name",
+        "precedence"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z176",
+      "name": "static-right-name-before-left-domain",
+      "groups": [
+        "static",
+        "unknown-name",
+        "precedence"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z177",
+      "name": "duplicate-binders",
+      "groups": [
+        "binder-scope",
+        "static-empty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z178",
+      "name": "key-left-duplicate",
+      "groups": [
+        "binder-scope",
+        "static-empty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z179",
+      "name": "predefined-binder",
+      "groups": [
+        "binder-scope",
+        "static-empty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z180",
+      "name": "reserved-operation-binder",
+      "groups": [
+        "binder-scope",
+        "static-empty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z181",
+      "name": "binder-shadows-visible-param",
+      "groups": [
+        "binder-scope",
+        "no-shadowing"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z182",
+      "name": "binder-not-visible-outside-body",
+      "groups": [
+        "lexical-scope"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z183",
+      "name": "new-profile-reserves-zip-name",
+      "groups": [
+        "reserved-spelling"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z184",
+      "name": "recursive-unused-helper",
+      "groups": [
+        "pure-call-cycle",
+        "unused-definition"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z185",
+      "name": "left-domain-before-right-domain",
+      "groups": [
+        "left-first",
+        "domain"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z186",
+      "name": "right-domain-before-mismatch",
+      "groups": [
+        "admission-before-mismatch"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z187",
+      "name": "body-invalid-constructor",
+      "groups": [
+        "body-domain",
+        "atomicity"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z188",
+      "name": "left-dynamic-failure-stops-right",
+      "groups": [
+        "left-first",
+        "right-not-executed"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z189",
+      "name": "empty-left-still-admits-right",
+      "groups": [
+        "right-admission",
+        "empty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z190",
+      "name": "body-failure-canonical-order",
+      "groups": [
+        "body-order",
+        "atomicity"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z191",
+      "name": "empty-body-domain-not-executed",
+      "groups": [
+        "empty",
+        "no-speculative-body-evaluation"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z192",
+      "name": "incompatible-vector-frames",
+      "groups": [
+        "frame",
+        "body-domain"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z193",
+      "name": "empty-key",
+      "groups": [
+        "input-key-domain"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z194",
+      "name": "invalid-key",
+      "groups": [
+        "input-key-domain"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z195",
+      "name": "nonascii-key",
+      "groups": [
+        "input-key-domain"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z196",
+      "name": "too-long-key",
+      "groups": [
+        "input-key-domain"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z197",
+      "name": "duplicate-key-inside-left",
+      "groups": [
+        "inherited-key-admission",
+        "left"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z198",
+      "name": "duplicate-key-inside-right",
+      "groups": [
+        "inherited-key-admission",
+        "right"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z199",
+      "name": "left-input-257",
+      "groups": [
+        "input-bound",
+        "admission-before-mismatch"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z200",
+      "name": "right-input-257",
+      "groups": [
+        "input-bound",
+        "admission-before-mismatch"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z201",
+      "name": "missing-explicit-types",
+      "groups": [
+        "syntax"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z202",
+      "name": "missing-type-argument",
+      "groups": [
+        "syntax"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z203",
+      "name": "extra-type-argument",
+      "groups": [
+        "syntax"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z204",
+      "name": "missing-right-operand",
+      "groups": [
+        "syntax"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z205",
+      "name": "missing-body",
+      "groups": [
+        "syntax"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z206",
+      "name": "two-binders",
+      "groups": [
+        "syntax"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z207",
+      "name": "four-binders",
+      "groups": [
+        "syntax"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z208",
+      "name": "missing-arrow",
+      "groups": [
+        "syntax"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z209",
+      "name": "extra-operand",
+      "groups": [
+        "syntax"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z210",
+      "name": "nested-keyed-T-unsupported",
+      "groups": [
+        "unsupported-leaf",
+        "T",
+        "empty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z211",
+      "name": "nested-keyed-U-unsupported",
+      "groups": [
+        "unsupported-leaf",
+        "U",
+        "empty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z212",
+      "name": "nested-keyed-V-unsupported",
+      "groups": [
+        "unsupported-leaf",
+        "V",
+        "empty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z213",
+      "name": "geometry-T-unsupported",
+      "groups": [
+        "unsupported-leaf",
+        "T",
+        "empty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z214",
+      "name": "geometry-U-unsupported",
+      "groups": [
+        "unsupported-leaf",
+        "U",
+        "empty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z215",
+      "name": "geometry-V-unsupported",
+      "groups": [
+        "unsupported-leaf",
+        "V",
+        "empty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z216",
+      "name": "body-model-T-unsupported",
+      "groups": [
+        "unsupported-leaf",
+        "T",
+        "empty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z217",
+      "name": "body-model-U-unsupported",
+      "groups": [
+        "unsupported-leaf",
+        "U",
+        "empty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z218",
+      "name": "body-model-V-unsupported",
+      "groups": [
+        "unsupported-leaf",
+        "V",
+        "empty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z219",
+      "name": "action-T-unsupported",
+      "groups": [
+        "unsupported-leaf",
+        "T",
+        "empty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z220",
+      "name": "action-U-unsupported",
+      "groups": [
+        "unsupported-leaf",
+        "U",
+        "empty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z221",
+      "name": "action-V-unsupported",
+      "groups": [
+        "unsupported-leaf",
+        "V",
+        "empty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z222",
+      "name": "excessive-expression-depth",
+      "groups": [
+        "parser-depth",
+        "inherited-bound"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z223",
+      "name": "qualified-older-zip-name",
+      "groups": [
+        "declaring-unit",
+        "old-reserved-name"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z224",
+      "name": "imported-merge-operand",
+      "groups": [
+        "declaring-unit",
+        "imported-merge",
+        "exact-pin"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z225",
+      "name": "private-helper-in-empty-body",
+      "groups": [
+        "private-access",
+        "empty-body"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z226",
+      "name": "wrong-import-pin",
+      "groups": [
+        "exact-pin"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z227",
+      "name": "imported-new-zip-helper",
+      "groups": [
+        "imported-zip",
+        "original-source-provenance",
+        "exact-pin"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z228",
+      "name": "older-importer-rejects-new-unit",
+      "groups": [
+        "declaring-unit",
+        "older-entry"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z229",
+      "name": "older-unit-rejects-new-syntax",
+      "groups": [
+        "declaring-unit",
+        "earlier-syntax"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z230",
+      "name": "empty-zip-retains-image-declaration",
+      "groups": [
+        "png-closure",
+        "empty",
+        "unused-definition"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z231",
+      "name": "discarded-input-retains-image-declaration",
+      "groups": [
+        "png-closure",
+        "discarded-input",
+        "ignored-binder"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z232",
+      "name": "empty-zip-missing-image",
+      "groups": [
+        "png-closure",
+        "missing-attachment"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z233",
+      "name": "discarded-input-missing-image",
+      "groups": [
+        "png-closure",
+        "discarded-input"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z234",
+      "name": "dynamic-image-id",
+      "groups": [
+        "png-closure",
+        "literal-declaration"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z235",
+      "name": "panel-task",
+      "groups": [
+        "two-occurrences",
+        "pinned-attribute-libraries",
+        "paired-dimensions-materials",
+        "texture",
+        "marker-motion",
+        "complete-export"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z236",
+      "name": "panel-task-repaired",
+      "groups": [
+        "two-occurrences",
+        "pinned-attribute-libraries",
+        "paired-dimensions-materials",
+        "texture",
+        "marker-motion",
+        "complete-export"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z237",
+      "name": "panel-task-restored",
+      "groups": [
+        "two-occurrences",
+        "pinned-attribute-libraries",
+        "paired-dimensions-materials",
+        "texture",
+        "marker-motion",
+        "complete-export"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z238",
+      "name": "panel-identity",
+      "groups": [
+        "two-occurrences",
+        "pinned-attribute-libraries",
+        "paired-dimensions-materials",
+        "texture",
+        "marker-motion",
+        "complete-export"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z239",
+      "name": "panel-task-higher-budget",
+      "groups": [
+        "two-occurrences",
+        "pinned-attribute-libraries",
+        "paired-dimensions-materials",
+        "texture",
+        "marker-motion",
+        "complete-export"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z240",
+      "name": "panel-task-missing-partner",
+      "groups": [
+        "repair-rollback",
+        "missing-partner"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z241",
+      "name": "panel-task-invalid-width",
+      "groups": [
+        "repair-rollback",
+        "geometry-after-pairing"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z242",
+      "name": "panel-task-ungranted-budget",
+      "groups": [
+        "host-authority",
+        "higher-request"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z243",
+      "name": "empty-captured-zero-not-evaluated",
+      "groups": [
+        "empty",
+        "captured-local",
+        "unknown-payload",
+        "no-speculative-domain"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z244",
+      "name": "zip-inside-zip-body",
+      "groups": [
+        "nested-body",
+        "distinct-pair-keys",
+        "exact-provenance"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z245",
+      "name": "captured-indexed-zip-in-body",
+      "groups": [
+        "captured-local",
+        "indexed-foreign-key",
+        "exact-provenance",
+        "pure-helper"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z246",
+      "name": "zip-inside-body-indexed-scalar",
+      "groups": [
+        "nested-body",
+        "scalar-index",
+        "exact-provenance"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z247",
+      "name": "captured-indexed-result-scalar",
+      "groups": [
+        "captured-local",
+        "scalar-index",
+        "exact-provenance"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z248",
+      "name": "equal-valued-paired-entries",
+      "groups": [
+        "shared-payload",
+        "distinct-key-origins",
+        "constant-body"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z249",
+      "name": "input-evaluation-once-and-order",
+      "groups": [
+        "observer-trace",
+        "once-only",
+        "left-before-right"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z250",
+      "name": "input-alias-remains-unmodified",
+      "groups": [
+        "alias",
+        "detached-wrapper",
+        "shared-payload"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z251",
+      "name": "guarded-empty-helper-replay",
+      "groups": [
+        "cache-replay",
+        "empty",
+        "aggregate-dependencies"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "Z252",
+      "name": "cached-empty-generated-taint",
+      "groups": [
+        "cache-replay",
+        "empty",
+        "generated-taint",
+        "no-laundering"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z253",
+      "name": "key-binder-exact-string-type",
+      "groups": [
+        "key-binder",
+        "exact-type",
+        "empty-static"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "Z254",
+      "name": "empty-constructor-signature-error",
+      "groups": [
+        "constructor-signature",
+        "empty-static"
+      ],
+      "outcome": "invalid"
+    }
+  ],
+  "corpus": "examples/keyed-zip/expected.json",
+  "workflows": "examples/keyed-zip/workflows.json",
+  "predecessor": "Complete immediate .17 workflows/readers/native controls and applicable inherited roles with unchanged original settings",
+  "full_product_acceptance": false
+}

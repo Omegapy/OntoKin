@@ -1,0 +1,11 @@
+(* C085 supplement to the unchanged .17 grammar and lexical precedence *)
+(* Effective only after reviewed adoption for source 0.18 / keyed-zip-0.1 *)
+zip-keyed-expression = "zip_keyed", "<", type, ",", type, ",", type, ">", "(",
+                       expression, ",", expression, ",",
+                       "(", identifier, ",", identifier, ",", identifier, ")",
+                       "->", expression, ")" ;
+(* Exact explicit types T, U, V require Keyed<T>, Keyed<U>, and body V *)
+(* Body-only distinct unshadowed binders are String key, T left, U right *)
+(* Static left/right/body checking precedes dynamic left then right admission *)
+(* Complete key-set agreement precedes every body and detached result copy *)
+(* Canonical ASCII pairing preserves stable keys; each input/result <= 256 *)

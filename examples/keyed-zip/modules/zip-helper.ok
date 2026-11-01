@@ -1,0 +1,5 @@
+ontokin "0.18";
+module ZipHelper @ "zip-helper";
+profile "keyed-zip-0.1";
+
+public fn combine @ "combine"(aa:Keyed<Int>,bb:Keyed<Int>)->Keyed<Int>{return zip_keyed<Int, Int, Int>(aa, bb, (key, lv, rv) -> lv+rv);}
