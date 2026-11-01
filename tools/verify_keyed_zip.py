@@ -14,7 +14,8 @@ sys.path.insert(0, str(ROOT))
 from tools.keyed_zip_reference import (DELIVERED_CASES, FREEZE_COMMIT, FREEZE_SHA256,
     ReferenceError, case_payload, check_artifact, check_inspection, codes, delivered_by_revision, load_fixtures,
     loads, ordinary_path, require, sha, diagnostic_anchor, source_units, check_all_locations,
-    canonical_probe_type, same_location, merge_location, _location_identity, PROFILE, check_zips, enriched_zip_records)
+    canonical_probe_type, same_location, merge_location, _location_identity, PROFILE, check_zips, enriched_zip_records,
+    zip_source_shape)
 from tools.keyed_zip_adversaries import build_mutations
 
 def requires_execution_trace(case):
@@ -92,6 +93,8 @@ def check_execution_trace(trace, case, units, budget):
             if index<len(current["body_keys"]):timeline.append({"event":"body","key":current["body_keys"][index]})
         require(current["timeline"]==timeline,"A body/result iteration preceded complete key-set agreement")
         abstract=current["abstract_body_checks"]
+        authored=zip_source_shape(current["expression"],units)
+        binder_types=dict(zip(authored["binders"],("String",origin["left_element_type"],origin["right_element_type"])))
         # Dynamic operand failure may occur during the earlier unknown body
         # check only if its inherited source type itself refuses. Every valid
         # dynamic invocation retains its own original unknown-payload check.
@@ -106,6 +109,9 @@ def check_execution_trace(trace, case, units, budget):
             require(isinstance(effective,dict)and set(effective)==set(incoming)and
                     all(not value["known"]and value["type"]==incoming[name]["type"] for name,value in effective.items()),
                     "Static body received a captured concrete payload")
+            require(all(name in effective and canonical_probe_type(effective[name]["type"])==wanted
+                        for name,wanted in binder_types.items()),
+                    "Unknown body context omitted or changed an exact original key/left/right binder")
             require(observation["mask_observed"] or effective==incoming,
                     "Reader invented a normalization without observing the real masking call")
         before,after=current["operations_before"],current["operations_after"]

@@ -232,6 +232,20 @@ class IndependentZipReaders(unittest.TestCase):
         with self.assertRaises(ReferenceError):
             check_execution_trace(trace, case, units, budget)
 
+    def test_unknown_body_cannot_omit_binders_or_retype_both_observations(self):
+        case, units, baseline, budget = self.singleton_trace()
+        for binder in ("key", "lv", "rv"):
+            missing = deepcopy(baseline)
+            for field in ("locals", "effective_locals"):
+                del missing["invocations"][0]["abstract_body_checks"][0][field][binder]
+            with self.subTest(binder=binder, mutation="missing"), self.assertRaises(ReferenceError):
+                check_execution_trace(missing, case, units, budget)
+            widened = deepcopy(baseline)
+            for field in ("locals", "effective_locals"):
+                widened["invocations"][0]["abstract_body_checks"][0][field][binder]["type"] = "Real"
+            with self.subTest(binder=binder, mutation="retyped"), self.assertRaises(ReferenceError):
+                check_execution_trace(widened, case, units, budget)
+
 
 if __name__ == "__main__":
     unittest.main()
