@@ -278,7 +278,8 @@ class Acceptance(KeyedRekeyAgentWorkflows, TextureAcceptance):
         return case_payload(self.fixtures, self.fixtures["cases"][name])
 
     def case_root(self, case):
-        return self.fixtures["agent_root"] if case["name"] in self.fixtures["agent_cases"] else self.fixture_root
+        root = self.fixtures["agent_root"] if case["name"] in self.fixtures["agent_cases"] else self.fixture_root
+        return self.fixtures["input_roots"].get(case["name"], root)
 
     def source_observation(self, source, case, prefix, *, control=False):
         # Older declaring-unit cases must use their actual explicit .18 binding

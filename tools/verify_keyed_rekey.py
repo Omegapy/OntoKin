@@ -12,12 +12,14 @@ import traceback
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from tools.keyed_rekey_reference import (
-    FREEZE_COMMIT, FREEZE_SHA256, PROFILE, TARGET, ReferenceError, require, sha,
+    AMENDMENTS, FREEZE_COMMIT, FREEZE_SHA256, PROFILE, TARGET, ReferenceError, require, sha,
     canonical, loads, ordinary_path, load_fixtures, input_lineage, case_payload,
     source_units, codes, walk, check_all_locations, diagnostic_anchor,
     check_inspection, check_artifact, delivered_by_revision, check_rekeys,
     canonical_probe_type, exact_location, _location_identity,
 )
+
+from tools.keyed_rekey_source_reference import result_rekey_expression
 
 
 def read_json(directory, name):
@@ -42,8 +44,7 @@ def check_execution_trace(trace, case, units, budget, fixtures):
     binders = {_location_identity(record["expression"]): record for record in case["source_rekey_binders"]}
     expected = case.get("expected") or {}
     checkpoints_total, bodies_total, checked = 0, 0, []
-    root_expression = (expected.get("root_aggregate_rekey_record") or
-                       (case["source_rekey_records"][0] if case["source_rekey_records"] else {})).get("expression")
+    root_expression = result_rekey_expression(case, units)
     root_invocations = []
     for current in invocations:
         identity = _location_identity(current["expression"])
@@ -60,28 +61,53 @@ def check_execution_trace(trace, case, units, budget, fixtures):
         if inputs is not None:
             require(inputs == sorted(set(inputs)) and len(inputs) <= 256,
                     "Admitted input keys/cardinality differ from immutable canonical input")
-            require(canonical_probe_type(current["input_type"]) == "Keyed<" + origin["element_type"] + ">",
+            require(canonical_probe_type(current["input_type"]) == "Keyed<" + canonical_probe_type(origin["element_type"]) + ">",
                     "Input boundary changed the exact canonical payload type")
         success = "output_keys" in current
         if success:
             require(evaluations == admissions == 1 and inputs is not None and
                     current["output_keys"] == sorted(set(current["output_keys"])) and
                     len(current["output_keys"]) == len(inputs) and
-                    canonical_probe_type(current["output_type"]) == "Keyed<" + origin["element_type"] + ">",
+                    canonical_probe_type(current["output_type"]) == "Keyed<" + canonical_probe_type(origin["element_type"]) + ">",
                     "Successful invocation changed key cardinality or exact payload type")
         checks = current["abstract_body_checks"]
-        if evaluations or success:
-            require(checks, "Dynamic input started without an unknown-payload callback check")
-        for check in checks:
-            require(check["input_evaluations_started"] == check["input_admissions_completed"] == check["body_evaluations_started"] == 0,
-                    "Unknown-payload body check occurred after dynamic work")
-            effective = check.get("effective_locals")
-            require(isinstance(effective, dict) and all(value["known"] is False for value in effective.values()),
-                    "Unknown-payload check retained an enclosing known local")
+        require(isinstance(checks, list) and isinstance(current["timeline"], list), "Malformed abstract-check timeline")
+        counters = {"input_evaluations_started": 0, "input_admissions_completed": 0, "body_evaluations_started": 0}
+        increments = {"evaluate_input": "input_evaluations_started", "admit_input": "input_admissions_completed",
+                      "body": "body_evaluations_started"}
+        check_index, preinput_checks = 0, 0
+        for event in current["timeline"]:
+            if event["event"] != "abstract_body":
+                if event["event"] in increments:
+                    counters[increments[event["event"]]] += 1
+                continue
+            require(event == {"event": "abstract_body"} and check_index < len(checks),
+                    "Abstract observation lacks its matching timeline event")
+            check = checks[check_index]; check_index += 1
+            require(all(type(check.get(name)) is int and check[name] == count for name, count in counters.items()),
+                    "Abstract observation counters do not match its exact dynamic timeline position")
+            if not any(counters.values()):
+                preinput_checks += 1
+            else:
+                require(counters["input_evaluations_started"] == counters["input_admissions_completed"] == 1 and
+                        counters["body_evaluations_started"] > 0,
+                        "Later abstract callback check lies outside an admitted dynamic body")
+            incoming, effective = check.get("locals"), check.get("effective_locals")
+            require(isinstance(incoming, dict) and isinstance(effective, dict) and set(incoming) == set(effective) and
+                    all(value.get("known") is False and set(value) == {"type", "known"} and
+                        value["type"] == incoming[name].get("type") for name, value in effective.items()) and
+                    (not any(value.get("known") is True for value in incoming.values()) or check.get("mask_observed") is True),
+                    "Unknown-payload check retained or dropped an enclosing local/type or omitted actual masking")
             declaration = binders[identity]
-            for name, wanted in zip(declaration["names"], declaration["types"]):
-                require(name in effective and effective[name] == {"type": canonical_probe_type(wanted), "known": False},
+            for name, wanted_type in zip(declaration["names"], declaration["types"]):
+                require(name in effective and effective[name] == {"type": canonical_probe_type(wanted_type), "known": False},
                         "Callback binder did not retain exact readonly String/payload types")
+        require(check_index == len(checks) and counters["input_evaluations_started"] == evaluations and
+                counters["input_admissions_completed"] == admissions and
+                counters["body_evaluations_started"] == len(current["body_keys"]),
+                "Abstract/dynamic trace counts differ from their complete recorded timeline")
+        if evaluations or success:
+            require(preinput_checks > 0, "Dynamic input started without its preinput unknown-payload callback check")
         body_keys = current["body_keys"]
         require(isinstance(body_keys, list) and len(body_keys) == len(set(body_keys)),
                 "One input callback was repeated")
@@ -102,8 +128,6 @@ def check_execution_trace(trace, case, units, budget, fixtures):
             wanted.append({"event": "keyed_rekey_publication", "key": None})
         require(dynamic == wanted[:len(dynamic)] and (not success or dynamic == wanted),
                 "Actual input/body/key-validation/collision/publication timeline differs")
-        for event in current["timeline"][:len(checks)]:
-            require(event == {"event": "abstract_body"}, "Static callback checks were not before dynamic input")
         checkpoints = current["checkpoints"]
         require([{"event": item["stage"], "key": item["key"]} for item in checkpoints] ==
                 [event for event in dynamic if event["event"].startswith("keyed_rekey_")],
@@ -314,11 +338,13 @@ def main():
     parser.add_argument("--results", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--scope", choices=("sources", "all"), default="all")
+    parser.add_argument("--input-amendment", choices=tuple(row["id"] for row in AMENDMENTS),
+                        default=AMENDMENTS[-1]["id"], help="Explicit adopted lineage; historical choice rereads retained evidence only")
     args = parser.parse_args()
     if args.output.exists():
         parser.error("--output must name a new report file")
     try:
-        report = verify(args.results.resolve(), load_fixtures(args.fixtures), scope=args.scope)
+        report = verify(args.results.resolve(), load_fixtures(args.fixtures, through_amendment=args.input_amendment), scope=args.scope)
     except Exception as error:
         report = {"schema_version": "ontokin.c086-independent-source-delivery-readback/0.1", "status": "failed",
                   "scope": args.scope, "exception": type(error).__name__, "reason": str(error),

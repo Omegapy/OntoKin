@@ -36,6 +36,27 @@ class IndependentRekeyReaders(unittest.TestCase):
             self.assertEqual(self.fixtures["core_cases"][name]["source_rekey_records"][0]["element_type"], "Point3<Length>")
         self.assertNotEqual(self.fixtures["original_expected_sha256"], self.fixtures["effective_expected_sha256"])
 
+    def test_published_unicode_overlay_preserves_historical_input_and_semantics(self):
+        historical = load_fixtures(through_amendment="AMENDMENT-C086-001")
+        current = self.fixtures
+        name = "output-key-unicode"
+        old_raw = case_payload(historical, name)["entry"]["source"].encode()
+        new_raw = case_payload(current, name)["entry"]["source"].encode()
+        self.assertEqual(new_raw, old_raw[:219] + '"café"'.encode() + old_raw[230:])
+        self.assertEqual(old_raw[219:230], b'"caf\\u00e9"')
+        self.assertEqual(current["original_expected"], historical["original_expected"])
+        self.assertEqual(historical["input_roots"], {})
+        self.assertEqual(set(current["input_roots"]), {name})
+        self.assertEqual(len(historical["amendments"]), 1)
+        self.assertEqual(len(current["amendments"]), 2)
+        old_case, new_case = historical["cases"][name], current["cases"][name]
+        for field in ("code", "category", "phase", "rule_ids", "message", "details"):
+            self.assertEqual(old_case["expected_diagnostic"][field], new_case["expected_diagnostic"][field])
+        for case_name in set(current["core_cases"]) - {name}:
+            self.assertEqual(current["cases"][case_name], historical["cases"][case_name])
+        with self.assertRaises(ReferenceError):
+            load_fixtures(through_amendment="unpublished")
+
     def test_selected_origins_reject_identity_fields_swaps_and_shifted_spans(self):
         case = self.fixtures["core_cases"]["nested-rekey"]
         units = source_units(case_payload(self.fixtures, case))
@@ -118,6 +139,136 @@ class IndependentRekeyReaders(unittest.TestCase):
             with self.subTest(change=change):
                 with self.assertRaises(ReferenceError):
                     check_execution_trace(wrong, case, units, budget, self.fixtures)
+
+
+    def test_later_abstract_checks_keep_preinput_gate_and_exact_timeline_counters(self):
+        trace, unused_case, unused_units, budget = self.empty_trace()
+        case = self.fixtures["core_cases"]["reordered-output"]
+        origin = case["source_rekey_records"][0]
+        trace.update(case=case["name"], program_revision=case["program_revision"])
+        current = trace["invocations"][0]
+        current.update({key: copy.deepcopy(origin[key]) for key in ("expression", "input", "body")})
+        keys = case["expected"]["body_key_order"]
+        current.update(input_keys=keys, body_keys=keys, output_keys=case["expected"]["output_key_order"],
+                       aggregate_rekey_records=[copy.deepcopy(origin)],
+                       stored_leaf_rekey_records={key: [copy.deepcopy(value)] for key, value in
+                                                 case["expected"]["root_selected_rekey_records"].items()})
+        current["timeline"] = [{"event": "abstract_body"}, {"event": "evaluate_input"}, {"event": "admit_input"}]
+        current["checkpoints"] = []
+        first = current["abstract_body_checks"][0]
+        for index, key in enumerate(keys):
+            for event in ("keyed_rekey_iteration", "body", "keyed_rekey_key_validation", "keyed_rekey_collision"):
+                current["timeline"].append({"event": event, "key": key})
+                if event.startswith("keyed_rekey_"):
+                    current["checkpoints"].append({"stage": event, "key": key,
+                        "consumed_operations": len(current["checkpoints"]) + 1, "value_entries": 0})
+                if event == "body":
+                    check = copy.deepcopy(first)
+                    check["effective_locals"] = copy.deepcopy(first["effective_locals"])
+                    check.update(input_evaluations_started=1, input_admissions_completed=1,
+                                 body_evaluations_started=index + 1, mask_observed=True)
+                    for value in check["locals"].values():
+                        value["known"] = True
+                    current["abstract_body_checks"].append(check)
+                    current["timeline"].append({"event": "abstract_body"})
+        current["timeline"].append({"event": "keyed_rekey_publication", "key": None})
+        current["checkpoints"].append({"stage": "keyed_rekey_publication", "key": None,
+                                      "consumed_operations": 9, "value_entries": 0})
+        units = source_units(case_payload(self.fixtures, case))
+        # Synthetic reader input only: supplemental checks are not claimed product observations.
+        check_execution_trace(trace, case, units, budget, self.fixtures)
+        for mutation in ("no_preinput_check", "wrong_counter", "missing_mask", "drop_local", "unmatched_event"):
+            wrong = copy.deepcopy(trace); observed = wrong["invocations"][0]
+            if mutation == "no_preinput_check":
+                observed["abstract_body_checks"].pop(0); observed["timeline"].pop(0)
+            elif mutation == "wrong_counter":
+                observed["abstract_body_checks"][1]["body_evaluations_started"] += 1
+            elif mutation == "missing_mask":
+                observed["abstract_body_checks"][1]["mask_observed"] = False
+            elif mutation == "drop_local":
+                observed["abstract_body_checks"][1]["locals"]["captured"] = {"type": "Int", "known": True}
+            else:
+                observed["timeline"].append({"event": "abstract_body"})
+            with self.subTest(mutation=mutation):
+                with self.assertRaises(ReferenceError):
+                    check_execution_trace(wrong, case, units, budget, self.fixtures)
+
+    def test_original_payload_entry_requires_the_source_bound_rename_chain(self):
+        from tools.keyed_rekey_source_reference import original_keyed_entries, original_entry_matches_current_key
+        case = self.fixtures["core_cases"]["rekey-then-map"]
+        units = source_units(case_payload(self.fixtures, case))
+        entry = next(row["location"] for row in original_keyed_entries(units).values() if row["key"] == "a")
+        entry = {**entry, "filename": "main.ok"}
+        selected = copy.deepcopy(case["source_rekey_records"][0])
+        selected.update(old_key="a", new_key="ns.a", input_entry=entry)
+        operand = selected["expression"]
+        original_entry_matches_current_key(entry, "ns.a", units, operand, [selected])
+        for mutation in ("missing", "wrong_old", "wrong_new", "unrelated_operand", "abbreviated_entry"):
+            records, location, argument = [copy.deepcopy(selected)], copy.deepcopy(entry), copy.deepcopy(operand)
+            if mutation == "missing": records = []
+            elif mutation == "wrong_old": records[0]["old_key"] = "other"
+            elif mutation == "wrong_new": records[0]["new_key"] = "other"
+            elif mutation == "unrelated_operand": argument = copy.deepcopy(selected["body"])
+            else: location["end_byte"] -= 1
+            with self.subTest(mutation=mutation):
+                with self.assertRaises(ReferenceError):
+                    original_entry_matches_current_key(location, "ns.a", units, argument, records)
+
+    def test_result_selection_and_dependency_ids_come_from_original_declarations(self):
+        from tools.keyed_rekey_source_reference import result_rekey_expression, core_member_source_identity
+        case = self.fixtures["core_cases"]["captured-rekey-inside-body"]
+        units = source_units(case_payload(self.fixtures, case))
+        resolved = result_rekey_expression(case, units)
+        self.assertEqual(resolved["start_byte"], 278)
+        self.assertNotEqual(resolved, case["source_rekey_records"][0]["expression"])
+        dependency_case = self.fixtures["core_cases"]["explicit-namespace-map"]
+        dependency_units = source_units(case_payload(self.fixtures, dependency_case))
+        self.assertEqual(core_member_source_identity(dependency_units, "shape", "items"),
+                         ["probe", "demo", "shape", "items"])
+        with self.assertRaises(ReferenceError):
+            core_member_source_identity(dependency_units, "shape", "not_declared")
+
+    def test_inherited_public_span_keeps_its_exact_file_envelope(self):
+        from tools.keyed_rekey_source_reference import exact_public_location
+        case = self.fixtures["core_cases"]["singleton"]
+        units = source_units(case_payload(self.fixtures, case))
+        expected = case["source_rekey_records"][0]["input"]
+        actual = {("file" if key == "filename" else key): value for key, value in expected.items()}
+        exact_public_location(actual, expected, units)
+        for wrong in ({**actual, "extra": "invented"}, {**actual, "file": "other.ok"},
+                      {**actual, "start_byte": actual["start_byte"] + 1}, expected):
+            with self.subTest(wrong=wrong):
+                with self.assertRaises(ReferenceError):
+                    exact_public_location(wrong, expected, units)
+
+    def test_empty_literal_control_has_source_derived_empty_keyset(self):
+        from tools.keyed_rekey_source_reference import literal_control_keys
+        case = self.fixtures["core_cases"]["empty-captured-zero-not-evaluated"]
+        units = source_units(case_payload(self.fixtures, case, control=True))
+        self.assertEqual(literal_control_keys(units), [])
+
+    def test_atomic_edit_replay_requires_original_utf8_preconditions(self):
+        from tools.verify_keyed_rekey_agent_evidence import replay_edit, normalized
+        from tools.keyed_rekey_reference import bundle_identity, digest
+        before = case_payload(self.fixtures, "panel-task")
+        after = case_payload(self.fixtures, "panel-task-repaired")
+        spec = self.fixtures["workflows"]["workflows"][0]["expected"]["repair_patches"][0]
+        raw = before["entry"]["source"].encode(); target = spec["expected_text"].encode(); offset = raw.index(target)
+        request = {"expected_program_revision": bundle_identity(before)[0], "patches": [{"source_id": "entry",
+            "element_id": ["sources", "entry"], "source_revision": digest(raw), "start_byte": offset,
+            "end_byte": offset + len(target), **spec}]}
+        self.assertEqual(replay_edit(before, request), normalized(after))
+        for change in ("source_revision", "expected_text", "overlap"):
+            wrong = copy.deepcopy(request)
+            if change == "source_revision":
+                wrong["patches"][0]["source_revision"] = "sha256:" + "0" * 64
+            elif change == "expected_text":
+                wrong["patches"][0]["expected_text"] += " "
+            else:
+                wrong["patches"].append(copy.deepcopy(wrong["patches"][0]))
+            with self.subTest(change=change):
+                with self.assertRaises(ReferenceError):
+                    replay_edit(before, wrong)
 
 
 if __name__ == "__main__":

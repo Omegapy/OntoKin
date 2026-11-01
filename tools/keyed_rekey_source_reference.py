@@ -101,7 +101,35 @@ def original_keyed_entries(units):
                 result[_location_identity(location)]={"key":key,"location":location}
     return result
 
-def check_transforms(records, units, *, expected=None, require_nonempty=True):
+def original_entry_matches_current_key(entry, key, units, operand, rekey_records):
+    """A renamed key keeps its complete original payload entry span.
+
+    A different original literal key requires a validated selected rekey chain
+    inside this exact operand. An arbitrary old-key span is never sufficient.
+    """
+    check_location(entry, units)
+    original = original_keyed_entries(units).get(_location_identity(entry))
+    require(original is not None, "Contributor is not a complete original keyed entry")
+    if original["key"] == key:
+        return
+    check_rekeys(rekey_records, units, require_nonempty=False)
+    reachable = {original["key"]}
+    for record in rekey_records:
+        expression, retained = record["expression"], record["input_entry"]
+        if retained is None or _location_identity(retained) != _location_identity(entry):
+            continue
+        if not (expression["source_id"] == operand["source_id"] and
+                operand["start_byte"] <= expression["start_byte"] < expression["end_byte"] <= operand["end_byte"]):
+            continue
+        body_tokens = _source_tokens(check_location(record["body"], units))
+        if len(body_tokens) == 1 and body_tokens[0][0].startswith(b'"'):
+            require(loads(body_tokens[0][0]) == record["new_key"], "Selected rekey contradicts its literal callback")
+        if record["old_key"] in reachable:
+            reachable.add(record["new_key"])
+    require(key in reachable, "Contributor key lacks its original-entry-preserving rekey chain")
+
+
+def check_transforms(records, units, *, expected=None, require_nonempty=True, rekey_records=()):
     require(isinstance(records, list) and (not require_nonempty or records), "Missing ordered map derivation records")
     count = 0
     for record in records:
@@ -126,8 +154,8 @@ def check_transforms(records, units, *, expected=None, require_nonempty=True):
             require(type(record["key"]) is str and record["key"].isascii() and record["key"], "Derived leaf lost its stable input key")
             raw_entry = check_location(record["input_entry"], units, allow_null=True)
             if raw_entry is not None:
-                require(re.match(re.escape(canonical(record["key"])) + rb"\s*:", raw_entry) is not None,
-                        "Derived leaf entry span identifies another original key")
+                original_entry_matches_current_key(record["input_entry"], record["key"], units,
+                                                   record["input"], list(rekey_records))
         count += 1
     if expected is not None:
         record = records[-1]
@@ -656,7 +684,7 @@ def enriched_zip_records(records, units):
         result.append(current)
     return result
 
-def check_zips(records, units, *, expected=None, require_nonempty=True, exact=False, aggregate=False):
+def check_zips(records, units, *, expected=None, require_nonempty=True, exact=False, aggregate=False, rekey_records=()):
     """Require exact original five-field locations and ten-field zip records."""
     require(isinstance(records,list) and (records or not require_nonempty), "Missing ordered zip provenance")
     seen=set()
@@ -684,11 +712,10 @@ def check_zips(records, units, *, expected=None, require_nonempty=True, exact=Fa
                 raw=check_location(entry,units)
                 tokens=_source_tokens(raw)
                 require(tokens and tokens[0][1]==0 and tokens[-1][2]==len(raw) and
-                        tokens[0][0]==canonical(key) and len(tokens)>=3 and tokens[1][0]==b":" and tokens[-1][0]!=b",",
-                        "Zip contributor is not the full original matching keyed entry")
-                original=original_entries.get(_location_identity(entry))
-                require(original is not None and original["key"]==key,
-                        "Zip contributor span abbreviates or crosses the complete original keyed entry")
+                        len(tokens)>=3 and tokens[0][0].startswith(b'"') and tokens[1][0]==b":" and tokens[-1][0]!=b",",
+                        "Zip contributor is not a full original keyed entry")
+                original_entry_matches_current_key(entry, key, units, record[field.removesuffix("_entry")],
+                                                   list(rekey_records))
         identity=canonical(record)
         require(identity not in seen, "Duplicate exact zip provenance record")
         seen.add(identity)
@@ -746,6 +773,58 @@ def exact_location(actual, expected, units):
     require(isinstance(actual, dict) and set(actual) == LOCATION_FIELDS,
             "Origin location does not have exactly five detached fields")
     merge_location(actual, expected, units)
+
+
+def exact_public_location(actual, expected, units):
+    """Inherited public diagnostic/generated spans use file, not filename."""
+    require(isinstance(actual, dict) and set(actual) == (LOCATION_FIELDS - {"filename"}) | {"file"},
+            "Inherited public location has an unexpected field set")
+    projected = {("filename" if key == "file" else key): value for key, value in actual.items()}
+    exact_location(projected, expected, units)
+
+
+def result_rekey_expression(case, units):
+    """Select the original result expression, never the first global declaration."""
+    origins = case["source_rekey_records"]
+    explicit = (case.get("expected") or {}).get("root_aggregate_rekey_record")
+    if explicit is not None:
+        require(explicit in origins, "Explicit result origin is not an authored source record")
+        return explicit["expression"]
+    if not origins:
+        return None
+    raw = units["entry"]["source"].encode()
+    tokens = _source_tokens(raw)
+    declarations = [i for i in range(len(tokens) - 5)
+                    if [token[0] for token in tokens[i:i + 5]] == [b"public", b"derive", b"result", b"@", b'"result"']]
+    require(len(declarations) == 1, "Trace result declaration is absent or ambiguous")
+    start = declarations[0]
+    equals = next(i for i in range(start + 5, len(tokens)) if tokens[i][0] == b"=")
+    semicolon = next(i for i in range(equals + 1, len(tokens)) if tokens[i][0] == b";")
+    first, end = tokens[equals + 1][1], tokens[semicolon - 1][2]
+    candidates = [record["expression"] for record in origins if record["expression"]["source_id"] == "entry" and
+                  first <= record["expression"]["start_byte"] < record["expression"]["end_byte"] <= end]
+    outer = [item for item in candidates if not any(other != item and
+             other["start_byte"] <= item["start_byte"] and item["end_byte"] <= other["end_byte"] for other in candidates)]
+    if not outer and len(origins) == 1:
+        # A sole helper expression is unambiguous; its exact frozen source remains checked.
+        outer = [origins[0]["expression"]]
+    require(len(outer) == 1, "Trace result rekey expression cannot be resolved from authored source")
+    return outer[0]
+
+
+def core_member_source_identity(units, object_name, member_name):
+    """Resolve the bounded core fixture's declared member identity from source."""
+    raw = units["entry"]["source"].encode()
+    string = rb'("(?:[^"\\]|\\.)*")'
+    def one(pattern, label):
+        matches = list(re.finditer(pattern, raw))
+        require(len(matches) == 1, "Core dependency " + label + " declaration is absent or ambiguous")
+        return matches[0]
+    module = one(rb'\bmodule\s+[A-Za-z_][A-Za-z0-9_]*\s*@\s*' + string + rb'\s*;', "module")
+    scene = one(rb'\bscene\s+[A-Za-z_][A-Za-z0-9_]*\s*@\s*' + string + rb'\s*{', "scene")
+    obj = one(rb'\bobject\s+' + re.escape(object_name.encode()) + rb'\s*@\s*' + string + rb'\s*:', "object")
+    member = one(rb'\bpublic\s+(?:param|derive)\s+' + re.escape(member_name.encode()) + rb'\s*@\s*' + string + rb'\s*:', "member")
+    return [loads(match[1]) for match in (module, scene, obj, member)]
 
 
 def check_rekeys(records, units, *, expected=None, exact=False, aggregate=False, require_nonempty=True):
@@ -836,11 +915,36 @@ def check_origin_projection(projection, units, *, control=False):
                 field = prefix + name
                 if field in value:
                     require(not (control and name == "rekeys"), "Explicit .18 control acquired .19 origin fields")
-                    count = reader(value[field], units)
+                    if name in ("transforms", "zips"):
+                        count = reader(value[field], units, rekey_records=value.get(prefix + "rekeys", []))
+                    else:
+                        count = reader(value[field], units)
                     counts[name] += count
         if isinstance(value.get("type"), str) and value["type"].startswith("Keyed<") and "derived_rekeys" in value:
             check_rekeys(value["derived_rekeys"], units, aggregate=True)
     return counts
+
+
+def literal_control_keys(units):
+    """Resolve the separately authored outer result literal, including empty."""
+    raw = units["entry"]["source"].encode()
+    match = re.search(rb'public\s+derive\s+result\s*@\s*"result"\s*:[^=;]+?=\s*([^;]+);', raw)
+    require(match is not None, "Literal control lacks its original result declaration")
+    tokens = _source_tokens(match[1])
+    require(tokens and tokens[0][0] == b"keyed", "Unspecified key expectation requires an explicit keyed literal control")
+    types, opening = _type_arguments(tokens, 0, b"keyed")
+    closing = _closing_delimiter(tokens, opening)
+    require(len(types) == 1 and tokens[opening][0] == b"{" and closing == len(tokens) - 1,
+            "Control key reader requires one complete outer immutable literal")
+    boundaries = [opening] + _top_level_commas(tokens, opening + 1, closing) + [closing]
+    keys = []
+    for left, right in zip(boundaries, boundaries[1:]):
+        if left + 1 == right:
+            continue
+        require(tokens[left + 2][0] == b":", "Control literal key delimiter differs")
+        keys.append(loads(tokens[left + 1][0]))
+    require(len(keys) == len(set(keys)), "Control literal repeats an original key")
+    return sorted(keys)
 
 
 def check_core_inspection(actual, control, case, fixtures):
@@ -868,9 +972,8 @@ def check_core_inspection(actual, control, case, fixtures):
     expected = case.get("expected") or {}
     keyed = value["type"].startswith("Keyed<")
     if keyed:
-        keys = expected.get("output_key_order", sorted(expected.get("entry_constructor_values", {})))
-        require(keys or "entry_constructor_values" in expected or "output_key_order" in expected,
-                "Keyed core result lacks authored key expectations")
+        keys = expected["output_key_order"] if "output_key_order" in expected else (
+            sorted(expected["entry_constructor_values"]) if "entry_constructor_values" in expected else literal_control_keys(old_units))
         check_keyed_membership(value, keys)
     records = value.get("derived_rekeys", [])
     if "exact_scalar_rekey_records" in expected:
@@ -898,8 +1001,16 @@ def check_core_inspection(actual, control, case, fixtures):
             if key == expected.get("plain_output_key_has_no_rekey_selected_contributor"):
                 require(all(record["old_key"] is None for record in leaf.get("derived_rekeys", [])),
                         "Plain independent leaf acquired a coincident selected rekey origin")
-    paths = {item["path"] for item in value.get("dependencies", []) if "path" in item}
-    require(set(expected.get("required_actual_member_reads", [])) <= paths, "Rekey lost an actual source read")
+    dependencies = value.get("dependencies", [])
+    for member in expected.get("required_actual_member_reads", []):
+        wanted_id = core_member_source_identity(units, "shape", member)
+        matches = [item for item in dependencies if item.get("path") == "shape." + member]
+        require(len(matches) == 1 and matches[0].get("element_id") == wanted_id and
+                matches[0].get("relationship") == "effective_value_dependency",
+                "Rekey lost or relabeled an actual source member read")
+        owners = [item for item in items if item.get("path") == "shape" and member in item.get("values", {})]
+        require(len(owners) == 1 and owners[0].get("element_id") == wanted_id[:-1],
+                "Dependency does not resolve to its source-declared public owner/member")
     for dependency in value.get("dependencies", []):
         require(dependency["program_revision"] == case["program_revision"], "Result dependency uses stale source")
     if case["name"] == "input-alias-remains-unmodified":

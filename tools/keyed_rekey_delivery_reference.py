@@ -15,7 +15,7 @@ from tools.keyed_rekey_reference import (
     bundle_identity, case_payload, source_units, expected_occurrences,
     check_geometry, check_images, check_motion, implementation_basis,
     check_all_locations, check_rekeys, check_zips, check_merges, check_location,
-    exact_location, original_keyed_entries, intrinsic_locations, merge_source_shape,
+    exact_location, exact_public_location, original_keyed_entries, intrinsic_locations, merge_source_shape,
     zip_source_shape, rekey_source_shape, json_differences, compact_json_bytes,
     check_raw_framing, _source_tokens, _closing_delimiter, _location_identity,
 )
@@ -465,7 +465,7 @@ def check_panel_values(items, case, fixtures, units=None, *, control=False):
             continue
         require(generated and generated["input_key"] == wanted["input_key"] and generated["unique_declaration_span"] is False,
                 "Public generated key/readonly source identity differs")
-        exact_location(generated["input_entry_span"], primary_panel_entry(case, fixtures, path, control=control, sources=sources), units)
+        exact_public_location(generated["input_entry_span"], primary_panel_entry(case, fixtures, path, control=control, sources=sources), units)
         if control:
             require(not any(key in generated for key in ("input_rekeys", "input_zips", "input_merges")),
                     "Literal control acquired current/inherited generated origins")

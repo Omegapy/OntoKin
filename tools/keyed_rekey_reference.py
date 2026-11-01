@@ -28,7 +28,10 @@ TARGET = "ontokin.glb/0.19"
 STORE_SCHEMA = "ontokin.keyed-rekey-program-agent-store/0.1"
 AMENDMENTS = ({"id": "AMENDMENT-C086-001", "commit": "f058cd632e1ef8856d950e5a9d93f373a5ef2fac",
     "sha256": "b87ad95c5c4499545373cbd1846d0c22e272fff8137e976490c61302f8bf488b",
-    "adoption_sha256": "dbd5b7aece83d016086c8f1ee1be37b429b03f632061e277f21832af84e59d09"},)
+    "adoption_sha256": "dbd5b7aece83d016086c8f1ee1be37b429b03f632061e277f21832af84e59d09"},
+    {"id": "AMENDMENT-C086-002", "commit": "4888f3e3d925aaa86cee4542c6d625ac15e21a02",
+     "sha256": "983fd95b9efd9529afaa0b3284f09ec00143699da2a7ec83567a5d2f4a998dcb",
+     "adoption_sha256": "a0e0395bc069b9e2d92718c7328b62570b2a4a97f4969253aa0a22d2fcd29874"})
 DELIVERED_CASES = frozenset({"panel-task", "panel-task-repaired", "panel-task-restored", "panel-task-higher-budget"})
 AGENT_CASES = ("panel-task", "panel-task-repaired", "panel-task-restored", "panel-task-duplicate", "panel-task-invalid-width", "panel-task-higher-budget", "panel-task-ungranted-budget")
 DEFAULT_POLICY = {"max_operations": 100000, "max_elapsed_ms": 30000}
@@ -45,6 +48,8 @@ def case_payload(fixtures, case, *, control=False):
     named = fixtures["cases"][case["name"]]
     require(case["file_manifest"] == named["file_manifest"], "Case manifest differs from frozen row")
     root = fixtures["agent_root"] if case["name"] in fixtures["agent_cases"] else fixtures["root"]
+    if not control:
+        root = fixtures["input_roots"].get(case["name"], root)
     if control:
         require("explicit_c085_control" in named, "Frozen source has no explicit .18 control")
         manifest = named["explicit_c085_control"]["file_manifest"]
@@ -53,8 +58,14 @@ def case_payload(fixtures, case, *, control=False):
     return file_payload(root, manifest)
 
 
-def load_fixtures(root=ROOT / "examples/keyed-rekey"):
-    """Verify every published frozen byte/mode before exposing independent inputs."""
+def load_fixtures(root=ROOT / "examples/keyed-rekey", *, through_amendment="AMENDMENT-C086-002"):
+    """Verify the freeze and an explicit published amendment prefix.
+
+    The default is the current adopted input. The named historical prefix exists
+    only to reread preserved evidence with its original unchanged input lineage.
+    """
+    require(through_amendment in {row["id"] for row in AMENDMENTS}, "Unknown adopted input amendment")
+    active_amendments = AMENDMENTS[:next(i + 1 for i, row in enumerate(AMENDMENTS) if row["id"] == through_amendment)]
     root = Path(root).resolve()
     repository = root.parent.parent
     design = "docs/language-design/keyed-rekey-v0.1/"
@@ -111,6 +122,68 @@ def load_fixtures(root=ROOT / "examples/keyed-rekey"):
     effective_sha = sha((json.dumps(expected, indent=2, ensure_ascii=False) + "\n").encode())
     require(len(replaced) == 11 and effective_sha == amendment["effective_expected_sha256"] == adoption["effective_expected_sha256"],
             "Effective C086 expectation identity differs")
+    input_roots = {}
+    if len(active_amendments) == 2:
+        identity = AMENDMENTS[1]
+        amendment_raw = ordinary_path(repository, amendment_root + identity["id"] + ".json").read_bytes()
+        adoption_raw = ordinary_path(repository, amendment_root + "ADOPTION-002.json").read_bytes()
+        require(sha(amendment_raw) == identity["sha256"] and sha(adoption_raw) == identity["adoption_sha256"],
+                "Published Unicode amendment/adoption identity differs")
+        amendment, adoption = loads(amendment_raw), loads(adoption_raw)
+        require(amendment["frozen_input_commit"] == FREEZE_COMMIT and
+                amendment["frozen_manifest_sha256"] == FREEZE_SHA256 and
+                amendment["original_expected_sha256"] == sha(expected_raw) == adoption["original_expected_sha256"] and
+                amendment["prior_amendments"] == list(AMENDMENTS[:1]) and
+                amendment["prior_effective_expected_sha256"] == effective_sha == adoption["prior_effective_expected_sha256"] and
+                adoption["amendment_sha256"] == identity["sha256"] and adoption["exact_replacements"] == 12,
+                "Unicode amendment does not continue the exact preceding adopted inputs")
+        overlays = amendment["input_overlays"]
+        require(len(overlays) == 1 and overlays[0]["case"] == "output-key-unicode" and
+                overlays[0]["root"] == "examples/keyed-rekey-amendments/AMENDMENT-C086-002" and
+                overlays[0]["file_manifest"] == "output-key-unicode.files.json" and
+                overlays[0]["source"] == "sources/output-key-unicode.ok", "Unadopted source-root override")
+        overlay = overlays[0]
+        overlay_root = ordinary_path(repository, overlay["root"] + "/" + overlay["file_manifest"]).parent
+        require({row["path"] for row in overlay["files"]} == {
+            overlay["root"] + "/" + overlay["file_manifest"], overlay["root"] + "/" + overlay["source"]},
+            "Unicode overlay file inventory differs")
+        for row in overlay["files"]:
+            path = ordinary_path(repository, row["path"]); data = path.read_bytes()
+            require(len(data) == row["bytes"] and sha(data) == row["sha256"] and not path.stat().st_mode & 0o111,
+                    "Published Unicode source/manifest bytes or mode differ")
+        require({path.relative_to(overlay_root).as_posix() for path in overlay_root.rglob("*") if path.is_file()} ==
+                {overlay["file_manifest"], overlay["source"]}, "Unicode overlay contains undeclared input files")
+        edit = amendment["source_edit"]
+        original_source = ordinary_path(repository, edit["source_path"]).read_bytes()
+        corrected_source = ordinary_path(overlay_root, overlay["source"]).read_bytes()
+        require(edit["source_path"] == "examples/keyed-rekey/sources/output-key-unicode.ok" and
+                sha(original_source) == edit["source_sha256_before"] and sha(corrected_source) == edit["source_sha256_after"] and
+                original_source[edit["start_byte"]:edit["end_byte"]] == bytes.fromhex(edit["before_utf8_hex"]) and
+                corrected_source == original_source[:edit["start_byte"]] + bytes.fromhex(edit["after_utf8_hex"]) + original_source[edit["end_byte"]:],
+                "Unicode overlay is not the one adopted exact UTF-8 token edit")
+        allowed = {"program_revision", "canonical_manifest/units/0/source_revision",
+            "source_rekey_records/0/expression/source_revision", "source_rekey_records/0/expression/end_byte",
+            "source_rekey_records/0/input/source_revision", "source_rekey_records/0/body/source_revision",
+            "source_rekey_records/0/body/end_byte", "source_rekey_binders/0/expression/source_revision",
+            "source_rekey_binders/0/expression/end_byte", "expected_diagnostic/primary/source_revision",
+            "expected_diagnostic/primary/end_byte", "expected_diagnostic/related/0/source_revision"}
+        replaced = set()
+        for change in amendment["changes"]:
+            pointer = change["json_pointer"]
+            require(change["operation"] == "replace" and change["case"] == "output-key-unicode" and
+                    pointer.startswith("/cases/107/") and pointer[len("/cases/107/"):] in allowed and
+                    pointer not in replaced and expected["cases"][107]["name"] == "output-key-unicode",
+                    "Unicode amendment changes another expectation role")
+            parts = pointer.split("/")[1:]; parent = expected
+            for part in parts[:-1]:
+                parent = parent[int(part)] if isinstance(parent, list) else parent[part]
+            key = int(parts[-1]) if isinstance(parent, list) else parts[-1]
+            require(parent[key] == change["before"], "Unicode amendment original value differs")
+            parent[key] = change["after"]; replaced.add(pointer)
+        effective_sha = sha((json.dumps(expected, indent=2, ensure_ascii=False) + "\n").encode())
+        require(len(replaced) == 12 and effective_sha == amendment["effective_expected_sha256"] == adoption["effective_expected_sha256"],
+                "Effective Unicode input expectation identity differs")
+        input_roots["output-key-unicode"] = overlay_root
     core = {case["name"]: case for case in expected["cases"]}
     require(len(core) == len(expected["cases"]) == expected["case_count"] == 177,
             "Frozen core source inventory differs")
@@ -119,9 +192,9 @@ def load_fixtures(root=ROOT / "examples/keyed-rekey"):
     agent_root = ordinary_path(root, "agent/workflows.json").parent
     result = {"root": root, "repository": repository, "agent_root": agent_root,
               "freeze": freeze, "expected": expected, "original_expected": original_expected, "core_cases": core,
-              "agent_cases": {}, "cases": dict(core),
+              "agent_cases": {}, "cases": dict(core), "input_roots": input_roots,
               "original_expected_sha256": sha(expected_raw),
-              "effective_expected_sha256": effective_sha, "amendments": copy.deepcopy(list(AMENDMENTS))}
+              "effective_expected_sha256": effective_sha, "amendments": copy.deepcopy(list(active_amendments))}
     for name, filename in (("workflows", "workflows.json"), ("delivery", "delivery-comparison.json"),
                            ("budget", "budget-expectations.json"), ("geometry", "geometry-expectations.json"),
                            ("adversaries", "supplied-byte-adversaries.json")):
@@ -132,7 +205,7 @@ def load_fixtures(root=ROOT / "examples/keyed-rekey"):
     require(result["adversaries"]["expected_isolated_refusals"] == 68,
             "Frozen supplied-byte inventory differs")
     for case in core.values():
-        require(bundle_identity(file_payload(root, case["file_manifest"])) ==
+        require(bundle_identity(file_payload(input_roots.get(case["name"], root), case["file_manifest"])) ==
                 (case["program_revision"], case["canonical_manifest"]),
                 "Frozen core bundle identity differs: " + case["name"])
         if "explicit_c085_control" in case:
@@ -246,7 +319,7 @@ from tools.keyed_zip_reference import (
 from tools.keyed_rekey_source_reference import (
     canonical_probe_type, source_units, codes, walk, check_location, same_location,
     check_all_locations, original_keyed_entries, inspect_member, semantic_value,
-    check_keyed_membership, merge_location, exact_location, intrinsic_locations,
+    check_keyed_membership, merge_location, exact_location, exact_public_location, intrinsic_locations,
     merge_source_shape, zip_source_shape, rekey_source_shape, check_transforms,
     check_reductions, check_filters, check_merges, check_zips, check_rekeys,
     enriched_zip_records, with_merge_side, diagnostic_anchor, check_origin_projection,
