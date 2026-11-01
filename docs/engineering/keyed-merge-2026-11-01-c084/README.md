@@ -1,6 +1,6 @@
 # C084 bounded pure keyed merge
 
-**C084 bounded pure keyed merge is a validated development candidate in [PR #83](https://github.com/Omegapy/OntoKin/pull/83).** Exact candidate review, merge and resulting-main checks remain pending at this publication.
+**C084 bounded pure keyed merge is integrated experimental development through [PR #83](https://github.com/Omegapy/OntoKin/pull/83).**
 
 ## Contract and source identity
 
@@ -43,9 +43,11 @@ The exact C083 predecessor and delivery closure were verified before C084. An in
 
 ## Integration and continuation
 
-Main integration lease: **interactive-c084-keyed-merge-20261101-2f03**, acquired through expected-head commit `c5040118a77cc22fb92e60440160d47c6686879c` against observed main `c4451efe1f4d869b9644375f3a4ed52467304af0`, expires **2026-11-01T15:51:15.390785+00:00**. This lease reserves main and its coordination state for C084 integration; it does not block independent nonoverlapping work.
+Reviewed candidate `9184b1e7755ded4ae4d107aa9c08b8c5688a77a6`, tree `e357143df239fb8a4eab07df98031e13d2cae5eb`, merged as actual main `cb6166d9d02259e51b6403ff2f47c7439d8a3ef0`, tree `e357143df239fb8a4eab07df98031e13d2cae5eb`. Both actual merge parents and the expected tree were verified. All **6,555 non-coordination files and modes** match fully tested source. Fresh resulting-main checks passed **27 focused tests**, **43 original source cases / 694 assertions** and documentation preservation/navigation, with source and Git unchanged throughout.
 
-The candidate is limited to the four enumerated coordination paths beyond the tested tree. All runtime, tests, tools, grammar, frozen inputs, assets, workflow and dependency bytes/modes must match tested source exactly. Independent exact-candidate approval, expected-head PR merge, actual merge readback, resulting-main checks, lease release and final publication remain required. No hosted execution or continuation schedule was started; observed Actions remains 198 runs, latest created `2026-10-19T15:43:43Z`.
+This following expected-head documentation publication releases **interactive-c084-keyed-merge-20261101-2f03**'s bounded integration lease only after successful publication and actual readback. The actual final publication record separately establishes the resulting final head and release. The remote work branch is observed absent after its exact head was retained in main's merge parents; the historical archive branch remains unchanged. No hosted execution was dispatched; the observed inventory remains 198 runs, latest created `2026-10-19T15:43:43Z`.
+
+This source snapshot does not establish later ZIP verification, fresh source/workspace recovery, independent actual-package audit or durable whole-file save/readback. The matching finite C084 completion entry in [Issue #26](https://github.com/Omegapy/OntoKin/issues/26) binds those separate results. Broader Issue #26 remains open.
 
 [integration.json](integration.json) separates candidate, merge, resulting-main checks and final publication. Only `STATUS.md`, this README, this validation summary and this integration record may differ from the fully tested cut. Every other tracked path, byte and mode must remain exact. Later whole-ZIP verification, fresh native Git/source recovery, both evidence-workspace recoveries, independent actual-package audit and durable readback are recorded externally after packaging, avoiding a self-hash cycle.
 
