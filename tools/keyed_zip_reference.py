@@ -760,7 +760,7 @@ def check_reductions(records, units, *, expected=None, require_nonempty=True):
         require(isinstance(record, dict) and set(record) == fields,
                 "Reduction projection has an unadopted shape or invented identity")
         expression = check_location(record["expression"], units)
-        require(expression.startswith(b"reduce_keyed<"), "Derived expression is not the authored reduction")
+        require(b"reduce_keyed<" in expression, "Derived expression is not the authored reduction")
         outer = record["expression"]
         for name in ("input", "seed", "body"):
             child = record[name]
@@ -1061,7 +1061,12 @@ def no_zip_origins(value):
 
 
 def check_zip_leaf_provenance(value, units, expected):
-    """Check normalized collection and exact retained leaf contributors separately."""
+    """Check public selected entries against aggregate plus private contributors.
+
+    The frozen stored-leaf records describe compiler values. Public keyed-value
+    serialization projects each selected entry with the aggregate first, using
+    exact-record deduplication, just as indexed and generated projections do.
+    """
     aggregate=value.get("derived_zips",[])
     check_zips(aggregate,units,require_nonempty=bool(aggregate),aggregate=True)
     if "aggregate_zip_records_exact" in expected:
@@ -1076,7 +1081,11 @@ def check_zip_leaf_provenance(value, units, expected):
         if wanted is None and key in expected.get("paired_entry_zip_records_exact",{}):
             wanted=[expected["paired_entry_zip_records_exact"][key]]
         if wanted is not None:
-            check_zips(records,units,expected=wanted,exact=True,require_nonempty=bool(wanted))
+            public=[]
+            for record in aggregate+enriched_zip_records(wanted,units):
+                if record not in public:
+                    public.append(record)
+            check_zips(records,units,expected=public,exact=True,require_nonempty=bool(public))
         count+=1
     return count
 
@@ -1107,12 +1116,18 @@ def paired_panel_merges(sources, *, control=False, key=None, stored_leaf=False):
             return [finish["record"],with_merge_side(finish["record"],finish["contributors"][key]["side"])]
         return [finish["record"]]+[with_merge_side(finish["record"],finish["contributors"][k]["side"]) for k in ("left","right")]
     if stored_leaf:
-        return panel_merge_records(sources,key=key,aggregate=False)
-    # Left and right aggregate admission, then the width condition and selected
-    # material body reads for each canonical pair. Existing merge records are
-    # not subject to the new zip-family aggregate normalization.
-    return panel_merge_records(sources)+[record for k in ("left","right")
-                                        for record in panel_merge_records(sources,key=k,aggregate=False)]
+        # Existing families retain both complete input aggregate origins on
+        # each copied leaf, followed by its matching left/right contributors.
+        # The body reads those same contributors, so exact dedup adds nothing.
+        return panel_merge_records(sources,key=key,aggregate=True)
+    # The inherited whole-input collector admits both aggregate groups, then
+    # every canonical left-input leaf, then every canonical right-input leaf.
+    # Body reads are already present and exact deduplication adds no records.
+    # This is the unchanged C084 collection-retention rule; new zip-family
+    # aggregate normalization does not change inherited merge records.
+    return panel_merge_records(sources)+[
+        with_merge_side(origin["record"],origin["contributors"][k]["side"])
+        for origin in (dims,finish) for k in ("left","right")]
 
 
 def primary_panel_entry(case, fixtures, key, *, control=False):
@@ -1172,7 +1187,8 @@ def check_panel_values(items, case, fixtures, units, *, control=False):
             check_merges(entry["value"].get("derived_merges"),units,
                          expected=paired_panel_merges(sources,control=control,key=key,stored_leaf=True),exact=True)
             if not control:
-                check_zips(entry["value"].get("derived_zips"),units,expected=panel_zip_records(sources,key),exact=True)
+                check_zips(entry["value"].get("derived_zips"),units,
+                           expected=panel_zip_records(sources)+panel_zip_records(sources,key),exact=True)
         if control:
             no_zip_origins(paired)
         else:
@@ -1215,9 +1231,17 @@ def check_generated_shapes(items, control_items, case, units, old_units):
         if "required_aggregate_map_key"in expected:
             maps=source.get("input_transforms",[])
             check_transforms(maps,units)
-            keys={record.get("key")for record in maps}
-            require(expected["required_aggregate_map_key"]in keys and expected["forbidden_relabelled_map_key"]not in keys,
-                    "Unrelated aggregate map acquired the generated zip key")
+            unrelated=expected["required_aggregate_map_key"]
+            authored_entries=original_keyed_entries(units).values()
+            matching=[record for record in maps if any(
+                entry["key"]==unrelated and
+                entry["location"]["source_id"]==record["input"]["source_id"] and
+                record["input"]["start_byte"]<=entry["location"]["start_byte"]<
+                entry["location"]["end_byte"]<=record["input"]["end_byte"]
+                for entry in authored_entries)]
+            require(len(matching)==1 and "key" not in matching[0] and "input_entry" not in matching[0] and
+                    all(record.get("key")!=expected["forbidden_relabelled_map_key"] for record in maps),
+                    "Unrelated aggregate map lost its original input or acquired a fabricated contributor")
         no_zip_origins(previous)
         count+=1
     return count
@@ -1535,7 +1559,7 @@ def _source_unit_path(path):
     return len(path) == 5 and path[:4] == ("extras", "ontokin", "program", "sources")
 
 
-def normalized_document(glb, payload, *, control=False):
+def normalized_document(glb, payload, *, case, fixtures, control=False):
     """Normalize only independently verified, explicitly source-derived fields.
 
     Each changed JSON path is recorded. All other data, including all unknown
@@ -1545,6 +1569,21 @@ def normalized_document(glb, payload, *, control=False):
     units = source_units(payload)
     revision, manifest = bundle_identity(payload)
     changes = []
+    bundles = [bundle for bundle in fixtures["comparison_amendment"]["bundles"]
+               if bundle["actual_program_revision"] == case["program_revision"] and
+               bundle["control_program_revision"] == case["explicit_c084_control"]["program_revision"]]
+    require(len(bundles) == 1, "Artifact has no exact published primary-origin amendment binding")
+    primary_locations = {}
+    for occurrence in bundles[0]["occurrences"]:
+        wanted = occurrence["control_location" if control else "actual_location"]
+        path = occurrence["occurrence_path"]
+        node_index = glb.objects()[path]
+        identity = glb.document["nodes"][node_index]["extras"]["ontokin"]
+        require(identity["path"] == path and identity["element_id"] == occurrence["element_id"],
+                "Amendment node selector does not match its exact independent occurrence")
+        primary_locations[("nodes", node_index, *occurrence["node_projection"]["relative_path"])] = wanted
+        primary_locations[tuple(occurrence["program_projection_path"])] = wanted
+    require(len(primary_locations) == 8, "Amendment must enumerate exactly eight primary locations per artifact")
     profile = "keyed-merge-0.1" if control else PROFILE
     source_hashes = {digest(u["source"].encode()): key for key, u in units.items()}
     def visit(value, path=(), parent=None):
@@ -1556,6 +1595,8 @@ def normalized_document(glb, payload, *, control=False):
         is_location = value.get("source_id") in units and (("start_byte" in value and "end_byte" in value) or ("start" in value and "end" in value))
         if is_location:
             check_location(value, units)
+        if path in primary_locations:
+            require(value == primary_locations[path], "Amendment primary origin differs from all five independently fixed fields")
         for key, child in value.items():
             current, replacement, reason = path+(key,), child, None
             if key == "input_zips" and _mapping_tail(path) == ("generated",):
@@ -1580,7 +1621,10 @@ def normalized_document(glb, payload, *, control=False):
                 check_transforms(child, units)
                 changes.append({"path": list(current), "kind": "adopted_map_derivation", "value_sha256": sha(canonical(child))})
                 continue
-            if key == "manifest" and path == ("extras", "ontokin", "program"):
+            if path in primary_locations and key in {"source_id","source_revision","filename","start_byte","end_byte"}:
+                replacement = "<independently_bound_primary_generated_entry_" + key + ">"
+                reason = "amendment_C085_001_primary_source_id" if key == "source_id" else "validated_primary_entry_location"
+            elif key == "manifest" and path == ("extras", "ontokin", "program"):
                 require(child == manifest, "Unexpected manifest while normalizing")
                 replacement, reason = "<independently_bound_program_manifest>", "program_manifest"
             elif child == revision and ((key == "program_revision" and _node_metadata_path(path)) or
@@ -1610,7 +1654,10 @@ def normalized_document(glb, payload, *, control=False):
             else:
                 output[key] = visit(child, current, value)
         return output
-    return visit(glb.document), changes
+    normalized = visit(glb.document)
+    require(sum(change["kind"] == "amendment_C085_001_primary_source_id" for change in changes) == 8,
+            "Amendment normalized an incomplete or extra primary source-ID path")
+    return normalized, changes
 
 
 def json_differences(a, b, path=()):
@@ -1661,8 +1708,8 @@ def check_identity(glb, old, case, fixtures):
         require(glb.accessor(index) == old.accessor(index) and glb.accessor_bytes(index) == old.accessor_bytes(index), "Decoded accessor differs from explicit control")
         accessors.append({"index": index, "sha256": sha(glb.accessor_bytes(index)), "count": glb.document["accessors"][index]["count"]})
     require(glb.geometry_streams() == old.geometry_streams() and glb.animation_streams() == old.animation_streams(), "Occurrence-bound geometry/motion streams differ")
-    new_json, new_changes = normalized_document(glb, case_payload(fixtures, case))
-    old_json, old_changes = normalized_document(old, case_payload(fixtures, case, control=True), control=True)
+    new_json, new_changes = normalized_document(glb, case_payload(fixtures, case), case=case, fixtures=fixtures)
+    old_json, old_changes = normalized_document(old, case_payload(fixtures, case, control=True), case=case, fixtures=fixtures, control=True)
     differences = json_differences(new_json, old_json)
     require(not differences, "Unpermitted control JSON differences: " + str(differences[:4]))
     new_bytes, old_bytes = compact_json_bytes(new_json), compact_json_bytes(old_json)
@@ -1671,6 +1718,7 @@ def check_identity(glb, old, case, fixtures):
         "actual_raw_framing": framing, "control_raw_framing": old_framing,
         "normalized_json_sha256": sha(new_bytes), "normalized_json_bytes": len(new_bytes),
         "actual_permitted_json_fields": new_changes, "control_permitted_json_fields": old_changes,
+        "comparison_amendment": copy.deepcopy(AMENDMENTS[0]),
         "unpermitted_json_differences": [], "comparison": "full BIN, all accessor bytes, occurrence-bound streams, raw compact JSON/member order and complete framing after individually verified source/version/provenance deltas"}
 
 

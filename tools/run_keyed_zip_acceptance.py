@@ -64,7 +64,7 @@ class ZipExecutionObserver:
     """Read original dynamic calls and real cumulative checkpoints unchanged."""
     def __init__(self,context):
         self.ledger=context.execution_budget
-        self.invocations,self.active,self.inputs,self.maps=[],[],[],[]
+        self.invocations,self.active,self.inputs,self.maps,self.abstract_calls=[],[],[],[],[]
 
     def __enter__(self):
         from unittest.mock import patch
@@ -72,6 +72,7 @@ class ZipExecutionObserver:
         original_expression=ConstructionCompiler.expression
         original_admission=ConstructionCompiler._keyed_zip_input
         original_checkpoint=ConstructionCompiler._keyed_zip_checkpoint
+        original_unknown=ConstructionCompiler._unknown_local_context
         def expression(compiler,node,context):
             return self.expression(original_expression,compiler,node,context)
         def admission(compiler,operand,token,context,element_type):
@@ -101,9 +102,18 @@ class ZipExecutionObserver:
                                                   "value_entries":compiler.budget.value_entries})
                     record["keyset_keys"if stage=="keyed_zip_keyset"else"iteration_keys"].append(key)
                     record["timeline"].append({"event":stage,"key":key})
+        def unknown(compiler,context,node):
+            result=original_unknown(compiler,context,node)
+            if self.abstract_calls:
+                observed_compiler,observed_node,observed=self.abstract_calls[-1]
+                if observed_compiler is compiler and observed_node is node:
+                    observed["effective_locals"]=self.local_types(result)
+                    observed["mask_observed"]=True
+            return result
         self.patches=[patch.object(ConstructionCompiler,"expression",expression),
                       patch.object(ConstructionCompiler,"_keyed_zip_input",admission),
-                      patch.object(ConstructionCompiler,"_keyed_zip_checkpoint",checkpoint)]
+                      patch.object(ConstructionCompiler,"_keyed_zip_checkpoint",checkpoint),
+                      patch.object(ConstructionCompiler,"_unknown_local_context",unknown)]
         for instrument in self.patches:instrument.start()
         return self
 
@@ -116,14 +126,35 @@ class ZipExecutionObserver:
         entries=getattr(value.value,"entries",None)if value.known else None
         return [key for key,_ in entries]if entries is not None else None
 
+    @staticmethod
+    def local_types(context):
+        return {name:{"type":str(value.type),"known":value.known}
+                for name,value in context.locals.items()}
+
+    @staticmethod
+    def private_zips(compiler,value):
+        # These two getters are uncharged and return already-retained data.
+        # Do not call public zip_provenance(), which legitimately charges the
+        # request for constructing a public projection.
+        return [{"expression":compiler.location(origin.expression),
+                 "left":compiler.location(origin.left),"right":compiler.location(origin.right),
+                 "body":compiler.location(origin.body),"left_element_type":str(origin.left_type),
+                 "right_element_type":str(origin.right_type),"output_element_type":str(origin.output_type),
+                 "key":origin.key,"left_entry":compiler.location(origin.left_entry),
+                 "right_entry":compiler.location(origin.right_entry)} for origin in compiler._zip_records(value)]
+
     def expression(self,original,compiler,node,context):
-        owner,side,record=None,None,None;map_scope=None
+        owner,side,record=None,None,None;map_scope=None;abstract_scope=None
         if self.active and self.active[-1][0]is compiler:
             _,current,owner=self.active[-1]
             if node is current.body:
                 if context.abstract:
-                    owner["abstract_body_checks"].append({"locals":{name:{"type":str(value.type),"known":value.known}
-                                                                    for name,value in context.locals.items()}})
+                    incoming=self.local_types(context)
+                    observed={"locals":incoming,"body_evaluations_started":len(owner["body_keys"]),
+                              "effective_locals":None if any(v["known"]for v in incoming.values())else incoming,
+                              "mask_observed":False}
+                    owner["abstract_body_checks"].append(observed)
+                    abstract_scope=(compiler,node,observed);self.abstract_calls.append(abstract_scope)
                 else:
                     key=context.locals.get(current.key_name)
                     value=key.value if key is not None and key.known else None
@@ -163,6 +194,12 @@ class ZipExecutionObserver:
                 owner[side+"_keys"]=self.keys(result);owner[side+"_type"]=str(result.type)
             if record is not None:
                 record.update(output_keys=self.keys(result),output_type=str(result.type))
+                operations,entries=self.ledger.operations,compiler.budget.value_entries
+                record["aggregate_zip_records"]=self.private_zips(compiler,result)
+                record["stored_leaf_zip_records"]={key:self.private_zips(compiler,leaf)
+                                                    for key,leaf in result.value.entries}
+                record["snapshot_ledger"]={"operations_before":operations,"value_entries_before":entries,
+                    "operations_after":self.ledger.operations,"value_entries_after":compiler.budget.value_entries}
             return result
         except BaseException as error:
             if record is not None:record["exception"]=error_record(error)
@@ -172,6 +209,7 @@ class ZipExecutionObserver:
                 record.update(operations_after=self.ledger.operations,value_entries_after=compiler.budget.value_entries)
                 self.active.pop()
             if map_scope is not None:self.maps.pop()
+            if abstract_scope is not None:self.abstract_calls.pop()
 
 
 from tools.keyed_zip_agent_workflows import KeyedZipAgentWorkflows
@@ -195,7 +233,8 @@ class Acceptance(KeyedZipAgentWorkflows, TextureAcceptance):
         self.Service = KeyedZipAgentService
         self.fixtures, self.output = fixtures, output
         self.trace_cases = {case["name"] for case in fixtures["expected"]["cases"]
-            if bool(set(case.get("expected", {})) & {"left_input_evaluations", "body_evaluations", "body_key_order_before_failure", "left_dynamic_divisions"})}
+            if bool(set(case.get("expected", {})) & {"left_input_evaluations", "body_evaluations", "body_key_order_before_failure", "left_dynamic_divisions",
+                                                    "stored_leaf_zips_exact","paired_entry_zip_records_exact"})}
         self.fixture_root = Path(fixtures["root"])
         self.serial, self.transcript, self.service = 0, [], None
         self.project, self.scenario = "", None
