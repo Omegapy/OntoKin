@@ -10,6 +10,23 @@ The current direction begins with exterior 3D models and short animations. Those
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
 
+### Combine named part groups with explicit collision refusal
+
+Explicit source `0.17` / `keyed-merge-0.1` combines two immutable keyed values with the same exact element type:
+
+```ontokin
+merge_keyed<Length>(standard_widths, optional_widths)
+```
+
+The operation evaluates and fully admits the left input once, then the right input once. It refuses the lowest shared ASCII key even when its values are equal. A disjoint result keeps original keys and detached typed values in canonical order, with at most 256 entries. Both inputs' actual dependencies and source origins remain available through later construction and inspection.
+
+```bash
+python3 -m ontokin export examples/keyed-merge/panel-task.files.json --bundle --target ontokin.glb/0.17 --output /tmp/ontokin-merged-panels.glb
+python3 -m ontokin agent --protocol ontokin.agent/0.17 --store /tmp/ontokin-keyed-merge-agent
+```
+
+The [versioned decision](docs/language-design/keyed-merge-v0.1/ADOPTION.md), [frozen examples](examples/keyed-merge/README.md), [Agent/0.17 guide](docs/language-design/agent-v0.17/README.md) and [C084 engineering record](docs/engineering/keyed-merge-2026-11-01-c084/README.md) separate semantics, actual verification and integration. The representative repair adds and then removes an optional vent in one occurrence while preserving its standard panels, sibling, pinned image and unrelated recorded motion. This explicit experimental capability keeps ordinary 100,000-operation / 30,000-ms defaults and adds no physical or motion authority. Complete feature release and full-product acceptance remain open.
+
 ### Select optional keyed parts while preserving surviving identities
 
 Explicit source `0.16` / `keyed-filter-0.1` adds a bounded pure selection:

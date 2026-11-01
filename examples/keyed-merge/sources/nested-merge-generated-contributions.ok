@@ -1,0 +1,24 @@
+ontokin "0.17";
+module Union @ "union";
+profile "keyed-merge-0.1";
+
+public class Leaf @ "leaf" {
+    public param size @ "size": Length = 0.25[m];
+    geometry = sphere(self.size);
+    physical = no_body();
+}
+public class Family @ "family" {
+    public param sizes @ "sizes": Keyed<Length> = keyed<Length>{"a": 0.25[m]};
+    public param optional @ "optional": Keyed<Length> = keyed<Length>{"z": 0.5[m]};
+    
+    
+    public derive result @ "result": Keyed<Length> = merge_keyed<Length>(merge_keyed<Length>(keyed<Length>{"a": 0.25[m]}, keyed<Length>{"b": 0.5[m]}), keyed<Length>{"c": 0.75[m]});
+    public parts leaves @ "leaves": Leaf for (child_key, child_value) in self.result { size = child_value; }
+    geometry = empty();
+    physical = no_body();
+}
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object rig @ "rig": Family {  }
+}
