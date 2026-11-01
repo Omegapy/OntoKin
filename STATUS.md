@@ -1,5 +1,11 @@
 # OntoKin status
 
+## Active integration lease
+
+Owner **interactive-c084-keyed-merge-20261101-2f03** holds the bounded C084 main integration scope after this expected-head publication is successfully applied and read back. Starting observed main: `c4451efe1f4d869b9644375f3a4ed52467304af0`. Acquired: **2026-11-01T15:21:15.390785+00:00**. Expires: **2026-11-01T15:51:15.390785+00:00**.
+
+Scope: independently reviewed C084 pure keyed merge, exact candidate publication, protected PR #83 merge, resulting-main verification and final lease release. Main and STATUS coordination writes are reserved to this verified holder while live. Independent nonoverlapping branch work may continue. Current hosted workflows remain manual-only/default-false; no hosted execution or continuation schedule is started. The C083 baseline and historical evidence below retain their meanings until the reviewed C084 integration is actually published.
+
 ## Current development baseline
 
 OntoKin's [GOAL](GOAL.md) is an AI-agent language for editable meaningful 3D objects, animation and simulation through authoritative `.ok` source. Finite increments do not complete that mission.
@@ -24,7 +30,7 @@ Fresh .15 predecessor evidence passed **128 source outcomes**, **62 explicit .14
 
 Reviewed candidate `65b3d566e2caed801692631d668d0fea9eb3e4a1`, tree `3994b3dfe8120238b1f1be2eb438c2108419978b`, merged through [PR #82](https://github.com/Omegapy/OntoKin/pull/82) as actual main `d2098aff57290d7c26dfc25d2812e58fd04bc607`, tree `3994b3dfe8120238b1f1be2eb438c2108419978b`. Both actual parents and the expected merge tree were verified. All 6,060 non-coordination files and their modes match the fully tested source. Fresh resulting-main checks passed 56 focused tests, 43 original source cases / 694 assertions, and documentation preservation/navigation, with source and Git unchanged throughout.
 
-This following expected-head publication releases **interactive-c083-keyed-filter-20261031-284e**'s bounded integration lease after successful publication and actual readback. **No main integration lease remains active** after that verified publication. The remote work branch is observed absent, its exact head is retained in main's merge parents, and the historical archive branch remains unchanged. No hosted execution was dispatched; the observed inventory contains 198 runs, latest created `2026-10-19T15:43:43Z`. Final publication and post-package delivery are bound separately through the [C083 scope entry](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6550228962). This source snapshot does not establish later ZIP verification, fresh recovery, independent package audit or durable save/readback. Broader Issue #26 remains open.
+This following expected-head publication releases **interactive-c083-keyed-filter-20261031-284e**'s bounded integration lease after successful publication and actual readback. That verified C083 publication left no main integration lease active; the current C084 lease is recorded above. The remote work branch is observed absent, its exact head is retained in main's merge parents, and the historical archive branch remains unchanged. No hosted execution was dispatched; the observed inventory contains 198 runs, latest created `2026-10-19T15:43:43Z`. Final publication and post-package delivery are bound separately through the [C083 scope entry](https://github.com/Omegapy/OntoKin/issues/26#issuecomment-6550228962). This source snapshot does not establish later ZIP verification, fresh recovery, independent package audit or durable save/readback. Broader Issue #26 remains open.
 
 The handoff retains original authoring/reader failures, strict-Bool and shared-payload taint defects, the first actual H11 metadata acceptance and the independent review's five additional accepted metadata locations. The final general .16 metadata closure corrects these cases without changing frozen expectations, encoders, numerical proofs or earlier profile meanings. The first native process-permission refusal remains retained alongside its successful pinned-tool rerun.
 
