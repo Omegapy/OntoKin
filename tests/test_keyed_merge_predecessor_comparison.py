@@ -3,6 +3,7 @@ from copy import deepcopy
 import unittest
 
 from tools.compare_keyed_merge_predecessor import compare_glb, packed_exact
+from tools.keyed_merge_adversaries import repack_preserving_member_order
 from tools.texture_reference import ReferenceError
 
 
@@ -38,6 +39,17 @@ class PredecessorComparison(unittest.TestCase):
         changed = self.compare(self.new_document)
         self.assertEqual(changed["comparison"], "fingerprint_only")
         self.assertEqual(len(changed["permitted_json_differences"]), 2)
+
+    def test_hostile_encoder_retains_unrelated_native_member_order(self):
+        document = deepcopy(self.new_document)
+        document["extras"]["ontokin"]["program"]["manifest"] = {"second": 2, "first": 1}
+        raw = packed_exact(document, self.binary)
+        self.assertEqual(repack_preserving_member_order(deepcopy(document), self.binary), raw)
+        document["extras"]["ontokin"]["provenance"].reverse()
+        changed = repack_preserving_member_order(document, self.binary)
+        self.assertNotEqual(raw, changed)
+        document["extras"]["ontokin"]["provenance"].reverse()
+        self.assertEqual(repack_preserving_member_order(document, self.binary), raw)
 
     def test_unknown_metadata_and_provenance_order_are_never_suppressed(self):
         for mutation in ("unknown", "provenance", "source", "derivation"):

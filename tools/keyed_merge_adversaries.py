@@ -2,9 +2,10 @@
 from __future__ import annotations
 
 import copy
+import json
 import struct
 
-from tools.keyed_merge_reference import GLB, TARGET, repack_glb, require, sha
+from tools.keyed_merge_reference import GLB, TARGET, require, sha
 
 MUTATIONS = (
     'Complete BIN position scalar changed while JSON metadata remains exact',
@@ -29,10 +30,24 @@ MUTATIONS = (
 )
 
 
+def repack_preserving_member_order(document, binary):
+    """Mutate only prescribed data; retain all unrelated JSON member order."""
+    document["buffers"][0]["byteLength"] = len(binary)
+    text = json.dumps(document, ensure_ascii=False, allow_nan=False, separators=(",", ":")).encode("utf-8")
+    text += b" " * (-len(text) % 4)
+    padded = binary + b"\0" * (-len(binary) % 4)
+    total = 12 + 8 + len(text) + 8 + len(padded)
+    return (struct.pack("<III", 0x46546c67, 2, total) + struct.pack("<II", len(text), 0x4e4f534a) +
+            text + struct.pack("<II", len(padded), 0x004e4942) + padded)
+
+
 def build_mutations(raw, case):
     """Build H01–H19 from retained successful bytes, without predicting a result."""
     name = case["name"] if isinstance(case, dict) else case
     original = GLB(raw, target=TARGET)
+    declared_binary = original.binary[:original.document["buffers"][0]["byteLength"]]
+    require(repack_preserving_member_order(copy.deepcopy(original.document), declared_binary) == raw,
+            "Unchanged supplied-byte baseline cannot be repacked without an unrelated JSON/framing change")
     records = []
     for ordinal, mutation in enumerate(MUTATIONS, 1):
         document = copy.deepcopy(original.document)
@@ -106,7 +121,7 @@ def build_mutations(raw, case):
             document["extras"]["ontokin"]["unadopted_metadata"] = {"selection_claim": "unverified"}
         elif ordinal != 12:
             raise AssertionError(ordinal)
-        changed = raw + b"\0\0\0\0" if ordinal == 12 else repack_glb(document, bytes(binary))
+        changed = raw + b"\0\0\0\0" if ordinal == 12 else repack_preserving_member_order(document, bytes(binary))
         require(changed != raw, "Supplied-byte adversary did not change the successful baseline")
         records.append({"id": f"H{ordinal:02}", "case": name, "mutation": mutation, "base_sha256": sha(raw),
                         "sha256": sha(changed), "bytes": len(changed), "data": changed})
