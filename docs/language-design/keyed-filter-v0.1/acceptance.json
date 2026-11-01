@@ -1,0 +1,1373 @@
+{
+  "schema_version": "ontokin.c083-acceptance/0.1",
+  "status": "independently_reviewed_frozen_before_runtime",
+  "cases": [
+    {
+      "id": "F001",
+      "name": "empty-length",
+      "groups": [
+        "empty",
+        "strict-predicate",
+        "units"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F002",
+      "name": "singleton-keep",
+      "groups": [
+        "singleton",
+        "keep"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F003",
+      "name": "singleton-drop",
+      "groups": [
+        "singleton",
+        "drop"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F004",
+      "name": "keep-all",
+      "groups": [
+        "keep-all",
+        "canonical-order"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F005",
+      "name": "drop-all",
+      "groups": [
+        "drop-all",
+        "canonical-order"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F006",
+      "name": "mixed-membership",
+      "groups": [
+        "mixed",
+        "stable-keys"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F007",
+      "name": "maximum-256",
+      "groups": [
+        "maximum",
+        "bounded-work",
+        "canonical-order"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F008",
+      "name": "maximum-keep-all",
+      "groups": [
+        "maximum",
+        "bounded-work",
+        "canonical-order"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F009",
+      "name": "maximum-drop-all",
+      "groups": [
+        "maximum",
+        "bounded-work",
+        "canonical-order"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F010",
+      "name": "ascii-and-punctuation-keys",
+      "groups": [
+        "keys",
+        "canonical-order",
+        "case"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F011",
+      "name": "literal-reordered",
+      "groups": [
+        "source-reorder",
+        "stable-identity"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F012",
+      "name": "maximum-key-length",
+      "groups": [
+        "64-byte-key"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F013",
+      "name": "equivalent-quantity-alias",
+      "groups": [
+        "exact-type",
+        "alias-equivalence"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F014",
+      "name": "leaf-bool",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "bool"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F015",
+      "name": "leaf-color",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "color"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F016",
+      "name": "leaf-frame",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "frame"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F017",
+      "name": "leaf-framed-section",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "framed-section"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F018",
+      "name": "leaf-int",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "int"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F019",
+      "name": "leaf-loft-section",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "loft-section"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F020",
+      "name": "leaf-material",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "material"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F021",
+      "name": "leaf-planar-point",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "planar-point"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F022",
+      "name": "leaf-planar-uv",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "planar-uv"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F023",
+      "name": "leaf-point3",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "point3"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F024",
+      "name": "leaf-polygon-pocket",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "polygon-pocket"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F025",
+      "name": "leaf-polygon-ring",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "polygon-ring"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F026",
+      "name": "leaf-polygon-section",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "polygon-section"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F027",
+      "name": "leaf-polygon-vertex",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "polygon-vertex"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F028",
+      "name": "leaf-pose",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "pose"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F029",
+      "name": "leaf-quantity",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "quantity"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F030",
+      "name": "leaf-range",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "range"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F031",
+      "name": "leaf-real",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "real"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F032",
+      "name": "leaf-rotation",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "rotation"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F033",
+      "name": "leaf-string",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "string"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F034",
+      "name": "leaf-texture-binding",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "texture-binding"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F035",
+      "name": "leaf-texture-image",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "texture-image"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F036",
+      "name": "leaf-vec3",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "vec3"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F037",
+      "name": "leaf-vector3",
+      "groups": [
+        "leaf-whitelist",
+        "preserved-value",
+        "vector3"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F038",
+      "name": "empty-domain-predicate",
+      "groups": [
+        "static-check",
+        "selected-branch",
+        "dynamic-domain"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F039",
+      "name": "unselected-domain-predicate",
+      "groups": [
+        "static-check",
+        "selected-branch",
+        "dynamic-domain"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F040",
+      "name": "empty-captured-zero",
+      "groups": [
+        "captured-local-masking",
+        "empty"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F041",
+      "name": "unselected-captured-zero",
+      "groups": [
+        "captured-local-masking",
+        "unselected-branch"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F042",
+      "name": "map-then-filter",
+      "groups": [
+        "composition",
+        "provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F043",
+      "name": "filter-then-map",
+      "groups": [
+        "composition",
+        "provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F044",
+      "name": "filter-then-reduce",
+      "groups": [
+        "composition",
+        "provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F045",
+      "name": "reduce-in-predicate",
+      "groups": [
+        "composition",
+        "provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F046",
+      "name": "filter-in-map-body",
+      "groups": [
+        "composition",
+        "provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F047",
+      "name": "nested-filter",
+      "groups": [
+        "composition",
+        "provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F048",
+      "name": "map-constant-retains-filter",
+      "groups": [
+        "composition",
+        "provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F049",
+      "name": "reduce-constant-retains-filter",
+      "groups": [
+        "composition",
+        "provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F050",
+      "name": "empty-map-retains-filter",
+      "groups": [
+        "composition",
+        "provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F051",
+      "name": "empty-reduce-retains-filter",
+      "groups": [
+        "composition",
+        "provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F052",
+      "name": "predicate-map-origin-dropped",
+      "groups": [
+        "composition",
+        "provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F053",
+      "name": "predicate-reduce-origin-dropped",
+      "groups": [
+        "composition",
+        "provenance",
+        "pure"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F054",
+      "name": "condition-retains-filter",
+      "groups": [
+        "condition",
+        "provenance",
+        "alias"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F055",
+      "name": "survivor-original-alias",
+      "groups": [
+        "alias",
+        "detached-wrapper",
+        "provenance"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F056",
+      "name": "empty-input-dependency",
+      "groups": [
+        "actual-read",
+        "selected-branch"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F057",
+      "name": "dropped-predicate-dependency",
+      "groups": [
+        "actual-read",
+        "dropped"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F058",
+      "name": "later-dropped-dependency",
+      "groups": [
+        "actual-read",
+        "dropped"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F059",
+      "name": "unselected-predicate-dependency",
+      "groups": [
+        "actual-read",
+        "selected-branch"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F060",
+      "name": "guarded-helper-replay",
+      "groups": [
+        "helper-cache",
+        "actual-read-replay",
+        "provenance"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F061",
+      "name": "generated-mixed",
+      "groups": [
+        "generated-shape",
+        "stable-identity",
+        "selected-branch"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F062",
+      "name": "unused-generated-read",
+      "groups": [
+        "generated-shape",
+        "stable-identity",
+        "selected-branch"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F063",
+      "name": "generated-condition-retains-filter",
+      "groups": [
+        "generated-shape",
+        "condition",
+        "aggregate-provenance"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F064",
+      "name": "equal-valued-plain-filtered-occurrences",
+      "groups": [
+        "alias",
+        "two-occurrences",
+        "generated-provenance"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F065",
+      "name": "drop-all-generated-read",
+      "groups": [
+        "generated-taint",
+        "drop-all"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F066",
+      "name": "later-dropped-generated-read",
+      "groups": [
+        "generated-taint",
+        "later-dropped"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F067",
+      "name": "empty-invalid-generated-access",
+      "groups": [
+        "empty",
+        "static-check",
+        "generated-access"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F068",
+      "name": "cached-generated-input-dropped",
+      "groups": [
+        "generated-taint",
+        "cached-read",
+        "drop-all"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F069",
+      "name": "generated-reference-input",
+      "groups": [
+        "inadmissible-input",
+        "generated-reference",
+        "nonempty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F070",
+      "name": "empty-generated-reference-input",
+      "groups": [
+        "inadmissible-input",
+        "generated-reference",
+        "empty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F071",
+      "name": "absent-key-override",
+      "groups": [
+        "shape-resolution",
+        "absent-key",
+        "override"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F072",
+      "name": "absent-key-reference",
+      "groups": [
+        "shape-resolution",
+        "absent-key",
+        "reference"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F073",
+      "name": "predicate-int",
+      "groups": [
+        "strict-bool"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F074",
+      "name": "predicate-real",
+      "groups": [
+        "strict-bool"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F075",
+      "name": "predicate-string",
+      "groups": [
+        "strict-bool"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F076",
+      "name": "predicate-keyed",
+      "groups": [
+        "strict-bool"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F077",
+      "name": "predicate-quantity",
+      "groups": [
+        "strict-bool"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F078",
+      "name": "empty-predicate-wrong-type",
+      "groups": [
+        "empty",
+        "strict-bool"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F079",
+      "name": "input-not-keyed",
+      "groups": [
+        "exact-input-type",
+        "admission-before-traversal"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F080",
+      "name": "exact-int-real-mismatch",
+      "groups": [
+        "exact-input-type",
+        "admission-before-traversal"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F081",
+      "name": "empty-exact-int-real-mismatch",
+      "groups": [
+        "exact-input-type",
+        "admission-before-traversal"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F082",
+      "name": "exact-quantity-mismatch",
+      "groups": [
+        "exact-input-type",
+        "admission-before-traversal"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F083",
+      "name": "admission-before-predicate-domain",
+      "groups": [
+        "input-first",
+        "failure-order"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F084",
+      "name": "too-many-257",
+      "groups": [
+        "257",
+        "input-bound",
+        "drop-all"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F085",
+      "name": "overbound-before-predicate-domain",
+      "groups": [
+        "257",
+        "input-first",
+        "failure-order"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F086",
+      "name": "duplicate-input-key",
+      "groups": [
+        "key-validation",
+        "admission-before-drop"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F087",
+      "name": "empty-input-key",
+      "groups": [
+        "key-validation",
+        "admission-before-drop"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F088",
+      "name": "invalid-input-key",
+      "groups": [
+        "key-validation",
+        "admission-before-drop"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F089",
+      "name": "nonascii-input-key",
+      "groups": [
+        "key-validation",
+        "admission-before-drop"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F090",
+      "name": "too-long-input-key",
+      "groups": [
+        "key-validation",
+        "admission-before-drop"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F091",
+      "name": "empty-unknown-name",
+      "groups": [
+        "static-or-selected-failure",
+        "no-masked-failure"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F092",
+      "name": "empty-wrong-unit",
+      "groups": [
+        "static-or-selected-failure",
+        "no-masked-failure"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F093",
+      "name": "empty-invalid-unused-branch",
+      "groups": [
+        "static-or-selected-failure",
+        "no-masked-failure"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F094",
+      "name": "selected-zero-division",
+      "groups": [
+        "static-or-selected-failure",
+        "no-masked-failure"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F095",
+      "name": "later-domain-failure",
+      "groups": [
+        "static-or-selected-failure",
+        "no-masked-failure"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F096",
+      "name": "selected-invalid-material",
+      "groups": [
+        "static-or-selected-failure",
+        "no-masked-failure"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F097",
+      "name": "invalid-input-domain-before-drop",
+      "groups": [
+        "static-or-selected-failure",
+        "no-masked-failure"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F098",
+      "name": "selected-captured-zero",
+      "groups": [
+        "captured-local-masking",
+        "selected-branch"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F099",
+      "name": "duplicate-binders",
+      "groups": [
+        "binder-scope",
+        "shadowing"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F100",
+      "name": "predefined-binder",
+      "groups": [
+        "binder-scope",
+        "shadowing"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F101",
+      "name": "self-binder",
+      "groups": [
+        "binder-scope",
+        "shadowing"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F102",
+      "name": "member-binder",
+      "groups": [
+        "binder-scope",
+        "shadowing"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F103",
+      "name": "class-binder",
+      "groups": [
+        "binder-scope",
+        "shadowing"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F104",
+      "name": "outer-local-binder",
+      "groups": [
+        "binder-scope",
+        "shadowing"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F105",
+      "name": "input-outside-binder-scope",
+      "groups": [
+        "scope"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F106",
+      "name": "binder-escapes-predicate",
+      "groups": [
+        "scope"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F107",
+      "name": "nested-binder-shadow",
+      "groups": [
+        "scope",
+        "nested"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F108",
+      "name": "new-profile-reserves-filter-name",
+      "groups": [
+        "reserved-spelling"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F109",
+      "name": "recursive-pure-helper",
+      "groups": [
+        "empty",
+        "pure-cycle"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F110",
+      "name": "missing-explicit-type",
+      "groups": [
+        "syntax"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F111",
+      "name": "extra-generic-type",
+      "groups": [
+        "syntax"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F112",
+      "name": "one-binder",
+      "groups": [
+        "syntax"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F113",
+      "name": "three-binders",
+      "groups": [
+        "syntax"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F114",
+      "name": "missing-predicate",
+      "groups": [
+        "syntax"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F115",
+      "name": "nested-keyed-input",
+      "groups": [
+        "leaf-whitelist",
+        "empty",
+        "inadmissible"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F116",
+      "name": "geometry-input",
+      "groups": [
+        "leaf-whitelist",
+        "empty",
+        "inadmissible"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F117",
+      "name": "body-model-input",
+      "groups": [
+        "leaf-whitelist",
+        "empty",
+        "inadmissible"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F118",
+      "name": "action-input",
+      "groups": [
+        "leaf-whitelist",
+        "empty",
+        "inadmissible"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F119",
+      "name": "excessive-expression-depth",
+      "groups": [
+        "parser-depth",
+        "bounded-work"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F120",
+      "name": "incompatible-vector-frame",
+      "groups": [
+        "frame",
+        "selected-predicate"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F121",
+      "name": "imported-legacy-predicate",
+      "groups": [
+        "imports",
+        "declaring-unit",
+        "exact-pin"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F122",
+      "name": "qualified-legacy-filter-name",
+      "groups": [
+        "imports",
+        "declaring-unit",
+        "exact-pin"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F123",
+      "name": "imported-reduction-threshold",
+      "groups": [
+        "imports",
+        "declaring-unit",
+        "exact-pin"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F124",
+      "name": "empty-private-import-predicate",
+      "groups": [
+        "empty",
+        "private-access"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F125",
+      "name": "import-alias-binder",
+      "groups": [
+        "import-alias",
+        "binder-scope"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F126",
+      "name": "imported-new-filter-helper",
+      "groups": [
+        "imported-filter",
+        "provenance"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F127",
+      "name": "older-importer-rejects-new-unit",
+      "groups": [
+        "declaring-unit",
+        "older-entry"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F128",
+      "name": "wrong-import-pin",
+      "groups": [
+        "exact-pin"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F129",
+      "name": "drop-all-retains-image-declaration",
+      "groups": [
+        "png-closure",
+        "drop-all"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F130",
+      "name": "empty-retains-image-declaration",
+      "groups": [
+        "png-closure",
+        "empty",
+        "unused-definition"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F131",
+      "name": "drop-all-missing-declared-image",
+      "groups": [
+        "png-closure",
+        "drop-all"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F132",
+      "name": "empty-missing-declared-image",
+      "groups": [
+        "png-closure",
+        "empty"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F133",
+      "name": "empty-dynamic-image-id",
+      "groups": [
+        "png-closure",
+        "literal-declaration"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F134",
+      "name": "panel-task",
+      "groups": [
+        "pinned-library",
+        "two-occurrences",
+        "filter-membership",
+        "map-filter-reduce",
+        "destination",
+        "texture",
+        "motion"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F135",
+      "name": "panel-task-repaired",
+      "groups": [
+        "pinned-library",
+        "two-occurrences",
+        "filter-membership",
+        "map-filter-reduce",
+        "destination",
+        "texture",
+        "motion"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F136",
+      "name": "panel-identity",
+      "groups": [
+        "pinned-library",
+        "two-occurrences",
+        "filter-membership",
+        "map-filter-reduce",
+        "destination",
+        "texture",
+        "motion"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F137",
+      "name": "panel-task-drop-all",
+      "groups": [
+        "pinned-library",
+        "two-occurrences",
+        "filter-membership",
+        "map-filter-reduce",
+        "destination",
+        "texture",
+        "motion"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F138",
+      "name": "panel-task-higher-budget",
+      "groups": [
+        "pinned-library",
+        "two-occurrences",
+        "filter-membership",
+        "map-filter-reduce",
+        "destination",
+        "texture",
+        "motion"
+      ],
+      "outcome": "valid"
+    },
+    {
+      "id": "F139",
+      "name": "panel-task-invalid",
+      "groups": [
+        "repair-rollback",
+        "absent-key-override"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F140",
+      "name": "panel-task-ungranted-budget",
+      "groups": [
+        "current-host-authority"
+      ],
+      "outcome": "invalid"
+    },
+    {
+      "id": "F141",
+      "name": "invalid-resulting-geometry",
+      "groups": [
+        "geometry-after-filter",
+        "insufficient-vertices"
+      ],
+      "outcome": "invalid"
+    }
+  ],
+  "required_lifecycle": "examples/keyed-filter/workflows.json",
+  "predecessor": "Complete immediate-predecessor .15 workflows/readers and all applicable inherited roles; no original gate settings change",
+  "full_product_acceptance": false,
+  "corpus": "examples/keyed-filter/expected.json",
+  "workflows": "examples/keyed-filter/workflows.json",
+  "runtime_work_started": false,
+  "expected_answers_from_candidate": false,
+  "required_roles": [
+    "frozen-source-corpus",
+    "explicit-c082-controls",
+    "actual-agent-workflows",
+    "raw-store-request-audit",
+    "supplied-byte-adversaries",
+    "complete-stream-comparison",
+    "pinned-native-destination",
+    "direct-image-review",
+    "complete-inherited-local-driver",
+    "complete-immediate-predecessor-015-workflows",
+    "independent-code-review",
+    "expected-head-integration",
+    "actual-resulting-main-checks",
+    "complete-offline-handoff-restoration"
+  ]
+}

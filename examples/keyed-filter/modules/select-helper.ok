@@ -1,0 +1,5 @@
+ontokin "0.16";
+module SelectionHelper @ "selection-helper";
+profile "keyed-filter-0.1";
+
+public fn select @ "select"(items: Keyed<Length>) -> Keyed<Length> { return filter_keyed<Length>(items, (k, v) -> v >= 0.5[m]); }

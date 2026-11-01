@@ -1,0 +1,19 @@
+ontokin "0.15";
+module Probe @ "probe";
+profile "keyed-reduction-0.1";
+
+public fn unused_image @ "unused-image"() -> TextureImage { return png_asset("label", "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"); }
+
+public class ProbeShape @ "probe-shape" {
+    
+    public derive result @ "result": Keyed<Int> = keyed<Int>{};
+    public derive forced @ "forced": Int = len(self.result);
+    
+    geometry = if self.forced >= 0 then box(vec3(1[m], 1[m], 1[m])) else empty();
+    physical = no_body();
+}
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object shape @ "shape": ProbeShape {}
+}

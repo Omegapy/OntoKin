@@ -10,6 +10,23 @@ The current direction begins with exterior 3D models and short animations. Those
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
 
+### Select optional keyed parts while preserving surviving identities
+
+Explicit source `0.16` / `keyed-filter-0.1` adds a bounded pure selection:
+
+```ontokin
+filter_keyed<Length>(widths, (key, width) -> width >= 1.5[m])
+```
+
+The input is evaluated once. A strict Boolean predicate visits at most 256 entries in canonical ASCII key order, retaining original keys and detached values for survivors. Empty input still receives static predicate checking. Filtering composes with mapping and reduction to select optional parts while preserving exact source repair authority and every actual dependency, including when no entries survive.
+
+```bash
+python3 -m ontokin export examples/keyed-filter/panel-task.files.json --bundle --target ontokin.glb/0.16 --output /tmp/ontokin-filtered-panels.glb
+python3 -m ontokin agent --protocol ontokin.agent/0.16 --store /tmp/ontokin-keyed-filter-agent
+```
+
+The [versioned decision](docs/language-design/keyed-filter-v0.1/ADOPTION.md), [frozen examples](examples/keyed-filter/README.md), [Agent/0.16 guide](docs/language-design/agent-v0.16/README.md) and [C083 engineering record](docs/engineering/keyed-filter-2026-10-31-c083/README.md) identify semantics, actual repair evidence and remaining gates. The representative repair removes one occurrence's left panel while preserving its right panel, sibling, pinned image and unrelated recorded motion. This experimental construction operation preserves ordinary defaults of 100,000 operations / 30,000 ms and adds no physical or motion authority. Complete feature release and full-product acceptance remain open.
+
 ### Compute reusable construction parameters from keyed values
 
 Explicit source `0.15` / `keyed-reduction-0.1` adds a bounded pure aggregate with an explicit typed seed:

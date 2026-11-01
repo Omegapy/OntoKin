@@ -1,0 +1,24 @@
+ontokin "0.16";
+module Selection @ "selection";
+profile "keyed-filter-0.1";
+
+public class Leaf @ "leaf" {
+    public param size @ "size": Length = 0.25[m];
+    geometry = sphere(self.size);
+    physical = no_body();
+}
+public class Family @ "family" {
+    public param sizes @ "sizes": Keyed<Length> = keyed<Length>{"a": 0.25[m], "z": 0.5[m]};
+    public param filtered @ "filtered": Bool = true;
+    
+    public derive result @ "result": Keyed<Length> = if self.filtered then filter_keyed<Length>(self.sizes, (fk, fv) -> true) else self.sizes;
+    public parts leaves @ "leaves": Leaf for (child_key, child_value) in self.result { size = child_value; }
+    geometry = empty();
+    physical = no_body();
+}
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object selected @ "selected": Family { filtered = true; }
+    object plain @ "plain": Family { filtered = false; }
+}

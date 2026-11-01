@@ -57,9 +57,9 @@ def prepare_node_textures(geometry, model, *, check=None):
         binding = metadata[region.key]
         asset = model.texture_assets.get(binding["asset_id"])
         if asset is None or asset.sha256 != binding["sha256"]:
-            from .profile_capabilities import KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE
+            from .profile_capabilities import KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE
             _fail("A source texture binding must retain its admitted immutable image.",
-                  target_contract="ontokin.glb/0.15" if model.profile == KEYED_REDUCTION_PROFILE else "ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else "ontokin.glb/0.13")
+                  target_contract="ontokin.glb/0.16" if model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if model.profile == KEYED_REDUCTION_PROFILE else "ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else "ontokin.glb/0.13")
         result[region.key] = {"uv": coordinates[region.key], "binding": binding,
                               "asset": asset, "material": region.material, "program_revision": model.program_revision}
     return result
@@ -117,9 +117,10 @@ def validate_texture_shapes(document, *, check=None):
     Exact base accessors do not establish appearance or rigid geometry when
     optional glTF fields can add normal/emission maps, unlit materials, morph
     targets, skins, instancing, texture transforms, or extra scene lighting.
-    Only this explicit destination calls this closed-shape check.  User-facing
-    metadata under extras remains data and is checked separately where it
-    carries OntoKin source authority.
+    Only explicit texture-family destinations call this closed-shape check.
+    The .16 destination also closes metadata at each supported container;
+    authority values remain independently checked against the supplied source.
+    Earlier destinations retain their existing extras policy.
     """
     def closed(value, allowed, label):
         if check is not None:
@@ -141,17 +142,68 @@ def validate_texture_shapes(document, *, check=None):
     closed(document, {"asset", "scene", "scenes", "nodes", "meshes", "materials",
                        "buffers", "bufferViews", "accessors", "animations", "extras",
                        "images", "textures", "samplers"}, "document")
-    closed(document["asset"], {"version", "generator", "extras"}, "asset")
+    filter_contract = _ACTIVE_TARGET.get() == "ontokin.glb/0.16"
+    if filter_contract:
+        closed(document.get("extras"), {"ontokin"}, "scene extras")
+        metadata = document["extras"].get("ontokin")
+        closed(metadata, {"target_contract", "schema_version", "source", "module", "scene", "profile",
+                          "coordinates", "transform_policy", "joints", "follows", "boundary_states",
+                          "gravity_m_per_s2", "motion_authority", "program", "force_profile",
+                          "surface_profile", "reach_profile", "reach_quantization", "texture_profile",
+                          "surface_delivery"}, "scene authority")
+        closed(metadata.get("source"), {"uri", "uri_kind", "entry_source_id", "entry_revision",
+                                        "editable_source_of_truth", "provenance"}, "scene source")
+    incidental_extras = set() if filter_contract else {"extras"}
+    surface_meshes = set()
+    closed(document["asset"], {"version", "generator"} | incidental_extras, "asset")
     for scene in rows(document["scenes"], "scenes"):
-        closed(scene, {"name", "nodes", "extras"}, "scene")
+        closed(scene, {"name", "nodes"} | incidental_extras, "scene")
     for node in rows(document["nodes"], "nodes"):
         closed(node, {"name", "translation", "rotation", "mesh", "extras"}, "node")
-    for mesh in rows(document.get("meshes", []), "meshes"):
-        closed(mesh, {"name", "primitives", "extras"}, "mesh")
+        if filter_contract:
+            closed(node.get("extras"), {"ontokin"}, "node extras")
+            metadata = node["extras"].get("ontokin")
+            if type(metadata) is dict and metadata.get("kind") == "object":
+                fields = {"kind", "path", "element_id", "owner", "class_name", "geometry", "physical",
+                          "collision", "authored_motion", "appearance_linear_rgba", "pose_frame", "role",
+                          "properties", "source_mapping", "program_revision"}
+                geometry = metadata.get("geometry")
+                # The later exact source-geometry comparison binds this
+                # discriminator; an empty/primitive object cannot gain an
+                # otherwise recognized native-surface authority field.
+                if type(geometry) is dict and geometry.get("kind") in (
+                        "loft", "placed", "extrusion", "holes", "ring_loft", "framed_loft", "pockets"):
+                    fields.add("surface")
+                    if "mesh" in node:
+                        surface_meshes.add(node["mesh"])
+            else:
+                fields = {"kind", "helper_kind", "physical_participation", "related_element_id",
+                          "frame_path"}
+                helper_kind = metadata.get("helper_kind") if type(metadata) is dict else None
+                if helper_kind == "assembly_origin":
+                    fields.add("object_path")
+                elif helper_kind == "joint_parent_site":
+                    fields.update(("joint_path", "meaning"))
+            closed(metadata, fields, "node authority")
+    surface_materials = set()
+    for mesh_index, mesh in enumerate(rows(document.get("meshes", []), "meshes")):
+        closed(mesh, {"name", "primitives"} | incidental_extras, "mesh")
+        native_surface = filter_contract and mesh_index in surface_meshes
         for primitive in rows(mesh["primitives"], "primitives"):
-            closed(primitive, {"attributes", "indices", "material", "mode", "extras"}, "primitive")
-    for material in rows(document.get("materials", []), "materials"):
-        closed(material, {"name", "pbrMetallicRoughness", "alphaMode", "extras"}, "material")
+            allowed_extras = {"extras"} if native_surface else incidental_extras
+            closed(primitive, {"attributes", "indices", "material", "mode"} | allowed_extras, "primitive")
+            if native_surface:
+                closed(primitive.get("extras"), {"ontokin"}, "primitive extras")
+                closed(primitive["extras"].get("ontokin"), {"region_key"}, "primitive authority")
+                surface_materials.add(primitive["material"])
+    for material_index, material in enumerate(rows(document.get("materials", []), "materials")):
+        native_surface = filter_contract and material_index in surface_materials
+        allowed_extras = {"extras"} if native_surface else incidental_extras
+        closed(material, {"name", "pbrMetallicRoughness", "alphaMode"} | allowed_extras, "material")
+        if native_surface:
+            closed(material.get("extras"), {"ontokin"}, "material extras")
+            closed(material["extras"].get("ontokin"),
+                   {"source_region_key", "occurrence_path", "element_id", "program_revision"}, "material authority")
         pbr = material.get("pbrMetallicRoughness", {})
         closed(pbr, {"baseColorFactor", "metallicFactor", "roughnessFactor", "baseColorTexture"},
                "pbrMetallicRoughness")
@@ -171,6 +223,10 @@ def validate_texture_shapes(document, *, check=None):
         closed(accessor, {"bufferView", "componentType", "count", "type", "min", "max"}, "accessor")
     for animation in rows(document["animations"], "animations"):
         closed(animation, {"name", "samplers", "channels", "extras"}, "animation")
+        if filter_contract:
+            closed(animation.get("extras"), {"ontokin"}, "animation extras")
+            closed(animation["extras"].get("ontokin"),
+                   {"target_contract", "exact_times_seconds", "boundary_times_seconds"}, "animation authority")
         for sampler in rows(animation["samplers"], "animation samplers"):
             closed(sampler, {"input", "output", "interpolation"}, "animation sampler")
         for channel in rows(animation["channels"], "animation channels"):
@@ -180,8 +236,8 @@ def validate_texture_shapes(document, *, check=None):
 
 def validate_texture_delivery(decoded, model, *, check=None):
     """Compare supplied image, UV and reference bytes with fresh source facts."""
-    from .profile_capabilities import KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE
-    target = "ontokin.glb/0.15" if model.profile == KEYED_REDUCTION_PROFILE else "ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else "ontokin.glb/0.13"
+    from .profile_capabilities import KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE
+    target = "ontokin.glb/0.16" if model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if model.profile == KEYED_REDUCTION_PROFILE else "ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else "ontokin.glb/0.13"
     token = _ACTIVE_TARGET.set(target)
     try:
         return _validate_texture_delivery(decoded, model, check=check)

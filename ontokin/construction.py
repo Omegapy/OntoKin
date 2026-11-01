@@ -29,7 +29,7 @@ from .pockets_runtime import POCKETS_CALLS, POCKETS_TYPES, pockets_builtin
 from .texture_bundle import TextureBundle
 from .texture_runtime import (TEXTURE_CALLS, TEXTURE_TYPES, texture_builtin,
                               validate_texture_closure, texture_coordinates)
-from .profile_capabilities import (BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, IMPULSE_PROFILES,
+from .profile_capabilities import (BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, IMPULSE_PROFILES,
                                    SURFACE_PROFILES)
 from .validator import (BUILTIN_TYPES, FIELD_TYPES,
                         PREDEFINED, READONLY_FIELDS, BoundExpression, Callable,
@@ -236,6 +236,16 @@ class KeyedReductionOrigin:
     accumulator_type: Type
 
 
+@dataclass(frozen=True)
+class KeyedFilterOrigin:
+    """Membership derivation only, with original source repair authority."""
+
+    expression: Any
+    input: Any
+    predicate: Any
+    element_type: Type
+
+
 def _materialize_reach_surface(recipe, *, max_vertices, work, check):
     """Reuse immutable loft construction, retaining each occurrence's limit.
 
@@ -310,6 +320,7 @@ class ConstructionCompiler(Validator):
         self._keyed_transforms: dict[int, tuple[KeyedTransformOrigin, ...]] = {}
         self._value_transforms: dict[int, tuple[Value, tuple[KeyedTransformOrigin, ...]]] = {}
         self._value_reductions: dict[int, tuple[Value, tuple[KeyedReductionOrigin, ...]]] = {}
+        self._value_filters: dict[int, tuple[Value, tuple[KeyedFilterOrigin, ...]]] = {}
         self._expression_flows: list[dict] = []
         self._shape_stack: list[str] = []
         self._value_taints: dict[int, set[str]] = {}
@@ -393,8 +404,10 @@ class ConstructionCompiler(Validator):
             result = PREDEFINED_02 | NAMES | TEXTURE_CALLS | TEXTURE_TYPES
             if self.linked.modules[node.source_id].ast.profile in KEYED_TRANSFORM_PROFILES:
                 result = result | {"map_keyed"}
-            if self.linked.modules[node.source_id].ast.profile == KEYED_REDUCTION_PROFILE:
+            if self.linked.modules[node.source_id].ast.profile in KEYED_REDUCTION_PROFILES:
                 result = result | {"reduce_keyed"}
+            if self.linked.modules[node.source_id].ast.profile == KEYED_FILTER_PROFILE:
+                result = result | {"filter_keyed"}
             return result
         if self.linked.modules[node.source_id].ast.profile in REACH_PROFILES:
             from .reach_source import NAMES
@@ -514,7 +527,38 @@ class ConstructionCompiler(Validator):
         reductions = self._reduction_records(original)
         if reductions:
             self._value_reductions[id(result)] = (result, reductions)
+        filters = self._filter_records(original)
+        if filters:
+            self._value_filters[id(result)] = (result, filters)
         return result
+
+    def _filter_records(self, value: Value) -> tuple[KeyedFilterOrigin, ...]:
+        retained = self._value_filters.get(id(value))
+        if retained is not None and retained[0] is value:
+            return retained[1]
+        return ()
+
+    def filter_provenance(self, value: Value) -> list[dict]:
+        result = []
+        for origin in self._filter_records(value):
+            self.budget.tick(origin.expression)
+            result.append({"expression": self.location(origin.expression),
+                           "input": self.location(origin.input),
+                           "predicate": self.location(origin.predicate),
+                           "element_type": str(origin.element_type)})
+        return result
+
+    def _merge_filter_records(self, *groups) -> tuple[KeyedFilterOrigin, ...]:
+        records, seen = [], set()
+        for group in groups:
+            for record in group:
+                self.budget.tick(record.expression)
+                identity = (id(record.expression), id(record.input),
+                            id(record.predicate), record.element_type)
+                if identity not in seen:
+                    records.append(record)
+                    seen.add(identity)
+        return tuple(records)
 
     def _reduction_records(self, value: Value) -> tuple[KeyedReductionOrigin, ...]:
         retained = self._value_reductions.get(id(value))
@@ -596,6 +640,9 @@ class ConstructionCompiler(Validator):
         reductions = self._reduction_records(value)
         if reductions:
             frame["reductions"].append(reductions)
+        filters = self._filter_records(value)
+        if filters:
+            frame["filters"].append(filters)
         frame["taints"].update(self._value_taints.get(id(value), ()))
 
     def _finish_value_flow(self, value: Value, node: Any, tracking: bool) -> Value:
@@ -605,7 +652,7 @@ class ConstructionCompiler(Validator):
         own = self._transform_records(value)
         # A map builds its aggregate derivation explicitly. Ordinary pure
         # expressions retain only the values their selected execution reads.
-        transforms = (own if node.kind in {"map_keyed", "reduce_keyed"} else
+        transforms = (own if node.kind in {"map_keyed", "reduce_keyed", "filter_keyed"} else
                       self._merge_transform_records(*frame["transforms"], own))
         if value.type.kind == "Keyed":
             if any(record.key is not None for record in transforms):
@@ -620,10 +667,13 @@ class ConstructionCompiler(Validator):
             transforms = tuple(record for record in transforms if record.key is not None
                                or (id(record.expression), id(record.body), id(record.input)) not in selected)
         own_reductions = self._reduction_records(value)
-        reductions = (own_reductions if node.kind == "reduce_keyed" else
+        reductions = (own_reductions if node.kind in {"reduce_keyed", "filter_keyed"} else
                       self._merge_reduction_records(*frame["reductions"], own_reductions))
+        own_filters = self._filter_records(value)
+        filters = (own_filters if node.kind == "filter_keyed" else
+                   self._merge_filter_records(*frame["filters"], own_filters))
         taints = frame["taints"] | self._value_taints.get(id(value), set())
-        if (transforms != own or reductions != own_reductions
+        if (transforms != own or reductions != own_reductions or filters != own_filters
                 or taints != self._value_taints.get(id(value), set())):
             value = self._inherit_value_info(value, Value(value.type, value.value, value.frame, value.hint))
             self.budget.charge_value(value, node)
@@ -631,6 +681,8 @@ class ConstructionCompiler(Validator):
                 self._value_transforms[id(value)] = (value, transforms)
             if reductions:
                 self._value_reductions[id(value)] = (value, reductions)
+            if filters:
+                self._value_filters[id(value)] = (value, filters)
             if taints:
                 self._value_taints[id(value)] = set(taints)
                 self._tainted_values[id(value)] = value
@@ -663,7 +715,7 @@ class ConstructionCompiler(Validator):
         for name, binder in binders:
             self.budget.tick(binder)
             if name in forbidden:
-                label = "Reduction" if node.kind == "reduce_keyed" else "Map"
+                label = {"reduce_keyed": "Reduction", "filter_keyed": "Filter"}.get(node.kind, "Map")
                 fail("OKL-E-NAME", f"{label} binder '{name}' duplicates or shadows a visible name.",
                      binder, phase="binding")
             forbidden.add(name)
@@ -751,6 +803,10 @@ class ConstructionCompiler(Validator):
                 self._reduction_records(leaf), self._reduction_records(computed))
             if reductions:
                 self._value_reductions[id(result)] = (result, reductions)
+            filters = self._merge_filter_records(self._filter_records(source),
+                self._filter_records(leaf), self._filter_records(computed))
+            if filters:
+                self._value_filters[id(result)] = (result, filters)
             leaf_taints = taints | self._value_taints.get(id(leaf), set()) | self._value_taints.get(id(computed), set())
             if leaf_taints:
                 self._value_taints[id(result)] = set(leaf_taints)
@@ -774,7 +830,7 @@ class ConstructionCompiler(Validator):
         return value
 
     def _reduce_keyed_expression(self, node: Any, ctx: Context) -> Value:
-        if self.linked.modules[node.source_id].ast.profile != KEYED_REDUCTION_PROFILE:
+        if self.linked.modules[node.source_id].ast.profile not in KEYED_REDUCTION_PROFILES:
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "reduce_keyed requires keyed-reduction-0.1.",
                  node, phase="support")
         accumulator_type = self.parse_type(node.accumulator_type)
@@ -812,6 +868,7 @@ class ConstructionCompiler(Validator):
         accumulator = copied(seed, node.seed)
         transforms = [self._transform_records(source), self._transform_records(seed)]
         reductions = [self._reduction_records(source), self._reduction_records(seed)]
+        filters = [self._filter_records(source), self._filter_records(seed)]
         taints = set(self._value_taints.get(id(source), ())) | set(self._value_taints.get(id(seed), ()))
         locals_ = {}
         for name, value in ctx.locals.items():
@@ -845,6 +902,7 @@ class ConstructionCompiler(Validator):
             accumulator = copied(computed, node.body)
             transforms.extend((self._transform_records(leaf), self._transform_records(computed)))
             reductions.extend((self._reduction_records(leaf), self._reduction_records(computed)))
+            filters.extend((self._filter_records(leaf), self._filter_records(computed)))
             taints.update(self._value_taints.get(id(leaf), ()))
             taints.update(self._value_taints.get(id(computed), ()))
             # Earlier reads remain part of the aggregate even when this body
@@ -855,6 +913,9 @@ class ConstructionCompiler(Validator):
                 self._value_transforms[id(accumulator)] = (accumulator, retained_transforms)
             if retained_reductions:
                 self._value_reductions[id(accumulator)] = (accumulator, retained_reductions)
+            retained_filters = self._merge_filter_records(*filters)
+            if retained_filters:
+                self._value_filters[id(accumulator)] = (accumulator, retained_filters)
             if taints:
                 self._value_taints[id(accumulator)] = set(taints)
                 self._tainted_values[id(accumulator)] = accumulator
@@ -865,12 +926,137 @@ class ConstructionCompiler(Validator):
         if retained_transforms:
             self._value_transforms[id(result)] = (result, retained_transforms)
         self._value_reductions[id(result)] = (result, retained_reductions)
+        retained_filters = self._merge_filter_records(*filters)
+        if retained_filters:
+            self._value_filters[id(result)] = (result, retained_filters)
         if taints:
             self._value_taints[id(result)] = set(taints)
             self._tainted_values[id(result)] = result
             for path in taints:
                 self._mark_generated(path, node)
         return result
+
+    def _filter_keyed_expression(self, node: Any, ctx: Context) -> Value:
+        if self.linked.modules[node.source_id].ast.profile != KEYED_FILTER_PROFILE:
+            fail("OKL-E-CAPABILITY-UNSUPPORTED", "filter_keyed requires keyed-filter-0.1.",
+                 node, phase="support")
+        element_type = self.parse_type(node.element_type)
+        self._keyed_leaf(element_type, node.element_type)
+        self._map_binders(node, ctx)
+        source = self.expression(node.input, ctx)
+        result_type = Type("Keyed", element=element_type)
+        if source.type != result_type:
+            fail("OKL-E-TYPE", f"filter_keyed requires exactly {result_type}, received {source.type}.",
+                 node.input, phase="type", details={"expected": str(result_type), "actual": str(source.type)})
+        self._keyed_leaf(source.type.element, node.input)
+        if not ctx.abstract:
+            if not source.known or not isinstance(source.value, KeyedValue):
+                fail("OKL-E-TYPE", "filter_keyed input must resolve to an immutable keyed value.",
+                     node.input, phase="type")
+            if len(source.value.entries) > MAX_KEYED_ENTRIES:
+                fail("OKL-E-RESOURCE", "Filter input exceeds 256 entries.", node.input, phase="support",
+                     details={"budget": "keyed_entries", "limit": MAX_KEYED_ENTRIES,
+                              "consumed": len(source.value.entries)})
+        abstract = self._unknown_local_context(ctx, node.predicate)
+        abstract.locals[node.key_name] = Value(STRING)
+        abstract.locals[node.value_name] = Value(element_type)
+        def strict_predicate(value):
+            if value.type != BOOL:
+                fail("OKL-E-TYPE", f"Filter predicate requires Bool, received {value.type}.",
+                     node.predicate, phase="type", details={"expected": "Bool", "actual": str(value.type)})
+            return value
+
+        strict_predicate(self.expression(node.predicate, abstract))
+        if ctx.abstract:
+            return Value(result_type)
+
+        def copied(value, origin):
+            self.budget.tick(origin)
+            result = self._inherit_value_info(value, Value(value.type, value.value, value.frame, value.hint))
+            self.budget.charge_value(result, origin)
+            return result
+
+        input_transforms = self._transform_records(source)
+        input_reductions = self._reduction_records(source)
+        input_filters = self._filter_records(source)
+        transforms, reductions, filters = [input_transforms], [input_reductions], [input_filters]
+        taints = set(self._value_taints.get(id(source), ()))
+        origins = self._keyed_origins.get(id(source.value), {})
+        current = KeyedFilterOrigin(node, node.input, node.predicate, element_type)
+        locals_ = {}
+        for name, value in ctx.locals.items():
+            self.budget.tick(node)
+            locals_[name] = value
+        predicate_ctx = replace(ctx, locals=locals_)
+        prior_key, entries = None, []
+        for key, leaf in source.value.entries:
+            ledger = getattr(self.budget, "execution_budget", None)
+            previous_stage = ledger.stage if ledger is not None else None
+            try:
+                if ledger is not None:
+                    ledger.stage = "keyed_filter_iteration"
+                self.budget.tick(node)
+            finally:
+                if ledger is not None:
+                    ledger.stage = previous_stage
+            self.key(node.input, key)
+            if prior_key is not None and key <= prior_key:
+                fail("OKL-E-ID", "Filter input keys must be unique canonical stable keys.",
+                     node.input, phase="binding")
+            prior_key = key
+            bound_key = Value(STRING, key)
+            self.budget.charge_value(bound_key, node.key_node)
+            bound_value = copied(leaf, node.value_node)
+            locals_[node.key_name], locals_[node.value_name] = bound_key, bound_value
+            predicate = strict_predicate(self.expression(node.predicate, predicate_ctx))
+            transforms.extend((self._transform_records(leaf), self._transform_records(predicate)))
+            reductions.extend((self._reduction_records(leaf), self._reduction_records(predicate)))
+            filters.extend((self._filter_records(leaf), self._filter_records(predicate)))
+            taints.update(self._value_taints.get(id(leaf), ()))
+            taints.update(self._value_taints.get(id(predicate), ()))
+            if not predicate.known:
+                fail("OKL-E-TYPE", "filter_keyed predicate must resolve to a Boolean value.",
+                     node.predicate, phase="type")
+            if not predicate.value:
+                continue
+            result = copied(leaf, node.predicate)
+            source_records = tuple(replace(record, key=key, input_entry=origins.get(key))
+                                   if record.key is None else record for record in input_transforms)
+            leaf_transforms = self._merge_transform_records(source_records,
+                self._transform_records(leaf), self._transform_records(predicate))
+            leaf_reductions = self._merge_reduction_records(input_reductions,
+                self._reduction_records(leaf), self._reduction_records(predicate))
+            leaf_filters = self._merge_filter_records(input_filters,
+                self._filter_records(leaf), self._filter_records(predicate), (current,))
+            if leaf_transforms:
+                self._value_transforms[id(result)] = (result, leaf_transforms)
+            if leaf_reductions:
+                self._value_reductions[id(result)] = (result, leaf_reductions)
+            self._value_filters[id(result)] = (result, leaf_filters)
+            if taints:
+                self._value_taints[id(result)] = set(taints)
+                self._tainted_values[id(result)] = result
+            entries.append((key, result))
+        self.budget.tick(node)
+        payload = KeyedValue(tuple(entries))
+        value = Value(result_type, payload)
+        self.budget.charge_value(value, node)
+        self._keyed_payloads[id(payload)] = payload
+        self._keyed_origins[id(payload)] = {key: origins[key] for key, _ in entries if key in origins}
+        retained_transforms = self._merge_transform_records(*transforms)
+        retained_reductions = self._merge_reduction_records(*reductions)
+        retained_filters = self._merge_filter_records(*filters, (current,))
+        if retained_transforms:
+            self._value_transforms[id(value)] = (value, retained_transforms)
+        if retained_reductions:
+            self._value_reductions[id(value)] = (value, retained_reductions)
+        self._value_filters[id(value)] = (value, retained_filters)
+        if taints:
+            self._value_taints[id(value)] = set(taints)
+            self._tainted_values[id(value)] = value
+            for path in taints:
+                self._mark_generated(path, node)
+        return value
 
     def expect(self, value: Value, typ: Type, node: Any) -> Value:
         if typ.kind == "ReachBranch" and value.type != typ:
@@ -1307,6 +1493,12 @@ class ConstructionCompiler(Validator):
         for path in taints:
             self._mark_generated(path, node)
         if taints:
+            if self.model.profile == KEYED_FILTER_PROFILE and not transforms:
+                # A selected collection can share a plain payload while its
+                # condition carries generated-view taint. Keep that taint on
+                # this indexed result, never on the original shared leaf.
+                result = self._inherit_value_info(result, Value(result.type, result.value, result.frame, result.hint))
+                self.budget.charge_value(result, node)
             self._value_taints.setdefault(id(result), set()).update(taints)
             self._tainted_values[id(result)] = result
         return result
@@ -1586,7 +1778,7 @@ class ConstructionCompiler(Validator):
             ctx = self._unknown_local_context(ctx, node)
         tracking = self.model.profile in KEYED_TRANSFORM_PROFILES and not ctx.abstract
         if tracking:
-            self._expression_flows.append({"transforms": [], "reductions": [], "taints": set()})
+            self._expression_flows.append({"transforms": [], "reductions": [], "filters": [], "taints": set()})
         self._expression_depth += 1
         try:
             if self._expression_depth > 128:
@@ -1632,6 +1824,7 @@ class ConstructionCompiler(Validator):
                                 and self._parameter_context(ctx, reads, names, node) == parameter_context
                                 and self._parameter_replay(ctx, reads, cached[1])
                                 and not (tracking and (self._expression_flows[-1]["transforms"]
+                                                       or self._expression_flows[-1]["filters"]
                                                        or self._expression_flows[-1]["reductions"]
                                                        or self._expression_flows[-1]["taints"]))
                                 and self._parameter_context(ctx, reads, names, node) == parameter_context):
@@ -1645,7 +1838,9 @@ class ConstructionCompiler(Validator):
                         capture = [{id(read) for _, read in reads}, reads, []]
                         self._parameter_capture = capture
             try:
-                if node.kind == "reduce_keyed":
+                if node.kind == "filter_keyed":
+                    result = self._filter_keyed_expression(node, ctx)
+                elif node.kind == "reduce_keyed":
                     result = self._reduce_keyed_expression(node, ctx)
                 elif node.kind == "map_keyed":
                     result = self._map_keyed_expression(node, ctx)
@@ -1670,7 +1865,8 @@ class ConstructionCompiler(Validator):
                     # Keep its real wrappers; older/plain reads still retain
                     # the exact existing cache replay and charging path.
                     and not (tracking and (self._expression_flows[-1]["transforms"]
-                                           or self._expression_flows[-1]["reductions"]
+                                           or self._expression_flows[-1]["filters"]
+                                                       or self._expression_flows[-1]["reductions"]
                                                        or self._expression_flows[-1]["taints"]))
                     and self._parameter_context(ctx, reads, names, node) == parameter_context):
                 value = self._parameter_copy(result)
@@ -1937,6 +2133,16 @@ class ConstructionCompiler(Validator):
                 self._value_reductions[id(derived_leaf)] = (derived_leaf, reductions)
                 locals_[node.value_name] = derived_leaf
                 generated["input_reductions"] = self.reduction_provenance(derived_leaf)
+            filters = self._merge_filter_records(self._filter_records(value),
+                                                  self._filter_records(leaf))
+            if filters:
+                selected_leaf = locals_[node.value_name]
+                derived_leaf = self._inherit_value_info(selected_leaf, Value(
+                    selected_leaf.type, selected_leaf.value, selected_leaf.frame, selected_leaf.hint))
+                self.budget.charge_value(derived_leaf, node.input)
+                self._value_filters[id(derived_leaf)] = (derived_leaf, filters)
+                locals_[node.value_name] = derived_leaf
+                generated["input_filters"] = self.filter_provenance(derived_leaf)
             self._register_tree(node, child_path, owner, collection["entry_ids"][key], child_context,
                                 forwarded, steps=collection["path_steps"] + (PathStep("key", key, node.start, node.end),),
                                 depth=collection["ownership_depth"] + 1, generated=generated,
@@ -2233,6 +2439,8 @@ class ConstructionCompiler(Validator):
                        if "input_transforms" in generated else {}),
                     **({"input_reductions": generated["input_reductions"]}
                        if "input_reductions" in generated else {}),
+                    **({"input_filters": generated["input_filters"]}
+                       if "input_filters" in generated else {}),
                 },
                 "generated_ancestor": record["generated_ancestor"],
             }
@@ -2305,7 +2513,7 @@ class ConstructionCompiler(Validator):
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "Required capabilities are not supplied by " + self.model.profile + ": " +
                  ", ".join(self.model.requested_capabilities), requires[0], phase="support")
         if self.level == "delivered":
-            target = ("ontokin.glb/0.15" if self.model.profile == KEYED_REDUCTION_PROFILE else
+            target = ("ontokin.glb/0.16" if self.model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if self.model.profile == KEYED_REDUCTION_PROFILE else
                        "ontokin.glb/0.14" if self.model.profile == KEYED_TRANSFORM_PROFILE else
                       "ontokin.glb/0.13" if self.model.profile == TEXTURE_PROFILE else
                       "ontokin.glb/0.12" if self.model.profile == POCKETS_PROFILE else

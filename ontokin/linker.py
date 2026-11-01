@@ -15,7 +15,7 @@ from .bundle import (DIGEST_RE, BundleError, ProgramBundle, SourceUnit,
 from .diagnostics import OntoKinError, Source
 from .syntax import MAX_TOKENS, Node
 from .syntax02 import parse_source_unit
-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, FORCE_PROFILES, IMPULSE_PROFILES
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, FORCE_PROFILES, IMPULSE_PROFILES
 from .validator import KEY_RE, PREDEFINED
 
 
@@ -133,8 +133,10 @@ def _bindings(module: LinkedModule, check: Callable[[], None]) -> None:
             predefined = predefined | TEXTURE_CALLS | TEXTURE_TYPES
         if module.ast.profile in KEYED_TRANSFORM_PROFILES:
             predefined = predefined | {"map_keyed"}
-        if module.ast.profile == KEYED_REDUCTION_PROFILE:
+        if module.ast.profile in KEYED_REDUCTION_PROFILES:
             predefined = predefined | {"reduce_keyed"}
+        if module.ast.profile == KEYED_FILTER_PROFILE:
+            predefined = predefined | {"filter_keyed"}
         if node.name in predefined or node.name in names:
             _error("OKL-E-NAME", "An import or definition name is predefined or duplicated in this module.",
                    node, rule="CON-003", related=[names[node.name]] if node.name in names else [],
@@ -223,8 +225,16 @@ def link_program(bundle: ProgramBundle, *, check: Callable[[], None] | None = No
             if target not in modules:
                 _error("OKL-E-NAME", "The explicitly imported package version is not supplied in this bundle.",
                        node, rule="CON-002", reason="missing_dependency", source_id=target)
+            if (modules[target].ast.profile == KEYED_FILTER_PROFILE
+                    and module.ast.profile != KEYED_FILTER_PROFILE):
+                raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED",
+                                   "An earlier declaring module cannot import a source 0.16 dependency.",
+                                   node, phase="support", category="unsupported",
+                                   details={"declaring_profile": module.ast.profile,
+                                            "dependency_profile": modules[target].ast.profile,
+                                            "dependency_source_id": target})
             if (modules[target].ast.profile == KEYED_REDUCTION_PROFILE
-                    and module.ast.profile != KEYED_REDUCTION_PROFILE):
+                    and module.ast.profile not in KEYED_REDUCTION_PROFILES):
                 raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED",
                                    "An earlier declaring module cannot import a source 0.15 dependency.",
                                    node, phase="support", category="unsupported",
