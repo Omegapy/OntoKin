@@ -48,6 +48,8 @@ Initial interface attempts retain their missing verification dependency and spar
 
 The complete unchanged C085 predecessor includes its original failed full invocation, separate three-role recovery, corrupt store, failed comparison reader and unestablished cause. Its complete C084 predecessor and earlier disclosed recoveries remain intact. Three original C080 artifacts and complete earlier history remain unavailable; replacement evidence remains separately named.
 
+The first final-candidate documentation check at `4a919cba7607070f2883590fa33492ab50494de1` failed on 39 local links in the unchanged partial C085 lexical-proof snapshot. Twenty distinct targets were absent. The separately recorded additive navigation repair supplies clearly labeled companions to complete preserved documents/directories and exact C085 non-document targets. Every original snapshot byte, path, mode and inventory remains unchanged; no runtime, frozen input or checker was changed. The failed check remains retained, and the repaired candidate requires a fresh check.
+
 ## Integration, delivery and next work
 
 Resulting-main verification is pending actual PR integration. The planned focused gate is the 27 C086 and 33 immediate-predecessor tests, the original 43-case / 694-assertion conformance and documentation preservation/navigation, with exact source/Git before-and-after checks. Passing candidate validation alone does not establish those later results.

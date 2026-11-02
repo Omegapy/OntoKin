@@ -22,9 +22,11 @@ The first inherited invocation remains interrupted after discovery that its defa
 
 Fresh complete .18 predecessor checks passed **254 source outcomes, 160 controls, ten workflows, 72 hostile streams**, independent readers and sixteen native roles, with **all 32 captures reviewed**. All **94 complete GLB role streams** are exactly byte-identical to retained C085, including raw JSON, BIN, framing, padding and hostile trailing bytes. The 94 roles represent 78 unique streams; no normalization was used. Overlapping scopes are not additive release totals.
 
+The first final-candidate documentation check at `4a919cba7607070f2883590fa33492ab50494de1` failed on 39 local links in the unchanged partial C085 lexical-proof snapshot. Twenty distinct targets were absent. The separately recorded additive navigation repair supplies clearly labeled companions to complete preserved documents/directories and exact C085 non-document targets. Every original snapshot byte, path, mode and inventory remains unchanged; no runtime, frozen input or checker was changed. The failed check remains retained, and the repaired candidate requires a fresh check.
+
 ## Integration, ownership and delivery
 
-Active bounded main integration lease: owner `interactive-c086-keyed-rekey-20261101-451f`, actual lease commit `19f0c99c798e5af43d73358670aa5e851e77ffd7`, acquired from `f4c90c04b9b381de73d46715d52e68f588e49e4f` by verified expected-head nonforce update. Started `2026-11-02T00:10:56.317647+00:00`; expires `2026-11-02T00:40:56.317647+00:00`. The candidate includes that actual lease as an additional parent. No other worker or branch ownership is changed.
+Active bounded main integration lease: owner `interactive-c086-keyed-rekey-20261101-451f`, actual lease commit `19f0c99c798e5af43d73358670aa5e851e77ffd7`, acquired from `f4c90c04b9b381de73d46715d52e68f588e49e4f` by verified expected-head nonforce update. Started `2026-11-02T00:10:56.317647+00:00`; expires `2026-11-02T00:40:56.317647+00:00`. The preparatory candidate `4a919cba7607070f2883590fa33492ab50494de1` includes that actual lease as an additional parent; the repaired candidate descends from it. No other worker or branch ownership is changed.
 
 This reviewed experimental development candidate is prepared for [PR #85](https://github.com/Omegapy/OntoKin/pull/85). Actual main integration and checks on the resulting main remain pending in this candidate snapshot. The published formal and strict-reader checkpoints above identify the completed observations.
 
