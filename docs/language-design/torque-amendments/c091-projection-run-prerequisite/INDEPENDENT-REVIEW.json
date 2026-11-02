@@ -1,0 +1,146 @@
+{
+  "schema_version": "ontokin.c091-independent-r13-review/1",
+  "status": "passed",
+  "created_utc": "2026-11-02T23:06:06.386335+00:00",
+  "reviewer": "torque-runtime-independent-review",
+  "basis": "94a7796a54725ca764b2027deb43f09204f8a6de",
+  "checks": [
+    {
+      "name": "Frozen table is untouched C090 bytes",
+      "status": "passed"
+    },
+    {
+      "name": "Frozen R13 has constructed-only setup and no run ID",
+      "status": "passed"
+    },
+    {
+      "name": "Target clock and stage remain exact",
+      "status": "passed"
+    },
+    {
+      "name": "All three independent runs bind the exact same170 predecessor source files",
+      "status": "passed"
+    },
+    {
+      "name": "author rejects timed inspect without run, then accepts actual evaluated run",
+      "status": "passed"
+    },
+    {
+      "name": "author inspect uses actual returned run ID",
+      "status": "passed"
+    },
+    {
+      "name": "author rejection retains exact inherited diagnostic",
+      "status": "passed"
+    },
+    {
+      "name": "coordinator rejects timed inspect without run, then accepts actual evaluated run",
+      "status": "passed"
+    },
+    {
+      "name": "coordinator inspect uses actual returned run ID",
+      "status": "passed"
+    },
+    {
+      "name": "coordinator rejection retains exact inherited diagnostic",
+      "status": "passed"
+    },
+    {
+      "name": "reviewer rejects timed inspect without run, then accepts actual evaluated run",
+      "status": "passed"
+    },
+    {
+      "name": "reviewer inspect uses actual returned run ID",
+      "status": "passed"
+    },
+    {
+      "name": "reviewer rejection retains exact inherited diagnostic",
+      "status": "passed"
+    },
+    {
+      "name": "Exactly two narrow additions",
+      "status": "passed"
+    },
+    {
+      "name": "Added setup uses original project/program and clock, no extra budget",
+      "status": "passed"
+    },
+    {
+      "name": "Exact returned ID substitution",
+      "status": "passed"
+    }
+  ],
+  "exact_additions": [
+    {
+      "json_pointer": "/cases/12/additional_setup",
+      "original_present": false,
+      "value": [
+        {
+          "step": "evaluate-prefix",
+          "expected_status": "succeeded",
+          "request": {
+            "schema_version": "ontokin.agent/0.22",
+            "project_id": "c090-r13",
+            "request_id": "c090-r13-evaluate-prefix",
+            "operation": "evaluate",
+            "program_revision": "sha256:b0522100e4af2c108eadabbeb8e8d96bac663914178aeaebc8190e581deee22d",
+            "run_id": null,
+            "until_seconds": "1"
+          }
+        }
+      ]
+    },
+    {
+      "json_pointer": "/cases/12/task_request/run_id",
+      "original_present": false,
+      "value": {
+        "$response": "R13.evaluate-prefix.run_id"
+      }
+    }
+  ],
+  "bindings": {
+    "/workspace/scratch/b46faa606e44/c090-recovery/OntoKin/docs/language-design/torque-amendments/c091-projection-run-prerequisite/AMENDMENT.json": {
+      "sha256": "8f14cc9900f04acdaceb91ff5a7138b7eb7cec20ecde804f1f0f6de9928292da",
+      "bytes": 1696,
+      "mode": "0o644"
+    },
+    "/workspace/scratch/b46faa606e44/c090-recovery/OntoKin/docs/language-design/torque-amendments/c091-projection-run-prerequisite/README.md": {
+      "sha256": "fb4c7908509d218fa314f08943204df9836f15e472682b5b2725f88c2edf07ac",
+      "bytes": 758,
+      "mode": "0o644"
+    },
+    "/workspace/scratch/b46faa606e44/c090-recovery/OntoKin/docs/language-design/torque-amendments/c091-projection-run-prerequisite/reproduce_predecessor.py": {
+      "sha256": "26289265043437ddaf80370991542670cce9067d4585361d93a5a7b7bf2bd8b4",
+      "bytes": 3704,
+      "mode": "0o644"
+    },
+    "/workspace/scratch/b46faa606e44/c090-recovery/OntoKin/docs/language-design/torque-amendments/c091-projection-run-prerequisite/predecessor-author.json": {
+      "sha256": "9fb1cc427c10a535c2c8e11ca380fb80d8867bc278e6968f0759e563a2ce8199",
+      "bytes": 182697,
+      "mode": "0o644"
+    },
+    "/workspace/scratch/b46faa606e44/c090-recovery/OntoKin/docs/language-design/torque-amendments/c091-projection-run-prerequisite/predecessor-independent.json": {
+      "sha256": "4415ace919d1746645ba8023925262b98137550a5af1b54e2f9afe747198811f",
+      "bytes": 182698,
+      "mode": "0o644"
+    },
+    "/workspace/scratch/b46faa606e44/c091-evidence/runtime/r13-reviewer-reproduction.json": {
+      "sha256": "9f1219c16a2add09687bced6b105eebf42d9ec199b2cac7edd2564d5c5e06811",
+      "bytes": 182695,
+      "mode": "0o644"
+    },
+    "/workspace/scratch/b46faa606e44/c090-recovery/OntoKin/docs/language-design/torque-v0.1/freeze/agent/resource-cases.json": {
+      "sha256": "b5115ea1bfd075bce5fa8dce94784b96c4f74fe797dc2c534bbd76dbf2fef5ce",
+      "bytes": 59141,
+      "mode": "0o644"
+    },
+    "/workspace/scratch/b46faa606e44/c090-recovery/OntoKin/docs/language-design/agent-v0.22/response.schema.json": {
+      "sha256": "d6ed82435883795f6e4049977f55f963edadaedf0e3238e0eb78913cd6e5d9e2",
+      "bytes": 88624,
+      "mode": "0o644"
+    }
+  },
+  "scope": "One missing actual prefix-evaluation prerequisite and exact returned run ID. No runtime, stage, clock, source/host budget, cancellation, cap, deadline, callback, protocol, or publication expectation changes. Original frozen table remains unchanged.",
+  "authority": "Review supports the proposed narrow erratum; parent must publish/read back the exact hash-bound amendment before using an overlaid R13 request as acceptance authority.",
+  "preparation_failure": "First replay used candidate c091-inherited-source by mistake; source hash admission correctly rejected agent_cli.py before any predecessor execution. Log preserved; successful second replay used /tmp/c091-predecessor-interface-code and reverified all170 files."
+}
