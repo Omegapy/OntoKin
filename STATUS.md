@@ -1,5 +1,11 @@
 # OntoKin status
 
+## Main integration lease — C089
+
+Owner: `interactive-c089-torque-review-20261102-813f`. Scope: integrate the independently reviewed documentation-only C089 torque review in [PR #88](https://github.com/Omegapy/OntoKin/pull/88), verify resulting main, and publish the closing checkpoint. Expected starting main: `7b6900baa0357ab96c4639ac5c2ebe4e1791833e`. Reviewed branch head: `47050d893728ae86e5241be3f758afd3b0c0945d`.
+
+Lease interval: **2026-11-02T20:10:16.000Z through 2026-11-02T20:40:16.000Z**. This lease becomes active only after the expected-head publication succeeds and actual main/STATUS are read back. It grants no runtime, source-profile or release adoption; unrelated nonoverlapping branch work may continue. No hosted execution is requested.
+
 ## Current development baseline
 
 OntoKin's [GOAL](GOAL.md) is an AI-agent language for editable meaningful 3D objects, animation and simulation through authoritative `.ok` source. Finite increments do not complete that mission.
