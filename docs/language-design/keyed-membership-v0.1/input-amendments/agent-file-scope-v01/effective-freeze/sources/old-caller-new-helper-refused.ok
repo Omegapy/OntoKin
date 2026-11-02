@@ -1,0 +1,16 @@
+ontokin "0.20";
+module MembershipProbe @ "membership-probe";
+profile "string-concat-0.1";
+
+import lib @ "helper-import" from "fixture.membership-helper" version "1.0.0" digest "sha256:0bdf8b2de408414aaf5ed333200afa17deaa813ab196348f88c10a3c656c17be";
+
+public class Probe @ "probe" {
+    public derive observed @ "observed": Bool = lib.lookup();
+    geometry = box(vec3(if self.observed then 2[m] else 1[m],1[m],1[m]));
+    physical = no_body();
+}
+scene Demo @ "demo" {
+    duration=1[s];
+    gravity=vector(world,0[m/s^2],0[m/s^2],0[m/s^2]);
+    object probe @ "probe": Probe {}
+}

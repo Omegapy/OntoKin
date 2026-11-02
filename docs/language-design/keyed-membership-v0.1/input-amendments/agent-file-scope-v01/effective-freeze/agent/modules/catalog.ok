@@ -1,0 +1,17 @@
+ontokin "0.20";
+module Catalog @ "membership-catalog";
+profile "string-concat-0.1";
+
+public fn defaults @ "defaults"() -> Keyed<Length> {
+    return keyed<Length>{"left":1[m],"middle":1.5[m],"right":2[m]};
+}
+public fn mounts @ "mounts"() -> Keyed<Length> {
+    return keyed<Length>{"left":0[m],"middle":3[m],"right":6[m]};
+}
+public fn finishes @ "finishes"() -> Keyed<SurfaceMaterial> {
+    return keyed<SurfaceMaterial>{
+        "left":surface_material(rgba(0.25,0.5,0.75,1),0,0.7),
+        "middle":surface_material(rgba(0.8,0.25,0.1,1),0,0.7),
+        "right":surface_material(rgba(0.25,0.5,0.75,1),0,0.7)
+    };
+}
