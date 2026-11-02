@@ -26,7 +26,7 @@ The first native merge-import attempt remains failed. A separately identified re
 
 ## Ownership and handoff
 
-This expected-head closing publication releases owner `interactive-c089-torque-review-20261102-813f`'s main integration lease only after actual main and exact STATUS readback. Its recorded interval was 2026-11-02T20:10:16Z through 2026-11-02T20:40:16Z. The standalone closing receipt identifies the final head/tree and effective release; a saved status is not proof of current remote ownership. Reconcile actual refs, branches, PRs and CI before new work.
+**Active main integration lease — C090.** Owner `interactive-c090-torque-contract-20261102-7of9`; acquired `2026-11-02T21:45:28Z`; expires `2026-11-02T22:15:28Z`. This expected-head publication is based on observed main `655097f016af17434b9b26fae22491f5f302aa18` and reserves main integration, STATUS and closing evidence for reviewed PR #89, candidate `133cff003287ccda44760b95871ed76a5b39b646`. The lease is effective only after actual main and exact STATUS readback. Independent nonoverlapping branch work remains permitted. Previous C089 release observations remain historical in the immutable predecessor; they do not describe this new lease.
 
 No hosted execution or continuation schedule was started. Hosted workflows remain manual-only with default-false opt-in. Historical October 19 Actions failures are not current-source validation, and no repository-wide Actions setting is inferred. The broader [Issue #26](https://github.com/Omegapy/OntoKin/issues/26) remains open.
 
