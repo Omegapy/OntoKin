@@ -1,0 +1,16 @@
+ontokin "0.21";
+module MembershipProbe @ "membership-probe";
+profile "keyed-membership-0.1";
+
+import lib @ "helper-import" from "fixture.membership-helper" version "1.0.0" digest "sha256:88d5eff75d9af9abb778cce71f3e4da18e87966a9cdc9c835bfef5d339b4b57d";
+
+public class Probe @ "probe" {
+    public derive observed @ "observed": Bool = lib.lookup();
+    geometry = box(vec3(if self.observed then 2[m] else 1[m],1[m],1[m]));
+    physical = no_body();
+}
+scene Demo @ "demo" {
+    duration=1[s];
+    gravity=vector(world,0[m/s^2],0[m/s^2],0[m/s^2]);
+    object probe @ "probe": Probe {}
+}

@@ -1,0 +1,19 @@
+ontokin "0.21";
+module MembershipProbe @ "membership-probe";
+profile "keyed-membership-0.1";
+
+public class Child @ "child" { geometry=box(vec3(1[m],1[m],1[m])); physical=no_body(); }
+public class Probe @ "probe" {
+    public parts children @ "children": Child for (k,v) in keyed<Int>{"one":1} {}
+    public derive flag @ "flag": Bool = has_key(self.children,"one");
+    public parts dependent @ "dependent": Child for (k,v) in (if self.flag then keyed<Int>{"x":1} else keyed<Int>{}) {}
+    public derive observed @ "observed": Bool = true;
+    geometry = empty();
+    physical = no_body();
+}
+
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object probe @ "probe": Probe {}
+}
