@@ -1,0 +1,16 @@
+ontokin "0.19";
+module StringConcatProbe @ "string-concat-probe";
+profile "keyed-rekey-0.1";
+import lib @ "lib-import" from "fixture.concat-helper" version "1.0.0" digest "sha256:7af87c35fcc6c3a3ca0458e3b37af9c30dc9594dee5889f26193d6a69bd7db69";
+
+
+public class ProbeShape @ "probe-shape" {
+    public derive result @ "result": String = lib.join("ns.","a");
+    geometry = if self.result == self.result then box(vec3(1[m], 1[m], 1[m])) else box(vec3(1[m], 1[m], 1[m]));
+    physical = no_body();
+}
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object shape @ "shape": ProbeShape {}
+}

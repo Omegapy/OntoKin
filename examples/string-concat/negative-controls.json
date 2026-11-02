@@ -1,0 +1,1484 @@
+{
+  "schema_version": "ontokin.c087-predecessor-negative-controls/0.1",
+  "candidate_observations_used": false,
+  "cases": [
+    {
+      "name": "string-plus-vector",
+      "file_manifest": "negative-control-string-plus-vector.files.json",
+      "program_revision": "sha256:edf60cfdf40646f11a87002f9a0106c2e8f656f572166c25e13b2f15b7ba381b",
+      "diagnostic": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "category": "invalid",
+        "message": "A tuple/vector supports multiplication or division by a scalar only.",
+        "details": {},
+        "related": [],
+        "repair": "Use a value with the required type, dimension, and frame.",
+        "rule_ids": [
+          "LANG-003"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:08701459bf7c8806e4a9fe3887e39761a2333ef6352beb673ea5026d50117df0",
+          "filename": "main.ok",
+          "start_byte": 183,
+          "end_byte": 200,
+          "element_id": [
+            "entry",
+            "string-concat-probe",
+            "definitions",
+            "probe-shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:edf60cfdf40646f11a87002f9a0106c2e8f656f572166c25e13b2f15b7ba381b",
+        "source_id": "entry",
+        "source_revision": "sha256:08701459bf7c8806e4a9fe3887e39761a2333ef6352beb673ea5026d50117df0",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "string-times-vector",
+      "file_manifest": "negative-control-string-times-vector.files.json",
+      "program_revision": "sha256:ffef2b747a4d095f10678e78290af811c8219d54bafbe7fa9c78a48e038d2e38",
+      "diagnostic": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "category": "invalid",
+        "message": "Vector scaling requires a numeric scalar.",
+        "details": {},
+        "related": [],
+        "repair": "Use a value with the required type, dimension, and frame.",
+        "rule_ids": [
+          "LANG-003"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:72fee3d9e059af2abbe6c959c7416261eb15cf38643cb79a4d203a41c0b82405",
+          "filename": "main.ok",
+          "start_byte": 183,
+          "end_byte": 200,
+          "element_id": [
+            "entry",
+            "string-concat-probe",
+            "definitions",
+            "probe-shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:ffef2b747a4d095f10678e78290af811c8219d54bafbe7fa9c78a48e038d2e38",
+        "source_id": "entry",
+        "source_revision": "sha256:72fee3d9e059af2abbe6c959c7416261eb15cf38643cb79a4d203a41c0b82405",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "string-equals-int",
+      "file_manifest": "negative-control-string-equals-int.files.json",
+      "program_revision": "sha256:c641cb744a1c8e157c483fa7191f29270b0aa8502084e5b93dcebe9ffce07921",
+      "diagnostic": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "category": "invalid",
+        "message": "Incompatible types: String and Int.",
+        "details": {
+          "expected": "String",
+          "actual": "Int"
+        },
+        "related": [],
+        "repair": "Use a value with the required type, dimension, and frame.",
+        "rule_ids": [
+          "LANG-003"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:5be35d14cd8e47f5474c0e31ce1e8676e95375c21a73268e2b7a3a5f4c5e048d",
+          "filename": "main.ok",
+          "start_byte": 181,
+          "end_byte": 189,
+          "element_id": [
+            "entry",
+            "string-concat-probe",
+            "definitions",
+            "probe-shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:c641cb744a1c8e157c483fa7191f29270b0aa8502084e5b93dcebe9ffce07921",
+        "source_id": "entry",
+        "source_revision": "sha256:5be35d14cd8e47f5474c0e31ce1e8676e95375c21a73268e2b7a3a5f4c5e048d",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "old-declaring-string-addition-refused",
+      "file_manifest": "negative-control-old-declaring-string-addition-refused.files.json",
+      "program_revision": "sha256:2c0764bed369c2b5c4a4f4eb7ff8e7f8fec6d245c76f354ce2a0dc985cb7bee7",
+      "diagnostic": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "category": "invalid",
+        "message": "Operator '+' is not defined for String and String.",
+        "details": {},
+        "related": [],
+        "location": "complete original binary expression",
+        "repair": "Use a value with the required type, dimension, and frame.",
+        "rule_ids": [
+          "LANG-003"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:6b39ffcb699777a247bec097dace71453d7425aea1a9c5bff7bb2db13c415583",
+          "filename": "main.ok",
+          "start_byte": 183,
+          "end_byte": 192,
+          "element_id": [
+            "entry",
+            "string-concat-probe",
+            "definitions",
+            "probe-shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:2c0764bed369c2b5c4a4f4eb7ff8e7f8fec6d245c76f354ce2a0dc985cb7bee7",
+        "source_id": "entry",
+        "source_revision": "sha256:6b39ffcb699777a247bec097dace71453d7425aea1a9c5bff7bb2db13c415583",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "unsupported-unicode-escape",
+      "file_manifest": "negative-control-unsupported-unicode-escape.files.json",
+      "program_revision": "sha256:af81680334269dc3e58c6a18acedd6d00f0e4430529fcc35b6180094ed9262b8",
+      "diagnostic": {
+        "code": "OKL-E-LEXICAL",
+        "category": "invalid",
+        "phase": "lexical",
+        "details": {},
+        "related": [],
+        "message": "Unsupported string escape; use \\\" , \\\\ , \\n, \\r, or \\t.",
+        "repair": "Use the UTF-8 token and string forms in LANG-001.",
+        "rule_ids": [
+          "LANG-001"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:67020594de8fdf7206117f90045bebf8531573ee897fa2c43842c26848b4bc4b",
+          "filename": "main.ok",
+          "start_byte": 184,
+          "end_byte": 186,
+          "element_id": null
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:af81680334269dc3e58c6a18acedd6d00f0e4430529fcc35b6180094ed9262b8",
+        "source_id": "entry",
+        "source_revision": "sha256:67020594de8fdf7206117f90045bebf8531573ee897fa2c43842c26848b4bc4b",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "string-plus-int",
+      "file_manifest": "negative-control-string-plus-int.files.json",
+      "program_revision": "sha256:c8a1c912e698dd01f319fb90039a5eb60690dbe690b74519c63a7b50d8380974",
+      "diagnostic": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "category": "invalid",
+        "message": "Operator '+' is not defined for String and Int.",
+        "details": {},
+        "related": [],
+        "location": "complete original binary expression",
+        "repair": "Use a value with the required type, dimension, and frame.",
+        "rule_ids": [
+          "LANG-003"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:274382b926662e4a2a07c5ecdb2c031cb9d3de1c320d80f28f75be5a3a4fdc1c",
+          "filename": "main.ok",
+          "start_byte": 183,
+          "end_byte": 190,
+          "element_id": [
+            "entry",
+            "string-concat-probe",
+            "definitions",
+            "probe-shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:c8a1c912e698dd01f319fb90039a5eb60690dbe690b74519c63a7b50d8380974",
+        "source_id": "entry",
+        "source_revision": "sha256:274382b926662e4a2a07c5ecdb2c031cb9d3de1c320d80f28f75be5a3a4fdc1c",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "int-plus-string",
+      "file_manifest": "negative-control-int-plus-string.files.json",
+      "program_revision": "sha256:658d422adaa50bdb6da966581d9e1c7adc60f02286ae8e7e559c0daba7c2cde6",
+      "diagnostic": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "category": "invalid",
+        "message": "Operator '+' is not defined for Int and String.",
+        "details": {},
+        "related": [],
+        "location": "complete original binary expression",
+        "repair": "Use a value with the required type, dimension, and frame.",
+        "rule_ids": [
+          "LANG-003"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:8c4e9de083409a0397731172553aaaede18d46855c9bbb26ca22f49039b918db",
+          "filename": "main.ok",
+          "start_byte": 183,
+          "end_byte": 190,
+          "element_id": [
+            "entry",
+            "string-concat-probe",
+            "definitions",
+            "probe-shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:658d422adaa50bdb6da966581d9e1c7adc60f02286ae8e7e559c0daba7c2cde6",
+        "source_id": "entry",
+        "source_revision": "sha256:8c4e9de083409a0397731172553aaaede18d46855c9bbb26ca22f49039b918db",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "string-plus-bool",
+      "file_manifest": "negative-control-string-plus-bool.files.json",
+      "program_revision": "sha256:43b5e9fada402ec3f927441d15c10ca5ba13f8d2d43aa01f39e8c9b8fbc56136",
+      "diagnostic": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "category": "invalid",
+        "message": "Operator '+' is not defined for String and Bool.",
+        "details": {},
+        "related": [],
+        "location": "complete original binary expression",
+        "repair": "Use a value with the required type, dimension, and frame.",
+        "rule_ids": [
+          "LANG-003"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:6fe8e8a6537a13871008973cf975ad6198c188718e40e879ff0209604e757d7d",
+          "filename": "main.ok",
+          "start_byte": 183,
+          "end_byte": 193,
+          "element_id": [
+            "entry",
+            "string-concat-probe",
+            "definitions",
+            "probe-shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:43b5e9fada402ec3f927441d15c10ca5ba13f8d2d43aa01f39e8c9b8fbc56136",
+        "source_id": "entry",
+        "source_revision": "sha256:6fe8e8a6537a13871008973cf975ad6198c188718e40e879ff0209604e757d7d",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "bool-plus-string",
+      "file_manifest": "negative-control-bool-plus-string.files.json",
+      "program_revision": "sha256:4d8f38adb4f3e4e3091d8eb3323bef6b3ef20b27ea4efa6c7adc75a25c86e444",
+      "diagnostic": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "category": "invalid",
+        "message": "Operator '+' is not defined for Bool and String.",
+        "details": {},
+        "related": [],
+        "location": "complete original binary expression",
+        "repair": "Use a value with the required type, dimension, and frame.",
+        "rule_ids": [
+          "LANG-003"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:158ed13bca758dde5c7382627bdcecab6c9d2fd81f5b51c9a30f75dfe98877b2",
+          "filename": "main.ok",
+          "start_byte": 183,
+          "end_byte": 193,
+          "element_id": [
+            "entry",
+            "string-concat-probe",
+            "definitions",
+            "probe-shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:4d8f38adb4f3e4e3091d8eb3323bef6b3ef20b27ea4efa6c7adc75a25c86e444",
+        "source_id": "entry",
+        "source_revision": "sha256:158ed13bca758dde5c7382627bdcecab6c9d2fd81f5b51c9a30f75dfe98877b2",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "string-plus-real",
+      "file_manifest": "negative-control-string-plus-real.files.json",
+      "program_revision": "sha256:084779505c53a673a8282f69d55482344d72dcbfe07d711b50812981ff391965",
+      "diagnostic": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "category": "invalid",
+        "message": "Operator '+' is not defined for String and Real.",
+        "details": {},
+        "related": [],
+        "location": "complete original binary expression",
+        "repair": "Use a value with the required type, dimension, and frame.",
+        "rule_ids": [
+          "LANG-003"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:b6a9eefb542e3d6b13cd9e52084a20323ce466d50ba8c2d3dc21284582098894",
+          "filename": "main.ok",
+          "start_byte": 183,
+          "end_byte": 192,
+          "element_id": [
+            "entry",
+            "string-concat-probe",
+            "definitions",
+            "probe-shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:084779505c53a673a8282f69d55482344d72dcbfe07d711b50812981ff391965",
+        "source_id": "entry",
+        "source_revision": "sha256:b6a9eefb542e3d6b13cd9e52084a20323ce466d50ba8c2d3dc21284582098894",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "string-plus-keyed",
+      "file_manifest": "negative-control-string-plus-keyed.files.json",
+      "program_revision": "sha256:f18b79a6f809d7e179eb60e1a3b10f9f104838bf73bb3157fe8e72238472b47a",
+      "diagnostic": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "category": "invalid",
+        "message": "Operator '+' is not defined for String and Keyed<Int>.",
+        "details": {},
+        "related": [],
+        "location": "complete original binary expression",
+        "repair": "Use a value with the required type, dimension, and frame.",
+        "rule_ids": [
+          "LANG-003"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:377fe5dfa2abf4249e461dc1570c81c2b1ebeaf1d7b0ee090c3530f5a63a03bb",
+          "filename": "main.ok",
+          "start_byte": 183,
+          "end_byte": 206,
+          "element_id": [
+            "entry",
+            "string-concat-probe",
+            "definitions",
+            "probe-shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:f18b79a6f809d7e179eb60e1a3b10f9f104838bf73bb3157fe8e72238472b47a",
+        "source_id": "entry",
+        "source_revision": "sha256:377fe5dfa2abf4249e461dc1570c81c2b1ebeaf1d7b0ee090c3530f5a63a03bb",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "unselected-branch-type-refusal",
+      "file_manifest": "negative-control-unselected-branch-type-refusal.files.json",
+      "program_revision": "sha256:8057d87b8ac4692520574d6a3979117366cf21ef807f986fac4e8f6f1c4d4398",
+      "diagnostic": {
+        "code": "OKL-E-TYPE",
+        "category": "invalid",
+        "phase": "type",
+        "details": {},
+        "related": [],
+        "message": "Operator '+' is not defined for String and Int.",
+        "repair": "Use a value with the required type, dimension, and frame.",
+        "rule_ids": [
+          "LANG-003"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:2fbc6c59b0d1d667b04ae47ba72d53aa8de621d6b422362eaa861bf080f5d2fa",
+          "filename": "main.ok",
+          "start_byte": 206,
+          "end_byte": 213,
+          "element_id": [
+            "entry",
+            "string-concat-probe",
+            "definitions",
+            "probe-shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:8057d87b8ac4692520574d6a3979117366cf21ef807f986fac4e8f6f1c4d4398",
+        "source_id": "entry",
+        "source_revision": "sha256:2fbc6c59b0d1d667b04ae47ba72d53aa8de621d6b422362eaa861bf080f5d2fa",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "empty-map-static-type-refusal",
+      "file_manifest": "negative-control-empty-map-static-type-refusal.files.json",
+      "program_revision": "sha256:c54a4ca456bbbdf274a33877caa53ced535ed18f92fab600aeca6f15e5189d9c",
+      "diagnostic": {
+        "code": "OKL-E-TYPE",
+        "category": "invalid",
+        "phase": "type",
+        "details": {},
+        "related": [],
+        "message": "Operator '+' is not defined for String and Int.",
+        "repair": "Use a value with the required type, dimension, and frame.",
+        "rule_ids": [
+          "LANG-003"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:91e5228ddde4b1394173708a2ff3833d633e01584e5e98344699f1d0decbdc17",
+          "filename": "main.ok",
+          "start_byte": 229,
+          "end_byte": 236,
+          "element_id": [
+            "entry",
+            "string-concat-probe",
+            "definitions",
+            "probe-shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:c54a4ca456bbbdf274a33877caa53ced535ed18f92fab600aeca6f15e5189d9c",
+        "source_id": "entry",
+        "source_revision": "sha256:91e5228ddde4b1394173708a2ff3833d633e01584e5e98344699f1d0decbdc17",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "empty-rekey-static-type-refusal",
+      "file_manifest": "negative-control-empty-rekey-static-type-refusal.files.json",
+      "program_revision": "sha256:602ce259d83e91216932f4abe061a806e5a0f445ebf00061cda38dedde32e5d4",
+      "diagnostic": {
+        "code": "OKL-E-TYPE",
+        "category": "invalid",
+        "phase": "type",
+        "details": {},
+        "related": [],
+        "message": "Operator '+' is not defined for String and Int.",
+        "repair": "Use a value with the required type, dimension, and frame.",
+        "rule_ids": [
+          "LANG-003"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:915da7c7260d7bbd4244789000299e873f33c96a7df9addfedfe86bf5096bafe",
+          "filename": "main.ok",
+          "start_byte": 225,
+          "end_byte": 234,
+          "element_id": [
+            "entry",
+            "string-concat-probe",
+            "definitions",
+            "probe-shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:602ce259d83e91216932f4abe061a806e5a0f445ebf00061cda38dedde32e5d4",
+        "source_id": "entry",
+        "source_revision": "sha256:915da7c7260d7bbd4244789000299e873f33c96a7df9addfedfe86bf5096bafe",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "global-type-refusal-before-left-error",
+      "file_manifest": "negative-control-global-type-refusal-before-left-error.files.json",
+      "program_revision": "sha256:64f61ca8a37e5ab295bf900630256655eaba5c7042e85b36a24f84a90e601ae4",
+      "diagnostic": {
+        "code": "OKL-E-TYPE",
+        "category": "invalid",
+        "phase": "type",
+        "details": {},
+        "related": [],
+        "message": "Operator '+' is not defined for String and Bool.",
+        "repair": "Use a value with the required type, dimension, and frame.",
+        "rule_ids": [
+          "LANG-003"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:5bd1f6c9ca6eba8d86c82c2583858fe2052bbb8169e0462392f714ebf70b2bf3",
+          "filename": "main.ok",
+          "start_byte": 445,
+          "end_byte": 464,
+          "element_id": [
+            "entry",
+            "string-concat-probe",
+            "definitions",
+            "probe-shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:64f61ca8a37e5ab295bf900630256655eaba5c7042e85b36a24f84a90e601ae4",
+        "source_id": "entry",
+        "source_revision": "sha256:5bd1f6c9ca6eba8d86c82c2583858fe2052bbb8169e0462392f714ebf70b2bf3",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "left-operand-error-precedes-right",
+      "file_manifest": "negative-control-left-operand-error-precedes-right.files.json",
+      "program_revision": "sha256:fd55b4fff5ca869160e927230f0a563968a2e29daaf09f3a9fcca69a9a416551",
+      "diagnostic": {
+        "code": "OKL-E-NUMERIC",
+        "phase": "elaboration",
+        "category": "invalid",
+        "message": "Division by zero.",
+        "details": {},
+        "related": [],
+        "location": "1 / left_denominator",
+        "no_dynamic_concat_stage_reached": true,
+        "repair": "Revise the expression so that its result is finite and inside the required domain.",
+        "rule_ids": [
+          "LANG-004"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:0a19a32566b186f93e01bf0f0f9a00fa70a39dbcebc571c15e0445917b0ebaca",
+          "filename": "main.ok",
+          "start_byte": 170,
+          "end_byte": 190,
+          "element_id": [
+            "string-concat-probe",
+            "demo",
+            "shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:fd55b4fff5ca869160e927230f0a563968a2e29daaf09f3a9fcca69a9a416551",
+        "source_id": "entry",
+        "source_revision": "sha256:0a19a32566b186f93e01bf0f0f9a00fa70a39dbcebc571c15e0445917b0ebaca",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "right-operand-error-before-admission",
+      "file_manifest": "negative-control-right-operand-error-before-admission.files.json",
+      "program_revision": "sha256:855fca8b251a6c0f4ac79baba01414d89069990a7a22b937df3b658ebf2b0dfc",
+      "diagnostic": {
+        "code": "OKL-E-NUMERIC",
+        "phase": "elaboration",
+        "category": "invalid",
+        "message": "Division by zero.",
+        "details": {},
+        "related": [],
+        "location": "1 / right_denominator",
+        "no_dynamic_concat_stage_reached": true,
+        "repair": "Revise the expression so that its result is finite and inside the required domain.",
+        "rule_ids": [
+          "LANG-004"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:240b8d7029092a0150b2be008395ad0a68ee0543ca6e7842e132b2896789ae39",
+          "filename": "main.ok",
+          "start_byte": 301,
+          "end_byte": 322,
+          "element_id": [
+            "string-concat-probe",
+            "demo",
+            "shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:855fca8b251a6c0f4ac79baba01414d89069990a7a22b937df3b658ebf2b0dfc",
+        "source_id": "entry",
+        "source_revision": "sha256:240b8d7029092a0150b2be008395ad0a68ee0543ca6e7842e132b2896789ae39",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "right-error-before-left-size-scan",
+      "file_manifest": "negative-control-right-error-before-left-size-scan.files.json",
+      "program_revision": "sha256:855fca8b251a6c0f4ac79baba01414d89069990a7a22b937df3b658ebf2b0dfc",
+      "diagnostic": {
+        "code": "OKL-E-NUMERIC",
+        "phase": "elaboration",
+        "category": "invalid",
+        "message": "Division by zero.",
+        "details": {},
+        "related": [],
+        "location": "1 / right_denominator",
+        "no_dynamic_concat_stage_reached": true,
+        "repair": "Revise the expression so that its result is finite and inside the required domain.",
+        "rule_ids": [
+          "LANG-004"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:240b8d7029092a0150b2be008395ad0a68ee0543ca6e7842e132b2896789ae39",
+          "filename": "main.ok",
+          "start_byte": 301,
+          "end_byte": 322,
+          "element_id": [
+            "string-concat-probe",
+            "demo",
+            "shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:855fca8b251a6c0f4ac79baba01414d89069990a7a22b937df3b658ebf2b0dfc",
+        "source_id": "entry",
+        "source_revision": "sha256:240b8d7029092a0150b2be008395ad0a68ee0543ca6e7842e132b2896789ae39",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "rekey-65-character-key",
+      "file_manifest": "negative-control-rekey-65-character-key.files.json",
+      "program_revision": "sha256:9990f29e51b697c6999f0a372078fe72a677aebbecfe9b742a08356dc543c44c",
+      "diagnostic": {
+        "code": "OKL-E-ID",
+        "category": "invalid",
+        "phase": "elaboration",
+        "details": {
+          "operation": "rekey_keyed",
+          "key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxa",
+          "old_key": "a"
+        },
+        "related": [
+          {
+            "source_id": "entry",
+            "source_revision": "sha256:cc888a62bc82f79742185d4a5c62f051fc4babaa917f7af11e7bbc771a753254",
+            "filename": "main.ok",
+            "start_byte": 215,
+            "end_byte": 220,
+            "element_id": null
+          }
+        ],
+        "message": "rekey_keyed produced invalid stable key \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxa\" from old key \"a\".",
+        "repair": "Give this declaration a unique key in its declared scope.",
+        "rule_ids": [
+          "LANG-007"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:cc888a62bc82f79742185d4a5c62f051fc4babaa917f7af11e7bbc771a753254",
+          "filename": "main.ok",
+          "start_byte": 230,
+          "end_byte": 297,
+          "element_id": [
+            "string-concat-probe",
+            "demo",
+            "shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:9990f29e51b697c6999f0a372078fe72a677aebbecfe9b742a08356dc543c44c",
+        "source_id": "entry",
+        "source_revision": "sha256:cc888a62bc82f79742185d4a5c62f051fc4babaa917f7af11e7bbc771a753254",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "rekey-unicode-key",
+      "file_manifest": "negative-control-rekey-unicode-key.files.json",
+      "program_revision": "sha256:96e7e1f1bf3ca0fe1b0d1cf697ae35b4cbda8d6926168971cf851f81046f79f0",
+      "diagnostic": {
+        "code": "OKL-E-ID",
+        "category": "invalid",
+        "phase": "elaboration",
+        "details": {
+          "operation": "rekey_keyed",
+          "key": "éa",
+          "old_key": "a"
+        },
+        "related": [
+          {
+            "source_id": "entry",
+            "source_revision": "sha256:115aab84817f58f0e7021d517ce2209d850f6727708b56e937d38b9628534e80",
+            "filename": "main.ok",
+            "start_byte": 215,
+            "end_byte": 220,
+            "element_id": null
+          }
+        ],
+        "message": "rekey_keyed produced invalid stable key \"\\u00e9a\" from old key \"a\".",
+        "repair": "Give this declaration a unique key in its declared scope.",
+        "rule_ids": [
+          "LANG-007"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:115aab84817f58f0e7021d517ce2209d850f6727708b56e937d38b9628534e80",
+          "filename": "main.ok",
+          "start_byte": 230,
+          "end_byte": 235,
+          "element_id": [
+            "string-concat-probe",
+            "demo",
+            "shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:96e7e1f1bf3ca0fe1b0d1cf697ae35b4cbda8d6926168971cf851f81046f79f0",
+        "source_id": "entry",
+        "source_revision": "sha256:115aab84817f58f0e7021d517ce2209d850f6727708b56e937d38b9628534e80",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "rekey-whitespace-key",
+      "file_manifest": "negative-control-rekey-whitespace-key.files.json",
+      "program_revision": "sha256:a2efc0a56265eecdc22003b6b6d8b33a52da9c3569da87d717532f423b462e50",
+      "diagnostic": {
+        "code": "OKL-E-ID",
+        "category": "invalid",
+        "phase": "elaboration",
+        "details": {
+          "operation": "rekey_keyed",
+          "key": "bad a",
+          "old_key": "a"
+        },
+        "related": [
+          {
+            "source_id": "entry",
+            "source_revision": "sha256:c5fcd9076f8614b2944244db08638f2e26ef014213a0c3c905c7893a0ff21536",
+            "filename": "main.ok",
+            "start_byte": 215,
+            "end_byte": 220,
+            "element_id": null
+          }
+        ],
+        "message": "rekey_keyed produced invalid stable key \"bad a\" from old key \"a\".",
+        "repair": "Give this declaration a unique key in its declared scope.",
+        "rule_ids": [
+          "LANG-007"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:c5fcd9076f8614b2944244db08638f2e26ef014213a0c3c905c7893a0ff21536",
+          "filename": "main.ok",
+          "start_byte": 230,
+          "end_byte": 237,
+          "element_id": [
+            "string-concat-probe",
+            "demo",
+            "shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:a2efc0a56265eecdc22003b6b6d8b33a52da9c3569da87d717532f423b462e50",
+        "source_id": "entry",
+        "source_revision": "sha256:c5fcd9076f8614b2944244db08638f2e26ef014213a0c3c905c7893a0ff21536",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "rekey-punctuation-first-key",
+      "file_manifest": "negative-control-rekey-punctuation-first-key.files.json",
+      "program_revision": "sha256:9014f15b97f51b440bba98cad3d21a53402e3a5c75b01efbbe521a842b7e76e7",
+      "diagnostic": {
+        "code": "OKL-E-ID",
+        "category": "invalid",
+        "phase": "elaboration",
+        "details": {
+          "operation": "rekey_keyed",
+          "key": "-a",
+          "old_key": "a"
+        },
+        "related": [
+          {
+            "source_id": "entry",
+            "source_revision": "sha256:2019e9d85f02687f16726386bd4ace8008b44aa2180147992e382dae461488fd",
+            "filename": "main.ok",
+            "start_byte": 215,
+            "end_byte": 220,
+            "element_id": null
+          }
+        ],
+        "message": "rekey_keyed produced invalid stable key \"-a\" from old key \"a\".",
+        "repair": "Give this declaration a unique key in its declared scope.",
+        "rule_ids": [
+          "LANG-007"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:2019e9d85f02687f16726386bd4ace8008b44aa2180147992e382dae461488fd",
+          "filename": "main.ok",
+          "start_byte": 230,
+          "end_byte": 234,
+          "element_id": [
+            "string-concat-probe",
+            "demo",
+            "shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:9014f15b97f51b440bba98cad3d21a53402e3a5c75b01efbbe521a842b7e76e7",
+        "source_id": "entry",
+        "source_revision": "sha256:2019e9d85f02687f16726386bd4ace8008b44aa2180147992e382dae461488fd",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "rekey-empty-key",
+      "file_manifest": "negative-control-rekey-empty-key.files.json",
+      "program_revision": "sha256:071c60b8884663faa2084b75a3edc324618a45e2454cc900eb2c0bcf8af3cc84",
+      "diagnostic": {
+        "code": "OKL-E-ID",
+        "category": "invalid",
+        "phase": "elaboration",
+        "details": {
+          "operation": "rekey_keyed",
+          "key": "",
+          "old_key": "a"
+        },
+        "related": [
+          {
+            "source_id": "entry",
+            "source_revision": "sha256:e40ee1d49b0f2e83fa02d49fb4384cafdeea3b3c2dab0dc0abf13787a3a19f78",
+            "filename": "main.ok",
+            "start_byte": 215,
+            "end_byte": 220,
+            "element_id": null
+          }
+        ],
+        "message": "rekey_keyed produced invalid stable key \"\" from old key \"a\".",
+        "repair": "Give this declaration a unique key in its declared scope.",
+        "rule_ids": [
+          "LANG-007"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:e40ee1d49b0f2e83fa02d49fb4384cafdeea3b3c2dab0dc0abf13787a3a19f78",
+          "filename": "main.ok",
+          "start_byte": 230,
+          "end_byte": 232,
+          "element_id": [
+            "string-concat-probe",
+            "demo",
+            "shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:071c60b8884663faa2084b75a3edc324618a45e2454cc900eb2c0bcf8af3cc84",
+        "source_id": "entry",
+        "source_revision": "sha256:e40ee1d49b0f2e83fa02d49fb4384cafdeea3b3c2dab0dc0abf13787a3a19f78",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "rekey-per-entry-collision",
+      "file_manifest": "negative-control-rekey-per-entry-collision.files.json",
+      "program_revision": "sha256:e59533a581c2ce2076c4daac08620b4d0efb07b89bf6c9707bff40bf46e5da1d",
+      "diagnostic": {
+        "code": "OKL-E-ID",
+        "category": "invalid",
+        "phase": "elaboration",
+        "details": {
+          "operation": "rekey_keyed",
+          "key": "na",
+          "first_old_key": "a",
+          "duplicate_old_key": "b"
+        },
+        "related": [
+          {
+            "source_id": "entry",
+            "source_revision": "sha256:bd6db41cd73e1e6e05dce491b385321000dac56722b44ac909aacdc00d5852bb",
+            "filename": "main.ok",
+            "start_byte": 221,
+            "end_byte": 226,
+            "element_id": null
+          },
+          {
+            "source_id": "entry",
+            "source_revision": "sha256:bd6db41cd73e1e6e05dce491b385321000dac56722b44ac909aacdc00d5852bb",
+            "filename": "main.ok",
+            "start_byte": 215,
+            "end_byte": 220,
+            "element_id": null
+          }
+        ],
+        "message": "rekey_keyed output key \"na\" duplicates old keys \"a\" and \"b\".",
+        "repair": "Give this declaration a unique key in its declared scope.",
+        "rule_ids": [
+          "LANG-007"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:bd6db41cd73e1e6e05dce491b385321000dac56722b44ac909aacdc00d5852bb",
+          "filename": "main.ok",
+          "start_byte": 242,
+          "end_byte": 246,
+          "element_id": [
+            "string-concat-probe",
+            "demo",
+            "shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:e59533a581c2ce2076c4daac08620b4d0efb07b89bf6c9707bff40bf46e5da1d",
+        "source_id": "entry",
+        "source_revision": "sha256:bd6db41cd73e1e6e05dce491b385321000dac56722b44ac909aacdc00d5852bb",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "merge-overlapping-namespaces-refused",
+      "file_manifest": "negative-control-merge-overlapping-namespaces-refused.files.json",
+      "program_revision": "sha256:00ea0ffcf577deb8b5ec8a16063e08c86df779bf70762329ea1e9d1255c6348a",
+      "diagnostic": {
+        "code": "OKL-E-ID",
+        "category": "invalid",
+        "phase": "elaboration",
+        "details": {
+          "operation": "merge_keyed",
+          "key": "same.a"
+        },
+        "related": [
+          {
+            "source_id": "entry",
+            "source_revision": "sha256:14849ab3d3eb9bab22459d584ea8f49880612a2cb2f6c24f5384db2c5d636ed9",
+            "filename": "main.ok",
+            "start_byte": 204,
+            "end_byte": 215,
+            "element_id": null
+          }
+        ],
+        "message": "merge_keyed inputs share key \"same.a\".",
+        "repair": "Give this declaration a unique key in its declared scope.",
+        "rule_ids": [
+          "LANG-007"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:14849ab3d3eb9bab22459d584ea8f49880612a2cb2f6c24f5384db2c5d636ed9",
+          "filename": "main.ok",
+          "start_byte": 256,
+          "end_byte": 267,
+          "element_id": [
+            "string-concat-probe",
+            "demo",
+            "shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:00ea0ffcf577deb8b5ec8a16063e08c86df779bf70762329ea1e9d1255c6348a",
+        "source_id": "entry",
+        "source_revision": "sha256:14849ab3d3eb9bab22459d584ea8f49880612a2cb2f6c24f5384db2c5d636ed9",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "generated-value-taint",
+      "file_manifest": "negative-control-generated-value-taint.files.json",
+      "program_revision": "sha256:c954a66c7e28640992cbae3fe457146c6a28acb18a1dc45ee64dc9a586729869",
+      "diagnostic": {
+        "code": "OKL-E-DEPENDENCY-CYCLE",
+        "category": "invalid",
+        "phase": "elaboration",
+        "details": {
+          "construction_rule": "CON-007",
+          "generated_dependency": "shape.children",
+          "shape_owner": "shape"
+        },
+        "related": [],
+        "message": "Collection shape depends on a generated collection or another generated occurrence.",
+        "repair": "Revise the indicated declaration or expression to satisfy the stated core rule.",
+        "rule_ids": [
+          "LANG-009"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:ef238ab6b2b283235938d7a194a26b47f8000c4ed66a9ff60843f6e1395f30f0",
+          "filename": "main.ok",
+          "start_byte": 446,
+          "end_byte": 459,
+          "element_id": [
+            "string-concat-probe",
+            "demo",
+            "shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:c954a66c7e28640992cbae3fe457146c6a28acb18a1dc45ee64dc9a586729869",
+        "source_id": "entry",
+        "source_revision": "sha256:ef238ab6b2b283235938d7a194a26b47f8000c4ed66a9ff60843f6e1395f30f0",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "condition-only-generated-taint",
+      "file_manifest": "negative-control-condition-only-generated-taint.files.json",
+      "program_revision": "sha256:c954a66c7e28640992cbae3fe457146c6a28acb18a1dc45ee64dc9a586729869",
+      "diagnostic": {
+        "code": "OKL-E-DEPENDENCY-CYCLE",
+        "category": "invalid",
+        "phase": "elaboration",
+        "details": {
+          "construction_rule": "CON-007",
+          "generated_dependency": "shape.children",
+          "shape_owner": "shape"
+        },
+        "related": [],
+        "message": "Collection shape depends on a generated collection or another generated occurrence.",
+        "repair": "Revise the indicated declaration or expression to satisfy the stated core rule.",
+        "rule_ids": [
+          "LANG-009"
+        ],
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:ef238ab6b2b283235938d7a194a26b47f8000c4ed66a9ff60843f6e1395f30f0",
+          "filename": "main.ok",
+          "start_byte": 446,
+          "end_byte": 459,
+          "element_id": [
+            "string-concat-probe",
+            "demo",
+            "shape",
+            "result"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:c954a66c7e28640992cbae3fe457146c6a28acb18a1dc45ee64dc9a586729869",
+        "source_id": "entry",
+        "source_revision": "sha256:ef238ab6b2b283235938d7a194a26b47f8000c4ed66a9ff60843f6e1395f30f0",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    },
+    {
+      "name": "imported-old-helper-keeps-refusal",
+      "file_manifest": "negative-control-imported-old-helper-keeps-refusal.files.json",
+      "program_revision": "sha256:157a552fe7699cbbd8361f6633c3d91250b55bf3697961b58bb246aa89ae9a5d",
+      "diagnostic": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "category": "invalid",
+        "message": "Operator '+' is not defined for String and String.",
+        "details": {},
+        "related": [],
+        "location": "full left + right expression in pinned package:fixture.concat-helper@1.0.0",
+        "repair": "Use a value with the required type, dimension, and frame.",
+        "rule_ids": [
+          "LANG-003"
+        ],
+        "primary": {
+          "source_id": "package:fixture.concat-helper@1.0.0",
+          "source_revision": "sha256:7af87c35fcc6c3a3ca0458e3b37af9c30dc9594dee5889f26193d6a69bd7db69",
+          "filename": "helper.ok",
+          "start_byte": 136,
+          "end_byte": 148,
+          "element_id": [
+            "package",
+            "fixture.concat-helper",
+            "helper",
+            "definitions",
+            "join"
+          ]
+        },
+        "severity": "error",
+        "time": null,
+        "run_id": null,
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:157a552fe7699cbbd8361f6633c3d91250b55bf3697961b58bb246aa89ae9a5d",
+        "source_id": "package:fixture.concat-helper@1.0.0",
+        "source_revision": "sha256:7af87c35fcc6c3a3ca0458e3b37af9c30dc9594dee5889f26193d6a69bd7db69",
+        "comparison": "Compare every declared field; public primary/related use file for filename and repair is {summary,patches:[]}. No extra details or related spans."
+      },
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "basis": "Inherited exact dispatch contract independently authored before this .19 execution"
+    }
+  ]
+}

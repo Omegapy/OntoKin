@@ -29,14 +29,15 @@ from .pockets_runtime import POCKETS_CALLS, POCKETS_TYPES, pockets_builtin
 from .texture_bundle import TextureBundle
 from .texture_runtime import (TEXTURE_CALLS, TEXTURE_TYPES, texture_builtin,
                               validate_texture_closure, texture_coordinates)
-from .profile_capabilities import (BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, KEYED_ZIP_PROFILES, KEYED_MERGE_PROFILES, KEYED_FILTER_PROFILES, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, IMPULSE_PROFILES,
+from .profile_capabilities import (BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_REKEY_PROFILES, KEYED_ZIP_PROFILES, KEYED_MERGE_PROFILES, KEYED_FILTER_PROFILES, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, IMPULSE_PROFILES,
                                    SURFACE_PROFILES)
 from .validator import (BUILTIN_TYPES, FIELD_TYPES,
                         PREDEFINED, READONLY_FIELDS, KEY_RE, BoundExpression, Callable,
                         Context, EffectiveClass, Instance, Member, Validator,
                         fail, optional)
 from .values import (ACCELERATION, ALIASES, BOOL, INT, LENGTH, STRING, TIME,
-                     UNKNOWN, KeyedValue, Type, Value, bounded_data, quantity_type)
+                     UNKNOWN, KeyedValue, Type, Value, binary, bounded_data, quantity_type)
+from .string_concat import concat_strings
 
 
 PROFILE = "construction-0.1"
@@ -455,7 +456,7 @@ class ConstructionCompiler(Validator):
                 result = result | {"merge_keyed"}
             if self.linked.modules[node.source_id].ast.profile in KEYED_ZIP_PROFILES:
                 result = result | {"zip_keyed"}
-            if self.linked.modules[node.source_id].ast.profile == KEYED_REKEY_PROFILE:
+            if self.linked.modules[node.source_id].ast.profile in KEYED_REKEY_PROFILES:
                 result = result | {"rekey_keyed"}
             return result
         if self.linked.modules[node.source_id].ast.profile in REACH_PROFILES:
@@ -1518,7 +1519,7 @@ class ConstructionCompiler(Validator):
         return source
 
     def _rekey_keyed_expression(self, node: Any, ctx: Context) -> Value:
-        if self.linked.modules[node.source_id].ast.profile != KEYED_REKEY_PROFILE:
+        if self.linked.modules[node.source_id].ast.profile not in KEYED_REKEY_PROFILES:
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "rekey_keyed requires keyed-rekey-0.1.",
                  node, phase="support")
         element_type = self.parse_type(node.element_type)
@@ -2307,6 +2308,28 @@ class ConstructionCompiler(Validator):
                       self.index_value(result, Value(STRING, step.value), node, ctx))
         return result
 
+    def _string_addition_syntax(self, node: Any) -> bool:
+        return (node.kind == "binary" and node.op == "+"
+                and self.linked.modules[node.source_id].ast.profile == STRING_CONCAT_PROFILE)
+
+    def _string_addition(self, node: Any, ctx: Context) -> Value:
+        # Evaluate each operand once, preserving inherited left-to-right errors
+        # and the ordinary expression flow for dependencies and generated taint.
+        left = self.expression(node.left, ctx)
+        right = self.expression(node.right, ctx)
+        if left.type != STRING or right.type != STRING:
+            return binary(node.op, left, right, node, self.warning)
+        if ctx.abstract or not left.known or not right.known:
+            return Value(STRING)
+        ledger = self.budget.execution_budget
+        try:
+            result = concat_strings(left.value, right.value, node, ledger)
+        except BaseException as error:
+            if error is ledger.callback_error:
+                self.budget.callback_error = error
+            raise
+        return Value(STRING, result)
+
     def _constant_names(self, node: Any, depth: int = 0) -> frozenset[str] | None:
         """Classify a sealed source subtree without reading occurrence state.
 
@@ -2333,8 +2356,11 @@ class ConstructionCompiler(Validator):
             children = (node.value,)
             result = frozenset()
         elif kind == "binary":
-            children = (node.left, node.right)
-            result = frozenset()
+            if self._string_addition_syntax(node):
+                result = None
+            else:
+                children = (node.left, node.right)
+                result = frozenset()
         elif kind == "call" and node.callee.kind == "name" and node.callee.name in _CONSTANT_CALLS:
             children = (node.callee, *node.args)
             result = frozenset()
@@ -2377,6 +2403,9 @@ class ConstructionCompiler(Validator):
         elif kind == "unary":
             children = (node.value,)
         elif kind == "binary" and node.op not in {"and", "or"}:
+            if self._string_addition_syntax(node):
+                self._parameter_syntax[id(node)] = node, None
+                return None
             children = (node.left, node.right)
         elif kind == "call" and node.callee.kind == "name" and node.callee.name in _PARAMETER_CALLS:
             children = (node.callee, *node.args)
@@ -2635,7 +2664,9 @@ class ConstructionCompiler(Validator):
                         capture = [{id(read) for _, read in reads}, reads, []]
                         self._parameter_capture = capture
             try:
-                if node.kind == "rekey_keyed":
+                if self._string_addition_syntax(node):
+                    result = self._string_addition(node, ctx)
+                elif node.kind == "rekey_keyed":
                     result = self._rekey_keyed_expression(node, ctx)
                 elif node.kind == "zip_keyed":
                     result = self._zip_keyed_expression(node, ctx)
@@ -3365,7 +3396,7 @@ class ConstructionCompiler(Validator):
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "Required capabilities are not supplied by " + self.model.profile + ": " +
                  ", ".join(self.model.requested_capabilities), requires[0], phase="support")
         if self.level == "delivered":
-            target = ("ontokin.glb/0.19" if self.model.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if self.model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if self.model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if self.model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if self.model.profile == KEYED_REDUCTION_PROFILE else
+            target = ("ontokin.glb/0.20" if self.model.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if self.model.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if self.model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if self.model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if self.model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if self.model.profile == KEYED_REDUCTION_PROFILE else
                        "ontokin.glb/0.14" if self.model.profile == KEYED_TRANSFORM_PROFILE else
                       "ontokin.glb/0.13" if self.model.profile == TEXTURE_PROFILE else
                       "ontokin.glb/0.12" if self.model.profile == POCKETS_PROFILE else

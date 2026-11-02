@@ -1,0 +1,15 @@
+ontokin "0.20";
+module StringConcatProbe @ "string-concat-probe";
+profile "string-concat-0.1";
+
+
+public class ProbeShape @ "probe-shape" {
+    public derive result @ "result": Keyed<Int> = rekey_keyed<Int>(keyed<Int>{"a":1}, (k,v)->"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" + k);
+    geometry = if len(self.result) >= 0 then box(vec3(1[m], 1[m], 1[m])) else box(vec3(1[m], 1[m], 1[m]));
+    physical = no_body();
+}
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object shape @ "shape": ProbeShape {}
+}

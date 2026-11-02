@@ -1,0 +1,49 @@
+{
+  "schema_version": "ontokin.c087-agent-inspection-adversaries/0.1",
+  "surface": "Raw actual Agent inspect response and its durable source revision; rehash transcript/snapshot envelopes before independent audit",
+  "expected_isolated_refusals": 2,
+  "requirements": [
+    {
+      "id": "AE01",
+      "request": {
+        "operation": "inspect",
+        "selector": {
+          "kind": "object",
+          "element_id": [
+            "panel-task",
+            "demo",
+            "first"
+          ]
+        },
+        "fields": [
+          "values"
+        ],
+        "limit": 1
+      },
+      "response_path": "result.items[0].values.renamed.dependencies",
+      "mutation": "Remove the effective_value_dependency whose element_id is [panel-task,demo,first,prefix] and path first.prefix",
+      "expected": "refused"
+    },
+    {
+      "id": "AE02",
+      "request": {
+        "operation": "inspect",
+        "selector": {
+          "kind": "object",
+          "element_id": [
+            "panel-task",
+            "demo",
+            "first"
+          ]
+        },
+        "fields": [
+          "values"
+        ],
+        "limit": 1
+      },
+      "response_path": "result.items[0].values.renamed.dependencies",
+      "mutation": "Replace first.prefix program_revision by the prior accepted revision after prefix repair while retaining current request/revision envelopes",
+      "expected": "refused"
+    }
+  ]
+}

@@ -77,6 +77,11 @@ def run(args, *, host_policy=None) -> int:
         from .pockets_protocol import PocketsProtocol
         service_type, envelope_fn = PocketsAgentService, PocketsProtocol.envelope
         service_options = {"protocol": selected_protocol, "host_policy": host_policy}
+    elif selected_protocol == "ontokin.agent/0.20":
+        from .string_concat_agent import StringConcatAgentService
+        from .string_concat_protocol import StringConcatProtocol
+        service_type, envelope_fn = StringConcatAgentService, StringConcatProtocol.envelope
+        service_options = {"protocol": selected_protocol, "host_policy": host_policy}
     elif selected_protocol == "ontokin.agent/0.19":
         from .keyed_rekey_agent import KeyedRekeyAgentService
         from .keyed_rekey_protocol import KeyedRekeyProtocol
@@ -112,7 +117,7 @@ def run(args, *, host_policy=None) -> int:
         from .texture_protocol import TextureProtocol
         service_type, envelope_fn = TextureAgentService, TextureProtocol.envelope
         service_options = {"protocol": selected_protocol, "host_policy": host_policy}
-    max_request_bytes = 8 * 1024 * 1024 if selected_protocol in ("ontokin.agent/0.13", "ontokin.agent/0.14", "ontokin.agent/0.15", "ontokin.agent/0.16", "ontokin.agent/0.17", "ontokin.agent/0.18", "ontokin.agent/0.19") else MAX_REQUEST_BYTES
+    max_request_bytes = 8 * 1024 * 1024 if selected_protocol in ("ontokin.agent/0.13", "ontokin.agent/0.14", "ontokin.agent/0.15", "ontokin.agent/0.16", "ontokin.agent/0.17", "ontokin.agent/0.18", "ontokin.agent/0.19", "ontokin.agent/0.20") else MAX_REQUEST_BYTES
     def error_response(error):
         return _error(error, envelope_fn)
     try:
