@@ -18,6 +18,7 @@ import re
 import stat
 import subprocess
 import sys
+from urllib.parse import unquote, urlsplit, urlunsplit
 
 SHA1 = re.compile(r'[0-9a-f]{40}\Z')
 SHA256 = re.compile(r'[0-9a-f]{64}\Z')
@@ -90,13 +91,17 @@ class Audit:
     def git(self, *arguments):
         return subprocess.check_output(['git', '-C', str(self.repository), *arguments], env=self.environment)
 
-    def read_json(self, path):
+    def read_bytes(self, path):
         require(stat.S_ISREG(path.lstat().st_mode), 'Evidence must be a regular file: ' + str(path))
         data = path.read_bytes()
         identity = {'path': str(path), 'bytes': len(data), 'sha256': digest(data),
                     'mode': format(stat.S_IMODE(path.stat().st_mode), '04o')}
         require(str(path) not in self.inputs, 'An evidence file was supplied more than once: ' + str(path))
         self.inputs[str(path)] = identity
+        return data
+
+    def read_json(self, path):
+        data = self.read_bytes(path)
         return json.loads(data.decode('utf-8'), object_pairs_hook=no_duplicate_keys,
                           parse_constant=reject_constant)
 
@@ -263,6 +268,24 @@ def verify(args, audit):
     require(args.blobs.is_dir() and not args.blobs.is_symlink(), 'Blob evidence path must be an ordinary directory')
     pages = sorted(args.blobs.glob('page-*.json'))
     blobs, blob_receipts = {}, []
+
+    def path_ref_identity(observation, requested):
+        path = source_path(observation.get('requested_path'))
+        require(path in changed and changed[path]['sha'] == requested,
+                'Transport requested path/SHA is not an immutable changed source path')
+        require(observation.get('requested_ref') == expected_commit,
+                'Transport requested ref differs from the expected immutable commit')
+        return path
+
+    def record_blob(requested, data, receipt):
+        require(requested in expected_blob_ids, 'Unexpected blob outside the changed unique blob set: ' + requested)
+        require(requested not in blobs, 'Duplicate observation for changed blob: ' + requested)
+        require(native_id('blob', data) == requested, 'Returned bytes do not hash to the requested native blob')
+        require(data == audit.blob(requested), 'Returned blob bytes differ from immutable local source')
+        receipt.update(requested_sha=requested, bytes=len(data), sha256=digest(data),
+                       git_blob_sha1=requested, native_bytes_equal=True)
+        blobs[requested] = receipt
+        blob_receipts.append(receipt)
     for page in pages:
         document = audit.read_json(page)
         require(type(document) is dict and type(document.get('observations')) is list,
@@ -272,6 +295,9 @@ def verify(args, audit):
             requested = sha1(observation.get('requested_sha'), 'Requested blob')
             require(requested in expected_blob_ids, 'Unexpected blob outside the changed unique blob set: ' + requested)
             require(requested not in blobs, 'Duplicate observation for changed blob: ' + requested)
+            variant = observation.get('api_variant', 'github_git_blob')
+            require(variant in ('github_git_blob', 'github_fetch_file'), 'Unsupported saved blob transport variant')
+            requested_path = path_ref_identity(observation, requested) if variant == 'github_fetch_file' else None
             response = observation.get('response')
             require(type(response) is dict and response.get('sha') == requested,
                     'Returned blob SHA differs from requested blob')
@@ -286,15 +312,91 @@ def verify(args, audit):
                 raise VerificationError('Returned blob base64 is invalid: ' + requested) from error
             require(base64.b64encode(data).decode('ascii') == compact,
                     'Returned blob base64 has noncanonical padding or discarded bits')
-            size = integer(response.get('size'), 'Returned blob size')
-            require(size == len(data), 'Returned blob length differs from its decoded bytes')
-            require(native_id('blob', data) == requested, 'Returned bytes do not hash to the requested native blob')
-            require(data == audit.blob(requested), 'Returned blob bytes differ from immutable local source')
-            receipt = {'requested_sha': requested, 'page': str(page), 'observation_index': index,
-                       'bytes': len(data), 'sha256': digest(data), 'git_blob_sha1': requested,
-                       'native_bytes_equal': True}
-            blobs[requested] = receipt
-            blob_receipts.append(receipt)
+            if variant == 'github_git_blob' or 'size' in response:
+                size = integer(response.get('size'), 'Returned blob size')
+                require(size == len(data), 'Returned blob length differs from its decoded bytes')
+            record_blob(requested, data, {'page': str(page), 'observation_index': index,
+                        'api_variant': variant, 'requested_path': requested_path,
+                        'requested_ref': expected_commit if requested_path is not None else None,
+                        'size_field_supplied': 'size' in response})
+
+    ignored_raw_receipts = []
+    directory_cache = {}
+    if args.raw_downloads is not None:
+        raw_root = args.raw_downloads.resolve(strict=True)
+        require(raw_root.is_dir() and not args.raw_downloads.is_symlink(), 'Raw downloads must use an ordinary directory')
+
+        def nested_objects(value):
+            if type(value) is dict:
+                yield value
+                for child in value.values():
+                    yield from nested_objects(child)
+            elif type(value) is list:
+                for child in value:
+                    yield from nested_objects(child)
+
+        def raw_url(value, path):
+            require(type(value) is str, 'Raw URL must be a string')
+            parsed = urlsplit(value)
+            require(parsed.scheme == 'https' and parsed.hostname == 'raw.githubusercontent.com' and
+                    not parsed.query and not parsed.fragment,
+                    'Raw receipt URL must be a query-stripped HTTPS raw.githubusercontent.com URL')
+            parts = unquote(parsed.path).split('/', 3)
+            require(len(parts) == 4 and parts[0] == '' and parts[1] and parts[2] and
+                    parts[3] == expected_commit + '/' + path,
+                    'Raw URL does not identify the requested immutable commit/path')
+            return value
+
+        for receipt_path in sorted(raw_root.glob('*.json')):
+            if SHA1.fullmatch(receipt_path.stem) is None:
+                ignored_raw_receipts.append({'path': str(receipt_path), 'reason': 'Not an exact SHA-named passing receipt; retained separately'})
+                continue
+            raw_receipt = audit.read_json(receipt_path)
+            require(type(raw_receipt) is dict, 'Raw download receipt must be an object')
+            if raw_receipt.get('status') != 'passed':
+                ignored_raw_receipts.append({'path': str(receipt_path), 'reason': 'Download did not pass; never used as successful readback'})
+                continue
+            requested = sha1(raw_receipt.get('requested_sha'), 'Raw requested blob')
+            require(requested == receipt_path.stem, 'Raw receipt filename differs from requested SHA')
+            require(raw_receipt.get('api_variant') == 'github_raw_download', 'Raw receipt has the wrong transport identity')
+            requested_path = path_ref_identity(raw_receipt, requested)
+            require(type(raw_receipt.get('http_status')) is int and raw_receipt['http_status'] == 200,
+                    'Raw payload was not an actual HTTP 200 download')
+            requested_url = raw_url(raw_receipt.get('request_url_without_query'), requested_path)
+            raw_url(raw_receipt.get('response_url_without_query'), requested_path)
+            payload = Path(raw_receipt.get('payload_path', ''))
+            require(payload.is_absolute() and payload.resolve(strict=True) == raw_root / (requested + '.bin'),
+                    'Raw payload path does not identify its exact SHA-named local download')
+            data = audit.read_bytes(payload)
+            require(integer(raw_receipt.get('bytes'), 'Raw receipt length') == len(data) and
+                    raw_receipt.get('sha256') == digest(data) and raw_receipt.get('git_blob_sha1') == requested,
+                    'Raw receipt length/SHA-256/native identity differs from actual downloaded bytes')
+            provenance = raw_receipt.get('directory_observation')
+            require(type(provenance) is dict and type(provenance.get('path')) is str,
+                    'Raw receipt lacks actual directory-observation provenance')
+            directory_path = Path(provenance['path'])
+            if not directory_path.is_absolute():
+                directory_path = raw_root.parent.parent / directory_path
+            directory_path = directory_path.absolute()
+            require(directory_path.resolve(strict=True).is_relative_to(raw_root.parent),
+                    'Directory-observation provenance is outside the readback evidence root')
+            if str(directory_path) not in directory_cache:
+                directory_cache[str(directory_path)] = audit.read_json(directory_path)
+            require(audit.inputs[str(directory_path)]['sha256'] == provenance.get('sha256'),
+                    'Actual directory-observation file hash differs from the raw receipt')
+            matching = []
+            for item in nested_objects(directory_cache[str(directory_path)]):
+                if item.get('path') == requested_path and item.get('sha') == requested and type(item.get('download_url')) is str:
+                    parsed = urlsplit(item['download_url'])
+                    clean = urlunsplit((parsed.scheme, parsed.netloc, parsed.path, '', ''))
+                    if clean == requested_url:
+                        matching.append(item)
+            require(matching, 'Raw receipt URL/path/SHA is absent from its actual saved directory response')
+            record_blob(requested, data, {'page': str(receipt_path), 'observation_index': None,
+                        'api_variant': 'github_raw_download', 'requested_path': requested_path,
+                        'requested_ref': expected_commit, 'payload_path': str(payload),
+                        'http_status': 200, 'directory_observation': provenance,
+                        'downloader_sha256': raw_receipt.get('downloader_sha256')})
     require(set(blobs) == expected_blob_ids, 'Blob observations are not the complete unique changed-blob set')
     files = []
     for path in sorted(native_identities):
@@ -314,6 +416,7 @@ def verify(args, audit):
             'changed_files': len(files), 'changed_file_bytes': sum(r['bytes'] for r in files),
             'unique_changed_blobs': len(blobs), 'unique_changed_blob_bytes': sum(r['bytes'] for r in blob_receipts),
             'tree_observations': tree_receipts, 'blob_observations': blob_receipts, 'files': files,
+            'ignored_raw_failure_receipts': ignored_raw_receipts,
             'complete_changed_path_and_blob_coverage': True,
             'all_changed_source_bytes_modes_equal_native_prepared_tree': True,
             'input_evidence_files_unchanged_during_verification': True,
@@ -330,6 +433,7 @@ def main():
     parser.add_argument('--commit', type=Path, required=True)
     parser.add_argument('--trees', type=Path, required=True)
     parser.add_argument('--blobs', type=Path, required=True)
+    parser.add_argument('--raw-downloads', type=Path)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     args.repository = args.repository.resolve(strict=True)
