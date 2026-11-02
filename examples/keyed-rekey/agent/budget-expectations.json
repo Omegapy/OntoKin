@@ -1,0 +1,72 @@
+{
+  "schema_version": "ontokin.c086-independent-budget-expectations/0.1",
+  "status": "predetermined_outcomes_not_measured_candidate_costs",
+  "candidate_measurements_used": false,
+  "ordinary_defaults": {
+    "max_operations": 100000,
+    "max_elapsed_ms": 30000
+  },
+  "source_high_request": {
+    "max_operations": 400000,
+    "max_elapsed_ms": 80000
+  },
+  "source_animation_seconds": 1,
+  "lower_bound": {
+    "max_operations": 1,
+    "expected_outcome": "resource_limit",
+    "reason": "More than one separately charged admission/type/expression step is required before a complete result, even for an empty input.",
+    "not_an_exact_consumption_claim": true
+  },
+  "adequate_cases": [
+    {
+      "name": "maximum-256",
+      "policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "expected_outcome": "valid",
+      "authored_input_counts": [
+        256
+      ],
+      "basis": "256 immutable Int leaves, 256 old-key callbacks returning their existing key, 256 bounded ASCII key validations/collision lookups, detached payloads, sorting and exact lineage. No recursive numerical proof or tessellation. Ordinary 100000 operations is a conservative finite-fixture allowance, not an exact measured count."
+    },
+    {
+      "name": "panel-task-higher-budget",
+      "policy": {
+        "max_operations": 400000,
+        "max_elapsed_ms": 80000
+      },
+      "expected_outcome": "valid",
+      "basis": "Two renamed String payloads in each of two occurrences, four 12-triangle panels plus one 12-triangle marker, one exact 89-byte 4×3 PNG, and five fixed poses over one second. Explicit 400000/80000 authority is requested and independently host-authorized before candidate execution; no candidate measurement sets this bound."
+    }
+  ],
+  "authority_refusals": [
+    {
+      "source_case": "panel-task-ungranted-budget",
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "expected_outcome": "resource_limit",
+      "reason": "Requested 400000/80000 exceeds current independent host ceiling."
+    },
+    {
+      "source_case": "panel-task-higher-budget",
+      "reopened_host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "expected_outcome": "resource_limit",
+      "reason": "Reopening old accepted bytes or grants does not expand current authority."
+    }
+  ],
+  "bounded_value_work": {
+    "input_entries": 256,
+    "result_entries": 256,
+    "computed_key_characters": 64,
+    "compound_copy_cost": "Charge each logical leaf/vertex, inheritance and serialized record even when immutable payloads can be shared",
+    "one_input_body_copy_sort_lineage_and_serialization_share_current_ledger": true
+  },
+  "wall_clock_claim": "No exact elapsed-millisecond or performance improvement claim",
+  "unchanged_original_gate_settings": true
+}

@@ -1,0 +1,266 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Omegapy/OntoKin/main/docs/language-design/core-v0.1/diagnostic.schema.json",
+  "title": "OntoKin individual diagnostic contract, proposed version 0.1",
+  "description": "The structural contract for one diagnostic. A valid JSON instance is not evidence that an OntoKin implementation ran, that its diagnosis is correct, or that a proposed repair is authorized.",
+  "$comment": "OK-LANG-001 supplies the normative constraints for source byte boundaries, end_byte >= start_byte, revision validity, registered codes and rule identifiers, and proposed repairs having no implicit effect. Standard JSON Schema validation alone does not establish those constraints. This schema supplies no defaults or inferred state.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "code",
+    "severity",
+    "category",
+    "phase",
+    "message",
+    "source_revision",
+    "run_id",
+    "time",
+    "primary",
+    "related",
+    "rule_ids",
+    "details",
+    "repair",
+    "blocks"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "ontokin.diagnostic/0.1"
+    },
+    "code": {
+      "type": "string",
+      "pattern": "^OKL-(E|W)-[A-Z0-9-]+$",
+      "description": "A registered code from the versioned language specification. The pattern alone does not establish registry membership."
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "error",
+        "warning"
+      ]
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "invalid",
+        "conflict",
+        "unsupported",
+        "numerical_failure",
+        "stale",
+        "resource_limit"
+      ]
+    },
+    "phase": {
+      "type": "string",
+      "enum": [
+        "lexical",
+        "syntax",
+        "binding",
+        "type",
+        "elaboration",
+        "support",
+        "admission",
+        "transition",
+        "evaluation",
+        "inspection",
+        "edit"
+      ]
+    },
+    "message": {
+      "$ref": "#/$defs/nonemptyString"
+    },
+    "source_revision": {
+      "$ref": "#/$defs/nonemptyString",
+      "description": "Opaque identity of the source revision to which this diagnostic applies; this schema does not resolve or authenticate it."
+    },
+    "run_id": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/nonemptyString"
+        }
+      ],
+      "description": "The relevant run identity, or null when no run applies."
+    },
+    "time": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/time"
+        }
+      ],
+      "description": "The exact nonnegative scene time and observation side, or null when no time applies."
+    },
+    "primary": {
+      "$ref": "#/$defs/location"
+    },
+    "related": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/location"
+      }
+    },
+    "rule_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/nonemptyString"
+      },
+      "description": "Applicable versioned rule identifiers. Registry membership is defined by the language specification."
+    },
+    "details": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Code-specific structured context. Additional fields are permitted only inside this open details object."
+    },
+    "repair": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "#/$defs/repair"
+        }
+      ],
+      "description": "A proposed repair, or null. Merely receiving or validating a diagnostic does not apply a patch."
+    },
+    "blocks": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ]
+      },
+      "description": "Requested result levels blocked by this diagnostic; an empty array is permitted."
+    }
+  },
+  "$defs": {
+    "nonemptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "elementPath": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/nonemptyString"
+      },
+      "description": "A nonempty path of stable identity components."
+    },
+    "time": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "seconds",
+        "side"
+      ],
+      "properties": {
+        "seconds": {
+          "type": "string",
+          "pattern": "^[0-9]+(?:\\.[0-9]+)?$",
+          "description": "An exact nonnegative decimal string with digits before the optional decimal point and no exponent or sign. Leading zeros are permitted."
+        },
+        "side": {
+          "type": "string",
+          "enum": [
+            "before",
+            "after"
+          ]
+        }
+      }
+    },
+    "location": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "file",
+        "start_byte",
+        "end_byte",
+        "element_id"
+      ],
+      "properties": {
+        "file": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "start_byte": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_byte": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "element_id": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/elementPath"
+            }
+          ]
+        }
+      },
+      "description": "An original-source UTF-8 byte span and resolved element identity, if known. Span ordering and valid source boundaries are normative prose constraints."
+    },
+    "patch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start_byte",
+        "end_byte",
+        "expected_text",
+        "replacement",
+        "element_id"
+      ],
+      "properties": {
+        "start_byte": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_byte": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "expected_text": {
+          "type": "string"
+        },
+        "replacement": {
+          "type": "string"
+        },
+        "element_id": {
+          "$ref": "#/$defs/elementPath"
+        }
+      },
+      "description": "A proposed revision-bound source edit. Correct identity, byte boundaries, expected source text, and authorization must be checked before any edit."
+    },
+    "repair": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "summary",
+        "patches"
+      ],
+      "properties": {
+        "summary": {
+          "$ref": "#/$defs/nonemptyString"
+        },
+        "patches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/patch"
+          }
+        }
+      }
+    }
+  }
+}

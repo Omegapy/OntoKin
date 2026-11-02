@@ -29,10 +29,10 @@ from .pockets_runtime import POCKETS_CALLS, POCKETS_TYPES, pockets_builtin
 from .texture_bundle import TextureBundle
 from .texture_runtime import (TEXTURE_CALLS, TEXTURE_TYPES, texture_builtin,
                               validate_texture_closure, texture_coordinates)
-from .profile_capabilities import (BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_MERGE_PROFILES, KEYED_FILTER_PROFILES, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, IMPULSE_PROFILES,
+from .profile_capabilities import (BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, KEYED_ZIP_PROFILES, KEYED_MERGE_PROFILES, KEYED_FILTER_PROFILES, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, IMPULSE_PROFILES,
                                    SURFACE_PROFILES)
 from .validator import (BUILTIN_TYPES, FIELD_TYPES,
-                        PREDEFINED, READONLY_FIELDS, BoundExpression, Callable,
+                        PREDEFINED, READONLY_FIELDS, KEY_RE, BoundExpression, Callable,
                         Context, EffectiveClass, Instance, Member, Validator,
                         fail, optional)
 from .values import (ACCELERATION, ALIASES, BOOL, INT, LENGTH, STRING, TIME,
@@ -273,6 +273,19 @@ class KeyedZipOrigin:
     right_entry: Any = None
 
 
+@dataclass(frozen=True)
+class KeyedRekeyOrigin:
+    """Original payload and computed key lineage, never writable identity."""
+
+    expression: Any
+    input: Any
+    body: Any
+    element_type: Type
+    old_key: str | None = None
+    new_key: str | None = None
+    input_entry: Any = None
+
+
 def _materialize_reach_surface(recipe, *, max_vertices, work, check):
     """Reuse immutable loft construction, retaining each occurrence's limit.
 
@@ -350,6 +363,7 @@ class ConstructionCompiler(Validator):
         self._value_filters: dict[int, tuple[Value, tuple[KeyedFilterOrigin, ...]]] = {}
         self._value_merges: dict[int, tuple[Value, tuple[KeyedMergeOrigin, ...]]] = {}
         self._value_zips: dict[int, tuple[Value, tuple[KeyedZipOrigin, ...]]] = {}
+        self._value_rekeys: dict[int, tuple[Value, tuple[KeyedRekeyOrigin, ...]]] = {}
         self._expression_flows: list[dict] = []
         self._shape_stack: list[str] = []
         self._value_taints: dict[int, set[str]] = {}
@@ -439,8 +453,10 @@ class ConstructionCompiler(Validator):
                 result = result | {"filter_keyed"}
             if self.linked.modules[node.source_id].ast.profile in KEYED_MERGE_PROFILES:
                 result = result | {"merge_keyed"}
-            if self.linked.modules[node.source_id].ast.profile == KEYED_ZIP_PROFILE:
+            if self.linked.modules[node.source_id].ast.profile in KEYED_ZIP_PROFILES:
                 result = result | {"zip_keyed"}
+            if self.linked.modules[node.source_id].ast.profile == KEYED_REKEY_PROFILE:
+                result = result | {"rekey_keyed"}
             return result
         if self.linked.modules[node.source_id].ast.profile in REACH_PROFILES:
             from .reach_source import NAMES
@@ -569,6 +585,54 @@ class ConstructionCompiler(Validator):
         zips = self._zip_records(original)
         if zips:
             self._value_zips[id(result)] = (result, zips)
+        rekeys = self._rekey_records(original)
+        if rekeys:
+            self._value_rekeys[id(result)] = (result, rekeys)
+        return result
+
+    def _rekey_records(self, value: Value) -> tuple[KeyedRekeyOrigin, ...]:
+        retained = self._value_rekeys.get(id(value))
+        if retained is not None and retained[0] is value:
+            return retained[1]
+        return ()
+
+    def _combine_rekey_records(self, *groups) -> tuple[KeyedRekeyOrigin, ...]:
+        records, seen = [], set()
+
+        def coordinates(node):
+            return None if node is None else (node.source_id, node.start, node.end)
+
+        for group in groups:
+            for record in group:
+                self.budget.tick(record.expression)
+                identity = (coordinates(record.expression), coordinates(record.input),
+                            coordinates(record.body), record.element_type,
+                            record.old_key, record.new_key, coordinates(record.input_entry))
+                if identity not in seen:
+                    records.append(record)
+                    seen.add(identity)
+        return tuple(records)
+
+    def _aggregate_rekey_records(self, *groups) -> tuple[KeyedRekeyOrigin, ...]:
+        normalized = []
+        for group in groups:
+            for record in group:
+                self.budget.tick(record.expression)
+                normalized.append(replace(record, old_key=None, new_key=None, input_entry=None))
+        return self._combine_rekey_records(normalized)
+
+    def rekey_provenance(self, value: Value, *, aggregate: Value | None = None) -> list[dict]:
+        records = (self._rekey_records(value) if aggregate is None else
+                   self._combine_rekey_records(self._rekey_records(aggregate), self._rekey_records(value)))
+        result = []
+        for origin in records:
+            self.budget.tick(origin.expression)
+            result.append({"expression": self.location(origin.expression),
+                           "input": self.location(origin.input),
+                           "body": self.location(origin.body),
+                           "element_type": str(origin.element_type),
+                           "old_key": origin.old_key, "new_key": origin.new_key,
+                           "input_entry": self.location(origin.input_entry)})
         return result
 
     def _zip_records(self, value: Value) -> tuple[KeyedZipOrigin, ...]:
@@ -776,6 +840,9 @@ class ConstructionCompiler(Validator):
         zips = self._zip_records(value)
         if zips:
             frame["zips"].append(zips)
+        rekeys = self._rekey_records(value)
+        if rekeys:
+            frame["rekeys"].append(rekeys)
         frame["taints"].update(self._value_taints.get(id(value), ()))
 
     def _finish_value_flow(self, value: Value, node: Any, tracking: bool) -> Value:
@@ -785,7 +852,7 @@ class ConstructionCompiler(Validator):
         own = self._transform_records(value)
         # A map builds its aggregate derivation explicitly. Ordinary pure
         # expressions retain only the values their selected execution reads.
-        transforms = (own if node.kind in {"map_keyed", "reduce_keyed", "filter_keyed", "merge_keyed", "zip_keyed"} else
+        transforms = (own if node.kind in {"map_keyed", "reduce_keyed", "filter_keyed", "merge_keyed", "zip_keyed", "rekey_keyed"} else
                       self._merge_transform_records(*frame["transforms"], own))
         if value.type.kind == "Keyed":
             if any(record.key is not None for record in transforms):
@@ -800,22 +867,27 @@ class ConstructionCompiler(Validator):
             transforms = tuple(record for record in transforms if record.key is not None
                                or (id(record.expression), id(record.body), id(record.input)) not in selected)
         own_reductions = self._reduction_records(value)
-        reductions = (own_reductions if node.kind in {"reduce_keyed", "filter_keyed", "merge_keyed", "zip_keyed"} else
+        reductions = (own_reductions if node.kind in {"reduce_keyed", "filter_keyed", "merge_keyed", "zip_keyed", "rekey_keyed"} else
                       self._merge_reduction_records(*frame["reductions"], own_reductions))
         own_filters = self._filter_records(value)
-        filters = (own_filters if node.kind in {"filter_keyed", "merge_keyed", "zip_keyed"} else
+        filters = (own_filters if node.kind in {"filter_keyed", "merge_keyed", "zip_keyed", "rekey_keyed"} else
                    self._merge_filter_records(*frame["filters"], own_filters))
         own_merges = self._merge_records(value)
-        merges = (own_merges if node.kind in {"merge_keyed", "zip_keyed"} else
+        merges = (own_merges if node.kind in {"merge_keyed", "zip_keyed", "rekey_keyed"} else
                   self._combine_merge_records(*frame["merges"], own_merges))
         own_zips = self._zip_records(value)
-        zips = (own_zips if node.kind == "zip_keyed" else
+        zips = (own_zips if node.kind in {"zip_keyed", "rekey_keyed"} else
                 self._combine_zip_records(*frame["zips"], own_zips))
         if value.type.kind == "Keyed" and zips:
             zips = self._aggregate_zip_records(zips)
+        own_rekeys = self._rekey_records(value)
+        rekeys = (own_rekeys if node.kind == "rekey_keyed" else
+                  self._combine_rekey_records(*frame["rekeys"], own_rekeys))
+        if value.type.kind == "Keyed" and rekeys:
+            rekeys = self._aggregate_rekey_records(rekeys)
         taints = frame["taints"] | self._value_taints.get(id(value), set())
         if (transforms != own or reductions != own_reductions or filters != own_filters
-                or merges != own_merges or zips != own_zips
+                or merges != own_merges or zips != own_zips or rekeys != own_rekeys
                 or taints != self._value_taints.get(id(value), set())):
             value = self._inherit_value_info(value, Value(value.type, value.value, value.frame, value.hint))
             self.budget.charge_value(value, node)
@@ -829,6 +901,8 @@ class ConstructionCompiler(Validator):
                 self._value_merges[id(value)] = (value, merges)
             if zips:
                 self._value_zips[id(value)] = (value, zips)
+            if rekeys:
+                self._value_rekeys[id(value)] = (value, rekeys)
             if taints:
                 self._value_taints[id(value)] = set(taints)
                 self._tainted_values[id(value)] = value
@@ -864,7 +938,7 @@ class ConstructionCompiler(Validator):
             self.budget.tick(binder)
             if name in forbidden:
                 label = {"reduce_keyed": "Reduction", "filter_keyed": "Filter",
-                         "zip_keyed": "Zip"}.get(node.kind, "Map")
+                         "zip_keyed": "Zip", "rekey_keyed": "Rekey"}.get(node.kind, "Map")
                 fail("OKL-E-NAME", f"{label} binder '{name}' duplicates or shadows a visible name.",
                      binder, phase="binding")
             forbidden.add(name)
@@ -967,6 +1041,10 @@ class ConstructionCompiler(Validator):
                 self._zip_records(leaf), self._zip_records(computed))
             if zips:
                 self._value_zips[id(result)] = (result, zips)
+            rekeys = self._combine_rekey_records(self._rekey_records(source),
+                self._rekey_records(leaf), self._rekey_records(computed))
+            if rekeys:
+                self._value_rekeys[id(result)] = (result, rekeys)
             leaf_taints = taints | self._value_taints.get(id(leaf), set()) | self._value_taints.get(id(computed), set())
             if leaf_taints:
                 self._value_taints[id(result)] = set(leaf_taints)
@@ -1030,6 +1108,7 @@ class ConstructionCompiler(Validator):
         reductions = [self._reduction_records(source), self._reduction_records(seed)]
         filters = [self._filter_records(source), self._filter_records(seed)]
         zips = [self._zip_records(source), self._zip_records(seed)]
+        rekeys = [self._rekey_records(source), self._rekey_records(seed)]
         taints = set(self._value_taints.get(id(source), ())) | set(self._value_taints.get(id(seed), ()))
         locals_ = {}
         for name, value in ctx.locals.items():
@@ -1065,6 +1144,7 @@ class ConstructionCompiler(Validator):
             reductions.extend((self._reduction_records(leaf), self._reduction_records(computed)))
             filters.extend((self._filter_records(leaf), self._filter_records(computed)))
             zips.extend((self._zip_records(leaf), self._zip_records(computed)))
+            rekeys.extend((self._rekey_records(leaf), self._rekey_records(computed)))
             taints.update(self._value_taints.get(id(leaf), ()))
             taints.update(self._value_taints.get(id(computed), ()))
             # Earlier reads remain part of the aggregate even when this body
@@ -1081,6 +1161,9 @@ class ConstructionCompiler(Validator):
             retained_zips = self._combine_zip_records(*zips)
             if retained_zips:
                 self._value_zips[id(accumulator)] = (accumulator, retained_zips)
+            retained_rekeys = self._combine_rekey_records(*rekeys)
+            if retained_rekeys:
+                self._value_rekeys[id(accumulator)] = (accumulator, retained_rekeys)
             if taints:
                 self._value_taints[id(accumulator)] = set(taints)
                 self._tainted_values[id(accumulator)] = accumulator
@@ -1097,6 +1180,9 @@ class ConstructionCompiler(Validator):
         retained_zips = self._combine_zip_records(*zips)
         if retained_zips:
             self._value_zips[id(result)] = (result, retained_zips)
+        retained_rekeys = self._combine_rekey_records(*rekeys)
+        if retained_rekeys:
+            self._value_rekeys[id(result)] = (result, retained_rekeys)
         if taints:
             self._value_taints[id(result)] = set(taints)
             self._tainted_values[id(result)] = result
@@ -1212,6 +1298,10 @@ class ConstructionCompiler(Validator):
                 self._zip_records(leaf), self._zip_records(predicate))
             if leaf_zips:
                 self._value_zips[id(result)] = (result, leaf_zips)
+            leaf_rekeys = self._combine_rekey_records(self._rekey_records(source),
+                self._rekey_records(leaf), self._rekey_records(predicate))
+            if leaf_rekeys:
+                self._value_rekeys[id(result)] = (result, leaf_rekeys)
             if taints:
                 self._value_taints[id(result)] = set(taints)
                 self._tainted_values[id(result)] = result
@@ -1383,6 +1473,182 @@ class ConstructionCompiler(Validator):
                 self._mark_generated(path, node)
         return result
 
+    def _keyed_rekey_checkpoint(self, node: Any, stage: str, key: str | None) -> None:
+        """Poll the actual complete-request ledger; retain callback exceptions."""
+        ledger = getattr(self.budget, "execution_budget", None)
+        previous_stage = ledger.stage if ledger is not None else None
+        try:
+            if ledger is not None:
+                ledger.stage = stage
+            self.budget.tick(node)
+        finally:
+            if ledger is not None:
+                ledger.stage = previous_stage
+
+    def _keyed_rekey_input(self, operand: Any, token: Any, ctx: Context,
+                           element_type: Type) -> Value:
+        source = self.expression(operand, ctx)
+        required = Type("Keyed", element=element_type)
+        if source.type != required:
+            fail("OKL-E-TYPE", f"rekey_keyed input requires exactly {required}, received {source.type}.",
+                 token, phase="type", details={"expected": str(required), "actual": str(source.type)})
+        self._keyed_leaf(source.type.element, operand)
+        if ctx.abstract:
+            return source
+        if not source.known or not isinstance(source.value, KeyedValue):
+            fail("OKL-E-TYPE", "rekey_keyed input must resolve to an immutable keyed value.",
+                 token, phase="type")
+        count = len(source.value.entries)
+        if count > MAX_KEYED_ENTRIES:
+            fail("OKL-E-RESOURCE", "Rekey input exceeds 256 entries.", operand, phase="support",
+                 details={"budget": "keyed_entries", "limit": MAX_KEYED_ENTRIES, "consumed": count})
+        self.budget.charge_value(source, operand)
+        previous = None
+        for key, leaf in source.value.entries:
+            self.budget.tick(operand)
+            self.key(operand, key)
+            if previous is not None and key <= previous:
+                fail("OKL-E-ID", "Rekey input keys must be unique canonical stable keys.",
+                     operand, phase="binding")
+            if leaf.type != element_type:
+                fail("OKL-E-TYPE", "Rekey input entry has a different resolved leaf type.", token,
+                     phase="type", details={"expected": str(required),
+                                            "actual": str(Type("Keyed", element=leaf.type))})
+            previous = key
+        return source
+
+    def _rekey_keyed_expression(self, node: Any, ctx: Context) -> Value:
+        if self.linked.modules[node.source_id].ast.profile != KEYED_REKEY_PROFILE:
+            fail("OKL-E-CAPABILITY-UNSUPPORTED", "rekey_keyed requires keyed-rekey-0.1.",
+                 node, phase="support")
+        element_type = self.parse_type(node.element_type)
+        self._keyed_leaf(element_type, node.element_type)
+        self._map_binders(node, ctx)
+        result_type = Type("Keyed", element=element_type)
+        # This expression's own abstract checks precede dynamic input work.
+        # Known enclosing values are masked, including for empty inputs.
+        abstract_input = self._unknown_local_context(ctx, node.input)
+        self._keyed_rekey_input(node.input, node.input_token, abstract_input, element_type)
+        abstract = self._unknown_local_context(ctx, node.body)
+        abstract.locals[node.key_name] = Value(STRING)
+        abstract.locals[node.value_name] = Value(element_type)
+
+        def exact_key(value):
+            if value.type != STRING:
+                fail("OKL-E-TYPE", f"rekey_keyed body requires exactly String, received {value.type}.",
+                     node.body_token, phase="type", details={"expected": "String", "actual": str(value.type)})
+            return value
+
+        exact_key(self.expression(node.body, abstract))
+        if ctx.abstract:
+            return Value(result_type)
+        source = self._keyed_rekey_input(node.input, node.input_token, ctx, element_type)
+        count = len(source.value.entries)
+        self.budget.tick(node, max(1, count))
+        originals = self._keyed_origins.get(id(source.value), {})
+        first_by_new, entries, origins = {}, [], {}
+        readers = (
+            (self._value_transforms, self._transform_records, self._merge_transform_records),
+            (self._value_reductions, self._reduction_records, self._merge_reduction_records),
+            (self._value_filters, self._filter_records, self._merge_filter_records),
+            (self._value_merges, self._merge_records, self._combine_merge_records),
+            (self._value_zips, self._zip_records, self._aggregate_zip_records))
+        groups = [[reader(source)] for _, reader, _ in readers]
+        rekeys = [self._rekey_records(source)]
+        taints = set(self._value_taints.get(id(source), ()))
+        for _, leaf in source.value.entries:
+            self.budget.tick(node.input)
+            for group, (_, reader, _) in zip(groups, readers):
+                group.append(reader(leaf))
+            rekeys.append(self._rekey_records(leaf))
+            taints.update(self._value_taints.get(id(leaf), ()))
+        current = KeyedRekeyOrigin(node, node.input, node.body, element_type)
+        locals_ = {}
+        for name, value in ctx.locals.items():
+            self.budget.tick(node)
+            locals_[name] = value
+        body_ctx = replace(ctx, locals=locals_)
+
+        def copied(value, origin):
+            result = self._inherit_value_info(value, Value(value.type, value.value, value.frame, value.hint))
+            self.budget.charge_value(result, origin)
+            return result
+
+        for old_key, original in source.value.entries:
+            self._keyed_rekey_checkpoint(node, "keyed_rekey_iteration", old_key)
+            bound_key = Value(STRING, old_key)
+            self.budget.charge_value(bound_key, node.key_node)
+            locals_[node.key_name] = bound_key
+            locals_[node.value_name] = copied(original, node.value_node)
+            computed = exact_key(self.expression(node.body, body_ctx))
+            if not computed.known or not isinstance(computed.value, str):
+                fail("OKL-E-TYPE", "rekey_keyed body must resolve to an immutable String value.",
+                     node.body_token, phase="type")
+            new_key = computed.value
+            self._keyed_rekey_checkpoint(node, "keyed_rekey_key_validation", old_key)
+            self.budget.charge_value(computed, node.body)
+            if not KEY_RE.fullmatch(new_key):
+                related = [originals[old_key]] if old_key in originals else []
+                raise OntoKinError("OKL-E-ID", "rekey_keyed produced invalid stable key " +
+                                   json.dumps(new_key) + " from old key " + json.dumps(old_key) + ".",
+                                   node.body_token, category="invalid", phase="elaboration",
+                                   rule_ids=["LANG-007"], related=related,
+                                   details={"operation": "rekey_keyed", "key": new_key, "old_key": old_key})
+            self._keyed_rekey_checkpoint(node, "keyed_rekey_collision", old_key)
+            self.budget.tick(node.body)
+            if new_key in first_by_new:
+                first = first_by_new[new_key]
+                related = [originals[key] for key in (first, old_key) if key in originals]
+                raise OntoKinError("OKL-E-ID", "rekey_keyed output key " + json.dumps(new_key) +
+                                   " duplicates old keys " + json.dumps(first) + " and " + json.dumps(old_key) + ".",
+                                   node.body_token, category="invalid", phase="elaboration",
+                                   rule_ids=["LANG-007"], related=related,
+                                   details={"operation": "rekey_keyed", "key": new_key,
+                                            "first_old_key": first, "duplicate_old_key": old_key})
+            first_by_new[new_key] = old_key
+            result = copied(original, node.input)
+            step = replace(current, old_key=old_key, new_key=new_key, input_entry=originals.get(old_key))
+            self._value_rekeys[id(result)] = (result, self._combine_rekey_records(
+                self._rekey_records(original), self._rekey_records(computed), (step,)))
+            # Inherited contributor keys stay original. Only this family adds
+            # the old-to-new step; aggregate reads cannot invent a contributor.
+            for index, (field, reader, combine) in enumerate(readers):
+                selected_combine = (self._selected_transform_records if index == 0 else
+                                    self._combine_zip_records if index == 4 else combine)
+                records = selected_combine(reader(original), reader(computed))
+                if records:
+                    field[id(result)] = (result, records)
+                groups[index].append(reader(computed))
+            rekeys.append(self._rekey_records(computed))
+            leaf_taints = taints | self._value_taints.get(id(computed), set())
+            if leaf_taints:
+                self._value_taints[id(result)] = set(leaf_taints)
+                self._tainted_values[id(result)] = result
+                taints.update(leaf_taints)
+            entries.append((new_key, result))
+            if old_key in originals:
+                origins[new_key] = originals[old_key]
+
+        self.budget.tick(node, max(1, count) * max(1, count.bit_length()))
+        ordered = sorted(entries, key=lambda item: item[0])
+        self._keyed_rekey_checkpoint(node, "keyed_rekey_publication", None)
+        payload = KeyedValue(tuple(ordered))
+        result = Value(result_type, payload)
+        self.budget.charge_value(result, node)
+        self._keyed_payloads[id(payload)] = payload
+        self._keyed_origins[id(payload)] = origins
+        for (field, _, combine), group in zip(readers, groups):
+            records = combine(*group)
+            if records:
+                field[id(result)] = (result, records)
+        self._value_rekeys[id(result)] = (result, self._aggregate_rekey_records(*rekeys, (current,)))
+        if taints:
+            self._value_taints[id(result)] = set(taints)
+            self._tainted_values[id(result)] = result
+            for path in taints:
+                self._mark_generated(path, node)
+        return result
+
     def _keyed_zip_checkpoint(self, node: Any, stage: str, key: str) -> None:
         """Poll the real shared ledger without altering a callback exception."""
         ledger = getattr(self.budget, "execution_budget", None)
@@ -1429,7 +1695,7 @@ class ConstructionCompiler(Validator):
         return source
 
     def _zip_keyed_expression(self, node: Any, ctx: Context) -> Value:
-        if self.linked.modules[node.source_id].ast.profile != KEYED_ZIP_PROFILE:
+        if self.linked.modules[node.source_id].ast.profile not in KEYED_ZIP_PROFILES:
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "zip_keyed requires keyed-zip-0.1.",
                  node, phase="support")
         types = []
@@ -1528,6 +1794,10 @@ class ConstructionCompiler(Validator):
             pair = replace(current, key=key, left_entry=left_origins.get(key), right_entry=right_origins.get(key))
             self._value_zips[id(result)] = (result, self._combine_zip_records(
                 self._zip_records(left_leaf), self._zip_records(right_leaf), self._zip_records(computed), (pair,)))
+            rekeys = self._combine_rekey_records(self._rekey_records(left_leaf),
+                self._rekey_records(right_leaf), self._rekey_records(computed))
+            if rekeys:
+                self._value_rekeys[id(result)] = (result, rekeys)
             selected_transforms = self._selected_transform_records(
                 self._transform_records(left), self._transform_records(right),
                 self._transform_records(left_leaf), self._transform_records(right_leaf),
@@ -2302,7 +2572,7 @@ class ConstructionCompiler(Validator):
         tracking = self.model.profile in KEYED_TRANSFORM_PROFILES and not ctx.abstract
         if tracking:
             self._expression_flows.append({"transforms": [], "reductions": [], "filters": [],
-                                           "merges": [], "zips": [], "taints": set()})
+                                           "merges": [], "zips": [], "rekeys": [], "taints": set()})
         self._expression_depth += 1
         try:
             if self._expression_depth > 128:
@@ -2351,6 +2621,7 @@ class ConstructionCompiler(Validator):
                                                        or self._expression_flows[-1]["filters"]
                                                        or self._expression_flows[-1]["merges"]
                                                        or self._expression_flows[-1]["zips"]
+                                                       or self._expression_flows[-1]["rekeys"]
                                                        or self._expression_flows[-1]["reductions"]
                                                        or self._expression_flows[-1]["taints"]))
                                 and self._parameter_context(ctx, reads, names, node) == parameter_context):
@@ -2364,7 +2635,9 @@ class ConstructionCompiler(Validator):
                         capture = [{id(read) for _, read in reads}, reads, []]
                         self._parameter_capture = capture
             try:
-                if node.kind == "zip_keyed":
+                if node.kind == "rekey_keyed":
+                    result = self._rekey_keyed_expression(node, ctx)
+                elif node.kind == "zip_keyed":
                     result = self._zip_keyed_expression(node, ctx)
                 elif node.kind == "merge_keyed":
                     result = self._merge_keyed_expression(node, ctx)
@@ -2398,6 +2671,7 @@ class ConstructionCompiler(Validator):
                                            or self._expression_flows[-1]["filters"]
                                            or self._expression_flows[-1]["merges"]
                                                        or self._expression_flows[-1]["zips"]
+                                                       or self._expression_flows[-1]["rekeys"]
                                                        or self._expression_flows[-1]["reductions"]
                                                        or self._expression_flows[-1]["taints"]))
                     and self._parameter_context(ctx, reads, names, node) == parameter_context):
@@ -2706,6 +2980,15 @@ class ConstructionCompiler(Validator):
                 self._value_zips[id(derived_leaf)] = (derived_leaf, zips)
                 locals_[node.value_name] = derived_leaf
                 generated["input_zips"] = self.zip_provenance(derived_leaf)
+            rekeys = self._combine_rekey_records(self._rekey_records(value), self._rekey_records(leaf))
+            if rekeys:
+                selected_leaf = locals_[node.value_name]
+                derived_leaf = self._inherit_value_info(selected_leaf, Value(
+                    selected_leaf.type, selected_leaf.value, selected_leaf.frame, selected_leaf.hint))
+                self.budget.charge_value(derived_leaf, node.input)
+                self._value_rekeys[id(derived_leaf)] = (derived_leaf, rekeys)
+                locals_[node.value_name] = derived_leaf
+                generated["input_rekeys"] = self.rekey_provenance(derived_leaf)
             self._register_tree(node, child_path, owner, collection["entry_ids"][key], child_context,
                                 forwarded, steps=collection["path_steps"] + (PathStep("key", key, node.start, node.end),),
                                 depth=collection["ownership_depth"] + 1, generated=generated,
@@ -3008,6 +3291,8 @@ class ConstructionCompiler(Validator):
                        if "input_merges" in generated else {}),
                     **({"input_zips": generated["input_zips"]}
                        if "input_zips" in generated else {}),
+                    **({"input_rekeys": generated["input_rekeys"]}
+                       if "input_rekeys" in generated else {}),
                 },
                 "generated_ancestor": record["generated_ancestor"],
             }
@@ -3080,7 +3365,7 @@ class ConstructionCompiler(Validator):
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "Required capabilities are not supplied by " + self.model.profile + ": " +
                  ", ".join(self.model.requested_capabilities), requires[0], phase="support")
         if self.level == "delivered":
-            target = ("ontokin.glb/0.18" if self.model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if self.model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if self.model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if self.model.profile == KEYED_REDUCTION_PROFILE else
+            target = ("ontokin.glb/0.19" if self.model.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if self.model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if self.model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if self.model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if self.model.profile == KEYED_REDUCTION_PROFILE else
                        "ontokin.glb/0.14" if self.model.profile == KEYED_TRANSFORM_PROFILE else
                       "ontokin.glb/0.13" if self.model.profile == TEXTURE_PROFILE else
                       "ontokin.glb/0.12" if self.model.profile == POCKETS_PROFILE else

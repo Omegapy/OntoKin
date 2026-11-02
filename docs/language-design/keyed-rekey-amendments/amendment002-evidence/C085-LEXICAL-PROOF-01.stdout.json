@@ -1,0 +1,1332 @@
+{
+  "schema_version": "ontokin.c086-unicode-lexical-proof/0.1",
+  "baseline_commit": "f4c90c04b9b381de73d46715d52e68f588e49e4f",
+  "operation": "unchanged C085 syntax.lex only; no .19 parsing, validation, runtime, exporter, or candidate expected-answer extraction",
+  "interpreter": {
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "dont_write_bytecode": true
+  },
+  "loaded_modules": [
+    {
+      "path": "/dev/shm/ontokin-c086-451f5bd4c211/c086-design/review/amendment002/pinned-c085/ontokin/syntax.py",
+      "sha256": "3b84c6c1c79a0d20e8e38326105a1c643e8d9397fad2712a16ea7d79a62dce46"
+    },
+    {
+      "path": "/dev/shm/ontokin-c086-451f5bd4c211/c086-design/review/amendment002/pinned-c085/ontokin/diagnostics.py",
+      "sha256": "106b723f452fcf1bf40070d2890bf654033d35541b3c200bba700d694063e177"
+    }
+  ],
+  "script_sha256": "cc8bdccef157e253dcf9c6c9eb42251fb3390802c65a2215285b7b2528205f5d",
+  "checks": [
+    {
+      "name": "escaped-snippet",
+      "input_bytes": 11,
+      "input_sha256": "ee08d8beb64c89c25fe7f583c6b522f7f380aab939035ec58d3fcdba24c881e1",
+      "expected_before_execution": {
+        "outcome": "invalid",
+        "code": "OKL-E-LEXICAL",
+        "phase": "lexical",
+        "rule_ids": [
+          "LANG-001"
+        ],
+        "span": [
+          4,
+          6
+        ]
+      },
+      "actual": {
+        "outcome": "invalid",
+        "diagnostic": {
+          "schema_version": "ontokin.diagnostic/0.1",
+          "code": "OKL-E-LEXICAL",
+          "severity": "error",
+          "category": "invalid",
+          "phase": "lexical",
+          "message": "Unsupported string escape; use \\\" , \\\\ , \\n, \\r, or \\t.",
+          "source_revision": "sha256:ee08d8beb64c89c25fe7f583c6b522f7f380aab939035ec58d3fcdba24c881e1",
+          "run_id": null,
+          "time": null,
+          "primary": {
+            "file": "main.ok",
+            "start_byte": 4,
+            "end_byte": 6,
+            "element_id": null
+          },
+          "related": [],
+          "rule_ids": [
+            "LANG-001"
+          ],
+          "details": {},
+          "repair": {
+            "summary": "Use the UTF-8 token and string forms in LANG-001.",
+            "patches": []
+          },
+          "blocks": [
+            "represented",
+            "constructed",
+            "evaluated",
+            "delivered"
+          ]
+        }
+      },
+      "matched_declared_lexical_answer": true
+    },
+    {
+      "name": "utf8-snippet",
+      "input_bytes": 7,
+      "input_sha256": "28380feb8724d669bc8d4cf5b5a5bb1adbdc61b81ebd06f3fabc567b4f3b0fc5",
+      "expected_before_execution": {
+        "outcome": "tokenized",
+        "value": "café",
+        "span": [
+          0,
+          7
+        ]
+      },
+      "actual": {
+        "outcome": "tokenized",
+        "tokens": [
+          {
+            "kind": "STRING",
+            "value": "café",
+            "start": 0,
+            "end": 7,
+            "source_id": "entry"
+          },
+          {
+            "kind": "EOF",
+            "value": "",
+            "start": 7,
+            "end": 7,
+            "source_id": "entry"
+          }
+        ]
+      },
+      "matched_declared_lexical_answer": true
+    },
+    {
+      "name": "original-full-source",
+      "input_bytes": 550,
+      "input_sha256": "daeb42e7c4730157d4f36c1074e52dee78c5b429ea1a78f47bacc8d4659808cc",
+      "expected_before_execution": {
+        "outcome": "invalid",
+        "code": "OKL-E-LEXICAL",
+        "phase": "lexical",
+        "rule_ids": [
+          "LANG-001"
+        ],
+        "span": [
+          223,
+          225
+        ]
+      },
+      "actual": {
+        "outcome": "invalid",
+        "diagnostic": {
+          "schema_version": "ontokin.diagnostic/0.1",
+          "code": "OKL-E-LEXICAL",
+          "severity": "error",
+          "category": "invalid",
+          "phase": "lexical",
+          "message": "Unsupported string escape; use \\\" , \\\\ , \\n, \\r, or \\t.",
+          "source_revision": "sha256:daeb42e7c4730157d4f36c1074e52dee78c5b429ea1a78f47bacc8d4659808cc",
+          "run_id": null,
+          "time": null,
+          "primary": {
+            "file": "main.ok",
+            "start_byte": 223,
+            "end_byte": 225,
+            "element_id": null
+          },
+          "related": [],
+          "rule_ids": [
+            "LANG-001"
+          ],
+          "details": {},
+          "repair": {
+            "summary": "Use the UTF-8 token and string forms in LANG-001.",
+            "patches": []
+          },
+          "blocks": [
+            "represented",
+            "constructed",
+            "evaluated",
+            "delivered"
+          ]
+        }
+      },
+      "matched_declared_lexical_answer": true
+    },
+    {
+      "name": "corrected-full-source",
+      "input_bytes": 546,
+      "input_sha256": "1b8c0e0b965441de15c44d08d61711b160074f85c2477ce8544f14953fb65ae5",
+      "expected_before_execution": {
+        "outcome": "tokenized",
+        "value": "café",
+        "span": [
+          219,
+          226
+        ]
+      },
+      "actual": {
+        "outcome": "tokenized",
+        "tokens": [
+          {
+            "kind": "ontokin",
+            "value": "ontokin",
+            "start": 0,
+            "end": 7,
+            "source_id": "entry"
+          },
+          {
+            "kind": "STRING",
+            "value": "0.19",
+            "start": 8,
+            "end": 14,
+            "source_id": "entry"
+          },
+          {
+            "kind": ";",
+            "value": ";",
+            "start": 14,
+            "end": 15,
+            "source_id": "entry"
+          },
+          {
+            "kind": "module",
+            "value": "module",
+            "start": 16,
+            "end": 22,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "Probe",
+            "start": 23,
+            "end": 28,
+            "source_id": "entry"
+          },
+          {
+            "kind": "@",
+            "value": "@",
+            "start": 29,
+            "end": 30,
+            "source_id": "entry"
+          },
+          {
+            "kind": "STRING",
+            "value": "probe",
+            "start": 31,
+            "end": 38,
+            "source_id": "entry"
+          },
+          {
+            "kind": ";",
+            "value": ";",
+            "start": 38,
+            "end": 39,
+            "source_id": "entry"
+          },
+          {
+            "kind": "profile",
+            "value": "profile",
+            "start": 40,
+            "end": 47,
+            "source_id": "entry"
+          },
+          {
+            "kind": "STRING",
+            "value": "keyed-rekey-0.1",
+            "start": 48,
+            "end": 65,
+            "source_id": "entry"
+          },
+          {
+            "kind": ";",
+            "value": ";",
+            "start": 65,
+            "end": 66,
+            "source_id": "entry"
+          },
+          {
+            "kind": "public",
+            "value": "public",
+            "start": 69,
+            "end": 75,
+            "source_id": "entry"
+          },
+          {
+            "kind": "class",
+            "value": "class",
+            "start": 76,
+            "end": 81,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "ProbeShape",
+            "start": 82,
+            "end": 92,
+            "source_id": "entry"
+          },
+          {
+            "kind": "@",
+            "value": "@",
+            "start": 93,
+            "end": 94,
+            "source_id": "entry"
+          },
+          {
+            "kind": "STRING",
+            "value": "probe-shape",
+            "start": 95,
+            "end": 108,
+            "source_id": "entry"
+          },
+          {
+            "kind": "{",
+            "value": "{",
+            "start": 109,
+            "end": 110,
+            "source_id": "entry"
+          },
+          {
+            "kind": "public",
+            "value": "public",
+            "start": 115,
+            "end": 121,
+            "source_id": "entry"
+          },
+          {
+            "kind": "derive",
+            "value": "derive",
+            "start": 122,
+            "end": 128,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "result",
+            "start": 129,
+            "end": 135,
+            "source_id": "entry"
+          },
+          {
+            "kind": "@",
+            "value": "@",
+            "start": 136,
+            "end": 137,
+            "source_id": "entry"
+          },
+          {
+            "kind": "STRING",
+            "value": "result",
+            "start": 138,
+            "end": 146,
+            "source_id": "entry"
+          },
+          {
+            "kind": ":",
+            "value": ":",
+            "start": 146,
+            "end": 147,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "Keyed",
+            "start": 148,
+            "end": 153,
+            "source_id": "entry"
+          },
+          {
+            "kind": "<",
+            "value": "<",
+            "start": 153,
+            "end": 154,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "Int",
+            "start": 154,
+            "end": 157,
+            "source_id": "entry"
+          },
+          {
+            "kind": ">",
+            "value": ">",
+            "start": 157,
+            "end": 158,
+            "source_id": "entry"
+          },
+          {
+            "kind": "=",
+            "value": "=",
+            "start": 159,
+            "end": 160,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "rekey_keyed",
+            "start": 161,
+            "end": 172,
+            "source_id": "entry"
+          },
+          {
+            "kind": "<",
+            "value": "<",
+            "start": 172,
+            "end": 173,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "Int",
+            "start": 173,
+            "end": 176,
+            "source_id": "entry"
+          },
+          {
+            "kind": ">",
+            "value": ">",
+            "start": 176,
+            "end": 177,
+            "source_id": "entry"
+          },
+          {
+            "kind": "(",
+            "value": "(",
+            "start": 177,
+            "end": 178,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "keyed",
+            "start": 178,
+            "end": 183,
+            "source_id": "entry"
+          },
+          {
+            "kind": "<",
+            "value": "<",
+            "start": 183,
+            "end": 184,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "Int",
+            "start": 184,
+            "end": 187,
+            "source_id": "entry"
+          },
+          {
+            "kind": ">",
+            "value": ">",
+            "start": 187,
+            "end": 188,
+            "source_id": "entry"
+          },
+          {
+            "kind": "{",
+            "value": "{",
+            "start": 188,
+            "end": 189,
+            "source_id": "entry"
+          },
+          {
+            "kind": "STRING",
+            "value": "a",
+            "start": 189,
+            "end": 192,
+            "source_id": "entry"
+          },
+          {
+            "kind": ":",
+            "value": ":",
+            "start": 192,
+            "end": 193,
+            "source_id": "entry"
+          },
+          {
+            "kind": "NUMBER",
+            "value": "7",
+            "start": 193,
+            "end": 194,
+            "source_id": "entry"
+          },
+          {
+            "kind": "}",
+            "value": "}",
+            "start": 194,
+            "end": 195,
+            "source_id": "entry"
+          },
+          {
+            "kind": ",",
+            "value": ",",
+            "start": 195,
+            "end": 196,
+            "source_id": "entry"
+          },
+          {
+            "kind": "(",
+            "value": "(",
+            "start": 197,
+            "end": 198,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "old_key",
+            "start": 198,
+            "end": 205,
+            "source_id": "entry"
+          },
+          {
+            "kind": ",",
+            "value": ",",
+            "start": 205,
+            "end": 206,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "payload",
+            "start": 207,
+            "end": 214,
+            "source_id": "entry"
+          },
+          {
+            "kind": ")",
+            "value": ")",
+            "start": 214,
+            "end": 215,
+            "source_id": "entry"
+          },
+          {
+            "kind": "->",
+            "value": "->",
+            "start": 216,
+            "end": 218,
+            "source_id": "entry"
+          },
+          {
+            "kind": "STRING",
+            "value": "café",
+            "start": 219,
+            "end": 226,
+            "source_id": "entry"
+          },
+          {
+            "kind": ")",
+            "value": ")",
+            "start": 226,
+            "end": 227,
+            "source_id": "entry"
+          },
+          {
+            "kind": ";",
+            "value": ";",
+            "start": 227,
+            "end": 228,
+            "source_id": "entry"
+          },
+          {
+            "kind": "public",
+            "value": "public",
+            "start": 233,
+            "end": 239,
+            "source_id": "entry"
+          },
+          {
+            "kind": "derive",
+            "value": "derive",
+            "start": 240,
+            "end": 246,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "forced",
+            "start": 247,
+            "end": 253,
+            "source_id": "entry"
+          },
+          {
+            "kind": "@",
+            "value": "@",
+            "start": 254,
+            "end": 255,
+            "source_id": "entry"
+          },
+          {
+            "kind": "STRING",
+            "value": "forced",
+            "start": 256,
+            "end": 264,
+            "source_id": "entry"
+          },
+          {
+            "kind": ":",
+            "value": ":",
+            "start": 264,
+            "end": 265,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "Int",
+            "start": 266,
+            "end": 269,
+            "source_id": "entry"
+          },
+          {
+            "kind": "=",
+            "value": "=",
+            "start": 270,
+            "end": 271,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "len",
+            "start": 272,
+            "end": 275,
+            "source_id": "entry"
+          },
+          {
+            "kind": "(",
+            "value": "(",
+            "start": 275,
+            "end": 276,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "self",
+            "start": 276,
+            "end": 280,
+            "source_id": "entry"
+          },
+          {
+            "kind": ".",
+            "value": ".",
+            "start": 280,
+            "end": 281,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "result",
+            "start": 281,
+            "end": 287,
+            "source_id": "entry"
+          },
+          {
+            "kind": ")",
+            "value": ")",
+            "start": 287,
+            "end": 288,
+            "source_id": "entry"
+          },
+          {
+            "kind": ";",
+            "value": ";",
+            "start": 288,
+            "end": 289,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "geometry",
+            "start": 294,
+            "end": 302,
+            "source_id": "entry"
+          },
+          {
+            "kind": "=",
+            "value": "=",
+            "start": 303,
+            "end": 304,
+            "source_id": "entry"
+          },
+          {
+            "kind": "if",
+            "value": "if",
+            "start": 305,
+            "end": 307,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "self",
+            "start": 308,
+            "end": 312,
+            "source_id": "entry"
+          },
+          {
+            "kind": ".",
+            "value": ".",
+            "start": 312,
+            "end": 313,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "forced",
+            "start": 313,
+            "end": 319,
+            "source_id": "entry"
+          },
+          {
+            "kind": ">=",
+            "value": ">=",
+            "start": 320,
+            "end": 322,
+            "source_id": "entry"
+          },
+          {
+            "kind": "NUMBER",
+            "value": "0",
+            "start": 323,
+            "end": 324,
+            "source_id": "entry"
+          },
+          {
+            "kind": "then",
+            "value": "then",
+            "start": 325,
+            "end": 329,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "box",
+            "start": 330,
+            "end": 333,
+            "source_id": "entry"
+          },
+          {
+            "kind": "(",
+            "value": "(",
+            "start": 333,
+            "end": 334,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "vec3",
+            "start": 334,
+            "end": 338,
+            "source_id": "entry"
+          },
+          {
+            "kind": "(",
+            "value": "(",
+            "start": 338,
+            "end": 339,
+            "source_id": "entry"
+          },
+          {
+            "kind": "NUMBER",
+            "value": "1",
+            "start": 339,
+            "end": 340,
+            "source_id": "entry"
+          },
+          {
+            "kind": "[",
+            "value": "[",
+            "start": 340,
+            "end": 341,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "m",
+            "start": 341,
+            "end": 342,
+            "source_id": "entry"
+          },
+          {
+            "kind": "]",
+            "value": "]",
+            "start": 342,
+            "end": 343,
+            "source_id": "entry"
+          },
+          {
+            "kind": ",",
+            "value": ",",
+            "start": 343,
+            "end": 344,
+            "source_id": "entry"
+          },
+          {
+            "kind": "NUMBER",
+            "value": "1",
+            "start": 345,
+            "end": 346,
+            "source_id": "entry"
+          },
+          {
+            "kind": "[",
+            "value": "[",
+            "start": 346,
+            "end": 347,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "m",
+            "start": 347,
+            "end": 348,
+            "source_id": "entry"
+          },
+          {
+            "kind": "]",
+            "value": "]",
+            "start": 348,
+            "end": 349,
+            "source_id": "entry"
+          },
+          {
+            "kind": ",",
+            "value": ",",
+            "start": 349,
+            "end": 350,
+            "source_id": "entry"
+          },
+          {
+            "kind": "NUMBER",
+            "value": "1",
+            "start": 351,
+            "end": 352,
+            "source_id": "entry"
+          },
+          {
+            "kind": "[",
+            "value": "[",
+            "start": 352,
+            "end": 353,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "m",
+            "start": 353,
+            "end": 354,
+            "source_id": "entry"
+          },
+          {
+            "kind": "]",
+            "value": "]",
+            "start": 354,
+            "end": 355,
+            "source_id": "entry"
+          },
+          {
+            "kind": ")",
+            "value": ")",
+            "start": 355,
+            "end": 356,
+            "source_id": "entry"
+          },
+          {
+            "kind": ")",
+            "value": ")",
+            "start": 356,
+            "end": 357,
+            "source_id": "entry"
+          },
+          {
+            "kind": "else",
+            "value": "else",
+            "start": 358,
+            "end": 362,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "empty",
+            "start": 363,
+            "end": 368,
+            "source_id": "entry"
+          },
+          {
+            "kind": "(",
+            "value": "(",
+            "start": 368,
+            "end": 369,
+            "source_id": "entry"
+          },
+          {
+            "kind": ")",
+            "value": ")",
+            "start": 369,
+            "end": 370,
+            "source_id": "entry"
+          },
+          {
+            "kind": ";",
+            "value": ";",
+            "start": 370,
+            "end": 371,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "physical",
+            "start": 376,
+            "end": 384,
+            "source_id": "entry"
+          },
+          {
+            "kind": "=",
+            "value": "=",
+            "start": 385,
+            "end": 386,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "no_body",
+            "start": 387,
+            "end": 394,
+            "source_id": "entry"
+          },
+          {
+            "kind": "(",
+            "value": "(",
+            "start": 394,
+            "end": 395,
+            "source_id": "entry"
+          },
+          {
+            "kind": ")",
+            "value": ")",
+            "start": 395,
+            "end": 396,
+            "source_id": "entry"
+          },
+          {
+            "kind": ";",
+            "value": ";",
+            "start": 396,
+            "end": 397,
+            "source_id": "entry"
+          },
+          {
+            "kind": "}",
+            "value": "}",
+            "start": 398,
+            "end": 399,
+            "source_id": "entry"
+          },
+          {
+            "kind": "scene",
+            "value": "scene",
+            "start": 400,
+            "end": 405,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "Demo",
+            "start": 406,
+            "end": 410,
+            "source_id": "entry"
+          },
+          {
+            "kind": "@",
+            "value": "@",
+            "start": 411,
+            "end": 412,
+            "source_id": "entry"
+          },
+          {
+            "kind": "STRING",
+            "value": "demo",
+            "start": 413,
+            "end": 419,
+            "source_id": "entry"
+          },
+          {
+            "kind": "{",
+            "value": "{",
+            "start": 420,
+            "end": 421,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "duration",
+            "start": 426,
+            "end": 434,
+            "source_id": "entry"
+          },
+          {
+            "kind": "=",
+            "value": "=",
+            "start": 435,
+            "end": 436,
+            "source_id": "entry"
+          },
+          {
+            "kind": "NUMBER",
+            "value": "1",
+            "start": 437,
+            "end": 438,
+            "source_id": "entry"
+          },
+          {
+            "kind": "[",
+            "value": "[",
+            "start": 438,
+            "end": 439,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "s",
+            "start": 439,
+            "end": 440,
+            "source_id": "entry"
+          },
+          {
+            "kind": "]",
+            "value": "]",
+            "start": 440,
+            "end": 441,
+            "source_id": "entry"
+          },
+          {
+            "kind": ";",
+            "value": ";",
+            "start": 441,
+            "end": 442,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "gravity",
+            "start": 447,
+            "end": 454,
+            "source_id": "entry"
+          },
+          {
+            "kind": "=",
+            "value": "=",
+            "start": 455,
+            "end": 456,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "vector",
+            "start": 457,
+            "end": 463,
+            "source_id": "entry"
+          },
+          {
+            "kind": "(",
+            "value": "(",
+            "start": 463,
+            "end": 464,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "world",
+            "start": 464,
+            "end": 469,
+            "source_id": "entry"
+          },
+          {
+            "kind": ",",
+            "value": ",",
+            "start": 469,
+            "end": 470,
+            "source_id": "entry"
+          },
+          {
+            "kind": "NUMBER",
+            "value": "0",
+            "start": 471,
+            "end": 472,
+            "source_id": "entry"
+          },
+          {
+            "kind": "[",
+            "value": "[",
+            "start": 472,
+            "end": 473,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "m",
+            "start": 473,
+            "end": 474,
+            "source_id": "entry"
+          },
+          {
+            "kind": "/",
+            "value": "/",
+            "start": 474,
+            "end": 475,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "s",
+            "start": 475,
+            "end": 476,
+            "source_id": "entry"
+          },
+          {
+            "kind": "^",
+            "value": "^",
+            "start": 476,
+            "end": 477,
+            "source_id": "entry"
+          },
+          {
+            "kind": "NUMBER",
+            "value": "2",
+            "start": 477,
+            "end": 478,
+            "source_id": "entry"
+          },
+          {
+            "kind": "]",
+            "value": "]",
+            "start": 478,
+            "end": 479,
+            "source_id": "entry"
+          },
+          {
+            "kind": ",",
+            "value": ",",
+            "start": 479,
+            "end": 480,
+            "source_id": "entry"
+          },
+          {
+            "kind": "NUMBER",
+            "value": "0",
+            "start": 481,
+            "end": 482,
+            "source_id": "entry"
+          },
+          {
+            "kind": "[",
+            "value": "[",
+            "start": 482,
+            "end": 483,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "m",
+            "start": 483,
+            "end": 484,
+            "source_id": "entry"
+          },
+          {
+            "kind": "/",
+            "value": "/",
+            "start": 484,
+            "end": 485,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "s",
+            "start": 485,
+            "end": 486,
+            "source_id": "entry"
+          },
+          {
+            "kind": "^",
+            "value": "^",
+            "start": 486,
+            "end": 487,
+            "source_id": "entry"
+          },
+          {
+            "kind": "NUMBER",
+            "value": "2",
+            "start": 487,
+            "end": 488,
+            "source_id": "entry"
+          },
+          {
+            "kind": "]",
+            "value": "]",
+            "start": 488,
+            "end": 489,
+            "source_id": "entry"
+          },
+          {
+            "kind": ",",
+            "value": ",",
+            "start": 489,
+            "end": 490,
+            "source_id": "entry"
+          },
+          {
+            "kind": "NUMBER",
+            "value": "0",
+            "start": 491,
+            "end": 492,
+            "source_id": "entry"
+          },
+          {
+            "kind": "[",
+            "value": "[",
+            "start": 492,
+            "end": 493,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "m",
+            "start": 493,
+            "end": 494,
+            "source_id": "entry"
+          },
+          {
+            "kind": "/",
+            "value": "/",
+            "start": 494,
+            "end": 495,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "s",
+            "start": 495,
+            "end": 496,
+            "source_id": "entry"
+          },
+          {
+            "kind": "^",
+            "value": "^",
+            "start": 496,
+            "end": 497,
+            "source_id": "entry"
+          },
+          {
+            "kind": "NUMBER",
+            "value": "2",
+            "start": 497,
+            "end": 498,
+            "source_id": "entry"
+          },
+          {
+            "kind": "]",
+            "value": "]",
+            "start": 498,
+            "end": 499,
+            "source_id": "entry"
+          },
+          {
+            "kind": ")",
+            "value": ")",
+            "start": 499,
+            "end": 500,
+            "source_id": "entry"
+          },
+          {
+            "kind": ";",
+            "value": ";",
+            "start": 500,
+            "end": 501,
+            "source_id": "entry"
+          },
+          {
+            "kind": "object",
+            "value": "object",
+            "start": 506,
+            "end": 512,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "shape",
+            "start": 513,
+            "end": 518,
+            "source_id": "entry"
+          },
+          {
+            "kind": "@",
+            "value": "@",
+            "start": 519,
+            "end": 520,
+            "source_id": "entry"
+          },
+          {
+            "kind": "STRING",
+            "value": "shape",
+            "start": 521,
+            "end": 528,
+            "source_id": "entry"
+          },
+          {
+            "kind": ":",
+            "value": ":",
+            "start": 528,
+            "end": 529,
+            "source_id": "entry"
+          },
+          {
+            "kind": "IDENT",
+            "value": "ProbeShape",
+            "start": 530,
+            "end": 540,
+            "source_id": "entry"
+          },
+          {
+            "kind": "{",
+            "value": "{",
+            "start": 541,
+            "end": 542,
+            "source_id": "entry"
+          },
+          {
+            "kind": "}",
+            "value": "}",
+            "start": 542,
+            "end": 543,
+            "source_id": "entry"
+          },
+          {
+            "kind": "}",
+            "value": "}",
+            "start": 544,
+            "end": 545,
+            "source_id": "entry"
+          },
+          {
+            "kind": "EOF",
+            "value": "",
+            "start": 546,
+            "end": 546,
+            "source_id": "entry"
+          }
+        ]
+      },
+      "matched_declared_lexical_answer": true
+    }
+  ],
+  "passed": true,
+  "complete_feature_release": false,
+  "full_product_acceptance": false
+}

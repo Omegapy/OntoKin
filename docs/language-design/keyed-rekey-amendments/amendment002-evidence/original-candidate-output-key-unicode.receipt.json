@@ -1,0 +1,109 @@
+{
+  "schema_version": "ontokin.c086-source-observation/0.1",
+  "frozen_input_commit": "02d767cdd1526470d6c119fdf0d6bacb772c8a97",
+  "frozen_manifest_sha256": "ef60ddfa380f6d0be7ec02595dc1e5f4483b003974d852514532849d568ac998",
+  "amendments": [
+    {
+      "id": "AMENDMENT-C086-001",
+      "commit": "f058cd632e1ef8856d950e5a9d93f373a5ef2fac",
+      "sha256": "b87ad95c5c4499545373cbd1846d0c22e272fff8137e976490c61302f8bf488b",
+      "adoption_sha256": "dbd5b7aece83d016086c8f1ee1be37b429b03f632061e277f21832af84e59d09"
+    }
+  ],
+  "original_expected_sha256": "693181d1db923376ddb04dfdb1d505e2877c1d21ac069bee08d8f5737ff60162",
+  "effective_expected_sha256": "9b03ec914f1fd786e1132f777129fcef560967bab92b4caab67b74ac3c5086bc",
+  "public_api": "KeyedRekeyProgramRuntime.validate_revision",
+  "profile": "keyed-rekey-0.1",
+  "program_revision": "sha256:37f65fab36132c0053cab65c34954440a59ac94a1c1ad8da55e2632b3fd72bd1",
+  "requested_level": "represented",
+  "result": {
+    "schema_version": "ontokin.program-runtime/0.1",
+    "program_revision": "sha256:37f65fab36132c0053cab65c34954440a59ac94a1c1ad8da55e2632b3fd72bd1",
+    "requested_level": "represented",
+    "achieved_level": null,
+    "outcome": "invalid",
+    "diagnostics": [
+      {
+        "schema_version": "ontokin.diagnostic/0.2",
+        "code": "OKL-E-LEXICAL",
+        "severity": "error",
+        "category": "invalid",
+        "phase": "lexical",
+        "message": "Unsupported string escape; use \\\" , \\\\ , \\n, \\r, or \\t.",
+        "source_revision": "sha256:daeb42e7c4730157d4f36c1074e52dee78c5b429ea1a78f47bacc8d4659808cc",
+        "run_id": null,
+        "time": null,
+        "primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:daeb42e7c4730157d4f36c1074e52dee78c5b429ea1a78f47bacc8d4659808cc",
+          "file": "main.ok",
+          "start_byte": 223,
+          "end_byte": 225,
+          "element_id": null
+        },
+        "related": [],
+        "rule_ids": [
+          "LANG-001"
+        ],
+        "details": {},
+        "repair": {
+          "summary": "Use the UTF-8 token and string forms in LANG-001.",
+          "patches": []
+        },
+        "blocks": [
+          "represented",
+          "constructed",
+          "evaluated",
+          "delivered"
+        ],
+        "program_revision": "sha256:37f65fab36132c0053cab65c34954440a59ac94a1c1ad8da55e2632b3fd72bd1",
+        "source_id": "entry"
+      }
+    ],
+    "source_manifest": {
+      "schema_version": "ontokin.bundle/0.2",
+      "entry_source_id": "entry",
+      "units": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "main.ok",
+          "source_revision": "sha256:daeb42e7c4730157d4f36c1074e52dee78c5b429ea1a78f47bacc8d4659808cc"
+        }
+      ],
+      "assets": []
+    },
+    "stages": {
+      "represented": "unavailable",
+      "constructed": "not_requested",
+      "evaluated": "not_requested"
+    }
+  },
+  "execution_budget": {
+    "schema_version": "ontokin.execution-budget/0.1",
+    "defaults": {
+      "max_operations": 100000,
+      "max_elapsed_ms": 30000
+    },
+    "policy_id": "sha256:f5c7685c52ca1c3cdded05bbc376e06cdbd6962c5196fe13d47f89f8c8d331ef",
+    "host_ceilings": {
+      "max_operations": 100000,
+      "max_elapsed_ms": 30000
+    },
+    "source_request": {
+      "max_operations": 100000,
+      "max_elapsed_ms": 30000
+    },
+    "caller_caps": {},
+    "effective": {
+      "max_operations": 100000,
+      "max_elapsed_ms": 30000
+    },
+    "consumed_operations": 17,
+    "elapsed_ms": 0.5162739980733022,
+    "stage": "construction",
+    "status": "invalid",
+    "budget_reason": null
+  }
+}
