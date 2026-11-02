@@ -1,0 +1,550 @@
+{
+  "base_identity": {
+    "manifest": {
+      "assets": [
+        {
+          "asset_id": "label",
+          "byte_length": 89,
+          "media_type": "image/png",
+          "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+        }
+      ],
+      "entry_source_id": "entry",
+      "schema_version": "ontokin.bundle/0.2",
+      "units": [
+        {
+          "filename": "main.ok",
+          "package_id": null,
+          "source_id": "entry",
+          "source_revision": "sha256:f55de4923fc403a86930c7d40dfc4d1cd2d545b9a52a5e20ac63a1183f29aa5f",
+          "version": null
+        },
+        {
+          "filename": "carriers.ok",
+          "package_id": "fixture.torque-carriers",
+          "source_id": "package:fixture.torque-carriers@1.0.0",
+          "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+          "version": "1.0.0"
+        }
+      ]
+    },
+    "program_revision": "sha256:6ab11bc850c65ce9c4750b752fa7364f5ca08e8c6cb71771047a428871030cc6"
+  },
+  "first_carrier_at_2": {
+    "agent-base": {
+      "inertia": "1",
+      "phase": "2",
+      "speed": "2"
+    },
+    "agent-duration": {
+      "inertia": "1",
+      "phase": "3/2",
+      "speed": "1"
+    },
+    "agent-magnitude": {
+      "inertia": "1",
+      "phase": "4",
+      "speed": "4"
+    },
+    "agent-mass": {
+      "inertia": "2",
+      "phase": "1",
+      "speed": "1"
+    },
+    "agent-radius": {
+      "inertia": "1/4",
+      "phase": "8",
+      "speed": "8"
+    }
+  },
+  "invalid_candidates_preserve": "Exact accepted agent-base revision, run prefix, artifacts, sibling and source/library/image identities",
+  "repairs": [
+    {
+      "expected_accepted": true,
+      "file_manifest": "agent-magnitude.files.json",
+      "from": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:f55de4923fc403a86930c7d40dfc4d1cd2d545b9a52a5e20ac63a1183f29aa5f",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:6ab11bc850c65ce9c4750b752fa7364f5ca08e8c6cb71771047a428871030cc6"
+      },
+      "id": "agent-magnitude",
+      "patch": {
+        "element_id": [
+          "sources",
+          "entry"
+        ],
+        "end_byte": 873,
+        "expected_text": "using 1[N*m]",
+        "replacement": "using 2[N*m]",
+        "source_id": "entry",
+        "source_revision": "sha256:f55de4923fc403a86930c7d40dfc4d1cd2d545b9a52a5e20ac63a1183f29aa5f",
+        "start_byte": 861
+      },
+      "to": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:8f1606e7fc72bcc317c63ec5f34b7a5537616dfb9e30966231c2a468de003c7c",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:2be5dc215fd74f3ef217ba66f18010b070e7449ce6a2dd5c5503519cab589e7f"
+      }
+    },
+    {
+      "expected_accepted": true,
+      "file_manifest": "agent-duration.files.json",
+      "from": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:f55de4923fc403a86930c7d40dfc4d1cd2d545b9a52a5e20ac63a1183f29aa5f",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:6ab11bc850c65ce9c4750b752fa7364f5ca08e8c6cb71771047a428871030cc6"
+      },
+      "id": "agent-duration",
+      "patch": {
+        "element_id": [
+          "sources",
+          "entry"
+        ],
+        "end_byte": 882,
+        "expected_text": "using 1[N*m] for 2[s]",
+        "replacement": "using 1[N*m] for 1[s]",
+        "source_id": "entry",
+        "source_revision": "sha256:f55de4923fc403a86930c7d40dfc4d1cd2d545b9a52a5e20ac63a1183f29aa5f",
+        "start_byte": 861
+      },
+      "to": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:382c9cfb25011eaeb05ee76f1ae5f9549993094d27c1ecc2d7a2afa9ee2686af",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:5e9c52c8c64700af59b4d6acf68a6a3a46329e11742e2dd13200b61e87d329e9"
+      }
+    },
+    {
+      "expected_accepted": true,
+      "file_manifest": "agent-mass.files.json",
+      "from": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:f55de4923fc403a86930c7d40dfc4d1cd2d545b9a52a5e20ac63a1183f29aa5f",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:6ab11bc850c65ce9c4750b752fa7364f5ca08e8c6cb71771047a428871030cc6"
+      },
+      "id": "agent-mass",
+      "patch": {
+        "element_id": [
+          "sources",
+          "entry"
+        ],
+        "end_byte": 401,
+        "expected_text": "body_mass = 2.5[kg]",
+        "replacement": "body_mass = 5[kg]",
+        "source_id": "entry",
+        "source_revision": "sha256:f55de4923fc403a86930c7d40dfc4d1cd2d545b9a52a5e20ac63a1183f29aa5f",
+        "start_byte": 382
+      },
+      "to": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:74e641b66f2c9c22192f701cfba98e4bdf2118565c3298d0b8610dafe6f98bca",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:ad999eaabf7c50805f64e9b9bafaae2e82fcfd9ed1957f6474dc9e53af991780"
+      }
+    },
+    {
+      "expected_accepted": true,
+      "file_manifest": "agent-radius.files.json",
+      "from": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:f55de4923fc403a86930c7d40dfc4d1cd2d545b9a52a5e20ac63a1183f29aa5f",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:6ab11bc850c65ce9c4750b752fa7364f5ca08e8c6cb71771047a428871030cc6"
+      },
+      "id": "agent-radius",
+      "patch": {
+        "element_id": [
+          "sources",
+          "entry"
+        ],
+        "end_byte": 429,
+        "expected_text": "body_radius = 1[m]",
+        "replacement": "body_radius = 0.5[m]",
+        "source_id": "entry",
+        "source_revision": "sha256:f55de4923fc403a86930c7d40dfc4d1cd2d545b9a52a5e20ac63a1183f29aa5f",
+        "start_byte": 411
+      },
+      "to": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:b354b7eb76a61de0f645e8186162118de6f77b248ae28f25093a9f4e3136567e",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:706e158c4789bab56ccd0b6a5a040f41d70667581939469c8999653b27d2e341"
+      }
+    },
+    {
+      "expected_accepted": false,
+      "file_manifest": "agent-invalid-duration.files.json",
+      "from": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:f55de4923fc403a86930c7d40dfc4d1cd2d545b9a52a5e20ac63a1183f29aa5f",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:6ab11bc850c65ce9c4750b752fa7364f5ca08e8c6cb71771047a428871030cc6"
+      },
+      "id": "agent-invalid-duration",
+      "patch": {
+        "element_id": [
+          "sources",
+          "entry"
+        ],
+        "end_byte": 882,
+        "expected_text": "using 1[N*m] for 2[s]",
+        "replacement": "using 1[N*m] for 0[s]",
+        "source_id": "entry",
+        "source_revision": "sha256:f55de4923fc403a86930c7d40dfc4d1cd2d545b9a52a5e20ac63a1183f29aa5f",
+        "start_byte": 861
+      },
+      "to": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:191dc829f3f35600eec2e9907f90e8665fe2387538e802b67916df7eb4a73f80",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:8b961cc78f1db352205b8f800461c7c1fe85a40ccf1e507192fdcbdb33466c4b"
+      }
+    },
+    {
+      "expected_accepted": false,
+      "file_manifest": "agent-invalid-mass.files.json",
+      "from": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:f55de4923fc403a86930c7d40dfc4d1cd2d545b9a52a5e20ac63a1183f29aa5f",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:6ab11bc850c65ce9c4750b752fa7364f5ca08e8c6cb71771047a428871030cc6"
+      },
+      "id": "agent-invalid-mass",
+      "patch": {
+        "element_id": [
+          "sources",
+          "entry"
+        ],
+        "end_byte": 401,
+        "expected_text": "body_mass = 2.5[kg]",
+        "replacement": "body_mass = 0[kg]",
+        "source_id": "entry",
+        "source_revision": "sha256:f55de4923fc403a86930c7d40dfc4d1cd2d545b9a52a5e20ac63a1183f29aa5f",
+        "start_byte": 382
+      },
+      "to": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:5ff6b0528cb6113f2bb1fd4fef78540160c82d26dea7c85de39e13c4fb31ebdf",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:5fb0f61a4344003215529a08f051181ee55c5a070209375b77ed212e7ddb4529"
+      }
+    }
+  ],
+  "schema_version": "ontokin.torque-independent-repairs/1",
+  "unchanged": {
+    "image": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e",
+    "library": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+    "sibling_inertia": "1",
+    "sibling_phase_at_2": "-1",
+    "sibling_position_at_2": [
+      "5",
+      "0",
+      "0"
+    ],
+    "sibling_speed_at_2": "-1"
+  }
+}

@@ -1,0 +1,59 @@
+ontokin "0.21";
+module TorqueCarriers @ "torque-carriers";
+profile "keyed-membership-0.1";
+
+public class Marker @ "marker" {
+    public param parent_frame @ "parent-frame": FrameRef = world;
+    public param offset_x @ "offset-x": Length = 1[m];
+    public param offset_y @ "offset-y": Length = 0[m];
+    public follow mounting @ "mounting" {
+        parent = self.parent_frame;
+        child = self;
+        offset = pose(self.parent_frame, vec3(self.offset_x, self.offset_y, 0[m]), quat(1, 0, 0, 0));
+    }
+    geometry = texture_surface(extrude(keyed<PolygonVertex> {
+        "a": polygon_vertex(0, planar_point(0[m], 0[m]), "side"),
+        "b": polygon_vertex(10, planar_point(0.25[m], 0[m]), "side"),
+        "c": polygon_vertex(20, planar_point(0.25[m], 0.5[m]), "side"),
+        "d": polygon_vertex(30, planar_point(0[m], 0.5[m]), "side")
+    }, keyed<SurfaceMaterial> {
+        "bottom": surface_material(rgba(1, 1, 1, 1), 0, 0.75),
+        "side": surface_material(rgba(0.125, 0.5, 0.875, 1), 0, 0.5),
+        "top": surface_material(rgba(1, 1, 1, 1), 0, 0.75)
+    }, 0.125[m], "bottom", "top"), keyed<TextureBinding> {
+        "top": texture_binding(png_asset("label", "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"),
+            planar_uv(vec3(0[m], 0[m], 0[m]), vec3(4[m^-1], 0[m^-1], 0[m^-1]), vec3(0[m^-1], 2[m^-1], 0[m^-1]), 0, 0))
+    });
+    physical = no_body();
+}
+
+public class FixedArm @ "fixed-arm" {
+    public param parent_frame @ "parent-frame": FrameRef = world;
+    public follow mounting @ "mounting" {
+        parent = self.parent_frame;
+        child = self;
+        offset = pose(self.parent_frame, vec3(0.25[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+    }
+    public part tip @ "tip": Marker {
+        parent_frame = self.frame;
+        offset_x = 0.5[m];
+        offset_y = 0.375[m];
+    }
+    geometry = empty();
+    physical = no_body();
+}
+
+public class Rotor @ "rotor" {
+    public param body_radius @ "body-radius": Length = 1[m];
+    public param body_mass @ "body-mass": Mass = 2.5[kg];
+    public param marker_radius @ "marker-radius": Length = 1[m];
+    public part label @ "label": Marker {
+        parent_frame = self.frame;
+        offset_x = self.marker_radius;
+    }
+    public part arm @ "arm": FixedArm { parent_frame = self.frame; }
+    geometry = sphere(self.body_radius);
+    physical = sphere_body(self.body_radius, self.body_mass);
+    motion = dynamic;
+    collision = disabled;
+}

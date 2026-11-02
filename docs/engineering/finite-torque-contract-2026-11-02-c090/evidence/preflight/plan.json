@@ -1,0 +1,271 @@
+{
+  "candidate_torque_runtime_present": false,
+  "commands": [
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/run_keyed_membership_sources.py",
+        "--checkout",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+        "--inputs",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor/docs/language-design/keyed-membership-v0.1/freeze",
+        "--output",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/membership-source",
+        "--mode",
+        "candidate"
+      ],
+      "dependencies": [],
+      "id": "membership-source",
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/run_keyed_membership_sources.py",
+        "--checkout",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+        "--inputs",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor/docs/language-design/keyed-membership-v0.1/freeze",
+        "--output",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/membership-controls",
+        "--mode",
+        "candidate-controls"
+      ],
+      "dependencies": [],
+      "id": "membership-controls",
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/run_keyed_membership_native.py",
+        "--checkout",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+        "--inputs",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor/docs/language-design/keyed-membership-v0.1/freeze",
+        "--output",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/membership-native"
+      ],
+      "dependencies": [],
+      "id": "membership-native",
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/verify_keyed_membership_observations.py",
+        "--inputs",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor/docs/language-design/keyed-membership-v0.1/freeze",
+        "--source",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/membership-source",
+        "--candidate-controls",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/membership-controls",
+        "--native",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/membership-native",
+        "--output",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/membership-observation-reader"
+      ],
+      "dependencies": [
+        "membership-source",
+        "membership-controls",
+        "membership-native"
+      ],
+      "id": "membership-observation-reader",
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/run_membership_agent.py",
+        "--checkout",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+        "--fixtures",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor/docs/language-design/keyed-membership-v0.1/input-amendments/agent-file-scope-v01/effective-freeze",
+        "--output",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/membership-agent"
+      ],
+      "dependencies": [],
+      "id": "membership-agent",
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/verify_membership_agent.py",
+        "--inputs",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor/docs/language-design/keyed-membership-v0.1/freeze",
+        "--agent",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/membership-agent",
+        "--checkout",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+        "--agent-amendment",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor/docs/language-design/keyed-membership-v0.1/input-amendments/agent-file-scope-v01",
+        "--output",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/membership-agent-reader"
+      ],
+      "dependencies": [
+        "membership-agent"
+      ],
+      "id": "membership-agent-reader",
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_keyed_membership_interfaces.py",
+        "-v"
+      ],
+      "dependencies": [],
+      "id": "membership-interfaces",
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_force*.py",
+        "-v"
+      ],
+      "dependencies": [],
+      "id": "force-unit-controls",
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_impulse*.py",
+        "-v"
+      ],
+      "dependencies": [],
+      "id": "impulse-unit-controls",
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_reach_evaluator",
+        "test_reach_kinematics",
+        "test_reach_force_projection",
+        "test_reach_phase",
+        "test_reach_phase_coaxial",
+        "test_reach_phase_recording_proof",
+        "test_reach_recording_boundary",
+        "test_reach_recording_dynamic",
+        "test_reach_recording_rotation",
+        "test_reach_recording_child_origin",
+        "test_reach_history_orientation_bounds",
+        "test_reach_independent_orientation_claims",
+        "test_reach_reference_impulses",
+        "test_reach_reference_release_selection",
+        "test_reach_reference_axial_derivatives",
+        "test_reach_reference_child_origins",
+        "test_reach_agent_transactions",
+        "test_reach_agent_protocol_cases"
+      ],
+      "dependencies": [],
+      "id": "reach-selected-unit-controls",
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "ontokin",
+        "conformance",
+        "--output",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/core-conformance.json"
+      ],
+      "dependencies": [],
+      "id": "core-conformance",
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/run_agent_conformance.py",
+        "--output",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/agent-conformance.json"
+      ],
+      "dependencies": [],
+      "id": "agent-conformance",
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/run_force_conformance.py",
+        "execute",
+        "--role",
+        "source",
+        "--output-dir",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/force-source"
+      ],
+      "dependencies": [],
+      "id": "force-source",
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/run_reach_source_corpus.py",
+        "--output",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/reach-source-corpus"
+      ],
+      "dependencies": [],
+      "id": "reach-source-corpus",
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "dependencies": [],
+      "id": "documentation",
+      "timeout_seconds": 1800
+    }
+  ],
+  "comparison_scope": "Frozen C088 source/control/Agent/state/native observations; complete generated no-torque GLB bytes retained. No fresh C087 cross-cut comparison claimed.",
+  "complete_inherited_suite": false,
+  "complete_release_acceptance": false,
+  "new_visual_destination_validation": false,
+  "schema_version": "ontokin.c090-predecessor-preflight-plan/1",
+  "scope": "Untouched C088 contract-preparation controls",
+  "source_commit": "7b6900baa0357ab96c4639ac5c2ebe4e1791833e",
+  "source_tree": "1a31d387795b0b794935b81d9f77803054e82699"
+}

@@ -1,0 +1,24 @@
+ontokin "0.22";
+module TorqueCases @ "torque-cases";
+profile "torque-0.1";
+
+import rotors @ "rotors" from "fixture.torque-carriers" version "1.0.0" digest "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10";
+
+scene Demo @ "demo" {
+    duration = 3[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object ball @ "ball": rotors.Rotor {
+        body_mass = 2.5[kg];
+        body_radius = 1[m];
+        marker_radius = 1[m];
+        placement = pose(world, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+        velocity = vector(world, 0[m/s], 0[m/s], 0[m/s]);
+        omega = vector(world, 0[rad/s], 0[rad/s], 0[rad/s]);
+    }
+    object sibling @ "sibling": rotors.Rotor {
+        placement = pose(world, vec3(5[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+    }
+    at 0[s] sequence {
+        torque ball @ "drive" about world_z using (2[N*m] / 0) for 1[m];
+    }
+}

@@ -1,0 +1,412 @@
+{
+  "candidate_output_used": false,
+  "cases": [
+    {
+      "candidate_observations_used": false,
+      "expected": {
+        "at_1": {
+          "signed_speed": "2",
+          "unwrapped_phase": "1"
+        },
+        "at_2": {
+          "signed_speed": "2",
+          "unwrapped_phase": "3"
+        },
+        "compile": "accepted",
+        "declaration_semantics": "Imported helper uses its own .21 arithmetic. Local .22 pure function torque and parameters about/world_z remain ordinary identifiers. using/for remain inherited reserved tokens.",
+        "duration_seconds": "1",
+        "evaluation": "accepted",
+        "torque_n_m": 2
+      },
+      "file_manifest": "l01-pure-import-and-contextual-names.files.json",
+      "id": "l01-pure-import-and-contextual-names",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:befab1722ffd22a59be1664c04899115ac67ef25945b2fa3824c8832903aaa29",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            },
+            {
+              "filename": "torque_values.ok",
+              "package_id": "fixture.torque-values",
+              "source_id": "package:fixture.torque-values@1.0.0",
+              "source_revision": "sha256:0a08629a8ec25f55bf372a1e1849e550fbc1598d41ed2d6b1f8c6a39b4ce80c7",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:5f9b0ac9a192c78c2374d3b715b17d3f222e3e18d7ef0033ef9b6257eb7ee038"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "delivery_variant": {
+        "file_manifest": "delivery-l02-nonidentity-fixed-local-rotation.files.json",
+        "host_policy": {
+          "max_elapsed_ms": 30000,
+          "max_operations": 1000000
+        },
+        "identity": {
+          "manifest": {
+            "assets": [
+              {
+                "asset_id": "label",
+                "byte_length": 89,
+                "media_type": "image/png",
+                "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+              }
+            ],
+            "entry_source_id": "entry",
+            "schema_version": "ontokin.bundle/0.2",
+            "units": [
+              {
+                "filename": "main.ok",
+                "package_id": null,
+                "source_id": "entry",
+                "source_revision": "sha256:c94b23248a1d266078dbc0de3e54d9caaeaeb49652ac6012d545fe40a6fb0e39",
+                "version": null
+              },
+              {
+                "filename": "carriers.ok",
+                "package_id": "fixture.torque-carriers",
+                "source_id": "package:fixture.torque-carriers@1.0.0",
+                "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+                "version": "1.0.0"
+              }
+            ]
+          },
+          "program_revision": "sha256:d5ec7d79affa884765b7aa7c79c0f6a10f14cb3fb0624bcba259175768c14b78"
+        },
+        "options": {
+          "end": "2",
+          "fps": 4,
+          "helpers": true,
+          "position_tolerance_m": 0.001,
+          "rotation_tolerance_rad": 0.001,
+          "time_tolerance_s": 1e-06
+        },
+        "required_future_outcome": "Accepted artifact, independently verified fixed-local-rotation landmark formulas and complete source/certificate history."
+      },
+      "expected": {
+        "at_1": {
+          "parent_signed_speed": "2",
+          "parent_unwrapped_phase": "1"
+        },
+        "compile": "accepted",
+        "evaluation": "accepted",
+        "flag_local_quaternion_wxyz": [
+          0,
+          1,
+          0,
+          0
+        ],
+        "flag_origin_formula": [
+          "(3/4)cos(theta)-(3/8)sin(theta)",
+          "(3/4)sin(theta)+(3/8)cos(theta)",
+          "0"
+        ],
+        "flag_origin_offset_m": [
+          "3/4",
+          "3/8",
+          "0"
+        ],
+        "flag_world_quaternion": "(0,cos(theta/2),sin(theta/2),0) for parent world-Z phase theta",
+        "recorded_scope": "eligible fixed-marker path; delivery requires separate1m source variant"
+      },
+      "file_manifest": "l02-nonidentity-fixed-local-rotation.files.json",
+      "id": "l02-nonidentity-fixed-local-rotation",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:7a1e4581485d19629d476ebc7427e3650f4e766dee776254ee64dd4edc9e0fc3",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:78799c170de248ae6e7d590b13ed6125189d11ff1a8f3bcba0481c56aa01c297"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "expected": {
+        "authority": "Inherited function_decl requires return after its optional let prefix; no runtime event may execute.",
+        "code": "OKL-E-SYNTAX",
+        "compile": "refused",
+        "message": "Expected 'return'; found 'torque'.",
+        "phase": "syntax",
+        "primary_source": {
+          "end_byte": 283,
+          "source_id": "entry",
+          "start_byte": 277,
+          "text": "torque"
+        }
+      },
+      "file_manifest": "l03-forbidden-function-event.files.json",
+      "id": "l03-forbidden-function-event",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:954daa921ff98eeb3fe4bec0585981a403c7aa44caca9cc32bebc11eb4c26381",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:e4e39a2b95b6a04ef34272b358377de8dad3f25d18bc364684a2d81943bff62f"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "expected": {
+        "authority": "Inherited assignment parser treats ordinary torque as a field identifier here and then requires =.",
+        "code": "OKL-E-SYNTAX",
+        "compile": "refused",
+        "message": "Expected '='; found 'ball'.",
+        "phase": "syntax",
+        "primary_source": {
+          "end_byte": 281,
+          "source_id": "entry",
+          "start_byte": 277,
+          "text": "ball"
+        }
+      },
+      "file_manifest": "l04-forbidden-initializer-event.files.json",
+      "id": "l04-forbidden-initializer-event",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:3b00556659affee48b4e5f7ece2ed6d72f9dc085de46464d58c8e82b8bc8d0a5",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:f0758ec4bb42d2897c71bda6709f0692b2924ebec51f196f06248433f1300a6b"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "expected": {
+        "authority": "Unchanged linker nonentry scene guard precedes unresolved target elaboration.",
+        "code": "OKL-E-TYPE",
+        "compile": "refused",
+        "message": "An imported definition module cannot declare a scene.",
+        "phase": "binding",
+        "primary_source": {
+          "end_byte": 219,
+          "source_id": "package:fixture.forbidden-scene@1.0.0",
+          "source_revision": "sha256:69bd562272be68fa47779877d909de3f46072cca79c042423e142a7a99edb01e",
+          "start_byte": 77,
+          "text": "scene Forbidden @ \"forbidden\" {\n    duration = 1[s];\n    at 0[s] sequence { torque absent @ \"illegal\" about world_z using 1[N*m] for 1[s]; }\n}"
+        }
+      },
+      "file_manifest": "l05-forbidden-library-scene.files.json",
+      "id": "l05-forbidden-library-scene",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:2ce6f2afe3cc45251ce5a55e4d20fc97b5f2b0ce8197a74db5d17e36ce0e0ed9",
+              "version": null
+            },
+            {
+              "filename": "forbidden_scene.ok",
+              "package_id": "fixture.forbidden-scene",
+              "source_id": "package:fixture.forbidden-scene@1.0.0",
+              "source_revision": "sha256:69bd562272be68fa47779877d909de3f46072cca79c042423e142a7a99edb01e",
+              "version": "1.0.0"
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:1afed9100b2ef65acd3f06616d56470860fe80fb81de96908604467c291ac7e4"
+      }
+    }
+  ],
+  "coverage_limit": "These finite witnesses cover entry event locality, pure imported inputs, inherited contextual-name handling, function/initializer/library-scene exclusions, and fixed local rotations; they do not claim every possible grammar combination.",
+  "predecessor_controls": [
+    {
+      "expected_compile": "accepted",
+      "expected_objects": 8,
+      "file_manifest": "control-l01-pure-import-and-contextual-names.files.json",
+      "id": "control-l01-pure-import-and-contextual-names",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:cabd2e9343974913fa260f2730375a9a1460c74262a42e53d685ed1967281058",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            },
+            {
+              "filename": "torque_values.ok",
+              "package_id": "fixture.torque-values",
+              "source_id": "package:fixture.torque-values@1.0.0",
+              "source_revision": "sha256:0a08629a8ec25f55bf372a1e1849e550fbc1598d41ed2d6b1f8c6a39b4ce80c7",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:8183d860032bfcca6f41197bec79baf9eb73397aa660d3657fa151c8010f3eb0"
+      }
+    },
+    {
+      "expected_compile": "accepted",
+      "expected_objects": 9,
+      "file_manifest": "control-l02-nonidentity-fixed-local-rotation.files.json",
+      "id": "control-l02-nonidentity-fixed-local-rotation",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:3098549c9d4118cff9d03a69bf2bc22ccd4871ac3848526a25ec0ca12d0ede04",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:49855feaafd53e6bc3c884e257b3b345b7a69247230b0b36881010f202a2454f"
+      }
+    }
+  ],
+  "schema_version": "ontokin.torque-independent-language-cases/1"
+}

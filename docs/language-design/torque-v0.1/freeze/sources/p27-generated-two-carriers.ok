@@ -1,0 +1,24 @@
+ontokin "0.22";
+module TorqueCases @ "torque-cases";
+profile "torque-0.1";
+
+import rotors @ "rotors" from "fixture.torque-carriers" version "1.0.0" digest "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10";
+
+public class Rack @ "rack-type" {
+    public param masses @ "masses": Keyed<Mass> = keyed<Mass> { "first": 2.5[kg], "second": 2.5[kg] };
+    public parts rotors @ "rotors": rotors.Rotor for (key, mass) in self.masses {
+        body_mass = mass;
+        placement = pose(world, vec3(if key == "first" then 0[m] else 5[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+    }
+    geometry = empty();
+    physical = no_body();
+}
+
+scene Demo @ "demo" {
+    duration = 3[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object rack @ "rack": Rack {}
+    at 0[s] sequence {
+        torque rack.rotors["first"] @ "drive" about world_z using 1[N*m] for 2[s];
+    }
+}

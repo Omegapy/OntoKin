@@ -1,0 +1,44 @@
+{
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/scratch/05c3f95a49c1/c090-reviews/integration-readback-review01-inputs/verify_published_readback.py",
+    "--repository",
+    "/tmp/c090-helper-review-6hdlt4hx/repository",
+    "--publication",
+    "/workspace/scratch/05c3f95a49c1/c090-reviews/integration-readback-review01-inputs/publication.json",
+    "--expected-commit",
+    "b0b4b8681706480c8397dfdc4473095d4026f760",
+    "--commit",
+    "/workspace/scratch/05c3f95a49c1/c090-reviews/integration-readback-review01-inputs/wrong-parent/commit.json",
+    "--trees",
+    "/workspace/scratch/05c3f95a49c1/c090-reviews/integration-readback-review01-inputs/wrong-parent/trees.json",
+    "--blobs",
+    "/workspace/scratch/05c3f95a49c1/c090-reviews/integration-readback-review01-inputs/wrong-parent/blobs",
+    "--output",
+    "/workspace/scratch/05c3f95a49c1/c090-reviews/integration-readback-review01-inputs/wrong-parent/receipt.json"
+  ],
+  "complete_changed_path_and_blob_coverage": false,
+  "completed_utc": "2026-11-02T21:23:32.807275+00:00",
+  "error": "Returned commit must have exactly the prepared parent",
+  "error_type": "VerificationError",
+  "evidence_files": [
+    {
+      "bytes": 2512,
+      "mode": "0644",
+      "path": "/workspace/scratch/05c3f95a49c1/c090-reviews/integration-readback-review01-inputs/publication.json",
+      "sha256": "b5941cd8d6779f44bf6bbac676e09656c839a2b5fe3b1fcfef34961ebd0009ff"
+    },
+    {
+      "bytes": 215,
+      "mode": "0644",
+      "path": "/workspace/scratch/05c3f95a49c1/c090-reviews/integration-readback-review01-inputs/wrong-parent/commit.json",
+      "sha256": "9fc7834799fa79cf7bba831c8eb87b1d040e38bfac94cf272d9d3a7c9cfc5b46"
+    }
+  ],
+  "repository": "/tmp/c090-helper-review-6hdlt4hx/repository",
+  "runtime_or_release_acceptance": false,
+  "schema_version": "ontokin.c090-published-source-readback/1",
+  "started_utc": "2026-11-02T21:23:32.787335+00:00",
+  "status": "failed",
+  "verifier_sha256": "dc4476fb3c5e89b95649715e7c5a2c82aa8d36d967ec0949b5e2447bd3ff94cf"
+}

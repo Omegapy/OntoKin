@@ -1,0 +1,2199 @@
+{
+  "candidate_observations_used": false,
+  "execution_claim": false,
+  "required_operations": [
+    "discover",
+    "create",
+    "edit",
+    "validate",
+    "inspect",
+    "evaluate",
+    "reset",
+    "status",
+    "cancel",
+    "export",
+    "artifact",
+    "surface.mesh_page"
+  ],
+  "scenarios": [
+    {
+      "assertions": [
+        "Catalog exposes the complete torque_interface and every inherited interface under its real .22 membership.",
+        "Source torque records have full frozen identities, spans and source order. Every available object state has all 15 closed torque fields.",
+        "Ball at 2 s: phase=2, speed=2, I=1. Sibling: phase=-1, speed=-1, I=1. Both counts start1/end1; anchor at2 after completion, phase_since_anchor=0.",
+        "Self-frame requests preserve world-referenced torque scalar axis/history, source identities, canonical net and signed speed.",
+        "Complete recorded closure, PNG, material/mesh/UV streams and actual controlled destination are checked by delivery-cases.json."
+      ],
+      "id": "A01",
+      "name": "discover-create-resume-inspect-export",
+      "steps": [
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "limit": 1000,
+            "operation": "discover",
+            "profile": "torque-0.1",
+            "project_id": "c090-a01",
+            "request_id": "c090-a01-discover",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "discover"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "bundle": {
+              "$bundle_file": "workflow-agent-base.files.json"
+            },
+            "expected_program_revision": null,
+            "operation": "create",
+            "project_id": "c090-a01",
+            "request_id": "c090-a01-create",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "create"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "operation": "validate",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a01",
+            "request_id": "c090-a01-validate",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "validate"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "fields": [
+              "identity",
+              "source",
+              "state",
+              "matter"
+            ],
+            "limit": 100,
+            "operation": "inspect",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a01",
+            "request_id": "c090-a01-inspect-initial",
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "kind": "object"
+            }
+          },
+          "step": "inspect-initial"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "operation": "evaluate",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a01",
+            "request_id": "c090-a01-evaluate-half",
+            "run_id": null,
+            "schema_version": "ontokin.agent/0.22",
+            "until_seconds": "0.5"
+          },
+          "step": "evaluate-half"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "operation": "evaluate",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a01",
+            "request_id": "c090-a01-resume",
+            "run_id": {
+              "$response": "A01.evaluate-half.run_id"
+            },
+            "schema_version": "ontokin.agent/0.22",
+            "until_seconds": "2"
+          },
+          "step": "resume"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "fields": [
+              "identity",
+              "source",
+              "state",
+              "matter"
+            ],
+            "limit": 100,
+            "operation": "inspect",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a01",
+            "request_id": "c090-a01-inspect-final",
+            "run_id": {
+              "$response": "A01.resume.run_id"
+            },
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "kind": "object"
+            },
+            "time": {
+              "seconds": "2",
+              "side": "after"
+            }
+          },
+          "step": "inspect-final"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "fields": [
+              "identity",
+              "source",
+              "state",
+              "matter"
+            ],
+            "frame": "ball.frame",
+            "limit": 100,
+            "operation": "inspect",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a01",
+            "request_id": "c090-a01-inspect-self",
+            "run_id": {
+              "$response": "A01.resume.run_id"
+            },
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "path": "ball"
+            },
+            "time": {
+              "seconds": "1",
+              "side": "after"
+            }
+          },
+          "step": "inspect-self"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "count": 256,
+            "element_id": [
+              "torque-cases",
+              "demo",
+              "sibling",
+              "label"
+            ],
+            "operation": "surface.mesh_page",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a01",
+            "request_id": "c090-a01-mesh",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "mesh"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "destination": "ontokin.glb/0.22",
+            "operation": "export",
+            "options": {
+              "end": "2",
+              "fps": 4,
+              "helpers": false,
+              "position_tolerance_m": 0.001,
+              "rotation_tolerance_rad": 0.001,
+              "time_tolerance_s": 1e-06
+            },
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a01",
+            "request_id": "c090-a01-export",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "export"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "artifact_id": {
+              "$response": "A01.export.result.artifact_id"
+            },
+            "max_bytes": 65536,
+            "offset": 0,
+            "operation": "artifact",
+            "project_id": "c090-a01",
+            "request_id": "c090-a01-artifact-first",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "artifact-first"
+        }
+      ]
+    },
+    {
+      "exact_invariants": [
+        "Pinned library and image bytes/revisions",
+        "Sibling physical and visual state at every common clock",
+        "All bytes outside exact entry patch",
+        "Old accepted runs/artifacts remain immutable"
+      ],
+      "expected_first_carrier": {
+        "inertia": "1",
+        "phase": "4",
+        "speed": "4"
+      },
+      "id": "A02-1",
+      "invalid_rollback": false,
+      "name": "workflow-agent-magnitude",
+      "repair_record": "workflow-agent-magnitude",
+      "steps": [
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "bundle": {
+              "$bundle_file": "workflow-agent-base.files.json"
+            },
+            "expected_program_revision": null,
+            "operation": "create",
+            "project_id": "c090-a02-1",
+            "request_id": "c090-a02-1-create",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "create"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "operation": "evaluate",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-1",
+            "request_id": "c090-a02-1-evaluate-base",
+            "run_id": null,
+            "schema_version": "ontokin.agent/0.22",
+            "until_seconds": "2"
+          },
+          "step": "evaluate-base"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "destination": "ontokin.glb/0.22",
+            "operation": "export",
+            "options": {
+              "end": "2",
+              "fps": 4,
+              "helpers": false,
+              "position_tolerance_m": 0.001,
+              "rotation_tolerance_rad": 0.001,
+              "time_tolerance_s": 1e-06
+            },
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-1",
+            "request_id": "c090-a02-1-export-base",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "export-base"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "expected_program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "operation": "edit",
+            "patches": [
+              {
+                "element_id": [
+                  "sources",
+                  "entry"
+                ],
+                "end_byte": 934,
+                "expected_text": "using 1[N*m]",
+                "replacement": "using 2[N*m]",
+                "source_id": "entry",
+                "source_revision": "sha256:435c772d86ae9d43779d4a924daa9e4a287e55163a5c08cc655ed5c4e72d9a54",
+                "start_byte": 922
+              }
+            ],
+            "project_id": "c090-a02-1",
+            "request_id": "c090-a02-1-edit",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "edit"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "fields": [
+              "identity",
+              "source",
+              "state",
+              "matter"
+            ],
+            "limit": 100,
+            "operation": "inspect",
+            "program_revision": "sha256:1409265cf2a7773cc6d55f04b32654161b18c181a4f685f89ed8ce38162040c1",
+            "project_id": "c090-a02-1",
+            "request_id": "c090-a02-1-inspect-after",
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "kind": "object"
+            }
+          },
+          "step": "inspect-after"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "operation": "evaluate",
+            "program_revision": "sha256:1409265cf2a7773cc6d55f04b32654161b18c181a4f685f89ed8ce38162040c1",
+            "project_id": "c090-a02-1",
+            "request_id": "c090-a02-1-evaluate-after",
+            "run_id": null,
+            "schema_version": "ontokin.agent/0.22",
+            "until_seconds": "2"
+          },
+          "step": "evaluate-after"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "fields": [
+              "identity",
+              "source",
+              "state",
+              "matter"
+            ],
+            "limit": 100,
+            "operation": "inspect",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-1",
+            "request_id": "c090-a02-1-old-run",
+            "run_id": {
+              "$response": "A02-1.evaluate-base.run_id"
+            },
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "kind": "object"
+            },
+            "time": {
+              "seconds": "2",
+              "side": "after"
+            }
+          },
+          "step": "old-run"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "artifact_id": {
+              "$response": "A02-1.export-base.result.artifact_id"
+            },
+            "max_bytes": 65536,
+            "offset": 0,
+            "operation": "artifact",
+            "project_id": "c090-a02-1",
+            "request_id": "c090-a02-1-old-artifact",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "old-artifact"
+        }
+      ]
+    },
+    {
+      "exact_invariants": [
+        "Pinned library and image bytes/revisions",
+        "Sibling physical and visual state at every common clock",
+        "All bytes outside exact entry patch",
+        "Old accepted runs/artifacts remain immutable"
+      ],
+      "expected_first_carrier": {
+        "inertia": "1",
+        "phase": "3/2",
+        "speed": "1"
+      },
+      "id": "A02-2",
+      "invalid_rollback": false,
+      "name": "workflow-agent-duration",
+      "repair_record": "workflow-agent-duration",
+      "steps": [
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "bundle": {
+              "$bundle_file": "workflow-agent-base.files.json"
+            },
+            "expected_program_revision": null,
+            "operation": "create",
+            "project_id": "c090-a02-2",
+            "request_id": "c090-a02-2-create",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "create"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "operation": "evaluate",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-2",
+            "request_id": "c090-a02-2-evaluate-base",
+            "run_id": null,
+            "schema_version": "ontokin.agent/0.22",
+            "until_seconds": "2"
+          },
+          "step": "evaluate-base"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "destination": "ontokin.glb/0.22",
+            "operation": "export",
+            "options": {
+              "end": "2",
+              "fps": 4,
+              "helpers": false,
+              "position_tolerance_m": 0.001,
+              "rotation_tolerance_rad": 0.001,
+              "time_tolerance_s": 1e-06
+            },
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-2",
+            "request_id": "c090-a02-2-export-base",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "export-base"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "expected_program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "operation": "edit",
+            "patches": [
+              {
+                "element_id": [
+                  "sources",
+                  "entry"
+                ],
+                "end_byte": 943,
+                "expected_text": "using 1[N*m] for 2[s]",
+                "replacement": "using 1[N*m] for 1[s]",
+                "source_id": "entry",
+                "source_revision": "sha256:435c772d86ae9d43779d4a924daa9e4a287e55163a5c08cc655ed5c4e72d9a54",
+                "start_byte": 922
+              }
+            ],
+            "project_id": "c090-a02-2",
+            "request_id": "c090-a02-2-edit",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "edit"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "fields": [
+              "identity",
+              "source",
+              "state",
+              "matter"
+            ],
+            "limit": 100,
+            "operation": "inspect",
+            "program_revision": "sha256:67ef64e7c7e4b1c7d0bae789a470604da57885a64b4161e700ea6daa12c00445",
+            "project_id": "c090-a02-2",
+            "request_id": "c090-a02-2-inspect-after",
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "kind": "object"
+            }
+          },
+          "step": "inspect-after"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "operation": "evaluate",
+            "program_revision": "sha256:67ef64e7c7e4b1c7d0bae789a470604da57885a64b4161e700ea6daa12c00445",
+            "project_id": "c090-a02-2",
+            "request_id": "c090-a02-2-evaluate-after",
+            "run_id": null,
+            "schema_version": "ontokin.agent/0.22",
+            "until_seconds": "2"
+          },
+          "step": "evaluate-after"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "fields": [
+              "identity",
+              "source",
+              "state",
+              "matter"
+            ],
+            "limit": 100,
+            "operation": "inspect",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-2",
+            "request_id": "c090-a02-2-old-run",
+            "run_id": {
+              "$response": "A02-2.evaluate-base.run_id"
+            },
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "kind": "object"
+            },
+            "time": {
+              "seconds": "2",
+              "side": "after"
+            }
+          },
+          "step": "old-run"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "artifact_id": {
+              "$response": "A02-2.export-base.result.artifact_id"
+            },
+            "max_bytes": 65536,
+            "offset": 0,
+            "operation": "artifact",
+            "project_id": "c090-a02-2",
+            "request_id": "c090-a02-2-old-artifact",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "old-artifact"
+        }
+      ]
+    },
+    {
+      "exact_invariants": [
+        "Pinned library and image bytes/revisions",
+        "Sibling physical and visual state at every common clock",
+        "All bytes outside exact entry patch",
+        "Old accepted runs/artifacts remain immutable"
+      ],
+      "expected_first_carrier": {
+        "inertia": "2",
+        "phase": "1",
+        "speed": "1"
+      },
+      "id": "A02-3",
+      "invalid_rollback": false,
+      "name": "workflow-agent-mass",
+      "repair_record": "workflow-agent-mass",
+      "steps": [
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "bundle": {
+              "$bundle_file": "workflow-agent-base.files.json"
+            },
+            "expected_program_revision": null,
+            "operation": "create",
+            "project_id": "c090-a02-3",
+            "request_id": "c090-a02-3-create",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "create"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "operation": "evaluate",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-3",
+            "request_id": "c090-a02-3-evaluate-base",
+            "run_id": null,
+            "schema_version": "ontokin.agent/0.22",
+            "until_seconds": "2"
+          },
+          "step": "evaluate-base"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "destination": "ontokin.glb/0.22",
+            "operation": "export",
+            "options": {
+              "end": "2",
+              "fps": 4,
+              "helpers": false,
+              "position_tolerance_m": 0.001,
+              "rotation_tolerance_rad": 0.001,
+              "time_tolerance_s": 1e-06
+            },
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-3",
+            "request_id": "c090-a02-3-export-base",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "export-base"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "expected_program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "operation": "edit",
+            "patches": [
+              {
+                "element_id": [
+                  "sources",
+                  "entry"
+                ],
+                "end_byte": 462,
+                "expected_text": "body_mass = 2.5[kg]",
+                "replacement": "body_mass = 5[kg]",
+                "source_id": "entry",
+                "source_revision": "sha256:435c772d86ae9d43779d4a924daa9e4a287e55163a5c08cc655ed5c4e72d9a54",
+                "start_byte": 443
+              }
+            ],
+            "project_id": "c090-a02-3",
+            "request_id": "c090-a02-3-edit",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "edit"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "fields": [
+              "identity",
+              "source",
+              "state",
+              "matter"
+            ],
+            "limit": 100,
+            "operation": "inspect",
+            "program_revision": "sha256:3a3cc711a98c5b5a3d406a65c3ba08c5337a9ef93d36fb71a5eb2c8ac0be08d8",
+            "project_id": "c090-a02-3",
+            "request_id": "c090-a02-3-inspect-after",
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "kind": "object"
+            }
+          },
+          "step": "inspect-after"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "operation": "evaluate",
+            "program_revision": "sha256:3a3cc711a98c5b5a3d406a65c3ba08c5337a9ef93d36fb71a5eb2c8ac0be08d8",
+            "project_id": "c090-a02-3",
+            "request_id": "c090-a02-3-evaluate-after",
+            "run_id": null,
+            "schema_version": "ontokin.agent/0.22",
+            "until_seconds": "2"
+          },
+          "step": "evaluate-after"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "fields": [
+              "identity",
+              "source",
+              "state",
+              "matter"
+            ],
+            "limit": 100,
+            "operation": "inspect",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-3",
+            "request_id": "c090-a02-3-old-run",
+            "run_id": {
+              "$response": "A02-3.evaluate-base.run_id"
+            },
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "kind": "object"
+            },
+            "time": {
+              "seconds": "2",
+              "side": "after"
+            }
+          },
+          "step": "old-run"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "artifact_id": {
+              "$response": "A02-3.export-base.result.artifact_id"
+            },
+            "max_bytes": 65536,
+            "offset": 0,
+            "operation": "artifact",
+            "project_id": "c090-a02-3",
+            "request_id": "c090-a02-3-old-artifact",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "old-artifact"
+        }
+      ]
+    },
+    {
+      "exact_invariants": [
+        "Pinned library and image bytes/revisions",
+        "Sibling physical and visual state at every common clock",
+        "All bytes outside exact entry patch",
+        "Old accepted runs/artifacts remain immutable"
+      ],
+      "expected_first_carrier": {
+        "inertia": "1/4",
+        "phase": "8",
+        "speed": "8"
+      },
+      "id": "A02-4",
+      "invalid_rollback": false,
+      "name": "workflow-agent-radius",
+      "repair_record": "workflow-agent-radius",
+      "steps": [
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "bundle": {
+              "$bundle_file": "workflow-agent-base.files.json"
+            },
+            "expected_program_revision": null,
+            "operation": "create",
+            "project_id": "c090-a02-4",
+            "request_id": "c090-a02-4-create",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "create"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "operation": "evaluate",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-4",
+            "request_id": "c090-a02-4-evaluate-base",
+            "run_id": null,
+            "schema_version": "ontokin.agent/0.22",
+            "until_seconds": "2"
+          },
+          "step": "evaluate-base"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "destination": "ontokin.glb/0.22",
+            "operation": "export",
+            "options": {
+              "end": "2",
+              "fps": 4,
+              "helpers": false,
+              "position_tolerance_m": 0.001,
+              "rotation_tolerance_rad": 0.001,
+              "time_tolerance_s": 1e-06
+            },
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-4",
+            "request_id": "c090-a02-4-export-base",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "export-base"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "expected_program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "operation": "edit",
+            "patches": [
+              {
+                "element_id": [
+                  "sources",
+                  "entry"
+                ],
+                "end_byte": 490,
+                "expected_text": "body_radius = 1[m]",
+                "replacement": "body_radius = 0.5[m]",
+                "source_id": "entry",
+                "source_revision": "sha256:435c772d86ae9d43779d4a924daa9e4a287e55163a5c08cc655ed5c4e72d9a54",
+                "start_byte": 472
+              }
+            ],
+            "project_id": "c090-a02-4",
+            "request_id": "c090-a02-4-edit",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "edit"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "fields": [
+              "identity",
+              "source",
+              "state",
+              "matter"
+            ],
+            "limit": 100,
+            "operation": "inspect",
+            "program_revision": "sha256:ab13ca1272f586006d216f67f6c1da05da9460a000e02aae7c41cb3d7957e892",
+            "project_id": "c090-a02-4",
+            "request_id": "c090-a02-4-inspect-after",
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "kind": "object"
+            }
+          },
+          "step": "inspect-after"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "operation": "evaluate",
+            "program_revision": "sha256:ab13ca1272f586006d216f67f6c1da05da9460a000e02aae7c41cb3d7957e892",
+            "project_id": "c090-a02-4",
+            "request_id": "c090-a02-4-evaluate-after",
+            "run_id": null,
+            "schema_version": "ontokin.agent/0.22",
+            "until_seconds": "2"
+          },
+          "step": "evaluate-after"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "fields": [
+              "identity",
+              "source",
+              "state",
+              "matter"
+            ],
+            "limit": 100,
+            "operation": "inspect",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-4",
+            "request_id": "c090-a02-4-old-run",
+            "run_id": {
+              "$response": "A02-4.evaluate-base.run_id"
+            },
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "kind": "object"
+            },
+            "time": {
+              "seconds": "2",
+              "side": "after"
+            }
+          },
+          "step": "old-run"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "artifact_id": {
+              "$response": "A02-4.export-base.result.artifact_id"
+            },
+            "max_bytes": 65536,
+            "offset": 0,
+            "operation": "artifact",
+            "project_id": "c090-a02-4",
+            "request_id": "c090-a02-4-old-artifact",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "old-artifact"
+        }
+      ]
+    },
+    {
+      "exact_invariants": [
+        "Pinned library and image bytes/revisions",
+        "Sibling physical and visual state at every common clock",
+        "All bytes outside exact entry patch",
+        "Old accepted runs/artifacts remain immutable"
+      ],
+      "expected_first_carrier": {
+        "inertia": "1",
+        "phase": "2",
+        "speed": "2"
+      },
+      "id": "A02-5",
+      "invalid_rollback": true,
+      "name": "workflow-agent-invalid-duration",
+      "repair_record": "workflow-agent-invalid-duration",
+      "steps": [
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "bundle": {
+              "$bundle_file": "workflow-agent-base.files.json"
+            },
+            "expected_program_revision": null,
+            "operation": "create",
+            "project_id": "c090-a02-5",
+            "request_id": "c090-a02-5-create",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "create"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "operation": "evaluate",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-5",
+            "request_id": "c090-a02-5-evaluate-base",
+            "run_id": null,
+            "schema_version": "ontokin.agent/0.22",
+            "until_seconds": "2"
+          },
+          "step": "evaluate-base"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "destination": "ontokin.glb/0.22",
+            "operation": "export",
+            "options": {
+              "end": "2",
+              "fps": 4,
+              "helpers": false,
+              "position_tolerance_m": 0.001,
+              "rotation_tolerance_rad": 0.001,
+              "time_tolerance_s": 1e-06
+            },
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-5",
+            "request_id": "c090-a02-5-export-base",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "export-base"
+        },
+        {
+          "expected_code": "OKL-E-EVENT-ORDER",
+          "expected_status": "rejected",
+          "request": {
+            "expected_program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "operation": "edit",
+            "patches": [
+              {
+                "element_id": [
+                  "sources",
+                  "entry"
+                ],
+                "end_byte": 943,
+                "expected_text": "using 1[N*m] for 2[s]",
+                "replacement": "using 1[N*m] for 0[s]",
+                "source_id": "entry",
+                "source_revision": "sha256:435c772d86ae9d43779d4a924daa9e4a287e55163a5c08cc655ed5c4e72d9a54",
+                "start_byte": 922
+              }
+            ],
+            "project_id": "c090-a02-5",
+            "request_id": "c090-a02-5-edit",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "edit"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "fields": [
+              "identity",
+              "source",
+              "state",
+              "matter"
+            ],
+            "limit": 100,
+            "operation": "inspect",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-5",
+            "request_id": "c090-a02-5-inspect-after",
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "kind": "object"
+            }
+          },
+          "step": "inspect-after"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "operation": "evaluate",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-5",
+            "request_id": "c090-a02-5-evaluate-after",
+            "run_id": null,
+            "schema_version": "ontokin.agent/0.22",
+            "until_seconds": "2"
+          },
+          "step": "evaluate-after"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "fields": [
+              "identity",
+              "source",
+              "state",
+              "matter"
+            ],
+            "limit": 100,
+            "operation": "inspect",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-5",
+            "request_id": "c090-a02-5-old-run",
+            "run_id": {
+              "$response": "A02-5.evaluate-base.run_id"
+            },
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "kind": "object"
+            },
+            "time": {
+              "seconds": "2",
+              "side": "after"
+            }
+          },
+          "step": "old-run"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "artifact_id": {
+              "$response": "A02-5.export-base.result.artifact_id"
+            },
+            "max_bytes": 65536,
+            "offset": 0,
+            "operation": "artifact",
+            "project_id": "c090-a02-5",
+            "request_id": "c090-a02-5-old-artifact",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "old-artifact"
+        }
+      ]
+    },
+    {
+      "exact_invariants": [
+        "Pinned library and image bytes/revisions",
+        "Sibling physical and visual state at every common clock",
+        "All bytes outside exact entry patch",
+        "Old accepted runs/artifacts remain immutable"
+      ],
+      "expected_first_carrier": {
+        "inertia": "1",
+        "phase": "2",
+        "speed": "2"
+      },
+      "id": "A02-6",
+      "invalid_rollback": true,
+      "name": "workflow-agent-invalid-mass",
+      "repair_record": "workflow-agent-invalid-mass",
+      "steps": [
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "bundle": {
+              "$bundle_file": "workflow-agent-base.files.json"
+            },
+            "expected_program_revision": null,
+            "operation": "create",
+            "project_id": "c090-a02-6",
+            "request_id": "c090-a02-6-create",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "create"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "operation": "evaluate",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-6",
+            "request_id": "c090-a02-6-evaluate-base",
+            "run_id": null,
+            "schema_version": "ontokin.agent/0.22",
+            "until_seconds": "2"
+          },
+          "step": "evaluate-base"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "destination": "ontokin.glb/0.22",
+            "operation": "export",
+            "options": {
+              "end": "2",
+              "fps": 4,
+              "helpers": false,
+              "position_tolerance_m": 0.001,
+              "rotation_tolerance_rad": 0.001,
+              "time_tolerance_s": 1e-06
+            },
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-6",
+            "request_id": "c090-a02-6-export-base",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "export-base"
+        },
+        {
+          "expected_code": "OKL-E-PHYSICAL-DOMAIN",
+          "expected_status": "rejected",
+          "request": {
+            "expected_program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "operation": "edit",
+            "patches": [
+              {
+                "element_id": [
+                  "sources",
+                  "entry"
+                ],
+                "end_byte": 462,
+                "expected_text": "body_mass = 2.5[kg]",
+                "replacement": "body_mass = 0[kg]",
+                "source_id": "entry",
+                "source_revision": "sha256:435c772d86ae9d43779d4a924daa9e4a287e55163a5c08cc655ed5c4e72d9a54",
+                "start_byte": 443
+              }
+            ],
+            "project_id": "c090-a02-6",
+            "request_id": "c090-a02-6-edit",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "edit"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "fields": [
+              "identity",
+              "source",
+              "state",
+              "matter"
+            ],
+            "limit": 100,
+            "operation": "inspect",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-6",
+            "request_id": "c090-a02-6-inspect-after",
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "kind": "object"
+            }
+          },
+          "step": "inspect-after"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "operation": "evaluate",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-6",
+            "request_id": "c090-a02-6-evaluate-after",
+            "run_id": null,
+            "schema_version": "ontokin.agent/0.22",
+            "until_seconds": "2"
+          },
+          "step": "evaluate-after"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "fields": [
+              "identity",
+              "source",
+              "state",
+              "matter"
+            ],
+            "limit": 100,
+            "operation": "inspect",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a02-6",
+            "request_id": "c090-a02-6-old-run",
+            "run_id": {
+              "$response": "A02-6.evaluate-base.run_id"
+            },
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "kind": "object"
+            },
+            "time": {
+              "seconds": "2",
+              "side": "after"
+            }
+          },
+          "step": "old-run"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "artifact_id": {
+              "$response": "A02-6.export-base.result.artifact_id"
+            },
+            "max_bytes": 65536,
+            "offset": 0,
+            "operation": "artifact",
+            "project_id": "c090-a02-6",
+            "request_id": "c090-a02-6-old-artifact",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "old-artifact"
+        }
+      ]
+    },
+    {
+      "assertions": [
+        "Historical create/export outcome remains exact and does not re-execute source or create another artifact.",
+        "Reset exposes before-zero empty/null torque state on every object; then new evaluation rebuilds histories.",
+        "A fresh request consumes current original authority despite unchanged source and warm caches."
+      ],
+      "id": "A03",
+      "name": "same-id-reopen-reset",
+      "steps": [
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "bundle": {
+              "$bundle_file": "workflow-agent-base.files.json"
+            },
+            "expected_program_revision": null,
+            "operation": "create",
+            "project_id": "c090-a03",
+            "request_id": "c090-a03-create",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "create"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "operation": "evaluate",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a03",
+            "request_id": "c090-a03-evaluate",
+            "run_id": null,
+            "schema_version": "ontokin.agent/0.22",
+            "until_seconds": "2"
+          },
+          "step": "evaluate"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "destination": "ontokin.glb/0.22",
+            "operation": "export",
+            "options": {
+              "end": "2",
+              "fps": 4,
+              "helpers": false,
+              "position_tolerance_m": 0.001,
+              "rotation_tolerance_rad": 0.001,
+              "time_tolerance_s": 1e-06
+            },
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a03",
+            "request_id": "c090-a03-export",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "export"
+        },
+        {
+          "action": "close_and_reopen_same_store",
+          "step": "reopen"
+        },
+        {
+          "expected_status": "succeeded",
+          "request_ref": "A03.create",
+          "step": "same-create"
+        },
+        {
+          "expected_status": "succeeded",
+          "request_ref": "A03.export",
+          "step": "same-export"
+        },
+        {
+          "expected_code": "OKL-E-REQUEST-ID",
+          "expected_status": "rejected",
+          "overrides": {
+            "options": {
+              "end": "2",
+              "fps": 2,
+              "helpers": false,
+              "position_tolerance_m": 0.001,
+              "rotation_tolerance_rad": 0.001,
+              "time_tolerance_s": 1e-06
+            }
+          },
+          "request_ref": "A03.export",
+          "step": "changed-retry"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "operation": "status",
+            "project_id": "c090-a03",
+            "request_id": "c090-a03-status",
+            "schema_version": "ontokin.agent/0.22",
+            "target_request_id": "c090-a03-export"
+          },
+          "step": "status"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "operation": "reset",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a03",
+            "request_id": "c090-a03-reset",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "reset"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "fields": [
+              "identity",
+              "source",
+              "state",
+              "matter"
+            ],
+            "limit": 100,
+            "operation": "inspect",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a03",
+            "request_id": "c090-a03-after-reset",
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "kind": "object"
+            }
+          },
+          "step": "after-reset"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "operation": "evaluate",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a03",
+            "request_id": "c090-a03-fresh-evaluate",
+            "run_id": null,
+            "schema_version": "ontokin.agent/0.22",
+            "until_seconds": "2"
+          },
+          "step": "fresh-evaluate"
+        }
+      ]
+    },
+    {
+      "additional_cursor_controls": [
+        "Same source/context reopened cursor must pass.",
+        "Change filter/project/profile/current-policy context independently; no coincident numeric offset acceptance."
+      ],
+      "id": "A04",
+      "name": "cursor-and-stale-source",
+      "steps": [
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "bundle": {
+              "$bundle_file": "workflow-agent-base.files.json"
+            },
+            "expected_program_revision": null,
+            "operation": "create",
+            "project_id": "c090-a04",
+            "request_id": "c090-a04-create",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "create"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "fields": [
+              "identity",
+              "source",
+              "state",
+              "matter"
+            ],
+            "limit": 1,
+            "operation": "inspect",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a04",
+            "request_id": "c090-a04-page",
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "kind": "object"
+            }
+          },
+          "step": "page"
+        },
+        {
+          "action": "close_and_reopen_same_store",
+          "step": "reopen"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "cursor": {
+              "$response": "A04.page.result.next_cursor"
+            },
+            "fields": [
+              "identity",
+              "source",
+              "state",
+              "matter"
+            ],
+            "limit": 1,
+            "operation": "inspect",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a04",
+            "request_id": "c090-a04-old-cursor-reopened",
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "kind": "object"
+            }
+          },
+          "step": "old-cursor-reopened"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "expected_program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "operation": "edit",
+            "patches": [
+              {
+                "element_id": [
+                  "sources",
+                  "entry"
+                ],
+                "end_byte": 934,
+                "expected_text": "using 1[N*m]",
+                "replacement": "using 2[N*m]",
+                "source_id": "entry",
+                "source_revision": "sha256:435c772d86ae9d43779d4a924daa9e4a287e55163a5c08cc655ed5c4e72d9a54",
+                "start_byte": 922
+              }
+            ],
+            "project_id": "c090-a04",
+            "request_id": "c090-a04-edit",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "edit"
+        },
+        {
+          "expected_code": "OKL-E-REVISION",
+          "expected_status": "rejected",
+          "request": {
+            "expected_program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "operation": "edit",
+            "patches": [
+              {
+                "element_id": [
+                  "sources",
+                  "entry"
+                ],
+                "end_byte": 934,
+                "expected_text": "using 1[N*m]",
+                "replacement": "using 2[N*m]",
+                "source_id": "entry",
+                "source_revision": "sha256:435c772d86ae9d43779d4a924daa9e4a287e55163a5c08cc655ed5c4e72d9a54",
+                "start_byte": 922
+              }
+            ],
+            "project_id": "c090-a04",
+            "request_id": "c090-a04-stale-edit",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "stale-edit"
+        },
+        {
+          "expected_code": "OKL-E-REVISION",
+          "expected_status": "rejected",
+          "request": {
+            "cursor": {
+              "$response": "A04.page.result.next_cursor"
+            },
+            "fields": [
+              "identity",
+              "source",
+              "state",
+              "matter"
+            ],
+            "limit": 1,
+            "operation": "inspect",
+            "program_revision": "sha256:1409265cf2a7773cc6d55f04b32654161b18c181a4f685f89ed8ce38162040c1",
+            "project_id": "c090-a04",
+            "request_id": "c090-a04-stale-cursor",
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "kind": "object"
+            }
+          },
+          "step": "stale-cursor"
+        }
+      ]
+    },
+    {
+      "assertions": [
+        "Historical outcome is identified as historical; it is not a fresh successful execution.",
+        "All fresh IDs require current authority. Reduced host ceiling cannot be replenished by the explicit source request1000000, warm caches or store reopen.",
+        "Accepted revision, prior runs and existing artifact inventory remain unchanged."
+      ],
+      "id": "A05",
+      "name": "current-host-authority",
+      "steps": [
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "bundle": {
+              "$bundle_file": "workflow-agent-base.files.json"
+            },
+            "expected_program_revision": null,
+            "operation": "create",
+            "project_id": "c090-a05",
+            "request_id": "c090-a05-create",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "create"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "destination": "ontokin.glb/0.22",
+            "operation": "export",
+            "options": {
+              "end": "2",
+              "fps": 4,
+              "helpers": false,
+              "position_tolerance_m": 0.001,
+              "rotation_tolerance_rad": 0.001,
+              "time_tolerance_s": 1e-06
+            },
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a05",
+            "request_id": "c090-a05-export",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "export"
+        },
+        {
+          "action": "close_and_reopen_same_store",
+          "host_policy": {
+            "max_elapsed_ms": 30000,
+            "max_operations": 999999
+          },
+          "step": "reopen-low"
+        },
+        {
+          "expected_status": "succeeded",
+          "request_ref": "A05.export",
+          "step": "historical-export"
+        },
+        {
+          "expected_code": "OKL-E-RESOURCE",
+          "expected_status": "failed",
+          "request": {
+            "operation": "evaluate",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a05",
+            "request_id": "c090-a05-deny-evaluate",
+            "run_id": null,
+            "schema_version": "ontokin.agent/0.22",
+            "until_seconds": "2"
+          },
+          "step": "deny-evaluate"
+        },
+        {
+          "expected_code": "OKL-E-RESOURCE",
+          "expected_status": "failed",
+          "request": {
+            "destination": "ontokin.glb/0.22",
+            "operation": "export",
+            "options": {
+              "end": "2",
+              "fps": 4,
+              "helpers": false,
+              "position_tolerance_m": 0.001,
+              "rotation_tolerance_rad": 0.001,
+              "time_tolerance_s": 1e-06
+            },
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a05",
+            "request_id": "c090-a05-deny-export",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "deny-export"
+        },
+        {
+          "expected_code": "OKL-E-RESOURCE",
+          "expected_status": "failed",
+          "request": {
+            "fields": [
+              "identity",
+              "source",
+              "state",
+              "matter"
+            ],
+            "limit": 100,
+            "operation": "inspect",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a05",
+            "request_id": "c090-a05-deny-inspect",
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "kind": "object"
+            }
+          },
+          "step": "deny-inspect"
+        },
+        {
+          "expected_code": "OKL-E-RESOURCE",
+          "expected_status": "failed",
+          "request": {
+            "operation": "validate",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a05",
+            "request_id": "c090-a05-deny-validate",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "deny-validate"
+        },
+        {
+          "expected_code": "OKL-E-RESOURCE",
+          "expected_status": "failed",
+          "request": {
+            "count": 1,
+            "element_id": [
+              "torque-cases",
+              "demo",
+              "ball",
+              "label"
+            ],
+            "operation": "surface.mesh_page",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a05",
+            "request_id": "c090-a05-deny-mesh",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "deny-mesh"
+        },
+        {
+          "expected_code": "OKL-E-RESOURCE",
+          "expected_status": "failed",
+          "request": {
+            "artifact_id": {
+              "$response": "A05.export.result.artifact_id"
+            },
+            "max_bytes": 1,
+            "offset": 0,
+            "operation": "artifact",
+            "project_id": "c090-a05",
+            "request_id": "c090-a05-deny-artifact",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "deny-artifact"
+        }
+      ]
+    },
+    {
+      "assertions": [
+        "Every failure retains original consumed-work prefix and deadline. No partial active/history projection is published as success."
+      ],
+      "id": "A06",
+      "name": "caller-and-output-caps",
+      "steps": [
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "bundle": {
+              "$bundle_file": "workflow-agent-base.files.json"
+            },
+            "expected_program_revision": null,
+            "operation": "create",
+            "project_id": "c090-a06",
+            "request_id": "c090-a06-create",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "create"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "destination": "ontokin.glb/0.22",
+            "operation": "export",
+            "options": {
+              "end": "2",
+              "fps": 4,
+              "helpers": false,
+              "position_tolerance_m": 0.001,
+              "rotation_tolerance_rad": 0.001,
+              "time_tolerance_s": 1e-06
+            },
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a06",
+            "request_id": "c090-a06-export",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "export"
+        },
+        {
+          "expected_code": "OKL-E-RESOURCE",
+          "expected_status": "failed",
+          "request": {
+            "budgets": {
+              "max_operations": 1
+            },
+            "operation": "validate",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a06",
+            "request_id": "c090-a06-operations",
+            "requested_level": "represented",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "operations"
+        },
+        {
+          "expected_code": "OKL-E-SAMPLE",
+          "expected_status": "rejected",
+          "request": {
+            "budgets": {
+              "max_result_items": 1
+            },
+            "fields": [
+              "identity"
+            ],
+            "limit": 2,
+            "operation": "inspect",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a06",
+            "request_id": "c090-a06-items",
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "kind": "object"
+            }
+          },
+          "step": "items"
+        },
+        {
+          "expected_code": "OKL-E-RESOURCE",
+          "expected_status": "failed",
+          "request": {
+            "budgets": {
+              "max_value_entries": 1
+            },
+            "fields": [
+              "state"
+            ],
+            "limit": 1,
+            "operation": "inspect",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a06",
+            "request_id": "c090-a06-records",
+            "schema_version": "ontokin.agent/0.22",
+            "selector": {
+              "path": "ball"
+            },
+            "time": {
+              "seconds": "1",
+              "side": "after"
+            }
+          },
+          "step": "records"
+        },
+        {
+          "expected_code": "OKL-E-RESOURCE",
+          "expected_status": "failed",
+          "request": {
+            "budgets": {
+              "max_operations": 1000001
+            },
+            "operation": "validate",
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a06",
+            "request_id": "c090-a06-enlarge",
+            "requested_level": "represented",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "enlarge"
+        },
+        {
+          "expected_code": "OKL-E-RESOURCE",
+          "expected_status": "failed",
+          "request": {
+            "artifact_id": {
+              "$response": "A06.export.result.artifact_id"
+            },
+            "budgets": {
+              "max_operations": 1
+            },
+            "max_bytes": 1,
+            "offset": 0,
+            "operation": "artifact",
+            "project_id": "c090-a06",
+            "request_id": "c090-a06-artifact",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "artifact"
+        }
+      ]
+    },
+    {
+      "assertions": [
+        "Accepted revision unchanged; no committed artifact/run for interrupted request.",
+        "Read actual SQLite transaction rows independently and compare prepared-only ID with absence from accepted artifact table.",
+        "Never mutate a history row to manufacture successful recovery."
+      ],
+      "export_request": {
+        "destination": "ontokin.glb/0.22",
+        "operation": "export",
+        "options": {
+          "end": "2",
+          "fps": 4,
+          "helpers": false,
+          "position_tolerance_m": 0.001,
+          "rotation_tolerance_rad": 0.001,
+          "time_tolerance_s": 1e-06
+        },
+        "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+        "project_id": "c090-a07",
+        "request_id": "c090-a07-export",
+        "schema_version": "ontokin.agent/0.22"
+      },
+      "fault": "Wrap the real _persist_task_metadata invoked inside _commit_task. Once task.artifact holds verified bytes and db.in_transaction is true, preserve exact prepared identity and bytes; raise a fresh sentinel subclass of BaseException. Let transaction unwind, restore the original method, close and reopen the same store. Issue no cancel.",
+      "id": "A07",
+      "name": "interrupted-artifact-publication",
+      "steps": [
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "bundle": {
+              "$bundle_file": "workflow-agent-base.files.json"
+            },
+            "expected_program_revision": null,
+            "operation": "create",
+            "project_id": "c090-a07",
+            "request_id": "c090-a07-create",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "create"
+        }
+      ],
+      "then": [
+        {
+          "action": "close_and_reopen_same_store",
+          "step": "reopen"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "operation": "status",
+            "project_id": "c090-a07",
+            "request_id": "c090-a07-status",
+            "schema_version": "ontokin.agent/0.22",
+            "target_request_id": "c090-a07-export"
+          },
+          "step": "status"
+        },
+        {
+          "expected_code": "OKA-E-UNKNOWN-OUTCOME",
+          "expected_status": "unknown_outcome",
+          "request_ref": "A07.export",
+          "step": "same-id-retry"
+        },
+        {
+          "expected_code": "OKA-E-ARTIFACT",
+          "expected_status": "rejected",
+          "request": {
+            "artifact_id": {
+              "$capture": "A07.prepared.artifact_id"
+            },
+            "max_bytes": 1,
+            "offset": 0,
+            "operation": "artifact",
+            "project_id": "c090-a07",
+            "request_id": "c090-a07-prepared-only",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "prepared-only"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "destination": "ontokin.glb/0.22",
+            "operation": "export",
+            "options": {
+              "end": "2",
+              "fps": 4,
+              "helpers": false,
+              "position_tolerance_m": 0.001,
+              "rotation_tolerance_rad": 0.001,
+              "time_tolerance_s": 1e-06
+            },
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a07",
+            "request_id": "c090-a07-fresh-export",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "fresh-export"
+        }
+      ]
+    },
+    {
+      "artifact_loops": [
+        {
+          "advance": "decoded returned byte count",
+          "initial_offset": 0,
+          "max_bytes": 1,
+          "must_equal": "Complete accepted GLB length and SHA256; every returned range equals exact original bytes.",
+          "request_template": {
+            "artifact_id": {
+              "$response": "A08.export.result.artifact_id"
+            },
+            "max_bytes": 1,
+            "offset": {
+              "$loop": "offset"
+            },
+            "operation": "artifact",
+            "project_id": "c090-a08",
+            "request_id": "c090-a08-artifact-${index}",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "stop": "exact actual total_bytes"
+        },
+        {
+          "advance": "decoded returned byte count",
+          "initial_offset": 0,
+          "max_bytes": 17,
+          "must_equal": "Complete accepted GLB length and SHA256; every returned range equals exact original bytes.",
+          "request_template": {
+            "artifact_id": {
+              "$response": "A08.export.result.artifact_id"
+            },
+            "max_bytes": 17,
+            "offset": {
+              "$loop": "offset"
+            },
+            "operation": "artifact",
+            "project_id": "c090-a08",
+            "request_id": "c090-a08-artifact-${index}",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "stop": "exact actual total_bytes"
+        },
+        {
+          "advance": "decoded returned byte count",
+          "initial_offset": 0,
+          "max_bytes": 65536,
+          "must_equal": "Complete accepted GLB length and SHA256; every returned range equals exact original bytes.",
+          "request_template": {
+            "artifact_id": {
+              "$response": "A08.export.result.artifact_id"
+            },
+            "max_bytes": 65536,
+            "offset": {
+              "$loop": "offset"
+            },
+            "operation": "artifact",
+            "project_id": "c090-a08",
+            "request_id": "c090-a08-artifact-${index}",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "stop": "exact actual total_bytes"
+        }
+      ],
+      "asset_loop": {
+        "request_template": {
+          "asset_slice": {
+            "max_bytes": 17,
+            "offset": {
+              "$loop": "offset"
+            }
+          },
+          "fields": [
+            "identity",
+            "source"
+          ],
+          "limit": 1,
+          "operation": "inspect",
+          "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+          "project_id": "c090-a08",
+          "request_id": "c090-a08-asset-${index}",
+          "schema_version": "ontokin.agent/0.22",
+          "selector": {
+            "element_id": [
+              "assets",
+              "label"
+            ]
+          }
+        },
+        "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e",
+        "total_bytes": 89
+      },
+      "eof_expected": {
+        "data_base64": "",
+        "next_offset": null,
+        "status": "succeeded",
+        "truncated": false
+      },
+      "eof_request": {
+        "artifact_id": {
+          "$response": "A08.export.result.artifact_id"
+        },
+        "max_bytes": 1,
+        "offset": {
+          "$capture": "A08.exact_total_bytes"
+        },
+        "operation": "artifact",
+        "project_id": "c090-a08",
+        "request_id": "c090-a08-eof",
+        "schema_version": "ontokin.agent/0.22"
+      },
+      "id": "A08",
+      "name": "chunk-and-EOF-byte-transport",
+      "past_eof_expected": {
+        "code": "OKA-E-ARTIFACT",
+        "status": "rejected"
+      },
+      "past_eof_request": {
+        "artifact_id": {
+          "$response": "A08.export.result.artifact_id"
+        },
+        "max_bytes": 1,
+        "offset": {
+          "$capture": "A08.exact_total_bytes_plus_one"
+        },
+        "operation": "artifact",
+        "project_id": "c090-a08",
+        "request_id": "c090-a08-past-eof",
+        "schema_version": "ontokin.agent/0.22"
+      },
+      "retain": "Every concrete materialized request and response plus exact reconstructed bytes; no JSON normalization.",
+      "steps": [
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "bundle": {
+              "$bundle_file": "workflow-agent-base.files.json"
+            },
+            "expected_program_revision": null,
+            "operation": "create",
+            "project_id": "c090-a08",
+            "request_id": "c090-a08-create",
+            "requested_level": "constructed",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "create"
+        },
+        {
+          "expected_status": "succeeded",
+          "request": {
+            "destination": "ontokin.glb/0.22",
+            "operation": "export",
+            "options": {
+              "end": "2",
+              "fps": 4,
+              "helpers": false,
+              "position_tolerance_m": 0.001,
+              "rotation_tolerance_rad": 0.001,
+              "time_tolerance_s": 1e-06
+            },
+            "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+            "project_id": "c090-a08",
+            "request_id": "c090-a08-export",
+            "schema_version": "ontokin.agent/0.22"
+          },
+          "step": "export"
+        }
+      ]
+    },
+    {
+      "id": "A09",
+      "matrix": "agent/resource-cases.json",
+      "name": "actual-cancellation-and-budget-stages",
+      "required_rows": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R08",
+        "R09",
+        "R10",
+        "R11",
+        "R12",
+        "R13",
+        "R14",
+        "R15",
+        "R16",
+        "R17"
+      ]
+    },
+    {
+      "database_filename": "torque-program-agent.sqlite3",
+      "id": "A10",
+      "must_preserve": [
+        "Unchanged predecessor complete-byte outputs",
+        "No accepted pointer to uncommitted or candidate-only source/run/artifact",
+        "Same-ID historical linkage and unknown-outcome tombstone",
+        "No database edits by verifier"
+      ],
+      "name": "store-isolation-and-independent-reconciliation",
+      "procedure": [
+        "Create the same project name in explicit .21 and .22 services in a temporary common parent directory; write/read each through its real service.",
+        "Open both SQLite files independently read-only. Verify actual store/protocol identities, accepted revision pointers, source/asset bytes, run sides/prefixes, request payload hash and response/transaction/byte hashes.",
+        "Reopen each actual service; .21 and all old defaults retain original files and behavior. A mismatched explicitly selected store must refuse; do not migrate or rewrite the .21 store.",
+        "Run A07 interruption, cancellation before/after acceptance, staged-artifact response-limit failure and every warm/reopened reader under current authority; inspect actual rows after each."
+      ],
+      "protocol": "ontokin.agent/0.22",
+      "store_schema": "ontokin.torque-program-agent-store/0.1"
+    },
+    {
+      "additional_evaluation_domains": "evaluation-domain-cases.json",
+      "id": "A11",
+      "input": "state-expectations.json",
+      "name": "complete-physics-boundary-and-resumption-matrix",
+      "procedure": [
+        "For each case create exact sealed input in a fresh project; verify frozen program/source/asset identity before evaluation.",
+        "At every frozen observation clock request the exact before/after state with inspect, then repeat with a new request ID and compare all defined fields.",
+        "Evaluate once directly to horizon, and independently in increasing frozen after clocks with returned run_id; close/reopen at first nonzero torque boundary and resume same actual run.",
+        "Compare source records, exact canonical hex/anchors/counts, bounded errors, independent quaternion/marker and COM oracles. Read self-frame variants at initial, reversal and completion clocks.",
+        "No sample-only split, hidden zero-crossing public event, future completion outside requested prefix or torque-induced translation anchor is permitted."
+      ],
+      "refusal_matrix": "refusal-cases.json"
+    }
+  ],
+  "schema_version": "ontokin.c090-independent-workflows/1",
+  "source_allocation": "Only separately named workflow sources opt into1000000 operations,30s before implementation; original default inputs still request100000/30s. Fixed allocation is a gate, not a success claim.",
+  "template_rules": {
+    "$bundle_file": "Read exact frozen files manifest and source/PNG bytes, seal unchanged bundle/0.2, verify independently frozen identity BEFORE dispatch. No ambient import.",
+    "$capture": "Use the actual barrier/byte-length field named here; it is captured evidence, not a guessed ID.",
+    "$loop": "Use zero-based iteration index and current exact returned byte offset; retain every fully materialized request.",
+    "$response": "Resolve exact named earlier actual response path; no alternative or fabricated identifier.",
+    "namespaces": "Every scenario, repair, stage, fault variant and chunk-size loop uses its own fresh project/store/request namespace. Templates retain all field values; replace only the documented namespace prefix to avoid accidental duplicate IDs.",
+    "request_ref": "Reuse complete named prior request including request_id; only explicit override test changes it.",
+    "unexpected_outcomes": "Retain actual failing outcome and input; correct only by reviewed new pre-implementation revision. Never retune expectations to candidate output."
+  },
+  "validation_host_policy": {
+    "max_elapsed_ms": 30000,
+    "max_operations": 1000000
+  }
+}

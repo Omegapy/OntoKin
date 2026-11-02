@@ -1,0 +1,42 @@
+{
+  "schema_version": "ontokin.torque-interface/0.1",
+  "source_version": "0.22",
+  "profile": "torque-0.1",
+  "agent_protocol": "ontokin.agent/0.22",
+  "target_contract": "ontokin.glb/0.22",
+  "statement": "torque <target> @ <stable_key> about <world_x|world_y|world_z> using <Torque> for <Time>;",
+  "axes": [
+    "world_x",
+    "world_y",
+    "world_z"
+  ],
+  "rotation_phase_limit_rad": 1048576,
+  "status": "experimental",
+  "mechanics": "free homogeneous own sphere; external world-axis couple; signed scalar; sticky axis; fixed rigid massless marker delivery",
+  "work_stages": [
+    "torque_source",
+    "torque_boundary_scan",
+    "torque_completion",
+    "torque_activation",
+    "torque_impulse_axis",
+    "torque_aggregate_begin",
+    "torque_aggregate_term",
+    "torque_aggregate_publish",
+    "torque_reference_origin",
+    "torque_rotation_anchor",
+    "torque_segment",
+    "torque_segment_vertex",
+    "torque_projection",
+    "torque_boundary_commit"
+  ],
+  "authority": "current host ceilings and reducing caller caps; original shared deadline and cancellation callback",
+  "unsupported": [
+    "arbitrary_axis",
+    "compound_inertia",
+    "nonspherical_body",
+    "reaction_motor",
+    "contacts",
+    "affected_articulated_delivery",
+    "live_engine_physics"
+  ]
+}

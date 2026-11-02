@@ -1,0 +1,1247 @@
+{
+  "candidate_observations_used": false,
+  "cases": [
+    {
+      "candidate_observations_used": false,
+      "condition": "Force is not Torque",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "outcome": "refused",
+        "phase": "type",
+        "primary_source": {
+          "end_byte": 866,
+          "source_id": "entry",
+          "start_byte": 862,
+          "text": "2[N]"
+        }
+      },
+      "file_manifest": "n01-force-unit.files.json",
+      "id": "n01-force-unit",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:4430775ca0f748b9acc83c563f1ac3a802c0447e40c54f1dde37be1ca712ece1",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:06bc26b517051bb94c71a2345384e1fb5afd89cec9c83f7b4fcbfdaa7e860d6d"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "Duration must be strictly positive",
+      "expected": {
+        "code": "OKL-E-EVENT-ORDER",
+        "outcome": "refused",
+        "phase": "validation",
+        "primary_source": {
+          "end_byte": 800,
+          "source_id": "entry",
+          "start_byte": 796,
+          "text": "0[s]"
+        }
+      },
+      "file_manifest": "n02-zero-duration.files.json",
+      "id": "n02-zero-duration",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:0610fea27a3b9554b0a6d819da2b0eb9e739325223bc0f57c0ef1830f0bf2f12",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:816bd0ca4c9a1a9e7979054688d651148b938ca7aea5314e8e0c1f53bf5f6fda"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "Duration must be strictly positive",
+      "expected": {
+        "code": "OKL-E-EVENT-ORDER",
+        "outcome": "refused",
+        "phase": "validation",
+        "primary_source": {
+          "end_byte": 878,
+          "source_id": "entry",
+          "start_byte": 873,
+          "text": "-1[s]"
+        }
+      },
+      "file_manifest": "n03-negative-duration.files.json",
+      "id": "n03-negative-duration",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:a5a1c8943347a1027fc591b7c3ff07617b71b84c6ed3980c01fececb0d85d192",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:c47587b971f5c8e36a6751beea919d588e1e57d4bd117ce18c4517a938dff9b2"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "Only the three literal Cartesian axis tokens are admitted",
+      "expected": {
+        "code": "OKL-E-SYNTAX",
+        "outcome": "refused",
+        "phase": "parse",
+        "primary_source": {
+          "end_byte": 855,
+          "source_id": "entry",
+          "start_byte": 848,
+          "text": "world_q"
+        }
+      },
+      "file_manifest": "n04-unknown-axis.files.json",
+      "id": "n04-unknown-axis",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:42a403731b4f0f4f8813d09207fdd6ad46191bdcbff36c56d72ee64a681a2e6b",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:a32163cfef13b3bc8a520024f1c6bbc09dff81cbe63d997f142135bc8832ff41"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "The axis slot is not an arbitrary expression",
+      "expected": {
+        "code": "OKL-E-SYNTAX",
+        "outcome": "refused",
+        "phase": "parse",
+        "primary_source": {
+          "end_byte": 870,
+          "source_id": "entry",
+          "start_byte": 848,
+          "text": "vector(world, 0, 0, 1)"
+        }
+      },
+      "file_manifest": "n05-axis-expression.files.json",
+      "id": "n05-axis-expression",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:eb7940aaee8230b6cdfddb673f0267ef30823fd428505df7d8d32dc4822ca8ae",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:3c00659ab2e64a36d3ba16f3bd0c0fce0037b6cc6dedc7fef765ecd5bba11bd5"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "The target must resolve",
+      "expected": {
+        "code": "OKL-E-NAME",
+        "outcome": "refused",
+        "phase": "resolve",
+        "primary_source": {
+          "end_byte": 834,
+          "source_id": "entry",
+          "start_byte": 827,
+          "text": "missing"
+        }
+      },
+      "file_manifest": "n06-unresolved-target.files.json",
+      "id": "n06-unresolved-target",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:914f457d067038285fea90b3c04cba79b97e7fdba19ca17b550e829291766fc7",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:5c85e5364e56aad3e4bc463d195612e6bac3bfd1a8399b5a3a0bf710f875aed6"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "Torque does not change motion mode",
+      "expected": {
+        "accepted_prefix": "before 0",
+        "boundary_seconds": "0",
+        "code": "OKL-E-MOTION-MODE",
+        "outcome": "refused",
+        "phase": "admission",
+        "primary_source": {
+          "end_byte": 907,
+          "source_id": "entry",
+          "start_byte": 849,
+          "text": "torque ball @ \"drive\" about world_z using 2[N*m] for 2[s];"
+        }
+      },
+      "file_manifest": "n07-prescribed-target.files.json",
+      "id": "n07-prescribed-target",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:965128c6c7be31225c4fe84a69a9ac990deca7c96bf79c4a7ca0e2198095cfec",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:14bc818b0eb954354b9af9de9c592df26d245feffadaf34c1547b41152ec402e"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "Inherited sphere mass admission remains mandatory",
+      "expected": {
+        "code": "OKL-E-PHYSICAL-DOMAIN",
+        "diagnostic_authority": "Inherited sphere_body diagnostic; effective constructor and parameter origin must both remain available",
+        "outcome": "refused",
+        "phase": "construction",
+        "primary_source": {
+          "end_byte": 399,
+          "source_id": "entry",
+          "start_byte": 394,
+          "text": "0[kg]"
+        }
+      },
+      "file_manifest": "n08-zero-mass.files.json",
+      "id": "n08-zero-mass",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:ef10b8fd74e78dfccb2fda2a14e474dd06d48ba1e2d3cf1773f3cf3cb3216706",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:8a292b529352ec8bd329ca53426257a9973ebdff4ad5fdfd7766a3e3e7c8924a"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "Inherited sphere radius admission remains mandatory",
+      "expected": {
+        "code": "OKL-E-PHYSICAL-DOMAIN",
+        "diagnostic_authority": "Inherited sphere_body diagnostic; effective constructor and parameter origin must both remain available",
+        "outcome": "refused",
+        "phase": "construction",
+        "primary_source": {
+          "end_byte": 429,
+          "source_id": "entry",
+          "start_byte": 425,
+          "text": "0[m]"
+        }
+      },
+      "file_manifest": "n09-zero-radius.files.json",
+      "id": "n09-zero-radius",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:522ccccfaad9e906a6e234d9f5e978bef21b4a55ad4ab5859ce3dfd307923478",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:f9ed65d283b1eaee820acff0290309519a5e909e789ab2d5555d666411338785"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "A scalar property is not an object occurrence",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "outcome": "refused",
+        "phase": "type",
+        "primary_source": {
+          "end_byte": 841,
+          "source_id": "entry",
+          "start_byte": 827,
+          "text": "ball.body_mass"
+        }
+      },
+      "file_manifest": "n10-property-target.files.json",
+      "id": "n10-property-target",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:c551e6be754a41b586b354aa44ba799b25bd66af02518e24de56f6d84bad2e39",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:04eb838d9a4436d06f69de3c665c5bdef382266765d878ce18c56177626d07f5"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "The first axis survives interval completion",
+      "expected": {
+        "accepted_prefix": "before 1",
+        "boundary_seconds": "1",
+        "code": "OKL-E-FRAME",
+        "expected_axis_before": "world_z",
+        "outcome": "refused",
+        "phase": "admission",
+        "primary_source": {
+          "end_byte": 978,
+          "source_id": "entry",
+          "start_byte": 920,
+          "text": "torque ball @ \"drive\" about world_x using 1[N*m] for 1[s];"
+        }
+      },
+      "file_manifest": "n11-empty-set-axis-change.files.json",
+      "id": "n11-empty-set-axis-change",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:633e1d3ada0a2555336c9d6daeafea4180435f8a1e974267510b649ed482701b",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:5ac3c80d2d1bd69e92af802b39a62005c9451737099450a650f91771bb13d646"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "Each interval must name the already staged axis, even with zero net torque",
+      "expected": {
+        "accepted_prefix": "before 0",
+        "boundary_seconds": "0",
+        "code": "OKL-E-FRAME",
+        "outcome": "refused",
+        "phase": "admission",
+        "primary_source": {
+          "end_byte": 946,
+          "source_id": "entry",
+          "start_byte": 887,
+          "text": "torque ball @ \"second\" about world_y using 0[N*m] for 1[s];"
+        },
+        "whole_boundary_rollback": true
+      },
+      "file_manifest": "n12-zero-mixed-axes.files.json",
+      "id": "n12-zero-mixed-axes",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:884ca42b2498a4bd6293ff8714b76891c26e927d0d0e5229aafcaed4901eff20",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:e4fe731190aadb4b396e1a1180a7923f0b8554bbc8ac164b787d714ad318db78"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "Incoming canonical orthogonal components must be exactly zero",
+      "expected": {
+        "accepted_prefix": "before 0",
+        "boundary_seconds": "0",
+        "code": "OKL-E-FRAME",
+        "outcome": "refused",
+        "phase": "admission",
+        "primary_source": {
+          "end_byte": 878,
+          "source_id": "entry",
+          "start_byte": 820,
+          "text": "torque ball @ \"drive\" about world_z using 2[N*m] for 2[s];"
+        }
+      },
+      "file_manifest": "n13-incoming-off-axis-spin.files.json",
+      "id": "n13-incoming-off-axis-spin",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:68484de4072109b31e7c7b8f544cc0c31e7d972223baed7abe9270fd3d25fdc9",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:4bbf1a391bc465d0867f05651c668df0b0301bb81393e25fddeb6a7662a9c693"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "An inverse later impulse cannot hide an off-axis intermediate state",
+      "expected": {
+        "accepted_prefix": "before 0",
+        "boundary_seconds": "0",
+        "code": "OKL-E-FRAME",
+        "forbidden_effects": [
+          "axis latch",
+          "first impulse",
+          "second impulse",
+          "torque activation count"
+        ],
+        "outcome": "refused",
+        "phase": "admission",
+        "primary_source": {
+          "end_byte": 983,
+          "source_id": "entry",
+          "start_byte": 887,
+          "text": "impulse ball using vector(world, 0[N*s], 0[N*s], 1[N*s]) at point(ball.frame, 1[m], 0[m], 0[m]);"
+        },
+        "whole_boundary_rollback": true
+      },
+      "file_manifest": "n14-intermediate-off-axis-impulse.files.json",
+      "id": "n14-intermediate-off-axis-impulse",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:67ab2ee0d9478b8ab3c92f26570d8b9c77fac52691b68c130b9890bf7df44f13",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:c75ce974f5d629899768c13eb2d4ca280be9de5ba493fff13aaf52e0e35812f2"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "Final exact aggregate is not a finite binary64 net",
+      "expected": {
+        "accepted_prefix": "before 0",
+        "boundary_seconds": "0",
+        "code": "OKL-E-NUMERIC",
+        "operation": "net_torque",
+        "outcome": "refused",
+        "phase": "evaluation",
+        "primary_source": {
+          "end_byte": 878,
+          "source_id": "entry",
+          "start_byte": 820,
+          "text": "torque ball @ \"a\" about world_z using 1e308[N*m] for 1[s];"
+        },
+        "whole_boundary_rollback": true
+      },
+      "file_manifest": "n15-net-overflow.files.json",
+      "id": "n15-net-overflow",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:6c2a366bf0616b4e1fff108eccaa5dcf145ac7e38df76e466a013653cf8c3cef",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:bb09bf3e8182decff30c99bfd94bffe1335bed66236170f7d7cd8a7086b22313"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "Finite net torque divided by canonical inertia has nonfinite final alpha",
+      "expected": {
+        "accepted_prefix": "before 0",
+        "boundary_seconds": "0",
+        "code": "OKL-E-NUMERIC",
+        "operation": "angular_acceleration",
+        "outcome": "refused",
+        "phase": "evaluation",
+        "primary_source": {
+          "end_byte": 878,
+          "source_id": "entry",
+          "start_byte": 820,
+          "text": "torque ball @ \"a\" about world_z using 1e308[N*m] for 1[s];"
+        }
+      },
+      "file_manifest": "n16-alpha-overflow.files.json",
+      "id": "n16-alpha-overflow",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:55ae876b9187ac72535e8d7ca278f255b17de20002976ccbd1d8751f3d424e03",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:4104abdc4a36fcae3d534514ab53b8088b8f0a89d6454f2666dc44f0274be2b9"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "A requested later segment exceeds the adopted phase domain; an earlier valid prefix stays valid",
+      "expected": {
+        "code": "OKL-E-NUMERIC",
+        "failed_request_seconds": "2",
+        "last_successful_run_preserved": true,
+        "operation": "phase_domain",
+        "outcome": "refused",
+        "phase": "evaluation",
+        "primary_source": {
+          "end_byte": 882,
+          "source_id": "entry",
+          "start_byte": 820,
+          "text": "torque ball @ \"later\" about world_z using 1e308[N*m] for 1[s];"
+        },
+        "successful_prefix_seconds": "0.5"
+      },
+      "file_manifest": "n17-later-bounded-phase.files.json",
+      "id": "n17-later-bounded-phase",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:084518f87515a336fb4237d2c726d26526891b9af64acb828298665b01740774",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:de2dd1482963fd4daa44bb1d3d2cbad99736df76c3ab9fad8c4276b52855be90"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "Stable torque keys are unique across the whole entry scene",
+      "expected": {
+        "code": "OKL-E-NAME",
+        "outcome": "refused",
+        "phase": "resolve",
+        "primary_occurrence": 1,
+        "primary_source": {
+          "end_byte": 972,
+          "source_id": "entry",
+          "start_byte": 915,
+          "text": "torque ball @ \"same\" about world_z using 1[N*m] for 1[s];"
+        },
+        "required_related": "earlier torque with key same"
+      },
+      "file_manifest": "n18-duplicate-key.files.json",
+      "id": "n18-duplicate-key",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:1f54854c1a4dc9220dc76d542ef648f7e164d047902a15cf624b44ab4009f34d",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:2ef05bc0350421f20c2a17948797396aa472c203206bb3ffbd9f0b838f0395a7"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "Older declaring profiles do not acquire torque syntax or semantics",
+      "expected": {
+        "code": "OKL-E-CAPABILITY-UNSUPPORTED",
+        "outcome": "refused",
+        "phase": "support",
+        "primary_source": {
+          "end_byte": 888,
+          "source_id": "entry",
+          "start_byte": 830,
+          "text": "torque ball @ \"drive\" about world_z using 2[N*m] for 2[s];"
+        }
+      },
+      "file_manifest": "n19-earlier-profile.files.json",
+      "id": "n19-earlier-profile",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:61ddeac390d924ee5814b53ac417391fc0b1c525065207f85ecb76a4f3d5f152",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:28caf2b39d8cf2d74e713f138a4f1435a0616f38da5c6e27f6937d6b9810b1e5"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "Operation-specific mechanical conversion does not erase the distinct Angle dimension",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "outcome": "refused",
+        "phase": "type",
+        "primary_source": {
+          "end_byte": 872,
+          "source_id": "entry",
+          "start_byte": 862,
+          "text": "2[N*m/rad]"
+        }
+      },
+      "file_manifest": "n20-angle-dimension.files.json",
+      "id": "n20-angle-dimension",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:10f54f7dce1f1bc70f994d8ff55b53ed9d13427bb17a8692f6c6c8f59e6f7848",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:4d996179e9ee72c0ff95964e63186798858bd87652b2905cd795e012c1fae466"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "Duration has Time type",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "outcome": "refused",
+        "phase": "type",
+        "primary_source": {
+          "end_byte": 429,
+          "source_id": "entry",
+          "start_byte": 425,
+          "text": "1[m]"
+        }
+      },
+      "file_manifest": "n21-duration-units.files.json",
+      "id": "n21-duration-units",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:e9a8270abc490f90e1afd9b49fbe832dde8ff4a8fa77dbbae7127eb2d20d43a8",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:e16e5dec20f3b9f63e38b29ca02d7f2198186f670330341d9621f8fd08c6d95e"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "Bool does not coerce to Torque",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "outcome": "refused",
+        "phase": "type",
+        "primary_source": {
+          "end_byte": 866,
+          "source_id": "entry",
+          "start_byte": 862,
+          "text": "true"
+        }
+      },
+      "file_manifest": "n22-boolean-torque.files.json",
+      "id": "n22-boolean-torque",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:8ba19f2465a622c62301c1717b99eb78e58363c29f3fdbe7f21b1e78a9819716",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:12e70529abf5aa070353d5ce25cbdddad553ac5956e93cc4bfdb3a81423c6104"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "A followed massless marker is not a free dynamic body",
+      "expected": {
+        "accepted_prefix": "before 0",
+        "boundary_seconds": "0",
+        "code": "OKL-E-MOTION-MODE",
+        "outcome": "refused",
+        "phase": "admission",
+        "primary_source": {
+          "end_byte": 884,
+          "source_id": "entry",
+          "start_byte": 820,
+          "text": "torque ball.label @ \"drive\" about world_z using 2[N*m] for 2[s];"
+        }
+      },
+      "file_manifest": "n23-followed-marker.files.json",
+      "id": "n23-followed-marker",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:8f97a580ff266473387b38f2a051d91fc2e3223d530619085fe0cb51d113c21f",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:2391b42f1d1d1ff3a69bdf492e7e4353af149a78b7c435a631436da5d6a0861f"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "Only an earlier staged release can make the sphere free",
+      "expected": {
+        "accepted_prefix": "before 1",
+        "boundary_seconds": "1",
+        "code": "OKL-E-MOTION-MODE",
+        "outcome": "refused",
+        "phase": "admission",
+        "primary_source": {
+          "end_byte": 1427,
+          "source_id": "entry",
+          "start_byte": 1369,
+          "text": "torque ball @ \"drive\" about world_z using 1[N*m] for 1[s];"
+        },
+        "whole_boundary_rollback": true
+      },
+      "file_manifest": "n24-torque-before-release.files.json",
+      "id": "n24-torque-before-release",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:aca08afa43fb2060d875cd649071b615e43f28275ad4d784b1989ce678de055a",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:9cfcadf4fc25b4d13b2a46ef5411b76b85ac28863ee77f35bf26b5ca8b888dd7"
+      }
+    },
+    {
+      "candidate_observations_used": false,
+      "condition": "Distinct mandatory exact source boundaries collapse in binary32 recording clocks",
+      "expected": {
+        "code": "OKL-E-EXPORT",
+        "completion_fraction": "10808639105689191/36028797018963968",
+        "expected_compile": "accepted",
+        "expected_evaluation": "accepted",
+        "near_clock": "0.3",
+        "outcome": "refused",
+        "permit_boundary_drop": false,
+        "phase": "delivery",
+        "primary_source": null,
+        "requested_output": "ontokin.glb/0.22"
+      },
+      "file_manifest": "n25-delivery-clock-collapse.files.json",
+      "id": "n25-delivery-clock-collapse",
+      "identity": {
+        "manifest": {
+          "assets": [
+            {
+              "asset_id": "label",
+              "byte_length": 89,
+              "media_type": "image/png",
+              "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+            }
+          ],
+          "entry_source_id": "entry",
+          "schema_version": "ontokin.bundle/0.2",
+          "units": [
+            {
+              "filename": "main.ok",
+              "package_id": null,
+              "source_id": "entry",
+              "source_revision": "sha256:f2e589679cd174e26f0302f15bb97e76f0e33c01206acd719456b80a6ad7d1e3",
+              "version": null
+            },
+            {
+              "filename": "carriers.ok",
+              "package_id": "fixture.torque-carriers",
+              "source_id": "package:fixture.torque-carriers@1.0.0",
+              "source_revision": "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+              "version": "1.0.0"
+            }
+          ]
+        },
+        "program_revision": "sha256:08dc4dbcae716868b030d4bd4ced620e4f90d01c0f9f98650be05bbc9935f749"
+      }
+    }
+  ],
+  "schema_version": "ontokin.torque-independent-refusals/1",
+  "state": "Review input; bind exact diagnostic wording and schema in the independently reviewed contract before adoption"
+}

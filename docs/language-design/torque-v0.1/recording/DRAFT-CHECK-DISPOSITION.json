@@ -1,0 +1,22 @@
+{
+  "cause": "Three intentional Markdown hard-line-break pairs of spaces are flagged by git whitespace checking",
+  "corrected_document_sha256": "6f096850c542b7a5e4f66c92d65f78f937054ad922c35034c1001fc707d020e0",
+  "correction": "Remove trailing whitespace from three document header lines; no normative text or schema changes",
+  "fresh_check": {
+    "command": "git diff --cached --check",
+    "returncode": 0,
+    "stderr": "",
+    "stdout": ""
+  },
+  "original_check": {
+    "command": "git diff-tree --check ffebd4452c6c7da91cdcd71b67ed4adc67fb2229^ ffebd4452c6c7da91cdcd71b67ed4adc67fb2229",
+    "returncode": 2,
+    "stderr": "",
+    "stdout": "docs/language-design/torque-v0.1/RECORDING.md:3: trailing whitespace.\n+**Identity:** `OK-TORQUE-RECORDING/0.1.0`  \ndocs/language-design/torque-v0.1/RECORDING.md:4: trailing whitespace.\n+**State:** review draft; adopted only by the separately reviewed C090 decision  \ndocs/language-design/torque-v0.1/RECORDING.md:5: trailing whitespace.\n+**Bindings:** source `0.22` / `torque-0.1`, `ontokin.agent/0.22`, `ontokin.glb/0.22`  \n"
+  },
+  "original_commit": "ffebd4452c6c7da91cdcd71b67ed4adc67fb2229",
+  "original_document_sha256": "1e1b5a3d0103462dfcddd32b68a3e7ef203857e145a450242fcadf8498af620b",
+  "prior_author_receipt": "AUTHOR-RECEIPT-01.json remains an exact historical draft receipt",
+  "product_test_failure": false,
+  "schema_version": "ontokin.c090-recording-draft-check-disposition/1"
+}

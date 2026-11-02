@@ -1,0 +1,110 @@
+{
+  "archive_policy": "Include every regular file except the top-level tmp directory. Preserve both attempt input snapshots, source inventories, drivers, logs and original statuses.",
+  "attempts": [
+    {
+      "bytes": 26654,
+      "mode": "0644",
+      "path": "attempt01/RESULT.json",
+      "sha256": "4340ca020e45a3386c380492fec52259c43c42a22b6a4a0d1fd774ae1c136a41",
+      "status": "failed"
+    },
+    {
+      "bytes": 16084,
+      "mode": "0644",
+      "path": "attempt02/RESULT.json",
+      "sha256": "8d2152624504a6a2f38781bfe72f3c821ae758c5879d5b7715a726c6a61466a2",
+      "status": "passed"
+    }
+  ],
+  "budget_explanation": "l01/l02 use original default100000 operations/30000ms. n31/n32 use their independently authored explicit1000000-operation/30000ms source request and matching host policy in both initial and repaired attempts.",
+  "complete_baseline_bytes_modes_unchanged": true,
+  "final_controls": [
+    {
+      "final_input_closure_matches_current_corpus": true,
+      "host_policy": {
+        "max_elapsed_ms": 30000,
+        "max_operations": 100000
+      },
+      "id": "control-l01-pure-import-and-contextual-names",
+      "objects": 8,
+      "program_revision": "sha256:8183d860032bfcca6f41197bec79baf9eb73397aa660d3657fa151c8010f3eb0",
+      "result": "attempt01/RESULT.json",
+      "successful_attempt": "attempt01"
+    },
+    {
+      "final_input_closure_matches_current_corpus": true,
+      "host_policy": {
+        "max_elapsed_ms": 30000,
+        "max_operations": 100000
+      },
+      "id": "control-l02-nonidentity-fixed-local-rotation",
+      "objects": 9,
+      "program_revision": "sha256:49855feaafd53e6bc3c884e257b3b345b7a69247230b0b36881010f202a2454f",
+      "result": "attempt01/RESULT.json",
+      "successful_attempt": "attempt01"
+    },
+    {
+      "final_input_closure_matches_current_corpus": true,
+      "host_policy": {
+        "max_elapsed_ms": 30000,
+        "max_operations": 1000000
+      },
+      "id": "control-n31-static-articulated-marker",
+      "objects": 9,
+      "program_revision": "sha256:d68f4d0dcc2066d87b4a0958d239a5dcba62076af74761d9099568838966230e",
+      "result": "attempt02/RESULT.json",
+      "successful_attempt": "attempt02"
+    },
+    {
+      "final_input_closure_matches_current_corpus": true,
+      "host_policy": {
+        "max_elapsed_ms": 30000,
+        "max_operations": 1000000
+      },
+      "id": "control-n32-moving-articulated-marker",
+      "objects": 9,
+      "program_revision": "sha256:f5e636bd61c81cacec15527c96e9a7f8c2cfc508097ef1629c445fdf6019d814",
+      "result": "attempt02/RESULT.json",
+      "successful_attempt": "attempt02"
+    }
+  ],
+  "old_preflight_closure_unchanged": true,
+  "original_failures": [
+    {
+      "diagnostic": {
+        "code": "OKL-E-MOTION-MODE",
+        "details": null,
+        "end_byte": 1208,
+        "message": "Core joints require a static/prescribed parent and a prescribed child.",
+        "phase": "elaboration",
+        "source_id": "entry",
+        "start_byte": 1014
+      },
+      "id": "control-n31-static-articulated-marker",
+      "program_revision": "sha256:0b5b84e0677b133f346e956cb5c2b2f8488062080b875e80d7b74242de7b8aa8"
+    },
+    {
+      "diagnostic": {
+        "code": "OKL-E-MOTION-MODE",
+        "details": null,
+        "end_byte": 1208,
+        "message": "Core joints require a static/prescribed parent and a prescribed child.",
+        "phase": "elaboration",
+        "source_id": "entry",
+        "start_byte": 1014
+      },
+      "id": "control-n32-moving-articulated-marker",
+      "program_revision": "sha256:eb0ebaa41cc5926440fd07f8b604149b4fd280a7db32f39e2c2d4d8604d6bb94"
+    }
+  ],
+  "production_execution_complete": true,
+  "recorded_utc": "2026-11-02T21:17:32.583778+00:00",
+  "repair": "Only n31/n32 source/control hinge parent changed from the dynamic carrier to its existing prescribed massless fixed follower ball.arm.origin; the torque-affected dependency path remains.",
+  "schema_version": "ontokin.c090-supplemental-language-preflight-closure/1",
+  "scope": "Four new independent .21 controls constructed only; no evaluation, GLB, .22 execution or broad suite rerun.",
+  "source_commit": "7b6900baa0357ab96c4639ac5c2ebe4e1791833e",
+  "source_inventory_sha256": "48e32d3efd156bc719c7fe6aaedb7c7278160cda205938434b96961d75e522f1",
+  "source_or_budget_weakened_to_hide_failure": false,
+  "source_tree": "1a31d387795b0b794935b81d9f77803054e82699",
+  "status": "completed_with_preserved_failed_initial_authoring_attempt"
+}
