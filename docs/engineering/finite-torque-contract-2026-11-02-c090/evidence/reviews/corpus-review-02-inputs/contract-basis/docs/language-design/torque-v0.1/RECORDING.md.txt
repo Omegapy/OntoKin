@@ -1,0 +1,202 @@
+# C090 recorded fixed-axis torque contract
+
+**Identity:** `OK-TORQUE-RECORDING/0.1.0`
+**State:** review draft; adopted only by the separately reviewed C090 decision
+**Bindings:** source `0.22` / `torque-0.1`, `ontokin.agent/0.22`, `ontokin.glb/0.22`
+**Baseline:** C089 `655097f016af17434b9b26fae22491f5f302aa18`; runtime bytes are the unchanged C088 predecessor.
+
+This document specifies recorded animation and its independently checked error bounds. It supplies no runtime implementation, passing torque artifact, destination attestation or release claim. The source numerical and transaction contract governs torque state. Earlier profiles and their exact artifacts retain their existing rules.
+
+## 1. Extend the current recording route
+
+The implementation boundary is the current `scene.build_scene` → `reach_export.build_reach_scene` → `gltf.validate_export` → `reach_conformance` route. Extending only `force_export.py` does not implement this binding. The baseline source identities inspected for this decision are retained in `recording/SOURCE-BASIS.json`.
+
+The new target retains flat root nodes with baked world poses, unit scale, one common binary32 clock accessor, LINEAR translation and the format's normalized-endpoint shortest-arc quaternion SLERP reference. Source ownership remains metadata. A delivered node's world transform must never be applied a second time through an exported parent.
+
+The new named numerical destination is `ontokin-controlled-three-recording/0.2.0`. The inherited `tools/reach_destination.mjs` wrapper accepts only GLB/0.6; it cannot directly accept a .22 artifact. The new explicit `tools/torque_destination.mjs` wrapper must retain that module's controlled arithmetic and bounds while admitting .22 under the exact checks in section 8. It approximates SLERP with a normalized chord and includes that approximation in the error certificate. A default animation mixer, unnamed player, or successful glTF structural check cannot inherit this numerical destination claim.
+
+`extras.ontokin.target_contract` is `ontokin.glb/0.22`, `profile` is `torque-0.1`, and the `reach_quantization` member uses `ontokin.torque-quantization/0.1`. It has the complete closed shape in `recording-quantization.schema.json`. The inherited `.21` geometry, PBR, UV, images, source manifests, surface histories and source-bound identity fields remain required. Add exactly one `torque_profile` object with the closed shape in `recording-profile.schema.json`. Boundary states carry the source contract's complete torque projection, including empty histories and a null axis before the first activation; their shape is not a second recording-only state format.
+
+## 2. Accepted kinematic paths
+
+A torque carrier is the supported free homogeneous sphere. Its own canonical mass and inertia supply the rotational law. Visual markers add no physical matter or authority.
+
+For each delivered frame, follow the actual kinematic dependency graph rather than the ownership graph. A path affected by a torque-latched carrier may contain fixed site transforms and fixed following transforms, including nested massless markers and nonidentity fixed local rotations. It may contain no independently running or paused local movement, spin, hinge/slider action, reach chain, skin or deformation. An authored joint in an affected path is outside this first recording scope even if its current derivative is zero. Unrelated branches keep their inherited supported motion.
+
+Apply that restriction to the graph at the phase or boundary side being checked. Before the first torque latch, inherited legal prescribed/gripped motion remains eligible. A grip already deactivated by an ordered release is absent from the subsequent dependency graph; its historical source declaration alone is not a refusal. A release followed by torque at the same boundary can therefore produce eligible fixed-marker paths. The zero-derivative exclusion concerns a joint that remains on the affected dependency path while the carrier is latched.
+
+Check this restriction before pose-array allocation on every requested positive-width phase and at each boundary's before and after states. An affected unsupported relation/action uses adapter identifier `OKE-E-TORQUE-COMPOSITION` with the inherited `scene.export_error` unsupported mapping. The actual public diagnostic is an `OntoKinError`: code `OKL-E-CAPABILITY-UNSUPPORTED`, phase `support`, category `unsupported`, and `blocks=["delivered"]`. Its message is `Torque recording requires fixed rigid marker paths.` The complete public details object has exactly five fields: `{"target_contract":"ontokin.glb/0.22","export_code":"OKE-E-TORQUE-COMPOSITION","profile":"torque-0.1","carrier":<torque occurrence path>,"frame":<affected frame path>}`. The inherited unsupported repair text remains `Use supported visual geometry and the explicitly matching model/delivery profile.`
+
+The primary span is the first offending relation/action in canonical frame-path order. The existing helper defaults to the whole scene's `model.span`; that default alone does not satisfy this new diagnostic. The implementation must use an equivalent `OntoKinError` construction with the identified offender span, or add an explicit optional span argument whose omitted behavior leaves every inherited caller unchanged. Public source and Agent projections resolve that actual span to its source unit, revision and byte range through their existing diagnostic transport. No separate `ExportError` class or public phase `export` is introduced.
+
+Throughout this document, `OKE-*` denotes an adapter identifier in `details.export_code`, not the public diagnostic code. Existing numeric, unsupported, resource and options failures retain their inherited `scene.export_error` mapping. In particular, numeric independent-reader rejections use `OKL-E-NUMERIC` / `evaluation` / `numerical_failure`; structural unsupported rejections use `OKL-E-CAPABILITY-UNSUPPORTED` / `support` / `unsupported`. Record both the adapter identifier and actual public envelope in negative-case evidence. This distinction changes no existing rejection precedence or callback exception transport.
+
+No partial artifact is published. A zero-torque latch still establishes this domain; it does not imply nonzero motion. Fixed markers may attach before a release if the ordinary source rules admit the relationship; the complete requested path must pass the same check after release.
+
+Retain the inherited discontinuity check. Torque changes no pose instantaneously. Release/impulse transfer and canonical rounding must remain within their independently propagated endpoint error bounds. A source pose discontinuity outside the established delivery allowance is explicitly refused.
+
+## 3. Source phase and numerical-error interface
+
+Every source event, action completion, COM-force completion and torque completion up to the requested horizon splits the source timeline at its exact clock. An interval certificate may not cross such an authored boundary. Completion beyond the requested horizon is not evaluated or clamped into that horizon. Before/after metadata is staged and committed under the source contract's atomic boundary rules.
+
+Each uniform source phase must expose four nonnegative exact rational bounds for every delivered frame:
+
+| Internal field | Meaning over the complete phase |
+| --- | --- |
+| `speed` | Upper bound V on the Euclidean speed of the frame origin |
+| `acceleration` | Upper bound A on the Euclidean acceleration of the frame origin |
+| `angular_speed` | Upper bound Ω on the Euclidean angular speed |
+| `angular_acceleration` | Upper bound Α on the Euclidean angular acceleration |
+
+Extend both producer `MotionBound` and independent `ReferencePhase` with `angular_acceleration`; do not silently default a torque phase to zero. Preserve `PhaseBound.angular_acceleration_upper_rad_per_s2` through dynamic-source construction, fixed-frame composition, phase selection, groups, serialization, supplied-byte minima and final comparisons. Other supported `.22` motion also contributes its actual existing `PhaseBound` acceleration field; the new field cannot be computed only for the root sphere and dropped downstream.
+
+For an exact reference signed speed law `w(t)=w_r+a_r(t-t_r)`, set `Ω=max(|w(a)|,|w(b)|)` and `Α=|a_r|` on a phase `[a,b]`. An affine function's absolute maximum is at an endpoint, including a reversal. If inherited release/impulse transfer supplies angular-velocity intervals or nonzero incoming uncertainty, enlarge Ω to bound their complete vector, including off-axis uncertainty. Canonical zero components do not erase ideal uncertainty. Endpoint component-interval L1 maxima are a permitted conservative bound. Do not replace Ω by absolute net phase displacement divided by duration. A derived speed-zero clock need not become a source clock or a recording key.
+
+The exact reference acceleration is `a_r = sum(exact(tau_i))/exact(I)` over the canonical individual torques and inherited canonical inertia. The exposed route is `net_c=RN(sum(exact(tau_i)))`, then `a_c=RN(exact(net_c)/exact(I))`; therefore `Ea=|a_c-a_r|` includes both rounding steps. Canonical rotation keeps its own anchor `(t_c,q_c,w_c)`. At a requested time it evaluates the exact polynomial `P(d)=exact(w_c)*d+exact(a_c)*d²/2`, with `d=t-t_c`, then `phi_c=RN(P(d))`. Exposed speed is `RN(exact(w_c)+exact(a_c)*d)`. Form the full rational expression before each single round. Apply the inherited controlled `ReachPoseOps.axis_rotation` for the selected positive Cartesian axis and multiply on the left of the full internal `RotationValue` anchor; do not substitute a host trigonometric function or public quaternion round trip. At zero elapsed time or exact zero P, return the anchor rotation exactly as specified by the source contract.
+
+The independent physical/error reference has a separate error origin and may split when a_r changes although a_c does not. This must never create a canonical motion anchor. At each error origin e, derive an enclosure Eθ for the canonical smooth law versus the reference orientation and Ew for their angular velocity. On elapsed magnitude `u=t-e`, their propagated discrepancy is bounded by `Eθ+Ew*u+Ea*u²/2`. This angular-rate perturbation bound also retains inherited off-axis uncertainty. If an error-origin enclosure was obtained from an exposed/canonical sampled pose, first add that sample's phase-rounding and kernel/projection difference to relate it back to the smooth law; no unproved cancellation is allowed. Actual canonical reanchors carry the complete prior error and actual new rounding discrepancy.
+
+For the full requested closed segment, independently bound `Pmax=max|P(d)|` using endpoints and the exact interior vertex where present. C090 requires `Pmax<=2^20` radians for split rotation. Uniform binary64 phase rounding is at most `Pmax*2^-53+2^-1075`; speed uses the analogous maximum of the affine expression and the same formula. These are additional to the inherited AXIS, PRODUCT and EXPOSED controlled-kernel allowances and offset propagation. Check the range only over the requested prefix; an unrequested future exceedance cannot fail a valid short request. Retain inherited precision stages 96/192/384/768/1536 and all finite-operand guards.
+
+The independent reader obtains its own interval enclosures from the identified source and transfer rules. It must not copy producer error records or infer a uniform error from sampled agreement. A phase-range/operand/proof failure uses the adopted source diagnostic and preserves the previously accepted prefix.
+
+COM translation retains all inherited `dynamic_errors`, `dynamic_error_times`, `ideal_accelerations` and transfer-cell meanings. Pure torque must not recalculate or reset those records. A neutral torque boundary retains its kinematic anchor; error propagation may retain a separate error-origin record only under an explicit source rule. Once the source enters split rotation, COM-force-only boundaries do not add rotational-anchor rounding.
+
+The numeric basis must identify the actual complete torque source implementation and this derivation in addition to inherited numeric modules. All guards, original work/deadline/cancellation callbacks and independent bounds apply before publication. Unknown or unproved numeric error means refusal.
+
+## 4. Fixed offsets and local landmarks
+
+For a rigid offset r from a carrier COM c, `p=c+Rr`. Differentiation gives `p''=c''+alpha×Rr+omega×(omega×Rr)`. Consequently:
+
+`V_marker <= V_COM + rho*Ω`
+
+`A_marker <= A_COM + rho*(Α + Ω²)`.
+
+Here rho bounds the full rigid path's COM-to-marker-origin distance. Use the sum of Euclidean upper bounds of each fixed local translation, or the no-smaller sum of their exact L1 norms. Constant rotations preserve Euclidean lengths. Nested fixed paths therefore use the sum of local translation radii without multiplying in ownership links. The path's source numerical offset errors remain separate, as in the inherited composition recurrence. Rotation bounds remain Ω and Α along a fixed path.
+
+Do not confuse rho with the certificate's `landmark_radius_m`, denoted r below. The latter bounds all promised geometry vertices and local sites relative to the delivered node's own origin, after the existing local mesh placement. Recompute r from actual source geometry/site operands and verify the actual decoded stored vertices. The inherited L1 maximum is conservative. `local_vertex_error_bound_m`, denoted ev, separately covers native vertex conversion. A node with a mesh origin at the COM can have rho zero and r nonzero; a translated marker node can have both nonzero.
+
+These two uses of radius cover different effects: rho changes the origin's translation curvature, while r multiplies orientation error to bound points attached to that origin. Omitting either can hide visible motion even when endpoint orientations agree.
+
+## 5. Continuous quaternion and origin bounds
+
+Use the continuously lifted unit quaternion q(t), with world-axis quaternion multiplication on the left. Its derivative is `q'=omega*q/2`; hence `||q''|| <= Α/2 + Ω²/4`. Constant right multiplication by a fixed marker orientation preserves these norms.
+
+For any twice differentiable vector curve f over a width h, its deviation from its endpoint chord is at most `sup||f''||*h²/8`. This follows by integrating the second derivative with the interval's nonnegative Green kernel, whose integral is `t(h-t)/2 <= h²/8`. Applying it to q gives
+
+`source_quaternion_chord <= Α*h²/16 + Ω²*h²/32`.
+
+The exact shortest-arc quaternion SLERP between normalized stored endpoints has parameter-space second derivative norm θ², where θ is its S³ arc. Its chord deviation is at most `θ²/8`. Combining the two chord bounds and the maximum endpoint unit-quaternion difference eq gives
+
+`D = eq + Α*h²/16 + Ω²*h²/32 + θ²/8`.
+
+Require `D <= 1/2`. On this range the associated SO(3) discrepancy is at most `4*D`. This is a conservative bound, including q versus -q sign equivalence only after a coherent short lift has been proved; it cannot accept a hidden complete revolution.
+
+The ideal fixed-axis phase error against its angle chord is `|a_r|*h²/8`, but that smaller expression is not a substitute for the full stored-quaternion proof above. C090 adopts the quaternion-chord route so it fits the existing independent certificate architecture and its endpoint and destination allowances.
+
+For a frame origin with acceleration bound A, the independent translation chord error is `A*h²/8`. This term uses the frame origin's full acceleration, including the offset-marker tangential and centripetal terms.
+
+## 6. Exact clocks and mandatory planning allocation
+
+Retain the existing exact rational authored keys and direct binary32 round-to-nearest, ties-to-even conversion. No intermediate binary64 conversion selects a clock. Keep semantic boundaries at their exact authored identities; two distinct semantic boundaries collapsing to one stored clock produce the inherited `OKE-E-TIMES-COLLAPSED` refusal. Retained nonsemantic keys may be coalesced only under the inherited rule, followed by complete planning and certificate rechecks on the final gaps.
+
+For each phase width H and selected integer subdivision count n, use h=H/n and require all of:
+
+`Ω*h <= K`
+
+`R_plan = (Α + Ω²)*h²/4 <= rotation_tolerance/4`
+
+`P_plan = A*h²/8`
+
+`P_plan + r*R_plan <= position_tolerance/4`.
+
+K is the unchanged exact binary64 value `0.7853981633974483`, a strict rational lower bound on pi/4. These preserve the existing quarter allocation while adding the missing acceleration term. For each node compute the integer maximum of `1`, `ceil(H*fps)`, `ceil(H*Ω/K)`, `ceil_sqrt(H²*(Α+Ω²)/rotation_tolerance)` and `ceil_sqrt(H²*(A/2+r*(Α+Ω²))/position_tolerance)`. The phase count n is the maximum across all delivered nodes. Here `ceil_sqrt(x)` is the least nonnegative integer k satisfying `k²>=x`, determined by exact guarded integer arithmetic. Every operation is charged and guarded before allocation.
+
+The final authored and stored adjacent-key widths must separately pass these inequalities. For the stored width use V, A, Ω and Α maxima over every source phase having positive-width intersection with the expanded interval from `min(authored_left,stored_left)` to `max(authored_right,stored_right)`, clipped to the valid source prefix. Preserve endpoint-phase numerical allowances even when that phase has no positive-width intersection. The after-state of the final semantic boundary also contributes its actual transfer error.
+
+The stored-width quarter test is an additional mandatory screen. It does not assume differentiability across an impulse. The continuous chord proof uses only the single authored smooth phase; source-time displacement across adjacent phases is bounded separately by the enclosing V/Ω Lipschitz terms. The exact time displacement is `δ=max(|stored_left-authored_left|,|stored_right-authored_right|)`. Affine interpolation of endpoint clock shifts cannot exceed δ. A final tail uses the inherited held endpoint behavior.
+
+Keep all key, baked-pose, certificate and numeric limits: at most 10,000 retained keys, 250,000 baked poses, 100,000 certificates, 32,768-bit arithmetic operands, the 256-entry request numerical cache and the existing 64-step cursor bound. Do not reset the shared operation/time allowance for refinement, serialization or validation. Fixed old fixtures keep their original settings.
+
+## 7. Complete serialized certificate
+
+The full certificate shape is the inherited 27 fields plus exactly these two required nonnegative finite fields:
+
+- `angular_acceleration_bound_rad_per_s2` for Α on the authored phase.
+- `enclosing_angular_acceleration_bound_rad_per_s2` for the expanded stored interval.
+
+Every field must be finite canonical binary64 when it is a JSON number; Boolean values are not numbers. The closed JSON schema is necessary but does not replace finite/native type, canonical rational, exact coverage, identity or numerical validation. Every rational clock is reduced and canonically serialized under the unchanged bounded decimal convention.
+
+Use these symbols for the inherited fields: ep is `max_endpoint_position_error_m`; eq is `max_endpoint_unit_quaternion_error`; nsp/nsr are the uniform source numeric errors; ndp/ndr are the identified destination numeric errors; θ is `stored_quaternion_arc_upper_rad`; r is `landmark_radius_m`; ev is `local_vertex_error_bound_m`; Vbar/Ωbar are enclosing speed bounds. Endpoint errors include their actual source-to-stored and source-numeric contributions exactly as in the inherited route; deliberately retained conservative overlap is not subtracted.
+
+The required reported minima are:
+
+| Field | Exact lower bound that the reported value must enclose |
+| --- | --- |
+| `unit_quaternion_difference_bound` | `eq + Α*h²/16 + Ω²*h²/32 + θ²/8` |
+| `ideal_rotation_bound_rad` | `(Α + Ω²)*h²/4` |
+| `ideal_position_bound_m` | `A*h²/8` |
+| `total_rotation_bound_rad` | `4*reported_D + nsr + ndr + Ωbar*δ` |
+| `carrier_position_bound_m` | `ep + A*h²/8 + nsp + ndp + Vbar*δ` |
+| `total_position_bound_m` | `reported_carrier_bound + r*reported_total_rotation + ev` |
+
+Require reported total rotation <= requested rotation tolerance, reported carrier and total position <= requested position tolerance, and all mandatory quarter tests. The supplied bound must enclose every independently reconstructed primitive minimum before these algebraic tests run.
+
+Primitive publication is upward to binary64. Recompute each dependent bound from the already published upper values and round upward again. In particular, both Α fields enter grouping, all cache keys, width relevance checks and numerical reuse admission. A width is irrelevant only when every coefficient using it is zero, including Α. Existing zero-quarter and equal-field shortcuts must fall back unless they explicitly include these new fields and preserve their current authority/callback checks. A static zero Ω at one endpoint does not permit omitting Α.
+
+The source travel bound plus actual endpoint errors gives an upper quaternion chord `c=Ω*h/2+4*eq`. Require c<=1/2, then bound the S³ arc by `c/(1-c²/4)` and require it <=K. The independent reader also decodes the actual endpoints, verifies their coherent lift and computes its own no-smaller stored-arc requirement. Preserve actual endpoint magnitude and rounding checks.
+
+## 8. Destination arithmetic stays explicit
+
+The destination's endpoint normalization uses the inherited exact integer rounding method. Exact normalized-chord interpolation differs from exact SLERP by a bounded amount; it is not reported as zero. Retain the identified destination bounds:
+
+`ndr = θ² + 2^-44`
+
+`ndp = (M + r + ev + 1)*2^-38`,
+
+where M bounds actual endpoint translation magnitude and `M+r+ev <= 2^400`. These contain the established normalization, matrix defect, CPU matrix/point arithmetic and subnormal allowances. Shader/rasterization error and arbitrary engine interpolation are outside this numerical statement. Native numerical comparison and direct browser captures of the same byte-identified artifacts remain required separately.
+
+The new wrapper imports `ArithmeticBudget` and `sampleControlled` from the unchanged `tools/reach_destination.mjs`; it does not call its .6-only attachment entry point or relabel source metadata to bypass that check. Its attachment and sampling procedure preserves the inherited bounded channel/accessor preflight, three-component translation/four-component quaternion checks, common clock, actual GLTFLoader associations, root-parent and identity-scene checks, exact interpolation, binary-search charging, staged complete carrier updates, cancellation identity and CPU matrix update. The sole new admission is the exact .22 target/profile/schema and the complete fixed `torque_profile` and quantization schema IDs; unsupported/missing/mismatched bindings are refused before loading accessors. The wrapper reports the .2.0 identity, leaving the old .1.0 entry point unchanged.
+
+`implementation_sha256` for this destination is SHA-256 of UTF-8 `ontokin-controlled-three-recording/0.2.0\n` followed by, in this order, the exact relative path `tools/reach_destination.mjs`, NUL, its lowercase 64-digit SHA-256, LF, then the corresponding path/hash/LF row for `tools/torque_destination.mjs`. `derivation_sha256` binds the exact adopted bytes of this RECORDING.md. These IDs are calculated from actual candidate bytes after implementation; no missing implementation hash is invented during adoption. The independent reader recomputes both file identities and this construction. Native and browser evidence must load the .22 artifact without byte rewriting and invoke this actual wrapper, not the default mixer. The inherited arithmetic derivation is pinned in `recording/SOURCE-BASIS.json`. Any arithmetic change beyond this wrapper contract needs separate review and proof before it can retain these bounds.
+
+## 9. Independent supplied-byte reconstruction
+
+The validator independently reconstructs the whole source closure, events, axis latch, active torque sets, exact completion clocks, split rotation and transfer errors. It uses a separately implemented reference trajectory; no producer simulator state, planning table, cursor, reported error minimum or cached certificate can establish the reference.
+
+The required check order is:
+
+1. Enforce inherited byte, JSON, node, array and allocation guards; validate framing, supported target, closed metadata and exact source/program revision.
+2. Verify actual source geometry, material/image/UV streams, root-node topology, complete promised sites and per-node landmark radii.
+3. Reconstruct semantic boundaries and before/after torque histories, then actual retained clocks and their exact binary32 rounding cells. Check the complete common axis and mandatory boundary coverage.
+4. Independently reconstruct all four source derivative fields, numerical-error envelopes, affected fixed paths and phase coverage. Refuse unsupported composition before a motion claim.
+5. Require exactly one certificate for every delivered node and adjacent retained key pair, including static nodes and helpers. Reject missing, duplicate, changed-carrier or nonadjacent rows.
+6. Decode actual pose bytes and verify endpoint values, coherent quaternion lift, finite normalization, conversion errors and source/error phase coverage. Every endpoint contributes, including the final after-state.
+7. Check every reported primitive against independent minima, both quarter plans, every dependent inequality and requested tolerances. Validate the current complete source and destination basis identities.
+8. Recheck original current authority/cancellation immediately before publication. Atomically publish only after all rows and the final source admission pass.
+
+Arithmetic reuse remains request-local with the current native authority/dispatch guards, inherited numeric cache capacity, original cancellation callback and deadline. Additions to pure field groups must include both acceleration fields. Retries/replays consume the same remaining request allowance; they cannot turn a source mutation or a caller-thrown private exception into permission to replay. Publication failure retains the last accepted run and artifact set.
+
+## 10. Explicit work and acceptance probes
+
+The new wrapper stages are `torque_recording_path` (one charge before examining each affected graph edge), `torque_recording_phase` (one before each affected frame/phase bound), and `torque_recording_certificate` (one before constructing each new-schema certificate row). Inside them, each actual scalar decode/add/subtract/multiply/divide/compare/root/round invokes the inherited charged guarded helper at its real omission/allocation point. No fixed wrapper charge prepays unbounded arithmetic. Enumerating torque starts/completions and source snapshots also consumes the source contract's stages. The stage wrapper restores the previous ledger stage in `finally` on every path. Independent scalar proof uses its existing `independent_*` charges, extended to every new operation. The producer and reader are both in the complete request ledger, without a standalone fallback in a source request.
+
+Frozen delivery cases must include the following exact attacks, each paired with its unchanged independently accepted original artifact before mutating bytes:
+
+- Remove or zero only authored Α on a nonzero-acceleration interval; remove or zero only enclosing Α on a clock-shifted neighboring phase; reject even when Ω at the selected endpoint is zero.
+- Retain equal orientation endpoints of a reversal but delete required interior keys; reject the acceleration/travel plan. Test a large offset marker whose orientation-only bound passes while its translation bound fails.
+- Understate only COM-to-marker offset contribution, nested offset contribution, a mesh/site landmark radius, or local vertex error; reject the corresponding source or geometry minimum.
+- Omit, duplicate, reorder noncanonically, or alter torque history/phase coverage; swap axis, sign, source revision, interval key, source span or final after-state error record; reject exact source identity.
+- Supply an extra/omitted certificate field, wrong type/NaN, nonreduced rational, invalid clock bits, collapsed semantic clocks, reordered common accessor, changed endpoint quaternion sign, nonroot node or unrelated destination identity; reject at the appropriate earliest inherited check.
+- Keep all schema fields valid and outward totals large enough while understating an independent primitive; reject the primitive rather than accepting the self-consistent sum.
+- Cancel or exhaust work during each new stage, after a warm cache hit, after reader validation and before artifact publication; retain exact callback identity and no partial artifact. Reopen, retry and retrieve chunks through the actual Agent protocol, including EOF and interrupted publication.
+
+The independently authored corpus fixes exact sources/options, mutations, expected diagnostics, tolerances and artifact comparison classes before runtime work. `recording/check_derivation.py` checks selected exact mathematical identities and the source-risk witnesses without importing production code. Its result is design evidence only. New runtime, native-reader, hostile-byte, Agent, browser and complete release execution remain separate obligations.
+
+## 11. Integration limits
+
+Do not reuse existing constant-angular-rate `RecordingAngularFrame`, `SpinPlan`, cursor or source-recipe witnesses for an affected split-rotation path. The first implementation uses direct controlled axis evaluation at each requested key. Legacy and unaffected paths retain their existing behavior and 64-step limits. A later acceleration-aware cursor requires a separately reviewed recurrence/error/callback proof; this contract does not authorize it.
+
+Whole-artifact equality remains required for unchanged predecessor programs under their original bindings. Changed source/profile/history comparisons preserve exact geometry, materials, images and source authority while using only the enumerated metadata/sampling differences and common-clock physical comparisons in the independent corpus. No `.22` field may be injected into an old binding to make a comparison pass.
+
+This finite recorded scope supplies no live torque solver in a destination, motor reaction body, contact, articulated dynamics, Unreal validation, authoring-benefit measurement or full GOAL completion. All retained failures and release gates remain unchanged.

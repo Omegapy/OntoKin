@@ -1,0 +1,582 @@
+{
+  "candidate_torque_runtime_present": false,
+  "commands": [
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/run_keyed_membership_sources.py",
+        "--checkout",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+        "--inputs",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor/docs/language-design/keyed-membership-v0.1/freeze",
+        "--output",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/membership-source",
+        "--mode",
+        "candidate"
+      ],
+      "cwd": "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+      "dependencies": [],
+      "elapsed_seconds": 167.23948483000277,
+      "finished_utc": "2026-11-02T20:55:57.635517+00:00",
+      "id": "membership-source",
+      "returncode": 0,
+      "started_utc": "2026-11-02T20:53:10.395648+00:00",
+      "status": "passed",
+      "stderr": {
+        "bytes": 0,
+        "mode": "0644",
+        "path": "logs/membership-source.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 133,
+        "mode": "0644",
+        "path": "logs/membership-source.stdout",
+        "sha256": "c93e14fac65e0fd9995249f5633c01af0a870f42f896e96cb76b2d6b756a691b"
+      },
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/run_keyed_membership_sources.py",
+        "--checkout",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+        "--inputs",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor/docs/language-design/keyed-membership-v0.1/freeze",
+        "--output",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/membership-controls",
+        "--mode",
+        "candidate-controls"
+      ],
+      "cwd": "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+      "dependencies": [],
+      "elapsed_seconds": 244.39299400800155,
+      "finished_utc": "2026-11-02T21:00:02.029322+00:00",
+      "id": "membership-controls",
+      "returncode": 0,
+      "started_utc": "2026-11-02T20:55:57.635761+00:00",
+      "status": "passed",
+      "stderr": {
+        "bytes": 0,
+        "mode": "0644",
+        "path": "logs/membership-controls.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 136,
+        "mode": "0644",
+        "path": "logs/membership-controls.stdout",
+        "sha256": "fe763fe28fe1f331dc1710111b3dfbade2c86c0e8433cd13f1e827dfa90e2f8e"
+      },
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/run_keyed_membership_native.py",
+        "--checkout",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+        "--inputs",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor/docs/language-design/keyed-membership-v0.1/freeze",
+        "--output",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/membership-native"
+      ],
+      "cwd": "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+      "dependencies": [],
+      "elapsed_seconds": 12.00637580199691,
+      "finished_utc": "2026-11-02T21:00:14.036272+00:00",
+      "id": "membership-native",
+      "returncode": 0,
+      "started_utc": "2026-11-02T21:00:02.029538+00:00",
+      "status": "passed",
+      "stderr": {
+        "bytes": 0,
+        "mode": "0644",
+        "path": "logs/membership-native.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 118,
+        "mode": "0644",
+        "path": "logs/membership-native.stdout",
+        "sha256": "b286b842210b55a529eedd54c30a3a3a02fdd4650299920dd49a694a2f2f5004"
+      },
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/verify_keyed_membership_observations.py",
+        "--inputs",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor/docs/language-design/keyed-membership-v0.1/freeze",
+        "--source",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/membership-source",
+        "--candidate-controls",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/membership-controls",
+        "--native",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/membership-native",
+        "--output",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/membership-observation-reader"
+      ],
+      "cwd": "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+      "dependencies": [
+        "membership-source",
+        "membership-controls",
+        "membership-native"
+      ],
+      "elapsed_seconds": 1.4684390879992861,
+      "finished_utc": "2026-11-02T21:00:15.505387+00:00",
+      "id": "membership-observation-reader",
+      "returncode": 0,
+      "started_utc": "2026-11-02T21:00:14.036633+00:00",
+      "status": "passed",
+      "stderr": {
+        "bytes": 0,
+        "mode": "0644",
+        "path": "logs/membership-observation-reader.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 145,
+        "mode": "0644",
+        "path": "logs/membership-observation-reader.stdout",
+        "sha256": "d656b5fcc5d7f7cf695fa28670d12ab87c4fd68df0f45f6ccab8693cc247c7e5"
+      },
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/run_membership_agent.py",
+        "--checkout",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+        "--fixtures",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor/docs/language-design/keyed-membership-v0.1/input-amendments/agent-file-scope-v01/effective-freeze",
+        "--output",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/membership-agent"
+      ],
+      "cwd": "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+      "dependencies": [],
+      "elapsed_seconds": 26.757722985999862,
+      "finished_utc": "2026-11-02T21:00:42.263832+00:00",
+      "id": "membership-agent",
+      "returncode": 0,
+      "started_utc": "2026-11-02T21:00:15.505692+00:00",
+      "status": "passed",
+      "stderr": {
+        "bytes": 0,
+        "mode": "0644",
+        "path": "logs/membership-agent.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 89,
+        "mode": "0644",
+        "path": "logs/membership-agent.stdout",
+        "sha256": "e3afa7457e37330435253d111b6fcc829af6aeccd7894ed5f628c7ba90f23641"
+      },
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/verify_membership_agent.py",
+        "--inputs",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor/docs/language-design/keyed-membership-v0.1/freeze",
+        "--agent",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/membership-agent",
+        "--checkout",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+        "--agent-amendment",
+        "/workspace/scratch/05c3f95a49c1/c090-predecessor/docs/language-design/keyed-membership-v0.1/input-amendments/agent-file-scope-v01",
+        "--output",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/membership-agent-reader"
+      ],
+      "cwd": "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+      "dependencies": [
+        "membership-agent"
+      ],
+      "elapsed_seconds": 2.9245242640026845,
+      "finished_utc": "2026-11-02T21:00:45.189108+00:00",
+      "id": "membership-agent-reader",
+      "returncode": 0,
+      "started_utc": "2026-11-02T21:00:42.264230+00:00",
+      "status": "passed",
+      "stderr": {
+        "bytes": 0,
+        "mode": "0644",
+        "path": "logs/membership-agent-reader.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 96,
+        "mode": "0644",
+        "path": "logs/membership-agent-reader.stdout",
+        "sha256": "76f28ef2a87ea183c95685c7b5763d1d99d93a085a26c81fe744f850d9ef2b11"
+      },
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_keyed_membership_interfaces.py",
+        "-v"
+      ],
+      "cwd": "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+      "dependencies": [],
+      "elapsed_seconds": 4.383628390998638,
+      "finished_utc": "2026-11-02T21:00:49.573702+00:00",
+      "id": "membership-interfaces",
+      "returncode": 0,
+      "started_utc": "2026-11-02T21:00:45.189412+00:00",
+      "status": "passed",
+      "stderr": {
+        "bytes": 1952,
+        "mode": "0644",
+        "path": "logs/membership-interfaces.stderr",
+        "sha256": "6b6f710c89431c260352c999c41f60ec9b8d4b6686ccd64a4c19bbc6d425741e"
+      },
+      "stdout": {
+        "bytes": 0,
+        "mode": "0644",
+        "path": "logs/membership-interfaces.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "timeout_seconds": 1800,
+      "unittest": {
+        "expected_failures": false,
+        "footer_present": true,
+        "ok_footer": true,
+        "skipped": false,
+        "tests": 9
+      }
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_force*.py",
+        "-v"
+      ],
+      "cwd": "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+      "dependencies": [],
+      "elapsed_seconds": 100.67958221899971,
+      "finished_utc": "2026-11-02T21:02:30.254615+00:00",
+      "id": "force-unit-controls",
+      "returncode": 0,
+      "started_utc": "2026-11-02T21:00:49.574065+00:00",
+      "status": "passed",
+      "stderr": {
+        "bytes": 46912,
+        "mode": "0644",
+        "path": "logs/force-unit-controls.stderr",
+        "sha256": "4e2d14be0ff8770b92e31e12c957cc2f3d52649513763e68db5d71a6e4e1a966"
+      },
+      "stdout": {
+        "bytes": 0,
+        "mode": "0644",
+        "path": "logs/force-unit-controls.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "timeout_seconds": 1800,
+      "unittest": {
+        "expected_failures": false,
+        "footer_present": true,
+        "ok_footer": true,
+        "skipped": false,
+        "tests": 270
+      }
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_impulse*.py",
+        "-v"
+      ],
+      "cwd": "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+      "dependencies": [],
+      "elapsed_seconds": 49.565255892001005,
+      "finished_utc": "2026-11-02T21:03:19.821122+00:00",
+      "id": "impulse-unit-controls",
+      "returncode": 0,
+      "started_utc": "2026-11-02T21:02:30.255061+00:00",
+      "status": "passed",
+      "stderr": {
+        "bytes": 22537,
+        "mode": "0644",
+        "path": "logs/impulse-unit-controls.stderr",
+        "sha256": "5ae899f5683d02e72e3297dfa89f82c3bfd2a4b67930a15ca651fee72293b23b"
+      },
+      "stdout": {
+        "bytes": 157,
+        "mode": "0644",
+        "path": "logs/impulse-unit-controls.stdout",
+        "sha256": "82160c6e197af610b7f5228784d297908afc81d25f253f9bc2a114cdcbbf4dca"
+      },
+      "timeout_seconds": 1800,
+      "unittest": {
+        "expected_failures": false,
+        "footer_present": true,
+        "ok_footer": true,
+        "skipped": false,
+        "tests": 124
+      }
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_reach_evaluator",
+        "test_reach_kinematics",
+        "test_reach_force_projection",
+        "test_reach_phase",
+        "test_reach_phase_coaxial",
+        "test_reach_phase_recording_proof",
+        "test_reach_recording_boundary",
+        "test_reach_recording_dynamic",
+        "test_reach_recording_rotation",
+        "test_reach_recording_child_origin",
+        "test_reach_history_orientation_bounds",
+        "test_reach_independent_orientation_claims",
+        "test_reach_reference_impulses",
+        "test_reach_reference_release_selection",
+        "test_reach_reference_axial_derivatives",
+        "test_reach_reference_child_origins",
+        "test_reach_agent_transactions",
+        "test_reach_agent_protocol_cases"
+      ],
+      "cwd": "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+      "dependencies": [],
+      "elapsed_seconds": 50.971016709998366,
+      "finished_utc": "2026-11-02T21:04:10.793210+00:00",
+      "id": "reach-selected-unit-controls",
+      "returncode": 0,
+      "started_utc": "2026-11-02T21:03:19.821524+00:00",
+      "status": "passed",
+      "stderr": {
+        "bytes": 25427,
+        "mode": "0644",
+        "path": "logs/reach-selected-unit-controls.stderr",
+        "sha256": "c0b4b9a270b7e446498f918d8415327b483831732c92c048a667149be4411b98"
+      },
+      "stdout": {
+        "bytes": 69,
+        "mode": "0644",
+        "path": "logs/reach-selected-unit-controls.stdout",
+        "sha256": "41529af72e49fc4227e00e156e83682db0336e8f42c20a8292a1531ca1795906"
+      },
+      "timeout_seconds": 1800,
+      "unittest": {
+        "expected_failures": false,
+        "footer_present": true,
+        "ok_footer": true,
+        "skipped": false,
+        "tests": 127
+      }
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "ontokin",
+        "conformance",
+        "--output",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/core-conformance.json"
+      ],
+      "cwd": "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+      "dependencies": [],
+      "elapsed_seconds": 0.8670576719996461,
+      "finished_utc": "2026-11-02T21:04:11.661017+00:00",
+      "id": "core-conformance",
+      "returncode": 0,
+      "started_utc": "2026-11-02T21:04:10.793636+00:00",
+      "status": "passed",
+      "stderr": {
+        "bytes": 0,
+        "mode": "0644",
+        "path": "logs/core-conformance.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 281,
+        "mode": "0644",
+        "path": "logs/core-conformance.stdout",
+        "sha256": "8e2de7bfe4e4c358d23632865b43a171c8692fa454358866f89c427681cd9030"
+      },
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/run_agent_conformance.py",
+        "--output",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/agent-conformance.json"
+      ],
+      "cwd": "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+      "dependencies": [],
+      "elapsed_seconds": 1.267873499000416,
+      "finished_utc": "2026-11-02T21:04:12.929727+00:00",
+      "id": "agent-conformance",
+      "returncode": 0,
+      "started_utc": "2026-11-02T21:04:11.661515+00:00",
+      "status": "passed",
+      "stderr": {
+        "bytes": 0,
+        "mode": "0644",
+        "path": "logs/agent-conformance.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 159,
+        "mode": "0644",
+        "path": "logs/agent-conformance.stdout",
+        "sha256": "519c519aacb16592037ad6b77704636933fa6cd76fdac4004b58d8f971bd0718"
+      },
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/run_force_conformance.py",
+        "execute",
+        "--role",
+        "source",
+        "--output-dir",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/force-source"
+      ],
+      "cwd": "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+      "dependencies": [],
+      "elapsed_seconds": 8.238927209000394,
+      "finished_utc": "2026-11-02T21:04:21.169784+00:00",
+      "id": "force-source",
+      "returncode": 0,
+      "started_utc": "2026-11-02T21:04:12.930430+00:00",
+      "status": "passed",
+      "stderr": {
+        "bytes": 0,
+        "mode": "0644",
+        "path": "logs/force-source.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 127,
+        "mode": "0644",
+        "path": "logs/force-source.stdout",
+        "sha256": "93d94477f4f841b562d7ec7e4580e0681c571b6e232342abf98663b5f957e69d"
+      },
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/run_reach_source_corpus.py",
+        "--output",
+        "/workspace/scratch/05c3f95a49c1/c090-preflight/reach-source-corpus"
+      ],
+      "cwd": "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+      "dependencies": [],
+      "elapsed_seconds": 45.903626316001464,
+      "finished_utc": "2026-11-02T21:05:07.074360+00:00",
+      "id": "reach-source-corpus",
+      "returncode": 0,
+      "started_utc": "2026-11-02T21:04:21.170257+00:00",
+      "status": "passed",
+      "stderr": {
+        "bytes": 0,
+        "mode": "0644",
+        "path": "logs/reach-source-corpus.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 111,
+        "mode": "0644",
+        "path": "logs/reach-source-corpus.stdout",
+        "sha256": "26b5a7d9bbdcd91137e1e3dbd53c2e4feed9a3d7e1d2f2214878b6cf31a63a07"
+      },
+      "timeout_seconds": 1800
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "cwd": "/workspace/scratch/05c3f95a49c1/c090-predecessor",
+      "dependencies": [],
+      "elapsed_seconds": 1.2672927400017215,
+      "finished_utc": "2026-11-02T21:05:08.342606+00:00",
+      "id": "documentation",
+      "returncode": 0,
+      "started_utc": "2026-11-02T21:05:07.074988+00:00",
+      "status": "passed",
+      "stderr": {
+        "bytes": 0,
+        "mode": "0644",
+        "path": "logs/documentation.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 6606,
+        "mode": "0644",
+        "path": "logs/documentation.stdout",
+        "sha256": "1db40f2d4c7fed89142d57df250cd4469f5ff610419c4b2b47ff1be278108c0f"
+      },
+      "timeout_seconds": 1800
+    }
+  ],
+  "complete_inherited_suite": false,
+  "complete_source_bytes_modes_unchanged": true,
+  "finished_utc": "2026-11-02T21:05:09.571244+00:00",
+  "full_product_acceptance": false,
+  "release_acceptance": false,
+  "schema_version": "ontokin.c090-predecessor-preflight/1",
+  "scope_limits": [
+    "No new torque runtime results",
+    "No complete inherited unit/visual suite",
+    "Only CPython 3.12.14 executed",
+    "No fresh named-engine or browser validation",
+    "No new C087 cross-cut complete-byte comparison",
+    "Original retained failed release gates unchanged"
+  ],
+  "selected_only": true,
+  "source_bytes": 669367315,
+  "source_commit": "7b6900baa0357ab96c4639ac5c2ebe4e1791833e",
+  "source_files": 10792,
+  "source_tree": "1a31d387795b0b794935b81d9f77803054e82699",
+  "started_utc": "2026-11-02T20:53:08.874740+00:00",
+  "status": "passed"
+}
