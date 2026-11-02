@@ -15,7 +15,7 @@ from .construction import compile_construction
 from .diagnostics import OntoKinError
 from .execution_budget import HostPolicy, SharedExecutionBudget, admit_entry_budget
 from .json_limits import JSONLimitError, measure_json
-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, POCKETS_PROFILES, EXECUTION_PROFILES
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, POCKETS_PROFILES, EXECUTION_PROFILES
 from .program_diagnostics import diagnostic_dict
 from .scene import ExportOptions
 
@@ -52,8 +52,8 @@ The receipt never authorizes a later execution or an independent reader.
     if not isinstance(profile, str) or profile not in EXECUTION_PROFILES:
         raise ValueError("Unknown execution-budget source profile.")
     target = {BUDGET_PROFILE: TARGET, EXTRUSION_PROFILE: "ontokin.glb/0.8",
-              HOLES_PROFILE: "ontokin.glb/0.9", RING_LOFT_PROFILE: "ontokin.glb/0.10", FRAMED_LOFT_PROFILE: "ontokin.glb/0.11", POCKETS_PROFILE: "ontokin.glb/0.12", TEXTURE_PROFILE: "ontokin.glb/0.13", KEYED_TRANSFORM_PROFILE: "ontokin.glb/0.14", KEYED_REDUCTION_PROFILE: "ontokin.glb/0.15", KEYED_FILTER_PROFILE: "ontokin.glb/0.16", KEYED_MERGE_PROFILE: "ontokin.glb/0.17", KEYED_ZIP_PROFILE: "ontokin.glb/0.18", KEYED_REKEY_PROFILE: "ontokin.glb/0.19"}[profile]
-    language_version = {BUDGET_PROFILE: "0.7", EXTRUSION_PROFILE: "0.8", HOLES_PROFILE: "0.9", RING_LOFT_PROFILE: "0.10", FRAMED_LOFT_PROFILE: "0.11", POCKETS_PROFILE: "0.12", TEXTURE_PROFILE: "0.13", KEYED_TRANSFORM_PROFILE: "0.14", KEYED_REDUCTION_PROFILE: "0.15", KEYED_FILTER_PROFILE: "0.16", KEYED_MERGE_PROFILE: "0.17", KEYED_ZIP_PROFILE: "0.18", KEYED_REKEY_PROFILE: "0.19"}[profile]
+              HOLES_PROFILE: "ontokin.glb/0.9", RING_LOFT_PROFILE: "ontokin.glb/0.10", FRAMED_LOFT_PROFILE: "ontokin.glb/0.11", POCKETS_PROFILE: "ontokin.glb/0.12", TEXTURE_PROFILE: "ontokin.glb/0.13", KEYED_TRANSFORM_PROFILE: "ontokin.glb/0.14", KEYED_REDUCTION_PROFILE: "ontokin.glb/0.15", KEYED_FILTER_PROFILE: "ontokin.glb/0.16", KEYED_MERGE_PROFILE: "ontokin.glb/0.17", KEYED_ZIP_PROFILE: "ontokin.glb/0.18", KEYED_REKEY_PROFILE: "ontokin.glb/0.19", STRING_CONCAT_PROFILE: "ontokin.glb/0.20"}[profile]
+    language_version = {BUDGET_PROFILE: "0.7", EXTRUSION_PROFILE: "0.8", HOLES_PROFILE: "0.9", RING_LOFT_PROFILE: "0.10", FRAMED_LOFT_PROFILE: "0.11", POCKETS_PROFILE: "0.12", TEXTURE_PROFILE: "0.13", KEYED_TRANSFORM_PROFILE: "0.14", KEYED_REDUCTION_PROFILE: "0.15", KEYED_FILTER_PROFILE: "0.16", KEYED_MERGE_PROFILE: "0.17", KEYED_ZIP_PROFILE: "0.18", KEYED_REKEY_PROFILE: "0.19", STRING_CONCAT_PROFILE: "0.20"}[profile]
     if not isinstance(source, ProgramBundle):
         raise TypeError("source must be a sealed ProgramBundle.")
     ledger = None
@@ -241,3 +241,10 @@ def execute_keyed_rekey_export(source, **kwargs):
     if "profile" in kwargs:
         raise TypeError("execute_keyed_rekey_export fixes keyed-rekey-0.1 explicitly.")
     return execute_budgeted_export(source, profile=KEYED_REKEY_PROFILE, **kwargs)
+
+
+def execute_string_concat_export(source, **kwargs):
+    """Select explicit .20 String construction and recorded delivery."""
+    if "profile" in kwargs:
+        raise TypeError("execute_string_concat_export fixes string-concat-0.1 explicitly.")
+    return execute_budgeted_export(source, profile=STRING_CONCAT_PROFILE, **kwargs)

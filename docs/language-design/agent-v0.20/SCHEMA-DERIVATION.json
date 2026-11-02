@@ -1,0 +1,175 @@
+{
+  "schema_version": "ontokin.c087-agent-schema-derivation/0.1",
+  "baseline_commit": "5d83b07354296a891c1a6acd70efc77322d2127f",
+  "adoption_commit": "2bdb81ece376144387da5581f8df91f59324dc2e",
+  "published_freeze_commit": "cd8c7fa2f84922ff4855de20f67b4be8d8866d5d",
+  "input_manifest_sha256": "b3a11de3aaaf4a6237e0526123b28da15e10ef5fa3a05353bd13885abb7187d4",
+  "state": "implementation schemas derived from the adopted C087 contract; actual protocol validation is separate",
+  "scope": "Exact .19 envelope and provenance shapes retained; explicit .20 protocol/profile/destination bindings and descriptions only. No original schema or frozen input changes.",
+  "request_operations_unchanged": 12,
+  "schemas": [
+    {
+      "name": "diagnostic.schema.json",
+      "baseline_path": "docs/language-design/agent-v0.19/diagnostic.schema.json",
+      "baseline_bytes": 407,
+      "baseline_sha256": "c3687efd5cd4ef5fbe60a639854efc619db460691d0d138c91824c00fbbc88d7",
+      "candidate_path": "docs/language-design/agent-v0.20/diagnostic.schema.json",
+      "candidate_bytes": 413,
+      "candidate_sha256": "97a7f9092efb05c4819478e4be6ae9729d29e6a1fec03d4f6cdf6b6e685efa64",
+      "exact_structural_changes": [
+        {
+          "pointer": "/$id",
+          "before": "https://omegapy.github.io/OntoKin/schemas/ontokin.agent-diagnostic-0.19.json",
+          "after": "https://omegapy.github.io/OntoKin/schemas/ontokin.agent-diagnostic-0.20.json"
+        },
+        {
+          "pointer": "/title",
+          "before": "OntoKin keyed renaming Agent/0.19 diagnostic",
+          "after": "OntoKin String concatenation Agent/0.20 diagnostic"
+        }
+      ]
+    },
+    {
+      "name": "request.schema.json",
+      "baseline_path": "docs/language-design/agent-v0.19/request.schema.json",
+      "baseline_bytes": 45311,
+      "baseline_sha256": "f3e0f5f1283452e6124e3b440ff01b2c632544dd86acbec65d217b75ef2f39ad",
+      "candidate_path": "docs/language-design/agent-v0.20/request.schema.json",
+      "candidate_bytes": 45319,
+      "candidate_sha256": "6ea6e2931aa90dd7982080c5d83cf28df8a5459ca17300afaca77d54e153e121",
+      "exact_structural_changes": [
+        {
+          "pointer": "/$id",
+          "before": "https://omegapy.github.io/OntoKin/schemas/ontokin.agent-request-0.19.json",
+          "after": "https://omegapy.github.io/OntoKin/schemas/ontokin.agent-request-0.20.json"
+        },
+        {
+          "pointer": "/oneOf/0/properties/profile/const",
+          "before": "keyed-rekey-0.1",
+          "after": "string-concat-0.1"
+        },
+        {
+          "pointer": "/oneOf/0/properties/schema_version/const",
+          "before": "ontokin.agent/0.19",
+          "after": "ontokin.agent/0.20"
+        },
+        {
+          "pointer": "/oneOf/1/properties/destination/const",
+          "before": "ontokin.glb/0.19",
+          "after": "ontokin.glb/0.20"
+        },
+        {
+          "pointer": "/oneOf/1/properties/schema_version/const",
+          "before": "ontokin.agent/0.19",
+          "after": "ontokin.agent/0.20"
+        },
+        {
+          "pointer": "/oneOf/2/properties/destination/const",
+          "before": "ontokin.glb/0.19",
+          "after": "ontokin.glb/0.20"
+        },
+        {
+          "pointer": "/oneOf/2/properties/schema_version/const",
+          "before": "ontokin.agent/0.19",
+          "after": "ontokin.agent/0.20"
+        },
+        {
+          "pointer": "/oneOf/3/properties/destination/const",
+          "before": "ontokin.glb/0.19",
+          "after": "ontokin.glb/0.20"
+        },
+        {
+          "pointer": "/oneOf/3/properties/schema_version/const",
+          "before": "ontokin.agent/0.19",
+          "after": "ontokin.agent/0.20"
+        },
+        {
+          "pointer": "/oneOf/4/properties/schema_version/const",
+          "before": "ontokin.agent/0.19",
+          "after": "ontokin.agent/0.20"
+        },
+        {
+          "pointer": "/oneOf/5/properties/schema_version/const",
+          "before": "ontokin.agent/0.19",
+          "after": "ontokin.agent/0.20"
+        },
+        {
+          "pointer": "/oneOf/6/properties/schema_version/const",
+          "before": "ontokin.agent/0.19",
+          "after": "ontokin.agent/0.20"
+        },
+        {
+          "pointer": "/oneOf/7/properties/schema_version/const",
+          "before": "ontokin.agent/0.19",
+          "after": "ontokin.agent/0.20"
+        },
+        {
+          "pointer": "/oneOf/8/properties/schema_version/const",
+          "before": "ontokin.agent/0.19",
+          "after": "ontokin.agent/0.20"
+        },
+        {
+          "pointer": "/oneOf/9/properties/destination/const",
+          "before": "ontokin.glb/0.19",
+          "after": "ontokin.glb/0.20"
+        },
+        {
+          "pointer": "/oneOf/9/properties/schema_version/const",
+          "before": "ontokin.agent/0.19",
+          "after": "ontokin.agent/0.20"
+        },
+        {
+          "pointer": "/oneOf/10/properties/schema_version/const",
+          "before": "ontokin.agent/0.19",
+          "after": "ontokin.agent/0.20"
+        },
+        {
+          "pointer": "/oneOf/11/properties/schema_version/const",
+          "before": "ontokin.agent/0.19",
+          "after": "ontokin.agent/0.20"
+        },
+        {
+          "pointer": "/title",
+          "before": "OntoKin keyed renaming Agent/0.19 request",
+          "after": "OntoKin String concatenation Agent/0.20 request"
+        }
+      ]
+    },
+    {
+      "name": "response.schema.json",
+      "baseline_path": "docs/language-design/agent-v0.19/response.schema.json",
+      "baseline_bytes": 86311,
+      "baseline_sha256": "ab5105d10da440282ff5653b6b3040d24f4ad4574e2816e0a02d67e1da797533",
+      "candidate_path": "docs/language-design/agent-v0.20/response.schema.json",
+      "candidate_bytes": 86319,
+      "candidate_sha256": "c18512518984457e880598d0ee88518d2cd55c3ad130014fb790a16b510f47d2",
+      "exact_structural_changes": [
+        {
+          "pointer": "/$defs/mesh_page_result/properties/profile/const",
+          "before": "keyed-rekey-0.1",
+          "after": "string-concat-0.1"
+        },
+        {
+          "pointer": "/$id",
+          "before": "https://omegapy.github.io/OntoKin/schemas/ontokin.agent-response-0.19.json",
+          "after": "https://omegapy.github.io/OntoKin/schemas/ontokin.agent-response-0.20.json"
+        },
+        {
+          "pointer": "/description",
+          "before": "Explicit Agent/0.19 responses. Transform, reduction, filter, merge, zip and rekey derivations are detached read-only source provenance and grant no new repair authority. Rekey aggregates have null old/new keys and input entry; selected records preserve the exact old-to-new step and original payload location. Inherited contributor keys are unchanged.",
+          "after": "Explicit Agent/0.20 responses. Transform, reduction, filter, merge, zip and rekey derivations are detached read-only source provenance and grant no new repair authority. Rekey aggregates have null old/new keys and input entry; selected records preserve the exact old-to-new step and original payload location. Inherited contributor keys are unchanged."
+        },
+        {
+          "pointer": "/properties/schema_version/const",
+          "before": "ontokin.agent/0.19",
+          "after": "ontokin.agent/0.20"
+        },
+        {
+          "pointer": "/title",
+          "before": "OntoKin keyed renaming Agent/0.19 response",
+          "after": "OntoKin String concatenation Agent/0.20 response"
+        }
+      ]
+    }
+  ]
+}
