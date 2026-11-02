@@ -1,0 +1,78 @@
+{
+  "argv": [
+    "c088-tools/c088_handoff.py",
+    "recover",
+    "--delivery",
+    "/workspace/scratch/d17b1ddbbda7/OntoKin_C088_Complete_Handoff.zip",
+    "--destination",
+    "/workspace/scratch/813fccdaf306/c088-recovered",
+    "--report",
+    "/workspace/scratch/813fccdaf306/recovery-records/C088-RECOVERY.json"
+  ],
+  "elapsed_seconds": 70.57436148299894,
+  "exception": "ValueError",
+  "executing_tool": {
+    "bytes": 29327,
+    "mode": "0644",
+    "sha256": "ccc278675261510daf4ca173a6b12075f9eabdbe4d914ec059d97ec4696115ca"
+  },
+  "finished_utc": "2026-11-02T19:58:38.546536+00:00",
+  "network_used": false,
+  "operation": "recover",
+  "original_c087_verify": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-B",
+      "/workspace/scratch/813fccdaf306/c088-recovered/recovery-tools/C087/c087_handoff.py",
+      "verify",
+      "--delivery",
+      "/workspace/scratch/813fccdaf306/c088-recovered/predecessor/OntoKin_C087_Complete_Handoff.zip",
+      "--report",
+      "/workspace/scratch/813fccdaf306/c088-recovered/recovery-records/c087-verify.json"
+    ],
+    "elapsed_seconds": 5.49794737999764,
+    "finished_utc": "2026-11-02T19:57:48.823983+00:00",
+    "label": "c087-verify",
+    "returncode": 0,
+    "started_utc": "2026-11-02T19:57:43.326061+00:00",
+    "stderr": {
+      "bytes": 0,
+      "mode": "0644",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout": {
+      "bytes": 82,
+      "mode": "0644",
+      "sha256": "3823d016da1f9ebc2464b2364ce57f179dcb02c09b30feeb35a5cd85eada01ad"
+    }
+  },
+  "partial_outputs_preserved": true,
+  "product_tests_performed": false,
+  "reason": "Recovery step failed: c087-recover",
+  "schema_version": "ontokin.c088-delivery-operation/1",
+  "started_utc": "2026-11-02T19:57:27.972064+00:00",
+  "status": "failed",
+  "traceback": "Traceback (most recent call last):\n  File \"/workspace/scratch/813fccdaf306/c088-tools/c088_handoff.py\", line 522, in main\n    recover(args, report)\n  File \"/workspace/scratch/813fccdaf306/c088-tools/c088_handoff.py\", line 437, in recover\n    report['original_c087_recover'] = run_step('c087-recover', [sys.executable, '-B', str(previous_tools / 'c087_handoff.py'),\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/813fccdaf306/c088-tools/c088_handoff.py\", line 396, in run_step\n    require(result.returncode == 0, 'Recovery step failed: ' + label)\n  File \"/workspace/scratch/813fccdaf306/c088-tools/c088_common.py\", line 13, in require\n    if not value:raise ValueError(message)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Recovery step failed: c087-recover\n",
+  "transport_before": {
+    "all_member_bytes_hashes_modes_verified": true,
+    "container_identity": {
+      "bytes": 1878747004,
+      "mode": "0644",
+      "sha256": "579f8a4024153a540497523de616a13d5d9bedeb26834c52d45a84b0ec79f85e"
+    },
+    "files": 36503,
+    "final_source": {
+      "head": "7b6900baa0357ab96c4639ac5c2ebe4e1791833e",
+      "tracked_bytes": 669367315,
+      "tracked_files": 10792,
+      "tree": "1a31d387795b0b794935b81d9f77803054e82699"
+    },
+    "full_product_acceptance": false,
+    "kind": "zip",
+    "manifest_sha256": "f50907e8c471e277bac24b2fc13cf8db63ba25121dd5c22dfd2417c31ea901ca",
+    "native_cut_metadata_and_pack_stream_verified": true,
+    "product_tests_performed": false,
+    "retention_manifest_and_literal_payload_pins_verified": true,
+    "status": "passed"
+  }
+}
