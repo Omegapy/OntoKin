@@ -1,5 +1,9 @@
 # OntoKin status
 
+## Active C088 integration lease
+
+Owner `interactive-c088-keyed-membership-20261102-d17b` acquires the bounded main integration lease only after this STATUS-only commit is published through an expected-head, nonforce update from `a969a668f9fdf021793366ac5f5b9a8f9cd0fa56` and the actual main/STATUS bytes are read back. The recorded interval is **2026-11-02T16:46:34.164717+00:00 through 2026-11-02T17:16:34.164717+00:00**. Scope: integrate the independently reviewed C088 candidate `3c1ac7ade31c758716930f32067440a50d4a6bf3` through [PR #87](https://github.com/Omegapy/OntoKin/pull/87), verify the resulting main source and applicable local checks, publish exact integration records, and release the lease through a separately verified coordination commit. Other nonoverlapping branch work remains permitted. No feature-release or full-product acceptance is claimed. The current baseline and retained gates below remain in force until actual integration is verified.
+
 ## Current development baseline
 
 OntoKin's [GOAL](GOAL.md) is an AI-agent language for editable meaningful 3D objects, animation and simulation through authoritative `.ok` source. Finite increments do not complete that mission.
