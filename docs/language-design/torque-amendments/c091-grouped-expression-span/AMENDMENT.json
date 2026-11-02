@@ -1,0 +1,30 @@
+{
+  "schema_version": "ontokin.torque-reviewed-expectation-amendment/1",
+  "status": "proposed_pending_independent_review",
+  "case_id": "n28-torque-child-before-duration-type",
+  "frozen_manifest_sha256": "98df30158c0cd77c542d89652f5dec6b585d03451a06bf7b1baffee0fc2f02eb",
+  "original_table": {
+    "path": "docs/language-design/torque-v0.1/freeze/refusal-cases.json",
+    "sha256": "e9599a9bb2afc6f5009611213d9d4cbad5a8586dce33c1a6156070513f2b03c7"
+  },
+  "source": {
+    "path": "docs/language-design/torque-v0.1/freeze/sources/n28-torque-child-before-duration-type.ok",
+    "sha256": "51853eb4faa38d66a5bd45b3944db12c8e9fc065aad6c70c12a6161357c19d5e"
+  },
+  "json_pointer": "/expected/primary_source",
+  "original": {
+    "end_byte": 873,
+    "source_id": "entry",
+    "start_byte": 863,
+    "text": "2[N*m] / 0"
+  },
+  "replacement": {
+    "end_byte": 874,
+    "source_id": "entry",
+    "start_byte": 862,
+    "text": "(2[N*m] / 0)"
+  },
+  "all_other_expectations_unchanged": true,
+  "runtime_semantic_change": false,
+  "reason": "Inherited grouped binary expression spans include the opening and closing parentheses; SPECIFICATION requires inherited child error spans unchanged. Pristine predecessor reproduction independently confirms the original rule."
+}

@@ -1,0 +1,81 @@
+{
+  "status": "reproduced",
+  "basis": "94a7796a54725ca764b2027deb43f09204f8a6de",
+  "source_files": {
+    "ontokin/syntax.py": {
+      "sha256": "3b84c6c1c79a0d20e8e38326105a1c643e8d9397fad2712a16ea7d79a62dce46",
+      "bytes": 19757,
+      "matches_C090_native_blob": true
+    },
+    "ontokin/syntax02.py": {
+      "sha256": "819b6587ef5956dc4c42cd1e09effd0f46442f2f679b23944315aa27625d89fd",
+      "bytes": 17338,
+      "matches_C090_native_blob": true
+    },
+    "ontokin/syntax14.py": {
+      "sha256": "082c258cbdc0639c4ae80eb0fcf765451167bf41b67f7b5abda58d68ba53a490",
+      "bytes": 4811,
+      "matches_C090_native_blob": true
+    },
+    "ontokin/construction.py": {
+      "sha256": "eb9a447f09894334f057be75104796fc8090a6a0e936d0135d54015054761fc1",
+      "bytes": 200172,
+      "matches_C090_native_blob": true
+    },
+    "ontokin/values.py": {
+      "sha256": "4fff5edda701aba27656561aa3fc3a61678ba228e1715bc8b5f43d0f104b9c6d",
+      "bytes": 22500,
+      "matches_C090_native_blob": true
+    }
+  },
+  "witness_source_sha256": "35ab58086769ff5caabe1c3ad142147866b1a0aa07cbcdf8db00364f61afc4ea",
+  "diagnostic": {
+    "schema_version": "ontokin.diagnostic/0.2",
+    "code": "OKL-E-NUMERIC",
+    "severity": "error",
+    "category": "invalid",
+    "phase": "elaboration",
+    "message": "Division by zero.",
+    "source_revision": "sha256:35ab58086769ff5caabe1c3ad142147866b1a0aa07cbcdf8db00364f61afc4ea",
+    "run_id": null,
+    "time": null,
+    "primary": {
+      "source_id": "entry",
+      "source_revision": "sha256:35ab58086769ff5caabe1c3ad142147866b1a0aa07cbcdf8db00364f61afc4ea",
+      "file": "main.ok",
+      "start_byte": 405,
+      "end_byte": 417,
+      "element_id": [
+        "torque-cases",
+        "demo",
+        "ball",
+        "body-mass"
+      ]
+    },
+    "related": [],
+    "rule_ids": [
+      "LANG-004"
+    ],
+    "details": {},
+    "repair": {
+      "summary": "Revise the expression so that its result is finite and inside the required domain.",
+      "patches": []
+    },
+    "blocks": [
+      "represented",
+      "constructed",
+      "evaluated",
+      "delivered"
+    ],
+    "program_revision": "sha256:5beb503ac83733031b5f54a86ea458d68679b03c0b912a47956306f0f0c1099d",
+    "source_id": "entry"
+  },
+  "actual_primary_text": "(2[N*m] / 0)",
+  "frozen_n28_expected_primary": {
+    "end_byte": 873,
+    "source_id": "entry",
+    "start_byte": 863,
+    "text": "2[N*m] / 0"
+  },
+  "scope": "Inherited grouped binary expression diagnostic includes parentheses; no runtime or frozen expectation was modified"
+}

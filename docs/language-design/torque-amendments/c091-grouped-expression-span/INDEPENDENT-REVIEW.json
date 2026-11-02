@@ -1,0 +1,33 @@
+{
+  "schema_version": "ontokin.c091-independent-amendment-review/1",
+  "status": "passed",
+  "reviewer": "c091-independent-reference",
+  "reviewed_at": "2026-11-02T22:53:15.260210+00:00",
+  "amendment_sha256": "a372bb209dc37e840b2896138bfa8d1af21ab70991dac3c02638d76b1b07b922",
+  "scope": "Only n28 expected primary_source interval/text; original freeze retained unchanged",
+  "findings": [],
+  "checks": [
+    "frozen table SHA256",
+    "frozen source SHA256",
+    "original expected binding",
+    "original source interval",
+    "replacement source interval",
+    "predecessor-author.json original basis",
+    "predecessor-author.json actual grouped span",
+    "predecessor-author.json ontokin/syntax.py",
+    "predecessor-author.json ontokin/syntax02.py",
+    "predecessor-author.json ontokin/syntax14.py",
+    "predecessor-author.json ontokin/construction.py",
+    "predecessor-author.json ontokin/values.py",
+    "predecessor-independent.json original basis",
+    "predecessor-independent.json actual grouped span",
+    "predecessor-independent.json ontokin/syntax.py",
+    "predecessor-independent.json ontokin/syntax02.py",
+    "predecessor-independent.json ontokin/syntax14.py",
+    "predecessor-independent.json ontokin/construction.py",
+    "predecessor-independent.json ontokin/values.py"
+  ],
+  "source_reason": "Inherited grouped expression parser widens the contained binary AST node span to opening/closing parentheses; inherited division-by-zero diagnostic uses that node span. C090 SPECIFICATION preserves inherited child errors. Separate .21 reproduction confirms behavior without torque runtime output.",
+  "original_outcome_preserved": true,
+  "approval": "Narrow overlay is justified once this independent review and amendment are published and read back; no other expectation, source, tolerance or budget change is approved."
+}
