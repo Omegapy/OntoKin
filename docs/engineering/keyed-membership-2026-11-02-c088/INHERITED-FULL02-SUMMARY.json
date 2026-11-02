@@ -1,0 +1,1542 @@
+{
+  "schema_version": "ontokin.local-checks/0.1",
+  "profile": "full",
+  "selected_roles": [
+    "core",
+    "visual",
+    "force-agent"
+  ],
+  "started_at": "2026-11-02T16:03:30.670633+00:00",
+  "status": "passed",
+  "source_root": "/tmp/ontokin-c088-candidate01",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "python_executable": "/tmp/c088-verification-deps/venv/bin/python",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.39",
+    "architecture": "x86_64"
+  },
+  "git": {
+    "available": true,
+    "local_head": "39afec7971b9221fe58cf7c7d002505d172dd64f",
+    "local_tree": "26b6417d082bd26fa6ace1e718455aeaa7822ccb",
+    "tracked_worktree_status": "",
+    "untracked_source_files": [],
+    "head_is_base_revision": true,
+    "source_inventory_includes_untracked_files": true,
+    "remote_head_verified": false
+  },
+  "steps": [
+    {
+      "id": "force-agent-tools",
+      "argv": [
+        "/tmp/c088-verification-deps/venv/bin/python",
+        "-c",
+        "from pathlib import Path\nimport sys\nfrom tools.check_local import force_agent_preflight\nraise SystemExit(force_agent_preflight(Path(sys.argv[1]), Path(sys.argv[2])))\n",
+        "tools/force-agent-verification-requirements.txt",
+        "/tmp/c088-validation/candidate01/inherited-full02/reports/force-agent-tools.json"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [],
+      "started_at": "2026-11-02T16:04:12.097858+00:00",
+      "log": "logs/force-agent-tools.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "reports/force-agent-tools.json",
+          "sha256": "sha256:a5fa95e2e328e2ec2169bfea395429b20546ce1971cbcecd754244b58722c49a",
+          "bytes": 1080,
+          "outcomes": {
+            "status": "passed"
+          },
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-02T16:04:12.264172+00:00",
+      "duration_seconds": 0.166,
+      "log_identity": {
+        "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "id": "unit-tests",
+      "argv": [
+        "/tmp/c088-verification-deps/venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [],
+      "started_at": "2026-11-02T16:04:12.264776+00:00",
+      "log": "logs/unit-tests.log",
+      "returncode": 0,
+      "status": "passed",
+      "test_execution": {
+        "tests_run": 3988,
+        "skipped": 0,
+        "expected_failures": 0,
+        "executed_without_skips": 3988,
+        "complete_regression_passed": true
+      },
+      "reports": [],
+      "finished_at": "2026-11-02T16:26:45.008216+00:00",
+      "duration_seconds": 1352.743,
+      "log_identity": {
+        "sha256": "sha256:d2bc3dd1de58d71eaf48b0edd85f284b8596c450b76c888c26aa905a87686174",
+        "bytes": 765940
+      }
+    },
+    {
+      "id": "source",
+      "argv": [
+        "/tmp/c088-verification-deps/venv/bin/python",
+        "-m",
+        "ontokin",
+        "conformance",
+        "--output",
+        "/tmp/c088-validation/candidate01/inherited-full02/reports/source.json"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [],
+      "started_at": "2026-11-02T16:26:45.010080+00:00",
+      "log": "logs/source.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "reports/source.json",
+          "sha256": "sha256:d61fd486d4605f72a56568e3f254e71bb79e0b6946b0bffaf1730909055c0b5a",
+          "bytes": 230305,
+          "outcomes": {
+            "summary": {
+              "passed": 43,
+              "failed": 0,
+              "total": 43,
+              "assertions": 694,
+              "expected_valid": 12,
+              "expected_invalid_or_conflicting": 29,
+              "expected_unsupported": 2
+            }
+          },
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-02T16:26:45.880513+00:00",
+      "duration_seconds": 0.87,
+      "log_identity": {
+        "sha256": "sha256:8d534ecec21a7d4fd66aa78f1c824629bd6e302216175a66f3c31274867a13d4",
+        "bytes": 282
+      }
+    },
+    {
+      "id": "agent",
+      "argv": [
+        "/tmp/c088-verification-deps/venv/bin/python",
+        "tools/run_agent_conformance.py",
+        "--output",
+        "/tmp/c088-validation/candidate01/inherited-full02/reports/agent.json"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [],
+      "started_at": "2026-11-02T16:26:45.881153+00:00",
+      "log": "logs/agent.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "reports/agent.json",
+          "sha256": "sha256:fe9446ea2a1fc4c92aebc6fced62aa97e57e03b8776d45b51132d451e08b7543",
+          "bytes": 257720,
+          "outcomes": {
+            "summary": {
+              "total": 10,
+              "passed": 10,
+              "failed": 0
+            },
+            "implementation": {
+              "name": "ontokin-reference",
+              "version": "0.4.0",
+              "source_code_sha256": "sha256:295b92eb61a483f4a7a60f251faa42e3f5750d415d5083c3c7b2d0b3098700de"
+            }
+          },
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-02T16:26:47.302616+00:00",
+      "duration_seconds": 1.421,
+      "log_identity": {
+        "sha256": "sha256:40dbd573d85c193083427e3b998ae7d1e4c8dcb1e20edea552d7ac70a44780ec",
+        "bytes": 158
+      }
+    },
+    {
+      "id": "construction",
+      "argv": [
+        "/tmp/c088-verification-deps/venv/bin/python",
+        "-m",
+        "tools.verify_construction_ci",
+        "--external-evidence",
+        "docs/engineering/construction-validation/external-gate.json",
+        "--output",
+        "/tmp/c088-validation/candidate01/inherited-full02/reports/construction.json"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [],
+      "started_at": "2026-11-02T16:26:47.303426+00:00",
+      "log": "logs/construction.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "reports/construction.json",
+          "sha256": "sha256:6f42f834394f101053db58259f3172f3704f8748a55dde26fad67091ce1a0965",
+          "bytes": 168966,
+          "outcomes": {
+            "summary": {
+              "total": 20,
+              "passed": 19,
+              "failed": 0,
+              "pending": 1,
+              "all_adopted_cases_selected": true,
+              "case_gate_complete": false
+            },
+            "implementation": {
+              "name": "ontokin-reference",
+              "version": "0.4.0",
+              "source_code_sha256": "sha256:295b92eb61a483f4a7a60f251faa42e3f5750d415d5083c3c7b2d0b3098700de"
+            }
+          },
+          "pending_cases": [
+            {
+              "id": "C20",
+              "reasons": [
+                "The identified independent visual-delivery gate is pending."
+              ]
+            }
+          ]
+        }
+      ],
+      "finished_at": "2026-11-02T16:27:29.968209+00:00",
+      "duration_seconds": 42.665,
+      "log_identity": {
+        "sha256": "sha256:92fb92111f5bda35bd87bb76563952d00ba3e04b4517945afee995eee4262af2",
+        "bytes": 501
+      }
+    },
+    {
+      "id": "surface",
+      "argv": [
+        "/tmp/c088-verification-deps/venv/bin/python",
+        "tools/run_surface_conformance.py",
+        "--allow-pending",
+        "--output",
+        "/tmp/c088-validation/candidate01/inherited-full02/reports/surface.json"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [],
+      "started_at": "2026-11-02T16:27:29.969473+00:00",
+      "log": "logs/surface.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "reports/surface.json",
+          "sha256": "sha256:49dfb5d0a7c24023071e9f6d4580c8fefad7609eacfa931bc759ab5266cfab7c",
+          "bytes": 547381,
+          "outcomes": {
+            "summary": {
+              "total": 12,
+              "passed": 1,
+              "failed": 0,
+              "pending": 11,
+              "all_adopted_cases_selected": true,
+              "full_gate_complete": false
+            },
+            "implementation": {
+              "name": "ontokin-reference",
+              "version": "0.4.0",
+              "source_code_sha256": "sha256:295b92eb61a483f4a7a60f251faa42e3f5750d415d5083c3c7b2d0b3098700de"
+            }
+          },
+          "pending_cases": [
+            {
+              "id": "M01",
+              "reasons": [
+                "destination: No identified surface release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "M02",
+              "reasons": [
+                "destination: No identified surface release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "M03",
+              "reasons": [
+                "destination: No identified surface release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "M04",
+              "reasons": [
+                "destination: No identified surface release evidence manifest was supplied.",
+                "workflow: No identified surface release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "M05",
+              "reasons": [
+                "workflow: No identified surface release evidence manifest was supplied.",
+                "destination: No identified surface release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "M06",
+              "reasons": [
+                "workflow: No identified surface release evidence manifest was supplied.",
+                "destination: No identified surface release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "M07",
+              "reasons": [
+                "workflow: No identified surface release evidence manifest was supplied.",
+                "destination: No identified surface release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "M08",
+              "reasons": [
+                "workflow: No identified surface release evidence manifest was supplied.",
+                "destination: No identified surface release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "M09",
+              "reasons": [
+                "workflow: No identified surface release evidence manifest was supplied.",
+                "destination: No identified surface release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "M11",
+              "reasons": [
+                "workflow: No identified surface release evidence manifest was supplied.",
+                "destination: No identified surface release evidence manifest was supplied.",
+                "browser: No identified surface release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "M12",
+              "reasons": [
+                "regression: No identified surface release evidence manifest was supplied.",
+                "ci: No identified surface release evidence manifest was supplied."
+              ]
+            }
+          ]
+        }
+      ],
+      "finished_at": "2026-11-02T16:27:59.095907+00:00",
+      "duration_seconds": 29.126,
+      "log_identity": {
+        "sha256": "sha256:1d7721ca6efb28128c4bd47703ee0f41abf4f0a9f9454ccac1df6509f9c3629a",
+        "bytes": 251
+      }
+    },
+    {
+      "id": "impulse",
+      "argv": [
+        "/tmp/c088-verification-deps/venv/bin/python",
+        "tools/run_impulse_conformance.py",
+        "--allow-pending",
+        "--output",
+        "/tmp/c088-validation/candidate01/inherited-full02/reports/impulse.json"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [],
+      "started_at": "2026-11-02T16:27:59.096739+00:00",
+      "log": "logs/impulse.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "reports/impulse.json",
+          "sha256": "sha256:18f2adb81f1589112693014a59a9d7ed621b233f07924d2bcca413c5dda74785",
+          "bytes": 850450,
+          "outcomes": {
+            "summary": {
+              "total": 12,
+              "passed": 8,
+              "failed": 0,
+              "pending": 4,
+              "all_adopted_cases_selected": true,
+              "full_gate_complete": false
+            },
+            "implementation": {
+              "name": "ontokin-reference",
+              "version": "0.4.0",
+              "source_code_sha256": "sha256:295b92eb61a483f4a7a60f251faa42e3f5750d415d5083c3c7b2d0b3098700de"
+            }
+          },
+          "pending_cases": [
+            {
+              "id": "I07",
+              "reasons": [
+                "workflow: No identified impulse release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "I09",
+              "reasons": [
+                "workflow: No identified impulse release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "I11",
+              "reasons": [
+                "workflow: No identified impulse release evidence manifest was supplied.",
+                "destination: No identified impulse release evidence manifest was supplied.",
+                "browser: No identified impulse release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "I12",
+              "reasons": [
+                "regression: No identified impulse release evidence manifest was supplied.",
+                "ci: No identified impulse release evidence manifest was supplied."
+              ]
+            }
+          ]
+        }
+      ],
+      "finished_at": "2026-11-02T16:29:02.825077+00:00",
+      "duration_seconds": 63.728,
+      "log_identity": {
+        "sha256": "sha256:82160c6e197af610b7f5228784d297908afc81d25f253f9bc2a114cdcbbf4dca",
+        "bytes": 157
+      }
+    },
+    {
+      "id": "documents",
+      "argv": [
+        "/tmp/c088-verification-deps/venv/bin/python",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [],
+      "started_at": "2026-11-02T16:29:02.828069+00:00",
+      "log": "logs/documents.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [],
+      "finished_at": "2026-11-02T16:29:04.046313+00:00",
+      "duration_seconds": 1.218,
+      "log_identity": {
+        "sha256": "sha256:74e4bcd6def6705aad4f38aca46de9be560e0fd14dfbddac5b050813e09e1f59",
+        "bytes": 6606
+      }
+    },
+    {
+      "id": "force-agent-tests",
+      "argv": [
+        "/tmp/c088-verification-deps/venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_force_agent*.py",
+        "-v"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [
+        "force-agent-tools"
+      ],
+      "started_at": "2026-11-02T16:29:04.047436+00:00",
+      "log": "logs/force-agent-tests.log",
+      "returncode": 0,
+      "status": "passed",
+      "test_execution": {
+        "tests_run": 106,
+        "skipped": 0,
+        "expected_failures": 0,
+        "executed_without_skips": 106,
+        "complete_cohort_passed": true
+      },
+      "reports": [],
+      "finished_at": "2026-11-02T16:30:27.914802+00:00",
+      "duration_seconds": 83.867,
+      "log_identity": {
+        "sha256": "sha256:4e9d1feae63bef04e6d79bb5b8e3a969835d4244402be2c803a388dc5a604806",
+        "bytes": 19531
+      }
+    },
+    {
+      "id": "force-agent-build",
+      "argv": [
+        "/tmp/c088-verification-deps/venv/bin/python",
+        "tools/build_force_agent_demo.py",
+        "--output-dir",
+        "/tmp/c088-validation/candidate01/inherited-full02/artifacts/force-agent-workflow"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [
+        "force-agent-tests"
+      ],
+      "started_at": "2026-11-02T16:30:27.916136+00:00",
+      "log": "logs/force-agent-build.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "artifacts/force-agent-workflow/workflow.json",
+          "sha256": "sha256:c81e9dcdfb372e23371f481c5a85f44d2151c98df85beecf139a0cad41bf9c33",
+          "bytes": 176843,
+          "outcomes": {
+            "status": "recorded",
+            "implementation": {
+              "name": "ontokin-reference",
+              "source_code_sha256": "sha256:295b92eb61a483f4a7a60f251faa42e3f5750d415d5083c3c7b2d0b3098700de",
+              "version": "0.4.0"
+            }
+          },
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-02T16:30:47.562886+00:00",
+      "duration_seconds": 19.647,
+      "log_identity": {
+        "sha256": "sha256:0e88619f7eb0187df6e10509df293e26f6ece4926ec4f8c81093968029b65608",
+        "bytes": 283
+      }
+    },
+    {
+      "id": "force-agent-audit",
+      "argv": [
+        "/tmp/c088-verification-deps/venv/bin/python",
+        "tools/verify_force_agent_workflow.py",
+        "--workflow-dir",
+        "/tmp/c088-validation/candidate01/inherited-full02/artifacts/force-agent-workflow",
+        "--output",
+        "/tmp/c088-validation/candidate01/inherited-full02/reports/force-agent-audit.json"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [
+        "force-agent-build",
+        "force-agent-tools"
+      ],
+      "started_at": "2026-11-02T16:30:47.564108+00:00",
+      "log": "logs/force-agent-audit.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "reports/force-agent-audit.json",
+          "sha256": "sha256:29a59b14544e71d0de43b5b9e916cf95a02bb90e3623629e9a5ee55db95eb902",
+          "bytes": 2049,
+          "outcomes": {
+            "status": "passed",
+            "implementation": {
+              "name": "ontokin-reference",
+              "source_code_sha256": "sha256:295b92eb61a483f4a7a60f251faa42e3f5750d415d5083c3c7b2d0b3098700de",
+              "version": "0.4.0"
+            },
+            "full_force_release_complete": false,
+            "destination_validated": false
+          },
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-02T16:30:49.384251+00:00",
+      "duration_seconds": 1.82,
+      "log_identity": {
+        "sha256": "sha256:6d698a1fe9d46c25093976e3aa2ceb8335e486058eeb014be56334181235c943",
+        "bytes": 2049
+      }
+    },
+    {
+      "id": "node-tools",
+      "argv": [
+        "/tmp/c088-verification-deps/node22/node_modules/node-linux-x64/bin/node",
+        "-e",
+        "\nconst fs = require('node:fs');\nconst path = require('node:path');\nconst expected = require('./tools/package.json').devDependencies;\nif (Number(process.versions.node.split('.')[0]) < 18) throw Error('Node 18 or later is required; hosted checks use Node 22.');\nfor (const [name, version] of Object.entries(expected)) {\n  const actual = JSON.parse(fs.readFileSync(path.join('tools/node_modules', name, 'package.json'))).version;\n  if (actual !== version) throw Error(`${name}: installed ${actual}, expected ${version}; install the pinned tools separately.`);\n}\nfs.writeFileSync(process.argv[1], JSON.stringify({node:process.version, platform:process.platform,\n  architecture:process.arch, dependencies:expected}, null, 2) + '\\n');\n",
+        "/tmp/c088-validation/candidate01/inherited-full02/reports/node-tools.json"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [],
+      "started_at": "2026-11-02T16:30:49.385345+00:00",
+      "log": "logs/node-tools.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "reports/node-tools.json",
+          "sha256": "sha256:58ee3f7ab16f845dbfe7c31ef1efdca607d6a0878d83bc3278adac4248f50d49",
+          "bytes": 215,
+          "outcomes": {},
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-02T16:30:49.417893+00:00",
+      "duration_seconds": 0.033,
+      "log_identity": {
+        "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "id": "browser-ready",
+      "argv": [
+        "/tmp/c088-verification-deps/node22/node_modules/node-linux-x64/bin/node",
+        "-e",
+        "\nconst fs = require('node:fs');\nconst {chromium} = require('./tools/node_modules/playwright');\n(async () => {\n  const browser = await chromium.launch({headless:true,args:['--no-sandbox','--use-gl=angle',\n    '--use-angle=swiftshader','--enable-unsafe-swiftshader']});\n  try { fs.writeFileSync(process.argv[1], JSON.stringify({browser:browser.version(),\n    platform:process.platform, architecture:process.arch}, null, 2) + '\\n'); }\n  finally { await browser.close(); }\n})().catch(error => { console.error(error); process.exitCode = 1; });\n",
+        "/tmp/c088-validation/candidate01/inherited-full02/reports/browser-ready.json"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [
+        "node-tools"
+      ],
+      "started_at": "2026-11-02T16:30:49.418796+00:00",
+      "log": "logs/browser-ready.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "reports/browser-ready.json",
+          "sha256": "sha256:6c7eae4436801b1ecc0b581b0e8a041fccd348c5ecc8f1bce7dab6b06f115bb4",
+          "bytes": 81,
+          "outcomes": {},
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-02T16:30:49.834669+00:00",
+      "duration_seconds": 0.416,
+      "log_identity": {
+        "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "id": "prototype-build",
+      "argv": [
+        "/tmp/c088-verification-deps/venv/bin/python",
+        "-m",
+        "tools.build_surface_prototype",
+        "--output-dir",
+        "/tmp/c088-validation/candidate01/inherited-full02/artifacts/surface-prototype"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [],
+      "started_at": "2026-11-02T16:30:49.835694+00:00",
+      "log": "logs/prototype-build.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [],
+      "finished_at": "2026-11-02T16:30:49.899987+00:00",
+      "duration_seconds": 0.064,
+      "log_identity": {
+        "sha256": "sha256:165025f16eb6c4dd7f0dd1e41f2384282bb04dac87ab94fe6aea48fb33ffa4cd",
+        "bytes": 463
+      }
+    },
+    {
+      "id": "prototype-format",
+      "argv": [
+        "/tmp/c088-verification-deps/node22/node_modules/node-linux-x64/bin/node",
+        "tools/verify_surface_prototype.mjs",
+        "/tmp/c088-validation/candidate01/inherited-full02/artifacts/surface-prototype/offset-taper.glb",
+        "--output",
+        "/tmp/c088-validation/candidate01/inherited-full02/reports/surface-prototype.json"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [
+        "prototype-build",
+        "node-tools"
+      ],
+      "started_at": "2026-11-02T16:30:49.901087+00:00",
+      "log": "logs/prototype-format.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "reports/surface-prototype.json",
+          "sha256": "sha256:322090d665b9c99cc6cef59fc2a38d07ceecd919e1f8fdd9c010f90920e181b1",
+          "bytes": 858,
+          "outcomes": {
+            "status": "passed"
+          },
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-02T16:30:50.065930+00:00",
+      "duration_seconds": 0.165,
+      "log_identity": {
+        "sha256": "sha256:322090d665b9c99cc6cef59fc2a38d07ceecd919e1f8fdd9c010f90920e181b1",
+        "bytes": 858
+      }
+    },
+    {
+      "id": "surface-native-build",
+      "argv": [
+        "/tmp/c088-verification-deps/venv/bin/python",
+        "tools/build_surface_demo.py",
+        "--output-dir",
+        "/tmp/c088-validation/candidate01/inherited-full02/artifacts/surface-native"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [],
+      "started_at": "2026-11-02T16:30:50.066914+00:00",
+      "log": "logs/surface-native-build.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [],
+      "finished_at": "2026-11-02T16:30:57.605750+00:00",
+      "duration_seconds": 7.539,
+      "log_identity": {
+        "sha256": "sha256:8f97a045d423333ecfff2be12b434b9555184b28b811160f8751773d075f9d08",
+        "bytes": 136
+      }
+    },
+    {
+      "id": "surface-native-format",
+      "argv": [
+        "/tmp/c088-verification-deps/node22/node_modules/node-linux-x64/bin/node",
+        "tools/verify_surface_native.mjs",
+        "--demo-dir",
+        "/tmp/c088-validation/candidate01/inherited-full02/artifacts/surface-native",
+        "--output",
+        "/tmp/c088-validation/candidate01/inherited-full02/reports/surface-native-destination.json"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [
+        "surface-native-build",
+        "node-tools"
+      ],
+      "started_at": "2026-11-02T16:30:57.606911+00:00",
+      "log": "logs/surface-native-format.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "reports/surface-native-destination.json",
+          "sha256": "sha256:703918e7c78729297753d8921d9aeccd691466756a23e894df04750b2e9d67c8",
+          "bytes": 254960,
+          "outcomes": {
+            "status": "passed"
+          },
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-02T16:30:58.577218+00:00",
+      "duration_seconds": 0.97,
+      "log_identity": {
+        "sha256": "sha256:b78f48e5988b0cbc7ee00fb4c70e40271d16804a42e34d49a6cbeb91e4877257",
+        "bytes": 180
+      }
+    },
+    {
+      "id": "surface-agent-build",
+      "argv": [
+        "/tmp/c088-verification-deps/venv/bin/python",
+        "tools/build_surface_agent_demo.py",
+        "--output-dir",
+        "/tmp/c088-validation/candidate01/inherited-full02/artifacts/surface-agent"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [],
+      "started_at": "2026-11-02T16:30:58.578277+00:00",
+      "log": "logs/surface-agent-build.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [],
+      "finished_at": "2026-11-02T16:32:28.341113+00:00",
+      "duration_seconds": 89.763,
+      "log_identity": {
+        "sha256": "sha256:651cfe19e01a57b28f5ee86850ba498c7ab00602d4a0a74fbf6ed796351c40bd",
+        "bytes": 3898
+      }
+    },
+    {
+      "id": "surface-agent-format",
+      "argv": [
+        "/tmp/c088-verification-deps/node22/node_modules/node-linux-x64/bin/node",
+        "tools/verify_surface_native.mjs",
+        "--demo-dir",
+        "/tmp/c088-validation/candidate01/inherited-full02/artifacts/surface-agent",
+        "--output",
+        "/tmp/c088-validation/candidate01/inherited-full02/reports/surface-agent-destination.json"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [
+        "surface-agent-build",
+        "node-tools"
+      ],
+      "started_at": "2026-11-02T16:32:28.343681+00:00",
+      "log": "logs/surface-agent-format.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "reports/surface-agent-destination.json",
+          "sha256": "sha256:8baf830b4419b5468994bb45335d69d6d985557df89bbadb36be5cc2547415a2",
+          "bytes": 775072,
+          "outcomes": {
+            "status": "passed"
+          },
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-02T16:32:29.874450+00:00",
+      "duration_seconds": 1.531,
+      "log_identity": {
+        "sha256": "sha256:c598c2e9ca016ab08a9fabd2022e863d05dff1c68d6f1f6e4859de7569585f1b",
+        "bytes": 180
+      }
+    },
+    {
+      "id": "impulse-agent-build",
+      "argv": [
+        "/tmp/c088-verification-deps/venv/bin/python",
+        "tools/build_impulse_agent_demo.py",
+        "--output-dir",
+        "/tmp/c088-validation/candidate01/inherited-full02/artifacts/impulse-agent"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [],
+      "started_at": "2026-11-02T16:32:29.875715+00:00",
+      "log": "logs/impulse-agent-build.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [],
+      "finished_at": "2026-11-02T16:32:50.514715+00:00",
+      "duration_seconds": 20.639,
+      "log_identity": {
+        "sha256": "sha256:6418e25192f42d65cb0d7df1cc82c42233e6d011db25137cc989b2de945d1762",
+        "bytes": 1614
+      }
+    },
+    {
+      "id": "impulse-agent-format",
+      "argv": [
+        "/tmp/c088-verification-deps/node22/node_modules/node-linux-x64/bin/node",
+        "tools/verify_impulse_native.mjs",
+        "--demo-dir",
+        "/tmp/c088-validation/candidate01/inherited-full02/artifacts/impulse-agent",
+        "--output",
+        "/tmp/c088-validation/candidate01/inherited-full02/reports/impulse-agent-destination.json"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [
+        "impulse-agent-build",
+        "node-tools"
+      ],
+      "started_at": "2026-11-02T16:32:50.515935+00:00",
+      "log": "logs/impulse-agent-format.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "reports/impulse-agent-destination.json",
+          "sha256": "sha256:9a90330a1d1069382bd82e34ea685263594ee3ee05601fca2b4736e125e8f9e8",
+          "bytes": 1621053,
+          "outcomes": {
+            "status": "passed",
+            "implementation": {
+              "name": "ontokin-reference",
+              "source_code_sha256": "sha256:295b92eb61a483f4a7a60f251faa42e3f5750d415d5083c3c7b2d0b3098700de",
+              "version": "0.4.0"
+            }
+          },
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-02T16:32:51.009140+00:00",
+      "duration_seconds": 0.493,
+      "log_identity": {
+        "sha256": "sha256:61cb9575ee35cdc164ffd819697fe7e199a19e3b0b8cafda0d92d815be21f54d",
+        "bytes": 221
+      }
+    },
+    {
+      "id": "viewer-build",
+      "argv": [
+        "/tmp/c088-verification-deps/node22/node_modules/node-linux-x64/bin/node",
+        "tools/build_viewer.mjs"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [
+        "node-tools"
+      ],
+      "started_at": "2026-11-02T16:32:51.011821+00:00",
+      "log": "logs/viewer-build.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [],
+      "finished_at": "2026-11-02T16:32:51.227451+00:00",
+      "duration_seconds": 0.215,
+      "log_identity": {
+        "sha256": "sha256:98cec98faaa0d7a8dcd739a3c41b789b5fccf1869d7fafa5409fe92cabab28e4",
+        "bytes": 35
+      }
+    },
+    {
+      "id": "visual-build",
+      "argv": [
+        "/tmp/c088-verification-deps/venv/bin/python",
+        "tools/build_visual_demos.py",
+        "--include-conformance"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [],
+      "started_at": "2026-11-02T16:32:51.229150+00:00",
+      "log": "logs/visual-build.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [],
+      "finished_at": "2026-11-02T16:33:00.226205+00:00",
+      "duration_seconds": 8.997,
+      "log_identity": {
+        "sha256": "sha256:88206d9fe6e01cd73748a8b53aeaccf4290b482c917ad2b56bbab0bf627e4486",
+        "bytes": 410
+      }
+    },
+    {
+      "id": "visual-format",
+      "argv": [
+        "/tmp/c088-verification-deps/node22/node_modules/node-linux-x64/bin/node",
+        "tools/verify_gltf.mjs",
+        "examples/visual",
+        "--output",
+        "/tmp/c088-validation/candidate01/inherited-full02/reports/visual-destination.json"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [
+        "visual-build",
+        "node-tools"
+      ],
+      "started_at": "2026-11-02T16:33:00.228464+00:00",
+      "log": "logs/visual-format.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "reports/visual-destination.json",
+          "sha256": "sha256:956dd426f219900dd352ac15ac9bea6d1d5ceff1327d6c1c52a6f831416c23d0",
+          "bytes": 126108,
+          "outcomes": {},
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-02T16:33:00.444592+00:00",
+      "duration_seconds": 0.216,
+      "log_identity": {
+        "sha256": "sha256:ec1eafe4b5fa531db33277c5cd194cc3b29195042e534110a578b02c0c09f720",
+        "bytes": 233
+      }
+    },
+    {
+      "id": "agent-demo-build",
+      "argv": [
+        "/tmp/c088-verification-deps/venv/bin/python",
+        "tools/build_agent_demo.py"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [],
+      "started_at": "2026-11-02T16:33:00.445892+00:00",
+      "log": "logs/agent-demo-build.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [],
+      "finished_at": "2026-11-02T16:33:08.641110+00:00",
+      "duration_seconds": 8.195,
+      "log_identity": {
+        "sha256": "sha256:13cc35630d232f970b73289ce42d2a54f4dfec9b89cae3dedb5f72a05a3a529e",
+        "bytes": 347
+      }
+    },
+    {
+      "id": "agent-demo-format",
+      "argv": [
+        "/tmp/c088-verification-deps/node22/node_modules/node-linux-x64/bin/node",
+        "tools/verify_gltf.mjs",
+        "examples/agent",
+        "--output",
+        "/tmp/c088-validation/candidate01/inherited-full02/reports/agent-demo-destination.json"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [
+        "agent-demo-build",
+        "node-tools"
+      ],
+      "started_at": "2026-11-02T16:33:08.642631+00:00",
+      "log": "logs/agent-demo-format.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "reports/agent-demo-destination.json",
+          "sha256": "sha256:958519ffeacc82e12d1f37a54edccb10f4be3a6d8d3c9a4c7b8f683800027783",
+          "bytes": 66644,
+          "outcomes": {},
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-02T16:33:08.858943+00:00",
+      "duration_seconds": 0.216,
+      "log_identity": {
+        "sha256": "sha256:6daab47e578b60d1d1a4a254658a51209ac0586de0f4d7a64843112c92acd4fe",
+        "bytes": 237
+      }
+    },
+    {
+      "id": "construction-demo-build",
+      "argv": [
+        "/tmp/c088-verification-deps/venv/bin/python",
+        "tools/build_construction_demo.py"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [],
+      "started_at": "2026-11-02T16:33:08.860371+00:00",
+      "log": "logs/construction-demo-build.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [],
+      "finished_at": "2026-11-02T16:33:21.726906+00:00",
+      "duration_seconds": 12.866,
+      "log_identity": {
+        "sha256": "sha256:f1287d8e57d191d8d6971f2fa3c063d0ae550c8b1bdac961cacd33472585a127",
+        "bytes": 394
+      }
+    },
+    {
+      "id": "construction-demo-format",
+      "argv": [
+        "/tmp/c088-verification-deps/node22/node_modules/node-linux-x64/bin/node",
+        "tools/verify_gltf.mjs",
+        "examples/construction",
+        "--output",
+        "/tmp/c088-validation/candidate01/inherited-full02/reports/construction-demo-destination.json"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [
+        "construction-demo-build",
+        "node-tools"
+      ],
+      "started_at": "2026-11-02T16:33:21.728430+00:00",
+      "log": "logs/construction-demo-format.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "reports/construction-demo-destination.json",
+          "sha256": "sha256:a18513af01939729ae7bbd233c9320b1b9ea3c0d94ef17f34ae7252c0c7475b1",
+          "bytes": 52879,
+          "outcomes": {},
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-02T16:33:21.894121+00:00",
+      "duration_seconds": 0.166,
+      "log_identity": {
+        "sha256": "sha256:75c95eacd52b386f48c6aae6a526f8f85c7c684c52dca148c59003e493dec505",
+        "bytes": 244
+      }
+    },
+    {
+      "id": "visual-browser",
+      "argv": [
+        "/tmp/c088-verification-deps/node22/node_modules/node-linux-x64/bin/node",
+        "tools/verify_viewer.mjs",
+        "--output-dir",
+        "/tmp/c088-validation/candidate01/inherited-full02/artifacts/visual-browser"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [
+        "visual-format",
+        "viewer-build",
+        "visual-build",
+        "browser-ready"
+      ],
+      "started_at": "2026-11-02T16:33:21.895645+00:00",
+      "log": "logs/visual-browser.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "artifacts/visual-browser/viewer-results.json",
+          "sha256": "sha256:db54482d7a2cdcbe312c00709d67bda4e95e34df36590f008ef62d877ad4b210",
+          "bytes": 1689,
+          "outcomes": {
+            "status": "passed"
+          },
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-02T16:33:25.539922+00:00",
+      "duration_seconds": 3.644,
+      "log_identity": {
+        "sha256": "sha256:ffa7a294678f961d10e84effb4abc0215e1b4b2fcb5e230e021fd200eca6579e",
+        "bytes": 181
+      }
+    },
+    {
+      "id": "agent-demo-browser",
+      "argv": [
+        "/tmp/c088-verification-deps/node22/node_modules/node-linux-x64/bin/node",
+        "tools/verify_agent_viewer.mjs",
+        "--output-dir",
+        "/tmp/c088-validation/candidate01/inherited-full02/artifacts/agent-demo-browser"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [
+        "agent-demo-format",
+        "viewer-build",
+        "visual-build",
+        "browser-ready"
+      ],
+      "started_at": "2026-11-02T16:33:25.542078+00:00",
+      "log": "logs/agent-demo-browser.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "artifacts/agent-demo-browser/viewer-results.json",
+          "sha256": "sha256:273aea2cdddd515c7da83585c4ba6b75f05ea2a98ea83eeb4a6fa8d37b85f8f2",
+          "bytes": 15596,
+          "outcomes": {
+            "status": "passed"
+          },
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-02T16:33:27.415042+00:00",
+      "duration_seconds": 1.873,
+      "log_identity": {
+        "sha256": "sha256:d3d7a3f650af61ec231033f9c061ef98a26f36f06d4605f4e34dd75d7f6c4b54",
+        "bytes": 396
+      }
+    },
+    {
+      "id": "construction-demo-browser",
+      "argv": [
+        "/tmp/c088-verification-deps/node22/node_modules/node-linux-x64/bin/node",
+        "tools/verify_construction_viewer.mjs",
+        "--output-dir",
+        "/tmp/c088-validation/candidate01/inherited-full02/artifacts/construction-demo-browser"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [
+        "construction-demo-format",
+        "viewer-build",
+        "visual-build",
+        "browser-ready"
+      ],
+      "started_at": "2026-11-02T16:33:27.416467+00:00",
+      "log": "logs/construction-demo-browser.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "artifacts/construction-demo-browser/viewer-results.json",
+          "sha256": "sha256:fe2353c80b2e750eb71e2bbaa5074283f1ef92246a820fa8a2675774083fe9dc",
+          "bytes": 91010,
+          "outcomes": {
+            "status": "passed"
+          },
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-02T16:33:29.394632+00:00",
+      "duration_seconds": 1.978,
+      "log_identity": {
+        "sha256": "sha256:32607bfbc532786361c54c904ed3ab72071e7cf15c72fcf7504a32edc2dfe17c",
+        "bytes": 431
+      }
+    },
+    {
+      "id": "surface-native-browser",
+      "argv": [
+        "/tmp/c088-verification-deps/node22/node_modules/node-linux-x64/bin/node",
+        "tools/verify_surface_viewer.mjs",
+        "--demo-dir",
+        "/tmp/c088-validation/candidate01/inherited-full02/artifacts/surface-native",
+        "--output-dir",
+        "/tmp/c088-validation/candidate01/inherited-full02/artifacts/surface-native-browser"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [
+        "surface-native-format",
+        "browser-ready"
+      ],
+      "started_at": "2026-11-02T16:33:29.396503+00:00",
+      "log": "logs/surface-native-browser.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "artifacts/surface-native-browser/browser-results.json",
+          "sha256": "sha256:6b6daf40320d4a88efd7fbf353094d98527e760a7948cc9e91fe50df6b228b1e",
+          "bytes": 41827,
+          "outcomes": {
+            "status": "passed"
+          },
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-02T16:33:33.351121+00:00",
+      "duration_seconds": 3.955,
+      "log_identity": {
+        "sha256": "sha256:5b2e4bbcc8fff48efe733aba9859ec0a49799259bab3484f3e62425754f7c633",
+        "bytes": 226
+      }
+    },
+    {
+      "id": "surface-agent-browser",
+      "argv": [
+        "/tmp/c088-verification-deps/node22/node_modules/node-linux-x64/bin/node",
+        "tools/verify_surface_viewer.mjs",
+        "--demo-dir",
+        "/tmp/c088-validation/candidate01/inherited-full02/artifacts/surface-agent",
+        "--output-dir",
+        "/tmp/c088-validation/candidate01/inherited-full02/artifacts/surface-agent-browser",
+        "--fixture",
+        "palette-repaired",
+        "--fixture",
+        "composition-ordinary",
+        "--fixture",
+        "composition-generated",
+        "--fixture",
+        "rotated-release"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [
+        "surface-agent-format",
+        "browser-ready"
+      ],
+      "started_at": "2026-11-02T16:33:33.353395+00:00",
+      "log": "logs/surface-agent-browser.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "artifacts/surface-agent-browser/browser-results.json",
+          "sha256": "sha256:65c8f3d694baf5475c24fd8896d57da617974f02bc93df51c9d4c4691c727a00",
+          "bytes": 114877,
+          "outcomes": {
+            "status": "passed"
+          },
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-02T16:33:41.021272+00:00",
+      "duration_seconds": 7.668,
+      "log_identity": {
+        "sha256": "sha256:7aac60bb84beee0c30d3d54dd9c4c97c5a455e70bfa4ecca4502c4b8d7b5839f",
+        "bytes": 226
+      }
+    },
+    {
+      "id": "impulse-agent-browser",
+      "argv": [
+        "/tmp/c088-verification-deps/node22/node_modules/node-linux-x64/bin/node",
+        "tools/verify_impulse_viewer.mjs",
+        "--demo-dir",
+        "/tmp/c088-validation/candidate01/inherited-full02/artifacts/impulse-agent",
+        "--output-dir",
+        "/tmp/c088-validation/candidate01/inherited-full02/artifacts/impulse-agent-browser"
+      ],
+      "cwd": "/tmp/c088-validation/candidate01/inherited-full02/workspace",
+      "requires": [
+        "impulse-agent-format",
+        "browser-ready"
+      ],
+      "started_at": "2026-11-02T16:33:41.022662+00:00",
+      "log": "logs/impulse-agent-browser.log",
+      "returncode": 0,
+      "status": "passed",
+      "reports": [
+        {
+          "path": "artifacts/impulse-agent-browser/browser-validation.json",
+          "sha256": "sha256:09392c5bf186cb76d67d3185a5d73a468eb47f1d08fc2fc460c0240114c6e14e",
+          "bytes": 339926,
+          "outcomes": {
+            "status": "passed",
+            "implementation": {
+              "name": "ontokin-reference",
+              "source_code_sha256": "sha256:295b92eb61a483f4a7a60f251faa42e3f5750d415d5083c3c7b2d0b3098700de",
+              "version": "0.4.0"
+            }
+          },
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-02T16:33:46.937460+00:00",
+      "duration_seconds": 5.915,
+      "log_identity": {
+        "sha256": "sha256:7119bd8013367f8184633310ecec1b3786c559c440ef5b15a3e240bfae88d42e",
+        "bytes": 226
+      }
+    }
+  ],
+  "release_certified": false,
+  "full_product_conformance_certified": false,
+  "remote_checks_executed": false,
+  "limits": [
+    "This run checks one installed Python version; it is not the three-version matrix.",
+    "Pending external conformance attestations remain pending, including after full visual checks.",
+    "Generated captures require actual visual review; this runner does not supply that review."
+  ],
+  "source_inventory": {
+    "path": "source-before.json",
+    "sha256": "sha256:9cdb42e0873579c1f4d27f2192ba5819647e2f7d9b5846a1aa296f100dd67f92",
+    "bytes": 2072279,
+    "inventory_sha256": "sha256:fbff352f798a5742fe1690336fbe407aada20fcb23c19f647ae09c94ca6211c4",
+    "file_count": 9824,
+    "includes_untracked_source_files": true
+  },
+  "workspace_generated_exclusions": {
+    "files": [
+      "examples/agent/rejected-candidate.ok",
+      "examples/agent/repaired.ok",
+      "examples/agent/workflow.json",
+      "examples/construction/authoring.ok",
+      "examples/construction/hinges.ok",
+      "examples/construction/main.ok",
+      "examples/construction/program.bundle.json",
+      "examples/construction/program.files.json",
+      "examples/construction/rejected-candidate.ok",
+      "examples/construction/workflow.json",
+      "examples/visual/THREE-LICENSE.txt",
+      "examples/visual/demo-data.js",
+      "examples/visual/viewer.bundle.js"
+    ],
+    "patterns": [
+      "examples/{visual,agent,construction}/*.{glb,export.json,reference.json}"
+    ],
+    "scope": "Only the isolated workspace comparison; all original checkout example bytes are preserved and checked."
+  },
+  "workspace_storage": {
+    "path": "workspace-storage.json",
+    "sha256": "sha256:3fe3794771e6b1ccd619ab05b22532b0b4cca2f897a3e56e42cd0e88d9c3d3e0",
+    "bytes": 184,
+    "schema_version": "ontokin.storage-binding/0.1",
+    "profile": "engineering-archives/0.1",
+    "lfs_files": [],
+    "network_transfers": false,
+    "source_configuration_copied": false
+  },
+  "workspace_git": {
+    "available": true,
+    "local_head": "39afec7971b9221fe58cf7c7d002505d172dd64f",
+    "local_tree": "26b6417d082bd26fa6ace1e718455aeaa7822ccb",
+    "tracked_worktree_status": "",
+    "untracked_source_files": [],
+    "head_is_base_revision": true,
+    "source_inventory_includes_untracked_files": true,
+    "remote_head_verified": false,
+    "index_basis": "source_commit_tree",
+    "copied_worktree_changes_preserved": true,
+    "source_staging_preserved": false
+  },
+  "planned_steps": [
+    "force-agent-tools",
+    "unit-tests",
+    "source",
+    "agent",
+    "construction",
+    "surface",
+    "impulse",
+    "documents",
+    "force-agent-tests",
+    "force-agent-build",
+    "force-agent-audit",
+    "node-tools",
+    "browser-ready",
+    "prototype-build",
+    "prototype-format",
+    "surface-native-build",
+    "surface-native-format",
+    "surface-agent-build",
+    "surface-agent-format",
+    "impulse-agent-build",
+    "impulse-agent-format",
+    "viewer-build",
+    "visual-build",
+    "visual-format",
+    "agent-demo-build",
+    "agent-demo-format",
+    "construction-demo-build",
+    "construction-demo-format",
+    "visual-browser",
+    "agent-demo-browser",
+    "construction-demo-browser",
+    "surface-native-browser",
+    "surface-agent-browser",
+    "impulse-agent-browser"
+  ],
+  "git_after": {
+    "available": true,
+    "local_head": "39afec7971b9221fe58cf7c7d002505d172dd64f",
+    "local_tree": "26b6417d082bd26fa6ace1e718455aeaa7822ccb",
+    "tracked_worktree_status": "",
+    "untracked_source_files": [],
+    "head_is_base_revision": true,
+    "source_inventory_includes_untracked_files": true,
+    "remote_head_verified": false
+  },
+  "git_revision_unchanged": true,
+  "source_unchanged": true,
+  "pending_external_cases": [
+    {
+      "step": "construction",
+      "report": "reports/construction.json",
+      "id": "C20",
+      "reasons": [
+        "The identified independent visual-delivery gate is pending."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M01",
+      "reasons": [
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M02",
+      "reasons": [
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M03",
+      "reasons": [
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M04",
+      "reasons": [
+        "destination: No identified surface release evidence manifest was supplied.",
+        "workflow: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M05",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M06",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M07",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M08",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M09",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M11",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied.",
+        "browser: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M12",
+      "reasons": [
+        "regression: No identified surface release evidence manifest was supplied.",
+        "ci: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "impulse",
+      "report": "reports/impulse.json",
+      "id": "I07",
+      "reasons": [
+        "workflow: No identified impulse release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "impulse",
+      "report": "reports/impulse.json",
+      "id": "I09",
+      "reasons": [
+        "workflow: No identified impulse release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "impulse",
+      "report": "reports/impulse.json",
+      "id": "I11",
+      "reasons": [
+        "workflow: No identified impulse release evidence manifest was supplied.",
+        "destination: No identified impulse release evidence manifest was supplied.",
+        "browser: No identified impulse release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "impulse",
+      "report": "reports/impulse.json",
+      "id": "I12",
+      "reasons": [
+        "regression: No identified impulse release evidence manifest was supplied.",
+        "ci: No identified impulse release evidence manifest was supplied."
+      ]
+    }
+  ],
+  "not_executed_steps": [],
+  "finished_at": "2026-11-02T16:33:49.098673+00:00",
+  "duration_seconds": 1818.388,
+  "exit_code": 0
+}
