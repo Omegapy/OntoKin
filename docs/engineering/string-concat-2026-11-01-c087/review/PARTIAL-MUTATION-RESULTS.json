@@ -1,0 +1,91 @@
+{
+  "schema": "ontokin.c087-independent-partial-reader-regression/0.1",
+  "scope": "Direct unmodified audit_workflows functions with caller-owned response substitution; raw evidence integrity remains the responsibility of the separate full audit.",
+  "expected_manifest_sha256": "45b7e7fa891f3048c45a7d8b85b55f73eb11f157770c82e470f56422fb4202fc",
+  "transcript_sha256": "bd5aaa98bb76ce3bd0b4bdb9ddffcc21c0c9e1dbd2972b03fc4918740547a4fb",
+  "implementations": [
+    {
+      "role": "original",
+      "commit": "506be4a",
+      "reader_sha256": "5a86d533322e331923453a6367ce8c593901c1d752546e57ec494269c24e2063"
+    },
+    {
+      "role": "corrected",
+      "commit": "0f7b36924ac1654d775495994ec5aaa098624b27",
+      "reader_sha256": "e1420258f1338f665a85ea1f2c037a57bda445e8f97f79103bb3e5fe8838184d"
+    }
+  ],
+  "observations": [
+    {
+      "reader_role": "original",
+      "name": "unchanged",
+      "response_sha256": "27d1200645bbecfb6236e1d9675dd733e1d736081f209a48556d4f917e4d1a65",
+      "schema_errors": 0,
+      "outcome": "accepted",
+      "workflows": 11
+    },
+    {
+      "reader_role": "original",
+      "name": "wrong-keyed-and-leaf-type",
+      "response_sha256": "e614ee5926dca51b0972806db7065efbb6c5550dd6f86dc55bcb7866f3ae925f",
+      "schema_errors": 0,
+      "outcome": "accepted",
+      "workflows": 11
+    },
+    {
+      "reader_role": "original",
+      "name": "removed-required-rekey-lineage",
+      "response_sha256": "b98156ff8c405aca78ca2cb9ce1b1091d873112f61039f4f27dae2e4fb86a266",
+      "schema_errors": 0,
+      "outcome": "accepted",
+      "workflows": 11
+    },
+    {
+      "reader_role": "original",
+      "name": "omitted-selected-total",
+      "response_sha256": "9d8324918922db419a1228782a419e689f018ad7b936733c9f55993f67eb93d1",
+      "schema_errors": 0,
+      "outcome": "accepted",
+      "workflows": 11
+    },
+    {
+      "reader_role": "corrected",
+      "name": "unchanged",
+      "response_sha256": "27d1200645bbecfb6236e1d9675dd733e1d736081f209a48556d4f917e4d1a65",
+      "schema_errors": 0,
+      "outcome": "accepted",
+      "workflows": 11
+    },
+    {
+      "reader_role": "corrected",
+      "name": "wrong-keyed-and-leaf-type",
+      "response_sha256": "e614ee5926dca51b0972806db7065efbb6c5550dd6f86dc55bcb7866f3ae925f",
+      "schema_errors": 0,
+      "outcome": "rejected",
+      "exception": "ReferenceError",
+      "reason": "Complete selected typed values/original lineage differ from independently validated full inspection",
+      "traceback": "Traceback (most recent call last):\n  File \"/tmp/ontokin-c087-evidence/corrections-review/review_partial_corrections.py\", line 92, in <module>\n    workflows = reader.audit_workflows(RESULTS, fixtures, summary, rows, sources,\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/ontokin-c087-readers/tools/verify_string_concat_agent_evidence.py\", line 350, in audit_workflows\n    candidate[\"request\"].get(\"selector\")=={\"kind\":\"object\"} and\n  File \"/tmp/ontokin-c087-readers/tools/texture_reference.py\", line 41, in require\n    raise ReferenceError(message, code=code)\ntools.texture_reference.ReferenceError: Complete selected typed values/original lineage differ from independently validated full inspection\n"
+    },
+    {
+      "reader_role": "corrected",
+      "name": "removed-required-rekey-lineage",
+      "response_sha256": "b98156ff8c405aca78ca2cb9ce1b1091d873112f61039f4f27dae2e4fb86a266",
+      "schema_errors": 0,
+      "outcome": "rejected",
+      "exception": "ReferenceError",
+      "reason": "Complete selected typed values/original lineage differ from independently validated full inspection",
+      "traceback": "Traceback (most recent call last):\n  File \"/tmp/ontokin-c087-evidence/corrections-review/review_partial_corrections.py\", line 92, in <module>\n    workflows = reader.audit_workflows(RESULTS, fixtures, summary, rows, sources,\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/ontokin-c087-readers/tools/verify_string_concat_agent_evidence.py\", line 350, in audit_workflows\n    candidate[\"request\"].get(\"selector\")=={\"kind\":\"object\"} and\n  File \"/tmp/ontokin-c087-readers/tools/texture_reference.py\", line 41, in require\n    raise ReferenceError(message, code=code)\ntools.texture_reference.ReferenceError: Complete selected typed values/original lineage differ from independently validated full inspection\n"
+    },
+    {
+      "reader_role": "corrected",
+      "name": "omitted-selected-total",
+      "response_sha256": "9d8324918922db419a1228782a419e689f018ad7b936733c9f55993f67eb93d1",
+      "schema_errors": 0,
+      "outcome": "rejected",
+      "exception": "ReferenceError",
+      "reason": "Complete selected typed values/original lineage differ from independently validated full inspection",
+      "traceback": "Traceback (most recent call last):\n  File \"/tmp/ontokin-c087-evidence/corrections-review/review_partial_corrections.py\", line 92, in <module>\n    workflows = reader.audit_workflows(RESULTS, fixtures, summary, rows, sources,\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/ontokin-c087-readers/tools/verify_string_concat_agent_evidence.py\", line 350, in audit_workflows\n    candidate[\"request\"].get(\"selector\")=={\"kind\":\"object\"} and\n  File \"/tmp/ontokin-c087-readers/tools/texture_reference.py\", line 41, in require\n    raise ReferenceError(message, code=code)\ntools.texture_reference.ReferenceError: Complete selected typed values/original lineage differ from independently validated full inspection\n"
+    }
+  ],
+  "status": "passed"
+}

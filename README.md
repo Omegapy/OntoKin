@@ -10,6 +10,23 @@ The current direction begins with exterior 3D models and short animations. Those
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
 
+### Give reusable part groups computed namespaces
+
+Explicit source `0.20` / `string-concat-0.1` supports pure immutable String concatenation:
+
+```ontokin
+rekey_keyed<Length>(widths, (old_key, width) -> prefix + old_key)
+```
+
+A pinned library can receive different prefixes for independent occurrences while preserving each original payload and source dependency. Both operands evaluate once, in order. Results preserve exact Unicode text and are bounded to 65,536 UTF-8 bytes each and 4,194,304 cumulative logical result bytes per request. The existing admitted execution budget governs scanning, allocation and publication. Rekey retains its separate 1–64-character ASCII stable-key rule and collision refusal. Earlier declaring versions and ordinary defaults retain their meanings.
+
+```bash
+python3 -m ontokin export examples/string-concat/agent/panel-task.files.json --bundle --target ontokin.glb/0.20 --output /tmp/ontokin-namespaced-panels.glb
+python3 -m ontokin agent --protocol ontokin.agent/0.20 --store /tmp/ontokin-string-concat-agent
+```
+
+The [adopted decision](docs/language-design/string-concat-v0.1/ADOPTION.md), [frozen corpus guide](docs/language-design/string-concat-v0.1/CORPUS.md), [Agent/0.20 guide](docs/language-design/agent-v0.20/README.md) and [C087 engineering record](docs/engineering/string-concat-2026-11-01-c087/README.md) distinguish meaning, executed checks and integration. The representative workflow changes one occurrence's prefix or member set while preserving its sibling, pinned library, image and unrelated recorded motion. Complete experimental-feature release and full-product acceptance remain open.
+
 ### Pair named attributes with exact key agreement
 
 Explicit source `0.18` / `keyed-zip-0.1` combines corresponding entries from two immutable keyed values:

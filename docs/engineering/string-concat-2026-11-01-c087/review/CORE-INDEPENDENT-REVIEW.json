@@ -1,0 +1,64 @@
+{
+  "schema": "ontokin.c087-core-independent-static-review/0.1",
+  "reviewer": "concat_contract (independent of core implementation author)",
+  "baseline_commit": "cd8c7fa2f84922ff4855de20f67b4be8d8866d5d",
+  "reviewed_files": [
+    {
+      "path": "ontokin/string_concat.py",
+      "sha256": "a1ea50eb7173beb776443577b4bb3f17e59eb10165c07c3d0e3e75afdb0b44f3",
+      "bytes": 3651
+    },
+    {
+      "path": "ontokin/construction.py",
+      "sha256": "89b8f478dff4c2ba34e11a43e86a95244478ed082b5fc63694d83f69550b29a8",
+      "bytes": 198087
+    },
+    {
+      "path": "ontokin/execution_budget.py",
+      "sha256": "fd804f9652809cd2474b05e7f86dd3f0c07121e97a680017c4ea480b7a8d6109",
+      "bytes": 19272
+    },
+    {
+      "path": "docs/language-design/string-concat-v0.1/SPECIFICATION.md",
+      "sha256": "2c72d8c104d8c6db924b3b42291c05431011df3e575e11d6a85f4b6f78cd4432",
+      "bytes": 24538
+    }
+  ],
+  "method": "Read full helper and exact core diff against the frozen input cut; inspect inherited evaluator, cache allowlists, flow and guarded-member semantics, compile admission and callback annotation paths. No candidate source execution in this review.",
+  "blocking_findings": [],
+  "assessments": [
+    {
+      "area": "declaring scope and operators",
+      "result": "The new dispatch tests the expression source module profile, then routes only String/String to the helper. Mixed or numeric plus delegates to unchanged values.binary; other operators stay in inherited Validator.expression."
+    },
+    {
+      "area": "static and dynamic evaluation",
+      "result": "Both operands evaluate once left to right; ctx.abstract forces unknown String even for known literals. Unknown payloads never reach scanning, result allocation, cumulative reservation or dynamic stages."
+    },
+    {
+      "area": "caches",
+      "result": "Both _constant_names and _parameter_plan reject .20 plus and propagate rejection through enclosing children. Actual user calls are outside the builtin allowlists. Derived members fail the parameter-member guard. Immutable param/member bindings retain guarded actual-read replay and their original single computation semantics; they do not reexecute concatenation on each read."
+    },
+    {
+      "area": "resource schedule",
+      "result": "Admission costs one. UTF-8 width uses scalar ord only; each separate operand starts its own 64-byte block count. Incremental scan charges precede each new block and overflow diagnoses the first excessive scalar. Allocation tick costs 1+ceil(total/64), precedes the cumulative cap check, and reserves all logical result bytes before native +. Publication costs one before a Value wrapper is constructed. Empty operands retain all non-scan stages. Previous stage restores in finally."
+    },
+    {
+      "area": "shared authority",
+      "result": "Helper requires a resolved SharedExecutionBudget with admitted entry revision. compile_construction already verifies exact bundle entry revision and explicit execution-profile context; no fallback ledger is created. Counter initializes once on the actual ledger and never refunds. Current host and caller caps, original deadline and callback remain the tick authority."
+    },
+    {
+      "area": "diagnostics and callback identity",
+      "result": "Result/aggregate resource details and repair match the adopted contract; code maps to LANG-009. The binary AST is the diagnostic primary location. New helper rethrows callback BaseException unchanged; compiler synchronizes callback_error so inherited annotation/type translation and host-recursion handlers preserve its identity."
+    },
+    {
+      "area": "provenance",
+      "result": "Both operand calls traverse ordinary expression flow before the result is finished. No synthetic concatenation lineage or writable IDs are introduced. Existing flow merges source dependencies, generated taints, and prior key contributor records."
+    }
+  ],
+  "limits": [
+    "Static review only; independent frozen source/resource/Agent workflows and inherited validation remain required.",
+    "Private helper assumes admitted source scalar Strings; its explicit surrogate rejection is not a new public lexical mode.",
+    "Existing immutable binding memoization is intentionally retained and distinct from prohibited concatenation result folding."
+  ]
+}
