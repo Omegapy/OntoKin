@@ -1,0 +1,93 @@
+{
+  "schema_version": "ontokin.c089-review-validation/1",
+  "checkpoint": "C089",
+  "state": "preflight_passed_integration_pending",
+  "scope": "Documentation and independent mathematical design review only",
+  "baseline_commit": "7b6900baa0357ab96c4639ac5c2ebe4e1791833e",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.39",
+  "recorded_utc": "2026-11-02T20:06:56.157624+00:00",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "returncode": 0,
+      "result": {
+        "sources_verified": 29,
+        "sections_verified": 233,
+        "failures": [],
+        "links": {
+          "documents": 533,
+          "local_links": 3213,
+          "anchors": 95,
+          "external_skipped": 603
+        }
+      }
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "docs/engineering/finite-torque-review-2026-11-02-c089/math/analyse_torque_math.py",
+        "/workspace/scratch/813fccdaf306/c089-validation/preflight01/analytic-reproduction.json"
+      ],
+      "actual_output": "evidence/preflight01/analytic-reproduction.json",
+      "returncode": 0,
+      "arithmetic_assertions": 663,
+      "interpretation": "Ideal mathematical design checks; original nondyadic diagnostic retained, not a product corpus"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "docs/engineering/finite-torque-review-2026-11-02-c089/math/analyse_canonical_rounding.py",
+        "/workspace/scratch/813fccdaf306/c089-validation/preflight01/canonical-reproduction.json"
+      ],
+      "actual_output": "evidence/preflight01/canonical-reproduction.json",
+      "returncode": 0,
+      "arithmetic_assertions": 16,
+      "interpretation": "Formula-level canonical binary64/dyadic witnesses; no production execution"
+    }
+  ],
+  "runtime_tests_changed": false,
+  "production_runtime_changed": false,
+  "earlier_tests_and_tools_changed": false,
+  "new_torque_runtime_tested": false,
+  "torque_contract_adopted": false,
+  "release_input_freeze": false,
+  "full_runtime_cohort_rerun": false,
+  "full_runtime_cohort_not_required_reason": "Changed production/runtime/test/tool/workflow scope is empty; adopted policy requires documentation preservation/navigation for this documentation review increment",
+  "full_product_acceptance": false,
+  "source_cut_note": "Exact uncommitted preflight documentation hashes and base commit are retained; final candidate and resulting-main checks must bind their own later source cuts",
+  "retained_failure_dispositions": "Original full C088 recovery remains failed; exact source/native recovery passed separately; original mathematical diagnostic remains unchanged and current correction is separately identified",
+  "files": [
+    {
+      "path": "evidence/preflight01/analytic-reproduction.json",
+      "bytes": 111204,
+      "sha256": "9b2766cdcd73b38b1ba8ec56df0ac71f4ee529f6e2abe35a2e8875a6d082bfbd"
+    },
+    {
+      "path": "evidence/preflight01/canonical-reproduction.json",
+      "bytes": 5220,
+      "sha256": "d9e7bc7a1088a63ea3be3def367040cce80a7ceac9fd6acfd16f1d8a409124eb"
+    },
+    {
+      "path": "evidence/preflight01/documentation.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence/preflight01/documentation.stdout.txt",
+      "bytes": 6606,
+      "sha256": "b328ab39d783c6667446f48e53b4583ec7e2b4b013328d52720d097580a3b707"
+    },
+    {
+      "path": "evidence/preflight01/source-cut.json",
+      "bytes": 9806,
+      "sha256": "733d9b66344790569aab0af69e9687ce6c68e0efaa1e8f872a22bef1a56ff2a7"
+    }
+  ]
+}

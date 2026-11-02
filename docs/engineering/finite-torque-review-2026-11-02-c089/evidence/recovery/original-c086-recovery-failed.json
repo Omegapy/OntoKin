@@ -1,0 +1,56 @@
+{
+  "argv": [
+    "/workspace/scratch/813fccdaf306/c088-recovered/ontokin-c087-transport-uscpautc/C086-tools/recover_handoff.py",
+    "recover",
+    "--delivery",
+    "/workspace/scratch/813fccdaf306/c088-recovered/ontokin-c087-transport-uscpautc/OntoKin_C086_Complete_Handoff_2026-11-02.zip",
+    "--destination",
+    "/workspace/scratch/813fccdaf306/c088-recovered/recovered",
+    "--receipt",
+    "/workspace/scratch/813fccdaf306/c088-recovered/ontokin-c087-transport-uscpautc/records/c086-recovery-receipt.json"
+  ],
+  "code_sha256": "0a4401ca05eb5a0b23433e38f36f73f02d6d6f1be6aab20e91a92e0e081aa67c",
+  "delivery_before": {
+    "container_identity": {
+      "bytes": 536729657,
+      "sha256": "6a49c23b59796e2c3f42f525f949141755e8638bce6ff7d7b49d2407ee8ba6f3"
+    },
+    "every_member_size_hash_mode_verified": true,
+    "exact_original_input_pins_verified": true,
+    "executing_helpers_match_delivery": true,
+    "files": 81,
+    "kind": "zip",
+    "manifest_bytes": 17126,
+    "manifest_sha256": "a51d03c0e40f5f4b53612b563cd84e54ea08d7b13dfc63ab97a68eaf46a53816",
+    "member_bytes": 537158304,
+    "status": "passed"
+  },
+  "destination": "/workspace/scratch/813fccdaf306/c088-recovered/recovered",
+  "elapsed_seconds": 41.494011762999435,
+  "exception": "ValueError",
+  "finished_utc": "2026-11-02T19:58:38.472135+00:00",
+  "inherited_transport_verification": {
+    "every_member_hash_size_mode_verified": true,
+    "expanded_bytes": 519300539,
+    "files": 12,
+    "manifest_sha256": "809abf9ceb4ec52aa6e682f234f10a17b76b418c67888c717bc1dcf61924f78d",
+    "prefix": "OntoKin_C085_Delivery/"
+  },
+  "network_used": false,
+  "operation": "recover",
+  "original_c085_outer_reencoded": false,
+  "original_c085_zip": {
+    "bytes": 519145523,
+    "exact_zip_available_without_reencoding": true,
+    "member": "payload/OntoKin_C085_Complete_Handoff_2026-11-01.zip",
+    "retained_container": "/workspace/scratch/813fccdaf306/c088-recovered/ontokin-c087-transport-uscpautc/OntoKin_C086_Complete_Handoff_2026-11-02.zip",
+    "sha256": "4755226851136250c8e1dff3972e17032da1a991ed61bc0447bd1520a67dc913"
+  },
+  "partial_outputs_preserved": true,
+  "product_execution_performed": false,
+  "reason": "File inventory differs: missing=[], extra=['evidence/current/acceptance-attempt01/producer/agent/.transcript.jsonl.u81P4B']",
+  "schema_version": "ontokin.c086-delivery-operation/1",
+  "started_utc": "2026-11-02T19:57:56.977696+00:00",
+  "status": "failed",
+  "traceback": "Traceback (most recent call last):\n  File \"/workspace/scratch/813fccdaf306/c088-recovered/ontokin-c087-transport-uscpautc/C086-tools/recover_handoff.py\", line 235, in main\n    else:recover(args,delivery,report)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/813fccdaf306/c088-recovered/ontokin-c087-transport-uscpautc/C086-tools/recover_handoff.py\", line 181, in recover\n    canonical=destination/'C085-canonical';report['canonical_recovery']=member_stream.decode_members(stream,old_stream_pins(),canonical)\n                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/813fccdaf306/c088-recovered/ontokin-c087-transport-uscpautc/C086-tools/inherited_tools/member_stream.py\", line 236, in decode_members\n    verification = base.verify_directory(target.path)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/scratch/813fccdaf306/c088-recovered/ontokin-c087-transport-uscpautc/C086-tools/inherited_tools/canonical_verify_handoff.py\", line 190, in verify_directory\n    require(actual_files == expected,\n  File \"/workspace/scratch/813fccdaf306/c088-recovered/ontokin-c087-transport-uscpautc/C086-tools/inherited_tools/canonical_verify_handoff.py\", line 49, in require\n    raise ValueError(message)\nValueError: File inventory differs: missing=[], extra=['evidence/current/acceptance-attempt01/producer/agent/.transcript.jsonl.u81P4B']\n"
+}
