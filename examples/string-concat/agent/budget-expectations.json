@@ -1,0 +1,24 @@
+{
+  "schema_version": "ontokin.c087-budget-inputs/0.1",
+  "per_result_utf8_bytes": 65536,
+  "cumulative_result_utf8_bytes": 4194304,
+  "concat_charge_formula": "3+ceil(L/64)+ceil(R/64)+ceil((L+R)/64)",
+  "ordinary_host": {
+    "max_operations": 100000,
+    "max_elapsed_ms": 30000
+  },
+  "independently_current_high_host": {
+    "max_operations": 400000,
+    "max_elapsed_ms": 80000
+  },
+  "caller_caps_only_reduce": true,
+  "four_real_string_stages": [
+    "string_concat_admission",
+    "string_concat_scan",
+    "string_concat_allocation",
+    "string_concat_publication"
+  ],
+  "source_prefix_body": "self.prefix + old_name",
+  "actual_entrypoint_and_ledger_required": true,
+  "no_counter_preloading_or_clock_replacement": true
+}

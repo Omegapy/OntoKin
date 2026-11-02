@@ -1,0 +1,54 @@
+ontokin "0.20";
+module Panels @ "panels";
+profile "string-concat-0.1";
+import dims @ "dims-import" from "fixture.pair-dimensions" version "1.0.0" digest "sha256:1407270b58800e4bc9872314950cbafcc9e76ca074a59bb31043b2ae2cde0499";
+import paint @ "paint-import" from "fixture.pair-finishes" version "1.0.0" digest "sha256:38b11a672a36a4082f63fb557e5c13994590646617af16d5c26cea2dd2d24e67";
+
+
+import names @ "names-import" from "fixture.rekey-catalog" version "1.0.0" digest "sha256:6bb2ea8b393b36a9e8ed463be0c66c0a8677a600976b6e0a96154107e887090f";
+
+public class Panel @ "panel" {
+    public param width @ "width": Length = 1[m];
+    public param coat @ "coat": SurfaceMaterial = surface_material(rgba(0.25,0.5,0.75,1),0,0.7);
+    public param parent_frame @ "parent-frame": FrameRef = world;
+    public param mount_x @ "mount-x": Length = 0[m];
+    public follow mounting @ "mounting" {
+        parent = self.parent_frame;
+        child = self;
+        offset = pose(self.parent_frame, vec3(self.mount_x, 0[m], 0[m]), quat(1, 0, 0, 0));
+    }
+    geometry = texture_surface(extrude(keyed<PolygonVertex> {
+        "v0": polygon_vertex(0, planar_point(0[m], 0[m]), "side"),
+        "v1": polygon_vertex(10, planar_point(self.width, 0[m]), "side"),
+        "v2": polygon_vertex(20, planar_point(self.width, 2[m]), "side"),
+        "v3": polygon_vertex(30, planar_point(0[m], 2[m]), "side")
+    }, keyed<SurfaceMaterial> {
+        "bottom": surface_material(rgba(1, 1, 1, 1), 0, 0.7),
+        "side": self.coat,
+        "top": surface_material(rgba(1, 1, 1, 1), 0, 0.7)
+    }, 0.25[m], "bottom", "top"), keyed<TextureBinding> {
+        "top": texture_binding(png_asset("label", "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"), planar_uv(vec3(0[m], 0[m], 0[m]),
+            vec3(0.5[m^-1], 0[m^-1], 0[m^-1]), vec3(0[m^-1], -0.5[m^-1], 0[m^-1]), 0, 1))
+    });
+    physical = no_body();
+}
+public class PanelGroup @ "panel-group" {
+    public param prefix @ "prefix": String = "front.";
+    public param member_names @ "member-names": Keyed<String> = names.members();
+    public param left_width @ "left-width": Length = 1[m];
+    public param warm_finish @ "warm-finish": Bool = false;
+    public param dimensions @ "dimensions": Keyed<Length> = merge_keyed<Length>(dims.widths(self.left_width), keyed<Length>{"middle":1.5[m]});
+    public param finishes @ "finishes": Keyed<SurfaceMaterial> = merge_keyed<SurfaceMaterial>(paint.coats(self.warm_finish), keyed<SurfaceMaterial>{"middle":surface_material(rgba(0.25,0.5,0.75,1),0,0.7)});
+    public param mounts @ "mounts": Keyed<Length> = keyed<Length>{"left":0[m],"middle":2[m],"right":4[m]};
+    public derive original_members @ "original-members": Keyed<String> = zip_keyed<String,String,String>(self.member_names,self.member_names,(pair_key,left_name,right_name)->if left_name == right_name then left_name else right_name);
+    public derive renamed @ "renamed": Keyed<String> = rekey_keyed<String>(self.original_members,(old_name,original_name)->self.prefix + old_name);
+    public derive selected_total @ "selected-total": Length = reduce_keyed<Length>(self.dimensions,0[m],(acc,rk,rv)->acc+rv);
+    public parts panels @ "panels": Panel for (panel_key,original_key) in self.renamed {
+        width = self.dimensions[original_key];
+        coat = self.finishes[original_key];
+        parent_frame = self.frame;
+        mount_x = self.mounts[original_key];
+    }
+    geometry = if self.selected_total >= 0[m] then empty() else empty();
+    physical = no_body();
+}

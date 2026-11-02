@@ -1,0 +1,1077 @@
+{
+  "schema_version": "ontokin.c087-runtime-boundary-inputs/0.1",
+  "state": "predetermined_requirements_not_execution",
+  "candidate_observations_used": false,
+  "staged_taint_guards": [
+    {
+      "name": "cached-empty-generated-string-taint",
+      "evidence_scope": "Staged internal guard evidence; not a full public compile or Agent outcome",
+      "candidate_output_used": false,
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "expected_copied_string": "leaf.",
+      "expected_real_concat_calls_before_guard": 1,
+      "expected_added_concat_operations": 5,
+      "expected_reserved_utf8_bytes_before_guard": 5,
+      "expected_reserved_utf8_bytes_after_refusal": 5,
+      "expected_new_concat_calls_on_cached_read": 0,
+      "required_taint_paths": [
+        "shape.family.leaves"
+      ],
+      "setup_sequence": [
+        "Admit one actual source request ledger for the exact supplied entry revision",
+        "Instantiate ConstructionCompiler with real linked source and ExecutionConstructionBudget",
+        "Call bind and check_static_types",
+        "Register the original scene object and owned Family through ordinary _register_tree exactly as run() does",
+        "Call _ensure_collection(\"shape.family.leaves\") outside an active shape",
+        "Call field(\"shape\",\"copied\",compiler.program); verify actual immutable String leaf. and one completed concat with five reserved bytes",
+        "Call _ensure_collection(\"shape.bad\") on the same compiler and same admitted ledger",
+        "Capture original inherited guard refusal and verify established binding is not recomputed"
+      ],
+      "forbidden_setup": [
+        "Do not assign memo entries",
+        "Do not inject Value objects or taints",
+        "Do not mutate _shape_stack, collection state, clock, operation counters or reservation counters",
+        "Do not substitute a custom ledger decision or prebuilt diagnostic"
+      ],
+      "guard_contract": {
+        "code": "OKL-E-DEPENDENCY-CYCLE",
+        "phase": "elaboration",
+        "category": "invalid",
+        "message": "Collection shape depends on a generated collection or another generated occurrence.",
+        "repair": "Revise the indicated declaration or expression to satisfy the stated core rule.",
+        "rule_ids": [
+          "LANG-009"
+        ],
+        "details_fixed": {
+          "construction_rule": "CON-007",
+          "shape_owner": "shape"
+        },
+        "generated_dependency_must_be_one_of": [
+          "shape.family.leaves"
+        ],
+        "reason_for_finite_alternatives": "The ordinary prewarm collection read marks shape.family.leaves. The generated leaf member adds no separate mark outside an active shape; replay therefore has this one exact inherited taint.",
+        "related": []
+      },
+      "source": {
+        "file_manifest": "runtime-boundaries/cached-empty-generated-string-taint.files.json",
+        "program_revision": "sha256:0cbae69d61ab121e2ab3491fd4a4871897a4280c25d8a9fe3882e58139eb5d09",
+        "canonical_manifest": {
+          "schema_version": "ontokin.bundle/0.2",
+          "entry_source_id": "entry",
+          "units": [
+            {
+              "source_id": "entry",
+              "package_id": null,
+              "version": null,
+              "filename": "main.ok",
+              "source_revision": "sha256:12c4b9f4a353a1991fbaf95759714c85f9b1acc969572566e08e44211ac1d5c2"
+            }
+          ],
+          "assets": []
+        },
+        "source_revision": "sha256:12c4b9f4a353a1991fbaf95759714c85f9b1acc969572566e08e44211ac1d5c2",
+        "guard_primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:12c4b9f4a353a1991fbaf95759714c85f9b1acc969572566e08e44211ac1d5c2",
+          "filename": "main.ok",
+          "start_byte": 780,
+          "end_byte": 791,
+          "element_id": [
+            "string-concat-probe",
+            "demo",
+            "shape",
+            "copied"
+          ]
+        }
+      },
+      "control": {
+        "file_manifest": "runtime-boundaries/cached-empty-generated-string-taint-control.files.json",
+        "program_revision": "sha256:8e8b3db8f52f00b080c232cb000c868da7bf8fe3c746eb6d23a8494acfde9d79",
+        "canonical_manifest": {
+          "schema_version": "ontokin.bundle/0.2",
+          "entry_source_id": "entry",
+          "units": [
+            {
+              "source_id": "entry",
+              "package_id": null,
+              "version": null,
+              "filename": "main.ok",
+              "source_revision": "sha256:f6692a74cd9e5acf7ccdee3b01dd97302d6dfa9bf9637ac46b94a199649af2b1"
+            }
+          ],
+          "assets": []
+        },
+        "source_revision": "sha256:f6692a74cd9e5acf7ccdee3b01dd97302d6dfa9bf9637ac46b94a199649af2b1",
+        "guard_primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:f6692a74cd9e5acf7ccdee3b01dd97302d6dfa9bf9637ac46b94a199649af2b1",
+          "filename": "main.ok",
+          "start_byte": 813,
+          "end_byte": 824,
+          "element_id": [
+            "string-concat-probe",
+            "demo",
+            "shape",
+            "copied"
+          ]
+        }
+      }
+    },
+    {
+      "name": "condition-only-empty-generated-string-taint",
+      "evidence_scope": "Staged internal guard evidence; not a full public compile or Agent outcome",
+      "candidate_output_used": false,
+      "host_policy": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "expected_copied_string": "leaf.",
+      "expected_real_concat_calls_before_guard": 1,
+      "expected_added_concat_operations": 5,
+      "expected_reserved_utf8_bytes_before_guard": 5,
+      "expected_reserved_utf8_bytes_after_refusal": 5,
+      "expected_new_concat_calls_on_cached_read": 0,
+      "required_taint_paths": [
+        "shape.family.leaves"
+      ],
+      "setup_sequence": [
+        "Admit one actual source request ledger for the exact supplied entry revision",
+        "Instantiate ConstructionCompiler with real linked source and ExecutionConstructionBudget",
+        "Call bind and check_static_types",
+        "Register the original scene object and owned Family through ordinary _register_tree exactly as run() does",
+        "Call _ensure_collection(\"shape.family.leaves\") outside an active shape",
+        "Call field(\"shape\",\"copied\",compiler.program); verify actual immutable String leaf. and one completed concat with five reserved bytes",
+        "Call _ensure_collection(\"shape.bad\") on the same compiler and same admitted ledger",
+        "Capture original inherited guard refusal and verify established binding is not recomputed"
+      ],
+      "forbidden_setup": [
+        "Do not assign memo entries",
+        "Do not inject Value objects or taints",
+        "Do not mutate _shape_stack, collection state, clock, operation counters or reservation counters",
+        "Do not substitute a custom ledger decision or prebuilt diagnostic"
+      ],
+      "guard_contract": {
+        "code": "OKL-E-DEPENDENCY-CYCLE",
+        "phase": "elaboration",
+        "category": "invalid",
+        "message": "Collection shape depends on a generated collection or another generated occurrence.",
+        "repair": "Revise the indicated declaration or expression to satisfy the stated core rule.",
+        "rule_ids": [
+          "LANG-009"
+        ],
+        "details_fixed": {
+          "construction_rule": "CON-007",
+          "shape_owner": "shape"
+        },
+        "generated_dependency_must_be_one_of": [
+          "shape.family.leaves"
+        ],
+        "reason_for_finite_alternatives": "The ordinary prewarm collection read marks shape.family.leaves. The generated leaf member adds no separate mark outside an active shape; replay therefore has this one exact inherited taint.",
+        "related": []
+      },
+      "source": {
+        "file_manifest": "runtime-boundaries/condition-only-empty-generated-string-taint.files.json",
+        "program_revision": "sha256:c3b77e401262d5a11b89a4df594d48946da52c17d731b6deb9d23e102e7a26c9",
+        "canonical_manifest": {
+          "schema_version": "ontokin.bundle/0.2",
+          "entry_source_id": "entry",
+          "units": [
+            {
+              "source_id": "entry",
+              "package_id": null,
+              "version": null,
+              "filename": "main.ok",
+              "source_revision": "sha256:cddfa5036b60cc274ad1b42086d52a446973137582f1d9bea60bea18ddb35449"
+            }
+          ],
+          "assets": []
+        },
+        "source_revision": "sha256:cddfa5036b60cc274ad1b42086d52a446973137582f1d9bea60bea18ddb35449",
+        "guard_primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:cddfa5036b60cc274ad1b42086d52a446973137582f1d9bea60bea18ddb35449",
+          "filename": "main.ok",
+          "start_byte": 787,
+          "end_byte": 798,
+          "element_id": [
+            "string-concat-probe",
+            "demo",
+            "shape",
+            "copied"
+          ]
+        }
+      },
+      "control": {
+        "file_manifest": "runtime-boundaries/condition-only-empty-generated-string-taint-control.files.json",
+        "program_revision": "sha256:511ce44c5c1e03bd4b8baf76ab613b59d3c80b23a15027c95c03835737c728b3",
+        "canonical_manifest": {
+          "schema_version": "ontokin.bundle/0.2",
+          "entry_source_id": "entry",
+          "units": [
+            {
+              "source_id": "entry",
+              "package_id": null,
+              "version": null,
+              "filename": "main.ok",
+              "source_revision": "sha256:7916b114b531101869f69e4a5fde7145e427ba3d986e7cd69f7aaa78c17a80bf"
+            }
+          ],
+          "assets": []
+        },
+        "source_revision": "sha256:7916b114b531101869f69e4a5fde7145e427ba3d986e7cd69f7aaa78c17a80bf",
+        "guard_primary": {
+          "source_id": "entry",
+          "source_revision": "sha256:7916b114b531101869f69e4a5fde7145e427ba3d986e7cd69f7aaa78c17a80bf",
+          "filename": "main.ok",
+          "start_byte": 820,
+          "end_byte": 831,
+          "element_id": [
+            "string-concat-probe",
+            "demo",
+            "shape",
+            "copied"
+          ]
+        }
+      }
+    }
+  ],
+  "direct_operation_boundaries": [
+    {
+      "name": "empty-both",
+      "source_case": "empty-both",
+      "expected_charge": {
+        "left_utf8_bytes": 0,
+        "right_utf8_bytes": 0,
+        "result_utf8_bytes": 0,
+        "admission": 1,
+        "scan": 0,
+        "allocation": 1,
+        "publication": 1,
+        "total": 3,
+        "cumulative_result_reservation_bytes": 0
+      },
+      "scope": "Direct actual internal bounded String operation on one freshly authorized real ledger, distinct from complete source workflow",
+      "private_entrypoint": "ontokin.string_concat.concat_strings(left:str,right:str,node,ledger:SharedExecutionBudget)->str",
+      "reservation_field": "string_concat_bytes",
+      "expected_header_admission_operations": 14,
+      "header_charge_basis": "Each supplied ordinary header emits 12 prefix tokens through the first public declaration, within two started 64-byte blocks; unchanged C086 control admission independently confirms 14. No candidate totals are used.",
+      "stage_end_operation_offsets": [
+        1,
+        2,
+        3
+      ],
+      "caller_operation_caps": [
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "operation_caps": "Each listed cap creates a fresh ledger with the cap set before real source admission. Assert exact admission cost first, then invoke the real helper. Predict the first stage whose cumulative debit exceeds cap from the frozen schedule; never alter an existing counter or cap.",
+      "schedule": [
+        {
+          "stage": "string_concat_admission",
+          "ticks": 1,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_scan",
+          "operand": "left",
+          "ticks": 0,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_scan",
+          "operand": "right",
+          "ticks": 0,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_allocation",
+          "ticks": 1,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_publication",
+          "ticks": 1,
+          "amount_per_tick": 1
+        }
+      ],
+      "absolute_ledger_setup_must_be_source_derived": true,
+      "candidate_total_operations_not_an_oracle": true
+    },
+    {
+      "name": "empty-left",
+      "source_case": "empty-left",
+      "expected_charge": {
+        "left_utf8_bytes": 0,
+        "right_utf8_bytes": 1,
+        "result_utf8_bytes": 1,
+        "admission": 1,
+        "scan": 1,
+        "allocation": 2,
+        "publication": 1,
+        "total": 5,
+        "cumulative_result_reservation_bytes": 1
+      },
+      "scope": "Direct actual internal bounded String operation on one freshly authorized real ledger, distinct from complete source workflow",
+      "private_entrypoint": "ontokin.string_concat.concat_strings(left:str,right:str,node,ledger:SharedExecutionBudget)->str",
+      "reservation_field": "string_concat_bytes",
+      "expected_header_admission_operations": 14,
+      "header_charge_basis": "Each supplied ordinary header emits 12 prefix tokens through the first public declaration, within two started 64-byte blocks; unchanged C086 control admission independently confirms 14. No candidate totals are used.",
+      "stage_end_operation_offsets": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "caller_operation_caps": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "operation_caps": "Each listed cap creates a fresh ledger with the cap set before real source admission. Assert exact admission cost first, then invoke the real helper. Predict the first stage whose cumulative debit exceeds cap from the frozen schedule; never alter an existing counter or cap.",
+      "schedule": [
+        {
+          "stage": "string_concat_admission",
+          "ticks": 1,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_scan",
+          "operand": "left",
+          "ticks": 0,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_scan",
+          "operand": "right",
+          "ticks": 1,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_allocation",
+          "ticks": 1,
+          "amount_per_tick": 2
+        },
+        {
+          "stage": "string_concat_publication",
+          "ticks": 1,
+          "amount_per_tick": 1
+        }
+      ],
+      "absolute_ledger_setup_must_be_source_derived": true,
+      "candidate_total_operations_not_an_oracle": true
+    },
+    {
+      "name": "empty-right",
+      "source_case": "empty-right",
+      "expected_charge": {
+        "left_utf8_bytes": 1,
+        "right_utf8_bytes": 0,
+        "result_utf8_bytes": 1,
+        "admission": 1,
+        "scan": 1,
+        "allocation": 2,
+        "publication": 1,
+        "total": 5,
+        "cumulative_result_reservation_bytes": 1
+      },
+      "scope": "Direct actual internal bounded String operation on one freshly authorized real ledger, distinct from complete source workflow",
+      "private_entrypoint": "ontokin.string_concat.concat_strings(left:str,right:str,node,ledger:SharedExecutionBudget)->str",
+      "reservation_field": "string_concat_bytes",
+      "expected_header_admission_operations": 14,
+      "header_charge_basis": "Each supplied ordinary header emits 12 prefix tokens through the first public declaration, within two started 64-byte blocks; unchanged C086 control admission independently confirms 14. No candidate totals are used.",
+      "stage_end_operation_offsets": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "caller_operation_caps": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "operation_caps": "Each listed cap creates a fresh ledger with the cap set before real source admission. Assert exact admission cost first, then invoke the real helper. Predict the first stage whose cumulative debit exceeds cap from the frozen schedule; never alter an existing counter or cap.",
+      "schedule": [
+        {
+          "stage": "string_concat_admission",
+          "ticks": 1,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_scan",
+          "operand": "left",
+          "ticks": 1,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_scan",
+          "operand": "right",
+          "ticks": 0,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_allocation",
+          "ticks": 1,
+          "amount_per_tick": 2
+        },
+        {
+          "stage": "string_concat_publication",
+          "ticks": 1,
+          "amount_per_tick": 1
+        }
+      ],
+      "absolute_ledger_setup_must_be_source_derived": true,
+      "candidate_total_operations_not_an_oracle": true
+    },
+    {
+      "name": "literal-prefix",
+      "source_case": "literal-prefix",
+      "expected_charge": {
+        "left_utf8_bytes": 3,
+        "right_utf8_bytes": 1,
+        "result_utf8_bytes": 4,
+        "admission": 1,
+        "scan": 2,
+        "allocation": 2,
+        "publication": 1,
+        "total": 6,
+        "cumulative_result_reservation_bytes": 4
+      },
+      "scope": "Direct actual internal bounded String operation on one freshly authorized real ledger, distinct from complete source workflow",
+      "private_entrypoint": "ontokin.string_concat.concat_strings(left:str,right:str,node,ledger:SharedExecutionBudget)->str",
+      "reservation_field": "string_concat_bytes",
+      "expected_header_admission_operations": 14,
+      "header_charge_basis": "Each supplied ordinary header emits 12 prefix tokens through the first public declaration, within two started 64-byte blocks; unchanged C086 control admission independently confirms 14. No candidate totals are used.",
+      "stage_end_operation_offsets": [
+        1,
+        2,
+        3,
+        5,
+        6
+      ],
+      "caller_operation_caps": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "operation_caps": "Each listed cap creates a fresh ledger with the cap set before real source admission. Assert exact admission cost first, then invoke the real helper. Predict the first stage whose cumulative debit exceeds cap from the frozen schedule; never alter an existing counter or cap.",
+      "schedule": [
+        {
+          "stage": "string_concat_admission",
+          "ticks": 1,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_scan",
+          "operand": "left",
+          "ticks": 1,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_scan",
+          "operand": "right",
+          "ticks": 1,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_allocation",
+          "ticks": 1,
+          "amount_per_tick": 2
+        },
+        {
+          "stage": "string_concat_publication",
+          "ticks": 1,
+          "amount_per_tick": 1
+        }
+      ],
+      "absolute_ledger_setup_must_be_source_derived": true,
+      "candidate_total_operations_not_an_oracle": true
+    },
+    {
+      "name": "charge-block-63",
+      "source_case": "charge-block-63",
+      "expected_charge": {
+        "left_utf8_bytes": 63,
+        "right_utf8_bytes": 1,
+        "result_utf8_bytes": 64,
+        "admission": 1,
+        "scan": 2,
+        "allocation": 2,
+        "publication": 1,
+        "total": 6,
+        "cumulative_result_reservation_bytes": 64
+      },
+      "scope": "Direct actual internal bounded String operation on one freshly authorized real ledger, distinct from complete source workflow",
+      "private_entrypoint": "ontokin.string_concat.concat_strings(left:str,right:str,node,ledger:SharedExecutionBudget)->str",
+      "reservation_field": "string_concat_bytes",
+      "expected_header_admission_operations": 14,
+      "header_charge_basis": "Each supplied ordinary header emits 12 prefix tokens through the first public declaration, within two started 64-byte blocks; unchanged C086 control admission independently confirms 14. No candidate totals are used.",
+      "stage_end_operation_offsets": [
+        1,
+        2,
+        3,
+        5,
+        6
+      ],
+      "caller_operation_caps": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "operation_caps": "Each listed cap creates a fresh ledger with the cap set before real source admission. Assert exact admission cost first, then invoke the real helper. Predict the first stage whose cumulative debit exceeds cap from the frozen schedule; never alter an existing counter or cap.",
+      "schedule": [
+        {
+          "stage": "string_concat_admission",
+          "ticks": 1,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_scan",
+          "operand": "left",
+          "ticks": 1,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_scan",
+          "operand": "right",
+          "ticks": 1,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_allocation",
+          "ticks": 1,
+          "amount_per_tick": 2
+        },
+        {
+          "stage": "string_concat_publication",
+          "ticks": 1,
+          "amount_per_tick": 1
+        }
+      ],
+      "absolute_ledger_setup_must_be_source_derived": true,
+      "candidate_total_operations_not_an_oracle": true
+    },
+    {
+      "name": "charge-block-64",
+      "source_case": "charge-block-64",
+      "expected_charge": {
+        "left_utf8_bytes": 64,
+        "right_utf8_bytes": 1,
+        "result_utf8_bytes": 65,
+        "admission": 1,
+        "scan": 2,
+        "allocation": 3,
+        "publication": 1,
+        "total": 7,
+        "cumulative_result_reservation_bytes": 65
+      },
+      "scope": "Direct actual internal bounded String operation on one freshly authorized real ledger, distinct from complete source workflow",
+      "private_entrypoint": "ontokin.string_concat.concat_strings(left:str,right:str,node,ledger:SharedExecutionBudget)->str",
+      "reservation_field": "string_concat_bytes",
+      "expected_header_admission_operations": 14,
+      "header_charge_basis": "Each supplied ordinary header emits 12 prefix tokens through the first public declaration, within two started 64-byte blocks; unchanged C086 control admission independently confirms 14. No candidate totals are used.",
+      "stage_end_operation_offsets": [
+        1,
+        2,
+        3,
+        6,
+        7
+      ],
+      "caller_operation_caps": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "operation_caps": "Each listed cap creates a fresh ledger with the cap set before real source admission. Assert exact admission cost first, then invoke the real helper. Predict the first stage whose cumulative debit exceeds cap from the frozen schedule; never alter an existing counter or cap.",
+      "schedule": [
+        {
+          "stage": "string_concat_admission",
+          "ticks": 1,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_scan",
+          "operand": "left",
+          "ticks": 1,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_scan",
+          "operand": "right",
+          "ticks": 1,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_allocation",
+          "ticks": 1,
+          "amount_per_tick": 3
+        },
+        {
+          "stage": "string_concat_publication",
+          "ticks": 1,
+          "amount_per_tick": 1
+        }
+      ],
+      "absolute_ledger_setup_must_be_source_derived": true,
+      "candidate_total_operations_not_an_oracle": true
+    },
+    {
+      "name": "charge-block-65",
+      "source_case": "charge-block-65",
+      "expected_charge": {
+        "left_utf8_bytes": 65,
+        "right_utf8_bytes": 1,
+        "result_utf8_bytes": 66,
+        "admission": 1,
+        "scan": 3,
+        "allocation": 3,
+        "publication": 1,
+        "total": 8,
+        "cumulative_result_reservation_bytes": 66
+      },
+      "scope": "Direct actual internal bounded String operation on one freshly authorized real ledger, distinct from complete source workflow",
+      "private_entrypoint": "ontokin.string_concat.concat_strings(left:str,right:str,node,ledger:SharedExecutionBudget)->str",
+      "reservation_field": "string_concat_bytes",
+      "expected_header_admission_operations": 14,
+      "header_charge_basis": "Each supplied ordinary header emits 12 prefix tokens through the first public declaration, within two started 64-byte blocks; unchanged C086 control admission independently confirms 14. No candidate totals are used.",
+      "stage_end_operation_offsets": [
+        1,
+        3,
+        4,
+        7,
+        8
+      ],
+      "caller_operation_caps": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "operation_caps": "Each listed cap creates a fresh ledger with the cap set before real source admission. Assert exact admission cost first, then invoke the real helper. Predict the first stage whose cumulative debit exceeds cap from the frozen schedule; never alter an existing counter or cap.",
+      "schedule": [
+        {
+          "stage": "string_concat_admission",
+          "ticks": 1,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_scan",
+          "operand": "left",
+          "ticks": 2,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_scan",
+          "operand": "right",
+          "ticks": 1,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_allocation",
+          "ticks": 1,
+          "amount_per_tick": 3
+        },
+        {
+          "stage": "string_concat_publication",
+          "ticks": 1,
+          "amount_per_tick": 1
+        }
+      ],
+      "absolute_ledger_setup_must_be_source_derived": true,
+      "candidate_total_operations_not_an_oracle": true
+    },
+    {
+      "name": "scalar-crosses-left-block",
+      "source_case": "scalar-crosses-left-block",
+      "expected_charge": {
+        "left_utf8_bytes": 67,
+        "right_utf8_bytes": 0,
+        "result_utf8_bytes": 67,
+        "admission": 1,
+        "scan": 2,
+        "allocation": 3,
+        "publication": 1,
+        "total": 7,
+        "cumulative_result_reservation_bytes": 67
+      },
+      "scope": "Direct actual internal bounded String operation on one freshly authorized real ledger, distinct from complete source workflow",
+      "private_entrypoint": "ontokin.string_concat.concat_strings(left:str,right:str,node,ledger:SharedExecutionBudget)->str",
+      "reservation_field": "string_concat_bytes",
+      "expected_header_admission_operations": 14,
+      "header_charge_basis": "Each supplied ordinary header emits 12 prefix tokens through the first public declaration, within two started 64-byte blocks; unchanged C086 control admission independently confirms 14. No candidate totals are used.",
+      "stage_end_operation_offsets": [
+        1,
+        3,
+        6,
+        7
+      ],
+      "caller_operation_caps": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "operation_caps": "Each listed cap creates a fresh ledger with the cap set before real source admission. Assert exact admission cost first, then invoke the real helper. Predict the first stage whose cumulative debit exceeds cap from the frozen schedule; never alter an existing counter or cap.",
+      "schedule": [
+        {
+          "stage": "string_concat_admission",
+          "ticks": 1,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_scan",
+          "operand": "left",
+          "ticks": 2,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_scan",
+          "operand": "right",
+          "ticks": 0,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_allocation",
+          "ticks": 1,
+          "amount_per_tick": 3
+        },
+        {
+          "stage": "string_concat_publication",
+          "ticks": 1,
+          "amount_per_tick": 1
+        }
+      ],
+      "absolute_ledger_setup_must_be_source_derived": true,
+      "candidate_total_operations_not_an_oracle": true
+    },
+    {
+      "name": "result-N",
+      "source_case": "result-N",
+      "expected_charge": {
+        "left_utf8_bytes": 32768,
+        "right_utf8_bytes": 32768,
+        "result_utf8_bytes": 65536,
+        "admission": 1,
+        "scan": 1024,
+        "allocation": 1025,
+        "publication": 1,
+        "total": 2051,
+        "cumulative_result_reservation_bytes": 65536
+      },
+      "scope": "Direct actual internal bounded String operation on one freshly authorized real ledger, distinct from complete source workflow",
+      "private_entrypoint": "ontokin.string_concat.concat_strings(left:str,right:str,node,ledger:SharedExecutionBudget)->str",
+      "reservation_field": "string_concat_bytes",
+      "expected_header_admission_operations": 14,
+      "header_charge_basis": "Each supplied ordinary header emits 12 prefix tokens through the first public declaration, within two started 64-byte blocks; unchanged C086 control admission independently confirms 14. No candidate totals are used.",
+      "stage_end_operation_offsets": [
+        1,
+        513,
+        1025,
+        2050,
+        2051
+      ],
+      "caller_operation_caps": [
+        14,
+        15,
+        16,
+        526,
+        527,
+        528,
+        1038,
+        1039,
+        1040,
+        2063,
+        2064,
+        2065,
+        2066
+      ],
+      "operation_caps": "Each listed cap creates a fresh ledger with the cap set before real source admission. Assert exact admission cost first, then invoke the real helper. Predict the first stage whose cumulative debit exceeds cap from the frozen schedule; never alter an existing counter or cap.",
+      "schedule": [
+        {
+          "stage": "string_concat_admission",
+          "ticks": 1,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_scan",
+          "operand": "left",
+          "ticks": 512,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_scan",
+          "operand": "right",
+          "ticks": 512,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_allocation",
+          "ticks": 1,
+          "amount_per_tick": 1025
+        },
+        {
+          "stage": "string_concat_publication",
+          "ticks": 1,
+          "amount_per_tick": 1
+        }
+      ],
+      "absolute_ledger_setup_must_be_source_derived": true,
+      "candidate_total_operations_not_an_oracle": true
+    },
+    {
+      "name": "result-N-four-byte",
+      "source_case": "result-N-four-byte",
+      "expected_charge": {
+        "left_utf8_bytes": 65532,
+        "right_utf8_bytes": 4,
+        "result_utf8_bytes": 65536,
+        "admission": 1,
+        "scan": 1025,
+        "allocation": 1025,
+        "publication": 1,
+        "total": 2052,
+        "cumulative_result_reservation_bytes": 65536
+      },
+      "scope": "Direct actual internal bounded String operation on one freshly authorized real ledger, distinct from complete source workflow",
+      "private_entrypoint": "ontokin.string_concat.concat_strings(left:str,right:str,node,ledger:SharedExecutionBudget)->str",
+      "reservation_field": "string_concat_bytes",
+      "expected_header_admission_operations": 14,
+      "header_charge_basis": "Each supplied ordinary header emits 12 prefix tokens through the first public declaration, within two started 64-byte blocks; unchanged C086 control admission independently confirms 14. No candidate totals are used.",
+      "stage_end_operation_offsets": [
+        1,
+        1025,
+        1026,
+        2051,
+        2052
+      ],
+      "caller_operation_caps": [
+        14,
+        15,
+        16,
+        1038,
+        1039,
+        1040,
+        1041,
+        2064,
+        2065,
+        2066,
+        2067
+      ],
+      "operation_caps": "Each listed cap creates a fresh ledger with the cap set before real source admission. Assert exact admission cost first, then invoke the real helper. Predict the first stage whose cumulative debit exceeds cap from the frozen schedule; never alter an existing counter or cap.",
+      "schedule": [
+        {
+          "stage": "string_concat_admission",
+          "ticks": 1,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_scan",
+          "operand": "left",
+          "ticks": 1024,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_scan",
+          "operand": "right",
+          "ticks": 1,
+          "amount_per_tick": 1
+        },
+        {
+          "stage": "string_concat_allocation",
+          "ticks": 1,
+          "amount_per_tick": 1025
+        },
+        {
+          "stage": "string_concat_publication",
+          "ticks": 1,
+          "amount_per_tick": 1
+        }
+      ],
+      "absolute_ledger_setup_must_be_source_derived": true,
+      "candidate_total_operations_not_an_oracle": true
+    }
+  ],
+  "complete_source_aggregate_cases": [
+    "aggregate-A-minus-1",
+    "aggregate-A",
+    "aggregate-A-plus-1"
+  ],
+  "aggregate_counter_setup": "Only actual preceding operations on same admitted ledger; never preload reservations. Individual overflow must be detected before cumulative check. Allocation-stage exhaustion/cancellation precedes aggregate check.",
+  "actual_cancellation_stages": [
+    "string_concat_admission",
+    "string_concat_scan",
+    "string_concat_allocation",
+    "string_concat_publication"
+  ],
+  "cancel_requirements": {
+    "one_execution_per_stage": true,
+    "original_callback_exception_identity_preserved": true,
+    "stage_restored_in_finally": true,
+    "ledger_clock_not_replaced": true,
+    "no_counter_mutation": true,
+    "reservation_before_allocation_failure": 0,
+    "publication_cancel_retains_reservation": true,
+    "no_partial_value_or_revision_or_artifact_accepted": true
+  },
+  "static_abstract_requirement": {
+    "cases": [
+      "ignored-branch-no-allocation",
+      "empty-map-string-types",
+      "empty-rekey-string-types"
+    ],
+    "dynamic_stages": [],
+    "computed_bytes_reserved": 0,
+    "known_String_payload": false,
+    "global_checks_still_execute": true,
+    "known_String_payload_scope": "Only the abstract String binary subexpression must be unknown. Actual completed source result remains its frozen expected value, including known \"ok\" for ignored-branch-no-allocation."
+  },
+  "current_authority_matrix": [
+    {
+      "case": "literal-prefix",
+      "source": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "host": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "caller": {
+        "max_operations": 100001
+      },
+      "outcome": "resource_refusal",
+      "budget_reason": "request_cap_exceeds_source"
+    },
+    {
+      "case": "aggregate-A",
+      "source": {
+        "max_operations": 400000,
+        "max_elapsed_ms": 80000
+      },
+      "host": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "caller": {},
+      "outcome": "resource_refusal",
+      "budget_reason": "host_ceiling_exceeded"
+    },
+    {
+      "case": "aggregate-A",
+      "source": {
+        "max_operations": 400000,
+        "max_elapsed_ms": 80000
+      },
+      "host": {
+        "max_operations": 400000,
+        "max_elapsed_ms": 80000
+      },
+      "caller": {},
+      "outcome": "valid",
+      "computed_bytes": 4194304
+    },
+    {
+      "case": "aggregate-A",
+      "source": {
+        "max_operations": 400000,
+        "max_elapsed_ms": 80000
+      },
+      "host": {
+        "max_operations": 400000,
+        "max_elapsed_ms": 80000
+      },
+      "caller": {
+        "max_operations": 100000
+      },
+      "outcome": "resource_refusal",
+      "budget_reason": "operation_budget_exhausted",
+      "require_actual_cumulative_ledger": true
+    }
+  ],
+  "missing_context": {
+    "source_case": "literal-prefix",
+    "operation": "compile_construction without execution_budget",
+    "code": "OKL-E-RESOURCE",
+    "phase": "support",
+    "category": "resource_limit",
+    "message": "This source profile requires its explicitly admitted execution context.",
+    "details": {
+      "budget_reason": "execution_context_required"
+    },
+    "primary": "complete original entry AST span",
+    "legacy_ConstructionBudget_fallback_for_concat": false
+  },
+  "exact_ordinary_values_audited_separately_from_bounded_public_outputs": true,
+  "public_response_caps_may_not_be_enlarged": true,
+  "actual_deadline_exhaustion": {
+    "stages": [
+      "string_concat_admission",
+      "string_concat_scan",
+      "string_concat_allocation",
+      "string_concat_publication"
+    ],
+    "executions": 4,
+    "caller_cap": {
+      "max_elapsed_ms": 1000
+    },
+    "scope": "Real helper/current-ledger guard, separate from source/Agent cases",
+    "observation": "At the selected actual stage, an observing callback waits using ordinary real time until the unchanged ledger elapsed_ms exceeds its 1000 ms cap, then returns normally. The actual ledger tick must issue its original deadline refusal. Each wait is bounded to approximately one second.",
+    "clock_replacement_forbidden": true,
+    "counter_mutation_forbidden": true,
+    "expected_code": "OKL-E-RESOURCE",
+    "expected_phase": "support",
+    "expected_budget_reason": "execution_deadline_exceeded",
+    "expected_budget": "max_elapsed_ms",
+    "expected_limit": 1000,
+    "expected_consumed": "Actual finite elapsed_ms strictly greater than 1000, never a substituted number",
+    "expected_stage": "Exactly the selected real String stage",
+    "reservation_expectations": {
+      "admission": 0,
+      "scan": 0,
+      "allocation": 0,
+      "publication": "Full result bytes already reserved and not refunded"
+    },
+    "partial_acceptance": false
+  }
+}

@@ -1,0 +1,28 @@
+ontokin "0.19";
+module StringConcatProbe @ "string-concat-probe";
+profile "keyed-rekey-0.1";
+
+public class Leaf @ "leaf" {
+    public param label @ "label": String = "leaf.";
+    geometry = box(vec3(0.25[m],0.25[m],0.25[m]));
+    physical = no_body();
+}
+public class Family @ "family" {
+    public param labels @ "labels": Keyed<String> = keyed<String>{"a":"leaf."};
+    public parts leaves @ "leaves": Leaf for (k,v) in self.labels { label = v; }
+    geometry = empty(); physical = no_body();
+}
+
+public class ProbeShape @ "probe-shape" {
+    public part family @ "family-part": Family {}
+    public derive copied @ "copied": String = if self.family.leaves["a"].label == "leaf." then "leaf." else "leaf.";
+    public parts bad @ "bad": Leaf for (k,v) in rekey_keyed<String>(filter_keyed<String>(keyed<String>{"x":self.copied},(fk,fv)->false),(old_key,payload)->"n.x") { label = v; }
+    public derive result @ "result": String = self.copied;
+    geometry = if self.result == self.result then box(vec3(1[m], 1[m], 1[m])) else box(vec3(1[m], 1[m], 1[m]));
+    physical = no_body();
+}
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object shape @ "shape": ProbeShape {}
+}

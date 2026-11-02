@@ -1,0 +1,85 @@
+{
+  "schema_version": "ontokin.c087-independent-preflight-gates/0.1",
+  "baseline_commit": "5d83b07354296a891c1a6acd70efc77322d2127f",
+  "baseline_tree": "da00e3fe2c36cdd89dbd6e1469eceb1c4400f567",
+  "candidate_runtime_imported": false,
+  "total_passed_observations": 122,
+  "distinct_control_states": 115,
+  "gates": [
+    {
+      "name": "core_literal_values",
+      "status": "passed",
+      "passed": 78,
+      "failed": 0,
+      "report": "/tmp/ontokin-c087-input-evidence/preflight02/RESULT.json",
+      "report_sha256": "0f9562971e903ff31f6a00cecd71a76ca267a990d035926569b5952019d0f6db",
+      "inputs_unchanged": true,
+      "baseline_clean": true
+    },
+    {
+      "name": "agent_complete_literal_exports",
+      "status": "passed",
+      "passed": 7,
+      "failed": 0,
+      "report": "/tmp/ontokin-c087-input-evidence/agent-preflight01/RESULT.json",
+      "report_sha256": "0808040ca7a349351494750be22d969eb6a1753fbd387cadef24034538b94f62",
+      "inputs_unchanged": true,
+      "baseline_clean": true
+    },
+    {
+      "name": "inherited_negative_diagnostics",
+      "status": "passed",
+      "passed": 28,
+      "failed": 0,
+      "report": "/tmp/ontokin-c087-input-evidence/negative-preflight03/RESULT.json",
+      "report_sha256": "0f8b1e186a904b8a3b5446a6500705de484b6bf499ce6cedff7d077a7ae1be29",
+      "inputs_unchanged": true,
+      "baseline_clean": true
+    },
+    {
+      "name": "staged_cached_taint_guards",
+      "status": "passed",
+      "passed": 2,
+      "failed": 0,
+      "report": "/tmp/ontokin-c087-input-evidence/staged-taint-preflight02/RESULT.json",
+      "report_sha256": "36d74e69b279bdd7b9797d12a416deb42c7252cfcc0d4c9b70332d7ec901b69f",
+      "inputs_unchanged": true,
+      "baseline_clean": true
+    },
+    {
+      "name": "agent_private_dependency_graph",
+      "status": "passed",
+      "passed": 7,
+      "failed": 0,
+      "report": "/tmp/ontokin-c087-input-evidence/agent-dependency-preflight02/RESULT.json",
+      "report_sha256": "1f197ea6aa739607f668e7ee260a8280cf905c62afdc21888550060e0db2bb57",
+      "inputs_unchanged": true,
+      "baseline_clean": true
+    }
+  ],
+  "original_failed_attempts": [
+    {
+      "directory": "/tmp/ontokin-c087-input-evidence/preflight01",
+      "passed": 73,
+      "failed": 3,
+      "disposition": "Original aggregate controls retaining 64 maximum strings exceeded inherited constructed JSON cap. Independently redesigned finite source workload as sequential reduction retaining small final value; 16 retained maximum strings stays a separate case. No limit relaxed."
+    },
+    {
+      "directory": "/tmp/ontokin-c087-input-evidence/staged-taint-preflight01",
+      "passed": 0,
+      "failed": 2,
+      "disposition": "Source expectation incorrectly required a generated leaf mark outside active shape. C086 source shows only collection mark there; fixed exact expected collection taint, original failed sources/expectations retained."
+    },
+    {
+      "directory": "/tmp/ontokin-c087-input-evidence/agent-dependency-preflight01",
+      "passed": 0,
+      "failed": 7,
+      "disposition": "Imported source_id was mistakenly used as stable definition ID. Corrected from linker._module_identity: [package,package_id,module_key,definitions,key]. Full failed diagnostic and unchanged source retained."
+    }
+  ],
+  "earlier_successful_diagnostic_preflights_retained": [
+    "negative-preflight01",
+    "negative-preflight02"
+  ],
+  "independent_review_analogue_report": "/tmp/ontokin-c087-review-diagnostic-analogues01/RESULT.json"
+}
