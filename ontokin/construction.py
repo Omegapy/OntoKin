@@ -31,6 +31,8 @@ from .texture_runtime import (TEXTURE_CALLS, TEXTURE_TYPES, texture_builtin,
                               validate_texture_closure, texture_coordinates)
 from .profile_capabilities import (BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_REKEY_PROFILES, KEYED_ZIP_PROFILES, KEYED_MERGE_PROFILES, KEYED_FILTER_PROFILES, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, IMPULSE_PROFILES,
                                    SURFACE_PROFILES)
+from .profile_capabilities import (KEYED_MEMBERSHIP_PROFILE, KEYED_MEMBERSHIP_PROFILES,
+                                   STRING_CONCAT_PROFILES)
 from .validator import (BUILTIN_TYPES, FIELD_TYPES,
                         PREDEFINED, READONLY_FIELDS, KEY_RE, BoundExpression, Callable,
                         Context, EffectiveClass, Instance, Member, Validator,
@@ -38,6 +40,7 @@ from .validator import (BUILTIN_TYPES, FIELD_TYPES,
 from .values import (ACCELERATION, ALIASES, BOOL, INT, LENGTH, STRING, TIME,
                      UNKNOWN, KeyedValue, Type, Value, binary, bounded_data, quantity_type)
 from .string_concat import concat_strings
+from .keyed_membership import has_key
 
 
 PROFILE = "construction-0.1"
@@ -458,6 +461,8 @@ class ConstructionCompiler(Validator):
                 result = result | {"zip_keyed"}
             if self.linked.modules[node.source_id].ast.profile in KEYED_REKEY_PROFILES:
                 result = result | {"rekey_keyed"}
+            if self.linked.modules[node.source_id].ast.profile in KEYED_MEMBERSHIP_PROFILES:
+                result = result | {"has_key"}
             return result
         if self.linked.modules[node.source_id].ast.profile in REACH_PROFILES:
             from .reach_source import NAMES
@@ -2141,6 +2146,9 @@ class ConstructionCompiler(Validator):
                     stack.append((child, iter(self.call_edges.get(child, ()))))
 
     def name(self, name: str, ctx: Context, node: Any) -> Value:
+        if (name == "has_key" and self.linked.modules[node.source_id].ast.profile in KEYED_MEMBERSHIP_PROFILES
+                and name not in ctx.locals):
+            return Value(Type("BuiltinCallable"), name)
         if self.linked.modules[node.source_id].ast.profile in REACH_PROFILES and name not in ctx.locals:
             from .reach_source import BRANCHES
             if name in BRANCHES:
@@ -2310,7 +2318,7 @@ class ConstructionCompiler(Validator):
 
     def _string_addition_syntax(self, node: Any) -> bool:
         return (node.kind == "binary" and node.op == "+"
-                and self.linked.modules[node.source_id].ast.profile == STRING_CONCAT_PROFILE)
+                and self.linked.modules[node.source_id].ast.profile in STRING_CONCAT_PROFILES)
 
     def _string_addition(self, node: Any, ctx: Context) -> Value:
         # Evaluate each operand once, preserving inherited left-to-right errors
@@ -2730,6 +2738,32 @@ class ConstructionCompiler(Validator):
                 self._expression_flows.pop()
 
     def builtin(self, name: str, args: list[Value], node: Any, ctx: Context) -> Value:
+        if name == "has_key" and self.linked.modules[node.source_id].ast.profile in KEYED_MEMBERSHIP_PROFILES:
+            if len(args) != 2:
+                fail("OKL-E-TYPE", "has_key requires exactly two positional arguments.",
+                     node, phase="type", details={"received": len(args)})
+            collection, query = args
+            if collection.type.kind != "Keyed":
+                fail("OKL-E-TYPE", "has_key requires an immutable Keyed value.", node, phase="type")
+            element = collection.type.element
+            if element.kind != "Ref":
+                self._keyed_leaf(element, node)
+            if query.type != STRING:
+                fail("OKL-E-TYPE", "has_key query requires exactly String.", node, phase="type")
+            if ctx.abstract or not collection.known or not query.known:
+                return Value(BOOL)
+            for value in args:
+                for path in self._value_taints.get(id(value), ()):
+                    self._mark_generated(path, node)
+            ledger = getattr(self.budget, "execution_budget", None)
+            try:
+                result = has_key(collection.value, query.value,
+                                 expected_type=element, node=node, ledger=ledger)
+            except BaseException as error:
+                if error is getattr(ledger, "callback_error", None):
+                    self.budget.callback_error = error
+                raise
+            return Value(BOOL, result)
         if name in TEXTURE_CALLS and self.linked.modules[node.source_id].ast.profile in TEXTURE_PROFILES:
             return texture_builtin(self, name, args, node, ctx)
         if name == "reach_planar":
@@ -3396,7 +3430,7 @@ class ConstructionCompiler(Validator):
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "Required capabilities are not supplied by " + self.model.profile + ": " +
                  ", ".join(self.model.requested_capabilities), requires[0], phase="support")
         if self.level == "delivered":
-            target = ("ontokin.glb/0.20" if self.model.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if self.model.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if self.model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if self.model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if self.model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if self.model.profile == KEYED_REDUCTION_PROFILE else
+            target = ("ontokin.glb/0.21" if self.model.profile == KEYED_MEMBERSHIP_PROFILE else "ontokin.glb/0.20" if self.model.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if self.model.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if self.model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if self.model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if self.model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if self.model.profile == KEYED_REDUCTION_PROFILE else
                        "ontokin.glb/0.14" if self.model.profile == KEYED_TRANSFORM_PROFILE else
                       "ontokin.glb/0.13" if self.model.profile == TEXTURE_PROFILE else
                       "ontokin.glb/0.12" if self.model.profile == POCKETS_PROFILE else

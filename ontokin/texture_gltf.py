@@ -57,9 +57,9 @@ def prepare_node_textures(geometry, model, *, check=None):
         binding = metadata[region.key]
         asset = model.texture_assets.get(binding["asset_id"])
         if asset is None or asset.sha256 != binding["sha256"]:
-            from .profile_capabilities import KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE
+            from .profile_capabilities import KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_MEMBERSHIP_PROFILE
             _fail("A source texture binding must retain its admitted immutable image.",
-                  target_contract="ontokin.glb/0.20" if model.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if model.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if model.profile == KEYED_REDUCTION_PROFILE else "ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else "ontokin.glb/0.13")
+                  target_contract="ontokin.glb/0.21" if model.profile == KEYED_MEMBERSHIP_PROFILE else "ontokin.glb/0.20" if model.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if model.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if model.profile == KEYED_REDUCTION_PROFILE else "ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else "ontokin.glb/0.13")
         result[region.key] = {"uv": coordinates[region.key], "binding": binding,
                               "asset": asset, "material": region.material, "program_revision": model.program_revision}
     return result
@@ -142,7 +142,7 @@ def validate_texture_shapes(document, *, check=None):
     closed(document, {"asset", "scene", "scenes", "nodes", "meshes", "materials",
                        "buffers", "bufferViews", "accessors", "animations", "extras",
                        "images", "textures", "samplers"}, "document")
-    filter_contract = _ACTIVE_TARGET.get() in {"ontokin.glb/0.16", "ontokin.glb/0.17", "ontokin.glb/0.18", "ontokin.glb/0.19", "ontokin.glb/0.20"}
+    filter_contract = _ACTIVE_TARGET.get() in {"ontokin.glb/0.16", "ontokin.glb/0.17", "ontokin.glb/0.18", "ontokin.glb/0.19", "ontokin.glb/0.20", "ontokin.glb/0.21"}
     if filter_contract:
         closed(document.get("extras"), {"ontokin"}, "scene extras")
         metadata = document["extras"].get("ontokin")
@@ -236,8 +236,8 @@ def validate_texture_shapes(document, *, check=None):
 
 def validate_texture_delivery(decoded, model, *, check=None):
     """Compare supplied image, UV and reference bytes with fresh source facts."""
-    from .profile_capabilities import KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE
-    target = "ontokin.glb/0.20" if model.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if model.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if model.profile == KEYED_REDUCTION_PROFILE else "ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else "ontokin.glb/0.13"
+    from .profile_capabilities import KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_MEMBERSHIP_PROFILE
+    target = "ontokin.glb/0.21" if model.profile == KEYED_MEMBERSHIP_PROFILE else "ontokin.glb/0.20" if model.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if model.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if model.profile == KEYED_REDUCTION_PROFILE else "ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else "ontokin.glb/0.13"
     token = _ACTIVE_TARGET.set(target)
     try:
         return _validate_texture_delivery(decoded, model, check=check)
