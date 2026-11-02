@@ -1,0 +1,310 @@
+{
+  "schema_version": "ontokin.c088-immediate-predecessor-closure/1",
+  "status": "passed_for_scoped_predecessor_obligations_with_preserved_initial_harness_failure",
+  "created_utc": "2026-11-02T15:47:46.032086+00:00",
+  "candidate": {
+    "commit": "39afec7971b9221fe58cf7c7d002505d172dd64f",
+    "tree": "26b6417d082bd26fa6ace1e718455aeaa7822ccb",
+    "status": ""
+  },
+  "execution_basis": "Exact original C087 tools, independent readers, frozen source inputs and expected values; selected runtime is fixed C088 candidate01. No inherited driver, expected value, runtime or fixture was edited.",
+  "source_suite": {
+    "cases": 118,
+    "literal_and_negative_controls": 85,
+    "predecessor_negative_controls": 28,
+    "status": "passed"
+  },
+  "agent_suite": {
+    "workflows": 11,
+    "raw_exchanges": 224,
+    "durable_request_identities": 217,
+    "durable_artifacts": 10,
+    "artifact_roles": 14,
+    "status": "passed"
+  },
+  "boundary_suite": {
+    "records": 104,
+    "kinds": {
+      "direct_operation_cap": 87,
+      "cancellation": 4,
+      "deadline": 4,
+      "current_authority": 4,
+      "missing_context": 1,
+      "staged_guard": 4
+    },
+    "status": "passed",
+    "accepted_results_root": "boundaries-only02",
+    "initial_attempt_preserved": "boundary-reader01.json"
+  },
+  "hostile_supplied_byte_suite": {
+    "positive_controls": 3,
+    "hostile_controls": 75,
+    "status": "passed"
+  },
+  "coherent_agent_evidence_adversaries": {
+    "expected_refusals": 2,
+    "actual_refusals": 2,
+    "all_schema_valid": true,
+    "original_evidence_unchanged": true
+  },
+  "partial_inspection_adversaries": {
+    "expected_refusals": 3,
+    "actual_refusals": 3,
+    "all_schema_valid": true,
+    "positive_original_accepted": true
+  },
+  "whole_artifact_byte_preservation": {
+    "complete_roles": 103,
+    "role_counts": {
+      "source": 7,
+      "literal-control": 7,
+      "agent": 14,
+      "hostile": 75
+    },
+    "unique_streams": 87,
+    "complete_role_membership_equal": true,
+    "comparison": "Every required role, complete ordinary file bytes including framing/JSON/BIN/padding/hostile suffixes; no normalization or deduplication",
+    "prefrozen_basis_sha256": "def496a45c655926414c755100e5f69478a77c49db3a12d6fb0775a19589a0d9"
+  },
+  "native_destination": {
+    "roles": 21,
+    "source_roles": 7,
+    "agent_roles": 14,
+    "khronos_errors": 0,
+    "khronos_warnings": 0,
+    "browser_page_or_request_or_console_errors": 0,
+    "recorded_pose_times_per_role": 5,
+    "directly_reviewed_individual_pngs": 42,
+    "png_dimensions": [
+      1100,
+      780
+    ],
+    "node": "v22.16.0",
+    "chromium": "141.0.7390.37",
+    "original_report_visual_review_pending_field_unchanged": true,
+    "separate_actual_visual_review_record": "PREDECESSOR-DIRECT-VISUAL-REVIEW.json"
+  },
+  "commands": [
+    {
+      "label": "agent-adversaries01",
+      "record": {
+        "path": "agent-adversaries01-command/invocation.json",
+        "bytes": 2033,
+        "sha256": "31be0bb3bc01377e7d1039bd480a89ce1f868f9dfb2272d7a48f938df8d93226"
+      },
+      "status": "passed",
+      "returncode": 0,
+      "elapsed_seconds": 28.132030028000372
+    },
+    {
+      "label": "agent-reader01",
+      "record": {
+        "path": "agent-reader01-command/invocation.json",
+        "bytes": 1911,
+        "sha256": "2f698533e0015076a1d32ab4ced873efc0625f008294b5c4c4b987455d6e61e2"
+      },
+      "status": "passed",
+      "returncode": 0,
+      "elapsed_seconds": 11.21060488600051
+    },
+    {
+      "label": "boundary-producer02",
+      "record": {
+        "path": "boundary-producer02-command/invocation.json",
+        "bytes": 2035,
+        "sha256": "de40a24b60bed3234fd7175bdb64412651bdd3390c3521e17ff662a4373f8327"
+      },
+      "status": "passed",
+      "returncode": 0,
+      "elapsed_seconds": 10.659146826999859
+    },
+    {
+      "label": "boundary-reader01",
+      "record": {
+        "path": "boundary-reader01-command/invocation.json",
+        "bytes": 2080,
+        "sha256": "8ec63cf32e0b7f467834dd817943ab82fd049df03e42bb27fce76ae3ff3e9cbc"
+      },
+      "status": "failed",
+      "returncode": 1,
+      "elapsed_seconds": 1.6206471440000314
+    },
+    {
+      "label": "boundary-reader02",
+      "record": {
+        "path": "boundary-reader02-command/invocation.json",
+        "bytes": 2085,
+        "sha256": "5445ef226533f16bd273cb6fd13de4bb0daade0ccc18dbc8e6f5bbb5af8d5d8b"
+      },
+      "status": "passed",
+      "returncode": 0,
+      "elapsed_seconds": 7.895933967999554
+    },
+    {
+      "label": "complete-byte-comparison01",
+      "record": {
+        "path": "complete-byte-comparison01-command/invocation.json",
+        "bytes": 2216,
+        "sha256": "af8f427efaa51c0d1c62d4eb8b471739d8c4f63f6a8e52c73b65a4e0b3df7000"
+      },
+      "status": "passed",
+      "returncode": 0,
+      "elapsed_seconds": 0.16485787900001014
+    },
+    {
+      "label": "hostile-producer01",
+      "record": {
+        "path": "hostile-producer01-command/invocation.json",
+        "bytes": 1907,
+        "sha256": "0bb4a21f244c9ba5f79c5b3346483cbda08e65f219bc7b54480a9a5f238c3d4a"
+      },
+      "status": "passed",
+      "returncode": 0,
+      "elapsed_seconds": 11.462989994000054
+    },
+    {
+      "label": "hostile-reader01",
+      "record": {
+        "path": "hostile-reader01-command/invocation.json",
+        "bytes": 1992,
+        "sha256": "bf8f3f30471a8f77836eb486a1bde884ee8e99ff0032ffbe8ea010758a10091c"
+      },
+      "status": "passed",
+      "returncode": 0,
+      "elapsed_seconds": 4.890555210000457
+    },
+    {
+      "label": "native01",
+      "record": {
+        "path": "native01-command/invocation.json",
+        "bytes": 2131,
+        "sha256": "fad36d160e9d9f2c957294d690ef68a8292d18ec63ebcd6a35dd34ca3673bb68"
+      },
+      "status": "passed",
+      "returncode": 0,
+      "elapsed_seconds": 12.965001278999807
+    },
+    {
+      "label": "partial-regressions01",
+      "record": {
+        "path": "partial-regressions01-command/invocation.json",
+        "bytes": 1939,
+        "sha256": "74b808374741a76504ae169c209b404a36611990194085f0855ce355c269ba51"
+      },
+      "status": "passed",
+      "returncode": 0,
+      "elapsed_seconds": 1.7758322910003699
+    },
+    {
+      "label": "producer01",
+      "record": {
+        "path": "producer01-command/invocation.json",
+        "bytes": 1992,
+        "sha256": "efd6e10033bf03a405501d1686f623236e65e0cf015cc6b2db812ebb9bc429be"
+      },
+      "status": "passed",
+      "returncode": 0,
+      "elapsed_seconds": 77.3379427789996
+    },
+    {
+      "label": "source-reader01",
+      "record": {
+        "path": "source-reader01-command/invocation.json",
+        "bytes": 1963,
+        "sha256": "83d81b5b34a0921b45e45a1074db99019c9311ac6c2be8c544fdb5d50c785641"
+      },
+      "status": "passed",
+      "returncode": 0,
+      "elapsed_seconds": 17.502863998000066
+    }
+  ],
+  "reports": [
+    {
+      "path": "PREFLIGHT.json",
+      "bytes": 631,
+      "sha256": "c2cee96f168a1a97c06bebfbe02a924b5cc90b36cbec8f7e6c7e24c85b1807df"
+    },
+    {
+      "path": "producer01/summary.json",
+      "bytes": 950120,
+      "sha256": "c0eb496260798c544272142b778ac8ac57d01d4f719bd16f126492ba829fbfbd"
+    },
+    {
+      "path": "source-reader01.json",
+      "bytes": 6446243,
+      "sha256": "ce9bcb17bdfc87487ee2191864a8991aa9366d1c0908d62aca7151b8b383d4d9"
+    },
+    {
+      "path": "agent-reader01.json",
+      "bytes": 21364,
+      "sha256": "6a2e4df8d2947dae2641949e32557e90667d238ae57a9fd8c1bc2f47c3d0d0b7"
+    },
+    {
+      "path": "boundary-reader01.json",
+      "bytes": 1133,
+      "sha256": "73079ee489d04d2beac1856ce412d994d85dcb4bac5247a6c4700f270ae3d079"
+    },
+    {
+      "path": "BOUNDARY-READER01-DISPOSITION.json",
+      "bytes": 1391,
+      "sha256": "64397615d254648b05889b251021493115468f1037c975149ec987774a6edfa5"
+    },
+    {
+      "path": "boundaries-only02/summary.json",
+      "bytes": 24012,
+      "sha256": "a5358a355eab0983eb2afc20f40073e6d595a2b0d68f0f2e310d7fdb48c89cbe"
+    },
+    {
+      "path": "boundary-reader02.json",
+      "bytes": 90902,
+      "sha256": "3b97710882f15ca9296884ecd142da2befd118dba39ba5916bcf134cfb31b53d"
+    },
+    {
+      "path": "hostile-glbs01/production-observations.json",
+      "bytes": 281007,
+      "sha256": "97fd497dfd549a8023b27db801bf88aa7a24dd4eef3fe9ab921494a2e86c46c7"
+    },
+    {
+      "path": "hostile-reader01.json",
+      "bytes": 41823,
+      "sha256": "9160ef3d82dcacd88c4dfeca3f97b4894d263975fa419145ae9b388b9a204ff4"
+    },
+    {
+      "path": "agent-adversaries01/RESULT.json",
+      "bytes": 4083,
+      "sha256": "6be305f1ee0e40474beac44d7e3035f241b82596870e0b447727c8f13f252d93"
+    },
+    {
+      "path": "partial-regressions01/RESULT.json",
+      "bytes": 1405,
+      "sha256": "7f741b6dc8a7262f1a63a056ccf6da0317f12a05e8762019f74bcccdbce6f4ff"
+    },
+    {
+      "path": "complete-byte-comparison01.json",
+      "bytes": 120559,
+      "sha256": "851dc388021430de0bbd168956972c51bf97e82c55bd0c2510b54ee0afcfeabe"
+    },
+    {
+      "path": "native01/report.json",
+      "bytes": 582358,
+      "sha256": "376a44f194a42c22cc89086cb9c43e4a57c800cb64aa143ecf6d48d3c35793ae"
+    },
+    {
+      "path": "PREDECESSOR-DIRECT-VISUAL-REVIEW.json",
+      "bytes": 51983,
+      "sha256": "d4cad6a9bf7afecf18dc48c7a17d31790cbfc62a9d759bc1835fd191eb03b01d"
+    }
+  ],
+  "initial_failure_disposition": {
+    "attempt": "boundary-reader01",
+    "status": "failed",
+    "returncode": 1,
+    "cause": "Original all-section producer leaves two live-store SQLite files that its own declared inventory omits. Original strict boundary reader rejects the resulting extra membership. All original files and the failed report are retained.",
+    "resolution": "Invoke the unchanged producer with its existing --section boundaries switch in a fresh directory, as in the historical separate boundary run; unchanged reader passed all 104 records on that fresh evidence. No original evidence was trimmed, projected or modified, and the first result remains failed."
+  },
+  "full_inherited34_execution": "Separate authorized run still in progress; this report does not claim that run passed.",
+  "inherited_historical_statuses_changed": false,
+  "release_acceptance": false,
+  "full_product_acceptance": false,
+  "external_attestations_changed": false
+}

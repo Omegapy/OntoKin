@@ -25,7 +25,7 @@ def main():
     parser.add_argument("--checkout", type=Path, required=True)
     parser.add_argument("--inputs", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--mode", choices=("candidate", "predecessor-controls"), required=True)
+    parser.add_argument("--mode", choices=("candidate", "predecessor-controls", "candidate-controls"), required=True)
     parser.add_argument("--no-exports", action="store_true", help="Diagnostic source-only subset; never full acceptance")
     parser.add_argument("--only", nargs="+", help="Explicit preserved diagnostic subset; never full acceptance")
     args = parser.parse_args()
@@ -35,6 +35,8 @@ def main():
     run.summary.update(mode=args.mode, full_cohort=not args.only and not args.no_exports)
     if args.mode == "predecessor-controls" and run.before["commit"] != PREDECESSOR_COMMIT:
         raise ValueError("Literal/reduction controls require exact unchanged C087.")
+    if args.mode == "candidate-controls" and run.before["commit"] == PREDECESSOR_COMMIT:
+        raise ValueError("Candidate controls require a separately fixed candidate source cut.")
     sys.path.insert(0, str(args.checkout.resolve()))
     import ontokin
     if Path(ontokin.__file__).resolve().parent != args.checkout.resolve() / "ontokin":
