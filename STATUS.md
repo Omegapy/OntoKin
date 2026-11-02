@@ -1,5 +1,11 @@
 # OntoKin status
 
+## Active C086 main integration lease
+
+Owner: `interactive-c086-keyed-rekey-20261101-451f`. Scope: reviewed C086 main integration, STATUS coordination, the C086 engineering record and related navigation/amendment explanation. The original C085 baseline and every retained gate below remain in force until the reviewed merge is verified.
+
+Acquisition is conditional on the expected-head nonforce publication from `f4c90c04b9b381de73d46715d52e68f588e49e4f` and actual main readback. Started `2026-11-02T00:10:56.317647+00:00`; expiry `2026-11-02T00:40:56.317647+00:00`. The owner will reconcile exact heads before any unknown-outcome retry, verify the merge and resulting-main checks, and release the lease by separately verified expected-head publication. PR #85 identifies the scoped candidate; no hosted execution or schedule is authorized by this lease.
+
 ## Current development baseline
 
 OntoKin's [GOAL](GOAL.md) is an AI-agent language for editable meaningful 3D objects, animation and simulation through authoritative `.ok` source. Finite increments do not complete that mission.
