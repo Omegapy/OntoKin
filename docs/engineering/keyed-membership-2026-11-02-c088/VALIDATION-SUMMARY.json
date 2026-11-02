@@ -1,7 +1,7 @@
 {
   "schema_version": "ontokin.c088-validation-summary/1",
-  "status": "finite_product_and_inherited_scopes_passed_final_publication_and_integration_pending",
-  "recorded_utc": "2026-11-02T16:36:16.537177+00:00",
+  "status": "finite_product_inherited_candidate_and_resulting_main_scopes_passed_coordination_publication_separate",
+  "recorded_utc": "2026-11-02T16:56:52.678111+00:00",
   "runtime": {
     "commit": "39afec7971b9221fe58cf7c7d002505d172dd64f",
     "tree": "26b6417d082bd26fa6ace1e718455aeaa7822ccb",
@@ -116,6 +116,16 @@
       "handoff_path": "C088-validation/candidate01/INHERITED-UNIT-COMPLETE-MEMBERSHIP.json",
       "bytes": 5037,
       "sha256": "b10a5d56c2843879f48c39010c5333b929c9b08b0c4cd99becc70ac92ed2d0f6"
+    },
+    "final_candidate_check": {
+      "handoff_path": "C088-work/final-candidate-check01/RESULT.json",
+      "bytes": 2411,
+      "sha256": "de444ddfde571566241478db84c11ebeca34cf5b510ed847438ed7eb2b4348f1"
+    },
+    "resulting_main": {
+      "handoff_path": "C088-work/resulting-main01/RESULT.json",
+      "bytes": 13941,
+      "sha256": "37a7cbbafae175288385d144fe838730004c60be4ea1deb67b51de9556ddb8c9"
     }
   },
   "immediate_predecessor": {
@@ -214,15 +224,31 @@
   "continuation_schedules_started": false,
   "release_acceptance": false,
   "full_product_acceptance": false,
-  "integration": "pending exact finalcandidate publication/readback/equivalence, observed-head lease, merge and resulting-main checks",
+  "integration": {
+    "status": "actual_merge_and_resulting_main_verified",
+    "merge_head": "c8e3123a5ab3ca90afa456d57944cdddd0a46ab3",
+    "merge_tree": "aa92bf5b1e801dc1c0852cc6fe027388eaa0af3f",
+    "ordered_parents": [
+      "86033b37568df0f30f025adc815f0cf782ec898b",
+      "3c1ac7ade31c758716930f32067440a50d4a6bf3"
+    ],
+    "record": "integration.json",
+    "resulting_main": {
+      "handoff_path": "C088-work/resulting-main01/RESULT.json",
+      "bytes": 13941,
+      "sha256": "37a7cbbafae175288385d144fe838730004c60be4ea1deb67b51de9556ddb8c9"
+    },
+    "lease_release": "This four-file coordination commit releases the lease only after an expected-head nonforce main update from the verified merge and exact actual main/STATUS readback. The external final-publication receipt identifies its resulting commit/tree and effective release."
+  },
   "next_task": {
     "path": "NEXT-TASK.md",
     "status": "proposalonly; separate contract/utility review and independent freeze required",
     "sha256": "c7e68eb2cba045b5aff3e1f3fe864f3ad1f0cb73b57fbfc641f262300118f0bf"
   },
-  "delivery_status": "pending final integration/nativecapture/oneZIP recovery and save",
+  "delivery_status": "Source integration verified; final coordination publication/native capture/one-ZIP recovery and save are separately recorded closing steps.",
   "published_equivalence": {
-    "checked_published_commit": "de7f22e73d7e54886734fbf85e399a5bcb4bc5c2",
+    "checked_published_commit": "3c1ac7ade31c758716930f32067440a50d4a6bf3",
+    "tree": "5b5ec27da27ec6b0e72cc6edb8190f26d6a78ca3",
     "status": "passed",
     "production_modules": 170,
     "schemas": 74,
@@ -233,12 +259,17 @@
     "original_tests": 334,
     "original_tools": 158,
     "receipt": {
-      "handoff_path": "C088-work/design-review/final-equivalence01/RESULT.json",
+      "handoff_path": "C088-work/design-review/final-equivalence02/RESULT.json",
       "bytes": 3875,
-      "sha256": "6156400ef0f034e302b6880c49fa2d2e3c54bc046cd986384445e4c152f2da4d"
+      "sha256": "b9961ee7d5428411bc53fdff6bc6ff6333677f9c0008e9a0408acfa452b7e0fb"
     },
-    "complete_native_inventories": "C088-work/design-review/final-equivalence01/",
-    "final_candidate_equivalence": "Required after this closing documentation publication; later exact receipt is retained in the complete handoff."
+    "readiness": {
+      "handoff_path": "C088-work/design-review/final-readiness01/REVIEW.json",
+      "bytes": 4392,
+      "sha256": "70999e747d5507663e0f8d6f844cfc8745b9ef3ac046e9944ba273590c9a0972"
+    },
+    "complete_native_inventories": "C088-work/design-review/final-equivalence02/",
+    "final_coordination_comparison": "Separate exact receipt follows actual four-path publication/readback."
   },
   "closing_documentation": {
     "original_check": "failed:55 archive-relative links in the repository copy of the handoff attempt index",
@@ -260,5 +291,24 @@
       "sha256": "a41fa8d108bf0e4b3dd277b6d53436adfbd6098da74fb7ba16e3a06799079452"
     },
     "product_or_oracle_changes": false
+  },
+  "previous_published_equivalence": {
+    "checked_published_commit": "de7f22e73d7e54886734fbf85e399a5bcb4bc5c2",
+    "status": "passed",
+    "production_modules": 170,
+    "schemas": 74,
+    "examples": 4410,
+    "tested_tests": 335,
+    "workflows": 2,
+    "original_freeze_files_including_manifest": 905,
+    "original_tests": 334,
+    "original_tools": 158,
+    "receipt": {
+      "handoff_path": "C088-work/design-review/final-equivalence01/RESULT.json",
+      "bytes": 3875,
+      "sha256": "6156400ef0f034e302b6880c49fa2d2e3c54bc046cd986384445e4c152f2da4d"
+    },
+    "complete_native_inventories": "C088-work/design-review/final-equivalence01/",
+    "final_candidate_equivalence": "Required after this closing documentation publication; later exact receipt is retained in the complete handoff."
   }
 }
