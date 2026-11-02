@@ -18,7 +18,7 @@ from .json_limits import measure_json, JSONLimitError
 from .program_diagnostics import diagnostic_dict
 from .program_protocol import MAX_BUDGETS
 from .program_bindings import PROFILE_BINDINGS
-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_REKEY_PROFILES, KEYED_ZIP_PROFILES, KEYED_MERGE_PROFILES, KEYED_FILTER_PROFILES, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, POCKETS_PROFILES, EXECUTION_PROFILES, REACH_PROFILES
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_MEMBERSHIP_PROFILE, KEYED_REKEY_PROFILES, KEYED_ZIP_PROFILES, KEYED_MERGE_PROFILES, KEYED_FILTER_PROFILES, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, POCKETS_PROFILES, EXECUTION_PROFILES, REACH_PROFILES
 from .syntax import Node
 from .validator import FIELD_TYPES, optional
 from .values import KeyedValue, Value, bounded_data
@@ -752,7 +752,7 @@ def _project(program, record, fields, compiler, sample, run, frame, budget):
     if "support" in fields:
         result["support"] = core._support_record(compiler, budget)
         result["support"]["profile"] = budget.profile
-        result["support"]["named_destination"] = ("ontokin.glb/0.20" if budget.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if budget.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if budget.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if budget.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if budget.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if budget.profile == KEYED_REDUCTION_PROFILE else
+        result["support"]["named_destination"] = ("ontokin.glb/0.21" if budget.profile == KEYED_MEMBERSHIP_PROFILE else "ontokin.glb/0.20" if budget.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if budget.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if budget.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if budget.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if budget.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if budget.profile == KEYED_REDUCTION_PROFILE else
                        "ontokin.glb/0.14" if budget.profile == KEYED_TRANSFORM_PROFILE else
                       "ontokin.glb/0.13" if budget.profile == TEXTURE_PROFILE else
                       "ontokin.glb/0.12" if budget.profile == POCKETS_PROFILE else

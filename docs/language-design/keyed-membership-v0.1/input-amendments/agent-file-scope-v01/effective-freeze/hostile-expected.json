@@ -1,0 +1,240 @@
+{
+  "schema_version": "ontokin.c088-hostile-inputs/1",
+  "specification_sha256": "e9a55ae015b1892453217deea38ea85e269e2551608ab5ed7aa7d21bea337d0b",
+  "candidate_observations_used": false,
+  "mutations": [
+    {
+      "id": "source-boolean",
+      "mutation": "source observation Bool true to false or false to true",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "source-diagnostic",
+      "mutation": "alter new query error code/message/span or erase details",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "stage-trace",
+      "mutation": "drop one input/scan/publication operation or invent an extra comparison",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "callback-identity",
+      "mutation": "replace original cancellation exception identity",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "input-identity",
+      "mutation": "change frozen input hash/revision in receipt",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "request-identity",
+      "mutation": "change immutable request body while keeping its ID",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "accepted-head",
+      "mutation": "change SQLite accepted revision to invalid-selected",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "source-bytes",
+      "mutation": "alter stored .ok bytes without matching source revision",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "patch-span",
+      "mutation": "shift source patch by one byte",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "derived-dependency",
+      "mutation": "erase overrides or query dependency from false result",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "detached-origin",
+      "mutation": "drop one required transform/reduction/filter/merge/zip/rekey origin",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "selected-origin",
+      "mutation": "invent selected payload origin for membership",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "glb-position",
+      "mutation": "mutate one position component in first or sibling panel",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "glb-normal",
+      "mutation": "mutate one normal component",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "glb-index",
+      "mutation": "mutate one triangle index",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "glb-material",
+      "mutation": "change one PBR color/metallic/roughness scalar",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "glb-uv",
+      "mutation": "mutate a top UV component",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "glb-image",
+      "mutation": "change one embedded PNG byte",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "glb-node-key",
+      "mutation": "change one surviving element ID or owner",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "glb-motion",
+      "mutation": "change one animation time/translation/quaternion component",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "glb-profile",
+      "mutation": "substitute .20 target/profile on .21 artifact",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "glb-source-location",
+      "mutation": "shift a source span to another syntactically valid call",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "glb-source-pin",
+      "mutation": "change one source revision/manifest unit hash",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "glb-lineage",
+      "mutation": "erase or invent a source_mapping origin record",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "glb-framing",
+      "mutation": "append trailing bytes or alter JSON/BIN padding",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "artifact-truncation",
+      "mutation": "remove last retrieved artifact byte while retaining reported total/hash",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "artifact-slice",
+      "mutation": "duplicate one chunk offset with wrong bytes",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "store-run",
+      "mutation": "change one durable run revision or state time",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    },
+    {
+      "id": "store-artifact",
+      "mutation": "change one durable artifact blob or pinned revision",
+      "expected": "independent reader refuses",
+      "base": "valid independently checked original result/record/artifact",
+      "original_must_remain_readable": true,
+      "one_mutation_per_copy": true
+    }
+  ],
+  "gate": "Report every original and mutated stream hash, exact one-field/byte mutation, reader command/result and refusal. A reader that accepts any mutation fails; a mutation-preparation error is not a successful refusal."
+}

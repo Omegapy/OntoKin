@@ -1,0 +1,4080 @@
+{
+  "schema_version": "ontokin.c088-native-admission-expected/1",
+  "basis": "Reviewed specification v02 native type metadata and stage order",
+  "candidate_observations_used": false,
+  "cases": [
+    {
+      "id": "container-list",
+      "defect": "entries_list",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "early_match_must_not_hide_malformed_tail": false
+    },
+    {
+      "id": "container-subclass",
+      "defect": "keyed_subclass",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "early_match_must_not_hide_malformed_tail": false
+    },
+    {
+      "id": "entry-list",
+      "defect": "entry_list",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "early_match_must_not_hide_malformed_tail": false
+    },
+    {
+      "id": "entry-arity",
+      "defect": "entry_arity_one",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "early_match_must_not_hide_malformed_tail": false
+    },
+    {
+      "id": "key-int",
+      "defect": "key_int",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "early_match_must_not_hide_malformed_tail": false
+    },
+    {
+      "id": "key-subclass",
+      "defect": "key_str_subclass",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "early_match_must_not_hide_malformed_tail": false
+    },
+    {
+      "id": "key-domain",
+      "defect": "key_empty",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-ID",
+        "phase": "binding",
+        "message": "Stable keys must contain 1–64 ASCII letters, digits, '.', '_', or '-', and begin with a letter or digit.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "early_match_must_not_hide_malformed_tail": false
+    },
+    {
+      "id": "value-subclass",
+      "defect": "value_subclass",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "early_match_must_not_hide_malformed_tail": false
+    },
+    {
+      "id": "value-type",
+      "defect": "different_value_type",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "early_match_must_not_hide_malformed_tail": false
+    },
+    {
+      "id": "value-unknown",
+      "defect": "unknown_value_payload",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "early_match_must_not_hide_malformed_tail": false
+    },
+    {
+      "id": "duplicate-tail",
+      "defect": "duplicate_second_key",
+      "base_keys": [
+        "a",
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-ID",
+        "phase": "binding",
+        "message": "has_key input keys must be unique canonical stable keys.",
+        "successful_dynamic_ticks_through_failure": 3,
+        "boolean_published": false,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "early_match_must_not_hide_malformed_tail": true
+    },
+    {
+      "id": "reversed-tail",
+      "defect": "descending_second_key",
+      "base_keys": [
+        "b",
+        "a"
+      ],
+      "query": "b",
+      "expected": {
+        "code": "OKL-E-ID",
+        "phase": "binding",
+        "message": "has_key input keys must be unique canonical stable keys.",
+        "successful_dynamic_ticks_through_failure": 3,
+        "boolean_published": false,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "early_match_must_not_hide_malformed_tail": true
+    },
+    {
+      "id": "oversized",
+      "defect": "257_entries",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-RESOURCE",
+        "phase": "support",
+        "message": "Keyed membership input exceeds 256 entries.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "details": {
+          "budget": "keyed_entries",
+          "limit": 256,
+          "consumed": 257
+        },
+        "category": "invalid",
+        "related": []
+      },
+      "early_match_must_not_hide_malformed_tail": false
+    },
+    {
+      "id": "query-native-int",
+      "defect": "query_native_int",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key query requires exactly String.",
+        "successful_dynamic_ticks_through_failure": 3,
+        "boolean_published": false,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "early_match_must_not_hide_malformed_tail": false
+    },
+    {
+      "id": "query-native-subclass",
+      "defect": "query_str_subclass",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key query requires exactly String.",
+        "successful_dynamic_ticks_through_failure": 3,
+        "boolean_published": false,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "early_match_must_not_hide_malformed_tail": false
+    },
+    {
+      "id": "collection-not_type",
+      "defect": "not_type",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-not_type",
+      "defect": "not_type",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-type_subclass",
+      "defect": "type_subclass",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-type_subclass",
+      "defect": "type_subclass",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-kind_nonstring",
+      "defect": "kind_nonstring",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-kind_nonstring",
+      "defect": "kind_nonstring",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-kind_string_subclass",
+      "defect": "kind_string_subclass",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-kind_string_subclass",
+      "defect": "kind_string_subclass",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-kind_33_chars",
+      "defect": "kind_33_chars",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-kind_33_chars",
+      "defect": "kind_33_chars",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-unknown_kind",
+      "defect": "unknown_kind",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-unknown_kind",
+      "defect": "unknown_kind",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-simple_dimension_non_none",
+      "defect": "simple_dimension_non_none",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-simple_dimension_non_none",
+      "defect": "simple_dimension_non_none",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-simple_element_non_none",
+      "defect": "simple_element_non_none",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-simple_element_non_none",
+      "defect": "simple_element_non_none",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-simple_name_non_none",
+      "defect": "simple_name_non_none",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-simple_name_non_none",
+      "defect": "simple_name_non_none",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-none_equal_object",
+      "defect": "none_equal_object",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-none_equal_object",
+      "defect": "none_equal_object",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-quantity_dim_list",
+      "defect": "quantity_dim_list",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-quantity_dim_list",
+      "defect": "quantity_dim_list",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-quantity_dim_tuple_subclass",
+      "defect": "quantity_dim_tuple_subclass",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-quantity_dim_tuple_subclass",
+      "defect": "quantity_dim_tuple_subclass",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-quantity_dim_arity3",
+      "defect": "quantity_dim_arity3",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-quantity_dim_arity3",
+      "defect": "quantity_dim_arity3",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-quantity_dim_bool",
+      "defect": "quantity_dim_bool",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-quantity_dim_bool",
+      "defect": "quantity_dim_bool",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-quantity_dim_int_subclass",
+      "defect": "quantity_dim_int_subclass",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-quantity_dim_int_subclass",
+      "defect": "quantity_dim_int_subclass",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-quantity_dim_plus17",
+      "defect": "quantity_dim_plus17",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-quantity_dim_plus17",
+      "defect": "quantity_dim_plus17",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-quantity_dim_minus17",
+      "defect": "quantity_dim_minus17",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-quantity_dim_minus17",
+      "defect": "quantity_dim_minus17",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-quantity_dim_all_zero",
+      "defect": "quantity_dim_all_zero",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-quantity_dim_all_zero",
+      "defect": "quantity_dim_all_zero",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-quantity_element_non_none",
+      "defect": "quantity_element_non_none",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-quantity_element_non_none",
+      "defect": "quantity_element_non_none",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-quantity_name_non_none",
+      "defect": "quantity_name_non_none",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-quantity_name_non_none",
+      "defect": "quantity_name_non_none",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-vec_child_non_type",
+      "defect": "vec_child_non_type",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-vec_child_non_type",
+      "defect": "vec_child_non_type",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-vec_child_type_subclass",
+      "defect": "vec_child_type_subclass",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-vec_child_type_subclass",
+      "defect": "vec_child_type_subclass",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-vec_child_bool_kind",
+      "defect": "vec_child_bool_kind",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-vec_child_bool_kind",
+      "defect": "vec_child_bool_kind",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-vec_child_vec3",
+      "defect": "vec_child_vec3",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-vec_child_vec3",
+      "defect": "vec_child_vec3",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-vec_dimension_non_none",
+      "defect": "vec_dimension_non_none",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-vec_dimension_non_none",
+      "defect": "vec_dimension_non_none",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-vec_name_non_none",
+      "defect": "vec_name_non_none",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-vec_name_non_none",
+      "defect": "vec_name_non_none",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-point3_child_real",
+      "defect": "point3_child_real",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-point3_child_real",
+      "defect": "point3_child_real",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-point3_child_wrong_dimension",
+      "defect": "point3_child_wrong_dimension",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-point3_child_wrong_dimension",
+      "defect": "point3_child_wrong_dimension",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-point3_child_non_type",
+      "defect": "point3_child_non_type",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-point3_child_non_type",
+      "defect": "point3_child_non_type",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-ref_empty_name",
+      "defect": "ref_empty_name",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-ref_empty_name",
+      "defect": "ref_empty_name",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-ref_279_name",
+      "defect": "ref_279_name",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-ref_279_name",
+      "defect": "ref_279_name",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-ref_name_subclass",
+      "defect": "ref_name_subclass",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-ref_name_subclass",
+      "defect": "ref_name_subclass",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-ref_name_foreign_eq",
+      "defect": "ref_name_foreign_eq",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-ref_name_foreign_eq",
+      "defect": "ref_name_foreign_eq",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-ref_dimension_non_none",
+      "defect": "ref_dimension_non_none",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-ref_dimension_non_none",
+      "defect": "ref_dimension_non_none",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-ref_element_non_none",
+      "defect": "ref_element_non_none",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-ref_element_non_none",
+      "defect": "ref_element_non_none",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-cyclic_element",
+      "defect": "cyclic_element",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-cyclic_element",
+      "defect": "cyclic_element",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-deep_chain_10000",
+      "defect": "deep_chain_10000",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-deep_chain_10000",
+      "defect": "deep_chain_10000",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-kind_foreign_eq_hash",
+      "defect": "kind_foreign_eq_hash",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-kind_foreign_eq_hash",
+      "defect": "kind_foreign_eq_hash",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "collection-dimension_foreign_eq_hash",
+      "defect": "dimension_foreign_eq_hash",
+      "metadata_location": "collection",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key requires an immutable Keyed value.",
+        "successful_dynamic_ticks_through_failure": 1,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-dimension_foreign_eq_hash",
+      "defect": "dimension_foreign_eq_hash",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-not-value",
+      "defect": "leaf_not_value",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "leaf-value-type-not-Type",
+      "defect": "leaf_type_not_type",
+      "metadata_location": "leaf",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0,
+        "details": {},
+        "category": "invalid",
+        "related": []
+      },
+      "forbidden_observations": [
+        "payload comparison",
+        "payload conversion",
+        "foreign __eq__",
+        "foreign __hash__",
+        "foreign __str__",
+        "recursive Type equality"
+      ]
+    },
+    {
+      "id": "malformed-leaf-tail-early-match",
+      "defect": "second_leaf_not_value",
+      "base_keys": [
+        "a",
+        "b"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "category": "invalid",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "details": {},
+        "related": [],
+        "successful_dynamic_ticks_through_failure": 3,
+        "boolean_published": false,
+        "foreign_methods_called": 0
+      },
+      "early_match_must_not_hide_malformed_tail": true
+    },
+    {
+      "id": "unknown-leaf-tail-early-match",
+      "defect": "second_leaf_unknown",
+      "base_keys": [
+        "a",
+        "b"
+      ],
+      "query": "a",
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "category": "invalid",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "details": {},
+        "related": [],
+        "successful_dynamic_ticks_through_failure": 3,
+        "boolean_published": false,
+        "foreign_methods_called": 0
+      },
+      "early_match_must_not_hide_malformed_tail": true
+    },
+    {
+      "id": "mismatched-quantity-dimension",
+      "defect": "different_valid_type",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected_descriptor": {
+        "kind": "Quantity",
+        "dimension": [
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      "leaf_descriptor": {
+        "kind": "Quantity",
+        "dimension": [
+          0,
+          0,
+          1,
+          0
+        ]
+      },
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "category": "invalid",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "details": {},
+        "related": [],
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0
+      },
+      "early_match_must_not_hide_malformed_tail": false
+    },
+    {
+      "id": "mismatched-vector-child",
+      "defect": "different_valid_type",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected_descriptor": {
+        "kind": "Vec3",
+        "element": {
+          "kind": "Real"
+        }
+      },
+      "leaf_descriptor": {
+        "kind": "Vec3",
+        "element": {
+          "kind": "Int"
+        }
+      },
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "category": "invalid",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "details": {},
+        "related": [],
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0
+      },
+      "early_match_must_not_hide_malformed_tail": false
+    },
+    {
+      "id": "mismatched-vector-unit",
+      "defect": "different_valid_type",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected_descriptor": {
+        "kind": "Vector3",
+        "element": {
+          "kind": "Quantity",
+          "dimension": [
+            1,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "leaf_descriptor": {
+        "kind": "Vector3",
+        "element": {
+          "kind": "Quantity",
+          "dimension": [
+            0,
+            0,
+            1,
+            0
+          ]
+        }
+      },
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "category": "invalid",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "details": {},
+        "related": [],
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0
+      },
+      "early_match_must_not_hide_malformed_tail": false
+    },
+    {
+      "id": "mismatched-ref-nominal",
+      "defect": "different_valid_type",
+      "base_keys": [
+        "a"
+      ],
+      "query": "a",
+      "expected_descriptor": {
+        "kind": "Ref",
+        "name": "C"
+      },
+      "leaf_descriptor": {
+        "kind": "Ref",
+        "name": "D"
+      },
+      "expected": {
+        "code": "OKL-E-TYPE",
+        "phase": "type",
+        "category": "invalid",
+        "message": "has_key input entry has a different resolved leaf type.",
+        "details": {},
+        "related": [],
+        "successful_dynamic_ticks_through_failure": 2,
+        "boolean_published": false,
+        "foreign_methods_called": 0
+      },
+      "early_match_must_not_hide_malformed_tail": false
+    }
+  ],
+  "missing_context": {
+    "code": "OKL-E-RESOURCE",
+    "phase": "support",
+    "message": "Construction requires one admitted execution context.",
+    "details": {
+      "budget_reason": "execution_context_required"
+    },
+    "dynamic_ticks": 0
+  },
+  "note": "No arbitrary executable payload is serialized. Harness builds safe native value wrappers corresponding to these declarative defects.",
+  "specification_sha256": "e9a55ae015b1892453217deea38ea85e269e2551608ab5ed7aa7d21bea337d0b",
+  "status": "review_candidate_before_implementation",
+  "valid_metadata_cases": [
+    {
+      "id": "valid-type-00",
+      "descriptor": {
+        "kind": "Int",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-00",
+      "descriptor": {
+        "kind": "Int",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-01",
+      "descriptor": {
+        "kind": "Real",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-01",
+      "descriptor": {
+        "kind": "Real",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-02",
+      "descriptor": {
+        "kind": "Bool",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-02",
+      "descriptor": {
+        "kind": "Bool",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-03",
+      "descriptor": {
+        "kind": "String",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-03",
+      "descriptor": {
+        "kind": "String",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-04",
+      "descriptor": {
+        "kind": "FrameRef",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-04",
+      "descriptor": {
+        "kind": "FrameRef",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-05",
+      "descriptor": {
+        "kind": "Rotation",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-05",
+      "descriptor": {
+        "kind": "Rotation",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-06",
+      "descriptor": {
+        "kind": "Pose",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-06",
+      "descriptor": {
+        "kind": "Pose",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-07",
+      "descriptor": {
+        "kind": "Color",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-07",
+      "descriptor": {
+        "kind": "Color",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-08",
+      "descriptor": {
+        "kind": "LoftSection",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-08",
+      "descriptor": {
+        "kind": "LoftSection",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-09",
+      "descriptor": {
+        "kind": "SurfaceMaterial",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-09",
+      "descriptor": {
+        "kind": "SurfaceMaterial",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-10",
+      "descriptor": {
+        "kind": "TextureImage",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-10",
+      "descriptor": {
+        "kind": "TextureImage",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-11",
+      "descriptor": {
+        "kind": "PlanarUV",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-11",
+      "descriptor": {
+        "kind": "PlanarUV",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-12",
+      "descriptor": {
+        "kind": "TextureBinding",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-12",
+      "descriptor": {
+        "kind": "TextureBinding",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-13",
+      "descriptor": {
+        "kind": "PolygonPocket",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-13",
+      "descriptor": {
+        "kind": "PolygonPocket",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-14",
+      "descriptor": {
+        "kind": "FramedPolygonSection",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-14",
+      "descriptor": {
+        "kind": "FramedPolygonSection",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-15",
+      "descriptor": {
+        "kind": "PolygonSection",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-15",
+      "descriptor": {
+        "kind": "PolygonSection",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-16",
+      "descriptor": {
+        "kind": "PolygonRing",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-16",
+      "descriptor": {
+        "kind": "PolygonRing",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-17",
+      "descriptor": {
+        "kind": "PlanarPoint",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-17",
+      "descriptor": {
+        "kind": "PlanarPoint",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-18",
+      "descriptor": {
+        "kind": "PolygonVertex",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-18",
+      "descriptor": {
+        "kind": "PolygonVertex",
+        "dimension": null,
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-19",
+      "descriptor": {
+        "kind": "Quantity",
+        "dimension": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-19",
+      "descriptor": {
+        "kind": "Quantity",
+        "dimension": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-20",
+      "descriptor": {
+        "kind": "Quantity",
+        "dimension": [
+          16,
+          -16,
+          0,
+          1
+        ],
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-20",
+      "descriptor": {
+        "kind": "Quantity",
+        "dimension": [
+          16,
+          -16,
+          0,
+          1
+        ],
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-21",
+      "descriptor": {
+        "kind": "Quantity",
+        "dimension": [
+          -16,
+          16,
+          1,
+          0
+        ],
+        "element": null,
+        "name": null
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-21",
+      "descriptor": {
+        "kind": "Quantity",
+        "dimension": [
+          -16,
+          16,
+          1,
+          0
+        ],
+        "element": null,
+        "name": null
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-22",
+      "descriptor": {
+        "kind": "Vec3",
+        "dimension": null,
+        "name": null,
+        "element": {
+          "kind": "Int",
+          "dimension": null,
+          "element": null,
+          "name": null
+        }
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-22",
+      "descriptor": {
+        "kind": "Vec3",
+        "dimension": null,
+        "name": null,
+        "element": {
+          "kind": "Int",
+          "dimension": null,
+          "element": null,
+          "name": null
+        }
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-23",
+      "descriptor": {
+        "kind": "Vec3",
+        "dimension": null,
+        "name": null,
+        "element": {
+          "kind": "Real",
+          "dimension": null,
+          "element": null,
+          "name": null
+        }
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-23",
+      "descriptor": {
+        "kind": "Vec3",
+        "dimension": null,
+        "name": null,
+        "element": {
+          "kind": "Real",
+          "dimension": null,
+          "element": null,
+          "name": null
+        }
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-24",
+      "descriptor": {
+        "kind": "Vec3",
+        "dimension": null,
+        "name": null,
+        "element": {
+          "kind": "Quantity",
+          "dimension": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "element": null,
+          "name": null
+        }
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-24",
+      "descriptor": {
+        "kind": "Vec3",
+        "dimension": null,
+        "name": null,
+        "element": {
+          "kind": "Quantity",
+          "dimension": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "element": null,
+          "name": null
+        }
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-25",
+      "descriptor": {
+        "kind": "Vector3",
+        "dimension": null,
+        "name": null,
+        "element": {
+          "kind": "Int",
+          "dimension": null,
+          "element": null,
+          "name": null
+        }
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-25",
+      "descriptor": {
+        "kind": "Vector3",
+        "dimension": null,
+        "name": null,
+        "element": {
+          "kind": "Int",
+          "dimension": null,
+          "element": null,
+          "name": null
+        }
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-26",
+      "descriptor": {
+        "kind": "Vector3",
+        "dimension": null,
+        "name": null,
+        "element": {
+          "kind": "Real",
+          "dimension": null,
+          "element": null,
+          "name": null
+        }
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-26",
+      "descriptor": {
+        "kind": "Vector3",
+        "dimension": null,
+        "name": null,
+        "element": {
+          "kind": "Real",
+          "dimension": null,
+          "element": null,
+          "name": null
+        }
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-27",
+      "descriptor": {
+        "kind": "Vector3",
+        "dimension": null,
+        "name": null,
+        "element": {
+          "kind": "Quantity",
+          "dimension": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "element": null,
+          "name": null
+        }
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-27",
+      "descriptor": {
+        "kind": "Vector3",
+        "dimension": null,
+        "name": null,
+        "element": {
+          "kind": "Quantity",
+          "dimension": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "element": null,
+          "name": null
+        }
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-28",
+      "descriptor": {
+        "kind": "Range",
+        "dimension": null,
+        "name": null,
+        "element": {
+          "kind": "Int",
+          "dimension": null,
+          "element": null,
+          "name": null
+        }
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-28",
+      "descriptor": {
+        "kind": "Range",
+        "dimension": null,
+        "name": null,
+        "element": {
+          "kind": "Int",
+          "dimension": null,
+          "element": null,
+          "name": null
+        }
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-29",
+      "descriptor": {
+        "kind": "Range",
+        "dimension": null,
+        "name": null,
+        "element": {
+          "kind": "Real",
+          "dimension": null,
+          "element": null,
+          "name": null
+        }
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-29",
+      "descriptor": {
+        "kind": "Range",
+        "dimension": null,
+        "name": null,
+        "element": {
+          "kind": "Real",
+          "dimension": null,
+          "element": null,
+          "name": null
+        }
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-30",
+      "descriptor": {
+        "kind": "Range",
+        "dimension": null,
+        "name": null,
+        "element": {
+          "kind": "Quantity",
+          "dimension": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "element": null,
+          "name": null
+        }
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-30",
+      "descriptor": {
+        "kind": "Range",
+        "dimension": null,
+        "name": null,
+        "element": {
+          "kind": "Quantity",
+          "dimension": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "element": null,
+          "name": null
+        }
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-31",
+      "descriptor": {
+        "kind": "Point3",
+        "dimension": null,
+        "name": null,
+        "element": {
+          "kind": "Quantity",
+          "dimension": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "element": null,
+          "name": null
+        }
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-31",
+      "descriptor": {
+        "kind": "Point3",
+        "dimension": null,
+        "name": null,
+        "element": {
+          "kind": "Quantity",
+          "dimension": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "element": null,
+          "name": null
+        }
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-32",
+      "descriptor": {
+        "kind": "Ref",
+        "dimension": null,
+        "element": null,
+        "name": "Object"
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-32",
+      "descriptor": {
+        "kind": "Ref",
+        "dimension": null,
+        "element": null,
+        "name": "Object"
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    },
+    {
+      "id": "valid-type-33",
+      "descriptor": {
+        "kind": "Ref",
+        "dimension": null,
+        "element": null,
+        "name": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+      },
+      "keys": [],
+      "query": "a",
+      "expected": false,
+      "operations": 3
+    },
+    {
+      "id": "opaque-payload-33",
+      "descriptor": {
+        "kind": "Ref",
+        "dimension": null,
+        "element": null,
+        "name": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+      },
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "payload": "opaque foreign object whose conversion/equality/hash methods throw; known means not UNKNOWN only",
+      "expected": true,
+      "operations": 5,
+      "foreign_methods_called": 0
+    }
+  ],
+  "callback_mutation_cases": [
+    {
+      "id": "capture-entry-tuple",
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "mutation_before_stage": "keyed_membership_input",
+      "mutation": "replace KeyedValue.entries with exact tuple containing z only",
+      "expected": true,
+      "operations": 5,
+      "captured_original_tuple_used": true
+    },
+    {
+      "id": "capture-expected-descriptor",
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "mutation_before_stage": "keyed_membership_input",
+      "mutation": "At the first keyed_membership_input callback, mutate only the fresh expected Type.kind to Bool using object.__setattr__; entry leaf.type remains a separate exact Type(Int). The captured flat descriptor remains Int.",
+      "expected": true,
+      "operations": 5,
+      "captured_original_descriptor_used": true,
+      "object_graph": "Create a fresh expected Type(Int) object and a distinct fresh leaf Type(Int) object. Do not reuse module-global INT, and do not share the expected Type with leaf.type.",
+      "forbidden": "Do not mutate a shared Type or the leaf type. A separately named leaf-Type mutation is a refusal case."
+    },
+    {
+      "id": "no-payload-reread",
+      "keys": [
+        "a"
+      ],
+      "query": "a",
+      "mutation_before_stage": "keyed_membership_query",
+      "mutation": "replace admitted entry Value.value with UNKNOWN after its input step",
+      "expected": true,
+      "operations": 5,
+      "known_payload_not_reread": true
+    }
+  ],
+  "unknown_abstract_cases": [
+    {
+      "id": "abstract-known-invalid-query",
+      "collection_type": "Keyed<Int>",
+      "collection": "empty known",
+      "query_type": "String",
+      "query": "bad key",
+      "abstract": true,
+      "expected_type": "Bool",
+      "expected_known": false,
+      "dynamic_ticks": 0
+    },
+    {
+      "id": "unknown-collection-invalid-query",
+      "collection_type": "Keyed<Int>",
+      "collection": "UNKNOWN",
+      "query_type": "String",
+      "query": "bad key",
+      "abstract": false,
+      "expected_type": "Bool",
+      "expected_known": false,
+      "dynamic_ticks": 0
+    },
+    {
+      "id": "unknown-query",
+      "collection_type": "Keyed<Int>",
+      "collection": "empty known",
+      "query_type": "String",
+      "query": "UNKNOWN",
+      "abstract": false,
+      "expected_type": "Bool",
+      "expected_known": false,
+      "dynamic_ticks": 0
+    },
+    {
+      "id": "unknown-collection-wrong-query-type",
+      "collection_type": "Keyed<Int>",
+      "collection": "UNKNOWN",
+      "query_type": "Int",
+      "query": 1,
+      "abstract": true,
+      "expected_code": "OKL-E-TYPE",
+      "expected_message": "has_key query requires exactly String.",
+      "dynamic_ticks": 0
+    }
+  ],
+  "entry_shape_details": {
+    "duplicate-tail": [
+      "a",
+      "a"
+    ],
+    "reversed-tail": [
+      "b",
+      "a"
+    ],
+    "oversized_count": 257,
+    "bounds_before_iteration": true,
+    "before_query_domain_all_entries_admitted": true,
+    "invalid_tail_with_early_match": "native repeated/descending/malformed last entry must fail even if first admitted key matches query"
+  },
+  "missing_context_variants": [
+    {
+      "id": "no-ledger",
+      "setup": "Pass None as ledger.",
+      "expected": {
+        "code": "OKL-E-RESOURCE",
+        "phase": "support",
+        "message": "Construction requires one admitted execution context.",
+        "details": {
+          "budget_reason": "execution_context_required"
+        },
+        "dynamic_ticks": 0
+      }
+    },
+    {
+      "id": "non-ledger",
+      "setup": "Pass a plain native object that is not SharedExecutionBudget.",
+      "expected": {
+        "code": "OKL-E-RESOURCE",
+        "phase": "support",
+        "message": "Construction requires one admitted execution context.",
+        "details": {
+          "budget_reason": "execution_context_required"
+        },
+        "dynamic_ticks": 0
+      }
+    },
+    {
+      "id": "unresolved-ledger",
+      "setup": "Construct an actual fresh SharedExecutionBudget, do not admit or promote it; resolved remains None.",
+      "expected": {
+        "code": "OKL-E-RESOURCE",
+        "phase": "support",
+        "message": "Construction requires one admitted execution context.",
+        "details": {
+          "budget_reason": "execution_context_required"
+        },
+        "dynamic_ticks": 0
+      }
+    },
+    {
+      "id": "unadmitted-ledger",
+      "setup": "Negative-only fixture: construct a fresh actual SharedExecutionBudget and call its actual promote({}, entry_revision=None). This leaves resolved metadata with no admitted entry revision. The membership operation must refuse; this malformed native state is never used to obtain a successful result or source/Agent acceptance.",
+      "expected": {
+        "code": "OKL-E-RESOURCE",
+        "phase": "support",
+        "message": "Construction requires one admitted execution context.",
+        "details": {
+          "budget_reason": "execution_context_required"
+        },
+        "dynamic_ticks": 0
+      }
+    }
+  ]
+}

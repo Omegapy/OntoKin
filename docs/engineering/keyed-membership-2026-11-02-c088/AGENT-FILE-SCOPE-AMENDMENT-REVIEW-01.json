@@ -1,0 +1,171 @@
+{
+  "schema_version": "ontokin.c088-independent-input-amendment-review/1",
+  "decision": "accepted_for_publication_and_exact_readback",
+  "reviewer": "/root/membership_review",
+  "amendment_sha256": "d53ae7f40659686d0874ced5d342deaa1a1421fd6ce17b9e6dd02b1b68510a54",
+  "original_input_manifest_sha256": "7ef04b64d93a45a4fac681b632a9c02bdb936a34d4565faa44452ce27c07aca1",
+  "effective_input_manifest_sha256": "c3bebcb33f03340b1d92ae48172c5c5d83d45f87e38a6934d75fd7ce7e327546",
+  "effective_inventory_sha256": "9afda4c68f35f8254cea38373356fa2e4b22027b2a478ffbc0840a0f1046993b",
+  "effective_files": 904,
+  "effective_bytes": 3260772,
+  "unchanged_files": 903,
+  "all_modes_verified": true,
+  "changed_inventory_entries": [
+    [
+      {
+        "path": "agent/request-workflows.json",
+        "bytes": 62373,
+        "mode": "100644",
+        "sha256": "6a9847a089936318597fd68433462face4a8eeddb57e4cc04962d59918fe28ec"
+      },
+      {
+        "path": "agent/request-workflows.json",
+        "bytes": 62149,
+        "mode": "100644",
+        "sha256": "c38097cbf5a40f2f8f773e59afff62b460ebda385e7a9cb2e3049d2bc16b3722"
+      }
+    ]
+  ],
+  "replayed_test_replace_operations": 14,
+  "exact_effective_request_bytes_reconstructed": true,
+  "schema_and_source_authority": [
+    {
+      "path": "docs/language-design/agent-v0.20/request.schema.json",
+      "sha256": "6ea6e2931aa90dd7982080c5d83cf28df8a5459ca17300afaca77d54e153e121",
+      "candidate_sha256": "6ea6e2931aa90dd7982080c5d83cf28df8a5459ca17300afaca77d54e153e121",
+      "candidate_whole_file_equal_C087": true
+    },
+    {
+      "path": "ontokin/budget_protocol.py",
+      "sha256": "3539d83c02b885111e3cf21234868c486fc894da30a124ac178ebb8b4eb750c3",
+      "candidate_sha256": "3539d83c02b885111e3cf21234868c486fc894da30a124ac178ebb8b4eb750c3",
+      "candidate_whole_file_equal_C087": true
+    },
+    {
+      "path": "ontokin/program_runtime.py",
+      "sha256": "ba891beec6c512883f891a09452e4db02c11fa7c0bdf56202b9349c11ec0bcf9",
+      "candidate_sha256": "c607f30d7910df7c3d00df25eb7c6a2d7d4f430effb1f9ca441d68ddc2233416",
+      "candidate_whole_file_equal_C087": false,
+      "exact_scope_functions": [
+        {
+          "name": "_file_records",
+          "sha256": "9093ddee8d3b7175fcde4cc7e937cfa1cc34db8c26036f3ba71d948bc4e2277b",
+          "equal": true
+        },
+        {
+          "name": "_target",
+          "sha256": "2cddaaf56f2b1eaba2a5a4f3e8da36bdf5b2532281504aa8d46a714e11a9ff14",
+          "equal": true
+        },
+        {
+          "name": "_index",
+          "sha256": "ab5a3b737436395e79d82fc696cb972c030910d69973d35bf30f3ee9a7fcf839",
+          "equal": true
+        },
+        {
+          "name": "apply_patches",
+          "sha256": "17bf4b3feadba86788e8cb3bb105fd1b6286d6d9ed7d8049e8c165beb7b13727",
+          "equal": true
+        }
+      ],
+      "whole_file_difference": "Only .21 profile import and support destination selector; source file scopes and patch authority functions are exact predecessor bytes."
+    }
+  ],
+  "schema_projection": "Only schema_version changed to ontokin.agent/0.20 in temporary static schema copies; actual requests remain .21.",
+  "cases": [
+    {
+      "workflow": "A01",
+      "step": "edit-inserted",
+      "pointer": "/scenarios/0/steps/8/request/patches/0/element_id",
+      "original_schema_refused": true,
+      "amended_schema_accepted": true,
+      "all_other_patch_fields_unchanged": true
+    },
+    {
+      "workflow": "A01",
+      "step": "edit-updated",
+      "pointer": "/scenarios/0/steps/12/request/patches/0/element_id",
+      "original_schema_refused": true,
+      "amended_schema_accepted": true,
+      "all_other_patch_fields_unchanged": true
+    },
+    {
+      "workflow": "A01",
+      "step": "edit-removed",
+      "pointer": "/scenarios/0/steps/16/request/patches/0/element_id",
+      "original_schema_refused": true,
+      "amended_schema_accepted": true,
+      "all_other_patch_fields_unchanged": true
+    },
+    {
+      "workflow": "A01",
+      "step": "edit-restored",
+      "pointer": "/scenarios/0/steps/20/request/patches/0/element_id",
+      "original_schema_refused": true,
+      "amended_schema_accepted": true,
+      "all_other_patch_fields_unchanged": true
+    },
+    {
+      "workflow": "A02",
+      "step": "invalid",
+      "pointer": "/scenarios/1/steps/1/request/patches/0/element_id",
+      "original_schema_refused": true,
+      "amended_schema_accepted": true,
+      "all_other_patch_fields_unchanged": true
+    },
+    {
+      "workflow": "A03",
+      "step": "insert",
+      "pointer": "/scenarios/2/steps/5/request/patches/0/element_id",
+      "original_schema_refused": true,
+      "amended_schema_accepted": true,
+      "all_other_patch_fields_unchanged": true
+    },
+    {
+      "workflow": "A03",
+      "step": "stale-edit",
+      "pointer": "/scenarios/2/steps/6/request/patches/0/element_id",
+      "original_schema_refused": true,
+      "amended_schema_accepted": true,
+      "all_other_patch_fields_unchanged": true
+    }
+  ],
+  "unchanged_semantics": "All source bytes, patch spans, expected_text/replacement bytes, requested levels, request IDs, status expectations, geometry, motion, provenance and resource answers are byte-identical; only seven request patch scope arrays change.",
+  "failed_original_run_verified": {
+    "path": "candidate-agent01",
+    "summary_sha256": "609db154a9dbfaac94ce65734d69d0a07a230b7387cca4c9e06213f78cb0411c",
+    "transcript_sha256": "2289ee509c6b8ce03b6374a0e318e42ce4575601448d16d8497e7b02b5adb30d"
+  },
+  "post_observation_disclosure_verified": "Only retained original Agent transport failure motivated this seven-pointer request-scope repair. All semantic, resource, provenance, geometry, image, motion, status and source-byte expectations retain the immutable preimplementation basis.",
+  "product_modules_imported": [],
+  "candidate_execution_performed": false,
+  "remaining_gate": "Parent must publish adoption and verify actual remote bytes/modes before executing amended requests.",
+  "reviewed_amendment_files": [
+    {
+      "path": "AMENDMENT.json",
+      "bytes": 3479,
+      "sha256": "d53ae7f40659686d0874ced5d342deaa1a1421fd6ce17b9e6dd02b1b68510a54"
+    },
+    {
+      "path": "PATCH.json",
+      "bytes": 2186,
+      "sha256": "05e366cafbc2a52355f89d5228c5b7cbd92c4e84fc4324fa43b9008005034ac2"
+    },
+    {
+      "path": "POINTERS.json",
+      "bytes": 1738,
+      "sha256": "c6d565b72b0be8a9eaaee8073a2b46102ba705394c7c80f53c962bce3a9f8ed0"
+    },
+    {
+      "path": "REVIEW-BASIS.json",
+      "bytes": 7847,
+      "sha256": "bdf60ff414a3739343c0d4fc78fe5a33dd0570a420306f2be684ea2cf3541cba"
+    },
+    {
+      "path": "request-workflows.diff",
+      "bytes": 3165,
+      "sha256": "3d828ba73a763e4ad221352cdc47ce7232b99e204134e8a9d6b33fc0404ea6c7"
+    }
+  ],
+  "review_audit_note": "An initial reviewer assertion incorrectly required all of program_runtime.py to be byte-identical to C087. Exact git diff shows only the authorized .21 import/destination selector. This final audit checks all four actual source-scope/patch authority functions byte-for-byte; no product/input change was made."
+}

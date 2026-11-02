@@ -1,0 +1,1754 @@
+{
+  "schema_version": "ontokin.c088-executable-workflows/1",
+  "specification_sha256": "e9a55ae015b1892453217deea38ea85e269e2551608ab5ed7aa7d21bea337d0b",
+  "candidate_observations_used": false,
+  "template_rules": {
+    "$bundle_file": "Load the frozen relative agent files manifest and seal unchanged source/image bytes; verify prewritten canonical manifest/revision before dispatch.",
+    "$response": "Resolve the exact named earlier response path; no inferred or selected alternative response is allowed.",
+    "request_ref": "Reuse the exact prior request object including request_id; only listed override tests may modify it.",
+    "expected_status": "For inherited source/support refusals retain the exact public status from the inherited service schema; each specified diagnostic and state invariant is mandatory. If the listed status differs, retain failure and request reviewed correction before changing it.",
+    "$capture": "Use the exact fault/barrier capture field from that real request; never manufacture another ID.",
+    "$loop": "Use the current zero-based loop index/byte offset derived solely from exact previous returned bytes; retain each concrete materialized request and response."
+  },
+  "required_operations": [
+    "discover",
+    "create",
+    "edit",
+    "validate",
+    "inspect",
+    "evaluate",
+    "reset",
+    "export",
+    "artifact",
+    "status",
+    "cancel",
+    "surface.mesh_page"
+  ],
+  "default_host_policy": {
+    "max_operations": 100000,
+    "max_elapsed_ms": 30000
+  },
+  "scenarios": [
+    {
+      "id": "A01",
+      "name": "sparse-override-lifecycle",
+      "steps": [
+        {
+          "step": "discover",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-discover",
+            "operation": "discover",
+            "profile": "keyed-membership-0.1",
+            "limit": 1000
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "create",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-create",
+            "operation": "create",
+            "bundle": {
+              "$bundle_file": "base.files.json"
+            },
+            "expected_program_revision": null,
+            "requested_level": "constructed"
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "validate",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-validate",
+            "operation": "validate",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "requested_level": "constructed"
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "inspect",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-inspect",
+            "operation": "inspect",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "selector": {
+              "kind": "object"
+            },
+            "fields": [
+              "identity",
+              "source",
+              "values",
+              "geometry",
+              "matter",
+              "support"
+            ],
+            "limit": 100
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "mesh",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-mesh",
+            "operation": "surface.mesh_page",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "element_id": [
+              "sparse-panels",
+              "demo",
+              "sibling",
+              "panels",
+              "back.right"
+            ],
+            "count": 256
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "evaluate-base",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-evaluate-base",
+            "operation": "evaluate",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "run_id": null,
+            "until_seconds": "1"
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "export-base",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-export-base",
+            "operation": "export",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "destination": "ontokin.glb/0.21",
+            "options": {
+              "fps": 4,
+              "end": "1",
+              "helpers": false
+            }
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "artifact-first",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-artifact-first",
+            "operation": "artifact",
+            "artifact_id": {
+              "$response": "A01.export-base.result.artifact_id"
+            },
+            "offset": 0,
+            "max_bytes": 65536
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "edit-inserted",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-edit-inserted",
+            "operation": "edit",
+            "expected_program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "requested_level": "constructed",
+            "patches": [
+              {
+                "source_id": "entry",
+                "source_revision": "sha256:ec02e37b21ec2666adbf09d6c48012c8651a6d3db4d989d51d385eac45ea6c4a",
+                "element_id": [
+                  "sources",
+                  "entry"
+                ],
+                "start_byte": 486,
+                "end_byte": 536,
+                "expected_text": "        overrides = keyed<Length>{\"left\":1.25[m]};",
+                "replacement": "        overrides = keyed<Length>{\"left\":1.25[m],\"middle\":2.25[m]};"
+              }
+            ]
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "inspect-inserted",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-inspect-inserted",
+            "operation": "inspect",
+            "program_revision": "sha256:8fc7861068113727564c919a1cb2d7a5fe5c1fa776946fc12a4ed36f29420daf",
+            "selector": {
+              "kind": "object"
+            },
+            "fields": [
+              "identity",
+              "source",
+              "values",
+              "geometry"
+            ],
+            "limit": 100
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "evaluate-inserted",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-evaluate-inserted",
+            "operation": "evaluate",
+            "program_revision": "sha256:8fc7861068113727564c919a1cb2d7a5fe5c1fa776946fc12a4ed36f29420daf",
+            "run_id": null,
+            "until_seconds": "1"
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "export-inserted",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-export-inserted",
+            "operation": "export",
+            "program_revision": "sha256:8fc7861068113727564c919a1cb2d7a5fe5c1fa776946fc12a4ed36f29420daf",
+            "destination": "ontokin.glb/0.21",
+            "options": {
+              "fps": 4,
+              "end": "1",
+              "helpers": false
+            }
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "edit-updated",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-edit-updated",
+            "operation": "edit",
+            "expected_program_revision": "sha256:8fc7861068113727564c919a1cb2d7a5fe5c1fa776946fc12a4ed36f29420daf",
+            "requested_level": "constructed",
+            "patches": [
+              {
+                "source_id": "entry",
+                "source_revision": "sha256:0fbf5b9bff86cfa1c4f4071a4ce110651615127c7ebcb58ff93caf9b4101fdff",
+                "element_id": [
+                  "sources",
+                  "entry"
+                ],
+                "start_byte": 486,
+                "end_byte": 553,
+                "expected_text": "        overrides = keyed<Length>{\"left\":1.25[m],\"middle\":2.25[m]};",
+                "replacement": "        overrides = keyed<Length>{\"left\":0.75[m],\"middle\":2.25[m]};"
+              }
+            ]
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "inspect-updated",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-inspect-updated",
+            "operation": "inspect",
+            "program_revision": "sha256:76062ec50c2b486948c1ced1388841da6a35e411d9f96931c1d940287f80009e",
+            "selector": {
+              "kind": "object"
+            },
+            "fields": [
+              "identity",
+              "source",
+              "values",
+              "geometry"
+            ],
+            "limit": 100
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "evaluate-updated",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-evaluate-updated",
+            "operation": "evaluate",
+            "program_revision": "sha256:76062ec50c2b486948c1ced1388841da6a35e411d9f96931c1d940287f80009e",
+            "run_id": null,
+            "until_seconds": "1"
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "export-updated",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-export-updated",
+            "operation": "export",
+            "program_revision": "sha256:76062ec50c2b486948c1ced1388841da6a35e411d9f96931c1d940287f80009e",
+            "destination": "ontokin.glb/0.21",
+            "options": {
+              "fps": 4,
+              "end": "1",
+              "helpers": false
+            }
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "edit-removed",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-edit-removed",
+            "operation": "edit",
+            "expected_program_revision": "sha256:76062ec50c2b486948c1ced1388841da6a35e411d9f96931c1d940287f80009e",
+            "requested_level": "constructed",
+            "patches": [
+              {
+                "source_id": "entry",
+                "source_revision": "sha256:a194b377604af21d92e5c16fe5c1996dfb9e395e2bfce6dea8f9187ef89781b0",
+                "element_id": [
+                  "sources",
+                  "entry"
+                ],
+                "start_byte": 486,
+                "end_byte": 553,
+                "expected_text": "        overrides = keyed<Length>{\"left\":0.75[m],\"middle\":2.25[m]};",
+                "replacement": "        overrides = keyed<Length>{\"middle\":2.25[m]};"
+              }
+            ]
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "inspect-removed",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-inspect-removed",
+            "operation": "inspect",
+            "program_revision": "sha256:f9ec005bf01a3e01056d94f576dddd1e5f6594f4ac8346d6d5316d3b812a4ed9",
+            "selector": {
+              "kind": "object"
+            },
+            "fields": [
+              "identity",
+              "source",
+              "values",
+              "geometry"
+            ],
+            "limit": 100
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "evaluate-removed",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-evaluate-removed",
+            "operation": "evaluate",
+            "program_revision": "sha256:f9ec005bf01a3e01056d94f576dddd1e5f6594f4ac8346d6d5316d3b812a4ed9",
+            "run_id": null,
+            "until_seconds": "1"
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "export-removed",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-export-removed",
+            "operation": "export",
+            "program_revision": "sha256:f9ec005bf01a3e01056d94f576dddd1e5f6594f4ac8346d6d5316d3b812a4ed9",
+            "destination": "ontokin.glb/0.21",
+            "options": {
+              "fps": 4,
+              "end": "1",
+              "helpers": false
+            }
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "edit-restored",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-edit-restored",
+            "operation": "edit",
+            "expected_program_revision": "sha256:f9ec005bf01a3e01056d94f576dddd1e5f6594f4ac8346d6d5316d3b812a4ed9",
+            "requested_level": "constructed",
+            "patches": [
+              {
+                "source_id": "entry",
+                "source_revision": "sha256:891229dddbb09f378a5d511d1b9589e0ec6f24f3ac5b52f71eb1e28d5df1b7bc",
+                "element_id": [
+                  "sources",
+                  "entry"
+                ],
+                "start_byte": 486,
+                "end_byte": 538,
+                "expected_text": "        overrides = keyed<Length>{\"middle\":2.25[m]};",
+                "replacement": "        overrides = keyed<Length>{\"left\":1.25[m]};"
+              }
+            ]
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "inspect-restored",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-inspect-restored",
+            "operation": "inspect",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "selector": {
+              "kind": "object"
+            },
+            "fields": [
+              "identity",
+              "source",
+              "values",
+              "geometry"
+            ],
+            "limit": 100
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "evaluate-restored",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-evaluate-restored",
+            "operation": "evaluate",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "run_id": null,
+            "until_seconds": "1"
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "export-restored",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-export-restored",
+            "operation": "export",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "destination": "ontokin.glb/0.21",
+            "options": {
+              "fps": 4,
+              "end": "1",
+              "helpers": false
+            }
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "old-run-inspect",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-old-run-inspect",
+            "operation": "inspect",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "run_id": {
+              "$response": "A01.evaluate-base.run_id"
+            },
+            "selector": {
+              "kind": "object"
+            },
+            "fields": [
+              "identity",
+              "state"
+            ],
+            "limit": 100,
+            "time": {
+              "seconds": "1",
+              "side": "after"
+            }
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "old-artifact",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a01",
+            "request_id": "c088-a01-old-artifact",
+            "operation": "artifact",
+            "artifact_id": {
+              "$response": "A01.export-base.result.artifact_id"
+            },
+            "offset": 0,
+            "max_bytes": 65536
+          },
+          "expected_status": "succeeded"
+        }
+      ],
+      "expected": "Each edit revision equals the prewritten state. Inspect/mesh/evaluate/export agree with full source-role geometry table. Old run/artifact retain original bytes and IDs. Base and restored immutable bundle revisions are equal."
+    },
+    {
+      "id": "A02",
+      "name": "invalid-selected-rollback",
+      "steps": [
+        {
+          "step": "create",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a02",
+            "request_id": "c088-a02-create",
+            "operation": "create",
+            "bundle": {
+              "$bundle_file": "base.files.json"
+            },
+            "expected_program_revision": null,
+            "requested_level": "constructed"
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "invalid",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a02",
+            "request_id": "c088-a02-invalid",
+            "operation": "edit",
+            "expected_program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "requested_level": "constructed",
+            "patches": [
+              {
+                "source_id": "entry",
+                "source_revision": "sha256:ec02e37b21ec2666adbf09d6c48012c8651a6d3db4d989d51d385eac45ea6c4a",
+                "element_id": [
+                  "sources",
+                  "entry"
+                ],
+                "start_byte": 486,
+                "end_byte": 536,
+                "expected_text": "        overrides = keyed<Length>{\"left\":1.25[m]};",
+                "replacement": "        overrides = keyed<Length>{\"left\":-1[m]};"
+              }
+            ]
+          },
+          "expected_status": "rejected",
+          "expected_code": "OKL-E-EXTRUSION-WINDING"
+        },
+        {
+          "step": "status",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a02",
+            "request_id": "c088-a02-status",
+            "operation": "status",
+            "target_request_id": "c088-a02-invalid"
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "inspect-after",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a02",
+            "request_id": "c088-a02-inspect-after",
+            "operation": "inspect",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "selector": {
+              "kind": "object"
+            },
+            "fields": [
+              "identity",
+              "values"
+            ],
+            "limit": 100
+          },
+          "expected_status": "succeeded"
+        }
+      ],
+      "expected_no_new": [
+        "accepted revision",
+        "run",
+        "artifact"
+      ],
+      "expected_accepted_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+      "retained_diagnostic_source_snapshot": "An immutable never-accepted candidate snapshot may be retained by inherited _snapshot before validation. It must not gain accepted-once state, an ordinary run, an artifact, or replace accepted bytes."
+    },
+    {
+      "id": "A03",
+      "name": "cursor-versus-stale-edit",
+      "steps": [
+        {
+          "step": "create",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a03",
+            "request_id": "c088-a03-create",
+            "operation": "create",
+            "bundle": {
+              "$bundle_file": "base.files.json"
+            },
+            "expected_program_revision": null,
+            "requested_level": "constructed"
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "cursor",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a03",
+            "request_id": "c088-a03-cursor",
+            "operation": "inspect",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "selector": {
+              "kind": "object"
+            },
+            "fields": [
+              "identity",
+              "source"
+            ],
+            "limit": 1
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "reopen",
+          "action": "close_and_reopen_same_store"
+        },
+        {
+          "step": "first-page-reopened",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a03",
+            "request_id": "c088-a03-first-page-reopened",
+            "operation": "inspect",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "selector": {
+              "kind": "object"
+            },
+            "fields": [
+              "identity",
+              "source"
+            ],
+            "limit": 1
+          },
+          "expected_status": "succeeded",
+          "expected_next_cursor_equals": {
+            "$response": "A03.cursor.next_cursor"
+          }
+        },
+        {
+          "step": "old-cursor-reopened",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a03",
+            "request_id": "c088-a03-old-cursor-reopened",
+            "operation": "inspect",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "cursor": {
+              "$response": "A03.cursor.next_cursor"
+            },
+            "selector": {
+              "kind": "object"
+            },
+            "fields": [
+              "identity",
+              "source"
+            ],
+            "limit": 1
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "insert",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a03",
+            "request_id": "c088-a03-insert",
+            "operation": "edit",
+            "expected_program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "requested_level": "constructed",
+            "patches": [
+              {
+                "source_id": "entry",
+                "source_revision": "sha256:ec02e37b21ec2666adbf09d6c48012c8651a6d3db4d989d51d385eac45ea6c4a",
+                "element_id": [
+                  "sources",
+                  "entry"
+                ],
+                "start_byte": 486,
+                "end_byte": 536,
+                "expected_text": "        overrides = keyed<Length>{\"left\":1.25[m]};",
+                "replacement": "        overrides = keyed<Length>{\"left\":1.25[m],\"middle\":2.25[m]};"
+              }
+            ]
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "stale-edit",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a03",
+            "request_id": "c088-a03-stale-edit",
+            "operation": "edit",
+            "expected_program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "requested_level": "constructed",
+            "patches": [
+              {
+                "source_id": "entry",
+                "source_revision": "sha256:ec02e37b21ec2666adbf09d6c48012c8651a6d3db4d989d51d385eac45ea6c4a",
+                "element_id": [
+                  "sources",
+                  "entry"
+                ],
+                "start_byte": 486,
+                "end_byte": 536,
+                "expected_text": "        overrides = keyed<Length>{\"left\":1.25[m]};",
+                "replacement": "        overrides = keyed<Length>{\"left\":1.25[m],\"middle\":2.25[m]};"
+              }
+            ]
+          },
+          "expected_status": "rejected",
+          "expected_code": "OKL-E-REVISION"
+        },
+        {
+          "step": "stale-cursor",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a03",
+            "request_id": "c088-a03-stale-cursor",
+            "operation": "inspect",
+            "program_revision": "sha256:8fc7861068113727564c919a1cb2d7a5fe5c1fa776946fc12a4ed36f29420daf",
+            "cursor": {
+              "$response": "A03.cursor.next_cursor"
+            },
+            "selector": {
+              "kind": "object"
+            },
+            "fields": [
+              "identity",
+              "source"
+            ],
+            "limit": 1
+          },
+          "expected_status": "rejected",
+          "expected_code": "OKL-E-REVISION"
+        }
+      ],
+      "assertions": [
+        "Retain the exact original nonempty cursor; repeat the original first-page query after reopen and require its next_cursor equals that retained token before consuming it. The continuation response may advance next_cursor.",
+        "Old cursor is valid for its original revision and query, then refused when coupled to the new revision.",
+        "Stale edit uses a new request ID, so rejection proves revision checking rather than retry identity."
+      ]
+    },
+    {
+      "id": "A04",
+      "name": "reopen-retry-reset",
+      "steps": [
+        {
+          "step": "create",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a04",
+            "request_id": "c088-a04-create",
+            "operation": "create",
+            "bundle": {
+              "$bundle_file": "base.files.json"
+            },
+            "expected_program_revision": null,
+            "requested_level": "constructed"
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "evaluate",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a04",
+            "request_id": "c088-a04-evaluate",
+            "operation": "evaluate",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "run_id": null,
+            "until_seconds": "1"
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "export",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a04",
+            "request_id": "c088-a04-export",
+            "operation": "export",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "destination": "ontokin.glb/0.21",
+            "options": {
+              "fps": 4,
+              "end": "1",
+              "helpers": false
+            }
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "reopen",
+          "action": "close_and_reopen_same_store"
+        },
+        {
+          "step": "same-create-retry",
+          "request_ref": "A04.create",
+          "expect_exact_response_ref": "A04.create"
+        },
+        {
+          "step": "same-export-retry",
+          "request_ref": "A04.export",
+          "expect_exact_response_ref": "A04.export"
+        },
+        {
+          "step": "changed-retry",
+          "request_ref": "A04.create",
+          "override": {
+            "requested_level": "represented"
+          },
+          "expected_status": "rejected",
+          "expected_code": "OKL-E-REQUEST-ID"
+        },
+        {
+          "step": "status",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a04",
+            "request_id": "c088-a04-status",
+            "operation": "status",
+            "target_request_id": "c088-a04-export"
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "reset",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a04",
+            "request_id": "c088-a04-reset",
+            "operation": "reset",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f"
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "evaluate-new",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a04",
+            "request_id": "c088-a04-evaluate-new",
+            "operation": "evaluate",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "run_id": null,
+            "until_seconds": "1"
+          },
+          "expected_status": "succeeded"
+        }
+      ],
+      "expected_reset": {
+        "time_seconds": "0",
+        "side": "before"
+      },
+      "distinct_run_responses": [
+        "A04.evaluate",
+        "A04.reset",
+        "A04.evaluate-new"
+      ],
+      "old_run_immutable": true
+    },
+    {
+      "id": "A05",
+      "name": "cancel-each-actual-membership-stage",
+      "steps": [
+        {
+          "step": "create",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a05",
+            "request_id": "c088-a05-create",
+            "operation": "create",
+            "bundle": {
+              "$bundle_file": "base.files.json"
+            },
+            "expected_program_revision": null,
+            "requested_level": "constructed"
+          },
+          "expected_status": "succeeded"
+        }
+      ],
+      "repeat_for_each_stage": [
+        {
+          "stage": "keyed_membership_admission",
+          "queue_request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a05",
+            "request_id": "c088-a05-validate-0",
+            "operation": "validate",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "requested_level": "represented"
+          },
+          "barrier": "Pause the existing original request callback at this actual dynamic ledger stage, with its operations/start/limits unchanged; send real cancel from the controlling thread, then release and invoke that original callback.",
+          "cancel_request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a05",
+            "request_id": "c088-a05-cancel-0",
+            "operation": "cancel",
+            "target_request_id": "c088-a05-validate-0"
+          },
+          "status_request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a05",
+            "request_id": "c088-a05-status-0",
+            "operation": "status",
+            "target_request_id": "c088-a05-validate-0"
+          },
+          "expected_queue_status": "queued",
+          "expected_terminal_status": "cancelled",
+          "same_callback_exception_object": true,
+          "no_revision_run_or_artifact": true
+        },
+        {
+          "stage": "keyed_membership_input",
+          "queue_request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a05",
+            "request_id": "c088-a05-validate-1",
+            "operation": "validate",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "requested_level": "represented"
+          },
+          "barrier": "Pause the existing original request callback at this actual dynamic ledger stage, with its operations/start/limits unchanged; send real cancel from the controlling thread, then release and invoke that original callback.",
+          "cancel_request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a05",
+            "request_id": "c088-a05-cancel-1",
+            "operation": "cancel",
+            "target_request_id": "c088-a05-validate-1"
+          },
+          "status_request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a05",
+            "request_id": "c088-a05-status-1",
+            "operation": "status",
+            "target_request_id": "c088-a05-validate-1"
+          },
+          "expected_queue_status": "queued",
+          "expected_terminal_status": "cancelled",
+          "same_callback_exception_object": true,
+          "no_revision_run_or_artifact": true
+        },
+        {
+          "stage": "keyed_membership_query",
+          "queue_request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a05",
+            "request_id": "c088-a05-validate-2",
+            "operation": "validate",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "requested_level": "represented"
+          },
+          "barrier": "Pause the existing original request callback at this actual dynamic ledger stage, with its operations/start/limits unchanged; send real cancel from the controlling thread, then release and invoke that original callback.",
+          "cancel_request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a05",
+            "request_id": "c088-a05-cancel-2",
+            "operation": "cancel",
+            "target_request_id": "c088-a05-validate-2"
+          },
+          "status_request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a05",
+            "request_id": "c088-a05-status-2",
+            "operation": "status",
+            "target_request_id": "c088-a05-validate-2"
+          },
+          "expected_queue_status": "queued",
+          "expected_terminal_status": "cancelled",
+          "same_callback_exception_object": true,
+          "no_revision_run_or_artifact": true
+        },
+        {
+          "stage": "keyed_membership_scan",
+          "queue_request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a05",
+            "request_id": "c088-a05-validate-3",
+            "operation": "validate",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "requested_level": "represented"
+          },
+          "barrier": "Pause the existing original request callback at this actual dynamic ledger stage, with its operations/start/limits unchanged; send real cancel from the controlling thread, then release and invoke that original callback.",
+          "cancel_request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a05",
+            "request_id": "c088-a05-cancel-3",
+            "operation": "cancel",
+            "target_request_id": "c088-a05-validate-3"
+          },
+          "status_request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a05",
+            "request_id": "c088-a05-status-3",
+            "operation": "status",
+            "target_request_id": "c088-a05-validate-3"
+          },
+          "expected_queue_status": "queued",
+          "expected_terminal_status": "cancelled",
+          "same_callback_exception_object": true,
+          "no_revision_run_or_artifact": true
+        },
+        {
+          "stage": "keyed_membership_publication",
+          "queue_request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a05",
+            "request_id": "c088-a05-validate-4",
+            "operation": "validate",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "requested_level": "represented"
+          },
+          "barrier": "Pause the existing original request callback at this actual dynamic ledger stage, with its operations/start/limits unchanged; send real cancel from the controlling thread, then release and invoke that original callback.",
+          "cancel_request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a05",
+            "request_id": "c088-a05-cancel-4",
+            "operation": "cancel",
+            "target_request_id": "c088-a05-validate-4"
+          },
+          "status_request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a05",
+            "request_id": "c088-a05-status-4",
+            "operation": "status",
+            "target_request_id": "c088-a05-validate-4"
+          },
+          "expected_queue_status": "queued",
+          "expected_terminal_status": "cancelled",
+          "same_callback_exception_object": true,
+          "no_revision_run_or_artifact": true
+        }
+      ],
+      "capture": [
+        "actual request and resolved ledger identities",
+        "original clock start",
+        "host/caller/effective caps",
+        "operations at each observed stage",
+        "original callback error identity",
+        "SQLite before/after accepted pointers and immutable rows"
+      ]
+    },
+    {
+      "id": "A06",
+      "name": "source-order-and-unused-key",
+      "steps": [
+        {
+          "step": "create",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a06",
+            "request_id": "c088-a06-create",
+            "operation": "create",
+            "bundle": {
+              "$bundle_file": "reordered.files.json"
+            },
+            "expected_program_revision": null,
+            "requested_level": "constructed"
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "unused-create",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a06-unused",
+            "request_id": "c088-a06-unused-create",
+            "operation": "create",
+            "bundle": {
+              "$bundle_file": "unused-override.files.json"
+            },
+            "expected_program_revision": null,
+            "requested_level": "constructed"
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "unused-inspect",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a06-unused",
+            "request_id": "c088-a06-unused-inspect",
+            "operation": "inspect",
+            "program_revision": "sha256:58000c8242e0303551bb2139b820f60c594604428d57d86fe3e960ad7e3adfa7",
+            "selector": {
+              "kind": "object"
+            },
+            "fields": [
+              "identity",
+              "source",
+              "values",
+              "geometry"
+            ],
+            "limit": 100
+          },
+          "expected_status": "succeeded"
+        }
+      ],
+      "compare_states": [
+        "inserted",
+        "reordered"
+      ],
+      "secondary_independent_create_state": "unused-override",
+      "assertions": [
+        "Reordered source has a different source revision but the exact same canonical selected widths, flags, generated keys, complete BIN/geometry/material/image/motion.",
+        "Unused override key is not a catalog key and creates no generated occurrence.",
+        "Both false flags retain the actual overrides collection dependency."
+      ]
+    },
+    {
+      "id": "A07",
+      "name": "interrupted-artifact-publication",
+      "steps": [
+        {
+          "step": "create",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a07",
+            "request_id": "c088-a07-create",
+            "operation": "create",
+            "bundle": {
+              "$bundle_file": "base.files.json"
+            },
+            "expected_program_revision": null,
+            "requested_level": "constructed"
+          },
+          "expected_status": "succeeded"
+        }
+      ],
+      "export_request": {
+        "schema_version": "ontokin.agent/0.21",
+        "project_id": "c088-a07",
+        "request_id": "c088-a07-export",
+        "operation": "export",
+        "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+        "destination": "ontokin.glb/0.21",
+        "options": {
+          "fps": 4,
+          "end": "1",
+          "helpers": false
+        }
+      },
+      "fault": "Wrap the real _persist_task_metadata invoked inside _commit_task. Once task.artifact contains verified bytes and db.in_transaction is true, preserve prepared artifact identity/bytes and raise one fresh sentinel subclass of BaseException. Let the transaction unwind; restore the original method; close the service, then reopen the same store. Issue no cancel.",
+      "then": [
+        {
+          "action": "close_and_reopen_same_store"
+        },
+        {
+          "step": "status",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a07",
+            "request_id": "c088-a07-status",
+            "operation": "status",
+            "target_request_id": "c088-a07-export"
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "same-id-retry",
+          "request_ref": "A07.export",
+          "expected_status": "unknown_outcome",
+          "expected_code": "OKA-E-UNKNOWN-OUTCOME"
+        },
+        {
+          "step": "prepared-artifact",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a07",
+            "request_id": "c088-a07-prepared-artifact",
+            "operation": "artifact",
+            "artifact_id": {
+              "$capture": "A07.prepared.artifact_id"
+            },
+            "offset": 0,
+            "max_bytes": 1
+          },
+          "expected_status": "rejected",
+          "expected_code": "OKA-E-ARTIFACT"
+        },
+        {
+          "step": "fresh-export",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a07",
+            "request_id": "c088-a07-fresh-export",
+            "operation": "export",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "destination": "ontokin.glb/0.21",
+            "options": {
+              "fps": 4,
+              "end": "1",
+              "helpers": false
+            }
+          },
+          "expected_status": "succeeded"
+        }
+      ],
+      "prepared_only_artifact_read": {
+        "operation": "artifact",
+        "offset": 0,
+        "max_bytes": 1,
+        "expected_code": "OKA-E-ARTIFACT",
+        "expected_status": "rejected"
+      },
+      "accepted_revision_unchanged": true,
+      "no_published_run_or_artifact": true,
+      "new_request_export_after_recovery_must_succeed": true,
+      "expected_target_status": "unknown_outcome",
+      "expected_target_protocol_code": "OKA-E-UNKNOWN-OUTCOME",
+      "same_id_retry_status": "unknown_outcome",
+      "same_id_retry_protocol_code": "OKA-E-UNKNOWN-OUTCOME"
+    },
+    {
+      "id": "A08",
+      "name": "reopened-current-host-authority",
+      "steps": [
+        {
+          "step": "create",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a08",
+            "request_id": "c088-a08-create",
+            "operation": "create",
+            "bundle": {
+              "$bundle_file": "base.files.json"
+            },
+            "expected_program_revision": null,
+            "requested_level": "constructed"
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "evaluate",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a08",
+            "request_id": "c088-a08-evaluate",
+            "operation": "evaluate",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "run_id": null,
+            "until_seconds": "1"
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "export",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a08",
+            "request_id": "c088-a08-export",
+            "operation": "export",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "destination": "ontokin.glb/0.21",
+            "options": {
+              "fps": 4,
+              "end": "1",
+              "helpers": false
+            }
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "reopen-low",
+          "action": "close_and_reopen_same_store",
+          "host_policy": {
+            "max_operations": 50000,
+            "max_elapsed_ms": 30000
+          }
+        },
+        {
+          "step": "denied-0",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a08",
+            "request_id": "c088-a08-denied-0",
+            "operation": "validate",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "requested_level": "constructed"
+          },
+          "expected_status": "failed",
+          "expected_code": "OKL-E-RESOURCE",
+          "expected_budget_reason": "host_ceiling_exceeded"
+        },
+        {
+          "step": "denied-1",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a08",
+            "request_id": "c088-a08-denied-1",
+            "operation": "inspect",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "selector": {
+              "kind": "object"
+            },
+            "fields": [
+              "identity"
+            ],
+            "limit": 100
+          },
+          "expected_status": "failed",
+          "expected_code": "OKL-E-RESOURCE",
+          "expected_budget_reason": "host_ceiling_exceeded"
+        },
+        {
+          "step": "denied-2",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a08",
+            "request_id": "c088-a08-denied-2",
+            "operation": "surface.mesh_page",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "element_id": [
+              "sparse-panels",
+              "demo",
+              "sibling",
+              "panels",
+              "back.right"
+            ],
+            "count": 1
+          },
+          "expected_status": "failed",
+          "expected_code": "OKL-E-RESOURCE",
+          "expected_budget_reason": "host_ceiling_exceeded"
+        },
+        {
+          "step": "denied-3",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a08",
+            "request_id": "c088-a08-denied-3",
+            "operation": "evaluate",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "run_id": null,
+            "until_seconds": "1"
+          },
+          "expected_status": "failed",
+          "expected_code": "OKL-E-RESOURCE",
+          "expected_budget_reason": "host_ceiling_exceeded"
+        },
+        {
+          "step": "denied-4",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a08",
+            "request_id": "c088-a08-denied-4",
+            "operation": "export",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "destination": "ontokin.glb/0.21",
+            "options": {
+              "fps": 4,
+              "end": "1",
+              "helpers": false
+            }
+          },
+          "expected_status": "failed",
+          "expected_code": "OKL-E-RESOURCE",
+          "expected_budget_reason": "host_ceiling_exceeded"
+        },
+        {
+          "step": "denied-5",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a08",
+            "request_id": "c088-a08-denied-5",
+            "operation": "artifact",
+            "artifact_id": {
+              "$response": "A08.export.result.artifact_id"
+            },
+            "offset": 0,
+            "max_bytes": 1
+          },
+          "expected_status": "failed",
+          "expected_code": "OKL-E-RESOURCE",
+          "expected_budget_reason": "host_ceiling_exceeded"
+        }
+      ],
+      "source_request": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "no_reused_authority": true,
+      "no_new_accepted_revision_run_or_artifact": true
+    },
+    {
+      "id": "A09",
+      "name": "caller-and-output-caps",
+      "steps": [
+        {
+          "step": "create",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a09",
+            "request_id": "c088-a09-create",
+            "operation": "create",
+            "bundle": {
+              "$bundle_file": "base.files.json"
+            },
+            "expected_program_revision": null,
+            "requested_level": "constructed"
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "export",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a09",
+            "request_id": "c088-a09-export",
+            "operation": "export",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "destination": "ontokin.glb/0.21",
+            "options": {
+              "fps": 4,
+              "end": "1",
+              "helpers": false
+            }
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "cap-0",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a09",
+            "request_id": "c088-a09-cap-0",
+            "operation": "validate",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "requested_level": "represented",
+            "budgets": {
+              "max_operations": 1
+            }
+          },
+          "expected_status": "failed",
+          "expected_code": "OKL-E-RESOURCE"
+        },
+        {
+          "step": "cap-1",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a09",
+            "request_id": "c088-a09-cap-1",
+            "operation": "inspect",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "selector": {
+              "kind": "object"
+            },
+            "fields": [
+              "identity"
+            ],
+            "limit": 2,
+            "budgets": {
+              "max_result_items": 1
+            }
+          },
+          "expected_status": "rejected",
+          "expected_code": "OKL-E-SAMPLE"
+        },
+        {
+          "step": "cap-2",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a09",
+            "request_id": "c088-a09-cap-2",
+            "operation": "inspect",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "selector": {
+              "path": "first"
+            },
+            "fields": [
+              "values"
+            ],
+            "limit": 1,
+            "budgets": {
+              "max_value_entries": 1
+            }
+          },
+          "expected_status": "failed",
+          "expected_code": "OKL-E-RESOURCE"
+        },
+        {
+          "step": "cap-3",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a09",
+            "request_id": "c088-a09-cap-3",
+            "operation": "surface.mesh_page",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "element_id": [
+              "sparse-panels",
+              "demo",
+              "sibling",
+              "panels",
+              "back.right"
+            ],
+            "count": 1,
+            "budgets": {
+              "max_operations": 1
+            }
+          },
+          "expected_status": "failed",
+          "expected_code": "OKL-E-RESOURCE"
+        },
+        {
+          "step": "cap-4",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a09",
+            "request_id": "c088-a09-cap-4",
+            "operation": "export",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "destination": "ontokin.glb/0.21",
+            "options": {
+              "fps": 4,
+              "end": "1",
+              "helpers": false
+            },
+            "budgets": {
+              "max_operations": 1
+            }
+          },
+          "expected_status": "failed",
+          "expected_code": "OKL-E-RESOURCE"
+        },
+        {
+          "step": "cap-5",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a09",
+            "request_id": "c088-a09-cap-5",
+            "operation": "validate",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "requested_level": "represented",
+            "budgets": {
+              "max_operations": 100001
+            }
+          },
+          "expected_status": "failed",
+          "expected_code": "OKL-E-RESOURCE"
+        },
+        {
+          "step": "artifact-cap",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a09",
+            "request_id": "c088-a09-artifact-cap",
+            "operation": "artifact",
+            "artifact_id": {
+              "$response": "A09.export.result.artifact_id"
+            },
+            "offset": 0,
+            "max_bytes": 1,
+            "budgets": {
+              "max_operations": 1
+            }
+          },
+          "expected_status": "failed",
+          "expected_code": "OKL-E-RESOURCE"
+        }
+      ],
+      "assertions": [
+        "No request changes accepted source/run/artifact inventories.",
+        "Caller caps cannot enlarge source requests or create new authority.",
+        "Each failed request retains its actual consumed prefix, effective caps and original deadline."
+      ]
+    },
+    {
+      "id": "A10",
+      "name": "bounded-attachment-and-artifact-slices",
+      "steps": [
+        {
+          "step": "create",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a10",
+            "request_id": "c088-a10-create",
+            "operation": "create",
+            "bundle": {
+              "$bundle_file": "base.files.json"
+            },
+            "expected_program_revision": null,
+            "requested_level": "constructed"
+          },
+          "expected_status": "succeeded"
+        },
+        {
+          "step": "export",
+          "request": {
+            "schema_version": "ontokin.agent/0.21",
+            "project_id": "c088-a10",
+            "request_id": "c088-a10-export",
+            "operation": "export",
+            "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+            "destination": "ontokin.glb/0.21",
+            "options": {
+              "fps": 4,
+              "end": "1",
+              "helpers": false
+            }
+          },
+          "expected_status": "succeeded"
+        }
+      ],
+      "artifact_loop": {
+        "artifact_id": {
+          "$response": "A10.export.result.artifact_id"
+        },
+        "initial_offset": 0,
+        "max_bytes": 65536,
+        "next_offset": "previous offset + decoded returned byte count",
+        "until": "exact total_bytes",
+        "must_match": [
+          "entire reconstructed hash",
+          "exact total byte count",
+          "each slice source revision and artifact identity"
+        ],
+        "eof": {
+          "offset": "total_bytes",
+          "max_bytes": 1,
+          "data_base64": "",
+          "next_offset": null
+        },
+        "past_eof": {
+          "offset": "total_bytes+1",
+          "max_bytes": 1,
+          "expected_code": "OKA-E-ARTIFACT"
+        },
+        "request_template": {
+          "schema_version": "ontokin.agent/0.21",
+          "project_id": "c088-a10",
+          "request_id": "c088-a10-artifact-${index}",
+          "operation": "artifact",
+          "artifact_id": {
+            "$response": "A10.export.result.artifact_id"
+          },
+          "offset": {
+            "$loop": "offset"
+          },
+          "max_bytes": 65536
+        }
+      },
+      "asset_loop": {
+        "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+        "selector": {
+          "element_id": [
+            "assets",
+            "label"
+          ]
+        },
+        "fields": [
+          "identity",
+          "source"
+        ],
+        "limit": 1,
+        "asset_slice": {
+          "initial_offset": 0,
+          "max_bytes": 17
+        },
+        "expected_bytes": 89,
+        "expected_sha256": "5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e",
+        "request_template": {
+          "schema_version": "ontokin.agent/0.21",
+          "project_id": "c088-a10",
+          "request_id": "c088-a10-asset-${index}",
+          "operation": "inspect",
+          "program_revision": "sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f",
+          "selector": {
+            "element_id": [
+              "assets",
+              "label"
+            ]
+          },
+          "fields": [
+            "identity",
+            "source"
+          ],
+          "limit": 1,
+          "asset_slice": {
+            "offset": {
+              "$loop": "offset"
+            },
+            "max_bytes": 17
+          }
+        }
+      }
+    },
+    {
+      "id": "A11",
+      "name": "warm-and-reopened-provenance",
+      "fresh_projects_from_source_cases": [
+        "composition-map",
+        "composition-filter-keep",
+        "composition-filter-drop",
+        "composition-filter-empty",
+        "composition-reduce",
+        "composition-merge",
+        "composition-zip",
+        "composition-rekey",
+        "composition-rekey-old-absent",
+        "composition-map-absent",
+        "composition-merge-absent",
+        "composition-zip-absent",
+        "composition-reduce-absent",
+        "dependencies-true",
+        "dependencies-false",
+        "condition-only-true",
+        "condition-only-false",
+        "helper-recomputed",
+        "binding-reuse"
+      ],
+      "sequence": [
+        "create constructed",
+        "inspect object probe values twice with separate request IDs",
+        "validate represented with a new request ID",
+        "close/reopen same store",
+        "inspect probe values with a new request ID",
+        "validate represented with a new request ID"
+      ],
+      "expected": "Exact independently frozen Bool, declared member dependencies and detached aggregate origins each time. Every fresh request owns a fresh admitted ledger and executes all actual membership invocations; immutable binding reuse within one request is permitted only where specified.",
+      "record": [
+        "original response bytes",
+        "raw parameter/derive dependency and origin records",
+        "dynamic stage trace bound to each actual request ledger",
+        "clock start and resolved caps",
+        "SQLite immutable revisions/requests/runs/artifacts"
+      ]
+    }
+  ]
+}

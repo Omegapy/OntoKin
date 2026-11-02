@@ -1,0 +1,104 @@
+{
+  "schema_version": "ontokin.c088-workflows/1",
+  "status": "superseded_planning_index",
+  "workflows": [
+    {
+      "id": "A01",
+      "name": "insert-update-remove-restore",
+      "base": "base",
+      "states": [
+        "inserted",
+        "updated",
+        "removed",
+        "restored"
+      ],
+      "required": [
+        "discover",
+        "create",
+        "validate",
+        "inspect",
+        "evaluate",
+        "export",
+        "artifact",
+        "edit"
+      ],
+      "assertions": [
+        "exact accepted revisions and byte preconditions",
+        "first width changes match literal table",
+        "all six generated keys stay unchanged",
+        "sibling/catalog/library/image remain exact",
+        "independent marker and sibling motion remain unchanged",
+        "old revisions/runs/artifacts remain immutable"
+      ]
+    },
+    {
+      "id": "A02",
+      "name": "invalid-selected-rollback",
+      "base": "base",
+      "candidate": "invalid-selected",
+      "expected_code": "OKL-E-EXTRUSION-WINDING",
+      "assertions": [
+        "accepted revision remains base",
+        "no candidate run/artifact",
+        "source diagnostic resolves to frozen library geometry and entry override"
+      ]
+    },
+    {
+      "id": "A03",
+      "name": "stale-revision-and-cursor",
+      "base": "base",
+      "candidate": "inserted",
+      "assertions": [
+        "stale source revision refused",
+        "cursor retains original revision",
+        "changed payload with reused request id refused"
+      ]
+    },
+    {
+      "id": "A04",
+      "name": "reopen-idempotent-retry",
+      "base": "base",
+      "candidate": "inserted",
+      "assertions": [
+        "reopened service returns accepted revision",
+        "same request payload replays exact durable response",
+        "different payload cannot reuse identity",
+        "current policy is rechecked for new evaluations"
+      ]
+    },
+    {
+      "id": "A05",
+      "name": "cancellation-and-interrupted-publication",
+      "base": "base",
+      "assertions": [
+        "cancellation before acceptance publishes no candidate result",
+        "interrupted write reconciles durable request state",
+        "retry preserves exact previous operation outcome",
+        "callback exception identity preserved"
+      ]
+    },
+    {
+      "id": "A06",
+      "name": "reorder-and-unused-key",
+      "base": "inserted",
+      "candidate": "reordered",
+      "assertions": [
+        "same canonical keys and widths despite source order",
+        "unused override in separate state creates no part",
+        "false membership still retains override-map dependency"
+      ]
+    },
+    {
+      "id": "A07",
+      "name": "bounded-delivery-and-hostile-records",
+      "base": "base",
+      "assertions": [
+        "bounded artifact chunks reconstruct exact whole stream",
+        "independent readers check all JSON and BIN data",
+        "wrong Boolean/width/key/source/texture/motion mutation refused",
+        "immutable SQLite source/history read"
+      ]
+    }
+  ],
+  "authoritative_requests": "request-workflows.json"
+}

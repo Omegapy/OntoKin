@@ -1,0 +1,103 @@
+{
+  "schema_version": "ontokin.c088-amendment-static-basis/1",
+  "no_product_import_or_execution": true,
+  "schema_projection": "Only top-level schema_version changed from ontokin.agent/0.21 to ontokin.agent/0.20 for validation against the exact unchanged predecessor request schema. Actual amended request remains .21.",
+  "predecessor_commit": "a969a668f9fdf021793366ac5f5b9a8f9cd0fa56",
+  "schema_sha256": "6ea6e2931aa90dd7982080c5d83cf28df8a5459ca17300afaca77d54e153e121",
+  "semantic_rule": "budget_protocol.BudgetProtocol.validate_request requires patch.element_id == [sources, patch.source_id].",
+  "source_scope_rule": "program_runtime._file_records owns [sources, source_id]; EXECUTION_PROFILES disable occurrence writable_spans.",
+  "cases": [
+    {
+      "workflow": "A01",
+      "step": "edit-inserted",
+      "original_projected_schema_errors": [
+        {
+          "path": [],
+          "message": "{'schema_version': 'ontokin.agent/0.20', 'project_id': 'c088-a01', 'request_id': 'c088-a01-edit-inserted', 'operation': 'edit', 'expected_program_revision': 'sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f', 'requested_level': 'constructed', 'patches': [{'source_id': 'entry', 'source_revision': 'sha256:ec02e37b21ec2666adbf09d6c48012c8651a6d3db4d989d51d385eac45ea6c4a', 'element_id': ['sparse-panels', 'demo', 'first'], 'start_byte': 486, 'end_byte': 536, 'expected_text': '        overrides = keyed<Length>{\"left\":1.25[m]};', 'replacement': '        overrides = keyed<Length>{\"left\":1.25[m],\"middle\":2.25[m]};'}]} is not valid under any of the given schemas"
+        }
+      ],
+      "amended_projected_schema_errors": [],
+      "exact_budget_protocol_scope_rule": true,
+      "all_other_patch_fields_identical": true
+    },
+    {
+      "workflow": "A01",
+      "step": "edit-updated",
+      "original_projected_schema_errors": [
+        {
+          "path": [],
+          "message": "{'schema_version': 'ontokin.agent/0.20', 'project_id': 'c088-a01', 'request_id': 'c088-a01-edit-updated', 'operation': 'edit', 'expected_program_revision': 'sha256:8fc7861068113727564c919a1cb2d7a5fe5c1fa776946fc12a4ed36f29420daf', 'requested_level': 'constructed', 'patches': [{'source_id': 'entry', 'source_revision': 'sha256:0fbf5b9bff86cfa1c4f4071a4ce110651615127c7ebcb58ff93caf9b4101fdff', 'element_id': ['sparse-panels', 'demo', 'first'], 'start_byte': 486, 'end_byte': 553, 'expected_text': '        overrides = keyed<Length>{\"left\":1.25[m],\"middle\":2.25[m]};', 'replacement': '        overrides = keyed<Length>{\"left\":0.75[m],\"middle\":2.25[m]};'}]} is not valid under any of the given schemas"
+        }
+      ],
+      "amended_projected_schema_errors": [],
+      "exact_budget_protocol_scope_rule": true,
+      "all_other_patch_fields_identical": true
+    },
+    {
+      "workflow": "A01",
+      "step": "edit-removed",
+      "original_projected_schema_errors": [
+        {
+          "path": [],
+          "message": "{'schema_version': 'ontokin.agent/0.20', 'project_id': 'c088-a01', 'request_id': 'c088-a01-edit-removed', 'operation': 'edit', 'expected_program_revision': 'sha256:76062ec50c2b486948c1ced1388841da6a35e411d9f96931c1d940287f80009e', 'requested_level': 'constructed', 'patches': [{'source_id': 'entry', 'source_revision': 'sha256:a194b377604af21d92e5c16fe5c1996dfb9e395e2bfce6dea8f9187ef89781b0', 'element_id': ['sparse-panels', 'demo', 'first'], 'start_byte': 486, 'end_byte': 553, 'expected_text': '        overrides = keyed<Length>{\"left\":0.75[m],\"middle\":2.25[m]};', 'replacement': '        overrides = keyed<Length>{\"middle\":2.25[m]};'}]} is not valid under any of the given schemas"
+        }
+      ],
+      "amended_projected_schema_errors": [],
+      "exact_budget_protocol_scope_rule": true,
+      "all_other_patch_fields_identical": true
+    },
+    {
+      "workflow": "A01",
+      "step": "edit-restored",
+      "original_projected_schema_errors": [
+        {
+          "path": [],
+          "message": "{'schema_version': 'ontokin.agent/0.20', 'project_id': 'c088-a01', 'request_id': 'c088-a01-edit-restored', 'operation': 'edit', 'expected_program_revision': 'sha256:f9ec005bf01a3e01056d94f576dddd1e5f6594f4ac8346d6d5316d3b812a4ed9', 'requested_level': 'constructed', 'patches': [{'source_id': 'entry', 'source_revision': 'sha256:891229dddbb09f378a5d511d1b9589e0ec6f24f3ac5b52f71eb1e28d5df1b7bc', 'element_id': ['sparse-panels', 'demo', 'first'], 'start_byte': 486, 'end_byte': 538, 'expected_text': '        overrides = keyed<Length>{\"middle\":2.25[m]};', 'replacement': '        overrides = keyed<Length>{\"left\":1.25[m]};'}]} is not valid under any of the given schemas"
+        }
+      ],
+      "amended_projected_schema_errors": [],
+      "exact_budget_protocol_scope_rule": true,
+      "all_other_patch_fields_identical": true
+    },
+    {
+      "workflow": "A02",
+      "step": "invalid",
+      "original_projected_schema_errors": [
+        {
+          "path": [],
+          "message": "{'schema_version': 'ontokin.agent/0.20', 'project_id': 'c088-a02', 'request_id': 'c088-a02-invalid', 'operation': 'edit', 'expected_program_revision': 'sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f', 'requested_level': 'constructed', 'patches': [{'source_id': 'entry', 'source_revision': 'sha256:ec02e37b21ec2666adbf09d6c48012c8651a6d3db4d989d51d385eac45ea6c4a', 'element_id': ['sparse-panels', 'demo', 'first'], 'start_byte': 486, 'end_byte': 536, 'expected_text': '        overrides = keyed<Length>{\"left\":1.25[m]};', 'replacement': '        overrides = keyed<Length>{\"left\":-1[m]};'}]} is not valid under any of the given schemas"
+        }
+      ],
+      "amended_projected_schema_errors": [],
+      "exact_budget_protocol_scope_rule": true,
+      "all_other_patch_fields_identical": true
+    },
+    {
+      "workflow": "A03",
+      "step": "insert",
+      "original_projected_schema_errors": [
+        {
+          "path": [],
+          "message": "{'schema_version': 'ontokin.agent/0.20', 'project_id': 'c088-a03', 'request_id': 'c088-a03-insert', 'operation': 'edit', 'expected_program_revision': 'sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f', 'requested_level': 'constructed', 'patches': [{'source_id': 'entry', 'source_revision': 'sha256:ec02e37b21ec2666adbf09d6c48012c8651a6d3db4d989d51d385eac45ea6c4a', 'element_id': ['sparse-panels', 'demo', 'first'], 'start_byte': 486, 'end_byte': 536, 'expected_text': '        overrides = keyed<Length>{\"left\":1.25[m]};', 'replacement': '        overrides = keyed<Length>{\"left\":1.25[m],\"middle\":2.25[m]};'}]} is not valid under any of the given schemas"
+        }
+      ],
+      "amended_projected_schema_errors": [],
+      "exact_budget_protocol_scope_rule": true,
+      "all_other_patch_fields_identical": true
+    },
+    {
+      "workflow": "A03",
+      "step": "stale-edit",
+      "original_projected_schema_errors": [
+        {
+          "path": [],
+          "message": "{'schema_version': 'ontokin.agent/0.20', 'project_id': 'c088-a03', 'request_id': 'c088-a03-stale-edit', 'operation': 'edit', 'expected_program_revision': 'sha256:a43d7ccc4aa68dabe00116c4d4062f97aab944262a7a8957005f52e38cc8335f', 'requested_level': 'constructed', 'patches': [{'source_id': 'entry', 'source_revision': 'sha256:ec02e37b21ec2666adbf09d6c48012c8651a6d3db4d989d51d385eac45ea6c4a', 'element_id': ['sparse-panels', 'demo', 'first'], 'start_byte': 486, 'end_byte': 536, 'expected_text': '        overrides = keyed<Length>{\"left\":1.25[m]};', 'replacement': '        overrides = keyed<Length>{\"left\":1.25[m],\"middle\":2.25[m]};'}]} is not valid under any of the given schemas"
+        }
+      ],
+      "amended_projected_schema_errors": [],
+      "exact_budget_protocol_scope_rule": true,
+      "all_other_patch_fields_identical": true
+    }
+  ],
+  "status": "passed"
+}

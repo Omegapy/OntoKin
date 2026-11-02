@@ -1,0 +1,11 @@
+(* Source 0.21 / keyed-membership-0.1 uses the inherited ordinary call grammar.
+   This fragment documents the adopted operation, not a new lexer token,
+   generic-call production, parser recovery rule or replacement grammar. *)
+
+membership_call = "has_key", "(", expression, ",", expression, ")" ;
+
+(* Both expressions use inherited grammar and eager left-to-right evaluation.
+   Arity is diagnosed by the ordinary call evaluator. Type arguments, a trailing
+   comma, or an anonymous callback in this ordinary call remain refused under
+   their inherited parser rules. Bare name reservation is declaring-unit scoped.
+   See SPECIFICATION.md for types, abstract behavior and dynamic stage order. *)

@@ -1,0 +1,40 @@
+{
+  "decision": "accepted",
+  "production_correction_required": false,
+  "candidate_commit": "39afec7971b9221fe58cf7c7d002505d172dd64f",
+  "specification_sha256": "e9a55ae015b1892453217deea38ea85e269e2551608ab5ed7aa7d21bea337d0b",
+  "tool_and_proposal": [
+    {
+      "path": "verification-tools/verify_keyed_membership_observations.py",
+      "sha256": "4dabe0acd4d99675d8e6ed92510673415bb5ec1365477f519012fc02101713cb"
+    },
+    {
+      "path": "verification-preparation/READER-PROJECTION-CORRECTION01.json",
+      "sha256": "311bcbc18eb643b678d45635143d05f2bdbfeedfaf066bbb9f4866800bb19ae4"
+    },
+    {
+      "path": "verification-tool-versions/v01/verify_keyed_membership_observations.py",
+      "sha256": "0cd56d1069af88dd72f7d22968d5be9950eebaaae68ca9b224e44d6a0eeffaff"
+    }
+  ],
+  "inherited_source_proof": [
+    {
+      "path": "ontokin/validator.py",
+      "sha256": "c48a52c4a0da85bc414480fa7c7a68de3de917dd03b33dcee0eecf3e7a4f84e1",
+      "candidate_matches_C087": true
+    },
+    {
+      "path": "ontokin/diagnostics.py",
+      "sha256": "106b723f452fcf1bf40070d2890bf654033d35541b3c200bba700d694063e177",
+      "candidate_matches_C087": true
+    },
+    {
+      "path": "ontokin/values.py",
+      "sha256": "4fff5edda701aba27656561aa3fc3a61678ba228e1715bc8b5f43d0f104b9c6d",
+      "candidate_matches_C087": true
+    }
+  ],
+  "reason": "The seven source signature call sites import validator.fail, whose absent details argument is None and is explicitly passed to OntoKinError. The exact unchanged Diagnostic.to_dict publishes self.details or {}. Specification freezes no additional details and inherits constructor defaults. Private observer projection maps only absent details to the public empty mapping; public output and native admission expectations stay exact.",
+  "reviewed_diff_scope": "Eight added lines in private source comparison, preserving all original failure evidence and all frozen expected bytes.",
+  "limitations": "This review classifies the representation mismatch and code scope. The independent source/native reader owns all actual per-case observed field comparisons."
+}

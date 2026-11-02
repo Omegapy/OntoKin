@@ -1,0 +1,1269 @@
+diff --git a/ontokin/agent_cli.py b/ontokin/agent_cli.py
+index 5fe02bb..936a9c9 100644
+--- a/ontokin/agent_cli.py
++++ b/ontokin/agent_cli.py
+@@ -77,6 +77,11 @@ def run(args, *, host_policy=None) -> int:
+         from .pockets_protocol import PocketsProtocol
+         service_type, envelope_fn = PocketsAgentService, PocketsProtocol.envelope
+         service_options = {"protocol": selected_protocol, "host_policy": host_policy}
++    elif selected_protocol == "ontokin.agent/0.21":
++        from .keyed_membership_agent import KeyedMembershipAgentService
++        from .keyed_membership_protocol import KeyedMembershipProtocol
++        service_type, envelope_fn = KeyedMembershipAgentService, KeyedMembershipProtocol.envelope
++        service_options = {"protocol": selected_protocol, "host_policy": host_policy}
+     elif selected_protocol == "ontokin.agent/0.20":
+         from .string_concat_agent import StringConcatAgentService
+         from .string_concat_protocol import StringConcatProtocol
+@@ -117,7 +122,7 @@ def run(args, *, host_policy=None) -> int:
+         from .texture_protocol import TextureProtocol
+         service_type, envelope_fn = TextureAgentService, TextureProtocol.envelope
+         service_options = {"protocol": selected_protocol, "host_policy": host_policy}
+-    max_request_bytes = 8 * 1024 * 1024 if selected_protocol in ("ontokin.agent/0.13", "ontokin.agent/0.14", "ontokin.agent/0.15", "ontokin.agent/0.16", "ontokin.agent/0.17", "ontokin.agent/0.18", "ontokin.agent/0.19", "ontokin.agent/0.20") else MAX_REQUEST_BYTES
++    max_request_bytes = 8 * 1024 * 1024 if selected_protocol in ("ontokin.agent/0.13", "ontokin.agent/0.14", "ontokin.agent/0.15", "ontokin.agent/0.16", "ontokin.agent/0.17", "ontokin.agent/0.18", "ontokin.agent/0.19", "ontokin.agent/0.20", "ontokin.agent/0.21") else MAX_REQUEST_BYTES
+     def error_response(error):
+         return _error(error, envelope_fn)
+     try:
+diff --git a/ontokin/budget_runtime.py b/ontokin/budget_runtime.py
+index 04eb64f..dc2843f 100644
+--- a/ontokin/budget_runtime.py
++++ b/ontokin/budget_runtime.py
+@@ -15,7 +15,7 @@ from .construction import compile_construction
+ from .diagnostics import OntoKinError
+ from .execution_budget import HostPolicy, SharedExecutionBudget, admit_entry_budget
+ from .json_limits import JSONLimitError, measure_json
+-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, POCKETS_PROFILES, EXECUTION_PROFILES
++from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_MEMBERSHIP_PROFILE, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, POCKETS_PROFILES, EXECUTION_PROFILES
+ from .program_diagnostics import diagnostic_dict
+ from .scene import ExportOptions
+ 
+@@ -52,8 +52,8 @@ The receipt never authorizes a later execution or an independent reader.
+     if not isinstance(profile, str) or profile not in EXECUTION_PROFILES:
+         raise ValueError("Unknown execution-budget source profile.")
+     target = {BUDGET_PROFILE: TARGET, EXTRUSION_PROFILE: "ontokin.glb/0.8",
+-              HOLES_PROFILE: "ontokin.glb/0.9", RING_LOFT_PROFILE: "ontokin.glb/0.10", FRAMED_LOFT_PROFILE: "ontokin.glb/0.11", POCKETS_PROFILE: "ontokin.glb/0.12", TEXTURE_PROFILE: "ontokin.glb/0.13", KEYED_TRANSFORM_PROFILE: "ontokin.glb/0.14", KEYED_REDUCTION_PROFILE: "ontokin.glb/0.15", KEYED_FILTER_PROFILE: "ontokin.glb/0.16", KEYED_MERGE_PROFILE: "ontokin.glb/0.17", KEYED_ZIP_PROFILE: "ontokin.glb/0.18", KEYED_REKEY_PROFILE: "ontokin.glb/0.19", STRING_CONCAT_PROFILE: "ontokin.glb/0.20"}[profile]
+-    language_version = {BUDGET_PROFILE: "0.7", EXTRUSION_PROFILE: "0.8", HOLES_PROFILE: "0.9", RING_LOFT_PROFILE: "0.10", FRAMED_LOFT_PROFILE: "0.11", POCKETS_PROFILE: "0.12", TEXTURE_PROFILE: "0.13", KEYED_TRANSFORM_PROFILE: "0.14", KEYED_REDUCTION_PROFILE: "0.15", KEYED_FILTER_PROFILE: "0.16", KEYED_MERGE_PROFILE: "0.17", KEYED_ZIP_PROFILE: "0.18", KEYED_REKEY_PROFILE: "0.19", STRING_CONCAT_PROFILE: "0.20"}[profile]
++              HOLES_PROFILE: "ontokin.glb/0.9", RING_LOFT_PROFILE: "ontokin.glb/0.10", FRAMED_LOFT_PROFILE: "ontokin.glb/0.11", POCKETS_PROFILE: "ontokin.glb/0.12", TEXTURE_PROFILE: "ontokin.glb/0.13", KEYED_TRANSFORM_PROFILE: "ontokin.glb/0.14", KEYED_REDUCTION_PROFILE: "ontokin.glb/0.15", KEYED_FILTER_PROFILE: "ontokin.glb/0.16", KEYED_MERGE_PROFILE: "ontokin.glb/0.17", KEYED_ZIP_PROFILE: "ontokin.glb/0.18", KEYED_REKEY_PROFILE: "ontokin.glb/0.19", STRING_CONCAT_PROFILE: "ontokin.glb/0.20", KEYED_MEMBERSHIP_PROFILE: "ontokin.glb/0.21"}[profile]
++    language_version = {BUDGET_PROFILE: "0.7", EXTRUSION_PROFILE: "0.8", HOLES_PROFILE: "0.9", RING_LOFT_PROFILE: "0.10", FRAMED_LOFT_PROFILE: "0.11", POCKETS_PROFILE: "0.12", TEXTURE_PROFILE: "0.13", KEYED_TRANSFORM_PROFILE: "0.14", KEYED_REDUCTION_PROFILE: "0.15", KEYED_FILTER_PROFILE: "0.16", KEYED_MERGE_PROFILE: "0.17", KEYED_ZIP_PROFILE: "0.18", KEYED_REKEY_PROFILE: "0.19", STRING_CONCAT_PROFILE: "0.20", KEYED_MEMBERSHIP_PROFILE: "0.21"}[profile]
+     if not isinstance(source, ProgramBundle):
+         raise TypeError("source must be a sealed ProgramBundle.")
+     ledger = None
+@@ -248,3 +248,11 @@ def execute_string_concat_export(source, **kwargs):
+     if "profile" in kwargs:
+         raise TypeError("execute_string_concat_export fixes string-concat-0.1 explicitly.")
+     return execute_budgeted_export(source, profile=STRING_CONCAT_PROFILE, **kwargs)
++
++
++
++def execute_keyed_membership_export(source, **kwargs):
++    """Select explicit .21 membership and recorded delivery."""
++    if "profile" in kwargs:
++        raise TypeError("execute_keyed_membership_export fixes keyed-membership-0.1 explicitly.")
++    return execute_budgeted_export(source, profile=KEYED_MEMBERSHIP_PROFILE, **kwargs)
+diff --git a/ontokin/cli.py b/ontokin/cli.py
+index 98950a7..5edb1c7 100644
+--- a/ontokin/cli.py
++++ b/ontokin/cli.py
+@@ -37,7 +37,7 @@ def _export_paths(source: Path, output: Path, report: Path | None, *,
+                   target_contract: str = "ontokin.glb/0.1",
+                   protected_sources: tuple[Path, ...] = ()) -> tuple[Path, Path]:
+     report = report if report is not None else output.with_suffix(".export.json")
+-    if target_contract in ("ontokin.glb/0.13", "ontokin.glb/0.14", "ontokin.glb/0.15", "ontokin.glb/0.16", "ontokin.glb/0.17", "ontokin.glb/0.18", "ontokin.glb/0.19", "ontokin.glb/0.20"):
++    if target_contract in ("ontokin.glb/0.13", "ontokin.glb/0.14", "ontokin.glb/0.15", "ontokin.glb/0.16", "ontokin.glb/0.17", "ontokin.glb/0.18", "ontokin.glb/0.19", "ontokin.glb/0.20", "ontokin.glb/0.21"):
+         from .bundle import BundleError
+         protected_pairs = [(path, destination) for path in (source, *protected_sources)
+                            for destination in (output, report)] + [(output, report)]
+@@ -420,7 +420,7 @@ def _program_export(args, *, host_policy=None) -> int:
+             raise BundleError("OKA-E-REQUEST", "A program bundle requires explicit GLB/0.2 through GLB/0.6 delivery.")
+         protected = []
+         if args.bundle:
+-            if args.target in ("ontokin.glb/0.13", "ontokin.glb/0.14", "ontokin.glb/0.15", "ontokin.glb/0.16", "ontokin.glb/0.17", "ontokin.glb/0.18", "ontokin.glb/0.19", "ontokin.glb/0.20"):
++            if args.target in ("ontokin.glb/0.13", "ontokin.glb/0.14", "ontokin.glb/0.15", "ontokin.glb/0.16", "ontokin.glb/0.17", "ontokin.glb/0.18", "ontokin.glb/0.19", "ontokin.glb/0.20", "ontokin.glb/0.21"):
+                 from .texture_bundle import load_texture_file_manifest_transport
+                 manifest_path = args.file.absolute()
+                 program, manifest_bytes, relative_paths = load_texture_file_manifest_transport(manifest_path)
+@@ -438,7 +438,7 @@ def _program_export(args, *, host_policy=None) -> int:
+                 protected = [manifest_path.parent / descriptor["path"]
+                              for descriptor in [manifest["entry"], *manifest["modules"]]]
+         else:
+-            if args.target in ("ontokin.glb/0.13", "ontokin.glb/0.14", "ontokin.glb/0.15", "ontokin.glb/0.16", "ontokin.glb/0.17", "ontokin.glb/0.18", "ontokin.glb/0.19", "ontokin.glb/0.20"):
++            if args.target in ("ontokin.glb/0.13", "ontokin.glb/0.14", "ontokin.glb/0.15", "ontokin.glb/0.16", "ontokin.glb/0.17", "ontokin.glb/0.18", "ontokin.glb/0.19", "ontokin.glb/0.20", "ontokin.glb/0.21"):
+                 raise BundleError("OKA-E-REQUEST", args.target.replace("ontokin.glb/", "GLB/") + " requires an explicit files/0.2 manifest with --bundle.")
+             source = _read_source(args.file)
+             try:
+@@ -447,12 +447,12 @@ def _program_export(args, *, host_policy=None) -> int:
+                 raise BundleError("OKA-E-REQUEST", "The source file must contain valid UTF-8.") from None
+             program = load_bundle({"schema_version": "ontokin.bundle/0.1",
+                 "entry": {"filename": str(args.file), "source": source_text}, "modules": []})
+-        if args.target in ("ontokin.glb/0.7", "ontokin.glb/0.8", "ontokin.glb/0.9", "ontokin.glb/0.10", "ontokin.glb/0.11", "ontokin.glb/0.12", "ontokin.glb/0.13", "ontokin.glb/0.14", "ontokin.glb/0.15", "ontokin.glb/0.16", "ontokin.glb/0.17", "ontokin.glb/0.18", "ontokin.glb/0.19", "ontokin.glb/0.20"):
+-            from .budget_runtime import execute_budgeted_export, execute_extrusion_export, execute_holes_export, execute_ring_loft_export, execute_framed_loft_export, execute_pockets_export, execute_texture_export, execute_keyed_transform_export, execute_keyed_reduction_export, execute_keyed_filter_export, execute_keyed_merge_export, execute_keyed_zip_export, execute_keyed_rekey_export, execute_string_concat_export
++        if args.target in ("ontokin.glb/0.7", "ontokin.glb/0.8", "ontokin.glb/0.9", "ontokin.glb/0.10", "ontokin.glb/0.11", "ontokin.glb/0.12", "ontokin.glb/0.13", "ontokin.glb/0.14", "ontokin.glb/0.15", "ontokin.glb/0.16", "ontokin.glb/0.17", "ontokin.glb/0.18", "ontokin.glb/0.19", "ontokin.glb/0.20", "ontokin.glb/0.21"):
++            from .budget_runtime import execute_budgeted_export, execute_extrusion_export, execute_holes_export, execute_ring_loft_export, execute_framed_loft_export, execute_pockets_export, execute_texture_export, execute_keyed_transform_export, execute_keyed_reduction_export, execute_keyed_filter_export, execute_keyed_merge_export, execute_keyed_zip_export, execute_keyed_rekey_export, execute_string_concat_export, execute_keyed_membership_export
+             execute = {"ontokin.glb/0.7": execute_budgeted_export, "ontokin.glb/0.8": execute_extrusion_export,
+                        "ontokin.glb/0.9": execute_holes_export, "ontokin.glb/0.10": execute_ring_loft_export,
+                        "ontokin.glb/0.11": execute_framed_loft_export,
+-                       "ontokin.glb/0.12": execute_pockets_export, "ontokin.glb/0.13": execute_texture_export, "ontokin.glb/0.14": execute_keyed_transform_export, "ontokin.glb/0.15": execute_keyed_reduction_export, "ontokin.glb/0.16": execute_keyed_filter_export, "ontokin.glb/0.17": execute_keyed_merge_export, "ontokin.glb/0.18": execute_keyed_zip_export, "ontokin.glb/0.19": execute_keyed_rekey_export, "ontokin.glb/0.20": execute_string_concat_export}[args.target]
++                       "ontokin.glb/0.12": execute_pockets_export, "ontokin.glb/0.13": execute_texture_export, "ontokin.glb/0.14": execute_keyed_transform_export, "ontokin.glb/0.15": execute_keyed_reduction_export, "ontokin.glb/0.16": execute_keyed_filter_export, "ontokin.glb/0.17": execute_keyed_merge_export, "ontokin.glb/0.18": execute_keyed_zip_export, "ontokin.glb/0.19": execute_keyed_rekey_export, "ontokin.glb/0.20": execute_string_concat_export, "ontokin.glb/0.21": execute_keyed_membership_export}[args.target]
+             output, report_path = _export_paths(args.file, args.output, args.report,
+                 target_contract=args.target, protected_sources=tuple(protected))
+             caps = {name: value for name, value in (
+@@ -530,7 +530,7 @@ def main(argv: list[str] | None = None, *, host_policy=None) -> int:
+     evaluate_parser.add_argument("--frame", default="world", help="Frame for --object inspection, for example first.frame")
+     export_parser = commands.add_parser("export", help="Bake and verify an animation in a self-contained .glb file")
+     export_parser.add_argument("file", type=Path)
+-    export_parser.add_argument("--target", choices=["ontokin.glb/0.1", "ontokin.glb/0.2", "ontokin.glb/0.3", "ontokin.glb/0.4", "ontokin.glb/0.5", "ontokin.glb/0.6", "ontokin.glb/0.7", "ontokin.glb/0.8", "ontokin.glb/0.9", "ontokin.glb/0.10", "ontokin.glb/0.11", "ontokin.glb/0.12", "ontokin.glb/0.13", "ontokin.glb/0.14", "ontokin.glb/0.15", "ontokin.glb/0.16", "ontokin.glb/0.17", "ontokin.glb/0.18", "ontokin.glb/0.19", "ontokin.glb/0.20"],
++    export_parser.add_argument("--target", choices=["ontokin.glb/0.1", "ontokin.glb/0.2", "ontokin.glb/0.3", "ontokin.glb/0.4", "ontokin.glb/0.5", "ontokin.glb/0.6", "ontokin.glb/0.7", "ontokin.glb/0.8", "ontokin.glb/0.9", "ontokin.glb/0.10", "ontokin.glb/0.11", "ontokin.glb/0.12", "ontokin.glb/0.13", "ontokin.glb/0.14", "ontokin.glb/0.15", "ontokin.glb/0.16", "ontokin.glb/0.17", "ontokin.glb/0.18", "ontokin.glb/0.19", "ontokin.glb/0.20", "ontokin.glb/0.21"],
+                                default="ontokin.glb/0.1", help="Explicit delivery profile; old source is never migrated")
+     export_parser.add_argument("--bundle", action="store_true",
+                                help="Read FILE as an explicit files/0.1 or files/0.2 manifest of pinned offline sources and assets")
+@@ -543,14 +543,14 @@ def main(argv: list[str] | None = None, *, host_policy=None) -> int:
+     export_parser.add_argument("--time-tolerance", type=float, default=0.000001, metavar="SECONDS")
+     export_parser.add_argument("--no-helpers", action="store_true", help="Omit the display-only assembly and joint markers")
+     export_parser.add_argument("--max-operations", type=int,
+-                               help="GLB/0.7 through GLB/0.20 caller reduction of the source operation request; grants no host authority")
++                               help="GLB/0.7 through GLB/0.21 caller reduction of the source operation request; grants no host authority")
+     export_parser.add_argument("--max-elapsed-ms", type=int,
+-                               help="GLB/0.7 through GLB/0.20 caller reduction of the source computation timeout in milliseconds")
++                               help="GLB/0.7 through GLB/0.21 caller reduction of the source computation timeout in milliseconds")
+     suite = commands.add_parser("conformance", help="Execute the published source cases and expected observations")
+     suite.add_argument("--fixtures", type=Path, default=DEFAULT_FIXTURES)
+     suite.add_argument("--output", type=Path, help="Write the complete JSON report to this path")
+     agent = commands.add_parser("agent", help="Serve an explicitly selected durable agent contract as local JSONL")
+-    agent.add_argument("--protocol", choices=["ontokin.agent/0.1", "ontokin.agent/0.2", "ontokin.agent/0.3", "ontokin.agent/0.4", "ontokin.agent/0.5", "ontokin.agent/0.6", "ontokin.agent/0.7", "ontokin.agent/0.8", "ontokin.agent/0.9", "ontokin.agent/0.10", "ontokin.agent/0.11", "ontokin.agent/0.12", "ontokin.agent/0.13", "ontokin.agent/0.14", "ontokin.agent/0.15", "ontokin.agent/0.16", "ontokin.agent/0.17", "ontokin.agent/0.18", "ontokin.agent/0.19", "ontokin.agent/0.20"], default="ontokin.agent/0.1", help="Select the explicit core, construction, surface, impulse, force, reach, execution-budget, polygon-extrusion, polygon-holes, polygon-loft, framed-polygon-loft, polygon-pockets, textured-surfaces, keyed-transform, keyed-reduction, keyed-filter, keyed-merge, keyed-zip, keyed-rekey or string-concat agent contract")
++    agent.add_argument("--protocol", choices=["ontokin.agent/0.1", "ontokin.agent/0.2", "ontokin.agent/0.3", "ontokin.agent/0.4", "ontokin.agent/0.5", "ontokin.agent/0.6", "ontokin.agent/0.7", "ontokin.agent/0.8", "ontokin.agent/0.9", "ontokin.agent/0.10", "ontokin.agent/0.11", "ontokin.agent/0.12", "ontokin.agent/0.13", "ontokin.agent/0.14", "ontokin.agent/0.15", "ontokin.agent/0.16", "ontokin.agent/0.17", "ontokin.agent/0.18", "ontokin.agent/0.19", "ontokin.agent/0.20", "ontokin.agent/0.21"], default="ontokin.agent/0.1", help="Select the explicit core, construction, surface, impulse, force, reach, execution-budget, polygon-extrusion, polygon-holes, polygon-loft, framed-polygon-loft, polygon-pockets, textured-surfaces, keyed-transform, keyed-reduction, keyed-filter, keyed-merge, keyed-zip, keyed-rekey, string-concat or keyed-membership agent contract")
+     agent.add_argument("--store", type=Path, required=True, help="Directory for immutable snapshots and durable request/run state")
+     agent.add_argument("--request", type=Path, help="Read one JSON request, emit its receipt, and exit")
+     agent.add_argument("--wait", action="store_true", help="Wait for this request's terminal result instead of returning a queued receipt")
+diff --git a/ontokin/construction.py b/ontokin/construction.py
+index b97d0b6..3e3fdcd 100644
+--- a/ontokin/construction.py
++++ b/ontokin/construction.py
+@@ -31,6 +31,8 @@ from .texture_runtime import (TEXTURE_CALLS, TEXTURE_TYPES, texture_builtin,
+                               validate_texture_closure, texture_coordinates)
+ from .profile_capabilities import (BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_REKEY_PROFILES, KEYED_ZIP_PROFILES, KEYED_MERGE_PROFILES, KEYED_FILTER_PROFILES, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, IMPULSE_PROFILES,
+                                    SURFACE_PROFILES)
++from .profile_capabilities import (KEYED_MEMBERSHIP_PROFILE, KEYED_MEMBERSHIP_PROFILES,
++                                   STRING_CONCAT_PROFILES)
+ from .validator import (BUILTIN_TYPES, FIELD_TYPES,
+                         PREDEFINED, READONLY_FIELDS, KEY_RE, BoundExpression, Callable,
+                         Context, EffectiveClass, Instance, Member, Validator,
+@@ -38,6 +40,7 @@ from .validator import (BUILTIN_TYPES, FIELD_TYPES,
+ from .values import (ACCELERATION, ALIASES, BOOL, INT, LENGTH, STRING, TIME,
+                      UNKNOWN, KeyedValue, Type, Value, binary, bounded_data, quantity_type)
+ from .string_concat import concat_strings
++from .keyed_membership import has_key
+ 
+ 
+ PROFILE = "construction-0.1"
+@@ -458,6 +461,8 @@ class ConstructionCompiler(Validator):
+                 result = result | {"zip_keyed"}
+             if self.linked.modules[node.source_id].ast.profile in KEYED_REKEY_PROFILES:
+                 result = result | {"rekey_keyed"}
++            if self.linked.modules[node.source_id].ast.profile in KEYED_MEMBERSHIP_PROFILES:
++                result = result | {"has_key"}
+             return result
+         if self.linked.modules[node.source_id].ast.profile in REACH_PROFILES:
+             from .reach_source import NAMES
+@@ -2141,6 +2146,9 @@ class ConstructionCompiler(Validator):
+                     stack.append((child, iter(self.call_edges.get(child, ()))))
+ 
+     def name(self, name: str, ctx: Context, node: Any) -> Value:
++        if (name == "has_key" and self.linked.modules[node.source_id].ast.profile in KEYED_MEMBERSHIP_PROFILES
++                and name not in ctx.locals):
++            return Value(Type("BuiltinCallable"), name)
+         if self.linked.modules[node.source_id].ast.profile in REACH_PROFILES and name not in ctx.locals:
+             from .reach_source import BRANCHES
+             if name in BRANCHES:
+@@ -2310,7 +2318,7 @@ class ConstructionCompiler(Validator):
+ 
+     def _string_addition_syntax(self, node: Any) -> bool:
+         return (node.kind == "binary" and node.op == "+"
+-                and self.linked.modules[node.source_id].ast.profile == STRING_CONCAT_PROFILE)
++                and self.linked.modules[node.source_id].ast.profile in STRING_CONCAT_PROFILES)
+ 
+     def _string_addition(self, node: Any, ctx: Context) -> Value:
+         # Evaluate each operand once, preserving inherited left-to-right errors
+@@ -2730,6 +2738,32 @@ class ConstructionCompiler(Validator):
+                 self._expression_flows.pop()
+ 
+     def builtin(self, name: str, args: list[Value], node: Any, ctx: Context) -> Value:
++        if name == "has_key" and self.linked.modules[node.source_id].ast.profile in KEYED_MEMBERSHIP_PROFILES:
++            if len(args) != 2:
++                fail("OKL-E-TYPE", "has_key requires exactly two positional arguments.",
++                     node, phase="type", details={"received": len(args)})
++            collection, query = args
++            if collection.type.kind != "Keyed":
++                fail("OKL-E-TYPE", "has_key requires an immutable Keyed value.", node, phase="type")
++            element = collection.type.element
++            if element.kind != "Ref":
++                self._keyed_leaf(element, node)
++            if query.type != STRING:
++                fail("OKL-E-TYPE", "has_key query requires exactly String.", node, phase="type")
++            if ctx.abstract or not collection.known or not query.known:
++                return Value(BOOL)
++            for value in args:
++                for path in self._value_taints.get(id(value), ()):
++                    self._mark_generated(path, node)
++            ledger = getattr(self.budget, "execution_budget", None)
++            try:
++                result = has_key(collection.value, query.value,
++                                 expected_type=element, node=node, ledger=ledger)
++            except BaseException as error:
++                if error is getattr(ledger, "callback_error", None):
++                    self.budget.callback_error = error
++                raise
++            return Value(BOOL, result)
+         if name in TEXTURE_CALLS and self.linked.modules[node.source_id].ast.profile in TEXTURE_PROFILES:
+             return texture_builtin(self, name, args, node, ctx)
+         if name == "reach_planar":
+@@ -3396,7 +3430,7 @@ class ConstructionCompiler(Validator):
+             fail("OKL-E-CAPABILITY-UNSUPPORTED", "Required capabilities are not supplied by " + self.model.profile + ": " +
+                  ", ".join(self.model.requested_capabilities), requires[0], phase="support")
+         if self.level == "delivered":
+-            target = ("ontokin.glb/0.20" if self.model.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if self.model.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if self.model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if self.model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if self.model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if self.model.profile == KEYED_REDUCTION_PROFILE else
++            target = ("ontokin.glb/0.21" if self.model.profile == KEYED_MEMBERSHIP_PROFILE else "ontokin.glb/0.20" if self.model.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if self.model.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if self.model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if self.model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if self.model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if self.model.profile == KEYED_REDUCTION_PROFILE else
+                        "ontokin.glb/0.14" if self.model.profile == KEYED_TRANSFORM_PROFILE else
+                       "ontokin.glb/0.13" if self.model.profile == TEXTURE_PROFILE else
+                       "ontokin.glb/0.12" if self.model.profile == POCKETS_PROFILE else
+diff --git a/ontokin/evaluator.py b/ontokin/evaluator.py
+index f44de8f..6066b2f 100644
+--- a/ontokin/evaluator.py
++++ b/ontokin/evaluator.py
+@@ -31,7 +31,7 @@ MAX_OUTPUT_RECORDS = 100000
+ IMPULSE_PROFILE = "impulse-0.1"
+ FORCE_PROFILE = "force-0.1"
+ REACH_PROFILE = "planar-reach-0.1"
+-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, POCKETS_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, FORCE_PROFILES, IMPULSE_PROFILES
++from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_MEMBERSHIP_PROFILE, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, POCKETS_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, FORCE_PROFILES, IMPULSE_PROFILES
+ 
+ 
+ class _NumericFault(Exception):
+@@ -790,7 +790,7 @@ def _request_work(model, check, work):
+     if model.profile in REACH_PROFILES:
+         if model.profile in EXECUTION_PROFILES:
+             from .reach_numeric import require_execution_work
+-            require_execution_work(work, target_contract=("ontokin.glb/0.20" if model.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if model.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if model.profile == KEYED_REDUCTION_PROFILE else
++            require_execution_work(work, target_contract=("ontokin.glb/0.21" if model.profile == KEYED_MEMBERSHIP_PROFILE else "ontokin.glb/0.20" if model.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if model.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if model.profile == KEYED_REDUCTION_PROFILE else
+                        "ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else
+                       "ontokin.glb/0.13" if model.profile == TEXTURE_PROFILE else
+                       "ontokin.glb/0.12" if model.profile == POCKETS_PROFILE else
+diff --git a/ontokin/execution_budget.py b/ontokin/execution_budget.py
+index 17f310e..ed370c1 100644
+--- a/ontokin/execution_budget.py
++++ b/ontokin/execution_budget.py
+@@ -16,7 +16,7 @@ from typing import Callable, Mapping
+ 
+ from .bundle import SourceUnit
+ from .diagnostics import OntoKinError
+-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES
++from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_MEMBERSHIP_PROFILE, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES
+ from .syntax import Node, Token
+ 
+ 
+@@ -327,7 +327,7 @@ def _admit_entry_budget(unit: SourceUnit, ledger: SharedExecutionBudget, *, prof
+         raise TypeError("Budget admission requires a SharedExecutionBudget.")
+     if ledger.resolved is not None:
+         raise ValueError("This execution has already admitted an entry source.")
+-    versions = {BUDGET_PROFILE: "0.7", EXTRUSION_PROFILE: "0.8", HOLES_PROFILE: "0.9", RING_LOFT_PROFILE: "0.10", FRAMED_LOFT_PROFILE: "0.11", POCKETS_PROFILE: "0.12", TEXTURE_PROFILE: "0.13", KEYED_TRANSFORM_PROFILE: "0.14", KEYED_REDUCTION_PROFILE: "0.15", KEYED_FILTER_PROFILE: "0.16", KEYED_MERGE_PROFILE: "0.17", KEYED_ZIP_PROFILE: "0.18", KEYED_REKEY_PROFILE: "0.19", STRING_CONCAT_PROFILE: "0.20"}
++    versions = {BUDGET_PROFILE: "0.7", EXTRUSION_PROFILE: "0.8", HOLES_PROFILE: "0.9", RING_LOFT_PROFILE: "0.10", FRAMED_LOFT_PROFILE: "0.11", POCKETS_PROFILE: "0.12", TEXTURE_PROFILE: "0.13", KEYED_TRANSFORM_PROFILE: "0.14", KEYED_REDUCTION_PROFILE: "0.15", KEYED_FILTER_PROFILE: "0.16", KEYED_MERGE_PROFILE: "0.17", KEYED_ZIP_PROFILE: "0.18", KEYED_REKEY_PROFILE: "0.19", STRING_CONCAT_PROFILE: "0.20", KEYED_MEMBERSHIP_PROFILE: "0.21"}
+     if profile not in versions:
+         budget_error("invalid_declaration", "Unsupported execution-budget source profile.")
+     scanner = _HeaderScanner(unit, ledger)
+diff --git a/ontokin/keyed_membership.py b/ontokin/keyed_membership.py
+new file mode 100644
+index 0000000..04cee56
+--- /dev/null
++++ b/ontokin/keyed_membership.py
+@@ -0,0 +1,164 @@
++"""Bounded read-only membership for the explicitly declared .21 profile.
++
++The evaluator owns eager arguments, signature/abstract checking and generated
++dependency guards. This private operation admits known native metadata before
++scanning keys, using only the caller's original admitted request ledger.
++"""
++from __future__ import annotations
++
++import re
++
++from .diagnostics import OntoKinError
++from .execution_budget import SharedExecutionBudget
++from .values import UNKNOWN, KeyedValue, Type, Value
++
++
++MAX_ENTRIES = 256
++MAX_KEY_CHARS = 64
++MAX_REF_NAME_CHARS = 278
++STAGES = ("keyed_membership_admission", "keyed_membership_input",
++          "keyed_membership_query", "keyed_membership_scan",
++          "keyed_membership_publication")
++_KEY_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,63}")
++_SIMPLE_KINDS = frozenset({
++    "Int", "Real", "Bool", "String", "FrameRef", "Rotation", "Pose", "Color",
++    "LoftSection", "SurfaceMaterial", "TextureImage", "PlanarUV", "TextureBinding",
++    "PolygonPocket", "FramedPolygonSection", "PolygonSection", "PolygonRing",
++    "PlanarPoint", "PolygonVertex",
++})
++_COLLECTION_MESSAGE = "has_key requires an immutable Keyed value."
++_LEAF_MESSAGE = "has_key input entry has a different resolved leaf type."
++_KEY_MESSAGE = ("Stable keys must contain 1–64 ASCII letters, digits, '.', '_', or '-', "
++                "and begin with a letter or digit.")
++
++
++def _type_descriptor(value, *, scalar_only=False):
++    """Return only bounded native scalar fields, never raw dataclass equality.
++
++    There is at most one recursive call, for a numeric child. Its scalar-only
++    branch rejects every container before inspecting another child, including
++    cyclic or deliberately deep native metadata.
++    """
++    if type(value) is not Type:
++        return None
++    kind = getattr(value, "kind", None)
++    if type(kind) is not str or len(kind) > 32:
++        return None
++    dimension, element, name = value.dimension, value.element, value.name
++    if kind in _SIMPLE_KINDS:
++        if (scalar_only and kind not in {"Int", "Real"}
++                or dimension is not None or element is not None or name is not None):
++            return None
++        return (kind,)
++    if kind == "Quantity":
++        if (type(dimension) is not tuple or len(dimension) != 4
++                or element is not None or name is not None):
++            return None
++        if any(type(exponent) is not int or not -16 <= exponent <= 16
++               for exponent in dimension):
++            return None
++        if not any(dimension):
++            return None
++        return (kind, *dimension)
++    if scalar_only:
++        return None
++    if kind in {"Vec3", "Vector3", "Range", "Point3"}:
++        if dimension is not None or name is not None:
++            return None
++        child = _type_descriptor(element, scalar_only=True)
++        if child is None:
++            return None
++        if kind == "Point3" and child != ("Quantity", 1, 0, 0, 0):
++            return None
++        return (kind, *child)
++    if kind == "Ref":
++        if (dimension is not None or element is not None or type(name) is not str
++                or not 1 <= len(name) <= MAX_REF_NAME_CHARS):
++            return None
++        return (kind, name)
++    return None
++
++
++def _type_error(message, node):
++    raise OntoKinError("OKL-E-TYPE", message, node, phase="type")
++
++
++def _key_domain(key, node):
++    # Exact native String shape is checked by the caller before any length or
++    # content operation. Oversized input is never copied, encoded or echoed.
++    if not 1 <= len(key) <= MAX_KEY_CHARS or _KEY_RE.fullmatch(key) is None:
++        raise OntoKinError("OKL-E-ID", _KEY_MESSAGE, node, phase="binding")
++
++
++def has_key(collection, query, *, expected_type: Type, node,
++            ledger: SharedExecutionBudget) -> bool:
++    """Execute one known membership invocation, adding exactly n + k + 3 ticks.
++
++    Complete input admission precedes query validation and scanning. No leaf
++    payload is evaluated or compared, and no sorting, index or collection copy
++    is created. An opaque known payload is sufficient after its exact wrapper
++    and resolved type metadata have been admitted.
++    """
++    if (not isinstance(ledger, SharedExecutionBudget) or ledger.resolved is None
++            or ledger.admitted_entry_revision is None):
++        raise OntoKinError("OKL-E-RESOURCE", "Construction requires one admitted execution context.",
++                           node, phase="support",
++                           details={"budget_reason": "execution_context_required"})
++    previous_stage = ledger.stage
++    try:
++        ledger.stage = "keyed_membership_admission"
++        ledger.tick(node)
++        if type(collection) is not KeyedValue:
++            _type_error(_COLLECTION_MESSAGE, node)
++        entries = getattr(collection, "entries", None)
++        if type(entries) is not tuple:
++            _type_error(_COLLECTION_MESSAGE, node)
++        count = len(entries)
++        if count > MAX_ENTRIES:
++            raise OntoKinError("OKL-E-RESOURCE", "Keyed membership input exceeds 256 entries.",
++                               node, phase="support",
++                               details={"budget": "keyed_entries", "limit": MAX_ENTRIES,
++                                        "consumed": count})
++        expected = _type_descriptor(expected_type)
++        if expected is None:
++            _type_error(_COLLECTION_MESSAGE, node)
++
++        previous_key = None
++        for index in range(count):
++            ledger.stage = "keyed_membership_input"
++            ledger.tick(node)
++            entry = entries[index]
++            if type(entry) is not tuple or len(entry) != 2:
++                _type_error(_COLLECTION_MESSAGE, node)
++            key, value = entry
++            if type(key) is not str:
++                _type_error(_COLLECTION_MESSAGE, node)
++            _key_domain(key, node)
++            if previous_key is not None and key <= previous_key:
++                raise OntoKinError("OKL-E-ID", "has_key input keys must be unique canonical stable keys.",
++                                   node, phase="binding")
++            if type(value) is not Value:
++                _type_error(_LEAF_MESSAGE, node)
++            actual = _type_descriptor(getattr(value, "type", None))
++            if actual is None or actual != expected or value.value is UNKNOWN:
++                _type_error(_LEAF_MESSAGE, node)
++            previous_key = key
++
++        ledger.stage = "keyed_membership_query"
++        ledger.tick(node)
++        if type(query) is not str:
++            _type_error("has_key query requires exactly String.", node)
++        _key_domain(query, node)
++
++        result = False
++        for index in range(count):
++            ledger.stage = "keyed_membership_scan"
++            ledger.tick(node)
++            if entries[index][0] == query:
++                result = True
++                break
++        ledger.stage = "keyed_membership_publication"
++        ledger.tick(node)
++        return result
++    finally:
++        ledger.stage = previous_stage
+diff --git a/ontokin/keyed_membership_agent.py b/ontokin/keyed_membership_agent.py
+new file mode 100644
+index 0000000..6a4976f
+--- /dev/null
++++ b/ontokin/keyed_membership_agent.py
+@@ -0,0 +1,19 @@
++"""Durable .21 membership, scoped source repairs and recorded delivery."""
++from .keyed_membership_program_runtime import KeyedMembershipProgramRuntime
++from .keyed_membership_protocol import KeyedMembershipProtocol, SCHEMA_VERSION
++from .keyed_membership_store import KeyedMembershipProgramStore
++from .texture_agent import TextureAgentService
++
++
++class KeyedMembershipAgentService(TextureAgentService):
++    protocol_type = KeyedMembershipProtocol
++    runtime_type = KeyedMembershipProgramRuntime
++    store_type = KeyedMembershipProgramStore
++
++    def __init__(self, store_path, *, protocol=SCHEMA_VERSION, **kwargs):
++        super().__init__(store_path, protocol=protocol, **kwargs)
++
++    @staticmethod
++    def catalog(**kwargs):
++        from .keyed_membership_agent_catalog import catalog
++        return catalog(**kwargs)
+diff --git a/ontokin/keyed_membership_agent_catalog.py b/ontokin/keyed_membership_agent_catalog.py
+new file mode 100644
+index 0000000..d9fbaf8
+--- /dev/null
++++ b/ontokin/keyed_membership_agent_catalog.py
+@@ -0,0 +1,157 @@
++"""Detached discovery for explicit bounded immutable keyed membership."""
++from __future__ import annotations
++
++import hashlib
++import json
++
++from .json_limits import measure_json
++from .keyed_membership_protocol import DEFINITION, MAX_REQUEST_BYTES, SCHEMA_VERSION
++from .profile_capabilities import KEYED_MEMBERSHIP_PROFILE, STRING_CONCAT_PROFILE
++from .string_concat_agent_catalog import _declarative_template as concat_template
++from .string_concat_agent_catalog import interface as concat_interface
++
++
++ADOPTION = "docs/language-design/keyed-membership-v0.1/ADOPTION.md"
++EXAMPLES = ["examples/keyed-membership/agent/base.files.json",
++            "examples/keyed-membership/agent/inserted.files.json",
++            "examples/keyed-membership/empty.files.json"]
++STAGES = ("keyed_membership_admission", "keyed_membership_input",
++          "keyed_membership_query", "keyed_membership_scan",
++          "keyed_membership_publication")
++
++
++def interface(policy=None, *, aggregate_limits=None):
++    result = concat_interface(policy, aggregate_limits=aggregate_limits)
++    result.update(agent_contract=SCHEMA_VERSION, language_version="0.21",
++        profile=KEYED_MEMBERSHIP_PROFILE, delivery_contract=DEFINITION.destination,
++        storage_schema=DEFINITION.store_schema, store_filename=DEFINITION.store_filename,
++        transport="KeyedMembershipAgentService(store, host_policy=...) or agent --protocol ontokin.agent/0.21",
++        request_schema="docs/language-design/agent-v0.21/request.schema.json",
++        response_schema="docs/language-design/agent-v0.21/response.schema.json",
++        file_manifest_command="export --bundle PROGRAM.files.json --target ontokin.glb/0.21 --output MODEL.glb",
++        adoption=ADOPTION)
++    result["source_expressions"]["string_concat"].update(
++        declaring_versions=["0.20", "0.21"],
++        declaring_profiles=[STRING_CONCAT_PROFILE, KEYED_MEMBERSHIP_PROFILE],
++        inherited_in_declaring_profile=KEYED_MEMBERSHIP_PROFILE,
++        diagnostic_profile=STRING_CONCAT_PROFILE,
++        cache_behavior="No folding or value-cache bypass of an executed .20/.21 plus; established immutable member reads retain inherited semantics")
++    result["source_expressions"]["has_key"] = {
++        "syntax": "has_key(collection, query)",
++        "signature": "has_key(Keyed<T>, String) -> Bool",
++        "declaring_version": "0.21", "declaring_profile": KEYED_MEMBERSHIP_PROFILE,
++        "inputs": ["Admitted immutable keyed leaf collection or existing generated Keyed<Ref<C>> view", "String"],
++        "output": "Bool",
++        "meaning": "True if the exact stable query key occurs in the fully admitted canonical collection; false for valid absence",
++        "declaring_boundary": "Bare has_key is reserved only in a .21 declaring unit; older functions, locals and aliases retain meaning and qualified older helpers remain available",
++        "evaluation_order": "Callee then both arguments eagerly left to right; arity, collection family and exact String query type precede abstract return",
++        "abstract_behavior": "Well-typed abstract or unknown input yields unknown Bool without dynamic stages, payload admission or literal query-domain checking",
++        "stable_key_pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,63}",
++        "invalid_query": "Explicit stable-key refusal, never false",
++        "max_entries": 256, "max_key_characters": 64,
++        "admission": "Validate the complete immutable tuple, canonical keys, exact leaf wrappers and bounded resolved metadata before validating the query or scanning",
++        "scan": "Canonical keys only; stop at the first exact match, otherwise scan all entries; never evaluate or compare payloads, sort, build a set or copy the collection",
++        "additional_operations": "n + k + 3; n is full input length and k is comparisons through the first match or n for absence",
++        "empty_operations": 3, "maximum_operations": 515,
++        "first_of_256_operations": 260,
++        "cancellation_stages": list(STAGES),
++        "stage_operations": {STAGES[0]: 1, STAGES[1]: "n", STAGES[2]: 1,
++                             STAGES[3]: "k", STAGES[4]: 1},
++        "authority": "The original admitted SharedExecutionBudget, deadline, current host ceilings, caller reductions and callback govern every stage; no fallback authority or new allowance",
++        "cache_behavior": "No constant or parameter result folding for actual invocations; inherited immutable binding reuse remains unchanged",
++        "provenance": "True and false retain actual collection/query dependencies, generated taints and all inherited detached contributors; no new public lineage family or selected-leaf fiction",
++        "generated_views": "Read-only membership retains existing access and CON-007 generated-shape restrictions; Ref is not a new authored annotation or mutable reference constructor",
++        "string_quota": "Membership consumes no computed String bytes; inherited String operations retain their own fixed result and cumulative caps",
++        "lookup": "A guarded lookup can select a fallback; ordinary unguarded absence retains its existing name error"}
++    return result
++
++
++def _declarative_template():
++    from .construction_catalog import _entry
++    result = json.loads(concat_template())
++    result.update(schema_version="ontokin.agent-catalog/0.21", language_version="0.21",
++        profile=KEYED_MEMBERSHIP_PROFILE, agent_contract=SCHEMA_VERSION,
++        delivery_targets=[DEFINITION.destination], adoption=ADOPTION,
++        source_header='ontokin "0.21"; module Example @ "example"; profile "keyed-membership-0.1";',
++        compatible_definition_profiles=[*result["compatible_definition_profiles"], KEYED_MEMBERSHIP_PROFILE],
++        complete_examples=EXAMPLES, example_file_manifests=EXAMPLES, example_bundles=[],
++        inherited_string_concat_examples={"language_version": "0.20",
++            "paths": ["examples/string-concat/agent/panel-task.files.json"]},
++        example_context="The .21 examples explicitly select membership for sparse overrides; inherited examples retain their original bindings.")
++    result["limits"].update(max_keyed_membership_entries=256,
++        max_keyed_membership_key_characters=64, max_keyed_membership_operations=515,
++        max_request_bytes=MAX_REQUEST_BYTES)
++    for item in result["items"]:
++        if item["kind"] == "protocol" or item["name"] == "persistent_agent_editing_service":
++            if item["kind"] == "protocol":
++                item["name"] = SCHEMA_VERSION
++                item["capability"] = SCHEMA_VERSION
++            item.update(profile=KEYED_MEMBERSHIP_PROFILE, specification=ADOPTION,
++                signature="KeyedMembershipAgentService(store, host_policy=HostPolicy(...))",
++                store_filename=DEFINITION.store_filename, store_schema=DEFINITION.store_schema,
++                description="Atomic sparse source repair and bounded immutable membership under current host authority.",
++                domains=["Explicit source/Agent/GLB .21; bundle/files .2 and twelve operation shapes remain unchanged",
++                    "Declaring .21 reserves has_key and inherits bounded .20 String addition",
++                    "Complete canonical input admission precedes query validation and key-only scan",
++                    "Five actual shared-ledger stages preserve cancellation and current authority",
++                    "Actual dependencies, generated restrictions and inherited detached contributors remain exact",
++                    "Accepted source, stores and artifacts never grant future execution authority"])
++        elif item["kind"] == "destination":
++            item.update(profile=KEYED_MEMBERSHIP_PROFILE, specification=ADOPTION,
++                name=DEFINITION.destination, capability=DEFINITION.destination,
++                signature=DEFINITION.destination, examples=EXAMPLES,
++                description="Recorded GLB/0.21 with complete source and immutable image identity.",
++                domains=["Inherited geometry, PBR, UV, PNG, sampler and recorded motion representation",
++                    "Equivalent explicit .20 controls retain complete geometry and motion streams",
++                    "Source/profile/revision and original detached lineage identify the .21 program",
++                    "No live destination physics or Unreal import claim"])
++        elif item["kind"] == "format" and item["name"] == "ontokin.bundle/0.1":
++            item["description"] = "Unchanged legacy transport; Agent/0.21 requires ontokin.bundle/0.2."
++        elif item["name"] == "String + String":
++            item.update(profile=KEYED_MEMBERSHIP_PROFILE, specification=ADOPTION)
++            item["domains"][0] = "Declaring source .20 or .21; earlier imported expressions retain their original meaning"
++    result["items"].append(_entry("builtin", "has_key", "has_key(Keyed<T>, String) -> Bool",
++        "Test an exact stable key in an admitted immutable collection without recomputing payloads.",
++        capability="bounded_keyed_membership", profile=KEYED_MEMBERSHIP_PROFILE,
++        specification=ADOPTION, examples=EXAMPLES,
++        domains=["Ordinary call in a .21 declaring unit; both arguments evaluate eagerly left to right",
++            "At most 256 canonical entries; stable keys are 1-64 ASCII characters with an initial letter or digit",
++            "Existing authored leaf families and read-only generated Ref views retain type/access/shape rules",
++            "Complete input admission, query validation, canonical scan and publication use the original ledger",
++            "Successful dynamic cost n+k+3; empty costs 3 and maximum costs 515; fixed original deadline and callback",
++            "Well-typed abstract/unknown calls return unknown Bool without dynamic stages",
++            "Both outcomes retain actual dependencies, generated taints and all existing contributor records",
++            "No payload comparison, collection copy, new lineage family, mutable container or physical authority"]))
++    result.pop("revision", None)
++    result.pop("program_context", None)
++    measure_json(result)
++    return json.dumps(result, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False)
++
++
++_DECLARATIVE_JSON = _declarative_template()
++
++
++def catalog(*, policy, linked_program=None, check=None, aggregate_limits=None):
++    from .construction_catalog import _Budget, _public_interfaces
++    budget = _Budget(check)
++    budget.step()
++    result = json.loads(_DECLARATIVE_JSON)
++    budget.charge(result)
++    current = interface(policy, aggregate_limits=aggregate_limits)
++    budget.charge(current)
++    result["keyed_membership_interface"] = current
++    result["program_context"] = None
++    if linked_program is not None:
++        if linked_program.entry.ast.profile != KEYED_MEMBERSHIP_PROFILE:
++            raise ValueError("Keyed membership discovery requires the admitted .21 source profile.")
++        result["program_context"] = {"program_revision": linked_program.bundle.program_revision,
++            "state": "linked declarations; no evaluated output claimed",
++            "source_manifest": linked_program.bundle.manifest()}
++        budget.charge(result["program_context"])
++        for entry, node in _public_interfaces(linked_program, budget, source_profiles=True):
++            budget.charge(entry, node)
++            result["items"].append(entry)
++    measure_json(result, check=check)
++    raw = json.dumps(result, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
++    result["revision"] = "sha256:" + hashlib.sha256(raw).hexdigest()
++    return result
+diff --git a/ontokin/keyed_membership_program_runtime.py b/ontokin/keyed_membership_program_runtime.py
+new file mode 100644
+index 0000000..1594a3b
+--- /dev/null
++++ b/ontokin/keyed_membership_program_runtime.py
+@@ -0,0 +1,7 @@
++"""Membership uses the existing admitted complete-request execution ledger."""
++from .profile_capabilities import KEYED_MEMBERSHIP_PROFILE
++from .texture_program_runtime import TextureProgramRuntime
++
++
++class KeyedMembershipProgramRuntime(TextureProgramRuntime):
++    profile = KEYED_MEMBERSHIP_PROFILE
+diff --git a/ontokin/keyed_membership_protocol.py b/ontokin/keyed_membership_protocol.py
+new file mode 100644
+index 0000000..6365007
+--- /dev/null
++++ b/ontokin/keyed_membership_protocol.py
+@@ -0,0 +1,40 @@
++"""Explicit .21 binding with unchanged source and immutable asset transport."""
++from __future__ import annotations
++
++import json
++
++from .agent_protocol import ProtocolError, _bad
++from .json_limits import JSONLimitError, bounded_dumps
++from .program_bindings import ProgramBinding
++from .profile_capabilities import KEYED_MEMBERSHIP_PROFILE
++from .texture_protocol import TextureProtocol, MAX_REQUEST_BYTES
++
++
++SCHEMA_VERSION = "ontokin.agent/0.21"
++DEFINITION = ProgramBinding(SCHEMA_VERSION, "0.21", KEYED_MEMBERSHIP_PROFILE,
++    "ontokin.glb/0.21", "keyed-membership-program-agent.sqlite3",
++    "ontokin.keyed-membership-program-agent-store/0.1", True, True)
++
++
++def canonical_request(value):
++    try:
++        payload = bounded_dumps(value, max_bytes=MAX_REQUEST_BYTES)
++        clean = json.loads(payload)
++    except JSONLimitError as exc:
++        raise ProtocolError("OKA-E-RESOURCE", "The request exceeds the Agent/0.21 JSON transport.",
++                            **exc.details) from exc
++    except (ValueError, TypeError, UnicodeError, RecursionError) as exc:
++        raise ProtocolError("OKA-E-REQUEST", "The request requires finite JSON and UTF-8 scalar strings.") from exc
++    if not isinstance(clean, dict):
++        _bad("A request must be a JSON object.")
++    return clean, payload
++
++
++class KeyedMembershipProtocol(TextureProtocol):
++    """Select .21 without replacing any earlier protocol or default."""
++
++    SCHEMA_VERSION = SCHEMA_VERSION
++    definition = DEFINITION
++    profile = KEYED_MEMBERSHIP_PROFILE
++    destination = DEFINITION.destination
++    canonical_request = staticmethod(canonical_request)
+diff --git a/ontokin/keyed_membership_store.py b/ontokin/keyed_membership_store.py
+new file mode 100644
+index 0000000..6420649
+--- /dev/null
++++ b/ontokin/keyed_membership_store.py
+@@ -0,0 +1,8 @@
++"""Independent .21 storage for immutable source and image revisions."""
++from .keyed_membership_protocol import KeyedMembershipProtocol
++from .texture_store import TextureProgramStore
++
++
++class KeyedMembershipProgramStore(TextureProgramStore):
++    def __init__(self, path, implementation, *, protocol=None):
++        super().__init__(path, implementation, protocol=protocol or KeyedMembershipProtocol())
+diff --git a/ontokin/linker.py b/ontokin/linker.py
+index eeca77f..3105135 100644
+--- a/ontokin/linker.py
++++ b/ontokin/linker.py
+@@ -16,6 +16,7 @@ from .diagnostics import OntoKinError, Source
+ from .syntax import MAX_TOKENS, Node
+ from .syntax02 import parse_source_unit
+ from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_REKEY_PROFILES, KEYED_ZIP_PROFILES, KEYED_MERGE_PROFILES, KEYED_FILTER_PROFILES, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, FORCE_PROFILES, IMPULSE_PROFILES
++from .profile_capabilities import KEYED_MEMBERSHIP_PROFILES, STRING_CONCAT_PROFILES
+ from .validator import KEY_RE, PREDEFINED
+ 
+ 
+@@ -143,6 +144,8 @@ def _bindings(module: LinkedModule, check: Callable[[], None]) -> None:
+             predefined = predefined | {"zip_keyed"}
+         if module.ast.profile in KEYED_REKEY_PROFILES:
+             predefined = predefined | {"rekey_keyed"}
++        if module.ast.profile in KEYED_MEMBERSHIP_PROFILES:
++            predefined = predefined | {"has_key"}
+         if node.name in predefined or node.name in names:
+             _error("OKL-E-NAME", "An import or definition name is predefined or duplicated in this module.",
+                    node, rule="CON-003", related=[names[node.name]] if node.name in names else [],
+@@ -231,8 +234,16 @@ def link_program(bundle: ProgramBundle, *, check: Callable[[], None] | None = No
+             if target not in modules:
+                 _error("OKL-E-NAME", "The explicitly imported package version is not supplied in this bundle.",
+                        node, rule="CON-002", reason="missing_dependency", source_id=target)
++            if (modules[target].ast.profile in KEYED_MEMBERSHIP_PROFILES
++                    and module.ast.profile not in KEYED_MEMBERSHIP_PROFILES):
++                raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED",
++                                   "An earlier declaring module cannot import a source 0.21 dependency.",
++                                   node, phase="support", category="unsupported",
++                                   details={"declaring_profile": module.ast.profile,
++                                            "dependency_profile": modules[target].ast.profile,
++                                            "dependency_source_id": target})
+             if (modules[target].ast.profile == STRING_CONCAT_PROFILE
+-                    and module.ast.profile != STRING_CONCAT_PROFILE):
++                    and module.ast.profile not in STRING_CONCAT_PROFILES):
+                 raise OntoKinError("OKL-E-CAPABILITY-UNSUPPORTED",
+                                    "An earlier declaring module cannot import a source 0.20 dependency.",
+                                    node, phase="support", category="unsupported",
+diff --git a/ontokin/profile_capabilities.py b/ontokin/profile_capabilities.py
+index 1cbd329..ffc3c13 100644
+--- a/ontokin/profile_capabilities.py
++++ b/ontokin/profile_capabilities.py
+@@ -18,7 +18,10 @@ KEYED_MERGE_PROFILE = "keyed-merge-0.1"
+ KEYED_ZIP_PROFILE = "keyed-zip-0.1"
+ KEYED_REKEY_PROFILE = "keyed-rekey-0.1"
+ STRING_CONCAT_PROFILE = "string-concat-0.1"
+-KEYED_REKEY_PROFILES = frozenset({KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE})
++KEYED_MEMBERSHIP_PROFILE = "keyed-membership-0.1"
++KEYED_MEMBERSHIP_PROFILES = frozenset({KEYED_MEMBERSHIP_PROFILE})
++STRING_CONCAT_PROFILES = frozenset({STRING_CONCAT_PROFILE, *KEYED_MEMBERSHIP_PROFILES})
++KEYED_REKEY_PROFILES = frozenset({KEYED_REKEY_PROFILE, *STRING_CONCAT_PROFILES})
+ KEYED_ZIP_PROFILES = frozenset({KEYED_ZIP_PROFILE, *KEYED_REKEY_PROFILES})
+ KEYED_MERGE_PROFILES = frozenset({KEYED_MERGE_PROFILE, *KEYED_ZIP_PROFILES})
+ KEYED_FILTER_PROFILES = frozenset({KEYED_FILTER_PROFILE, *KEYED_MERGE_PROFILES})
+diff --git a/ontokin/program_runtime.py b/ontokin/program_runtime.py
+index 097641a..76b7869 100644
+--- a/ontokin/program_runtime.py
++++ b/ontokin/program_runtime.py
+@@ -18,7 +18,7 @@ from .json_limits import measure_json, JSONLimitError
+ from .program_diagnostics import diagnostic_dict
+ from .program_protocol import MAX_BUDGETS
+ from .program_bindings import PROFILE_BINDINGS
+-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_REKEY_PROFILES, KEYED_ZIP_PROFILES, KEYED_MERGE_PROFILES, KEYED_FILTER_PROFILES, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, POCKETS_PROFILES, EXECUTION_PROFILES, REACH_PROFILES
++from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_MEMBERSHIP_PROFILE, KEYED_REKEY_PROFILES, KEYED_ZIP_PROFILES, KEYED_MERGE_PROFILES, KEYED_FILTER_PROFILES, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, POCKETS_PROFILES, EXECUTION_PROFILES, REACH_PROFILES
+ from .syntax import Node
+ from .validator import FIELD_TYPES, optional
+ from .values import KeyedValue, Value, bounded_data
+@@ -752,7 +752,7 @@ def _project(program, record, fields, compiler, sample, run, frame, budget):
+     if "support" in fields:
+         result["support"] = core._support_record(compiler, budget)
+         result["support"]["profile"] = budget.profile
+-        result["support"]["named_destination"] = ("ontokin.glb/0.20" if budget.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if budget.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if budget.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if budget.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if budget.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if budget.profile == KEYED_REDUCTION_PROFILE else
++        result["support"]["named_destination"] = ("ontokin.glb/0.21" if budget.profile == KEYED_MEMBERSHIP_PROFILE else "ontokin.glb/0.20" if budget.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if budget.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if budget.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if budget.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if budget.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if budget.profile == KEYED_REDUCTION_PROFILE else
+                        "ontokin.glb/0.14" if budget.profile == KEYED_TRANSFORM_PROFILE else
+                       "ontokin.glb/0.13" if budget.profile == TEXTURE_PROFILE else
+                       "ontokin.glb/0.12" if budget.profile == POCKETS_PROFILE else
+diff --git a/ontokin/scene.py b/ontokin/scene.py
+index 494410a..435892f 100644
+--- a/ontokin/scene.py
++++ b/ontokin/scene.py
+@@ -23,7 +23,7 @@ from .force_export import ForcePrefixPlan, force_interval_violation, force_prefi
+ from .geometry import (SPHERE_RINGS, SPHERE_SEGMENTS, Mesh, assembly_marker,
+                        box_mesh, joint_marker, sphere_mesh)
+ from .model import SceneModel, Vec
+-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, SURFACE_PROFILES, CONSTRUCTION_PROFILES
++from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_MEMBERSHIP_PROFILE, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, SURFACE_PROFILES, CONSTRUCTION_PROFILES
+ from .json_limits import JSONLimitError
+ from .surface import (LoftSection, SurfaceMaterial, RegionTriangles, SurfaceError,
+                       MAX_SECTIONS, MAX_MATERIALS,
+@@ -52,7 +52,8 @@ KEYED_MERGE_TARGET = "ontokin.glb/0.17"
+ KEYED_ZIP_TARGET = "ontokin.glb/0.18"
+ KEYED_REKEY_TARGET = "ontokin.glb/0.19"
+ STRING_CONCAT_TARGET = "ontokin.glb/0.20"
+-TEXTURE_TARGETS = (TEXTURE_TARGET, KEYED_TRANSFORM_TARGET, KEYED_REDUCTION_TARGET, KEYED_FILTER_TARGET, KEYED_MERGE_TARGET, KEYED_ZIP_TARGET, KEYED_REKEY_TARGET, STRING_CONCAT_TARGET)
++KEYED_MEMBERSHIP_TARGET = "ontokin.glb/0.21"
++TEXTURE_TARGETS = (TEXTURE_TARGET, KEYED_TRANSFORM_TARGET, KEYED_REDUCTION_TARGET, KEYED_FILTER_TARGET, KEYED_MERGE_TARGET, KEYED_ZIP_TARGET, KEYED_REKEY_TARGET, STRING_CONCAT_TARGET, KEYED_MEMBERSHIP_TARGET)
+ EXECUTION_TARGETS = (BUDGET_REACH_TARGET, EXTRUSION_TARGET, HOLES_TARGET, RING_LOFT_TARGET, FRAMED_LOFT_TARGET, POCKETS_TARGET, *TEXTURE_TARGETS)
+ REACH_TARGETS = (REACH_TARGET, *EXECUTION_TARGETS)
+ NATIVE_TARGETS = (SURFACE_TARGET, IMPULSE_TARGET, FORCE_TARGET, *REACH_TARGETS)
+@@ -103,7 +104,7 @@ def export_error(export_code: str, message: str, model: SceneModel | None = None
+                                                      "force-0.1": FORCE_TARGET,
+                                                      "planar-reach-0.1": REACH_TARGET,
+                                                      BUDGET_PROFILE: BUDGET_REACH_TARGET, EXTRUSION_PROFILE: EXTRUSION_TARGET,
+-                                                     HOLES_PROFILE: HOLES_TARGET, RING_LOFT_PROFILE: RING_LOFT_TARGET, FRAMED_LOFT_PROFILE: FRAMED_LOFT_TARGET, POCKETS_PROFILE: POCKETS_TARGET, TEXTURE_PROFILE: TEXTURE_TARGET, KEYED_TRANSFORM_PROFILE: KEYED_TRANSFORM_TARGET, KEYED_REDUCTION_PROFILE: KEYED_REDUCTION_TARGET, KEYED_FILTER_PROFILE: KEYED_FILTER_TARGET, KEYED_MERGE_PROFILE: KEYED_MERGE_TARGET, KEYED_ZIP_PROFILE: KEYED_ZIP_TARGET, KEYED_REKEY_PROFILE: KEYED_REKEY_TARGET, STRING_CONCAT_PROFILE: STRING_CONCAT_TARGET}.get(model.profile, TARGET_CONTRACT)
++                                                     HOLES_PROFILE: HOLES_TARGET, RING_LOFT_PROFILE: RING_LOFT_TARGET, FRAMED_LOFT_PROFILE: FRAMED_LOFT_TARGET, POCKETS_PROFILE: POCKETS_TARGET, TEXTURE_PROFILE: TEXTURE_TARGET, KEYED_TRANSFORM_PROFILE: KEYED_TRANSFORM_TARGET, KEYED_REDUCTION_PROFILE: KEYED_REDUCTION_TARGET, KEYED_FILTER_PROFILE: KEYED_FILTER_TARGET, KEYED_MERGE_PROFILE: KEYED_MERGE_TARGET, KEYED_ZIP_PROFILE: KEYED_ZIP_TARGET, KEYED_REKEY_PROFILE: KEYED_REKEY_TARGET, STRING_CONCAT_PROFILE: STRING_CONCAT_TARGET, KEYED_MEMBERSHIP_PROFILE: KEYED_MEMBERSHIP_TARGET}.get(model.profile, TARGET_CONTRACT)
+                                                     if model is not None else TARGET_CONTRACT),
+                                 "export_code": export_code, **(details or {})},
+                        repair=("Use supported visual geometry and the explicitly matching model/delivery profile." if kind == "unsupported" else
+@@ -687,7 +688,7 @@ def checked_contract(model: SceneModel, target_contract: str) -> str:
+     expected = {TARGET_CONTRACT: "core-0.1", CONSTRUCTION_TARGET: "construction-0.1",
+                 SURFACE_TARGET: "surface-0.1", IMPULSE_TARGET: "impulse-0.1", FORCE_TARGET: "force-0.1",
+                 REACH_TARGET: "planar-reach-0.1", BUDGET_REACH_TARGET: BUDGET_PROFILE, EXTRUSION_TARGET: EXTRUSION_PROFILE,
+-                HOLES_TARGET: HOLES_PROFILE, RING_LOFT_TARGET: RING_LOFT_PROFILE, FRAMED_LOFT_TARGET: FRAMED_LOFT_PROFILE, POCKETS_TARGET: POCKETS_PROFILE, TEXTURE_TARGET: TEXTURE_PROFILE, KEYED_TRANSFORM_TARGET: KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_TARGET: KEYED_REDUCTION_PROFILE, KEYED_FILTER_TARGET: KEYED_FILTER_PROFILE, KEYED_MERGE_TARGET: KEYED_MERGE_PROFILE, KEYED_ZIP_TARGET: KEYED_ZIP_PROFILE, KEYED_REKEY_TARGET: KEYED_REKEY_PROFILE, STRING_CONCAT_TARGET: STRING_CONCAT_PROFILE}
++                HOLES_TARGET: HOLES_PROFILE, RING_LOFT_TARGET: RING_LOFT_PROFILE, FRAMED_LOFT_TARGET: FRAMED_LOFT_PROFILE, POCKETS_TARGET: POCKETS_PROFILE, TEXTURE_TARGET: TEXTURE_PROFILE, KEYED_TRANSFORM_TARGET: KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_TARGET: KEYED_REDUCTION_PROFILE, KEYED_FILTER_TARGET: KEYED_FILTER_PROFILE, KEYED_MERGE_TARGET: KEYED_MERGE_PROFILE, KEYED_ZIP_TARGET: KEYED_ZIP_PROFILE, KEYED_REKEY_TARGET: KEYED_REKEY_PROFILE, STRING_CONCAT_TARGET: STRING_CONCAT_PROFILE, KEYED_MEMBERSHIP_TARGET: KEYED_MEMBERSHIP_PROFILE}
+     if target_contract not in expected or model.profile != expected[target_contract]:
+         export_error("OKE-E-SUPPORT", "The named GLB contract must explicitly match the authored semantic profile.",
+                      model, kind="unsupported", details={"target_contract": target_contract,
+@@ -696,7 +697,7 @@ def checked_contract(model: SceneModel, target_contract: str) -> str:
+         export_error("OKE-E-SUPPORT", "The GLB adapter requires a supported, validated model.", model, kind="unsupported")
+     return {TARGET_CONTRACT: "0.1", CONSTRUCTION_TARGET: "0.2", SURFACE_TARGET: "0.3",
+             IMPULSE_TARGET: "0.4", FORCE_TARGET: "0.5", REACH_TARGET: "0.6",
+-            BUDGET_REACH_TARGET: "0.7", EXTRUSION_TARGET: "0.8", HOLES_TARGET: "0.9", RING_LOFT_TARGET: "0.10", FRAMED_LOFT_TARGET: "0.11", POCKETS_TARGET: "0.12", TEXTURE_TARGET: "0.13", KEYED_TRANSFORM_TARGET: "0.14", KEYED_REDUCTION_TARGET: "0.15", KEYED_FILTER_TARGET: "0.16", KEYED_MERGE_TARGET: "0.17", KEYED_ZIP_TARGET: "0.18", KEYED_REKEY_TARGET: "0.19", STRING_CONCAT_TARGET: "0.20"}[target_contract]
++            BUDGET_REACH_TARGET: "0.7", EXTRUSION_TARGET: "0.8", HOLES_TARGET: "0.9", RING_LOFT_TARGET: "0.10", FRAMED_LOFT_TARGET: "0.11", POCKETS_TARGET: "0.12", TEXTURE_TARGET: "0.13", KEYED_TRANSFORM_TARGET: "0.14", KEYED_REDUCTION_TARGET: "0.15", KEYED_FILTER_TARGET: "0.16", KEYED_MERGE_TARGET: "0.17", KEYED_ZIP_TARGET: "0.18", KEYED_REKEY_TARGET: "0.19", STRING_CONCAT_TARGET: "0.20", KEYED_MEMBERSHIP_TARGET: "0.21"}[target_contract]
+ 
+ 
+ def program_metadata(model: SceneModel, *, check: Callable[[], None] | None = None) -> dict[str, Any]:
+@@ -1221,7 +1222,7 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
+                                                                 "force-0.1": FORCE_TARGET,
+                                                                 "planar-reach-0.1": REACH_TARGET,
+                                                                 BUDGET_PROFILE: BUDGET_REACH_TARGET, EXTRUSION_PROFILE: EXTRUSION_TARGET,
+-                                                                HOLES_PROFILE: HOLES_TARGET, RING_LOFT_PROFILE: RING_LOFT_TARGET, FRAMED_LOFT_PROFILE: FRAMED_LOFT_TARGET, POCKETS_PROFILE: POCKETS_TARGET, TEXTURE_PROFILE: TEXTURE_TARGET, KEYED_TRANSFORM_PROFILE: KEYED_TRANSFORM_TARGET, KEYED_REDUCTION_PROFILE: KEYED_REDUCTION_TARGET, KEYED_FILTER_PROFILE: KEYED_FILTER_TARGET, KEYED_MERGE_PROFILE: KEYED_MERGE_TARGET, KEYED_ZIP_PROFILE: KEYED_ZIP_TARGET, KEYED_REKEY_PROFILE: KEYED_REKEY_TARGET, STRING_CONCAT_PROFILE: STRING_CONCAT_TARGET}.get(model.profile, SURFACE_TARGET),
++                                                                HOLES_PROFILE: HOLES_TARGET, RING_LOFT_PROFILE: RING_LOFT_TARGET, FRAMED_LOFT_PROFILE: FRAMED_LOFT_TARGET, POCKETS_PROFILE: POCKETS_TARGET, TEXTURE_PROFILE: TEXTURE_TARGET, KEYED_TRANSFORM_PROFILE: KEYED_TRANSFORM_TARGET, KEYED_REDUCTION_PROFILE: KEYED_REDUCTION_TARGET, KEYED_FILTER_PROFILE: KEYED_FILTER_TARGET, KEYED_MERGE_PROFILE: KEYED_MERGE_TARGET, KEYED_ZIP_PROFILE: KEYED_ZIP_TARGET, KEYED_REKEY_PROFILE: KEYED_REKEY_TARGET, STRING_CONCAT_PROFILE: STRING_CONCAT_TARGET, KEYED_MEMBERSHIP_PROFILE: KEYED_MEMBERSHIP_TARGET}.get(model.profile, SURFACE_TARGET),
+                                             "object_path": obj.path, **error.details}) from error
+             charge(mesh)
+             return mesh
+diff --git a/ontokin/syntax02.py b/ontokin/syntax02.py
+index 3ea98f8..a21a6ff 100644
+--- a/ontokin/syntax02.py
++++ b/ontokin/syntax02.py
+@@ -104,7 +104,7 @@ class Parser02(Parser):
+                          version_node=version_node, profile_node=profile_node,
+                          requires=requires, imports=imports, classes=classes,
+                          functions=functions, definitions=definitions, scene=scene)
+-        if self.expected_version in {"0.7", "0.8", "0.9", "0.10", "0.11", "0.12", "0.13", "0.14", "0.15", "0.16", "0.17", "0.18", "0.19", "0.20"}:
++        if self.expected_version in {"0.7", "0.8", "0.9", "0.10", "0.11", "0.12", "0.13", "0.14", "0.15", "0.16", "0.17", "0.18", "0.19", "0.20", "0.21"}:
+             result.data["execution"] = execution
+         return result
+ 
+@@ -301,7 +301,10 @@ def parse_source_unit(unit: SourceUnit, *, check: Callable[[], None] | None = No
+         declared = (tokens[1].value if len(tokens) > 2 and tokens[0].kind == "ontokin"
+                     and tokens[1].kind == "STRING" else None)
+         callback = checkpoint if check is not None else None
+-        if declared == "0.20":
++        if declared == "0.21":
++            from .syntax21 import Parser21
++            result = Parser21(tokens, unit.source_id, callback).program()
++        elif declared == "0.20":
+             from .syntax20 import Parser20
+             result = Parser20(tokens, unit.source_id, callback).program()
+         elif declared == "0.19":
+diff --git a/ontokin/syntax21.py b/ontokin/syntax21.py
+new file mode 100644
+index 0000000..7e6bce6
+--- /dev/null
++++ b/ontokin/syntax21.py
+@@ -0,0 +1,12 @@
++"""Explicit source .21 header; keyed membership uses ordinary call grammar."""
++from .profile_capabilities import KEYED_MEMBERSHIP_PROFILE
++from .syntax02 import Parser02
++from .syntax20 import Parser20
++
++
++class Parser21(Parser20):
++    def __init__(self, tokens, source_id, check=None):
++        Parser02.__init__(self, tokens, source_id, check,
++                          expected_version="0.21", expected_profile=KEYED_MEMBERSHIP_PROFILE)
++        self._expression_nesting = 0
++        self._type_nesting = 0
+diff --git a/ontokin/texture_gltf.py b/ontokin/texture_gltf.py
+index 069a63d..3b676f0 100644
+--- a/ontokin/texture_gltf.py
++++ b/ontokin/texture_gltf.py
+@@ -57,9 +57,9 @@ def prepare_node_textures(geometry, model, *, check=None):
+         binding = metadata[region.key]
+         asset = model.texture_assets.get(binding["asset_id"])
+         if asset is None or asset.sha256 != binding["sha256"]:
+-            from .profile_capabilities import KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE
++            from .profile_capabilities import KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_MEMBERSHIP_PROFILE
+             _fail("A source texture binding must retain its admitted immutable image.",
+-                  target_contract="ontokin.glb/0.20" if model.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if model.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if model.profile == KEYED_REDUCTION_PROFILE else "ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else "ontokin.glb/0.13")
++                  target_contract="ontokin.glb/0.21" if model.profile == KEYED_MEMBERSHIP_PROFILE else "ontokin.glb/0.20" if model.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if model.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if model.profile == KEYED_REDUCTION_PROFILE else "ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else "ontokin.glb/0.13")
+         result[region.key] = {"uv": coordinates[region.key], "binding": binding,
+                               "asset": asset, "material": region.material, "program_revision": model.program_revision}
+     return result
+@@ -142,7 +142,7 @@ def validate_texture_shapes(document, *, check=None):
+     closed(document, {"asset", "scene", "scenes", "nodes", "meshes", "materials",
+                        "buffers", "bufferViews", "accessors", "animations", "extras",
+                        "images", "textures", "samplers"}, "document")
+-    filter_contract = _ACTIVE_TARGET.get() in {"ontokin.glb/0.16", "ontokin.glb/0.17", "ontokin.glb/0.18", "ontokin.glb/0.19", "ontokin.glb/0.20"}
++    filter_contract = _ACTIVE_TARGET.get() in {"ontokin.glb/0.16", "ontokin.glb/0.17", "ontokin.glb/0.18", "ontokin.glb/0.19", "ontokin.glb/0.20", "ontokin.glb/0.21"}
+     if filter_contract:
+         closed(document.get("extras"), {"ontokin"}, "scene extras")
+         metadata = document["extras"].get("ontokin")
+@@ -236,8 +236,8 @@ def validate_texture_shapes(document, *, check=None):
+ 
+ def validate_texture_delivery(decoded, model, *, check=None):
+     """Compare supplied image, UV and reference bytes with fresh source facts."""
+-    from .profile_capabilities import KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE
+-    target = "ontokin.glb/0.20" if model.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if model.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if model.profile == KEYED_REDUCTION_PROFILE else "ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else "ontokin.glb/0.13"
++    from .profile_capabilities import KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_MEMBERSHIP_PROFILE
++    target = "ontokin.glb/0.21" if model.profile == KEYED_MEMBERSHIP_PROFILE else "ontokin.glb/0.20" if model.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if model.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if model.profile == KEYED_REDUCTION_PROFILE else "ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else "ontokin.glb/0.13"
+     token = _ACTIVE_TARGET.set(target)
+     try:
+         return _validate_texture_delivery(decoded, model, check=check)
+diff --git a/tests/test_keyed_membership_interfaces.py b/tests/test_keyed_membership_interfaces.py
+new file mode 100644
+index 0000000..9f1e468
+--- /dev/null
++++ b/tests/test_keyed_membership_interfaces.py
+@@ -0,0 +1,347 @@
++"""Explicit .21 interfaces, frozen source answers and inherited closed lineage.
++
++These focused binding checks supplement the separately authored C088 acceptance
++packet. The frozen packet supplies source bytes, revisions and Boolean answers;
++no expected answer is obtained from a candidate execution.
++"""
++from __future__ import annotations
++
++import copy
++import hashlib
++import io
++import json
++from contextlib import redirect_stdout
++from pathlib import Path
++import struct
++import tempfile
++import unittest
++from unittest.mock import patch
++
++from ontokin.agent import AgentService
++from ontokin.agent_protocol import ProtocolError
++from ontokin.cli import main as cli_main
++from ontokin.execution_budget import HostPolicy
++from ontokin.keyed_membership_agent import KeyedMembershipAgentService
++from ontokin.keyed_membership_protocol import KeyedMembershipProtocol
++from ontokin.program_agent import ProgramAgentService
++from ontokin.program_bindings import PROGRAM_BINDINGS, PROFILE_BINDINGS
++from ontokin.string_concat_agent import StringConcatAgentService
++from ontokin.string_concat_protocol import StringConcatProtocol
++from ontokin.syntax02 import parse_source_unit
++from ontokin.texture_bundle import load_texture_file_manifest
++
++
++ROOT = Path(__file__).resolve().parents[1]
++FROZEN = ROOT / "docs/language-design/keyed-membership-v0.1/freeze"
++PROFILE, PROTOCOL, TARGET = "keyed-membership-0.1", "ontokin.agent/0.21", "ontokin.glb/0.21"
++CHECKPOINTS = ["keyed_membership_admission", "keyed_membership_input",
++               "keyed_membership_query", "keyed_membership_scan",
++               "keyed_membership_publication"]
++CONCAT_CHECKPOINTS = ["string_concat_admission", "string_concat_scan",
++                      "string_concat_allocation", "string_concat_publication"]
++
++
++def frozen_case(name):
++    document = json.loads((FROZEN / "source-expected.json").read_bytes())
++    return next(case for case in document["cases"] if case["id"] == name)
++
++
++class KeyedMembershipInterfaceTests(unittest.TestCase):
++    @classmethod
++    def setUpClass(cls):
++        from jsonschema import Draft202012Validator
++        from referencing import Registry, Resource
++        resources = {}
++        for path in (ROOT / "docs/language-design").rglob("*.schema.json"):
++            value = json.loads(path.read_bytes())
++            if "$id" in value:
++                resources[value["$id"]] = Resource.from_contents(value)
++        registry = Registry().with_resources(resources.items())
++        cls.validators = {}
++        for name in ("request", "response", "diagnostic"):
++            schema = json.loads((ROOT / f"docs/language-design/agent-v0.21/{name}.schema.json").read_bytes())
++            Draft202012Validator.check_schema(schema)
++            cls.validators[name] = Draft202012Validator(schema, registry=registry)
++
++    def setUp(self):
++        self.directory = tempfile.TemporaryDirectory(prefix="ontokin-c088-interface-")
++        self.service = KeyedMembershipAgentService(self.directory.name)
++        self.serial = 0
++
++    def tearDown(self):
++        self.service.close()
++        self.directory.cleanup()
++
++    def request(self, operation="discover", **fields):
++        self.serial += 1
++        return {"schema_version": PROTOCOL, "project_id": "membership-interface",
++                "request_id": f"request-{self.serial}", "operation": operation,
++                **({"profile": PROFILE, "limit": 1000} if operation == "discover" else {}),
++                **fields}
++
++    def send(self, operation="discover", **fields):
++        request = self.request(operation, **fields)
++        self.validators["request"].validate(request)
++        KeyedMembershipProtocol.validate_request(request)
++        response = self.service.handle(request)
++        self.validators["response"].validate(response)
++        self.assertEqual(response["schema_version"], PROTOCOL)
++        return response
++
++    def success(self, operation="discover", **fields):
++        response = self.send(operation, **fields)
++        self.assertEqual(response["status"], "succeeded", response)
++        return response
++
++    def frozen_program(self, name):
++        case = frozen_case(name)
++        program = load_texture_file_manifest(FROZEN / case["files"])
++        self.assertEqual(hashlib.sha256(program.entry.raw).hexdigest(), case["source_sha256"])
++        self.assertEqual(program.program_revision, case["program_revision"])
++        return case, program
++
++    def test_discovery_advertises_membership_and_inherited_string_authority(self):
++        result = self.success()["result"]
++        interface = result["keyed_membership_interface"]
++        self.assertEqual(interface["operations"], sorted(KeyedMembershipProtocol.OPERATIONS))
++        self.assertEqual(KeyedMembershipProtocol.OPERATIONS, StringConcatProtocol.OPERATIONS)
++        self.assertEqual(len(interface["operations"]), 12)
++        self.assertEqual(interface["defaults"], {"max_operations": 100000, "max_elapsed_ms": 30000})
++        self.assertEqual(interface["host_ceilings"], self.service.host_policy.ceilings)
++        self.assertEqual(interface["delivery_contract"], TARGET)
++        self.assertEqual(interface["source_schema"], "ontokin.bundle/0.2")
++        self.assertEqual(interface["file_transport_schema"], "ontokin.files/0.2")
++        membership = interface["source_expressions"]["has_key"]
++        self.assertEqual(membership["signature"], "has_key(Keyed<T>, String) -> Bool")
++        self.assertEqual(membership["declaring_version"], "0.21")
++        self.assertEqual(membership["declaring_profile"], PROFILE)
++        self.assertEqual(membership["stable_key_pattern"], "[A-Za-z0-9][A-Za-z0-9._-]{0,63}")
++        self.assertEqual(membership["max_entries"], 256)
++        self.assertEqual(membership["max_key_characters"], 64)
++        self.assertEqual(membership["empty_operations"], 3)
++        self.assertEqual(membership["first_of_256_operations"], 260)
++        self.assertEqual(membership["maximum_operations"], 515)
++        self.assertEqual(membership["cancellation_stages"], CHECKPOINTS)
++        self.assertEqual(membership["stage_operations"], dict(zip(CHECKPOINTS, (1, "n", 1, "k", 1))))
++        concat = interface["source_expressions"]["string_concat"]
++        self.assertEqual(concat["declaring_versions"], ["0.20", "0.21"])
++        self.assertEqual(concat["declaring_profiles"], ["string-concat-0.1", PROFILE])
++        self.assertEqual(concat["diagnostic_profile"], "string-concat-0.1")
++        self.assertEqual(concat["max_result_utf8_bytes"], 65536)
++        self.assertEqual(concat["max_total_utf8_bytes"], 4194304)
++        self.assertEqual(concat["cancellation_stages"], CONCAT_CHECKPOINTS)
++        self.assertTrue(interface["source_expressions"]["rekey_keyed"]["string_concatenation"])
++        self.assertEqual(next(item for item in result["items"] if item["name"] == "has_key")["kind"], "builtin")
++        for item in result["items"]:
++            if item["kind"] == "protocol":
++                self.assertEqual(item["name"], PROTOCOL)
++            elif item["kind"] == "destination":
++                self.assertEqual(item["name"], TARGET)
++
++    def test_discovery_is_detached_and_recomputes_current_host_policy(self):
++        first = self.success()["result"]
++        old_revision = first["revision"]
++        interface = first["keyed_membership_interface"]
++        interface["source_expressions"]["has_key"]["cancellation_stages"].clear()
++        interface["source_expressions"]["string_concat"]["cancellation_stages"].clear()
++        interface["rekey_provenance"]["writable"] = True
++        self.service.host_policy = HostPolicy(200000, 80000)
++        fresh = self.success()["result"]
++        current = fresh["keyed_membership_interface"]
++        self.assertEqual(current["host_ceilings"], self.service.host_policy.ceilings)
++        self.assertNotEqual(fresh["revision"], old_revision)
++        self.assertEqual(current["source_expressions"]["has_key"]["cancellation_stages"], CHECKPOINTS)
++        self.assertEqual(current["source_expressions"]["string_concat"]["cancellation_stages"], CONCAT_CHECKPOINTS)
++        self.assertFalse(current["rekey_provenance"]["writable"])
++        with StringConcatAgentService(self.directory.name) as predecessor:
++            response = predecessor.handle({**self.request(), "schema_version": "ontokin.agent/0.20",
++                                           "profile": "string-concat-0.1"})
++            self.assertEqual(response["status"], "succeeded", response)
++            self.assertNotIn("keyed_membership_interface", response["result"])
++            old = response["result"]["string_concat_interface"]
++            self.assertNotIn("has_key", old["source_expressions"])
++            self.assertEqual(old["source_expressions"]["string_concat"]["declaring_version"], "0.20")
++            self.assertNotIn("declaring_versions", old["source_expressions"]["string_concat"])
++            self.assertEqual(current["source_expressions"]["rekey_keyed"], old["source_expressions"]["rekey_keyed"])
++            self.assertNotEqual(predecessor.database_path, self.service.database_path)
++
++    def test_store_reopens_its_own_contract_and_preserves_old_defaults(self):
++        expected_revision = self.success()["result"]["revision"]
++        self.assertEqual(self.service.database_path.name, "keyed-membership-program-agent.sqlite3")
++        self.assertEqual(self.service._store.schema_version, "ontokin.keyed-membership-program-agent-store/0.1")
++        self.service.close()
++        self.service = KeyedMembershipAgentService(self.directory.name)
++        self.assertEqual(self.success()["result"]["revision"], expected_revision)
++        self.assertNotIn(PROTOCOL, PROGRAM_BINDINGS)
++        self.assertNotIn(PROFILE, PROFILE_BINDINGS)
++        with ProgramAgentService(Path(self.directory.name) / "program-default") as default:
++            self.assertEqual(default._protocol.SCHEMA_VERSION, "ontokin.agent/0.2")
++        with AgentService(Path(self.directory.name) / "core-default") as default:
++            response = default.handle(self.request())
++            self.assertEqual(response["schema_version"], "ontokin.agent/0.1")
++            self.assertEqual(response["status"], "rejected")
++
++    def test_request_shapes_refuse_cross_contract_and_invented_membership_fields(self):
++        good = self.request()
++        KeyedMembershipProtocol.validate_request(good)
++        self.validators["request"].validate(good)
++        with self.assertRaises(ProtocolError):
++            StringConcatProtocol.validate_request(good)
++        inspect = self.request("inspect", program_revision="sha256:" + "0" * 64,
++                               selector={"kind": "source"}, fields=["source"], limit=1)
++        KeyedMembershipProtocol.validate_request(inspect)
++        self.validators["request"].validate(inspect)
++        invalid = [
++            {**good, "schema_version": "ontokin.agent/0.20"},
++            {**good, "membership_query": "alpha"},
++            {**inspect, "source_slice": {"offset": 0, "max_bytes": 128}},
++        ]
++        for request in invalid:
++            with self.subTest(request=request):
++                self.assertTrue(list(self.validators["request"].iter_errors(request)))
++                with self.assertRaises(ProtocolError):
++                    KeyedMembershipProtocol.validate_request(request)
++
++    def test_schemas_preserve_all_inherited_operation_and_provenance_shapes(self):
++        replacements = {"ontokin.agent/0.20": PROTOCOL, "ontokin.glb/0.20": TARGET,
++                        "string-concat-0.1": PROFILE}
++
++        def binding_scalars(value):
++            if isinstance(value, dict):
++                return {key: binding_scalars(child) for key, child in value.items()}
++            if isinstance(value, list):
++                return [binding_scalars(child) for child in value]
++            return replacements.get(value, value) if isinstance(value, str) else value
++
++        for name in ("request", "response", "diagnostic"):
++            with self.subTest(schema=name):
++                old = json.loads((ROOT / f"docs/language-design/agent-v0.20/{name}.schema.json").read_bytes())
++                expected = binding_scalars(old)
++                expected["$id"] = old["$id"].replace("0.20", "0.21")
++                expected["title"] = f"OntoKin Keyed membership Agent/0.21 {name}"
++                if name == "response":
++                    expected["description"] = old["description"].replace("Agent/0.20", "Agent/0.21")
++                self.assertEqual(self.validators[name].schema, expected)
++        self.assertFalse(any("membership" in name for name in self.validators["response"].schema["$defs"]))
++
++    def test_true_and_false_inspection_keep_exact_closed_detached_filter_records(self):
++        for name in ("composition-filter-keep", "composition-filter-drop"):
++            with self.subTest(case=name):
++                case, program = self.frozen_program(name)
++                self.success("create", project_id=name, bundle=program.to_payload(),
++                             expected_program_revision=None, requested_level="constructed")
++                fields = {"project_id": name, "program_revision": program.program_revision,
++                          "selector": {"path": "probe"}, "fields": ["values", "support"], "limit": 1}
++                response = self.success("inspect", **fields)
++                item = response["result"]["items"][0]
++                self.assertEqual(item["support"]["named_destination"], TARGET)
++                value = item["values"]["observed"]
++                self.assertEqual(value["type"], "Bool")
++                self.assertIs(value["value"], case["expected"]["observed"])
++
++                def location(raw):
++                    start = program.entry.raw.index(raw)
++                    return {"source_id": "entry", "source_revision": "sha256:" + case["source_sha256"],
++                            "filename": "main.ok", "start_byte": start, "end_byte": start + len(raw)}
++
++                expected = {"expression": location(b'filter_keyed<Length>(keyed<Length>{"a":1[m],"b":2[m]},(k,v)->v>1[m])'),
++                            "input": location(b'keyed<Length>{"a":1[m],"b":2[m]}'),
++                            "predicate": location(b"v>1[m]"), "element_type": "Length"}
++                self.assertEqual(value["derived_filters"], [expected])
++                self.assertEqual({key for key in value if key.startswith("derived_")}, {"derived_filters"})
++                original_value = copy.deepcopy(value)
++                for mutation in ({"key": "b"}, {"membership_query": "a"}, {"writable": True}):
++                    broken = copy.deepcopy(response)
++                    broken["result"]["items"][0]["values"]["observed"]["derived_filters"][0].update(mutation)
++                    self.assertTrue(list(self.validators["response"].iter_errors(broken)))
++                value["derived_filters"].clear()
++                fresh = self.success("inspect", **fields)
++                self.assertEqual(fresh["result"]["items"][0]["values"]["observed"], original_value)
++                self.service.close()
++                self.service = KeyedMembershipAgentService(self.directory.name)
++                reopened = self.success("inspect", **fields)
++                self.assertEqual(reopened["result"]["items"][0]["values"]["observed"], original_value)
++
++    def test_inherited_rekey_schema_retains_closed_old_to_new_constraints(self):
++        from jsonschema import Draft202012Validator
++        schema = self.validators["response"].schema
++        validator = Draft202012Validator({"$schema": schema["$schema"], "$defs": schema["$defs"],
++                                          "$ref": "#/$defs/derived_rekey"})
++        expected = json.loads((ROOT / "examples/keyed-rekey/expected.json").read_bytes())
++        singleton = next(case for case in expected["cases"] if case["name"] == "singleton")["expected"]
++        aggregate = singleton["root_aggregate_rekey_record"]
++        selected = singleton["root_selected_rekey_records"]["ns.a"]
++        validator.validate(aggregate)
++        validator.validate(selected)
++        for mutation in ({**aggregate, "old_key": "a"}, {**selected, "new_key": None},
++                         {**selected, "editable_key": "a"}):
++            self.assertTrue(list(validator.iter_errors(mutation)))
++        broken = copy.deepcopy(selected)
++        broken["input_entry"]["writable"] = True
++        self.assertTrue(list(validator.iter_errors(broken)))
++
++    def test_explicit_parser_and_cli_do_not_replace_earlier_defaults(self):
++        case, program = self.frozen_program("empty")
++        ast = parse_source_unit(program.entry)
++        self.assertEqual((ast.version, ast.profile), ("0.21", PROFILE))
++        old = load_texture_file_manifest(FROZEN / case["controls"]["literal"])
++        old_ast = parse_source_unit(old.entry)
++        self.assertEqual((old_ast.version, old_ast.profile), ("0.20", "string-concat-0.1"))
++        request_file = Path(self.directory.name) / "request.json"
++        request_file.write_text(json.dumps(self.request()), encoding="utf-8")
++        stream = io.StringIO()
++        with redirect_stdout(stream):
++            code = cli_main(["agent", "--protocol", PROTOCOL, "--store",
++                             str(Path(self.directory.name) / "cli"), "--request", str(request_file)])
++        self.assertEqual(code, 0, stream.getvalue())
++        response = json.loads(stream.getvalue())
++        self.assertEqual(response["schema_version"], PROTOCOL)
++        self.validators["response"].validate(response)
++        with patch("ontokin.agent_cli.run", return_value=0) as run:
++            self.assertEqual(cli_main(["agent", "--store", self.directory.name]), 0)
++        self.assertEqual(run.call_args.args[0].protocol, "ontokin.agent/0.1")
++        with patch("ontokin.cli._program_export", return_value=0) as export:
++            self.assertEqual(cli_main(["export", "--bundle", "unread.files.json",
++                                       "--output", "unwritten.glb"]), 0)
++        self.assertEqual(export.call_args.args[0].target, "ontokin.glb/0.1")
++
++    def test_small_actual_cli_export_has_explicit_identity_and_closed_reader(self):
++        from ontokin import texture_gltf
++        from ontokin.budget_runtime import execute_keyed_membership_export
++        from ontokin.diagnostics import OntoKinError
++        case, program = self.frozen_program("empty")
++        with self.assertRaises(TypeError):
++            execute_keyed_membership_export(program, profile="string-concat-0.1")
++        output = Path(self.directory.name) / "membership.glb"
++        stream = io.StringIO()
++        with redirect_stdout(stream):
++            code = cli_main(["export", "--bundle", str(FROZEN / case["files"]),
++                             "--target", TARGET, "--output", str(output), "--fps", "1", "--end", "1"])
++        self.assertEqual(code, 0, stream.getvalue())
++        data = output.read_bytes()
++        self.assertEqual(data[:4], b"glTF")
++        json_length, chunk_type = struct.unpack_from("<I4s", data, 12)
++        self.assertEqual(chunk_type, b"JSON")
++        document = json.loads(data[20:20 + json_length])
++        metadata = document["extras"]["ontokin"]
++        self.assertEqual(metadata["target_contract"], TARGET)
++        self.assertEqual(metadata["schema_version"], "0.21")
++        self.assertEqual(metadata["profile"], PROFILE)
++        self.assertEqual(metadata["source"]["entry_revision"], "sha256:" + case["source_sha256"])
++        token = texture_gltf._ACTIVE_TARGET.set(TARGET)
++        try:
++            texture_gltf.validate_texture_shapes(document)
++            broken = copy.deepcopy(document)
++            broken["asset"]["extras"] = {"invented": True}
++            with self.assertRaises(OntoKinError):
++                texture_gltf.validate_texture_shapes(broken)
++            broken = copy.deepcopy(document)
++            broken["extras"]["ontokin"]["membership_authority"] = True
++            with self.assertRaises(OntoKinError):
++                texture_gltf.validate_texture_shapes(broken)
++        finally:
++            texture_gltf._ACTIVE_TARGET.reset(token)
++
++
++if __name__ == "__main__":
++    unittest.main()

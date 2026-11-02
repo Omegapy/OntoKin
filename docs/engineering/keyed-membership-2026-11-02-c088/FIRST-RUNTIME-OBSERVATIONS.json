@@ -1,0 +1,74 @@
+{
+  "schema_version": "ontokin.c088-first-runtime-observations/1",
+  "status": "partial_validation_in_progress",
+  "recorded_utc": "2026-11-02T15:40:54.252133+00:00",
+  "source": {
+    "head": "39afec7971b9221fe58cf7c7d002505d172dd64f",
+    "tree": "26b6417d082bd26fa6ace1e718455aeaa7822ccb"
+  },
+  "source_records": 188,
+  "native_observations": 6871,
+  "focused_interface_tests": 9,
+  "passed_source_native_reader_checks": 681795,
+  "original_source_native_reader": {
+    "status": "failed",
+    "diagnostic_projection_mismatches": 7,
+    "evidence": {
+      "handoff_path": "C088-work/reader-source-native01/result.json",
+      "bytes": 1042065,
+      "sha256": "f59b7d0e0b889d9ba7032afb8786a31671f6e282a2b7991e6cfd145a66649743"
+    }
+  },
+  "source_native_reader_correction": {
+    "status": "passed",
+    "reason": "Seven private Diagnostic.details None values must use the unchanged public Diagnostic.to_dict projection to {}. Public candidate diagnostics already matched the frozen contract; no runtime or expected-answer change.",
+    "review": {
+      "handoff_path": "C088-work/design-review/DIAGNOSTIC-PROJECTION-REVIEW-01.json",
+      "bytes": 2111,
+      "sha256": "84a1b11912e77320538ff30986d25954447d3d1c5d551cbd7b7fedaf3eaa8ed8"
+    },
+    "evidence": {
+      "handoff_path": "C088-work/reader-source-native02/result.json",
+      "bytes": 1041103,
+      "sha256": "3d0de5d87ce98b48cab551fa439ea615bf58d922fe6803f080de4a371fe611a4"
+    }
+  },
+  "original_agent_producer": {
+    "status": "failed",
+    "passing_workflows": 8,
+    "failing_workflows": [
+      "A01",
+      "A02",
+      "A03"
+    ],
+    "exchange_count": 218,
+    "reason": "The frozen edit request uses object identity where the unchanged protocol requires [sources, entry]. Seven separately reviewed request leaves are proposed for correction.",
+    "summary": {
+      "handoff_path": "C088-work/candidate-agent01/summary.json",
+      "bytes": 3039902,
+      "sha256": "609db154a9dbfaac94ce65734d69d0a07a230b7387cca4c9e06213f78cb0411c"
+    },
+    "transcript": {
+      "handoff_path": "C088-work/candidate-agent01/agent/transcript.json",
+      "bytes": 12520163,
+      "sha256": "2289ee509c6b8ce03b6374a0e318e42ce4575601448d16d8497e7b02b5adb30d"
+    }
+  },
+  "agent_amendment": {
+    "path": "../../language-design/keyed-membership-v0.1/input-amendments/agent-file-scope-v01/AMENDMENT.json",
+    "sha256": "d53ae7f40659686d0874ced5d342deaa1a1421fd6ce17b9e6dd02b1b68510a54",
+    "candidate_execution_after_amendment": "not_started; requires separately verified publication/readback"
+  },
+  "runtime_changes_since_first_candidate": false,
+  "release_acceptance": false,
+  "full_product_acceptance": false,
+  "pending": [
+    "independent Agent amendment adoption/readback and full rerun",
+    "complete independent GLB/store/hostile readers",
+    "all native destination roles and direct capture reviews",
+    "unchanged .20 complete regression and103exact whole-role streams",
+    "complete inherited34local roles",
+    "final candidate review, serialized integration and actual resulting-main checks",
+    "complete oneZIP reconstruction and durable save"
+  ]
+}

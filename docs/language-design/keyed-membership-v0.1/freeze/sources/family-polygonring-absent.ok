@@ -1,0 +1,15 @@
+ontokin "0.21";
+module MembershipProbe @ "membership-probe";
+profile "keyed-membership-0.1";
+
+public class Probe @ "probe" {
+    public derive observed @ "observed": Bool = has_key(keyed<PolygonRing>{"entry":polygon_ring(0,"outer",keyed<PolygonVertex>{"v0":polygon_vertex(0,planar_point(0[m],0[m]),"side"),"v1":polygon_vertex(1,planar_point(1[m],0[m]),"side"),"v2":polygon_vertex(2,planar_point(0[m],1[m]),"side")})},"missing");
+    geometry = box(vec3(if self.observed then 2[m] else 1[m], 1[m], 1[m]));
+    physical = no_body();
+}
+
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object probe @ "probe": Probe {}
+}

@@ -10,6 +10,23 @@ The current direction begins with exterior 3D models and short animations. Those
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
 
+### Select sparse per-key component overrides
+
+Explicit source `0.21` / `keyed-membership-0.1` supports bounded, read-only keyed membership:
+
+```ontokin
+if has_key(overrides, key) then overrides[key] else defaults[key]
+```
+
+A pinned component library can select an optional override while preserving each occurrence's complete catalog, independently identifiable parts, appearance and recorded motion. The operation accepts an existing immutable keyed value and an exact String query, admits the complete input, and checks canonical keys under the current request's execution budget. Both results preserve actual dependencies and inherited provenance. Generated keyed views retain their existing access and taint restrictions. Invalid queries and unguarded missing lookups remain explicit errors.
+
+```bash
+python3 -m ontokin export examples/keyed-membership/agent/base.files.json --bundle --target ontokin.glb/0.21 --output /tmp/ontokin-sparse-panels.glb
+python3 -m ontokin agent --protocol ontokin.agent/0.21 --store /tmp/ontokin-keyed-membership-agent
+```
+
+The [adopted decision](docs/language-design/keyed-membership-v0.1/ADOPTION.md), [language guide](docs/language-design/keyed-membership-v0.1/README.md), [Agent/0.21 guide](docs/language-design/agent-v0.21/README.md) and [C088 engineering record](docs/engineering/keyed-membership-2026-11-02-c088/README.md) identify the contract, independent inputs, actual checks and integration. An existing typed reduction/conditional helper remains a valid alternative for authored keyed leaves. This experimental convenience introduces no physical authority or measured authoring-benefit claim; complete feature release and full-product acceptance remain open.
+
 ### Give reusable part groups computed namespaces
 
 Explicit source `0.20` / `string-concat-0.1` supports pure immutable String concatenation:

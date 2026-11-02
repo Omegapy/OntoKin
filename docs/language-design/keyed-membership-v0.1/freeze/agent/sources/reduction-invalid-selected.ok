@@ -1,0 +1,27 @@
+ontokin "0.20";
+module SparsePanels @ "sparse-panels";
+profile "string-concat-0.1";
+import lib @ "lib-import" from "fixture.membership-panels" version "1.0.0" digest "sha256:726438127bb8e008cf72117769ce14719dbb99d71ebf0a17efa532b44b91c19b";
+
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world,0[m/s^2],0[m/s^2],0[m/s^2]);
+    object first @ "first": lib.PanelGroup {
+        placement = pose(world,vec3(-10[m],0[m],0[m]),quat(1,0,0,0));
+        prefix = "front.";
+        overrides = keyed<Length>{"left":-1[m]};
+    }
+    object sibling @ "sibling": lib.PanelGroup {
+        placement = pose(world,vec3(2[m],0[m],0[m]),quat(1,0,0,0));
+        prefix = "back.";
+        overrides = keyed<Length>{"right":1.75[m]};
+    }
+    object marker @ "marker": Object {
+        placement = pose(world,vec3(0[m],-3[m],0[m]),quat(1,0,0,0));
+        geometry = box(vec3(0.5[m],0.5[m],0.5[m]));
+        physical = no_body();
+    }
+    action travel @ "travel" = move(first,vector(world,0[m/s],0.5[m/s],0[m/s]),1[s]);
+    action marker_travel @ "marker-travel" = move(marker,vector(world,0.25[m/s],0[m/s],0[m/s]),1[s]);
+    at 0[s] sequence { start travel; start marker_travel; }
+}
