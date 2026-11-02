@@ -1,0 +1,109 @@
+{
+  "schema_version": "ontokin.c091-independent-a04-review/1",
+  "status": "passed",
+  "created_utc": "2026-11-02T22:59:20.409292+00:00",
+  "reviewer": "independent-source-and-supplied-byte-worker",
+  "basis": "94a7796a54725ca764b2027deb43f09204f8a6de",
+  "checks": [
+    {
+      "name": "frozen scenario index8 is A04",
+      "status": "passed"
+    },
+    {
+      "name": "exact cursor steps remain reopen and stale",
+      "status": "passed"
+    },
+    {
+      "name": "frozen incorrect cursor at step3",
+      "status": "passed"
+    },
+    {
+      "name": "frozen incorrect cursor at step6",
+      "status": "passed"
+    },
+    {
+      "name": "both reproductions use exact C090 basis",
+      "status": "passed"
+    },
+    {
+      "name": "both reproductions prove same170 code hashes",
+      "status": "passed"
+    },
+    {
+      "name": "same unchanged control program",
+      "status": "passed"
+    },
+    {
+      "name": "both reproduce inherited envelope cursor",
+      "status": "passed"
+    },
+    {
+      "name": "author all three requests succeed",
+      "status": "passed"
+    },
+    {
+      "name": "author nonempty outer cursor only",
+      "status": "passed"
+    },
+    {
+      "name": "author next page uses exact outer cursor",
+      "status": "passed"
+    },
+    {
+      "name": "independent all three requests succeed",
+      "status": "passed"
+    },
+    {
+      "name": "independent nonempty outer cursor only",
+      "status": "passed"
+    },
+    {
+      "name": "independent next page uses exact outer cursor",
+      "status": "passed"
+    },
+    {
+      "name": "frozen workflow bytes unchanged from C090",
+      "status": "passed"
+    },
+    {
+      "name": "adopted response schema cursor at envelope",
+      "status": "passed"
+    }
+  ],
+  "exact_change": [
+    {
+      "json_pointer": "/scenarios/8/steps/3/request/cursor/$response",
+      "old": "A04.page.result.next_cursor",
+      "new": "A04.page.next_cursor"
+    },
+    {
+      "json_pointer": "/scenarios/8/steps/6/request/cursor/$response",
+      "old": "A04.page.result.next_cursor",
+      "new": "A04.page.next_cursor"
+    }
+  ],
+  "bindings": {
+    "c091-evidence/interface/a04-predecessor-reproduction.json": {
+      "sha256": "043ae1d1f4c556ce9506730ba4c86e812ae5105ae75890e5ab55611dc6ba30b7",
+      "bytes": 104761
+    },
+    "c091-evidence/reference/a04-independent/reproduction.json": {
+      "sha256": "dd9d981a48e519eee860779ef7e6c68ad4845ffe31640dd8221a9f9620618320",
+      "bytes": 104763
+    },
+    "c090-recovery/OntoKin/docs/language-design/torque-v0.1/freeze/agent/request-workflows.json": {
+      "sha256": "038e568e8166420ec15b5f38a10811f224baa2c131387fe4d70f038f52bda4d4",
+      "bytes": 75317
+    },
+    "c090-recovery/OntoKin/docs/language-design/agent-v0.22/response.schema.json": {
+      "sha256": "d6ed82435883795f6e4049977f55f963edadaedf0e3238e0eb78913cd6e5d9e2",
+      "bytes": 88624
+    },
+    "c091-evidence/interface/reproduce_a04_predecessor.py": {
+      "sha256": "2a00d91ee54df5f2255a9ec6cf45920a3cc8bf6b9262dfab6ff1b2d6012c5dcb",
+      "bytes": 3083
+    }
+  },
+  "scope": "Two response substitution paths only. No source, compiler, runtime, cursor protocol, status, diagnostic, budget, state, or physics expectation changes. Frozen original remains unchanged.",
+  "authority": "Review supports the proposed narrow erratum. Corrected paths require a hash-bound amendment with publication/readback before use as acceptance authority."
+}

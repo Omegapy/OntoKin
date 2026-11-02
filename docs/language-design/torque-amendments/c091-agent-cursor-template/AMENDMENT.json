@@ -1,0 +1,25 @@
+{
+  "schema_version": "ontokin.torque-reviewed-expectation-amendment/1",
+  "status": "proposed_pending_independent_review",
+  "case_id": "A04",
+  "frozen_manifest_sha256": "98df30158c0cd77c542d89652f5dec6b585d03451a06bf7b1baffee0fc2f02eb",
+  "original_table": {
+    "path": "docs/language-design/torque-v0.1/freeze/agent/request-workflows.json",
+    "sha256": "038e568e8166420ec15b5f38a10811f224baa2c131387fe4d70f038f52bda4d4"
+  },
+  "replacements": [
+    {
+      "json_pointer": "/scenarios/8/steps/3/request/cursor/$response",
+      "original": "A04.page.result.next_cursor",
+      "replacement": "A04.page.next_cursor"
+    },
+    {
+      "json_pointer": "/scenarios/8/steps/6/request/cursor/$response",
+      "original": "A04.page.result.next_cursor",
+      "replacement": "A04.page.next_cursor"
+    }
+  ],
+  "all_other_expectations_unchanged": true,
+  "runtime_semantic_change": false,
+  "reason": "The inherited Agent cursor is a top-level response field. The frozen workflow templates name a nonexistent result.next_cursor and its template rules forbid alternate lookups. Two untouched C090 package reproductions confirm the same successful envelope and next-page behavior."
+}
