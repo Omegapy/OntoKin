@@ -489,5 +489,189 @@ class C092PointOwnershipTests(unittest.TestCase):
                 immutable(value)
 
 
+class C092PointDispatchTests(unittest.TestCase):
+    def descriptor_refusal(self, owner_class, name):
+        owner = {'armed': False, 'changed': False, 'foreign_calls': 0}
+        sentinel = RuntimeError('C092 foreign descriptor: ' + name)
+        previous = vars(owner_class).get(name)
+        present = name in vars(owner_class)
+
+        def foreign(self, *args):
+            owner['foreign_calls'] += 1
+            raise sentinel
+
+        replacement = foreign if name == '__getattribute__' else property(foreign)
+        replacement_class = None
+        if name == '__dict__':
+            # Python prevents replacing an existing type's __dict__ entry.
+            # A layout-compatible class can declare it, however, and the
+            # callback can install that class on the original native object.
+            from ontokin.torque_runtime import TorqueSimulator
+            replacement_class = type('C092ForeignDict', (TorqueSimulator,),
+                                     {'__slots__': (), '__dict__': replacement})
+            if owner_class is not TorqueSimulator:
+                replacement_class = type('C092InheritedForeignDict',
+                                         (replacement_class,), {'__slots__': ()})
+
+        def check():
+            if owner['armed'] and not owner['changed']:
+                owner['changed'] = True
+                if replacement_class is not None:
+                    object.__setattr__(sim, '__class__', replacement_class)
+                else:
+                    setattr(owner_class, name, replacement)
+
+        sim, ledger = simulator(literal('unchanged-force-origin.ok'), check=check)
+        original_class = type(sim)
+        original_state, saved_state = sim.state, copy.deepcopy(sim.state)
+        original_clock = ledger._clock
+        before = ledger.operations
+        owner['armed'] = True
+        caught = None
+        try:
+            sim.advance(F(1), 'after')
+        except BaseException as error:
+            caught = error
+        finally:
+            if replacement_class is not None:
+                object.__setattr__(sim, '__class__', original_class)
+            elif present:
+                setattr(owner_class, name, previous)
+            else:
+                delattr(owner_class, name)
+
+        self.assertTrue(owner['changed'])
+        self.assertEqual(owner['foreign_calls'], 0,
+                         'The original callback returned normally; foreign dispatch is not its exception')
+        self.assertIsInstance(caught, OntoKinError)
+        self.assertEqual(caught.diagnostic.code, 'OKL-E-RESOURCE')
+        self.assertEqual(caught.diagnostic.details['budget_reason'], 'execution_context_required')
+        self.assertIs(ledger.check, check)
+        self.assertIs(ledger._clock, original_clock)
+        self.assertGreaterEqual(ledger.operations, before)
+        self.assertLessEqual(ledger.operations, 100000)
+        self.assertIs(sim.state, original_state)
+        self.assertEqual(sim.state, saved_state)
+
+    def test_runtime_storage_and_lookup_descriptors_refuse_before_foreign_code(self):
+        from ontokin.torque_runtime import TorqueSimulator
+        for name in ('work', 'pose_ops', '__getattribute__', '__dict__'):
+            with self.subTest(name=name):
+                self.descriptor_refusal(TorqueSimulator, name)
+
+    def test_inherited_storage_and_lookup_descriptors_refuse_before_foreign_code(self):
+        from ontokin.reach_runtime import ReachSimulator
+        for name in ('work', 'pose_ops', '__getattribute__', '__dict__'):
+            with self.subTest(name=name):
+                self.descriptor_refusal(ReachSimulator, name)
+
+    def guard_entry_refusal(self, variant, *, callback_raises=False):
+        from ontokin import torque_runtime as runtime
+        owner = {'armed': False, 'changed': False}
+        dispatch_sentinel = RuntimeError('C092 foreign guard body: ' + variant)
+        callback_sentinel = RuntimeError('C092 original callback before guard')
+        original_alias = runtime._admit_canonical_dispatch
+        original_authority = canonical_spin._authority_current
+        target = {
+            'guard_context_code': runtime.TorqueSimulator._guard_context,
+            'runtime_admit_alias': canonical_spin.admit_simulator,
+            'admit_simulator_code': canonical_spin.admit_simulator,
+            'authority_code': original_authority,
+            'authority_alias': original_authority,
+        }[variant]
+        original_code, original_defaults = target.__code__, target.__defaults__
+
+        def foreign(self, error=dispatch_sentinel):
+            raise error
+
+        def check():
+            if owner['armed'] and not owner['changed']:
+                owner['changed'] = True
+                owner['consumed'] = ledger.operations
+                if variant == 'runtime_admit_alias':
+                    runtime._admit_canonical_dispatch = foreign
+                elif variant == 'authority_alias':
+                    canonical_spin._authority_current = foreign
+                else:
+                    target.__code__, target.__defaults__ = foreign.__code__, foreign.__defaults__
+                if callback_raises:
+                    raise callback_sentinel
+
+        sim, ledger = simulator(literal('unchanged-force-origin.ok'), check=check)
+        original_state, saved_state = sim.state, copy.deepcopy(sim.state)
+        original_clock = ledger._clock
+        owner['armed'] = True
+        caught = None
+        try:
+            sim.advance(F(1), 'after')
+        except BaseException as error:
+            caught = error
+        finally:
+            runtime._admit_canonical_dispatch = original_alias
+            canonical_spin._authority_current = original_authority
+            target.__code__, target.__defaults__ = original_code, original_defaults
+
+        self.assertTrue(owner['changed'])
+        self.assertIsNot(caught, dispatch_sentinel, 'Changed public guard code must never execute')
+        if callback_raises:
+            self.assertIs(caught, callback_sentinel)
+            self.assertIs(ledger.callback_error, callback_sentinel)
+        else:
+            self.assertIsInstance(caught, OntoKinError)
+            self.assertEqual(caught.diagnostic.code, 'OKL-E-RESOURCE')
+            self.assertEqual(caught.diagnostic.details['budget_reason'], 'execution_context_required')
+        self.assertEqual(ledger.operations, owner['consumed'])
+        self.assertIs(ledger.check, check)
+        self.assertIs(ledger._clock, original_clock)
+        self.assertIs(sim.state, original_state)
+        self.assertEqual(sim.state, saved_state)
+
+    def test_private_receipt_refuses_public_guard_code_and_global_replacements(self):
+        for variant in ('guard_context_code', 'runtime_admit_alias', 'admit_simulator_code',
+                        'authority_code', 'authority_alias'):
+            with self.subTest(variant=variant):
+                self.guard_entry_refusal(variant)
+
+    def test_original_callback_exception_precedes_changed_public_guard_dispatch(self):
+        self.guard_entry_refusal('guard_context_code', callback_raises=True)
+
+    def test_public_preflight_cannot_redefine_a_new_simulator_guard_entry(self):
+        from ontokin import torque_runtime as runtime
+        owner = {'armed': False, 'changed': False, 'foreign_calls': 0}
+        sentinel = RuntimeError('C092 foreign guard alias before constructor')
+        original = runtime._admit_canonical_dispatch
+
+        def foreign(self):
+            owner['foreign_calls'] += 1
+            raise sentinel
+
+        def check():
+            if owner['armed'] and not owner['changed']:
+                owner['changed'] = True
+                runtime._admit_canonical_dispatch = foreign
+
+        compiled, ledger = compile_bundle(literal('unchanged-force-origin.ok'), check=check)
+        before = ledger.operations
+        owner['armed'] = True
+        caught, result = None, None
+        try:
+            result = evaluate_prefix(compiled.model, '1', work=compiled.reach_work)
+        except BaseException as error:
+            caught = error
+        finally:
+            runtime._admit_canonical_dispatch = original
+
+        self.assertTrue(owner['changed'])
+        self.assertEqual(owner['foreign_calls'], 0)
+        if caught is None:
+            self.assertIsNotNone(result)
+            caught = result['failure']
+        self.assertIsInstance(caught, OntoKinError)
+        self.assertEqual(caught.diagnostic.code, 'OKL-E-RESOURCE')
+        self.assertEqual(caught.diagnostic.details['budget_reason'], 'execution_context_required')
+        self.assertIs(ledger.check, check)
+        self.assertGreaterEqual(ledger.operations, before)
+
+
 if __name__ == '__main__':
     unittest.main()

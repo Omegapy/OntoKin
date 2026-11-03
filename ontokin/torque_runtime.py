@@ -10,7 +10,7 @@ import math
 from contextlib import contextmanager
 from dataclasses import dataclass, field, fields, replace
 from fractions import Fraction as F
-from itertools import chain
+from itertools import chain, repeat
 from operator import attrgetter, is_
 from types import MethodType
 
@@ -27,7 +27,9 @@ from .reach_pose import (AXIS_ERROR, EXPOSED_ROTATION_ERROR, PRODUCT_ERROR,
                          RotationValue)
 from .reach_runtime import ReachSimulator, RecordingPose, _ReachRunState
 from .torque_canonical_spin import (advance_orientation as _canonical_advance_orientation,
-    admit_simulator as _admit_canonical_dispatch, bind_simulator_type as _bind_canonical_dispatch)
+    admit_simulator as _admit_canonical_dispatch, bind_simulator_type as _bind_canonical_dispatch,
+    admit_simulator_after_entry as _canonical_after_entry,
+    _POINT_AUTHORITY as _canonical_point_authority)
 
 
 PROFILE = "torque-0.1"
@@ -454,6 +456,43 @@ class TorqueSimulator(ReachSimulator):
     """One admitted request, exact torque intervals and atomic boundaries."""
 
     def __init__(self, model, check=None, *, work=None):
+        # This request-private entry receipt runs before mutable public guard
+        # functions. Its code and closure cells are trusted owner metadata,
+        # like the existing source-preflight receipt; this is not a sandbox
+        # against arbitrary inspection or replacement of interpreter state.
+        (entry, original_admit, original_context, native_all, native_any, native_map,
+         native_is, native_flatten, native_repeat, native_len, native_getattribute,
+         native_get, native_items, native_contains, error_type) = _CANONICAL_GUARD_BOOTSTRAP
+        context_ready = False
+
+        def guard():
+            # Captured native is_ compares object identity without invoking
+            # value equality. The full records remain strongly owned in
+            # entry[0]; every callback performs the checks again.
+            actual = native_flatten(native_map(entry[1], entry[2]))
+            if not native_all(native_map(native_is, actual, entry[3])):
+                raise error_type("OKL-E-RESOURCE", "Torque point guard dispatch changed after admission.",
+                    category="resource_limit", phase="evaluation",
+                    details={"budget_reason": "execution_context_required"})
+            for mapping, expected in entry[4]:
+                if (native_len(mapping) * 2 != native_len(expected)
+                        or not native_all(native_map(native_is,
+                            native_flatten(native_items(mapping)), expected))):
+                    raise error_type("OKL-E-RESOURCE", "Torque point guard defaults changed after admission.",
+                        category="resource_limit", phase="evaluation",
+                        details={"budget_reason": "execution_context_required"})
+            actual = native_map(native_get, entry[5], entry[6], native_repeat(entry[10]))
+            if (not native_all(native_map(native_is, actual, entry[7]))
+                    or native_any(native_map(native_contains, entry[8], entry[9]))):
+                raise error_type("OKL-E-RESOURCE", "Torque point guard bindings changed after admission.",
+                    category="resource_limit", phase="evaluation",
+                    details={"budget_reason": "execution_context_required"})
+            original_admit(self)
+            if context_ready:
+                namespace = native_getattribute(self, "__dict__")
+                original_context(self, initial=not namespace["_torque_constructed"])
+
+        guard()
         if (type(model) is not SceneModel or type(model.events) is not list
                 or type(model.objects) is not dict
                 or type(work) is not ReachExecutionWork
@@ -488,6 +527,9 @@ class TorqueSimulator(ReachSimulator):
                     self._torque_sources[id(event)] = (event, event.torque, block, block.time,
                                                        _source_snapshot(model, event))
         require_execution_work(work, target_contract="ontokin.glb/0.22")
+        # The original zero-charge checkpoint above can invoke the original
+        # callback before this simulator becomes the ledger's context owner.
+        guard()
         if model.profile != PROFILE:
             raise ValueError("The torque simulator requires its explicit source profile.")
         self._torque_ledger = work.execution_budget
@@ -500,7 +542,8 @@ class TorqueSimulator(ReachSimulator):
         previous_guard = ledger._torque_context_guard
         if previous_guard is not None:
             previous_guard()
-        self._torque_guard_hook = self._guard_context
+        context_ready = True
+        self._torque_guard_hook = guard
         ledger._torque_context_guard = self._torque_guard_hook
         self._context(initial=True)
         super().__init__(model, check=check, work=work)
@@ -512,6 +555,7 @@ class TorqueSimulator(ReachSimulator):
         self._torque_constructed = True
 
     def _guard_context(self):
+        _admit_canonical_dispatch(self)
         self._context(initial=not self._torque_constructed)
 
     def _advance_orientation(self, initial, omega, elapsed, *,
@@ -535,6 +579,10 @@ class TorqueSimulator(ReachSimulator):
 
     def _context(self, *, initial=False):
         _admit_canonical_dispatch(self)
+        return self._context_after_dispatch(initial=initial)
+
+    def _context_after_dispatch(self, *, initial=False):
+        """The native context body after callback-free dispatch admission."""
         ledger = self._torque_ledger
         work = self._torque_work
         receipt = self._torque_context_receipt
@@ -1407,4 +1455,35 @@ class TorqueSimulator(ReachSimulator):
         return super().advance(time, side)
 
 
+# Capture before any request callback, including public source preflights that
+# occur before a simulator is constructed. Mutable aliases cannot become a
+# new request's trusted entrypoint. This tuple has the same private immutable
+# receipt status as the helper's authority catalogues.
+_CANONICAL_PRESENT_BINDINGS = tuple(row for row in _canonical_point_authority[2]
+                                    if row[1] in row[0])
+_CANONICAL_ABSENT_BINDINGS = tuple(row for row in _canonical_point_authority[2]
+                                   if row[1] not in row[0])
+_CANONICAL_POINT_ENTRY = (
+    _canonical_point_authority,
+    # Original native function objects retain their read-only globals,
+    # builtins, closure and class pointers. Their dictionary contents remain
+    # checked separately on every callback. Only these three fields can be
+    # replaced on the retained function object.
+    attrgetter("__code__", "__defaults__", "__kwdefaults__"),
+    tuple(row[0] for row in _canonical_point_authority[0]),
+    tuple(value for row in _canonical_point_authority[0] for value in row[1:4]),
+    tuple((row[3], tuple(value for pair in row[7] for value in pair))
+          for row in _canonical_point_authority[0] if row[3] is not None),
+    tuple(row[0] for row in _CANONICAL_PRESENT_BINDINGS),
+    tuple(row[1] for row in _CANONICAL_PRESENT_BINDINGS),
+    tuple(row[2] for row in _CANONICAL_PRESENT_BINDINGS),
+    tuple(row[0] for row in _CANONICAL_ABSENT_BINDINGS),
+    tuple(row[1] for row in _CANONICAL_ABSENT_BINDINGS),
+    object(),
+)
+_CANONICAL_GUARD_BOOTSTRAP = (
+    _CANONICAL_POINT_ENTRY, _canonical_after_entry, TorqueSimulator._context_after_dispatch,
+    all, any, map, is_, chain.from_iterable, repeat, len, object.__getattribute__, dict.get,
+    dict.items, dict.__contains__, OntoKinError,
+)
 _bind_canonical_dispatch(TorqueSimulator)

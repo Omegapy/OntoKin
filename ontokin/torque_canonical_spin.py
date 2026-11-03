@@ -9,7 +9,9 @@ from __future__ import annotations
 
 from collections import OrderedDict
 from fractions import Fraction as F
+from itertools import chain, repeat
 import math
+from operator import attrgetter, is_ as _IDENTICAL
 import struct
 import sys
 from types import FunctionType, MethodType
@@ -24,6 +26,71 @@ _NAMESPACE = "ontokin.c092.canonical-point/0.1.0"
 _OWNERS = WeakKeyDictionary()
 _MISSING = object()
 _RUNTIME_BINDING = None
+
+# Native readers are captured before the authority catalogue. Their bindings
+# are admitted with every other global; they only traverse original functions,
+# native dictionaries/proxies, and immutable owning receipts.
+_FUNCTION_ATTRIBUTES = attrgetter("__code__", "__defaults__", "__kwdefaults__")
+_CHAIN = chain.from_iterable
+_DICT_GET = dict.get
+_DICT_ITEMS = dict.items
+_DICT_CONTAINS = dict.__contains__
+_PROXY_GET = type(type.__dict__).get
+_PROXY_CONTAINS = type(type.__dict__).__contains__
+
+
+def _compile_functions(records):
+    functions = tuple(row[0] for row in records)
+    if any(type(function) is not FunctionType for function in functions):
+        _fail()
+    # Native functions cannot change __class__, __globals__, __closure__, or
+    # __builtins__ through ordinary Python assignment, deletion, or instance
+    # shadowing. Their original owning records retain those read-only slots;
+    # globals/builtins contents remain independently checked below. Only the
+    # three mutable function slots require a fresh identity read per callback.
+    return (functions, tuple(_CHAIN(row[1:4] for row in records)),
+        tuple((row[3], len(row[7]), tuple(_CHAIN(row[7])))
+              for row in records if row[3] is not None))
+
+
+def _functions_current(compiled):
+    functions, attributes, keywords = compiled
+    if not all(map(_IDENTICAL, _CHAIN(map(_FUNCTION_ATTRIBUTES, functions)), attributes)):
+        return False
+    for owner, length, identities in keywords:
+        if len(owner) != length or not all(map(_IDENTICAL, _CHAIN(_DICT_ITEMS(owner)), identities)):
+            return False
+    return True
+
+
+def _compile_bindings(rows):
+    present = tuple(row for row in rows if row[1] in row[0])
+    absent = tuple(row for row in rows if row[1] not in row[0])
+    # This fallback is created after the owning rows and cannot be one of
+    # their original values. A removed present sentinel binding cannot mask
+    # itself as an absent key, and planted sentinels cannot mask new shadows.
+    return (tuple(row[0] for row in present), tuple(row[1] for row in present),
+            tuple(row[2] for row in present), tuple(row[0] for row in absent),
+            tuple(row[1] for row in absent), object())
+
+
+def _bindings_current(compiled, getter=_DICT_GET, contains=_DICT_CONTAINS):
+    owners, names, expected, absent_owners, absent_names, missing = compiled
+    return (not any(map(contains, absent_owners, absent_names))
+            and all(map(_IDENTICAL, map(getter, owners, names, repeat(missing)), expected)))
+
+
+def _compiled_authority(raw):
+    # Keep every original object alive in the first five owning fields. The
+    # supplemental native-identity vectors never invoke foreign equality.
+    functions, classes, bindings, modules, fractions = raw
+    compiled = (_compile_functions(functions),
+        tuple((tuple(name for name, _ in row[3]), tuple(value for _, value in row[3]), object())
+              for row in classes),
+        _compile_bindings(bindings),
+        tuple((tuple(name for name, _ in row[1]), tuple(value for _, value in row[1]), object())
+              for row in modules))
+    return (*raw, compiled)
 
 
 def _fail():
@@ -144,11 +211,13 @@ def _authority_snapshot():
             pending.extend(v for v in code.co_consts if type(v) is type(code))
         for name in names:
             # This receipt's own completed catalogue is assigned once below.
-            if namespace is globals() and name in ("_AUTHORITY", "_RUNTIME_BINDING"):
+            if namespace is globals() and name in ("_AUTHORITY", "_POINT_AUTHORITY", "_RUNTIME_BINDING"):
                 continue
             owner = namespace if name in namespace else builtins
             if name in owner:
                 bindings[(id(owner), name)] = (owner, name, owner[name])
+                if owner is builtins:
+                    bindings[(id(namespace), name)] = (namespace, name, _MISSING)
         records.append((function, function.__code__, function.__defaults__,
                         function.__kwdefaults__, function.__closure__, namespace,
                         builtins, None if function.__kwdefaults__ is None
@@ -172,22 +241,12 @@ def _authority_snapshot():
     return tuple(records), tuple(class_records), tuple(bindings.values()), module_records, fractional
 
 
-def _authority_current(authority):
-    functions, classes, bindings, modules, fractions = authority
-    for f, code, defaults, kwdefaults, closure, namespace, builtins, kwitems in functions:
-        if (type(f) is not FunctionType or f.__code__ is not code
-                or f.__defaults__ is not defaults or f.__kwdefaults__ is not kwdefaults
-                or f.__closure__ is not closure or f.__globals__ is not namespace
-                or f.__builtins__ is not builtins
-                or kwdefaults is not None and (len(kwdefaults) != len(kwitems)
-                    or any(a is not x or b is not y for (a,b),(x,y)
-                           in zip(kwdefaults.items(), kwitems)))):
-            return False
-    for cls, bases, mro, entries, slots in classes:
+def _classes_current(classes, vectors):
+    for (cls, bases, mro, entries, slots), (names, expected, missing) in zip(classes, vectors):
         current = vars(cls)
         if (cls.__bases__ is not bases or cls.__mro__ is not mro
                 or len(current) != len(entries) + int("__slotnames__" in current)
-                or any(current.get(name, _MISSING) is not value for name, value in entries)):
+                or not all(map(_IDENTICAL, map(_PROXY_GET, repeat(current), names, repeat(missing)), expected))):
             return False
         # copyreg lazily publishes this exact nonsemantic slot-name cache.
         # It may appear after deepcopy; foreign names/types still refuse.
@@ -195,11 +254,20 @@ def _authority_current(authority):
             actual = current["__slotnames__"]
             if type(actual) is not list or any(type(v) is not str for v in actual) or tuple(actual) != slots:
                 return False
-    if any(owner.get(name, _MISSING) is not value for owner, name, value in bindings):
+    return True
+
+
+def _authority_current(authority):
+    functions, classes, bindings, modules, fractions, compiled = authority
+    function_vectors, class_vectors, binding_vectors, module_vectors = compiled
+    if not _functions_current(function_vectors) or not _classes_current(classes, class_vectors):
         return False
-    for module, entries in modules:
+    if not _bindings_current(binding_vectors):
+        return False
+    for (module, entries), (names, expected, missing) in zip(modules, module_vectors):
         current = vars(module)
-        if len(current) != len(entries) or any(current.get(name, _MISSING) is not value for name,value in entries):
+        if (len(current) != len(entries)
+                or not all(map(_IDENTICAL, map(_DICT_GET, repeat(current), names, repeat(missing)), expected))):
             return False
     return all(type(v) is F and v._numerator is n and v._denominator is d
                for v,n,d in fractions)
@@ -210,49 +278,115 @@ def bind_simulator_type(cls):
     global _RUNTIME_BINDING
     if _RUNTIME_BINDING is not None:
         _fail()
-    rows = []
-    for name in ("_advance_orientation", "_context", "_guard_context"):
-        function = vars(cls)[name]
+    rows, methods, all_bindings = [], {}, {}
+    for base in cls.__mro__:
+        for name, function in type.__getattribute__(base, "__dict__").items():
+            if name not in methods and type(function) is FunctionType:
+                methods[name] = function
+    for name, function in methods.items():
         namespace, builtins = function.__globals__, function.__builtins__
         bindings = []
-        for key in function.__code__.co_names:
+        names, pending = set(), [function.__code__]
+        while pending:
+            code = pending.pop()
+            names.update(code.co_names)
+            pending.extend(v for v in code.co_consts if type(v) is type(code))
+        for key in sorted(names):
             owner = namespace if key in namespace else builtins
             if key in owner:
                 bindings.append((owner, key, owner[key]))
+                if owner is builtins:
+                    bindings.append((namespace, key, _MISSING))
+        for owner, key, value in bindings:
+            all_bindings[(id(owner), key)] = (owner, key, value)
         rows.append((name, function, function.__code__, function.__defaults__,
             function.__kwdefaults__, function.__closure__, namespace, builtins,
             None if function.__kwdefaults__ is None else tuple(function.__kwdefaults__.items()),
             tuple(bindings)))
-    _RUNTIME_BINDING = (cls, cls.__bases__, cls.__mro__, tuple(rows))
+    storage_names = ("__getattribute__", "__getattr__", "__dict__", "work",
+        "pose_ops", "model", "state", "events", "_torque_ledger",
+        "_torque_work", "_torque_context_receipt", "_torque_model",
+        "_torque_revision", "_torque_objects_owner", "_torque_limits_owner",
+        "_torque_guard_hook", "_torque_state_owner", "_torque_history_owner",
+        "_torque_source_watches", "_torque_constructed", "_torque_event_order")
+    dictionaries = tuple(type.__getattribute__(base, "__dict__") for base in cls.__mro__)
+    storage = tuple((name, next((mapping[name] for mapping in dictionaries
+        if name in mapping), _MISSING)) for name in storage_names)
+    descriptors = {}
+    for name, expected in (*storage, *((row[0], row[1]) for row in rows)):
+        current = _MISSING
+        for mapping in dictionaries:
+            current = mapping.get(name, _MISSING)
+            descriptors[(id(mapping), name)] = (mapping, name, current)
+            if name in mapping:
+                break
+        if current is not expected:
+            _fail()
+    owned_bindings, owned_descriptors = tuple(all_bindings.values()), tuple(descriptors.values())
+    compiled = (_compile_functions(tuple(row[1:9] for row in rows)),
+                _compile_bindings(owned_bindings), tuple(row[0] for row in rows),
+                _compile_bindings(owned_descriptors),
+                owned_bindings, owned_descriptors)
+    _RUNTIME_BINDING = (cls, cls.__bases__, cls.__mro__, tuple(rows), storage, compiled)
 
 
 def admit_simulator(simulator):
-    cls, bases, mro, rows = _RUNTIME_BINDING
+    if not _authority_current(_POINT_AUTHORITY):
+        _fail()
+    _admit_simulator_runtime(simulator)
+
+
+def admit_simulator_after_entry(simulator):
+    """After the request-private guard admitted point functions and bindings.
+
+    There is no callback between that exact entry receipt and this body. Keep
+    helper class/descriptor and complete runtime admission here; public callers
+    use admit_simulator and retain the full point entry check as well.
+    """
+    if not _classes_current(_POINT_AUTHORITY[1], _POINT_AUTHORITY[5][1]):
+        _fail()
+    _admit_simulator_runtime(simulator)
+
+
+def _admit_simulator_runtime(simulator):
+    cls, bases, mro, rows, storage, compiled = _RUNTIME_BINDING
+    function_vectors, binding_vectors, names, descriptor_vectors, _, _ = compiled
     actual = type(simulator)
     if (type(actual) is not type or cls not in actual.__mro__
             or cls.__bases__ is not bases or cls.__mro__ is not mro):
         _fail()
-    namespace = object.__getattribute__(simulator, "__dict__")
-    for name, function, code, defaults, kwdefaults, closure, module, builtins, kwitems, bindings in rows:
-        owner = next(base for base in actual.__mro__ if name in vars(base))
-        if (name in namespace or vars(owner)[name] is not function
-                or function.__code__ is not code or function.__defaults__ is not defaults
-                or function.__kwdefaults__ is not kwdefaults or function.__closure__ is not closure
-                or function.__globals__ is not module or function.__builtins__ is not builtins
-                or kwdefaults is not None and (len(kwdefaults) != len(kwitems)
-                    or any(a is not x or b is not y for (a,b),(x,y) in zip(kwdefaults.items(),kwitems)))
-                or any(mapping.get(key, _MISSING) is not value for mapping,key,value in bindings)):
+    # Even object.__getattribute__(instance, "__dict__") invokes a foreign
+    # data descriptor. Check raw class resolution, including subclass lookup
+    # hooks and inherited storage, before any ordinary instance attribute.
+    if actual is cls:
+        # Every earlier MRO namespace retains a witnessed absence until the
+        # original provider. New shadow descriptors therefore cannot hide a
+        # later method/storage field. All receipts own their original values.
+        if not _bindings_current(descriptor_vectors, _PROXY_GET, _PROXY_CONTAINS):
             _fail()
+    else:
+        # Preserve the existing supported subclass domain and exact effective
+        # resolution through its complete MRO; this is not a class allowlist.
+        dictionaries = tuple(type.__getattribute__(base, "__dict__")
+                             for base in actual.__mro__)
+        for name, expected in (*storage, *((row[0], row[1]) for row in rows)):
+            current = next((mapping[name] for mapping in dictionaries if name in mapping), _MISSING)
+            if current is not expected:
+                _fail()
+    namespace = object.__getattribute__(simulator, "__dict__")
+    if (any(map(_DICT_CONTAINS, repeat(namespace), names))
+            or not _functions_current(function_vectors) or not _bindings_current(binding_vectors)):
+        _fail()
 
 
 class _PointScope:
     def __init__(self, simulator, initial, omega, elapsed):
         admit_simulator(simulator)
-        self.simulator, self.work = simulator, simulator.work
-        self.ops, self.context = simulator.pose_ops, simulator._context
         self.authority = _AUTHORITY
         if not _authority_current(self.authority):
             _fail()
+        self.simulator, self.work = simulator, simulator.work
+        self.ops, self.context = simulator.pose_ops, simulator._context
         self.watches = []
         self.inputs = tuple(_pack(v, self.work, self.watches) for v in (initial, omega, elapsed))
         self.cache = self.work._cache
@@ -263,22 +397,27 @@ class _PointScope:
         self.admit()
 
     def admit(self):
-        admit_simulator(self.simulator)
-        if (self.simulator.work is not self.work or self.simulator.pose_ops is not self.ops
+        # Validate helper descriptors before even consulting this instance.
+        # The captured public context then admits runtime dispatch and its
+        # original context exactly once. No callback occurs before the work,
+        # cache, operand, and native-method checks below.
+        if not _authority_current(_AUTHORITY):
+            _fail()
+        self.context()
+        if (self.authority is not _AUTHORITY
+                or self.simulator.work is not self.work or self.simulator.pose_ops is not self.ops
                 or type(self.ops) is not pose.ReachPoseOps or self.ops.work is not self.work
                 or type(self.work) is not numeric.ReachExecutionWork
                 or self.work._cache is not self.cache or type(self.cache) is not OrderedDict
                 or type(self.work.max_cache_entries) is not int
                 or not 1 <= self.work.max_cache_entries <= 256
                 or len(self.cache) > self.work.max_cache_entries
-                or not _authority_current(self.authority)
                 or not _watches_current(self.watches)):
             _fail()
         for name, function in self.methods:
             actual = getattr(self.work, name)
             if type(actual) is not MethodType or actual.__self__ is not self.work or actual.__func__ is not function:
                 _fail()
-        self.context()
 
 
 class _CacheWork(tuple):
@@ -330,7 +469,6 @@ class _CacheWork(tuple):
         # The owned tuple contains native immutable leaves only. Detached
         # arithmetic operands cannot be changed through the shared cache.
         result = _unpack(value[1])
-        scope.admit()
         return result
 
     def remember(self, key, value, *, admission=None):
@@ -360,4 +498,12 @@ def advance_orientation(simulator, initial, omega, elapsed):
     return result
 
 
-_AUTHORITY = _authority_snapshot()
+_AUTHORITY = _compiled_authority(_authority_snapshot())
+# The original ledger callback guard checks this small dispatch graph before
+# control returns to any helper method or field lookup. Full arithmetic and
+# operand admission remains separate and still precedes each point operation.
+_POINT_AUTHORITY = _compiled_authority((tuple(row for row in _AUTHORITY[0]
+                        if row[0].__module__ == __name__),
+                    tuple(row for row in _AUTHORITY[1]
+                        if row[0].__module__ == __name__),
+                    _AUTHORITY[2], (), ()))
