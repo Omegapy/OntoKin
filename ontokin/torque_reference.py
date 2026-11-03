@@ -87,7 +87,8 @@ class TorqueReference(ReachReference):
             exact_q = exact_axis.rotation(obj.placement.rotation, self.a)
             exact_w = tuple(F(value) for value in obj.omega) if obj.motion == "dynamic" else (F(0),)*3
             support = axis_reference.AngularSupport(F(0), axis_reference.constants(exact_q),
-                        axis_reference.constants(exact_w), exact_q, exact_w)
+                        axis_reference.constants(exact_w), exact_q, exact_w,
+                        rotation_error=PRODUCT_ERROR)
             self._state.torques[path] = _TorqueHistory(support=support)
 
     def _recording_body_domain(self):
@@ -107,7 +108,7 @@ class TorqueReference(ReachReference):
                                                  recording_context=None)
 
     def _copy_state(self, state):
-        entries = sum(42 + len(h.active) * 14 + len(h.changes) * 15
+        entries = sum(49 + len(h.active) * 14 + len(h.changes) * 15
                       for h in state.torques.values())
         if entries * (len(self._times) + 1) > 100000:
             raise ReferenceError("resource", "Independent torque history exceeds its retained-state bound")
@@ -207,7 +208,10 @@ class TorqueReference(ReachReference):
         index = AXES[axis].index(1)
         for position, value in enumerate(vector):
             value = self.a.interval(value)
-            if position != index and (support[position] or not value.contains(0)):
+            # Canonical source arithmetic supplies this exact support. The
+            # separate interval may be wide, or enclose a smooth law that the
+            # fixed source grid rounds to zero; it is never an axis predicate.
+            if position != index and support[position]:
                 raise ReferenceError("source_admission", "Independent torque angular state has no exact zero-axis proof",
                                      torque_reason=reason, expected_axis=axis)
         return self.a.interval(vector[index])
@@ -243,20 +247,14 @@ class TorqueReference(ReachReference):
         history = state.torques[event.target]
         original_support = history.support
         support = axis_reference.root_support(self, event.target, time, state)
-        exact_w, exact_q = support.exact_omega, support.exact_quaternion
-        exact_angular = None
-        if exact_w is not None and (exact_q is not None or not any(event.impulse.point_self_m)):
-            lever = (exact_axis.exposed_vector(exact_axis.rotated(exact_q, event.impulse.point_self_m, self.a),self.a)
-                     if exact_q is not None else (F(0),)*3)
-            angular = exact_axis.exposed_vector(exact_axis.cross(lever, event.impulse.impulse_world_n_s,self.a),self.a)
-            exact_angular = angular
-            exact_w = exact_axis.exposed_vector((self.a.exact(before,
-                self.a.exact(delta,self.model.objects[event.target].inertia,"div"),"add")
-                for before,delta in zip(exact_w,angular)),self.a)
-        else:
-            exact_w = None
-        if (exact_q is not None and history.rotation is None and any(event.impulse.impulse_world_n_s)):
-            exact_q = exact_axis.materialized(exact_q,self.a)
+        exact_w = exact_axis.exposed_vector(support.exact_omega, self.a)
+        lever = exact_axis.exposed_vector(exact_axis.rotated(
+            support.exact_quaternion, event.impulse.point_self_m, self.a), self.a)
+        exact_angular = exact_axis.exposed_vector(exact_axis.cross(
+            lever, event.impulse.impulse_world_n_s, self.a), self.a)
+        exact_w = exact_axis.exposed_vector((self.a.exact(before,
+            self.a.exact(delta,self.model.objects[event.target].inertia,"div"),"add")
+            for before,delta in zip(exact_w,exact_angular)),self.a)
         before_actual = self._root_pose(event.target, time, state, ideal=False)
         before_ideal = self._root_pose(event.target, time, state, ideal=True)
         exact_transfer = self._coordinate_impulse(event, time, state, before_actual)
@@ -266,7 +264,6 @@ class TorqueReference(ReachReference):
             # materialize or reanchor either trajectory. In particular the
             # legacy COM anchor's omega is not the current split angular law.
             return
-        impulse_support = None
         if exact_transfer is not None and any(event.impulse.impulse_world_n_s):
             actual, position_error, rotation_error, velocity_error, omega_error = exact_transfer
             anchor = state.dynamic[event.target]
@@ -275,33 +272,27 @@ class TorqueReference(ReachReference):
                 velocity_error=velocity_error, omega_error=omega_error)
             self._poses.clear()
             self._basis_cache.clear()
-            omega_support = tuple(cell.lo != 0 for cell in actual.omega)
-        else:
-            lever_support = axis_reference.rotate(support.quaternion,
-                axis_reference.constants(event.impulse.point_self_m), self.a)
-            impulse_support = axis_reference.cross(lever_support,
-                axis_reference.constants(event.impulse.impulse_world_n_s), self.a)
-            omega_support = tuple(x or y for x, y in zip(support.omega, impulse_support))
-        if exact_w is not None:
-            omega_support = axis_reference.constants(exact_w)
-        updated_support = axis_reference.AngularSupport(time, support.quaternion, omega_support, exact_q, exact_w)
+        omega_support = axis_reference.constants(exact_w)
+        # Legacy impulses materialize the complete public rotation even when
+        # their angular delta cancels. The split law retains its own private
+        # rotation and only a genuinely changed speed reanchors that law.
+        updated_support = (axis_reference.materialize(support, self.a)
+                           if history.rotation is None else support)
+        updated_support = replace(updated_support, time=time,
+                                  omega=omega_support, exact_omega=exact_w)
         history.support = updated_support
         if history.axis is None:
             return
         self.a.tick()
         anchor = state.dynamic[event.target]
-        actual_speed = self._axis_check(anchor.actual.omega, history.axis, "impulse_axis", omega_support)
+        self._axis_check(anchor.actual.omega, history.axis, "impulse_axis", omega_support)
         index = AXES[history.axis].index(1)
+        actual_speed = self.a.point(exact_w[index])
         # A source interval's width is not a canonical change. In particular,
         # R*0 and an independently reconstructed exact zero cross product keep
         # every already exposed canonical speed unchanged. The angular origin
         # must remain its original complete controlled expression in that case.
-        unchanged = (not any(event.impulse.point_self_m)
-                     or exact_angular is not None and not any(exact_angular)
-                     or impulse_support is not None and not any(impulse_support)
-                     or exact_w is not None and support.exact_omega is not None
-                        and exact_w == support.exact_omega)
-        angular_changed = not unchanged and anchor.actual.omega != before_actual.omega
+        angular_changed = exact_w != support.exact_omega
         if history.rotation is not None and not angular_changed:
             history.support = original_support
         # Every nonzero impulse transports the separate shadow and complete
@@ -330,10 +321,7 @@ class TorqueReference(ReachReference):
         child = self.model.sites[joint.child].owner
         support = axis_reference.frame_support(self, child + ".frame", time, incoming)
         super()._release(event, index, time, state, incoming, touched, releases)
-        state.torques[child].support = replace(support,
-            exact_quaternion=(None if support.exact_quaternion is None else
-                              exact_axis.materialized(support.exact_quaternion,self.a)),
-            exact_omega=None if support.exact_omega is None else exact_axis.exposed_vector(support.exact_omega,self.a))
+        state.torques[child].support = axis_reference.materialize(support, self.a)
 
     def _finish(self, path, time, state, status):
         action = self.model.actions[path]
@@ -341,10 +329,9 @@ class TorqueReference(ReachReference):
                    if action.kind == "spin" else None)
         super()._finish(path, time, state, status)
         if support is not None:
-            state.torques[action.target].support = axis_reference.AngularSupport(
-                time, support.quaternion, axis_reference.ZERO,
-                None if support.exact_quaternion is None else exact_axis.materialized(support.exact_quaternion,self.a),
-                (F(0),)*3)
+            state.torques[action.target].support = replace(
+                axis_reference.materialize(support, self.a),
+                omega=axis_reference.ZERO, exact_omega=(F(0),)*3)
 
     def _aggregate(self, path, time, state):
         support = (axis_reference.root_support(self, path, time, state)
@@ -355,9 +342,10 @@ class TorqueReference(ReachReference):
         if (support is not None and state.dynamic[path] is not original
                 and state.torques[path].rotation is None):
             if state.forces[path].acceleration != previous_acceleration:
-                support = replace(support, exact_quaternion=None if support.exact_quaternion is None else
-                                  exact_axis.materialized(support.exact_quaternion,self.a))
-            state.torques[path].support = support
+                state.torques[path].support = axis_reference.materialize(support, self.a)
+            # Equal canonical acceleration moves only the independent error
+            # clock. Retain the entire older source origin, not the sampled
+            # quaternion at this error boundary.
 
     def _coordinate_impulse(self, event, time, state, current):
         """Resolve an exact coordinate rotation without a fictitious cell width.
@@ -575,7 +563,7 @@ class TorqueReference(ReachReference):
                         AXIS_ERROR, PRODUCT_ERROR)
                     speed_error = self.a.exact_sum(speed_error,
                         self.a.exact_product(speed.magnitude, ROUND_RELATIVE), ROUND_TINY)
-                signed = actual.omega[AXES[history.axis].index(1)]
+                signed = self.a.point(support.exact_omega[AXES[history.axis].index(1)])
                 history.rotation = _RotationOrigin(time, actual.orientation, signed, theta_error, speed_error)
             self.a.tick()
             history.reference = _ReferenceOrigin(time, ideal.orientation,
@@ -588,8 +576,7 @@ class TorqueReference(ReachReference):
         if support is not None:
             omega_support = tuple(possible or bool(canonical and axis)
                                   for possible, axis in zip(support.omega, AXES[history.axis]))
-            history.support = axis_reference.AngularSupport(time, support.quaternion, omega_support,
-                support.exact_quaternion, support.exact_omega)
+            history.support = replace(support, time=time, omega=omega_support)
         self._poses.clear()
         self._basis_cache.clear()
 
@@ -700,7 +687,8 @@ class TorqueReference(ReachReference):
         speed = phase = None
         if axis is not None:
             if rotation is None:
-                speed = self._root_pose(path, time, state, ideal=False).omega[AXES[axis].index(1)]
+                support = axis_reference.root_support(self, path, time, state)
+                speed = self.a.point(support.exact_omega[AXES[axis].index(1)])
             else:
                 phase, speed = self._polynomial(rotation.speed, history.acceleration,
                                                 self.a.exact(time, rotation.time, "sub"))

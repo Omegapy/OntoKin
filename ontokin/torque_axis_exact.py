@@ -6,11 +6,14 @@ The 96-bit nearest-even grid and final binary64 exposure are actual arithmetic
 steps, not a tolerance or an uncertainty midpoint.
 """
 from fractions import Fraction as F
+from math import factorial, isqrt
 import struct
 
 from .reach_reference import ReferenceError
 
 GRID = 1 << 96
+PRECISIONS = (96, 192, 384, 768, 1536)
+ARGUMENT_ERROR = F(1, 1 << 86)
 
 
 def nearest_grid(value, a, *, bits=96):
@@ -123,3 +126,162 @@ def materialized(q, a):
     norm = a.exact_sum(*squares)
     return tuple((-1 if value < 0 else 1)*sqrt_binary64(a.exact(square,norm,"div"),a)
                  for value,square in zip(q,squares))
+
+
+def sqrt_bounds(value, precision, a):
+    """Outward dyadic square-root enclosure with prospective integer guards."""
+    a.tick()
+    value = F(value)
+    a.guard(value)
+    if value < 0:
+        raise ReferenceError("numeric", "Independent angular square root is negative")
+    if value.numerator.bit_length() + 2*precision + 2 > a.operand_limit:
+        raise ReferenceError("resource", "Independent angular square-root preflight exceeds operand domain")
+    numerator, denominator = value.numerator << (2*precision), value.denominator
+    root = isqrt(numerator // denominator)
+    if 2*root.bit_length() + denominator.bit_length() + 1 > a.operand_limit:
+        raise ReferenceError("resource", "Independent angular square-root comparison exceeds operand domain")
+    scale = 1 << precision
+    return F(root,scale), F(root if root*root*denominator == numerator else root+1,scale)
+
+
+def pi_bounds(precision, a):
+    key = ("independent_exact_axis_pi", precision)
+    cached = a.lookup(key)
+    if cached is not None:
+        a.guard(*cached)
+        return cached
+    count = (precision+15)//4
+    def arc(denominator):
+        step = F(1,denominator*denominator)
+        power, total = F(1,denominator), F(0)
+        for index in range(count):
+            term = a.exact(power,2*index+1,"div")
+            total = a.exact(total,term,"sub" if index%2 else "add")
+            power = a.exact(power,step,"mul")
+        tail = a.exact(power,2*count+1,"div")
+        other = a.exact(total,tail,"sub" if count%2 else "add")
+        return min(total,other),max(total,other)
+    first,last = arc(5),arc(239)
+    low = a.exact(a.exact(16,first[0],"mul"),a.exact(4,last[1],"mul"),"sub")
+    high = a.exact(a.exact(16,first[1],"mul"),a.exact(4,last[0],"mul"),"sub")
+    scale = 1 << precision
+    a.guard(F(scale))
+    low_scaled, high_scaled = a.exact(low,scale,"mul"),a.exact(high,scale,"mul")
+    result = (F(low_scaled.numerator//low_scaled.denominator,scale),
+              F(-(-high_scaled.numerator//high_scaled.denominator),scale))
+    return a.remember(key,result)
+
+
+def polynomial_sincos(value, a):
+    a.tick()
+    a.guard(value)
+    if abs(value)>1 or value.denominator > GRID or value.denominator & (value.denominator-1):
+        raise ReferenceError("numeric", "Independent source sine polynomial requires its fixed reduced grid")
+    square = a.exact(value,value,"mul")
+    sine, cosine = F(1,factorial(25)), F(1,factorial(24))
+    for index in range(11,-1,-1):
+        sign = -1 if index%2 else 1
+        sine = a.exact(a.exact(sine,square,"mul"),F(sign,factorial(2*index+1)),"add")
+        cosine = a.exact(a.exact(cosine,square,"mul"),F(sign,factorial(2*index)),"add")
+    return nearest_grid(a.exact(value,sine,"mul"),a),nearest_grid(cosine,a)
+
+
+def reduced_sincos(lower, upper, pi, a):
+    middle_pi = a.exact(a.exact(pi[0],pi[1],"add"),2,"div")
+    ratio = a.exact(a.exact(lower,upper,"add"),middle_pi,"div")
+    quadrant = nearest_grid(ratio,a,bits=0).numerator
+    first,last = sorted(a.exact(quadrant,value,"mul") for value in pi)
+    low = a.exact(lower,a.exact(last,2,"div"),"sub")
+    high = a.exact(upper,a.exact(first,2,"div"),"sub")
+    value = nearest_grid(a.exact(a.exact(low,high,"add"),2,"div"),a)
+    error = max(a.exact(value,low,"sub"),a.exact(high,value,"sub"))
+    if error > ARGUMENT_ERROR or abs(value)>1:
+        return None
+    sine,cosine = polynomial_sincos(value,a)
+    return ((sine,cosine),(cosine,-sine),(-sine,-cosine),(-cosine,sine))[quadrant%4]
+
+
+def axis_rotation(axis, angle, a):
+    """The inherited finite source hinge law, independently reconstructed."""
+    a.tick()
+    axis,angle = tuple(F(value) for value in axis),F(angle)
+    a.guard(*axis,angle)
+    maximum = max(map(abs,axis))
+    if not maximum:
+        raise ReferenceError("numeric", "Independent canonical source axis is zero")
+    scaled = tuple(a.exact(value,maximum,"div") for value in axis)
+    norm = sqrt_bounds(a.exact_sum(*(a.exact(value,value,"mul") for value in scaled)),96,a)
+    if not angle:
+        return (F(1),F(0),F(0),F(0))
+    midpoint = a.exact(a.exact(norm[0],norm[1],"add"),2,"div")
+    unit = tuple(nearest_grid(a.exact(value,midpoint,"div"),a) for value in scaled)
+    half = a.exact(angle,2,"div")
+    if abs(half)<=1:
+        pair = polynomial_sincos(nearest_grid(half,a),a)
+    else:
+        pair = None
+        for precision in PRECISIONS:
+            pair = reduced_sincos(half,half,pi_bounds(precision,a),a)
+            if pair is not None:
+                break
+        if pair is None:
+            raise ReferenceError("numeric", "Independent canonical source angle reduction cannot be certified")
+    sine,cosine = pair
+    return rotation((cosine,*(a.exact(value,sine,"mul") for value in unit)),a)
+
+
+def spin_plan(omega, elapsed, a):
+    """First certifying stage for this source vector and actual elapsed only.
+
+    The plan contains pure independently computed operands. The original
+    arithmetic cache owns at most 256 entries and re-admits its live operand
+    domain. No source state, producer plan, horizon or action clock is cached.
+    """
+    a.tick()
+    omega, elapsed = tuple(F(value) for value in omega), F(elapsed)
+    a.guard(*omega, elapsed)
+    key = ("independent_c092_spin_plan", omega, abs(elapsed))
+    cached = a.lookup(key)
+    if cached is not None:
+        precision, scaled, maximum, norm, pi, error = cached
+        a.guard(precision, *scaled, maximum, *norm, *pi, error)
+        return cached
+    maximum = max(map(abs,omega))
+    if not maximum:
+        raise ReferenceError("numeric", "A stationary source spin has no nonzero point plan")
+    scaled = tuple(a.exact(value,maximum,"div") for value in omega)
+    square = a.exact_sum(*(a.exact(value,value,"mul") for value in scaled))
+    for precision in PRECISIONS:
+        norm,pi = sqrt_bounds(square,precision,a),pi_bounds(precision,a)
+        extent = a.exact(a.exact(maximum,abs(elapsed),"mul"),norm[1],"mul")
+        quotient = a.exact(extent,pi[0],"div")
+        a.tick()
+        kmax = quotient.numerator//quotient.denominator+2
+        a.guard(kmax)
+        angular_width = a.exact(a.exact(maximum,abs(elapsed),"mul"),a.exact(norm[1],norm[0],"sub"),"mul")
+        pi_width = a.exact(kmax,a.exact(pi[1],pi[0],"sub"),"mul")
+        error = a.exact(a.exact(a.exact(angular_width,pi_width,"add"),4,"div"),F(1,1<<97),"add")
+        a.tick()
+        if error <= ARGUMENT_ERROR:
+            return a.remember(key,(precision,scaled,maximum,norm,pi,error))
+    raise ReferenceError("numeric", "Independent finite source spin phase reduction cannot be certified")
+
+
+def spin_rotation(omega, elapsed, a):
+    """Execute the selected point stage; later reduction failure is terminal."""
+    a.tick()
+    omega,elapsed = tuple(F(value) for value in omega),F(elapsed)
+    a.guard(*omega,elapsed)
+    if not any(omega) or not elapsed:
+        return (F(1),F(0),F(0),F(0))
+    _,scaled,maximum,norm,pi,_ = spin_plan(omega,elapsed,a)
+    factor = a.exact(a.exact(maximum,elapsed,"mul"),2,"div")
+    low,high = sorted(a.exact(factor,value,"mul") for value in norm)
+    pair = reduced_sincos(low,high,pi,a)
+    if pair is None:
+        raise ReferenceError("numeric", "Independent selected source spin did not enclose its point")
+    midpoint = a.exact(a.exact(norm[0],norm[1],"add"),2,"div")
+    unit = tuple(nearest_grid(a.exact(value,midpoint,"div"),a) for value in scaled)
+    sine,cosine = pair
+    return rotation((cosine,*(a.exact(value,sine,"mul") for value in unit)),a)

@@ -1690,7 +1690,7 @@ def _basis_entries(names, *, work):
 
 def source_numeric_basis(*, work):
     from .reach_pose import SourceNumericBasis
-    method = "ontokin.source-pose-projective-dyadic-torque/0.1"
+    method = "ontokin.source-pose-projective-dyadic-torque/0.2"
     key = (method, "source_numeric_basis")
     retained = work.lookup(key)
     if retained is not None:
@@ -1700,19 +1700,22 @@ def source_numeric_basis(*, work):
         "ontokin/reach_phase.py", "ontokin/reach_runtime.py", "ontokin/reach_export.py",
         "ontokin/reach_recording_fast.py", "ontokin/reach_recording_capture.py",
         "ontokin/reach_transfer_bounds.py", "ontokin/torque_runtime.py", "ontokin/torque_phase.py", "ontokin/torque_recording.py",
-        "ontokin/torque_transfer_bounds.py")
+        "ontokin/torque_transfer_bounds.py", "ontokin/torque_canonical_spin.py")
     derivation_names = (
         "docs/engineering/reach-numeric-kernel.md", "docs/engineering/reach-source-kernel.md",
         "docs/engineering/reach-coaxial-phase-bounds.md", "docs/engineering/reach-carrier-rotation-cursors.md",
         "docs/engineering/reach-recording-certified-planar.md", "docs/engineering/reach-deferred-phase-locations.md",
         "docs/engineering/reach-planning-reuse.md", "docs/engineering/reach-release-cell-envelope.md",
-        "docs/language-design/torque-v0.1/SPECIFICATION.md", "docs/language-design/torque-v0.1/RECORDING.md")
+        "docs/language-design/torque-v0.1/SPECIFICATION.md", "docs/language-design/torque-v0.1/RECORDING.md",
+        "docs/language-design/torque-amendments/c092-canonical-spin-selection/AMENDMENT.md",
+        "docs/language-design/torque-amendments/c092-canonical-spin-selection/NUMERICAL-PROOF.md",
+        "docs/language-design/torque-amendments/c092-canonical-spin-selection/COMPATIBILITY.md")
     entries = _basis_entries(implementation_names + derivation_names, work=work)
     def aggregate(rows):
         _charge(work, "numeric_basis_digest")
         return "sha256:" + hashlib.sha256("".join(name + "\0" + digest + "\n"
             for name, digest in rows).encode("ascii")).hexdigest()
-    result = SourceNumericBasis("OntoKin controlled source poses", "0.3",
+    result = SourceNumericBasis("OntoKin controlled source poses", "0.4",
         aggregate(entries[:len(implementation_names)]), method,
         aggregate(entries[len(implementation_names):]), entries)
     work.remember(key, result)

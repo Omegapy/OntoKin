@@ -18,13 +18,14 @@ ACCELERATION_FIELDS = ("angular_acceleration_bound_rad_per_s2",
                        "enclosing_angular_acceleration_bound_rad_per_s2")
 CERTIFICATE_KEYS = rc._CERTIFICATE_KEYS | set(ACCELERATION_FIELDS)
 NUMERIC_KEYS = tuple(sorted(set(rc._NUMERIC_CERTIFICATE_KEYS) | set(ACCELERATION_FIELDS)))
-SOURCE_METHOD = "ontokin.source-pose-projective-dyadic-torque/0.1"
+SOURCE_METHOD = "ontokin.source-pose-projective-dyadic-torque/0.2"
 SOURCE_PATHS = (
     "ontokin/reach_numeric.py", "ontokin/reach_kinematics.py", "ontokin/reach_pose.py",
     "ontokin/reach_phase.py", "ontokin/reach_runtime.py", "ontokin/reach_export.py",
     "ontokin/reach_recording_fast.py", "ontokin/reach_recording_capture.py",
     "ontokin/reach_transfer_bounds.py", "ontokin/torque_runtime.py",
     "ontokin/torque_phase.py", "ontokin/torque_recording.py", "ontokin/torque_transfer_bounds.py",
+    "ontokin/torque_canonical_spin.py",
 )
 DERIVATION_PATHS = (
     "docs/engineering/reach-numeric-kernel.md", "docs/engineering/reach-source-kernel.md",
@@ -33,6 +34,9 @@ DERIVATION_PATHS = (
     "docs/engineering/reach-planning-reuse.md", "docs/engineering/reach-release-cell-envelope.md",
     "docs/language-design/torque-v0.1/SPECIFICATION.md",
     "docs/language-design/torque-v0.1/RECORDING.md",
+    "docs/language-design/torque-amendments/c092-canonical-spin-selection/AMENDMENT.md",
+    "docs/language-design/torque-amendments/c092-canonical-spin-selection/NUMERICAL-PROOF.md",
+    "docs/language-design/torque-amendments/c092-canonical-spin-selection/COMPATIBILITY.md",
 )
 
 
@@ -84,7 +88,7 @@ def verify_numeric_bases(quantization, *, work):
         rc._tick(work, "independent_basis_aggregate")
         return hashlib.sha256((prefix + "".join(name + "\0" + digest + "\n"
                                                for name, digest in rows)).encode("utf-8")).hexdigest()
-    source = {"name": "OntoKin controlled source poses", "version": "0.3", "method": SOURCE_METHOD,
+    source = {"name": "OntoKin controlled source poses", "version": "0.4", "method": SOURCE_METHOD,
         "implementation_sha256": "sha256:" + aggregate(SOURCE_PATHS),
         "derivation_sha256": "sha256:" + aggregate(DERIVATION_PATHS)}
     destination = {"name": "ontokin-controlled-three-recording", "version": "0.2.0",

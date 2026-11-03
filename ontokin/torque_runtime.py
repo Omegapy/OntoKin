@@ -26,6 +26,8 @@ from .reach_phase import AnchorError, PhaseArithmetic
 from .reach_pose import (AXIS_ERROR, EXPOSED_ROTATION_ERROR, PRODUCT_ERROR,
                          RotationValue)
 from .reach_runtime import ReachSimulator, RecordingPose, _ReachRunState
+from .torque_canonical_spin import (advance_orientation as _canonical_advance_orientation,
+    admit_simulator as _admit_canonical_dispatch, bind_simulator_type as _bind_canonical_dispatch)
 
 
 PROFILE = "torque-0.1"
@@ -512,7 +514,27 @@ class TorqueSimulator(ReachSimulator):
     def _guard_context(self):
         self._context(initial=not self._torque_constructed)
 
+    def _advance_orientation(self, initial, omega, elapsed, *,
+                             recording_context=None, recording_path=None,
+                             recording_pose_ops=None):
+        """Select the first certifying plan for this exact source operation.
+
+        A registered whole-phase plan proves coverage, but its horizon must
+        not choose this point's canonical operands. The unchanged source
+        kernel selects from the actual elapsed time when no plan is supplied.
+        Recording uses that same complete source operation, without a cursor.
+        """
+        self._context()
+        if recording_pose_ops is not None and (recording_context is None
+                or getattr(recording_pose_ops, "source_ops", None) is not self.pose_ops
+                or recording_pose_ops.work is not self.work):
+            raise ValueError("Alternate spin recording requires this source's recording-only work context.")
+        result = _canonical_advance_orientation(self, initial, omega, elapsed)
+        self._context()
+        return result
+
     def _context(self, *, initial=False):
+        _admit_canonical_dispatch(self)
         ledger = self._torque_ledger
         work = self._torque_work
         receipt = self._torque_context_receipt
@@ -1383,3 +1405,6 @@ class TorqueSimulator(ReachSimulator):
         self._requested_time, self._requested_side = getattr(
             self, "_torque_requested_observation", (F(time), side))
         return super().advance(time, side)
+
+
+_bind_canonical_dispatch(TorqueSimulator)
