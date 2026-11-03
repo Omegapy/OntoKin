@@ -8,6 +8,7 @@ ordinary callback ownership, not a sandbox for a hostile Python interpreter.
 from __future__ import annotations
 
 from collections import OrderedDict
+from dis import get_instructions
 from fractions import Fraction as F
 from itertools import chain, repeat
 import math
@@ -37,6 +38,100 @@ _DICT_ITEMS = dict.items
 _DICT_CONTAINS = dict.__contains__
 _PROXY_GET = type(type.__dict__).get
 _PROXY_CONTAINS = type(type.__dict__).__contains__
+_PREDICATE_COMPARISONS = 4096
+_PREDICATE_TEXT_BYTES = 512 * 1024
+
+
+def _compile_fixed_predicate(functions=(), keywords=(), present=(), absent=(), *,
+                             present_first=False):
+    """Specialize a fixed import-time receipt, never a source or an admission.
+
+    Values become strongly owned private closure operands, not generated source
+    text. The original generic path remains available for oversized or unusual
+    static receipts. Each caller seals the generated executable before use.
+    """
+    count = 3 * len(functions) + sum(1 + len(row[2]) for row in keywords)
+    count += len(present) + len(absent)
+    if count > _PREDICATE_COMPARISONS:
+        return None
+    if (any(type(row[0]) is not FunctionType for row in functions)
+            or any(type(owner) is not dict or type(length) is not int
+                   or length < 0 or len(expected) != 2 * length
+                   for owner, length, expected in keywords)
+            or any(type(row[1]) is not str for row in (*present, *absent))):
+        return None
+    operands, indices, body = [], {}, []
+
+    def operand(value):
+        identity = id(value)
+        if identity not in indices:
+            indices[identity] = len(operands)
+            operands.append(value)
+        return "v" + str(indices[identity])
+
+    def require(expression):
+        body.extend(("        if " + expression + ":", "            return False"))
+
+    for function, code, defaults, kwdefaults in functions:
+        name = operand(function)
+        for slot, expected in (("__code__", code), ("__defaults__", defaults),
+                               ("__kwdefaults__", kwdefaults)):
+            require(name + "." + slot + " is not " + operand(expected))
+    for owner, length, expected in keywords:
+        name = operand(owner)
+        require(operand(len) + "(" + name + ") != " + operand(length))
+        if length:
+            body.append("        iterator = " + operand(iter) + "(" + operand(_DICT_ITEMS)
+                        + "(" + name + "))")
+            for index in range(length):
+                body.append("        pair = " + operand(next) + "(iterator)")
+                require("pair[0] is not " + operand(expected[2 * index]))
+                require("pair[1] is not " + operand(expected[2 * index + 1]))
+    groups = ((present, True), (absent, False)) if present_first else ((absent, False), (present, True))
+    for rows, exists in groups:
+        for row in rows:
+            owner, name = operand(row[0]), operand(row[1])
+            if exists:
+                require("getter(" + owner + ", " + name + ", " + operand(row[3])
+                        + ") is not " + operand(row[2]))
+            else:
+                require("contains(" + owner + ", " + name + ")")
+    lines = ["def build(values):"]
+    lines.extend("    v" + str(i) + " = values[" + str(i) + "]" for i in range(len(operands)))
+    lines.extend(("    def predicate(getter, contains):", *body,
+                  "        return True", "    return predicate"))
+    source = "\n".join(lines) + "\n"
+    if len(source.encode("ascii")) > _PREDICATE_TEXT_BYTES:
+        return None
+    namespace = {"__builtins__": {}}
+    exec(compile(source, "<ontokin-fixed-authority-predicate>", "exec"), namespace)
+    owned = tuple(operands)
+    function = namespace["build"](owned)
+    forbidden = {"LOAD_GLOBAL", "LOAD_NAME", "IMPORT_NAME", "IMPORT_FROM", "IMPORT_STAR",
+                 "STORE_GLOBAL", "STORE_NAME", "DELETE_GLOBAL", "DELETE_NAME"}
+    if (type(function) is not FunctionType or function.__defaults__ is not None
+            or function.__kwdefaults__ is not None
+            or any(item.opname in forbidden for item in get_instructions(function))
+            or any(type(value) is type(function.__code__) for value in function.__code__.co_consts)):
+        raise ValueError("A fixed authority predicate acquired an unowned executable dependency.")
+    return (function, function.__code__, function.__defaults__, function.__kwdefaults__,
+            function.__closure__, function.__globals__, function.__builtins__,
+            owned, (functions, keywords, present, absent), source)
+
+
+def compile_point_entry(authority):
+    """Keep the private entry's three diagnostic groups and binding order."""
+    records, bindings = authority[0], authority[2]
+    missing = object()
+    slots = tuple(row[:4] for row in records)
+    keywords = tuple((row[3], len(row[7]), tuple(_CHAIN(row[7])))
+                     for row in records if row[3] is not None)
+    present = tuple((*row, missing) for row in bindings if row[1] in row[0])
+    absent = tuple(row for row in bindings if row[1] not in row[0])
+    predicates = (_compile_fixed_predicate(functions=slots),
+                  _compile_fixed_predicate(keywords=keywords),
+                  _compile_fixed_predicate(present=present, absent=absent, present_first=True))
+    return predicates if all(row is not None for row in predicates) else None
 
 
 def _compile_functions(records):
@@ -48,13 +143,20 @@ def _compile_functions(records):
     # shadowing. Their original owning records retain those read-only slots;
     # globals/builtins contents remain independently checked below. Only the
     # three mutable function slots require a fresh identity read per callback.
-    return (functions, tuple(_CHAIN(row[1:4] for row in records)),
-        tuple((row[3], len(row[7]), tuple(_CHAIN(row[7])))
-              for row in records if row[3] is not None))
+    keywords = tuple((row[3], len(row[7]), tuple(_CHAIN(row[7])))
+                     for row in records if row[3] is not None)
+    return (functions, tuple(_CHAIN(row[1:4] for row in records)), keywords,
+            _compile_fixed_predicate(functions=tuple(row[:4] for row in records), keywords=keywords))
 
 
 def _functions_current(compiled):
-    functions, attributes, keywords = compiled
+    functions, attributes, keywords, specialized = compiled
+    if specialized is not None:
+        function, code, defaults, kwdefaults = specialized[:4]
+        if (function.__code__ is not code or function.__defaults__ is not defaults
+                or function.__kwdefaults__ is not kwdefaults):
+            return False
+        return function(_DICT_GET, _DICT_CONTAINS)
     if not all(map(_IDENTICAL, _CHAIN(map(_FUNCTION_ATTRIBUTES, functions)), attributes)):
         return False
     for owner, length, identities in keywords:
@@ -69,13 +171,21 @@ def _compile_bindings(rows):
     # This fallback is created after the owning rows and cannot be one of
     # their original values. A removed present sentinel binding cannot mask
     # itself as an absent key, and planted sentinels cannot mask new shadows.
+    missing = object()
     return (tuple(row[0] for row in present), tuple(row[1] for row in present),
             tuple(row[2] for row in present), tuple(row[0] for row in absent),
-            tuple(row[1] for row in absent), object())
+            tuple(row[1] for row in absent), missing,
+            _compile_fixed_predicate(present=tuple((*row, missing) for row in present), absent=absent))
 
 
 def _bindings_current(compiled, getter=_DICT_GET, contains=_DICT_CONTAINS):
-    owners, names, expected, absent_owners, absent_names, missing = compiled
+    owners, names, expected, absent_owners, absent_names, missing, specialized = compiled
+    if specialized is not None:
+        function, code, defaults, kwdefaults = specialized[:4]
+        if (function.__code__ is not code or function.__defaults__ is not defaults
+                or function.__kwdefaults__ is not kwdefaults):
+            return False
+        return function(getter, contains)
     return (not any(map(contains, absent_owners, absent_names))
             and all(map(_IDENTICAL, map(getter, owners, names, repeat(missing)), expected)))
 

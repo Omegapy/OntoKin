@@ -1,0 +1,254 @@
+{
+  "acceptance_limits": [
+    "Focused geometry and malformed-input controls are not the full native gate.",
+    "No full 36-variant run before the parent supplies the next immutable accepted product pin.",
+    "Independent root/reader review of the exact new verifier is required before final acceptance."
+  ],
+  "artifact_bytes_or_native_inventories_read_in_c093_before_freeze": false,
+  "base_commit": "cddecad5db3a73d73bb042773476967b6bd1793a",
+  "correction": [
+    "Replace the unsupported joint helper discriminator with the documented joint_parent_site discriminator in the new versioned checker only.",
+    "Bind joint_path, related source element, exact parent-site frame, name, physical_participation and release meaning to the actual source joint; reject any other helper kind.",
+    "Preserve inherited source/native position, normal, topology, occurrence, native attribute, PBR, marker-bound, PNG and dense source-pose comparisons; require the source helper gold material explicitly.",
+    "Retain j/32 plus all original common clocks and both sides, all original caps/tolerances and front/oblique/back captures.",
+    "Keep the original tool hash in new verifier receipts and refuse if the protected original tool changes."
+  ],
+  "created_utc": "2026-11-03T19:30:07.998453+00:00",
+  "independent_source_transform": {
+    "both_boundary_sides": true,
+    "column_major_native_matrix": [
+      "1",
+      "0",
+      "0",
+      "0",
+      "0",
+      "1",
+      "0",
+      "0",
+      "0",
+      "0",
+      "1",
+      "0",
+      "min(t,1)",
+      "0",
+      "0",
+      "1"
+    ],
+    "domain_seconds": [
+      "0",
+      "3"
+    ],
+    "frame": "carrier.tip.frame",
+    "independent_expected_samples": [
+      {
+        "position": [
+          "0",
+          "0",
+          "0"
+        ],
+        "time": "0"
+      },
+      {
+        "position": [
+          "1/2",
+          "0",
+          "0"
+        ],
+        "time": "1/2"
+      },
+      {
+        "position": [
+          "1",
+          "0",
+          "0"
+        ],
+        "time": "1"
+      },
+      {
+        "position": [
+          "1",
+          "0",
+          "0"
+        ],
+        "time": "3/2"
+      },
+      {
+        "position": [
+          "1",
+          "0",
+          "0"
+        ],
+        "time": "2"
+      },
+      {
+        "position": [
+          "1",
+          "0",
+          "0"
+        ],
+        "time": "3"
+      }
+    ],
+    "native_scale_xyz": [
+      "1",
+      "1",
+      "1"
+    ],
+    "release_effect": "At t=1 hold releases ball. The marker remains on the stopped carrier parent site for 1<t<=3; it does not follow the released ball or assert an active grip.",
+    "source": "delivery-p28-release-then-torque.ok: carrier.tip is the identity local site; carry moves carrier at world velocity (1,0,0) for 1 second from time zero.",
+    "world_position_m": [
+      "min(t,1)",
+      "0",
+      "0"
+    ],
+    "world_quaternion_wxyz": [
+      "1",
+      "0",
+      "0",
+      "0"
+    ]
+  },
+  "inherited_source_only_expectation": {
+    "bytes": 5924,
+    "exact_copy": "C092-INDEPENDENT-EXPECTED-GEOMETRY.json",
+    "original_path": "/workspace/scratch/383ae78f6be4/c092-reviews/recording-durable/implementation/p28-helper-classification01/EXPECTED-BEFORE-ARTIFACT-INSPECTION.json",
+    "sha256": "cf5dee14622c9b9caad5403680fc8cb875361807b007fb526f412dc523ed1694"
+  },
+  "local_geometry": {
+    "axis_bar": false,
+    "index_u16_sha256": "7e6e9309203119ae4a5c2a1fdbedba53557a4ef238f3a7d6711d8a7ab198324f",
+    "latitude_bands": 6,
+    "longitude_segments": 12,
+    "material": {
+      "baseColorFactor": [
+        0.9,
+        0.65,
+        0.08,
+        1.0
+      ],
+      "metallicFactor": 0,
+      "roughnessFactor": 0.7
+    },
+    "normal_binary32_sha256": "4440ad4677832768190825f99fef268a9a3acb04c428da5018768cc4360d5f0b",
+    "position_binary32_sha256": "62c682cbbf2db85a4f82d1f1a6d9cd524a7544d9a86106c00027ef032ec1fff5",
+    "radius_binary64_literal": 0.025,
+    "radius_m": "1/40",
+    "source_grip_axis": null,
+    "triangles": 120,
+    "vertices": 62
+  },
+  "meaningful_controls": [
+    "Positive source-only grip marker using the frozen independent binary streams and gold PBR.",
+    "Malformed helper kinds, including the erroneous joint literal, must refuse.",
+    "Changed source frame, joint occurrence, related identity, physical participation and release meaning must refuse.",
+    "Changed position/radius, normal, winding/topology, added axis geometry and gold PBR must refuse even when the synthetic native inventory agrees with the malformed GLB stream.",
+    "Native-only attribute, index and material divergence must refuse.",
+    "The expected parent-site transform must remain at x=1 after release; a released-child transform must exceed the original positional allowance."
+  ],
+  "metadata": {
+    "frame_path": "carrier.tip.frame",
+    "helper_kind": "joint_parent_site",
+    "joint_path": "hold",
+    "kind": "visual_helper",
+    "meaning": "Parent site marker remains after release; it does not indicate an active constraint.",
+    "physical_participation": "none",
+    "related_element_id": [
+      "torque-cases",
+      "demo",
+      "hold"
+    ]
+  },
+  "planned_added_repository_paths": [
+    "tools/verify_torque_native_dense_c093.py",
+    "tests/test_torque_native_joint_parent_site_c093.py"
+  ],
+  "schema_version": "ontokin.c093-native-joint-parent-site-design/1",
+  "scope": "Correct one supported native-helper kind in a new identified verifier; original checker, source/export contracts, budgets, tolerances and artifacts remain unchanged.",
+  "source_bindings": [
+    {
+      "bytes": 48450,
+      "exact_c092_closing_bytes": true,
+      "path": "docs/engineering/OK-ENG-002-3d-scene-animation-export-and-visual-validation.md",
+      "sha256": "137bb3e93dfc26d280808b56045e36da3a94e5d0393a5f14c7b34e236cb2214b"
+    },
+    {
+      "bytes": 30731,
+      "exact_c092_closing_bytes": true,
+      "path": "docs/language-design/torque-v0.1/RECORDING.md",
+      "sha256": "58a69bb37f22905a0d83e2ec913d890934ebf18b31d96dc670ac0b36b4794a20"
+    },
+    {
+      "bytes": 33485,
+      "exact_c092_closing_bytes": true,
+      "path": "docs/language-design/torque-v0.1/SPECIFICATION.md",
+      "sha256": "1df5fe712760d3e0af6614f6fbd200708bae76a1191e1aa5829dff8382e74ced"
+    },
+    {
+      "bytes": 168665,
+      "exact_c092_closing_bytes": true,
+      "path": "docs/language-design/torque-v0.1/freeze/delivery-cases.json",
+      "sha256": "66a46872e8b1bbbec72e9c3ea77bc7431aa30ceceedd9d0dd309c3d36ecd9455"
+    },
+    {
+      "bytes": 536,
+      "exact_c092_closing_bytes": true,
+      "path": "docs/language-design/torque-v0.1/freeze/delivery-p28-release-then-torque.files.json",
+      "sha256": "dcc76325179a585ca89ca91e2c3985f018d091032347ca3b3519f9078941881a"
+    },
+    {
+      "bytes": 1459,
+      "exact_c092_closing_bytes": true,
+      "path": "docs/language-design/torque-v0.1/freeze/sources/delivery-p28-release-then-torque.ok",
+      "sha256": "4aaa2ac9ff2fa3eb7dd91389df44584115a4386101ea3610e190d93fa819f4d6"
+    },
+    {
+      "bytes": 2456,
+      "exact_c092_closing_bytes": true,
+      "path": "docs/language-design/torque-v0.1/freeze/modules/carriers.ok",
+      "sha256": "e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10"
+    },
+    {
+      "bytes": 4942,
+      "exact_c092_closing_bytes": true,
+      "path": "ontokin/geometry.py",
+      "sha256": "1442fbcea2b16eb8b0cb663949ad2b17586395eaa79ba207bd650a9c9442a2b9"
+    },
+    {
+      "bytes": 92178,
+      "exact_c092_closing_bytes": true,
+      "path": "ontokin/scene.py",
+      "sha256": "7a2d3e2f7185184fc19cd8573284498c67f14d118f6c261428241de6ea5a9189"
+    },
+    {
+      "bytes": 77572,
+      "exact_c092_closing_bytes": true,
+      "path": "ontokin/gltf.py",
+      "sha256": "07aad92e9da11f2d7d6ff207770b1bba0498d7c8c37def0c17d22a0246b8319c"
+    },
+    {
+      "bytes": 23061,
+      "exact_c092_closing_bytes": true,
+      "path": "ontokin/texture_gltf.py",
+      "sha256": "3bf2b210b55f8dbbec72676df3b9273cbc1c7609e560d85e9e8d3d30328ee6a9"
+    },
+    {
+      "bytes": 211041,
+      "exact_c092_closing_bytes": true,
+      "path": "ontokin/reach_conformance.py",
+      "sha256": "f105dcf7ace3230249db6448b23f08d8e9ba5bef13d3ab2e08984670d02bb796"
+    },
+    {
+      "bytes": 25573,
+      "exact_c092_closing_bytes": true,
+      "path": "tools/verify_torque_native_dense.py",
+      "sha256": "39362551d20fba2537516c00d04d102fe7a916de6e27368fc04d7bb611298449"
+    },
+    {
+      "bytes": 10463,
+      "exact_c092_closing_bytes": true,
+      "path": "tools/torque_browser_probe.mjs",
+      "sha256": "fd18f4b0cc9799bb9af668ce1efdea72794539540198f29c9e3fd7a19d0a10cb"
+    }
+  ],
+  "status": "frozen_before_c093_artifact_inspection_or_checker_edit"
+}

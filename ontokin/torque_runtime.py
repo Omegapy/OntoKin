@@ -29,6 +29,7 @@ from .reach_runtime import ReachSimulator, RecordingPose, _ReachRunState
 from .torque_canonical_spin import (advance_orientation as _canonical_advance_orientation,
     admit_simulator as _admit_canonical_dispatch, bind_simulator_type as _bind_canonical_dispatch,
     admit_simulator_after_entry as _canonical_after_entry,
+    compile_point_entry as _compile_canonical_entry,
     _POINT_AUTHORITY as _canonical_point_authority)
 
 
@@ -463,30 +464,64 @@ class TorqueSimulator(ReachSimulator):
         (entry, original_admit, original_context, native_all, native_any, native_map,
          native_is, native_flatten, native_repeat, native_len, native_getattribute,
          native_get, native_items, native_contains, error_type) = _CANONICAL_GUARD_BOOTSTRAP
+        specialized = entry[11]
         context_ready = False
 
         def guard():
             # Captured native is_ compares object identity without invoking
             # value equality. The full records remain strongly owned in
             # entry[0]; every callback performs the checks again.
-            actual = native_flatten(native_map(entry[1], entry[2]))
-            if not native_all(native_map(native_is, actual, entry[3])):
-                raise error_type("OKL-E-RESOURCE", "Torque point guard dispatch changed after admission.",
-                    category="resource_limit", phase="evaluation",
-                    details={"budget_reason": "execution_context_required"})
-            for mapping, expected in entry[4]:
-                if (native_len(mapping) * 2 != native_len(expected)
-                        or not native_all(native_map(native_is,
-                            native_flatten(native_items(mapping)), expected))):
+            if specialized is None:
+                actual = native_flatten(native_map(entry[1], entry[2]))
+                if not native_all(native_map(native_is, actual, entry[3])):
+                    raise error_type("OKL-E-RESOURCE", "Torque point guard dispatch changed after admission.",
+                        category="resource_limit", phase="evaluation",
+                        details={"budget_reason": "execution_context_required"})
+                for mapping, expected in entry[4]:
+                    if (native_len(mapping) * 2 != native_len(expected)
+                            or not native_all(native_map(native_is,
+                                native_flatten(native_items(mapping)), expected))):
+                        raise error_type("OKL-E-RESOURCE", "Torque point guard defaults changed after admission.",
+                            category="resource_limit", phase="evaluation",
+                            details={"budget_reason": "execution_context_required"})
+                actual = native_map(native_get, entry[5], entry[6], native_repeat(entry[10]))
+                if (not native_all(native_map(native_is, actual, entry[7]))
+                        or native_any(native_map(native_contains, entry[8], entry[9]))):
+                    raise error_type("OKL-E-RESOURCE", "Torque point guard bindings changed after admission.",
+                        category="resource_limit", phase="evaluation",
+                        details={"budget_reason": "execution_context_required"})
+            else:
+                # Seal each private generated executable before calling it.
+                # Native function slot reads cannot execute a replacement
+                # descriptor; its globals contain no executable name lookup.
+                # The same three refusal groups keep their original order.
+                receipt = specialized[0]
+                function = receipt[0]
+                if (function.__code__ is not receipt[1]
+                        or function.__defaults__ is not receipt[2]
+                        or function.__kwdefaults__ is not receipt[3]
+                        or not function(native_get, native_contains)):
+                    raise error_type("OKL-E-RESOURCE", "Torque point guard dispatch changed after admission.",
+                        category="resource_limit", phase="evaluation",
+                        details={"budget_reason": "execution_context_required"})
+                receipt = specialized[1]
+                function = receipt[0]
+                if (function.__code__ is not receipt[1]
+                        or function.__defaults__ is not receipt[2]
+                        or function.__kwdefaults__ is not receipt[3]
+                        or not function(native_get, native_contains)):
                     raise error_type("OKL-E-RESOURCE", "Torque point guard defaults changed after admission.",
                         category="resource_limit", phase="evaluation",
                         details={"budget_reason": "execution_context_required"})
-            actual = native_map(native_get, entry[5], entry[6], native_repeat(entry[10]))
-            if (not native_all(native_map(native_is, actual, entry[7]))
-                    or native_any(native_map(native_contains, entry[8], entry[9]))):
-                raise error_type("OKL-E-RESOURCE", "Torque point guard bindings changed after admission.",
-                    category="resource_limit", phase="evaluation",
-                    details={"budget_reason": "execution_context_required"})
+                receipt = specialized[2]
+                function = receipt[0]
+                if (function.__code__ is not receipt[1]
+                        or function.__defaults__ is not receipt[2]
+                        or function.__kwdefaults__ is not receipt[3]
+                        or not function(native_get, native_contains)):
+                    raise error_type("OKL-E-RESOURCE", "Torque point guard bindings changed after admission.",
+                        category="resource_limit", phase="evaluation",
+                        details={"budget_reason": "execution_context_required"})
             original_admit(self)
             if context_ready:
                 namespace = native_getattribute(self, "__dict__")
@@ -1480,6 +1515,7 @@ _CANONICAL_POINT_ENTRY = (
     tuple(row[0] for row in _CANONICAL_ABSENT_BINDINGS),
     tuple(row[1] for row in _CANONICAL_ABSENT_BINDINGS),
     object(),
+    _compile_canonical_entry(_canonical_point_authority),
 )
 _CANONICAL_GUARD_BOOTSTRAP = (
     _CANONICAL_POINT_ENTRY, _canonical_after_entry, TorqueSimulator._context_after_dispatch,
