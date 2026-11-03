@@ -268,6 +268,9 @@ class _PointScope:
                 or type(self.ops) is not pose.ReachPoseOps or self.ops.work is not self.work
                 or type(self.work) is not numeric.ReachExecutionWork
                 or self.work._cache is not self.cache or type(self.cache) is not OrderedDict
+                or type(self.work.max_cache_entries) is not int
+                or not 1 <= self.work.max_cache_entries <= 256
+                or len(self.cache) > self.work.max_cache_entries
                 or not _authority_current(self.authority)
                 or not _watches_current(self.watches)):
             _fail()

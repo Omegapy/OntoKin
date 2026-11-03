@@ -20,6 +20,7 @@ from ontokin.reach_numeric import ReachAdmissionError, ReachExecutionWork, round
 from ontokin.reach_pose import (ARGUMENT_ERROR, AXIS_ERROR, METHOD, PRODUCT_ERROR,
                                ReachPoseOps, RotationValue, UNIT)
 from ontokin.texture_bundle import load_texture_file_manifest
+from ontokin import torque_canonical_spin as canonical_spin
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -375,6 +376,117 @@ class C092SourceHistoryTests(unittest.TestCase):
             self.assertEqual(result['failure'].diagnostic.code, 'OKL-E-RESOURCE')
         self.assertIs(ledger.check, check)
         self.assertLessEqual(ledger.operations, 100000)
+
+
+class C092PointOwnershipTests(unittest.TestCase):
+    def prepared(self):
+        owner = {'armed': False, 'changed': False}
+        def check():
+            if owner['armed'] and not owner['changed']:
+                owner['changed'] = True
+                owner['mutate']()
+        sim, ledger = simulator(literal('unchanged-force-origin.ok'), check=check)
+        initial = RotationValue(tuple(F(v) for v in (1, 0, 0, 0)), F(0))
+        omega, elapsed = tuple(map(F, (0.6, 0.8, 0.0))), F(1)
+        result = sim._advance_orientation(initial, omega, elapsed)
+        self.assertEqual(grid(result.components), EXPECTED['witness_candidates'][0]['quaternion_grid_integers'])
+        key = (canonical_spin._NAMESPACE, canonical_spin._pack(
+            (METHOD, 'spin_plan', omega, elapsed), sim.work))
+        self.assertIn(key, sim.work._cache)
+        return sim, ledger, owner, initial, omega, elapsed, key
+
+    def reject(self, prepared, mutation):
+        sim, ledger, owner, initial, omega, elapsed, _ = prepared
+        before = ledger.operations
+        owner.update(armed=True, mutate=mutation)
+        with self.assertRaises(OntoKinError) as caught:
+            sim._advance_orientation(initial, omega, elapsed)
+        self.assertTrue(owner['changed'])
+        self.assertEqual(caught.exception.diagnostic.code, 'OKL-E-RESOURCE')
+        self.assertEqual(caught.exception.diagnostic.details['budget_reason'], 'execution_context_required')
+        self.assertGreaterEqual(ledger.operations, before)
+        self.assertLessEqual(ledger.operations, 100000)
+
+    def test_same_key_equal_payload_forgery_has_no_completion_owner(self):
+        prepared = self.prepared()
+        sim, _, _, _, _, _, key = prepared
+        old = sim.work._cache[key]
+        forged = tuple(list(old))
+        self.assertEqual(forged, old)
+        self.assertIsNot(forged, old)
+        self.reject(prepared, lambda: sim.work._cache.__setitem__(key, forged))
+
+    def test_owned_entry_for_another_elapsed_cannot_move_to_this_key(self):
+        prepared = self.prepared()
+        sim, _, _, initial, omega, _, key = prepared
+        sim._advance_orientation(initial, omega, F(2))
+        other_key = (canonical_spin._NAMESPACE, canonical_spin._pack(
+            (METHOD, 'spin_plan', omega, F(2)), sim.work))
+        other = sim.work._cache[other_key]
+        self.reject(prepared, lambda: sim.work._cache.__setitem__(key, other))
+
+    def test_another_original_ledger_cannot_supply_owned_cache_entry(self):
+        first = self.prepared()
+        second = self.prepared()
+        sim, _, _, _, _, _, key = first
+        other_sim, _, _, _, _, _, other_key = second
+        other = other_sim.work._cache[other_key]
+        self.assertEqual(key, other_key)
+        self.reject(first, lambda: sim.work._cache.__setitem__(key, other))
+
+    def test_callback_mutation_of_each_original_fraction_input_refuses(self):
+        for target in ('elapsed', 'omega', 'anchor_error', 'anchor_component'):
+            with self.subTest(target=target):
+                prepared = self.prepared()
+                _, _, _, initial, omega, elapsed, _ = prepared
+                value = {'elapsed': elapsed, 'omega': omega[0],
+                         'anchor_error': initial.error_rad, 'anchor_component': initial.components[0]}[target]
+                numerator = value._numerator
+                try:
+                    self.reject(prepared, lambda: object.__setattr__(value, '_numerator', numerator + 1))
+                finally:
+                    object.__setattr__(value, '_numerator', numerator)
+
+    def test_original_callback_exception_wins_over_operand_mutation(self):
+        prepared = self.prepared()
+        sim, ledger, owner, initial, omega, elapsed, _ = prepared
+        sentinel = RuntimeError('C092 original callback and changed elapsed')
+        numerator = elapsed._numerator
+        def mutate():
+            owner['consumed'] = ledger.operations
+            object.__setattr__(elapsed, '_numerator', numerator + 1)
+            raise sentinel
+        owner.update(armed=True, mutate=mutate)
+        try:
+            with self.assertRaises(RuntimeError) as caught:
+                sim._advance_orientation(initial, omega, elapsed)
+            self.assertIs(caught.exception, sentinel)
+            self.assertIs(ledger.callback_error, sentinel)
+            self.assertEqual(ledger.operations, owner['consumed'])
+        finally:
+            object.__setattr__(elapsed, '_numerator', numerator)
+
+    def test_eviction_preserves_exact_point_and_the_single_bounded_cache(self):
+        sim, _, _, initial, omega, elapsed, _ = self.prepared()
+        for index in range(256):
+            sim.work.remember(('C092 actual charged eviction control', index), index)
+        self.assertLessEqual(len(sim.work._cache), 256)
+        result = sim._advance_orientation(initial, omega, elapsed)
+        self.assertEqual(grid(result.components), EXPECTED['witness_candidates'][0]['quaternion_grid_integers'])
+        self.assertLessEqual(len(sim.work._cache), 256)
+        owned = canonical_spin._OWNERS[sim.work]
+        current = {id(value) for value in sim.work._cache.values()}
+        self.assertTrue(set(owned).issubset(current))
+        self.assertLessEqual(len(owned), len(sim.work._cache))
+        def immutable(value):
+            self.assertIn(type(value), (tuple, str, int, bool, type(None)))
+            if type(value) is tuple:
+                for child in value:
+                    immutable(child)
+        for key, value in sim.work._cache.items():
+            if key[0] == canonical_spin._NAMESPACE:
+                immutable(key)
+                immutable(value)
 
 
 if __name__ == '__main__':
