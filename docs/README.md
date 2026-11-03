@@ -1,5 +1,12 @@
 # OntoKin documentation guide
 
+C092's [deterministic canonical spin amendment](language-design/torque-amendments/c092-canonical-spin-selection/README.md)
+and [engineering record](engineering/canonical-spin-amendment-2026-11-03-c092/README.md)
+address C091's reproduced request-history conflict. Independent input freeze,
+reviewed authority, actual publication, implementation and acceptance remain
+separate gates; the exact adoption receipt determines when implementation is
+authorized. The C091 draft remains held for its complete required evidence.
+
 C091 provides the [finite torque implementation checkpoint](engineering/finite-torque-implementation-2026-11-02-c091/README.md) on an explicitly held development branch. Source/Agent/recorded GLB `.22` are implemented and independently reviewed in identified component scopes, but a reproduced same-source canonical-axis result depends on earlier work history. Complete torque acceptance and main integration are blocked. The [next task](engineering/finite-torque-implementation-2026-11-02-c091/NEXT-TASK.md) requires a separately reviewed deterministic numerical amendment before finishing the reader and final acceptance. All frozen inputs, original failures and earlier bindings remain preserved.
 
 C090 supplies the [adopted finite Cartesian torque contract](language-design/torque-v0.1/ADOPTION.md) and [independently frozen inputs](language-design/torque-v0.1/freeze/README.md) for explicit source/Agent/recorded GLB `.22`. The [engineering record](engineering/finite-torque-contract-2026-11-02-c090/README.md) binds exact source, numerical, transactional, Agent and reach-recording rules, independent review, selected untouched C088 preflight and retained failed control outcomes. At the C090 checkpoint, torque runtime remained unimplemented. [C091](engineering/finite-torque-contract-2026-11-02-c090/NEXT-TASK.md) is the concrete implementation task after published adoption/readback.
