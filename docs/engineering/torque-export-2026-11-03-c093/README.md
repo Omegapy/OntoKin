@@ -1,15 +1,33 @@
-# C093: original export cost and native helper verification
+# C093: bounded export-cost attempt and native helper verification
+
+**The original A08 Agent export still fails its unchanged 30-second deadline.**
+C093 retains one reviewed runtime candidate and ends that bounded performance
+attempt. Its separate native helper correction and actual verification are
+recorded with their own scope; complete torque acceptance remains open.
+
+The fresh CLI cohort passed all 67 required executions. The corrected native
+verifier passed all 36 required variants, including the release parent-site
+helper, and all 108 actual gate captures received direct review with documented
+visibility limits. These current results remain separate from the failed A08
+production gate and unexecuted broader acceptance roles.
+
+Read the [handoff](HANDOFF-C093.md), [validation summary](VALIDATION-SUMMARY.json),
+[review matrix](REVIEW-MATRIX.json), [evidence index](EVIDENCE-INDEX.json),
+[next task](NEXT-TASK.md) and [retained gates](RETAINED-GATES.md).
+The tested published product is
+`fab1137e7b3e24d656ed4ba7cfd55935b6b2f241`.
+The standalone ZIP's `PUBLICATION.json`, `C093-CHECKPOINT.json` and
+`PRODUCT-BINDING.json` identify the subsequent documentary publication and
+prove unchanged tested product bytes and modes.
+
+The [scope](SCOPE.md) fixes ownership, original limits and the one-candidate stop
+condition. The [guard design](GUARD-DESIGN.md) and
+[native oracle design](NATIVE-ORACLE-DESIGN.json) are frozen design snapshots.
+The initial [candidate review bindings](CANDIDATE-REVIEW-BINDINGS.json) retain
+their original point-in-time scope; the final validation and review records
+identify completed execution separately.
 
 C093 continues the [C092 next task](../canonical-spin-amendment-2026-11-03-c092/NEXT-TASK.md)
-on the existing held development branch. Read [SCOPE.md](SCOPE.md) for the
-bounded ownership, unchanged limits, initial A08 reproduction and stop condition.
-
-The [guard design](GUARD-DESIGN.md) is the reviewed proposal snapshot for one
-fixed-catalog cost reduction. The separate [native oracle design](NATIVE-ORACLE-DESIGN.json)
-was frozen from source expectations before C093 artifact inspection. Actual
-candidate validation, publication and acceptance are separate observations.
-
-The initial original A08 export still exceeds its unchanged 30-second limit.
-The proposed runtime change and the native helper correction do not establish
-complete torque acceptance, integration or a release. Final executed results
-and the concrete continuation are recorded by the closing handoff.
+on the existing held `work/c091-finite-torque` branch and draft PR 90. Shared
+STATUS and main are unchanged. No main integration lease, merge, hosted workflow
+or continuation schedule was started.
