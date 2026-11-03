@@ -9,14 +9,15 @@ from __future__ import annotations
 from dataclasses import dataclass
 import hashlib
 import json
+import math
 import re
 import time
-from types import MappingProxyType
+from types import MappingProxyType, MethodType, ModuleType
 from typing import Callable, Mapping
 
 from .bundle import SourceUnit
 from .diagnostics import OntoKinError
-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_MEMBERSHIP_PROFILE, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_MEMBERSHIP_PROFILE, TORQUE_PROFILE, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES
 from .syntax import Node, Token
 
 
@@ -28,6 +29,71 @@ MAX_HEADER_TOKEN_CHARS = 256
 MAX_LITERAL_CHARS = 32
 _INTEGER = re.compile(r"(?:0|[1-9][0-9]*)\Z", re.ASCII)
 _DECIMAL = re.compile(r"(?:0|[1-9][0-9]*)(?:\.[0-9]+)?\Z", re.ASCII)
+_NATIVE_MONOTONIC = time.monotonic
+_NATIVE_MATH = math
+_NATIVE_ISFINITE = math.isfinite
+
+
+def _native_agent_clock_binding(clock):
+    """Retain the exact Agent reader and its original host clock, if native."""
+    if type(clock) is not MethodType:
+        return None
+    from .budget_agent import (_BudgetCheck, _NATIVE_BUDGET_READ_CLOCK,
+                               _NATIVE_BUDGET_READ_CLOCK_AUTHORITY)
+    owner = clock.__self__
+    if type(owner) is not _BudgetCheck or clock.__func__ is not _NATIVE_BUDGET_READ_CLOCK:
+        return None
+    namespace = object.__getattribute__(owner, "__dict__")
+    if type(namespace) is not dict:
+        return None
+    return (clock, owner, _BudgetCheck, namespace, _NATIVE_BUDGET_READ_CLOCK,
+            namespace.get("_host_clock"), _NATIVE_BUDGET_READ_CLOCK_AUTHORITY)
+
+
+def _native_agent_clock_current(binding, clock):
+    original, owner, native, namespace, function, host_clock, authority = binding
+    if (clock is not original or type(clock) is not MethodType
+            or type(owner) is not native or clock.__self__ is not owner
+            or clock.__func__ is not function
+            or function.__code__ is not authority[0] or function.__defaults__ is not authority[1]
+            or function.__kwdefaults__ is not authority[2] or function.__closure__ is not authority[3]
+            or function.__globals__ is not authority[4]
+            or function.__builtins__ is not authority[5]
+            or any(function.__globals__.get(name, authority[5].get(name)) is not original
+                   for name, original in authority[6])
+            or native.__bases__ is not authority[7] or native.__mro__ is not authority[8]
+            or native.__getattribute__ is not object.__getattribute__
+            or native.__setattr__ is not object.__setattr__
+            or any(name in vars(native) for name in ("_host_clock", "_clock_failed", "_last_clock"))
+            or object.__getattribute__(owner, "__dict__") is not namespace
+            or namespace.get("_host_clock") is not host_clock
+            or namespace.get("_clock_failed") is not False
+            or function.__globals__.get("math") is not _NATIVE_MATH
+            or type(_NATIVE_MATH) is not ModuleType
+            or vars(_NATIVE_MATH).get("isfinite") is not _NATIVE_ISFINITE):
+        return False
+    last = namespace.get("_last_clock")
+    if last is None:
+        return True
+    if type(last) not in (int, float):
+        return False
+    try:
+        return _NATIVE_ISFINITE(last)
+    except OverflowError:
+        return False
+
+
+def _native_elapsed_reader_current(reader, owner):
+    function, authority = _NATIVE_SHARED_ELAPSED_MS, _NATIVE_SHARED_ELAPSED_AUTHORITY
+    return (type(owner) is SharedExecutionBudget and type(reader) is MethodType
+        and reader.__self__ is owner and reader.__func__ is function
+        and function.__code__ is authority[0] and function.__defaults__ is authority[1]
+        and function.__kwdefaults__ is authority[2] and function.__closure__ is authority[3]
+        and function.__globals__ is authority[4]
+        and SharedExecutionBudget.__bases__ is authority[5] and SharedExecutionBudget.__mro__ is authority[6]
+        and SharedExecutionBudget.__getattribute__ is object.__getattribute__
+        and SharedExecutionBudget.__setattr__ is object.__setattr__
+        and "_clock" not in vars(SharedExecutionBudget) and "started" not in vars(SharedExecutionBudget))
 
 
 def budget_error(reason: str, message: str, node=None, **details):
@@ -116,6 +182,12 @@ class SharedExecutionBudget:
         self.admitted_entry_revision = None
         self.stage = "header_admission"
         self.budget_reason = None
+        # Only the explicit .22 admission enables this callback receipt.
+        # Earlier contracts retain their exact callback and charge behavior.
+        self._torque_guarded = False
+        self._torque_counter = None
+        self._torque_context_guard = None
+        self._torque_clock_binding = None
 
     @property
     def limits(self) -> dict:
@@ -131,18 +203,83 @@ class SharedExecutionBudget:
     def tick(self, node=None, amount: int = 1) -> None:
         if type(amount) is not int or amount < 0:
             raise ValueError("A work charge must be a nonnegative integer.")
+        guarded = self._torque_guarded
+        expected = self._torque_counter
+        clock_binding = self._torque_clock_binding
+        elapsed_reader = self.elapsed_ms if guarded else None
+        clock_before_poll = None if clock_binding is None else clock_binding[3].get("_last_clock")
+        if guarded and (type(self.operations) is not int or self.operations != expected):
+            self.operations = expected
+            self._fail("execution_context_required", "Torque execution cannot change its consumed work.", node)
+        if guarded and not _native_elapsed_reader_current(elapsed_reader, self):
+            self._fail("execution_context_required", "Torque execution requires its original elapsed-time reader.", node)
+        # Capture before the original callback. This is an admission check,
+        # not a replacement callback, new work operation, or alternate clock.
+        receipt = None
+        if guarded and (self.check is not None or self._clock is not _NATIVE_MONOTONIC):
+            receipt = (self.check, self._clock, self.started, self.resolved,
+                       self._limits, tuple(self._limits.items()), self._torque_context_guard, clock_binding)
+        def admit_counter(value):
+            if type(self) is not SharedExecutionBudget:
+                budget_error("execution_context_required", "Torque execution requires its original native ledger.", node)
+            if (not self._torque_guarded or type(self.operations) is not int
+                    or self.operations != value or self._torque_counter != value):
+                self.operations = self._torque_counter = value
+                self._torque_guarded = True
+                self._fail("execution_context_required", "Torque execution cannot change its consumed work.", node)
+        def admit_callback(value, *, source=True):
+            admit_counter(value)
+            current_elapsed = self.elapsed_ms
+            if (self.check is not receipt[0] or self._clock is not receipt[1]
+                    or self.started is not receipt[2] or self.resolved is not receipt[3]
+                    or self._limits is not receipt[4] or len(self._limits) != len(receipt[5])
+                    or any(key is not old_key or value is not old_value
+                           for (key, value), (old_key, old_value) in zip(self._limits.items(), receipt[5]))
+                    or self._torque_context_guard is not receipt[6]
+                    or self._torque_clock_binding is not receipt[7]
+                    or not _native_elapsed_reader_current(current_elapsed, self)
+                    or clock_binding is not None and not _native_agent_clock_current(clock_binding, self._clock)):
+                self._fail("execution_context_required", "Torque execution cannot replace its original callback context.", node)
+            if source and receipt[6] is not None:
+                receipt[6]()
+        # The receipt was just captured without a callback; comparing it to
+        # itself here would repeat every native check without observing work.
+        # Admit the original counter above and re-admit this receipt after
+        # each actual callback, before the next operation uses its context.
         if self.check is not None:
             try:
                 self.check()
             except BaseException as error:
+                if guarded:
+                    # An original callback exception keeps precedence and
+                    # identity, while already consumed work cannot disappear.
+                    self.operations = self._torque_counter = expected
                 self.callback_error = error
                 raise
+        if receipt is not None:
+            admit_callback(expected)
+        # A poll-side read of the original clock is permitted. If its native
+        # last-reading field changed, retain the complete second source scan.
+        unchanged_clock_state = (clock_binding is not None
+                                 and clock_binding[3].get("_last_clock") is clock_before_poll)
         self.operations += amount
+        if guarded:
+            self._torque_counter = self.operations
+            expected += amount
         if self.operations > self._limits["max_operations"]:
             self._fail("operation_budget_exhausted", "Execution exceeded max_operations.", node,
                        budget="max_operations", limit=self._limits["max_operations"],
                        consumed=self.operations)
         elapsed = self.elapsed_ms()
+        if receipt is not None:
+            # The exact native Agent reader over the captured builtin clock
+            # cannot call user code. Its owner/function/host clock and native
+            # state are admitted both before and after this actual invocation.
+            # The original poll callback still receives its complete source
+            # admission above. Every custom clock keeps the second full scan.
+            native_clock = (receipt[1] is _NATIVE_MONOTONIC or clock_binding is not None
+                            and clock_binding[5] is _NATIVE_MONOTONIC and unchanged_clock_state)
+            admit_callback(expected, source=not native_clock)
         if elapsed > self._limits["max_elapsed_ms"]:
             self._fail("execution_deadline_exceeded", "Execution exceeded max_elapsed_ms.", node,
                        budget="max_elapsed_ms", limit=self._limits["max_elapsed_ms"], consumed=elapsed)
@@ -192,6 +329,13 @@ class SharedExecutionBudget:
                 "consumed_operations": self.operations, "elapsed_ms": self.elapsed_ms(),
                 "stage": self.stage, "status": status,
                 "budget_reason": self.budget_reason if budget_reason is None else budget_reason}
+
+
+_NATIVE_SHARED_ELAPSED_MS = SharedExecutionBudget.elapsed_ms
+_NATIVE_SHARED_ELAPSED_AUTHORITY = (_NATIVE_SHARED_ELAPSED_MS.__code__,
+    _NATIVE_SHARED_ELAPSED_MS.__defaults__, _NATIVE_SHARED_ELAPSED_MS.__kwdefaults__,
+    _NATIVE_SHARED_ELAPSED_MS.__closure__, _NATIVE_SHARED_ELAPSED_MS.__globals__,
+    SharedExecutionBudget.__bases__, SharedExecutionBudget.__mro__)
 
 
 def operation_literal(text: str, node=None) -> int:
@@ -327,9 +471,13 @@ def _admit_entry_budget(unit: SourceUnit, ledger: SharedExecutionBudget, *, prof
         raise TypeError("Budget admission requires a SharedExecutionBudget.")
     if ledger.resolved is not None:
         raise ValueError("This execution has already admitted an entry source.")
-    versions = {BUDGET_PROFILE: "0.7", EXTRUSION_PROFILE: "0.8", HOLES_PROFILE: "0.9", RING_LOFT_PROFILE: "0.10", FRAMED_LOFT_PROFILE: "0.11", POCKETS_PROFILE: "0.12", TEXTURE_PROFILE: "0.13", KEYED_TRANSFORM_PROFILE: "0.14", KEYED_REDUCTION_PROFILE: "0.15", KEYED_FILTER_PROFILE: "0.16", KEYED_MERGE_PROFILE: "0.17", KEYED_ZIP_PROFILE: "0.18", KEYED_REKEY_PROFILE: "0.19", STRING_CONCAT_PROFILE: "0.20", KEYED_MEMBERSHIP_PROFILE: "0.21"}
+    versions = {BUDGET_PROFILE: "0.7", EXTRUSION_PROFILE: "0.8", HOLES_PROFILE: "0.9", RING_LOFT_PROFILE: "0.10", FRAMED_LOFT_PROFILE: "0.11", POCKETS_PROFILE: "0.12", TEXTURE_PROFILE: "0.13", KEYED_TRANSFORM_PROFILE: "0.14", KEYED_REDUCTION_PROFILE: "0.15", KEYED_FILTER_PROFILE: "0.16", KEYED_MERGE_PROFILE: "0.17", KEYED_ZIP_PROFILE: "0.18", KEYED_REKEY_PROFILE: "0.19", STRING_CONCAT_PROFILE: "0.20", KEYED_MEMBERSHIP_PROFILE: "0.21", TORQUE_PROFILE: "0.22"}
     if profile not in versions:
         budget_error("invalid_declaration", "Unsupported execution-budget source profile.")
+    if profile == TORQUE_PROFILE:
+        ledger._torque_guarded = True
+        ledger._torque_counter = ledger.operations
+        ledger._torque_clock_binding = _native_agent_clock_binding(ledger._clock)
     scanner = _HeaderScanner(unit, ledger)
     scanner.take("IDENT", "ontokin")
     scanner.take("STRING", versions[profile])

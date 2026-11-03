@@ -982,6 +982,9 @@ def _verify_metadata(decoded, model, options, program, boundary_records, *, work
             "motion_model": "two_prescribed_planar_hinges", "rotation_interpolation": "shortest_arc_slerp",
             "goal_residual_max_m": 1e-9, "bound_chain_tuple_max": 32,
             "named_reach_action_max": 128, "live_solver_embedded": False}}
+    if target_contract == "ontokin.glb/0.22":
+        from .torque_conformance import profile_metadata
+        expected["torque_profile"] = profile_metadata()
     if model.profile in TEXTURE_PROFILES:
         from .texture_gltf import profile_metadata
         expected["texture_profile"] = profile_metadata()
@@ -1011,7 +1014,8 @@ def _verify_metadata(decoded, model, options, program, boundary_records, *, work
     quantization = metadata.get("reach_quantization")
     if type(quantization) is not dict or set(quantization) != _QUANTIZATION_KEYS:
         _error("OKE-E-CERTIFICATE", "Reach quantization must contain exactly the complete adopted fields.")
-    fixed = {"schema_version": "ontokin.reach-quantization/0.1", "rotation_interpolation": "shortest_arc_slerp",
+    fixed = {"schema_version": ("ontokin.torque-quantization/0.1" if target_contract == "ontokin.glb/0.22"
+                                else "ontokin.reach-quantization/0.1"), "rotation_interpolation": "shortest_arc_slerp",
         "clock_conversion": CLOCK_CONVERSION, "position_tolerance_m": options.position_tolerance_m,
         "rotation_tolerance_rad": options.rotation_tolerance_rad, "time_tolerance_s": options.time_tolerance_s,
         "all_values_independently_recomputed": True, "unknown_error_bound_policy": "reject",
@@ -1080,6 +1084,13 @@ def _plain_projection_tree(actual, expected):
 
 
 def _history_allowance(path, allowances):
+    if (path and path[-1] in {"phase_since_anchor_rad", "signed_angular_speed_rad_per_s"}
+            and any(value in {"torques", "torque_states_before", "torque_states_after"}
+                    for value in path if isinstance(value, str))):
+        # These independent cells already enclose the specified single RN64
+        # projection of the complete torque polynomial. No pose tolerance or
+        # second scalar-rounding allowance belongs to their history leaves.
+        return Fraction(0), True
     labels = " ".join(str(value) for value in path)
     impulse_fields = {
         "lever_arm_world_m", "application_point_world_m", "angular_impulse_world_n_m_s",
@@ -1159,7 +1170,11 @@ def _assert_projection(actual, expected, *, arithmetic, allowances, path=()):
     """Compare complete histories; interval leaves retain their units/meaning."""
     from .reach_reference import Interval
     arithmetic.tick("independent_projection_entry")
-    if isinstance(expected, Interval):
+    from .torque_reference import TorqueErrorRequirement
+    if isinstance(expected, TorqueErrorRequirement):
+        from .torque_conformance import verify_error_requirement
+        verify_error_requirement(actual, expected.minimum, arithmetic, path)
+    elif isinstance(expected, Interval):
         if type(actual) not in (int, float):
             _error("OKE-E-BOUNDARY-HISTORY", "A numerical source history has a nonnumeric leaf.", details={"path": list(path)})
         allowance, source_impulse = _history_allowance(path, allowances)
@@ -3374,6 +3389,10 @@ class _IntervalCertificateClaims:
 
 def _verify_certificates(decoded, reference, geometry, tables, endpoint_phases, authored, times, quantization, options, *, work,
                          finalize=None):
+    if reference.model.profile == "torque-0.1":
+        from .torque_conformance import verify_certificates
+        return verify_certificates(decoded, reference, geometry, tables, endpoint_phases, authored,
+                                   times, quantization, options, work=work, finalize=finalize)
     certificates = quantization["interval_certificates"]
     expected_count = (len(authored) - 1) * len(geometry)
     if type(certificates) is not list or len(certificates) != expected_count or expected_count > MAX_CERTIFICATES:
@@ -3519,6 +3538,24 @@ def _verify_certificates(decoded, reference, geometry, tables, endpoint_phases, 
 
 
 def validate_reach_export(data, model, *, options=None, check=None, work=None, target_contract=TARGET):
+    if target_contract != "ontokin.glb/0.22":
+        return _validate_reach_export(data, model, options=options, check=check, work=work,
+                                      target_contract=target_contract)
+    from .torque_validation_guard import TorqueValidationScope
+    from .reach_reference import ReferenceError
+    try:
+        with TorqueValidationScope(model, work) as scope:
+            return _validate_reach_export(data, scope.model, options=options, check=check, work=work,
+                                          target_contract=target_contract)
+    except ReferenceError as error:
+        if error is getattr(work, "callback_error", None):
+            raise
+        _error("OKE-E-INDEPENDENT-VALIDATION", "The independent torque source/context receipt did not admit the complete proof: " + str(error),
+            model=model, kind="resource" if error.code == "resource" else "unsupported",
+            details={"reference_code": error.code, **error.details})
+
+
+def _validate_reach_export(data, model, *, options=None, check=None, work=None, target_contract=TARGET):
     """Verify the complete source/byte proof with the caller's existing work.
 
     Missing independent source behavior rejects delivery. Additional fixed,
@@ -3558,7 +3595,11 @@ def validate_reach_export(data, model, *, options=None, check=None, work=None, t
     expected_count = (len(authored_records) - 1) * len(nodes)
     if type(certificates) is not list or len(certificates) != expected_count or expected_count > MAX_CERTIFICATES:
         _error("OKE-E-CERTIFICATE-COVERAGE", "The certificate count must cover every carrier and adjacent key pair exactly once.")
-    verify_numeric_bases(quantization, work=work)
+    if target_contract == "ontokin.glb/0.22":
+        from .torque_conformance import verify_numeric_bases as verify_torque_bases
+        verify_torque_bases(quantization, work=work)
+    else:
+        verify_numeric_bases(quantization, work=work)
     program = program_metadata(model, check=work.tick)
     try:
         reference = build_reference(model, end=end, work=work)

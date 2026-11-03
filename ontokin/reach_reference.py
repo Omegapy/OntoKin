@@ -797,6 +797,7 @@ class ReferencePhase:
     vector_round_count: int
     coordinate_angle_error: F
     path: tuple[str, ...]
+    angular_acceleration: F = F(0)
 
 
 def build_reference(model, *, end, end_side="after", mode="recording", work=None, check=None):
@@ -808,7 +809,11 @@ def build_reference(model, *, end, end_side="after", mode="recording", work=None
     Explicit ``mode="observation"`` reconstructs requested source state without
     claiming complete H06 recording capacity; ``boundary_states`` is unavailable.
     """
-    return ReachReference(model, end=F(end), end_side=end_side, mode=mode, arithmetic=_Arithmetic(work, check))
+    reference_type = ReachReference
+    if model.profile == "torque-0.1":
+        from .torque_reference import TorqueReference
+        reference_type = TorqueReference
+    return reference_type(model, end=F(end), end_side=end_side, mode=mode, arithmetic=_Arithmetic(work, check))
 
 
 class _PoseArithmetic:
@@ -2247,7 +2252,7 @@ class ReachReference:
     alter later independent expectations.
     """
     def __init__(self, model, *, end, arithmetic, end_side="after", mode="recording"):
-        if (model.profile not in REACH_PROFILES or end < 0 or end > model.duration
+        if (model.profile not in REACH_PROFILES and model.profile != "torque-0.1" or end < 0 or end > model.duration
                 or end_side not in ("before", "after") or mode not in ("recording", "observation")):
             raise ReferenceError("unsupported", "Independent reference requires a valid planar reach prefix")
         self.a, self.p = arithmetic, _PoseArithmetic(arithmetic)
@@ -4438,11 +4443,12 @@ class ReachReference:
             velocity_error = add(anchor.velocity_error, mul(acceleration_error, elapsed), rounding(actual_speed))
             actual_omega = self._l1(anchor.actual.omega)
             moving = bool(actual_omega and elapsed)
-            return finish(extent=extent, trig=int(moving), products=3 if moving else 1,
+            bound = finish(extent=extent, trig=int(moving), products=3 if moving else 1,
                 anchor_position=position_error, anchor_rotation=add(anchor.rotation_error, mul(anchor.omega_error, elapsed)),
                 velocity_error=velocity_error, omega_error=anchor.omega_error,
                 speed=add(actual_speed, velocity_error), acceleration=self._l1(ideal_acceleration),
                 omega=add(actual_omega, anchor.omega_error), actual_speed=actual_speed, actual_omega=actual_omega)
+            return self._dynamic_source_basis(path, start, end, state, bound)
 
         def visit(frame):
             self.a.tick()
@@ -4488,6 +4494,10 @@ class ReachReference:
             return value
 
         return visit(carrier)
+
+    def _dynamic_source_basis(self, path, start, end, state, bound):
+        """Versioned extensions may replace only their own angular law."""
+        return bound
 
     def _axis_transport(self, rotation, axis):
         """Prove a fixed source rotation preserves or reverses one axis.
@@ -4853,4 +4863,6 @@ class ReachReference:
             ideal_root.position, ideal_root.velocity, ideal_root.orientation, ideal_root.omega,
             basis.offset, basis.extent, basis.anchor_position, basis.anchor_rotation, anchor_velocity, anchor_omega,
             basis.position_error, basis.rotation_error, basis.velocity_error, basis.omega_error,
-            basis.trig, basis.products, basis.vectors, basis.coordinate, path)
+            basis.trig, basis.products, basis.vectors, basis.coordinate, path,
+            angular_acceleration=(basis.alpha if self.model.profile == "torque-0.1"
+                                  and axial is None else F(0)))

@@ -1,0 +1,109 @@
+{
+  "schema_version": "ontokin.c091-independent-cache-store-review/1",
+  "status": "passed_for_listed_source_and_scope",
+  "reviewer": "runtime agent, independent of interface author",
+  "source_commit": "8594a3875f405c1a78a588ba534a9b8fda9ed738",
+  "package_sha256": "249da76c6d411587be3bd2abc0ac944fabfe131be5a89da7e5f968ee632011a4",
+  "reviewed_source": {
+    "ontokin/torque_store.py": "053c808304263bcc3bafbd32971e6541553fd772f41836c0a416921cf645dd82",
+    "ontokin/torque_artifacts.py": "57d1a84b7dc193a9050839350d4ec80e4a7ee0451611b17e314efc464aec902e",
+    "ontokin/torque_agent.py": "4b79853d9254d587aa7d4ab6fdfb44990046f897ca5df993c529c258bac1bf96",
+    "ontokin/torque_protocol.py": "60cd367afe18bf83b62139ff98dfd2cb87f44ed84ac7865a70c07d99bc52515e",
+    "ontokin/texture_agent.py": "888931c5ca59af893ffdbd49f28bc3749f88c1715352393ca72c1e05dda1538a",
+    "ontokin/texture_store.py": "3578d0bbb4b15ac0f2ae789da028f629b16e32243e6cb934b1a45f08bdb4056c",
+    "ontokin/agent_store.py": "6a0b0a0a739066b7ecf882f9074d067cf4c0e37a05497b9035113228b6f4598a",
+    "ontokin/budget_agent.py": "612977cbbc854d29cc84aa8eaa9dc1268a86abcea96a94d24d02bdb966a4e54e",
+    "ontokin/torque_json_limits.py": "a78f05df574ff89114c7d3578b7c261edf9d5c738c212ffa242684fc99d301bb"
+  },
+  "checks": [
+    {
+      "id": "current_source_authority",
+      "passed": true,
+      "basis": "Every read obtains the current source through read_program and admits that source on the original request check; no authorization state is cached."
+    },
+    {
+      "id": "complete_current_bytes",
+      "passed": true,
+      "basis": "The second SQLite query reads the entire current blob, report, source revision and SHA; source revision must match the first query, and both byte limits remain 64 MiB."
+    },
+    {
+      "id": "current_metadata",
+      "passed": true,
+      "basis": "Every read validates current report program revision and implementation; current stored SHA and content-derived artifact ID are checked after all original integrity charges."
+    },
+    {
+      "id": "proof_provenance",
+      "passed": true,
+      "basis": "Only a native immutable _VerifiedBytes tuple published through the module-owned weak-key map is available through the read-only service property; six ordinary callback assignment variants refuse."
+    },
+    {
+      "id": "equal_bytes_digest",
+      "passed": true,
+      "basis": "A cache hit requires exact native project/artifact/data/digest fields and complete bytes equality. This establishes reuse of the earlier SHA result for identical bytes; changed bytes take the complete original hash route."
+    },
+    {
+      "id": "original_accounting",
+      "passed": true,
+      "basis": "Both hash misses and full-byte hits retain each original 64 KiB integrity tick and the original slice tick. Author tests independently replayed compare entire callback traces and charges."
+    },
+    {
+      "id": "bounded_retention",
+      "passed": true,
+      "basis": "Exactly one proof per live service is retained, bounded by the unchanged 64 MiB artifact limit. There is no request-history or authority cache."
+    },
+    {
+      "id": "close_publication",
+      "passed": true,
+      "basis": "Close first fences the store then clears under the same cache lock; the publisher checks closed under that lock. Actual delayed publication after completed close is tested."
+    },
+    {
+      "id": "original_exception",
+      "passed": true,
+      "basis": "Uncaught callback AttributeError keeps its original object identity; failed publication retains original durable rollback behavior."
+    },
+    {
+      "id": "idle_connection",
+      "passed": true,
+      "basis": "One autocommit SQLite connection is checked out exclusively under a native lock; overlapping/nested requests use inherited fresh connections. No callback or transaction is held under that lock."
+    },
+    {
+      "id": "bounded_sqlite_cache",
+      "passed": true,
+      "basis": "The reused connection has a fixed 8 MiB SQLite cache and the inherited timeout/synchronous settings; unfinished explicit transactions roll back when a context exits."
+    },
+    {
+      "id": "current_visibility",
+      "passed": true,
+      "basis": "Actual interleaved services observe committed updates; reopened services do not receive a cached authority grant. Concurrent request tests and deferred close tests pass."
+    },
+    {
+      "id": "predecessor_isolation",
+      "passed": true,
+      "basis": "Only explicit TorqueAgentService/TorqueProgramStore select the optimization; inherited predecessor service/store schema behavior remains tested."
+    }
+  ],
+  "actual_replay": {
+    "custom_review_checks": 41,
+    "actual_exchanges": 19,
+    "artifact_methods": 13,
+    "artifact_method_seconds": 21.057,
+    "source_json_methods": 16
+  },
+  "evidence": {
+    "cache-owner-before-probe01/result.json": "a511e92c56d34b9b911003881c007281d0a754304ceb823618bb436447d69747",
+    "cache-inplace-before-probe01/result.json": "15fd1460ad1bb33faf85646b2548822f21a113152ac39f26b03898fe4fb11c30",
+    "cache-owner-after-probe01/result.json": "940f2023f162747c289b8dbddbd30a3262343efcb64c45613142e08a83158d77",
+    "cache-owner-after-probe01/review-classification.json": "c48ee6d669a9d5ae5a2c5a113f1510a597fcbf34ffc5009205f4cb56484ab02b",
+    "cache-owner-after-probe02/result.json": "43837e08af34252b7db0cf43cbec21821129c4719ef28a24110a263ad64f1f61",
+    "interface-independent-artifact-units-attempt04.log": "902e01ae576d03937766de3c9b0ca7b4b4c83ea0bdc0a2b0acc78b725a0ffaee",
+    "interface-independent-units-attempt02.log": "cbc5c545c181dde82ce92fb856706a4a8f94b705130fb95898c1686875155b78",
+    "interface-independent-units-attempt02-classification.json": "8184e8f4e12a89b67a75ed163da20defe8adb61976ff50f951523ce832e3e6df",
+    "interface-independent-artifact-units-attempt03-classification.json": "a465f9cb6429ab17c387cdfe9a309c4151870cb3ff342d6ed910fd7ada942b1e"
+  },
+  "limits": [
+    "Review covers ordinary native callback-visible service proof ownership and complete current durable reads; it is not a Python-process sandbox claim.",
+    "Source pin is interface 8594a38. It is not the final integrated numerical/reader source; final export/Agent acceptance must bind that integrated pin.",
+    "The 10,000 one-byte capacity run is explicitly incomplete and does not establish all required A08 chunks or EOF completion.",
+    "Separate source_intervals foreign-equality finding remains open pending the interface fix and independent replay; this receipt approves cache/store scope only."
+  ]
+}

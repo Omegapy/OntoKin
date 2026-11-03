@@ -153,6 +153,20 @@ class ForcePayload:
     source: dict[str, Any]
 
 
+@dataclass(frozen=True)
+class TorquePayload:
+    """Elaborated .22 scalar couple and its original repair locations."""
+
+    key: str
+    axis: str
+    torque_n_m: float
+    duration: Fraction
+    sequence_index: int
+    source: dict[str, Any]
+    operand_source: dict[str, Any]
+    duration_source: dict[str, Any]
+
+
 @dataclass
 class Event:
     kind: str
@@ -160,6 +174,7 @@ class Event:
     span: Any = None
     impulse: ImpulsePayload | None = None
     force: ForcePayload | None = None
+    torque: TorquePayload | None = None
 
 
 @dataclass

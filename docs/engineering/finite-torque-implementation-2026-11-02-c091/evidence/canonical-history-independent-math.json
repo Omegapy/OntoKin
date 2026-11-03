@@ -1,0 +1,640 @@
+{
+  "schema": "c091-axis-completeness-review/1",
+  "source_commit": "e8e1f5028b1136b26a24308cba53733b163d0041",
+  "source_status": [
+    " M ontokin/torque_axis_exact.py",
+    " M ontokin/torque_axis_reference.py"
+  ],
+  "source_hashes": {
+    "ontokin/torque_axis_exact.py": "e45c83f5f021967538c1128720d2ef60a8da3304def6107b7214ef44416be7b4",
+    "ontokin/torque_axis_reference.py": "e4fe36d7a19e177dbc861dfbf42d2a8e4002e00e30e149f5616d83f782a24aaa",
+    "ontokin/torque_reference.py": "598bfdb0e67ed532117627672481b791581f1d08ae6fd7e686558df0bb89cdfd",
+    "ontokin/reach_reference.py": "f2a693c9b1cab8999e0ae9834801d94caf735e1130725a9150280ce939019795",
+    "ontokin/reach_numeric.py": "70f47e092c892fc4909b00d1af75d33aea9145dd0313248bb76f7cd2578d31a9",
+    "ontokin/reach_pose.py": "e1ec6bd98184900a5637b05fce1c0066820fa9b9f159c89f57ea7c1364167013",
+    "ontokin/reach_runtime.py": "fb38864a9ee73a1f00a1c72366305d95105b2486922d61f6606611fb435600e6",
+    "ontokin/reach_phase.py": "e1904fa4b05719b72a56c6d35f653836250cb455a39cb5d191c6dcc58251421c",
+    "ontokin/torque_runtime.py": "bc6d7fb94dc4f6a3c4df8dfde10a0e970712b128059043ac2946fe8d734e050a",
+    "ontokin/torque_phase.py": "7eb37f33ff66b53958c7068dda9a3c5f283f6687284a4c57f483ca02f28f62fb",
+    "ontokin/evaluator.py": "8d2f20ab618b3075b3cfa27b3cca91b741741757172edeb9cd194075e60f716a",
+    "ontokin/validator.py": "c48a52c4a0da85bc414480fa7c7a68de3de917dd03b33dcee0eecf3e7a4f84e1",
+    "docs/language-design/torque-v0.1/SPECIFICATION.md": "1df5fe712760d3e0af6614f6fbd200708bae76a1191e1aa5829dff8382e74ced",
+    "docs/language-design/torque-v0.1/RECORDING.md": "58a69bb37f22905a0d83e2ec913d890934ebf18b31d96dc670ac0b36b4794a20",
+    "docs/language-design/torque-v0.1/freeze/p28-release-then-torque.files.json": "a0414498f308e22d9f7d893dc12d55bc7829f5a8ea4d3c5572a10cd188181cc8",
+    "docs/language-design/torque-v0.1/freeze/sources/p28-release-then-torque.ok": "81266d41a0aad00ae6f74278304dc4f5669031b02b3bb78a0701feabf15f3f8d",
+    "docs/language-design/torque-v0.1/freeze/modules/carriers.ok": "e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+    "docs/language-design/torque-v0.1/freeze/assets/label.png": "5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+  },
+  "interpreter": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.39",
+  "scope": "Independent exact proof first; producer execution only as verification control afterward",
+  "omega_binary64_hex": [
+    "0x1.3333333333333p-1",
+    "0x1.999999999999ap-1",
+    "0x0.0p+0"
+  ],
+  "omega_exact": [
+    "5404319552844595/9007199254740992",
+    "3602879701896397/4503599627370496",
+    "0"
+  ],
+  "independent_candidates": [
+    {
+      "precision_bits": 96,
+      "quaternion_grid_integers": [
+        69529253833134890245331416652,
+        22790402691613502847048901949,
+        30387203588818006607446292455,
+        0
+      ],
+      "released_omega_grid_integers": [
+        0,
+        0,
+        0
+      ],
+      "released_omega_binary64_hex": [
+        "0x0.0p+0",
+        "0x0.0p+0",
+        "0x0.0p+0"
+      ],
+      "accepts_world_x": true,
+      "eligible_at_elapsed_1": true,
+      "eligible_at_horizon_16384": false
+    },
+    {
+      "precision_bits": 192,
+      "quaternion_grid_integers": [
+        69529253833134890245331416652,
+        22790402691613502847048901949,
+        30387203588818006607446292456,
+        0
+      ],
+      "released_omega_grid_integers": [
+        0,
+        0,
+        1
+      ],
+      "released_omega_binary64_hex": [
+        "0x0.0p+0",
+        "0x0.0p+0",
+        "0x1.0000000000000p-96"
+      ],
+      "accepts_world_x": false,
+      "eligible_at_elapsed_1": true,
+      "eligible_at_horizon_16384": true
+    },
+    {
+      "precision_bits": 384,
+      "quaternion_grid_integers": [
+        69529253833134890245331416652,
+        22790402691613502847048901949,
+        30387203588818006607446292456,
+        0
+      ],
+      "released_omega_grid_integers": [
+        0,
+        0,
+        1
+      ],
+      "released_omega_binary64_hex": [
+        "0x0.0p+0",
+        "0x0.0p+0",
+        "0x1.0000000000000p-96"
+      ],
+      "accepts_world_x": false,
+      "eligible_at_elapsed_1": true,
+      "eligible_at_horizon_16384": true
+    },
+    {
+      "precision_bits": 768,
+      "quaternion_grid_integers": [
+        69529253833134890245331416652,
+        22790402691613502847048901949,
+        30387203588818006607446292456,
+        0
+      ],
+      "released_omega_grid_integers": [
+        0,
+        0,
+        1
+      ],
+      "released_omega_binary64_hex": [
+        "0x0.0p+0",
+        "0x0.0p+0",
+        "0x1.0000000000000p-96"
+      ],
+      "accepts_world_x": false,
+      "eligible_at_elapsed_1": true,
+      "eligible_at_horizon_16384": true
+    },
+    {
+      "precision_bits": 1536,
+      "quaternion_grid_integers": [
+        69529253833134890245331416652,
+        22790402691613502847048901949,
+        30387203588818006607446292456,
+        0
+      ],
+      "released_omega_grid_integers": [
+        0,
+        0,
+        1
+      ],
+      "released_omega_binary64_hex": [
+        "0x0.0p+0",
+        "0x0.0p+0",
+        "0x1.0000000000000p-96"
+      ],
+      "accepts_world_x": false,
+      "eligible_at_elapsed_1": true,
+      "eligible_at_horizon_16384": true
+    }
+  ],
+  "current_all_plan_agreement_recipe": "None",
+  "independent_scalar_steps": 6009,
+  "controls": [
+    {
+      "mode": "actual",
+      "helper_force": false,
+      "checkpoints": [],
+      "entry_sha256": "671edad55c608eb12a129df4b3c06f4b29ece6a576e73c7ab7f1e859aee0f941",
+      "program_revision": "sha256:fa608afe6bac9e14dda637a89e098ef6f830cfdd6ca48a9a745c2db8dffd4046",
+      "native_axis": [
+        0.6,
+        0.8,
+        0.0
+      ],
+      "cache_entries": 256,
+      "budget": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "torque_state": {
+        "active": [
+          {
+            "torque_key": "drive",
+            "torque_element_id": [
+              "torque-cases",
+              "demo",
+              "torque",
+              "drive"
+            ],
+            "target_path": "ball",
+            "target_element_id": [
+              "torque-cases",
+              "demo",
+              "ball"
+            ],
+            "program_revision": "sha256:fa608afe6bac9e14dda637a89e098ef6f830cfdd6ca48a9a745c2db8dffd4046",
+            "source_location": {
+              "source_id": "entry",
+              "source_revision": "sha256:671edad55c608eb12a129df4b3c06f4b29ece6a576e73c7ab7f1e859aee0f941",
+              "start_byte": 1627,
+              "end_byte": 1685
+            },
+            "sequence_index": 1,
+            "activation_time_seconds": "16385",
+            "duration_seconds": "1",
+            "completion_time_seconds": "16386",
+            "axis": "world_x",
+            "torque_n_m": 1.0,
+            "operand_location": {
+              "source_id": "entry",
+              "source_revision": "sha256:671edad55c608eb12a129df4b3c06f4b29ece6a576e73c7ab7f1e859aee0f941",
+              "start_byte": 1669,
+              "end_byte": 1675
+            },
+            "duration_location": {
+              "source_id": "entry",
+              "source_revision": "sha256:671edad55c608eb12a129df4b3c06f4b29ece6a576e73c7ab7f1e859aee0f941",
+              "start_byte": 1680,
+              "end_byte": 1684
+            }
+          }
+        ],
+        "net_torque_n_m": 1.0,
+        "angular_acceleration_rad_per_s2": 1.0,
+        "axis": "world_x",
+        "rotation_route": "split",
+        "rotation_anchor_seconds": "16385",
+        "signed_angular_speed_rad_per_s": 0.0,
+        "phase_since_anchor_rad": 0.0,
+        "angular_acceleration_reference_rad_per_s2": {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        "angular_error_bound_rad": {
+          "numerator": "1438154572184947136027881768451907651968745595667436837522593530977281591427883551706928523186697922293640786760382212045332462639634864340841879750418515525917625785925003747368191951617785250653791736929885222032550420431330293135973448286983099274429736958670592785690186307648494296576448725536439986552835",
+          "denominator": "202402253307310618352495346718917307049556649764142118356901358027430339567995346891960383701437124495187077864316811911389808737385793476867013399940738509921517424276566361364466907742093216341239767678472745068562007483424692698618103355649159556340810056512358769552333414615230502532186327508646006263307707741093494784"
+        },
+        "angular_speed_error_bound_rad_per_s": {
+          "numerator": "952777376478750850612741129406523461650194260216788792815032804010024490830581604289855381713922997777517081353621736044183882951558213341071174281147266555407152127672585900622832118630780793460327416799108469274572182810326370334361714328079858118996215744873174088766356320443673575595592610112066751037449",
+          "denominator": "101201126653655309176247673359458653524778324882071059178450679013715169783997673445980191850718562247593538932158405955694904368692896738433506699970369254960758712138283180682233453871046608170619883839236372534281003741712346349309051677824579778170405028256179384776166707307615251266093163754323003131653853870546747392"
+        },
+        "started_count": 1,
+        "completed_count": 0,
+        "last_change_time_seconds": "16385",
+        "last_changes": [
+          {
+            "kind": "started",
+            "torque_key": "drive",
+            "torque_element_id": [
+              "torque-cases",
+              "demo",
+              "torque",
+              "drive"
+            ],
+            "target_path": "ball",
+            "target_element_id": [
+              "torque-cases",
+              "demo",
+              "ball"
+            ],
+            "program_revision": "sha256:fa608afe6bac9e14dda637a89e098ef6f830cfdd6ca48a9a745c2db8dffd4046",
+            "source_location": {
+              "source_id": "entry",
+              "source_revision": "sha256:671edad55c608eb12a129df4b3c06f4b29ece6a576e73c7ab7f1e859aee0f941",
+              "start_byte": 1627,
+              "end_byte": 1685
+            },
+            "sequence_index": 1,
+            "activation_time_seconds": "16385",
+            "duration_seconds": "1",
+            "completion_time_seconds": "16386",
+            "axis": "world_x",
+            "torque_n_m": 1.0,
+            "operand_location": {
+              "source_id": "entry",
+              "source_revision": "sha256:671edad55c608eb12a129df4b3c06f4b29ece6a576e73c7ab7f1e859aee0f941",
+              "start_byte": 1669,
+              "end_byte": 1675
+            },
+            "duration_location": {
+              "source_id": "entry",
+              "source_revision": "sha256:671edad55c608eb12a129df4b3c06f4b29ece6a576e73c7ab7f1e859aee0f941",
+              "start_byte": 1680,
+              "end_byte": 1684
+            }
+          }
+        ]
+      },
+      "incoming_releases": [
+        {
+          "program_revision": "sha256:fa608afe6bac9e14dda637a89e098ef6f830cfdd6ca48a9a745c2db8dffd4046",
+          "source_location": {
+            "source_id": "entry",
+            "source_revision": "sha256:671edad55c608eb12a129df4b3c06f4b29ece6a576e73c7ab7f1e859aee0f941",
+            "start_byte": 1590,
+            "end_byte": 1618
+          },
+          "sequence_index": 0,
+          "time_seconds": "16385",
+          "grip": {
+            "path": "hold",
+            "element_id": [
+              "torque-cases",
+              "demo",
+              "hold"
+            ]
+          },
+          "target": {
+            "path": "ball",
+            "element_id": [
+              "torque-cases",
+              "demo",
+              "ball"
+            ]
+          },
+          "reach_contributors": [],
+          "incoming_pose_world": {
+            "position_m": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "orientation_wxyz": [
+              0.8775825618903728,
+              0.2876553231625218,
+              0.3835404308833624,
+              0.0
+            ]
+          },
+          "incoming_linear_velocity_world_m_per_s": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "incoming_angular_velocity_world_rad_per_s": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "outcome": "accepted",
+      "operations": 14609,
+      "observed_final_plan": {
+        "precision_bits": 96,
+        "max_elapsed_s": "1"
+      }
+    },
+    {
+      "mode": "reference",
+      "helper_force": false,
+      "checkpoints": [],
+      "entry_sha256": "671edad55c608eb12a129df4b3c06f4b29ece6a576e73c7ab7f1e859aee0f941",
+      "program_revision": "sha256:fa608afe6bac9e14dda637a89e098ef6f830cfdd6ca48a9a745c2db8dffd4046",
+      "native_axis": [
+        0.6,
+        0.8,
+        0.0
+      ],
+      "cache_entries": 256,
+      "budget": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "outcome": "refused",
+      "exception_type": "ReferenceError",
+      "message": "Independent torque angular state has no exact zero-axis proof",
+      "details": {
+        "torque_reason": "incoming_axis",
+        "expected_axis": "world_x"
+      },
+      "operations": 9042
+    },
+    {
+      "mode": "actual",
+      "helper_force": true,
+      "checkpoints": [],
+      "entry_sha256": "abb8621189a67f47d3361197b21fc6d49925c4661b37a6a42434757bd117cf4e",
+      "program_revision": "sha256:ed9281b0deabb132544aa835f3fd80a21834180e050c9c8f5079a0b15d919b5a",
+      "native_axis": [
+        0.6,
+        0.8,
+        0.0
+      ],
+      "cache_entries": 256,
+      "budget": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "outcome": "refused",
+      "exception_type": "OntoKinError",
+      "message": "Angular velocity must lie on the selected torque axis.",
+      "diagnostic": {
+        "code": "OKL-E-FRAME",
+        "details": {
+          "torque_reason": "incoming_axis",
+          "target_path": "ball",
+          "torque_key": "drive",
+          "sequence_index": 1
+        }
+      },
+      "operations": 15035,
+      "observed_final_plan": {
+        "precision_bits": 192,
+        "max_elapsed_s": "16384"
+      }
+    },
+    {
+      "mode": "reference",
+      "helper_force": true,
+      "checkpoints": [],
+      "entry_sha256": "abb8621189a67f47d3361197b21fc6d49925c4661b37a6a42434757bd117cf4e",
+      "program_revision": "sha256:ed9281b0deabb132544aa835f3fd80a21834180e050c9c8f5079a0b15d919b5a",
+      "native_axis": [
+        0.6,
+        0.8,
+        0.0
+      ],
+      "cache_entries": 256,
+      "budget": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "outcome": "refused",
+      "exception_type": "ReferenceError",
+      "message": "Independent torque angular state has no exact zero-axis proof",
+      "details": {
+        "torque_reason": "incoming_axis",
+        "expected_axis": "world_x"
+      },
+      "operations": 9507
+    },
+    {
+      "mode": "actual",
+      "helper_force": true,
+      "checkpoints": [
+        [
+          "16384",
+          "after"
+        ]
+      ],
+      "entry_sha256": "abb8621189a67f47d3361197b21fc6d49925c4661b37a6a42434757bd117cf4e",
+      "program_revision": "sha256:ed9281b0deabb132544aa835f3fd80a21834180e050c9c8f5079a0b15d919b5a",
+      "native_axis": [
+        0.6,
+        0.8,
+        0.0
+      ],
+      "cache_entries": 256,
+      "budget": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "outcome": "refused",
+      "exception_type": "OntoKinError",
+      "message": "Angular velocity must lie on the selected torque axis.",
+      "diagnostic": {
+        "code": "OKL-E-FRAME",
+        "details": {
+          "torque_reason": "incoming_axis",
+          "target_path": "ball",
+          "torque_key": "drive",
+          "sequence_index": 1
+        }
+      },
+      "operations": 15567,
+      "observed_final_plan": {
+        "precision_bits": 192,
+        "max_elapsed_s": "16384"
+      }
+    },
+    {
+      "mode": "actual",
+      "helper_force": true,
+      "checkpoints": [
+        [
+          "16384",
+          "after"
+        ],
+        [
+          "32769/2",
+          "after"
+        ]
+      ],
+      "entry_sha256": "abb8621189a67f47d3361197b21fc6d49925c4661b37a6a42434757bd117cf4e",
+      "program_revision": "sha256:ed9281b0deabb132544aa835f3fd80a21834180e050c9c8f5079a0b15d919b5a",
+      "native_axis": [
+        0.6,
+        0.8,
+        0.0
+      ],
+      "cache_entries": 256,
+      "budget": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "outcome": "refused",
+      "exception_type": "OntoKinError",
+      "message": "Angular velocity must lie on the selected torque axis.",
+      "diagnostic": {
+        "code": "OKL-E-FRAME",
+        "details": {
+          "torque_reason": "incoming_axis",
+          "target_path": "ball",
+          "torque_key": "drive",
+          "sequence_index": 1
+        }
+      },
+      "operations": 18489,
+      "observed_final_plan": {
+        "precision_bits": 192,
+        "max_elapsed_s": "16384"
+      }
+    },
+    {
+      "mode": "actual",
+      "helper_force": true,
+      "checkpoints": [
+        [
+          "16385",
+          "before"
+        ]
+      ],
+      "entry_sha256": "abb8621189a67f47d3361197b21fc6d49925c4661b37a6a42434757bd117cf4e",
+      "program_revision": "sha256:ed9281b0deabb132544aa835f3fd80a21834180e050c9c8f5079a0b15d919b5a",
+      "native_axis": [
+        0.6,
+        0.8,
+        0.0
+      ],
+      "cache_entries": 256,
+      "budget": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "before_ball": {
+        "element_id": [
+          "torque-cases",
+          "demo",
+          "ball"
+        ],
+        "kind": "object",
+        "name": "ball",
+        "class_name": "package/fixture.torque-carriers/torque-carriers/definitions/rotor",
+        "owner": null,
+        "motion": "prescribed",
+        "position_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "orientation_wxyz": [
+          0.8775825618903728,
+          0.2876553231625218,
+          0.3835404308833624,
+          0.0
+        ],
+        "velocity_m_per_s": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "angular_velocity_rad_per_s": [
+          0.0,
+          0.0,
+          1.262177448353619e-29
+        ],
+        "pose_frame": "world",
+        "velocity_measured_in": "world",
+        "velocity_expressed_in": "world",
+        "velocity_reference_point": "center_of_mass",
+        "pose_authority": {
+          "kind": "joint",
+          "relation": "hold"
+        },
+        "own_mass_kg": 2.5,
+        "owned_aggregate_mass_kg": 2.5,
+        "inertia_kg_m2": 1.0,
+        "geometry": {
+          "kind": "sphere",
+          "radius": 1.0
+        },
+        "physical": {
+          "kind": "sphere_body",
+          "radius": 1.0,
+          "mass": 2.5,
+          "inertia": 1.0
+        },
+        "gravity_participation": "inactive_prescribed",
+        "collision": "disabled",
+        "impulses": {
+          "applied_count": 0,
+          "last_application_time_seconds": null,
+          "last_applications": []
+        },
+        "forces": {
+          "active": [],
+          "net_force_world_n": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "acceleration_world_m_per_s2": null,
+          "started_count": 0,
+          "completed_count": 0,
+          "last_change_time_seconds": null,
+          "last_changes": []
+        },
+        "torques": {
+          "active": [],
+          "net_torque_n_m": 0.0,
+          "angular_acceleration_rad_per_s2": null,
+          "axis": null,
+          "rotation_route": "legacy",
+          "rotation_anchor_seconds": null,
+          "signed_angular_speed_rad_per_s": null,
+          "phase_since_anchor_rad": null,
+          "angular_acceleration_reference_rad_per_s2": null,
+          "angular_error_bound_rad": null,
+          "angular_speed_error_bound_rad_per_s": null,
+          "started_count": 0,
+          "completed_count": 0,
+          "last_change_time_seconds": null,
+          "last_changes": []
+        }
+      },
+      "outcome": "refused",
+      "exception_type": "OntoKinError",
+      "message": "Angular velocity must lie on the selected torque axis.",
+      "diagnostic": {
+        "code": "OKL-E-FRAME",
+        "details": {
+          "torque_reason": "incoming_axis",
+          "target_path": "ball",
+          "torque_key": "drive",
+          "sequence_index": 1
+        }
+      },
+      "operations": 15595,
+      "observed_final_plan": {
+        "precision_bits": 192,
+        "max_elapsed_s": "16384"
+      }
+    }
+  ],
+  "source_hashes_unchanged_during_run": true,
+  "script_sha256": "ede1606448a05ea75ffe5fb05deadd819fb30ee5f3c3d9596d5c8c8f408e89d5"
+}

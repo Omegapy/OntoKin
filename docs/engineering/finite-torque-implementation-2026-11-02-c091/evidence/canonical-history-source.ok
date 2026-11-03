@@ -1,0 +1,50 @@
+ontokin "0.22";
+module TorqueCases @ "torque-cases";
+profile "torque-0.1";
+
+import rotors @ "rotors" from "fixture.torque-carriers" version "1.0.0" digest "sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10";
+
+public class Carrier @ "carrier-type" {
+    geometry = empty();
+    physical = no_body();
+    public site tip @ "tip" {
+        pose = pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+        interface = "rigid.origin";
+        size = 0[m];
+    }
+}
+
+scene Demo @ "demo" {
+    duration = 16387[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object ball @ "ball": rotors.Rotor {
+        motion = prescribed;
+        body_mass = 2.5[kg];
+        body_radius = 1[m];
+        marker_radius = 1[m];
+        velocity = vector(world, 0[m/s], 0[m/s], 0[m/s]);
+        omega = vector(world, 0[rad/s], 0[rad/s], 0[rad/s]);
+    }
+    object sibling @ "sibling": rotors.Rotor {
+        omega = vector(world, 0.6[rad/s], 0.8[rad/s], 0[rad/s]);
+        placement = pose(world, vec3(5[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+    }
+    object carrier @ "carrier": Carrier {}
+    object arm @ "arm": Carrier {}
+    joint swivel @ "swivel": hinge {
+        parent = carrier.tip; child = arm.tip;
+        axis = vec3(0.6, 0.8, 0); limits = range(-2[rad], 2[rad]); initial = 1[rad];
+    }
+    action turn @ "turn" = spin(carrier, vector(world, 0.6[rad/s], 0.8[rad/s], 0[rad/s]), 3[s]);
+    joint hold @ "hold": grip { parent = arm.tip; child = ball.origin; }
+    action carry @ "carry" = tween(swivel, 0[rad], 1[s]);
+    at 0[s] sequence {
+        start carry; start turn;
+    }
+    at 1[s] sequence {
+        release hold using incoming;
+        torque ball @ "drive" about world_x using 1[N*m] for 1[s];
+    }
+
+    at 16384[s] sequence { force sibling @ "late-force" using vector(world, 1[N], 0[N], 0[N]) for 2[s]; }
+}

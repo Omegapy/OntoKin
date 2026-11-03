@@ -771,6 +771,9 @@ class _Simulator:
 
 
 def _simulator(model, check=None, *, work=None):
+    if model.profile == "torque-0.1":
+        from .torque_runtime import TorqueSimulator
+        return TorqueSimulator(model, check=check, work=work)
     if model.profile in REACH_PROFILES:
         from .reach_runtime import ReachSimulator
         return ReachSimulator(model, check=check, work=work)
@@ -788,9 +791,15 @@ def _request_work(model, check, work):
     no counters or cache are retained in the reusable source model.
     """
     if model.profile in REACH_PROFILES:
+        if model.profile == "torque-0.1":
+            from .torque_runtime import admit_torque_request_source
+            # The inherited authority check below invokes the original zero-
+            # charge callback. Admit source before that first observation;
+            # the later simulator explicitly takes over this native receipt.
+            admit_torque_request_source(model, work=work, check=check)
         if model.profile in EXECUTION_PROFILES:
             from .reach_numeric import require_execution_work
-            require_execution_work(work, target_contract=("ontokin.glb/0.21" if model.profile == KEYED_MEMBERSHIP_PROFILE else "ontokin.glb/0.20" if model.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if model.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if model.profile == KEYED_REDUCTION_PROFILE else
+            require_execution_work(work, target_contract=("ontokin.glb/0.22" if model.profile == "torque-0.1" else "ontokin.glb/0.21" if model.profile == KEYED_MEMBERSHIP_PROFILE else "ontokin.glb/0.20" if model.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if model.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if model.profile == KEYED_REDUCTION_PROFILE else
                        "ontokin.glb/0.14" if model.profile == KEYED_TRANSFORM_PROFILE else
                       "ontokin.glb/0.13" if model.profile == TEXTURE_PROFILE else
                       "ontokin.glb/0.12" if model.profile == POCKETS_PROFILE else
@@ -819,7 +828,7 @@ def preflight(model: SceneModel, *, check: Callable[[], None] | None = None, wor
     """Validate the authored timeline without creating a persistent live run."""
     check, work = _request_work(model, check, work)
     if model.profile in IMPULSE_PROFILES:
-        _output_budget(model, 1, check=check)
+        _output_budget(model, 1, check=check, work=work)
     simulator = _simulator(model, check=check, work=work)
     simulator.advance(model.duration)
     return {"outcome": "valid", "duration_seconds": time_text(model.duration),
@@ -828,7 +837,21 @@ def preflight(model: SceneModel, *, check: Callable[[], None] | None = None, wor
 
 def _records_per_sample(model: SceneModel, *, constructing: bool = False,
                         check: Callable[[], None] | None = None,
-                        horizon: Fraction | None = None, side: str = "after") -> int:
+                        horizon: Fraction | None = None, side: str = "after",
+                        work=None) -> int:
+    if model.profile == "torque-0.1":
+        from .torque_runtime import torque_source_preflight
+        with torque_source_preflight(model, work=work, check=check) as original_work:
+            return _records_per_sample_unscoped(model, constructing=constructing, check=check,
+                horizon=horizon, side=side, work=original_work)
+    return _records_per_sample_unscoped(model, constructing=constructing, check=check,
+        horizon=horizon, side=side, work=work)
+
+
+def _records_per_sample_unscoped(model: SceneModel, *, constructing: bool = False,
+                                check: Callable[[], None] | None = None,
+                                horizon: Fraction | None = None, side: str = "after",
+                                work=None) -> int:
     """Conservative complete output weight, shared with recorded animation.
 
     Existing row accounting is unchanged. Impulse projections additionally
@@ -849,6 +872,10 @@ def _records_per_sample(model: SceneModel, *, constructing: bool = False,
     if model.profile in REACH_PROFILES:
         from .reach_projection import reach_record_bound
         base += reach_record_bound(model, check=check)
+    if model.profile == "torque-0.1":
+        from .torque_runtime import torque_record_bound
+        base += torque_record_bound(model, constructing=constructing,
+                                    horizon=horizon, side=side, check=check, work=work)
     if constructing:
         return base
     retained: dict[str, int] = {}
@@ -878,9 +905,9 @@ def _records_per_sample(model: SceneModel, *, constructing: bool = False,
 
 def _output_budget(model: SceneModel, sample_count: int, *, constructing: bool = False,
                    check: Callable[[], None] | None = None,
-                   records_per_sample: int | None = None) -> None:
+                   records_per_sample: int | None = None, work=None) -> None:
     if records_per_sample is None:
-        records_per_sample = _records_per_sample(model, constructing=constructing, check=check)
+        records_per_sample = _records_per_sample(model, constructing=constructing, check=check, work=work)
     if sample_count > MAX_SAMPLES or sample_count * records_per_sample > MAX_OUTPUT_RECORDS:
         raise OntoKinError("OKL-E-RESOURCE", "The requested state output exceeds the prototype's inspection budget.",
                            model.span, category="resource_limit", phase="elaboration" if constructing else "inspection",
@@ -898,7 +925,7 @@ def construct(model: SceneModel, *, check=None, work=None) -> dict[str, Any]:
     later action conflict does not prevent this lower-level result.
     """
     check, work = _request_work(model, check, work)
-    _output_budget(model, 1, constructing=True, check=check)
+    _output_budget(model, 1, constructing=True, check=check, work=work)
     try:
         simulator = _simulator(model, check=check, work=work)
         if model.profile in REACH_PROFILES:
@@ -925,7 +952,7 @@ def evaluate(model: SceneModel, times: Iterable[Any] | None = None, *, side: str
     check, work = _request_work(model, check, work)
     if times is None:
         times = ["0", model.duration]
-    records = _records_per_sample(model, check=check)
+    records = _records_per_sample(model, check=check, work=work)
     if model.profile in IMPULSE_PROFILES:
         # Even an empty requested sample list still validates the full horizon
         # and must not allocate an unbounded retained application group.
@@ -961,6 +988,10 @@ def evaluate(model: SceneModel, times: Iterable[Any] | None = None, *, side: str
     if model.profile in FORCE_PROFILES:
         assumptions.update(continuous_external_forces="authored_constant_world_com_intervals_and_uniform_gravity",
                            force_intervals="exact_rational_start_plus_canonical_duration")
+    if model.profile == "torque-0.1":
+        assumptions.update(external_torque="authored_cartesian_couples_and_instantaneous_angular_impulses",
+                           continuous_external_torque="authored_constant_cartesian_world_axis_intervals",
+                           torque_intervals="exact_rational_start_plus_canonical_duration")
     return {
         "outcome": "valid", "level": "evaluated", "profile": model.profile,
         "module": model.module_name, "scene": model.scene_name,
@@ -992,8 +1023,8 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
                            model.span, phase="inspection", blocks=[],
                            details={"duration_seconds": time_text(model.duration),
                                     "requested_time_seconds": time_text(endpoint), "requested_side": side})
-    _output_budget(model, 1, check=check, records_per_sample=(
-        _records_per_sample(model, check=check, horizon=endpoint, side=side) if model.profile in FORCE_PROFILES else None))
+    _output_budget(model, 1, check=check, work=work, records_per_sample=(
+        _records_per_sample(model, check=check, horizon=endpoint, side=side, work=work) if model.profile in FORCE_PROFILES else None))
     simulator = None
     last = None
     failure = None
@@ -1057,6 +1088,10 @@ def evaluate_prefix(model: SceneModel, until: Any, *, side: str = "after",
         simulator = _simulator(model, check=check, work=work)
         if model.profile in REACH_PROFILES:
             simulator.context_kind = context_kind
+        if model.profile == "torque-0.1":
+            # Internal prefix captures may inspect a boundary's before side.
+            # An incoming phase refusal still belongs to the actual request.
+            simulator._torque_requested_observation = (endpoint, side)
         last = capture(Fraction(0), "before")
         while True:
             if check is not None:

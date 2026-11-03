@@ -18,7 +18,7 @@ from .json_limits import measure_json, JSONLimitError
 from .program_diagnostics import diagnostic_dict
 from .program_protocol import MAX_BUDGETS
 from .program_bindings import PROFILE_BINDINGS
-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_MEMBERSHIP_PROFILE, KEYED_REKEY_PROFILES, KEYED_ZIP_PROFILES, KEYED_MERGE_PROFILES, KEYED_FILTER_PROFILES, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, POCKETS_PROFILES, EXECUTION_PROFILES, REACH_PROFILES
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_MEMBERSHIP_PROFILE, TORQUE_PROFILE, KEYED_REKEY_PROFILES, KEYED_ZIP_PROFILES, KEYED_MERGE_PROFILES, KEYED_FILTER_PROFILES, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, POCKETS_PROFILES, EXECUTION_PROFILES, REACH_PROFILES
 from .syntax import Node
 from .validator import FIELD_TYPES, optional
 from .values import KeyedValue, Value, bounded_data
@@ -311,7 +311,10 @@ def prepare_delivery(source, *, until=None, budgets=None, check=None, profile=RE
         endpoint = compiler.model.duration if until is None else until
         capture = None
         if profile in REACH_PROFILES:
-            from .reach_delivery import ReachDeliveryCapture
+            if budget.profile == TORQUE_PROFILE:
+                from .torque_recording import TorqueDeliveryCapture as ReachDeliveryCapture
+            else:
+                from .reach_delivery import ReachDeliveryCapture
             capture = ReachDeliveryCapture(compiler.model, exact_time(endpoint), work=compiler.reach_work)
         result = _evaluate_compiled(source, compiler, budget, endpoint, capture_observer=capture)
         if capture is not None and result["outcome"] == "valid":
@@ -752,7 +755,7 @@ def _project(program, record, fields, compiler, sample, run, frame, budget):
     if "support" in fields:
         result["support"] = core._support_record(compiler, budget)
         result["support"]["profile"] = budget.profile
-        result["support"]["named_destination"] = ("ontokin.glb/0.21" if budget.profile == KEYED_MEMBERSHIP_PROFILE else "ontokin.glb/0.20" if budget.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if budget.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if budget.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if budget.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if budget.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if budget.profile == KEYED_REDUCTION_PROFILE else
+        result["support"]["named_destination"] = ("ontokin.glb/0.22" if budget.profile == TORQUE_PROFILE else "ontokin.glb/0.21" if budget.profile == KEYED_MEMBERSHIP_PROFILE else "ontokin.glb/0.20" if budget.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if budget.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if budget.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if budget.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if budget.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if budget.profile == KEYED_REDUCTION_PROFILE else
                        "ontokin.glb/0.14" if budget.profile == KEYED_TRANSFORM_PROFILE else
                       "ontokin.glb/0.13" if budget.profile == TEXTURE_PROFILE else
                       "ontokin.glb/0.12" if budget.profile == POCKETS_PROFILE else
@@ -771,6 +774,9 @@ def _project(program, record, fields, compiler, sample, run, frame, budget):
                 result[field] = {"available": False, "reason": "definition_has_no_occurrence_state" if record["_definition"] else "source_is_unresolved"}
         return result
     path = record.get("_object_path")
+    if "source" in fields and record["kind"] == "object" and path is not None and budget.profile == TORQUE_PROFILE:
+        from .torque_source import source_intervals
+        result["source"]["torque_intervals"] = source_intervals(compiler, path, budget)
     if "actions" in fields and budget.profile in REACH_PROFILES:
         result["actions"] = _reach_actions(compiler, record, path, sample, budget)
     if "geometry" in fields and path is not None and compiler.model.objects[path].geometry["kind"] in ("loft", "extrusion", "placed", "holes", "ring_loft", "framed_loft", "pockets"):
