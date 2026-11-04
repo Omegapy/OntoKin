@@ -1,0 +1,36 @@
+{
+  "case": "p30-underflow-replacement",
+  "source_sha256": "sha256:0503600ac2e467111633af5ea98fc6d8a3f87221412ef60e2a35d9314a554e94",
+  "probes": [
+    {
+      "mutation": "unchanged",
+      "sha256": "sha256:02e793f7d13e5da5967bbda3e949b13f7072c7249c81205b730946540a616475",
+      "literal_history_reader": "passed",
+      "supplied_byte_reader": "passed"
+    },
+    {
+      "mutation": "event_order",
+      "sha256": "sha256:cb7e02b9f329698b9037fcc98a73dafc751a8665178f956198b4e578035c4d2c",
+      "literal_history_reader": "rejected",
+      "supplied_byte_reader": "rejected",
+      "diagnostic_code": "OKL-E-NUMERIC",
+      "diagnostic_message": "A recorded source identity, control or invariant value differs from source."
+    },
+    {
+      "mutation": "operand_span",
+      "sha256": "sha256:8b6f3cadfc39ec331726246c3a9ce3e58cc33252296c4c0e833cbf2dcd9a861a",
+      "literal_history_reader": "rejected",
+      "supplied_byte_reader": "rejected",
+      "diagnostic_code": "OKL-E-NUMERIC",
+      "diagnostic_message": "A recorded source identity, control or invariant value differs from source."
+    },
+    {
+      "mutation": "certificate_bound",
+      "sha256": "sha256:17d5f12e7c194e49251ffa18d78c6445ff14a8b1d8d7e440aa711755e4012291",
+      "literal_history_reader": "passed",
+      "supplied_byte_reader": "rejected",
+      "diagnostic_code": "OKL-E-NUMERIC",
+      "diagnostic_message": "A torque certificate understates a required exact sum."
+    }
+  ]
+}
