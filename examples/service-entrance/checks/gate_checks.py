@@ -194,11 +194,11 @@ def source_dynamics(source):
         require(end not in (1, 2, 3, end_time) or (v == 0 and x == (Fraction(3, 2) if end in (1, 2) else 0)), 'incorrect source endpoint')
     return dict(mass_kg=float(mass), initial=initial, initial_world_positions_m=poses, phases=phases, peak_speed_m_s=max((abs(p['start_v_m_s']) for p in phases)))
 
-def measure(data, physics):
+def measure(data, physics, root_count=3):
     graph, binary = read_glb(data)
     times, tracks, clock_error = read_tracks(graph, binary)
     nodes = graph['nodes']
-    require(len(nodes) == 3 and sorted(graph['scenes'][graph['scene']]['nodes']) == [0, 1, 2] and {n['name'] for n in nodes} >= {'post','gate'}, 'expected three root meshes')
+    require(len(nodes) == root_count and sorted(graph['scenes'][graph['scene']]['nodes']) == list(range(root_count)) and {n['name'] for n in nodes} >= {'post','gate'}, f'expected {root_count} root meshes including gate and post')
     require(all((not any((k in n for k in ('matrix', 'children', 'scale'))) for n in nodes)), 'unexpected hierarchy or scale')
     features = {}
     fixed_error = rotation_error = 0.0
