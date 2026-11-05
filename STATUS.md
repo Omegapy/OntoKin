@@ -1,6 +1,12 @@
-# OntoKin development status — C090
+# OntoKin development status — C127
 
 ## Current checkpoint
+
+[PR #93](https://github.com/Omegapy/OntoKin/pull/93) integrated the [editable service entrance](examples/service-entrance/README.md) at [`9ce0df0e5de0`](https://github.com/Omegapy/OntoKin/commit/9ce0df0e5de0fa84afa93ab78f17f62dbd951275). Both the visual and agent guides lead to its source. On Linux x86-64 with CPython 3.12.14, both fresh builds reproduced the accepted source bundles and animated GLBs from C126 byte for byte. The 0.58 m cart cleared the gate and post by 0.46 m per side. The 0.90 m edit left 0.30 m per side. Both used the pinned [simulation runtime](https://github.com/Omegapy/OntoKin/commit/3a1cd5785a9dd0c64d9b74ef97cdc5e6b609b117). Mesh measurements, independent playback and the documentation check passed at the merge.
+
+On reviewed candidate `88c2fd9fada027c8090f671af1bc381fcc301f9b`, one complete stock core run passed all 3,988 original methods with zero skips, plus source, agent, construction, surface, impulse and documentation checks. Sixteen external conformance cases remain pending. The C127 handoff preserves the two failed C126 runs and the fresh logs. This example is integrated development. The human first-use study, native-platform coverage and finite release gates remain open. The next proposed agent trial adds a second independently parked cart from the repository entry point.
+
+## Earlier contract checkpoint — C090
 
 [C090](docs/engineering/finite-torque-contract-2026-11-02-c090/README.md) completes the finite-torque contract and independent input freeze selected by C089. The reviewed [adoption](docs/language-design/torque-v0.1/ADOPTION.md) fixes explicit source `0.22` / `torque-0.1`, Agent/0.22 and recorded GLB/0.22 bindings. **Torque runtime implementation and release remain unfinished.** The [C091 task](docs/engineering/finite-torque-contract-2026-11-02-c090/NEXT-TASK.md) implements and executes the complete frozen obligations; it does not repeat the utility review or silently alter the frozen expectations.
 
@@ -26,7 +32,7 @@ Published adoption/input candidate `754f72106279abc6c867ab180300f2ba382a3f2d`, t
 
 ## Ownership and handoff
 
-**C127 active integration lease.** Owner `interactive-c127-service-entrance-20261105T185655Z` holds main integration from `2026-11-05T18:56:55Z` through `2026-11-05T19:26:55Z` to integrate PR #93 and verify both service-cart builds. The observed base is `c7bb631f96069dd67cc242f6822de7a16623f996` and reviewed head is `88c2fd9fada027c8090f671af1bc381fcc301f9b`. All 3,988 candidate unit tests and the six other stock checks passed on Linux x86-64 with CPython 3.12.14. The reservation covers main integration, this ownership record and the seven paths in PR #93. Other workers retain their independent branch scopes.
+**C127 integration lease release.** This closing update releases `interactive-c127-service-entrance-20261105T185655Z` on verified publication and readback of its STATUS-only commit. The lease began at `2026-11-05T18:56:55Z` with expiry `2026-11-05T19:26:55Z`. PR #93 is merged and both builds were verified at `9ce0df0e5de0fa84afa93ab78f17f62dbd951275`. Consult actual main, open PRs and current ownership before further integration.
 
 This expected-head closing publication releases owner `interactive-c090-torque-contract-20261102-7of9`'s main integration lease only after actual main and exact STATUS readback. Its recorded interval is `2026-11-02T21:45:28Z` through `2026-11-02T22:15:28Z`. The standalone closing receipt identifies final head/tree and effective release. A saved status is not proof of current remote ownership; reconcile actual refs, branches, PRs and CI before C091.
 
