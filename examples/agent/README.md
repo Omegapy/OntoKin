@@ -4,6 +4,8 @@ This demonstration uses the working `ontokin.agent/0.1` interface to create a pr
 
 The scene contains two instances of the same `Rig` class. The first assembly moves while its head turns and its hand extends. The second assembly provides an unchanged reference. A local edit increases only the first head's radius parameter from `0.2 m` to `0.35 m`; the second head remains at `0.2 m`.
 
+For an editable example with two moving objects, [animate a service cart passing through a sliding gate](../service-entrance/README.md). Build the animation, change the cart width, and measure the clearance on each side from the exported meshes.
+
 ## Open the result
 
 Open [the offline viewer](../visual/viewer.html) from a local checkout, choose **Open GLB**, and select [repaired.glb](repaired.glb). Play the animation or scrub to **1.5 seconds**. The moving head is at `(1.5, 1, 0) m`; the reference head is at `(0, 1, 1.5) m`. The first head has the larger geometry. The viewer reads the imported GLB locally.
