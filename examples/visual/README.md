@@ -2,6 +2,8 @@
 
 These examples provide a complete path from an editable `.ok` program to a visible 3D animation. Python evaluates the authored motion and writes a glTF 2.0 binary file (`.glb`). The offline viewer loads that file with Three.js and plays its stored animation.
 
+[Animate a service cart passing through a sliding gate](../service-entrance/README.md). Edit the cart width, export the animation, and measure how much space remains on each side.
+
 ## Open the viewer
 
 Open [viewer.html](viewer.html) from your local checkout. No server, installation, account, or network access is required. On macOS, from the repository root:
