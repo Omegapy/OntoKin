@@ -1,0 +1,85 @@
+ontokin "0.22";
+module ServiceEntrance @ "service-entrance";
+profile "torque-0.1";
+execution { max_operations = 1000000; max_elapsed = 80[s]; }
+
+class Gate @ "gate" {
+    geometry = extrude(keyed<PolygonVertex> {
+        "bottom-left": polygon_vertex(0, planar_point(-0.75[m], -0.48[m]), "steel"),
+        "bottom-right": polygon_vertex(10, planar_point(0.75[m], -0.48[m]), "steel"),
+        "top-right": polygon_vertex(20, planar_point(0.75[m], 0.48[m]), "steel"),
+        "top-left": polygon_vertex(30, planar_point(-0.75[m], 0.48[m]), "steel")
+    }, keyed<SurfaceMaterial> {
+        "steel": surface_material(rgba(0.045, 0.32, 0.37, 1), 0.25, 0.55)
+    }, 0.08[m], "steel", "steel");
+    physical = sphere_body(0.25[m], 10[kg]);
+    motion = dynamic;
+    collision = disabled;
+}
+
+class Post @ "post" {
+    geometry = extrude(keyed<PolygonVertex> {
+        "bottom-left": polygon_vertex(0, planar_point(-0.075[m], 0[m]), "enamel"),
+        "bottom-right": polygon_vertex(10, planar_point(0.075[m], 0[m]), "enamel"),
+        "top-right": polygon_vertex(20, planar_point(0.075[m], 1.16[m]), "enamel"),
+        "top-left": polygon_vertex(30, planar_point(-0.075[m], 1.16[m]), "enamel")
+    }, keyed<SurfaceMaterial> {
+        "enamel": surface_material(rgba(0.92, 0.43, 0.06, 1), 0.1, 0.6)
+    }, 0.16[m], "enamel", "enamel");
+    physical = no_body();
+}
+
+class Cart @ "cart" {
+    geometry = extrude(keyed<PolygonVertex> {
+        "base-left": polygon_vertex(0, planar_point(-0.29[m], -0.12[m]), "frame"),
+        "base-right": polygon_vertex(10, planar_point(0.29[m], -0.12[m]), "frame"),
+        "deck-right": polygon_vertex(20, planar_point(0.29[m], -0.02[m]), "frame"),
+        "bin-right": polygon_vertex(30, planar_point(0.23[m], -0.02[m]), "bin"),
+        "rim-right": polygon_vertex(40, planar_point(0.23[m], 0.17[m]), "bin"),
+        "rim-left": polygon_vertex(50, planar_point(-0.23[m], 0.17[m]), "bin"),
+        "bin-left": polygon_vertex(60, planar_point(-0.23[m], -0.02[m]), "frame"),
+        "deck-left": polygon_vertex(70, planar_point(-0.29[m], -0.02[m]), "frame")
+    }, keyed<SurfaceMaterial> {
+        "frame": surface_material(rgba(0.11, 0.13, 0.15, 1), 0.2, 0.5),
+        "bin": surface_material(rgba(0.86, 0.67, 0.15, 1), 0.1, 0.58)
+    }, 0.62[m], "bin", "bin");
+    physical = sphere_body(0.24[m], 4[kg]);
+    motion = dynamic;
+    collision = disabled;
+}
+
+scene Entrance @ "entrance" {
+    duration = 3.25[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object post @ "post": Post {
+        placement = pose(world, vec3(-0.825[m], 0[m], -0.08[m]), quat(1, 0, 0, 0));
+    }
+    object gate @ "gate": Gate {
+        placement = pose(world, vec3(0[m], 0.56[m], -0.04[m]), quat(1, 0, 0, 0));
+        velocity = vector(world, 0[m/s], 0[m/s], 0[m/s]);
+        omega = vector(world, 0[rad/s], 0[rad/s], 0[rad/s]);
+    }
+    object cart @ "cart": Cart {
+        placement = pose(world, vec3(0[m], 0.16[m], -1.30[m]), quat(1, 0, 0, 0));
+        velocity = vector(world, 0[m/s], 0[m/s], 0[m/s]);
+        omega = vector(world, 0[rad/s], 0[rad/s], 0[rad/s]);
+    }
+    at 0[s] sequence {
+        force gate @ "accelerate-open" using vector(world, 60[N], 0[N], 0[N]) for 0.5[s];
+    }
+    at 0.5[s] sequence {
+        force gate @ "brake-open" using vector(world, -60[N], 0[N], 0[N]) for 0.5[s];
+    }
+    at 1[s] sequence {
+        force cart @ "drive" using vector(world, 0[N], 0[N], 32[N]) for 0.5[s];
+    }
+    at 1.5[s] sequence {
+        force cart @ "brake" using vector(world, 0[N], 0[N], -32[N]) for 0.5[s];
+    }
+    at 2[s] sequence {
+        force gate @ "accelerate-close" using vector(world, -60[N], 0[N], 0[N]) for 0.5[s];
+    }
+    at 2.5[s] sequence {
+        force gate @ "brake-close" using vector(world, 60[N], 0[N], 0[N]) for 0.5[s];
+    }
+}
