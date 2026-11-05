@@ -26,6 +26,8 @@ Published adoption/input candidate `754f72106279abc6c867ab180300f2ba382a3f2d`, t
 
 ## Ownership and handoff
 
+**C127 active integration lease.** Owner `interactive-c127-service-entrance-20261105T185655Z` holds main integration from `2026-11-05T18:56:55Z` through `2026-11-05T19:26:55Z` to integrate PR #93 and verify both service-cart builds. The observed base is `c7bb631f96069dd67cc242f6822de7a16623f996` and reviewed head is `88c2fd9fada027c8090f671af1bc381fcc301f9b`. All 3,988 candidate unit tests and the six other stock checks passed on Linux x86-64 with CPython 3.12.14. The reservation covers main integration, this ownership record and the seven paths in PR #93. Other workers retain their independent branch scopes.
+
 This expected-head closing publication releases owner `interactive-c090-torque-contract-20261102-7of9`'s main integration lease only after actual main and exact STATUS readback. Its recorded interval is `2026-11-02T21:45:28Z` through `2026-11-02T22:15:28Z`. The standalone closing receipt identifies final head/tree and effective release. A saved status is not proof of current remote ownership; reconcile actual refs, branches, PRs and CI before C091.
 
 No hosted job or continuation schedule was started. Workflows remain manual-only with default-false opt-in. Historical October 19 Actions failures are not current-source evidence; no repository-wide Actions setting is inferred. [Issue #26](https://github.com/Omegapy/OntoKin/issues/26) remains the broader open handoff.
