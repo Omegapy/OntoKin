@@ -6,6 +6,18 @@ OntoKin (pronounced **ON-toh-kin**) is a programming language under development,
 
 The current direction begins with exterior 3D models and short animations. Those objects should remain reusable in larger scenes, video games, and eventually more complex virtual worlds. Physics and mechanics are central to the design; mathematics gives those descriptions precise meaning.
 
+## Try an agent edit
+
+From a local checkout with Python 3.11 or later, run this example from the repository root.
+
+```sh
+python3 tools/build_agent_demo.py --output-dir /tmp/ontokin-first-model
+```
+
+Open the checkout's [offline viewer](examples/visual/viewer.html), choose **Open GLB**, and select `/tmp/ontokin-first-model/repaired.glb`. Scrub to **1.5 s**. The moving assembly's blue head is wider than the stationary assembly's head. The example uses a scripted client to make the edit, reject a value with the wrong unit, and retrieve the animation through the agent interface.
+
+To try your own edit, start with the [editable scene](examples/agent/authoring-demo.ok), the [Agent/0.1 request schema](docs/language-design/agent-v0.1/request.schema.json), and the [agent guide](examples/agent/README.md). The [first-use task](examples/agent/first-use.md) describes how to test a fresh coding agent on this workflow.
+
 > **Project status:** OntoKin remains in development. The reference package is **0.4.0**. Its development line supports pinned reusable assemblies, native exterior surfaces and regional PBR materials, instantaneous impulses, and finite center-of-mass force intervals. Explicit Agent/0.5 and recorded GLB/0.5 support force-program inspection, source repair and artifact retrieval. Earlier profiles retain their meanings and defaults. [STATUS.md](STATUS.md) identifies integrated implementation, complete release evidence and remaining requirements; component implementation alone does not close a release or the broader product goal.
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.
