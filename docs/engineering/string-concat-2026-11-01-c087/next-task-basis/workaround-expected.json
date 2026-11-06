@@ -1,7 +1,0 @@
-{
-  "status": "independently authored before execution",
-  "purpose": "Establish that guarded optional lookup is already expressible by a typed reduce helper; do not claim a primitive unlocks previously impossible semantics.",
-  "profile": "keyed-rekey-0.1",
-  "expected_widths_m": {"present": 2.0, "missing": 1.0},
-  "reasoning": "The immutable map contains only left:2m. Reducing key equality from false is true for left and false for right. The conditional therefore selects the existing 2m value or the 1m fallback without dynamically looking up the absent right key."
-}

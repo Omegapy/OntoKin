@@ -1,8 +1,0 @@
-ontokin "0.14";
-module OldHelper @ "old-helper";
-profile "keyed-transform-0.1";
-
-public fn reduce_keyed @ "retained-user-name"(value: Length) -> Length { return value * 2; }
-private fn secret @ "private-helper"(value: Length) -> Length { return value; }
-public fn twice @ "twice"(value: Length) -> Length { return reduce_keyed(value); }
-public fn widths @ "widths"(input: Keyed<Length>) -> Keyed<Length> { return map_keyed<Length>(input, (older_key, older_value) -> older_value * 2); }

@@ -1,7 +1,0 @@
-ontokin "0.17";
-module Legacy @ "legacy";
-profile "keyed-merge-0.1";
-
-public fn zip_keyed @ "ordinary-zip"(x:Int)->Int{return x+1;}
-public fn values @ "values"()->Keyed<Int>{return merge_keyed<Int>(keyed<Int>{"a":2},keyed<Int>{"b":3});}
-private fn hidden @ "hidden"()->Int{return 1;}

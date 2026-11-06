@@ -1,7 +1,0 @@
-# Independent review: Agent source-file scope amendment
-
-Accepted for publication and exact remote readback. Amendment `d53ae7f40659686d0874ced5d342deaa1a1421fd6ce17b9e6dd02b1b68510a54` changes exactly seven edit request scope arrays from the occurrence ID to `["sources", "entry"]`. The unchanged C087 request schema and `BudgetProtocol.validate_request` require this exact source-file scope.
-
-I independently replayed all seven test/replace pairs, reconstructed the exact replacement request file bytes, and checked all 904 effective files and modes. The other 903 files are byte-identical. All source bytes, spans, replacements, request IDs, expected statuses and semantic/resource/geometry/provenance answers remain unchanged. Each original request is rejected by the unchanged .20 schema after schema-version-only projection, and each amended request passes. The schema and BudgetProtocol are unchanged. The four runtime source-scope/patch functions are byte-identical despite unrelated .21 import/destination wiring elsewhere in program_runtime.py.
-
-The original failed Agent summary and transcript remain present with the hashes declared by the amendment. The effective manifest openly records that this transport correction follows candidate observation. I did not import or execute product code. Remote publication/readback remains required before the amended Agent run. Exact evidence is in the companion JSON receipt.

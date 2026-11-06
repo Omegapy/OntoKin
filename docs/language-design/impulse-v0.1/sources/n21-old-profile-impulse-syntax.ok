@@ -1,9 +1,0 @@
-ontokin "0.3";
-module ImpulseDemo @ "impulse-demo";
-profile "surface-0.1";
-scene Demo @ "demo" {
-    duration = 2[s];
-    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
-    object ball @ "ball": Object { physical = sphere_body(0.5[m], 2[kg]); motion = dynamic; }
-    at 1[s] sequence { impulse ball using vector(world, 6[N*s], 0[N*s], 0[N*s]) at point(ball.frame, 0[m], 0[m], 0[m]); }
-}

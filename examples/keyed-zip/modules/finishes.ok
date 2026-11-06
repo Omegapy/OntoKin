@@ -1,9 +1,0 @@
-ontokin "0.17";
-module Finishes @ "finishes";
-profile "keyed-merge-0.1";
-
-public fn coats @ "coats"(warm:Bool)->Keyed<SurfaceMaterial>{
-    return merge_keyed<SurfaceMaterial>(
-        keyed<SurfaceMaterial>{"left":surface_material(if warm then rgba(0.8,0.25,0.1,1) else rgba(0.25,0.5,0.75,1),0,0.7)},
-        keyed<SurfaceMaterial>{"right":surface_material(rgba(0.25,0.5,0.75,1),0,0.7)});
-}

@@ -1,5 +1,0 @@
-# Polygon extrusion examples
-
-These editable `.ok` files and analytic expectations were frozen before C075 implementation. The [versioned decision](../../docs/language-design/polygon-extrusion-v0.1/ADOPTION.md) defines the source contract. `rectangle.ok` creates a plate; `concave-bracket.ok` creates an L bracket. `assembly.ok` imports the exact pinned `parts.ok` library, while `generated.ok` creates three independently keyed instances with different depths. `assembly-repaired.ok` changes one first-instance corner and preserves its sibling and library.
-
-`expected.json` defines outcomes and independent measurements. Its cases include permitted boundary values, invalid topology, wrong units, earlier-version rejection and a shape whose binary64 outline collapses in binary32 delivery. The freeze records source and expected bytes; it asserts no executed pass. Use the explicit source .8/Agent .8/GLB .8 binding and retain default execution budgets unless a source declares more and the host independently authorizes it.

@@ -1,7 +1,0 @@
-ontokin "0.17";
-module Dimensions @ "dimensions";
-profile "keyed-merge-0.1";
-
-public fn widths @ "widths"(left_width:Length)->Keyed<Length>{
-    return merge_keyed<Length>(keyed<Length>{"right":2[m]},keyed<Length>{"left":left_width});
-}

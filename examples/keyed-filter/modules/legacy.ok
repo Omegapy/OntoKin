@@ -1,8 +1,0 @@
-ontokin "0.15";
-module Legacy @ "legacy";
-profile "keyed-reduction-0.1";
-
-public fn keep @ "keep"(x: Length) -> Bool { return x >= 0.5[m]; }
-public fn filter_keyed @ "ordinary-filter"(x: Length) -> Bool { return x >= 0.5[m]; }
-private fn hidden @ "hidden"(x: Length) -> Bool { return true; }
-public fn threshold @ "threshold"() -> Length { return reduce_keyed<Length>(keyed<Length>{"a": 0.25[m], "b": 0.25[m]}, 0[m], (acc, k, v) -> acc + v); }

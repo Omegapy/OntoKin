@@ -1,9 +1,0 @@
-(* Reviewed C086 supplement; exact publication establishes this selected contract. *)
-(* Supplement to unchanged source .18 grammar and lexical precedence. *)
-rekey-keyed-expression = "rekey_keyed", "<", type, ">", "(", expression, ",",
-                         "(", identifier, ",", identifier, ")", "->", expression, ")" ;
-(* Exactly one explicit leaf type T; input/result Keyed<T>, body String. *)
-(* Distinct unshadowed read-only binders String old_key and T value. *)
-(* Canonical old-key callbacks; immediate validated-new-key collision refusal. *)
-(* Successful output is sorted by new keys; exact payloads are preserved. *)
-(* Input/result at most 256 entries; no new container or String operation. *)

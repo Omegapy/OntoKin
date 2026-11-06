@@ -1,7 +1,0 @@
-(* C081 supplement to the unchanged .13 grammar and lexical precedence *)
-(* Effective only for source 0.14 / keyed-transform-0.1 *)
-map-keyed-expression = "map_keyed", "<", type, ">", "(", expression, ",",
-                       "(", identifier, ",", identifier, ")", "->", expression, ")" ;
-(* Add map-keyed-expression to primary-expression in Parser14 only *)
-(* First identifier binds the String key; second binds the input leaf value *)
-(* Binders have body-only scope; admission and shadowing rules are in ADOPTION.md *)

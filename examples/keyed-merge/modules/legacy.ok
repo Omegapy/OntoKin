@@ -1,7 +1,0 @@
-ontokin "0.16";
-module Legacy @ "legacy";
-profile "keyed-filter-0.1";
-
-public fn merge_keyed @ "ordinary-merge"(x: Int) -> Int { return x + 1; }
-public fn left_group @ "left-group"() -> Keyed<Int> { return filter_keyed<Int>(keyed<Int>{"a": 1, "z": 9}, (fk, fv) -> fv < 5); }
-private fn hidden @ "hidden"() -> Keyed<Int> { return keyed<Int>{}; }
