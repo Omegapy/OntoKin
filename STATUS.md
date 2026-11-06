@@ -32,6 +32,8 @@ Published adoption/input candidate `754f72106279abc6c867ab180300f2ba382a3f2d`, t
 
 ## Ownership and handoff
 
+**C133 main integration lease.** Owner `interactive-c133-first-use-20261106` holds the main integration lease for PR #91 documentation and resulting-main verification from 2026-11-06T03:11:07Z to 2026-11-06T03:41:07Z. Observed main `36c72f14ece77dbd6c3ed79e6566cff206ad2080` and PR head `3e5280530015ddbd97643fc70a8d15729f3cead9`. PR #94 remains on its separate seven-step regression gate.
+
 **C127 integration lease release.** This closing update releases `interactive-c127-service-entrance-20261105T185655Z` on verified publication and readback of its STATUS-only commit. The lease began at `2026-11-05T18:56:55Z` with expiry `2026-11-05T19:26:55Z`. PR #93 is merged and both builds were verified at `9ce0df0e5de0fa84afa93ab78f17f62dbd951275`. Consult actual main, open PRs and current ownership before further integration.
 
 This expected-head closing publication releases owner `interactive-c090-torque-contract-20261102-7of9`'s main integration lease only after actual main and exact STATUS readback. Its recorded interval is `2026-11-02T21:45:28Z` through `2026-11-02T22:15:28Z`. The standalone closing receipt identifies final head/tree and effective release. A saved status is not proof of current remote ownership; reconcile actual refs, branches, PRs and CI before C091.
