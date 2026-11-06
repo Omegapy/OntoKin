@@ -1,6 +1,14 @@
-# OntoKin development status — C127
+# OntoKin development status — C133
 
 ## Current checkpoint
+
+[PR #91](https://github.com/Omegapy/OntoKin/pull/91) added the first agent edit to the [README](README.md#try-an-agent-edit). At the [main merge](https://github.com/Omegapy/OntoKin/commit/18854eb7d7a0a615596920cff2444906b5b1f39e), the documentation checker passed and the scripted edit passed all 18 checks across 41 operations on Linux x86-64, CPython 3.12.14. Its 125,892-byte animation matched the reviewed candidate byte for byte. The independent newcomer playback trial remains open.
+
+[PR #92](https://github.com/Omegapy/OntoKin/pull/92) integrated the native-reader verification setup into the [torque development branch](https://github.com/Omegapy/OntoKin/commit/70bd425b53ab01fd65ab7e19cc52198c60b9d4ab). The merged setup passed the decoder preflight, 11 test methods, 47 subtests and the documentation checker. [PR #90](https://github.com/Omegapy/OntoKin/pull/90) remains draft. The [retention index](https://github.com/Omegapy/OntoKin/blob/cf95177318f174053b16d5e4f51d8f2fbacd7542/RETAINED-HEADS.json) preserves the original work heads for #91 and #92.
+
+[PR #94](https://github.com/Omegapy/OntoKin/pull/94) remains draft at `fe6a9dd23511916f49dc52fc9c5854a8108b95e0`. Its next gate is one complete seven-step run on a persistent Linux x86-64 runner. The two interrupted attempts together cover 2,611 distinct methods out of 3,988. Neither has a complete stock step or worker exit. After a passing audit, reconcile the README, first-use documentation and STATUS changes on current main before integrating the service checker.
+
+## Service-entrance checkpoint — C127
 
 [PR #93](https://github.com/Omegapy/OntoKin/pull/93) integrated the [editable service entrance](examples/service-entrance/README.md) at [`9ce0df0e5de0`](https://github.com/Omegapy/OntoKin/commit/9ce0df0e5de0fa84afa93ab78f17f62dbd951275). Both the visual and agent guides lead to its source. On Linux x86-64 with CPython 3.12.14, both fresh builds reproduced the accepted source bundles and animated GLBs from C126 byte for byte. The 0.58 m cart cleared the gate and post by 0.46 m per side. The 0.90 m edit left 0.30 m per side. Both used the pinned [simulation runtime](https://github.com/Omegapy/OntoKin/commit/3a1cd5785a9dd0c64d9b74ef97cdc5e6b609b117). Mesh measurements, independent playback and the documentation check passed at the merge.
 
@@ -32,7 +40,7 @@ Published adoption/input candidate `754f72106279abc6c867ab180300f2ba382a3f2d`, t
 
 ## Ownership and handoff
 
-**C133 main integration lease.** Owner `interactive-c133-first-use-20261106` holds the main integration lease for PR #91 documentation and resulting-main verification from 2026-11-06T03:11:07Z to 2026-11-06T03:41:07Z. Observed main `36c72f14ece77dbd6c3ed79e6566cff206ad2080` and PR head `3e5280530015ddbd97643fc70a8d15729f3cead9`. PR #94 remains on its separate seven-step regression gate.
+**C133 integration lease release.** Owner `interactive-c133-first-use-20261106` releases the lease after verified publication and readback of this STATUS-only commit. The lease at `e40cfc2935a9c42402b9771b24c7476eb968b720` covered PR #91 from 2026-11-06T03:11:07Z to 2026-11-06T03:41:07Z. The actual merge and its verification are recorded above.
 
 **C127 integration lease release.** This closing update releases `interactive-c127-service-entrance-20261105T185655Z` on verified publication and readback of its STATUS-only commit. The lease began at `2026-11-05T18:56:55Z` with expiry `2026-11-05T19:26:55Z`. PR #93 is merged and both builds were verified at `9ce0df0e5de0fa84afa93ab78f17f62dbd951275`. Consult actual main, open PRs and current ownership before further integration.
 
