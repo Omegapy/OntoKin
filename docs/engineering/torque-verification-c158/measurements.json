@@ -1,0 +1,345 @@
+{
+  "measured_commit": "53e7648b805c2ae29a5089709d17842252899e6c",
+  "measured_tree": "655a61f34587c23a40817e8223df9231916f63e2",
+  "fresh_trials": {
+    "configured-A1": {
+      "elapsed_s": 32.939969,
+      "operations": 452627,
+      "grant": {
+        "max_elapsed_ms": 80000,
+        "max_operations": 1000000
+      },
+      "stage": "publication",
+      "methods": 13,
+      "passed": true,
+      "artifact": {
+        "bytes": 2447148,
+        "sha256": "b6e235d31b6482878695a166fe12ebf3ed284ccc95addf55537dacc80ebc424c"
+      },
+      "receipt_sha256": "31ea90873847672f13c0b5e244347312be0f48f9384bb89957f3fd5acaa417d5"
+    },
+    "original-A1": {
+      "elapsed_s": 30.002949,
+      "operations": 271006,
+      "grant": {
+        "max_elapsed_ms": 30000,
+        "max_operations": 1000000
+      },
+      "stage": "recording_export_readback",
+      "methods": 0,
+      "passed": false,
+      "artifact": null,
+      "receipt_sha256": "a4e0816d3a52bc2dd67b42ee9e4f04fd550fb9fcb19b7052e76743c81a521f07"
+    },
+    "configured-A2": {
+      "elapsed_s": 32.723059,
+      "operations": 452627,
+      "grant": {
+        "max_elapsed_ms": 80000,
+        "max_operations": 1000000
+      },
+      "stage": "publication",
+      "methods": 13,
+      "passed": true,
+      "artifact": {
+        "bytes": 2447148,
+        "sha256": "b6e235d31b6482878695a166fe12ebf3ed284ccc95addf55537dacc80ebc424c"
+      },
+      "receipt_sha256": "6f623ba10e37b6f5301fa91544a57f432ec32fc4e67f5ef988c83099a0d28a7c"
+    },
+    "original-A2": {
+      "elapsed_s": 30.000757,
+      "operations": 354440,
+      "grant": {
+        "max_elapsed_ms": 30000,
+        "max_operations": 1000000
+      },
+      "stage": "recording_export_readback",
+      "methods": 0,
+      "passed": false,
+      "artifact": null,
+      "receipt_sha256": "c167588148093dd431cc69c9988bf8553441472f4f24e938e4fd55a8ba0ac913"
+    }
+  },
+  "configured_sampler": {
+    "producer_s": 35.68571962900023,
+    "total": 1107,
+    "source_watch_leaf": 258,
+    "key_leaf": 89,
+    "value_leaf": 89,
+    "profile_sha256": "33cc85df935859ff407c8f1f53f49eba1e89f0de1f3fac4ef7f12d9cb88b268d"
+  },
+  "bindings": {
+    "result.json": {
+      "input_sha256": "fce8645cf963d3b3a5ca28e96e5c5c9bfb930f9ad61e6fe2c127befbcb087202",
+      "all": 1251,
+      "final_bindings": 70,
+      "shared_checks": 13
+    },
+    "result-C158-profile-A1.json": {
+      "input_sha256": "33cc85df935859ff407c8f1f53f49eba1e89f0de1f3fac4ef7f12d9cb88b268d",
+      "all": 1107,
+      "final_bindings": 47,
+      "shared_checks": 14
+    }
+  },
+  "census": [
+    {
+      "request_id": "seed-create",
+      "operation": "create",
+      "watch_returned_true": 3826,
+      "watch_returned_false": 0
+    },
+    {
+      "request_id": "seed-export",
+      "operation": "export",
+      "watch_returned_true": 253946,
+      "watch_returned_false": 0
+    }
+  ],
+  "dicts_per_watch": 79,
+  "entries_per_watch": 465,
+  "python_microbench_median_us": {
+    "two_scans": 34.43513428594867,
+    "combined_scan": 33.98581714204089,
+    "full_original_guard": 48.37166571373278
+  },
+  "native_research_microbench": {
+    "native-probe.json": {
+      "median_us": {
+        "stock_segment": 21.549264999976003,
+        "native_segment": 5.29322249803954,
+        "stock_full": 28.034914998897875,
+        "native_full": 11.204527500012773
+      },
+      "median_paired_saving_us": {
+        "segment": 16.456112498417497,
+        "full": 16.579372500018508
+      },
+      "controls": 28,
+      "report_sha256": "9a7b48470df7ca569eec27578673b4d14ce6c86036fa035863b7b1eb8c8aa324"
+    }
+  },
+  "authoritative_controls": {
+    "tests": 30,
+    "passed": true,
+    "log_sha256": "807a16f89b62ed9bc69925765c9ed445f15da60bdfc5533960e1da1c1100186e"
+  },
+  "original_direct": {
+    "entry_point": "ontokin.budget_runtime.execute_torque_export",
+    "wall_seconds": 5.928873783999734,
+    "profile": "original source/options, default real monotonic clock; direct exporter without Agent",
+    "receipt": {
+      "schema_version": "ontokin.execution-budget/0.1",
+      "defaults": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "policy_id": "sha256:7fa5c9e224d9ca55e4f34ffcfa6986574957acd3d5a9124c4408179913fe85fc",
+      "host_ceilings": {
+        "max_operations": 1000000,
+        "max_elapsed_ms": 30000
+      },
+      "source_request": {
+        "max_operations": 1000000,
+        "max_elapsed_ms": 30000
+      },
+      "caller_caps": {},
+      "effective": {
+        "max_operations": 1000000,
+        "max_elapsed_ms": 30000
+      },
+      "consumed_operations": 448334,
+      "elapsed_ms": 5913.164090999999,
+      "stage": "result",
+      "status": "valid",
+      "budget_reason": null
+    },
+    "bytes": 2447148,
+    "sha256": "6911a4921133841df9b12e308c59b89b9ef4b5219f604751c6de2861410564aa"
+  },
+  "original_reader": {
+    "status": "passed",
+    "structure": "passed_bounded_glb_reader",
+    "method": "Independent exact-sign admission, interval source event/pose reference, exact clock cells and complete supplied-byte continuous inequalities.",
+    "reach_continuous_bounds": "passed_independent_source_and_bytes",
+    "reach_boundary_histories": "passed_complete_both_sides_and_incoming_releases",
+    "position_metric": "conservative uniform Euclidean carrier and native-landmark bound in metres",
+    "rotation_metric": "conservative uniform physical rotation-angle bound in radians",
+    "probe_policy": "every actual stored key endpoint plus every complete source boundary; continuous per-interval proof",
+    "sample_count": 188,
+    "node_pose_comparisons": 1504,
+    "interval_certificates_checked": 1496,
+    "max_position_error_bound_m": 0.00044758001534901746,
+    "max_rotation_error_bound_rad": 0.00025847097609045674,
+    "max_time_error_seconds": 5.928590335947945e-08,
+    "max_geometry_dimension_error_m": 3.8125435031233224e-08,
+    "max_surface_vertex_error_m": 0.0,
+    "surface_vertex_tolerance_m": 1e-05,
+    "surface_geometry_materials_and_provenance": "passed_source_comparison",
+    "failures": [],
+    "scope": "Continuous proof for this source, actual bytes and identified controlled destination algorithm; actual native/browser execution and visual review remain separate release obligations."
+  },
+  "numerical_inputs_checked": {
+    "source_implementation": {
+      "files": 14,
+      "aggregate_sha256_as_recorded": "35752a65207742d7334b4ce539c55dc97bc306c94f34c67a46e6ed04d6e8a194"
+    },
+    "source_derivation": {
+      "files": 13,
+      "aggregate_sha256_as_recorded": "11a74707f182e8ffb568f6246f5fae653d5a1d4d5098a752e55d98420856c1be"
+    },
+    "destination_implementation": {
+      "files": 2,
+      "aggregate_sha256_as_recorded": "00657f773b37513e5025bb78a770eb59c78f3916d44686c98e946e1142434278"
+    },
+    "destination_derivation": {
+      "files": 1,
+      "aggregate_sha256_as_recorded": "58a69bb37f22905a0d83e2ec913d890934ebf18b31d96dc670ac0b36b4794a20"
+    }
+  },
+  "fresh_full_suite": false,
+  "prior_full_driver": {
+    "checkpoint": "C157",
+    "roles_passed": 33,
+    "roles_total": 34,
+    "preceding_methods_before_A08": 3971,
+    "A08_methods_entered": 0
+  },
+  "runtime_integration": "none",
+  "original_deadline_gate": "open",
+  "scan_caller_profiles": [
+    {
+      "input_sha256": "fce8645cf963d3b3a5ca28e96e5c5c9bfb930f9ad61e6fe2c127befbcb087202",
+      "total_samples": 1251,
+      "immediate_callers": [
+        {
+          "source": "ontokin/torque_runtime.py",
+          "function": "admit_torque_request_source.<locals>.guard",
+          "line": 380,
+          "keys": 0,
+          "values": 0
+        },
+        {
+          "source": "ontokin/torque_runtime.py",
+          "function": "TorqueSimulator._context_after_dispatch",
+          "line": 648,
+          "keys": 108,
+          "values": 110
+        }
+      ]
+    },
+    {
+      "input_sha256": "33cc85df935859ff407c8f1f53f49eba1e89f0de1f3fac4ef7f12d9cb88b268d",
+      "total_samples": 1107,
+      "immediate_callers": [
+        {
+          "source": "ontokin/torque_runtime.py",
+          "function": "admit_torque_request_source.<locals>.guard",
+          "line": 380,
+          "keys": 0,
+          "values": 0
+        },
+        {
+          "source": "ontokin/torque_runtime.py",
+          "function": "TorqueSimulator._context_after_dispatch",
+          "line": 648,
+          "keys": 89,
+          "values": 89
+        }
+      ]
+    }
+  ],
+  "public_preflight_probes": [
+    {
+      "mode": "control",
+      "events": [
+        "original check"
+      ],
+      "raised_identical_marker": false,
+      "ledger_operations_delta": 1,
+      "module_bindings_restored": true
+    },
+    {
+      "mode": "is_",
+      "events": [
+        "original check",
+        "is_:admitted key",
+        "is_:admitted value"
+      ],
+      "raised_identical_marker": true,
+      "ledger_operations_delta": 0,
+      "module_bindings_restored": true
+    },
+    {
+      "mode": "chain",
+      "events": [
+        "original check",
+        "chain:dictionary keys",
+        "chain:dictionary values"
+      ],
+      "raised_identical_marker": true,
+      "ledger_operations_delta": 0,
+      "module_bindings_restored": true
+    },
+    {
+      "mode": "late chain via vars",
+      "events": [
+        "original check",
+        "vars:installed chain",
+        "chain:dictionary keys",
+        "chain:dictionary values"
+      ],
+      "raised_identical_marker": true,
+      "ledger_operations_delta": 0,
+      "module_bindings_restored": true
+    }
+  ],
+  "simulator_probes": [
+    {
+      "mode": "control",
+      "result": "tick completed",
+      "events": [
+        "original check"
+      ],
+      "ledger_operations_delta": 1
+    },
+    {
+      "mode": "is_",
+      "result": "identical marker",
+      "events": [
+        "original check",
+        "program_revision value"
+      ],
+      "ledger_operations_delta": 0
+    },
+    {
+      "mode": "chain",
+      "result": "identical marker",
+      "events": [
+        "original check",
+        "dictionary values"
+      ],
+      "ledger_operations_delta": 0
+    },
+    {
+      "mode": "vars",
+      "result": "Canonical torque point work requires its original operands and numerical authority.",
+      "events": [
+        "original check"
+      ],
+      "ledger_operations_delta": 0
+    },
+    {
+      "mode": "late vars",
+      "result": "identical marker",
+      "events": [
+        "original check",
+        "model revision descriptor",
+        "shadow vars installed chain",
+        "dictionary values"
+      ],
+      "ledger_operations_delta": 0
+    }
+  ]
+}

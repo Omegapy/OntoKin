@@ -1,0 +1,31 @@
+{
+  "schema_version": "ontokin.agent/0.22",
+  "project_id": "c091-byte-proof",
+  "request_id": "seed-create",
+  "operation": "create",
+  "expected_program_revision": null,
+  "requested_level": "constructed",
+  "bundle": {
+    "schema_version": "ontokin.bundle/0.2",
+    "entry": {
+      "filename": "main.ok",
+      "source": "ontokin \"0.22\";\nmodule TorqueCases @ \"torque-cases\";\nprofile \"torque-0.1\";\nexecution { max_operations = 1000000; max_elapsed = 80[s]; }\n\nimport rotors @ \"rotors\" from \"fixture.torque-carriers\" version \"1.0.0\" digest \"sha256:e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10\";\n\nscene Demo @ \"demo\" {\n    duration = 2[s];\n    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);\n    object ball @ \"ball\": rotors.Rotor {\n        body_mass = 2.5[kg];\n        body_radius = 1[m];\n        marker_radius = 1[m];\n        placement = pose(world, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        velocity = vector(world, 0[m/s], 0[m/s], 0[m/s]);\n        omega = vector(world, 0[rad/s], 0[rad/s], 0[rad/s]);\n    }\n    object sibling @ \"sibling\": rotors.Rotor {\n        placement = pose(world, vec3(5[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n    }\n    at 0[s] sequence {\n        torque ball @ \"left-drive\" about world_z using 1[N*m] for 2[s];\n        torque sibling @ \"right-drive\" about world_z using -0.5[N*m] for 2[s];\n    }\n}\n"
+    },
+    "modules": [
+      {
+        "package_id": "fixture.torque-carriers",
+        "version": "1.0.0",
+        "filename": "carriers.ok",
+        "source": "ontokin \"0.21\";\nmodule TorqueCarriers @ \"torque-carriers\";\nprofile \"keyed-membership-0.1\";\n\npublic class Marker @ \"marker\" {\n    public param parent_frame @ \"parent-frame\": FrameRef = world;\n    public param offset_x @ \"offset-x\": Length = 1[m];\n    public param offset_y @ \"offset-y\": Length = 0[m];\n    public follow mounting @ \"mounting\" {\n        parent = self.parent_frame;\n        child = self;\n        offset = pose(self.parent_frame, vec3(self.offset_x, self.offset_y, 0[m]), quat(1, 0, 0, 0));\n    }\n    geometry = texture_surface(extrude(keyed<PolygonVertex> {\n        \"a\": polygon_vertex(0, planar_point(0[m], 0[m]), \"side\"),\n        \"b\": polygon_vertex(10, planar_point(0.25[m], 0[m]), \"side\"),\n        \"c\": polygon_vertex(20, planar_point(0.25[m], 0.5[m]), \"side\"),\n        \"d\": polygon_vertex(30, planar_point(0[m], 0.5[m]), \"side\")\n    }, keyed<SurfaceMaterial> {\n        \"bottom\": surface_material(rgba(1, 1, 1, 1), 0, 0.75),\n        \"side\": surface_material(rgba(0.125, 0.5, 0.875, 1), 0, 0.5),\n        \"top\": surface_material(rgba(1, 1, 1, 1), 0, 0.75)\n    }, 0.125[m], \"bottom\", \"top\"), keyed<TextureBinding> {\n        \"top\": texture_binding(png_asset(\"label\", \"sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e\"),\n            planar_uv(vec3(0[m], 0[m], 0[m]), vec3(4[m^-1], 0[m^-1], 0[m^-1]), vec3(0[m^-1], 2[m^-1], 0[m^-1]), 0, 0))\n    });\n    physical = no_body();\n}\n\npublic class FixedArm @ \"fixed-arm\" {\n    public param parent_frame @ \"parent-frame\": FrameRef = world;\n    public follow mounting @ \"mounting\" {\n        parent = self.parent_frame;\n        child = self;\n        offset = pose(self.parent_frame, vec3(0.25[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n    }\n    public part tip @ \"tip\": Marker {\n        parent_frame = self.frame;\n        offset_x = 0.5[m];\n        offset_y = 0.375[m];\n    }\n    geometry = empty();\n    physical = no_body();\n}\n\npublic class Rotor @ \"rotor\" {\n    public param body_radius @ \"body-radius\": Length = 1[m];\n    public param body_mass @ \"body-mass\": Mass = 2.5[kg];\n    public param marker_radius @ \"marker-radius\": Length = 1[m];\n    public part label @ \"label\": Marker {\n        parent_frame = self.frame;\n        offset_x = self.marker_radius;\n    }\n    public part arm @ \"arm\": FixedArm { parent_frame = self.frame; }\n    geometry = sphere(self.body_radius);\n    physical = sphere_body(self.body_radius, self.body_mass);\n    motion = dynamic;\n    collision = disabled;\n}\n"
+      }
+    ],
+    "assets": [
+      {
+        "asset_id": "label",
+        "media_type": "image/png",
+        "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e",
+        "data_base64": "iVBORw0KGgoAAAANSUhEUgAAAAQAAAADCAIAAAA7ljmRAAAAIElEQVR42mP4z8DAAMb/YeT/hoYGLm4eqIhGwIL/DQwAPgcQLQlN+BAAAAAASUVORK5CYII="
+      }
+    ]
+  }
+}

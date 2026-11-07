@@ -1,5 +1,7 @@
 # OntoKin documentation guide
 
+The [C158 source-identity investigation](engineering/torque-verification-c158/README.md) records the binding counterexample, live scan costs and original callback boundary.
+
 The [C157 timing study](engineering/torque-verification-c157/README.md) records the original A08 deadline, direct export, browser checks and the clock experiment.
 
 The [current development status](../STATUS.md) records the integrated two-cart service-entrance checker and the explicit 0.22 finite-torque implementation. The [C104 torque verification record](engineering/torque-verification-c104/README.md) describes the 30-second A08 export limit and the separate 80-second control.

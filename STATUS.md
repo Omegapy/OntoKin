@@ -1,14 +1,10 @@
-# OntoKin development status — C157
-
-## C158 integration lease
-
-Owner `interactive-c158-a08-1503` holds the main integration lease from 2026-11-07T15:03:00Z through 2026-11-07T15:33:00Z for the A08 binding and source-identity investigation. The measured starting commit is `53e7648b805c2ae29a5089709d17842252899e6c`.
+# OntoKin development status — C158
 
 ## Current checkpoint
 
-The original A08 torque export missed its 30-second deadline in fresh Agent processes on the measured Linux host. The direct exporter reproduced the historical 2,447,148-byte GLB in 6.030 seconds, and the independent reader and Chromium verified it. The stock local driver passed 33 of 34 roles. The unit run executed 4,150 methods. 3,988 of the 3,988 identified pre-torque methods passed. The measured clock change did not improve whole-export timing. The next experiment concerns 30 overlapping binding checks. [C157 timing and verification](docs/engineering/torque-verification-c157/README.md)
+The frozen A08 torque animation timed out in both fresh 30-second Agent trials. The separately configured 80-second controls finished in 32.940 and 32.723 seconds with all 13 reads passing. A callback can invalidate the 30 common binding checks between their two uses. The configured export also performed 253,946 live source checks. A faster standalone dictionary scan exposed a separate callback-compatibility issue. The next step is to test whether a simulator-only fast path can preserve those callbacks and their exceptions. [C158 investigation and measurements](docs/engineering/torque-verification-c158/README.md)
 
-Owner `interactive-c157-a08-visual-1414` releases the main integration lease on verified publication of this record.
+Owner `interactive-c158-a08-1503` releases the main integration lease on verified publication of this record. [Prior full run and visual verification](docs/engineering/torque-verification-c157/README.md)
 
 ## Integrated development baseline at C156
 
