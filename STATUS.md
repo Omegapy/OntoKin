@@ -1,5 +1,9 @@
 # OntoKin development status — C160
 
+## C161 integration lease
+
+Owner `c161-duct-5e6eedd3` reserves integration of the joined-duct example from 2026-11-07T17:19:07Z through 2026-11-07T17:49:07Z. Base `59395b0dc73e09eacaf2998356de4379db196e32`. The example, its checker, tests and navigation are the bounded work scope.
+
 ## Current checkpoint
 
 C160 retained the reference class-attribute guard. In a real simulator tick the faster membership expression missed the caller’s exception and charged one operation. A fallback that inspected monitoring introduced a different observable call. The original A08 Agent export timed out at 30.001 s. Its 80-second control published at 35.588 s and passed all 13 reads. Chromium and VTK sampled the rebuilt original clip. A separately tested Agent/0.11 duct example gives C161 a starting point for joining and repairing two editable 3D parts. [C160 probes, measurements and authoring pilot](docs/engineering/torque-verification-c160/README.md)
