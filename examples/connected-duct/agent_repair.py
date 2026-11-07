@@ -25,7 +25,7 @@ def write_json(path, value):
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + '\n', encoding='utf-8')
 
 
-def replay(manifest, output, store):
+def session(manifest, output, store):
     program = load_file_manifest(manifest)
     output.mkdir(parents=True, exist_ok=True)
     records = output / 'exchanges'
@@ -83,6 +83,8 @@ def replay(manifest, output, store):
     def export(label, revision):
         descriptor = send(label + '-export', 'export', program_revision=revision,
                           destination='ontokin.glb/0.11', options=OPTIONS)['result']
+        if descriptor['program_revision'] != revision:
+            raise ValueError(f'{label}: export revision mismatch')
         data = retrieve(label, descriptor)
         (output / (label + '.glb')).write_bytes(data)
         summary[label] = {k: descriptor[k] for k in ('program_revision', 'sha256', 'total_bytes', 'artifact_id')}
@@ -99,6 +101,11 @@ def replay(manifest, output, store):
         return send(label, 'edit', invalid=invalid, expected_program_revision=accepted.program_revision,
                     requested_level='constructed', patches=[patch])
 
+    return program, send, snapshot, retrieve, export, edit, summary
+
+
+def replay(manifest, output, store):
+    program, send, snapshot, retrieve, export, edit, summary = session(manifest, output, store)
     created = send('nominal-create', 'create', bundle=program.to_payload(),
                    expected_program_revision=None, requested_level='constructed')
     nominal = snapshot('nominal', created['accepted_program_revision'])

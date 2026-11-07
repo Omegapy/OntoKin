@@ -42,3 +42,22 @@ python3 tools/verify_connected_duct.py /tmp/duct-oblique-agent/repaired.glb --pl
 ```
 
 The defective check exits with status 1. Its measured world displacement is approximately (−0.144, −0.0864, −0.1852) m. The two square bores overlap by 0.75 m². Setting `bore_shift` back to zero restores the full 1.00 m² opening and the original source revision and GLB bytes. The checker projects the delivered triangles into the selected port frame. The `fixed` and `oblique` settings correspond to the two authored placements in this example. [View the repaired joint](oblique-repaired.png)
+
+## Place the straight duct from its exported geometry
+
+The [misplaced assembly](assembly-misplaced.ok) starts with the inlet 0.375 m away from the elbow outlet and tilted 12°. The authoring script gives the [placement solver](fit_placement.py) the GLB bytes. The solver uses end-face triangle winding to recover each outward normal and boundary edges to locate the square rims. Four rotations can match a square. It chooses the one that moves the straight duct through the smallest angle.
+
+Run these commands in the repository root with the verification dependencies and fresh output directories.
+
+```sh
+ex=examples/connected-duct
+python3 "$ex/agent_place.py" "$ex/assembly-misplaced.files.json" /tmp/duct-placement
+python3 tools/verify_duct_placement.py /tmp/duct-placement/defective.glb /tmp/duct-placement/repaired.glb
+python3 "$ex/placement_controls.py" /tmp/duct-placement/defective.glb /tmp/duct-placement-controls
+```
+
+The Agent changes the straight occurrence’s placement in the accepted source and retrieves the new GLB in chunks. Inspect the two `.ok` files, `fit.json`, `summary.json` and the protocol records under `exchanges/`. The [independent reference](third-contract.json) fixes the expected world positions and directions before the repair. The verifier compares both complete rims, the straight axis and the 1.00 m² opening to that reference. The controls exercise a straight duct with its opposite end at the seam and a flush joint with a half-turn of unnecessary roll.
+
+This example selects the two stationary root occurrences named `elbow` and `straight`. It uses the rectangular, concentric ports of this parts module.
+
+[See the gap and tilt before repair](placement-before.png) · [See the flush joint after repair](placement-after.png)
