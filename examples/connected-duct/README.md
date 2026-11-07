@@ -61,3 +61,38 @@ The Agent changes the straight occurrence’s placement in the accepted source a
 This example selects the two stationary root occurrences named `elbow` and `straight`. It uses the rectangular, concentric ports of this parts module.
 
 [See the gap and tilt before repair](placement-before.png) · [See the flush joint after repair](placement-after.png)
+
+## C164 · Select one of two identical elbow outlets
+
+The straight duct `link` starts 0.375 m from the outlet of `bypass` and 4.018 m from the requested `outbound` outlet. Both elbows use the same imported part and expose a region named `top`. The authoring script accepts an occurrence name and a region name for each side of the joint. It fits the selected rims from their exported triangles and sends one Agent/0.11 edit to the placement of `link`. [Assembly source](assembly-selection.ok) · [Frozen joint contract](selection-contract.json)
+
+| Initial placement | Requested joint | Flush decoy control |
+| --- | --- | --- |
+| [View the gap and tilt near bypass](selection-before.png) | [View link fitted to outbound](selection-after.png) | [View link fitted to bypass](selection-decoy.png) |
+
+From the repository root, run these commands with the verification dependencies installed. Each invocation writes the source, delivered artifacts and Agent exchanges into its own directory.
+
+```sh
+ex=examples/connected-duct
+out=$(mktemp -d)
+fit_joint() {
+    python3 "$ex/agent_select.py" "$ex/assembly-selection.files.json" "$out/$1" \
+        --elbow "$2" --elbow-region top --straight link --straight-region bottom
+}
+
+fit_joint target outbound
+fit_joint decoy bypass
+python3 tools/verify_duct_selection.py "$out/target/defective.glb" "$out/target/repaired.glb" \
+    --decoy-control "$out/decoy/repaired.glb" > "$out/measurements.json"
+```
+
+The independent verifier measures both rims, the opposing face normals, the straight axis and the shared opening. Four rotations align the square profiles. The shortest correction is 12°. The repaired target has a maximum rim-corner separation of 0.56 μm against a 10 μm tolerance, and the opening measures 0.99999970 m². The control is flush against `bypass`, 4 m from the requested joint.
+
+The next two runs exit with status 2. An unknown name has no matching occurrence. The shared elbow class matches both. Each run saves the rejection reason in `summary.json`. The two `cmp` commands verify that the accepted source bundle is byte-identical after rejection.
+
+```sh
+fit_joint unknown missing || test "$?" -eq 2
+fit_joint ambiguous package/example.connected-duct-parts/duct-parts/definitions/elbow || test "$?" -eq 2
+cmp "$out/unknown/defective-bundle.json" "$out/unknown/after-rejection-bundle.json"
+cmp "$out/ambiguous/defective-bundle.json" "$out/ambiguous/after-rejection-bundle.json"
+```

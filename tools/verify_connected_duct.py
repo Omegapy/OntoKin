@@ -104,7 +104,7 @@ def stationary_times(glb, nodes):
                 error = min(error, math.dist(base, [-v for v in value]))
             require(error < 1e-7, 'Moving transform at ' + nodes[i]['name'] + '/' + path)
         tracks[i, path] = times
-    require(len(tracks) == 4, 'Missing transform channel')
+    require(len(tracks) == 2 * len(nodes), 'Missing transform channel')
     return sorted({t for times in tracks.values() for t in times})
 
 
@@ -134,9 +134,10 @@ def rings(half):
     return [(0, y*r, z*r) for r in (1, half) for y, z in [(-1,-1),(1,-1),(1,1),(-1,1)]]
 
 
-def port(glb, node, width, frame):
+def port(glb, node, width, frame, role=None):
     name = node['name']
-    cap_region, direction = PORTS[name]
+    role = role or name
+    cap_region, direction = PORTS[role]
     target = rings(width/2)
     edges, actual = Counter(), {}
     area = 0.0
@@ -163,7 +164,7 @@ def port(glb, node, width, frame):
         require(len(indices) % 3 == 0 and all(0 <= j < len(points) for j in indices), 'Invalid triangle indices')
         for start in range(0, len(indices), 3):
             tri = [points[j] for j in indices[start:start+3]]
-            if name == 'straight' and region == 'top':
+            if role == 'straight' and region == 'top':
                 outlet_points.update(tri)
             if cap:
                 normal = cross(sub(tri[1], tri[0]), sub(tri[2], tri[0]))
@@ -206,7 +207,7 @@ def port(glb, node, width, frame):
                inner_center_m=[sum(p[axis] for p in inner)/4 for axis in range(3)],
                max_expected_corner_distance_m=max_corner_error,
                intersects_required_opening=obstructed)
-    if name == 'straight':
+    if role == 'straight':
         require(outlet_points, 'Missing straight outlet')
         # For the framed square, the midpoint of opposite extrema is its exterior center.
         outlet = [(min(axis)+max(axis))/2 for axis in zip(*outlet_points)]
@@ -249,7 +250,13 @@ def measure(raw, width=1, placement='fixed'):
             {n['name'] for n in nodes.values()} == set(PORTS), 'Expected separate elbow and straight roots')
     require(glb.objects() == {node['name']: i for i, node in nodes.items()}, 'Duct object path differs')
     times = stationary_times(glb, nodes)
-    ports = {n['name']:port(glb, n, width, frame) for n in nodes.values()}
+    by_name = {n['name']: n for n in nodes.values()}
+    return measure_pair(raw, glb, by_name['elbow'], by_name['straight'], width, frame, times)
+
+
+def measure_pair(raw, glb, elbow, straight, width, frame, times):
+    ports = {role: port(glb, node, width, frame, role)
+             for role, node in [('elbow', elbow), ('straight', straight)]}
     rim_errors, gaps = [], []
     for key in ('outer_loop_m', 'inner_loop_m'):
         for a,b in zip(ports['elbow'][key], ports['straight'][key]):
