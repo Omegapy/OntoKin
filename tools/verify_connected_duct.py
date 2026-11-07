@@ -63,8 +63,8 @@ FIXED = PortFrame((4,0,4), ((1,0,0),(0,1,0),(0,0,1)))
 def port_frame(placement):
     if placement == 'fixed':
         return FIXED
-    require(placement == 'oblique', 'Unknown duct placement')
-    path = Path(__file__).resolve().parents[1] / 'examples/connected-duct/oblique-contract.json'
+    require(placement in ('oblique', 'third'), 'Unknown duct placement')
+    path = Path(__file__).resolve().parents[1] / f'examples/connected-duct/{placement}-contract.json'
     expected = json.loads(path.read_text())
     return PortFrame(tuple(expected['elbow_outlet_center_m']), tuple(zip(*expected['rotation_rows'])))
 
@@ -286,7 +286,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('glb', type=Path)
     parser.add_argument('--width', type=float, default=1, choices=(1,1.25))
-    parser.add_argument('--placement', default='fixed', choices=('fixed', 'oblique'))
+    parser.add_argument('--placement', default='fixed', choices=('fixed', 'oblique', 'third'))
     args = parser.parse_args()
     try:
         print(json.dumps(measure(args.glb.read_bytes(), args.width, args.placement), indent=2))
