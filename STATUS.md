@@ -1,5 +1,9 @@
 # OntoKin development status — C158
 
+## C159 integration lease
+
+Owner `interactive-c159-scan-site-1547` holds the main integration lease from 2026-11-07T15:48:13Z through 2026-11-07T16:18:13Z for the simulator scan-site investigation. The measured starting commit is `ca9d79a9b49b5218a018e98c737e9d1b74a94bb1`.
+
 ## Current checkpoint
 
 The frozen A08 torque animation timed out in both fresh 30-second Agent trials. The separately configured 80-second controls finished in 32.940 and 32.723 seconds with all 13 reads passing. A callback can invalidate the 30 common binding checks between their two uses. The configured export also performed 253,946 live source checks. A faster standalone dictionary scan exposed a separate callback-compatibility issue. The next step is to test whether a simulator-only fast path can preserve those callbacks and their exceptions. [C158 investigation and measurements](docs/engineering/torque-verification-c158/README.md)
