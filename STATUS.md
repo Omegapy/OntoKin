@@ -1,10 +1,14 @@
-# OntoKin development status — C164
-
-## C165 integration lease
-
-Owner `c165-span-96a738` holds the integration lease for [PR #102](https://github.com/Omegapy/OntoKin/pull/102) from 2026-11-07T22:51:33Z through 2026-11-07T23:21:33Z. Base `38f188bec02d5ba962c8291880cf20e7d9241bff`. Candidate `116f8e40aeec00df105fab0ca7ee1ce175c55d1f` passed the five two-port cases, legacy replays, 45 duct tests and framed-loft acceptance. Scope covers the named two-port example, independent verification and its integration record.
+# OntoKin development status — C165
 
 ## Current checkpoint
+
+Agent/0.11 fitted both ends of a single editable straight duct between named stationary ports. One transaction changed its length from 4 m to 5.75 m and set its pose. Each opening measured 1.00 m². Independent Three.js measurements put the largest rim separation at 0.2784 µm against a 10 µm limit. A downstream port shifted 0.25 m sideways was rejected before any source edit. Reversed ends, a short connector and a correct fit to the bypass each failed the requested joint check. [Run the example and inspect both joints](examples/connected-duct/README.md#c165--fit-both-ends-of-a-straight-duct)
+
+[PR #102](https://github.com/Omegapy/OntoKin/pull/102) merged at [a2622bfe1018](https://github.com/Omegapy/OntoKin/commit/a2622bfe101877b114c54cfa003cb55aaec8c950). The clean merge reproduced the five C165 cases. On candidate [116f8e40aeec](https://github.com/Omegapy/OntoKin/commit/116f8e40aeec00df105fab0ca7ee1ce175c55d1f), 45 duct tests, 137 framed-loft unit tests and all 69 stock cases passed, as did the C161–C164 replays. The seven-step Linux core run failed in the torque-read setup when its export reached the original 30-second deadline. All 4,195 individual tests that started passed. The other 13 did not start. The separate [C160 torque release obligations](docs/engineering/torque-verification-c160/README.md) remain open.
+
+Next, fit a 90° elbow and two variable-length straights between perpendicular named ports. Owner `c165-span-96a738` releases the main integration lease on verified publication of this record.
+
+## Previous checkpoint at C164
 
 Given two independently named elbows of the same class, Agent/0.11 connected the straight duct to the requested outlet in one editable source change. Its inlet started 0.375 m from the bypass and 4.018 m from the requested elbow. The repaired rims match within 0.56 µm and share 0.99999970 m² of clear opening. A flush fit to the bypass failed the requested joint by 4 m. An unknown or ambiguous selection preserved the accepted revision. [Run the example and compare the three exports](examples/connected-duct/README.md#c164--select-one-of-two-identical-elbow-outlets)
 
