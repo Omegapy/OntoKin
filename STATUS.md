@@ -1,5 +1,9 @@
 # OntoKin development status — C159
 
+## C160 integration lease
+
+Owner `c160-guard-1aaa4982` holds the main integration lease from 2026-11-07T16:52:00Z through 2026-11-07T17:22:00Z for the C160 descriptor guard investigation. The starting commit is `1b723b25ce1ab9adf75f2128e9747601dcdc4ac7`.
+
 ## Current checkpoint
 
 C159 rejected three simulator scan changes. An extra dictionary lookup, reuse of the key scan’s helpers, and delayed release of a temporary callable each changed an exception or work charge. The original A08 Agent export timed out at 30.001 seconds. The separate 80-second control finished in 34.341 seconds and passed all 13 reads. The direct exporter recreated the historical animation and the independent reader and Chromium verified it. The next experiment concerns 151 class descriptor checks in a generated Python predicate. [C159 evidence and executable controls](docs/engineering/torque-verification-c159/README.md)
