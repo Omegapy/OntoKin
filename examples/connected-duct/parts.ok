@@ -1,0 +1,57 @@
+ontokin "0.11";
+module DuctParts @ "duct-parts";
+profile "framed-polygon-loft-0.1";
+
+public fn standard_half_bore @ "standard-half-bore"() -> Length {
+    return 0.5[m];
+}
+
+public fn duct_rings @ "duct-rings"(half: Length, shift: Length) -> Keyed<PolygonRing> {
+    return keyed<PolygonRing> {
+        "outer": polygon_ring(20, "outer", keyed<PolygonVertex> {
+            "v0": polygon_vertex(0, planar_point(-1[m], -1[m]), "outer"),
+            "v1": polygon_vertex(10, planar_point(1[m], -1[m]), "outer"),
+            "v2": polygon_vertex(20, planar_point(1[m], 1[m]), "outer"),
+            "v3": polygon_vertex(30, planar_point(-1[m], 1[m]), "outer")
+        }),
+        "opening": polygon_ring(40, "hole", keyed<PolygonVertex> {
+            "v0": polygon_vertex(0, planar_point(shift - half, half), "inner"),
+            "v1": polygon_vertex(10, planar_point(shift + half, half), "inner"),
+            "v2": polygon_vertex(20, planar_point(shift + half, -half), "inner"),
+            "v3": polygon_vertex(30, planar_point(shift - half, -half), "inner")
+        })
+    };
+}
+
+public fn duct_palette @ "duct-palette"() -> Keyed<SurfaceMaterial> {
+    return keyed<SurfaceMaterial> {
+        "bottom": surface_material(rgba(0.3, 0.35, 0.4, 1), 0.1, 0.65),
+        "inner": surface_material(rgba(0.15, 0.65, 0.3, 1), 0.1, 0.65),
+        "outer": surface_material(rgba(0.7, 0.3, 0.1, 1), 0.1, 0.65),
+        "top": surface_material(rgba(0.1, 0.5, 0.8, 1), 0.1, 0.65)
+    };
+}
+
+public class Elbow @ "elbow" {
+    public param bore_half @ "bore-half": Length = standard_half_bore();
+    public param rings @ "rings": Keyed<PolygonRing> = duct_rings(self.bore_half, 0[m]);
+    public param sections @ "sections": Keyed<FramedPolygonSection> = keyed<FramedPolygonSection> {
+        "inlet": framed_polygon_section(0, pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0)), self.rings),
+        "mid": framed_polygon_section(10, pose(self.frame, vec3(1.17157287525381[m], 0[m], 2.82842712474619[m]), quat(0.9238795325112867, 0, 0.3826834323650898, 0)), self.rings),
+        "outlet": framed_polygon_section(20, pose(self.frame, vec3(4[m], 0[m], 4[m]), quat(0.7071067811865476, 0, 0.7071067811865476, 0)), self.rings)
+    };
+    geometry = loft_framed_rings(self.sections, duct_palette(), "bottom", "top");
+    physical = no_body();
+}
+
+public class Straight @ "straight" {
+    public param bore_half @ "bore-half": Length = standard_half_bore();
+    public param bore_shift @ "bore-shift": Length = 0[m];
+    public param rings @ "rings": Keyed<PolygonRing> = duct_rings(self.bore_half, self.bore_shift);
+    public param sections @ "sections": Keyed<FramedPolygonSection> = keyed<FramedPolygonSection> {
+        "inlet": framed_polygon_section(0, pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0)), self.rings),
+        "outlet": framed_polygon_section(10, pose(self.frame, vec3(0[m], 0[m], 4[m]), quat(1, 0, 0, 0)), self.rings)
+    };
+    geometry = loft_framed_rings(self.sections, duct_palette(), "bottom", "top");
+    physical = no_body();
+}
