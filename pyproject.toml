@@ -14,4 +14,30 @@ readme = "README.md"
 ontokin = "ontokin.cli:main"
 
 [tool.setuptools]
-packages = ["ontokin"]
+packages = ["ontokin", "_ontokin_reference_payload", "_ontokin_reference_payload.ontokin"]
+include-package-data = false
+
+[tool.setuptools.package-dir]
+ontokin = "packaging/installed/ontokin"
+"_ontokin_reference_payload" = "."
+"_ontokin_reference_payload.ontokin" = "ontokin"
+
+[tool.setuptools.package-data]
+"_ontokin_reference_payload" = [
+    "docs/engineering/reach-carrier-rotation-cursors.md",
+    "docs/engineering/reach-coaxial-phase-bounds.md",
+    "docs/engineering/reach-deferred-phase-locations.md",
+    "docs/engineering/reach-destination-numerics.md",
+    "docs/engineering/reach-numeric-kernel.md",
+    "docs/engineering/reach-planning-reuse.md",
+    "docs/engineering/reach-recording-certified-planar.md",
+    "docs/engineering/reach-release-cell-envelope.md",
+    "docs/engineering/reach-source-kernel.md",
+    "docs/language-design/torque-amendments/c092-canonical-spin-selection/AMENDMENT.md",
+    "docs/language-design/torque-amendments/c092-canonical-spin-selection/COMPATIBILITY.md",
+    "docs/language-design/torque-amendments/c092-canonical-spin-selection/NUMERICAL-PROOF.md",
+    "docs/language-design/torque-v0.1/RECORDING.md",
+    "docs/language-design/torque-v0.1/SPECIFICATION.md",
+    "tools/reach_destination.mjs",
+    "tools/torque_destination.mjs",
+]

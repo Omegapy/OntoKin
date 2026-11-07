@@ -1,0 +1,213 @@
+{
+  "schema": "ontokin.c092-frozen-literal-sources/1",
+  "candidate_output_used": false,
+  "sources": [
+    {
+      "path": "same_source_history.ok",
+      "bytes": 1858,
+      "sha256": "8d02d0fb3ca61f275bb85f019a45451c34e89925e488e7d2236432b6085fc27e",
+      "mode": "0644",
+      "dependencies_from": "docs/language-design/torque-v0.1/freeze/p28-release-then-torque.files.json"
+    },
+    {
+      "path": "no_helper.ok",
+      "bytes": 1694,
+      "sha256": "671edad55c608eb12a129df4b3c06f4b29ece6a576e73c7ab7f1e859aee0f941",
+      "mode": "0644",
+      "dependencies_from": "docs/language-design/torque-v0.1/freeze/p28-release-then-torque.files.json"
+    },
+    {
+      "path": "helper_force.ok",
+      "bytes": 1836,
+      "sha256": "abb8621189a67f47d3361197b21fc6d49925c4661b37a6a42434757bd117cf4e",
+      "mode": "0644",
+      "dependencies_from": "docs/language-design/torque-v0.1/freeze/p28-release-then-torque.files.json"
+    },
+    {
+      "path": "unchanged-force-origin.ok",
+      "bytes": 1008,
+      "sha256": "d9e4e2c9c9f2cec01aad6d007d5aeca383ecaf9692e644a1e9aa37c4f41a8dd4",
+      "mode": "0644",
+      "dependencies_from": "docs/language-design/torque-v0.1/freeze/p28-release-then-torque.files.json"
+    },
+    {
+      "path": "paused-resumed-origin.ok",
+      "bytes": 1858,
+      "sha256": "708d1ab041e7aa8609751b8fcc18150153bf168ba21cca85cd316c928bcc8e9c",
+      "mode": "0644",
+      "dependencies_from": "docs/language-design/torque-v0.1/freeze/p28-release-then-torque.files.json"
+    },
+    {
+      "path": "off-axis-positive.ok",
+      "bytes": 988,
+      "sha256": "8edb518b82decee996f125d5ff329b675ea1f37bc19dd36fbc598e8c78be2b8c",
+      "mode": "0644",
+      "dependencies_from": "docs/language-design/torque-v0.1/freeze/p28-release-then-torque.files.json"
+    },
+    {
+      "path": "off-axis-negative.ok",
+      "bytes": 989,
+      "sha256": "d9b891965efecda1f70827e1b61ff396f6b9182ce1459e0995939e7e4aa4163c",
+      "mode": "0644",
+      "dependencies_from": "docs/language-design/torque-v0.1/freeze/p28-release-then-torque.files.json"
+    },
+    {
+      "path": "evolved-permutation.ok",
+      "bytes": 1788,
+      "sha256": "1f2e995250e7d6e439aa84227d19056daaa9454cc7c0061320ec8d9ba84ded4a",
+      "mode": "0644",
+      "dependencies_from": "docs/language-design/torque-v0.1/freeze/p28-release-then-torque.files.json"
+    },
+    {
+      "path": "nonzero-parallel-impulse.ok",
+      "bytes": 1000,
+      "sha256": "837de582756c4607b124034d62405c7d333283e4c8f386fc2da87ca91d580baf",
+      "mode": "0644",
+      "dependencies_from": "docs/language-design/torque-v0.1/freeze/p28-release-then-torque.files.json"
+    }
+  ],
+  "new_origin_cases": {
+    "unchanged-force-origin.ok": {
+      "omega": [
+        {
+          "numerator": "0",
+          "denominator": "1"
+        },
+        {
+          "numerator": "0",
+          "denominator": "1"
+        },
+        {
+          "numerator": "1",
+          "denominator": "4"
+        }
+      ],
+      "actual_source_clock": "0",
+      "zero_force_activation": "0.5",
+      "zero_force_completion": "0.75",
+      "sample_clock": "1",
+      "expected_elapsed": "1",
+      "expected_quaternion_grid_integers": [
+        "78609998025519249473753715358",
+        "0",
+        "0",
+        "9877750038067397005839861362"
+      ],
+      "incorrect_half_plus_half_quaternion_grid_integers": [
+        "78609998025519249473753715357",
+        "0",
+        "0",
+        "9877750038067397005839861361"
+      ],
+      "incorrect_reseed_differs": true,
+      "axis": "world_z",
+      "incoming_omega_binary64_hex": [
+        "0x0.0p+0",
+        "0x0.0p+0",
+        "0x1.0000000000000p-2"
+      ],
+      "disposition": "accepted after; zero force changes no canonical acceleration/orientation anchor"
+    },
+    "paused-resumed-origin.ok": {
+      "requested_clock": "1.5",
+      "elapsed_action_seconds": "1",
+      "incoming_omega_binary64_hex": [
+        "0x0.0p+0",
+        "0x0.0p+0",
+        "0x0.0p+0"
+      ],
+      "expected_axis": "world_x",
+      "disposition": "accepted after",
+      "argument": "Both prescribed spin and hinge tween pause at0.25 and resume at0.75; at1.5 their accumulated elapsed time is1 and the original complete action origin is retained"
+    }
+  },
+  "off_axis_cases": {
+    "requested_clock": "0",
+    "axis": "world_x",
+    "diagnostic": "OKL-E-FRAME",
+    "torque_reason": "incoming_axis",
+    "boundary_side": "before",
+    "latch_committed": false,
+    "positive_y": "0x1.0000000000000p-96",
+    "negative_y": "-0x1.0000000000000p-96"
+  },
+  "source_permutations_and_parallel_impulse": {
+    "evolved-permutation.ok": {
+      "parent_quaternion_grid_integers": [
+        "15772624673556192222390994952",
+        "53756629159578698444647585180",
+        "53756629159578698444647585180",
+        "15772624673556192222390994952"
+      ],
+      "pre_release_quaternion_grid_integers": [
+        "1982689078931490836050981657",
+        "55987675534081839379611897988",
+        "55987675534081839379611897988",
+        "1982689078931490836050981657"
+      ],
+      "released_omega_binary64_hex": [
+        "0x0.0p+0",
+        "0x1.8000000000000p+0",
+        "0x0.0p+0"
+      ],
+      "axis": "world_y",
+      "clock": "1",
+      "disposition": "accepted after",
+      "proof": "Parent q=(a,b,b,a) maps self X exactly to world Y; local hinge rate1/2 plus world-Y parent rate1 gives3/2; all intermediate orthogonal components are exactly zero"
+    },
+    "nonzero-parallel-impulse.ok": {
+      "world_lever": [
+        {
+          "numerator": "3",
+          "denominator": "1"
+        },
+        {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        {
+          "numerator": "2",
+          "denominator": "1"
+        }
+      ],
+      "world_impulse": [
+        {
+          "numerator": "3",
+          "denominator": "1"
+        },
+        {
+          "numerator": "1",
+          "denominator": "1"
+        },
+        {
+          "numerator": "2",
+          "denominator": "1"
+        }
+      ],
+      "angular_cross": [
+        {
+          "numerator": "0",
+          "denominator": "1"
+        },
+        {
+          "numerator": "0",
+          "denominator": "1"
+        },
+        {
+          "numerator": "0",
+          "denominator": "1"
+        }
+      ],
+      "released_omega_binary64_hex": [
+        "0x0.0p+0",
+        "0x0.0p+0",
+        "0x0.0p+0"
+      ],
+      "axis": "world_z",
+      "clock": "0",
+      "applied_count": 1,
+      "disposition": "accepted after",
+      "proof": "Cyclic quaternion(1/2,1/2,1/2,1/2) maps(1,2,3) to(3,1,2), exactly parallel to the nonzero impulse; angular cross is exactly zero while linear impulse remains nonzero"
+    }
+  }
+}

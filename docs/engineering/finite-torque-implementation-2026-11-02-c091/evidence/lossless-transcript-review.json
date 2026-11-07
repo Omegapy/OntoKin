@@ -1,0 +1,174 @@
+{
+  "status": "passed",
+  "checks": 68,
+  "tool_path": "/workspace/scratch/b46faa606e44/c090-recovery/OntoKin/tools/pack_lossless_jsonl.py",
+  "tool_sha256": "07580619b93b6efed593f05ccfad24128154835e0d1bfda3c75b9e04533b1c61",
+  "observations": [
+    {
+      "case": "literal-controls",
+      "input": {
+        "bytes": 55513,
+        "sha256": "a8ea14d84b2b9efefbee19b547bb37d28cf22528117f2b37f7c94f5850af76a6"
+      },
+      "packed": {
+        "bytes": 480,
+        "sha256": "ebd364ec6e7f4a1b719783b9071b601ad1fd0f313c4f169edf7cb0a0676fa12c"
+      },
+      "raw": {
+        "bytes": 55513,
+        "records": 1030,
+        "sha256": "a8ea14d84b2b9efefbee19b547bb37d28cf22528117f2b37f7c94f5850af76a6"
+      },
+      "packets": 6
+    },
+    {
+      "case": "gzip-controls",
+      "input": {
+        "bytes": 381,
+        "sha256": "898aa07ca0ee9362bddbdd84b959a33a4a2d5b750ad01e1a25689ad610cf6d9c"
+      },
+      "packed": {
+        "bytes": 480,
+        "sha256": "ebd364ec6e7f4a1b719783b9071b601ad1fd0f313c4f169edf7cb0a0676fa12c"
+      },
+      "raw": {
+        "bytes": 55513,
+        "records": 1030,
+        "sha256": "a8ea14d84b2b9efefbee19b547bb37d28cf22528117f2b37f7c94f5850af76a6"
+      },
+      "packets": 6
+    },
+    {
+      "case": "empty",
+      "input": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "packed": {
+        "bytes": 256,
+        "sha256": "36b3ff01a00a02055648ed9db0726f7c087d9ce7d529402811bddcd6ef82ebd1"
+      },
+      "raw": {
+        "bytes": 0,
+        "records": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "packets": 0
+    },
+    {
+      "case": "actual-10002",
+      "input": {
+        "bytes": 1428015,
+        "sha256": "0a86025bcd3f5f8bd7f694e30149aac2f595f1647836a70fb03753b15af6117b"
+      },
+      "packed": {
+        "bytes": 504980,
+        "sha256": "dccd5b7e103ff3c35f7fc64df42a306d61ca009688a40ddfeb200a20cd0526a2"
+      },
+      "raw": {
+        "bytes": 32968880,
+        "records": 10002,
+        "sha256": "8908d24f79bbe20f300a6efb83e354e03004bba9f8e30e306fda436822b538c4"
+      },
+      "packets": 12
+    },
+    {
+      "case": "header",
+      "status": "refused",
+      "exception": "ValueError",
+      "reason": "Unknown lossless transcript format or allocation."
+    },
+    {
+      "case": "rows-zero",
+      "status": "refused",
+      "exception": "ValueError",
+      "reason": "Invalid bounded packet shape."
+    },
+    {
+      "case": "rows-bool",
+      "status": "refused",
+      "exception": "ValueError",
+      "reason": "Invalid bounded packet shape."
+    },
+    {
+      "case": "rows-excess",
+      "status": "refused",
+      "exception": "ValueError",
+      "reason": "Invalid bounded packet shape."
+    },
+    {
+      "case": "column-type",
+      "status": "refused",
+      "exception": "ValueError",
+      "reason": "Invalid raw-lexeme column."
+    },
+    {
+      "case": "column-length",
+      "status": "refused",
+      "exception": "ValueError",
+      "reason": "Invalid raw-lexeme column."
+    },
+    {
+      "case": "unknown-field",
+      "status": "refused",
+      "exception": "ValueError",
+      "reason": "Packed record has unknown fields."
+    },
+    {
+      "case": "raw-byte-change",
+      "status": "refused",
+      "exception": "ValueError",
+      "reason": "The complete restored transcript differs from its original byte identity."
+    },
+    {
+      "case": "missing-footer",
+      "status": "refused",
+      "exception": "ValueError",
+      "reason": "The complete restored transcript differs from its original byte identity."
+    },
+    {
+      "case": "after-footer",
+      "status": "refused",
+      "exception": "ValueError",
+      "reason": "Oversized packet or data following the final receipt."
+    },
+    {
+      "case": "footer-digest",
+      "status": "refused",
+      "exception": "ValueError",
+      "reason": "The complete restored transcript differs from its original byte identity."
+    },
+    {
+      "case": "duplicate-packet-key",
+      "status": "refused",
+      "exception": "ValueError",
+      "reason": "Duplicate packed record key."
+    },
+    {
+      "case": "nonfinite-packet-number",
+      "status": "refused",
+      "exception": "ValueError",
+      "reason": "Nonfinite packed number."
+    },
+    {
+      "case": "truncated-xz",
+      "status": "refused",
+      "exception": "EOFError",
+      "reason": "Compressed file ended before the end-of-stream marker was reached"
+    },
+    {
+      "case": "manifest-raw-digest",
+      "status": "refused",
+      "exception": "ValueError",
+      "reason": "The complete restored transcript differs from its original byte identity."
+    }
+  ],
+  "claim": "Exact original decompressed UTF-8 transcript bytes, including all lexeme spellings and whitespace.",
+  "limits": [
+    "Original gzip container bytes are identified but not recreated.",
+    "This is a storage codec, not JSON semantic or application schema validation.",
+    "A passing decoder receipt binds to the separately retained original raw SHA/size/count manifest.",
+    "Partial outputs from refused encodings have no passing receipt and must remain labeled failed.",
+    "Raw SQLite omission is a separate disclosed handoff scope decision, not a byte-recovery property of this codec."
+  ]
+}

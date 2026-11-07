@@ -44,7 +44,7 @@ List the planned checks without executing them:
 python3 tools/check_local.py --list
 ```
 
-Run the routine Python and documentation checks:
+Prepare the native-reader environment below before running the routine Python and documentation checks:
 
 ```bash
 python3 tools/check_local.py
@@ -66,12 +66,21 @@ objects and preserves copied source edits; it does not create a replacement
 snapshot commit or depend on the evidence directory being inside the repository.
 The source checkout's metadata is not used as the workspace's writable index.
 
-An isolated Python environment is optional. It can be kept outside the repository:
+### Prepare the native-reader verification environment
+
+The C093 native reader uses Pillow to decode embedded PNG textures. Unit-test discovery includes its controls. Before running the complete suite or the combined full driver on this candidate, prepare a clean verification environment outside the checkout. The [seven-package lock](../../tools/native-reader-verification-linux-cp312.lock) includes the six historical Agent/0.5 pins and Pillow 13.0.0. The recorded binary-wheel hashes cover CPython 3.12 on Linux x86-64 with compatible manylinux wheels. Additional platforms require their own wheel identities. OntoKin runtime installation uses its existing package metadata.
 
 ```bash
-python3 -m venv /tmp/ontokin-validation-venv
-source /tmp/ontokin-validation-venv/bin/activate
-python3 tools/check_local.py
+python3.12 -m venv /tmp/ontokin-native-venv
+source /tmp/ontokin-native-venv/bin/activate
+python -I -m pip install --only-binary=:all: --require-hashes -r tools/native-reader-verification-linux-cp312.lock
+python -I -B tools/check_native_reader_setup.py && python -m unittest discover -s tests -p 'test_torque_native_joint_parent_site_c093.py' -v
+```
+
+The [preflight](../../tools/check_native_reader_setup.py) imports `PIL.Image` and checks the Pillow version before test discovery. The focused class contains 11 methods and 47 subtests. To install offline, add `--no-index` and `--find-links` for each directory containing the seven locked wheels. For the full invocation, prepare the Node and Chromium dependencies below, then run the following command from the same environment.
+
+```bash
+python -I -B tools/check_native_reader_setup.py && timeout 7200 python tools/check_local.py --full --force-agent --timeout 3600
 ```
 
 ### Independent geometry and browser checks

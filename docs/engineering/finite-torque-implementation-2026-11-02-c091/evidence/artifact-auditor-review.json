@@ -1,0 +1,285 @@
+{
+  "schema_version": "ontokin.c091-independent-artifact-auditor-review/1",
+  "status": "passed_for_listed_auditor_scope",
+  "reviewer": "runtime agent, independent of the auditor/interface author",
+  "source_commit": "f95b9d29abb514bdd167d8d9fdc717d25224097d",
+  "reviewed_file": "tools/audit_torque_artifact_loop.py",
+  "reviewed_file_sha256": "f682f7afb17691b5f3413bf219fd56aab412da70ed5dc82a40b68dce486b7383",
+  "frozen_manifest_sha256": "98df30158c0cd77c542d89652f5dec6b585d03451a06bf7b1baffee0fc2f02eb",
+  "checks": [
+    {
+      "id": "independent_reader",
+      "passed": true,
+      "basis": "The auditor uses Python standard-library JSON, gzip, SQLite, hashing and byte comparisons, with no producer, service, cache or reference-verifier imports."
+    },
+    {
+      "id": "frozen_source_closure",
+      "passed": true,
+      "basis": "The exact original freeze manifest hash is admitted and every used workflow, file manifest, entry/module and PNG byte sequence is checked against its frozen size/hash before independent program-revision construction."
+    },
+    {
+      "id": "closed_read_only_database",
+      "passed": true,
+      "basis": "The reader rejects nonempty unapplied WAL/journal data and opens the complete closed SQLite file in immutable read-only mode; database integrity and exact relevant row counts are checked."
+    },
+    {
+      "id": "source_artifact_run",
+      "passed": true,
+      "basis": "Accepted source, report, artifact full-byte digest/identifier, committed run identity and producer implementation agree. A report or stored metadata cannot replace the actual full BLOB bytes."
+    },
+    {
+      "id": "durable_exchange_bijection",
+      "passed": true,
+      "basis": "Each transcript exchange advances exactly one ordered durable request row; index, project, request ID, operation, terminal state, canonical request SHA and exact full response serialization agree, and trailing rows/requests are rejected."
+    },
+    {
+      "id": "bounded_transcript_read",
+      "passed": true,
+      "basis": "A gzip readline limit of 8 MiB plus one byte bounds allocation before decoding or searching for a complete newline. Duplicate JSON members and nonfinite JSON tokens are refused."
+    },
+    {
+      "id": "exact_request_types",
+      "passed": true,
+      "basis": "Frozen materialized request and budget dictionaries use exact canonical JSON comparison. Booleans and integral floats cannot impersonate required integers through Python equality."
+    },
+    {
+      "id": "native_response_values",
+      "passed": true,
+      "basis": "Offsets, lengths, next offsets, consumed work and minimum counts require bounded native nonnegative integers; truncation requires an actual Boolean; elapsed time is finite and nonnegative and original clocks/deadline are finite."
+    },
+    {
+      "id": "execution_provenance",
+      "passed": true,
+      "basis": "Every stored request engine and the committed run implementation bind to the producer artifact identity. Every response preserves the explicit original effective/source/host/default limits, request/source identity and deadline interval."
+    },
+    {
+      "id": "artifact_ranges",
+      "passed": true,
+      "basis": "All original artifact requests are the exact frozen sequential requests; every returned decoded range equals actual stored bytes, with exact offset/length/next-offset/truncation semantics and complete identity."
+    },
+    {
+      "id": "eof_and_png",
+      "passed": true,
+      "basis": "A complete success requires the exact successful empty EOF, exact past-EOF refusal and all original PNG ranges. Extra requests after the prescribed workflow are rejected."
+    },
+    {
+      "id": "prefix_is_not_completion",
+      "passed": true,
+      "basis": "Only the explicit allow-incomplete option permits a prefix, and complete_frozen_loop remains false until all artifact bytes, EOF/refusal and PNG bytes have actually occurred."
+    },
+    {
+      "id": "input_and_receipt_binding",
+      "passed": true,
+      "basis": "The report retains original database and compressed/raw transcript hashes and sizes, request/response chain hashes, source closure and producer identity; original database/transcript hashes are checked unchanged after observation."
+    },
+    {
+      "id": "literal_hostile_replay",
+      "passed": true,
+      "basis": "All 11 preserved cases replay with expected outcomes at exact f95b9d2 bytes; nine previously accepted coherent invalid records now refuse for their intended admission predicate, the original valid control passes, and the oversized line refuses before unbounded allocation."
+    },
+    {
+      "id": "complete_and_prefix_controls",
+      "passed": true,
+      "basis": "The independent historical complete 48-exchange control passes 1,221 checks; the actual current capacity prefix of 10,002 exchanges passes 250,075 checks and remains explicitly incomplete."
+    }
+  ],
+  "preserved_cases": [
+    {
+      "case": "control",
+      "before_exit": 0,
+      "after_exit": 0,
+      "input_bytes_unchanged": true,
+      "after_refusal": null
+    },
+    {
+      "case": "boolean-request-max-bytes",
+      "before_exit": 0,
+      "after_exit": 1,
+      "input_bytes_unchanged": true,
+      "after_refusal": "AssertionError('Every frozen chunk request uses actual decoded sequential offset')"
+    },
+    {
+      "case": "foreign-request-engine",
+      "before_exit": 0,
+      "after_exit": 1,
+      "input_bytes_unchanged": true,
+      "after_refusal": "AssertionError('Every durable request is bound to its actual producer implementation')"
+    },
+    {
+      "case": "negative-consumed-work",
+      "before_exit": 0,
+      "after_exit": 1,
+      "input_bytes_unchanged": true,
+      "after_refusal": "AssertionError('Native nonnegative consumed work')"
+    },
+    {
+      "case": "negative-elapsed",
+      "before_exit": 0,
+      "after_exit": 1,
+      "input_bytes_unchanged": true,
+      "after_refusal": "AssertionError('Native finite nonnegative elapsed time')"
+    },
+    {
+      "case": "boolean-response-offset",
+      "before_exit": 0,
+      "after_exit": 1,
+      "input_bytes_unchanged": true,
+      "after_refusal": "AssertionError('Native nonnegative returned offset')"
+    },
+    {
+      "case": "boolean-next-offset",
+      "before_exit": 0,
+      "after_exit": 1,
+      "input_bytes_unchanged": true,
+      "after_refusal": "AssertionError('Native nonnegative returned next offset')"
+    },
+    {
+      "case": "integer-truncated",
+      "before_exit": 0,
+      "after_exit": 1,
+      "input_bytes_unchanged": true,
+      "after_refusal": "AssertionError('Native response truncation flag')"
+    },
+    {
+      "case": "float-budget-limit",
+      "before_exit": 0,
+      "after_exit": 1,
+      "input_bytes_unchanged": true,
+      "after_refusal": "AssertionError('Every actual request retains frozen allocation, inherited defaults and implementation')"
+    },
+    {
+      "case": "boolean-size-max-bytes",
+      "before_exit": 0,
+      "after_exit": 1,
+      "input_bytes_unchanged": true,
+      "after_refusal": "AssertionError('Frozen native integer chunk size')"
+    },
+    {
+      "case": "oversized-transcript-line",
+      "before_exit": 1,
+      "after_exit": 1,
+      "input_bytes_unchanged": true,
+      "after_refusal": "AssertionError('Bounded complete original transcript record')"
+    }
+  ],
+  "actual_independent_controls": [
+    {
+      "status": "passed",
+      "complete_frozen_loop": true,
+      "checks": 1221,
+      "implementation_identity": {
+        "name": "ontokin-reference",
+        "source_code_sha256": "sha256:0952d330603a89b7f626d481b953a518614316b4c4a948dd9b1b378c01234c22",
+        "version": "0.4.0"
+      },
+      "original_database": {
+        "bytes": 10694656,
+        "counts": {
+          "artifacts": 1,
+          "projects": 1,
+          "requests": 48,
+          "runs": 1,
+          "sources": 1
+        },
+        "integrity": "ok",
+        "path": "/workspace/scratch/b46faa606e44/c091-evidence/interface/workflows-attempt04/A08-chunk-65536/store/torque-program-agent.sqlite3",
+        "read_only": true,
+        "sha256": "be75c9940f916d12afc2e355e7df04986e09b8a331e4582ec09c3987e69c7f4a"
+      },
+      "transcript": {
+        "compressed_bytes": 251286,
+        "compressed_sha256": "65685c784966dc9b634e409c57fccb2b30da0d374a854d6a1e9a7ec1ca164ea0",
+        "path": "/workspace/scratch/b46faa606e44/c091-evidence/interface/workflows-attempt04/A08-chunk-65536/exchanges.jsonl.gz",
+        "raw_bytes": 5779394,
+        "raw_sha256": "b245492b09e333c82229c6efbf102cf62d9fc2bd28f14181a444204356d08884",
+        "records": 48
+      },
+      "artifact": {
+        "bytes": 2447148,
+        "chunk_requests": 38,
+        "eof_executed": true,
+        "id": "artifact:61a1414ef5a89f82117e1ebe5345b76acdf8e5058652e167243673a72090a0c4",
+        "max_bytes": 65536,
+        "past_eof_executed": true,
+        "report_sha256": "f5ed1e015699d10bd4893f9936cfe00fe25e270fcb5ffa19b4935931a84c4e9a",
+        "retrieved_bytes": 2447148,
+        "sha256": "sha256:61a1414ef5a89f82117e1ebe5345b76acdf8e5058652e167243673a72090a0c4"
+      },
+      "asset": {
+        "chunk_requests": 6,
+        "retrieved_bytes": 89,
+        "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+      }
+    },
+    {
+      "status": "passed",
+      "complete_frozen_loop": false,
+      "checks": 250075,
+      "implementation_identity": {
+        "name": "ontokin-reference",
+        "source_code_sha256": "sha256:249da76c6d411587be3bd2abc0ac944fabfe131be5a89da7e5f968ee632011a4",
+        "version": "0.4.0"
+      },
+      "original_database": {
+        "bytes": 45125632,
+        "counts": {
+          "artifacts": 1,
+          "projects": 1,
+          "requests": 10002,
+          "runs": 1,
+          "sources": 1
+        },
+        "integrity": "ok",
+        "path": "/workspace/scratch/b46faa606e44/c091-evidence/interface/a08-capacity-attempt08/A08-chunk-1/store/torque-program-agent.sqlite3",
+        "read_only": true,
+        "sha256": "b067dd86531eb89150c33bc00c86992a9849c4bcb2a72140462ad754ebc5be1b"
+      },
+      "transcript": {
+        "compressed_bytes": 621255,
+        "compressed_sha256": "6790f37ef00ac5bf05788c1c16cd120e578548f30c9efa86ced24776ecd2f4d3",
+        "path": "/workspace/scratch/b46faa606e44/c091-evidence/interface/a08-capacity-attempt08/A08-chunk-1/exchanges.jsonl.gz",
+        "raw_bytes": 32026996,
+        "raw_sha256": "3ed48d92135f7b69b91cbd0e13d089cec80b44704870bff0be689413a38a6593",
+        "records": 10002
+      },
+      "artifact": {
+        "bytes": 2447148,
+        "chunk_requests": 10000,
+        "eof_executed": false,
+        "id": "artifact:20519f1383e7c421c71c41a72fa5b8746c9fccce142fb5e486cc2602962a28d8",
+        "max_bytes": 1,
+        "past_eof_executed": false,
+        "report_sha256": "4cf1e81e2f778f5b7ec4adcb5265ce5b6aa3a418a7c44411373e9ea5fb6b02b7",
+        "retrieved_bytes": 10000,
+        "sha256": "sha256:20519f1383e7c421c71c41a72fa5b8746c9fccce142fb5e486cc2602962a28d8"
+      },
+      "asset": {
+        "chunk_requests": 0,
+        "retrieved_bytes": 0,
+        "sha256": "sha256:5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+      }
+    }
+  ],
+  "evidence_sha256": {
+    "a08-auditor-independent-probes03/results.json": "d9861f4a89e17a91d4456f6c31a7a80fa72118d1f7ba554494da0eb77a7f0b76",
+    "a08-auditor-independent-probes04/results.json": "10e6e6f74a7e3429fc9dbf184eb636cfa7aa7ad1658021c1c1a6022a1a115f0e",
+    "a08-auditor-preserved-witnesses-after02/results.json": "39852d362a55bba5afe022efac7bc074f3ac9acc6e13685f1ae2f4597f66b1f3",
+    "a08-auditor-complete-independent-after01/AUDIT.json": "37010fc34eddf6891eeb5eb0ec5d44d85b6d4f72795e9b4134d421f1f8682ac7",
+    "a08-auditor-capacity-independent-after01/AUDIT.json": "b664857a120408e391a4fec2d441ae0bdf1e9841dcfa6fe90b055c6b0a1d6e00"
+  },
+  "review_driver": {
+    "commit": "a1fc0f6",
+    "file": "tools/review_torque_artifact_auditor.py",
+    "sha256": "e6be38f44bbd963848af4cbd9a62f2a85e3629b365b8ad4f17f5f5c0da8b78ad"
+  },
+  "retained_attempt_classifications": [
+    "Independent probes02 left a SQLite connection open, so the nonempty WAL precondition masked intended predicates. That harness preparation failure is retained; probes03 explicitly closes each copy and is the valid before witness.",
+    "Preserved-witnesses-after01 had a driver SyntaxError before invocation and made no auditor or input runs. It remains retained; after02 is the actual successful exact-input replay."
+  ],
+  "scope_limits": [
+    "This review verifies the listed offline receipt auditor, not torque physics, independent source numerical proofs, the implementation truth of every reported primitive, or a complete integrated release.",
+    "The 48-exchange complete control belongs to its recorded historical implementation; it is not a final-basis A08 claim. The 10,002-exchange current capacity control retrieves only 10,000 of 2,447,148 bytes and does not execute EOF or PNG reads.",
+    "The auditor observes and hashes an actual closed SQLite file. It does not reconstruct that original physical SQLite file from a transcript. Any final ZIP omission of that original database must be explicit and retain the original hash, full transcript, retrieved artifact, source closure, report/run metadata and auditor receipt.",
+    "A future full workflow on different implementation bytes requires a fresh actual store/transcript and fresh auditor execution. Existing prefix/historical audit success cannot stand in for those requests."
+  ]
+}

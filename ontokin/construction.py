@@ -31,7 +31,7 @@ from .texture_runtime import (TEXTURE_CALLS, TEXTURE_TYPES, texture_builtin,
                               validate_texture_closure, texture_coordinates)
 from .profile_capabilities import (BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_REKEY_PROFILES, KEYED_ZIP_PROFILES, KEYED_MERGE_PROFILES, KEYED_FILTER_PROFILES, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, EXECUTION_PROFILES, REACH_PROFILES, IMPULSE_PROFILES,
                                    SURFACE_PROFILES)
-from .profile_capabilities import (KEYED_MEMBERSHIP_PROFILE, KEYED_MEMBERSHIP_PROFILES,
+from .profile_capabilities import (KEYED_MEMBERSHIP_PROFILE, KEYED_MEMBERSHIP_PROFILES, TORQUE_PROFILE,
                                    STRING_CONCAT_PROFILES)
 from .validator import (BUILTIN_TYPES, FIELD_TYPES,
                         PREDEFINED, READONLY_FIELDS, KEY_RE, BoundExpression, Callable,
@@ -2117,7 +2117,7 @@ class ConstructionCompiler(Validator):
                 self.expect(self.expression(node.condition, ctx), BOOL, node.condition)
             elif node.kind == "event_block":
                 self.expect(self.expression(node.time, ctx), quantity_type(TIME), node.time)
-                for event in node.events:
+                for sequence_index, event in enumerate(node.events):
                     if event.kind == "release":
                         self.expect(self.path_value(event.path, ctx, event), Type("JointRef"), event)
                     elif event.kind == "impulse":
@@ -2125,6 +2125,12 @@ class ConstructionCompiler(Validator):
                     elif event.kind == "force":
                         from .force_source import force_values
                         force_values(self, event, ctx)
+                    elif event.kind == "torque":
+                        # The source pass already checked the target structure.
+                        # Admit each concrete child once, in statement order,
+                        # during lowering. An abstract duration type failure
+                        # must not precede an actual first-child arithmetic error.
+                        pass
             elif node.kind in ("site", "joint", "follow"):
                 self.check_member_types(node, ctx)
         done, active = set(), set()
@@ -3282,6 +3288,10 @@ class ConstructionCompiler(Validator):
                     force_keys.add(event.key)
                     target, payload = lower_force(self, event, sequence_index)
                     events.append(Event("force", target, event, force=payload))
+                elif event.kind == "torque":
+                    from .torque_source import lower_torque
+                    target, payload = lower_torque(self, event, sequence_index)
+                    events.append(Event("torque", target, event, torque=payload))
                 else:
                     if event.name not in self.actions:
                         fail("OKL-E-NAME", f"'{event.name}' is not a named action instance.", event, phase="binding")
@@ -3392,6 +3402,9 @@ class ConstructionCompiler(Validator):
         if self.level not in ("represented", "constructed", "evaluated", "delivered"):
             fail("OKL-E-CAPABILITY-UNSUPPORTED", f"Unknown requested output level '{self.level}'.", self.program, phase="support")
         self.bind()
+        if self.model.profile == TORQUE_PROFILE:
+            from .torque_source import check_torque_structure
+            check_torque_structure(self)
         self.check_static_types()
         context = Context(scene=True)
         prefix = (self.model.module_key, self.model.scene_key)
@@ -3430,7 +3443,7 @@ class ConstructionCompiler(Validator):
             fail("OKL-E-CAPABILITY-UNSUPPORTED", "Required capabilities are not supplied by " + self.model.profile + ": " +
                  ", ".join(self.model.requested_capabilities), requires[0], phase="support")
         if self.level == "delivered":
-            target = ("ontokin.glb/0.21" if self.model.profile == KEYED_MEMBERSHIP_PROFILE else "ontokin.glb/0.20" if self.model.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if self.model.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if self.model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if self.model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if self.model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if self.model.profile == KEYED_REDUCTION_PROFILE else
+            target = ("ontokin.glb/0.22" if self.model.profile == TORQUE_PROFILE else "ontokin.glb/0.21" if self.model.profile == KEYED_MEMBERSHIP_PROFILE else "ontokin.glb/0.20" if self.model.profile == STRING_CONCAT_PROFILE else "ontokin.glb/0.19" if self.model.profile == KEYED_REKEY_PROFILE else "ontokin.glb/0.18" if self.model.profile == KEYED_ZIP_PROFILE else "ontokin.glb/0.17" if self.model.profile == KEYED_MERGE_PROFILE else "ontokin.glb/0.16" if self.model.profile == KEYED_FILTER_PROFILE else "ontokin.glb/0.15" if self.model.profile == KEYED_REDUCTION_PROFILE else
                        "ontokin.glb/0.14" if self.model.profile == KEYED_TRANSFORM_PROFILE else
                       "ontokin.glb/0.13" if self.model.profile == TEXTURE_PROFILE else
                       "ontokin.glb/0.12" if self.model.profile == POCKETS_PROFILE else

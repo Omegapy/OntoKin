@@ -1,0 +1,148 @@
+{
+  "schema_version": "ontokin.c091-independent-evidence-packaging-review/1",
+  "status": "passed_for_reviewed_tool_bytes_and_bounded_cases",
+  "reviewer": "runtime agent, independent of root packaging-tool author",
+  "reviewed_tools_sha256": {
+    "capture_handoff_evidence.py": "bcd2dfb0fe43c191bc4ac08382d42735b4da34ae8625ea2ab700487edeb8baa4",
+    "recover_handoff_evidence.py": "f7be315c10fc4c3af98a34ec3f0fb48933a72241daa5e56f6b5ab1b5a8aad6ee"
+  },
+  "unchanged_common_sha256": "38d84de5e3662efcd47519517da38e8fef841744d50cdafe4246652c0e2273ab",
+  "actual_cases": {
+    "main": 40,
+    "late_output_and_index_link": 3,
+    "coherent_native_authority": 3,
+    "total": 46,
+    "expected_positive_controls": 2,
+    "expected_refusals": 44
+  },
+  "checks": [
+    {
+      "id": "exact_control",
+      "passed": true,
+      "basis": "The independent binary, NUL/CRLF/UTF-8 content, UTF-8 path, empty file and nondefault ordinary modes round trip exactly; each raw body is independently compared to native SHA1 and full SHA256 and exact native tree membership."
+    },
+    {
+      "id": "source_unchanged",
+      "passed": true,
+      "basis": "The fresh fixture product HEAD, exact index bytes and source content remain unchanged through all 46 cases. Only explicit archival refs/objects and fresh review outputs are created."
+    },
+    {
+      "id": "input_path_admission",
+      "passed": true,
+      "basis": "Capture now opens every ancestor without following links and uses held ordinary input descriptors for Git hashing. The original nested-include ancestor-link acceptance now refuses."
+    },
+    {
+      "id": "closed_capture_inventory",
+      "passed": true,
+      "basis": "Capture re-enumerates the complete included membership before commit and before ref publication and checks original file stamps. Both existing-file mutation and newly added membership refuse."
+    },
+    {
+      "id": "private_index",
+      "passed": true,
+      "basis": "A private 0700 temporary index directory replaces the predictable index file; even the legacy dangling-link witness is explicitly refused without creating its foreign target."
+    },
+    {
+      "id": "native_embedded_index",
+      "passed": true,
+      "basis": "A reserved native index blob binds all original paths, body identities, complete ordinary modes, counts, totals, source parent and capture scope. Changing an ordinary mode in the external manifest cannot alter the restored mode without breaking that native authority."
+    },
+    {
+      "id": "native_authority_bodies",
+      "passed": true,
+      "basis": "Decoder checks exact commit type, tree and sole source parent, captured archive ref and full native header/body identity for source/archive commits, root/nested trees and embedded index; all three coherent loose-object mutation variants refuse."
+    },
+    {
+      "id": "strict_manifest",
+      "passed": true,
+      "basis": "Native integer counts/totals/byte sizes, strict SHA1/SHA256 identities, bounded ordinary modes, sorted unique paths and native tree equality are admitted before output publication."
+    },
+    {
+      "id": "safe_fresh_outputs",
+      "passed": true,
+      "basis": "Existing destinations, reports, symlinks and dangling links refuse without overwriting them. Unsafe absolute, parent, backslash and Git-control paths refuse."
+    },
+    {
+      "id": "streamed_body_identity",
+      "passed": true,
+      "basis": "Every restored body is bounded by its native batch frame and streamed while independently hashing complete SHA256 and native blob SHA1. A corrupted native body with a coherently changed external full hash still refuses."
+    },
+    {
+      "id": "final_output_closure",
+      "passed": true,
+      "basis": "Complete destination membership and every restored file fingerprint are checked before the success report. The original late body-change and added-output witnesses now refuse without publishing a success report."
+    },
+    {
+      "id": "manifest_change",
+      "passed": true,
+      "basis": "A changed external manifest during restoration refuses; original valid control and all earlier intended refusal predicates remain intact."
+    },
+    {
+      "id": "frozen_common",
+      "passed": true,
+      "basis": "The decoder uses unchanged handoff_common.py, SHA-256 38d84de5e3662efcd47519517da38e8fef841744d50cdafe4246652c0e2273ab. Strict source recovery is not weakened or modified by this review."
+    },
+    {
+      "id": "evidence_preserved",
+      "passed": true,
+      "basis": "All original preparation failures and accepted bad outcomes remain recorded. Four complete raw fixture workspaces are sealed with independently checked bytes, modes, path membership and symlink metadata, and readable actual receipts/drivers/logs remain outside the archives."
+    }
+  ],
+  "original_failures": {
+    "first_tool_revision_unexpected_acceptances": 11,
+    "second_revision_remaining_embedded_index_native_identity_acceptance": 1,
+    "first_fixture_preparation_error": "Readonly copied Git object needed owner-write permission for deliberate corruption; review01 failure is retained and was corrected only in the fixture."
+  },
+  "evidence_files": {
+    "evidence-archive-review04/RESULT.json": "6903a11f17878505992b63f9a1caa43f59123d314b85b6d6c5f4a111570a19f0",
+    "evidence-archive-review04/additional/RESULT.json": "caf9ff708874d8b4d44212f64df7499e72e5869b8dfcef7fbd0637b17e759cfb",
+    "evidence-archive-review04/native-authority-after01/RESULT.json": "bcfc74453e7011bfe81b2cf678755d330253a4e7630a0f9142614064f9610f05",
+    "evidence-archive-review02/RESULT.json": "f47374bf61c88cbb61a54d18883940ec2e4c77af272769d0e0c9e22d99c4ffdb",
+    "evidence-archive-review02/additional/RESULT.json": "412f8b5306aac47454cd6363caf0146856329f9a41a032e533e67d692280a86c",
+    "evidence-archive-review03/native-authority-before01/RESULT.json": "fd535550e484e634456b53c9a0711f9d485277949258f24f2d7b92b806c1f1a6"
+  },
+  "fixture_archives": [
+    {
+      "path": "evidence-archive-review01/FIXTURE-WORKSPACE.tar.gz",
+      "sha256": "bb9117a4e59b183cafc066e59021a11b67bcf41b876872a2751467c5737933d1",
+      "bytes": 99001,
+      "manifest_path": "evidence-archive-review01/FIXTURE-ARCHIVE.json",
+      "manifest_sha256": "c64b7418b34b147795a6b9312c121772943469a167f05acff4d00c5415d20b5a",
+      "members": 315
+    },
+    {
+      "path": "evidence-archive-review02/FIXTURE-WORKSPACE.tar.gz",
+      "sha256": "b42629d4c412dc5adbdce6c2ad0e030e3804813c6e629315201ee6521120d553",
+      "bytes": 203033,
+      "manifest_path": "evidence-archive-review02/FIXTURE-ARCHIVE.json",
+      "manifest_sha256": "143bf61c0a211fd2d820836532987f64c267e8f06361792c240bcceb1d364d15",
+      "members": 556
+    },
+    {
+      "path": "evidence-archive-review03/FIXTURE-WORKSPACE.tar.gz",
+      "sha256": "5494f2ab74c91dc9b6943b6df7095269cbc0ecbe31dee376ee1334070e3761a7",
+      "bytes": 232542,
+      "manifest_path": "evidence-archive-review03/FIXTURE-ARCHIVE.json",
+      "manifest_sha256": "c98fee5cde42e5b5a37a9976628fb69179e22114555ebffdd3a09f597d76cba4",
+      "members": 801
+    },
+    {
+      "path": "evidence-archive-review04/FIXTURE-WORKSPACE.tar.gz",
+      "sha256": "0a0a9872cc62dea224b8c6bc8af35735697cf2d4d0d642eafdfee5d977ffecd7",
+      "bytes": 202448,
+      "manifest_path": "evidence-archive-review04/FIXTURE-ARCHIVE.json",
+      "manifest_sha256": "fd1e39f55a283c045badca2bd68d7b31b6c6c5f801028b9065a96c89df8608b3",
+      "members": 707
+    }
+  ],
+  "source_preservation_after_all46": {
+    "head": "8a155f98333449b257270042a1978c4431b172b9",
+    "index_sha256": "95b591bc0cf88533c03572dfb80237382e198bd99b66fd52c16f83d2b679c161",
+    "source_sha256": "b184da342933fbdf6c81cb49fc77e32bee2327a0141d256c043bc7a271de3cb5"
+  },
+  "limits": [
+    "This approves the listed packaging tool bytes for the described review and small fixtures; actual full evidence capture, native pack generation and fresh full-size recovery remain separate required executions.",
+    "Archive commits are explicitly archival, have the source as their sole parent and must never be checked out or merged as product source.",
+    "Fixture archives are opaque review data containing deliberately linked inputs and Git control directories. The evidence decoder preserves their ordinary archive-file bytes and does not unpack them into product source. No raw review data is omitted.",
+    "No product source, frozen authority, source recovery helper or original execution evidence is changed by these checks. This is not a torque release or GOAL-completion claim."
+  ]
+}

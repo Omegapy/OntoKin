@@ -1,0 +1,3954 @@
+{
+  "actual_current_gates": [
+    {
+      "counts": {
+        "cases": 31,
+        "checks": 14172
+      },
+      "evidence": [
+        "c092-validation/candidate03-reference.json",
+        "c092-validation/candidate03-reference-run.json"
+      ],
+      "id": "independent_reference",
+      "scope": "Original independent scalar/history oracle; no producer artifact acceptance.",
+      "source_binding": "actual_published_candidate03_execution",
+      "status": "passed"
+    },
+    {
+      "counts": {
+        "rows": 17
+      },
+      "evidence": [
+        "c092-validation/candidate03-domains/SUMMARY.json",
+        "c092-validation/candidate03-domains-run.json"
+      ],
+      "id": "direct_domains_and_refusals",
+      "scope": "Original exact domain and before/after runtime refusal expectations.",
+      "source_binding": "actual_published_candidate03_execution",
+      "status": "passed"
+    },
+    {
+      "counts": {
+        "cases": 7,
+        "checks": 60
+      },
+      "evidence": [
+        "c092-validation/candidate03-numerical-attempt01/RUN.json",
+        "c092-validation/candidate03-numerical-run.json",
+        "c092-reviews/reader/implementation/final-candidate03/NUMERICAL-HARNESS-PIN-BINDING.json"
+      ],
+      "id": "seven_original_numerical_cases",
+      "scope": "Only the required source pin changed in the external harness; original prior harness retained. Source and original expected values unchanged.",
+      "source_binding": "actual_published_candidate03_execution",
+      "status": "passed"
+    },
+    {
+      "counts": {
+        "cases": 31,
+        "state_observations": 204
+      },
+      "evidence": [
+        "c092-reviews/source/implementation/final-runtime-candidate03-attempt01/runtime-states-RESULT.json",
+        "c092-reviews/source/implementation/final-runtime-candidate03-attempt01/RESULT.json"
+      ],
+      "id": "runtime_states",
+      "scope": "Original before/after source state corpus.",
+      "source_binding": "actual_published_candidate03_execution",
+      "status": "passed"
+    },
+    {
+      "counts": {
+        "direct_fault_variants": 65,
+        "runtime_stages": 13
+      },
+      "evidence": [
+        "c092-reviews/source/implementation/final-runtime-candidate03-attempt01/runtime-stage-faults-RESULT.json",
+        "c092-reviews/source/implementation/final-runtime-candidate03-attempt01/RESULT.json"
+      ],
+      "id": "runtime_faults",
+      "scope": "Original direct runtime fault matrix.",
+      "source_binding": "actual_published_candidate03_execution",
+      "status": "passed"
+    },
+    {
+      "counts": {
+        "checks": 1997388,
+        "runner_exchanges": 383,
+        "variants": 90
+      },
+      "evidence": [
+        "c092-reviews/source/implementation/final-runtime-candidate03-attempt01/agent-resource-stages-RESULT.json",
+        "c092-reviews/source/implementation/final-runtime-candidate03-attempt01/RESULT.json"
+      ],
+      "id": "agent_resource_faults_A09",
+      "scope": "All original Agent resource variants, including original callback variants; controlled fault clocks do not replace uninstrumented A08 success.",
+      "source_binding": "actual_published_candidate03_execution",
+      "status": "passed"
+    },
+    {
+      "counts": {
+        "additional_executions": 0,
+        "exact_repeats": 31,
+        "executions": 67,
+        "originals": 31,
+        "required_helpers": 5
+      },
+      "evidence": [
+        "c092-validation/candidate03-delivery/summary.json",
+        "c092-validation/candidate03-delivery-gate.json",
+        "c092-validation/candidate03-delivery-run/RESULT.json",
+        "c092-validation/candidate03-delivery-audit-run/RESULT.json"
+      ],
+      "id": "frozen_CLI_delivery",
+      "scope": "Required original options, sources, allocation and exact byte repeat checks; independent destination and Agent checks remain separate.",
+      "source_binding": "actual_published_candidate03_execution",
+      "status": "passed"
+    },
+    {
+      "classification": "inherited_oracle_omits_documented_joint_parent_site",
+      "counts": {
+        "carrier_observations_for_passed_variants": 1815991,
+        "executed_clock_sides_for_passed_variants": 216098,
+        "failed": 1,
+        "missing_native_gate_captures": 3,
+        "native_gate_captures": 105,
+        "passed": 35,
+        "required_variants": 36
+      },
+      "evidence": [
+        "c092-reviews/recording-durable/implementation/NATIVE-SHARDS-FREEZE.json",
+        "c092-reviews/recording-durable/implementation/native-failed-gate-audit02/RESULT.json",
+        "c092-reviews/recording-durable/implementation/p28-helper-classification01/RESULT.json"
+      ],
+      "failed_variant": "delivery-p28-release-then-torque/helpers",
+      "failure": "Unknown requested helper",
+      "id": "controlled_native_dense",
+      "maxima_for_passed_variants": {
+        "box_vertex_m": 0.000247671843734261,
+        "origin_m": 0.00024706134439939103,
+        "rotation_rad": 0.00025119296973250005,
+        "site_m": 0.00024706134439939103
+      },
+      "no_p28_dense_approval": true,
+      "scope": "Exact disjoint union through the original --case option. All original variants, clocks, predicates and per-case100000000 operations/900seconds retained.",
+      "source_binding": "actual_published_candidate03_execution",
+      "status": "failed"
+    },
+    {
+      "counts": {
+        "gate_images_reviewed": 105,
+        "native_gate_images_missing": 3,
+        "separate_capture_only_images_reviewed": 3,
+        "total_images_reviewed": 108
+      },
+      "evidence": [
+        "c092-reviews/recording-durable/implementation/NATIVE-VISUAL-REVIEW.json",
+        "c092-reviews/recording-durable/implementation/native-p28-helper-capture-only01/RESULT.json",
+        "c092-reviews/recording-durable/implementation/p28-helper-classification01/EXPECTED-BEFORE-ARTIFACT-INSPECTION.json"
+      ],
+      "id": "native_visual_review",
+      "scope": "All nine contact sheets inspected. Original p14 cameras leave geometry tiny; helpers can be occluded. The three p28 capture-only images do not replace its missing dense/source-geometry gate.",
+      "source_binding": "actual_published_candidate03_execution",
+      "status": "complete_with_visibility_limits"
+    },
+    {
+      "counts": {
+        "C5_pairs": 2,
+        "explicit_unpaired_predecessor_refusals": 4,
+        "pairs": 29,
+        "predecessor_pairs": 27
+      },
+      "evidence": [
+        "c092-reviews/recording-durable/implementation/geometry-candidate03-attempt01/RESULT.json",
+        "c092-reviews/recording-durable/implementation/geometry-candidate03-run01/RESULT.json"
+      ],
+      "id": "exact_geometry_streams",
+      "scope": "Complete resolved geometry/PBR/texture/sampler/PNG comparison; four missing predecessor artifacts remain unpaired.",
+      "source_binding": "actual_published_candidate03_execution",
+      "status": "passed"
+    },
+    {
+      "counts": {
+        "before_after_state_stream_pairs": 31,
+        "cases": 31,
+        "original_refusals_preserved": 4,
+        "whole_GLB_pairs": 27
+      },
+      "evidence": [
+        "c092-reviews/recording-durable/implementation/predecessor-candidate03-attempt01/summary.json",
+        "c092-reviews/recording-durable/implementation/predecessor-candidate03-run01/RESULT.json"
+      ],
+      "id": "predecessor_state_and_bytes_C1",
+      "scope": "Whole predecessor bytes compared without normalizing padding or numerical basis; original baseline batch remains failed.",
+      "source_binding": "actual_published_candidate03_execution",
+      "status": "passed"
+    },
+    {
+      "counts": {
+        "blocked_before_mutation": 26,
+        "p01_control_blocked_cases": 24,
+        "p04_control_blocked_cases": 2,
+        "prescribed_mutation_refusals_passed": 14,
+        "required": 40,
+        "successful_final_engine_original_controls": 5
+      },
+      "evidence": [
+        "c092-reviews/recording-durable/implementation/HOSTILE-CANDIDATE03-SCOPED-RESULT.json",
+        "c092-reviews/recording-durable/implementation/hostile-candidate03-run01/RESULT.json"
+      ],
+      "id": "hostile_artifact_bytes",
+      "scope": "Failed original Agent export controls cannot count as mutation rejections. All original failed rows and actual inventories retained.",
+      "source_binding": "actual_published_candidate03_execution",
+      "status": "failed",
+      "timing_context": "Original frozen source and host limits retained. Three inherited unit-suite processes were active elsewhere in the shared workspace when this required original gate started; native sampling was not started until this gate completed. No uncontended timing claim is made."
+    },
+    {
+      "complete_byte_retrieval": false,
+      "counts": {
+        "artifact_rows": 0,
+        "diagnostic_elapsed_ms": 30000.312716,
+        "operations": 189856,
+        "reported_budget_elapsed_ms": 30001.01628,
+        "source_and_host_max_elapsed_ms": 30000,
+        "source_and_host_max_operations": 1000000
+      },
+      "evidence": [
+        "c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt03/actual-a08-attempt01/RESULT.json",
+        "c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt03/actual-a08-integrity-attempt02/RESULT.json",
+        "c092-reviews/recording-durable/implementation/candidate03-bindings01/RESULT.json"
+      ],
+      "id": "actual_original_A08_export",
+      "scope": "Uninstrumented full frozen original A08. The exact189 package bytes match final candidate03; actual isolated run preceded publication and did not overlap other verification CPU workloads.",
+      "source_binding": "prepublication_execution_exact_final_package_bytes",
+      "stage": "recording_export_readback",
+      "status": "failed"
+    },
+    {
+      "counts": {
+        "checks_including_failed_assertions": 803,
+        "failed": 11,
+        "passed": 2,
+        "runner_reported_exchanges": 61,
+        "selected": 13
+      },
+      "evidence": [
+        "c092-reviews/source/AGENT-WORKFLOW-STATE-SUPPLEMENT.json",
+        "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows-RESULT.json",
+        "c092-reviews/source/implementation/final-agent-candidate03-attempt01/A07-DURABLE-EXPORT-FAILURE.json"
+      ],
+      "failed_scenarios": [
+        "A01",
+        "A02-1",
+        "A02-2",
+        "A02-3",
+        "A02-4",
+        "A02-5",
+        "A02-6",
+        "A03",
+        "A05",
+        "A06",
+        "A07"
+      ],
+      "id": "default_Agent_workflows",
+      "passed_scenarios": [
+        "A04",
+        "transport"
+      ],
+      "scenario_rows": [
+        {
+          "checks_performed_including_any_failure": 135,
+          "classification": "blocked_by_full_export_deadline_before_dependent_steps",
+          "elapsed_seconds": 45.257345571999394,
+          "original_runner_status": "failed",
+          "runner_reported_exchanges": 10,
+          "scenario": "A01"
+        },
+        {
+          "checks_performed_including_any_failure": 46,
+          "classification": "blocked_by_full_export_deadline_before_dependent_steps",
+          "elapsed_seconds": 33.48231282799861,
+          "original_runner_status": "failed",
+          "runner_reported_exchanges": 3,
+          "scenario": "A02-1"
+        },
+        {
+          "checks_performed_including_any_failure": 46,
+          "classification": "blocked_by_full_export_deadline_before_dependent_steps",
+          "elapsed_seconds": 33.15214797600129,
+          "original_runner_status": "failed",
+          "runner_reported_exchanges": 3,
+          "scenario": "A02-2"
+        },
+        {
+          "checks_performed_including_any_failure": 46,
+          "classification": "blocked_by_full_export_deadline_before_dependent_steps",
+          "elapsed_seconds": 33.30724234400077,
+          "original_runner_status": "failed",
+          "runner_reported_exchanges": 3,
+          "scenario": "A02-3"
+        },
+        {
+          "checks_performed_including_any_failure": 46,
+          "classification": "blocked_by_full_export_deadline_before_dependent_steps",
+          "elapsed_seconds": 33.39670885399937,
+          "original_runner_status": "failed",
+          "runner_reported_exchanges": 3,
+          "scenario": "A02-4"
+        },
+        {
+          "checks_performed_including_any_failure": 46,
+          "classification": "blocked_by_full_export_deadline_before_dependent_steps",
+          "elapsed_seconds": 33.34750223899937,
+          "original_runner_status": "failed",
+          "runner_reported_exchanges": 3,
+          "scenario": "A02-5"
+        },
+        {
+          "checks_performed_including_any_failure": 46,
+          "classification": "blocked_by_full_export_deadline_before_dependent_steps",
+          "elapsed_seconds": 33.513980259000164,
+          "original_runner_status": "failed",
+          "runner_reported_exchanges": 3,
+          "scenario": "A02-6"
+        },
+        {
+          "checks_performed_including_any_failure": 46,
+          "classification": "blocked_by_full_export_deadline_before_dependent_steps",
+          "elapsed_seconds": 34.88824773600027,
+          "original_runner_status": "failed",
+          "runner_reported_exchanges": 3,
+          "scenario": "A03"
+        },
+        {
+          "checks_performed_including_any_failure": 109,
+          "classification": "passed",
+          "elapsed_seconds": 2.5409158040001785,
+          "original_runner_status": "passed",
+          "runner_reported_exchanges": 12,
+          "scenario": "A04"
+        },
+        {
+          "checks_performed_including_any_failure": 29,
+          "classification": "blocked_by_full_export_deadline_before_dependent_steps",
+          "elapsed_seconds": 30.84376905099998,
+          "original_runner_status": "failed",
+          "runner_reported_exchanges": 2,
+          "scenario": "A05"
+        },
+        {
+          "checks_performed_including_any_failure": 29,
+          "classification": "blocked_by_full_export_deadline_before_dependent_steps",
+          "elapsed_seconds": 30.893630330001542,
+          "original_runner_status": "failed",
+          "runner_reported_exchanges": 2,
+          "scenario": "A06"
+        },
+        {
+          "checks_performed_including_any_failure": 28,
+          "classification": "blocked_by_full_export_deadline_before_dependent_steps",
+          "elapsed_seconds": 31.45167895400118,
+          "original_runner_status": "failed",
+          "runner_reported_exchanges": 1,
+          "scenario": "A07"
+        },
+        {
+          "checks_performed_including_any_failure": 151,
+          "classification": "passed",
+          "elapsed_seconds": 1.0330385329998535,
+          "original_runner_status": "passed",
+          "runner_reported_exchanges": 13,
+          "scenario": "transport"
+        }
+      ],
+      "scope": "The eleven failed scenarios all require the original full export control. A02 repair steps, A03 post-export lifecycle, A05 warm-reader denial, A06 late caps and A07 actual publication interruption are not established by these incomplete workflows.",
+      "source_binding": "actual_published_candidate03_execution",
+      "status": "failed"
+    },
+    {
+      "additional_A11_roles_not_closed": true,
+      "combined_Agent_runner_status": "failed_due_to_default_workflows",
+      "counts": {
+        "checks": 9096,
+        "historical_retries_in_retained_pairs": 30,
+        "passed_cases": 31,
+        "required_cases": 31,
+        "retained_request_response_pairs": 1026,
+        "runner_reported_exchanges": 996
+      },
+      "elapsed_seconds": 1901.4043926100003,
+      "evidence": [
+        "c092-reviews/source/AGENT-WORKFLOW-STATE-SUPPLEMENT.json",
+        "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix-RESULT.json",
+        "c092-reviews/source/implementation/final-agent-candidate03-attempt01/RESULT.json",
+        "c092-reviews/source/implementation/final-agent-candidate03-attempt01/SOURCE-BEFORE.json",
+        "c092-reviews/source/implementation/final-agent-candidate03-attempt01/SOURCE-AFTER.json"
+      ],
+      "id": "A11_positive_actual_store_state_matrix",
+      "scope": "Original positive source/state corpus through real .22 services, repeated new-ID inspections, direct/resumed state equality, reopening and historical retry, source records and independent quaternion enclosure, and self-frame scalar history. Full A11 domain/refusal/additional self-frame roles remain separate.",
+      "source_binding": "actual_published_candidate03_execution",
+      "status": "passed"
+    },
+    {
+      "counts": {
+        "output_bytes": 34682562,
+        "output_files": 1225,
+        "passed": 3,
+        "recovery_captures_reviewed": 12,
+        "roles": 3
+      },
+      "database_failure_cause_established": false,
+      "evidence": [
+        "c092-validation/candidate03-surface-agent-recovery01/RESULT.json",
+        "c092-validation/candidate03-surface-agent-recovery01/OUTPUT-MANIFEST.json",
+        "c092-validation/candidate03-surface-agent-recovery01/SOURCE-BEFORE.json",
+        "c092-validation/candidate03-surface-agent-recovery01/SOURCE-AFTER.json",
+        "c092-validation/candidate03-surface-agent-recovery01/FAILED-ORIGINAL-BEFORE.json",
+        "c092-validation/candidate03-surface-agent-recovery01/FAILED-ORIGINAL-AFTER.json",
+        "c092-reviews/reader/implementation/surface-agent-db-candidate03-attempt01/RECOVERY-DECISION.json",
+        "c092-validation/candidate03-surface-agent-recovery01/outputs/logs/surface-agent-build.log",
+        "c092-validation/candidate03-surface-agent-recovery01/outputs/logs/surface-agent-format.log",
+        "c092-validation/candidate03-surface-agent-recovery01/outputs/reports/surface-agent-destination.json",
+        "c092-validation/candidate03-surface-agent-recovery01/outputs/logs/surface-agent-browser.log",
+        "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/browser-results.json",
+        "c092-reviews/reader/implementation/inherited-visual-candidate03/ORIGINAL-VISUAL-REVIEW.json",
+        "c092-reviews/reader/implementation/inherited-visual-candidate03/INHERITED-RECOVERY-VISUAL.json",
+        "c092-reviews/reader/implementation/inherited-visual-candidate03/RECOVERY-INTEGRITY.json",
+        "c092-reviews/reader/implementation/inherited-visual-candidate03/RECOVERY-CAPTURES-MANIFEST.json",
+        "c092-reviews/reader/implementation/inherited-visual-candidate03/RECOVERY-SQLITE-DIAGNOSTICS.json",
+        "c092-reviews/reader/implementation/inherited-visual-candidate03/inspect_recovery.py"
+      ],
+      "id": "surface_agent_three_role_recovery",
+      "independent_visual_and_fresh_store_review": "passed_scoped_independent_review",
+      "original_failed_artifacts_unchanged": true,
+      "original_full_invocation_reclassified": false,
+      "original_supervision_seconds": 3600,
+      "program_limits_changed": false,
+      "roles": [
+        {
+          "duration_seconds": 73.879,
+          "id": "surface-agent-build",
+          "output_root_substitution_only": true,
+          "status": "passed"
+        },
+        {
+          "duration_seconds": 0.972,
+          "id": "surface-agent-format",
+          "output_root_substitution_only": true,
+          "status": "passed"
+        },
+        {
+          "duration_seconds": 8.163,
+          "id": "surface-agent-browser",
+          "output_root_substitution_only": true,
+          "status": "passed"
+        }
+      ],
+      "scope": "One fresh execution of the three unchanged original roles. Only absolute output-root substitutions change; the failed original invocation remains failed.",
+      "source_binding": "actual_published_candidate03_source_workspace_execution",
+      "source_unchanged": true,
+      "status": "passed"
+    },
+    {
+      "counts": {
+        "missing_original_surface_agent_images": 12,
+        "original_capture_count": 23,
+        "original_images_directly_reviewed": 23,
+        "recovery_images_included": 0
+      },
+      "evidence": [
+        "c092-reviews/reader/implementation/inherited-visual-candidate03/ORIGINAL-VISUAL-REVIEW.json",
+        "c092-reviews/reader/implementation/inherited-visual-candidate03/ORIGINAL-CAPTURES-MANIFEST.json",
+        "c092-reviews/reader/implementation/inherited-visual-candidate03/INHERITED-RECOVERY-VISUAL.json"
+      ],
+      "id": "original_inherited23_visual_review",
+      "scope": "Original23 visible-state review only. The original full invocation remains failed, with30 passed/2 failed/2 blocked. Missing original surface-agent images are not fabricated or replaced by the separate recovery cohort. Images do not certify continuous playback, numerical correctness or torque/durable acceptance.",
+      "source_binding": "actual_published_candidate03_original_failed_full_run",
+      "status": "complete_with_stated_visibility_limits"
+    },
+    {
+      "copied_store_integrity": "ok",
+      "copied_store_quick_check": "ok",
+      "counts": {
+        "closed_output_bytes_independently_verified": 34682562,
+        "closed_output_files_independently_verified": 1225,
+        "original_failed_artifact_files_preserved": 718,
+        "recovery_images_directly_reviewed": 12,
+        "stored_artifact_blob_scene_revision_hash_matches": 22
+      },
+      "database_failure_cause_established": false,
+      "evidence": [
+        "c092-reviews/reader/implementation/inherited-visual-candidate03/ORIGINAL-VISUAL-REVIEW.json",
+        "c092-reviews/reader/implementation/inherited-visual-candidate03/INHERITED-RECOVERY-VISUAL.json",
+        "c092-reviews/reader/implementation/inherited-visual-candidate03/RECOVERY-INTEGRITY.json",
+        "c092-reviews/reader/implementation/inherited-visual-candidate03/RECOVERY-CAPTURES-MANIFEST.json",
+        "c092-reviews/reader/implementation/inherited-visual-candidate03/RECOVERY-SQLITE-DIAGNOSTICS.json",
+        "c092-reviews/reader/implementation/inherited-visual-candidate03/inspect_recovery.py"
+      ],
+      "id": "separate_surface_recovery12_visual_and_store_review",
+      "original_full_invocation_reclassified": false,
+      "scope": "Exact separately approved recovery outputs/private-copy comparison, fresh copied-store integrity/quick_check and direct review of12 recovery stills. Original23 and recovery12 stay separate. Side projections can occlude surfaces. No failure-cause attribution or torque/A08/durable approval.",
+      "source_binding": "actual_published_candidate03_separate_recovery",
+      "status": "passed_scoped_integrity_and_visible_state_review"
+    }
+  ],
+  "adoption_and_publication": {
+    "candidate03": {
+      "all_bytes_modes_and_native_ids_exact": true,
+      "evidence": [
+        "c092-publication/candidate03-publication-verification.json",
+        "c092-publication/candidate03-readback.json",
+        "c092-publication/candidate03-tree-readback.json",
+        "c092-reviews/source/implementation/CANDIDATE03-PUBLICATION-INDEPENDENT-REVIEW.json"
+      ],
+      "expected_parent": "8762e740abd5e8175d015fb5c15b36fe0fbcbff6",
+      "files": 4,
+      "observed_utc": "2026-11-03T16:36:13.120094+00:00",
+      "remote_commit": "68898e9b73efd20b37842897cbdfb2f61d4801ca",
+      "remote_tree": "eb6ff3fbe4694866f11dae988def4c7b1498524b",
+      "status": "passed",
+      "tracked_working_tree_clean": true,
+      "trees": 6
+    },
+    "effective_adoption": {
+      "all_bytes_modes_and_native_ids_exact": true,
+      "evidence": [
+        "c092-publication/adoption02-publication-verification.json",
+        "c092-publication/adoption02-readback.json",
+        "c092-publication/adoption02-tree-readback.json"
+      ],
+      "expected_parent": "310e178fa0fca9ee5af5c4840f186ec1b9ccd891",
+      "files": 3,
+      "product_code_unchanged": true,
+      "remote_commit": "4422805fb81438f4fecaa07d002fe12ce2765ac4",
+      "remote_tree": "598f6314f79236f73b68dbec9f2ab6b09432a812",
+      "status": "passed",
+      "trees": 6
+    },
+    "historical_wording_correction": {
+      "evidence": [
+        "c092-publication/candidate03-publication-verification-original-wording.json"
+      ],
+      "scope": "Original receipt described a predicate that checked tracked paths as clean. The corrected receipt states tracked cleanliness and discloses the verification dependency link; original retained."
+    },
+    "hosted_workflows_dispatched": false,
+    "initial_authority": {
+      "authority_manifest_sha256": "aa0c810dbe50dda1c55256f0cbe1f6c9373439b2e68464a59570022f810fbdd7",
+      "bytes": 365669,
+      "evidence": [
+        "c092-publication/adoption01-publication-verification.json",
+        "c092-publication/adoption01-file-readback.json",
+        "c092-publication/adoption01-tree-readback.json",
+        "c092-reviews/source/PUBLICATION-INDEPENDENT-REVIEW.json"
+      ],
+      "expected_parent": "ee00c5891dacc7dbe318722e5058696b2bbc8343",
+      "file_count": 40,
+      "hosted_workflows_dispatched": false,
+      "main_merged": false,
+      "product_code_changed": false,
+      "remote_commit": "310e178fa0fca9ee5af5c4840f186ec1b9ccd891",
+      "remote_tree": "34643be41a218ab8255ea14ca2c3b402c9ec336e",
+      "remote_tree_objects_reconstructed_and_hashed": 10,
+      "status": "passed"
+    },
+    "integration_or_release_approved": false,
+    "last_retained_remote_observations": [
+      "c092-publication/recenter-branch-20261103T1646.json",
+      "c092-publication/recenter-main-20261103T1646.json",
+      "c092-publication/recenter-ci-20261103T1646.json"
+    ],
+    "main_merged": false,
+    "scope": "Actual retained publication/readback observations, not a new live remote query or release approval. Closing report publication is outside this draft."
+  },
+  "author": "/root/recording_durable_review",
+  "candidate": {
+    "adopted_authority": "OK-LANG-022-CANONICAL-SPIN/0.1.0",
+    "authority_manifest_sha256": "aa0c810dbe50dda1c55256f0cbe1f6c9373439b2e68464a59570022f810fbdd7",
+    "basis": {
+      "derivation_sha256": "sha256:11a74707f182e8ffb568f6246f5fae653d5a1d4d5098a752e55d98420856c1be",
+      "implementation_sha256": "sha256:8f1b6e452cf1b4cbc28eac5947e3ffd375c0a8fa139c885cedebb5fd2a0ee3f8",
+      "method": "ontokin.source-pose-projective-dyadic-torque/0.2",
+      "name": "OntoKin controlled source poses",
+      "version": "0.4"
+    },
+    "binding_receipt": "c092-reviews/recording-durable/implementation/candidate03-bindings01/RESULT.json",
+    "commit": "68898e9b73efd20b37842897cbdfb2f61d4801ca",
+    "complete_package_files": 189,
+    "implementation": {
+      "name": "ontokin-reference",
+      "source_code_sha256": "sha256:36ee084ce33a200cbfc38833f801c053562678c371487dcb5e1a23495b95898c",
+      "version": "0.4.0"
+    },
+    "tree": "eb6ff3fbe4694866f11dae988def4c7b1498524b"
+  },
+  "catalog_rehash_at_draft02_closure": {
+    "all_current_catalog_entries_rehashed": true,
+    "catalog_records": 348,
+    "original_outer_archive_member_records": 2,
+    "path_resolution_classes": 3
+  },
+  "complete_torque_acceptance": false,
+  "created_utc": "2026-11-03T17:31:04.207778+00:00",
+  "current_inherited_interpreter_invocations": {
+    "receipt": "c092-validation/INHERITED-CANDIDATE03-DISPOSITION.json",
+    "runs": [
+      {
+        "actual_seed_export": {
+          "budget_reason": "execution_deadline_exceeded",
+          "consumed_operations": 174408,
+          "effective": {
+            "max_elapsed_ms": 30000,
+            "max_operations": 1000000
+          },
+          "elapsed_ms": 30002.887138000006,
+          "host_ceilings": {
+            "max_elapsed_ms": 30000,
+            "max_operations": 1000000
+          },
+          "source_request": {
+            "max_elapsed_ms": 30000,
+            "max_operations": 1000000
+          },
+          "stage": "recording_export_readback",
+          "status": "failed"
+        },
+        "evidence": [
+          "c092-validation/candidate03-full-local/summary.json",
+          "c092-validation/candidate03-full-local-run/RESULT.json",
+          "c092-validation/candidate03-full-local/logs/unit-tests.log"
+        ],
+        "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+        "role_counts": {
+          "blocked": 2,
+          "failed": 2,
+          "passed": 30
+        },
+        "role_details": [
+          {
+            "duration_seconds": 0.166,
+            "id": "force-agent-tools",
+            "log": "logs/force-agent-tools.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/force-agent-tools.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 1878.944,
+            "id": "unit-tests",
+            "log": "logs/unit-tests.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/unit-tests.log",
+            "status": "failed"
+          },
+          {
+            "duration_seconds": 1.177,
+            "id": "source",
+            "log": "logs/source.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/source.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 2.237,
+            "id": "agent",
+            "log": "logs/agent.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/agent.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 58.41,
+            "id": "construction",
+            "log": "logs/construction.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/construction.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 33.849,
+            "id": "surface",
+            "log": "logs/surface.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/surface.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 79.997,
+            "id": "impulse",
+            "log": "logs/impulse.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/impulse.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 1.874,
+            "id": "documents",
+            "log": "logs/documents.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/documents.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 97.752,
+            "id": "force-agent-tests",
+            "log": "logs/force-agent-tests.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/force-agent-tests.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 22.589,
+            "id": "force-agent-build",
+            "log": "logs/force-agent-build.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/force-agent-build.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 2.373,
+            "id": "force-agent-audit",
+            "log": "logs/force-agent-audit.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/force-agent-audit.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 0.115,
+            "id": "node-tools",
+            "log": "logs/node-tools.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/node-tools.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 0.528,
+            "id": "browser-ready",
+            "log": "logs/browser-ready.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/browser-ready.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 0.115,
+            "id": "prototype-build",
+            "log": "logs/prototype-build.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/prototype-build.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 0.217,
+            "id": "prototype-format",
+            "log": "logs/prototype-format.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/prototype-format.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 10.497,
+            "id": "surface-native-build",
+            "log": "logs/surface-native-build.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/surface-native-build.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 0.975,
+            "id": "surface-native-format",
+            "log": "logs/surface-native-format.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/surface-native-format.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 25.259,
+            "id": "surface-agent-build",
+            "log": "logs/surface-agent-build.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/surface-agent-build.log",
+            "status": "failed"
+          },
+          {
+            "duration_seconds": 0.0,
+            "id": "surface-agent-format",
+            "log": "logs/surface-agent-format.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/surface-agent-format.log",
+            "reason": "Prerequisite checks did not pass: surface-agent-build",
+            "status": "blocked"
+          },
+          {
+            "duration_seconds": 28.481,
+            "id": "impulse-agent-build",
+            "log": "logs/impulse-agent-build.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/impulse-agent-build.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 0.648,
+            "id": "impulse-agent-format",
+            "log": "logs/impulse-agent-format.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/impulse-agent-format.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 0.265,
+            "id": "viewer-build",
+            "log": "logs/viewer-build.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/viewer-build.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 11.71,
+            "id": "visual-build",
+            "log": "logs/visual-build.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/visual-build.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 0.37,
+            "id": "visual-format",
+            "log": "logs/visual-format.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/visual-format.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 11.479,
+            "id": "agent-demo-build",
+            "log": "logs/agent-demo-build.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/agent-demo-build.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 0.318,
+            "id": "agent-demo-format",
+            "log": "logs/agent-demo-format.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/agent-demo-format.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 16.088,
+            "id": "construction-demo-build",
+            "log": "logs/construction-demo-build.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/construction-demo-build.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 0.316,
+            "id": "construction-demo-format",
+            "log": "logs/construction-demo-format.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/construction-demo-format.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 3.745,
+            "id": "visual-browser",
+            "log": "logs/visual-browser.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/visual-browser.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 2.748,
+            "id": "agent-demo-browser",
+            "log": "logs/agent-demo-browser.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/agent-demo-browser.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 4.178,
+            "id": "construction-demo-browser",
+            "log": "logs/construction-demo-browser.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/construction-demo-browser.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 7.237,
+            "id": "surface-native-browser",
+            "log": "logs/surface-native-browser.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/surface-native-browser.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 0.0,
+            "id": "surface-agent-browser",
+            "log": "logs/surface-agent-browser.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/surface-agent-browser.log",
+            "reason": "Prerequisite checks did not pass: surface-agent-format",
+            "status": "blocked"
+          },
+          {
+            "duration_seconds": 11.145,
+            "id": "impulse-agent-browser",
+            "log": "logs/impulse-agent-browser.log",
+            "log_evidence": "c092-validation/candidate03-full-local/logs/impulse-agent-browser.log",
+            "status": "passed"
+          }
+        ],
+        "roles": [
+          {
+            "id": "force-agent-tools",
+            "status": "passed"
+          },
+          {
+            "id": "unit-tests",
+            "status": "failed"
+          },
+          {
+            "id": "source",
+            "status": "passed"
+          },
+          {
+            "id": "agent",
+            "status": "passed"
+          },
+          {
+            "id": "construction",
+            "status": "passed"
+          },
+          {
+            "id": "surface",
+            "status": "passed"
+          },
+          {
+            "id": "impulse",
+            "status": "passed"
+          },
+          {
+            "id": "documents",
+            "status": "passed"
+          },
+          {
+            "id": "force-agent-tests",
+            "status": "passed"
+          },
+          {
+            "id": "force-agent-build",
+            "status": "passed"
+          },
+          {
+            "id": "force-agent-audit",
+            "status": "passed"
+          },
+          {
+            "id": "node-tools",
+            "status": "passed"
+          },
+          {
+            "id": "browser-ready",
+            "status": "passed"
+          },
+          {
+            "id": "prototype-build",
+            "status": "passed"
+          },
+          {
+            "id": "prototype-format",
+            "status": "passed"
+          },
+          {
+            "id": "surface-native-build",
+            "status": "passed"
+          },
+          {
+            "id": "surface-native-format",
+            "status": "passed"
+          },
+          {
+            "id": "surface-agent-build",
+            "status": "failed"
+          },
+          {
+            "id": "surface-agent-format",
+            "status": "blocked"
+          },
+          {
+            "id": "impulse-agent-build",
+            "status": "passed"
+          },
+          {
+            "id": "impulse-agent-format",
+            "status": "passed"
+          },
+          {
+            "id": "viewer-build",
+            "status": "passed"
+          },
+          {
+            "id": "visual-build",
+            "status": "passed"
+          },
+          {
+            "id": "visual-format",
+            "status": "passed"
+          },
+          {
+            "id": "agent-demo-build",
+            "status": "passed"
+          },
+          {
+            "id": "agent-demo-format",
+            "status": "passed"
+          },
+          {
+            "id": "construction-demo-build",
+            "status": "passed"
+          },
+          {
+            "id": "construction-demo-format",
+            "status": "passed"
+          },
+          {
+            "id": "visual-browser",
+            "status": "passed"
+          },
+          {
+            "id": "agent-demo-browser",
+            "status": "passed"
+          },
+          {
+            "id": "construction-demo-browser",
+            "status": "passed"
+          },
+          {
+            "id": "surface-native-browser",
+            "status": "passed"
+          },
+          {
+            "id": "surface-agent-browser",
+            "status": "blocked"
+          },
+          {
+            "id": "impulse-agent-browser",
+            "status": "passed"
+          }
+        ],
+        "run": "candidate03-full-local",
+        "scope": "Original unit run failed in class setup before these artifact-read methods. Other actual role outcomes are listed independently; no failed invocation is relabeled.",
+        "setup_errors": [
+          "test_torque_artifact_reads.TorqueArtifactReadTests"
+        ],
+        "source_pin": "68898e9b73efd20b37842897cbdfb2f61d4801ca",
+        "source_unchanged": true,
+        "status": "failed",
+        "total_roles": 34,
+        "unexecuted_artifact_read_method_count": 13,
+        "unexecuted_artifact_read_methods": [
+          "test_close_defers_borrowed_connection_release_without_losing_fence",
+          "test_completed_close_cannot_be_followed_by_inflight_cache_publication",
+          "test_current_authority_is_rechecked_and_reopen_has_no_cached_grant",
+          "test_idle_handle_has_no_snapshot_and_services_observe_each_commit",
+          "test_nested_and_concurrent_contexts_keep_separate_transactions",
+          "test_original_callback_cannot_mutate_verified_proof_to_accept_corrupt_bytes",
+          "test_original_callbacks_cannot_replace_proof_from_any_request_stage",
+          "test_original_miss_and_equal_bytes_preserve_all_charges_and_callbacks",
+          "test_predecessor_store_and_schema_refusal_remain_unchanged",
+          "test_real_publication_exception_rolls_back_and_close_fences_identity",
+          "test_uncaught_cache_assignment_preserves_original_callback_exception",
+          "test_warm_proof_rereads_entire_blob_metadata_and_source",
+          "test_warm_read_retains_cap_deadline_cancel_and_original_exception"
+        ],
+        "unit_duration_seconds": 1873.762,
+        "unit_methods_run": 4131,
+        "unit_result": "FAILED (errors=1)"
+      },
+      {
+        "actual_seed_export": {
+          "budget_reason": "execution_deadline_exceeded",
+          "consumed_operations": 178520,
+          "effective": {
+            "max_elapsed_ms": 30000,
+            "max_operations": 1000000
+          },
+          "elapsed_ms": 30000.755664999815,
+          "host_ceilings": {
+            "max_elapsed_ms": 30000,
+            "max_operations": 1000000
+          },
+          "source_request": {
+            "max_elapsed_ms": 30000,
+            "max_operations": 1000000
+          },
+          "stage": "recording_export_readback",
+          "status": "failed"
+        },
+        "evidence": [
+          "c092-validation/candidate03-python311/summary.json",
+          "c092-validation/candidate03-python311-run/RESULT.json",
+          "c092-validation/candidate03-python311/logs/unit-tests.log"
+        ],
+        "python": "3.11.17 (main, Oct 14 2026, 01:05:33) [Clang 23.1.3 ]",
+        "role_counts": {
+          "failed": 1,
+          "passed": 10
+        },
+        "role_details": [
+          {
+            "duration_seconds": 0.566,
+            "id": "force-agent-tools",
+            "log": "logs/force-agent-tools.log",
+            "log_evidence": "c092-validation/candidate03-python311/logs/force-agent-tools.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 2195.028,
+            "id": "unit-tests",
+            "log": "logs/unit-tests.log",
+            "log_evidence": "c092-validation/candidate03-python311/logs/unit-tests.log",
+            "status": "failed"
+          },
+          {
+            "duration_seconds": 1.783,
+            "id": "source",
+            "log": "logs/source.log",
+            "log_evidence": "c092-validation/candidate03-python311/logs/source.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 2.646,
+            "id": "agent",
+            "log": "logs/agent.log",
+            "log_evidence": "c092-validation/candidate03-python311/logs/agent.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 62.629,
+            "id": "construction",
+            "log": "logs/construction.log",
+            "log_evidence": "c092-validation/candidate03-python311/logs/construction.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 40.154,
+            "id": "surface",
+            "log": "logs/surface.log",
+            "log_evidence": "c092-validation/candidate03-python311/logs/surface.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 79.564,
+            "id": "impulse",
+            "log": "logs/impulse.log",
+            "log_evidence": "c092-validation/candidate03-python311/logs/impulse.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 1.92,
+            "id": "documents",
+            "log": "logs/documents.log",
+            "log_evidence": "c092-validation/candidate03-python311/logs/documents.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 96.895,
+            "id": "force-agent-tests",
+            "log": "logs/force-agent-tests.log",
+            "log_evidence": "c092-validation/candidate03-python311/logs/force-agent-tests.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 22.291,
+            "id": "force-agent-build",
+            "log": "logs/force-agent-build.log",
+            "log_evidence": "c092-validation/candidate03-python311/logs/force-agent-build.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 2.875,
+            "id": "force-agent-audit",
+            "log": "logs/force-agent-audit.log",
+            "log_evidence": "c092-validation/candidate03-python311/logs/force-agent-audit.log",
+            "status": "passed"
+          }
+        ],
+        "roles": [
+          {
+            "id": "force-agent-tools",
+            "status": "passed"
+          },
+          {
+            "id": "unit-tests",
+            "status": "failed"
+          },
+          {
+            "id": "source",
+            "status": "passed"
+          },
+          {
+            "id": "agent",
+            "status": "passed"
+          },
+          {
+            "id": "construction",
+            "status": "passed"
+          },
+          {
+            "id": "surface",
+            "status": "passed"
+          },
+          {
+            "id": "impulse",
+            "status": "passed"
+          },
+          {
+            "id": "documents",
+            "status": "passed"
+          },
+          {
+            "id": "force-agent-tests",
+            "status": "passed"
+          },
+          {
+            "id": "force-agent-build",
+            "status": "passed"
+          },
+          {
+            "id": "force-agent-audit",
+            "status": "passed"
+          }
+        ],
+        "run": "candidate03-python311",
+        "scope": "Original unit run failed in class setup before these artifact-read methods. Other actual role outcomes are listed independently; no failed invocation is relabeled.",
+        "setup_errors": [
+          "test_torque_artifact_reads.TorqueArtifactReadTests"
+        ],
+        "source_pin": "68898e9b73efd20b37842897cbdfb2f61d4801ca",
+        "source_unchanged": true,
+        "status": "failed",
+        "total_roles": 11,
+        "unexecuted_artifact_read_method_count": 13,
+        "unexecuted_artifact_read_methods": [
+          "test_close_defers_borrowed_connection_release_without_losing_fence",
+          "test_completed_close_cannot_be_followed_by_inflight_cache_publication",
+          "test_current_authority_is_rechecked_and_reopen_has_no_cached_grant",
+          "test_idle_handle_has_no_snapshot_and_services_observe_each_commit",
+          "test_nested_and_concurrent_contexts_keep_separate_transactions",
+          "test_original_callback_cannot_mutate_verified_proof_to_accept_corrupt_bytes",
+          "test_original_callbacks_cannot_replace_proof_from_any_request_stage",
+          "test_original_miss_and_equal_bytes_preserve_all_charges_and_callbacks",
+          "test_predecessor_store_and_schema_refusal_remain_unchanged",
+          "test_real_publication_exception_rolls_back_and_close_fences_identity",
+          "test_uncaught_cache_assignment_preserves_original_callback_exception",
+          "test_warm_proof_rereads_entire_blob_metadata_and_source",
+          "test_warm_read_retains_cap_deadline_cancel_and_original_exception"
+        ],
+        "unit_duration_seconds": 2188.593,
+        "unit_methods_run": 4131,
+        "unit_result": "FAILED (errors=1)"
+      },
+      {
+        "actual_seed_export": {
+          "budget_reason": "execution_deadline_exceeded",
+          "consumed_operations": 175000,
+          "effective": {
+            "max_elapsed_ms": 30000,
+            "max_operations": 1000000
+          },
+          "elapsed_ms": 30001.019250001264,
+          "host_ceilings": {
+            "max_elapsed_ms": 30000,
+            "max_operations": 1000000
+          },
+          "source_request": {
+            "max_elapsed_ms": 30000,
+            "max_operations": 1000000
+          },
+          "stage": "recording_export_readback",
+          "status": "failed"
+        },
+        "evidence": [
+          "c092-validation/candidate03-python313/summary.json",
+          "c092-validation/candidate03-python313-run/RESULT.json",
+          "c092-validation/candidate03-python313/logs/unit-tests.log"
+        ],
+        "python": "3.13.16 (main, Oct 14 2026, 01:04:01) [Clang 23.1.3 ]",
+        "role_counts": {
+          "failed": 1,
+          "passed": 10
+        },
+        "role_details": [
+          {
+            "duration_seconds": 0.717,
+            "id": "force-agent-tools",
+            "log": "logs/force-agent-tools.log",
+            "log_evidence": "c092-validation/candidate03-python313/logs/force-agent-tools.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 1824.585,
+            "id": "unit-tests",
+            "log": "logs/unit-tests.log",
+            "log_evidence": "c092-validation/candidate03-python313/logs/unit-tests.log",
+            "status": "failed"
+          },
+          {
+            "duration_seconds": 1.38,
+            "id": "source",
+            "log": "logs/source.log",
+            "log_evidence": "c092-validation/candidate03-python313/logs/source.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 1.88,
+            "id": "agent",
+            "log": "logs/agent.log",
+            "log_evidence": "c092-validation/candidate03-python313/logs/agent.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 56.151,
+            "id": "construction",
+            "log": "logs/construction.log",
+            "log_evidence": "c092-validation/candidate03-python313/logs/construction.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 33.921,
+            "id": "surface",
+            "log": "logs/surface.log",
+            "log_evidence": "c092-validation/candidate03-python313/logs/surface.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 81.91,
+            "id": "impulse",
+            "log": "logs/impulse.log",
+            "log_evidence": "c092-validation/candidate03-python313/logs/impulse.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 2.122,
+            "id": "documents",
+            "log": "logs/documents.log",
+            "log_evidence": "c092-validation/candidate03-python313/logs/documents.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 97.152,
+            "id": "force-agent-tests",
+            "log": "logs/force-agent-tests.log",
+            "log_evidence": "c092-validation/candidate03-python313/logs/force-agent-tests.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 23.813,
+            "id": "force-agent-build",
+            "log": "logs/force-agent-build.log",
+            "log_evidence": "c092-validation/candidate03-python313/logs/force-agent-build.log",
+            "status": "passed"
+          },
+          {
+            "duration_seconds": 2.923,
+            "id": "force-agent-audit",
+            "log": "logs/force-agent-audit.log",
+            "log_evidence": "c092-validation/candidate03-python313/logs/force-agent-audit.log",
+            "status": "passed"
+          }
+        ],
+        "roles": [
+          {
+            "id": "force-agent-tools",
+            "status": "passed"
+          },
+          {
+            "id": "unit-tests",
+            "status": "failed"
+          },
+          {
+            "id": "source",
+            "status": "passed"
+          },
+          {
+            "id": "agent",
+            "status": "passed"
+          },
+          {
+            "id": "construction",
+            "status": "passed"
+          },
+          {
+            "id": "surface",
+            "status": "passed"
+          },
+          {
+            "id": "impulse",
+            "status": "passed"
+          },
+          {
+            "id": "documents",
+            "status": "passed"
+          },
+          {
+            "id": "force-agent-tests",
+            "status": "passed"
+          },
+          {
+            "id": "force-agent-build",
+            "status": "passed"
+          },
+          {
+            "id": "force-agent-audit",
+            "status": "passed"
+          }
+        ],
+        "run": "candidate03-python313",
+        "scope": "Original unit run failed in class setup before these artifact-read methods. Other actual role outcomes are listed independently; no failed invocation is relabeled.",
+        "setup_errors": [
+          "test_torque_artifact_reads.TorqueArtifactReadTests"
+        ],
+        "source_pin": "68898e9b73efd20b37842897cbdfb2f61d4801ca",
+        "source_unchanged": true,
+        "status": "failed",
+        "total_roles": 11,
+        "unexecuted_artifact_read_method_count": 13,
+        "unexecuted_artifact_read_methods": [
+          "test_close_defers_borrowed_connection_release_without_losing_fence",
+          "test_completed_close_cannot_be_followed_by_inflight_cache_publication",
+          "test_current_authority_is_rechecked_and_reopen_has_no_cached_grant",
+          "test_idle_handle_has_no_snapshot_and_services_observe_each_commit",
+          "test_nested_and_concurrent_contexts_keep_separate_transactions",
+          "test_original_callback_cannot_mutate_verified_proof_to_accept_corrupt_bytes",
+          "test_original_callbacks_cannot_replace_proof_from_any_request_stage",
+          "test_original_miss_and_equal_bytes_preserve_all_charges_and_callbacks",
+          "test_predecessor_store_and_schema_refusal_remain_unchanged",
+          "test_real_publication_exception_rolls_back_and_close_fences_identity",
+          "test_uncaught_cache_assignment_preserves_original_callback_exception",
+          "test_warm_proof_rereads_entire_blob_metadata_and_source",
+          "test_warm_read_retains_cap_deadline_cancel_and_original_exception"
+        ],
+        "unit_duration_seconds": 1818.773,
+        "unit_methods_run": 4131,
+        "unit_result": "FAILED (errors=1)"
+      }
+    ],
+    "status": "failed_invocations_preserved",
+    "temporary_store_scope": "The unchanged unittest owns its TemporaryDirectory lifecycle. Its exact failed response, fixture source and command logs are retained; no original temporary seed database bytes are claimed retained.",
+    "timing_context": "The three interpreter suites overlapped each other and other independent local checks; these are actual run outcomes, not uncontended timing benchmarks. The separate final-byte A08 failure preceded these heavy runs."
+  },
+  "draft": false,
+  "draft02_ready_for_independent_delta_review": true,
+  "draft02_updated_utc": "2026-11-03T17:36:55.533561+00:00",
+  "draft_revision_history": [
+    {
+      "evidence": "c092-drafts/validation-base/VALIDATION-SUMMARY-DRAFT-before-surface-recovery.json",
+      "reason": "Initial unsealed draft before root reported completion of the three-role surface recovery; preserved without relabeling."
+    },
+    {
+      "evidence": "c092-drafts/validation-base/VALIDATION-SUMMARY-DRAFT.json",
+      "reason": "Original draft remains exact at its requested filename. DRAFT02 incorporates completed surface recovery and separately completed original23/recovery12 visual/store reviews."
+    }
+  ],
+  "evidence_catalog": {
+    "c091-packet/OntoKin_C091_Handoff/NEXT-TASK.md": {
+      "bytes": 25382,
+      "path": "c091-packet/OntoKin_C091_Handoff/NEXT-TASK.md",
+      "path_base": "workspace",
+      "sha256": "ae5a1a954fa7301bb0cbbb5147a319af01f5223c7d68f5834b89b9860e779afb"
+    },
+    "c091-packet/OntoKin_C091_Handoff/VALIDATION-SUMMARY.json": {
+      "bytes": 18136,
+      "path": "c091-packet/OntoKin_C091_Handoff/VALIDATION-SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "551881f1ad56992b9567731d443598a0832c92e45980534ee0438695c67efc3c"
+    },
+    "c092-drafts/closing-static/HANDOFF-C092.md": {
+      "bytes": 16220,
+      "path": "c092-drafts/closing-static/HANDOFF-C092.md",
+      "path_base": "workspace",
+      "sha256": "cb1fa9cc83e5c80a323a02568852dae86ae90200af1d3b4490c558b25fc7f171"
+    },
+    "c092-drafts/closing-static/RETAINED-GATES.md": {
+      "bytes": 4221,
+      "path": "c092-drafts/closing-static/RETAINED-GATES.md",
+      "path_base": "workspace",
+      "sha256": "d9c4769af9f55391917a93d549e962dab416f710a7b18b6f7db7b4fd175e1ce7"
+    },
+    "c092-drafts/validation-base/VALIDATION-SUMMARY-DRAFT-before-surface-recovery.json": {
+      "bytes": 168173,
+      "path": "c092-drafts/validation-base/VALIDATION-SUMMARY-DRAFT-before-surface-recovery.json",
+      "path_base": "workspace",
+      "sha256": "2ee03d89da0cb6d412f017af8c3965cf9215b6592b4cc20824b6fa4d5164c474"
+    },
+    "c092-drafts/validation-base/VALIDATION-SUMMARY-DRAFT.json": {
+      "bytes": 168173,
+      "path": "c092-drafts/validation-base/VALIDATION-SUMMARY-DRAFT.json",
+      "path_base": "workspace",
+      "sha256": "2ee03d89da0cb6d412f017af8c3965cf9215b6592b4cc20824b6fa4d5164c474"
+    },
+    "c092-publication/adoption01-file-readback.json": {
+      "bytes": 411396,
+      "path": "c092-publication/adoption01-file-readback.json",
+      "path_base": "workspace",
+      "sha256": "4f54683e1de3d9fc8abd64f45c45e2bdf64d5e4958be329b49907483edb8259f"
+    },
+    "c092-publication/adoption01-publication-verification.json": {
+      "bytes": 15329,
+      "path": "c092-publication/adoption01-publication-verification.json",
+      "path_base": "workspace",
+      "sha256": "e3789c8a0e5a5b28502c3326b6c50803aa43ca34b66da6f9ee5476e039e49c08"
+    },
+    "c092-publication/adoption01-tree-readback.json": {
+      "bytes": 143163,
+      "path": "c092-publication/adoption01-tree-readback.json",
+      "path_base": "workspace",
+      "sha256": "f7e60b5196413abb0b8d80912c4adf030cc100be0720e0bd702176dfa2038e16"
+    },
+    "c092-publication/adoption02-publication-verification.json": {
+      "bytes": 2956,
+      "path": "c092-publication/adoption02-publication-verification.json",
+      "path_base": "workspace",
+      "sha256": "f106160e946f07129bac0b67ff00d50491895d1f5e5225112349e44bc2c77f09"
+    },
+    "c092-publication/adoption02-readback.json": {
+      "bytes": 97717,
+      "path": "c092-publication/adoption02-readback.json",
+      "path_base": "workspace",
+      "sha256": "c25b17aaa6945feb4c75391c1f53f33f72af395cab314870c46339c2d0a60c8d"
+    },
+    "c092-publication/adoption02-tree-readback.json": {
+      "bytes": 53465,
+      "path": "c092-publication/adoption02-tree-readback.json",
+      "path_base": "workspace",
+      "sha256": "414147ad3d68426c2401cf1190c024f016968d5a6cf6ed8c6ec32887ad8edfd8"
+    },
+    "c092-publication/candidate02-publication-verification.json": {
+      "bytes": 1359,
+      "path": "c092-publication/candidate02-publication-verification.json",
+      "path_base": "workspace",
+      "sha256": "046afafd912984abbb555c6e85cfa73ee2428611e5fedfe6e10bf7b640c61c57"
+    },
+    "c092-publication/candidate03-publication-verification-original-wording.json": {
+      "bytes": 3089,
+      "path": "c092-publication/candidate03-publication-verification-original-wording.json",
+      "path_base": "workspace",
+      "sha256": "7f44a17f0fa32cbff8ad85cec85ef33ef5203d2b1595a44535d8f4954a1dd750"
+    },
+    "c092-publication/candidate03-publication-verification.json": {
+      "bytes": 3584,
+      "path": "c092-publication/candidate03-publication-verification.json",
+      "path_base": "workspace",
+      "sha256": "b62dc04fd1c3b2a329b32bdf6e99afed7ce684af8ad72dec251c1d02be8f9e4f"
+    },
+    "c092-publication/candidate03-readback.json": {
+      "bytes": 158215,
+      "path": "c092-publication/candidate03-readback.json",
+      "path_base": "workspace",
+      "sha256": "f23233f4fcf7dda12448283179ddd22765813c4fa6e578d7404d60cd2efb5fd9"
+    },
+    "c092-publication/candidate03-tree-readback.json": {
+      "bytes": 366774,
+      "path": "c092-publication/candidate03-tree-readback.json",
+      "path_base": "workspace",
+      "sha256": "00920a4165e39cffbcce09f56bae14e40aa4a20c8bfcf5cc1860c42f6a230a97"
+    },
+    "c092-publication/recenter-branch-20261103T1646.json": {
+      "bytes": 1504,
+      "path": "c092-publication/recenter-branch-20261103T1646.json",
+      "path_base": "workspace",
+      "sha256": "ddf321df591e1c4e5c7448b1f9a3d128fe6fe493bb363f596134ca2e45c0298a"
+    },
+    "c092-publication/recenter-ci-20261103T1646.json": {
+      "bytes": 810,
+      "path": "c092-publication/recenter-ci-20261103T1646.json",
+      "path_base": "workspace",
+      "sha256": "f0af1a566cc4987ae52d0b28b51c3fe816def0bd4e2623017fe963146960af58"
+    },
+    "c092-publication/recenter-main-20261103T1646.json": {
+      "bytes": 1273,
+      "path": "c092-publication/recenter-main-20261103T1646.json",
+      "path_base": "workspace",
+      "sha256": "4918b871897b1b6508cd7d2969dbd0f80f71ae0356e3044ad854cf2d60593b74"
+    },
+    "c092-recovery/C091-EVIDENCE-RECOVERY01-FAILURE.json": {
+      "bytes": 2586,
+      "path": "c092-recovery/C091-EVIDENCE-RECOVERY01-FAILURE.json",
+      "path_base": "workspace",
+      "sha256": "ffc0a4a6f5510e7f4dd29e50389013874db70e8f3091b74b5dfd96913bcf3042"
+    },
+    "c092-recovery/C091-EVIDENCE-RECOVERY02.json": {
+      "bytes": 571,
+      "path": "c092-recovery/C091-EVIDENCE-RECOVERY02.json",
+      "path_base": "workspace",
+      "sha256": "080992abbc66140aa95adf509f51dbbbb4b8a12644a72b37d4f09019114cc3fb"
+    },
+    "c092-recovery/C091-LATE-PROOF-RECOVERY.json": {
+      "bytes": 1077,
+      "path": "c092-recovery/C091-LATE-PROOF-RECOVERY.json",
+      "path_base": "workspace",
+      "sha256": "3980bc571f889755c2fef4f458dd82c39a13a9ead76b1eed713428d0bec8ca14"
+    },
+    "c092-recovery/C091-PUBLIC-HISTORY-REPLAY.json": {
+      "bytes": 3277,
+      "path": "c092-recovery/C091-PUBLIC-HISTORY-REPLAY.json",
+      "path_base": "workspace",
+      "sha256": "ea0f74714a29d611d5d3cf1b58c2bea667655980a53529f02543b94742a67b33"
+    },
+    "c092-recovery/C091-SOURCE-RECOVERY.json": {
+      "bytes": 2294,
+      "path": "c092-recovery/C091-SOURCE-RECOVERY.json",
+      "path_base": "workspace",
+      "sha256": "dc193270c58cdf522dc71512d9f3d5d89a0ed2e65cf11ad682911209ac42ab73"
+    },
+    "c092-recovery/C091-SOURCE-RECOVERY02.json": {
+      "bytes": 2296,
+      "path": "c092-recovery/C091-SOURCE-RECOVERY02.json",
+      "path_base": "workspace",
+      "sha256": "00e03501ffa2615be204e835031a01802a1fede3626c4d9ba96073ff64ac7c3f"
+    },
+    "c092-recovery/C091-SOURCE-RECOVERY03.json": {
+      "bytes": 2415,
+      "path": "c092-recovery/C091-SOURCE-RECOVERY03.json",
+      "path_base": "workspace",
+      "sha256": "24ef6fb950c422bb8073173a8de659f7f24c4df4ee91c46f493d243d2ccba60e"
+    },
+    "c092-reviews/reader/DURABLE-PROBE-CORRECTION-REVIEW.json": {
+      "bytes": 3158,
+      "path": "c092-reviews/reader/DURABLE-PROBE-CORRECTION-REVIEW.json",
+      "path_base": "workspace",
+      "sha256": "b3d05f946432716966aa041059a26333ebdb80fddcac432075812f701aad79f2"
+    },
+    "c092-reviews/reader/FINAL-ADOPTION-REVIEW.json": {
+      "bytes": 5905,
+      "path": "c092-reviews/reader/FINAL-ADOPTION-REVIEW.json",
+      "path_base": "workspace",
+      "sha256": "78cb9e0ca632f5937c06c752b3d73b79e68ec3cdd0cb21bea9269b5f38fb5c7c"
+    },
+    "c092-reviews/reader/implementation/final-candidate03/EVIDENCE-CROSSBINDING.json": {
+      "bytes": 4407,
+      "path": "c092-reviews/reader/implementation/final-candidate03/EVIDENCE-CROSSBINDING.json",
+      "path_base": "workspace",
+      "sha256": "62a7c2d4600b2fa8fbd26d5f647f38fe18646ec0781348ff9cbf2c8957e7a878"
+    },
+    "c092-reviews/reader/implementation/final-candidate03/FINAL-IMPLEMENTATION-REVIEW.json": {
+      "bytes": 9360,
+      "path": "c092-reviews/reader/implementation/final-candidate03/FINAL-IMPLEMENTATION-REVIEW.json",
+      "path_base": "workspace",
+      "sha256": "0a833aef4e7d6a88368ffb7d3eeb1b0c71efed8ae2c2b66da5b02198ab06e93a"
+    },
+    "c092-reviews/reader/implementation/final-candidate03/FINAL-IMPLEMENTATION-REVIEW.md": {
+      "bytes": 16851,
+      "path": "c092-reviews/reader/implementation/final-candidate03/FINAL-IMPLEMENTATION-REVIEW.md",
+      "path_base": "workspace",
+      "sha256": "5f55bb6710e91272796c7877e630877032ddaf74b1043e003de662fe73bf31be"
+    },
+    "c092-reviews/reader/implementation/final-candidate03/GATES-SUMMARY.json": {
+      "bytes": 1347,
+      "path": "c092-reviews/reader/implementation/final-candidate03/GATES-SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "9a4e889cc7849f9d247e36e8afdd30d671912e4234df29b1a53a4dffebd0ee77"
+    },
+    "c092-reviews/reader/implementation/final-candidate03/NUMERICAL-HARNESS-PIN-BINDING.json": {
+      "bytes": 768,
+      "path": "c092-reviews/reader/implementation/final-candidate03/NUMERICAL-HARNESS-PIN-BINDING.json",
+      "path_base": "workspace",
+      "sha256": "a307591b4d160ed467ef0a10e67aec202af3520e6ca4e421f65ee399f25c6dbd"
+    },
+    "c092-reviews/reader/implementation/final-candidate03/PRESERVATION.json": {
+      "bytes": 295519,
+      "path": "c092-reviews/reader/implementation/final-candidate03/PRESERVATION.json",
+      "path_base": "workspace",
+      "sha256": "c5077eafb30a6489650541dd9b30543c8b64da38c2536574cea1e1c234c3bf0d"
+    },
+    "c092-reviews/reader/implementation/guard-performance/READONLY-SLOT-INVARIANT-REVIEW.json": {
+      "bytes": 2420,
+      "path": "c092-reviews/reader/implementation/guard-performance/READONLY-SLOT-INVARIANT-REVIEW.json",
+      "path_base": "workspace",
+      "sha256": "efe0fa33ec06ec0752ad5314290829f094750d494ff0f1cce9b3b4dc8f8b1362"
+    },
+    "c092-reviews/reader/implementation/guard-performance/readonly-function-proof/PYTHON-311.json": {
+      "bytes": 7098,
+      "path": "c092-reviews/reader/implementation/guard-performance/readonly-function-proof/PYTHON-311.json",
+      "path_base": "workspace",
+      "sha256": "e3f02c09b086289f41c494c4ea7a36284340702ced4237ec3cb456ea1b5c271b"
+    },
+    "c092-reviews/reader/implementation/guard-performance/readonly-function-proof/PYTHON-312.json": {
+      "bytes": 7093,
+      "path": "c092-reviews/reader/implementation/guard-performance/readonly-function-proof/PYTHON-312.json",
+      "path_base": "workspace",
+      "sha256": "d75b69961876ad90e8fcc9b7425b672341d71d5c2dcca36b4ecd102c256b353f"
+    },
+    "c092-reviews/reader/implementation/guard-performance/readonly-function-proof/PYTHON-313.json": {
+      "bytes": 7098,
+      "path": "c092-reviews/reader/implementation/guard-performance/readonly-function-proof/PYTHON-313.json",
+      "path_base": "workspace",
+      "sha256": "f4774ec62312531f982fe499f22d194c4fdb160951f48a316cf27889ad99d5af"
+    },
+    "c092-reviews/reader/implementation/inherited-visual-candidate03/INHERITED-RECOVERY-VISUAL.json": {
+      "bytes": 11901,
+      "path": "c092-reviews/reader/implementation/inherited-visual-candidate03/INHERITED-RECOVERY-VISUAL.json",
+      "path_base": "workspace",
+      "sha256": "d1f67eff65523f0c1a0f7f1036a00770710bec1224edb28e92e6d6e5467a84c7"
+    },
+    "c092-reviews/reader/implementation/inherited-visual-candidate03/ORIGINAL-CAPTURES-MANIFEST.json": {
+      "bytes": 9425,
+      "path": "c092-reviews/reader/implementation/inherited-visual-candidate03/ORIGINAL-CAPTURES-MANIFEST.json",
+      "path_base": "workspace",
+      "sha256": "e7e0453c99ef3542b3d35b4f3cc225d32d9fc728985da07ff3b69c4f6ca47fb4"
+    },
+    "c092-reviews/reader/implementation/inherited-visual-candidate03/ORIGINAL-VISUAL-REVIEW.json": {
+      "bytes": 18431,
+      "path": "c092-reviews/reader/implementation/inherited-visual-candidate03/ORIGINAL-VISUAL-REVIEW.json",
+      "path_base": "workspace",
+      "sha256": "671ead1d6fbd780c35a1f8ad2943d2a6e33501e9dba269553d0eaa40d119aa00"
+    },
+    "c092-reviews/reader/implementation/inherited-visual-candidate03/RECOVERY-CAPTURES-MANIFEST.json": {
+      "bytes": 4881,
+      "path": "c092-reviews/reader/implementation/inherited-visual-candidate03/RECOVERY-CAPTURES-MANIFEST.json",
+      "path_base": "workspace",
+      "sha256": "cd03caa553d1290b0da13b05c0ef8a257f713ec3c1a6b4fefab1313009c92bc4"
+    },
+    "c092-reviews/reader/implementation/inherited-visual-candidate03/RECOVERY-INTEGRITY.json": {
+      "bytes": 2432,
+      "path": "c092-reviews/reader/implementation/inherited-visual-candidate03/RECOVERY-INTEGRITY.json",
+      "path_base": "workspace",
+      "sha256": "39190bcb5c7c2d44d13451076f24816d453811634bdf04f756edccce5b6bb7cd"
+    },
+    "c092-reviews/reader/implementation/inherited-visual-candidate03/RECOVERY-SQLITE-DIAGNOSTICS.json": {
+      "bytes": 18596,
+      "path": "c092-reviews/reader/implementation/inherited-visual-candidate03/RECOVERY-SQLITE-DIAGNOSTICS.json",
+      "path_base": "workspace",
+      "sha256": "a1e7f6561dc128ccd69b216b98f5d0ff09d852d49522e3b07d885af50475b93f"
+    },
+    "c092-reviews/reader/implementation/inherited-visual-candidate03/inspect_recovery.py": {
+      "bytes": 10900,
+      "path": "c092-reviews/reader/implementation/inherited-visual-candidate03/inspect_recovery.py",
+      "path_base": "workspace",
+      "sha256": "f8d20ecd33ed9a78eb2ae5468e69e042780b5e245f2c3d599b3d49585948eaa7"
+    },
+    "c092-reviews/reader/implementation/surface-agent-db-candidate03-attempt01/RECOVERY-DECISION.json": {
+      "bytes": 9238,
+      "path": "c092-reviews/reader/implementation/surface-agent-db-candidate03-attempt01/RECOVERY-DECISION.json",
+      "path_base": "workspace",
+      "sha256": "6e5efd3912b55a0205fb9f2d51211e61455009d05a62087321c3f140476c866a"
+    },
+    "c092-reviews/reader/implementation/surface-agent-db-candidate03-attempt01/RESULT.json": {
+      "bytes": 1293,
+      "path": "c092-reviews/reader/implementation/surface-agent-db-candidate03-attempt01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "05ac3f48423b164c02a39cd3a4ddfd7f18ed4214bd120d161a8f91771194bf36"
+    },
+    "c092-reviews/recording-durable/FINAL-DURABLE-REVIEW.json": {
+      "bytes": 12043,
+      "path": "c092-reviews/recording-durable/FINAL-DURABLE-REVIEW.json",
+      "path_base": "workspace",
+      "sha256": "1123b35a1edd8f53e15fbb9925e142f3b8de69332af1ef547557332c96193e6c"
+    },
+    "c092-reviews/recording-durable/FINAL-RECORDING-REVIEW.json": {
+      "bytes": 10507,
+      "path": "c092-reviews/recording-durable/FINAL-RECORDING-REVIEW.json",
+      "path_base": "workspace",
+      "sha256": "80b9739333c7de48245d5e940f986a6bd9312e2748097b6f18341c898e1e52f6"
+    },
+    "c092-reviews/recording-durable/design-probe02/RESULT.json": {
+      "bytes": 5160,
+      "path": "c092-reviews/recording-durable/design-probe02/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "6209824fe1a77d58281fb2ebff50a5870dc51e4cc774c9c18dfc1851dc9b9c7f"
+    },
+    "c092-reviews/recording-durable/implementation/ADDITIONAL-GATES-PLAN.json": {
+      "bytes": 3293,
+      "path": "c092-reviews/recording-durable/implementation/ADDITIONAL-GATES-PLAN.json",
+      "path_base": "workspace",
+      "sha256": "1a17dd682e05c31a8a8c20e3357be9f4d692f9f19d8d1c32bafab46c981bdf3a"
+    },
+    "c092-reviews/recording-durable/implementation/FINAL-IMPLEMENTATION-DURABLE-REVIEW.json": {
+      "bytes": 11617,
+      "path": "c092-reviews/recording-durable/implementation/FINAL-IMPLEMENTATION-DURABLE-REVIEW.json",
+      "path_base": "workspace",
+      "sha256": "b7ca20e494720ba1848a16ec06fd0909e5a7a6214e7fc1b575f7797e297f3973"
+    },
+    "c092-reviews/recording-durable/implementation/FINAL-IMPLEMENTATION-RECORDING-REVIEW.json": {
+      "bytes": 44934,
+      "path": "c092-reviews/recording-durable/implementation/FINAL-IMPLEMENTATION-RECORDING-REVIEW.json",
+      "path_base": "workspace",
+      "sha256": "3531f98b51a198761b84998db57ddcdff25afb7cc52d88eb1742ac714a0c91b0"
+    },
+    "c092-reviews/recording-durable/implementation/HOSTILE-CANDIDATE03-SCOPED-RESULT.json": {
+      "bytes": 20176,
+      "path": "c092-reviews/recording-durable/implementation/HOSTILE-CANDIDATE03-SCOPED-RESULT.json",
+      "path_base": "workspace",
+      "sha256": "7948f94a0cdc34be82d4e7d507d11fa1273668ccf02d202cc5795b69cc90854d"
+    },
+    "c092-reviews/recording-durable/implementation/IMPLEMENTATION-DURABLE-REVIEW.json": {
+      "bytes": 9228,
+      "path": "c092-reviews/recording-durable/implementation/IMPLEMENTATION-DURABLE-REVIEW.json",
+      "path_base": "workspace",
+      "sha256": "cb85bb790c8e8536998604fdbeb31b42a532bf619483deda5e7154610f94cbf8"
+    },
+    "c092-reviews/recording-durable/implementation/NATIVE-EVIDENCE-AUDIT-CORRECTION.json": {
+      "bytes": 1073,
+      "path": "c092-reviews/recording-durable/implementation/NATIVE-EVIDENCE-AUDIT-CORRECTION.json",
+      "path_base": "workspace",
+      "sha256": "bc3b58129d4189f294858512d664a5218484c88d5f814cb723d950d87033420d"
+    },
+    "c092-reviews/recording-durable/implementation/NATIVE-SHARDS-FREEZE.json": {
+      "bytes": 33809,
+      "path": "c092-reviews/recording-durable/implementation/NATIVE-SHARDS-FREEZE.json",
+      "path_base": "workspace",
+      "sha256": "29e484fe031f67ad6f35d97dc32a44adbd10ca7b12684bfad8a3615447248b31"
+    },
+    "c092-reviews/recording-durable/implementation/NATIVE-VISUAL-REVIEW.json": {
+      "bytes": 92488,
+      "path": "c092-reviews/recording-durable/implementation/NATIVE-VISUAL-REVIEW.json",
+      "path_base": "workspace",
+      "sha256": "37d4009507027e8ca6fb7f319123d7988be491c7ec4f78aee2166b989a3446ad"
+    },
+    "c092-reviews/recording-durable/implementation/SEQUENTIAL-P01-GZIP-DIFFERENCE.json": {
+      "bytes": 2762,
+      "path": "c092-reviews/recording-durable/implementation/SEQUENTIAL-P01-GZIP-DIFFERENCE.json",
+      "path_base": "workspace",
+      "sha256": "3d4d91c00285c2ea792a935e9faa4d9a23dc57356f691939bc2fc9b8b8d15152"
+    },
+    "c092-reviews/recording-durable/implementation/SOURCE-RECEIPT-APPLICABILITY.json": {
+      "bytes": 9620,
+      "path": "c092-reviews/recording-durable/implementation/SOURCE-RECEIPT-APPLICABILITY.json",
+      "path_base": "workspace",
+      "sha256": "8a05ac9cfc54960eba20df603a338d75ea1cc5f5ee0d73836baa6b8970c37e65"
+    },
+    "c092-reviews/recording-durable/implementation/actual-closed-schemas01/RESULT.json": {
+      "bytes": 62588,
+      "path": "c092-reviews/recording-durable/implementation/actual-closed-schemas01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "ac0cdd4476b45351249a75b8a0d2dd9bc1944730eddb586fa30efa9975d23c88"
+    },
+    "c092-reviews/recording-durable/implementation/actual-compatibility01/RESULT.json": {
+      "bytes": 15839,
+      "path": "c092-reviews/recording-durable/implementation/actual-compatibility01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "64f73970c1cfa2429b868b5035a7e6a4383274b24f098891d6a41be332b3dacf"
+    },
+    "c092-reviews/recording-durable/implementation/actual-old-retrieval01/RESULT.json": {
+      "bytes": 29473,
+      "path": "c092-reviews/recording-durable/implementation/actual-old-retrieval01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "8ddcf861de7e16249889ddda4e2254047b567045eb991d001dce0ec25f938c12"
+    },
+    "c092-reviews/recording-durable/implementation/candidate03-bindings01/RESULT.json": {
+      "bytes": 45856,
+      "path": "c092-reviews/recording-durable/implementation/candidate03-bindings01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "ad7789b8d75e5c5387514fa08e66c9695865bfdadfe3b5122e13f29d1664ab68"
+    },
+    "c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt01/actual-a08-attempt01/RESULT.json": {
+      "bytes": 42065,
+      "path": "c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt01/actual-a08-attempt01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "f995279c7a9d17f16d16b1f69bd2dc4f3e1d0470dd4591bf6bb9a638e18d06a4"
+    },
+    "c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt02/actual-a08-attempt01/RESULT.json": {
+      "bytes": 42067,
+      "path": "c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt02/actual-a08-attempt01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "7f34ffd4583f157669e1f59aef073232c9e7aae7b73fe2c24a1feac3bff4a0fc"
+    },
+    "c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt03/A08-DIAGNOSTIC-PROFILE-SUMMARY.json": {
+      "bytes": 17504,
+      "path": "c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt03/A08-DIAGNOSTIC-PROFILE-SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "db8147edfa52cebf329f336b0bdcecb8b7278f288d1c35e483948f67f898d4da"
+    },
+    "c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt03/GUARD-MATRIX-SUMMARY.json": {
+      "bytes": 1231,
+      "path": "c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt03/GUARD-MATRIX-SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "396d53bc595292875a8de6a05fa7e191bb199755d5ab343bb723504572348773"
+    },
+    "c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt03/SNAPSHOT.json": {
+      "bytes": 1012,
+      "path": "c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt03/SNAPSHOT.json",
+      "path_base": "workspace",
+      "sha256": "e9d5fce7b9f0495d6d222e0ffaa1ddc60009b42e6aefc5d760785fe6eef67475"
+    },
+    "c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt03/actual-a08-attempt01/RESULT.json": {
+      "bytes": 42067,
+      "path": "c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt03/actual-a08-attempt01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "dd1353885d2e9a3470d3104b1e98f4117bc32f987d2899810f2877283327e21c"
+    },
+    "c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt03/actual-a08-integrity-attempt02/RESULT.json": {
+      "bytes": 23790,
+      "path": "c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt03/actual-a08-integrity-attempt02/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "807b0bde41f351a718770a263499513aec839fd34e5ef9edd9067db017708bf0"
+    },
+    "c092-reviews/recording-durable/implementation/geometry-candidate03-attempt01/RESULT.json": {
+      "bytes": 1408114,
+      "path": "c092-reviews/recording-durable/implementation/geometry-candidate03-attempt01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "d413fd819390defcf2eea0e1152efdf1f5a00365dc7d675f4453c12521e41bb8"
+    },
+    "c092-reviews/recording-durable/implementation/geometry-candidate03-run01/RESULT.json": {
+      "bytes": 151422,
+      "path": "c092-reviews/recording-durable/implementation/geometry-candidate03-run01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "2d8cf1ca4b8b44b85f1a428884a97e140ee1806da11c9e8ccd8fcb92a4c39cbf"
+    },
+    "c092-reviews/recording-durable/implementation/hostile-candidate03-run01/RESULT.json": {
+      "bytes": 151406,
+      "path": "c092-reviews/recording-durable/implementation/hostile-candidate03-run01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "cd5baaff2fa5424648c1d1f40402d862c7c8ebafad2ce5e72bae7a38185c2be1"
+    },
+    "c092-reviews/recording-durable/implementation/native-candidate03-run01/INTERRUPTION-RESULT.json": {
+      "bytes": 1463,
+      "path": "c092-reviews/recording-durable/implementation/native-candidate03-run01/INTERRUPTION-RESULT.json",
+      "path_base": "workspace",
+      "sha256": "8e78b4cf46bbb9046b0e6adb2800e0f4687ec234becd6b8b05fb3be8b380b3a7"
+    },
+    "c092-reviews/recording-durable/implementation/native-candidate03-run01/INTERRUPTION.json": {
+      "bytes": 1711,
+      "path": "c092-reviews/recording-durable/implementation/native-candidate03-run01/INTERRUPTION.json",
+      "path_base": "workspace",
+      "sha256": "e5bfa1777db1e63179f75d28b876247962e57e2d2e7824a505fb9b29dff0c3b8"
+    },
+    "c092-reviews/recording-durable/implementation/native-candidate03-shard01-attempt01/implementation.json": {
+      "bytes": 19945,
+      "path": "c092-reviews/recording-durable/implementation/native-candidate03-shard01-attempt01/implementation.json",
+      "path_base": "workspace",
+      "sha256": "73ddc52f1fb33df7408f5bd1424735c606a49c386bfcafece16555a4eeab315b"
+    },
+    "c092-reviews/recording-durable/implementation/native-candidate03-shard01-attempt01/summary.json": {
+      "bytes": 1590,
+      "path": "c092-reviews/recording-durable/implementation/native-candidate03-shard01-attempt01/summary.json",
+      "path_base": "workspace",
+      "sha256": "9cd044de83d3da6548362123cba72b8ef7fc9b8d4398d7c9990817a5c894b129"
+    },
+    "c092-reviews/recording-durable/implementation/native-candidate03-shard01-run01/RESULT.json": {
+      "bytes": 152002,
+      "path": "c092-reviews/recording-durable/implementation/native-candidate03-shard01-run01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "9f819b8b8de09980455878bafb0d78e46cbda6ba19f03f75237073f267feef02"
+    },
+    "c092-reviews/recording-durable/implementation/native-candidate03-shard02-attempt01/implementation.json": {
+      "bytes": 19945,
+      "path": "c092-reviews/recording-durable/implementation/native-candidate03-shard02-attempt01/implementation.json",
+      "path_base": "workspace",
+      "sha256": "c912f0a3852f73632787fdcf4bae10c8f2af572b0ae293ac81398eddab72b5d2"
+    },
+    "c092-reviews/recording-durable/implementation/native-candidate03-shard02-attempt01/summary.json": {
+      "bytes": 1480,
+      "path": "c092-reviews/recording-durable/implementation/native-candidate03-shard02-attempt01/summary.json",
+      "path_base": "workspace",
+      "sha256": "43dd64d3386b2c60803fed9ab58dd8449906f1866caeb416f4ea5e759a859fe3"
+    },
+    "c092-reviews/recording-durable/implementation/native-candidate03-shard02-run01/RESULT.json": {
+      "bytes": 151954,
+      "path": "c092-reviews/recording-durable/implementation/native-candidate03-shard02-run01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "ee43b373740bdd7120d3bb3ab17e324638e902853089c3c807587aa029ca904f"
+    },
+    "c092-reviews/recording-durable/implementation/native-candidate03-shard03-attempt01/implementation.json": {
+      "bytes": 19945,
+      "path": "c092-reviews/recording-durable/implementation/native-candidate03-shard03-attempt01/implementation.json",
+      "path_base": "workspace",
+      "sha256": "916fd8e07b7627df648fdd9d38bdd722d6e68811c77c5a64867b97f676218659"
+    },
+    "c092-reviews/recording-durable/implementation/native-candidate03-shard03-attempt01/summary.json": {
+      "bytes": 1245,
+      "path": "c092-reviews/recording-durable/implementation/native-candidate03-shard03-attempt01/summary.json",
+      "path_base": "workspace",
+      "sha256": "d02e28a9459885240662f89244439fe3f323a0e37f8b292ed92331428f8b9897"
+    },
+    "c092-reviews/recording-durable/implementation/native-candidate03-shard03-run01/RESULT.json": {
+      "bytes": 151892,
+      "path": "c092-reviews/recording-durable/implementation/native-candidate03-shard03-run01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "05aeb53f2acf860f58edd0d2d5062d9f937c9a2f4454ce0ea46f6727a29eb4e2"
+    },
+    "c092-reviews/recording-durable/implementation/native-candidate03-shard04-attempt01/implementation.json": {
+      "bytes": 19945,
+      "path": "c092-reviews/recording-durable/implementation/native-candidate03-shard04-attempt01/implementation.json",
+      "path_base": "workspace",
+      "sha256": "18d179b6c20b7f13340374d9261647a876a43641d6e732f1d0baaf64d9c0b2b1"
+    },
+    "c092-reviews/recording-durable/implementation/native-candidate03-shard04-attempt01/summary.json": {
+      "bytes": 1099,
+      "path": "c092-reviews/recording-durable/implementation/native-candidate03-shard04-attempt01/summary.json",
+      "path_base": "workspace",
+      "sha256": "57ff6c25ab2f9a2e5d9d5bef5c68e203704c49fa9e79074cab2871b2166f0d05"
+    },
+    "c092-reviews/recording-durable/implementation/native-candidate03-shard04-run01/RESULT.json": {
+      "bytes": 151867,
+      "path": "c092-reviews/recording-durable/implementation/native-candidate03-shard04-run01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "359c3694d4571b073db0c105ad17de1061c00e888a30f2dc6fd49454d26f41cb"
+    },
+    "c092-reviews/recording-durable/implementation/native-failed-gate-audit01/RESULT.json": {
+      "bytes": 1123,
+      "path": "c092-reviews/recording-durable/implementation/native-failed-gate-audit01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "0e4e96f1af1c05f248bc7692c35f985cf574b7470ff885ce0cdabf178fab8f0b"
+    },
+    "c092-reviews/recording-durable/implementation/native-failed-gate-audit02/RESULT.json": {
+      "bytes": 210839,
+      "path": "c092-reviews/recording-durable/implementation/native-failed-gate-audit02/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "014213bd07dfaa81a353764b4d07f0af8e46e9aa5a9996d7861d893f56fc541f"
+    },
+    "c092-reviews/recording-durable/implementation/native-p28-helper-capture-only01/RESULT.json": {
+      "bytes": 5342,
+      "path": "c092-reviews/recording-durable/implementation/native-p28-helper-capture-only01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "e357b396d0d0a1663fac4a174a889d9f72f1c350fb08c619d1d76132e6f3ce1f"
+    },
+    "c092-reviews/recording-durable/implementation/p28-helper-classification01/EXPECTED-BEFORE-ARTIFACT-INSPECTION.json": {
+      "bytes": 5924,
+      "path": "c092-reviews/recording-durable/implementation/p28-helper-classification01/EXPECTED-BEFORE-ARTIFACT-INSPECTION.json",
+      "path_base": "workspace",
+      "sha256": "cf5dee14622c9b9caad5403680fc8cb875361807b007fb526f412dc523ed1694"
+    },
+    "c092-reviews/recording-durable/implementation/p28-helper-classification01/RESULT.json": {
+      "bytes": 7573,
+      "path": "c092-reviews/recording-durable/implementation/p28-helper-classification01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "862dacb9dac1b13a9f88122af3eb7b506e5fdb33660602157e27d3e1c6f27e1c"
+    },
+    "c092-reviews/recording-durable/implementation/predecessor-candidate03-attempt01/summary.json": {
+      "bytes": 25458,
+      "path": "c092-reviews/recording-durable/implementation/predecessor-candidate03-attempt01/summary.json",
+      "path_base": "workspace",
+      "sha256": "0299ff88d5f6b7e19e3c8fd0aac69ea2278963b31b5bfd176f388437d09d7868"
+    },
+    "c092-reviews/recording-durable/implementation/predecessor-candidate03-run01/RESULT.json": {
+      "bytes": 151248,
+      "path": "c092-reviews/recording-durable/implementation/predecessor-candidate03-run01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "5487f1d373bddeeeb2d6f76555fec2626764112edf1f3404ba1b53bc877471b5"
+    },
+    "c092-reviews/source/AGENT-WORKFLOW-STATE-SUPPLEMENT.json": {
+      "bytes": 24635,
+      "path": "c092-reviews/source/AGENT-WORKFLOW-STATE-SUPPLEMENT.json",
+      "path_base": "workspace",
+      "sha256": "9b4cdde9646cf0cb8862ffbf8cd357feb8f99f17c8ed4607eec1729a1a89f058"
+    },
+    "c092-reviews/source/PUBLICATION-INDEPENDENT-REVIEW.json": {
+      "bytes": 23922,
+      "path": "c092-reviews/source/PUBLICATION-INDEPENDENT-REVIEW.json",
+      "path_base": "workspace",
+      "sha256": "20c36f82ca200c3edb8d4039084cba1ce6f92cf69019622e289f161b0fa62432"
+    },
+    "c092-reviews/source/SOURCE-NUMERICAL-IMPLEMENTATION-REVIEW.json": {
+      "bytes": 15999,
+      "path": "c092-reviews/source/SOURCE-NUMERICAL-IMPLEMENTATION-REVIEW.json",
+      "path_base": "workspace",
+      "sha256": "6e9648474a5d4d4d95e842a458f470cf8900701cecdb0ed2e1758dc2cec12709"
+    },
+    "c092-reviews/source/SOURCE-NUMERICAL-REVIEW.json": {
+      "bytes": 3178,
+      "path": "c092-reviews/source/SOURCE-NUMERICAL-REVIEW.json",
+      "path_base": "workspace",
+      "sha256": "e2c4c177a115da6ee11d0b55425a498a771362b5d25f7bddc955f96b96617949"
+    },
+    "c092-reviews/source/freeze/EXPECTED-SELECTOR-RESULTS.json": {
+      "bytes": 125944,
+      "path": "c092-reviews/source/freeze/EXPECTED-SELECTOR-RESULTS.json",
+      "path_base": "workspace",
+      "sha256": "7d21f989106c4ad2406b2850b1a9d1d4430f2068584c52ebfd1c17fb64d56271"
+    },
+    "c092-reviews/source/freeze/SOURCE-EXPECTATION-FREEZE.json": {
+      "bytes": 3209,
+      "path": "c092-reviews/source/freeze/SOURCE-EXPECTATION-FREEZE.json",
+      "path_base": "workspace",
+      "sha256": "80bee151dd2396ce0d2ab0654e0322247ee2939bcaa58b3c1835f5c952d8ced0"
+    },
+    "c092-reviews/source/freeze/derive_expectations.py": {
+      "bytes": 16729,
+      "path": "c092-reviews/source/freeze/derive_expectations.py",
+      "path_base": "workspace",
+      "sha256": "41c61c343fab2ddc5f39e19f31599cab1f19939dfd0057d4c5bfc350d564bd87"
+    },
+    "c092-reviews/source/implementation/CANDIDATE03-PUBLICATION-INDEPENDENT-REVIEW.json": {
+      "bytes": 3379,
+      "path": "c092-reviews/source/implementation/CANDIDATE03-PUBLICATION-INDEPENDENT-REVIEW.json",
+      "path_base": "workspace",
+      "sha256": "33d8f77154f91936188215800e00f05c91bbc5f42cfe477a015b1524bb4d6862"
+    },
+    "c092-reviews/source/implementation/GUARD-COST-REVIEW.md": {
+      "bytes": 5825,
+      "path": "c092-reviews/source/implementation/GUARD-COST-REVIEW.md",
+      "path_base": "workspace",
+      "sha256": "5d994476b0f64cec6adf28795ca5d1d92b082c6ea7eb150602297d91b2677909"
+    },
+    "c092-reviews/source/implementation/IMMUTABLE-INPUT-CANDIDATE03.json": {
+      "bytes": 5083,
+      "path": "c092-reviews/source/implementation/IMMUTABLE-INPUT-CANDIDATE03.json",
+      "path_base": "workspace",
+      "sha256": "1f9189108d1ffd6bf088c113a9e5d3f0757defb335936e6505f6abd4eabfbb94"
+    },
+    "c092-reviews/source/implementation/IMMUTABLE-INPUT-FINAL-CLOSURE.json": {
+      "bytes": 5083,
+      "path": "c092-reviews/source/implementation/IMMUTABLE-INPUT-FINAL-CLOSURE.json",
+      "path_base": "workspace",
+      "sha256": "a610fb455d8995b5ff51ef002144549001b140ba510660542edf0d64c850de33"
+    },
+    "c092-reviews/source/implementation/PARENT-INHERITED-CANDIDATE03-DISPOSITION.json": {
+      "bytes": 26567,
+      "path": "c092-reviews/source/implementation/PARENT-INHERITED-CANDIDATE03-DISPOSITION.json",
+      "path_base": "workspace",
+      "sha256": "58a49025f22aeea2659011faf6f605d20a6e51e1fe810dc249c8ce293eebcac2"
+    },
+    "c092-reviews/source/implementation/READER-SELECTOR-REPLAY01.json": {
+      "bytes": 4761,
+      "path": "c092-reviews/source/implementation/READER-SELECTOR-REPLAY01.json",
+      "path_base": "workspace",
+      "sha256": "b21c09d0bf86a342ff657d7f2440f8cc1a102ff4792b6471d339ea458b4429cf"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/A07-DURABLE-EXPORT-FAILURE.json": {
+      "bytes": 5793,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/A07-DURABLE-EXPORT-FAILURE.json",
+      "path_base": "workspace",
+      "sha256": "ec7e23d0b409e4fd6036089aae980d17d648b23ed57af4caa8845e897ba6e81f"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/RESULT.json": {
+      "bytes": 41675,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "838bfe8ee0525a30ca252b24e9f9946c3991de3c53349b8c044420e1b0a09b14"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/SCHEMA-AUDIT-LOG-SELECTION.json": {
+      "bytes": 5063,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/SCHEMA-AUDIT-LOG-SELECTION.json",
+      "path_base": "workspace",
+      "sha256": "5c3d973a4e24716000ca017dc32ea3d6cb34f55de459c0534376657fbfad61d8"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/SOURCE-AFTER.json": {
+      "bytes": 33782,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/SOURCE-AFTER.json",
+      "path_base": "workspace",
+      "sha256": "d6cc46774bff420c4309adec55fddccdd40c6f9bfbbaa0d071c117f7c9e07785"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/SOURCE-BEFORE.json": {
+      "bytes": 33782,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/SOURCE-BEFORE.json",
+      "path_base": "workspace",
+      "sha256": "d6cc46774bff420c4309adec55fddccdd40c6f9bfbbaa0d071c117f7c9e07785"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix-RESULT.json": {
+      "bytes": 6696,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix-RESULT.json",
+      "path_base": "workspace",
+      "sha256": "8ec2c3c07119e1208088127b6ae16bb049fde118332d2d10127d28e8d1ca5c35"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p01-spin-up/SUMMARY.json": {
+      "bytes": 29507,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p01-spin-up/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "fe3fe2bd038aa3f9d736769eff980401c27970f251097d0e83b607826afcb54b"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p02-negative/SUMMARY.json": {
+      "bytes": 24629,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p02-negative/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "4c4193bf18efda0d4af98911c684b8c98ecb1126ffc066e1ca2c5ce7747ddc4f"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p03-braking-reversal/SUMMARY.json": {
+      "bytes": 34451,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p03-braking-reversal/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "635d71b6268d569d330c8935bf7023e42dda59620d36a4fe8483d8ea00dcfa78"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p04-overlap/SUMMARY.json": {
+      "bytes": 33991,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p04-overlap/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "08f087cc86915382c7dc76343d026ae6f74abdde8fc499bc056d7f5c58c55543"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p05-cancelling/SUMMARY.json": {
+      "bytes": 24120,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p05-cancelling/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "20b90ef72af2e8ab26733ad09a30aec55ea951a895bd271637bbc573ed4132e7"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p06-zero/SUMMARY.json": {
+      "bytes": 24114,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p06-zero/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "a5ca291d35eb09b5243821c5233a75cdf47e56a263756593de5c845b59b83049"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p07-same-net-replacement/SUMMARY.json": {
+      "bytes": 31762,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p07-same-net-replacement/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "ebb737834aa43ce6a58c7cd69c374c7c82b2a2e16b6e65beb4d4b9518c6edc76"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p08-split-neutral-overlap/SUMMARY.json": {
+      "bytes": 29070,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p08-split-neutral-overlap/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "46c3748c49e0d31b57084b9aae2ab0cf2c197f3150494fc03c92ac87e8d9b0b4"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p09-completion-starts-rotation/SUMMARY.json": {
+      "bytes": 31586,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p09-completion-starts-rotation/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "67847f742231847c3b47cec9aec3e5e3b9e64d483cf8c0ceaad36129b40e3f60"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p10-half-inertia/SUMMARY.json": {
+      "bytes": 24577,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p10-half-inertia/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "4e412a206b41399f5defe409d4c233e97a805c8401ac693b06dda233ab95bbc4"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p11-large-inertia/SUMMARY.json": {
+      "bytes": 24578,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p11-large-inertia/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "978e82a7dbfcbdd043a81988437fcdeb6339933e237146e67c2c977a27202f91"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p12-world-x/SUMMARY.json": {
+      "bytes": 19693,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p12-world-x/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "f7f6a47f4c783bacc91efb5e8b7d20515bffeeda8b4a7886d4a007945a384171"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p13-world-y/SUMMARY.json": {
+      "bytes": 19693,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p13-world-y/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "0eeff70f35bc9c3803397a1156900a27c56f6a89a8fb1123eb84753750bb0919"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p14-offset-reversal/SUMMARY.json": {
+      "bytes": 19757,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p14-offset-reversal/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "367f5c0e01bfd6ae964766173fa33892357a30d6629468fc9a689537ee1a5f9b"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p15-translation-tie/SUMMARY.json": {
+      "bytes": 26392,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p15-translation-tie/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "d2b6f5dfd7a67a26433a1722e7a7da5349a0af5119c98b6010f1d5a40bf5570a"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p16-neutral-com-force/SUMMARY.json": {
+      "bytes": 40480,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p16-neutral-com-force/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "c8dcdf5f914a28b20b0f7fd18996503c8fc16a1151a61504690c94154d828c93"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p17-split-com-force/SUMMARY.json": {
+      "bytes": 29515,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p17-split-com-force/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "80222ce916fa42234d0ed98805bbb3364284d24318e7ed2a164b76dfbd3e1505"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p18-sticky-after-empty/SUMMARY.json": {
+      "bytes": 33642,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p18-sticky-after-empty/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "7fe41157f76f8188bc12febfcbba7a588a207f7c60257e2bcf535c0d598d4712"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p19-torque-then-impulse/SUMMARY.json": {
+      "bytes": 24584,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p19-torque-then-impulse/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "c537eecd27075b105f015cf497efe274ae1f82f0fc09f618f3bfdfbdd354ff38"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p20-impulse-then-torque/SUMMARY.json": {
+      "bytes": 24584,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p20-impulse-then-torque/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "d53520de582a22e0dc43d3657856f99cb911b5962bbebab929f0aff14be96a9f"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p21-equal-endpoint-reversal/SUMMARY.json": {
+      "bytes": 29691,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p21-equal-endpoint-reversal/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "519ec277327abbef074e3d09c4e3b24f636bfd5336c39336e13550c58f8de8e3"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p22-nondyadic-zero-crossing/SUMMARY.json": {
+      "bytes": 29691,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p22-nondyadic-zero-crossing/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "94598a8018935682c5c9c1820ac51bc4c6a4c7e8bf1ee73118b7ea9e7090a29f"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p23-partial-sum-overflow-cancels/SUMMARY.json": {
+      "bytes": 19406,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p23-partial-sum-overflow-cancels/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "e0c26b3b2a69255dd3fb7b0d15525e71c8a8f97d504004d6ef9608905bb58ca9"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p24-underflow-is-neutral/SUMMARY.json": {
+      "bytes": 19398,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p24-underflow-is-neutral/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "1714c5dc218c7b0a6002e6b3796ea8ef93d431509679060c5231c303511e8c91"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p25-beyond-horizon/SUMMARY.json": {
+      "bytes": 17417,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p25-beyond-horizon/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "1af8366bed4a76d3e1cd05231bcd893e3dd54b52badc325afbb912210eedbcca"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p26-small-marker/SUMMARY.json": {
+      "bytes": 19698,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p26-small-marker/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "4be2339dcaf1feac1afbff6b2d2dfe026e805cc3ec22ffd5a4f62394fdcc78f8"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p27-generated-two-carriers/SUMMARY.json": {
+      "bytes": 27307,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p27-generated-two-carriers/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "667e414adbff9fa534a6628f20778af3dbd462b90bdd976d48c78268519405ab"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p28-release-then-torque/SUMMARY.json": {
+      "bytes": 32592,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p28-release-then-torque/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "d7eab7f2a59c05689ace8a86012074d2afb2b6c8b8b8d0933cea65c19f898dee"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p29-canonical-clock-addition/SUMMARY.json": {
+      "bytes": 36086,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p29-canonical-clock-addition/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "ff1d54606d208a441541b17ff087ca7a014325f375964204fb9a6cbcd054bd5d"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p30-underflow-replacement/SUMMARY.json": {
+      "bytes": 21554,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p30-underflow-replacement/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "53277f4f1fa2d27f09bc879faaf9d71525b341ef239cf6fd1c2a8a6dcb323192"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p31-noncommuting-initial-rotation/SUMMARY.json": {
+      "bytes": 19715,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/a11-positive-state-matrix/p31-noncommuting-initial-rotation/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "8100ca957fc0b57b76b2fc032f39334e0113c603ae3a3038b8409a15647b01a1"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows-RESULT.json": {
+      "bytes": 32115,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows-RESULT.json",
+      "path_base": "workspace",
+      "sha256": "4ff4920a0f07e946553af8e245d516cff91b9514e3c23ff4351ba4dc5f8f2b4a"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A01.json": {
+      "bytes": 2841,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A01.json",
+      "path_base": "workspace",
+      "sha256": "de66ed80cdb35aaa585834a4a6eb21151345398c692ef704d1c498eb2c4f34f9"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A02-1.json": {
+      "bytes": 2854,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A02-1.json",
+      "path_base": "workspace",
+      "sha256": "49e9fb80058f9cf975c6999ac3f8cdc118bb307f42a2b86b487c407c8a0733b2"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A02-2.json": {
+      "bytes": 2854,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A02-2.json",
+      "path_base": "workspace",
+      "sha256": "a11eeda9523fc9793b3fcb727dcca7bffd2be35c039e6fba2b8ad1c6cf11116f"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A02-3.json": {
+      "bytes": 2854,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A02-3.json",
+      "path_base": "workspace",
+      "sha256": "432efb349b01793ac171b807f0081a3c2a776842fc4b63fdeeb94f80dbb11a19"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A02-4.json": {
+      "bytes": 2856,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A02-4.json",
+      "path_base": "workspace",
+      "sha256": "f199ad441121cbb86616555b8c66de4e94ae0ec8935ebf714744989b50563a83"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A02-5.json": {
+      "bytes": 2856,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A02-5.json",
+      "path_base": "workspace",
+      "sha256": "64ec799bed8d7fccf84ed97aed0f464b908124324e0891da2681192c60c676ca"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A02-6.json": {
+      "bytes": 2857,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A02-6.json",
+      "path_base": "workspace",
+      "sha256": "307722e930b5c5e8d9ea5ed476e197daee24798887bb4c150ba9ee01156d0ba7"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A03.json": {
+      "bytes": 2836,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A03.json",
+      "path_base": "workspace",
+      "sha256": "7b47bf005e205ed9f13301ee2e0dc784551102ed5da73a974b27c6a9e6c9240d"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A04.json": {
+      "bytes": 143,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A04.json",
+      "path_base": "workspace",
+      "sha256": "528ea7e5778185808b7708d76390178e743dfeebdf09a36ef88ce5607eb29835"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A05.json": {
+      "bytes": 2838,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A05.json",
+      "path_base": "workspace",
+      "sha256": "3e355a2cf14686fb26694444b955b21932438a444a2cb2dcf5e76284b42fff47"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A06.json": {
+      "bytes": 2837,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A06.json",
+      "path_base": "workspace",
+      "sha256": "2dc825d654dcb1f0e20ff9f2ec7d5450bf243a526d770f9b4e7c97788df24fca"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A07.json": {
+      "bytes": 800,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/A07.json",
+      "path_base": "workspace",
+      "sha256": "a1675758d9e2c1e39f3cbaa9e8d0b500b082015149c1ba9278f65dd73353577f"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/transport.json": {
+      "bytes": 155,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/default-workflows/transport.json",
+      "path_base": "workspace",
+      "sha256": "a54af131b05022cd238993e99b4897d8361854d558cf97397818d475243a889b"
+    },
+    "c092-reviews/source/implementation/final-agent-candidate03-attempt01/request-schema-dispatch-RESULT.json": {
+      "bytes": 152,
+      "path": "c092-reviews/source/implementation/final-agent-candidate03-attempt01/request-schema-dispatch-RESULT.json",
+      "path_base": "workspace",
+      "sha256": "887696b8aa9cb3227b22e738bf010beaeabe2f6674e1dfc58b15eeec6315543a"
+    },
+    "c092-reviews/source/implementation/final-runtime-candidate03-attempt01/RESULT.json": {
+      "bytes": 309273,
+      "path": "c092-reviews/source/implementation/final-runtime-candidate03-attempt01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "bcfa38cef768d58ce426c2c21a3725cdd8b3d3cb47b611146724bad3fcf6cea8"
+    },
+    "c092-reviews/source/implementation/final-runtime-candidate03-attempt01/agent-resource-stages-RESULT.json": {
+      "bytes": 214729,
+      "path": "c092-reviews/source/implementation/final-runtime-candidate03-attempt01/agent-resource-stages-RESULT.json",
+      "path_base": "workspace",
+      "sha256": "a15bcf4e59b03d408617672a1d89a5cd6174a21b353ba2be19f34ecf08cf983b"
+    },
+    "c092-reviews/source/implementation/final-runtime-candidate03-attempt01/runtime-stage-faults-RESULT.json": {
+      "bytes": 11692,
+      "path": "c092-reviews/source/implementation/final-runtime-candidate03-attempt01/runtime-stage-faults-RESULT.json",
+      "path_base": "workspace",
+      "sha256": "bdd1e52a2925da219d69872d465d59ba620b61d0a4bc0e25783f3a76e692100c"
+    },
+    "c092-reviews/source/implementation/final-runtime-candidate03-attempt01/runtime-states-RESULT.json": {
+      "bytes": 50313,
+      "path": "c092-reviews/source/implementation/final-runtime-candidate03-attempt01/runtime-states-RESULT.json",
+      "path_base": "workspace",
+      "sha256": "ec92c94d14ea40edf77d5732c043c3e5b86908f9a0531318b5e120accee85d1a"
+    },
+    "c092-reviews/source/implementation/focused-attempt09/RESULT.json": {
+      "bytes": 5612,
+      "path": "c092-reviews/source/implementation/focused-attempt09/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "71a614e2a074a411ef0ad0fa042f81213532ff336169dea6c433a1785dc4d7d2"
+    },
+    "c092-reviews/source/implementation/original-callback-repair-attempt04/RESULT.json": {
+      "bytes": 5103,
+      "path": "c092-reviews/source/implementation/original-callback-repair-attempt04/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "6910092f5e61bf2831763edb6b81ede6be2969d3898ad8b3474d7eeef6d99c61"
+    },
+    "c092-validation/INHERITED-CANDIDATE03-DISPOSITION.json": {
+      "bytes": 26567,
+      "path": "c092-validation/INHERITED-CANDIDATE03-DISPOSITION.json",
+      "path_base": "workspace",
+      "sha256": "58a49025f22aeea2659011faf6f605d20a6e51e1fe810dc249c8ce293eebcac2"
+    },
+    "c092-validation/candidate02-delivery-run/RESULT.json": {
+      "bytes": 18398,
+      "path": "c092-validation/candidate02-delivery-run/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "cd2a145fa06a785e9aa4de960500748b8dc1cce2f0321c82d5afe25692777161"
+    },
+    "c092-validation/candidate02-delivery/summary.json": {
+      "bytes": 64312,
+      "path": "c092-validation/candidate02-delivery/summary.json",
+      "path_base": "workspace",
+      "sha256": "38d9a15a780720aa2f257704d521eac2b4997f42abc3bbffe67d086a51f77e1e"
+    },
+    "c092-validation/candidate02-domains-run.json": {
+      "bytes": 39544,
+      "path": "c092-validation/candidate02-domains-run.json",
+      "path_base": "workspace",
+      "sha256": "2a68b727c4bcbeb6a23adb3986ef63938132584d1174251fe41bcdec887f27c5"
+    },
+    "c092-validation/candidate02-domains/SUMMARY.json": {
+      "bytes": 81,
+      "path": "c092-validation/candidate02-domains/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "d09e14e1cf95ed3c78ab9da4d9db77887100931f80ac32a3671fe2abda4eccff"
+    },
+    "c092-validation/candidate02-full-local-run/RESULT.json": {
+      "bytes": 577,
+      "path": "c092-validation/candidate02-full-local-run/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "a4e07802020d765f4319b3920e4d330b0ca75e22265d48864ab89c17f2956cc8"
+    },
+    "c092-validation/candidate02-full-local/summary.json": {
+      "bytes": 55836,
+      "path": "c092-validation/candidate02-full-local/summary.json",
+      "path_base": "workspace",
+      "sha256": "3a9f08a6ee6ff8e934fc41c9fc4c10ca14206820316666011b900edbc317cf86"
+    },
+    "c092-validation/candidate02-input-mathematics-run.json": {
+      "bytes": 946,
+      "path": "c092-validation/candidate02-input-mathematics-run.json",
+      "path_base": "workspace",
+      "sha256": "a9788c1ed443c89027ca60e6ff5e3ba084d59a3f191ede89d8f6f7d7ddebfc23"
+    },
+    "c092-validation/candidate02-input-mathematics.json": {
+      "bytes": 1186612,
+      "path": "c092-validation/candidate02-input-mathematics.json",
+      "path_base": "workspace",
+      "sha256": "9000b8a47ccf13a8b2772b4fb46172515ff2717bd73228594884fe5beda49103"
+    },
+    "c092-validation/candidate02-reference-run.json": {
+      "bytes": 39501,
+      "path": "c092-validation/candidate02-reference-run.json",
+      "path_base": "workspace",
+      "sha256": "6d911b52021b1e45fefb8b8e55c9e2fc938e37b6aa59967ec403e00a28fb833b"
+    },
+    "c092-validation/candidate02-reference.json": {
+      "bytes": 28578,
+      "path": "c092-validation/candidate02-reference.json",
+      "path_base": "workspace",
+      "sha256": "78d54414045b662e1cde55383d18dff94034c95393fda066b62109893b253806"
+    },
+    "c092-validation/candidate03-delivery-audit-run/RESULT.json": {
+      "bytes": 40446,
+      "path": "c092-validation/candidate03-delivery-audit-run/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "feedb8a36a3acfb7816cc2894dc1d0ad69d72e0e22ae08555543c32c7844767c"
+    },
+    "c092-validation/candidate03-delivery-gate.json": {
+      "bytes": 26356,
+      "path": "c092-validation/candidate03-delivery-gate.json",
+      "path_base": "workspace",
+      "sha256": "b1d3cc5a71e9545eefeaae5142e7a09547f16074718eba64629194bccaf0e44d"
+    },
+    "c092-validation/candidate03-delivery-run/RESULT.json": {
+      "bytes": 40378,
+      "path": "c092-validation/candidate03-delivery-run/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "dd97e450b11fbfc4be056cdc04eadb9974d05d10ae723339767bcf4b8fc7c71f"
+    },
+    "c092-validation/candidate03-delivery/summary.json": {
+      "bytes": 64321,
+      "path": "c092-validation/candidate03-delivery/summary.json",
+      "path_base": "workspace",
+      "sha256": "310b6cbaeea0e457a60c468e53af898c3737fe37fc34dfb98dcc0c4340d90a8b"
+    },
+    "c092-validation/candidate03-domains-run.json": {
+      "bytes": 192291,
+      "path": "c092-validation/candidate03-domains-run.json",
+      "path_base": "workspace",
+      "sha256": "5b1bac6ab7527c44af8c654f91ee9189c38c550535692e15759f053c3ea235c0"
+    },
+    "c092-validation/candidate03-domains/0-domain01-exact-phase-cap.json": {
+      "bytes": 43812,
+      "path": "c092-validation/candidate03-domains/0-domain01-exact-phase-cap.json",
+      "path_base": "workspace",
+      "sha256": "c9389e5bf42cefbbcc28899e60629a51ec15d6ea2542aab5c4cc43ac59bbdc81"
+    },
+    "c092-validation/candidate03-domains/1-domain02-underflow-long-prefix.json": {
+      "bytes": 42422,
+      "path": "c092-validation/candidate03-domains/1-domain02-underflow-long-prefix.json",
+      "path_base": "workspace",
+      "sha256": "3a48a2fedd9f2255434ffa6755cf4ba2f4cd51f8e6c8f23081e32f7f135f9e34"
+    },
+    "c092-validation/candidate03-domains/10-n16-alpha-overflow.json": {
+      "bytes": 42441,
+      "path": "c092-validation/candidate03-domains/10-n16-alpha-overflow.json",
+      "path_base": "workspace",
+      "sha256": "8fd000fbafe1b6fd76289e1573cd726494b54f18a843a16e5c12891b40a07b2b"
+    },
+    "c092-validation/candidate03-domains/11-n17-later-bounded-phase.json": {
+      "bytes": 44738,
+      "path": "c092-validation/candidate03-domains/11-n17-later-bounded-phase.json",
+      "path_base": "workspace",
+      "sha256": "62185395f29253a89bc4d713e65cd8f1e1ee51de0fc42272ed65507dfbff3172"
+    },
+    "c092-validation/candidate03-domains/12-n17-later-bounded-phase.json": {
+      "bytes": 44736,
+      "path": "c092-validation/candidate03-domains/12-n17-later-bounded-phase.json",
+      "path_base": "workspace",
+      "sha256": "ffa1e52c2809efb24a2c9890618f771a93b8b456a20a1a2b91812d84006ee9d1"
+    },
+    "c092-validation/candidate03-domains/13-n23-followed-marker.json": {
+      "bytes": 40996,
+      "path": "c092-validation/candidate03-domains/13-n23-followed-marker.json",
+      "path_base": "workspace",
+      "sha256": "7698b761b88a95889cbfca30d1709a920fa76246eab3d637adb99a7e631d8cf7"
+    },
+    "c092-validation/candidate03-domains/14-n24-torque-before-release.json": {
+      "bytes": 45536,
+      "path": "c092-validation/candidate03-domains/14-n24-torque-before-release.json",
+      "path_base": "workspace",
+      "sha256": "2c694f20f637eb83739595f585951819d3734bad5b1b81b602d9a7393ec2cbce"
+    },
+    "c092-validation/candidate03-domains/15-n26-interior-phase-domain.json": {
+      "bytes": 44605,
+      "path": "c092-validation/candidate03-domains/15-n26-interior-phase-domain.json",
+      "path_base": "workspace",
+      "sha256": "ea75150877d0d5a245cb7601bb9497b023531a9b7cf019372cf990d6b5e1dd7e"
+    },
+    "c092-validation/candidate03-domains/16-n26-interior-phase-domain.json": {
+      "bytes": 44603,
+      "path": "c092-validation/candidate03-domains/16-n26-interior-phase-domain.json",
+      "path_base": "workspace",
+      "sha256": "de59f838f2e71668b16625db0bd288856b60b2eda798421a2892aad81ad333e4"
+    },
+    "c092-validation/candidate03-domains/2-domain03-reference-origin-transfer.json": {
+      "bytes": 42427,
+      "path": "c092-validation/candidate03-domains/2-domain03-reference-origin-transfer.json",
+      "path_base": "workspace",
+      "sha256": "fa02e68b4701c0154f35c497ac507a34baaad53e09037df1a1572f3943547c1c"
+    },
+    "c092-validation/candidate03-domains/3-domain04-reference-only-change.json": {
+      "bytes": 46857,
+      "path": "c092-validation/candidate03-domains/3-domain04-reference-only-change.json",
+      "path_base": "workspace",
+      "sha256": "7b982f49a11cb0e8131d3172dfb5fbd2ff5a02443ce61a9bad50f2cb490e08ca"
+    },
+    "c092-validation/candidate03-domains/4-n07-prescribed-target.json": {
+      "bytes": 40886,
+      "path": "c092-validation/candidate03-domains/4-n07-prescribed-target.json",
+      "path_base": "workspace",
+      "sha256": "0bc7437ca09274fae97f430c31417dbf2220c1cdc93c57c832c8aff4183c9a98"
+    },
+    "c092-validation/candidate03-domains/5-n11-empty-set-axis-change.json": {
+      "bytes": 42842,
+      "path": "c092-validation/candidate03-domains/5-n11-empty-set-axis-change.json",
+      "path_base": "workspace",
+      "sha256": "f5a4da5c02188d53a2c28a174c14e7ed2f0567a5b2718f57ffb2904b7973bbdc"
+    },
+    "c092-validation/candidate03-domains/6-n12-zero-mixed-axes.json": {
+      "bytes": 42434,
+      "path": "c092-validation/candidate03-domains/6-n12-zero-mixed-axes.json",
+      "path_base": "workspace",
+      "sha256": "4098ce2069dc31f04a6a83a9443cad5e53aada9708fa0d08b0001d87796c11ce"
+    },
+    "c092-validation/candidate03-domains/7-n13-incoming-off-axis-spin.json": {
+      "bytes": 40934,
+      "path": "c092-validation/candidate03-domains/7-n13-incoming-off-axis-spin.json",
+      "path_base": "workspace",
+      "sha256": "801f6eeb5859a55baac42bdc67e248ab7db51bcad6f3b78ae4d551f986a21b0d"
+    },
+    "c092-validation/candidate03-domains/8-n14-intermediate-off-axis-impulse.json": {
+      "bytes": 42516,
+      "path": "c092-validation/candidate03-domains/8-n14-intermediate-off-axis-impulse.json",
+      "path_base": "workspace",
+      "sha256": "00b1bf9f12626f5b70fadabfd15b822f82ab74e0bf045f88f18c396740dfe35a"
+    },
+    "c092-validation/candidate03-domains/9-n15-net-overflow.json": {
+      "bytes": 43824,
+      "path": "c092-validation/candidate03-domains/9-n15-net-overflow.json",
+      "path_base": "workspace",
+      "sha256": "a988c4144c12a79de5df6ed9d795d578a406d4859387cb072117c20eaf6a2f55"
+    },
+    "c092-validation/candidate03-domains/SUMMARY.json": {
+      "bytes": 81,
+      "path": "c092-validation/candidate03-domains/SUMMARY.json",
+      "path_base": "workspace",
+      "sha256": "d09e14e1cf95ed3c78ab9da4d9db77887100931f80ac32a3671fe2abda4eccff"
+    },
+    "c092-validation/candidate03-full-local-run/RESULT.json": {
+      "bytes": 40428,
+      "path": "c092-validation/candidate03-full-local-run/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "03c48e8ff8f7e880e88f2ee1e2355729edc377304ee5325db5154357911b7baf"
+    },
+    "c092-validation/candidate03-full-local/artifacts/agent-demo-browser/agent-authoring.png": {
+      "bytes": 384944,
+      "path": "c092-validation/candidate03-full-local/artifacts/agent-demo-browser/agent-authoring.png",
+      "path_base": "workspace",
+      "sha256": "6b740d583092ed6a9c9742de3f6e0a4aa5b67ba3d2447d23d027d53d16ef7e9c"
+    },
+    "c092-validation/candidate03-full-local/artifacts/construction-demo-browser/keyed-rack.png": {
+      "bytes": 379191,
+      "path": "c092-validation/candidate03-full-local/artifacts/construction-demo-browser/keyed-rack.png",
+      "path_base": "workspace",
+      "sha256": "37056a797f1acbd502daef56aec2dd585683475880afd1afe59bdf15b357b513"
+    },
+    "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P02-animated.png": {
+      "bytes": 74944,
+      "path": "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P02-animated.png",
+      "path_base": "workspace",
+      "sha256": "4a43b4c5539952911c12c50ace27ccbf9dd944e2311e9e4f1f857ed1ec866272"
+    },
+    "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P02-front.png": {
+      "bytes": 78752,
+      "path": "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P02-front.png",
+      "path_base": "workspace",
+      "sha256": "535e8a9e96e9cc53faf916d6bacf6057065709aad7e84827dac4cda5a7692d5a"
+    },
+    "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P02-side.png": {
+      "bytes": 72442,
+      "path": "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P02-side.png",
+      "path_base": "workspace",
+      "sha256": "f793193f9ccd962692f23cd331ad75747d7002c05714d7985f1063c39105851c"
+    },
+    "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P04-animated.png": {
+      "bytes": 73821,
+      "path": "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P04-animated.png",
+      "path_base": "workspace",
+      "sha256": "0b5974b7344a5fc7fea106795243e3637d383b199a42ade6842979fdf4d5e292"
+    },
+    "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P04-front.png": {
+      "bytes": 74598,
+      "path": "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P04-front.png",
+      "path_base": "workspace",
+      "sha256": "c3842c2cb1d5b314d7bd756b7c2abc656d4774d38319b29bea3a954e9701857c"
+    },
+    "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P04-side.png": {
+      "bytes": 70041,
+      "path": "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P04-side.png",
+      "path_base": "workspace",
+      "sha256": "dccc9807901eb9c7c580340d594c9d9b72f809cb4f20fde548c293c0e8ff03eb"
+    },
+    "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P08-animated.png": {
+      "bytes": 83629,
+      "path": "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P08-animated.png",
+      "path_base": "workspace",
+      "sha256": "ab9ac1e700867ca8971ed83b58dcb4b71dd70a53af7b61b74779a61a9a7c7542"
+    },
+    "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P08-front.png": {
+      "bytes": 84538,
+      "path": "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P08-front.png",
+      "path_base": "workspace",
+      "sha256": "acba4072fc490e27b3f74257cf6722b8eb9e24c9278a4bb80f963bf7d7d7f8ab"
+    },
+    "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P08-side.png": {
+      "bytes": 76830,
+      "path": "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P08-side.png",
+      "path_base": "workspace",
+      "sha256": "eec71fff12e48ffebf7883e9931569dc9c05c31f75e8c30502a4948aac9b0309"
+    },
+    "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P11-animated.png": {
+      "bytes": 97147,
+      "path": "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P11-animated.png",
+      "path_base": "workspace",
+      "sha256": "328e6e4d920b063edaf3cb613714b647586a3f33ac96a216d4fbc04c00f7228d"
+    },
+    "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P11-front.png": {
+      "bytes": 97160,
+      "path": "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P11-front.png",
+      "path_base": "workspace",
+      "sha256": "960228efd9df98ae89e51a5f855c1cf6a9f4ae7517e574dd9e9020ac18627fd6"
+    },
+    "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P11-side.png": {
+      "bytes": 88967,
+      "path": "c092-validation/candidate03-full-local/artifacts/impulse-agent-browser/P11-side.png",
+      "path_base": "workspace",
+      "sha256": "a333ceadd1f822af9dd562bc99339ba412e8d96b4589f98e8d0be762807616b6"
+    },
+    "c092-validation/candidate03-full-local/artifacts/surface-native-browser/rotated-animation-animated.png": {
+      "bytes": 74303,
+      "path": "c092-validation/candidate03-full-local/artifacts/surface-native-browser/rotated-animation-animated.png",
+      "path_base": "workspace",
+      "sha256": "525c79b31008c4cfca7834a9e3b3168252634343b5b3689bc039d830e5d07d5d"
+    },
+    "c092-validation/candidate03-full-local/artifacts/surface-native-browser/rotated-animation-front.png": {
+      "bytes": 72566,
+      "path": "c092-validation/candidate03-full-local/artifacts/surface-native-browser/rotated-animation-front.png",
+      "path_base": "workspace",
+      "sha256": "93f8019b12c18ec5df3b8019fe3bb839e586c0d6ce25f468749bd6961dba763f"
+    },
+    "c092-validation/candidate03-full-local/artifacts/surface-native-browser/rotated-animation-side.png": {
+      "bytes": 78455,
+      "path": "c092-validation/candidate03-full-local/artifacts/surface-native-browser/rotated-animation-side.png",
+      "path_base": "workspace",
+      "sha256": "09fc2f6ca995f576234f931aecdcf6f0739dbdf2cd129e4f9d4848ceb1978b41"
+    },
+    "c092-validation/candidate03-full-local/artifacts/surface-native-browser/studio-animated.png": {
+      "bytes": 92797,
+      "path": "c092-validation/candidate03-full-local/artifacts/surface-native-browser/studio-animated.png",
+      "path_base": "workspace",
+      "sha256": "c60967f41638b94f994c8e3f8e5c13a8cec3466dc822eea83b3173cdb0edbf33"
+    },
+    "c092-validation/candidate03-full-local/artifacts/surface-native-browser/studio-front.png": {
+      "bytes": 93061,
+      "path": "c092-validation/candidate03-full-local/artifacts/surface-native-browser/studio-front.png",
+      "path_base": "workspace",
+      "sha256": "23a9c0e3805d4c5265eb79360f8aed344af92de441d9377782887046e0475155"
+    },
+    "c092-validation/candidate03-full-local/artifacts/surface-native-browser/studio-side.png": {
+      "bytes": 91838,
+      "path": "c092-validation/candidate03-full-local/artifacts/surface-native-browser/studio-side.png",
+      "path_base": "workspace",
+      "sha256": "8ec94b0efc0f332c5cece5d5e3f36fa0a2f79bc9dcaa23d1a19c42d1b5a573d8"
+    },
+    "c092-validation/candidate03-full-local/artifacts/visual-browser/gravity-and-release.png": {
+      "bytes": 417992,
+      "path": "c092-validation/candidate03-full-local/artifacts/visual-browser/gravity-and-release.png",
+      "path_base": "workspace",
+      "sha256": "25e6ee36f92213880ba6638d7ba51769d76914fcb2a9f54076e39064e33fb2b7"
+    },
+    "c092-validation/candidate03-full-local/artifacts/visual-browser/independent-parts.png": {
+      "bytes": 379035,
+      "path": "c092-validation/candidate03-full-local/artifacts/visual-browser/independent-parts.png",
+      "path_base": "workspace",
+      "sha256": "613f2a3062b3ef10f82fcca608f4176a2d95ca07346b985601e554c8730cc2b0"
+    },
+    "c092-validation/candidate03-full-local/artifacts/visual-browser/viewer-narrow.png": {
+      "bytes": 284000,
+      "path": "c092-validation/candidate03-full-local/artifacts/visual-browser/viewer-narrow.png",
+      "path_base": "workspace",
+      "sha256": "8a167c28f7f732ecd2894f6f01997970fb90931abfdcea032d97b2e12a7f997a"
+    },
+    "c092-validation/candidate03-full-local/logs/agent-demo-browser.log": {
+      "bytes": 417,
+      "path": "c092-validation/candidate03-full-local/logs/agent-demo-browser.log",
+      "path_base": "workspace",
+      "sha256": "0c313c77abb0fc3724c3fd79ac6f4558342a2368f192af93f5a14fb12f9e0a43"
+    },
+    "c092-validation/candidate03-full-local/logs/agent-demo-build.log": {
+      "bytes": 368,
+      "path": "c092-validation/candidate03-full-local/logs/agent-demo-build.log",
+      "path_base": "workspace",
+      "sha256": "c4463e40936c2ca858228ec3b4d70bd7f796e20311074fae1c6a36a6af5dca4d"
+    },
+    "c092-validation/candidate03-full-local/logs/agent-demo-format.log": {
+      "bytes": 258,
+      "path": "c092-validation/candidate03-full-local/logs/agent-demo-format.log",
+      "path_base": "workspace",
+      "sha256": "38fdcf468d48f1a574e42a8f12a761f40ad4f96723ab81a55e12877b3f3588d4"
+    },
+    "c092-validation/candidate03-full-local/logs/agent.log": {
+      "bytes": 179,
+      "path": "c092-validation/candidate03-full-local/logs/agent.log",
+      "path_base": "workspace",
+      "sha256": "8649489a97e10a4a395a9915b5c3655fa752dd7408ca4f136be15d0e7724a063"
+    },
+    "c092-validation/candidate03-full-local/logs/browser-ready.log": {
+      "bytes": 0,
+      "path": "c092-validation/candidate03-full-local/logs/browser-ready.log",
+      "path_base": "workspace",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "c092-validation/candidate03-full-local/logs/construction-demo-browser.log": {
+      "bytes": 452,
+      "path": "c092-validation/candidate03-full-local/logs/construction-demo-browser.log",
+      "path_base": "workspace",
+      "sha256": "1f383f62ee31ca7a4681484a806d8386d59807860e11a543019223f4ca2b7fa9"
+    },
+    "c092-validation/candidate03-full-local/logs/construction-demo-build.log": {
+      "bytes": 415,
+      "path": "c092-validation/candidate03-full-local/logs/construction-demo-build.log",
+      "path_base": "workspace",
+      "sha256": "d7cfc5e7fc07acbdc0fd499213cad8000ae29ea926b66908d289f97ce601de98"
+    },
+    "c092-validation/candidate03-full-local/logs/construction-demo-format.log": {
+      "bytes": 265,
+      "path": "c092-validation/candidate03-full-local/logs/construction-demo-format.log",
+      "path_base": "workspace",
+      "sha256": "991ae9e3eeae9b2376876c2dc23f0a563a5f87b8127e672b9e03b4e2c6aebcb7"
+    },
+    "c092-validation/candidate03-full-local/logs/construction.log": {
+      "bytes": 522,
+      "path": "c092-validation/candidate03-full-local/logs/construction.log",
+      "path_base": "workspace",
+      "sha256": "2998ddb33d958110d36569857ad8e5e6f58faada2427f59b57f0414e8c241f16"
+    },
+    "c092-validation/candidate03-full-local/logs/documents.log": {
+      "bytes": 6606,
+      "path": "c092-validation/candidate03-full-local/logs/documents.log",
+      "path_base": "workspace",
+      "sha256": "068fb1b3338cb541b5acdd5e7571677d85d7024375ae1c214e2e7e9433b55a9a"
+    },
+    "c092-validation/candidate03-full-local/logs/force-agent-audit.log": {
+      "bytes": 2049,
+      "path": "c092-validation/candidate03-full-local/logs/force-agent-audit.log",
+      "path_base": "workspace",
+      "sha256": "32bc80a507fde718e7d8d072a567b5df5863ab981a1aca672256c455b110f7c5"
+    },
+    "c092-validation/candidate03-full-local/logs/force-agent-build.log": {
+      "bytes": 283,
+      "path": "c092-validation/candidate03-full-local/logs/force-agent-build.log",
+      "path_base": "workspace",
+      "sha256": "607d8ade62d3b51532c6d3db9890634d0cd74248eedfdc8ec6394bf2fd98362a"
+    },
+    "c092-validation/candidate03-full-local/logs/force-agent-tests.log": {
+      "bytes": 19531,
+      "path": "c092-validation/candidate03-full-local/logs/force-agent-tests.log",
+      "path_base": "workspace",
+      "sha256": "f7547b8ec037e06eb5291d7b36e6daefedcfbb90b3a9e741370d188817a0e152"
+    },
+    "c092-validation/candidate03-full-local/logs/force-agent-tools.log": {
+      "bytes": 0,
+      "path": "c092-validation/candidate03-full-local/logs/force-agent-tools.log",
+      "path_base": "workspace",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "c092-validation/candidate03-full-local/logs/impulse-agent-browser.log": {
+      "bytes": 247,
+      "path": "c092-validation/candidate03-full-local/logs/impulse-agent-browser.log",
+      "path_base": "workspace",
+      "sha256": "315078c0ed33f77e1876062ae2c9977ed420439830dc83d49c0f1d2ac3abe917"
+    },
+    "c092-validation/candidate03-full-local/logs/impulse-agent-build.log": {
+      "bytes": 1635,
+      "path": "c092-validation/candidate03-full-local/logs/impulse-agent-build.log",
+      "path_base": "workspace",
+      "sha256": "cfcb899c34c23aabb6f38af4e788459be3fbff6f45764912530e25412bb529b6"
+    },
+    "c092-validation/candidate03-full-local/logs/impulse-agent-format.log": {
+      "bytes": 242,
+      "path": "c092-validation/candidate03-full-local/logs/impulse-agent-format.log",
+      "path_base": "workspace",
+      "sha256": "a4b13cd8a67792eb7b040f7b933f697ca25aa89b10746f24a4622e2be28a859e"
+    },
+    "c092-validation/candidate03-full-local/logs/impulse.log": {
+      "bytes": 157,
+      "path": "c092-validation/candidate03-full-local/logs/impulse.log",
+      "path_base": "workspace",
+      "sha256": "82160c6e197af610b7f5228784d297908afc81d25f253f9bc2a114cdcbbf4dca"
+    },
+    "c092-validation/candidate03-full-local/logs/node-tools.log": {
+      "bytes": 0,
+      "path": "c092-validation/candidate03-full-local/logs/node-tools.log",
+      "path_base": "workspace",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "c092-validation/candidate03-full-local/logs/prototype-build.log": {
+      "bytes": 484,
+      "path": "c092-validation/candidate03-full-local/logs/prototype-build.log",
+      "path_base": "workspace",
+      "sha256": "33878eebe6996b85edc7e914f377ffda8b57e58b6689d49e7017dce24290b7eb"
+    },
+    "c092-validation/candidate03-full-local/logs/prototype-format.log": {
+      "bytes": 858,
+      "path": "c092-validation/candidate03-full-local/logs/prototype-format.log",
+      "path_base": "workspace",
+      "sha256": "322090d665b9c99cc6cef59fc2a38d07ceecd919e1f8fdd9c010f90920e181b1"
+    },
+    "c092-validation/candidate03-full-local/logs/source.log": {
+      "bytes": 303,
+      "path": "c092-validation/candidate03-full-local/logs/source.log",
+      "path_base": "workspace",
+      "sha256": "2b798f05d802e565e49e467fe4ebde465e0288f814ab3616618e5c74d9b32539"
+    },
+    "c092-validation/candidate03-full-local/logs/surface-agent-browser.log": {
+      "bytes": 55,
+      "path": "c092-validation/candidate03-full-local/logs/surface-agent-browser.log",
+      "path_base": "workspace",
+      "sha256": "db05d2f8e29e4981abcf674422c6395c51cca390d4ed9d2dcfcde4c1f85a5e2a"
+    },
+    "c092-validation/candidate03-full-local/logs/surface-agent-build.log": {
+      "bytes": 5256,
+      "path": "c092-validation/candidate03-full-local/logs/surface-agent-build.log",
+      "path_base": "workspace",
+      "sha256": "bb83bfe4523984f958787a5458a7ab4b48022100a429a13d400ca627c2f044cd"
+    },
+    "c092-validation/candidate03-full-local/logs/surface-agent-format.log": {
+      "bytes": 54,
+      "path": "c092-validation/candidate03-full-local/logs/surface-agent-format.log",
+      "path_base": "workspace",
+      "sha256": "f695eee8556b3d6a96c1a612f921d6c86ba1b500018a596daa068a5d83a58001"
+    },
+    "c092-validation/candidate03-full-local/logs/surface-native-browser.log": {
+      "bytes": 247,
+      "path": "c092-validation/candidate03-full-local/logs/surface-native-browser.log",
+      "path_base": "workspace",
+      "sha256": "6f8bb8662180d1e240a56a5a5c4b5fa23c4720e839e92b0d4e6a8074d316252a"
+    },
+    "c092-validation/candidate03-full-local/logs/surface-native-build.log": {
+      "bytes": 157,
+      "path": "c092-validation/candidate03-full-local/logs/surface-native-build.log",
+      "path_base": "workspace",
+      "sha256": "8d2694f0d037fde2e87e97e73a02eb5039042e1ee29a13d0689a845ba63d2df8"
+    },
+    "c092-validation/candidate03-full-local/logs/surface-native-format.log": {
+      "bytes": 201,
+      "path": "c092-validation/candidate03-full-local/logs/surface-native-format.log",
+      "path_base": "workspace",
+      "sha256": "7393a37a7731da972f62e8934fdd8ead87440999ff5d55a687d417a6cf147808"
+    },
+    "c092-validation/candidate03-full-local/logs/surface.log": {
+      "bytes": 272,
+      "path": "c092-validation/candidate03-full-local/logs/surface.log",
+      "path_base": "workspace",
+      "sha256": "def7dbfecf7acc02c35a8593e9422c6c546e6376957369e6769b652962ec2ae5"
+    },
+    "c092-validation/candidate03-full-local/logs/unit-tests.log": {
+      "bytes": 795775,
+      "path": "c092-validation/candidate03-full-local/logs/unit-tests.log",
+      "path_base": "workspace",
+      "sha256": "6fb629dbdb9dcf6d1af028ce8834845bf5e7d7ad043f7db600a65ed2ed588dec"
+    },
+    "c092-validation/candidate03-full-local/logs/viewer-build.log": {
+      "bytes": 35,
+      "path": "c092-validation/candidate03-full-local/logs/viewer-build.log",
+      "path_base": "workspace",
+      "sha256": "98cec98faaa0d7a8dcd739a3c41b789b5fccf1869d7fafa5409fe92cabab28e4"
+    },
+    "c092-validation/candidate03-full-local/logs/visual-browser.log": {
+      "bytes": 202,
+      "path": "c092-validation/candidate03-full-local/logs/visual-browser.log",
+      "path_base": "workspace",
+      "sha256": "a819520bd3e42298270fdcba84af3ab75e76bacc11747e103c6b3e536eec0776"
+    },
+    "c092-validation/candidate03-full-local/logs/visual-build.log": {
+      "bytes": 431,
+      "path": "c092-validation/candidate03-full-local/logs/visual-build.log",
+      "path_base": "workspace",
+      "sha256": "7c9fb772c628f21c997b8c266383eeaee903c642354bbd5d10cded96730adfc4"
+    },
+    "c092-validation/candidate03-full-local/logs/visual-format.log": {
+      "bytes": 254,
+      "path": "c092-validation/candidate03-full-local/logs/visual-format.log",
+      "path_base": "workspace",
+      "sha256": "59ee264234d8890c77d83a869a330889ddd6cb4b84b362a371ed90d9904a6b9a"
+    },
+    "c092-validation/candidate03-full-local/summary.json": {
+      "bytes": 55198,
+      "path": "c092-validation/candidate03-full-local/summary.json",
+      "path_base": "workspace",
+      "sha256": "16cf8831585dfb682747d6235306adb5823975450924be077bef9991824a3c4c"
+    },
+    "c092-validation/candidate03-numerical-attempt01/PLANNED-MAPPING.json": {
+      "bytes": 10026,
+      "path": "c092-validation/candidate03-numerical-attempt01/PLANNED-MAPPING.json",
+      "path_base": "workspace",
+      "sha256": "0fd63ffd9516d77e5e892a766ebca410a0e30cecc87c19cf85feb9e96007c254"
+    },
+    "c092-validation/candidate03-numerical-attempt01/RUN.json": {
+      "bytes": 40442,
+      "path": "c092-validation/candidate03-numerical-attempt01/RUN.json",
+      "path_base": "workspace",
+      "sha256": "7b431ae01761c8ec72035436208400623276fd6aba3aa21e57f42cc7703daf1f"
+    },
+    "c092-validation/candidate03-numerical-attempt01/num01-inertia-and-alpha.json": {
+      "bytes": 4037,
+      "path": "c092-validation/candidate03-numerical-attempt01/num01-inertia-and-alpha.json",
+      "path_base": "workspace",
+      "sha256": "478c92e51eb967ad454e61d57233dc23000afd6b410b8b7c25a992c3bb1441ad"
+    },
+    "c092-validation/candidate03-numerical-attempt01/num02-underflow.json": {
+      "bytes": 6568,
+      "path": "c092-validation/candidate03-numerical-attempt01/num02-underflow.json",
+      "path_base": "workspace",
+      "sha256": "aec58bb5024716e18e538654a30687c96b93d561c0d14d74ed909ceb8bcc420f"
+    },
+    "c092-validation/candidate03-numerical-attempt01/num03-near-cancelling.json": {
+      "bytes": 3695,
+      "path": "c092-validation/candidate03-numerical-attempt01/num03-near-cancelling.json",
+      "path_base": "workspace",
+      "sha256": "70414983282efd23eef6350a43b37e088425edeb011c6aae54b445c36fb2abd9"
+    },
+    "c092-validation/candidate03-numerical-attempt01/num04-canonical-clock.json": {
+      "bytes": 1441,
+      "path": "c092-validation/candidate03-numerical-attempt01/num04-canonical-clock.json",
+      "path_base": "workspace",
+      "sha256": "0ce5f50dc5316d7803e3a16e4ca8c894f8abb68dbdc183831248ace166dd0015"
+    },
+    "c092-validation/candidate03-numerical-attempt01/num05-translation-tie.json": {
+      "bytes": 1295,
+      "path": "c092-validation/candidate03-numerical-attempt01/num05-translation-tie.json",
+      "path_base": "workspace",
+      "sha256": "fc487d0b903b9a877b32b0de3099db86ddbac5242829fc480f37cc50ae8da653"
+    },
+    "c092-validation/candidate03-numerical-attempt01/num06-marker-bound.json": {
+      "bytes": 6048,
+      "path": "c092-validation/candidate03-numerical-attempt01/num06-marker-bound.json",
+      "path_base": "workspace",
+      "sha256": "7cdb284395fdb4b3e61cf3ac9df99d4c7e69b78680121a29af2602e0e414b840"
+    },
+    "c092-validation/candidate03-numerical-attempt01/num07-unpublishable-zero-crossing.json": {
+      "bytes": 1591,
+      "path": "c092-validation/candidate03-numerical-attempt01/num07-unpublishable-zero-crossing.json",
+      "path_base": "workspace",
+      "sha256": "7c38060b4943a996ab91419af4b08c7fc20883bc5c62f0f16c79e6f9a3883b6f"
+    },
+    "c092-validation/candidate03-numerical-run.json": {
+      "bytes": 192328,
+      "path": "c092-validation/candidate03-numerical-run.json",
+      "path_base": "workspace",
+      "sha256": "3cb8568c24dcd49283bcfa54ba28b32ce2f564e1795081ccefd0459fdaafdaf1"
+    },
+    "c092-validation/candidate03-python311-run/RESULT.json": {
+      "bytes": 40486,
+      "path": "c092-validation/candidate03-python311-run/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "fb4932f2a9e77ed6e40eaa67be6d34c6df3ec150c1a875edc916c0fe3da3532b"
+    },
+    "c092-validation/candidate03-python311/logs/agent.log": {
+      "bytes": 178,
+      "path": "c092-validation/candidate03-python311/logs/agent.log",
+      "path_base": "workspace",
+      "sha256": "bc777f3a96f1c2bdde5baba5aa794e6b095db0aada7f4221155c7bebaae0feee"
+    },
+    "c092-validation/candidate03-python311/logs/construction.log": {
+      "bytes": 521,
+      "path": "c092-validation/candidate03-python311/logs/construction.log",
+      "path_base": "workspace",
+      "sha256": "5b564349d241c68ac7b347a8658e045107216a3345497ca3b2181106f7f63835"
+    },
+    "c092-validation/candidate03-python311/logs/documents.log": {
+      "bytes": 6606,
+      "path": "c092-validation/candidate03-python311/logs/documents.log",
+      "path_base": "workspace",
+      "sha256": "068fb1b3338cb541b5acdd5e7571677d85d7024375ae1c214e2e7e9433b55a9a"
+    },
+    "c092-validation/candidate03-python311/logs/force-agent-audit.log": {
+      "bytes": 2049,
+      "path": "c092-validation/candidate03-python311/logs/force-agent-audit.log",
+      "path_base": "workspace",
+      "sha256": "e1dc351bf439907bc1519a336b0eaba2eea51816240e10703fbb6bd10838cadb"
+    },
+    "c092-validation/candidate03-python311/logs/force-agent-build.log": {
+      "bytes": 283,
+      "path": "c092-validation/candidate03-python311/logs/force-agent-build.log",
+      "path_base": "workspace",
+      "sha256": "607d8ade62d3b51532c6d3db9890634d0cd74248eedfdc8ec6394bf2fd98362a"
+    },
+    "c092-validation/candidate03-python311/logs/force-agent-tests.log": {
+      "bytes": 19531,
+      "path": "c092-validation/candidate03-python311/logs/force-agent-tests.log",
+      "path_base": "workspace",
+      "sha256": "c392c7c46e7f67e1a47e64e160ab6afe0560c5e7cce06a976cb55ef4fd0b4910"
+    },
+    "c092-validation/candidate03-python311/logs/force-agent-tools.log": {
+      "bytes": 0,
+      "path": "c092-validation/candidate03-python311/logs/force-agent-tools.log",
+      "path_base": "workspace",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "c092-validation/candidate03-python311/logs/impulse.log": {
+      "bytes": 157,
+      "path": "c092-validation/candidate03-python311/logs/impulse.log",
+      "path_base": "workspace",
+      "sha256": "82160c6e197af610b7f5228784d297908afc81d25f253f9bc2a114cdcbbf4dca"
+    },
+    "c092-validation/candidate03-python311/logs/source.log": {
+      "bytes": 302,
+      "path": "c092-validation/candidate03-python311/logs/source.log",
+      "path_base": "workspace",
+      "sha256": "01b33a2f6ec20e7044bbf68e4f600d938d4c8c1ecceff663f1a00a0dce4c9ed6"
+    },
+    "c092-validation/candidate03-python311/logs/surface.log": {
+      "bytes": 271,
+      "path": "c092-validation/candidate03-python311/logs/surface.log",
+      "path_base": "workspace",
+      "sha256": "8422b8ec91f36a22eb447b1cf387ee88c2dbe8b44cba25dbdedd77422cb2f965"
+    },
+    "c092-validation/candidate03-python311/logs/unit-tests.log": {
+      "bytes": 795772,
+      "path": "c092-validation/candidate03-python311/logs/unit-tests.log",
+      "path_base": "workspace",
+      "sha256": "143119b32a6a8dd8bf6ca9eb2ca07c2a094a29e840e8b7edc19b8e6e359500d2"
+    },
+    "c092-validation/candidate03-python311/summary.json": {
+      "bytes": 27643,
+      "path": "c092-validation/candidate03-python311/summary.json",
+      "path_base": "workspace",
+      "sha256": "5a6f72d4d4a20772f2508d17463405f042e202b7f29a6aaa6abccda8d58da80a"
+    },
+    "c092-validation/candidate03-python313-run/RESULT.json": {
+      "bytes": 40483,
+      "path": "c092-validation/candidate03-python313-run/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "d238333df6141e5a83a8ab8891b4797acbdb9cb241e9d7ad16629f9d37ac8759"
+    },
+    "c092-validation/candidate03-python313/logs/agent.log": {
+      "bytes": 178,
+      "path": "c092-validation/candidate03-python313/logs/agent.log",
+      "path_base": "workspace",
+      "sha256": "26aad03262949bffbf30c555b5f17a0b71c6b578b7043395915065be899f68fb"
+    },
+    "c092-validation/candidate03-python313/logs/construction.log": {
+      "bytes": 521,
+      "path": "c092-validation/candidate03-python313/logs/construction.log",
+      "path_base": "workspace",
+      "sha256": "db90ab0df4595bd22e543d1cfbec6c2e19b0df4d64d515f75e6ad065a739cc1b"
+    },
+    "c092-validation/candidate03-python313/logs/documents.log": {
+      "bytes": 6606,
+      "path": "c092-validation/candidate03-python313/logs/documents.log",
+      "path_base": "workspace",
+      "sha256": "068fb1b3338cb541b5acdd5e7571677d85d7024375ae1c214e2e7e9433b55a9a"
+    },
+    "c092-validation/candidate03-python313/logs/force-agent-audit.log": {
+      "bytes": 2049,
+      "path": "c092-validation/candidate03-python313/logs/force-agent-audit.log",
+      "path_base": "workspace",
+      "sha256": "32fbb7a25b511b6c44ba848f56adb92a723b61f668a1f2fe8a9206f91ea30187"
+    },
+    "c092-validation/candidate03-python313/logs/force-agent-build.log": {
+      "bytes": 283,
+      "path": "c092-validation/candidate03-python313/logs/force-agent-build.log",
+      "path_base": "workspace",
+      "sha256": "607d8ade62d3b51532c6d3db9890634d0cd74248eedfdc8ec6394bf2fd98362a"
+    },
+    "c092-validation/candidate03-python313/logs/force-agent-tests.log": {
+      "bytes": 20416,
+      "path": "c092-validation/candidate03-python313/logs/force-agent-tests.log",
+      "path_base": "workspace",
+      "sha256": "bb75ede53353f301e95b7898c19fa3e96cb76740316b438df5f99e2885afd03d"
+    },
+    "c092-validation/candidate03-python313/logs/force-agent-tools.log": {
+      "bytes": 0,
+      "path": "c092-validation/candidate03-python313/logs/force-agent-tools.log",
+      "path_base": "workspace",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "c092-validation/candidate03-python313/logs/impulse.log": {
+      "bytes": 157,
+      "path": "c092-validation/candidate03-python313/logs/impulse.log",
+      "path_base": "workspace",
+      "sha256": "82160c6e197af610b7f5228784d297908afc81d25f253f9bc2a114cdcbbf4dca"
+    },
+    "c092-validation/candidate03-python313/logs/source.log": {
+      "bytes": 302,
+      "path": "c092-validation/candidate03-python313/logs/source.log",
+      "path_base": "workspace",
+      "sha256": "c2e4fb1a864a77d44856e633864659ce6b4082808a8850a68731e4e576c25224"
+    },
+    "c092-validation/candidate03-python313/logs/surface.log": {
+      "bytes": 271,
+      "path": "c092-validation/candidate03-python313/logs/surface.log",
+      "path_base": "workspace",
+      "sha256": "c1edba470271a0630f189680f88fc245e6ab3fe0cdc61e676b0905177ae89287"
+    },
+    "c092-validation/candidate03-python313/logs/unit-tests.log": {
+      "bytes": 796937,
+      "path": "c092-validation/candidate03-python313/logs/unit-tests.log",
+      "path_base": "workspace",
+      "sha256": "878b761ac0e427cb106909c3c3aa7861313ce35d0add4620731be5f3092e50db"
+    },
+    "c092-validation/candidate03-python313/summary.json": {
+      "bytes": 27641,
+      "path": "c092-validation/candidate03-python313/summary.json",
+      "path_base": "workspace",
+      "sha256": "50b87bdfea3ecf1093dfefb3eea8fb53bc9154457fdac5921f61dcf90fe5980e"
+    },
+    "c092-validation/candidate03-reference-run.json": {
+      "bytes": 192247,
+      "path": "c092-validation/candidate03-reference-run.json",
+      "path_base": "workspace",
+      "sha256": "f44c191e8bcab7b2d12e719c012319cf3c7c7494347ab7084f5292257445ec30"
+    },
+    "c092-validation/candidate03-reference.json": {
+      "bytes": 28578,
+      "path": "c092-validation/candidate03-reference.json",
+      "path_base": "workspace",
+      "sha256": "6d70566ea479bdf5c0ab6ed63178ef738cf4944b6ea6d51c3e1d48dfebb7fe68"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/FAILED-ORIGINAL-AFTER.json": {
+      "bytes": 126308,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/FAILED-ORIGINAL-AFTER.json",
+      "path_base": "workspace",
+      "sha256": "9782d7432734f5ad2b4d32a66a920963083ea62035790e07e92dc752eb26d9f1"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/FAILED-ORIGINAL-BEFORE.json": {
+      "bytes": 126308,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/FAILED-ORIGINAL-BEFORE.json",
+      "path_base": "workspace",
+      "sha256": "9782d7432734f5ad2b4d32a66a920963083ea62035790e07e92dc752eb26d9f1"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/OUTPUT-MANIFEST.json": {
+      "bytes": 244959,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/OUTPUT-MANIFEST.json",
+      "path_base": "workspace",
+      "sha256": "3c2f3989a044b189b6710e2b245bcabcd0134a22e4a48d711623fa41ff22d87e"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/RESULT.json": {
+      "bytes": 7618,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/RESULT.json",
+      "path_base": "workspace",
+      "sha256": "3b88b57aca3c8c4c4cdef1b8213ab167cb3153ffae55d0b90f46de7b721404fa"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/SOURCE-AFTER.json": {
+      "bytes": 2639130,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/SOURCE-AFTER.json",
+      "path_base": "workspace",
+      "sha256": "c6122fb59284338b2d9cd81954efd35871e11bf2e61f7f3e57ba96e165b32a2a"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/SOURCE-BEFORE.json": {
+      "bytes": 2639130,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/SOURCE-BEFORE.json",
+      "path_base": "workspace",
+      "sha256": "c6122fb59284338b2d9cd81954efd35871e11bf2e61f7f3e57ba96e165b32a2a"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/browser-results.json": {
+      "bytes": 114903,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/browser-results.json",
+      "path_base": "workspace",
+      "sha256": "3a0de0e284238415de109126482009c3f65f14a06580e4ce0e769d05005a6ebc"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/composition-generated-animated.png": {
+      "bytes": 102263,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/composition-generated-animated.png",
+      "path_base": "workspace",
+      "sha256": "90f33fd9cdbdcc65e9e39decac411f6c9d3a91abd9d04bf8d26bc5d6ebebc150"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/composition-generated-front.png": {
+      "bytes": 102941,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/composition-generated-front.png",
+      "path_base": "workspace",
+      "sha256": "d1867374bfa652a50cbf7ef191b868898c5e9b9b4877336bc371de5ab9ac94a8"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/composition-generated-side.png": {
+      "bytes": 99973,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/composition-generated-side.png",
+      "path_base": "workspace",
+      "sha256": "0eb9c68001123b4685b30768d72bad484c34f33550ad5f933155473fa43f7475"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/composition-ordinary-animated.png": {
+      "bytes": 88073,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/composition-ordinary-animated.png",
+      "path_base": "workspace",
+      "sha256": "1f486e397ff2f8cc8717d6756dd97b46f2fd83251d54e1995af0edc9b43a5535"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/composition-ordinary-front.png": {
+      "bytes": 88253,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/composition-ordinary-front.png",
+      "path_base": "workspace",
+      "sha256": "c4b880d167b7e54c10027627943d1c97a2d4d6306aa0dfbe7fa921b2622285c8"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/composition-ordinary-side.png": {
+      "bytes": 80654,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/composition-ordinary-side.png",
+      "path_base": "workspace",
+      "sha256": "966666a2f75daa49d1a9758de49f08358677f89b6403bb57f812e688583501d4"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/palette-repaired-animated.png": {
+      "bytes": 94881,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/palette-repaired-animated.png",
+      "path_base": "workspace",
+      "sha256": "b564dd025ac2446faf2e248ed536aaf06308e2c4ad349d0941029ea261d27b6a"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/palette-repaired-front.png": {
+      "bytes": 94536,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/palette-repaired-front.png",
+      "path_base": "workspace",
+      "sha256": "845e2e35633852faa3df90595d3cfa92570ac23e4a957c1ee8b6c3c44fa3867e"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/palette-repaired-side.png": {
+      "bytes": 94031,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/palette-repaired-side.png",
+      "path_base": "workspace",
+      "sha256": "35b59a1f6445c6a751d30bbe889f10407b79346fd1607d68666aced0869feb6d"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/rotated-release-animated.png": {
+      "bytes": 74980,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/rotated-release-animated.png",
+      "path_base": "workspace",
+      "sha256": "ce10d5563203a2d3a35e6a1e1c8149f6d39077d497f0350d1dced15a692422c9"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/rotated-release-front.png": {
+      "bytes": 75754,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/rotated-release-front.png",
+      "path_base": "workspace",
+      "sha256": "6a37af7b21495fd71d08b1883b6c79a7c70952085305b2f22b40d0393fbcb51f"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/rotated-release-side.png": {
+      "bytes": 78430,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/outputs/artifacts/surface-agent-browser/rotated-release-side.png",
+      "path_base": "workspace",
+      "sha256": "07c3e62925a284461f7416d101ec65441c826cd8171315fcda0e438dfd22eb43"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/outputs/logs/surface-agent-browser.log": {
+      "bytes": 212,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/outputs/logs/surface-agent-browser.log",
+      "path_base": "workspace",
+      "sha256": "5bc43ba3830d244c0a8b9fa3daa14a2787fdd861d69bd4dbbcc7b3591ce82d7a"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/outputs/logs/surface-agent-build.log": {
+      "bytes": 3884,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/outputs/logs/surface-agent-build.log",
+      "path_base": "workspace",
+      "sha256": "9f61e7bb7f4be806ecebed97a4555ecb23cc4e032b661e06042f5520afd68db7"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/outputs/logs/surface-agent-format.log": {
+      "bytes": 166,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/outputs/logs/surface-agent-format.log",
+      "path_base": "workspace",
+      "sha256": "f26fbae235f60d9ee3f63ec92ecff9d152385ad4a98f17e6ed0f70dea12b2507"
+    },
+    "c092-validation/candidate03-surface-agent-recovery01/outputs/reports/surface-agent-destination.json": {
+      "bytes": 776512,
+      "path": "c092-validation/candidate03-surface-agent-recovery01/outputs/reports/surface-agent-destination.json",
+      "path_base": "workspace",
+      "sha256": "863cac8792e7d50d4a1199bd86519f491499a3b551eeb6f62794643077d71cc9"
+    },
+    "candidate-source:docs/language-design/torque-amendments/c092-canonical-spin-selection/ADOPTION.md": {
+      "bytes": 3121,
+      "path": "docs/language-design/torque-amendments/c092-canonical-spin-selection/ADOPTION.md",
+      "path_base": "candidate_source",
+      "sha256": "6335433ceff1227440bff74d043b54698f51a73ab955da1cb1bd6ddab2b68893"
+    },
+    "candidate-source:docs/language-design/torque-amendments/c092-canonical-spin-selection/EFFECTIVE-ADOPTION.json": {
+      "bytes": 2379,
+      "path": "docs/language-design/torque-amendments/c092-canonical-spin-selection/EFFECTIVE-ADOPTION.json",
+      "path_base": "candidate_source",
+      "sha256": "804b532e2b77966b6b467388970ec2258bb52a0f25c0f52de8ad60cb9f174a39"
+    },
+    "candidate-source:docs/language-design/torque-amendments/c092-canonical-spin-selection/MANIFEST.json": {
+      "bytes": 6770,
+      "path": "docs/language-design/torque-amendments/c092-canonical-spin-selection/MANIFEST.json",
+      "path_base": "candidate_source",
+      "sha256": "aa0c810dbe50dda1c55256f0cbe1f6c9373439b2e68464a59570022f810fbdd7"
+    },
+    "candidate-source:docs/language-design/torque-amendments/c092-canonical-spin-selection/REGRESSION-PLAN.md": {
+      "bytes": 5739,
+      "path": "docs/language-design/torque-amendments/c092-canonical-spin-selection/REGRESSION-PLAN.md",
+      "path_base": "candidate_source",
+      "sha256": "ec81b52b60a300abdfde4ef5d3e1a1482817c11e74bfee2c26dfd76f0a57d125"
+    },
+    "candidate-source:docs/language-design/torque-v0.1/AGENT.md": {
+      "bytes": 16219,
+      "path": "docs/language-design/torque-v0.1/AGENT.md",
+      "path_base": "candidate_source",
+      "sha256": "9ede91a70d93a5f5dc20d0391e0dc8c6bca1e03e3b8180e0ca521e0da70d027a"
+    },
+    "candidate-source:docs/language-design/torque-v0.1/RECORDING.md": {
+      "bytes": 30731,
+      "path": "docs/language-design/torque-v0.1/RECORDING.md",
+      "path_base": "candidate_source",
+      "sha256": "58a69bb37f22905a0d83e2ec913d890934ebf18b31d96dc670ac0b36b4794a20"
+    },
+    "candidate-source:docs/language-design/torque-v0.1/SPECIFICATION.md": {
+      "bytes": 33485,
+      "path": "docs/language-design/torque-v0.1/SPECIFICATION.md",
+      "path_base": "candidate_source",
+      "sha256": "1df5fe712760d3e0af6614f6fbd200708bae76a1191e1aa5829dff8382e74ced"
+    },
+    "candidate-source:docs/language-design/torque-v0.1/freeze/agent/request-workflows.json": {
+      "bytes": 75317,
+      "path": "docs/language-design/torque-v0.1/freeze/agent/request-workflows.json",
+      "path_base": "candidate_source",
+      "sha256": "038e568e8166420ec15b5f38a10811f224baa2c131387fe4d70f038f52bda4d4"
+    },
+    "candidate-source:docs/language-design/torque-v0.1/freeze/comparisons.json": {
+      "bytes": 10255,
+      "path": "docs/language-design/torque-v0.1/freeze/comparisons.json",
+      "path_base": "candidate_source",
+      "sha256": "1b1a86b4d903f7b8116cbcef08f06a691e5e55c361271feac7814d1fb910db37"
+    },
+    "candidate-source:tests/test_torque_artifact_reads.py": {
+      "bytes": 24868,
+      "path": "tests/test_torque_artifact_reads.py",
+      "path_base": "candidate_source",
+      "sha256": "ffbe4585958bd4a120d7fcbc6c4ef89078d6281dba290a9142868b7829cf45f6"
+    },
+    "candidate-source:tools/audit_torque_artifact_loop.py": {
+      "bytes": 27545,
+      "path": "tools/audit_torque_artifact_loop.py",
+      "path_base": "candidate_source",
+      "sha256": "f682f7afb17691b5f3413bf219fd56aab412da70ed5dc82a40b68dce486b7383"
+    },
+    "candidate-source:tools/check_torque_agent_pose_oracles.py": {
+      "bytes": 6982,
+      "path": "tools/check_torque_agent_pose_oracles.py",
+      "path_base": "candidate_source",
+      "sha256": "0c00ed28e2858371950bfb8f32367a026622147bb45c13272fd267d9d919820c"
+    },
+    "candidate-source:tools/check_torque_artifact_audit.py": {
+      "bytes": 12238,
+      "path": "tools/check_torque_artifact_audit.py",
+      "path_base": "candidate_source",
+      "sha256": "0379d974de9f49b4487abd852c9959cf314d7f7d1e4d84d98638c1fe9d99ec17"
+    },
+    "candidate-source:tools/check_torque_delivery_edges.py": {
+      "bytes": 5547,
+      "path": "tools/check_torque_delivery_edges.py",
+      "path_base": "candidate_source",
+      "sha256": "ce2088ea7f361a69c9606912bd953779c5945fcc60bb8f026966099e8438660d"
+    },
+    "candidate-source:tools/check_torque_internal_comparisons.py": {
+      "bytes": 4179,
+      "path": "tools/check_torque_internal_comparisons.py",
+      "path_base": "candidate_source",
+      "sha256": "4a77dddb52e3b1651d72678d98d6786fd282570a4e556ee8db7e605950b89ffc"
+    },
+    "candidate-source:tools/check_torque_quaternion_oracle.py": {
+      "bytes": 2563,
+      "path": "tools/check_torque_quaternion_oracle.py",
+      "path_base": "candidate_source",
+      "sha256": "22acede1177397bb61b69560fd6d09fc0ff2059b8f0f79dc21681b184a0b3954"
+    },
+    "candidate-source:tools/check_torque_recording_pose_identity.py": {
+      "bytes": 2692,
+      "path": "tools/check_torque_recording_pose_identity.py",
+      "path_base": "candidate_source",
+      "sha256": "e4f24164a742550a1fd676f23259215da0dcefaa807d6456e5254fe6f114dc93"
+    },
+    "candidate-source:tools/check_torque_request_schema_dispatch.py": {
+      "bytes": 7926,
+      "path": "tools/check_torque_request_schema_dispatch.py",
+      "path_base": "candidate_source",
+      "sha256": "ef7a2d697f482e04ab053d69c2d132fa5e873c6f2e766b56c90e2a4100606ef3"
+    },
+    "candidate-source:tools/check_torque_resumption_equivalence.py": {
+      "bytes": 5459,
+      "path": "tools/check_torque_resumption_equivalence.py",
+      "path_base": "candidate_source",
+      "sha256": "be494c576b9a85545efbe078be1c40af3ddb86810523430adaa4fbf2a2c0c6cb"
+    },
+    "candidate-source:tools/check_torque_structural_counts.py": {
+      "bytes": 4841,
+      "path": "tools/check_torque_structural_counts.py",
+      "path_base": "candidate_source",
+      "sha256": "0e0b3c03908139b3a9670bcf2c65341e9939da2cbc7920dad069e491aaa696b8"
+    },
+    "candidate-source:tools/run_torque_agent_domains.py": {
+      "bytes": 10979,
+      "path": "tools/run_torque_agent_domains.py",
+      "path_base": "candidate_source",
+      "sha256": "03db5b180dca8efc75b42fbd50a33c5804eba14d669a26ece7e58a16b9dc10b6"
+    },
+    "candidate-source:tools/run_torque_agent_self_frames.py": {
+      "bytes": 5259,
+      "path": "tools/run_torque_agent_self_frames.py",
+      "path_base": "candidate_source",
+      "sha256": "5c2e013971121163383f50be233e9ecfe0ea9ae9d6195d2dad38f9a0c69ac512"
+    },
+    "candidate-source:tools/run_torque_agent_source_refusals.py": {
+      "bytes": 15323,
+      "path": "tools/run_torque_agent_source_refusals.py",
+      "path_base": "candidate_source",
+      "sha256": "489c0bb002db49cb4e8aff5a992aef7447a889b2fffccf43e5e66081cb4f6172"
+    },
+    "candidate-source:tools/run_torque_agent_store.py": {
+      "bytes": 11652,
+      "path": "tools/run_torque_agent_store.py",
+      "path_base": "candidate_source",
+      "sha256": "d77cade5fa03f3d291990c3af134210840ffde899d7535cd616705e246ac1a68"
+    },
+    "candidate-source:tools/run_torque_agent_workflows.py": {
+      "bytes": 49267,
+      "path": "tools/run_torque_agent_workflows.py",
+      "path_base": "candidate_source",
+      "sha256": "52a3c90bd4d70f4831253a6e647f968d1b02fc6e20a3380fdb75204c85dbff9d"
+    },
+    "candidate-source:tools/verify_torque_hostile_bytes.py": {
+      "bytes": 22359,
+      "path": "tools/verify_torque_hostile_bytes.py",
+      "path_base": "candidate_source",
+      "sha256": "f4a9f1e37db1b60c7adbc341620c7ec2294361b314d91e68b03b3b11766e57a8"
+    },
+    "candidate-source:tools/verify_torque_native_dense.py": {
+      "bytes": 25573,
+      "path": "tools/verify_torque_native_dense.py",
+      "path_base": "candidate_source",
+      "sha256": "39362551d20fba2537516c00d04d102fe7a916de6e27368fc04d7bb611298449"
+    }
+  },
+  "finalization": {
+    "catalog_records_rehashed_exact": 348,
+    "created_utc": "2026-11-03T17:39:31.424996+00:00",
+    "current_gate_groups": 18,
+    "draft": {
+      "bytes": 195474,
+      "path": "c092-drafts/validation-base/VALIDATION-SUMMARY-DRAFT02.json",
+      "sha256": "e8c3af56e2a1025ba952d63d954219c8171fafa28d1724e3e5d0461e1357070e"
+    },
+    "independent_delta_review": {
+      "bytes": 2843,
+      "path": "c092-reviews/source/implementation/closing-docs-review02/REVIEW.json",
+      "sha256": "4ed546fd004581cfb9cbbddfe939e8f24f5e3d072034840f843788256280d4bb"
+    },
+    "product_results_changed": false,
+    "schema": "ontokin.c092-validation-finalization/1",
+    "scope": "This finalizes the factual validation index only. Remote documentary publication, final archive sealing and actual fresh recovery have separate receipts.",
+    "status": "passed",
+    "unfinished_product_scopes": 11
+  },
+  "full_product_acceptance": false,
+  "historical_results_and_limits": {
+    "C091_baseline": {
+      "evidence": [
+        "c091-packet/OntoKin_C091_Handoff/VALIDATION-SUMMARY.json",
+        "c091-packet/OntoKin_C091_Handoff/NEXT-TASK.md"
+      ],
+      "scope": "Retained original failures and earlier partial/complete runs keep their original pins. No old full run or artifact-loop result fills a current final-candidate gap.",
+      "source_commit": "ee00c5891dacc7dbe318722e5058696b2bbc8343",
+      "source_engine": "sha256:b19444604168bb5be808870c3940f67dd96e05cbf3e01d5d61947de1101859b4"
+    },
+    "candidate02": {
+      "actual_durable": {
+        "A08_export_elapsed_ms": 26676.607,
+        "A08_export_operations": 452617,
+        "checks": 182,
+        "evidence": [
+          "c092-reviews/recording-durable/implementation/actual-compatibility01/RESULT.json",
+          "c092-reviews/recording-durable/implementation/actual-old-retrieval01/RESULT.json",
+          "c092-reviews/recording-durable/implementation/actual-closed-schemas01/RESULT.json",
+          "c092-reviews/recording-durable/implementation/IMPLEMENTATION-DURABLE-REVIEW.json"
+        ],
+        "exchanges": 57,
+        "new_artifact_bytes": 2447148,
+        "new_artifact_sha256": "c57a096559428b9c7278f23d0e0b0fa80768fd95a4e8bbfd954567dfe8fe541f",
+        "retrieval": "Full65536-byte reconstruction only; this did not complete original1-byte/17-byte loops.",
+        "status": "passed"
+      },
+      "commit": "8762e740abd5e8175d015fb5c15b36fe0fbcbff6",
+      "engine_source_code_sha256": "sha256:bd862d4631dac4b41ac7b407c155e1f39cfabe44be5ddab8c0f4a8487ca49e5b",
+      "full_local": {
+        "evidence": [
+          "c092-validation/candidate02-full-local/summary.json",
+          "c092-validation/candidate02-full-local-run/RESULT.json"
+        ],
+        "role_counts": {
+          "failed": 1,
+          "passed": 33
+        },
+        "scope": "The whole invocation remains failed and source-unstable; scoped earlier outcomes are not relabeled as current candidate03 evidence.",
+        "source_changed_error": "Source or verification inputs changed during this run.",
+        "source_unchanged": false,
+        "status": "failed",
+        "unit_role_reason": "Exceeded900-second role supervision"
+      },
+      "not_final_candidate_approval": true,
+      "other_scoped_receipts": [
+        "c092-publication/candidate02-publication-verification.json",
+        "c092-validation/candidate02-delivery/summary.json",
+        "c092-validation/candidate02-delivery-run/RESULT.json",
+        "c092-validation/candidate02-reference.json",
+        "c092-validation/candidate02-reference-run.json",
+        "c092-validation/candidate02-domains/SUMMARY.json",
+        "c092-validation/candidate02-domains-run.json"
+      ],
+      "tree": "538597472911b10820780ab1b152898eee5a3131"
+    },
+    "input_mathematics_only": {
+      "assertions": 2906,
+      "candidate_imported": false,
+      "evidence": [
+        "c092-validation/candidate02-input-mathematics.json",
+        "c092-validation/candidate02-input-mathematics-run.json",
+        "c092-reviews/reader/implementation/final-candidate03/EVIDENCE-CROSSBINDING.json"
+      ],
+      "not_a_new_candidate03_product_execution": true,
+      "status": "passed_unchanged_authority_proof"
+    },
+    "synthetic_design_probe": {
+      "evidence": [
+        "c092-reviews/recording-durable/design-probe02/RESULT.json",
+        "c092-reviews/reader/DURABLE-PROBE-CORRECTION-REVIEW.json"
+      ],
+      "scope": "41 checks/20 exchanges on C091 code with synthetic identity, design-policy evidence only; not real C092 runtime. First overstrong database-equality predicate failure and independently reviewed correction preserved."
+    }
+  },
+  "independent_scoped_reviews": [
+    "c092-reviews/source/SOURCE-NUMERICAL-REVIEW.json",
+    "c092-reviews/source/PUBLICATION-INDEPENDENT-REVIEW.json",
+    "c092-reviews/reader/FINAL-ADOPTION-REVIEW.json",
+    "c092-reviews/recording-durable/FINAL-RECORDING-REVIEW.json",
+    "c092-reviews/recording-durable/FINAL-DURABLE-REVIEW.json",
+    "c092-reviews/source/SOURCE-NUMERICAL-IMPLEMENTATION-REVIEW.json",
+    "c092-reviews/reader/implementation/final-candidate03/FINAL-IMPLEMENTATION-REVIEW.json",
+    "c092-reviews/recording-durable/implementation/FINAL-IMPLEMENTATION-RECORDING-REVIEW.json",
+    "c092-reviews/recording-durable/implementation/FINAL-IMPLEMENTATION-DURABLE-REVIEW.json",
+    "c092-reviews/source/AGENT-WORKFLOW-STATE-SUPPLEMENT.json"
+  ],
+  "independently_bound_prepublication_executions": {
+    "actual_readonly_interpreters": [
+      "CPython3.11.17",
+      "CPython3.12.14",
+      "CPython3.13.16"
+    ],
+    "complete_package_files_rebound": 189,
+    "counts": {
+      "actual_readonly_function_slot_checks": 84,
+      "known_guard_probes": 31,
+      "new_focused_tests": 29,
+      "original_callback_tests": 20
+    },
+    "foreign_getter_or_body_calls_in_listed_guard_probes": 0,
+    "guard_probe_breakdown": {
+      "helper_code": 4,
+      "helper_descriptors": 19,
+      "recording_dispatch": 3,
+      "runtime_guard_entry": 3,
+      "runtime_storage": 2
+    },
+    "independent_rebinding": [
+      "c092-reviews/reader/implementation/final-candidate03/EVIDENCE-CROSSBINDING.json",
+      "c092-reviews/recording-durable/implementation/SOURCE-RECEIPT-APPLICABILITY.json",
+      "c092-reviews/recording-durable/implementation/candidate03-bindings01/RESULT.json"
+    ],
+    "not_new_final_pin_executions": true,
+    "original_executions": [
+      "c092-reviews/source/implementation/focused-attempt09/RESULT.json",
+      "c092-reviews/source/implementation/original-callback-repair-attempt04/RESULT.json",
+      "c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt03/GUARD-MATRIX-SUMMARY.json",
+      "c092-reviews/reader/implementation/guard-performance/READONLY-SLOT-INVARIANT-REVIEW.json",
+      "c092-reviews/reader/implementation/guard-performance/readonly-function-proof/PYTHON-311.json",
+      "c092-reviews/reader/implementation/guard-performance/readonly-function-proof/PYTHON-312.json",
+      "c092-reviews/reader/implementation/guard-performance/readonly-function-proof/PYTHON-313.json"
+    ],
+    "peer_source_bindings_rehashed": 58,
+    "scope": "Current mutable function/global/descriptor checks retain strongly owned originals. No hostile-interpreter sandbox claim. The84 readonly-slot probes justify the stated native slot invariant, not release acceptance.",
+    "status": "independently_rebound_to_exact_final_bytes"
+  },
+  "main_integration_approved": false,
+  "parent_navigation_binding_updates": [
+    {
+      "current_bytes": 4221,
+      "current_sha256": "d9c4769af9f55391917a93d549e962dab416f710a7b18b6f7db7b4fd175e1ce7",
+      "path": "c092-drafts/closing-static/RETAINED-GATES.md",
+      "prior_bytes": 4190,
+      "prior_sha256": "7443b9d03d186f471e0ce170c04299f409c6458c6a3e4327aa5745113bfcfc55",
+      "reason": "Parent intentionally updated closing navigation; no original result changed."
+    }
+  ],
+  "pending_root_finalization": [],
+  "preservation": {
+    "adopted_authority_bytes": 243159,
+    "adopted_authority_files": 24,
+    "all_preexisting_test_files": 346,
+    "c091_overlays": 27,
+    "claim": "Exact path membership, ordinary-file type, bytes, mode, SHA-256, native Git blob and committed entry checks. No numerical gate follows from preservation alone.",
+    "evidence": [
+      "c092-reviews/reader/implementation/final-candidate03/PRESERVATION.json",
+      "c092-reviews/source/implementation/IMMUTABLE-INPUT-CANDIDATE03.json",
+      "c092-reviews/source/implementation/IMMUTABLE-INPUT-FINAL-CLOSURE.json"
+    ],
+    "original_frozen_bytes": 12256793,
+    "original_frozen_files": 399,
+    "original_input_manifest_sha256": "98df30158c0cd77c542d89652f5dec6b585d03451a06bf7b1baffee0fc2f02eb",
+    "protected_predecessor_numerical_modules": 9,
+    "status": "passed_for_exact_listed_inputs"
+  },
+  "program_limits": {
+    "budgets_tolerances_or_frozen_expectations_increased_after_failure": false,
+    "cache_entries": 256,
+    "cursor_steps": 64,
+    "frozen_export_source_and_host_elapsed_ms": 30000,
+    "frozen_export_source_and_host_operations": 1000000,
+    "operand_bits": 32768,
+    "ordinary_elapsed_ms": 30000,
+    "ordinary_operations": 100000,
+    "scope": "Established full-role harness supervision is distinct from fixed program execution limits; historical900-second failure remains failed.",
+    "test_harness_supervision_seconds": 3600
+  },
+  "purpose": "Final factual index of the C092 blocked implementation checkpoint. Exact passing scopes, failures, historical results and unfinished obligations remain distinct; no integration or release approval.",
+  "recovered_path_resolution": {
+    "purpose": "Resolve retained catalog provenance after running the handoff recovery helper; catalog path and path_base remain the original observed locations.",
+    "recovery_root_placeholder": "recovery",
+    "rules": [
+      {
+        "catalog_path_base": "candidate_source",
+        "catalog_path_pattern": "<path>",
+        "resolved_ordinary_file": "recovery/source/OntoKin/<path>"
+      },
+      {
+        "catalog_path_base": "workspace",
+        "catalog_path_pattern": "c092-*/<path>",
+        "resolved_ordinary_file": "recovery/c092-evidence/<catalog path>"
+      },
+      {
+        "archive_file": "recovery/C091-original.zip",
+        "archive_members": [
+          "OntoKin_C091_Handoff/NEXT-TASK.md",
+          "OntoKin_C091_Handoff/VALIDATION-SUMMARY.json"
+        ],
+        "archive_sha256": "80deeeada6f5c3abe25e624e2f2b18c6b535612e7bc7872fbcc9c31bed9bfe12",
+        "catalog_path_base": "workspace",
+        "catalog_paths": [
+          "c091-packet/OntoKin_C091_Handoff/NEXT-TASK.md",
+          "c091-packet/OntoKin_C091_Handoff/VALIDATION-SUMMARY.json"
+        ],
+        "instruction": "Read these two original outer members from C091-original.zip and compare uncompressed member bytes/length/SHA-256 with the catalog. Their workspace provenance is not a claim that the main helper extracts them as ordinary files.",
+        "ordinary_files_extracted_by_main_recovery_helper": false
+      }
+    ]
+  },
+  "recovery": [
+    {
+      "complete_earlier_history": false,
+      "complete_historical_transient_workspaces": false,
+      "exact_native_objects_commits_refs_and_shallow": true,
+      "exact_source_bytes_modes_and_paths": true,
+      "native_commits": 424,
+      "native_fsck_passed": true,
+      "native_objects": 29979,
+      "receipt": "c092-recovery/C091-SOURCE-RECOVERY03.json",
+      "status": "passed"
+    },
+    {
+      "bytes": 3162195498,
+      "every_original_file_byte_and_mode_exact": true,
+      "files": 21497,
+      "receipt": "c092-recovery/C091-EVIDENCE-RECOVERY02.json",
+      "status": "passed"
+    },
+    {
+      "bytes": 190531455,
+      "every_selected_regular_file_byte_and_mode_exact": true,
+      "files": 797,
+      "receipt": "c092-recovery/C091-LATE-PROOF-RECOVERY.json",
+      "status": "passed"
+    },
+    {
+      "receipt": "c092-recovery/C091-PUBLIC-HISTORY-REPLAY.json",
+      "status": "history_divergence_reproduced"
+    }
+  ],
+  "release_certified": false,
+  "required_unexecuted_or_incomplete_roles": [
+    {
+      "id": "A08_complete_GLB_and_PNG_retrieval",
+      "original_tools": [
+        "candidate-source:tools/run_torque_agent_workflows.py",
+        "candidate-source:tools/audit_torque_artifact_loop.py",
+        "candidate-source:tools/check_torque_artifact_audit.py"
+      ],
+      "reason": "The actual full export failed and retained zero artifacts. Historical candidate02 65536-byte retrieval and bounded/prefix probes do not satisfy this gate.",
+      "related_evidence": [
+        "c092-reviews/recording-durable/implementation/FINAL-IMPLEMENTATION-DURABLE-REVIEW.json"
+      ],
+      "required_scope": "Complete current GLB reads at chunk sizes1,17,65536 and PNG slices through exact EOF, past-EOF refusals, exact reconstructed bytes, reopen and complete independent artifact-loop audit.",
+      "status": "not_executed_or_not_completed_at_final_candidate"
+    },
+    {
+      "id": "complete_current_cross_version_durable_compatibility",
+      "original_tools": [],
+      "reason": "The full actual compatibility runner passed only at candidate02. The final A08 failure blocks complete new-artifact/current-path acceptance.",
+      "related_evidence": [
+        "c092-reviews/recording-durable/implementation/FINAL-IMPLEMENTATION-DURABLE-REVIEW.json",
+        "c092-reviews/recording-durable/implementation/actual-compatibility01/RESULT.json"
+      ],
+      "required_scope": "Successful final-candidate old/new source-basis and engine identity reconciliation, old queue/run/edit/inspect/artifact fences, unchanged-payload historical idempotence, current reset/validate, full returned bytes and reopen.",
+      "status": "not_executed_or_not_completed_at_final_candidate"
+    },
+    {
+      "id": "default_workflow_dependent_steps_and_both_repair_cohorts",
+      "original_tools": [
+        "candidate-source:tools/run_torque_agent_workflows.py"
+      ],
+      "reason": "Eleven default scenarios failed at required full export controls. These are unreached dependent tests, not demonstrated repair-semantic defects.",
+      "related_evidence": [
+        "c092-reviews/source/AGENT-WORKFLOW-STATE-SUPPLEMENT.json"
+      ],
+      "required_scope": "Complete original16 scenarios across12 operations; all six A02 workflow repairs and the separate six repair cohort; post-export reset/idempotence/reopen/authority/cap/publication paths.",
+      "status": "not_executed_or_not_completed_at_final_candidate"
+    },
+    {
+      "id": "A10_store_isolation_and_reconciliation",
+      "original_tools": [
+        "candidate-source:tools/run_torque_agent_store.py"
+      ],
+      "reason": "Root directed that the known failing A08 full control not be repeated for this dependency.",
+      "related_evidence": [
+        "c092-reviews/source/AGENT-WORKFLOW-STATE-SUPPLEMENT.json"
+      ],
+      "required_scope": "Actual unchanged A10 store runner, predecessor isolation, cancellation and late-publication/output-cap controls.",
+      "status": "not_run_blocked_dependency"
+    },
+    {
+      "id": "complete_schema_dispatch_and_semantic_mutations",
+      "original_tools": [
+        "candidate-source:tools/check_torque_request_schema_dispatch.py"
+      ],
+      "reason": "The current audit explicitly records missing artifact/reset-operation examples. Individual executed exchanges and transport passes do not establish all-operation closure.",
+      "related_evidence": [
+        "c092-reviews/source/implementation/final-agent-candidate03-attempt01/request-schema-dispatch-RESULT.json",
+        "c092-reviews/source/implementation/final-agent-candidate03-attempt01/SCHEMA-AUDIT-LOG-SELECTION.json"
+      ],
+      "required_scope": "Full-versus-dispatched closed request/response schema equivalence over all12 operations and all52 frozen semantic/schema mutations.",
+      "status": "not_run_incomplete_operation_coverage"
+    },
+    {
+      "id": "A11_additional_domains_refusals_self_frames",
+      "original_tools": [
+        "candidate-source:tools/run_torque_agent_domains.py",
+        "candidate-source:tools/run_torque_agent_source_refusals.py",
+        "candidate-source:tools/run_torque_agent_self_frames.py",
+        "candidate-source:tools/check_torque_agent_pose_oracles.py",
+        "candidate-source:tools/check_torque_structural_counts.py"
+      ],
+      "reason": "The completed31-case positive A11 matrix covers its stated source/state/reopen scope only; its owner identifies these as separate uncompleted roles.",
+      "related_evidence": [
+        "c092-reviews/source/AGENT-WORKFLOW-STATE-SUPPLEMENT.json"
+      ],
+      "required_scope": "Full separate Agent domain/runtime-refusal matrix, all18 source-phase refusals, extra self-frame clock matrix, independent Agent full-quaternion oracle and exact structural/projection counts.",
+      "status": "not_executed_or_not_completed_at_final_candidate"
+    },
+    {
+      "id": "delivery_refusals_and_path_edges",
+      "original_tools": [
+        "candidate-source:tools/check_torque_delivery_edges.py"
+      ],
+      "reason": "The67 required positive CLI exports do not execute the separate edge runner. No current completed edge-run receipt is included in this validation batch.",
+      "related_evidence": [
+        "c092-validation/candidate03-delivery-gate.json"
+      ],
+      "required_scope": "Original fixed-marker positive edge and three explicit refusal routes, including the two frozen delivery-refusal cases and source/path negative edge.",
+      "status": "not_executed_or_not_completed_at_final_candidate"
+    },
+    {
+      "id": "remaining_complete_comparison_classes",
+      "original_tools": [
+        "candidate-source:tools/check_torque_internal_comparisons.py",
+        "candidate-source:tools/check_torque_resumption_equivalence.py",
+        "candidate-source:tools/check_torque_quaternion_oracle.py",
+        "candidate-source:tools/check_torque_recording_pose_identity.py"
+      ],
+      "reason": "C1, original C3 expectations, two C5 geometry pairs, focused new tests and the positive A11 subset have explicit successes; they do not replace any remaining entire comparison role.",
+      "related_evidence": [
+        "c092-reviews/recording-durable/implementation/FINAL-IMPLEMENTATION-RECORDING-REVIEW.json",
+        "c092-reviews/source/SOURCE-NUMERICAL-IMPLEMENTATION-REVIEW.json"
+      ],
+      "required_scope": "Complete original C1-C6 acceptance, including dedicated fresh/resumed both-side C2/C5 common-clock trajectories, C4 translation equivalence, recording pose identity, remaining full-quaternion/Agent repair comparisons.",
+      "status": "not_executed_or_not_completed_at_final_candidate"
+    },
+    {
+      "id": "hostile_26_mutation_bodies",
+      "original_tools": [
+        "candidate-source:tools/verify_torque_hostile_bytes.py"
+      ],
+      "reason": "Only14 prescribed rejections executed successfully;26 mutation bodies were blocked by p01/p04 export-control deadlines.",
+      "related_evidence": [
+        "c092-reviews/recording-durable/implementation/HOSTILE-CANDIDATE03-SCOPED-RESULT.json"
+      ],
+      "required_scope": "All40 original hostile-artifact mutations following successful unchanged original controls.",
+      "status": "blocked_before_mutation"
+    },
+    {
+      "id": "p28_helpers_complete_native_gate",
+      "original_tools": [
+        "candidate-source:tools/verify_torque_native_dense.py"
+      ],
+      "reason": "Documented joint_parent_site is rejected by unchanged oracle literal joint. One variant and its three gate captures are incomplete. Independent local-geometry diagnosis and three capture-only views do not grant dense/source acceptance.",
+      "related_evidence": [
+        "c092-reviews/recording-durable/implementation/p28-helper-classification01/RESULT.json",
+        "c092-reviews/recording-durable/implementation/native-failed-gate-audit02/RESULT.json"
+      ],
+      "required_scope": "All36 required native/dense variants and108 native-gate captures following a separately reviewed narrowly scoped oracle correction.",
+      "status": "failed_before_dense_geometry_obligation"
+    },
+    {
+      "id": "artifact_read_unit_methods_three_interpreters",
+      "original_tools": [
+        "candidate-source:tests/test_torque_artifact_reads.py"
+      ],
+      "reason": "All three original4131-method invocations failed in class setup because their seed full A08 export failed; these13 methods were never entered.",
+      "related_evidence": [
+        "c092-validation/INHERITED-CANDIDATE03-DISPOSITION.json"
+      ],
+      "required_scope": "The13 TorqueArtifactReadTests methods listed for each of CPython3.11,3.12,3.13.",
+      "status": "unexecuted_after_failed_class_setup"
+    }
+  ],
+  "retained_broader_obligations": {
+    "complete_reach_and_prior_contract_gates": "Unclosed as documented in retained gates; current torque subset does not close earlier release/interpreter/external obligations.",
+    "evidence": [
+      "c092-drafts/closing-static/RETAINED-GATES.md"
+    ],
+    "external_attestations": [
+      "construction C20",
+      "surface M01-M09,M11,M12",
+      "impulse I07,I09,I11,I12"
+    ],
+    "hosted_workflows": "None dispatched for this task; no hosted acceptance claimed.",
+    "original28": "24/28 passed, overall failed; P11/P16/P23/L03 open",
+    "storage_causes": "C059/C084/C085 causes remain unestablished; current surface SQLite cause remains unestablished."
+  },
+  "retained_failures_and_inspection_corrections": {
+    "A08_drafts": [
+      "c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt01/actual-a08-attempt01/RESULT.json",
+      "c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt02/actual-a08-attempt01/RESULT.json",
+      "c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt03/actual-a08-attempt01/RESULT.json"
+    ],
+    "all_first_failures_retained": true,
+    "diagnostic_profile_only": [
+      "c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt03/A08-DIAGNOSTIC-PROFILE-SUMMARY.json"
+    ],
+    "native_read_only_inspection_correction": [
+      "c092-reviews/recording-durable/implementation/native-failed-gate-audit01/RESULT.json",
+      "c092-reviews/recording-durable/implementation/NATIVE-EVIDENCE-AUDIT-CORRECTION.json",
+      "c092-reviews/recording-durable/implementation/native-failed-gate-audit02/RESULT.json"
+    ],
+    "native_sequential_interrupted": [
+      "c092-reviews/recording-durable/implementation/native-candidate03-run01/INTERRUPTION.json",
+      "c092-reviews/recording-durable/implementation/native-candidate03-run01/INTERRUPTION-RESULT.json"
+    ],
+    "scope": "Neither a later successful subset nor a documentation correction relabels an original failed attempt. Exact source, options, budgets and failure identities stay preserved.",
+    "source_recovery_failures": [
+      "c092-recovery/C091-SOURCE-RECOVERY.json",
+      "c092-recovery/C091-SOURCE-RECOVERY02.json",
+      "c092-recovery/C091-EVIDENCE-RECOVERY01-FAILURE.json"
+    ]
+  },
+  "root_finalization_required": false,
+  "schema_version": "ontokin.c092-validation-summary/1",
+  "seal_scope": "The factual index and its evidence bindings are closed. This field makes no claim that archive sealing or final archive recovery has already occurred.",
+  "sealed": true,
+  "status": "FINAL_BLOCKED_IMPLEMENTATION_CHECKPOINT",
+  "updated_utc": "2026-11-03T17:32:32.283822+00:00"
+}

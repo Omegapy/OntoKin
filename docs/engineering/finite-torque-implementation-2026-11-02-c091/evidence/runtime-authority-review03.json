@@ -1,0 +1,99 @@
+{
+  "schema_version": "ontokin.c091-independent-runtime-authority-review/1",
+  "timestamp_utc": "2026-11-03T00:08:43.549868+00:00",
+  "reviewed_commit": "ae91606e1d8b2128c12422403112f3ad0c313ac7",
+  "status": "source_review_and_identified_probes_passed_final_integration_pending",
+  "reviewer": "independent reference/destination owner, not runtime author",
+  "files": [
+    {
+      "path": "ontokin/execution_budget.py",
+      "sha256": "b35a42726e47f64537f20355fc678c0ebbe46274ba58fbe7e3445591751064e5",
+      "bytes": 28326
+    },
+    {
+      "path": "ontokin/budget_agent.py",
+      "sha256": "c6fd7a75d697a0b8760d9ed1b74ffbf4dbf4967b4ecadd3a1167296cd6dad4fa",
+      "bytes": 27218
+    },
+    {
+      "path": "ontokin/torque_runtime.py",
+      "sha256": "4d552eaa9d62b572e5794d3405f601504f4bac2dced9194d981bfacda14b3b5d",
+      "bytes": 75457
+    },
+    {
+      "path": "ontokin/evaluator.py",
+      "sha256": "83b6a46103839037accd9c689ef0354f87a7a7a65b7a411b6a295cdf5f1e5dc5",
+      "bytes": 65609
+    },
+    {
+      "path": "tests/test_torque_callback_admission.py",
+      "sha256": "3d0b7e62305ee11c2e05314362250a6da3730bd733452ed5dfc8be9b117d5f38",
+      "bytes": 16612
+    }
+  ],
+  "review": [
+    {
+      "area": "native_clock_purity",
+      "finding": "The successful exact Agent clock route retains the native function object and executable code/defaults/keyword defaults/closure/globals/builtins owners. The actual type/int/float name resolutions, original math module and isfinite builtin, original native monotonic callable, finite native last-reading fields, class bases/MRO and ordinary native attribute read/write semantics are freshly admitted. This establishes that the optional omitted second source scan cannot conceal a user callable in the successful clock body."
+    },
+    {
+      "area": "elapsed_time_reader",
+      "finding": "The shared ledger retains its exact elapsed reader function and executable state; native owner/class and the _clock/started field lookup semantics are admitted. Actual original poll and custom clocks remain unchanged. Any poll-side original clock read keeps the full second source admission. Counters and current callback context are still admitted before and after actual calls."
+    },
+    {
+      "area": "source_watch_optimization",
+      "finding": "Retained dictionary views remain attached to the exact original dictionary owners. Before using native iterators, all owner types are current; all retained key/value/sequence member identities and Fraction native integer slots are compared. Strong retention prevents identity reuse. No replacement value equality method is invoked."
+    },
+    {
+      "area": "public_preflight_first_callback",
+      "finding": "The complete native source receipt is captured before require_execution_work performs its inherited zero-charge callback. Direct public request paths retain this guard until the simulator explicitly takes over; nested record-count preflights use a scoped replacement and restore/admit the original guard on successful exit. No extra callback or charge is inserted and original exceptions retain precedence."
+    }
+  ],
+  "resolved_findings": [
+    {
+      "id": "native-clock-mutable-code",
+      "before": "native-clock-code-authority-defect01.json",
+      "after": "native-clock-code-authority-corrected02.json",
+      "observed_before": "Same function identity, changed code executes source mutation after one admission, tick accepted14->15.",
+      "observed_after": "Refused before changed code executes, exact counter14 retained, sentinel0, OKL-E-RESOURCE/execution_context_required."
+    },
+    {
+      "id": "clock-transitive-name-and-descriptor-bindings",
+      "source": "Runtime author independent additional before receipt and our source review; focused replay includes actual global and descriptor mutation cases.",
+      "resolution": "Actual successful dependencies and native field resolution are retained and current."
+    }
+  ],
+  "verification": {
+    "independent_exact_reproduction": "passed",
+    "focused_replayed_test_methods": 19,
+    "retained_preflight_full_byte_comparisons": 10,
+    "retained_trace_scope": "All five actual public-route result bytes and complete callback/charge trace bytes match before/after preflight source correction. These are the identified retained controls, not a new final release matrix."
+  },
+  "evidence": [
+    {
+      "path": "native-clock-code-authority-defect01.json",
+      "sha256": "34caab74a46de086861854dfd59070b474a3f5a995a3440304f99d3f9bdf6191",
+      "bytes": 527
+    },
+    {
+      "path": "native-clock-code-authority-corrected02.json",
+      "sha256": "5335b47f20abf83064a8433e66e09b41d46159660d725146603df64809ce7e2e",
+      "bytes": 741
+    },
+    {
+      "path": "runtime-callback-authority-ae91606-unit01.log",
+      "sha256": "fad48e7bd0abb8d5b220e8bacafa4c62ee104e5bf42da8a0e68e04038edfe1ca",
+      "bytes": 3864
+    },
+    {
+      "path": "runtime-public-preflight-independent-byte-comparison02.json",
+      "sha256": "c9c622160328992e9b0184a9ed0e54efb880e296d9e10b24c8811daab5f73037",
+      "bytes": 4334
+    }
+  ],
+  "limitations": [
+    "This follow-up reviews native clock/source preflight authority at ae91606. It does not establish final Agent performance or replace the complete final-pin frozen execution gates.",
+    "The independent reader general exact-axis completeness work remains separate and unfinished.",
+    "The earlier2994 semantic review remains an identified source review; final integrated source hashes and actual export/native/hostile acceptance must be recorded after all owners finish."
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "schema_version": "ontokin.c091-independent-public-axis-history/1",
+  "utc": "2026-11-03T14:50:53.124347+00:00",
+  "source_commit": "ee00c5891dacc7dbe318722e5058696b2bbc8343",
+  "source_hashes": {
+    "ontokin/torque_runtime.py": "9868c43a0e91fd0f8ea96faf702fa593c3a217c7321f23403914a4c0eb248a54",
+    "ontokin/torque_phase.py": "7eb37f33ff66b53958c7068dda9a3c5f283f6687284a4c57f483ca02f28f62fb",
+    "ontokin/reach_pose.py": "e1ec6bd98184900a5637b05fce1c0066820fa9b9f159c89f57ea7c1364167013",
+    "ontokin/reach_runtime.py": "fb38864a9ee73a1f00a1c72366305d95105b2486922d61f6606611fb435600e6",
+    "ontokin/reach_numeric.py": "70f47e092c892fc4909b00d1af75d33aea9145dd0313248bb76f7cd2578d31a9",
+    "ontokin/execution_budget.py": "b35a42726e47f64537f20355fc678c0ebbe46274ba58fbe7e3445591751064e5",
+    "ontokin/evaluator.py": "83b6a46103839037accd9c689ef0354f87a7a7a65b7a411b6a295cdf5f1e5dc5",
+    "ontokin/model.py": "04684d8143b7f6a6d7629bff26bd2a800bfca0ef3434aff90b731c7b1deeaff8"
+  },
+  "source_hashes_unchanged": true,
+  "entry_sha256": "8d02d0fb3ca61f275bb85f019a45451c34e89925e488e7d2236432b6085fc27e",
+  "entry_bytes": 1858,
+  "driver_sha256": "d45f9f92d4848708b7c8478806074b0349a88976ad4123c7865d362d82e5b5d0",
+  "scope": "Two fresh constructed controls from identical bytes. Warming and second public evaluate_prefix calls are adjacent with no inspection, callback change, cache access or plan injection. No private plan is observed at any point.",
+  "controls": [
+    {
+      "warmed": false,
+      "program_revision": "sha256:a2e3fb4fc44349355ede9480cc35f5d699663de084e5bbbcd010d143aedb3b1e",
+      "budget": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "operations": 16971,
+      "preparation": null,
+      "result": {
+        "status": "accepted",
+        "valid_until_seconds": "1",
+        "valid_until_side": "after",
+        "omega_hex": [
+          "0x0.0p+0",
+          "0x0.0p+0",
+          "0x0.0p+0"
+        ],
+        "axis": "world_x",
+        "started_count": 1,
+        "failure": null
+      }
+    },
+    {
+      "warmed": true,
+      "program_revision": "sha256:a2e3fb4fc44349355ede9480cc35f5d699663de084e5bbbcd010d143aedb3b1e",
+      "budget": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "operations": 40969,
+      "preparation": {
+        "status": "accepted",
+        "valid_until_seconds": "16384",
+        "valid_until_side": "after",
+        "omega_hex": [
+          "0x1.0000000000000p+0",
+          "0x0.0p+0",
+          "0x0.0p+0"
+        ],
+        "axis": "world_x",
+        "started_count": 1,
+        "failure": null
+      },
+      "result": {
+        "status": "refused",
+        "valid_until_seconds": "1",
+        "valid_until_side": "before",
+        "omega_hex": [
+          "0x0.0p+0",
+          "0x0.0p+0",
+          "0x1.0000000000000p-96"
+        ],
+        "axis": null,
+        "started_count": 0,
+        "failure": {
+          "type": "OntoKinError",
+          "code": "OKL-E-FRAME",
+          "details": {
+            "torque_reason": "incoming_axis",
+            "target_path": "ball",
+            "torque_key": "drive",
+            "sequence_index": 1
+          }
+        }
+      }
+    }
+  ],
+  "status": "history_divergence_reproduced"
+}

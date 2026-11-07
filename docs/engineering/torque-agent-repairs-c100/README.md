@@ -1,0 +1,19 @@
+# C100 torque Agent repair recordings
+
+November 4, 2026. The C096 repair runs recorded the accepted source after each edit. Each configured run had already exported its base before the edit. C100 recovered the original GLB from all six stores, verified all 132 original and configured exchanges against 12 archived stores, and issued fresh exports for the accepted sources with the same product and recording options.
+
+The [frozen input guide](../../language-design/torque-v0.1/freeze/README.md) specifies four valid edits and two invalid edits. The [original](../../language-design/torque-v0.1/freeze/agent/repairs.json) and [workflow](../../language-design/torque-v0.1/freeze/agent/workflow-repairs.json) rows bind each source and patch. C096's separately configured workflow retained the 1,000,000-operation allowance and changed the source and host elapsed budget from 30 to 80 seconds. Each cohort has its own program revisions. The producer for this comparison was `7aed65b6b3ffcc12c7237e60a7b8574f1841521a`, with CPython 3.12.14. The original recordings use an end time of 2 s, 4 fps, no helpers, 0.001 m and 0.001 rad tolerances, and a 0.000001 s clock tolerance.
+
+| Source and effective budget | Two-second results |
+| --- | --- |
+| Original · 100,000 operations / 30 s | The base, four valid edits and both retained-base exports reached operation 100,001 during recording readback. No GLB was published. |
+| Frozen workflow · 1,000,000 operations / 30 s | Duration and mass delivered the edited files. The base hit the deadline, leaving no before/after pair. Magnitude, radius, and both exports after rejected edits also hit the deadline. |
+| Configured workflow · 1,000,000 operations / 80 s | Duration and mass preserved the geometry and appearance streams. Both invalid edits retained the exact base GLB. Magnitude and radius reached 80 s in both the complete-checkout and serial runs. The serial runs ended at 773,789 and 613,409 operations, respectively. |
+
+For invalid duration and mass the Agent rejected the candidate with `OKL-E-EVENT-ORDER` and `OKL-E-PHYSICAL-DOMAIN`, respectively. Each configured re-export of the retained accepted program reproduced the complete 2,447,148-byte C096 base, SHA-256 `b6e235d31b6482878695a166fe12ebf3ed284ccc95addf55537dacc80ebc424c`.
+
+In a supplemental run only the recording end time changed to 0.5 s. The exact same configured base, magnitude and radius programs produced three GLBs. The magnitude edit preserved every compared geometry and appearance stream. The radius edit reduced the selected sphere from 1 m to 0.5 m. Independent reconstruction matched all 482 stored position triples for both radii. The mesh normals, triangle indices, other carrier, markers, materials, texture data and 89-byte embedded PNG passed the specified comparisons. The checker rejected all [16 deliberately corrupted copies](controls.json), including a missing scene marker, an incorrect node scale and erased surface metadata. The supplemental recording covers the first quarter of the requested duration.
+
+The [18-row two-second matrix](matrix.json) and [supplemental half-second comparisons](short-horizon.json) identify each compared file. The C100 handoff includes the source and budget bindings, archived exchange logs, new exports and refusals, independent comparator, and a portable producer replay. The [C099 comparison](../torque-streams-c099/README.md) retains its 27 predecessor and two torque-program geometry comparisons. C1 whole-file predecessor equality, C3 neutral-motion controls, full one-byte artifact delivery, interpreter coverage and release remain separate gates.
+
+Scope owner `interactive-c100-agent-repair-streams-20261104` closes this evidence increment on draft PR 90. The outstanding licensed-main reconciliation precedes any merge.

@@ -136,6 +136,16 @@ class _BudgetCheck:
                 "provisional": ledger.resolved is None}
 
 
+# Retain the exact native reader function for .22's callback-free clock proof.
+# Earlier profiles do not use this binding or change any clock behavior.
+_NATIVE_BUDGET_READ_CLOCK = _BudgetCheck._read_clock
+_NATIVE_BUDGET_READ_CLOCK_AUTHORITY = (_BudgetCheck._read_clock.__code__,
+    _BudgetCheck._read_clock.__defaults__, _BudgetCheck._read_clock.__kwdefaults__,
+    _BudgetCheck._read_clock.__closure__, _BudgetCheck._read_clock.__globals__,
+    _BudgetCheck._read_clock.__builtins__, (("type", type), ("int", int), ("float", float)),
+    _BudgetCheck.__bases__, _BudgetCheck.__mro__)
+
+
 class BudgetAgentService(ProgramAgentService):
     """Explicit local budget service; host configuration is never JSON authority."""
 

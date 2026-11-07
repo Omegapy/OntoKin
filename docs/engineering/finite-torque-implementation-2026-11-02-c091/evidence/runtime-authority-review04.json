@@ -1,0 +1,25 @@
+{
+  "schema_version": "ontokin.c091-independent-runtime-authority-review/1",
+  "timestamp_utc": "2026-11-03T00:14:58.887451+00:00",
+  "reviewed_commit": "5028dac5030bd75ea7c90a3ac7f1c31d73c93023",
+  "status": "narrow_correction_review_passed_release_still_blocked",
+  "files": [
+    {
+      "path": "ontokin/torque_runtime.py",
+      "sha256": "9868c43a0e91fd0f8ea96faf702fa593c3a217c7321f23403914a4c0eb248a54"
+    },
+    {
+      "path": "tests/test_torque_callback_admission.py",
+      "sha256": "ad8e0673d65fa4cd0540e3cddd148dcd279576ca0d4b25efd640a937ef5335cf"
+    }
+  ],
+  "finding": "The native work callback must be the actual MethodType bound to the original shared ledger and retained native tick function. Equality with an untrusted replacement is not an ownership proof. Current fields, source revision and limits use retained native identities, preventing replacement equality from executing. Initial source duration numerator/denominator and event/location key types are explicitly native before arithmetic or comparison.",
+  "independent_probes": {
+    "path": "native-work-context-identity-2513b07-probes01.json",
+    "sha256": "d31276a61cd640bf0ffacca54afaa453e617715eaad72825ab2b90c367bd2947",
+    "cases": 6,
+    "status": "passed",
+    "scope": "Actual original callbacks replace work.external_check, started, operand/cache/operation/elapsed limits with equal-claiming foreign objects. All six refuse with exact resource reason, invoke no foreign equality/callback, retain accepted state values/owner/event index and original callback."
+  },
+  "remaining": "Separate exact-axis precision/history investigation has found an original-source work-reuse divergence and is being sealed. This narrow authority correction is not a final runtime or release approval."
+}

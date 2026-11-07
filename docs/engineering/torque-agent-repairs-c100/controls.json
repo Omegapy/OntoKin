@@ -1,0 +1,92 @@
+{
+  "scope": "Comparator-only controls. The first seven use a synthetic radius edit on historical bytes. Subsequent controls mutate a recorded product candidate.",
+  "positive": "passed",
+  "actual_radius_pair": {
+    "scope": "Configured 0.5-second product radius pair, independently mutated after publication.",
+    "before_glb_sha256": "c8402717b5fe44e64184aebb2cda6b5b955fbe0aa5e9373363064a91739af194",
+    "after_glb_sha256": "e07e8c4bb78b94bff3f5724737d1c53cc9d10e882f8802d7289ef42066d88be4",
+    "positive": "passed"
+  },
+  "negative": [
+    {
+      "mutation": "ball/POSITION",
+      "rejection": "selected POSITION differs from independently reconstructed sphere",
+      "mutant_sha256": "7cd42bc2f62925fb83e48c90bbec7ddaa78b3b5dea19c40c995e148de4b4ed28"
+    },
+    {
+      "mutation": "ball/NORMAL",
+      "rejection": "ball mesh/appearance differs",
+      "mutant_sha256": "93f281b03cfa002b550d59f461a5e842c57d67d3696b68e42874ead0ea9594c8"
+    },
+    {
+      "mutation": "sibling/POSITION",
+      "rejection": "sibling mesh/appearance differs",
+      "mutant_sha256": "3ebaa8a6748023048b35c8edd5a988151a79566604b737c9bc8b88560ae0dd08"
+    },
+    {
+      "mutation": "ball.arm.tip/TEXCOORD_0",
+      "rejection": "ball.arm.tip mesh/appearance differs",
+      "mutant_sha256": "57ee5bb30c7555a9b1f7d20567b495148eba82a2bf6c559c185650e96dab5255"
+    },
+    {
+      "mutation": "sibling.label/indices",
+      "rejection": "sibling.label mesh/appearance differs",
+      "mutant_sha256": "37575948af6910eb04b32625fbd2f7ca4a285e9bdbcd3a089535e345520256b5"
+    },
+    {
+      "mutation": "material roughness",
+      "rejection": "ball mesh/appearance differs",
+      "mutant_sha256": "8f33d80fb37f84449a6143ff2dd58e0f99b2ced7b9b5ffb687980fecefc1d6ce"
+    },
+    {
+      "mutation": "image bytes plus self-consistent image digest",
+      "rejection": "frozen PNG mismatch",
+      "mutant_sha256": "cc9213e49c77d5b40cbe40f6fda70abfa889196b5f247d1194a3279b670dd453"
+    },
+    {
+      "mutation": "remove sibling.label from active scene",
+      "rejection": "active scene root membership",
+      "mutant_sha256": "3103ce673670f4d560b5bd444b757480e1d0663c21a62ceba618396006a138f8"
+    },
+    {
+      "mutation": "reparent sibling.label",
+      "rejection": "scene node hierarchy",
+      "mutant_sha256": "f08b58d17b358ff91b6c530166bf4ec8787cedfccc2b81b05f65355caa93afab"
+    },
+    {
+      "mutation": "scale sibling.label",
+      "rejection": "sibling.label mesh/appearance differs",
+      "mutant_sha256": "784c50cb3c61759b80107a3612d674b07d1cdc919d2845bba641a93c682fc3c6"
+    },
+    {
+      "mutation": "skin sibling.label",
+      "rejection": "sibling.label mesh/appearance differs",
+      "mutant_sha256": "2c3ebebb0c7db998e696e80879cfb5379be1dc0454f8f5b4c9cf71c9bbbb7063"
+    },
+    {
+      "mutation": "weight sibling.label",
+      "rejection": "sibling.label mesh/appearance differs",
+      "mutant_sha256": "b32f312654cb5e2eaf9683fe354d6c096001b1d3754a0abbdabf95ed0738fa4f"
+    },
+    {
+      "mutation": "erase sibling.label surface",
+      "rejection": "sibling.label mesh/appearance differs",
+      "mutant_sha256": "87dc3389e1cda6b951590b12f98c8fc261753bbac9f80560ff04c7d28d21d09a"
+    },
+    {
+      "mutation": "move sibling.label surface locally",
+      "rejection": "sibling.label mesh/appearance differs",
+      "mutant_sha256": "a59ea0360fe260e8380e461a6cca77af99c730ced6534a90726a61cbc1d060a0"
+    },
+    {
+      "mutation": "replace sibling.label top material region",
+      "rejection": "sibling.label mesh/appearance differs",
+      "mutant_sha256": "a7b1445e4deadc159f277fd8a99cf75dedd76f3e3d67aff3d607a33d54439329"
+    },
+    {
+      "mutation": "self-consistent false declaration end offset",
+      "rejection": "frozen declaration byte span",
+      "mutant_sha256": "db293f24ea51787a72d3009fa5e9d4bc43b0af852d81caf8a8a028fca4506aea"
+    }
+  ]
+}

@@ -1,0 +1,340 @@
+{
+  "schema_version": "ontokin.c091-integrated-blocked-checkpoint-review/1",
+  "status": "focused_checks_passed_canonical_history_blocker_reproduced",
+  "source_commit": "8190ed7f0f9e1fbd908ec6f01c63ec53ccd51508",
+  "implementation_identity": {
+    "name": "ontokin-reference",
+    "version": "0.4.0",
+    "source_code_sha256": "sha256:b19444604168bb5be808870c3940f67dd96e05cbf3e01d5d61947de1101859b4"
+  },
+  "utc": "2026-11-03T05:05:40.650958+00:00",
+  "actual_checks": {
+    "focused_runtime_native_path_methods": 40,
+    "focused_seconds": 6.092,
+    "focused_exit_code": 0,
+    "public_history_driver_exit_code": 0,
+    "decisive_history_divergence": "history_divergence_reproduced",
+    "cold_operations": 16971,
+    "warm_cumulative_operations": 40969,
+    "source_modules_unchanged": 188,
+    "all_source_bytes_equal_pinned_git_commit": true,
+    "tracked_worktree_unchanged": true,
+    "inherited_nine_byte_identical_to_c090": true,
+    "source_agent_review_files_identical": 20,
+    "cache_review_files_identical": 8,
+    "auditor_bytes_identical": true
+  },
+  "commands": [
+    {
+      "cwd": "/workspace/scratch/b46faa606e44/c091-closing-source",
+      "environment": {
+        "PYTHONPATH": "/workspace/scratch/b46faa606e44/c091-closing-source:/workspace/scratch/b46faa606e44/c091-closing-source/tests"
+      },
+      "argv": [
+        "python",
+        "-m",
+        "unittest",
+        "-v",
+        "test_torque_callback_admission",
+        "test_torque_recording_paths",
+        "test_torque_runtime"
+      ],
+      "stdout_and_stderr": "focused-guards.log",
+      "exit_code": 0
+    },
+    {
+      "cwd": "/workspace/scratch/b46faa606e44/c091-closing-source",
+      "argv": [
+        "python",
+        "/workspace/scratch/b46faa606e44/c091-evidence/reference/reproduce_axis_history_public.py",
+        "/workspace/scratch/b46faa606e44/c091-closing-source",
+        "/workspace/scratch/b46faa606e44/c091-evidence/reference/axis-completeness-review/same_source_history.ok",
+        "/workspace/scratch/b46faa606e44/c091-evidence/runtime/integrated-blocked-checkpoint-attempt02/public-history.json"
+      ],
+      "stdout_and_stderr": "public-history.log",
+      "exit_code": 0
+    }
+  ],
+  "canonical_blocker": {
+    "entry_sha256": "8d02d0fb3ca61f275bb85f019a45451c34e89925e488e7d2236432b6085fc27e",
+    "program_revision": "sha256:a2e3fb4fc44349355ede9480cc35f5d699663de084e5bbbcd010d143aedb3b1e",
+    "cold": "Public evaluate_prefix at1 accepts after with exact zero omega.",
+    "warm": "Public evaluate_prefix at16384 succeeds, then adjacent same-model/same-work prefix1 refuses before with OKL-E-FRAME/incoming_axis and omega_z=2^-96.",
+    "budget": {
+      "max_operations": 100000,
+      "max_elapsed_ms": 30000
+    },
+    "private_cache_or_plan_access_between_calls": false,
+    "source_or_callback_mutation_between_calls": false,
+    "rule_change_performed": false
+  },
+  "component_review_binding": {
+    "source-agent-independent-review02.json": {
+      "review_sha256": "43b75a6322148cebfc8a7a06fd3f860576bfbeef0bef6183a0e9d8ed2665ceb3",
+      "reviewed_commit": "c475a9356d072916318a562d6d1b2b64279809f3",
+      "comparisons": [
+        {
+          "path": "ontokin/syntax22.py",
+          "reviewed_sha256": "50b526c552e92b984e3e33b159d128a2e973c71415cbd2214da526397f0a41a1",
+          "integrated_sha256": "50b526c552e92b984e3e33b159d128a2e973c71415cbd2214da526397f0a41a1",
+          "equal": true
+        },
+        {
+          "path": "ontokin/syntax02.py",
+          "reviewed_sha256": "e150a05d763318766094d396a0063f23e6f356781d0324a67448b11b42e37482",
+          "integrated_sha256": "e150a05d763318766094d396a0063f23e6f356781d0324a67448b11b42e37482",
+          "equal": true
+        },
+        {
+          "path": "ontokin/profile_capabilities.py",
+          "reviewed_sha256": "389fcde88dcd0ee5ae456ffc7443df3559f14e4a4dcbbe796bcc641170abde6a",
+          "integrated_sha256": "389fcde88dcd0ee5ae456ffc7443df3559f14e4a4dcbbe796bcc641170abde6a",
+          "equal": true
+        },
+        {
+          "path": "ontokin/linker.py",
+          "reviewed_sha256": "1a9c65d0b6dc94e94cd36f88397235414acaf15ac0788481fc65c714110bcad1",
+          "integrated_sha256": "1a9c65d0b6dc94e94cd36f88397235414acaf15ac0788481fc65c714110bcad1",
+          "equal": true
+        },
+        {
+          "path": "ontokin/validator.py",
+          "reviewed_sha256": "c48a52c4a0da85bc414480fa7c7a68de3de917dd03b33dcee0eecf3e7a4f84e1",
+          "integrated_sha256": "c48a52c4a0da85bc414480fa7c7a68de3de917dd03b33dcee0eecf3e7a4f84e1",
+          "equal": true
+        },
+        {
+          "path": "ontokin/values.py",
+          "reviewed_sha256": "4fff5edda701aba27656561aa3fc3a61678ba228e1715bc8b5f43d0f104b9c6d",
+          "integrated_sha256": "4fff5edda701aba27656561aa3fc3a61678ba228e1715bc8b5f43d0f104b9c6d",
+          "equal": true
+        },
+        {
+          "path": "ontokin/construction.py",
+          "reviewed_sha256": "d0ccd8d5c93060906f9032fabf37f7fe01561eccb027fad8f084611ddc6bb72c",
+          "integrated_sha256": "d0ccd8d5c93060906f9032fabf37f7fe01561eccb027fad8f084611ddc6bb72c",
+          "equal": true
+        },
+        {
+          "path": "ontokin/torque_source.py",
+          "reviewed_sha256": "20499e8cf2a42b2200566c9a1dfd059926facea62bc8aec2eaa8c37b5766a1e1",
+          "integrated_sha256": "20499e8cf2a42b2200566c9a1dfd059926facea62bc8aec2eaa8c37b5766a1e1",
+          "equal": true
+        },
+        {
+          "path": "ontokin/program_runtime.py",
+          "reviewed_sha256": "7eb6c97fcdc548dd4f0fa05e08481d8481288d5bd42b1ce9cab7ddb9b5ee6c77",
+          "integrated_sha256": "7eb6c97fcdc548dd4f0fa05e08481d8481288d5bd42b1ce9cab7ddb9b5ee6c77",
+          "equal": true
+        },
+        {
+          "path": "ontokin/program_bindings.py",
+          "reviewed_sha256": "e060ca4b154e6e0afef037850055891d9f55f742413b7b39a1261270905c37c4",
+          "integrated_sha256": "e060ca4b154e6e0afef037850055891d9f55f742413b7b39a1261270905c37c4",
+          "equal": true
+        },
+        {
+          "path": "ontokin/torque_program_runtime.py",
+          "reviewed_sha256": "bd5b76c1bacecbf375efb54f00eb875c82babf895fd5a3660145532d304d3d9a",
+          "integrated_sha256": "bd5b76c1bacecbf375efb54f00eb875c82babf895fd5a3660145532d304d3d9a",
+          "equal": true
+        },
+        {
+          "path": "ontokin/torque_protocol.py",
+          "reviewed_sha256": "60cd367afe18bf83b62139ff98dfd2cb87f44ed84ac7865a70c07d99bc52515e",
+          "integrated_sha256": "60cd367afe18bf83b62139ff98dfd2cb87f44ed84ac7865a70c07d99bc52515e",
+          "equal": true
+        },
+        {
+          "path": "ontokin/torque_agent.py",
+          "reviewed_sha256": "4b79853d9254d587aa7d4ab6fdfb44990046f897ca5df993c529c258bac1bf96",
+          "integrated_sha256": "4b79853d9254d587aa7d4ab6fdfb44990046f897ca5df993c529c258bac1bf96",
+          "equal": true
+        },
+        {
+          "path": "ontokin/torque_agent_catalog.py",
+          "reviewed_sha256": "2c0678dc6c16e7329450d07091433d24549d4bcda915dc3b5a0e5ec71a2ca767",
+          "integrated_sha256": "2c0678dc6c16e7329450d07091433d24549d4bcda915dc3b5a0e5ec71a2ca767",
+          "equal": true
+        },
+        {
+          "path": "ontokin/torque_store.py",
+          "reviewed_sha256": "053c808304263bcc3bafbd32971e6541553fd772f41836c0a416921cf645dd82",
+          "integrated_sha256": "053c808304263bcc3bafbd32971e6541553fd772f41836c0a416921cf645dd82",
+          "equal": true
+        },
+        {
+          "path": "ontokin/torque_artifacts.py",
+          "reviewed_sha256": "57d1a84b7dc193a9050839350d4ec80e4a7ee0451611b17e314efc464aec902e",
+          "integrated_sha256": "57d1a84b7dc193a9050839350d4ec80e4a7ee0451611b17e314efc464aec902e",
+          "equal": true
+        },
+        {
+          "path": "ontokin/torque_json_limits.py",
+          "reviewed_sha256": "a78f05df574ff89114c7d3578b7c261edf9d5c738c212ffa242684fc99d301bb",
+          "integrated_sha256": "a78f05df574ff89114c7d3578b7c261edf9d5c738c212ffa242684fc99d301bb",
+          "equal": true
+        },
+        {
+          "path": "ontokin/agent_cli.py",
+          "reviewed_sha256": "493c985b453ef2e5b7ec36ec5564fdb9cd2713547377faa45e87b28e9acb346e",
+          "integrated_sha256": "493c985b453ef2e5b7ec36ec5564fdb9cd2713547377faa45e87b28e9acb346e",
+          "equal": true
+        },
+        {
+          "path": "ontokin/cli.py",
+          "reviewed_sha256": "413362c0dcba224c270d98a476ff59aa8dd2c5cd86a4a6af8125f2cebab850ee",
+          "integrated_sha256": "413362c0dcba224c270d98a476ff59aa8dd2c5cd86a4a6af8125f2cebab850ee",
+          "equal": true
+        },
+        {
+          "path": "ontokin/budget_runtime.py",
+          "reviewed_sha256": "94889c77876710b5f87d04586302c0ca96473dd0f7dc503101d2b404604b7a79",
+          "integrated_sha256": "94889c77876710b5f87d04586302c0ca96473dd0f7dc503101d2b404604b7a79",
+          "equal": true
+        }
+      ]
+    },
+    "cache-store-independent-review01.json": {
+      "review_sha256": "be3f44076eed4c27db897dbcfc53d20bd6831da343bd10dbe188d5c198b23823",
+      "reviewed_commit": "8594a3875f405c1a78a588ba534a9b8fda9ed738",
+      "comparisons": [
+        {
+          "path": "ontokin/torque_store.py",
+          "reviewed_sha256": "053c808304263bcc3bafbd32971e6541553fd772f41836c0a416921cf645dd82",
+          "integrated_sha256": "053c808304263bcc3bafbd32971e6541553fd772f41836c0a416921cf645dd82",
+          "equal": true
+        },
+        {
+          "path": "ontokin/torque_artifacts.py",
+          "reviewed_sha256": "57d1a84b7dc193a9050839350d4ec80e4a7ee0451611b17e314efc464aec902e",
+          "integrated_sha256": "57d1a84b7dc193a9050839350d4ec80e4a7ee0451611b17e314efc464aec902e",
+          "equal": true
+        },
+        {
+          "path": "ontokin/torque_agent.py",
+          "reviewed_sha256": "4b79853d9254d587aa7d4ab6fdfb44990046f897ca5df993c529c258bac1bf96",
+          "integrated_sha256": "4b79853d9254d587aa7d4ab6fdfb44990046f897ca5df993c529c258bac1bf96",
+          "equal": true
+        },
+        {
+          "path": "ontokin/torque_protocol.py",
+          "reviewed_sha256": "60cd367afe18bf83b62139ff98dfd2cb87f44ed84ac7865a70c07d99bc52515e",
+          "integrated_sha256": "60cd367afe18bf83b62139ff98dfd2cb87f44ed84ac7865a70c07d99bc52515e",
+          "equal": true
+        },
+        {
+          "path": "ontokin/texture_agent.py",
+          "reviewed_sha256": "888931c5ca59af893ffdbd49f28bc3749f88c1715352393ca72c1e05dda1538a",
+          "integrated_sha256": "888931c5ca59af893ffdbd49f28bc3749f88c1715352393ca72c1e05dda1538a",
+          "equal": true
+        },
+        {
+          "path": "ontokin/texture_store.py",
+          "reviewed_sha256": "3578d0bbb4b15ac0f2ae789da028f629b16e32243e6cb934b1a45f08bdb4056c",
+          "integrated_sha256": "3578d0bbb4b15ac0f2ae789da028f629b16e32243e6cb934b1a45f08bdb4056c",
+          "equal": true
+        },
+        {
+          "path": "ontokin/agent_store.py",
+          "reviewed_sha256": "6a0b0a0a739066b7ecf882f9074d067cf4c0e37a05497b9035113228b6f4598a",
+          "integrated_sha256": "6a0b0a0a739066b7ecf882f9074d067cf4c0e37a05497b9035113228b6f4598a",
+          "equal": true
+        },
+        {
+          "path": "ontokin/budget_agent.py",
+          "reviewed_sha256": "612977cbbc854d29cc84aa8eaa9dc1268a86abcea96a94d24d02bdb966a4e54e",
+          "integrated_sha256": "c6fd7a75d697a0b8760d9ed1b74ffbf4dbf4967b4ecadd3a1167296cd6dad4fa",
+          "equal": false
+        },
+        {
+          "path": "ontokin/torque_json_limits.py",
+          "reviewed_sha256": "a78f05df574ff89114c7d3578b7c261edf9d5c738c212ffa242684fc99d301bb",
+          "integrated_sha256": "a78f05df574ff89114c7d3578b7c261edf9d5c738c212ffa242684fc99d301bb",
+          "equal": true
+        }
+      ]
+    }
+  },
+  "auditor_binding": {
+    "file": "tools/audit_torque_artifact_loop.py",
+    "sha256": "f682f7afb17691b5f3413bf219fd56aab412da70ed5dc82a40b68dce486b7383",
+    "reviewed_commit": "f95b9d29abb514bdd167d8d9fdc717d25224097d"
+  },
+  "cache_dependency_difference": "Only inherited budget_agent.py differs from cache review8594a38: ae91606 native clock execution-authority tuple. Cache review remains component scoped; integrated artifact repeat gate is separate.",
+  "inherited_nine": [
+    {
+      "path": "ontokin/reach_numeric.py",
+      "predecessor_sha256": "70f47e092c892fc4909b00d1af75d33aea9145dd0313248bb76f7cd2578d31a9",
+      "integrated_sha256": "70f47e092c892fc4909b00d1af75d33aea9145dd0313248bb76f7cd2578d31a9",
+      "byte_identical": true
+    },
+    {
+      "path": "ontokin/reach_kinematics.py",
+      "predecessor_sha256": "685c8fa0f2dce8d280caeec77359fa0294e1e9fcd13db676c00a3188a2ca7923",
+      "integrated_sha256": "685c8fa0f2dce8d280caeec77359fa0294e1e9fcd13db676c00a3188a2ca7923",
+      "byte_identical": true
+    },
+    {
+      "path": "ontokin/reach_pose.py",
+      "predecessor_sha256": "e1ec6bd98184900a5637b05fce1c0066820fa9b9f159c89f57ea7c1364167013",
+      "integrated_sha256": "e1ec6bd98184900a5637b05fce1c0066820fa9b9f159c89f57ea7c1364167013",
+      "byte_identical": true
+    },
+    {
+      "path": "ontokin/reach_phase.py",
+      "predecessor_sha256": "e1904fa4b05719b72a56c6d35f653836250cb455a39cb5d191c6dcc58251421c",
+      "integrated_sha256": "e1904fa4b05719b72a56c6d35f653836250cb455a39cb5d191c6dcc58251421c",
+      "byte_identical": true
+    },
+    {
+      "path": "ontokin/reach_runtime.py",
+      "predecessor_sha256": "fb38864a9ee73a1f00a1c72366305d95105b2486922d61f6606611fb435600e6",
+      "integrated_sha256": "fb38864a9ee73a1f00a1c72366305d95105b2486922d61f6606611fb435600e6",
+      "byte_identical": true
+    },
+    {
+      "path": "ontokin/reach_export.py",
+      "predecessor_sha256": "b500c799369c37b928a959923c3e1a6b14e7312c25b1b10ccd8af266131352fb",
+      "integrated_sha256": "b500c799369c37b928a959923c3e1a6b14e7312c25b1b10ccd8af266131352fb",
+      "byte_identical": true
+    },
+    {
+      "path": "ontokin/reach_recording_fast.py",
+      "predecessor_sha256": "bbe0a389f633dd4e6974538b17d2f92d8ed6658b8078ca0ae666fa3df6a4391e",
+      "integrated_sha256": "bbe0a389f633dd4e6974538b17d2f92d8ed6658b8078ca0ae666fa3df6a4391e",
+      "byte_identical": true
+    },
+    {
+      "path": "ontokin/reach_recording_capture.py",
+      "predecessor_sha256": "30a3747ced90a5e5e9aa3a7326c6faeebc1ce80bb615993ea380d3597549e085",
+      "integrated_sha256": "30a3747ced90a5e5e9aa3a7326c6faeebc1ce80bb615993ea380d3597549e085",
+      "byte_identical": true
+    },
+    {
+      "path": "ontokin/reach_transfer_bounds.py",
+      "predecessor_sha256": "46a4012276eeb6b7024097cca4250a6777042152bf18cda733529ba7d3723d6b",
+      "integrated_sha256": "46a4012276eeb6b7024097cca4250a6777042152bf18cda733529ba7d3723d6b",
+      "byte_identical": true
+    }
+  ],
+  "source_context_receipt": "context-before.json",
+  "full_release": false,
+  "goal_complete": false,
+  "main_merge_authorized_by_this_receipt": false,
+  "next_step": "Separately reviewed semantic amendment resolving exact source-clock canonical evaluation, inherited-route preservation and the independent source predicate; retain the failure and frozen authority.",
+  "scope_limits": [
+    "Focused regression results do not establish final integrated export or full artifact-loop delivery gates.",
+    "All20 frontend/interface review bytes match. The historical cache/store review has eight exact files and one explicit native-clock dependency change; no silent package-equivalence claim.",
+    "The original preparation failure on the declared untracked dependency link is retained in attempt01; no product or test failure was concealed."
+  ],
+  "evidence_sha256": {
+    "context-before.json": "9441b94b118b446adb8210f65f98b4458d54d70661953a837de620c1087f217b",
+    "focused-guards.log": "b6a424194f9310a35cf833af0fdc8090bbba73f05db87796a33c055119a9ed44",
+    "public-history.json": "e34b51afb9b854d376217b7a40223c18face2cadfcfe9d24f34d9e9a494f4566",
+    "public-history.log": "e6ff006fc051c01691f9e9fb81359950fa90e0f28aff8e02d96caae620ab9a8f",
+    "cache-budget-agent-dependency.diff": "6f88a419c823729ee4c29b41d0e89eb6a8db4f4f160c546154589df09eaaaf2f",
+    "same_source_history.ok": "8d02d0fb3ca61f275bb85f019a45451c34e89925e488e7d2236432b6085fc27e",
+    "reproduce_axis_history_public.py": "d45f9f92d4848708b7c8478806074b0349a88976ad4123c7865d362d82e5b5d0"
+  }
+}

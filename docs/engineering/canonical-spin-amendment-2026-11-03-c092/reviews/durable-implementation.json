@@ -1,0 +1,220 @@
+{
+  "actual_current_evidence": {
+    "closed_schema_checks": 4,
+    "complete_current_a08_artifact": "NONE: zero retained artifact rows and no complete current A08 GLB.",
+    "create": {
+      "elapsed_ms": 1096.6526629999862,
+      "operations": 7865,
+      "status": "succeeded"
+    },
+    "database": {
+      "bytes": 131072,
+      "integrity_check": "ok",
+      "path": "/workspace/scratch/383ae78f6be4/c092-reviews/recording-durable/implementation/descriptor-probes-draft03-attempt03/actual-a08-attempt01/store/torque-program-agent.sqlite3",
+      "row_counts": {
+        "artifacts": 0,
+        "projects": 1,
+        "requests": 2,
+        "runs": 0,
+        "sources": 1
+      },
+      "sha256": "917648eafa39c59430156e995898c37cb0bb773c8de8e25b96b56e7cae138952",
+      "unchanged_by_read_only_inspection": true
+    },
+    "export": {
+      "budget_reason": "execution_deadline_exceeded",
+      "code": "OKL-E-RESOURCE",
+      "diagnostic_elapsed_ms": 30000.312715999826,
+      "effective_caps": {
+        "max_elapsed_ms": 30000,
+        "max_operations": 1000000
+      },
+      "host_caps": {
+        "max_elapsed_ms": 30000,
+        "max_operations": 1000000
+      },
+      "operations": 189856,
+      "reported_budget_elapsed_ms": 30001.01627999902,
+      "source_caps": {
+        "max_elapsed_ms": 30000,
+        "max_operations": 1000000
+      },
+      "stage": "recording_export_readback",
+      "status": "failed"
+    },
+    "retained_payload_response_texts": "Exact actual create and failed-export request/response text equals the closed database rows."
+  },
+  "actual_current_implementation": {
+    "name": "ontokin-reference",
+    "source_code_sha256": "sha256:36ee084ce33a200cbfc38833f801c053562678c371487dcb5e1a23495b95898c",
+    "version": "0.4.0"
+  },
+  "adopted_manifest_sha256": "aa0c810dbe50dda1c55256f0cbe1f6c9373439b2e68464a59570022f810fbdd7",
+  "binding_method": "The original failed A08 ran in an isolated uncommitted draft. All 189 sorted ontokin/*.py names and byte hashes match the published candidate exactly, the independently recomputed actual engine package digest matches its recorded service identity, and all A08 source/options inputs and source/destination basis files match. The original attempt is retained without relabeling; a separate binding receipt establishes applicability. No identical failure was rerun solely for commit metadata.",
+  "candidate_commit": "68898e9b73efd20b37842897cbdfb2f61d4801ca",
+  "candidate_tree": "eb6ff3fbe4694866f11dae988def4c7b1498524b",
+  "current_uncompleted_gates": [
+    "Complete current A08 production export and returned artifact reconstruction under original 1,000,000-operation / 30,000-ms source and host limits.",
+    "Final-engine complete cross-version durable runner covering old queued/run/edit/inspect/artifact fences, exact historic idempotence, current reset/validation, new full export/retrieval, and close/reopen continuation.",
+    "All 16 original frozen Agent workflows and required artifact chunk cases; prior 65,536-byte reconstruction did not cover the complete 1-byte and 17-byte loops."
+  ],
+  "decision": "BLOCK_CURRENT_AGENT_DELIVERY_AND_COMPLETE_DURABLE_ACCEPTANCE",
+  "earlier_actual_evidence": {
+    "actual_implementation": {
+      "name": "ontokin-reference",
+      "source_code_sha256": "sha256:bd862d4631dac4b41ac7b407c155e1f39cfabe44be5ddab8c0f4a8487ca49e5b",
+      "version": "0.4.0"
+    },
+    "candidate_commit": "8762e740abd5e8175d015fb5c15b36fe0fbcbff6",
+    "candidate_tree": "538597472911b10820780ab1b152898eee5a3131",
+    "closed_schema_checks": 192,
+    "compatibility_checks": 182,
+    "compatibility_exchanges": 57,
+    "limitation": "These successful actual old/new tests and their scoped approval apply only to candidate02 8762e740. They remain evidence of the prior implementation and are not carried forward as runtime approval of candidate03.",
+    "new_artifact_bytes": 2447148,
+    "new_artifact_sha256": "c57a096559428b9c7278f23d0e0b0fa80768fd95a4e8bbfd954567dfe8fe541f",
+    "old_full_retrieval_checks": 122,
+    "old_full_retrieval_exchanges": 38
+  },
+  "evidence_bindings": [
+    {
+      "bytes": 45856,
+      "path": "candidate03-bindings01/RESULT.json",
+      "sha256": "ad7789b8d75e5c5387514fa08e66c9695865bfdadfe3b5122e13f29d1664ab68"
+    },
+    {
+      "bytes": 6651,
+      "path": "bind_candidate03_evidence.py",
+      "sha256": "d4ccaeeaa1f8ec129c09400a74caeb1008950dd6fa931fb23220e8af67c262a9"
+    },
+    {
+      "bytes": 1231,
+      "path": "descriptor-probes-draft03-attempt03/GUARD-MATRIX-SUMMARY.json",
+      "sha256": "396d53bc595292875a8de6a05fa7e191bb199755d5ab343bb723504572348773"
+    },
+    {
+      "bytes": 42067,
+      "path": "descriptor-probes-draft03-attempt03/actual-a08-attempt01/RESULT.json",
+      "sha256": "dd1353885d2e9a3470d3104b1e98f4117bc32f987d2899810f2877283327e21c"
+    },
+    {
+      "bytes": 82685,
+      "path": "descriptor-probes-draft03-attempt03/actual-a08-attempt01/create.json",
+      "sha256": "93bd0c0d36b76386299df963cbbc481ea564b4245906808046d1e184606d71ee"
+    },
+    {
+      "bytes": 8334,
+      "path": "descriptor-probes-draft03-attempt03/actual-a08-attempt01/export.json",
+      "sha256": "3b9dc58cce10bcd5bd002645a48c56b8fdbffb0dd6203165a1359394ae48c85c"
+    },
+    {
+      "bytes": 23790,
+      "path": "descriptor-probes-draft03-attempt03/actual-a08-integrity-attempt02/RESULT.json",
+      "sha256": "807b0bde41f351a718770a263499513aec839fd34e5ef9edd9067db017708bf0"
+    },
+    {
+      "bytes": 571,
+      "path": "descriptor-probes-draft03-attempt03/A08-INTEGRITY-INSPECTION-ATTEMPT01.json",
+      "sha256": "6e91358847179dbc3d288dc1d1479f05fc3e269ccfe859090b1c0370f7f5b042"
+    },
+    {
+      "bytes": 17504,
+      "path": "descriptor-probes-draft03-attempt03/A08-DIAGNOSTIC-PROFILE-SUMMARY.json",
+      "sha256": "db8147edfa52cebf329f336b0bdcecb8b7278f288d1c35e483948f67f898d4da"
+    },
+    {
+      "bytes": 9228,
+      "path": "IMPLEMENTATION-DURABLE-REVIEW.json",
+      "sha256": "cb85bb790c8e8536998604fdbeb31b42a532bf619483deda5e7154610f94cbf8"
+    },
+    {
+      "bytes": 15839,
+      "path": "actual-compatibility01/RESULT.json",
+      "sha256": "64f73970c1cfa2429b868b5035a7e6a4383274b24f098891d6a41be332b3dacf"
+    },
+    {
+      "bytes": 29473,
+      "path": "actual-old-retrieval01/RESULT.json",
+      "sha256": "8ddcf861de7e16249889ddda4e2254047b567045eb991d001dce0ec25f938c12"
+    },
+    {
+      "bytes": 62588,
+      "path": "actual-closed-schemas01/RESULT.json",
+      "sha256": "ac0cdd4476b45351249a75b8a0d2dd9bc1944730eddb586fa30efa9975d23c88"
+    },
+    {
+      "bytes": 5049,
+      "path": "probe_actual_a08_export.py",
+      "sha256": "f14f0327939f93a54c0c5e026d1d24109d78904e8bd3d6d083fd79fb85580b85"
+    },
+    {
+      "bytes": 5232,
+      "path": "check_a08_failure_integrity.py",
+      "sha256": "9a4c021d21fb1cfe068aa041504ce4a7489ffd369a90dbc914c8ee03d40a6c0a"
+    }
+  ],
+  "guard_evidence": {
+    "foreign_getter_or_body_calls": 0,
+    "known_probes": 31,
+    "safe_refusals": 31,
+    "scope": "Known helper descriptors, helper code/defaults, direct recording dispatch, runtime guard entry, and runtime storage descriptor regressions; this is not a claim of a hostile-interpreter sandbox."
+  },
+  "independent_cli_native_gate": "The final-pin 67 CLI exports and 36 native destination variants are separate recording acceptance gates. Their results belong in the recording review and cannot replace the failed actual Agent A08 gate.",
+  "next_required_work": "Repair the concrete original-bound callback guard cost without changing source/host allowances, frozen inputs, predicates, or numerical method. Then rerun complete current durable and original Agent acceptance on the repaired exact candidate. Preserve the original deadline failures and known guard regressions.",
+  "preserved_policy_findings_from_candidate02": [
+    {
+      "observed": "Exact retained historical response; original payload/response texts and engine remain unchanged.",
+      "operation": "Same canonical payload with original completed old request id"
+    },
+    {
+      "observed": "OKL-E-REQUEST-ID refusal.",
+      "operation": "Changed payload using original completed request id"
+    },
+    {
+      "observed": "OKA-E-ENGINE refusal; no numerical reinterpretation.",
+      "operation": "Queued old-engine request under actual new engine"
+    },
+    {
+      "observed": "OKL-E-SAMPLE refusal.",
+      "operation": "Continue old run or inspect old numerical run state through a fresh request"
+    },
+    {
+      "observed": "OKA-E-ENGINE refusal. Existing accepted state and all old source rows remain exact. The documented snapshot-before-gate lifecycle adds only the independently identified unaccepted magnitude candidate, with accepted_once=0.",
+      "operation": "Edit against prior accepted implementation identity"
+    },
+    {
+      "observed": "OKA-E-STORE-INTEGRITY refusal; old completed artifact-read request remains exactly idempotent.",
+      "operation": "Fresh request to read old artifact under actual new engine"
+    },
+    {
+      "observed": "Succeeded with actual current implementation. Reset creates a distinct current run; current validation refreshes acceptance without rewriting the old run.",
+      "operation": "Deliberate current reset, constructed validation, and evaluation"
+    },
+    {
+      "observed": "Succeeded. Exact 2,447,148-byte new GLB reconstructed using 38 returned 65,536-byte chunks, exact EOF empty, past EOF refused. Independent complete supplied-byte validation accepts current basis.",
+      "operation": "New production export and complete artifact reads"
+    },
+    {
+      "observed": "Exact current historical export response on retry; current run resumes to 1 second. Old run/artifact and all original terminal request rows remain exact.",
+      "operation": "Close/reopen current store, current export retry, and current run continuation"
+    }
+  ],
+  "retention_rules": "Original C091 baseline and candidate02 successes remain unchanged. The actual failed current store legitimately contains a project/source and two terminal request receipts. No whole-store byte equality after service use is claimed; only this later read-only inspection left its 131,072-byte closed file unchanged. Rejected edits in prior tests may legitimately add the exact unaccepted diagnostic candidate before the engine gate.",
+  "review_id": "C092-IMPLEMENTATION-AGENT-DURABLE-03",
+  "reviewed_utc": "2026-11-03T16:38:20.116254+00:00",
+  "reviewer_scope": "Independent current Agent and durable compatibility acceptance review",
+  "schema": "ontokin.c092-agent-durable-implementation-review/1",
+  "static_compatibility_policy": {
+    "basis_recipe": "Original 13 producer paths and 10 derivation paths retain their order; canonical helper and the 3 adopted derivations are appended identically by producer and independent reader. Current basis hashes are independently reconstructed, not taken from a current A08 artifact.",
+    "closed_source_agent_glb_shapes": "Existing .22 schemas retained; relevant exact bytes unchanged from C091",
+    "durable_schema": "ontokin.torque-program-agent-store/0.1",
+    "source_method": {
+      "derivation_sha256": "sha256:11a74707f182e8ffb568f6246f5fae653d5a1d4d5098a752e55d98420856c1be",
+      "implementation_sha256": "sha256:8f1b6e452cf1b4cbc28eac5947e3ffd375c0a8fa139c885cedebb5fd2a0ee3f8",
+      "method": "ontokin.source-pose-projective-dyadic-torque/0.2",
+      "name": "OntoKin controlled source poses",
+      "version": "0.4"
+    },
+    "status": "PRESERVED_BY_EXACT_CODE_AND_SCHEMA_BINDING_NOT_NEW_COMPLETE_RUNTIME_APPROVAL"
+  }
+}

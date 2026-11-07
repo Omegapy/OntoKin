@@ -23,7 +23,7 @@ from .force_export import ForcePrefixPlan, force_interval_violation, force_prefi
 from .geometry import (SPHERE_RINGS, SPHERE_SEGMENTS, Mesh, assembly_marker,
                        box_mesh, joint_marker, sphere_mesh)
 from .model import SceneModel, Vec
-from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_MEMBERSHIP_PROFILE, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, SURFACE_PROFILES, CONSTRUCTION_PROFILES
+from .profile_capabilities import BUDGET_PROFILE, EXTRUSION_PROFILE, HOLES_PROFILE, RING_LOFT_PROFILE, FRAMED_LOFT_PROFILE, POCKETS_PROFILE, TEXTURE_PROFILE, KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_PROFILE, KEYED_FILTER_PROFILE, KEYED_MERGE_PROFILE, KEYED_ZIP_PROFILE, KEYED_REKEY_PROFILE, STRING_CONCAT_PROFILE, KEYED_MEMBERSHIP_PROFILE, TORQUE_PROFILE, KEYED_REDUCTION_PROFILES, KEYED_TRANSFORM_PROFILES, TEXTURE_PROFILES, POCKETS_PROFILES, FRAMED_LOFT_PROFILES, RING_LOFT_PROFILES, HOLES_PROFILES, EXTRUSION_PROFILES, SURFACE_PROFILES, CONSTRUCTION_PROFILES
 from .json_limits import JSONLimitError
 from .surface import (LoftSection, SurfaceMaterial, RegionTriangles, SurfaceError,
                       MAX_SECTIONS, MAX_MATERIALS,
@@ -53,7 +53,8 @@ KEYED_ZIP_TARGET = "ontokin.glb/0.18"
 KEYED_REKEY_TARGET = "ontokin.glb/0.19"
 STRING_CONCAT_TARGET = "ontokin.glb/0.20"
 KEYED_MEMBERSHIP_TARGET = "ontokin.glb/0.21"
-TEXTURE_TARGETS = (TEXTURE_TARGET, KEYED_TRANSFORM_TARGET, KEYED_REDUCTION_TARGET, KEYED_FILTER_TARGET, KEYED_MERGE_TARGET, KEYED_ZIP_TARGET, KEYED_REKEY_TARGET, STRING_CONCAT_TARGET, KEYED_MEMBERSHIP_TARGET)
+TORQUE_TARGET = "ontokin.glb/0.22"
+TEXTURE_TARGETS = (TEXTURE_TARGET, KEYED_TRANSFORM_TARGET, KEYED_REDUCTION_TARGET, KEYED_FILTER_TARGET, KEYED_MERGE_TARGET, KEYED_ZIP_TARGET, KEYED_REKEY_TARGET, STRING_CONCAT_TARGET, KEYED_MEMBERSHIP_TARGET, TORQUE_TARGET)
 EXECUTION_TARGETS = (BUDGET_REACH_TARGET, EXTRUSION_TARGET, HOLES_TARGET, RING_LOFT_TARGET, FRAMED_LOFT_TARGET, POCKETS_TARGET, *TEXTURE_TARGETS)
 REACH_TARGETS = (REACH_TARGET, *EXECUTION_TARGETS)
 NATIVE_TARGETS = (SURFACE_TARGET, IMPULSE_TARGET, FORCE_TARGET, *REACH_TARGETS)
@@ -88,7 +89,7 @@ def _guard_check(check: Callable[[], None] | None) -> Callable[[], None] | None:
 
 
 def export_error(export_code: str, message: str, model: SceneModel | None = None,
-                 *, kind: str = "numeric", details: dict[str, Any] | None = None) -> None:
+                 *, kind: str = "numeric", details: dict[str, Any] | None = None, span=None) -> None:
     """Use the existing diagnostic transport, with adapter-specific details."""
     code, phase, category = {
         "numeric": ("OKL-E-NUMERIC", "evaluation", "numerical_failure"),
@@ -96,7 +97,7 @@ def export_error(export_code: str, message: str, model: SceneModel | None = None
         "resource": ("OKL-E-RESOURCE", "support", "resource_limit"),
         "options": ("OKL-E-SAMPLE", "inspection", "invalid"),
     }[kind]
-    raise OntoKinError(code, message, model.span if model else None, phase=phase,
+    raise OntoKinError(code, message, span if span is not None else model.span if model else None, phase=phase,
                        category=category, blocks=["delivered"],
                        details={"target_contract": ({"construction-0.1": CONSTRUCTION_TARGET,
                                                      "surface-0.1": SURFACE_TARGET,
@@ -104,7 +105,7 @@ def export_error(export_code: str, message: str, model: SceneModel | None = None
                                                      "force-0.1": FORCE_TARGET,
                                                      "planar-reach-0.1": REACH_TARGET,
                                                      BUDGET_PROFILE: BUDGET_REACH_TARGET, EXTRUSION_PROFILE: EXTRUSION_TARGET,
-                                                     HOLES_PROFILE: HOLES_TARGET, RING_LOFT_PROFILE: RING_LOFT_TARGET, FRAMED_LOFT_PROFILE: FRAMED_LOFT_TARGET, POCKETS_PROFILE: POCKETS_TARGET, TEXTURE_PROFILE: TEXTURE_TARGET, KEYED_TRANSFORM_PROFILE: KEYED_TRANSFORM_TARGET, KEYED_REDUCTION_PROFILE: KEYED_REDUCTION_TARGET, KEYED_FILTER_PROFILE: KEYED_FILTER_TARGET, KEYED_MERGE_PROFILE: KEYED_MERGE_TARGET, KEYED_ZIP_PROFILE: KEYED_ZIP_TARGET, KEYED_REKEY_PROFILE: KEYED_REKEY_TARGET, STRING_CONCAT_PROFILE: STRING_CONCAT_TARGET, KEYED_MEMBERSHIP_PROFILE: KEYED_MEMBERSHIP_TARGET}.get(model.profile, TARGET_CONTRACT)
+                                                     HOLES_PROFILE: HOLES_TARGET, RING_LOFT_PROFILE: RING_LOFT_TARGET, FRAMED_LOFT_PROFILE: FRAMED_LOFT_TARGET, POCKETS_PROFILE: POCKETS_TARGET, TEXTURE_PROFILE: TEXTURE_TARGET, KEYED_TRANSFORM_PROFILE: KEYED_TRANSFORM_TARGET, KEYED_REDUCTION_PROFILE: KEYED_REDUCTION_TARGET, KEYED_FILTER_PROFILE: KEYED_FILTER_TARGET, KEYED_MERGE_PROFILE: KEYED_MERGE_TARGET, KEYED_ZIP_PROFILE: KEYED_ZIP_TARGET, KEYED_REKEY_PROFILE: KEYED_REKEY_TARGET, STRING_CONCAT_PROFILE: STRING_CONCAT_TARGET, KEYED_MEMBERSHIP_PROFILE: KEYED_MEMBERSHIP_TARGET, TORQUE_PROFILE: TORQUE_TARGET}.get(model.profile, TARGET_CONTRACT)
                                                     if model is not None else TARGET_CONTRACT),
                                 "export_code": export_code, **(details or {})},
                        repair=("Use supported visual geometry and the explicitly matching model/delivery profile." if kind == "unsupported" else
@@ -688,7 +689,7 @@ def checked_contract(model: SceneModel, target_contract: str) -> str:
     expected = {TARGET_CONTRACT: "core-0.1", CONSTRUCTION_TARGET: "construction-0.1",
                 SURFACE_TARGET: "surface-0.1", IMPULSE_TARGET: "impulse-0.1", FORCE_TARGET: "force-0.1",
                 REACH_TARGET: "planar-reach-0.1", BUDGET_REACH_TARGET: BUDGET_PROFILE, EXTRUSION_TARGET: EXTRUSION_PROFILE,
-                HOLES_TARGET: HOLES_PROFILE, RING_LOFT_TARGET: RING_LOFT_PROFILE, FRAMED_LOFT_TARGET: FRAMED_LOFT_PROFILE, POCKETS_TARGET: POCKETS_PROFILE, TEXTURE_TARGET: TEXTURE_PROFILE, KEYED_TRANSFORM_TARGET: KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_TARGET: KEYED_REDUCTION_PROFILE, KEYED_FILTER_TARGET: KEYED_FILTER_PROFILE, KEYED_MERGE_TARGET: KEYED_MERGE_PROFILE, KEYED_ZIP_TARGET: KEYED_ZIP_PROFILE, KEYED_REKEY_TARGET: KEYED_REKEY_PROFILE, STRING_CONCAT_TARGET: STRING_CONCAT_PROFILE, KEYED_MEMBERSHIP_TARGET: KEYED_MEMBERSHIP_PROFILE}
+                HOLES_TARGET: HOLES_PROFILE, RING_LOFT_TARGET: RING_LOFT_PROFILE, FRAMED_LOFT_TARGET: FRAMED_LOFT_PROFILE, POCKETS_TARGET: POCKETS_PROFILE, TEXTURE_TARGET: TEXTURE_PROFILE, KEYED_TRANSFORM_TARGET: KEYED_TRANSFORM_PROFILE, KEYED_REDUCTION_TARGET: KEYED_REDUCTION_PROFILE, KEYED_FILTER_TARGET: KEYED_FILTER_PROFILE, KEYED_MERGE_TARGET: KEYED_MERGE_PROFILE, KEYED_ZIP_TARGET: KEYED_ZIP_PROFILE, KEYED_REKEY_TARGET: KEYED_REKEY_PROFILE, STRING_CONCAT_TARGET: STRING_CONCAT_PROFILE, KEYED_MEMBERSHIP_TARGET: KEYED_MEMBERSHIP_PROFILE, TORQUE_TARGET: TORQUE_PROFILE}
     if target_contract not in expected or model.profile != expected[target_contract]:
         export_error("OKE-E-SUPPORT", "The named GLB contract must explicitly match the authored semantic profile.",
                      model, kind="unsupported", details={"target_contract": target_contract,
@@ -697,7 +698,7 @@ def checked_contract(model: SceneModel, target_contract: str) -> str:
         export_error("OKE-E-SUPPORT", "The GLB adapter requires a supported, validated model.", model, kind="unsupported")
     return {TARGET_CONTRACT: "0.1", CONSTRUCTION_TARGET: "0.2", SURFACE_TARGET: "0.3",
             IMPULSE_TARGET: "0.4", FORCE_TARGET: "0.5", REACH_TARGET: "0.6",
-            BUDGET_REACH_TARGET: "0.7", EXTRUSION_TARGET: "0.8", HOLES_TARGET: "0.9", RING_LOFT_TARGET: "0.10", FRAMED_LOFT_TARGET: "0.11", POCKETS_TARGET: "0.12", TEXTURE_TARGET: "0.13", KEYED_TRANSFORM_TARGET: "0.14", KEYED_REDUCTION_TARGET: "0.15", KEYED_FILTER_TARGET: "0.16", KEYED_MERGE_TARGET: "0.17", KEYED_ZIP_TARGET: "0.18", KEYED_REKEY_TARGET: "0.19", STRING_CONCAT_TARGET: "0.20", KEYED_MEMBERSHIP_TARGET: "0.21"}[target_contract]
+            BUDGET_REACH_TARGET: "0.7", EXTRUSION_TARGET: "0.8", HOLES_TARGET: "0.9", RING_LOFT_TARGET: "0.10", FRAMED_LOFT_TARGET: "0.11", POCKETS_TARGET: "0.12", TEXTURE_TARGET: "0.13", KEYED_TRANSFORM_TARGET: "0.14", KEYED_REDUCTION_TARGET: "0.15", KEYED_FILTER_TARGET: "0.16", KEYED_MERGE_TARGET: "0.17", KEYED_ZIP_TARGET: "0.18", KEYED_REKEY_TARGET: "0.19", STRING_CONCAT_TARGET: "0.20", KEYED_MEMBERSHIP_TARGET: "0.21", TORQUE_TARGET: "0.22"}[target_contract]
 
 
 def program_metadata(model: SceneModel, *, check: Callable[[], None] | None = None) -> dict[str, Any]:
@@ -1222,7 +1223,7 @@ def _nodes(model: SceneModel, options: ExportOptions, *,
                                                                 "force-0.1": FORCE_TARGET,
                                                                 "planar-reach-0.1": REACH_TARGET,
                                                                 BUDGET_PROFILE: BUDGET_REACH_TARGET, EXTRUSION_PROFILE: EXTRUSION_TARGET,
-                                                                HOLES_PROFILE: HOLES_TARGET, RING_LOFT_PROFILE: RING_LOFT_TARGET, FRAMED_LOFT_PROFILE: FRAMED_LOFT_TARGET, POCKETS_PROFILE: POCKETS_TARGET, TEXTURE_PROFILE: TEXTURE_TARGET, KEYED_TRANSFORM_PROFILE: KEYED_TRANSFORM_TARGET, KEYED_REDUCTION_PROFILE: KEYED_REDUCTION_TARGET, KEYED_FILTER_PROFILE: KEYED_FILTER_TARGET, KEYED_MERGE_PROFILE: KEYED_MERGE_TARGET, KEYED_ZIP_PROFILE: KEYED_ZIP_TARGET, KEYED_REKEY_PROFILE: KEYED_REKEY_TARGET, STRING_CONCAT_PROFILE: STRING_CONCAT_TARGET, KEYED_MEMBERSHIP_PROFILE: KEYED_MEMBERSHIP_TARGET}.get(model.profile, SURFACE_TARGET),
+                                                                HOLES_PROFILE: HOLES_TARGET, RING_LOFT_PROFILE: RING_LOFT_TARGET, FRAMED_LOFT_PROFILE: FRAMED_LOFT_TARGET, POCKETS_PROFILE: POCKETS_TARGET, TEXTURE_PROFILE: TEXTURE_TARGET, KEYED_TRANSFORM_PROFILE: KEYED_TRANSFORM_TARGET, KEYED_REDUCTION_PROFILE: KEYED_REDUCTION_TARGET, KEYED_FILTER_PROFILE: KEYED_FILTER_TARGET, KEYED_MERGE_PROFILE: KEYED_MERGE_TARGET, KEYED_ZIP_PROFILE: KEYED_ZIP_TARGET, KEYED_REKEY_PROFILE: KEYED_REKEY_TARGET, STRING_CONCAT_PROFILE: STRING_CONCAT_TARGET, KEYED_MEMBERSHIP_PROFILE: KEYED_MEMBERSHIP_TARGET, TORQUE_PROFILE: TORQUE_TARGET}.get(model.profile, SURFACE_TARGET),
                                             "object_path": obj.path, **error.details}) from error
             charge(mesh)
             return mesh
@@ -1532,7 +1533,10 @@ def build_scene(model: SceneModel, *, options: ExportOptions | None = None,
     """Bake the explicit profile while preserving caller cancellation errors."""
     try:
         if target_contract in REACH_TARGETS:
-            from .reach_export import build_reach_scene
+            if target_contract == TORQUE_TARGET:
+                from .torque_recording import build_reach_scene
+            else:
+                from .reach_export import build_reach_scene
             return build_reach_scene(model, options=options, source_uri=source_uri,
                                      source_sha256=source_sha256, check=_guard_check(check), work=work,
                                      reach_plan=reach_plan, target_contract=target_contract)

@@ -31,9 +31,9 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from tools.storage_identity import prepare_offline_workspace
 
-SOURCE_DIRS = ("ontokin", "tests", "tools", "docs", "examples", "schemas", "prototypes", ".github")
-ROOT_FILES = ("pyproject.toml", "README.md", "AGENTS.md", "GOAL.md", "STATUS.md", "LICENSE", ".gitignore",
-              ".gitattributes", ".lfsconfig")
+SOURCE_DIRS = ("ontokin", "tests", "tools", "docs", "examples", "schemas", "prototypes", "packaging", ".github")
+ROOT_FILES = ("pyproject.toml", "README.md", "AGENTS.md", "GOAL.md", "STATUS.md", "LICENSE", "LICENSE-CODE",
+              "LICENSE-DOCS", ".gitignore", ".gitattributes", ".lfsconfig")
 IGNORED = {".git", "node_modules", "__pycache__", ".venv", "venv", ".tox", ".cache",
            ".pytest_cache", ".mypy_cache", ".ruff_cache", "build", "dist", "_build"}
 GENERATED_EXAMPLES = {

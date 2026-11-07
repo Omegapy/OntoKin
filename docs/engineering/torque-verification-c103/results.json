@@ -1,0 +1,140 @@
+{
+  "checkpoint": "C103",
+  "verificationCut": "cc7866733a71bb31bf61601c8f6b5d8fe7a0ab67",
+  "licensedMerge": "3a7f9b7541bc001808960c5da581e66a68da2f7e",
+  "packaging": {
+    "commit": "7cb961ed1ebed86eb1bbea6bafe5794660fb0518",
+    "tree": "534fe7f6050f45b1b9e3eda43f61c789e70e2878",
+    "trackedPathsAndModes": 12498,
+    "buildPath": "Source distribution from individually Git-verified files, wheel from freshly extracted source distribution",
+    "setuptools": "84.2.1",
+    "wheelBuildEpoch": 1770000000,
+    "wheelSha256": "3ec3146a30195694b6148d47a9b6d712dde50e9d21a447e345428fe2ddb934b1",
+    "matchesIndependentlyTestedWheelBytes": true,
+    "wheelMembers": 214,
+    "sdistSha256": "9bbde1a848d2ee8de5b91b820d4be169771f3fefca5e195cd8f7b3eb0fc4a5d9",
+    "sdistFiles": 559,
+    "earlierSdistSha256": "750eb564536ac4a826c5dce431c97c11170c0f5bde394782cbd207656f77572c",
+    "earlierSdistDifference": "The sole file payload difference was redundant entries for 16 existing paths in generated egg-info/SOURCES.txt. The retained archive is the clean rebuild."
+  },
+  "installedNeutralResults": [
+    {
+      "case": "p05-cancelling",
+      "outcome": "resource_limit",
+      "operations": 100001,
+      "glbBytes": 0
+    },
+    {
+      "case": "p06-zero",
+      "outcome": "resource_limit",
+      "operations": 100001,
+      "glbBytes": 0
+    },
+    {
+      "case": "p16-neutral-com-force",
+      "outcome": "resource_limit",
+      "operations": 100001,
+      "glbBytes": 0
+    },
+    {
+      "case": "p23-partial-sum-overflow-cancels",
+      "outcome": "valid",
+      "operations": 33493,
+      "glbBytes": 162952
+    },
+    {
+      "case": "p24-underflow-is-neutral",
+      "outcome": "valid",
+      "operations": 32702,
+      "glbBytes": 152480
+    },
+    {
+      "case": "p30-underflow-replacement",
+      "outcome": "valid",
+      "operations": 40587,
+      "glbBytes": 173636
+    }
+  ],
+  "inherited": {
+    "selectedFreshRoles": [
+      "membership-agent",
+      "membership-agent-reader",
+      "membership-interfaces",
+      "force-unit-controls"
+    ],
+    "ref": "C090 selected preflight",
+    "totalRolesCoveredAcrossC102C103": 15,
+    "workflows": 11,
+    "exchanges": 251,
+    "byteIdenticalMembershipGLBs": 11,
+    "independentReaderChecks": 31006,
+    "interfaceTestsPassed": 9,
+    "forceTestsPassed": 270,
+    "forceSkips": 0
+  },
+  "additionalConformance": {
+    "construction": {
+      "total": 20,
+      "passed": 19,
+      "failed": 0,
+      "pending": 1,
+      "all_adopted_cases_selected": true,
+      "case_gate_complete": false
+    },
+    "surface": {
+      "total": 12,
+      "passed": 1,
+      "failed": 0,
+      "pending": 11,
+      "all_adopted_cases_selected": true,
+      "full_gate_complete": false
+    }
+  },
+  "restart": {
+    "fullRunStarted": false,
+    "boundaryRequests": 0,
+    "scope": "Two independent rehearsals of the same offsets 0 through 31",
+    "producerArtifactBytes": 2447148,
+    "producerArtifactSHA256": "b6e235d31b6482878695a166fe12ebf3ed284ccc95addf55537dacc80ebc424c",
+    "cases": {
+      "db-ahead": {
+        "checkpointAtInterruption": 8,
+        "loggedAtInterruption": 8,
+        "persistedAtInterruption": 9,
+        "interruptedWalBytes": 395552,
+        "verifiedFinalUniqueIDs": 32,
+        "verifiedPrefixBytes": 32,
+        "prefixSHA256": "e3c93cbaa66f7e6b0b49af5b497dda3b155f00d8065d7d0f223c617d726aa4db",
+        "replayedOffsets": [
+          8
+        ],
+        "rejectedCorruptions": {
+          "missing-middle-row": "gap or wrong persisted ID/state",
+          "changed-db-only-response": "supervisor receipt mismatch",
+          "lost-crash-wal": "gap between trace and stored receipts"
+        }
+      },
+      "trace-ahead": {
+        "checkpointAtInterruption": 8,
+        "loggedAtInterruption": 12,
+        "persistedAtInterruption": 12,
+        "interruptedWalBytes": 519152,
+        "verifiedFinalUniqueIDs": 32,
+        "verifiedPrefixBytes": 32,
+        "prefixSHA256": "e3c93cbaa66f7e6b0b49af5b497dda3b155f00d8065d7d0f223c617d726aa4db",
+        "replayedOffsets": [],
+        "rejectedCorruptions": {
+          "altered-durable-tail": "trace/SQLite mismatch",
+          "changed-prefix-byte": "reconstructed prefix mismatch",
+          "torn-gzip-member": "end-of-stream"
+        }
+      }
+    }
+  },
+  "timingRatiosAlternativeOverCurrent": {
+    "dictionary": 1.6731658086746435,
+    "whole_watch": 1.462274011428936
+  },
+  "humanFirstUse": "awaiting independent participant",
+  "releaseAccepted": false
+}

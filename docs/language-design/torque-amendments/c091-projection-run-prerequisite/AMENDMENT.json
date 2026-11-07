@@ -1,0 +1,41 @@
+{
+  "schema_version": "ontokin.torque-reviewed-expectation-amendment/1",
+  "status": "proposed_pending_independent_review",
+  "case_id": "R13",
+  "frozen_manifest_sha256": "98df30158c0cd77c542d89652f5dec6b585d03451a06bf7b1baffee0fc2f02eb",
+  "original_table": {
+    "path": "docs/language-design/torque-v0.1/freeze/agent/resource-cases.json",
+    "sha256": "b5115ea1bfd075bce5fa8dce94784b96c4f74fe797dc2c534bbd76dbf2fef5ce"
+  },
+  "additions": [
+    {
+      "json_pointer": "/cases/12/additional_setup",
+      "original_present": false,
+      "value": [
+        {
+          "step": "evaluate-prefix",
+          "expected_status": "succeeded",
+          "request": {
+            "schema_version": "ontokin.agent/0.22",
+            "project_id": "c090-r13",
+            "request_id": "c090-r13-evaluate-prefix",
+            "operation": "evaluate",
+            "program_revision": "sha256:b0522100e4af2c108eadabbeb8e8d96bac663914178aeaebc8190e581deee22d",
+            "run_id": null,
+            "until_seconds": "1"
+          }
+        }
+      ]
+    },
+    {
+      "json_pointer": "/cases/12/task_request/run_id",
+      "original_present": false,
+      "value": {
+        "$response": "R13.evaluate-prefix.run_id"
+      }
+    }
+  ],
+  "all_other_expectations_unchanged": true,
+  "runtime_semantic_change": false,
+  "reason": "Timed current-state inspection requires an actual matching program run under the inherited .21 and .22 operation contract. The constructed-only frozen setup does not produce one. Add the missing independently executed prefix setup and bind the exact returned run ID; retain the original target time, selected stage, host/source allocation and interruption assertions."
+}

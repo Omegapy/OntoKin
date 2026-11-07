@@ -191,6 +191,21 @@ class LocalChecksTests(unittest.TestCase):
         self.assertFalse(summary["source_unchanged"])
         self.assertIn("changed", summary["error"])
 
+    def test_packaging_sources_and_license_notices_survive_workspace_isolation(self):
+        paths = ("packaging/installed/ontokin/__init__.py", "LICENSE", "LICENSE-CODE", "LICENSE-DOCS")
+        for name in paths:
+            source = self.root / name
+            source.parent.mkdir(parents=True, exist_ok=True)
+            source.write_text(name + "\n", encoding="utf-8")
+        self.initialize_git(self.root)
+        code, summary = self.execute([])
+        self.assertEqual(code, 0, summary)
+        recorded = {item["path"] for item in checks.inventory(self.root)["files"]}
+        self.assertTrue(set(paths) <= recorded, set(paths) - recorded)
+        self.assertEqual(summary["workspace_git"]["tracked_worktree_status"], "")
+        for name in paths:
+            self.assertEqual((self.output / "workspace" / name).read_bytes(), (self.root / name).read_bytes())
+
     def test_original_generated_inputs_and_new_json_sources_are_inventoried(self):
         manifest = self.root / "examples/visual/scene.files.json"
         manifest.write_text('{"entry": "scene.ok"}', encoding="utf-8")

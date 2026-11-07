@@ -1,0 +1,394 @@
+{
+  "additional_integrity_diagnostic": "wrong # of entries in index sqlite_autoindex_requests_1",
+  "all_original_files_directories_and_log_exact_before_after": true,
+  "bounded_recovery_review": {
+    "actual_recovery_executed_by_this_review": false,
+    "commands": [
+      {
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "tools/build_surface_agent_demo.py",
+          "--output-dir",
+          "/workspace/scratch/383ae78f6be4/c092-validation/candidate03-full-local/artifacts/surface-agent"
+        ],
+        "cwd": "/workspace/scratch/383ae78f6be4/c092-validation/candidate03-full-local/workspace",
+        "duration_seconds": 25.259,
+        "finished_at": "2026-11-03T17:14:37.776368+00:00",
+        "id": "surface-agent-build",
+        "log": "logs/surface-agent-build.log",
+        "log_identity": {
+          "bytes": 5256,
+          "sha256": "sha256:bb83bfe4523984f958787a5458a7ab4b48022100a429a13d400ca627c2f044cd"
+        },
+        "recovery_argv_template": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "tools/build_surface_agent_demo.py",
+          "--output-dir",
+          "<fresh-absent-output-root>/artifacts/surface-agent"
+        ],
+        "reports": [],
+        "requires": [],
+        "returncode": 1,
+        "started_at": "2026-11-03T17:14:12.517232+00:00",
+        "status": "failed"
+      },
+      {
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "tools/verify_surface_native.mjs",
+          "--demo-dir",
+          "/workspace/scratch/383ae78f6be4/c092-validation/candidate03-full-local/artifacts/surface-agent",
+          "--output",
+          "/workspace/scratch/383ae78f6be4/c092-validation/candidate03-full-local/reports/surface-agent-destination.json"
+        ],
+        "cwd": "/workspace/scratch/383ae78f6be4/c092-validation/candidate03-full-local/workspace",
+        "duration_seconds": 0.0,
+        "finished_at": "2026-11-03T17:14:37.777778+00:00",
+        "id": "surface-agent-format",
+        "log": "logs/surface-agent-format.log",
+        "log_identity": {
+          "bytes": 54,
+          "sha256": "sha256:f695eee8556b3d6a96c1a612f921d6c86ba1b500018a596daa068a5d83a58001"
+        },
+        "reason": "Prerequisite checks did not pass: surface-agent-build",
+        "recovery_argv_template": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "tools/verify_surface_native.mjs",
+          "--demo-dir",
+          "<fresh-absent-output-root>/artifacts/surface-agent",
+          "--output",
+          "<fresh-absent-output-root>/reports/surface-agent-destination.json"
+        ],
+        "reports": [],
+        "requires": [
+          "surface-agent-build",
+          "node-tools"
+        ],
+        "returncode": null,
+        "started_at": "2026-11-03T17:14:37.777629+00:00",
+        "status": "blocked"
+      },
+      {
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "tools/verify_surface_viewer.mjs",
+          "--demo-dir",
+          "/workspace/scratch/383ae78f6be4/c092-validation/candidate03-full-local/artifacts/surface-agent",
+          "--output-dir",
+          "/workspace/scratch/383ae78f6be4/c092-validation/candidate03-full-local/artifacts/surface-agent-browser",
+          "--fixture",
+          "palette-repaired",
+          "--fixture",
+          "composition-ordinary",
+          "--fixture",
+          "composition-generated",
+          "--fixture",
+          "rotated-release"
+        ],
+        "cwd": "/workspace/scratch/383ae78f6be4/c092-validation/candidate03-full-local/workspace",
+        "duration_seconds": 0.0,
+        "finished_at": "2026-11-03T17:16:05.386944+00:00",
+        "id": "surface-agent-browser",
+        "log": "logs/surface-agent-browser.log",
+        "log_identity": {
+          "bytes": 55,
+          "sha256": "sha256:db05d2f8e29e4981abcf674422c6395c51cca390d4ed9d2dcfcde4c1f85a5e2a"
+        },
+        "reason": "Prerequisite checks did not pass: surface-agent-format",
+        "recovery_argv_template": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "tools/verify_surface_viewer.mjs",
+          "--demo-dir",
+          "<fresh-absent-output-root>/artifacts/surface-agent",
+          "--output-dir",
+          "<fresh-absent-output-root>/artifacts/surface-agent-browser",
+          "--fixture",
+          "palette-repaired",
+          "--fixture",
+          "composition-ordinary",
+          "--fixture",
+          "composition-generated",
+          "--fixture",
+          "rotated-release"
+        ],
+        "reports": [],
+        "requires": [
+          "surface-agent-format",
+          "browser-ready"
+        ],
+        "returncode": null,
+        "started_at": "2026-11-03T17:16:05.386764+00:00",
+        "status": "blocked"
+      }
+    ],
+    "disposition": "appropriate-as-separate-diagnostic-evidence",
+    "original_per_command_timeout_seconds": 3600,
+    "requirements": [
+      "Use exactly one fresh absent private output root; do not copy the damaged store into it.",
+      "Keep original executables, source bytes, arguments and fixture list; relocate only output/report paths.",
+      "Preserve build then format then browser dependency ordering, existing node/browser prerequisite evidence, and original limits.",
+      "Preserve every command, environment, before/after source binding, log and resulting file in separately named evidence.",
+      "Do not retry a failed recovery role or run its dependent role.",
+      "Retain original full verification as failed even if separate recovery succeeds.",
+      "Review any 12 recovery captures separately from 23 original current captures; no substitution."
+    ],
+    "role_count": 3,
+    "same_cwd": "/workspace/scratch/383ae78f6be4/c092-validation/candidate03-full-local/workspace",
+    "same_recorded_environment": {
+      "PLAYWRIGHT_BROWSERS_PATH": "/tmp/c092-verification-deps/browsers",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONPATH": "/tmp/c092-verification-deps/python"
+    }
+  },
+  "candidate_head": "68898e9b73efd20b37842897cbdfb2f61d4801ca",
+  "candidate_tree": "eb6ff3fbe4694866f11dae988def4c7b1498524b",
+  "cause_established": false,
+  "cause_limits": [
+    "Retained state establishes internal page/reference inconsistency only.",
+    "No retained live WAL, SHM, rollback journal, filesystem trace, or write-order trace establishes how it arose.",
+    "A short or mixed page state is an observation, not proof of a particular truncation, process, filesystem, SQLite, or application defect.",
+    "The unchanged six inspected source files do not establish a cause or exclude effects elsewhere.",
+    "No claim connects this occurrence to historical C084/C085 failures."
+  ],
+  "completed_fixture_log_rows": 15,
+  "copied_integrity_result": "SQLITE_CORRUPT; streaming partial diagnostics retained",
+  "copied_request_lookup_result": "SQLITE_CORRUPT in both indexed and NOT INDEXED lookup",
+  "copied_sqlite_mode": "mode=ro&immutable=1; PRAGMA query_only=ON",
+  "database_identity": {
+    "bytes": 3641344,
+    "ctime_ns": 1793726075226377222,
+    "device": 27,
+    "inode": 923155,
+    "mode": "0644",
+    "mtime_ns": 1793726075226377222,
+    "sha256": "38bd71434609437073463cac4799266b128fa21d7ab5d6c6c6af933b507933d5",
+    "sqlite_magic": true
+  },
+  "dbstat_corrupted_reference_count": 29,
+  "dbstat_corrupted_references_by_tree": {
+    "artifacts": 1,
+    "requests": 25,
+    "sources": 2,
+    "sqlite_autoindex_requests_1": 1
+  },
+  "dbstat_references_beyond_file_count": 27,
+  "disposition": "original-failure-preserved-cause-unknown",
+  "evidence": {
+    "LOG-AFTER.json": {
+      "bytes": 248,
+      "sha256": "c4f18530047c716579b214f6f25cd7e87c50949214e5df20868b0849ef8a85db"
+    },
+    "LOG-BEFORE.json": {
+      "bytes": 248,
+      "sha256": "c4f18530047c716579b214f6f25cd7e87c50949214e5df20868b0849ef8a85db"
+    },
+    "ORIGINAL-AFTER.json": {
+      "bytes": 251070,
+      "sha256": "2a17a77c495addac411163e6a14560c2ff107f69a805b9304b448829cdec8faf"
+    },
+    "ORIGINAL-BEFORE.json": {
+      "bytes": 251070,
+      "sha256": "2a17a77c495addac411163e6a14560c2ff107f69a805b9304b448829cdec8faf"
+    },
+    "PRIVATE-COPIES-AFTER.json": {
+      "bytes": 894,
+      "sha256": "582e685fb3e6f0ee180d3065c56abe90f2864502f223a3f47ce0012457ff6fec"
+    },
+    "PRIVATE-COPIES-BEFORE.json": {
+      "bytes": 2221,
+      "sha256": "caef2fdc4d50a48329ffc05042ad32ff5b858bf9f0f214e19f6a63c755f149a0"
+    },
+    "RESULT.json": {
+      "bytes": 1293,
+      "sha256": "05ac3f48423b164c02a39cd3a4ddfd7f18ed4214bd120d161a8f91771194bf36"
+    },
+    "SQLITE-PAGE-DIAGNOSTICS.json": {
+      "bytes": 214545,
+      "sha256": "9c20ca252b3e868ec2eb3e6865271cafb501db65ba3cc482f2cfffb8f2ff3b7b"
+    },
+    "SQLITE-READ-ONLY-DIAGNOSTICS.json": {
+      "bytes": 157362,
+      "sha256": "bb7ccd207094352612246fd0264897414dbb26db28b890b9b851c526682e5a12"
+    },
+    "close_review.py": {
+      "bytes": 7396,
+      "sha256": "d79b1218cc8d28715377efdbd20fb54aa222e0bc1822e9db920fa809652e3f58"
+    },
+    "inspect_pages.py": {
+      "bytes": 4553,
+      "sha256": "f2f194e35b275692537d8241aa58787c2c082bcca4193ded570b0646c9cc21e8"
+    },
+    "inspect_stores.py": {
+      "bytes": 11104,
+      "sha256": "e778585cfed418940bfd387ae3d75f7d0fb863f5d212a4fb945b93db1bcfcf24"
+    },
+    "surface-agent-build.original.log": {
+      "bytes": 5256,
+      "sha256": "bb83bfe4523984f958787a5458a7ab4b48022100a429a13d400ca627c2f044cd"
+    },
+    "workflow.original.json": {
+      "bytes": 181799,
+      "sha256": "c31dc0c4bfbbc1ed23408dd3ea3d27bab2950f351f11032536bb771fec8ebc21"
+    }
+  },
+  "failed_request": {
+    "operation": "surface.mesh_page",
+    "project_id": "surface-workflow-held-out-4",
+    "response_file_absent": true,
+    "sequence": 283
+  },
+  "file_page_size": 4096,
+  "file_pages": 889,
+  "integrity_present_duplicate_reference_pages": [
+    885,
+    886
+  ],
+  "maximum_referenced_page": 1063,
+  "observed_original_wal_shm_or_journal_companions": [],
+  "original_bytes": 9946854,
+  "original_command_identity": {
+    "bytes": 20289,
+    "sha256": "3da45e5ef81fb543924518ebab24be3ba170b01cb6f4f56cc9a3868cf9ebd3fe"
+  },
+  "original_database_count": 1,
+  "original_files": 718,
+  "original_sqlite_opened": false,
+  "original_summary_identity": {
+    "bytes": 55198,
+    "sha256": "16cf8831585dfb682747d6235306adb5823975450924be077bef9991824a3c4c"
+  },
+  "original_surface_roles": [
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tools/build_surface_agent_demo.py",
+        "--output-dir",
+        "/workspace/scratch/383ae78f6be4/c092-validation/candidate03-full-local/artifacts/surface-agent"
+      ],
+      "cwd": "/workspace/scratch/383ae78f6be4/c092-validation/candidate03-full-local/workspace",
+      "duration_seconds": 25.259,
+      "finished_at": "2026-11-03T17:14:37.776368+00:00",
+      "id": "surface-agent-build",
+      "log": "logs/surface-agent-build.log",
+      "log_identity": {
+        "bytes": 5256,
+        "sha256": "sha256:bb83bfe4523984f958787a5458a7ab4b48022100a429a13d400ca627c2f044cd"
+      },
+      "reports": [],
+      "requires": [],
+      "returncode": 1,
+      "started_at": "2026-11-03T17:14:12.517232+00:00",
+      "status": "failed"
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "tools/verify_surface_native.mjs",
+        "--demo-dir",
+        "/workspace/scratch/383ae78f6be4/c092-validation/candidate03-full-local/artifacts/surface-agent",
+        "--output",
+        "/workspace/scratch/383ae78f6be4/c092-validation/candidate03-full-local/reports/surface-agent-destination.json"
+      ],
+      "cwd": "/workspace/scratch/383ae78f6be4/c092-validation/candidate03-full-local/workspace",
+      "duration_seconds": 0.0,
+      "finished_at": "2026-11-03T17:14:37.777778+00:00",
+      "id": "surface-agent-format",
+      "log": "logs/surface-agent-format.log",
+      "log_identity": {
+        "bytes": 54,
+        "sha256": "sha256:f695eee8556b3d6a96c1a612f921d6c86ba1b500018a596daa068a5d83a58001"
+      },
+      "reason": "Prerequisite checks did not pass: surface-agent-build",
+      "reports": [],
+      "requires": [
+        "surface-agent-build",
+        "node-tools"
+      ],
+      "returncode": null,
+      "started_at": "2026-11-03T17:14:37.777629+00:00",
+      "status": "blocked"
+    },
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "tools/verify_surface_viewer.mjs",
+        "--demo-dir",
+        "/workspace/scratch/383ae78f6be4/c092-validation/candidate03-full-local/artifacts/surface-agent",
+        "--output-dir",
+        "/workspace/scratch/383ae78f6be4/c092-validation/candidate03-full-local/artifacts/surface-agent-browser",
+        "--fixture",
+        "palette-repaired",
+        "--fixture",
+        "composition-ordinary",
+        "--fixture",
+        "composition-generated",
+        "--fixture",
+        "rotated-release"
+      ],
+      "cwd": "/workspace/scratch/383ae78f6be4/c092-validation/candidate03-full-local/workspace",
+      "duration_seconds": 0.0,
+      "finished_at": "2026-11-03T17:16:05.386944+00:00",
+      "id": "surface-agent-browser",
+      "log": "logs/surface-agent-browser.log",
+      "log_identity": {
+        "bytes": 55,
+        "sha256": "sha256:db05d2f8e29e4981abcf674422c6395c51cca390d4ed9d2dcfcde4c1f85a5e2a"
+      },
+      "reason": "Prerequisite checks did not pass: surface-agent-format",
+      "reports": [],
+      "requires": [
+        "surface-agent-format",
+        "browser-ready"
+      ],
+      "returncode": null,
+      "started_at": "2026-11-03T17:16:05.386764+00:00",
+      "status": "blocked"
+    }
+  ],
+  "schema": "ontokin.c092-independent-failed-surface-store-review/1",
+  "source_bindings_unchanged_since_c091": {
+    "ontokin/agent.py": {
+      "bytes": 39620,
+      "c091_native_blob": "b6de422f6c16fdc054aa50d7b463d38cfa010fe4",
+      "candidate03_native_blob": "b6de422f6c16fdc054aa50d7b463d38cfa010fe4",
+      "old_current_worktree_executed_workspace_exact": true,
+      "sha256": "a19f71b9ffad298624387c6c81222bc85683037689c877ccbf56fd310a8cd590"
+    },
+    "ontokin/agent_store.py": {
+      "bytes": 11374,
+      "c091_native_blob": "74bfb891fe034309e62338839013cd887c80bd12",
+      "candidate03_native_blob": "74bfb891fe034309e62338839013cd887c80bd12",
+      "old_current_worktree_executed_workspace_exact": true,
+      "sha256": "6a0b0a0a739066b7ecf882f9074d067cf4c0e37a05497b9035113228b6f4598a"
+    },
+    "tools/build_surface_agent_demo.py": {
+      "bytes": 32821,
+      "c091_native_blob": "d369994f3882f8ccb684c7705781a84be4cbcc5d",
+      "candidate03_native_blob": "d369994f3882f8ccb684c7705781a84be4cbcc5d",
+      "old_current_worktree_executed_workspace_exact": true,
+      "sha256": "420fcf0b621a35e02d7ac34f76ed446898a5066f92bf3f84aafc57448db60574"
+    },
+    "tools/check_local.py": {
+      "bytes": 32839,
+      "c091_native_blob": "da8c93b84ef23d8a05c16fb93111d7974a3d93f1",
+      "candidate03_native_blob": "da8c93b84ef23d8a05c16fb93111d7974a3d93f1",
+      "old_current_worktree_executed_workspace_exact": true,
+      "sha256": "1b64398d9a5a724dcec964017d8e1d86ffdef31e6d158c2175c8ccf35fb98381"
+    },
+    "tools/verify_surface_native.mjs": {
+      "bytes": 30000,
+      "c091_native_blob": "2895441713378f35b0365d8e2a8185b058957496",
+      "candidate03_native_blob": "2895441713378f35b0365d8e2a8185b058957496",
+      "old_current_worktree_executed_workspace_exact": true,
+      "sha256": "77b74bc15c606840034d50bfc266446cb96a43dd95ccfe83294401e918ba8226"
+    },
+    "tools/verify_surface_viewer.mjs": {
+      "bytes": 16165,
+      "c091_native_blob": "9b72e7ac5af738daca766d6eda0fe656d9fff8fc",
+      "candidate03_native_blob": "9b72e7ac5af738daca766d6eda0fe656d9fff8fc",
+      "old_current_worktree_executed_workspace_exact": true,
+      "sha256": "62221c96986db0549dceba4db4e3fadddd07411ec073594f8c4ab97a5edc85b1"
+    }
+  },
+  "sqlite_version": "3.53.1"
+}

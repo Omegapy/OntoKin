@@ -1,0 +1,7 @@
+# C091 grouped expression diagnostic span amendment
+
+This proposed amendment changes only the primary source range and text for frozen case `n28-torque-child-before-duration-type`. The original table, source, global freeze and failed comparison remain unchanged. The inherited parser extends the binary expression span to include its parentheses; the inherited value evaluator reports that span for division by zero. C090 SPECIFICATION sections 2 and 9 require the inherited child span.
+
+The frozen expectation accidentally omitted the parentheses. Its original byte interval is `[863,873)`; the independently reproduced inherited interval is `[862,874)`, text `(2[N*m] / 0)`. Code, message, phase, precedence, source identity, all other cases, and every budget and tolerance are unchanged. AMENDMENT.json binds the old and replacement values. A harness may overlay only this exact field after independent review passes; the frozen file itself must remain untouched.
+
+The reproduction uses the untouched C090 syntax, construction and values native blobs and an explicit .21 source witness. It establishes predecessor behavior without requiring candidate torque output. Root repeated the reproduction from a separate untouched worktree. Both observations and the actual original candidate mismatch remain retained in the C091 evidence. Independent review and publication of this separate amendment are required before treating the corrected comparison as passed.
