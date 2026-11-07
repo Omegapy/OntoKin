@@ -1,10 +1,14 @@
-# OntoKin development status — C161
-
-## C162 integration lease
-
-Owner `c162-placement-140b63d6` reserves integration of [PR #99](https://github.com/Omegapy/OntoKin/pull/99) from 2026-11-07T18:01:19Z through 2026-11-07T18:31:19Z. Base `051bd56f67c2d4fa51052e1a77ca7e3cdad0e2b5`. The work covers the oblique duct example, local geometry checker, regression tests and example guide.
+# OntoKin development status — C162
 
 ## Current checkpoint
+
+An Agent can now verify and repair the stationary duct joint at either of two authored placements. In the translated and rotated assembly, a 0.25 m local bore shift reduced the measured shared opening from 0.99999948 to 0.74999978 m². Reversing that one source edit restored all 49,736 bytes of the nominal model. The checker measures the exported triangle winding and complete inner and outer boundaries in the chosen port frame. [Run the example and inspect both views](examples/connected-duct/README.md#move-the-assembly-and-repair-the-same-opening).
+
+[PR #99](https://github.com/Omegapy/OntoKin/pull/99) integrated at [3e8168e006df](https://github.com/Omegapy/OntoKin/commit/3e8168e006df61db167367426d9b11e9276d30bf). On the merge, the six C161 controls reproduced their original artifacts and outcomes, all 35 example exchanges passed schema validation, and all 12 joint and 137 existing framed-loft unit tests passed. The stock 0.11 acceptance suite passed 69 cases and 1,036 assertions. Both transformed views passed Khronos validation. The next authoring task is to place a mispositioned straight duct against a named outlet using frames recovered from exported geometry. The separate finite-torque A08 release gates remain open.
+
+Owner `c162-placement-140b63d6` releases the C162 main integration lease on verified publication of this record.
+
+## Previous checkpoint at C161
 
 C161 adds a stationary hollow elbow and straight duct with a shared editable bore. A 0.25 m shift kept their 2 m exteriors aligned but reduced the common opening from 1.00 to 0.75 m². Agent/0.11 repaired the shift and reproduced the original 49,504-byte GLB. An out-of-bounds 2 m edit preserved the prior accepted source and artifact. Six direct exports and three Agent exports produced the expected joint checks. The wider pair measured 1.5625 m². Rolling the straight part 90° passed. Shrinking its bore or tilting its axis failed. [Source, replay and measured views](examples/connected-duct/README.md)
 
