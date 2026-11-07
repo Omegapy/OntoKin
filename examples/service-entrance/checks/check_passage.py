@@ -364,6 +364,29 @@ def select_carts(source, graph, revision, accepted, moving_cart, parked_cart):
     return moving, parked
 
 
+def exact_rotated_bounds(primitives, rotations):
+    """Bound the delivered vertices before rounding any rotated coordinate."""
+    first = rotations[0]
+    pivot = max(range(4), key=lambda i: abs(first[i]))
+    # Each product of two decoded binary32 components is exact in binary64.
+    # Proportional quaternions represent the same orientation, including q and -q.
+    require(all(all(a * key[pivot] == b * first[pivot] for a, b in zip(first, key))
+                for key in set(rotations)), 'rotation changes during the clearance sweep')
+
+    q = tuple(map(Fraction, first))
+    norm_squared = sum(c*c for c in q)
+    vertices = {p for primitive in primitives for p in primitive}
+    rotated = []
+    for point in vertices:
+        v = tuple(map(Fraction, point))
+        cross = gate.cross(q[:3], v)
+        double_cross = gate.cross(q[:3], cross)
+        # q v q^-1 uses the squared norm, so no rounded square root is needed.
+        rotated.append(tuple(x + 2 * (q[3]*a + b) / norm_squared
+                             for x, a, b in zip(v, cross, double_cross)))
+    return [list(map(op, zip(*rotated))) for op in (min, max)]
+
+
 def parked_clearance(times, tracks, bounds, parked, other):
     # For rigid boxes with fixed orientation, six signed axis gaps are affine in time.
     # Their maximum is a lower bound on surface distance. Its minimum occurs at an
@@ -452,12 +475,14 @@ def main(source, bundle, glb, width=None, moving_cart=None, parked_cart=None):
     graph, data = gate.read_glb(raw)
     moving, parked = select_carts(src, graph, 'sha256:' + digest, accepted, moving_cart, parked_cart)
     cart = moving[0]
-    times, tracks, _ = gate.read_tracks(graph, data)
+    raw_rotations = {} if parked else None
+    times, tracks, _ = gate.read_tracks(graph, data, raw_rotations=raw_rotations)
     require(set(tracks) == {(node['name'], path) for node in graph['nodes']
                             for path in ('rotation', 'translation')}, 'missing delivered pose tracks')
     original = gate.measure(raw, gate.source_dynamics(src), root_count=4 if parked else 3)
     physics = cart_source(src, moving[1])
     local_bounds = {}
+    separation_bounds = {}
     triangles = {}
     sibling_meshes = {}
     obstacle_hashes = {}
@@ -479,11 +504,13 @@ def main(source, bundle, glb, width=None, moving_cart=None, parked_cart=None):
         bounds = [list(map(op, zip(*points))) for op in (min, max)]
         require(all(high > low for low, high in zip(*bounds)), "zero-thickness mesh")
         local_bounds[name] = bounds
+        if parked:
+            separation_bounds[name] = exact_rotated_bounds(primitives, raw_rotations[name])
 
     if parked:
         require(sibling_meshes[cart] == sibling_meshes[parked[0]],
                 "parked cart mesh differs from moving cart sibling geometry")
-    parked_result = check_parked(src, parked, cart, times, tracks, local_bounds) if parked else None
+    parked_result = check_parked(src, parked, cart, times, tracks, separation_bounds) if parked else None
     crossing = score_geometry(times, tracks, local_bounds, cart)
     witnesses = surface_witnesses(times, tracks, triangles, crossing, cart)
     low, high = local_bounds[cart]
