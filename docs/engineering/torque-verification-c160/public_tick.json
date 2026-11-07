@@ -1,0 +1,170 @@
+{
+  "python": "3.12.14",
+  "setattr_control": [
+    {
+      "class": "TorqueSimulator",
+      "stored_key_type": "str",
+      "retained_subclass": false
+    },
+    {
+      "class": "ReachSimulator",
+      "stored_key_type": "str",
+      "retained_subclass": false
+    }
+  ],
+  "cases": {
+    "stock": {
+      "clean": {
+        "result": "returned",
+        "events": [],
+        "poll": 1,
+        "clock": 1,
+        "debit": 1,
+        "accepted_state_and_event_index_preserved": true,
+        "source_and_proof_receipt_identity_preserved": true
+      },
+      "native_call": {
+        "result": "native_contains",
+        "events": [
+          "native contains"
+        ],
+        "poll": 1,
+        "clock": 0,
+        "debit": 0,
+        "accepted_state_and_event_index_preserved": true,
+        "source_and_proof_receipt_identity_preserved": true
+      },
+      "first_call": {
+        "result": "native_contains",
+        "events": [
+          "native contains"
+        ],
+        "poll": 1,
+        "clock": 0,
+        "debit": 0,
+        "accepted_state_and_event_index_preserved": true,
+        "source_and_proof_receipt_identity_preserved": true
+      },
+      "frame_audit": {
+        "result": "returned",
+        "events": [],
+        "poll": 1,
+        "clock": 1,
+        "debit": 1,
+        "accepted_state_and_event_index_preserved": true,
+        "source_and_proof_receipt_identity_preserved": true
+      },
+      "cancel": {
+        "result": "cancel",
+        "events": [],
+        "poll": 1,
+        "clock": 0,
+        "debit": 0,
+        "accepted_state_and_event_index_preserved": true,
+        "source_and_proof_receipt_identity_preserved": true
+      }
+    },
+    "accessor_only": {
+      "clean": {
+        "result": "returned",
+        "events": [],
+        "poll": 1,
+        "clock": 1,
+        "debit": 1,
+        "accepted_state_and_event_index_preserved": true,
+        "source_and_proof_receipt_identity_preserved": true
+      },
+      "native_call": {
+        "result": "returned",
+        "events": [],
+        "poll": 1,
+        "clock": 1,
+        "debit": 1,
+        "accepted_state_and_event_index_preserved": true,
+        "source_and_proof_receipt_identity_preserved": true
+      },
+      "first_call": {
+        "result": "present_get",
+        "events": [
+          "present getter"
+        ],
+        "poll": 1,
+        "clock": 0,
+        "debit": 0,
+        "accepted_state_and_event_index_preserved": true,
+        "source_and_proof_receipt_identity_preserved": true
+      },
+      "frame_audit": {
+        "result": "returned",
+        "events": [],
+        "poll": 1,
+        "clock": 1,
+        "debit": 1,
+        "accepted_state_and_event_index_preserved": true,
+        "source_and_proof_receipt_identity_preserved": true
+      },
+      "cancel": {
+        "result": "cancel",
+        "events": [],
+        "poll": 1,
+        "clock": 0,
+        "debit": 0,
+        "accepted_state_and_event_index_preserved": true,
+        "source_and_proof_receipt_identity_preserved": true
+      }
+    },
+    "entry_guard": {
+      "clean": {
+        "result": "returned",
+        "events": [],
+        "poll": 1,
+        "clock": 1,
+        "debit": 1,
+        "accepted_state_and_event_index_preserved": true,
+        "source_and_proof_receipt_identity_preserved": true
+      },
+      "native_call": {
+        "result": "native_contains",
+        "events": [
+          "native contains"
+        ],
+        "poll": 1,
+        "clock": 0,
+        "debit": 0,
+        "accepted_state_and_event_index_preserved": true,
+        "source_and_proof_receipt_identity_preserved": true
+      },
+      "first_call": {
+        "result": "guard_call",
+        "events": [
+          "eligibility helper"
+        ],
+        "poll": 1,
+        "clock": 0,
+        "debit": 0,
+        "accepted_state_and_event_index_preserved": true,
+        "source_and_proof_receipt_identity_preserved": true
+      },
+      "frame_audit": {
+        "result": "frame_audit",
+        "events": [
+          "audit of sys._getframe on predicate"
+        ],
+        "poll": 1,
+        "clock": 0,
+        "debit": 0,
+        "accepted_state_and_event_index_preserved": true,
+        "source_and_proof_receipt_identity_preserved": true
+      },
+      "cancel": {
+        "result": "cancel",
+        "events": [],
+        "poll": 1,
+        "clock": 0,
+        "debit": 0,
+        "accepted_state_and_event_index_preserved": true,
+        "source_and_proof_receipt_identity_preserved": true
+      }
+    }
+  }
+}

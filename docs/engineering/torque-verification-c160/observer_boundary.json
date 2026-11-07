@@ -1,0 +1,45 @@
+{
+  "python": "3.12.14",
+  "absent": 151,
+  "present": 84,
+  "cases": {
+    "stock": {
+      "clean": {
+        "events": [],
+        "outcome": "returned True"
+      },
+      "prearmed": {
+        "events": [
+          "observed native contains"
+        ],
+        "outcome": "exact callback exception"
+      },
+      "late": {
+        "events": [
+          "row 1 enabled local CALL",
+          "observed native contains"
+        ],
+        "outcome": "exact callback exception"
+      }
+    },
+    "entry_guard": {
+      "clean": {
+        "events": [],
+        "outcome": "returned True"
+      },
+      "prearmed": {
+        "events": [
+          "observed native contains"
+        ],
+        "outcome": "exact callback exception"
+      },
+      "late": {
+        "events": [
+          "row 1 enabled local CALL",
+          "row 2 comparison raised"
+        ],
+        "outcome": "exact comparison exception"
+      }
+    }
+  }
+}
