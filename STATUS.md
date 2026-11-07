@@ -1,10 +1,14 @@
-# OntoKin development status — C163
-
-## C164 integration lease
-
-Owner `c164-selection-91b3` holds the main integration lease for [PR #101](https://github.com/Omegapy/OntoKin/pull/101) from 2026-11-07T19:56:27Z through 2026-11-07T20:26:27Z. Base `55ef55bf63185e65ffb0ffe44865e21ff146aa4a`. Scope covers the named repeated-elbow example, verification from exported geometry, tests and documentation.
+# OntoKin development status — C164
 
 ## Current checkpoint
+
+Given two independently named elbows of the same class, Agent/0.11 connected the straight duct to the requested outlet in one editable source change. Its inlet started 0.375 m from the bypass and 4.018 m from the requested elbow. The repaired rims match within 0.56 µm and share 0.99999970 m² of clear opening. A flush fit to the bypass failed the requested joint by 4 m. An unknown or ambiguous selection preserved the accepted revision. [Run the example and compare the three exports](examples/connected-duct/README.md#c164--select-one-of-two-identical-elbow-outlets)
+
+[PR #101](https://github.com/Omegapy/OntoKin/pull/101) merged at [00ef2e3ee7e9](https://github.com/Omegapy/OntoKin/commit/00ef2e3ee7e977538f2199dabeb18e72addd34d3). The clean merge reproduced the earlier duct controls and passed 36 duct tests, 27 C164 selection probes, 137 framed-loft tests and all 69 stock acceptance cases. The next authoring task is to fit both ends of one editable straight to two named stationary ports and reject a span the straight cannot bridge. The [C160 torque release obligations](docs/engineering/torque-verification-c160/README.md) remain open.
+
+Owner `c164-selection-91b3` releases the main integration lease on verified publication of this record.
+
+## Previous checkpoint at C163
 
 Agent/0.11 placed a mispositioned straight duct against the named elbow outlet from the delivered GLB. It measured the two mating frames and changed one placement declaration. The initial gap was 0.375 m and the axis was tilted 12°. Both complete rims now agree within 0.56 μm, and the shared opening measures 0.99999970 m². The elbow declaration and imported parts module retain their source identities. [Run the example and view the before and after close-ups](examples/connected-duct/README.md#place-the-straight-duct-from-its-exported-geometry)
 
