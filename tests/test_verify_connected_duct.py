@@ -3,6 +3,9 @@ from copy import deepcopy
 from dataclasses import replace
 from pathlib import Path
 import unittest
+import json
+import math
+import struct
 
 from ontokin.budget_runtime import execute_framed_loft_export
 from ontokin.bundle import ProgramBundle, load_file_manifest
@@ -73,9 +76,15 @@ class ConnectedDuctAuditTests(unittest.TestCase):
             self.assertAlmostEqual(port['clear_area_m2'], 1.0, places=5)
 
     def test_extra_obstruction_outside_cap_material(self):
+        # Elbow-local coordinates are identical for both rigid placements.
+        for placement, manifest in [('fixed', 'assembly.files.json'), ('oblique', 'assembly-oblique.files.json')]:
+            with self.subTest(placement=placement):
+                raw = self.export(load_file_manifest(EXAMPLE / manifest))
+                self.check_extra_obstruction(raw, placement)
+
+    def check_extra_obstruction(self, raw, placement):
         # A single triangle covers a corner of the bore and misses its center.
-        import struct
-        glb = GLB(self.raw, target='ontokin.glb/0.11')
+        glb = GLB(raw, target='ontokin.glb/0.11')
         doc = glb.document
         node = next(n for n in doc['nodes'] if n['name'] == 'elbow')
         primitives = doc['meshes'][node['mesh']]['primitives']
@@ -97,11 +106,92 @@ class ConnectedDuctAuditTests(unittest.TestCase):
                 extra['attributes'][key] = index
         primitives.append(extra)
         with self.assertRaisesRegex(ValueError, 'obstructed opening'):
-            measure(repack_glb(doc, bytes(binary)))
+            measure(repack_glb(doc, bytes(binary)), placement=placement)
 
     def test_transverse_obstruction(self):
-        face = [(3.9,.2,4.2),(4.1,.2,4.2),(4.1,.4,4.2)]
+        face = [(-.1,.2,.2),(.1,.2,.2),(.1,.4,.2)]
         self.assertTrue(opening_intersection(face, .5))
+
+    def test_oblique_contract(self):
+        bundle = load_file_manifest(EXAMPLE / 'assembly-oblique.files.json')
+        expected = json.loads((EXAMPLE / 'oblique-contract.json').read_text())
+        nominal = measure(self.export(bundle), placement='oblique')
+        for name, port in nominal['ports'].items():
+            end = 'outlet' if name == 'elbow' else 'inlet'
+            self.assertLess(math.dist(port['cap_normal'], expected[f'{name}_{end}_normal']), 1e-5)
+            self.assertLess(math.dist(port['inner_center_m'], expected[f'{name}_{end}_center_m']), 1e-5)
+            for key in ('outer_loop_m', 'inner_loop_m'):
+                for corner in expected[key]:
+                    self.assertLess(min(math.dist(corner, p) for p in port[key]), 1e-5)
+        self.assertLess(math.dist(nominal['ports']['straight']['outlet_center_m'],
+                                  expected['straight_outlet_center_m']), 1e-5)
+        self.assertAlmostEqual(nominal['rectangular_rim_overlap_m2'], 1, places=5)
+        entry = replace(bundle.entry, raw=bundle.entry.raw.replace(b'bore_shift = 0[m];', b'bore_shift = 0.25[m];'))
+        with self.assertRaisesRegex(JointFailure, 'straight rim corner differs') as rejection:
+            measure(self.export(ProgramBundle(entry, bundle.modules)), placement='oblique')
+        row = rejection.exception.measurements
+        self.assertLess(math.dist(row['inner_center_displacement_m'], expected['shift_world_m']), 1e-5)
+        self.assertAlmostEqual(row['rectangular_rim_overlap_m2'], .75, places=5)
+
+    def test_wrong_endpoint_and_reversed_winding(self):
+        bundle = load_file_manifest(EXAMPLE / 'assembly-oblique.files.json')
+        raw = self.export(bundle)
+        for fault in ('endpoint', 'winding'):
+            with self.subTest(fault=fault):
+                glb = GLB(raw, target='ontokin.glb/0.11')
+                doc = glb.document
+                binary = bytearray(glb.binary)
+                node = next(n for n in doc['nodes'] if n['name'] == 'straight')
+                primitives = doc['meshes'][node['mesh']]['primitives']
+                caps = {doc['materials'][p['material']]['name']: p for p in primitives}
+                inlet, outlet = caps['straight: bottom'], caps['straight: top']
+                if fault == 'endpoint':
+                    inlet['material'], outlet['material'] = outlet['material'], inlet['material']
+                    inlet['extras'], outlet['extras'] = outlet['extras'], inlet['extras']
+                else:
+                    acc = doc['accessors'][inlet['indices']]
+                    view = doc['bufferViews'][acc['bufferView']]
+                    offset = view.get('byteOffset', 0) + acc.get('byteOffset', 0)
+                    pair = '<' + {5121:'B', 5123:'H', 5125:'I'}[acc['componentType']]*2
+                    a,b = struct.unpack_from(pair, binary, offset)
+                    struct.pack_into(pair, binary, offset, b,a)
+                with self.assertRaisesRegex(JointFailure, 'straight cap normal differs'):
+                    measure(repack_glb(doc, bytes(binary)), placement='oblique')
+
+    def test_inconsistent_region_identity(self):
+        for fault in ('primitive', 'material', 'both', 'occurrence'):
+            with self.subTest(fault=fault):
+                glb = GLB(self.raw, target='ontokin.glb/0.11')
+                inlet = next(p for p in glb.primitives('straight') if p['extras']['ontokin']['region_key'] == 'bottom')
+                identity = glb.reference('materials', inlet['material'])['extras']['ontokin']
+                if fault in ('primitive', 'both'):
+                    inlet['extras']['ontokin']['region_key'] = 'top'
+                if fault in ('material', 'both'):
+                    identity['source_region_key'] = 'top'
+                if fault == 'occurrence':
+                    identity['occurrence_path'] = 'elbow'
+                with self.assertRaisesRegex(ValueError, 'inconsistent region identity'):
+                    measure(repack_glb(glb.document, glb.binary))
+
+    def test_wrong_object_identity(self):
+        glb = GLB(self.raw, target='ontokin.glb/0.11')
+        nodes = glb.document['nodes']
+        nodes[0]['name'], nodes[1]['name'] = nodes[1]['name'], nodes[0]['name']
+        with self.assertRaisesRegex(ValueError, 'object path differs'):
+            measure(repack_glb(glb.document, glb.binary))
+
+    def test_negative_references(self):
+        for table in ('scene', 'sampler'):
+            with self.subTest(table=table):
+                glb = GLB(self.raw, target='ontokin.glb/0.11')
+                if table == 'scene':
+                    glb.document['scene'] = -1
+                else:
+                    animation = glb.document['animations'][0]
+                    channel = animation['channels'][-1]
+                    channel['sampler'] -= len(animation['samplers'])
+                with self.assertRaisesRegex(ValueError, 'Invalid .* reference'):
+                    measure(repack_glb(glb.document, glb.binary))
 
     def test_missing_cap(self):
         glb = GLB(self.raw, target='ontokin.glb/0.11')
