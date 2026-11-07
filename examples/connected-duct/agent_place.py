@@ -22,12 +22,35 @@ def declaration(source, occurrence, part):
 def replacement(source, pose):
     straight = declaration(source, 'straight', 'Straight')
     old, = re.findall(r'\bplacement = pose\([^;]+\);', straight)
+    return old, placement_text(pose)
+
+
+def placement_text(pose):
     xyz, quat = pose['translation_m'], pose['rotation_wxyz']
     if len(xyz) != 3 or len(quat) != 4 or not all(math.isfinite(v) for v in (*xyz, *quat)):
         raise ValueError('solver returned an invalid placement')
     position = ', '.join(f'{v:.17g}[m]' for v in xyz)
     rotation = ', '.join(f'{v:.17g}' for v in quat)
-    return old, f'placement = pose(world, vec3({position}), quat({rotation}));'
+    return f'placement = pose(world, vec3({position}), quat({rotation}));'
+
+
+def validate_exchanges(output, edits):
+    validators = schema_validators(output)
+    requests = sorted((output / 'exchanges').glob('*-request.json'))
+    operations = []
+    for path in requests:
+        key = path.name.removesuffix('-request.json')
+        req = json.loads(path.read_bytes())
+        res = json.loads(path.with_name(key + '-response.json').read_bytes())
+        validators['request.schema.json'].validate(req)
+        validators['response.schema.json'].validate(res)
+        for record in (req, res):
+            if (record['request_id'], record['project_id'], record['schema_version']) != (key, PROJECT, PROTOCOL):
+                raise ValueError(f'{key} exchange identity mismatch')
+        operations.append(req['operation'])
+    if operations.count('edit') != edits:
+        raise ValueError(f'expected {edits} source edits')
+    return len(requests)
 
 
 def replay(manifest, output, store):
@@ -51,25 +74,11 @@ def replay(manifest, output, store):
     _, repaired = export('repaired', after.program_revision)
     if repaired == defective:
         raise ValueError('placement edit yielded identical GLBs')
-    validators = schema_validators(output)
-    requests = sorted((output / 'exchanges').glob('*-request.json'))
-    operations = []
-    for path in requests:
-        key = path.name.removesuffix('-request.json')
-        req = json.loads(path.read_bytes())
-        res = json.loads(path.with_name(key + '-response.json').read_bytes())
-        validators['request.schema.json'].validate(req)
-        validators['response.schema.json'].validate(res)
-        for record in (req, res):
-            if (record['request_id'], record['project_id'], record['schema_version']) != (key, PROJECT, PROTOCOL):
-                raise ValueError(f'{key} exchange identity mismatch')
-        operations.append(req['operation'])
-    if operations.count('edit') != 1:
-        raise ValueError('expected one source edit')
+    pairs = validate_exchanges(output, edits=1)
     summary['source'] = dict(defective_entry=before.entry.revision, repaired_entry=after.entry.revision,
                              unchanged_elbow_declaration='sha256:' + hashlib.sha256(elbow.encode()).hexdigest(),
                              unchanged_modules={m.source_id: m.revision for m in after.modules})
-    summary['schema_validated_pairs'] = len(requests)
+    summary['schema_validated_pairs'] = pairs
     write_json(output / 'summary.json', summary)
 
 

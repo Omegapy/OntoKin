@@ -15,13 +15,13 @@ else:
 CONTRACT = Path(__file__).resolve().parents[1] / 'examples/connected-duct/third-contract.json'
 
 
-def endpoints(raw):
+def endpoints(raw, names=('elbow', 'straight')):
     """Read endpoint centers and winding directions before imposing any mating constraints."""
     glb = GLB(raw, target='ontokin.glb/0.11')
     roots = glb.reference('scenes', glb.document['scene'])['nodes']
     objects = glb.objects()
-    require(set(objects) == {'elbow', 'straight'} and sorted(roots) == sorted(objects.values()),
-            'Expected both duct occurrences in the active scene')
+    require(set(objects) == set(names) and sorted(roots) == sorted(objects.values()),
+            'Expected all named duct occurrences in the active scene')
     indexed = {i: glb.reference('nodes', i) for i in roots}
     stationary_times(glb, indexed)
     nodes = {name: indexed[i] for name, i in objects.items()}
@@ -54,7 +54,7 @@ def quaternion_error(node, target):
     return min(math.dist(actual, target), math.dist(actual, [-v for v in target]))
 
 
-def source_identity(glb, nodes):
+def source_identity(glb, nodes, moving='straight'):
     """Return comparable occurrence records after checking the two mutable source revisions."""
     records = deepcopy(nodes)
     program = glb.document['extras']['ontokin']['program']
@@ -80,7 +80,7 @@ def source_identity(glb, nodes):
                 'Unexpected parts definition source')
         del mapping['declaration']['source_revision']
         del identity['program_revision']
-        if name == 'straight':
+        if name == moving:
             del mapping['declaration']['end_byte']
             del node['translation'], node['rotation']
     return entry['source_revision'], records

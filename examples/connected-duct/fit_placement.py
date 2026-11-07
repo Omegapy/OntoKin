@@ -44,6 +44,7 @@ def cap_frame(glb, node, endpoint):
         identity = material.get('extras', {}).get('ontokin', {})
         require(isinstance(region, str) and identity.get('source_region_key') == region and
                 identity.get('occurrence_path') == name and identity.get('element_id') == meta['element_id'] and
+                identity.get('program_revision') == meta['program_revision'] and
                 material.get('name') == f'{name}: {region}', 'Inconsistent endpoint identity')
         pbr = material['pbrMetallicRoughness']
         expected = palette[region]
@@ -97,34 +98,63 @@ def named_frame(glb, node, endpoint):
     declared = sub(sections[-1]['origin_m'], sections[0]['origin_m'])
     declared = rotate(surface['local_visual_placement']['orientation_wxyz'], declared)
     x, y, z, w = node['rotation']
-    declared = rotate((w, x, y, z), declared)
+    world_rotation = (w, x, y, z)
+    declared = rotate(world_rotation, declared)
     require(dot(unit(declared), unit(sub(top[0], bottom[0]))) > 0,
             node['name'] + ' cap order opposes declared section direction')
+    # Both imported duct classes start at a section facing local -Z. This
+    # class invariant still distinguishes the inlet if section summaries and
+    # cap indices are swapped together. The measured corners drive the fit.
+    require(dist(bottom[1], rotate(world_rotation, (0, 0, -1))) < TOL,
+            node['name'] + ' signed inlet winding differs from the duct class')
     return top if endpoint == 'top' else bottom
 
 
-def solve_placement(raw, *, elbow_region='top', straight_region='bottom'):
+class SelectionError(ValueError):
+    """A requested occurrence or signed port cannot be resolved uniquely."""
+
+
+def select_occurrence(paths, occurrences, name, role):
+    class_id = f'package/example.connected-duct-parts/duct-parts/definitions/{role}'
+    if name not in paths:
+        candidates = [key for key in paths if occurrences[key]['class_id'] == class_id]
+        if name == class_id and len(candidates) > 1:
+            raise SelectionError(f'Ambiguous {role} class selector: choose an occurrence from {sorted(candidates)}')
+        raise SelectionError(f'Unknown {role} occurrence: {name}')
+    if occurrences[name]['class_id'] != class_id:
+        raise SelectionError(f'Selected {name} has the wrong class for role {role}')
+    return paths[name]
+
+
+def solve_placement(raw, *, elbow='elbow', elbow_region='top', straight='straight', straight_region='bottom'):
     """Return the absolute straight placement in OntoKin translation/quaternion order."""
-    require((elbow_region, straight_region) == ('top', 'bottom'), 'Expected elbow outlet and straight inlet')
+    if (elbow_region, straight_region) != ('top', 'bottom'):
+        raise SelectionError('Expected elbow outlet and straight inlet')
     glb = GLB(raw, target='ontokin.glb/0.11')
     require(not glb.document.get('extensionsUsed') and not glb.document.get('extensionsRequired'),
             'Expected unextended GLB')
     paths = glb.objects()
     roots = glb.reference('scenes', glb.document['scene'])['nodes']
-    require(set(paths) == {'elbow', 'straight'} and sorted(roots) == sorted(paths.values()),
+    require(sorted(roots) == sorted(paths.values()),
             'Expected the named duct roots')
     nodes = {i: glb.reference('nodes', i) for i in roots}
-    occurrences = glb.document['extras']['ontokin']['program']['occurrences']
+    program = glb.document['extras']['ontokin']['program']
+    occurrences = program['occurrences']
+    require(set(occurrences) == set(paths), 'Inconsistent occurrence inventory')
     for name, i in paths.items():
         node = nodes[i]
         meta = node['extras']['ontokin']
         mapping = occurrences[name]
-        require(node['name'] == mapping['path'] == name and meta.get('source_mapping') == mapping and
+        require(node['name'] == mapping['path'] == mapping['root_path'] == name and
+                mapping['owner_path'] is None and not node.get('children') and meta.get('source_mapping') == mapping and
+                mapping['path_steps'] == [{'kind': 'member', 'value': name}] and mapping['element_id'][-1] == name and
+                meta['geometry']['owner_frame'] == name + '.frame' and meta['program_revision'] == program['revision'] and
                 meta.get('element_id') == mapping['element_id'] and meta.get('class_name') == mapping['class_id'],
                 'Inconsistent occurrence identity')
     stationary_times(glb, nodes)
-    straight = nodes[paths['straight']]
-    target, outlet, outer, inner = named_frame(glb, nodes[paths['elbow']], elbow_region)
+    straight = nodes[select_occurrence(paths, occurrences, straight, 'straight')]
+    elbow = nodes[select_occurrence(paths, occurrences, elbow, 'elbow')]
+    target, outlet, outer, inner = named_frame(glb, elbow, elbow_region)
     source, inlet, old_outer, old_inner = named_frame(glb, straight, straight_region)
     desired = tuple(-x for x in outlet)
     diagonal = unit(sub(old_outer[0], source))
