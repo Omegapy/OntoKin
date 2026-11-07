@@ -1,5 +1,9 @@
 # OntoKin development status — C157
 
+## C158 integration lease
+
+Owner `interactive-c158-a08-1503` holds the main integration lease from 2026-11-07T15:03:00Z through 2026-11-07T15:33:00Z for the A08 binding and source-identity investigation. The measured starting commit is `53e7648b805c2ae29a5089709d17842252899e6c`.
+
 ## Current checkpoint
 
 The original A08 torque export missed its 30-second deadline in fresh Agent processes on the measured Linux host. The direct exporter reproduced the historical 2,447,148-byte GLB in 6.030 seconds, and the independent reader and Chromium verified it. The stock local driver passed 33 of 34 roles. The unit run executed 4,150 methods. 3,988 of the 3,988 identified pre-torque methods passed. The measured clock change did not improve whole-export timing. The next experiment concerns 30 overlapping binding checks. [C157 timing and verification](docs/engineering/torque-verification-c157/README.md)
