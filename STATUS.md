@@ -1,5 +1,9 @@
 # OntoKin development status — C164
 
+## C165 integration lease
+
+Owner `c165-span-96a738` holds the integration lease for [PR #102](https://github.com/Omegapy/OntoKin/pull/102) from 2026-11-07T22:51:33Z through 2026-11-07T23:21:33Z. Base `38f188bec02d5ba962c8291880cf20e7d9241bff`. Candidate `116f8e40aeec00df105fab0ca7ee1ce175c55d1f` passed the five two-port cases, legacy replays, 45 duct tests and framed-loft acceptance. Scope covers the named two-port example, independent verification and its integration record.
+
 ## Current checkpoint
 
 Given two independently named elbows of the same class, Agent/0.11 connected the straight duct to the requested outlet in one editable source change. Its inlet started 0.375 m from the bypass and 4.018 m from the requested elbow. The repaired rims match within 0.56 µm and share 0.99999970 m² of clear opening. A flush fit to the bypass failed the requested joint by 4 m. An unknown or ambiguous selection preserved the accepted revision. [Run the example and compare the three exports](examples/connected-duct/README.md#c164--select-one-of-two-identical-elbow-outlets)
