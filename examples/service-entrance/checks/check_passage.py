@@ -2,6 +2,7 @@
 
 import argparse
 from bisect import bisect_right
+from collections import Counter
 from fractions import Fraction
 import hashlib
 import json
@@ -279,25 +280,221 @@ def surface_witnesses(times, tracks, triangles, crossing, cart):
     return witnesses
 
 
-def main(source, bundle, glb, width=None):
-    src = source.read_text()
-    require(src == json.loads(bundle.read_text())["entry"]["source"], "accepted source mismatch")
+def example_source(text):
+    """Keep stable keys and exclude comments and free text from the example's pattern checks."""
+    # The language accepts // line comments, non-nested /* blocks */ and escaped quotes.
+    tokens = r'"(?:\\.|[^"\\])*"|//[^\r\n]*|/\*[\s\S]*?\*/'
+
+    def replace(match):
+        token = match[0]
+        if token.startswith('"'):
+            # Only stable keys are significant strings for these scene checks.
+            return token if re.fullmatch(r'"[A-Za-z0-9][A-Za-z0-9._-]{0,63}"', token) else '""'
+        return ' '
+
+    return re.sub(tokens, replace, text)
+
+
+def select_carts(source, graph, revision, accepted, moving_cart, parked_cart):
+    objects = re.findall(r'\bobject\s+(\w+)\s+@\s*"([^"]+)"\s*:\s*(\w+)\s*\{([^}]*)\}', source)
+    nodes = graph['nodes']
+    names = [n.get('name') for n in nodes]
+    require(len(set(names)) == len(names), 'ambiguous delivered node names')
+    candidates = [o for o in objects if o[0] not in ('gate', 'post')]
+    require(len(candidates) in (1, 2), 'expected one passing cart and at most one parked cart')
+    if len(candidates) == 2:
+        require(moving_cart and parked_cart, 'specify both --moving-cart and --parked-cart for a two-cart scene')
+    require(parked_cart is None or len(candidates) == 2, 'no parked sibling in this scene')
+    classes = dict(re.findall(r'\bclass\s+(\w+)\s+@\s*"([^"]+)"', source))
+    scope = [re.search(r'\b' + kind + r'\s+\w+\s+@\s*"([^"]+)"', source)[1]
+             for kind in ('module', 'scene')]
+    exported = graph.get('extras', {}).get('ontokin', {})
+    entry = exported.get('source', {})
+    program = exported.get('program', {})
+    entry_record = program.get('sources', {}).get('entry', {})
+
+    filename = accepted['entry']['filename']
+    unit = dict(source_id='entry', filename=filename, source_revision=revision, package_id=None, version=None)
+    manifest = dict(schema_version=accepted['schema_version'], entry_source_id='entry', units=[unit], assets=[])
+    canonical = json.dumps(manifest, sort_keys=True, ensure_ascii=False, separators=(',', ':')).encode()
+    program_revision = 'sha256:' + hashlib.sha256(b'ontokin.bundle/0.2\0' + canonical).hexdigest()
+    require(program.get('manifest') == manifest and program.get('revision') == program_revision,
+            'GLB program manifest or revision differs from accepted bundle')
+
+    def matches_source(record):
+        return (record.get('source_id') == 'entry' and record.get('filename') == filename
+                and record.get('source_revision') == revision)
+
+    require(entry.get('entry_source_id') == program.get('entry_source_id') == 'entry'
+            and entry.get('entry_revision') == revision and matches_source(entry_record),
+            'GLB entry source identity or revision differs from accepted source')
+
+    def select(selector, role):
+        matches = [o for o in objects if selector in o[:2]]
+        require(matches, f'{role} selector {selector!r} missing from accepted source')
+        require(len(matches) == 1, f'ambiguous {role} selector {selector!r}')
+        obj, = matches
+        name, stable_id, cls, _ = obj
+        require(obj in candidates, f'{role} selector {selector!r} selects an obstacle')
+        require(name in names, f'{role} node {name!r} missing from delivered GLB')
+        meta = nodes[names.index(name)].get('extras', {}).get('ontokin', {})
+        mapping = meta.get('source_mapping', {})
+        expected_id = scope + [stable_id]
+        class_id = '/'.join(['entry', scope[0], 'definitions', classes[cls]])
+        require(meta.get('kind') == 'object' and meta.get('path') == mapping.get('path') == name
+                and meta.get('element_id') == mapping.get('element_id') == expected_id
+                and meta.get('class_name') == mapping.get('class_id') == class_id
+                and mapping.get('definition_id') == class_id.split('/')
+                and matches_source(mapping.get('declaration', {})) and matches_source(mapping.get('definition', {}))
+                and mapping == program.get('occurrences', {}).get(name)
+                and meta.get('program_revision') == program.get('revision'),
+                f'{role} node {name!r} does not match accepted source identity or revision')
+        require(sum(n.get('extras', {}).get('ontokin', {}).get('element_id') == expected_id
+                    for n in nodes) == 1, f'ambiguous delivered element ID {stable_id!r}')
+        return obj
+
+    moving = select(moving_cart or candidates[0][0], 'moving cart')
+    parked = select(parked_cart, 'parked cart') if parked_cart else None
+    if parked:
+        require(moving != parked, 'moving cart and parked cart must select different objects')
+        require(moving[2] == parked[2], 'parked cart must be a sibling of the moving cart class')
+    require(re.search(r'\bforce\s+' + moving[0] + r'\b', source),
+            f'selected moving cart {moving[0]!r} has no driving force')
+    require(all(isinstance(name, str) and name for name in names), 'missing delivered GLB node name')
+    return moving, parked
+
+
+def exact_rotated_bounds(primitives, rotations):
+    """Bound the delivered vertices before rounding any rotated coordinate."""
+    first = rotations[0]
+    pivot = max(range(4), key=lambda i: abs(first[i]))
+    # Each product of two decoded binary32 components is exact in binary64.
+    # Proportional quaternions represent the same orientation, including q and -q.
+    require(all(all(a * key[pivot] == b * first[pivot] for a, b in zip(first, key))
+                for key in set(rotations)), 'rotation changes during the clearance sweep')
+
+    q = tuple(map(Fraction, first))
+    norm_squared = sum(c*c for c in q)
+    vertices = {p for primitive in primitives for p in primitive}
+    rotated = []
+    for point in vertices:
+        v = tuple(map(Fraction, point))
+        cross = gate.cross(q[:3], v)
+        double_cross = gate.cross(q[:3], cross)
+        # q v q^-1 uses the squared norm, so no rounded square root is needed.
+        rotated.append(tuple(x + 2 * (q[3]*a + b) / norm_squared
+                             for x, a, b in zip(v, cross, double_cross)))
+    return [list(map(op, zip(*rotated))) for op in (min, max)]
+
+
+def parked_clearance(times, tracks, bounds, parked, other):
+    # For rigid boxes with fixed orientation, six signed axis gaps are affine in time.
+    # Their maximum is a lower bound on surface distance. Its minimum occurs at an
+    # endpoint or where two of the six lines intersect.
+    # Convert the represented bounds and translations before arithmetic so that an
+    # exact contact cannot round to a positive gap.
+    p_lo, p_hi = bounds[parked]
+    o_lo, o_hi = bounds[other]
+    local_gaps = [(Fraction(p_lo[a]) - Fraction(o_hi[a]), Fraction(o_lo[a]) - Fraction(p_hi[a]))
+                  for a in range(3)]
+
+    def gaps(i):
+        result = []
+        for (above, below), p, o in zip(local_gaps, tracks[parked, 'translation'][i],
+                                        tracks[other, 'translation'][i]):
+            offset = Fraction(p) - Fraction(o)
+            result.extend((above + offset, below - offset))
+        return result
+
+    right = gaps(0)
+    minimum = (max(right), Fraction(times[0]))
+    for i, (start, end) in enumerate(zip(times, times[1:]), 1):
+        left, right = right, gaps(i)
+        left_max, right_max = max(left), max(right)
+        start, end = Fraction(start), Fraction(end)
+        minimum = min(minimum, (right_max, end))
+        # A line that dominates at both ends dominates the entire interval.
+        if any(a == left_max and b == right_max for a, b in zip(left, right)):
+            continue
+        slopes = [b - a for a, b in zip(left, right)]
+        for j, slope in enumerate(slopes):
+            for k in range(j):
+                if slope != slopes[k]:
+                    u = (left[k] - left[j]) / (slope - slopes[k])
+                    if 0 < u < 1:
+                        lower = max(x + u * m for x, m in zip(left, slopes))
+                        minimum = min(minimum, (lower, start + u * (end - start)))
+    lower, time = minimum
+    reported = float(lower)
+    if reported > lower:
+        reported = math.nextafter(reported, -math.inf)
+    time = float(time)
+    require(reported > 0, f'parked cart {parked!r} lacks positive separation from {other!r} at {time:.9g} s')
+    return dict(separation_lower_bound_m=reported, time_of_min_s=time)
+
+
+def local_triangle_counts(primitives):
+    """Compare sibling geometry independently of mesh indices, winding and primitive order."""
+    return Counter(tuple(sorted(points[i:i + 3]))
+                   for points in primitives for i in range(0, len(points), 3))
+
+
+def check_parked(source, obj, moving, times, tracks, bounds):
+    name, stable_id, _, body = obj
+    require(not re.search(r'\b(?:force|torque|impulse)\s+' + name + r'\b', source),
+            f'selected parked cart {name!r} has an authored load')
+    for field, unit in [('velocity', 'm/s'), ('omega', 'rad/s')]:
+        vector = re.search(field + r'\s*=\s*vector\(world,\s*([^)]*)\)', body)
+        require(vector and vector_components(vector[1], unit) == [0, 0, 0], 'parked cart must start at rest')
+    pose = re.search(r'pose\(world,\s*vec3\(([^)]*)\),\s*quat\(([^)]*)\)\)', body)
+    require(pose, 'expected an authored world pose for parked cart')
+    position = list(map(float, vector_components(pose[1], 'm')))
+    w, x, y, z = map(float, pose[2].split(','))
+    rows = tracks[name, 'translation']
+    require(math.dist(rows[0], position) <= 1e-6, 'parked cart translation differs from authored pose')
+    require(all(row == rows[0] for row in rows), 'parked cart drifts from fixed position')
+    require(gate.angle(tracks[name, 'rotation'][0], gate.unit((x, y, z, w))) <= 1e-6,
+            'parked cart rotation differs from authored pose')
+    return dict(identifier=name, element_id=stable_id, position_m=rows[0],
+                separation={other: parked_clearance(times, tracks, bounds, name, other)
+                            for other in (moving, 'gate', 'post')})
+
+
+def main(source, bundle, glb, width=None, moving_cart=None, parked_cart=None):
+    source_bytes = source.read_bytes()
+    text = source_bytes.decode("utf-8")
+    accepted = json.loads(bundle.read_bytes())
+    require(accepted.get('schema_version') == 'ontokin.bundle/0.2'
+            and accepted.get('modules') == [] and accepted.get('assets') == [],
+            'expected a single-file accepted bundle with empty modules and assets')
+    entry = accepted.get('entry', {})
+    require(isinstance(entry.get('filename'), str) and text == entry.get('source'), "accepted source mismatch")
+    digest = hashlib.sha256(source_bytes).hexdigest()
+    src = example_source(text)
     raw = glb.read_bytes()
     graph, data = gate.read_glb(raw)
-    times, tracks, _ = gate.read_tracks(graph, data)
-    original = gate.measure(raw, gate.source_dynamics(src))
-    cart, = {node["name"] for node in graph["nodes"]} - {"gate", "post"}
-    physics = cart_source(src, cart)
+    moving, parked = select_carts(src, graph, 'sha256:' + digest, accepted, moving_cart, parked_cart)
+    cart = moving[0]
+    raw_rotations = {} if parked else None
+    times, tracks, _ = gate.read_tracks(graph, data, raw_rotations=raw_rotations)
+    require(set(tracks) == {(node['name'], path) for node in graph['nodes']
+                            for path in ('rotation', 'translation')}, 'missing delivered pose tracks')
+    original = gate.measure(raw, gate.source_dynamics(src), root_count=4 if parked else 3)
+    physics = cart_source(src, moving[1])
     local_bounds = {}
+    separation_bounds = {}
     triangles = {}
+    sibling_meshes = {}
     obstacle_hashes = {}
     for node in graph["nodes"]:
         name = node["name"]
         rotations = tracks[name, "rotation"]
         require(all(gate.align(rotations[0], q) == rotations[0] for q in rotations),
-                "rigid translation only")
+                f"{name!r} rotation drifts; expected rigid translation only")
         primitives = gate.surfaces(graph, data, node)
         require(all(len(points) % 3 == 0 for points in primitives), "incomplete triangle")
+        if parked and name in (cart, parked[0]):
+            sibling_meshes[name] = local_triangle_counts(primitives)
         triangles[name] = [[gate.rotate(rotations[0], point) for point in primitive]
                            for primitive in primitives]
         if name in ("post", "gate"):
@@ -307,7 +504,13 @@ def main(source, bundle, glb, width=None):
         bounds = [list(map(op, zip(*points))) for op in (min, max)]
         require(all(high > low for low, high in zip(*bounds)), "zero-thickness mesh")
         local_bounds[name] = bounds
+        if parked:
+            separation_bounds[name] = exact_rotated_bounds(primitives, raw_rotations[name])
 
+    if parked:
+        require(sibling_meshes[cart] == sibling_meshes[parked[0]],
+                "parked cart mesh differs from moving cart sibling geometry")
+    parked_result = check_parked(src, parked, cart, times, tracks, separation_bounds) if parked else None
     crossing = score_geometry(times, tracks, local_bounds, cart)
     witnesses = surface_witnesses(times, tracks, triangles, crossing, cart)
     low, high = local_bounds[cart]
@@ -327,13 +530,15 @@ def main(source, bundle, glb, width=None):
     return dict(
         result="REJECTED" if diagnostics else "PASS",
         diagnostics=diagnostics,
+        moving_cart=dict(identifier=cart, element_id=moving[1]),
+        parked_cart=parked_result,
         cart_mesh=mesh,
         cart_travel_z_m=rows[-1][2]-rows[0][2],
         surface_witnesses=witnesses,
         obstacle_mesh_sha256=obstacle_hashes,
         animation_tracks_sha256=hashlib.sha256(json.dumps(
             [times, [(k, tracks[k]) for k in sorted(tracks)]]).encode()).hexdigest(),
-        source_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),
+        source_sha256=digest,
         glb_sha256=hashlib.sha256(raw).hexdigest(),
         cart_source=physics,
         gate=original,
@@ -348,6 +553,11 @@ if __name__ == "__main__":
     for key in ["source", "bundle", "glb"]:
         parser.add_argument(key, type=Path)
     parser.add_argument("--width", type=float, help="expected full cart mesh width in metres")
-    result = main(**vars(parser.parse_args()))
+    parser.add_argument('--moving-cart', help='passing cart source identifier or stable element ID')
+    parser.add_argument('--parked-cart', help='parked sibling source identifier or stable element ID')
+    try:
+        result = main(**vars(parser.parse_args()))
+    except ValueError as error:
+        result = dict(result='REJECTED', diagnostics=[str(error)])
     print(json.dumps(result, indent=2))
     sys.exit(0 if result["result"] == "PASS" else 1)

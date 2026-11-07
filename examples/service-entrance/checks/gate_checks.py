@@ -98,7 +98,7 @@ def lerp(a, b, u):
     return tuple(x + u * (y-x) for x, y in zip(a, b))
 
 
-def read_tracks(graph, binary):
+def read_tracks(graph, binary, *, raw_rotations=None):
     animation, = graph['animations']
     exact = [Fraction(int(v['numerator']), int(v['denominator'])) for v in
              animation['extras']['ontokin']['exact_times_seconds']]
@@ -122,6 +122,8 @@ def read_tracks(graph, binary):
         max_clock = max(max_clock, max(abs(Fraction(x)-y) for x,y in zip(clock,exact)))
         values = accessor(graph,binary,sampler['output'],'VEC4' if path=='rotation' else 'VEC3')
         require(len(values)==len(clock), 'incorrect track length')
+        if path == 'rotation' and raw_rotations is not None:
+            raw_rotations[name] = values
         tracks[name,path] = [unit(q) for q in values] if path=='rotation' else values
     require(max_clock <= CLOCK_TOL, 'binary clock exceeds 1 microsecond tolerance')
     return times, tracks, float(max_clock)
@@ -144,6 +146,8 @@ def primitive_points(graph, binary, primitive):
 
 
 def surfaces(graph, binary, node):
+    require('EXT_mesh_gpu_instancing' not in node.get('extensions', {}),
+            'mesh instancing is unsupported by the passage checker')
     mesh = indexed(graph['meshes'], node['mesh'])
     require('skin' not in node and 'weights' not in node and 'weights' not in mesh,
             'expected rigid mesh without skin or morph weights')
@@ -194,11 +198,11 @@ def source_dynamics(source):
         require(end not in (1, 2, 3, end_time) or (v == 0 and x == (Fraction(3, 2) if end in (1, 2) else 0)), 'incorrect source endpoint')
     return dict(mass_kg=float(mass), initial=initial, initial_world_positions_m=poses, phases=phases, peak_speed_m_s=max((abs(p['start_v_m_s']) for p in phases)))
 
-def measure(data, physics):
+def measure(data, physics, root_count=3):
     graph, binary = read_glb(data)
     times, tracks, clock_error = read_tracks(graph, binary)
     nodes = graph['nodes']
-    require(len(nodes) == 3 and sorted(graph['scenes'][graph['scene']]['nodes']) == [0, 1, 2] and {n['name'] for n in nodes} >= {'post','gate'}, 'expected three root meshes')
+    require(len(nodes) == root_count and sorted(graph['scenes'][graph['scene']]['nodes']) == list(range(root_count)) and {n['name'] for n in nodes} >= {'post','gate'}, f'expected {root_count} root meshes including gate and post')
     require(all((not any((k in n for k in ('matrix', 'children', 'scale'))) for n in nodes)), 'unexpected hierarchy or scale')
     features = {}
     fixed_error = rotation_error = 0.0
