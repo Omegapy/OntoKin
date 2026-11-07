@@ -1,0 +1,344 @@
+{
+  "checkpoint": "C157",
+  "tested_commit": "21588acad94e1c222b45ed26880ebf0832f8999a",
+  "tested_tree": "b3fa711f6409355473128c7f846d6be082f42250",
+  "host": {
+    "node": "20ec93839856",
+    "kernel": "6.18.57",
+    "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+    "cpu_quota": "800000 100000",
+    "allowed_cpu_list": "0-8",
+    "benchmark_core": 4,
+    "interpreter": "Python 3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "sqlite_store": "Linux tempdir, local overlay filesystem",
+    "head": "21588acad94e1c222b45ed26880ebf0832f8999a",
+    "tree": "b3fa711f6409355473128c7f846d6be082f42250"
+  },
+  "source_anchors": {
+    "tests/test_torque_artifact_reads.py": "ffbe4585958bd4a120d7fcbc6c4ef89078d6281dba290a9142868b7829cf45f6",
+    "docs/language-design/torque-v0.1/freeze/workflow-agent-base.files.json": "4c8a9775c218499bb4a8e3d63fa54973ca842c27d99c39988183441ac504a900",
+    "docs/language-design/torque-v0.1/freeze/sources/workflow-agent-base.ok": "435c772d86ae9d43779d4a924daa9e4a287e55163a5c08cc655ed5c4e72d9a54",
+    "docs/language-design/torque-v0.1/freeze/agent/request-workflows.json": "038e568e8166420ec15b5f38a10811f224baa2c131387fe4d70f038f52bda4d4",
+    "docs/language-design/torque-v0.1/freeze/modules/carriers.ok": "e0452a1de23724a65fe3ca50695e1cde138c138b291ec3b7acee850464e75e10",
+    "docs/language-design/torque-v0.1/freeze/assets/label.png": "5f87c7071d06327a077e05e1f57253370bc0b2eff1fa7f2025765825b7dcdd6e"
+  },
+  "fresh": [
+    {
+      "attempt": "fresh-01",
+      "status": "failed",
+      "elapsed_ms": 30000.613666000165,
+      "operations": 348405,
+      "stage": "recording_export_readback",
+      "methods": 0,
+      "artifact": null
+    },
+    {
+      "attempt": "fresh-02",
+      "status": "failed",
+      "elapsed_ms": 30000.580993000083,
+      "operations": 410225,
+      "stage": "recording_export_readback",
+      "methods": 0,
+      "artifact": null
+    }
+  ],
+  "after_full_driver": [
+    {
+      "label": "quiet-01",
+      "producer_status": "failed",
+      "producer_elapsed_ms": 30000.62464499979,
+      "methods": 0,
+      "operations": 381313,
+      "stage": "recording_export_readback",
+      "artifact_sha256": null,
+      "exit_code": 5,
+      "methods_passed": 0
+    },
+    {
+      "label": "quiet-02",
+      "producer_status": "failed",
+      "producer_elapsed_ms": 30000.782895000157,
+      "methods": 0,
+      "operations": 414471,
+      "stage": "recording_export_readback",
+      "artifact_sha256": null,
+      "exit_code": 5,
+      "methods_passed": 0
+    }
+  ],
+  "full_unit_A08": {
+    "status": "failed",
+    "methods": 0,
+    "passed": 0,
+    "elapsed_ms": 30000.56917599977,
+    "operations": 282401,
+    "stage": "recording_export_readback",
+    "artifact_id": null
+  },
+  "same_prefix_methods": {
+    "count": 3971,
+    "ordered_ids_sha256": "d53cb5f9042ecfd08338b448488f92364a6dfe9e5156c5b80434b20b028d42be",
+    "status_histogram": {
+      "ok": 3971
+    }
+  },
+  "legacy_passed": 3988,
+  "full_driver": {
+    "status": "failed",
+    "exit": 1,
+    "roles": {
+      "force-agent-tools": "passed",
+      "unit-tests": "failed",
+      "source": "passed",
+      "agent": "passed",
+      "construction": "passed",
+      "surface": "passed",
+      "impulse": "passed",
+      "documents": "passed",
+      "force-agent-tests": "passed",
+      "force-agent-build": "passed",
+      "force-agent-audit": "passed",
+      "node-tools": "passed",
+      "browser-ready": "passed",
+      "prototype-build": "passed",
+      "prototype-format": "passed",
+      "surface-native-build": "passed",
+      "surface-native-format": "passed",
+      "surface-agent-build": "passed",
+      "surface-agent-format": "passed",
+      "impulse-agent-build": "passed",
+      "impulse-agent-format": "passed",
+      "viewer-build": "passed",
+      "visual-build": "passed",
+      "visual-format": "passed",
+      "agent-demo-build": "passed",
+      "agent-demo-format": "passed",
+      "construction-demo-build": "passed",
+      "construction-demo-format": "passed",
+      "visual-browser": "passed",
+      "agent-demo-browser": "passed",
+      "construction-demo-browser": "passed",
+      "surface-native-browser": "passed",
+      "surface-agent-browser": "passed",
+      "impulse-agent-browser": "passed"
+    },
+    "role_counts": {
+      "passed": 33,
+      "failed": 1
+    },
+    "unit_tests": {
+      "tests_run": 4150,
+      "skipped": 0,
+      "expected_failures": 0,
+      "executed_without_skips": 4150,
+      "complete_regression_passed": false
+    },
+    "unit_nonpassing": [],
+    "unit_missing": [
+      "test_torque_artifact_reads.TorqueArtifactReadTests.test_close_defers_borrowed_connection_release_without_losing_fence",
+      "test_torque_artifact_reads.TorqueArtifactReadTests.test_completed_close_cannot_be_followed_by_inflight_cache_publication",
+      "test_torque_artifact_reads.TorqueArtifactReadTests.test_current_authority_is_rechecked_and_reopen_has_no_cached_grant",
+      "test_torque_artifact_reads.TorqueArtifactReadTests.test_idle_handle_has_no_snapshot_and_services_observe_each_commit",
+      "test_torque_artifact_reads.TorqueArtifactReadTests.test_nested_and_concurrent_contexts_keep_separate_transactions",
+      "test_torque_artifact_reads.TorqueArtifactReadTests.test_original_callback_cannot_mutate_verified_proof_to_accept_corrupt_bytes",
+      "test_torque_artifact_reads.TorqueArtifactReadTests.test_original_callbacks_cannot_replace_proof_from_any_request_stage",
+      "test_torque_artifact_reads.TorqueArtifactReadTests.test_original_miss_and_equal_bytes_preserve_all_charges_and_callbacks",
+      "test_torque_artifact_reads.TorqueArtifactReadTests.test_predecessor_store_and_schema_refusal_remain_unchanged",
+      "test_torque_artifact_reads.TorqueArtifactReadTests.test_real_publication_exception_rolls_back_and_close_fences_identity",
+      "test_torque_artifact_reads.TorqueArtifactReadTests.test_uncaught_cache_assignment_preserves_original_callback_exception",
+      "test_torque_artifact_reads.TorqueArtifactReadTests.test_warm_proof_rereads_entire_blob_metadata_and_source",
+      "test_torque_artifact_reads.TorqueArtifactReadTests.test_warm_read_retains_cap_deadline_cancel_and_original_exception"
+    ],
+    "source_unchanged": true,
+    "source_inventory": "sha256:ce53c8fd5db9c2333625fd76c8ab99b647ee07666e4c8ee9ce6368cc8bdb1d0c",
+    "unit_log": "337e776c26510a2a41d1b6bfa3163e54288b7f76936799974fcac9dd44c9c1a7",
+    "pending_external_cases": 16
+  },
+  "clock_experiment": {
+    "candidate_patch_sha256": "2c46758eca8732c042a5335e8ce6cc6f8499a96d82e8d6307ec5a53de796f6a2",
+    "result": "hold",
+    "reason": "The candidate completed 0 of its 2 original 30-second classes.",
+    "native_admission_microbenchmark_ns_per_call_median": {
+      "stock": 1757.5064800007567,
+      "candidate": 1424.343220000992
+    },
+    "corrected_configured_export": {
+      "stock_mean_s": 34.604,
+      "candidate_mean_s": 36.388,
+      "candidate_minus_stock_s": 1.784,
+      "candidate_minus_stock_percent": 5.15,
+      "full_binary_comparison": "all four identical",
+      "glb_sha256": "b6e235d31b6482878695a166fe12ebf3ed284ccc95addf55537dacc80ebc424c",
+      "glb_bytes": 2447148,
+      "consumed_operations_each": 452627,
+      "classes_passed": 4
+    },
+    "original_timeouts": [
+      "original-stock",
+      "original-candidate",
+      "repeat-original-stock",
+      "repeat-original-candidate"
+    ]
+  },
+  "original_direct": {
+    "entry_point": "ontokin.budget_runtime.execute_torque_export",
+    "wall_seconds": 6.06489471000009,
+    "profile": "original source/options, default real monotonic clock; direct exporter without Agent",
+    "receipt": {
+      "schema_version": "ontokin.execution-budget/0.1",
+      "defaults": {
+        "max_operations": 100000,
+        "max_elapsed_ms": 30000
+      },
+      "policy_id": "sha256:7fa5c9e224d9ca55e4f34ffcfa6986574957acd3d5a9124c4408179913fe85fc",
+      "host_ceilings": {
+        "max_operations": 1000000,
+        "max_elapsed_ms": 30000
+      },
+      "source_request": {
+        "max_operations": 1000000,
+        "max_elapsed_ms": 30000
+      },
+      "caller_caps": {},
+      "effective": {
+        "max_operations": 1000000,
+        "max_elapsed_ms": 30000
+      },
+      "consumed_operations": 448334,
+      "elapsed_ms": 6029.993713000067,
+      "stage": "result",
+      "status": "valid",
+      "budget_reason": null
+    },
+    "bytes": 2447148,
+    "sha256": "6911a4921133841df9b12e308c59b89b9ef4b5219f604751c6de2861410564aa"
+  },
+  "independent_reader": {
+    "kind": "original_A08_independent_reader_replay",
+    "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+    "options": {
+      "end": "2",
+      "fps": 4,
+      "helpers": false,
+      "position_tolerance_m": 0.001,
+      "rotation_tolerance_rad": 0.001,
+      "time_tolerance_s": 1e-06
+    },
+    "limits": {
+      "max_operations": 1000000,
+      "max_elapsed_ms": 30000
+    },
+    "bytes": 2447148,
+    "sha256": "6911a4921133841df9b12e308c59b89b9ef4b5219f604751c6de2861410564aa",
+    "size_matches_original": true,
+    "sha256_matches_original": true,
+    "reader_operations_including_compilation": 201183,
+    "reader_report": {
+      "status": "passed",
+      "structure": "passed_bounded_glb_reader",
+      "method": "Independent exact-sign admission, interval source event/pose reference, exact clock cells and complete supplied-byte continuous inequalities.",
+      "reach_continuous_bounds": "passed_independent_source_and_bytes",
+      "reach_boundary_histories": "passed_complete_both_sides_and_incoming_releases",
+      "position_metric": "conservative uniform Euclidean carrier and native-landmark bound in metres",
+      "rotation_metric": "conservative uniform physical rotation-angle bound in radians",
+      "probe_policy": "every actual stored key endpoint plus every complete source boundary; continuous per-interval proof",
+      "sample_count": 188,
+      "node_pose_comparisons": 1504,
+      "interval_certificates_checked": 1496,
+      "max_position_error_bound_m": 0.00044758001534901746,
+      "max_rotation_error_bound_rad": 0.00025847097609045674,
+      "max_time_error_seconds": 5.928590335947945e-08,
+      "max_geometry_dimension_error_m": 3.8125435031233224e-08,
+      "max_surface_vertex_error_m": 0.0,
+      "surface_vertex_tolerance_m": 1e-05,
+      "surface_geometry_materials_and_provenance": "passed_source_comparison",
+      "failures": [],
+      "scope": "Continuous proof for this source, actual bytes and identified controlled destination algorithm; actual native/browser execution and visual review remain separate release obligations."
+    }
+  },
+  "profile": {
+    "sampling": "Linux ITIMER_PROF on the synchronous main producer thread; deterministic jitter 17–31ms of process CPU time per interrupt; no background sampler thread, no product hook or monkeypatch. Includes only service.handle(export), outside create and artifact reads. Stack order leaf to root. Python dispatch after a native call can bias its attribution; blocked wall time is not sampled.",
+    "cpu_affinity": [
+      6
+    ],
+    "node": "20ec93839856",
+    "expected_configured_revision": "sha256:f9706bb36e9be09721c3c14c9e60eb7d66115f9887ac6a24abf8c156c9348336",
+    "interpreter": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "wall_seconds": 39.117117732,
+    "process_cpu_seconds": 38.984046621,
+    "callback_cpu_seconds": 0.06690810499994204,
+    "total_samples": 1251,
+    "status": "succeeded",
+    "producer_elapsed_ms": 39110.399018999946,
+    "operations": 452627,
+    "artifact": {
+      "sha256": "b6e235d31b6482878695a166fe12ebf3ed284ccc95addf55537dacc80ebc424c",
+      "bytes": 2447148
+    }
+  },
+  "branch_inventory_at_intake": {
+    "observed_utc": "2026-11-07T14:17:08.999Z",
+    "repository": "Omegapy/OntoKin",
+    "main": "21588acad94e1c222b45ed26880ebf0832f8999a",
+    "tree": "b3fa711f6409355473128c7f846d6be082f42250",
+    "branches": [
+      {
+        "name": "archive/c133-branch-reconciliation",
+        "sha": "cf95177318f174053b16d5e4f51d8f2fbacd7542"
+      },
+      {
+        "name": "main",
+        "sha": "21588acad94e1c222b45ed26880ebf0832f8999a"
+      }
+    ],
+    "open_prs": [],
+    "prior_non_main_tips": [
+      {
+        "name": "archive/c133-branch-reconciliation",
+        "sha": "cf95177318f174053b16d5e4f51d8f2fbacd7542",
+        "status": "behind",
+        "ahead_by": 0,
+        "behind_by": 19,
+        "merge_base": "cf95177318f174053b16d5e4f51d8f2fbacd7542"
+      },
+      {
+        "name": "work/c091-finite-torque",
+        "sha": "70bd425b53ab01fd65ab7e19cc52198c60b9d4ab",
+        "status": "behind",
+        "ahead_by": 0,
+        "behind_by": 21,
+        "merge_base": "70bd425b53ab01fd65ab7e19cc52198c60b9d4ab"
+      },
+      {
+        "name": "work/c129-service-checker",
+        "sha": "fe6a9dd23511916f49dc52fc9c5854a8108b95e0",
+        "status": "behind",
+        "ahead_by": 0,
+        "behind_by": 43,
+        "merge_base": "fe6a9dd23511916f49dc52fc9c5854a8108b95e0"
+      },
+      {
+        "name": "work/c152-passage-correctness",
+        "sha": "d4dfde257e4ba1e14a0673ed24f462b5cbd71997",
+        "status": "behind",
+        "ahead_by": 0,
+        "behind_by": 42,
+        "merge_base": "d4dfde257e4ba1e14a0673ed24f462b5cbd71997"
+      },
+      {
+        "name": "work/c155-rendered-cart-clearance",
+        "sha": "605d40ae8a427485108205caf74632c37151c1dc",
+        "status": "behind",
+        "ahead_by": 0,
+        "behind_by": 41,
+        "merge_base": "605d40ae8a427485108205caf74632c37151c1dc"
+      }
+    ]
+  },
+  "example_glb_digests": {
+    "expected": 52,
+    "verified": 52,
+    "matched": 52
+  },
+  "runtime_change_published": false
+}
