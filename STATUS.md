@@ -1,5 +1,9 @@
 # OntoKin development status — C161
 
+## C162 integration lease
+
+Owner `c162-placement-140b63d6` reserves integration of [PR #99](https://github.com/Omegapy/OntoKin/pull/99) from 2026-11-07T18:01:19Z through 2026-11-07T18:31:19Z. Base `051bd56f67c2d4fa51052e1a77ca7e3cdad0e2b5`. The work covers the oblique duct example, local geometry checker, regression tests and example guide.
+
 ## Current checkpoint
 
 C161 adds a stationary hollow elbow and straight duct with a shared editable bore. A 0.25 m shift kept their 2 m exteriors aligned but reduced the common opening from 1.00 to 0.75 m². Agent/0.11 repaired the shift and reproduced the original 49,504-byte GLB. An out-of-bounds 2 m edit preserved the prior accepted source and artifact. Six direct exports and three Agent exports produced the expected joint checks. The wider pair measured 1.5625 m². Rolling the straight part 90° passed. Shrinking its bore or tilting its axis failed. [Source, replay and measured views](examples/connected-duct/README.md)
