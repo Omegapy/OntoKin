@@ -1,10 +1,14 @@
-# OntoKin development status — C162
-
-## C163 integration lease
-
-Owner `c163-port-fit-87b67246` holds the main integration lease for [PR #100](https://github.com/Omegapy/OntoKin/pull/100) from 2026-11-07T19:03:36Z through 2026-11-07T19:33:36Z. Base `eb65f5ad6ecf8d38cfdb6f4cd11b14561db3e59a`. Scope covers the named duct placement example, its geometry checks, tests and documentation.
+# OntoKin development status — C163
 
 ## Current checkpoint
+
+Agent/0.11 placed a mispositioned straight duct against the named elbow outlet from the delivered GLB. It measured the two mating frames and changed one placement declaration. The initial gap was 0.375 m and the axis was tilted 12°. Both complete rims now agree within 0.56 μm, and the shared opening measures 0.99999970 m². The elbow declaration and imported parts module retain their source identities. [Run the example and view the before and after close-ups](examples/connected-duct/README.md#place-the-straight-duct-from-its-exported-geometry)
+
+[PR #100](https://github.com/Omegapy/OntoKin/pull/100) merged at [118fa7803fa8](https://github.com/Omegapy/OntoKin/commit/118fa7803fa8447d28ea6cb1d66d5fc1b409789c). On the clean merge the fixed and oblique examples reproduced their reference artifacts. All 25 duct tests, 17 independent placement probes, 137 framed-loft tests and 69 stock acceptance cases passed. The next task is to select a named outlet among repeated part instances and reject a flush connection to a decoy. The separate torque A08 release obligations remain open.
+
+Owner `c163-port-fit-87b67246` releases the main integration lease on verified publication of this record.
+
+## Previous checkpoint at C162
 
 An Agent can now verify and repair the stationary duct joint at either of two authored placements. In the translated and rotated assembly, a 0.25 m local bore shift reduced the measured shared opening from 0.99999948 to 0.74999978 m². Reversing that one source edit restored all 49,736 bytes of the nominal model. The checker measures the exported triangle winding and complete inner and outer boundaries in the chosen port frame. [Run the example and inspect both views](examples/connected-duct/README.md#move-the-assembly-and-repair-the-same-opening).
 
