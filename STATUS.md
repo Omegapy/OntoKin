@@ -1,5 +1,9 @@
 # OntoKin development status — C162
 
+## C163 integration lease
+
+Owner `c163-port-fit-87b67246` holds the main integration lease for [PR #100](https://github.com/Omegapy/OntoKin/pull/100) from 2026-11-07T19:03:36Z through 2026-11-07T19:33:36Z. Base `eb65f5ad6ecf8d38cfdb6f4cd11b14561db3e59a`. Scope covers the named duct placement example, its geometry checks, tests and documentation.
+
 ## Current checkpoint
 
 An Agent can now verify and repair the stationary duct joint at either of two authored placements. In the translated and rotated assembly, a 0.25 m local bore shift reduced the measured shared opening from 0.99999948 to 0.74999978 m². Reversing that one source edit restored all 49,736 bytes of the nominal model. The checker measures the exported triangle winding and complete inner and outer boundaries in the chosen port frame. [Run the example and inspect both views](examples/connected-duct/README.md#move-the-assembly-and-repair-the-same-opening).
