@@ -1,0 +1,68 @@
+{
+  "request": {
+    "upstream": [
+      "outbound",
+      "top"
+    ],
+    "inlet": [
+      "link",
+      "bottom"
+    ],
+    "outlet": [
+      "link",
+      "top"
+    ],
+    "downstream": [
+      "inbound",
+      "bottom"
+    ]
+  },
+  "achievable": {
+    "start_center_m": [
+      5,
+      2,
+      3
+    ],
+    "end_center_m": [
+      10.75,
+      2,
+      3
+    ],
+    "span_m": 5.75
+  },
+  "incompatible": {
+    "start_center_m": [
+      5,
+      2,
+      3
+    ],
+    "end_center_m": [
+      10.75,
+      2.25,
+      3
+    ],
+    "lateral_offset_m": 0.25
+  },
+  "joint_axis": [
+    1,
+    0,
+    0
+  ],
+  "bypass_end_center_m": [
+    15.75,
+    2,
+    3
+  ],
+  "initial_span_m": 4,
+  "outer_side_m": 2,
+  "inner_side_m": 1,
+  "maximum_rim_error_m": 1e-05,
+  "maximum_unit_normal_error": 1e-05,
+  "common_area_m2": 1,
+  "area_tolerance_m2": 5e-05,
+  "controls": {
+    "wrong-end": "reverse link bottom and top",
+    "incorrect-length": "preserve fitted pose and use original 4 m length",
+    "wrong-occurrence": "fit outbound/top to bypass/bottom and score against inbound/bottom"
+  }
+}
