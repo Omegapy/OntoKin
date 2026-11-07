@@ -89,8 +89,7 @@ def named_frame(glb, node, endpoint):
     # A physically valid cap at the wrong end can carry swapped triangle indices.
     # Use the declared section order only to authenticate the direction between
     # the measured centers. The frame and both sets of corners come from triangles.
-    meta = node['extras']['ontokin']
-    surface, geometry = meta['surface'], meta['geometry']
+    surface = node['extras']['ontokin']['surface']
     sections = sorted(surface['sections'], key=lambda section: section['order'])
     require((surface['bottom_region'], surface['top_region']) == ('bottom', 'top') and
             len(sections) >= 2 and sections[0]['order'] < sections[-1]['order'], 'Missing signed endpoints')
@@ -106,8 +105,7 @@ def named_frame(glb, node, endpoint):
     # Both imported duct classes start at a section facing local -Z. This
     # class invariant still distinguishes the inlet if section summaries and
     # cap indices are swapped together. The measured corners drive the fit.
-    inlet_axis = rotate(geometry.get('local_rotation', (1, 0, 0, 0)), (0, 0, -1))
-    require(dist(bottom[1], rotate(world_rotation, inlet_axis)) < TOL,
+    require(dist(bottom[1], rotate(world_rotation, (0, 0, -1))) < TOL,
             node['name'] + ' signed inlet winding differs from the duct class')
     return top if endpoint == 'top' else bottom
 
