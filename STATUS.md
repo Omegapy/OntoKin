@@ -1,14 +1,10 @@
-# OntoKin development status — C158
-
-## C159 integration lease
-
-Owner `interactive-c159-scan-site-1547` holds the main integration lease from 2026-11-07T15:48:13Z through 2026-11-07T16:18:13Z for the simulator scan-site investigation. The measured starting commit is `ca9d79a9b49b5218a018e98c737e9d1b74a94bb1`.
+# OntoKin development status — C159
 
 ## Current checkpoint
 
-The frozen A08 torque animation timed out in both fresh 30-second Agent trials. The separately configured 80-second controls finished in 32.940 and 32.723 seconds with all 13 reads passing. A callback can invalidate the 30 common binding checks between their two uses. The configured export also performed 253,946 live source checks. A faster standalone dictionary scan exposed a separate callback-compatibility issue. The next step is to test whether a simulator-only fast path can preserve those callbacks and their exceptions. [C158 investigation and measurements](docs/engineering/torque-verification-c158/README.md)
+C159 rejected three simulator scan changes. An extra dictionary lookup, reuse of the key scan’s helpers, and delayed release of a temporary callable each changed an exception or work charge. The original A08 Agent export timed out at 30.001 seconds. The separate 80-second control finished in 34.341 seconds and passed all 13 reads. The direct exporter recreated the historical animation and the independent reader and Chromium verified it. The next experiment concerns 151 class descriptor checks in a generated Python predicate. [C159 evidence and executable controls](docs/engineering/torque-verification-c159/README.md)
 
-Owner `interactive-c158-a08-1503` releases the main integration lease on verified publication of this record. [Prior full run and visual verification](docs/engineering/torque-verification-c157/README.md)
+Owner `interactive-c159-scan-site-1547` releases the main integration lease on verified publication of this record. [Previous scan measurements](docs/engineering/torque-verification-c158/README.md)
 
 ## Integrated development baseline at C156
 

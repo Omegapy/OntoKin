@@ -1,5 +1,7 @@
 # OntoKin documentation guide
 
+The [C159 simulator scan investigation](engineering/torque-verification-c159/README.md) shows where a faster dictionary check changes the exception or operation count. It records the original export, browser checks and the next Python experiment.
+
 The [C158 source-identity investigation](engineering/torque-verification-c158/README.md) records the binding counterexample, live scan costs and original callback boundary.
 
 The [C157 timing study](engineering/torque-verification-c157/README.md) records the original A08 deadline, direct export, browser checks and the clock experiment.
