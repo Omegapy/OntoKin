@@ -18,6 +18,8 @@ Open the checkout's [offline viewer](examples/visual/viewer.html), choose **Open
 
 To try your own edit, start with the [editable scene](examples/agent/authoring-demo.ok), the [Agent/0.1 request schema](docs/language-design/agent-v0.1/request.schema.json), and the [agent guide](examples/agent/README.md). The [first-use task](examples/agent/first-use.md) describes how to test a fresh coding agent on this workflow.
 
+To see why a valid part can still make a bad assembly, try the [connected-duct example](examples/connected-duct/README.md). It checks the opening between two hollow parts and repairs an offset through the Agent interface.
+
 > **Project status:** OntoKin remains in development. The reference package is **0.4.0**. Its development line supports pinned reusable assemblies, native exterior surfaces and regional PBR materials, instantaneous impulses, and finite center-of-mass force intervals. Explicit Agent/0.5 and recorded GLB/0.5 support force-program inspection, source repair and artifact retrieval. Earlier profiles retain their meanings and defaults. [STATUS.md](STATUS.md) identifies integrated implementation, complete release evidence and remaining requirements; component implementation alone does not close a release or the broader product goal.
 
 The [project goal](GOAL.md) preserves the full language and product mission. [STATUS.md](STATUS.md) records verified progress, the active milestone, and the next unmet gate. [AGENTS.md](AGENTS.md) defines how development resumes after interruptions and coordinates concurrent work.

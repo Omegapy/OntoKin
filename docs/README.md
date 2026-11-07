@@ -1,5 +1,7 @@
 # OntoKin documentation guide
 
+The [C161 connected duct](../examples/connected-duct/README.md) joins two editable hollow parts and verifies the common opening before and after an Agent repair.
+
 The [C160 descriptor guard study](engineering/torque-verification-c160/README.md) records an observable exception and work-charge difference, A08 playback in Chromium and VTK, and an editable hollow-duct pilot.
 
 The [C159 simulator scan investigation](engineering/torque-verification-c159/README.md) shows where a faster dictionary check changes the exception or operation count. It records the original export, browser checks and the next Python experiment.
