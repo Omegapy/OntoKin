@@ -1,5 +1,9 @@
 # OntoKin development status — C163
 
+## C164 integration lease
+
+Owner `c164-selection-91b3` holds the main integration lease for [PR #101](https://github.com/Omegapy/OntoKin/pull/101) from 2026-11-07T19:56:27Z through 2026-11-07T20:26:27Z. Base `55ef55bf63185e65ffb0ffe44865e21ff146aa4a`. Scope covers the named repeated-elbow example, verification from exported geometry, tests and documentation.
+
 ## Current checkpoint
 
 Agent/0.11 placed a mispositioned straight duct against the named elbow outlet from the delivered GLB. It measured the two mating frames and changed one placement declaration. The initial gap was 0.375 m and the axis was tilted 12°. Both complete rims now agree within 0.56 μm, and the shared opening measures 0.99999970 m². The elbow declaration and imported parts module retain their source identities. [Run the example and view the before and after close-ups](examples/connected-duct/README.md#place-the-straight-duct-from-its-exported-geometry)
