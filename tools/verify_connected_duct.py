@@ -134,10 +134,10 @@ def rings(half):
     return [(0, y*r, z*r) for r in (1, half) for y, z in [(-1,-1),(1,-1),(1,1),(-1,1)]]
 
 
-def port(glb, node, width, frame, role=None):
+def port(glb, node, width, frame, role=None, *, cap=None):
     name = node['name']
     role = role or name
-    cap_region, direction = PORTS[role]
+    cap_region, direction = cap or PORTS[role]
     target = rings(width/2)
     edges, actual = Counter(), {}
     area = 0.0

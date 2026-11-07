@@ -1,0 +1,26 @@
+ontokin "0.11";
+module ConnectedDuct @ "connected-duct";
+profile "framed-polygon-loft-0.1";
+execution { max_operations = 200000; max_elapsed = 30[s]; }
+
+import ducts @ "duct-parts" from "example.connected-duct-parts" version "1.1.0"
+    digest "sha256:b520cfdd2d668d7840624f9110a0a56db440608213643c81758470be5c8c7f6f";
+
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object outbound @ "outbound": ducts.Elbow {
+        placement = pose(world, vec3(1[m], 2[m], -1[m]), quat(1, 0, 0, 0));
+    }
+    object bypass @ "bypass": ducts.Elbow {
+        placement = pose(world, vec3(15.75[m], 2[m], 3[m]), quat(0.7071067811865476, 0, 0.7071067811865476, 0));
+    }
+    object inbound @ "inbound": ducts.Elbow {
+        placement = pose(world, vec3(10.75[m], 2[m], 3[m]), quat(0.7071067811865476, 0, 0.7071067811865476, 0));
+    }
+    object link @ "link": ducts.Straight {
+        placement = pose(world, vec3(5.4[m], 1.5[m], 4[m]), quat(1, 0, 0, 0));
+        span = 4[m];
+        bore_shift = 0[m];
+    }
+}
