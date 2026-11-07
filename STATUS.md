@@ -1,10 +1,16 @@
-# OntoKin development status — C133
+# OntoKin development status — C156
 
-## C156 integration lease
+## Current development baseline
 
-Owner `interactive-c156-branch-integration` holds the main integration lease from `2026-11-07T03:38:34Z` through `2026-11-07T04:08:34Z` for reconciliation of the service-entrance stack, finite torque development and the historical branch index. The observed starting main is `2fac0eeed3fb61bae806df60e0a14bf06cdd1de1`.
+[The C156 product merge](https://github.com/Omegapy/OntoKin/commit/900f271db4cc0fb057971b2456deb14ac46fedc4) integrates the service-entrance checker and the opt-in finite-torque implementation. The reference package version is 0.4.0. Earlier default source, Agent and GLB behavior passed direct comparison with the previous main. The existing release gates remain open as recorded below.
 
-## Current checkpoint
+[Service-entrance PRs #94](https://github.com/Omegapy/OntoKin/pull/94), [#96](https://github.com/Omegapy/OntoKin/pull/96) and [#97](https://github.com/Omegapy/OntoKin/pull/97) are integrated. All seven steps of the original PR #97 worker passed on Linux x86-64 with CPython 3.12.14. An independent checkout verified all 3,988 baseline methods in order and the same 16 pending external cases. The worker ran under observation on a temporary host. On the product merge, all seven focused tests passed, all 22 CLI cases matched, the checker rejected all 13 corrupted exports, and both renamed scenes passed.
+
+[Finite-torque PR #90](https://github.com/Omegapy/OntoKin/pull/90) adds explicit source, Agent and recorded GLB 0.22 for development. The combined preview passed all 3,988 legacy methods and produced 52 legacy GLBs byte for byte. Its expanded unit run exercised 4,163 methods and reported zero failures, errors or skips. All 13 original A08 read methods passed in this suite, which requires the preceding export to complete within 30 seconds. Two standalone attempts on the identical fixture exceeded that deadline before any read method could start. A third standalone invocation produced the original 2,447,148-byte GLB (SHA-256 `6911a4921133841df9b12e308c59b89b9ef4b5219f604751c6de2861410564aa`) and passed all 13 methods. The separately configured 80-second export produced the expected 2,447,148 bytes and the 13 read checks passed with a 30-second caller cap. Full one-byte transfer, independent playback, external destination checks and release qualification remain open. The next engineering task is to characterize A08 timing on an idle host with the original budget and run the full visual profile with its pinned Node and Chromium dependencies. [Prior measurements](docs/engineering/torque-verification-c104/README.md)
+
+The C133 [index](https://github.com/Omegapy/OntoKin/blob/cf95177318f174053b16d5e4f51d8f2fbacd7542/RETAINED-HEADS.json) preserves older branch tips. At the owner's request to reconcile every branch, C156 records that index commit as historical ancestry and keeps its one-file tree out of the product checkout. Owner `interactive-c156-branch-integration` releases the integration lease on verified publication of this record.
+
+## Branch integration at C133
 
 [PR #91](https://github.com/Omegapy/OntoKin/pull/91) added the first agent edit to the [README](README.md#try-an-agent-edit). At the [main merge](https://github.com/Omegapy/OntoKin/commit/18854eb7d7a0a615596920cff2444906b5b1f39e), the documentation checker passed and the scripted edit passed all 18 checks across 41 operations on Linux x86-64, CPython 3.12.14. Its 125,892-byte animation matched the reviewed candidate byte for byte. The independent newcomer playback trial remains open.
 
@@ -24,9 +30,9 @@ On reviewed candidate `88c2fd9fada027c8090f671af1bc381fcc301f9b`, one complete s
 
 The global input manifest binds **399 files / 12,256,793 bytes**, SHA-256 `98df30158c0cd77c542d89652f5dec6b585d03451a06bf7b1baffee0fc2f02eb`. It fixes signed Cartesian world-axis couples on a free homogeneous sphere, canonical rounding and reference/error transport, sticky axis and split-rotation transactions, current authority and real work charges, source repair and all twelve Agent transports, actual reach-recording error allocation and a separate controlled .22 destination. Earlier source, Agent, recording and default meanings remain unchanged.
 
-## Last implemented capability: C088
+## Implementation at C088
 
-[C088 bounded keyed membership](docs/engineering/keyed-membership-2026-11-02-c088/README.md) remains the latest implemented increment at source `7b6900baa0357ab96c4639ac5c2ebe4e1791833e`, tree `1a31d387795b0b794935b81d9f77803054e82699`. Source `0.21` / `keyed-membership-0.1`, Agent/0.21 and recorded GLB/0.21 provide bounded read-only `has_key(collection, query) -> Bool` and sparse component overrides. Immutable bundle/files remain `0.2`.
+[C088 bounded keyed membership](docs/engineering/keyed-membership-2026-11-02-c088/README.md) was the implemented increment at source `7b6900baa0357ab96c4639ac5c2ebe4e1791833e`, tree `1a31d387795b0b794935b81d9f77803054e82699`. Source `0.21` / `keyed-membership-0.1`, Agent/0.21 and recorded GLB/0.21 provide bounded read-only `has_key(collection, query) -> Bool` and sparse component overrides. Immutable bundle/files remain `0.2`.
 
 C088's identified evidence retains 3,988 unit tests, 106 force-Agent tests, its complete 34-role inherited invocation and directly reviewed captures. Its earlier 900-second unit timeout remains failed. C087's original 33-role pass and separate documentation recovery remain distinct from a single passing full invocation. C089 supplied the separate utility/contract review; C090 does not relabel any older runtime cohort as fresh torque validation.
 

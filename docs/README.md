@@ -1,5 +1,7 @@
 # OntoKin documentation guide
 
+The [current development status](../STATUS.md) records the integrated two-cart service-entrance checker and the explicit 0.22 finite-torque implementation. The [C104 torque verification record](engineering/torque-verification-c104/README.md) describes the 30-second A08 export limit and the separate 80-second control.
+
 C092's [deterministic canonical spin amendment](language-design/torque-amendments/c092-canonical-spin-selection/README.md)
 and [engineering record](engineering/canonical-spin-amendment-2026-11-03-c092/README.md)
 address C091's reproduced request-history conflict. Independent input freeze,
