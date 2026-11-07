@@ -1,10 +1,12 @@
-# OntoKin development status — C160
-
-## C161 integration lease
-
-Owner `c161-duct-5e6eedd3` reserves integration of the joined-duct example from 2026-11-07T17:19:07Z through 2026-11-07T17:49:07Z. Base `59395b0dc73e09eacaf2998356de4379db196e32`. The example, its checker, tests and navigation are the bounded work scope.
+# OntoKin development status — C161
 
 ## Current checkpoint
+
+C161 adds a stationary hollow elbow and straight duct with a shared editable bore. A 0.25 m shift kept their 2 m exteriors aligned but reduced the common opening from 1.00 to 0.75 m². Agent/0.11 repaired the shift and reproduced the original 49,504-byte GLB. An out-of-bounds 2 m edit preserved the prior accepted source and artifact. Six direct exports and three Agent exports produced the expected joint checks. The wider pair measured 1.5625 m². Rolling the straight part 90° passed. Shrinking its bore or tilting its axis failed. [Source, replay and measured views](examples/connected-duct/README.md)
+
+[PR #98](https://github.com/Omegapy/OntoKin/pull/98) integrated the example, checker and tests at [990561c31a45](https://github.com/Omegapy/OntoKin/commit/990561c31a4514c4639cd3b4e42afb702479f008). The seven new regression tests follow the original A08 prelude in discovery order. The next authoring task is to verify and repair the joint after translating and rotating the entire assembly. The separate A08 release gates below remain open. Owner `c161-duct-5e6eedd3` releases the integration lease on verified publication of this record.
+
+## Previous checkpoint at C160
 
 C160 retained the reference class-attribute guard. In a real simulator tick the faster membership expression missed the caller’s exception and charged one operation. A fallback that inspected monitoring introduced a different observable call. The original A08 Agent export timed out at 30.001 s. Its 80-second control published at 35.588 s and passed all 13 reads. Chromium and VTK sampled the rebuilt original clip. A separately tested Agent/0.11 duct example gives C161 a starting point for joining and repairing two editable 3D parts. [C160 probes, measurements and authoring pilot](docs/engineering/torque-verification-c160/README.md)
 
