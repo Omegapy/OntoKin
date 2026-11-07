@@ -1,5 +1,9 @@
 # OntoKin development status — C156
 
+## C157 integration lease
+
+Owner `interactive-c157-a08-visual-1414` holds the main integration lease from `2026-11-07T14:24:00Z` through `2026-11-07T14:54:00Z` to publish the A08 timing study and full local verification. The tested starting commit is `21588acad94e1c222b45ed26880ebf0832f8999a`. The original branch and pull request inventory is reconciled.
+
 ## Current development baseline
 
 [The C156 product merge](https://github.com/Omegapy/OntoKin/commit/900f271db4cc0fb057971b2456deb14ac46fedc4) integrates the service-entrance checker and the opt-in finite-torque implementation. The reference package version is 0.4.0. Earlier default source, Agent and GLB behavior passed direct comparison with the previous main. The existing release gates remain open as recorded below.
