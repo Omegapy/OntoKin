@@ -107,6 +107,19 @@ def solve_placement(raw, *, elbow_region='top', straight_region='bottom'):
     straight = nodes[paths['straight']]
     target, outlet, outer, inner = cap_frame(glb, nodes[paths['elbow']], elbow_region)
     source, inlet, old_outer, old_inner = cap_frame(glb, straight, straight_region)
+    # A square straight duct has indistinguishable ends if their index streams
+    # are exchanged. Use the declared section order only to authenticate their
+    # direction. Translation, winding, rim corners and rotation come from triangles.
+    surface = straight['extras']['ontokin']['surface']
+    sections = sorted(surface['sections'], key=lambda section: section['order'])
+    require(surface['bottom_region'] == straight_region and len(sections) >= 2 and
+            sections[0]['order'] < sections[-1]['order'], 'Missing signed straight endpoints')
+    far, *_ = cap_frame(glb, straight, surface['top_region'])
+    declared = sub(sections[-1]['origin_m'], sections[0]['origin_m'])
+    declared = rotate(surface['local_visual_placement']['orientation_wxyz'], declared)
+    x, y, z, w = straight['rotation']
+    declared = rotate((w, x, y, z), declared)
+    require(dot(unit(declared), unit(sub(far, source))) > 0, 'Straight cap order opposes declared section direction')
     desired = tuple(-x for x in outlet)
     diagonal = unit(sub(old_outer[0], source))
     # Swing the inlet normal onto the mating normal. At a half turn the rim
@@ -131,6 +144,5 @@ def solve_placement(raw, *, elbow_region='top', straight_region='bottom'):
             predicted = rotate(correction, sub(p, source))
             require(min(dist(predicted, sub(t, target)) for t in final) < TOL, 'Rim dimensions do not match')
     offset = rotate(correction, sub(straight['translation'], source))
-    x, y, z, w = straight['rotation']
     return {'translation_m': [a+b for a, b in zip(target, offset)],
             'rotation_wxyz': list(compose(correction, (w, x, y, z)))}
