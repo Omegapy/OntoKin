@@ -1,5 +1,9 @@
 # OntoKin development status — C133
 
+## C156 integration lease
+
+Owner `interactive-c156-branch-integration` holds the main integration lease from `2026-11-07T03:38:34Z` through `2026-11-07T04:08:34Z` for reconciliation of the service-entrance stack, finite torque development and the historical branch index. The observed starting main is `2fac0eeed3fb61bae806df60e0a14bf06cdd1de1`.
+
 ## Current checkpoint
 
 [PR #91](https://github.com/Omegapy/OntoKin/pull/91) added the first agent edit to the [README](README.md#try-an-agent-edit). At the [main merge](https://github.com/Omegapy/OntoKin/commit/18854eb7d7a0a615596920cff2444906b5b1f39e), the documentation checker passed and the scripted edit passed all 18 checks across 41 operations on Linux x86-64, CPython 3.12.14. Its 125,892-byte animation matched the reviewed candidate byte for byte. The independent newcomer playback trial remains open.
