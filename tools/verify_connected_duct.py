@@ -1,6 +1,7 @@
-"""Measure the stationary C161 joint from rendered glTF triangles in a GLB."""
+"""Measure a stationary framed duct joint from rendered glTF triangles in a GLB."""
 import argparse
 from collections import Counter
+from dataclasses import dataclass
 import hashlib
 import json
 import math
@@ -40,6 +41,34 @@ def sub(a, b):
     return tuple(x-y for x, y in zip(a, b))
 
 
+@dataclass(frozen=True)
+class PortFrame:
+    center: tuple
+    axes: tuple  # World directions of normal, first rim axis and second rim axis.
+
+    def local(self, point):
+        offset = sub(point, self.center)
+        return tuple(sum(a*b for a,b in zip(axis, offset)) for axis in self.axes)
+
+    def vector(self, local):
+        return tuple(sum(a*b for a,b in zip(row, local)) for row in zip(*self.axes))
+
+    def world(self, local):
+        return tuple(a+b for a,b in zip(self.center, self.vector(local)))
+
+
+FIXED = PortFrame((4,0,4), ((1,0,0),(0,1,0),(0,0,1)))
+
+
+def port_frame(placement):
+    if placement == 'fixed':
+        return FIXED
+    require(placement == 'oblique', 'Unknown duct placement')
+    path = Path(__file__).resolve().parents[1] / 'examples/connected-duct/oblique-contract.json'
+    expected = json.loads(path.read_text())
+    return PortFrame(tuple(expected['elbow_outlet_center_m']), tuple(zip(*expected['rotation_rows'])))
+
+
 def place(point, node):
     q = node['rotation']
     length = math.hypot(*q)
@@ -58,9 +87,11 @@ def stationary_times(glb, nodes):
     for channel in animation['channels']:
         target = channel['target']
         i, path = target['node'], target['path']
-        require(i in nodes and path in ('translation', 'rotation') and (i, path) not in tracks,
+        require(type(i) is int and i in nodes and path in ('translation', 'rotation') and (i, path) not in tracks,
                 'Unexpected or duplicate transform channel')
-        sampler = animation['samplers'][channel['sampler']]
+        index = channel['sampler']
+        require(type(index) is int and 0 <= index < len(animation['samplers']), 'Invalid animation sampler reference')
+        sampler = animation['samplers'][index]
         times = glb.accessor(sampler['input'])
         values = glb.accessor(sampler['output'])
         require(sampler.get('interpolation', 'LINEAR') == 'LINEAR' and len(times) == len(values)
@@ -79,19 +110,19 @@ def stationary_times(glb, nodes):
 
 def opening_intersection(face, half):
     """Clip the triangle's joint-plane section to the open square, inset by TOL."""
-    section = [v[1:] for v in face if abs(v[0]-4) <= TOL]
+    section = [v[1:] for v in face if abs(v[0]) <= TOL]
     for a, b in zip(face, face[1:]+face[:1]):
-        if (a[0]-4)*(b[0]-4) < 0:
-            t = (4-a[0])/(b[0]-a[0])
+        if a[0]*b[0] < 0:
+            t = (-a[0])/(b[0]-a[0])
             section.append(tuple(a[i]+t*(b[i]-a[i]) for i in (1, 2)))
-    if all(abs(v[0]-4) <= TOL for v in face):
+    if all(abs(v[0]) <= TOL for v in face):
         section = [v[1:] for v in face]
-    for axis, center in enumerate((0, 4)):
+    for axis in (0, 1):
         for sign in (-1, 1):
             polygon, section = section, []
             for a, b in zip(polygon, polygon[1:]+polygon[:1]):
-                da = half-TOL-sign*(a[axis]-center)
-                db = half-TOL-sign*(b[axis]-center)
+                da = half-TOL-sign*a[axis]
+                db = half-TOL-sign*b[axis]
                 if da >= 0:
                     section.append(a)
                 if da*db < 0:
@@ -100,12 +131,12 @@ def opening_intersection(face, half):
 
 
 def rings(half):
-    return [(4, y*r, 4+z*r) for r in (1, half) for y, z in [(-1,-1),(1,-1),(1,1),(-1,1)]]
+    return [(0, y*r, z*r) for r in (1, half) for y, z in [(-1,-1),(1,-1),(1,1),(-1,1)]]
 
 
-def port(glb, node, width):
+def port(glb, node, width, frame):
     name = node['name']
-    material, direction = PORTS[name]
+    cap_region, direction = PORTS[name]
     target = rings(width/2)
     edges, actual = Counter(), {}
     area = 0.0
@@ -120,14 +151,19 @@ def port(glb, node, width):
             'Expected rigid duct mesh')
     for primitive in mesh['primitives']:
         require(primitive.get('mode', 4) == 4 and 'targets' not in primitive, 'Expected rigid triangles')
-        group = glb.reference('materials', primitive['material'])['name']
-        cap = group == name + ': ' + material
-        points = [place(p, node) for p in glb.accessor(primitive['attributes']['POSITION'])]
+        material = glb.reference('materials', primitive['material'])
+        region = primitive.get('extras', {}).get('ontokin', {}).get('region_key')
+        identity = material.get('extras', {}).get('ontokin', {})
+        require(isinstance(region, str) and region == identity.get('source_region_key') and
+                identity.get('occurrence_path') == name and material.get('name') == f'{name}: {region}',
+                name + ' inconsistent region identity')
+        cap = region == cap_region
+        points = [frame.local(place(p, node)) for p in glb.accessor(primitive['attributes']['POSITION'])]
         indices = glb.accessor(primitive['indices'])
         require(len(indices) % 3 == 0 and all(0 <= j < len(points) for j in indices), 'Invalid triangle indices')
         for start in range(0, len(indices), 3):
             tri = [points[j] for j in indices[start:start+3]]
-            if name == 'straight' and group == 'straight: top':
+            if name == 'straight' and region == 'top':
                 outlet_points.update(tri)
             if cap:
                 normal = cross(sub(tri[1], tri[0]), sub(tri[2], tri[0]))
@@ -140,8 +176,8 @@ def port(glb, node, width):
                 max_normal_error = max(max_normal_error, error)
                 if error > TOL:
                     raise JointFailure(name + ' cap normal differs',
-                                       {'part': name, 'triangle_normal': unit,
-                                        'expected_normal': (direction, 0, 0), 'normal_error': error})
+                                       {'part': name, 'triangle_normal': frame.vector(unit),
+                                        'expected_normal': frame.vector((direction, 0, 0)), 'normal_error': error})
                 ids = []
                 for p in tri:
                     j = min(range(8), key=lambda k: math.dist(p, target[k]))
@@ -189,7 +225,7 @@ def rectangular_overlap(ports):
     bounds = []
     for row in ports.values():
         corners = row['inner_loop_m']
-        if any(abs(p[0]-4) > TOL for p in corners):
+        if any(abs(p[0]) > TOL for p in corners):
             return None
         ys, zs = zip(*(p[1:] for p in corners))
         rect = (min(ys), max(ys), min(zs), max(zs))
@@ -201,17 +237,19 @@ def rectangular_overlap(ports):
     return math.prod(max(0, min(a[i+1], b[i+1]) - max(a[i], b[i])) for i in (0, 2))
 
 
-def measure(raw, width=1):
+def measure(raw, width=1, placement='fixed'):
+    frame = port_frame(placement)
     require(width in (1,1.25), 'Expected frozen nominal or alternate width')
     glb = GLB(raw, target='ontokin.glb/0.11')
     doc = glb.document
     require(not doc.get('extensionsUsed') and not doc.get('extensionsRequired'), 'Expected unextended GLB')
-    roots = doc['scenes'][doc['scene']]['nodes']
+    roots = glb.reference('scenes', doc['scene'])['nodes']
     nodes = {i:glb.reference('nodes', i) for i in roots}
     require(len(roots) == len(nodes) == len(doc['nodes']) == 2 and
             {n['name'] for n in nodes.values()} == set(PORTS), 'Expected separate elbow and straight roots')
+    require(glb.objects() == {node['name']: i for i, node in nodes.items()}, 'Duct object path differs')
     times = stationary_times(glb, nodes)
-    ports = {n['name']:port(glb, n, width) for n in nodes.values()}
+    ports = {n['name']:port(glb, n, width, frame) for n in nodes.values()}
     rim_errors, gaps = [], []
     for key in ('outer_loop_m', 'inner_loop_m'):
         for a,b in zip(ports['elbow'][key], ports['straight'][key]):
@@ -220,8 +258,16 @@ def measure(raw, width=1):
     displacement = sub(ports['straight']['inner_center_m'], ports['elbow']['inner_center_m'])
     measured = dict(sha256=hashlib.sha256(raw).hexdigest(), bore_width_m=width, stationary_keys_s=times,
                     max_plane_gap_m=max(gaps), max_matched_corner_distance_m=max(rim_errors),
-                    inner_center_displacement_m=displacement, rectangular_rim_overlap_m2=rectangular_overlap(ports),
+                    inner_center_displacement_m=frame.vector(displacement), rectangular_rim_overlap_m2=rectangular_overlap(ports),
                     ports=ports)
+    for name, row in ports.items():
+        for key in ('outer_loop_m', 'inner_loop_m'):
+            row[key] = [frame.world(point) for point in row[key]]
+        row['inner_center_m'] = frame.world(row['inner_center_m'])
+        row['cap_normal'] = frame.vector(row['cap_normal'])
+        if name == 'straight':
+            row['outlet_center_m'] = frame.world(row['outlet_center_m'])
+            row['centerline_direction'] = frame.vector(row['centerline_direction'])
     for name, row in ports.items():
         if row['max_expected_corner_distance_m'] > TOL:
             raise JointFailure(name + ' rim corner differs', measured)
@@ -240,9 +286,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('glb', type=Path)
     parser.add_argument('--width', type=float, default=1, choices=(1,1.25))
+    parser.add_argument('--placement', default='fixed', choices=('fixed', 'oblique'))
     args = parser.parse_args()
     try:
-        print(json.dumps(measure(args.glb.read_bytes(), args.width), indent=2))
+        print(json.dumps(measure(args.glb.read_bytes(), args.width, args.placement), indent=2))
     except JointFailure as exc:
         print(json.dumps({'failure': str(exc), 'measurements': exc.measurements}, indent=2))
         sys.exit(1)
