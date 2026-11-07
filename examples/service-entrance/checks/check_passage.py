@@ -2,6 +2,7 @@
 
 import argparse
 from bisect import bisect_right
+from collections import Counter
 from fractions import Fraction
 import hashlib
 import json
@@ -363,36 +364,79 @@ def select_carts(source, graph, revision, accepted, moving_cart, parked_cart):
     return moving, parked
 
 
+def exact_rotated_bounds(primitives, rotations):
+    """Bound the delivered vertices before rounding any rotated coordinate."""
+    first = rotations[0]
+    pivot = max(range(4), key=lambda i: abs(first[i]))
+    # Each product of two decoded binary32 components is exact in binary64.
+    # Proportional quaternions represent the same orientation, including q and -q.
+    require(all(all(a * key[pivot] == b * first[pivot] for a, b in zip(first, key))
+                for key in set(rotations)), 'rotation changes during the clearance sweep')
+
+    q = tuple(map(Fraction, first))
+    norm_squared = sum(c*c for c in q)
+    vertices = {p for primitive in primitives for p in primitive}
+    rotated = []
+    for point in vertices:
+        v = tuple(map(Fraction, point))
+        cross = gate.cross(q[:3], v)
+        double_cross = gate.cross(q[:3], cross)
+        # q v q^-1 uses the squared norm, so no rounded square root is needed.
+        rotated.append(tuple(x + 2 * (q[3]*a + b) / norm_squared
+                             for x, a, b in zip(v, cross, double_cross)))
+    return [list(map(op, zip(*rotated))) for op in (min, max)]
+
+
 def parked_clearance(times, tracks, bounds, parked, other):
     # For rigid boxes with fixed orientation, six signed axis gaps are affine in time.
     # Their maximum is a lower bound on surface distance. Its minimum occurs at an
     # endpoint or where two of the six lines intersect.
-    def gaps(i):
-        offset = gate.subtract(tracks[parked, 'translation'][i], tracks[other, 'translation'][i])
-        p_lo, p_hi = bounds[parked]
-        o_lo, o_hi = bounds[other]
-        return [gap for a, d in enumerate(offset)
-                for gap in (d + p_lo[a] - o_hi[a], o_lo[a] - p_hi[a] - d)]
+    # Convert the represented bounds and translations before arithmetic so that an
+    # exact contact cannot round to a positive gap.
+    p_lo, p_hi = bounds[parked]
+    o_lo, o_hi = bounds[other]
+    local_gaps = [(Fraction(p_lo[a]) - Fraction(o_hi[a]), Fraction(o_lo[a]) - Fraction(p_hi[a]))
+                  for a in range(3)]
 
-    minimum = (math.inf, None)
-    left = gaps(0)
+    def gaps(i):
+        result = []
+        for (above, below), p, o in zip(local_gaps, tracks[parked, 'translation'][i],
+                                        tracks[other, 'translation'][i]):
+            offset = Fraction(p) - Fraction(o)
+            result.extend((above + offset, below - offset))
+        return result
+
+    right = gaps(0)
+    minimum = (max(right), Fraction(times[0]))
     for i, (start, end) in enumerate(zip(times, times[1:]), 1):
-        right = gaps(i)
+        left, right = right, gaps(i)
+        left_max, right_max = max(left), max(right)
+        start, end = Fraction(start), Fraction(end)
+        minimum = min(minimum, (right_max, end))
+        # A line that dominates at both ends dominates the entire interval.
+        if any(a == left_max and b == right_max for a, b in zip(left, right)):
+            continue
         slopes = [b - a for a, b in zip(left, right)]
-        fractions = [0., 1.]
         for j, slope in enumerate(slopes):
             for k in range(j):
                 if slope != slopes[k]:
                     u = (left[k] - left[j]) / (slope - slopes[k])
                     if 0 < u < 1:
-                        fractions.append(u)
-        for u in fractions:
-            lower = max(x + u * slope for x, slope in zip(left, slopes))
-            minimum = min(minimum, (lower, start + u * (end - start)))
-        left = right
+                        lower = max(x + u * m for x, m in zip(left, slopes))
+                        minimum = min(minimum, (lower, start + u * (end - start)))
     lower, time = minimum
-    require(lower > 0, f'parked cart {parked!r} lacks positive separation from {other!r} at {time:.9g} s')
-    return dict(separation_lower_bound_m=lower, time_of_min_s=time)
+    reported = float(lower)
+    if reported > lower:
+        reported = math.nextafter(reported, -math.inf)
+    time = float(time)
+    require(reported > 0, f'parked cart {parked!r} lacks positive separation from {other!r} at {time:.9g} s')
+    return dict(separation_lower_bound_m=reported, time_of_min_s=time)
+
+
+def local_triangle_counts(primitives):
+    """Compare sibling geometry independently of mesh indices, winding and primitive order."""
+    return Counter(tuple(sorted(points[i:i + 3]))
+                   for points in primitives for i in range(0, len(points), 3))
 
 
 def check_parked(source, obj, moving, times, tracks, bounds):
@@ -431,13 +475,16 @@ def main(source, bundle, glb, width=None, moving_cart=None, parked_cart=None):
     graph, data = gate.read_glb(raw)
     moving, parked = select_carts(src, graph, 'sha256:' + digest, accepted, moving_cart, parked_cart)
     cart = moving[0]
-    times, tracks, _ = gate.read_tracks(graph, data)
+    raw_rotations = {} if parked else None
+    times, tracks, _ = gate.read_tracks(graph, data, raw_rotations=raw_rotations)
     require(set(tracks) == {(node['name'], path) for node in graph['nodes']
                             for path in ('rotation', 'translation')}, 'missing delivered pose tracks')
     original = gate.measure(raw, gate.source_dynamics(src), root_count=4 if parked else 3)
     physics = cart_source(src, moving[1])
     local_bounds = {}
+    separation_bounds = {}
     triangles = {}
+    sibling_meshes = {}
     obstacle_hashes = {}
     for node in graph["nodes"]:
         name = node["name"]
@@ -446,6 +493,8 @@ def main(source, bundle, glb, width=None, moving_cart=None, parked_cart=None):
                 f"{name!r} rotation drifts; expected rigid translation only")
         primitives = gate.surfaces(graph, data, node)
         require(all(len(points) % 3 == 0 for points in primitives), "incomplete triangle")
+        if parked and name in (cart, parked[0]):
+            sibling_meshes[name] = local_triangle_counts(primitives)
         triangles[name] = [[gate.rotate(rotations[0], point) for point in primitive]
                            for primitive in primitives]
         if name in ("post", "gate"):
@@ -455,8 +504,13 @@ def main(source, bundle, glb, width=None, moving_cart=None, parked_cart=None):
         bounds = [list(map(op, zip(*points))) for op in (min, max)]
         require(all(high > low for low, high in zip(*bounds)), "zero-thickness mesh")
         local_bounds[name] = bounds
+        if parked:
+            separation_bounds[name] = exact_rotated_bounds(primitives, raw_rotations[name])
 
-    parked_result = check_parked(src, parked, cart, times, tracks, local_bounds) if parked else None
+    if parked:
+        require(sibling_meshes[cart] == sibling_meshes[parked[0]],
+                "parked cart mesh differs from moving cart sibling geometry")
+    parked_result = check_parked(src, parked, cart, times, tracks, separation_bounds) if parked else None
     crossing = score_geometry(times, tracks, local_bounds, cart)
     witnesses = surface_witnesses(times, tracks, triangles, crossing, cart)
     low, high = local_bounds[cart]

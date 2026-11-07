@@ -41,3 +41,5 @@ python3.12 -IB examples/service-entrance/checks/check_passage.py examples/servic
 ```
 
 Each selector accepts the source identifier or the quoted stable element ID, so `--parked-cart parked` selects the same object. The single-cart command above still selects its only cart automatically. The checker matches each selection to its delivered node and checks the passing cart's trajectory and aperture clearances. It also checks that the parked cart holds its authored world pose throughout playback. `parked_cart.separation` gives a conservative minimum gap in metres to the moving cart, gate and post, including the intervals between stored poses. An intersecting or touching pair of bounding boxes fails this check. A rejected check exits with status 1 and gives the cause in `diagnostics`.
+
+The checker rejects meshes that use `EXT_mesh_gpu_instancing` because individual instances can have additional transforms that change their clearance.

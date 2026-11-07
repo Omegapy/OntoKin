@@ -98,7 +98,7 @@ def lerp(a, b, u):
     return tuple(x + u * (y-x) for x, y in zip(a, b))
 
 
-def read_tracks(graph, binary):
+def read_tracks(graph, binary, *, raw_rotations=None):
     animation, = graph['animations']
     exact = [Fraction(int(v['numerator']), int(v['denominator'])) for v in
              animation['extras']['ontokin']['exact_times_seconds']]
@@ -122,6 +122,8 @@ def read_tracks(graph, binary):
         max_clock = max(max_clock, max(abs(Fraction(x)-y) for x,y in zip(clock,exact)))
         values = accessor(graph,binary,sampler['output'],'VEC4' if path=='rotation' else 'VEC3')
         require(len(values)==len(clock), 'incorrect track length')
+        if path == 'rotation' and raw_rotations is not None:
+            raw_rotations[name] = values
         tracks[name,path] = [unit(q) for q in values] if path=='rotation' else values
     require(max_clock <= CLOCK_TOL, 'binary clock exceeds 1 microsecond tolerance')
     return times, tracks, float(max_clock)
@@ -144,6 +146,8 @@ def primitive_points(graph, binary, primitive):
 
 
 def surfaces(graph, binary, node):
+    require('EXT_mesh_gpu_instancing' not in node.get('extensions', {}),
+            'mesh instancing is unsupported by the passage checker')
     mesh = indexed(graph['meshes'], node['mesh'])
     require('skin' not in node and 'weights' not in node and 'weights' not in mesh,
             'expected rigid mesh without skin or morph weights')
