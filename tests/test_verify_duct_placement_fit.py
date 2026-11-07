@@ -76,12 +76,15 @@ class FitDuctPlacementTests(unittest.TestCase):
             fit.solve_placement(repack_glb(glb.document, glb.binary))
 
     def test_cap_indices_swapped(self):
-        glb = GLB(self.export(), target='ontokin.glb/0.11')
-        caps = {p['extras']['ontokin']['region_key']: p for p in glb.primitives('straight')}
-        bottom, top = caps['bottom'], caps['top']
-        bottom['indices'], top['indices'] = top['indices'], bottom['indices']
-        with self.assertRaisesRegex(ValueError, 'cap order'):
-            fit.solve_placement(repack_glb(glb.document, glb.binary))
+        raw = self.export()
+        for name in ('straight', 'elbow'):
+            with self.subTest(name=name):
+                glb = GLB(raw, target='ontokin.glb/0.11')
+                caps = {p['extras']['ontokin']['region_key']: p for p in glb.primitives(name)}
+                bottom, top = caps['bottom'], caps['top']
+                bottom['indices'], top['indices'] = top['indices'], bottom['indices']
+                with self.assertRaisesRegex(ValueError, name + ' cap order'):
+                    fit.solve_placement(repack_glb(glb.document, glb.binary))
 
     def test_one_cap_reversed(self):
         glb = GLB(self.export(), target='ontokin.glb/0.11')
