@@ -96,3 +96,34 @@ fit_joint ambiguous package/example.connected-duct-parts/duct-parts/definitions/
 cmp "$out/unknown/defective-bundle.json" "$out/unknown/after-rejection-bundle.json"
 cmp "$out/ambiguous/defective-bundle.json" "$out/ambiguous/after-rejection-bundle.json"
 ```
+
+## C165 · Fit both ends of a straight duct
+
+The request joins `outbound/top` to `link/bottom` and `link/top` to `inbound/bottom`. The straight starts 4 m long, off-axis, and facing the wrong direction. The separately pinned [1.1.0 parts module](parts-span.ok) makes its length editable. The fitter measures the two stationary port frames in the starting GLB, sizes the straight to 5.75 m, and submits its placement and span in one revision-guarded Agent edit. The elbows remain stationary. [Starting source](span-achievable.ok) · [Fitted assembly and joint close-ups](span-fitted.png)
+
+From the repository root, use the same verification environment as for C164. Each run needs a fresh output directory.
+
+```sh
+ex=examples/connected-duct
+out=$(mktemp -d)
+fit_span() {
+    python3 "$ex/agent_span.py" "$ex/span-$1.files.json" "$out/$2" \
+        --upstream outbound/top --inlet link/bottom --outlet link/top --downstream "$3" "${@:4}"
+}
+fit_span achievable target inbound/bottom
+python3 tools/verify_duct_span.py "$out/target/defective.glb" "$out/target/repaired.glb"
+fit_span incompatible offset inbound/bottom || test "$?" -eq 2
+cmp "$out/offset/defective-bundle.json" "$out/offset/after-rejection-bundle.json"
+```
+
+Run the snippet in Bash. The verifier uses both complete square rims, triangle winding and the common opening at each joint. The [frozen limits](span-contract.json) allow 10 µm of rim separation and 1.00 ± 0.00005 m² of open area. The [incompatible scene](span-incompatible.ok) shifts the downstream center sideways by 0.25 m. The script returns status 2 before submitting an edit.
+
+To exercise the negative controls, substitute a different named downstream port or ask the driver to export a deliberate error in its own run.
+
+```sh
+fit_span achievable bypass bypass/bottom
+fit_span achievable short inbound/bottom --control incorrect-length
+fit_span achievable reversed inbound/bottom --control wrong-end
+```
+
+Scored against the original request, the bypass fit overshoots by 5 m and the short connector falls 1.75 m short. The reversed straight occupies the correct space with its two signed ends in the wrong order. The example supports stationary root occurrences from the supplied parts and a straight growing along its local positive Z axis. Each scene explicitly requests up to 200,000 operations and 30 seconds for the four-occurrence export.

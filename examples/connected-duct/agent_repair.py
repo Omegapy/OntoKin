@@ -25,7 +25,7 @@ def write_json(path, value):
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + '\n', encoding='utf-8')
 
 
-def session(manifest, output, store):
+def session(manifest, output, store, *, host_policy=None):
     program = load_file_manifest(manifest)
     output.mkdir(parents=True, exist_ok=True)
     records = output / 'exchanges'
@@ -41,7 +41,7 @@ def session(manifest, output, store):
                        request_id=key, operation=operation, **fields)
         write_json(records / (key + '-request.json'), request)
         # Reopen the on-disk store for each request, including after rejection.
-        with closing(FramedLoftAgentService(str(store))) as service:
+        with closing(FramedLoftAgentService(str(store), host_policy=host_policy)) as service:
             response = service.handle(request)
         write_json(records / (key + '-response.json'), response)
         allowed = ('rejected', 'failed') if invalid else ('succeeded',)
@@ -50,7 +50,7 @@ def session(manifest, output, store):
         return response
 
     def snapshot(label, revision):
-        with closing(FramedLoftAgentService(str(store))) as service:
+        with closing(FramedLoftAgentService(str(store), host_policy=host_policy)) as service:
             if service.accepted_revision(PROJECT) != revision:
                 raise ValueError(f'{label}: accepted revision does not match the response')
             accepted = service.read_program(PROJECT, revision)
