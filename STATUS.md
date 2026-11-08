@@ -2,7 +2,7 @@
 
 ## C168 integration lease
 
-Owner `c168-infer-077f` holds the main integration lease from 2026-11-08T17:15:28Z through 2026-11-08T17:45:28Z for [PR #105](https://github.com/Omegapy/OntoKin/pull/105). Base `4616178773a0a5624fdfb6e12d667434f96ac59c`. Candidate `52ef1e3e4b365ae9b4b7c3c27360c47e16c87df2` passed the seven Agent cases, independent geometry checks and Three.js verification. The Linux core and remaining legacy checks are running. Scope covers the connected-duct authoring example, related tests and verification.
+Owner `c168-infer-077f` renews the main integration lease from 2026-11-08T17:42:30Z through 2026-11-08T17:57:30Z to publish the Linux result. [PR #105](https://github.com/Omegapy/OntoKin/pull/105) merged at `83d0a1a696499a69af882fadd8a07bf0f388f619`. The actual merge replay reproduced all seven Agent cases. An offline candidate restore reproduced the models and all seven browser images. The complete unit run has reached the final duct checks on candidate `52ef1e3e4b365ae9b4b7c3c27360c47e16c87df2`. The expected torque-read setup error has occurred. C161–C167 and framed-loft regressions passed.
 
 ## Current checkpoint
 
