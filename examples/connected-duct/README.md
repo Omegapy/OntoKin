@@ -127,3 +127,29 @@ fit_span achievable reversed inbound/bottom --control wrong-end
 ```
 
 Scored against the original request, the bypass fit overshoots by 5 m and the short connector falls 1.75 m short. The reversed straight occupies the correct space with its two signed ends in the wrong order. The example supports stationary root occurrences from the supplied parts and a straight growing along its local positive Z axis. Each scene explicitly requests up to 200,000 operations and 30 seconds for the four-occurrence export.
+
+## C166 · Route a 90° elbow between two straight ducts
+
+The [starting scene](route-achievable.ok) has two stationary ports with perpendicular axes. The router locates both ports in the exported triangles, measures the rigid elbow’s inlet-to-outlet displacement, and solves for the length of each straight along its own axis. In the [frozen case](route-contract.json), the first straight runs 2.75 m in +Z and the second runs 4.5 m in +X. One Agent/0.11 transaction changes the three placements and two lengths. [Fitted route and four cap close-ups](route-fitted.png)
+
+From the repository root, run the driver and the independent four-joint checker with the verification dependencies installed. The five names are the ordered source, first straight, bend, second straight and sink. Every connection joins the upstream `top` to the next occurrence’s `bottom`.
+
+```bash
+ex=examples/connected-duct
+out=$(mktemp -d)
+route() {
+    python3 "$ex/agent_route.py" "$ex/route-$1.files.json" "$out/$2" \
+        --chain outbound lead turn tail inbound "${@:3}"
+}
+route achievable target
+python3 tools/verify_duct_route.py "$out/target/defective.glb" "$out/target/repaired.glb"
+route incompatible incompatible || test "$?" -eq 2
+route achievable wrong-turn --control wrong-turn
+route achievable one-sided --control one-sided
+route achievable rollback --control rollback
+python3 tools/audit_duct_route_exchanges.py "$out" "$ex"
+```
+
+The checker measures both rims, opposing cap normals, and the open area at each of the four joints. The allowed corner separation is 10 µm and the required opening is 1.00 ± 0.00005 m². In the [skew scene](route-incompatible.ok), the fixed axes miss each other by 0.25 m. The driver records this refusal before sending an edit. The wrong-turn control reverses the direction of the elbow, and the one-sided control shortens the final straight by 1 m. The rollback control submits five patches with a stale final precondition and retrieves the accepted source and export again.
+
+This example uses stationary root occurrences of the supplied square-bore parts. It checks a specified single-bend route. Collision avoidance, physical attachment and flow simulation are outside its scope.
