@@ -1,10 +1,14 @@
-# OntoKin development status — C165
-
-## C166 integration lease
-
-Owner `c166-route-70a7` holds the integration lease for [PR #103](https://github.com/Omegapy/OntoKin/pull/103) from 2026-11-08T03:34:02Z through 2026-11-08T04:04:02Z. Base `057b3f7ff352c453235929610bf93230de0f9541`. Candidate `17e2be57d4087f2d1762c9d4dfb39e394ccce7f1` passed the four-joint geometry, source re-export, two refusals, both wrong fits, rotated held-out route and legacy duct replays. Scope is the C166 connected-duct authoring example, its verification and integration record.
+# OntoKin development status — C166
 
 ## Current checkpoint
+
+The connected-duct authoring example now fits two adjustable straight sections and a rigid 90° elbow between named perpendicular ports. Agent/0.11 changes the three placements and both lengths in one edit. For 2.75 m and 4.50 m runs, the four joints each share 1.00 m² of clear opening. The largest rim separation measured in Three.js was 0.310 µm against the 10 µm limit. A 0.25 m out-of-plane offset and computed spans outside the 0.001–100 m framed-loft range produce pre-edit refusals. [Run the route and inspect its four joints](examples/connected-duct/README.md#c166--route-a-90-elbow-between-two-straight-ducts)
+
+[PR #103](https://github.com/Omegapy/OntoKin/pull/103) merged at [e4f483e17e4a](https://github.com/Omegapy/OntoKin/commit/e4f483e17e4a385d37ea06f605c9a23b6e0ed2a8). The merge reproduced the route, controls, refusals, and standalone source export. On final candidate [17e2be57d408](https://github.com/Omegapy/OntoKin/commit/17e2be57d4087f2d1762c9d4dfb39e394ccce7f1), 49 duct tests, 137 framed-loft tests, 69 stock acceptance cases and the C161–C165 replays passed. All 4,199 tests that started passed. The existing 30-second torque export timeout prevented 13 torque-read tests from starting. The other six core stages passed. The [C160 torque qualification](docs/engineering/torque-verification-c160/README.md) remains open.
+
+Next, fit two elbows and three adjustable straights across a positive offset between ports on different planes. Owner `c166-route-70a7` releases the main integration lease on verified publication of this record.
+
+## Previous checkpoint at C165
 
 Agent/0.11 fitted both ends of a single editable straight duct between named stationary ports. One transaction changed its length from 4 m to 5.75 m and set its pose. Each opening measured 1.00 m². Independent Three.js measurements put the largest rim separation at 0.2784 µm against a 10 µm limit. A downstream port shifted 0.25 m sideways was rejected before any source edit. Reversed ends, a short connector and a correct fit to the bypass each failed the requested joint check. [Run the example and inspect both joints](examples/connected-duct/README.md#c165--fit-both-ends-of-a-straight-duct)
 
