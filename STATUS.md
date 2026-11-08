@@ -2,7 +2,7 @@
 
 ## C169 integration lease
 
-Owner `c169-span-8bca` holds the main integration lease from 2026-11-08T18:43:54Z through 2026-11-08T19:13:54Z for [PR #106](https://github.com/Omegapy/OntoKin/pull/106). All 16 fixed-boundary fixtures and C161–C168 regressions passed on `abfb975ebf4275a16aafa542f05abfa4cd416068`. The Linux core run continues under its original policy.
+Owner `c169-span-8bca` renews the integration lease from 2026-11-08T19:07:37Z through 2026-11-08T19:22:37Z to publish the Linux core and release the checkpoint. [PR #106](https://github.com/Omegapy/OntoKin/pull/106) merged at `cbc090b2337fe6a1c348ded8aed67d9a63b1256c`. The merged tree and a separate offline candidate checkout reproduced all 16 cases, both original witness fits and the damaged-preview refusal. The offline browser replay also reproduced all 13 fitted PNGs. The full core reached the previously reproduced torque class-setup error and continued.
 
 ## Current checkpoint
 
