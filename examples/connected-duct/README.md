@@ -153,3 +153,22 @@ python3 tools/audit_duct_route_exchanges.py "$out" "$ex"
 The router checks that each measured straight length falls within the framed-loft profile’s constructible range of 0.001–100 m before it submits an edit. The checker measures both rims, opposing cap normals, and the open area at each of the four joints. The allowed corner separation is 10 µm and the required opening is 1.00 ± 0.00005 m². In the [skew scene](route-incompatible.ok), the fixed axes miss each other by 0.25 m. The driver records this refusal before sending an edit. The wrong-turn control reverses the direction of the elbow, and the one-sided control shortens the final straight by 1 m. The rollback control submits five patches with a stale final precondition and retrieves the accepted source and export again.
 
 This example uses stationary root occurrences of the supplied square-bore parts. It checks a specified single-bend route. Collision avoidance, physical attachment and flow simulation are outside its scope.
+
+## C167 · Connect ports on different planes
+
+The two fixed ports in this example are 11.5 m apart along the vertical axis. The requested path starts along +Z, turns upward, then turns along +X into the receiving port. Two rigid elbows account for 8 m of the vertical offset. The middle straight fills the remaining 3.5 m.
+
+From the repository root, use three direction components in world coordinates and name the seven occurrences in their travel order. The first and last names select the stationary ports. The fitter measures both port normals and both elbow displacements from the initial GLB. It changes five placements and three spans in one revision-guarded edit.
+
+```bash
+ex=examples/connected-duct
+python3 "$ex/agent_offset.py" "$ex/offset-achievable.files.json" /tmp/offset-fit \
+  --chain outbound lead turn bridge rise tail inbound --middle-direction 0 1 0
+python3 tools/verify_duct_offset_route.py /tmp/offset-fit/defective.glb /tmp/offset-fit/repaired.glb
+```
+
+The [frozen contract](offset-contract.json) identifies the twelve cap faces at the six joints. Each pair must meet within 10 µm, face in opposing directions and share 1.00 ± 0.00005 m² of clear opening. A [second scene](offset-incompatible.ok) gives the elbows only 7.5 m of vertical space. The computed middle span is −0.5 m and the fitter refuses the route before editing.
+
+Use `--control wrong-plane` to turn the first bend toward +X, `--control interior-gap` to shorten the middle straight by 1 m, or `--control rollback` to submit a stale eighth patch. Each run needs a fresh output directory. The first two controls keep the downstream joint closed and expose faults at different interior joints. This example verifies a prescribed static chain. The caller supplies the middle direction and part order.
+
+![Fitted two-elbow offset route and the six measured joints](offset-fitted.png)

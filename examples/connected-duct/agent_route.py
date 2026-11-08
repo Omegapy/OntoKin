@@ -30,7 +30,7 @@ def route_patches(program, mappings, fit, chain, control):
     return patches
 
 
-def replay(manifest, output, store, chain, control=None):
+def replay(manifest, output, store, chain, control=None, *, solver=solve, build_patches=route_patches):
     program, send, snapshot, _, export, _, summary = session(
         manifest, output, store, host_policy=HostPolicy(300000, 30000))
     write_json(output / 'selection.json', list(chain))
@@ -40,7 +40,7 @@ def replay(manifest, output, store, chain, control=None):
     require(before == program, 'Accepted input differs from the manifest')
     _, raw = export('defective', before.program_revision)
     try:
-        fit = solve(raw, *chain)
+        fit = solver(raw, *chain)
     except ValueError as exc:
         require(snapshot('after-rejection', before.program_revision) == before,
                 'Rejected route changed the accepted source')
@@ -49,9 +49,9 @@ def replay(manifest, output, store, chain, control=None):
     else:
         write_json(output / 'fit.json', fit)
         mappings = occurrences(raw)
-        patches = route_patches(before, mappings, fit, chain, control)
+        patches = build_patches(before, mappings, fit, chain, control)
         if control == 'rollback':
-            # The final patch has a stale precondition. The four earlier valid patches
+            # The final patch has a stale precondition. The earlier valid patches
             # must never become visible, even after reopening the store.
             patches[-1]['expected_text'] = 'span = 9[m];'
             result = send('stale-route', 'edit', invalid=True, expected_program_revision=before.program_revision,
