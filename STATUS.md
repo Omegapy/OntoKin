@@ -1,10 +1,14 @@
-# OntoKin development status — C168
-
-## C169 integration lease
-
-Owner `c169-span-8bca` renews the integration lease from 2026-11-08T19:07:37Z through 2026-11-08T19:22:37Z to publish the Linux core and release the checkpoint. [PR #106](https://github.com/Omegapy/OntoKin/pull/106) merged at `cbc090b2337fe6a1c348ded8aed67d9a63b1256c`. The merged tree and a separate offline candidate checkout reproduced all 16 cases, both original witness fits and the damaged-preview refusal. The offline browser replay also reproduced all 13 fitted PNGs. The full core reached the previously reproduced torque class-setup error and continued.
+# OntoKin development status — C169
 
 ## Current checkpoint
+
+The two-elbow fitter can now repair a legal 1 mm straight that measures 0.99992752 mm in the starting GLB. It tests whether the recorded port positions support the correction, then verifies all six openings on a trial export before submitting one atomic source edit. The 16 frozen cases gave 13 fits and three pre-edit refusals. Three.js measured at most 5.746 µm of rim separation across 78 joints against a 10 µm limit. Original clearances that round to identical geometry can produce the same fit. [Source, limits and replay](examples/connected-duct/README.md#c169--fit-straight-lengths-at-the-source-limits)
+
+[PR #106](https://github.com/Omegapy/OntoKin/pull/106) merged at [cbc090b2337f](https://github.com/Omegapy/OntoKin/commit/cbc090b2337fe6a1c348ded8aed67d9a63b1256c). The merge replay reproduced all 16 cases and both fits of the original 1 mm witness. On [candidate abfb975ebf42](https://github.com/Omegapy/OntoKin/commit/abfb975ebf4275a16aafa542f05abfa4cd416068), all C161–C168 replays, 60 duct tests, 137 framed-loft tests and 69 stock Agent cases passed. On Linux x86-64 with CPython 3.12.14, all 4,210 unit tests that started passed. The original 30-second torque export timed out during class setup, before 13 torque-read tests could start. The full core is marked failed. Its other six stages passed. [C160 torque qualification](docs/engineering/torque-verification-c160/README.md) remains open.
+
+Next, fit a route with parallel, same-direction ports and a caller-specified lead length. Owner `c169-span-8bca` releases the integration lease on verified publication of this record.
+
+## Previous checkpoint at C168
 
 The connected-duct agent now infers the middle travel direction from the signed faces of two fixed ports. It fitted a rising route, its downward mirror and a rotated, renamed assembly. Each fit required one edit and closed six clear 1.00 m² openings. Three.js measured a maximum rim separation of 0.835 µm against a 10 µm limit. Insufficient clearance and parallel flow axes produced pre-edit refusals with identical source bytes. [Run the example and inspect the contract](examples/connected-duct/README.md#c168--infer-the-middle-direction-from-two-fixed-ports)
 
