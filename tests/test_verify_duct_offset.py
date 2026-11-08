@@ -4,6 +4,7 @@ from math import dist, inf, nan
 from pathlib import Path
 import sys
 import unittest
+from unittest.mock import patch
 
 from ontokin.budget_runtime import execute_framed_loft_export
 from ontokin.bundle import load_file_manifest
@@ -63,3 +64,42 @@ class OffsetFitTests(unittest.TestCase):
             scene = self.bundle.entry.raw.replace(b'12.5[m]', sink_y)
             with self.subTest(sink_y=sink_y), self.assertRaisesRegex(ValueError, 'Straight spans'):
                 solve(self.export(scene), *CHAIN, middle_direction=(0, 1, 0))
+
+    def test_inference_evaluates_both_signs_and_selects_one(self):
+        report = {}
+        fit = solve(self.raw, *CHAIN, evaluation=report)
+        self.assertEqual(fit, solve(self.raw, *CHAIN, middle_direction=report['selected_direction']))
+        accepted, rejected = sorted(report['candidates'], key=lambda c: not c['feasible'])
+        self.assertLess(dist(accepted['direction'], (0, 1, 0)), 1e-5)
+        self.assertLess(dist(rejected['direction'], (0, -1, 0)), 1e-5)
+        self.assertAlmostEqual(accepted['lengths_m'][1], 3.5, places=5)
+        self.assertAlmostEqual(rejected['lengths_m'][1], -19.5, places=5)
+        self.assertIn('Straight spans', rejected['reason'])
+
+    def test_inference_checks_signed_rims_after_lengths(self):
+        # Roll the sink by 45 degrees around its inlet. Its axis and center stay fixed.
+        scene = self.bundle.entry.raw.replace(b'quat(0.7071067811865476, 0, 0.7071067811865476, 0)',
+                    b'quat(0.6532814824381883, 0.2705980500730985, 0.6532814824381883, 0.2705980500730985)')
+        report = {}
+        with self.assertRaisesRegex(ValueError, 'No feasible'):
+            solve(self.export(scene), *CHAIN, evaluation=report)
+        self.assertIsNone(report['selected_direction'])
+        self.assertTrue(any('outlet rim' in candidate['reason'] for candidate in report['candidates']))
+
+    def test_parallel_and_antiparallel_axes_have_no_discrete_candidates(self):
+        for rotation in (b'quat(1, 0, 0, 0)', b'quat(0, 0, 1, 0)'):
+            scene = self.bundle.entry.raw.replace(b'quat(0.7071067811865476, 0, 0.7071067811865476, 0)', rotation)
+            report = {}
+            with self.subTest(rotation=rotation), self.assertRaisesRegex(ValueError, 'Parallel'):
+                solve(self.export(scene), *CHAIN, evaluation=report)
+            self.assertEqual(report['candidates'], [])
+            self.assertIsNone(report['selected_direction'])
+
+    def test_multiple_accepted_candidates_refuse_selection(self):
+        # The stock elbows always consume positive clearance. Simulate both fit
+        # results to exercise the uniqueness guard independently of this part class.
+        report = {}
+        with patch('offset_solver._fit_candidate', return_value={}), self.assertRaisesRegex(ValueError, 'Multiple feasible'):
+            solve(self.raw, *CHAIN, evaluation=report)
+        self.assertEqual([c['feasible'] for c in report['candidates']], [True, True])
+        self.assertIsNone(report['selected_direction'])

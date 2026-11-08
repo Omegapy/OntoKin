@@ -21,24 +21,29 @@ def load(path):
 
 
 def audit(root, example, case, *, offset=False):
-    directory = root / case
-    rejected = case == 'incompatible'
-    rollback = case == 'rollback'
-    label = 'incompatible' if rejected else 'achievable'
+    label = 'incompatible' if case == 'incompatible' else 'achievable'
     prefix = 'offset' if offset else 'route'
     fixture = example / f'{prefix}-{label}.ok'
+    chain = (['outbound', 'lead', 'turn', 'bridge', 'rise', 'tail', 'inbound'] if offset else
+             ['outbound', 'lead', 'turn', 'tail', 'inbound'])
+    outcome = {'target': 'fitted', 'incompatible': 'fit-rejected', 'rollback': 'edit-rejected'}.get(case, 'control-exported')
+    reason = '-0.5' if offset else 'skew'
+    return audit_case(root / case, fixture, chain, outcome, root / 'target', reason)
+
+
+def audit_case(directory, fixture, chain, outcome, successful_directory, rejection_contains=None):
+    case = directory.name
+    rejected = outcome == 'fit-rejected'
+    rollback = outcome == 'edit-rejected'
     bundle = load(directory / 'defective-bundle.json')
     summary = load(directory / 'summary.json')
-    outcome = {'target': 'fitted', 'incompatible': 'fit-rejected', 'rollback': 'edit-rejected'}.get(case, 'control-exported')
-    check(summary['outcome'] == outcome and summary.get('control') ==
-          (None if case in ('target', 'incompatible') else case), f'{case}: case outcome')
+    control = case if outcome in ('edit-rejected', 'control-exported') else None
+    check(summary['outcome'] == outcome and summary.get('control') == control, f'{case}: case outcome')
     module, = bundle['modules']
     check(bundle['entry'] == dict(filename=fixture.name, source=fixture.read_text()) and
           module == dict(filename='parts-span.ok', package_id='example.connected-duct-parts',
-                         version='1.1.0', source=(example/'parts-span.ok').read_text()),
+                         version='1.1.0', source=(fixture.parent / 'parts-span.ok').read_text()),
           f'{case}: frozen input')
-    chain = (['outbound', 'lead', 'turn', 'bridge', 'rise', 'tail', 'inbound'] if offset else
-             ['outbound', 'lead', 'turn', 'tail', 'inbound'])
     check(load(directory / 'selection.json') == chain, f'{case}: selected occurrence chain')
 
     exchanges = directory / 'exchanges'
@@ -87,13 +92,13 @@ def audit(root, example, case, *, offset=False):
                 check(region.start() <= start < end <= region.end() and pos <= start and
                       p['source_id'] == 'entry' and p['source_revision'] == digest(raw) and
                       p['element_id'] == ['sources','entry'] and
-                      (raw[start:end] == p['expected_text'].encode()) == (not rollback or (name, field) != ('tail', 'span')) and
+                      (raw[start:end] == p['expected_text'].encode()) == (not rollback or (name, field) != (chain[-2], 'span')) and
                       re.fullmatch(pattern, p['expected_text']) and re.fullmatch(pattern, p['replacement']),
                       f'{case}: {field} source range')
                 chunks.extend([raw[pos:start], p['replacement'].encode()])
                 pos = end
             if rollback:
-                target_edit, = (root / 'target' / 'exchanges').glob('*-fit-route-request.json')
+                target_edit, = (successful_directory / 'exchanges').glob('*-fit-route-request.json')
                 target_patches = load(target_edit)['patches']
                 submitted = q['patches']
                 check(submitted[-1] == patches[-1] and submitted[:-1] == target_patches[:-1] and
@@ -151,7 +156,8 @@ def audit(root, example, case, *, offset=False):
         oldrev = rev
     check(i == len(pairs), f'{case}: unexpected operation')
     if rejected:
-        check(summary['outcome'] == 'fit-rejected' and ('-0.5' if offset else 'skew') in summary['reason'].lower() and
+        check(summary['outcome'] == 'fit-rejected' and summary['edit_patch_count'] == 0 and bool(summary['reason']) and
+              (rejection_contains is None or rejection_contains in summary['reason'].lower()) and
               summary['preserved_revision'] == oldrev and
               (directory / 'after-rejection-bundle.json').read_bytes() == (directory / 'defective-bundle.json').read_bytes() and
               (directory / 'after-rejection.ok').read_bytes() == raw, f'{case}: rejected source identity')

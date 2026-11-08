@@ -1,16 +1,17 @@
 """Fit two rigid bends and three variable spans between signed GLB port frames."""
-from math import dist, isfinite
+from math import dist, hypot, isfinite
 
 from fit_placement import (GLB, TOL, compose, cross, dot, named_frame, require, rotate,
                            select_occurrence, solve_placement, sub, unit)
 from route_solver import add, align_turn, check_outlet, quaternion, scale
 
 
-def solve(raw, *chain, middle_direction):
+def solve(raw, *chain, middle_direction=None, evaluation=None):
+    """Fit a unique measured direction, or a direction specified by the caller.
+
+    For inference, evaluation receives both candidate decisions, including on refusal.
+    """
     require(len(chain) == len(set(chain)) == 7, 'Expected seven distinct duct occurrences')
-    require(len(middle_direction) == 3 and all(isfinite(v) for v in middle_direction),
-            'Middle direction must have three finite components')
-    middle = unit(middle_direction)
     glb = GLB(raw, target='ontokin.glb/0.11')
     paths = glb.objects()
     occurrences = glb.document['extras']['ontokin']['program']['occurrences']
@@ -21,8 +22,41 @@ def solve(raw, *chain, middle_direction):
             'Expected rigid unit-scale nodes')
     start = named_frame(glb, nodes[0], 'top')
     end = named_frame(glb, nodes[-1], 'bottom')
-    a, b, c = start[1], middle, scale(-1, end[1])
-    axes = (a, b, c)
+    a, c = start[1], scale(-1, end[1])
+    if middle_direction is not None:
+        require(len(middle_direction) == 3 and all(isfinite(v) for v in middle_direction),
+                'Middle direction must have three finite components')
+        return _fit_candidate(raw, chain, glb, nodes, start, end, (a, unit(middle_direction), c))
+
+    report = evaluation if evaluation is not None else {}
+    report.update(entry_direction=list(a), exit_direction=list(c), candidates=[],
+                  selected_direction=None, reason=None)
+    normal = cross(a, c)
+    if hypot(*normal) <= TOL:
+        report['reason'] = 'Parallel fixed port axes do not determine the middle direction'
+        raise ValueError(report['reason'])
+    normal = unit(normal)
+    fits = []
+    for direction in (normal, scale(-1, normal)):
+        candidate = {'direction': list(direction), 'feasible': False, 'reason': None}
+        report['candidates'].append(candidate)
+        try:
+            fit = _fit_candidate(raw, chain, glb, nodes, start, end, (a, direction, c), candidate)
+        except ValueError as exc:
+            candidate['reason'] = str(exc)
+        else:
+            candidate['feasible'] = True
+            fits.append((candidate['direction'], fit))
+    if len(fits) != 1:
+        report['reason'] = ('No feasible middle direction' if not fits else
+                            'Multiple feasible middle directions')
+        raise ValueError(report['reason'])
+    report['selected_direction'], fit = fits[0]
+    return fit
+
+
+def _fit_candidate(raw, chain, glb, nodes, start, end, axes, candidate=None):
+    a, b, c = axes
     gap = sub(end[0], start[0])
     turns = []
     for index, upstream in enumerate((2, 4)):
@@ -35,6 +69,8 @@ def solve(raw, *chain, middle_direction):
     determinant = dot(a, cross(b, c))
     require(abs(determinant) > TOL, 'The three span axes must be linearly independent')
     lengths = [dot(gap, normal)/determinant for normal in (cross(b, c), cross(c, a), cross(a, b))]
+    if candidate is not None:
+        candidate['lengths_m'] = lengths
     require(all(0.001 <= length <= 100 for length in lengths),
             'Straight spans must be within [0.001, 100] m: ' + ', '.join(f'{x:.9g}' for x in lengths))
     fit = {}
