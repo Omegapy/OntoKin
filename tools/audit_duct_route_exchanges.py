@@ -28,6 +28,9 @@ def audit(root, example, case):
     fixture = example / f'route-{label}.ok'
     bundle = load(directory / 'defective-bundle.json')
     summary = load(directory / 'summary.json')
+    outcome = {'target': 'fitted', 'incompatible': 'fit-rejected', 'rollback': 'edit-rejected'}.get(case, 'control-exported')
+    check(summary['outcome'] == outcome and summary.get('control') ==
+          (None if case in ('target', 'incompatible') else case), f'{case}: case outcome')
     module, = bundle['modules']
     check(bundle['entry'] == dict(filename=fixture.name, source=fixture.read_text()) and
           module == dict(filename='parts-span.ok', package_id='example.connected-duct-parts',
@@ -85,6 +88,12 @@ def audit(root, example, case):
                 chunks.extend([raw[pos:start], p['replacement'].encode()])
                 pos = end
             if rollback:
+                target_edit, = (root / 'target' / 'exchanges').glob('*-fit-route-request.json')
+                target_patches = load(target_edit)['patches']
+                submitted = q['patches']
+                check(submitted[-1] == patches[-1] and submitted[:-1] == target_patches[:-1] and
+                      dict(submitted[-1], expected_text=target_patches[-1]['expected_text']) == target_patches[-1],
+                      f'{case}: only the final submitted guard may differ from the successful edit')
                 diagnostic, = r['diagnostics']
                 check(diagnostic['code'] == 'OKL-E-REVISION' and diagnostic['phase'] == 'edit' and
                       diagnostic['primary']['start_byte'] == patches[-1]['start_byte'] and
@@ -94,7 +103,8 @@ def audit(root, example, case):
                 raw = b''.join(chunks + [raw[pos:]])
         accepted = load(directory / (state + '-bundle.json'))
         check(raw == (directory / (state + '.ok')).read_bytes() == accepted['entry']['source'].encode()
-              and accepted['modules'] == bundle['modules'], f'{case}/{state}: reconstructed source')
+              and accepted['entry']['filename'] == fixture.name and accepted['modules'] == bundle['modules'],
+              f'{case}/{state}: reconstructed source')
         rev = r['accepted_program_revision']
         q, r = pairs[i+1]
         export = r['result']
