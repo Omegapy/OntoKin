@@ -87,8 +87,8 @@ def scene(data):
     return glb, nodes, faces
 
 
-def joint(glb, nodes, faces, pair, center, spec):
-    frame = PortFrame(tuple(center), ((1, 0, 0), (0, 1, 0), (0, 0, 1)))
+def joint(glb, nodes, faces, pair, center, spec, *, axes=((1, 0, 0), (0, 1, 0), (0, 0, 1))):
+    frame = PortFrame(tuple(center), axes)
     tol = spec['maximum_rim_error_m']
     normal_tol = spec['maximum_unit_normal_error']
     area_tol = spec['area_tolerance_m2']
