@@ -1,10 +1,14 @@
-# OntoKin development status — C167
-
-## C168 integration lease
-
-Owner `c168-infer-077f` renews the main integration lease from 2026-11-08T17:42:30Z through 2026-11-08T17:57:30Z to publish the Linux result. [PR #105](https://github.com/Omegapy/OntoKin/pull/105) merged at `83d0a1a696499a69af882fadd8a07bf0f388f619`. The actual merge replay reproduced all seven Agent cases. An offline candidate restore reproduced the models and all seven browser images. The complete unit run has reached the final duct checks on candidate `52ef1e3e4b365ae9b4b7c3c27360c47e16c87df2`. The expected torque-read setup error has occurred. C161–C167 and framed-loft regressions passed.
+# OntoKin development status — C168
 
 ## Current checkpoint
+
+The connected-duct agent now infers the middle travel direction from the signed faces of two fixed ports. It fitted a rising route, its downward mirror and a rotated, renamed assembly. Each fit required one edit and closed six clear 1.00 m² openings. Three.js measured a maximum rim separation of 0.835 µm against a 10 µm limit. Insufficient clearance and parallel flow axes produced pre-edit refusals with identical source bytes. [Run the example and inspect the contract](examples/connected-duct/README.md#c168--infer-the-middle-direction-from-two-fixed-ports)
+
+[PR #105](https://github.com/Omegapy/OntoKin/pull/105) merged at [83d0a1a69649](https://github.com/Omegapy/OntoKin/commit/83d0a1a696499a69af882fadd8a07bf0f388f619). The merge replay passed. On [candidate 52ef1e3e4b36](https://github.com/Omegapy/OntoKin/commit/52ef1e3e4b365ae9b4b7c3c27360c47e16c87df2), the C161–C167 replays, 57 duct tests, 137 framed-loft tests and 69 stock Agent cases passed. All 4,207 unit tests that started passed. The original 30-second torque setup deadline prevented 13 torque-read methods from starting. The core is marked failed and the other six stages passed. [C160 torque qualification](docs/engineering/torque-verification-c160/README.md) remains open.
+
+Next, qualify the measured-span boundary. An authored 1 mm bridge can measure 0.99992752 mm in the starting GLB and trigger the existing minimum-length guard. A direct 1 mm source fit closed all six joints within 0.073 µm. Owner `c168-infer-077f` releases the main integration lease on verified publication of this record.
+
+## Previous checkpoint at C167
 
 The connected-duct authoring agent fitted two rigid 90° elbows and three adjustable straights between fixed ports on different planes. One guarded edit set five placements and three spans of 2.75, 3.50 and 4.50 m. All six joints shared a clear 1.00 m² opening. Three.js measured a maximum rim separation of 0.310 µm against the 10 µm limit. A route requiring a negative middle span was refused before editing. [Fitted model, controls and replay commands](examples/connected-duct/README.md#c167--connect-ports-on-different-planes)
 
