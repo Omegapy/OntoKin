@@ -1,5 +1,9 @@
 # OntoKin development status — C168
 
+## C169 integration lease
+
+Owner `c169-span-8bca` holds the main integration lease from 2026-11-08T18:43:54Z through 2026-11-08T19:13:54Z for [PR #106](https://github.com/Omegapy/OntoKin/pull/106). All 16 fixed-boundary fixtures and C161–C168 regressions passed on `abfb975ebf4275a16aafa542f05abfa4cd416068`. The Linux core run continues under its original policy.
+
 ## Current checkpoint
 
 The connected-duct agent now infers the middle travel direction from the signed faces of two fixed ports. It fitted a rising route, its downward mirror and a rotated, renamed assembly. Each fit required one edit and closed six clear 1.00 m² openings. Three.js measured a maximum rim separation of 0.835 µm against a 10 µm limit. Insufficient clearance and parallel flow axes produced pre-edit refusals with identical source bytes. [Run the example and inspect the contract](examples/connected-duct/README.md#c168--infer-the-middle-direction-from-two-fixed-ports)
