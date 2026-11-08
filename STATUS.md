@@ -8,6 +8,8 @@ The two-elbow fitter can now repair a legal 1 mm straight that measures 0.999927
 
 Next, fit a route with parallel, same-direction ports and a caller-specified lead length. Owner `c169-span-8bca` releases the integration lease on verified publication of this record.
 
+Owner `c169-pause-be0d` holds the main integration lease through 20:02 UTC on November 8, 2026, to record the owner's requested pause in this file.
+
 ## Previous checkpoint at C168
 
 The connected-duct agent now infers the middle travel direction from the signed faces of two fixed ports. It fitted a rising route, its downward mirror and a rotated, renamed assembly. Each fit required one edit and closed six clear 1.00 m² openings. Three.js measured a maximum rim separation of 0.835 µm against a 10 µm limit. Insufficient clearance and parallel flow axes produced pre-edit refusals with identical source bytes. [Run the example and inspect the contract](examples/connected-duct/README.md#c168--infer-the-middle-direction-from-two-fixed-ports)
