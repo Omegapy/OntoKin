@@ -1,5 +1,6 @@
 """Fit a selected straight–elbow–straight chain in one guarded Agent edit."""
 import argparse
+from dataclasses import replace
 from pathlib import Path
 import tempfile
 
@@ -30,9 +31,9 @@ def route_patches(program, mappings, fit, chain, control):
     return patches
 
 
-def replay(manifest, output, store, chain, control=None, *, solver=solve, build_patches=route_patches):
-    program, send, snapshot, _, export, _, summary = session(
-        manifest, output, store, host_policy=HostPolicy(300000, 30000))
+def replay(manifest, output, store, chain, control=None, *, solver=solve, build_patches=route_patches, preview=None):
+    policy = HostPolicy(300000, 30000)
+    program, send, snapshot, _, export, _, summary = session(manifest, output, store, host_policy=policy)
     write_json(output / 'selection.json', list(chain))
     created = send('defective-create', 'create', bundle=program.to_payload(),
                    expected_program_revision=None, requested_level='constructed')
@@ -41,6 +42,17 @@ def replay(manifest, output, store, chain, control=None, *, solver=solve, build_
     _, raw = export('defective', before.program_revision)
     try:
         fit = solver(raw, *chain)
+        mappings = occurrences(raw)
+        patches = build_patches(before, mappings, fit, chain, control)
+        expected = before.entry.raw
+        for patch in sorted(patches, key=lambda p: p['start_byte'], reverse=True):
+            start, end = patch['start_byte'], patch['end_byte']
+            require(expected[start:end] == patch['expected_text'].encode(), 'Stale patch source range')
+            expected = expected[:start] + patch['replacement'].encode() + expected[end:]
+        staged = None
+        if preview is not None:
+            proposed = replace(before, entry=replace(before.entry, raw=expected))
+            staged = preview(proposed, fit, chain, policy)
     except ValueError as exc:
         require(snapshot('after-rejection', before.program_revision) == before,
                 'Rejected route changed the accepted source')
@@ -48,8 +60,6 @@ def replay(manifest, output, store, chain, control=None, *, solver=solve, build_
                        edit_patch_count=0, schema_validated_pairs=validate_exchanges(output, edits=0))
     else:
         write_json(output / 'fit.json', fit)
-        mappings = occurrences(raw)
-        patches = build_patches(before, mappings, fit, chain, control)
         if control == 'rollback':
             # The final patch has a stale precondition. The earlier valid patches
             # must never become visible, even after reopening the store.
@@ -68,14 +78,10 @@ def replay(manifest, output, store, chain, control=None, *, solver=solve, build_
         result = send('fit-route', 'edit', expected_program_revision=before.program_revision,
                       requested_level='constructed', patches=patches)
         after = snapshot('repaired', result['accepted_program_revision'])
-        expected = before.entry.raw
-        for patch in sorted(patches, key=lambda p: p['start_byte'], reverse=True):
-            start, end = patch['start_byte'], patch['end_byte']
-            require(expected[start:end] == patch['expected_text'].encode(), 'Stale patch source range')
-            expected = expected[:start] + patch['replacement'].encode() + expected[end:]
         require(after.entry.raw == expected and after.modules == before.modules,
                 'Accepted source differs from the guarded field edits')
         _, repaired = export('repaired', after.program_revision)
+        require(staged is None or repaired == staged, 'Accepted GLB differs from the verified preview')
         updated = occurrences(repaired)
         require(set(updated) == set(mappings) and all(
             updated[name][field] == record[field] for name, record in mappings.items()

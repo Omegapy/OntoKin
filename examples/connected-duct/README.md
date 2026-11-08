@@ -186,3 +186,17 @@ python3 tools/verify_inferred_duct_offset.py mirrored "$out/fit/defective.glb" "
 ```
 
 The [positive](offset-achievable.ok) and [mirrored](offset-mirrored.ok) layouts require opposite directions for the 3.50 m middle duct. The [rotated layout](offset-rotated.ok) changes the part names, world axes and all three straight lengths. The [frozen geometry contract](inferred-offset-contract.json) identifies all six signed joints and their acceptance limits. Each run records the evaluated directions and its decision in `directions.json`. Parallel port axes and insufficient clearance lead to a refusal before editing. To run all five layouts and both controls, use `python3 examples/connected-duct/replay_inferred.py /absolute/new-output`.
+
+## C169 · Fit straight lengths at the source limits
+
+A 1 mm middle duct can measure 0.99992752 mm in the starting GLB. The two-elbow fitter can now try the exact legal limit when the recorded positions of the fixed ports support that correction. This applies to both inferred and caller-supplied directions.
+
+For an out-of-range measurement, the fitter holds the measured rotations and all in-range spans fixed. It computes the three-dimensional displacement needed to use the nearest legal boundary (0.001 or 100 m). Each component must be possible within the two recorded translations’ binary32 rounding intervals. The JSON translations must agree with the stationary animation samples. The fitter conservatively refuses midpoint ties and coordinates too coarse to resolve the route at 10 µm. A small joint gap alone cannot justify a boundary edit.
+
+Before submitting a boundary edit, the agent exports the proposed source in memory. It measures both rims, their opposing normals and the shared square opening at all six joints. It also checks every triangle for an obstruction. After the single guarded edit it compares the delivered GLB bytes with that preview. In `fit.json`, `measured_length_m` records the original inferred length when it differs from the emitted `length_m`.
+
+Run the [frozen span-limit cases](span-boundary-contract.json) from the repository root. The output includes the editable sources, GLBs, Agent exchanges, and independent measurements against the authored joint locations.
+
+```bash
+python3 examples/connected-duct/replay_span_boundary.py /absolute/new-output
+```
