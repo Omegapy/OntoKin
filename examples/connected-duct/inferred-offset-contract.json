@@ -1,0 +1,297 @@
+{
+  "maximum_rim_error_m": 1e-05,
+  "maximum_unit_normal_error": 1e-05,
+  "common_area_m2": 1,
+  "area_tolerance_m2": 5e-05,
+  "inner_side_m": 1,
+  "outer_side_m": 2,
+  "straight_span_limits_m": [0.001, 100],
+  "rigid_elbow": {
+    "local_inlet_m": [0, 0, 0],
+    "local_outlet_m": [4, 0, 4],
+    "inlet_outward_normal": [0, 0, -1],
+    "outlet_outward_normal": [1, 0, 0],
+    "turn_degrees": 90,
+    "preserve_streams": [
+      "POSITION",
+      "NORMAL",
+      "indices"
+    ],
+    "regions": [
+      "top",
+      "bottom",
+      "inner",
+      "outer"
+    ]
+  },
+  "joint_order": "For every adjacent pair in chain, upstream/top has outward normal +flow and downstream/bottom has outward normal -flow.",
+  "fixed_ports": "First and last instance poses remain identical. All rigid elbow local geometry streams remain identical.",
+  "interior_gap": {
+    "case": "positive",
+    "shorten_middle_by_m": 1,
+    "expected_open_joint": 4,
+    "expected_closed_joints": [1, 2, 3, 5, 6]
+  },
+  "cases": {
+    "positive": {
+      "manifest": "offset-achievable.files.json",
+      "chain": [
+        "outbound",
+        "lead",
+        "turn",
+        "bridge",
+        "rise",
+        "tail",
+        "inbound"
+      ],
+      "joints": [
+        [
+          "outbound/top",
+          "lead/bottom"
+        ],
+        [
+          "lead/top",
+          "turn/bottom"
+        ],
+        [
+          "turn/top",
+          "bridge/bottom"
+        ],
+        [
+          "bridge/top",
+          "rise/bottom"
+        ],
+        [
+          "rise/top",
+          "tail/bottom"
+        ],
+        [
+          "tail/top",
+          "inbound/bottom"
+        ]
+      ],
+      "expected": "unique_fit",
+      "transaction_count": 1,
+      "joint_centers_m": [
+        [2, 1, 3],
+        [2, 1, 5.75],
+        [2, 5, 9.75],
+        [2, 8.5, 9.75],
+        [6, 12.5, 9.75],
+        [10.5, 12.5, 9.75]
+      ],
+      "flow_axes": [
+        [0, 0, 1],
+        [0, 0, 1],
+        [0, 1, 0],
+        [0, 1, 0],
+        [1, 0, 0],
+        [1, 0, 0]
+      ],
+      "straight_spans_m": [2.75, 3.5, 4.5],
+      "opposing_middle_span_m": -19.5
+    },
+    "mirrored": {
+      "manifest": "offset-mirrored.files.json",
+      "chain": [
+        "outbound",
+        "lead",
+        "turn",
+        "bridge",
+        "rise",
+        "tail",
+        "inbound"
+      ],
+      "joints": [
+        [
+          "outbound/top",
+          "lead/bottom"
+        ],
+        [
+          "lead/top",
+          "turn/bottom"
+        ],
+        [
+          "turn/top",
+          "bridge/bottom"
+        ],
+        [
+          "bridge/top",
+          "rise/bottom"
+        ],
+        [
+          "rise/top",
+          "tail/bottom"
+        ],
+        [
+          "tail/top",
+          "inbound/bottom"
+        ]
+      ],
+      "expected": "unique_fit",
+      "transaction_count": 1,
+      "joint_centers_m": [
+        [2, 1, 3],
+        [2, 1, 5.75],
+        [2, -3, 9.75],
+        [2, -6.5, 9.75],
+        [6, -10.5, 9.75],
+        [10.5, -10.5, 9.75]
+      ],
+      "flow_axes": [
+        [0, 0, 1],
+        [0, 0, 1],
+        [0, -1, 0],
+        [0, -1, 0],
+        [1, 0, 0],
+        [1, 0, 0]
+      ],
+      "straight_spans_m": [2.75, 3.5, 4.5],
+      "opposing_middle_span_m": -19.5
+    },
+    "rotated": {
+      "manifest": "offset-rotated.files.json",
+      "chain": [
+        "supply",
+        "stem",
+        "knee_a",
+        "crosspipe",
+        "knee_b",
+        "runout",
+        "terminal"
+      ],
+      "joints": [
+        [
+          "supply/top",
+          "stem/bottom"
+        ],
+        [
+          "stem/top",
+          "knee_a/bottom"
+        ],
+        [
+          "knee_a/top",
+          "crosspipe/bottom"
+        ],
+        [
+          "crosspipe/top",
+          "knee_b/bottom"
+        ],
+        [
+          "knee_b/top",
+          "runout/bottom"
+        ],
+        [
+          "runout/top",
+          "terminal/bottom"
+        ]
+      ],
+      "expected": "unique_fit",
+      "transaction_count": 1,
+      "joint_centers_m": [
+        [3.2, -0.24615384615384572, 6.230769230769231],
+        [4.5, 0.6538461538461537, 6.605769230769231],
+        [7.700000000000001, 1.3307692307692314, 11.221153846153847],
+        [7.700000000000001, -0.6403846153846127, 15.951923076923077],
+        [5.300000000000001, 0.775000000000003, 20.875],
+        [1.5499999999999994, 5.390384615384617, 22.798076923076923]
+      ],
+      "flow_axes": [
+        [0.8, 0.5538461538461539, 0.23076923076923078],
+        [0.8, 0.5538461538461539, 0.23076923076923078],
+        [0.0, -0.38461538461538464, 0.9230769230769231],
+        [0.0, -0.38461538461538464, 0.9230769230769231],
+        [-0.6000000000000001, 0.7384615384615385, 0.3076923076923077],
+        [-0.6000000000000001, 0.7384615384615385, 0.3076923076923077]
+      ],
+      "straight_spans_m": [1.625, 5.125, 6.25],
+      "opposing_middle_span_m": -21.125
+    },
+    "insufficient": {
+      "manifest": "offset-incompatible.files.json",
+      "chain": [
+        "outbound",
+        "lead",
+        "turn",
+        "bridge",
+        "rise",
+        "tail",
+        "inbound"
+      ],
+      "joints": [
+        [
+          "outbound/top",
+          "lead/bottom"
+        ],
+        [
+          "lead/top",
+          "turn/bottom"
+        ],
+        [
+          "turn/top",
+          "bridge/bottom"
+        ],
+        [
+          "bridge/top",
+          "rise/bottom"
+        ],
+        [
+          "rise/top",
+          "tail/bottom"
+        ],
+        [
+          "tail/top",
+          "inbound/bottom"
+        ]
+      ],
+      "expected": "refused",
+      "transaction_count": 0,
+      "source_unchanged": true,
+      "reason": "Neither candidate gives a permitted middle span.",
+      "candidate_middle_spans_m": [-0.5, -15.5]
+    },
+    "parallel": {
+      "manifest": "offset-parallel.files.json",
+      "chain": [
+        "outbound",
+        "lead",
+        "turn",
+        "bridge",
+        "rise",
+        "tail",
+        "inbound"
+      ],
+      "joints": [
+        [
+          "outbound/top",
+          "lead/bottom"
+        ],
+        [
+          "lead/top",
+          "turn/bottom"
+        ],
+        [
+          "turn/top",
+          "bridge/bottom"
+        ],
+        [
+          "bridge/top",
+          "rise/bottom"
+        ],
+        [
+          "rise/top",
+          "tail/bottom"
+        ],
+        [
+          "tail/top",
+          "inbound/bottom"
+        ]
+      ],
+      "expected": "refused",
+      "transaction_count": 0,
+      "source_unchanged": true,
+      "reason": "Parallel fixed flow axes do not determine a perpendicular direction.",
+      "candidate_count": 0
+    }
+  }
+}
