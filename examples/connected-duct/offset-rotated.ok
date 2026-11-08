@@ -1,0 +1,39 @@
+ontokin "0.11";
+module ConnectedDuct @ "connected-duct";
+profile "framed-polygon-loft-0.1";
+execution { max_operations = 300000; max_elapsed = 30[s]; }
+
+import ducts @ "duct-parts" from "example.connected-duct-parts" version "1.1.0"
+    digest "sha256:b520cfdd2d668d7840624f9110a0a56db440608213643c81758470be5c8c7f6f";
+
+scene Demo @ "demo" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object supply @ "supply": ducts.Elbow {
+        placement = pose(world, vec3(-2.4000000000000004[m], 0.49230769230769278[m], 6.5384615384615383[m]), quat(0.52623481158421759, 0.78935221737632633, 0.17541160386140586, 0.26311740579210879));
+    }
+    object terminal @ "terminal": ducts.Elbow {
+        placement = pose(world, vec3(1.5499999999999994[m], 5.3903846153846171[m], 22.798076923076923[m]), quat(-0.17541160386140586, -0.26311740579210879, 0.52623481158421759, 0.78935221737632633));
+    }
+    object stem @ "stem": ducts.Straight {
+        placement = pose(world, vec3(6.8000000000000007[m], -4.6769230769230772[m], 4.384615384615385[m]), quat(0.24806946917841693, 0.37210420376762537, 0.49613893835683387, 0.74420840753525075));
+        span = 4[m];
+        bore_shift = 0[m];
+    }
+    object knee_a @ "knee_a": ducts.Elbow {
+        placement = pose(world, vec3(2.7999999999999998[m], -2.8307692307692309[m], 5.1538461538461533[m]), quat(0.24806946917841693, 0.37210420376762537, 0.49613893835683387, 0.74420840753525075));
+    }
+    object crosspipe @ "crosspipe": ducts.Straight {
+        placement = pose(world, vec3(4.5999999999999996[m], -3.8923076923076927[m], 1.4615384615384612[m]), quat(0.24806946917841693, 0.37210420376762537, 0.49613893835683387, 0.74420840753525075));
+        span = 4[m];
+        bore_shift = 0[m];
+    }
+    object knee_b @ "knee_b": ducts.Elbow {
+        placement = pose(world, vec3(0.19999999999999973[m], 0.75384615384615383[m], 1.2307692307692304[m]), quat(0.24806946917841693, 0.37210420376762537, 0.49613893835683387, 0.74420840753525075));
+    }
+    object runout @ "runout": ducts.Straight {
+        placement = pose(world, vec3(-3.8000000000000007[m], 0.67692307692307763[m], 6.6153846153846159[m]), quat(0.24806946917841693, 0.37210420376762537, 0.49613893835683387, 0.74420840753525075));
+        span = 4[m];
+        bore_shift = 0[m];
+    }
+}

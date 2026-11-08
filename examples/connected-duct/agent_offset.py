@@ -5,6 +5,7 @@ from math import pi
 from pathlib import Path
 import tempfile
 
+from agent_repair import write_json
 from agent_route import replay as replay_route
 from agent_select import placement_patch
 from agent_span import span_patch
@@ -26,9 +27,17 @@ def offset_patches(program, mappings, fit, chain, control):
     return patches
 
 
-def replay(manifest, output, store, chain, middle_direction, control=None):
-    return replay_route(manifest, output, store, chain, control, solver=partial(solve, middle_direction=middle_direction),
-                        build_patches=offset_patches)
+def replay(manifest, output, store, chain, middle_direction=None, control=None):
+    if middle_direction is None:
+        def measure(raw, *names):
+            evaluation = {}
+            try:
+                return solve(raw, *names, evaluation=evaluation)
+            finally:
+                write_json(output / 'directions.json', evaluation)
+    else:
+        measure = partial(solve, middle_direction=middle_direction)
+    return replay_route(manifest, output, store, chain, control, solver=measure, build_patches=offset_patches)
 
 
 if __name__ == '__main__':
@@ -36,7 +45,7 @@ if __name__ == '__main__':
     parser.add_argument('manifest', type=Path)
     parser.add_argument('output', type=Path)
     parser.add_argument('--chain', nargs=7, required=True)
-    parser.add_argument('--middle-direction', nargs=3, required=True, type=float)
+    parser.add_argument('--middle-direction', nargs=3, type=float, help='Override the direction inferred from the fixed ports')
     parser.add_argument('--control', choices=('wrong-plane', 'interior-gap', 'rollback'))
     args = parser.parse_args()
     with tempfile.TemporaryDirectory(prefix='duct-offset-') as store:

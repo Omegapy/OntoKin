@@ -172,3 +172,17 @@ The [frozen contract](offset-contract.json) identifies the twelve cap faces at t
 Use `--control wrong-plane` to turn the first bend toward +X, `--control interior-gap` to shorten the middle straight by 1 m, or `--control rollback` to submit a stale eighth patch. Each run needs a fresh output directory. The first two controls keep the downstream joint closed and expose faults at different interior joints. This example verifies a prescribed static chain. The caller supplies the middle direction and part order.
 
 ![Fitted two-elbow offset route and the six measured joints](offset-fitted.png)
+
+## C168 · Infer the middle direction from two fixed ports
+
+Name the seven parts in travel order. The agent reads the signed faces of the two fixed ports from the starting GLB. With nonparallel end axes, only two opposite directions are perpendicular to both. The agent tries each direction using the measured elbows, the allowed straight lengths, and the two rims of each connection. It submits one guarded edit when exactly one route fits.
+
+```bash
+ex=examples/connected-duct
+out=$(mktemp -d)
+python3 "$ex/agent_offset.py" "$ex/offset-mirrored.files.json" "$out/fit" \
+  --chain outbound lead turn bridge rise tail inbound
+python3 tools/verify_inferred_duct_offset.py mirrored "$out/fit/defective.glb" "$out/fit/repaired.glb"
+```
+
+The [positive](offset-achievable.ok) and [mirrored](offset-mirrored.ok) layouts require opposite directions for the 3.50 m middle duct. The [rotated layout](offset-rotated.ok) changes the part names, world axes and all three straight lengths. The [frozen geometry contract](inferred-offset-contract.json) identifies all six signed joints and their acceptance limits. Each run records the evaluated directions and its decision in `directions.json`. Parallel port axes and insufficient clearance lead to a refusal before editing. To run all five layouts and both controls, use `python3 examples/connected-duct/replay_inferred.py /absolute/new-output`.
