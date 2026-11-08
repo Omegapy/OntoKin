@@ -1,5 +1,9 @@
 # OntoKin development status — C165
 
+## C166 integration lease
+
+Owner `c166-route-70a7` holds the integration lease for [PR #103](https://github.com/Omegapy/OntoKin/pull/103) from 2026-11-08T03:34:02Z through 2026-11-08T04:04:02Z. Base `057b3f7ff352c453235929610bf93230de0f9541`. Candidate `17e2be57d4087f2d1762c9d4dfb39e394ccce7f1` passed the four-joint geometry, source re-export, two refusals, both wrong fits, rotated held-out route and legacy duct replays. Scope is the C166 connected-duct authoring example, its verification and integration record.
+
 ## Current checkpoint
 
 Agent/0.11 fitted both ends of a single editable straight duct between named stationary ports. One transaction changed its length from 4 m to 5.75 m and set its pose. Each opening measured 1.00 m². Independent Three.js measurements put the largest rim separation at 0.2784 µm against a 10 µm limit. A downstream port shifted 0.25 m sideways was rejected before any source edit. Reversed ends, a short connector and a correct fit to the bypass each failed the requested joint check. [Run the example and inspect both joints](examples/connected-duct/README.md#c165--fit-both-ends-of-a-straight-duct)
