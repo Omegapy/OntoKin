@@ -8,7 +8,7 @@ The two-elbow fitter can now repair a legal 1 mm straight that measures 0.999927
 
 **Duct fitting is paused after C169.** The next development work is the owner's planned features for developing the language. Start that work from current `main`. Resume duct fitting when the owner selects it again. The first deferred task is to fit two fixed ports with the same flow direction using a caller-specified lead length. A hand-authored example exists in the C169 handoff. The solver work has not started.
 
-Owner `c169-pause-be0d` releases the integration lease with publication of this pause.
+Owner `c170-observe-b7f3` holds the main integration lease until 00:28 UTC on November 9, 2026 for the observation development tool on `work/c170-observation-development`.
 
 ## Previous checkpoint at C168
 
