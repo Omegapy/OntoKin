@@ -1,5 +1,9 @@
 # OntoKin development status — C167
 
+## C168 integration lease
+
+Owner `c168-infer-077f` holds the main integration lease from 2026-11-08T17:15:28Z through 2026-11-08T17:45:28Z for [PR #105](https://github.com/Omegapy/OntoKin/pull/105). Base `4616178773a0a5624fdfb6e12d667434f96ac59c`. Candidate `52ef1e3e4b365ae9b4b7c3c27360c47e16c87df2` passed the seven Agent cases, independent geometry checks and Three.js verification. The Linux core and remaining legacy checks are running. Scope covers the connected-duct authoring example, related tests and verification.
+
 ## Current checkpoint
 
 The connected-duct authoring agent fitted two rigid 90° elbows and three adjustable straights between fixed ports on different planes. One guarded edit set five placements and three spans of 2.75, 3.50 and 4.50 m. All six joints shared a clear 1.00 m² opening. Three.js measured a maximum rim separation of 0.310 µm against the 10 µm limit. A route requiring a negative middle span was refused before editing. [Fitted model, controls and replay commands](examples/connected-duct/README.md#c167--connect-ports-on-different-planes)
