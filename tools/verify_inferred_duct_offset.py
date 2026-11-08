@@ -36,17 +36,21 @@ def verify(label, before, after):
     spec = json.loads((EXAMPLE / 'inferred-offset-contract.json').read_bytes())
     control = spec['interior_gap'] if label == 'interior-gap' else None
     case = spec['cases'][control['case'] if control else label]
+    return verify_case(label, before, after, spec, case, EXAMPLE, control)
+
+
+def verify_case(label, before, after, spec, case, example, control=None):
     chain = case['chain']
     original, originals, original_caps = endpoints(before, chain)
     glb, nodes, caps = endpoints(after, chain)
-    manifest = json.loads((EXAMPLE / case['manifest']).read_bytes())
+    manifest = json.loads((example / case['manifest']).read_bytes())
     for model in (original, glb):
         sources = model.document['extras']['ontokin']['program']['sources']
         for unit in manifest['modules']:
             source = sources['package:' + unit['package_id'] + '@' + unit['version']]
-            digest = hashlib.sha256((EXAMPLE / unit['path']).read_bytes()).hexdigest()
+            digest = hashlib.sha256((example / unit['path']).read_bytes()).hexdigest()
             require(source['source_revision'] == 'sha256:' + digest, 'Rigid parts source differs from freeze')
-    entry = (EXAMPLE / manifest['entry']['path']).read_bytes()
+    entry = (example / manifest['entry']['path']).read_bytes()
     require(original.document['extras']['ontokin']['program']['sources']['entry']['source_revision']
             == 'sha256:' + hashlib.sha256(entry).hexdigest(), 'Initial entry differs from freeze')
 

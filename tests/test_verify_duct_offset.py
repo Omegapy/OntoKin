@@ -10,11 +10,12 @@ from ontokin.budget_runtime import execute_framed_loft_export
 from ontokin.bundle import load_file_manifest
 from ontokin.execution_budget import HostPolicy
 from ontokin.scene import ExportOptions
+from tools.texture_reference import GLB, repack_glb
 
 EXAMPLE = Path(__file__).resolve().parents[1] / 'examples' / 'connected-duct'
 sys.path.insert(0, str(EXAMPLE))
 try:
-    from offset_solver import solve
+    from offset_solver import _rounding_offsets, solve
 finally:
     sys.path.remove(str(EXAMPLE))
 
@@ -63,6 +64,40 @@ class OffsetFitTests(unittest.TestCase):
         for sink_y in (b'8.5[m]', b'9.0005[m]', b'110[m]'):
             scene = self.bundle.entry.raw.replace(b'12.5[m]', sink_y)
             with self.subTest(sink_y=sink_y), self.assertRaisesRegex(ValueError, 'Straight spans'):
+                solve(self.export(scene), *CHAIN, middle_direction=(0, 1, 0))
+
+    def test_rounding_cell_is_asymmetric_at_powers_of_two(self):
+        self.assertEqual(_rounding_offsets(1.0), (-2**-25, 2**-24))
+        self.assertEqual(_rounding_offsets(-1.0), (-2**-24, 2**-25))
+        self.assertEqual(_rounding_offsets(2**-126), (-2**-150, 2**-150))
+        self.assertEqual(_rounding_offsets(-0.0), (-2**-150, 0.0))
+
+    def test_binary32_witness_for_legal_minimum(self):
+        source = self.bundle.entry.raw.replace(b'6[m], 1[m], -1[m]', b'6[m], -2[m], -1[m]')
+        raw = self.export(source.replace(b'12.5[m]', b'6.001[m]'))
+        report = {}
+        fit = solve(raw, *CHAIN, evaluation=report)
+        self.assertEqual(fit, solve(raw, *CHAIN, middle_direction=(0, 1, 0)))
+        self.assertEqual(fit['bridge']['measured_length_m'], 0.0009999275207519531)
+        self.assertEqual(fit['bridge']['length_m'], 0.001)
+        accepted, = [row for row in report['candidates'] if row['feasible']]
+        trial = accepted['boundary_trial']
+        self.assertLess(0, trial['required_endpoint_delta_m'][1])
+        self.assertLess(trial['required_endpoint_delta_m'][1], trial['open_delta_intervals_m'][1][1])
+
+        # Give the JSON node an unrecorded 10 nm shift. The older stationarity
+        # tolerance would permit it, but this node cannot warrant a binary32 trial.
+        glb = GLB(raw, target='ontokin.glb/0.11')
+        glb.document['nodes'][glb.objects()['inbound']]['translation'][1] += 1e-8
+        with self.assertRaisesRegex(ValueError, 'Straight spans'):
+            solve(repack_glb(glb.document, glb.binary), *CHAIN, middle_direction=(0, 1, 0))
+
+    def test_boundary_fit_requires_resolved_endpoint_cells(self):
+        source = self.bundle.entry.raw.replace(b'6[m], 1[m], -1[m]', b'6[m], -2[m], -1[m]')
+        for scene in (source.replace(b'12.5[m]', b'6.000995[m]'),
+                      source.replace(b'6[m], -2[m]', b'1030[m], -2[m]')
+                            .replace(b'10.5[m], 12.5[m]', b'1034.5[m], 6.001[m]')):
+            with self.subTest(scene=scene), self.assertRaisesRegex(ValueError, 'Straight spans'):
                 solve(self.export(scene), *CHAIN, middle_direction=(0, 1, 0))
 
     def test_inference_evaluates_both_signs_and_selects_one(self):
