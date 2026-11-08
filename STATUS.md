@@ -1,5 +1,9 @@
 # OntoKin development status — C166
 
+## C167 integration lease
+
+Owner `c167-offset-d1ac` holds the main integration lease for [PR #104](https://github.com/Omegapy/OntoKin/pull/104) from 2026-11-08T04:20:21Z through 2026-11-08T04:50:21Z. Base `4b76f1a529fb1e869444bdf95abf23bbc87a7289`. Candidate `fea71d0d2cd96d465814407802e2020bb45e91b1` passed the six-joint measurements, two faulty geometry controls, clearance refusal, eight-patch rollback, changed-coordinate replay and C161–C166 regression checks. Scope is integration of the connected-duct example and its verification. The sequential Linux core is running on that candidate.
+
 ## Current checkpoint
 
 The connected-duct authoring example now fits two adjustable straight sections and a rigid 90° elbow between named perpendicular ports. Agent/0.11 changes the three placements and both lengths in one edit. For 2.75 m and 4.50 m runs, the four joints each share 1.00 m² of clear opening. The largest rim separation measured in Three.js was 0.310 µm against the 10 µm limit. A 0.25 m out-of-plane offset and computed spans outside the 0.001–100 m framed-loft range produce pre-edit refusals. [Run the route and inspect its four joints](examples/connected-duct/README.md#c166--route-a-90-elbow-between-two-straight-ducts)
