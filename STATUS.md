@@ -6,9 +6,9 @@ The two-elbow fitter can now repair a legal 1 mm straight that measures 0.999927
 
 [PR #106](https://github.com/Omegapy/OntoKin/pull/106) merged at [cbc090b2337f](https://github.com/Omegapy/OntoKin/commit/cbc090b2337fe6a1c348ded8aed67d9a63b1256c). The merge replay reproduced all 16 cases and both fits of the original 1 mm witness. On [candidate abfb975ebf42](https://github.com/Omegapy/OntoKin/commit/abfb975ebf4275a16aafa542f05abfa4cd416068), all C161–C168 replays, 60 duct tests, 137 framed-loft tests and 69 stock Agent cases passed. On Linux x86-64 with CPython 3.12.14, all 4,210 unit tests that started passed. The original 30-second torque export timed out during class setup, before 13 torque-read tests could start. The full core is marked failed. Its other six stages passed. [C160 torque qualification](docs/engineering/torque-verification-c160/README.md) remains open.
 
-Next, fit a route with parallel, same-direction ports and a caller-specified lead length. Owner `c169-span-8bca` releases the integration lease on verified publication of this record.
+**Duct fitting is paused after C169.** The next development work is the owner's planned features for developing the language. Start that work from current `main`. Resume duct fitting when the owner selects it again. The first deferred task is to fit two fixed ports with the same flow direction using a caller-specified lead length. A hand-authored example exists in the C169 handoff. The solver work has not started.
 
-Owner `c169-pause-be0d` holds the main integration lease through 20:02 UTC on November 8, 2026, to record the owner's requested pause in this file.
+Owner `c169-pause-be0d` releases the integration lease with publication of this pause.
 
 ## Previous checkpoint at C168
 
