@@ -1,10 +1,14 @@
-# OntoKin development status — C166
-
-## C167 integration lease
-
-Owner `c167-offset-d1ac` holds the main integration lease for [PR #104](https://github.com/Omegapy/OntoKin/pull/104) from 2026-11-08T04:20:21Z through 2026-11-08T04:50:21Z. Base `4b76f1a529fb1e869444bdf95abf23bbc87a7289`. Candidate `fea71d0d2cd96d465814407802e2020bb45e91b1` passed the six-joint measurements, two faulty geometry controls, clearance refusal, eight-patch rollback, changed-coordinate replay and C161–C166 regression checks. Scope is integration of the connected-duct example and its verification. The sequential Linux core is running on that candidate.
+# OntoKin development status — C167
 
 ## Current checkpoint
+
+The connected-duct authoring agent fitted two rigid 90° elbows and three adjustable straights between fixed ports on different planes. One guarded edit set five placements and three spans of 2.75, 3.50 and 4.50 m. All six joints shared a clear 1.00 m² opening. Three.js measured a maximum rim separation of 0.310 µm against the 10 µm limit. A route requiring a negative middle span was refused before editing. [Fitted model, controls and replay commands](examples/connected-duct/README.md#c167--connect-ports-on-different-planes)
+
+[PR #104](https://github.com/Omegapy/OntoKin/pull/104) merged at [5a0ea223fc36](https://github.com/Omegapy/OntoKin/commit/5a0ea223fc3630d928ce30acb636e7a930dced13). The merge replay passed. On [candidate fea71d0d2cd9](https://github.com/Omegapy/OntoKin/commit/fea71d0d2cd96d465814407802e2020bb45e91b1), 53 duct tests, 137 framed-loft tests, 69 stock Agent cases and the C161–C166 replays passed. All 4,203 unit tests that started passed. The original 30-second torque export deadline prevented 13 torque-read tests from starting, leaving the Linux core failed. The other six core stages passed. [C160 torque qualification](docs/engineering/torque-verification-c160/README.md) remains open.
+
+Next, infer the signed middle direction from the fixed ports and check both mirrored and impossible offsets. Owner `c167-offset-d1ac` releases the main integration lease on verified publication of this record.
+
+## Previous checkpoint at C166
 
 The connected-duct authoring example now fits two adjustable straight sections and a rigid 90° elbow between named perpendicular ports. Agent/0.11 changes the three placements and both lengths in one edit. For 2.75 m and 4.50 m runs, the four joints each share 1.00 m² of clear opening. The largest rim separation measured in Three.js was 0.310 µm against the 10 µm limit. A 0.25 m out-of-plane offset and computed spans outside the 0.001–100 m framed-loft range produce pre-edit refusals. [Run the route and inspect its four joints](examples/connected-duct/README.md#c166--route-a-90-elbow-between-two-straight-ducts)
 
