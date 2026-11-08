@@ -87,7 +87,10 @@ def solve(raw, source_name, first_name, bend_name, second_name, sink_name):
     second_length = dot(gap, b) - ab*first_length
     residual = dist(gap, add(scale(first_length, a), scale(second_length, b)))
     require(residual <= TOL, f'Fixed port axes are skew: lateral separation {residual:.9g} m')
-    require(min(first_length, second_length) > 0, 'Both straight runs must have positive length')
+    # Agent/0.11 framed_polygon_loft_limits bounds the two section origins of
+    # this straight. A zero run can appear slightly positive in the GLB frame.
+    require(min(first_length, second_length) >= 0.001 and max(first_length, second_length) <= 100,
+            'Both straight runs must have a positive length within the framed-loft range [0.001, 100] m')
     bend_inlet = add(start[0], scale(first_length, a))
 
     def move_with_bend(point):

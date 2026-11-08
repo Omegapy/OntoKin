@@ -63,3 +63,11 @@ class RouteFitTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'right angle'):
             self.fit(self.exported([(b'quat(0.7071067811865476, 0, 0.7071067811865476, 0)',
                                      b'quat(1, 0, 0, 0)')]))
+
+    def test_straight_span_must_be_constructible_before_edit(self):
+        for old, new in [(b'9.75[m]', b'7[m]'), (b'9.75[m]', b'7.0005[m]'),
+                         (b'10.5[m]', b'107[m]')]:
+            with self.subTest(new=new), self.assertRaisesRegex(ValueError, 'framed-loft range'):
+                self.fit(self.exported([(old, new)]))
+        near = self.fit(self.exported([(b'9.75[m]', b'7.002[m]')]))
+        self.assertAlmostEqual(near['lead']['length_m'], .002, places=5)
