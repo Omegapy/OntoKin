@@ -20,12 +20,13 @@ def load(path):
     return json.loads(path.read_bytes())
 
 
-def audit(root, example, case):
+def audit(root, example, case, *, offset=False):
     directory = root / case
     rejected = case == 'incompatible'
     rollback = case == 'rollback'
     label = 'incompatible' if rejected else 'achievable'
-    fixture = example / f'route-{label}.ok'
+    prefix = 'offset' if offset else 'route'
+    fixture = example / f'{prefix}-{label}.ok'
     bundle = load(directory / 'defective-bundle.json')
     summary = load(directory / 'summary.json')
     outcome = {'target': 'fitted', 'incompatible': 'fit-rejected', 'rollback': 'edit-rejected'}.get(case, 'control-exported')
@@ -36,7 +37,8 @@ def audit(root, example, case):
           module == dict(filename='parts-span.ok', package_id='example.connected-duct-parts',
                          version='1.1.0', source=(example/'parts-span.ok').read_text()),
           f'{case}: frozen input')
-    chain = ['outbound', 'lead', 'turn', 'tail', 'inbound']
+    chain = (['outbound', 'lead', 'turn', 'bridge', 'rise', 'tail', 'inbound'] if offset else
+             ['outbound', 'lead', 'turn', 'tail', 'inbound'])
     check(load(directory / 'selection.json') == chain, f'{case}: selected occurrence chain')
 
     exchanges = directory / 'exchanges'
@@ -70,8 +72,11 @@ def audit(root, example, case):
             check(q['operation'] == 'edit' and q['expected_program_revision'] == oldrev and
                   q.get('module_changes', []) == [], f'{case}: guarded atomic transaction')
             patches = sorted(q['patches'], key=lambda p: p['start_byte'])
-            fields = [('lead', 'placement'), ('lead', 'span'), ('turn', 'placement'),
-                      ('tail', 'placement'), ('tail', 'span')]
+            fields = []
+            for index, name in enumerate(chain[1:-1]):
+                fields.append((name, 'placement'))
+                if index % 2 == 0:
+                    fields.append((name, 'span'))
             check(len(patches) == len(fields) == summary['attempted_patch_count' if rollback else 'edit_patch_count'], f'{case}: patch count')
             chunks, pos = [], 0
             for p, (name, field) in zip(patches, fields):
@@ -98,7 +103,7 @@ def audit(root, example, case):
                 check(diagnostic['code'] == 'OKL-E-REVISION' and diagnostic['phase'] == 'edit' and
                       diagnostic['primary']['start_byte'] == patches[-1]['start_byte'] and
                       r['accepted_program_revision'] == oldrev == summary['preserved_revision'] and
-                      summary['outcome'] == 'edit-rejected', f'{case}: stale fifth patch')
+                      summary['outcome'] == 'edit-rejected', f'{case}: stale final patch')
             else:
                 raw = b''.join(chunks + [raw[pos:]])
         accepted = load(directory / (state + '-bundle.json'))
@@ -146,7 +151,7 @@ def audit(root, example, case):
         oldrev = rev
     check(i == len(pairs), f'{case}: unexpected operation')
     if rejected:
-        check(summary['outcome'] == 'fit-rejected' and 'skew' in summary['reason'].lower() and
+        check(summary['outcome'] == 'fit-rejected' and ('-0.5' if offset else 'skew') in summary['reason'].lower() and
               summary['preserved_revision'] == oldrev and
               (directory / 'after-rejection-bundle.json').read_bytes() == (directory / 'defective-bundle.json').read_bytes() and
               (directory / 'after-rejection.ok').read_bytes() == raw, f'{case}: rejected source identity')
@@ -162,7 +167,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('agent_directory', type=Path)
     parser.add_argument('example_directory', type=Path)
+    parser.add_argument('--offset', action='store_true', help='Check the C167 two-elbow route')
     args = parser.parse_args()
-    results = [audit(args.agent_directory, args.example_directory, label) for label in
-               ('target','incompatible','wrong-turn','one-sided','rollback')]
+    controls = ('wrong-plane', 'interior-gap') if args.offset else ('wrong-turn', 'one-sided')
+    results = [audit(args.agent_directory, args.example_directory, label, offset=args.offset)
+               for label in ('target', 'incompatible', *controls, 'rollback')]
     print(json.dumps(dict(result='passed', cases=results), indent=2))
