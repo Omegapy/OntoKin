@@ -1,0 +1,141 @@
+[
+  {
+    "case": "ontokin-active",
+    "role": "ontokin",
+    "reason": "wall deadline",
+    "returned": [
+      "closed"
+    ],
+    "markers": {
+      "active-start": true,
+      "late-write": false,
+      "forbidden-after-cutoff": false
+    },
+    "actions": 1,
+    "acceptedVisibleBytes": 120,
+    "serverAndQemuExited": true,
+    "postStopActionDenied": true
+  },
+  {
+    "case": "ontokin-bytes",
+    "role": "ontokin",
+    "reason": "visible byte limit",
+    "returned": [
+      "closed"
+    ],
+    "markers": {
+      "active-start": false,
+      "late-write": false,
+      "forbidden-after-cutoff": false
+    },
+    "actions": 1,
+    "acceptedVisibleBytes": 33,
+    "serverAndQemuExited": true,
+    "postStopActionDenied": true
+  },
+  {
+    "case": "blender-active",
+    "role": "blender",
+    "reason": "wall deadline",
+    "returned": [
+      "closed"
+    ],
+    "markers": {
+      "active-start": true,
+      "late-write": false,
+      "forbidden-after-cutoff": false
+    },
+    "actions": 1,
+    "acceptedVisibleBytes": 120,
+    "serverAndQemuExited": true,
+    "postStopActionDenied": true
+  },
+  {
+    "case": "blender-bytes",
+    "role": "blender",
+    "reason": "visible byte limit",
+    "returned": [
+      "closed"
+    ],
+    "markers": {
+      "active-start": false,
+      "late-write": false,
+      "forbidden-after-cutoff": false
+    },
+    "actions": 1,
+    "acceptedVisibleBytes": 33,
+    "serverAndQemuExited": true,
+    "postStopActionDenied": true
+  },
+  {
+    "case": "malformed",
+    "role": "ontokin",
+    "reason": "consecutive invalid actions",
+    "returned": [
+      "rejected",
+      "rejected",
+      "rejected"
+    ],
+    "markers": {
+      "active-start": false,
+      "late-write": false,
+      "forbidden-after-cutoff": false
+    },
+    "actions": 3,
+    "acceptedVisibleBytes": 306,
+    "serverAndQemuExited": true,
+    "postStopActionDenied": true
+  },
+  {
+    "case": "retry-and-submit",
+    "role": "blender",
+    "reason": "submitted",
+    "returned": [
+      "rejected",
+      "tool",
+      "tool",
+      "submitted"
+    ],
+    "markers": {
+      "active-start": false,
+      "late-write": false,
+      "forbidden-after-cutoff": false
+    },
+    "actions": 4,
+    "acceptedVisibleBytes": 604,
+    "serverAndQemuExited": true,
+    "postStopActionDenied": true
+  },
+  {
+    "case": "idle-deadline",
+    "role": "ontokin",
+    "reason": "wall deadline",
+    "returned": [],
+    "markers": {
+      "active-start": false,
+      "late-write": false,
+      "forbidden-after-cutoff": false
+    },
+    "actions": 0,
+    "acceptedVisibleBytes": 0,
+    "serverAndQemuExited": true,
+    "postStopActionDenied": true
+  },
+  {
+    "case": "count",
+    "role": "blender",
+    "reason": "action limit",
+    "returned": [
+      "tool"
+    ],
+    "markers": {
+      "active-start": false,
+      "late-write": false,
+      "forbidden-after-cutoff": false
+    },
+    "actions": 1,
+    "acceptedVisibleBytes": 175,
+    "serverAndQemuExited": true,
+    "postStopActionDenied": true
+  }
+]

@@ -1,0 +1,13 @@
+ontokin "0.1";
+module SpacerPractice @ "spacer-practice";
+profile "core-0.1";
+
+class Spacer @ "spacer-type" {
+    geometry = box(vec3(40[mm], 12[mm], 20[mm]));
+}
+
+scene Practice @ "practice" {
+    duration = 1[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object spacer @ "spacer": Spacer {}
+}
