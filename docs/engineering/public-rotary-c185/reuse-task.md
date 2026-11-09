@@ -1,0 +1,5 @@
+# Add a third width to the repaired indexer
+
+A replacement gauge shoe must fit on the same arm. Start with your route’s accepted C185 editable design. Add one selection called `medium-long`. Keep the shoe 300 mm long and 110 mm high. Set its width to 220 mm, centered on the previous centreline. Keep its mounting face at local X = 600 mm. Both guards still require 15.0 ± 0.5 mm minimum clearance through the two-second quarter turn. The existing 0.2 mm geometry tolerance and the C185 rules for part identities, guard motion, colors, axis and timing still apply.
+
+Deliver the edited design, commands for all three selections, and three standalone animated GLBs. The two existing selections must still produce the same geometry, materials and motion as their C185 exports. Supply a minimum clearance and time for each guard on the new selection. Record the files changed, checks run, failed attempts and any assistance. Use the fixed Delft viewer for visual review. The coordinator independently checks the result.

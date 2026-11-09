@@ -1,8 +1,14 @@
-# OntoKin development status — C184 operating correction
+# OntoKin development status — C185 public rotary repair
 
 ## Current checkpoint
 
-C185 integration lease held by `c185-rotary-daa36bf7` until 2026-11-09T20:12:58Z. Scope is the public rotary repair evidence, README and status.
+Both subagents repaired the five-part rotary indexer. Blender/Python and OntoKin each earned 100/100, producing a 180 mm and a 260 mm wide shoe on the first formal submission. Independent decoding verified the 15.0 ± 0.5 mm guard minima through the full two-second turn. The coordinator opened all four exports against the same Delft capture. Two clean rebuilds of each design reproduced all four submitted GLBs byte for byte. [Measured results and editable deliveries](docs/engineering/public-rotary-c185/README.md)
+
+Next, spawn exactly two fresh coding subagents here and give each its own accepted source and the [220 mm reuse task](docs/engineering/public-rotary-c185/reuse-task.md). Check whether both previous widths survive the edit. The public exercise establishes the repair on this assembly. Per-agent cost, broader comparative reliability and release qualification remain open.
+
+Owner `c185-rotary-daa36bf7` releases the main integration lease on merge.
+
+## Previous checkpoint at C184a
 
 Run the existing public rotary-indexer repair in this shared execution environment. The coordinator immediately spawns two subagents here, one for Blender/Python and one for OntoKin. Both receive the same brief, model settings, time allowance and attempt limit, plus their tool’s editable starter. Collect both variants from each agent and independently rebuild and measure the exports. Record the results as shared-environment observations. Dispatch is already authorized and requires no separate host or isolation preflight. [Repair instructions](docs/engineering/hosted-boundary-c184/ADMISSION.md)
 
