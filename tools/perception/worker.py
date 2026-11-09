@@ -71,12 +71,14 @@ def _run(command, checkout, log, timeout):
 
 
 def run_worker(adapter: str, media: Path, output: Path, *, checkout: Path, python: Path,
-               checkpoint: Path, timeout_s: int = 1800, static_camera: bool = False) -> dict:
+               checkpoint: Path, timeout_s: int = 1800, static_camera: bool = False, device=None) -> dict:
     """Execute the pinned worker in its own process group; retain raw output, log and import receipt."""
     if os.name != "posix":
         raise ValueError("Worker execution requires a POSIX host with process groups")
     if adapter not in REVISIONS or (static_camera and adapter != "flowhmr"):
         raise ValueError("Select a supported worker; static_camera requires FlowHMR")
+    if device not in (None, "auto", "cpu", "cuda") or (device == "cpu" and adapter != "solv3r"):
+        raise ValueError("CPU mode is available for Solv3R only; choose auto, cuda or cpu")
     if type(timeout_s) is not int or not 1 <= timeout_s <= 86400:
         raise ValueError("Worker timeout must be between 1 and 86400 seconds")
     # Preserve the virtual-environment executable path even if it is a symlink.
@@ -96,7 +98,7 @@ def run_worker(adapter: str, media: Path, output: Path, *, checkout: Path, pytho
     summary = {"schema": "ontokin.perception_worker/1", "adapter": adapter, "revision": REVISIONS[adapter],
                "checkout": str(checkout), "python": str(python), "capture": capture,
                "checkpoint": {"path": str(checkpoint), "sha256": checkpoint_hash},
-               "timeout_s": timeout_s, "status": "running"}
+               "timeout_s": timeout_s, "device_request": device or "auto", "status": "running"}
     receipt = output / "worker.json"
 
     def record():
@@ -130,7 +132,8 @@ def run_worker(adapter: str, media: Path, output: Path, *, checkout: Path, pytho
                 finally:
                     alias.unlink(missing_ok=True)
         else:
-            command = [str(python), "examples/offline.py", "--images", str(media), "--out", str(raw),
+            script = str(Path(__file__).with_name("solv3r_cpu.py").resolve()) if device == "cpu" else "examples/offline.py"
+            command = [str(python), script, "--images", str(media), "--out", str(raw),
                        "--checkpoint", str(checkpoint)]
             summary["command"] = command
             record()

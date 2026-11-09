@@ -13,7 +13,7 @@ ADAPTER_REVISION = "87ebb483ce9da32be72c67971bc8fd76f27251f3"
 
 def _floats(data, key, shape):
     value = data[key]
-    if value.shape != shape or value.dtype.kind != "f" or not np.isfinite(value).all():
+    if value.shape != shape or value.dtype.kind != "f" or value.dtype.itemsize > 8 or not np.isfinite(value).all():
         raise ValueError(f"{key} must be a finite floating array of shape {shape}")
     return value
 

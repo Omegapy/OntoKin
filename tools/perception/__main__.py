@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 import sys
 
-from .observation import ADAPTERS, import_observation, load_observation
+from .observation import ADAPTERS, MODEL_ADAPTERS, import_observation, load_observation
 
 
 def main(argv=None):
@@ -31,14 +31,25 @@ def main(argv=None):
     fit.add_argument("--start-frame", type=int, default=0)
     fit.add_argument("--stop-frame", type=int, help="exclusive upper bound")
     fit.add_argument("--max-error-m", type=float, default=0.025)
+    ballistic = commands.add_parser("ballistic", help="test a gravity-only hypothesis on a calibrated point trajectory")
+    ballistic.add_argument("observation", type=Path)
+    ballistic.add_argument("output", type=Path)
+    ballistic.add_argument("--max-error-m", type=float, default=0.01)
+    joint = commands.add_parser("articulate", help="derive a parameterized knee-hinge action from measured joint rotations")
+    joint.add_argument("observation", type=Path)
+    joint.add_argument("output", type=Path)
+    joint.add_argument("--joint", choices=("left_knee", "right_knee"), default="left_knee")
+    joint.add_argument("--max-error-deg", type=float, default=10.0)
+    joint.add_argument("--max-phases", type=int, default=16)
     run = commands.add_parser("run-worker", help="run an already configured external model and import its result")
-    run.add_argument("adapter", choices=ADAPTERS)
+    run.add_argument("adapter", choices=MODEL_ADAPTERS)
     run.add_argument("media", type=Path)
     run.add_argument("output", type=Path)
     for key in ("checkout", "python", "checkpoint"):
         run.add_argument("--" + key, type=Path, required=True)
     run.add_argument("--timeout-s", type=int, default=1800)
     run.add_argument("--static-camera", action="store_true")
+    run.add_argument("--device", choices=("cpu", "cuda", "auto"), default=None)
     args = vars(parser.parse_args(argv))
     operation = args.pop("operation")
     try:
@@ -52,6 +63,12 @@ def main(argv=None):
         elif operation == "synthesize":
             from .synthesis import synthesize
             result = synthesize(args.pop("observation"), args.pop("output"), **args)
+        elif operation == "ballistic":
+            from .ballistic import fit_ballistic
+            result = fit_ballistic(args.pop("observation"), args.pop("output"), **args)
+        elif operation == "articulate":
+            from .articulation import articulate
+            result = articulate(args.pop("observation"), args.pop("output"), **args)
         else:
             from .worker import run_worker
             result = run_worker(**args)

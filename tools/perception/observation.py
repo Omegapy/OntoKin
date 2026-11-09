@@ -16,7 +16,8 @@ import numpy as np
 from numpy.lib import format
 
 SCHEMA = "ontokin.observation/1"
-ADAPTERS = ("flowhmr", "solv3r")
+MODEL_ADAPTERS = ("flowhmr", "solv3r")
+ADAPTERS = (*MODEL_ADAPTERS, "metric-track")
 MAX_BYTES = 256 * 1024 * 1024
 MAX_MANIFEST = 4 * 1024 * 1024
 KEY = re.compile(r"[A-Za-z][A-Za-z0-9_]*\Z")
@@ -82,7 +83,7 @@ def read_arrays(source: Path, names, *, optional=(), exact=False) -> dict[str, n
                         shape, _, dtype = format.read_array_header_2_0(stream)
                     else:
                         raise ValueError(f"Unsupported NPY version in {key}")
-                    if (dtype.kind not in "biufSU" or len(shape) > 6
+                    if (dtype.kind not in "biufSU" or dtype.itemsize == 0 or len(shape) > 6
                             or any(n < 0 or n > MAX_BYTES for n in shape)
                             or stream.tell() + math.prod(shape) * dtype.itemsize != member.file_size):
                         raise ValueError(f"Invalid dtype, shape or length in {key}")
@@ -110,7 +111,7 @@ def import_observation(adapter: str, source: Path, output: Path, *, fps=None,
     if source.stat().st_size > MAX_BYTES + MAX_MANIFEST:
         raise ValueError("Input exceeds the observation size budget")
     source_hash = digest(source)
-    provider = importlib.import_module("." + adapter, __package__)
+    provider = importlib.import_module("." + adapter.replace("-", "_"), __package__)
     meta, arrays = provider.adapt(source, fps=fps)
     if digest(source) != source_hash:
         raise ValueError("Input changed during import")

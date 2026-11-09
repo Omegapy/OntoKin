@@ -16,6 +16,16 @@ python -m tools.perception synthesize /tmp/observed-human /tmp/root-action --sta
 
 Open `/tmp/root-action/root-motion.ok` to see the fitted velocity, starting position and reusable `advance(duration)` method. `root-motion.glb` animates a sphere at the estimated SMPL-H model translation. `fit.json` records the observed error in metres and the result of executing the action 20% faster. The example window was selected after inspecting the capture. Frames 30–51 supply the fit. Frames 52–59 test it. All 155 frames together fail the same 25 mm tolerance. A refused fit leaves its output directory absent.
 
+## Fit a joint action on the full capture
+
+```bash
+python -m tools.perception articulate /tmp/observed-human /tmp/left-knee --joint left_knee
+```
+
+The method fits a hinge axis in the parent frame and a short sequence of angular targets. The editable `knee.ok` uses OntoKin's native hinge and `tween` operation. Open `knee.glb` to view the exported action. The exporter checked 5,877 sample times against the native program. The bar represents joint orientation. Its dimensions are display settings. In the published capture, 13 phases reproduced the left knee to within 9.84° across 38 held-out frames. The counterfactual source reduces the angular excursion by 20%. The comparison uses the angle between orientations, which accounts for equivalent quaternion signs. A fit that exceeds either the phase budget or the error limit is refused.
+
+For a single command that replays the capture, camera example and free-flight experiment, run `python examples/perception/replay.py /tmp/observation-examples`. The output directory contains editable source, fit reports and the recorded refusal for the full-clip constant-velocity hypothesis.
+
 ## Inspect a reconstructed point
 
 ```bash
@@ -26,9 +36,15 @@ python -m tools.perception inspect /tmp/observed-room
 
 The arguments after the observation directory are the view number, pixel column and pixel row. In this fixture the result is `[0, 0, -0.875]` in the first-view coordinate system. The point falls behind the second camera. When a point is visible in both views, the tool reports its projected pixel and the observed minus predicted optical depth at the nearest pixel. The unit is the model's reconstruction scale. A measurement in metres requires independent scale calibration. [Sample sources and licenses](data/NOTICE.md)
 
+## Recover downward acceleration from a calibrated object track
+
+The `metric-track` adapter accepts `position_m` triples, strictly increasing `timestamps_s` and the scalar string `coordinate_system="right_handed_y_up"`. The producer must establish a stationary metric frame independently. Solv3R's native scale alone is insufficient. Run `python -m tools.perception import metric-track track.npz /tmp/flight-obs`, then `python -m tools.perception ballistic /tmp/flight-obs /tmp/flight-fit`.
+
+The tool fits starting velocity and a constant downward acceleration using the earlier samples. It simulates the native dynamic body against a held-out final quarter, then halves gravity and checks the predicted change. A straight trajectory with too little measurable curvature, a significant sideways acceleration, or a bad holdout refuses the hypothesis. Mass cannot be identified from this experiment. The synthetic replay includes a known −8.2 m/s² trajectory.
+
 ## Run the model workers on Linux
 
-Run each model in its own provisioned Linux environment. The controlling environment invokes the worker's Python executable, verifies the tracked Git checkout, records the capture and checkpoint hashes, and imports the resulting NPZ. Each job has its own output directory, log and finite process-group deadline. A successful observation import from an existing NPZ is independent of worker qualification.
+The [Linux worker record](LINUX-WORKERS.md) includes a reproducible pretrained Solv3R CPU run and the scope of the separate FlowHMR execution. Run each model in its own provisioned Linux environment. The controlling environment invokes the worker's Python executable, verifies the tracked Git checkout, records the capture and checkpoint hashes, and imports the resulting NPZ. Each job has its own output directory, log and finite process-group deadline. A successful observation import from an existing NPZ is independent of worker qualification.
 
 | Worker | Checkout revision | Input | Environment preparation |
 | --- | --- | --- | --- |
@@ -43,7 +59,7 @@ python -m tools.perception run-worker flowhmr /captures/walk.mp4 /jobs/human-001
   --checkpoint /weights/flowhmr_latest.ckpt --timeout-s 1800
 python -m tools.perception run-worker solv3r /captures/room /jobs/scene-001 \
   --checkout /workers/solv3r --python /envs/solv3r/bin/python \
-  --checkpoint /weights/solv3r.safetensors --timeout-s 1800
+  --checkpoint /weights/solv3r.safetensors --device cpu --timeout-s 1800
 ```
 
 Use `--static-camera` for FlowHMR only when the capture used a fixed camera. Inspect `worker.json` and `worker.log` for the exit status. A successful run saves the raw export under `raw/` and the observation under `observation/`. The wrapper expects upstream dependencies, auxiliary assets and access permissions to be in place. Each model's licenses apply separately.

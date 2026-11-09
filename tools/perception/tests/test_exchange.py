@@ -55,6 +55,13 @@ class ExchangeTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "inventory"):
             load_observation(self.output)
 
+    def test_bounds_central_directory_before_opening_members(self):
+        archive = bytearray(self.source.read_bytes())
+        archive[-14:-12] = (65534).to_bytes(2, "little")
+        self.source.write_bytes(archive)
+        with self.assertRaisesRegex(ValueError, "central directory"):
+            read_arrays(self.source, ("depth",))
+
     def test_refuse_forged_size_before_allocation(self):
         header = io.BytesIO()
         np.lib.format.write_array_header_1_0(header, dict(descr="<f8", shape=(100_000_000,), fortran_order=False))

@@ -101,6 +101,20 @@ class WorkerTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "static_camera"):
             self.run_job("solv3r", frames, job="other", static_camera=True)
 
+    def test_cpu_dispatch_and_flow_refusal(self):
+        self.install("solv3r", SOLV_SCRIPT)
+        frames = self.base / "images"
+        frames.mkdir()
+        (frames / "frame.jpg").write_bytes(b"image")
+        with patch("tools.perception.worker._run", side_effect=ValueError("dispatched")) as invoke:
+            with self.assertRaisesRegex(ValueError, "dispatched"):
+                self.run_job("solv3r", frames, device="cpu")
+            command = invoke.call_args.args[0]
+            self.assertEqual(Path(command[1]).name, "solv3r_cpu.py")
+            self.assertEqual(command[command.index("--checkpoint") + 1], str(self.checkpoint))
+        with self.assertRaisesRegex(ValueError, "CPU mode"):
+            self.run_job("flowhmr", device="cpu", job="flow-cpu")
+
     def test_pinned_checkout_and_worker_failures(self):
         self.install("flowhmr", "import sys; print('failure'); sys.exit(3)")
         with self.assertRaisesRegex(ValueError, "status 3"):
