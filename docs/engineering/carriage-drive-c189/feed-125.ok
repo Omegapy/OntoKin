@@ -1,0 +1,82 @@
+ontokin "0.22";
+module Gauge @ "gauge";
+profile "torque-0.1";
+execution { max_operations = 1000000; max_elapsed = 80[s]; }
+
+// The local origin is the minimum XYZ corner of each part.
+fn cuboid @ "cuboid"(length_x: Length, height_y: Length, width_z: Length, finish: SurfaceMaterial) -> Geometry {
+    return extrude(keyed<PolygonVertex> {
+        "lower-left": polygon_vertex(0, planar_point(0[mm], 0[mm]), "finish"),
+        "lower-right": polygon_vertex(1, planar_point(length_x, 0[mm]), "finish"),
+        "upper-right": polygon_vertex(2, planar_point(length_x, height_y), "finish"),
+        "upper-left": polygon_vertex(3, planar_point(0[mm], height_y), "finish")
+    }, keyed<SurfaceMaterial> { "finish": finish }, width_z, "finish", "finish");
+}
+
+class Base @ "base_block" {
+    geometry = cuboid(730[mm], 80[mm], 600[mm], surface_material(rgba(0.21, 0.26, 0.30, 1), 0, 0.65));
+    physical = no_body();
+}
+
+class Carriage @ "carriage" {
+    public param feed_speed @ "feed_speed": Speed = 150[mm/s];
+    velocity = vector(world, self.feed_speed, 0[m/s], 0[m/s]);
+    geometry = cuboid(200[mm], 40[mm], 80[mm], surface_material(rgba(0.17, 0.50, 0.54, 1), 0, 0.65));
+    physical = sphere_body(20[mm], 1[kg]);
+    motion = dynamic;
+    collision = disabled;
+}
+
+// Both shoe occurrences inherit these public geometry parameters.
+// An assignment inside a single scene object overrides that parameter for that shoe.
+class Shoe @ "shoe" {
+    public param length_x @ "length_x": Length = 100[mm];
+    public param height_y @ "height_y": Length = 50[mm];
+    public param width_z @ "width_z": Length = 80[mm];
+    public param finish @ "finish": SurfaceMaterial = surface_material(rgba(0.84, 0.60, 0.18, 1), 0, 0.65);
+    geometry = cuboid(self.length_x, self.height_y, self.width_z, self.finish);
+    physical = no_body();
+    motion = prescribed;
+    collision = disabled;
+}
+
+class EndStop @ "end_stop" {
+    geometry = cuboid(30[mm], 40[mm], 120[mm], surface_material(rgba(0.61, 0.25, 0.19, 1), 0, 0.65));
+    physical = no_body();
+}
+
+scene Slide @ "slide" {
+    duration = 2[s];
+    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+    object base @ "base": Base {
+        placement = pose(world, vec3(-160[mm], 0[mm], -300[mm]), quat(1, 0, 0, 0));
+    }
+    object left_carriage @ "left_carriage": Carriage {
+        placement = pose(world, vec3(-100[mm], 80[mm], -200[mm]), quat(1, 0, 0, 0));
+        feed_speed = 125[mm/s];
+    }
+    object left_shoe @ "left_shoe": Shoe {
+        length_x = 130[mm];
+    }
+    follow left_mount @ "left_mount" {
+        parent = left_carriage.frame;
+        child = left_shoe;
+        offset = pose(left_carriage.frame, vec3(150[mm], 40[mm], 0[mm]), quat(1, 0, 0, 0));
+    }
+    object left_stop @ "left_stop": EndStop {
+        placement = pose(world, vec3(495[mm], 130[mm], -220[mm]), quat(1, 0, 0, 0));
+    }
+    object right_carriage @ "right_carriage": Carriage {
+        placement = pose(world, vec3(-100[mm], 80[mm], 120[mm]), quat(1, 0, 0, 0));
+    }
+    object right_shoe @ "right_shoe": Shoe {
+    }
+    follow right_mount @ "right_mount" {
+        parent = right_carriage.frame;
+        child = right_shoe;
+        offset = pose(right_carriage.frame, vec3(180[mm], 40[mm], 0[mm]), quat(1, 0, 0, 0));
+    }
+    object right_stop @ "right_stop": EndStop {
+        placement = pose(world, vec3(495[mm], 130[mm], 100[mm]), quat(1, 0, 0, 0));
+    }
+}
