@@ -1,0 +1,17 @@
+{
+  "schema": "ontokin-landmark-plan/1",
+  "kind": "similarity",
+  "environmentSha256": "718bc0555e4cc40ab7505669f807c7bb51d894901a1188935676d0da87886407",
+  "referenceMethod": "Synthetic control. The nominal metre coordinates below are obtained from named construction features in make_fixture.py, using the prescribed map (x,y,z) -> (1+2z, 0.5+2y, 3-2x).",
+  "scaleBasis": "This control prescribes a calibration of two authored metres per fixture unit. The fitted scale should recover it.",
+  "referenceUncertaintyM": 0,
+  "toleranceM": 0.000001,
+  "toleranceBasis": "The generator specifies nominal decimal coordinates and the GLB stores them as float32. Allow one micrometre for this small numerical control.",
+  "minimumAltitudeM": 0.5,
+  "landmarks": [
+    {"name": "screen-lower-left", "role": "fit", "world": [0.32, 0.52, 3.4]},
+    {"name": "screen-lower-right", "role": "fit", "world": [0.32, 0.52, 2.6]},
+    {"name": "wall-upper-right", "role": "fit", "world": [-3.08, 3.86, -1.48]},
+    {"name": "floor-far-right", "role": "holdout", "world": [4.92, 0.39, -1.48]}
+  ]
+}
