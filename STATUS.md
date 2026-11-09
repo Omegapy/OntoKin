@@ -2,6 +2,8 @@
 
 ## Current checkpoint
 
+Integration owner `c184-boundary-2d86` holds the main lease through 2026-11-09 19:43 UTC to publish the hosted participant boundary admission result. Reserved paths are STATUS.md and docs/engineering/hosted-boundary-c184/.
+
 Two unaided hosted subagents completed the [public spacer repair](docs/engineering/hosted-spacer-c183/README.md). One edited Blender/Python and the other edited OntoKin. Each changed a centered 40 × 12 × 20 mm solid to 50 × 12 × 24 mm, exported it and submitted an editable source with its baseline and repaired GLBs. Independent checks passed the 0.05 mm tolerance. Both native sources reproduced the exact delivered bytes when the source path was preserved.
 
 A fresh hosted child could read a coordinator-only test marker outside its guest. Before opening the next unseen task, restrict the actual participant interface to its route and verify denied host reads, additional delegation, cancellation and masked custody. Per-worker provider token totals were unavailable. The wider release and 30–50-task study remain open. [Evidence](docs/engineering/hosted-spacer-c183/results.json)
