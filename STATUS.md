@@ -1,10 +1,12 @@
-# OntoKin development status — C178
-
-## Main integration lease
-
-Owner `c179-indexer-7368` holds the main integration lease through 2026-11-09T16:14:36Z for the rotary-indexer benchmark admission. Base `ebebfe4416da5741743a4dbd67a9fad4aee69d18`. Bounded work branch `work/c179-rotary-admission`.
+# OntoKin development status — C179
 
 ## Current checkpoint
+
+The [rotary-indexer admission](docs/engineering/rotary-indexer-c179/README.md) qualifies independently editable OntoKin and Blender starters for the same held-out repair. Both native exports reproduce the five-part common fixture and its interior guard penetration. A neutral decoder measured 18.953 mm of east clearance and 7.047 mm of north penetration across all three files. The early Blender export eased between correct endpoints. Fixing its key interpolation brought the full motion within tolerance. The checker passed 13 geometry and motion controls, and the scorecard passed five private controls.
+
+[PR #112](https://github.com/Omegapy/OntoKin/pull/112) merged at [6dd25379b886](https://github.com/Omegapy/OntoKin/commit/6dd25379b886265c1adaebddd45ffc947a716b98). The reviewed and merged trees match, and both passed documentation preservation. Keep the evaluator and participant materials separate. The next milestone is a timed paired run on a confined worker with one pinned model and a hard 60,000-token limit per arm. Neither arm has started. The C178 release limitations below still apply. Owner `c179-indexer-7368` releases the integration lease on publication of this record.
+
+## Previous checkpoint at C178
 
 The [Delft campus trial](docs/engineering/captured-environment-c178/README.md) registers an existing photographic Gaussian-splat capture to independent Dutch building outlines and airborne laser elevations. Three roof corners gave a 0.061 m RMS fit error. The fourth corner was held out and differed by 0.216 m against a 1.00 m visual tolerance. The estimated reference uncertainty is 0.60 m. An edited cart and gate play in the courtyard. Both source-to-mesh checks still measure 0.46 m per side for the original cart and 0.30 m after widening.
 
