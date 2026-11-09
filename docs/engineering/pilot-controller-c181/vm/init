@@ -1,0 +1,21 @@
+#!/bin/busybox sh
+set -eu
+/bin/busybox --install -s /bin
+mount -t devtmpfs devtmpfs /dev
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+mount -t tmpfs -o mode=1777,size=512m tmpfs /tmp
+chmod 600 /dev/ttyS0 /dev/console
+mkdir -p /dev/shm
+mount -t tmpfs -o mode=1777,size=256m tmpfs /dev/shm
+ip link set lo up
+if test -b /dev/vdb; then
+    mkdir -p /native /opt
+    mount -t ext4 -o ro,nodev,nosuid /dev/vdb /native
+    mount -o bind /native/opt /opt
+fi
+mount -t ext4 -o sync,nodev,nosuid /dev/vda /work
+chown -R 65534:65534 /work
+chmod 755 /work
+stty -F /dev/ttyS0 raw -echo
+exec /usr/bin/python3.12 -IB /rpc.py </dev/ttyS0 >/dev/ttyS0 2>&1
