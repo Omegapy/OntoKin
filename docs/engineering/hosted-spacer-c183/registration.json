@@ -1,0 +1,90 @@
+{
+  "experiment": "C183 public spacer practice",
+  "date": "2026-11-09",
+  "registeredBeforeParticipantDispatch": true,
+  "sourceCommit": "7e747b29c74d63b3ab7963785bf4913bcbb67f84",
+  "sourceTree": "6842717787e29be197fc7baadb2ad438c6ae01e5",
+  "predecessorArchiveSha256": {
+    "OntoKin_C181_Rotary_Repair_Pilot_Handoff_2026-11-09.zip": "12ec0a9492920fc8906a903026b0848ad5a684a74fceb65071d73e94f87a3c25",
+    "OntoKin_C182_Pro_Subagent_Handoff_2026-11-09.zip": "18d2259ae705d16eeea2f1084abbc38279513903575a15b1e898cc860f0425e3"
+  },
+  "inputSha256": {
+    "practice/INPUTS.sha256": "d70b82a3e939e2525f845ee6fb1926bf7992b947be777289f348e6cac8c432a0",
+    "practice/TASK.md": "d012d4300d12584f347954ecfd82adeaf9dfd96b6c8330aea9f03e02565c8099",
+    "practice/measure_glb.py": "371d1a46b1384a8f0d613f90682d3cf45d661c553a637f5695e873e8f0b2292f",
+    "practice/starters/blender/README.md": "13450e8bdf53488216653d34d68e212203dd4cff2180557ce030a75f1aacce55",
+    "practice/starters/blender/build_spacer.py": "cd24f670043c7870438b145efdd6891f929be0205adb0057c67dbd34089f2442",
+    "practice/starters/ontokin/README.md": "b059388fc620f29b8d0081fad0754d18595224ce2e38cb7ef6f6a6aba9610660",
+    "practice/starters/ontokin/main.ok": "914e98f875a7cadff8f732b56b2437bb6391f84eb4d3ced5a9c0d2719642855d",
+    "protocol/HOSTED-SUBAGENTS.md": "e8d9000b0c2549f018ce2705f1b63837ed814150a852be3a3d820dfb09b3a52b"
+  },
+  "workers": {
+    "dispatch": "native collaboration.spawn_agent",
+    "count": 2,
+    "fork_turns": "none",
+    "modelOverride": null,
+    "reasoningOverride": null,
+    "roles": [
+      "blender",
+      "ontokin"
+    ],
+    "allowedAssistance": "unaided, one fresh child per route, self-correction allowed",
+    "availableAttestation": "same requested session configuration; per-worker provider build and usage recorded only if exposed"
+  },
+  "native": {
+    "blenderVersion": "4.5.3 LTS",
+    "python": "CPython 3.12.14",
+    "arch": "Linux x86-64",
+    "C181GuestBootstrapSha256": "541497920ca4dc864c59043f1751b03f7cb07d7d054170ad0a39f28dd52c9b2b",
+    "C181ToolDiskSha256": {
+      "blender": "826c76c8edb745f7621564ec25e573303c604b060b1d8df65b14b7de868a0403",
+      "ontokin": "7e6f33330b78eba457508518b9bc2fae274542c858fbb49b9e536559342d5765"
+    }
+  },
+  "gate": {
+    "axisOrder": "glTF world X,Y,Z",
+    "unit": "mm",
+    "baseline": [
+      40,
+      12,
+      20
+    ],
+    "target": [
+      50,
+      12,
+      24
+    ],
+    "absoluteTolerance": 0.05,
+    "center": [
+      0,
+      0,
+      0
+    ],
+    "centerTolerancePerAxis": 0.05,
+    "required": [
+      "inspect editable source",
+      "export native baseline",
+      "measure baseline and observe failed target check",
+      "edit one centered solid",
+      "export repaired GLB",
+      "measure and submit baseline, repair, editable source and log",
+      "coordinator independently checks and cleanly rebuilds each repair"
+    ]
+  },
+  "relay": {
+    "command": "{\"command\":\"...\"}",
+    "submit": "SUBMIT",
+    "fencedSubmitAllowed": true,
+    "wallSecondsPerRoute": 900,
+    "maxRepliesPerRoute": 24,
+    "maxConsecutiveFormatRejections": 3,
+    "maxVisibleBytesPerRoute": 98304,
+    "usageMetric": "relay-visible UTF-8 bytes of initial prompt, replies and tool responses",
+    "actualProviderTokenBudget": null,
+    "actualProviderTokens": null,
+    "ranking": null,
+    "stop": "Close on submission or first limit reached. Cancel an active guest operation at its deadline. Preserve any partial work and identify incomplete stages."
+  },
+  "isolation": "Each repair shell runs in a route-specific, offline QEMU guest. Hosted subagents can access shared session tools. Other tools are excluded by instruction only.",
+  "hiddenCase": "Keep sealed until actual hosted tool isolation and blind custody gates pass."
+}
