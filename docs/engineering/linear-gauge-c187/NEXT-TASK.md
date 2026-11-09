@@ -1,0 +1,10 @@
+# C188 · Run the localized left-shoe repair
+
+Spawn two fresh coding subagents in this conversation’s execution environment. Use `collaboration.spawn_agent` twice with `fork_turns="none"` and leave model and reasoning overrides unset. Give each the [repair brief](next/participant.md), [repaired dimensions](next/assembly.json), a writable directory and its own accepted [C187 delivery](deliveries.zip). Hand the Blender/Python author only the Blender delivery and the native OntoKin author only the OntoKin delivery. Start them while staging the pinned tools. The coordinator owns the checks. Each author has 30 minutes after tool readiness and up to four formal submissions. Record the dispatch, input hashes, assistance, local corrections and formal attempts.
+
+1. Verify the incoming archive and restore the checkout as described in the C187 handoff. Stage the pinned OntoKin runtime and Blender 4.5.3 LTS. Keep copies of the two original submissions with verified seals.
+2. Before giving either author feedback, qualify the frozen C187 checker, then run it with the C188 design. Qualify an independent known-good rearward extension, and reject the unmodified C187 starters, a forward extension, and a change to both shoes. Preserve the new control inputs, reasons and hashes. Reuse a separate design table and retain C187 controls and results.
+3. Seal each submission before judging it. Verify all seven parts and both gaps for the entire two-second clip. Compare the other six parts with that route's sealed C187 export as well as with the numerical design. Review source changes for one-instance scope and check native-to-final field differences when applicable.
+4. Rebuild the accepted sources twice in fresh directories. Open both repaired GLBs at 0, 1 and 2 seconds in the C187 camera, inspect the three poses and save the measurements, captures and full results. Include the concrete next task in a new handoff ZIP.
+
+This is the first repair attempt on this fixture. C187 established the equivalent starting assemblies. Count only work actually performed here toward repair outcomes.

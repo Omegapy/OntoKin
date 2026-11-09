@@ -1,12 +1,16 @@
-# OntoKin development status — C186 rotary reuse
+# OntoKin development status — C187 two-carriage gauge
 
 ## Current checkpoint
 
+Two fresh agents built seven-part, editable two-carriage gauges in Blender/Python and OntoKin. Both starters passed on their first submission. Each lane reached its 15 mm minimum gap at 2 s after 300 mm of travel. Four clean rebuilds reproduced the submitted GLBs byte for byte, and both exports opened at the same three poses. [Measurements, editable starters and verification](docs/engineering/linear-gauge-c187/README.md)
+
+C188 assigns each starter to a fresh agent. Extend only the rear of the left shoe by 30 mm, preserve both front faces and compare the other six parts with the original export. Comparative cost, broader repair reliability and release qualification remain open. [Repair brief and coordinator checks](docs/engineering/linear-gauge-c187/NEXT-TASK.md)
+
+Owner `c187-gauge-a5b624b3` releases the main integration lease on merge.
+
+## Previous checkpoint at C186
+
 Two fresh coding agents reused the [C185 designs](docs/engineering/public-rotary-c185/README.md) to add a 220 mm shoe. Blender/Python and OntoKin each preserved the 180 mm and 260 mm selections and met the 15.0 ± 0.5 mm clearance requirement on the first submission. All twelve clean rebuilds matched their submitted exports byte for byte. Six exports passed the fixed Delft viewer and independent continuous-motion checks. [Measured results and editable sources](docs/engineering/rotary-reuse-c186/README.md)
-
-C187 qualifies a second assembly with two instances of the same shoe geometry. Spawn two fresh subagents in the current conversation’s execution environment and give each the [two-carriage brief](docs/engineering/rotary-reuse-c186/starter-brief.md). Comparative cost, broader repair reliability and release qualification remain open.
-
-C187 main integration lease held by `c187-gauge-a5b624b3` until 2026-11-09T21:18:12Z. Scope covers qualification of the two-carriage starters, the localized repair brief, README and STATUS.
 
 ## Previous checkpoint at C185
 
