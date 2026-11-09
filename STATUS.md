@@ -1,8 +1,14 @@
-# OntoKin development status — C183
+# OntoKin development status — C184
 
 ## Current checkpoint
 
-Integration owner `c184-boundary-2d86` holds the main lease through 2026-11-09 19:43 UTC to publish the hosted participant boundary admission result. Reserved paths are STATUS.md and docs/engineering/hosted-boundary-c184/.
+The [C184 hosted participant test](docs/engineering/hosted-boundary-c184/README.md) blocked admission to an unseen repair. Two fresh children each copied their own random marker and read all three protected markers through the host shell. These six successful reads reached the other route, coordinator and evaluator files. Both children received the same requested settings and empty histories.
+
+C185 requires an identifiable change to the participant launcher that enforces route-only tools and files. Follow the [admission procedure](docs/engineering/hosted-boundary-c184/ADMISSION.md) on that configuration before opening a new case. The [C183 public spacer deliveries](docs/engineering/hosted-spacer-c183/README.md) remain reproducible. Comparative performance, the 30–50-task study and broader release remain open.
+
+Owner `c184-boundary-2d86` releases the main integration lease on merge.
+
+## Previous checkpoint at C183
 
 Two unaided hosted subagents completed the [public spacer repair](docs/engineering/hosted-spacer-c183/README.md). One edited Blender/Python and the other edited OntoKin. Each changed a centered 40 × 12 × 20 mm solid to 50 × 12 × 24 mm, exported it and submitted an editable source with its baseline and repaired GLBs. Independent checks passed the 0.05 mm tolerance. Both native sources reproduced the exact delivered bytes when the source path was preserved.
 
