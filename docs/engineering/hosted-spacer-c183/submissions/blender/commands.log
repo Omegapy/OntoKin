@@ -1,0 +1,148 @@
+Blender 4.5.3 LTS | working directory /work | BLENDER=/opt/blender/blender
+Inspected TASK.md, starter/README.md, starter/build_spacer.py and measure_glb.py (exit 0).
+The source creates one centered cube and maps glTF (X,Y,Z) to Blender (X,Z,Y).
+
+$ /opt/blender/blender -b -t 2 --factory-startup --python-exit-code 1 --python starter/build_spacer.py -- /work/baseline
+could not get a list of mounted file-systems
+INFO Draco mesh compression is available, use library at /opt/blender/4.5/scripts/addons_core/io_scene_gltf2/libextern_draco.so
+18:52:58 | INFO: Starting glTF 2.0 export
+18:52:58 | INFO: Extracting primitive: spacer
+18:52:58 | INFO: Primitives created: 1
+18:52:58 | INFO: Finished glTF 2.0 export in 0.17038321495056152 s
+
+Blender 4.5.3 LTS (hash 67807e1800cc built 2025-09-09 01:38:15)
+
+Blender quit
+exit 0
+
+$ mv baseline/spacer.glb submission/baseline.glb
+exit 0
+
+$ python3.12 measure_glb.py submission/baseline.glb --expect-mm 40 12 20
+{
+  "mesh_count": 1,
+  "primitive_count": 1,
+  "triangle_count": 12,
+  "dimensions_mm": [
+    39.99999910593033,
+    12.000000104308128,
+    19.999999552965164
+  ],
+  "center_mm": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "world_min_mm": [
+    -19.999999552965164,
+    -6.000000052154064,
+    -9.999999776482582
+  ],
+  "world_max_mm": [
+    19.999999552965164,
+    6.000000052154064,
+    9.999999776482582
+  ],
+  "expected_mm": [
+    40.0,
+    12.0,
+    20.0
+  ],
+  "tolerance_mm": 0.05,
+  "pass": true
+}
+exit 0
+
+$ python3.12 measure_glb.py submission/baseline.glb --expect-mm 50 12 24
+{
+  "mesh_count": 1,
+  "primitive_count": 1,
+  "triangle_count": 12,
+  "dimensions_mm": [
+    39.99999910593033,
+    12.000000104308128,
+    19.999999552965164
+  ],
+  "center_mm": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "world_min_mm": [
+    -19.999999552965164,
+    -6.000000052154064,
+    -9.999999776482582
+  ],
+  "world_max_mm": [
+    19.999999552965164,
+    6.000000052154064,
+    9.999999776482582
+  ],
+  "expected_mm": [
+    50.0,
+    12.0,
+    24.0
+  ],
+  "tolerance_mm": 0.05,
+  "pass": false
+}
+exit 1
+Baseline against repaired target: expected exit 1, observed 1.
+
+$ cp starter/build_spacer.py submission/build_spacer.py
+exit 0
+
+$ sed -i 's/x_mm, y_mm, z_mm = 40, 12, 20/x_mm, y_mm, z_mm = 50, 12, 24/' submission/build_spacer.py
+exit 0
+
+$ /opt/blender/blender -b -t 2 --factory-startup --python-exit-code 1 --python submission/build_spacer.py -- /work/repaired
+could not get a list of mounted file-systems
+INFO Draco mesh compression is available, use library at /opt/blender/4.5/scripts/addons_core/io_scene_gltf2/libextern_draco.so
+18:53:47 | INFO: Starting glTF 2.0 export
+18:53:47 | INFO: Extracting primitive: spacer
+18:53:47 | INFO: Primitives created: 1
+18:53:47 | INFO: Finished glTF 2.0 export in 0.09356999397277832 s
+
+Blender 4.5.3 LTS (hash 67807e1800cc built 2025-09-09 01:38:15)
+
+Blender quit
+exit 0
+
+$ mv repaired/spacer.glb submission/repaired.glb
+exit 0
+
+$ python3.12 measure_glb.py submission/repaired.glb --expect-mm 50 12 24
+{
+  "mesh_count": 1,
+  "primitive_count": 1,
+  "triangle_count": 12,
+  "dimensions_mm": [
+    50.00000074505806,
+    12.000000104308128,
+    24.000000208616257
+  ],
+  "center_mm": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "world_min_mm": [
+    -25.00000037252903,
+    -6.000000052154064,
+    -12.000000104308128
+  ],
+  "world_max_mm": [
+    25.00000037252903,
+    6.000000052154064,
+    12.000000104308128
+  ],
+  "expected_mm": [
+    50.0,
+    12.0,
+    24.0
+  ],
+  "tolerance_mm": 0.05,
+  "pass": true
+}
+exit 0
+The repaired dimensions and center all pass the 0.05 mm tolerance. No retries or outside help.

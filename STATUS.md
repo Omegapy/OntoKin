@@ -1,6 +1,14 @@
-# OntoKin development status — C181
+# OntoKin development status — C183
 
 ## Current checkpoint
+
+Two unaided hosted subagents completed the [public spacer repair](docs/engineering/hosted-spacer-c183/README.md). One edited Blender/Python and the other edited OntoKin. Each changed a centered 40 × 12 × 20 mm solid to 50 × 12 × 24 mm, exported it and submitted an editable source with its baseline and repaired GLBs. Independent checks passed the 0.05 mm tolerance. Both native sources reproduced the exact delivered bytes when the source path was preserved.
+
+A fresh hosted child could read a coordinator-only test marker outside its guest. Before opening the next unseen task, restrict the actual participant interface to its route and verify denied host reads, additional delegation, cancellation and masked custody. Per-worker provider token totals were unavailable. The wider release and 30–50-task study remain open. [Evidence](docs/engineering/hosted-spacer-c183/results.json)
+
+Owner `c183-hosted-39b8` releases the main integration lease on merge.
+
+## Previous checkpoint at C181
 
 The [rotary repair pilot](docs/engineering/pilot-controller-c181/README.md) ran both frozen native workflows. Each participant had 60 minutes and 60,000 aggregate tokens. The same local Qwen2.5-Coder-1.5B-Instruct model used a private Linux VM for each route. Both stopped at the token boundary with empty submissions and no changes to the starting files. The masked checker scored each route 0/100. Blender used 58,721 tokens in 11 min 01 s. OntoKin used 56,618 in 16 min 13 s.
 

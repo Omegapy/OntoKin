@@ -1,0 +1,36 @@
+OntoKin machine spacer
+Working directory: /work
+JOB=/work/job
+Read TASK.md, starter/README.md and the independent reader.
+
+(.) $ cat starter/main.ok
+Found one Spacer instance, geometry box(vec3(40[mm], 12[mm], 20[mm])).
+exit 0
+
+(.) $ cp starter/main.ok submission/main.ok
+exit 0
+
+($JOB/checkout) $ $JOB/venv/bin/python -B -m ontokin export /work/submission/main.ok --no-helpers --fps 1 --output /work/submission/baseline.glb
+OntoKin 0.4.0, outcome=valid, validation=passed
+exit 0
+
+(.) $ python3.12 measure_glb.py submission/baseline.glb --expect-mm 40 12 20
+{"dimensions_mm": [39.99999910593033, 12.000000104308128, 19.999999552965164], "center_mm": [0.0, 0.0, 0.0], "mesh_count": 1, "triangle_count": 12, "expected_mm": [40.0, 12.0, 20.0], "tolerance_mm": 0.05, "pass": true}
+exit 0
+
+(.) $ python3.12 measure_glb.py submission/baseline.glb --expect-mm 50 12 24
+{"dimensions_mm": [39.99999910593033, 12.000000104308128, 19.999999552965164], "center_mm": [0.0, 0.0, 0.0], "mesh_count": 1, "triangle_count": 12, "expected_mm": [50.0, 12.0, 24.0], "tolerance_mm": 0.05, "pass": false}
+exit 1
+
+(.) $ sed -i 's/40\[mm\], 12\[mm\], 20\[mm\]/50[mm], 12[mm], 24[mm]/' submission/main.ok
+exit 0
+
+($JOB/checkout) $ $JOB/venv/bin/python -B -m ontokin export /work/submission/main.ok --no-helpers --fps 1 --output /work/submission/repaired.glb
+OntoKin 0.4.0, outcome=valid, validation=passed
+exit 0
+
+(.) $ python3.12 measure_glb.py submission/repaired.glb --expect-mm 50 12 24
+{"dimensions_mm": [50.00000074505806, 12.000000104308128, 24.000000208616257], "center_mm": [0.0, 0.0, 0.0], "mesh_count": 1, "triangle_count": 12, "expected_mm": [50.0, 12.0, 24.0], "tolerance_mm": 0.05, "pass": true}
+exit 0
+
+The baseline check against the repaired dimensions intentionally returned 1. No retries or external help.
