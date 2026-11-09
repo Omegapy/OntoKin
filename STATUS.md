@@ -1,12 +1,18 @@
-# OntoKin development status — C185 public rotary repair
+# OntoKin development status — C186 rotary reuse
 
 ## Current checkpoint
+
+Two fresh coding agents reused the [C185 designs](docs/engineering/public-rotary-c185/README.md) to add a 220 mm shoe. Blender/Python and OntoKin each preserved the 180 mm and 260 mm selections and met the 15.0 ± 0.5 mm clearance requirement on the first submission. All twelve clean rebuilds matched their submitted exports byte for byte. Six exports passed the fixed Delft viewer and independent continuous-motion checks. [Measured results and editable sources](docs/engineering/rotary-reuse-c186/README.md)
+
+C187 qualifies a second assembly with two instances of the same shoe geometry. Spawn two fresh subagents in the current conversation’s execution environment and give each the [two-carriage brief](docs/engineering/rotary-reuse-c186/starter-brief.md). Comparative cost, broader repair reliability and release qualification remain open.
+
+Owner `c186-reuse-f3b52eef` releases the main integration lease on merge.
+
+## Previous checkpoint at C185
 
 Both subagents repaired the five-part rotary indexer. Blender/Python and OntoKin each earned 100/100, producing a 180 mm and a 260 mm wide shoe on the first formal submission. Independent decoding verified the 15.0 ± 0.5 mm guard minima through the full two-second turn. The coordinator opened all four exports against the same Delft capture. Two clean rebuilds of each design reproduced all four submitted GLBs byte for byte. [Measured results and editable deliveries](docs/engineering/public-rotary-c185/README.md)
 
 Next, spawn exactly two fresh coding subagents here and give each its own accepted source and the [220 mm reuse task](docs/engineering/public-rotary-c185/reuse-task.md). Check whether both previous widths survive the edit. The public exercise establishes the repair on this assembly. Per-agent cost, broader comparative reliability and release qualification remain open.
-
-C186 integration lease held by `c186-reuse-f3b52eef` until 2026-11-09T20:46:00Z. Scope covers the public reuse results, repository README and status.
 
 ## Previous checkpoint at C184a
 
