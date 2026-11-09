@@ -1,5 +1,9 @@
 # OntoKin development status — C179
 
+## Main integration lease
+
+Owner `c180-scope-6451` holds the lease through 2026-11-09T17:17:00Z for the semantic and physical language scope and the rotary pilot preflight. Base `11f6f10bea46dbae6a7cf2cdb135398fbe8e0a32`. Bounded branch `work/c180-semantic-physical-scope`. Reserved files: README.md, GOAL.md and STATUS.md.
+
 ## Current checkpoint
 
 The [rotary-indexer admission](docs/engineering/rotary-indexer-c179/README.md) qualifies independently editable OntoKin and Blender starters for the same held-out repair. Both native exports reproduce the five-part common fixture and its interior guard penetration. A neutral decoder measured 18.953 mm of east clearance and 7.047 mm of north penetration across all three files. The early Blender export eased between correct endpoints. Fixing its key interpolation brought the full motion within tolerance. The checker passed 13 geometry and motion controls, and the scorecard passed five private controls.
