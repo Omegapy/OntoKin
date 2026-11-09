@@ -1,5 +1,9 @@
 # OntoKin development status — C178
 
+## Main integration lease
+
+Owner `c179-indexer-7368` holds the main integration lease through 2026-11-09T16:14:36Z for the rotary-indexer benchmark admission. Base `ebebfe4416da5741743a4dbd67a9fad4aee69d18`. Bounded work branch `work/c179-rotary-admission`.
+
 ## Current checkpoint
 
 The [Delft campus trial](docs/engineering/captured-environment-c178/README.md) registers an existing photographic Gaussian-splat capture to independent Dutch building outlines and airborne laser elevations. Three roof corners gave a 0.061 m RMS fit error. The fourth corner was held out and differed by 0.216 m against a 1.00 m visual tolerance. The estimated reference uncertainty is 0.60 m. An edited cart and gate play in the courtyard. Both source-to-mesh checks still measure 0.46 m per side for the original cart and 0.30 m after widening.
