@@ -6,7 +6,7 @@ Two fresh coding agents reused the [C185 designs](docs/engineering/public-rotary
 
 C187 qualifies a second assembly with two instances of the same shoe geometry. Spawn two fresh subagents in the current conversation’s execution environment and give each the [two-carriage brief](docs/engineering/rotary-reuse-c186/starter-brief.md). Comparative cost, broader repair reliability and release qualification remain open.
 
-Owner `c186-reuse-f3b52eef` releases the main integration lease on merge.
+C187 main integration lease held by `c187-gauge-a5b624b3` until 2026-11-09T21:18:12Z. Scope covers qualification of the two-carriage starters, the localized repair brief, README and STATUS.
 
 ## Previous checkpoint at C185
 
