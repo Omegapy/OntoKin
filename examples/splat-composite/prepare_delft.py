@@ -24,6 +24,9 @@ def assemble(controls, glb, plan, picks, output):
         raise ValueError("Expected the published 140,000-splat Delft display derivative")
     if not fit["passesTolerance"] or not fit["holdout"]["count"]:
         raise ValueError("Delft requires a passing fit and at least one passing held-out landmark")
+    if (fit["planSha256"] != "e84a2d3b473be59eb31ed5a8460e2cb35e018a47c0e27a87d7dd4a7e481d90f3"
+            or fit["picksSha256"] != "4c40f72ebe3ac00e151bb696e24e773ea1bf51f4c280a6025d749745f7fc2751"):
+        raise ValueError("Expected the frozen Delft plan and optical observations")
     with tempfile.TemporaryDirectory(dir=output.parent) as temp:
         demo = Path(temp) / "demo"
         demo.mkdir()
