@@ -1,14 +1,18 @@
-# OntoKin development status — C184
-
-## Main integration lease
-
-Owner `c184a-shared-927e` holds the main integration lease until 2026-11-09 19:52 UTC for the shared-environment instructions in README, STATUS and the two C184 engineering guides. Work branch `work/c184a-shared-execution` starts from the verified lease on C184 main.
+# OntoKin development status — C184 operating correction
 
 ## Current checkpoint
 
+Run the existing public rotary-indexer repair in this shared execution environment. The coordinator immediately spawns two subagents here, one for Blender/Python and one for OntoKin. Both receive the same brief, model settings, time allowance and attempt limit, plus their tool’s editable starter. Collect both variants from each agent and independently rebuild and measure the exports. Record the results as shared-environment observations. Dispatch is already authorized and requires no separate host or isolation preflight. [Repair instructions](docs/engineering/hosted-boundary-c184/ADMISSION.md)
+
+The [C184 participant probe](docs/engineering/hosted-boundary-c184/README.md) recorded six successful reads of protected markers. This limits claims about blind evaluation. The [C183 spacer deliveries](docs/engineering/hosted-spacer-c183/README.md) remain reproducible. Comparative performance across 30–50 tasks and broader release qualification remain open.
+
+Owner `c184a-shared-927e` releases the main integration lease on merge.
+
+## Previous checkpoint at C184
+
 The [C184 hosted participant test](docs/engineering/hosted-boundary-c184/README.md) blocked admission to an unseen repair. Two fresh children each copied their own random marker and read all three protected markers through the host shell. These six successful reads reached the other route, coordinator and evaluator files. Both children received the same requested settings and empty histories.
 
-C185 requires an identifiable change to the participant launcher that enforces route-only tools and files. Follow the [admission procedure](docs/engineering/hosted-boundary-c184/ADMISSION.md) on that configuration before opening a new case. The [C183 public spacer deliveries](docs/engineering/hosted-spacer-c183/README.md) remain reproducible. Comparative performance, the 30–50-task study and broader release remain open.
+The original C184 plan required a changed launcher with route-only tools and files before opening a blind case. The [admission procedure](docs/engineering/hosted-boundary-c184/ADMISSION.md) retains those controls for a future blind study. The [C183 public spacer deliveries](docs/engineering/hosted-spacer-c183/README.md) remain reproducible. Comparative performance, the 30–50-task study and broader release remain open.
 
 Owner `c184-boundary-2d86` releases the main integration lease on merge.
 
