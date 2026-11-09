@@ -2,6 +2,8 @@
 
 ## Current checkpoint
 
+C185 integration lease held by `c185-rotary-daa36bf7` until 2026-11-09T20:12:58Z. Scope is the public rotary repair evidence, README and status.
+
 Run the existing public rotary-indexer repair in this shared execution environment. The coordinator immediately spawns two subagents here, one for Blender/Python and one for OntoKin. Both receive the same brief, model settings, time allowance and attempt limit, plus their tool’s editable starter. Collect both variants from each agent and independently rebuild and measure the exports. Record the results as shared-environment observations. Dispatch is already authorized and requires no separate host or isolation preflight. [Repair instructions](docs/engineering/hosted-boundary-c184/ADMISSION.md)
 
 The [C184 participant probe](docs/engineering/hosted-boundary-c184/README.md) recorded six successful reads of protected markers. This limits claims about blind evaluation. The [C183 spacer deliveries](docs/engineering/hosted-spacer-c183/README.md) remain reproducible. Comparative performance across 30–50 tasks and broader release qualification remain open.
