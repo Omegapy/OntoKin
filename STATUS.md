@@ -8,7 +8,7 @@ The first comparison is the frozen rotary repair below. Both toolchains share it
 
 The C180 Linux replay passed 95 focused tests. All three stored starter GLBs reproduced the same interior guard penetration. All 18 evaluator controls passed, both staged inventories matched, and the staged OntoKin source regenerated its GLB byte for byte. The current host could read a file across sibling workspaces, denied nested namespace setup and produced no model usage receipt on the harmless preflight. Neither timed arm started. The next gate is a confined worker and an external controller that can demonstrate and enforce the 60-minute and 60,000-token limits before either agent sees the task. Full release qualification remains open.
 
-Owner `c181-controller-a93f` holds the main integration lease for C181 controller admission through 2026-11-09 17:41 UTC. Reserved scope is this status and `docs/engineering/pilot-controller-c181/`. The frozen participant inputs stay locked.
+Owner `c181-controller-a93f` holds the main integration lease for C181 controller admission through 2026-11-09 18:00 UTC. Both final isolated native worker configurations passed their harmless checks. The metered controller has enforced a real token cutoff and an active guest deadline. Final-image cutoff replays precede the timed pair. Reserved scope is this status and `docs/engineering/pilot-controller-c181/`. The frozen participant inputs stay locked.
 
 ## Previous checkpoint at C179
 
