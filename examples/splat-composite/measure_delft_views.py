@@ -66,8 +66,10 @@ if __name__ == "__main__":
                         zero_signal += contrast == 0
                         differences.append(contrast)
                 if count < 300:
-                    raise ValueError(f"{base} has only {count} gold reference pixels")
-                rows[view][phase] = {"referenceGoldPixels": count, "exactRgb": exact,
+                    rows[view][phase] = {"qualified": False, "referenceGoldPixels": count,
+                                         "reason": "Fewer than 300 source-only gold pixels"}
+                    continue
+                rows[view][phase] = {"qualified": True, "referenceGoldPixels": count, "exactRgb": exact,
                     "within12PerChannel": near, "within12Fraction": near / count,
                     "distinctFromSiteByMoreThan12": signal, "distinctFraction": signal / count,
                     "identicalToSiteOnly": zero_signal,

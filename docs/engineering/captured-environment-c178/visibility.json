@@ -1,0 +1,74 @@
+{
+  "metric": "Count source-only gold cart pixels, then measure RGB change at those same pixels with the real captured environment enabled. The near-match cutoff is 12 in each 8-bit colour channel. Also compare composite with captured-site-only colour at those pixels. Contrast over 12 in at least one channel counts as a distinct cart pixel. Background colour similarity affects this metric. It does not measure physical opacity.",
+  "posesSeconds": {
+    "early": 1,
+    "middle": 1.5,
+    "late": 1.99
+  },
+  "results": {
+    "foreground": {
+      "early": {
+        "qualified": true,
+        "referenceGoldPixels": 2341,
+        "exactRgb": 2283,
+        "within12PerChannel": 2298,
+        "within12Fraction": 0.981631781290047,
+        "distinctFromSiteByMoreThan12": 2341,
+        "distinctFraction": 1.0,
+        "identicalToSiteOnly": 0,
+        "medianContrastWithSiteOnly": 71
+      },
+      "middle": {
+        "qualified": true,
+        "referenceGoldPixels": 1609,
+        "exactRgb": 0,
+        "within12PerChannel": 0,
+        "within12Fraction": 0.0,
+        "distinctFromSiteByMoreThan12": 1254,
+        "distinctFraction": 0.7793660658794282,
+        "identicalToSiteOnly": 0,
+        "medianContrastWithSiteOnly": 28
+      },
+      "late": {
+        "qualified": true,
+        "referenceGoldPixels": 2255,
+        "exactRgb": 0,
+        "within12PerChannel": 0,
+        "within12Fraction": 0.0,
+        "distinctFromSiteByMoreThan12": 289,
+        "distinctFraction": 0.12815964523281598,
+        "identicalToSiteOnly": 246,
+        "medianContrastWithSiteOnly": 2
+      }
+    },
+    "low": {
+      "early": {
+        "qualified": false,
+        "referenceGoldPixels": 65,
+        "reason": "Fewer than 300 source-only gold pixels"
+      },
+      "middle": {
+        "qualified": true,
+        "referenceGoldPixels": 3561,
+        "exactRgb": 2407,
+        "within12PerChannel": 2775,
+        "within12Fraction": 0.7792754844144903,
+        "distinctFromSiteByMoreThan12": 3561,
+        "distinctFraction": 1.0,
+        "identicalToSiteOnly": 0,
+        "medianContrastWithSiteOnly": 89
+      },
+      "late": {
+        "qualified": true,
+        "referenceGoldPixels": 3927,
+        "exactRgb": 3844,
+        "within12PerChannel": 3881,
+        "within12Fraction": 0.9882862235803412,
+        "distinctFromSiteByMoreThan12": 3927,
+        "distinctFraction": 1.0,
+        "identicalToSiteOnly": 0,
+        "medianContrastWithSiteOnly": 71
+      }
+    }
+  }
+}
