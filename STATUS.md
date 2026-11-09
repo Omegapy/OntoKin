@@ -1,5 +1,9 @@
 # OntoKin development status — C188 localized left-shoe repair
 
+## Active main integration lease
+
+Owner `c189-drive-69d28120` holds main integration until 2026-11-09T22:13:03Z for the C189 carriage drive and shoe following experiment on `work/c189-carriage-drive`. Reserved paths are `STATUS.md`, `README.md` and `docs/engineering/carriage-drive-c189/`. Base `11b4d5adadece376b6576904ecaeadb41adeb236`.
+
 ## Current checkpoint
 
 Blender/Python and OntoKin each extended only the left shoe of the two-carriage gauge by 30 mm. Both exports preserved the front face, the six other parts and their motion. The minimum clearance on each lane remained 15.000 mm at 2.000 s, rounded to three decimal places. Both first submissions passed, and four clean rebuilds reproduced their submitted GLBs byte for byte. [Evidence and editable sources](docs/engineering/linear-gauge-repair-c188/README.md)
