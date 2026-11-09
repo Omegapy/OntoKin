@@ -6,7 +6,7 @@ Both subagents repaired the five-part rotary indexer. Blender/Python and OntoKin
 
 Next, spawn exactly two fresh coding subagents here and give each its own accepted source and the [220 mm reuse task](docs/engineering/public-rotary-c185/reuse-task.md). Check whether both previous widths survive the edit. The public exercise establishes the repair on this assembly. Per-agent cost, broader comparative reliability and release qualification remain open.
 
-Owner `c185-rotary-daa36bf7` releases the main integration lease on merge.
+C186 integration lease held by `c186-reuse-f3b52eef` until 2026-11-09T20:46:00Z. Scope covers the public reuse results, repository README and status.
 
 ## Previous checkpoint at C184a
 
