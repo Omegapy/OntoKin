@@ -1,5 +1,9 @@
 # OntoKin development status — C170
 
+## Main integration lease
+
+Owner `c175-language-d194` holds the main integration lease through 2026-11-09T13:41:08Z to archive the external model experiments and return active development to the C169 language baseline. Starting main is `038370794d828972cf5a06cdceac50275eda65f0`. The archive worker owns only `archive/c174-model-research`.
+
 ## Current checkpoint
 
 The [observation developer tools](examples/perception/README.md) import model outputs into a versioned, inspectable format and test editable OntoKin actions against measured samples. On a published 155-frame human capture, a root-motion segment had 17.58 mm maximum error over eight held-out frames. A 13-phase left-knee hinge reached 9.83° maximum error over 38 held-out frames. A separately calibrated synthetic object track recovered −8.2 m/s² acceleration and passed a half-gravity counterfactual.
