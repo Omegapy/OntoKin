@@ -1,5 +1,9 @@
 # OntoKin development status — C184
 
+## Main integration lease
+
+Owner `c184a-shared-927e` holds the main integration lease until 2026-11-09 19:52 UTC for the shared-environment instructions in README, STATUS and the two C184 engineering guides. Work branch `work/c184a-shared-execution` starts from the verified lease on C184 main.
+
 ## Current checkpoint
 
 The [C184 hosted participant test](docs/engineering/hosted-boundary-c184/README.md) blocked admission to an unseen repair. Two fresh children each copied their own random marker and read all three protected markers through the host shell. These six successful reads reached the other route, coordinator and evaluator files. Both children received the same requested settings and empty histories.
