@@ -1,12 +1,12 @@
 # OntoKin
 
-**An AI-native, object-oriented language for physical 3D models and animation.**
+**A typed semantic and physical intermediate language for AI agents working with 3D objects.**
 
-OntoKin (pronounced **ON-toh-kin**) is a programming language under development, designed primarily for AI agents to create reusable objects, characters, and animations. An agent describes an object's form, parts, appearance, physical properties, mechanical connections, and intended actions. The language system supplies supported construction and behavior. People can inspect the definitions, review the results, and direct changes.
+OntoKin (pronounced **ON-toh-kin**) lets an agent describe a physical object in editable, object-oriented `.ok` source. “Intermediate” means the source sits between a request and the tools that build or display the object. It names the parts, gives dimensions their units, identifies the frame in which a joint turns, and specifies allowed changes. An accepted source revision is the authority for those declarations. A person or another agent can inspect that revision and use it to reproduce a result. Specialist tools can supply meshes, rendering or simulation through checked interfaces.
 
-The current direction begins with exterior 3D models and short animations. Those objects should remain reusable in larger scenes, video games, and eventually more complex virtual worlds. Physics and mechanics are central to the design; mathematics gives those descriptions precise meaning.
+For example, widening a service cart raises a practical question. Will it still fit through the gate? In the [cart example](examples/service-entrance/README.md), widening the cart from 0.58 m to 0.90 m reduced the measured gap on each side from 0.46 m to 0.30 m. The measurement uses the exported cart and gate. A [separately registered campus scan](docs/engineering/captured-environment-c178/README.md) supplies the scenery.
 
-The [experimental composite viewer](examples/splat-composite/README.md) places an editable OntoKin assembly in a separately registered Gaussian-splat environment. The service-entrance example tests whether widening the cart preserves clearance while the scenery stays fixed. [Project decision and next trials](docs/engineering/external-environment-c177/README.md)
+The research question is whether the same agent makes more reliable repairs, or spends less time and fewer tokens on equally good repairs, using OntoKin than using Blender/Python directly. The [rotary-indexer pilot](docs/engineering/rotary-indexer-c179/README.md) has equivalent faulty starting assemblies and an independent checker. Comparative agent performance is still unmeasured. The [project goal](GOAL.md) gives the benchmark and the criteria for investing in additional backends.
 
 Current development uses the CPU-based language tools below. The [model research archive](docs/maintenance/model-research-archive.md) preserves the separate FlowHMR and Solv3R experiments for later use.
 
@@ -220,7 +220,7 @@ Historical original recording evidence is **24/28, a failed gate**. P11/P16/P23/
 
 Main is the current development baseline under [OK-ENG-009](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md). New checkpoints normally become commits on the same active scope branch. Historical branches are preserved through a separately verified archival history before removal. This consolidation does not complete the reach release: all 28 source recordings, ten Agent artifacts, compatibility, rates, native/browser/visual checks, formal input closure and every R01–R12/Q01–Q22 obligation remain required.
 
-The language's goal remains editable `.ok` programs that AI agents use to build reusable 3D shapes and animation for game engines, including Unreal Engine. Current GLB playback does not establish live engine integration or destination physics.
+This profile delivers recorded animation. Demonstrating live behavior would require a separate import and behavior test in the named engine version.
 
 ## Git LFS for engineering archives
 

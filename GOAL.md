@@ -1,26 +1,40 @@
 # OntoKin goal
 
-Reaffirmed by the project owner on October 28, 2026, including authority to reconcile and integrate the repository while preserving this mission. This record preserves the goal across sessions and implementation milestones. [STATUS.md](STATUS.md) records current evidence and work; [AGENTS.md](AGENTS.md) defines the working procedure.
+The owner refined the October 28 mission on November 9, 2026 after reviewing *OntoKin in the Age of AI-Generated 3D*. Current results are recorded in [STATUS.md](STATUS.md). Repository coordination follows [AGENTS.md](AGENTS.md).
 
 ## Mission
 
-Build OntoKin into a programming language designed primarily for AI agents to create, inspect, revise, and reuse meaningful 3D objects and their behavior. An agent should express form, parts, appearance, physical properties, connections, and intended actions in editable, human-readable `.ok` source. OntoKin should supply the supported construction, routine setup, evaluation, and delivery needed to turn that source into usable models and animations.
+Build OntoKin as a typed semantic and physical intermediate language for AI agents. An agent should be able to describe what an object is, inspect how its parts connect and move, change one instance, validate that change, and regenerate the object for a named destination. The accepted `.ok` revision owns the design intent. Classes, instances, functions and reusable libraries give that intent a programmable form that people can review. Ordinary execution must continue without a model call per frame.
 
-Game-engine delivery, including Unreal Engine and other suitable engines, remains a product target. Each claimed destination must have a named format/version and actual import and animation-playback evidence; a valid exported file alone does not establish support in a particular engine.
+Take a wheel mounted on a robot. Its visual mesh may come from an artist, an image-conditioned generator or a CAD kernel. The program should name the wheel, give its radius and mass in declared units, identify the axle frame and specify allowed rotation. An agent replacing the mesh must still verify dimensions, attachment and motion. For an external asset, the proposed workflow is to pin its origin and bytes, fit it to the declared frame and check the mapping. A photograph or Gaussian-splat capture can supply scenery. A physical claim about that scene needs independently measured engineering geometry or a validated collision proxy.
 
-The language must offer actual programmable abstractions: types, classes, instances, functions, operations, composition, and progressively richer reusable libraries and algorithms. Its purpose includes independent local actions within coherent assemblies, understandable physical and mechanical behavior, and precise inspection and repair. Human direction and review remain possible through the same source and evidence. Ordinary execution must continue without a language-model call per frame.
+## Near-term investment
 
-Start with complete exterior models, characters, props, mechanisms, and short animations. Preserve their reuse in larger scenes, games, connected virtual worlds, and the longer-term planetary and universe-scale settings described in the founding vision. That growth requires explicit models, precision, detail, and resource limits; it does not promise exact simulation of every physical phenomenon. Detailed biological interiors are outside the current modeling focus.
+Fund features that help an agent complete a measured physical-asset task. Concentrate on five capabilities.
 
-The [capability definition](docs/product/OK-CAP-001-modeling-motion-and-object-structure.md) supplies this modeling emphasis. The [PRD](docs/product/OK-PRD-001-product-requirements.md) retains the broader product ambition. Their historical review statuses remain visible; adopted language rules and measured implementation claims have separate records.
+| Capability | What the agent must be able to demonstrate |
+| --- | --- |
+| Semantic assemblies | Address an instance by a stable identity, reuse its class and preserve the identities of its siblings. |
+| Dimensions and constraints | Check quantities in declared units and frames, and locate a violated constraint in source or delivered geometry. |
+| Physical relationships | Distinguish part ownership, spatial following and mechanical connection. Identify the authority for each motion and check the relevant range or physical result. |
+| Targeted repair | Inspect a failure, apply an atomic edit to the accepted source, and show that an invalid edit preserved the last accepted revision and an intended edit preserved unrelated parts. |
+| Multi-backend delivery | Map the same source revision to named destination profiles. Verify which identities, dimensions, joint properties and motions survive each mapping and report any loss. |
 
-## November 2026 priority • Editable objects in external environments
+Delegate mesh synthesis, precision solid modeling, rendering and general-purpose simulation to specialist tools where a task needs them. Keep the reference implementation and its bounded physical profiles for reproducible checks. New language or engine work should address a demonstrated authoring failure or an essential validation need. Defer a general importer, capture pipeline or new production backend until the comparison below justifies the expense.
 
-An agent should be able to place an OntoKin assembly in an existing captured or generated environment, change one named part, and verify the effect on the delivered geometry and motion. The language owns editable object identity, units, physical intent and revision history. Specialized tools can provide scenery, rendering, geometry or simulation through explicit, independently checked interfaces.
+Recorded GLB (binary glTF) is the current delivery path. Candidate destinations include Blender for visualization, OpenUSD Physics for bodies and joints, Unreal for engine delivery, and a CAD kernel for representable solids. A proposed adapter needs a versioned mapping and a test in the receiving application. Reopen the actual output, measure geometry and playback where applicable, and exercise any claimed live behavior. Record unsupported features explicitly. The [export and validation contract](docs/engineering/OK-ENG-002-3d-scene-animation-export-and-visual-validation.md) distinguishes delivery from destination evidence.
 
-Start with a read-only Gaussian-splat environment and the service-entrance cart. Keep the environment and its coordinate registration fixed while the agent edits the cart. Base each clearance or collision claim on identified engineering geometry with a stated check. Before increasing investment in new backends, compare an unseen repair and reuse task with the same agent using Blender/Python. Record correctness, local edit isolation, tokens, time and human intervention. [C177 product decision and acceptance sequence](docs/engineering/external-environment-c177/README.md)
+## How to decide whether to expand
 
-## Development priority: flexible execution budgets
+**Can the same agent make reliable, localized repairs and reuse the result more effectively with OntoKin than with direct Blender/Python?** The [cart trial](docs/engineering/external-environment-c177/README.md) established a source-edit and clearance check. The [rotary-indexer pilot](docs/engineering/rotary-indexer-c179/README.md) is the first held-out paired task. Preserve its frozen prompts, run order, two native exporters, common GLB checker and viewer. Start only after an isolated controller demonstrates the wall-clock and token cutoffs. Score the deliveries before revealing their routes.
+
+If that pilot supports further study, target **30–50 unseen physical-asset tasks** with localized edits and later reuse. C177 sketched a cohort of 10–20 objects. Count distinct assemblies separately from tasks, and include variations across task families. Before runs, freeze the prompts, allowable preparation, success criteria, acceptable tolerances and the improvement large enough to justify continued investment. Give both routes the same model snapshot, settings, information, tools for inspection, resources and output requirements. In a study intended to isolate the language's contribution, use the same versioned Blender backend for both routes. Qualify that OntoKin adapter first. The existing pilot compares complete native workflows with a shared evaluator.
+
+Record first-pass acceptance, invalid intermediate states, model and repair turns, token use, elapsed time and human interventions. On the actual deliveries, measure dimensions, unchanged siblings, prescribed motion or physical outcomes as applicable, clean regeneration and success on a later localized edit. Report paired successes and failures across all tasks. Compare cost at matched success levels and separate reusable setup from task-specific work.
+
+Expand only where the measured improvement meets the predeclared criterion. A mixed result should narrow investment to the task families or semantics that earned their cost. If direct tooling performs as well or better, pause broad language and backend expansion. One successful repair can qualify a workflow for further study. It cannot establish a general authoring advantage. [C180 comparison design and decision record](docs/engineering/semantic-physical-scope-c180/README.md)
+
+## Execution budgets
 
 The owner's October 29, 2026 direction prioritizes developing the language's capabilities and enabling increasingly complex 3D objects, animations and simulations. Keep the ordinary execution defaults of 100,000 operations and 30,000 ms, while adding an explicit language feature through which an entry program requests higher limits within resource ceilings authorized by its execution environment. Examples include 200,000 or 400,000 operations and 60, 75 or 80 seconds of computation time. Modeled animation duration remains a separate source value.
 
@@ -33,6 +47,8 @@ Original tests, fixtures and acceptance gates retain their current limits. New d
 [C076](docs/engineering/polygon-holes-2026-10-30-c076/README.md) extends useful exterior modeling with source-authored through-holes under its explicit [source/Agent/GLB .9 decision](docs/language-design/polygon-holes-v0.1/ADOPTION.md). Frozen ring, composition and repair cases, independent delivered-geometry checks and actual playback evidence remain distinct from implementation and integration. All broader product and release requirements below remain open unless separately completed.
 
 ## Preserve the full product scope
+
+Exterior objects, characters and animation remain intended applications, with reuse in larger scenes, games and eventually more complex virtual worlds. Each expansion needs a supported profile, precision and resource limits, and destination evidence. The broader domains below are long-term requirements. Detailed biological interiors remain outside the current focus. The [capability definition](docs/product/OK-CAP-001-modeling-motion-and-object-structure.md) and [PRD](docs/product/OK-PRD-001-product-requirements.md) retain their historical status.
 
 [C078's explicit frame decision](docs/language-design/framed-polygon-loft-v0.1/ADOPTION.md) extends the experimental polygon loft family to authored rigid section poses for bent bodies, hollow elbows and handles. It preserves the full mission and all unchanged release gates. Source/Agent/GLB `.11` implementation, independent frozen expectations, actual verification and integration remain separately identified in [STATUS](STATUS.md); this finite geometry increment does not establish general sweeps, branching, articulated mechanisms or live engine physics.
 
@@ -116,4 +132,4 @@ Continue implementing and validating the adopted [OK-LANG-006/0.1.0 contract](do
 
 The finite runtime and release gate remain open. Source `0.6` / `planar-reach-0.1`, explicit Agent/0.6 and recorded GLB/0.6 must satisfy all adopted source, protocol, numerical, destination, browser, compatibility and inherited obligations. The [integration record](docs/language-design/planar-reach-v0.1/contract-review/integration18.json) reports only contract preparation, adoption and resulting-main checks; it does not establish runtime support, an authoring improvement or full-product completion.
 
-Subsequent finite milestones must address richer exterior modeling, physical interactions and mechanisms, supplied controllers, and the remaining domain/delivery capabilities. Each must name representative tasks, limits, expected failures, and evidence before implementation. Production compiler, physics-engine, and editor choices follow relevant requirements and experiments; the present prototype does not settle them permanently.
+For any later work on exterior models, mechanisms or controllers, select a representative task from the investment priorities above. Specify limits, expected failures and evidence before selecting an implementation or backend.
