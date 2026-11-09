@@ -135,24 +135,28 @@ class WorkerTest(unittest.TestCase):
         self.assertFalse((self.base / "job/observation").exists())
 
     def test_timeout(self):
+        import fcntl
+
+        # The child's lock is observable across PID namespaces. Its release
+        # proves this particular descendant stopped holding the resource.
+        lock = self.base / "child.lock"
+        child = ("import fcntl, sys, time; "
+                 "f = open(sys.argv[1], 'w'); fcntl.flock(f, fcntl.LOCK_EX); "
+                 "print('child locked', flush=True); time.sleep(30)")
         code = ("import subprocess, sys, time\n"
-                "child = subprocess.Popen([sys.executable, '-c', 'import time; time.sleep(30)'])\n"
-                "print(child.pid, flush=True)\ntime.sleep(30)\n")
+                f"subprocess.Popen([sys.executable, '-c', {child!r}, {str(lock)!r}])\n"
+                "time.sleep(30)\n")
         self.install("flowhmr", code)
         with self.assertRaisesRegex(ValueError, "exceeded"):
             self.run_job(timeout_s=1)
-        self.assertEqual(json.loads((self.base / "job/worker.json").read_text())["status"], "failed")
-        # Linux may retain a killed orphan as a zombie until its system reaper runs.
-        if sys.platform.startswith("linux"):
-            pid = int((self.base / "job/worker.log").read_text())
-            status = Path(f"/proc/{pid}/status")
-            for _ in range(40):
+        self.assertIn("child locked", (self.base / "job/worker.log").read_text())
+        deadline = time.monotonic() + 1
+        with lock.open() as stream:
+            while True:
                 try:
-                    state = next(line for line in status.read_text().splitlines() if line.startswith("State:"))
-                except FileNotFoundError:
+                    fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
                     break
-                if state.split()[1] in {"Z", "X"}:
-                    break
-                time.sleep(0.025)
-            else:
-                self.fail(f"Worker child is still running: {state}")
+                except BlockingIOError:
+                    if time.monotonic() >= deadline:
+                        self.fail("Timed-out worker's child still holds the lock")
+                    time.sleep(0.025)
