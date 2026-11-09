@@ -12,13 +12,13 @@ python3.12 -Bm ontokin.composite_manifest ../service-demo/widened.json
 
 ## File contract
 
-The two generated JSON manifests are complete examples. Paths use forward slashes, remain inside the manifest directory and contain only ASCII letters, digits, periods, hyphens or underscores in each component. SHA-256 values are 64 lowercase hex characters. A failed check exits with a nonzero status.
+The two generated JSON manifests are complete examples. Paths use forward slashes, remain inside the manifest directory and contain only ASCII letters, digits, periods, hyphens or underscores in each component. A component cannot begin with a period. SHA-256 values are 64 lowercase hex characters. A failed check exits with a nonzero status.
 
 | Field | Meaning |
 | --- | --- |
 | `schema` | The literal `ontokin-composite/1`. |
 | `environment` | `name`, `path`, `sha256`, human-readable `provenance`, `requiredExtension` set to `KHR_gaussian_splatting`, and `authority` set to `visual-only`. Feed the existing GLB to the structural preflight before rendering. |
-| `authored` | `source` and `glb` each have a path and digest. This profile pairs a single-entry, asset-free source bundle with its self-contained OntoKin GLB/0.22. The checker compares the source digest with both source-revision records inside the GLB. The demo passage checker independently checks the actual geometry and motion. |
+| `authored` | `source` and `glb` each have a path and digest. This profile pairs a single-entry, asset-free source bundle with its self-contained OntoKin GLB/0.22. The checker compares the source digest with both source-revision records inside the GLB and checks the native dense triangle layout, flat scene roots and bounded animation tracks. The demo passage checker independently checks the actual geometry and motion. |
 | `registration` | `kind`, `worldUnit`, `matrix`, `anchors`, and `toleranceM`. |
 | `collisionProxy` | Must be JSON `null` in this version. A future qualified proxy would need its own registration, provenance and numerical tests. |
 

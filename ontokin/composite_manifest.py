@@ -54,7 +54,7 @@ def _resolve_asset(root, asset):
     relative = asset["path"]
     # Use the same conservative path vocabulary in local files and browser URLs.
     require(isinstance(relative, str) and re.fullmatch(r"[A-Za-z0-9._/-]{1,256}", relative)
-            and all(part not in ("", ".", "..") for part in relative.split("/")), "Invalid relative asset path")
+            and all(part and not part.startswith(".") for part in relative.split("/")), "Invalid relative asset path")
     path = (root / relative).resolve(strict=True)
     require(path.is_relative_to(root) and path.is_file(), "Asset resolves outside its manifest or is not a file")
     require(isinstance(asset["sha256"], str) and re.fullmatch("[a-f0-9]{64}", asset["sha256"]),

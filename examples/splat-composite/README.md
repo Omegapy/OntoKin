@@ -10,7 +10,7 @@ Serve the prepared preview folder on localhost. Run the following command **insi
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-Choose **Screen view**, then scrub between 1 and 2 seconds with **Show environment** enabled. The salmon screen covers the cart early in the crossing. As the cart moves forward it becomes visible in front of the screen. Toggle the environment to compare at the same time and camera. Choose **Widened cart** to reload the edited source's GLB. The viewer retains the room, registration, camera and timeline position.
+Choose **Screen view**, then scrub between 1 and 2 seconds with **Show environment** enabled. At 1.080 s the salmon screen covers the cart. At 1.294 s it covers part of the gold front face. By 1.800 s the cart is in front. The focused time slider accepts arrow keys in 1 ms steps. As the cart moves forward it becomes visible in front of the screen. Toggle the environment to compare at the same time and camera. Choose **Widened cart** to reload the edited source's GLB. The viewer retains the room, registration, camera and timeline position.
 
 ## Build the preview from a checkout
 

@@ -161,7 +161,7 @@ class ManifestTests(unittest.TestCase):
             self.check(self.manifest)
 
     def test_path_escape_and_uri_are_rejected(self):
-        for path in ("../main.ok", "/main.ok", "%2e%2e/main.ok", "https://example.test/scene.ok"):
+        for path in ("../main.ok", "/main.ok", ".hidden.ok", "%2e%2e/main.ok", "https://example.test/scene.ok"):
             changed = copy.deepcopy(self.manifest)
             changed["authored"]["source"]["path"] = path
             with self.subTest(path=path), self.assertRaisesRegex(ValueError, "relative asset path"):

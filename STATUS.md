@@ -1,10 +1,16 @@
-# OntoKin development status — C175
+# OntoKin development status — C177
 
 ## Main integration lease
 
 Owner `c177-composite-4ca2` holds the main integration lease through 2026-11-09T14:37:03Z for the read-only external environment experiment, project goal and handoff. The observed base is `d4f621bba518be6fd5b0e64d5b2c0ad59f4d29a9`. The bounded development branch is `work/c177-composite`.
 
 ## Current checkpoint
+
+The selected feature is a read-only external environment for agent-authored physical objects. The [composite example](examples/splat-composite/README.md) binds an editable cart, its recorded GLB, an existing splat GLB and a measured frame transform. The Linux experiment reproduced 0.46 m and 0.30 m of clearance on each side after widening the cart from 0.58 m to 0.90 m. Chromium drew the two layers on software WebGL2. The fixed-camera trial observed the cart behind, partly behind and in front of a synthetic screen. A separate published Biker scan passed preflight and rendered on its own. [Evidence](docs/engineering/external-environment-c177/verification.json)
+
+The next gate is a captured environment with independently measured landmarks and documented asset rights. Then run an unseen repair/reuse comparison with the same agent using Blender/Python before expanding the backend effort. Real-site accuracy, hardware WebGPU, collision with the scenery and relative authoring cost remain open. [Product decision and acceptance sequence](docs/engineering/external-environment-c177/README.md)
+
+## Previous checkpoint at C175
 
 **Language development is active.** Start from GitHub `main` and use the first language feature the owner specifies. A fresh Linux CPU checkout can run the [agent editing example](README.md#try-an-agent-edit) and export an animation. The language implementation and its tests match the [C169 graceful-stop checkpoint](https://github.com/Omegapy/OntoKin/commit/941f350b98512ab9967b5ac16ec569fe04beb8be).
 

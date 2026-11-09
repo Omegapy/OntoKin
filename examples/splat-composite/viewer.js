@@ -116,7 +116,7 @@ function fixedView(screen) {
 function setTime(value) {
   sceneTime = value;
   $('time').value = String(value);
-  $('seconds').textContent = value.toFixed(2) + ' s';
+  $('seconds').textContent = value.toFixed(3) + ' s';
   if (action) action.paused = false;
   mixer?.setTime(value);
 }
