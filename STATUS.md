@@ -1,6 +1,16 @@
-# OntoKin development status — C180
+# OntoKin development status — C181
 
 ## Current checkpoint
+
+The [rotary repair pilot](docs/engineering/pilot-controller-c181/README.md) ran both frozen native workflows. Each participant had 60 minutes and 60,000 aggregate tokens. The same local Qwen2.5-Coder-1.5B-Instruct model used a private Linux VM for each route. Both stopped at the token boundary with empty submissions and no changes to the starting files. The masked checker scored each route 0/100. Blender used 58,721 tokens in 11 min 01 s. OntoKin used 56,618 in 16 min 13 s.
+
+Each model sent task prose to its shell and then repeated replies in an unsupported format. Neither invoked the native exporter. The controller, native tools, frozen starting geometry and two independent starter rebuilds per route passed their checks. This pair identifies a model and command-interface failure. It provides no successful repair with which to measure the benefit or cost of the typed language.
+
+Next, qualify a model and its action interface on a public multi-step inspection, edit, export and readback. Demonstrate recovery after a bad command and a working submission before running a fresh held-out comparison. The broader release and 30–50-task study remain open. [Locked scores and accounting](docs/engineering/pilot-controller-c181/results.json)
+
+Owner `c181-controller-a93f` releases the main integration lease on merge.
+
+## Previous checkpoint at C180
 
 The owner adopted a narrower [project goal](GOAL.md). OntoKin will keep the identity, dimensions, relationships and allowed edits of a physical assembly in typed source. The investment decision now turns on whether agents can repair and reuse these assemblies more reliably or at lower cost than with direct Blender/Python. Recorded GLB delivery and the existing physical profiles provide the starting evidence.
 
@@ -8,7 +18,7 @@ The first comparison is the frozen rotary repair below. Both toolchains share it
 
 The C180 Linux replay passed 95 focused tests. All three stored starter GLBs reproduced the same interior guard penetration. All 18 evaluator controls passed, both staged inventories matched, and the staged OntoKin source regenerated its GLB byte for byte. The current host could read a file across sibling workspaces, denied nested namespace setup and produced no model usage receipt on the harmless preflight. Neither timed arm started. The next gate is a confined worker and an external controller that can demonstrate and enforce the 60-minute and 60,000-token limits before either agent sees the task. Full release qualification remains open.
 
-Owner `c181-controller-a93f` holds the main integration lease for C181 controller admission through 2026-11-09 18:23 UTC. Both final configurations passed the combined deadline and real-token checks. The execution card was published at 57ba24eb66f6906f095936e7ead4ba8852a038fe before starting the repair. The first timed arm closed with 58,721 charged tokens. The second arm is running under the same card. Reserved scope is this status and `docs/engineering/pilot-controller-c181/`. The operator retains the evaluator and separate workspace disks.
+Owner `c180-scope-6451` released the main integration lease when C180 merged.
 
 ## Previous checkpoint at C179
 

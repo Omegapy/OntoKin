@@ -2,6 +2,19 @@
 
 The [rotary repair pilot](../rotary-indexer-c179/README.md) compares edits to one moving assembly in Blender/Python and OntoKin. Both routes have the same initial interference between the rotating shoe and a fixed guard. The agent receives an editable starting design for its route, the common viewer and its task. The operator holds the checker, the other starting design and the model's usage ledger.
 
+## What happened in the timed repair
+
+| Route | Full input | Cached input | Output | Total tokens | Wall time | Model replies | Rejected formats |
+| --- | ---: | ---: | ---: | ---: | --- | ---: | ---: |
+| Blender/Python | 57,431 | 0 | 1,290 | 58,721 | 11 min 01 s | 27 | 26 |
+| OntoKin | 49,029 | 0 | 7,589 | 56,618 | 16 min 13 s | 14 | 13 |
+
+Each worker read its assignment successfully. Each agent then copied the assignment text into a shell block. The guest shell returned exit code 2. Neither agent invoked its native exporter. The Blender agent sent `SUBMIT` in an unlabelled Markdown code block 25 times. The registered controller accepts a bare `SUBMIT` or a labelled final block. The OntoKin agent repeated the assignment inside an unlabelled block 13 times. Both agents stopped when their remaining allowance could no longer fit the next input and one output token. VM startup took 8.93 seconds for Blender and 8.13 seconds for OntoKin, measured separately. No human intervened in a timed session.
+
+The operator recovered the original and final disks and examined the submission directories. Both were empty. There was no submitted GLB, editable design or measurement to rebuild or view. The original frozen starters remain available as reference material. The masked scorer awarded **0/100 to each route**, with both the geometry and reusable-delivery gates failed. The [machine-readable result](results.json) identifies the registered run and the locked scoring evidence.
+
+The pilot reproduced the failure at the boundary between the model and its tools. Its token and elapsed-time totals describe two unsuccessful attempts. They cannot establish the cost of a successful repair or whether typed physical intent improves one. Before a larger comparison, qualify a candidate coding agent on a public multi-step inspection, edit, native export and readback. Use that practice task to test command formatting, retries and submission handling. Reserve a fresh unseen repair for the next scored pair.
+
 ## The worker and the meter
 
 The operator runs a CPU-only Qwen2.5-Coder-1.5B-Instruct model in a fresh llama.cpp context for every turn. The weights, prompt format, inference library, seed and settings are pinned. Each receipt lists the token IDs that the runtime evaluated and generated. Each call charges its entire input and the generated output, including a sampled stop token. The new context gives each call zero cross-request cache credit.
