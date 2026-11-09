@@ -6,6 +6,8 @@ OntoKin (pronounced **ON-toh-kin**) is a programming language under development,
 
 The current direction begins with exterior 3D models and short animations. Those objects should remain reusable in larger scenes, video games, and eventually more complex virtual worlds. Physics and mechanics are central to the design; mathematics gives those descriptions precise meaning.
 
+The [experimental composite viewer](examples/splat-composite/README.md) places an editable OntoKin assembly in a separately registered Gaussian-splat environment. The service-entrance example tests whether widening the cart preserves clearance while the scenery stays fixed. [Project decision and next trials](docs/engineering/external-environment-c177/README.md)
+
 Current development uses the CPU-based language tools below. The [model research archive](docs/maintenance/model-research-archive.md) preserves the separate FlowHMR and Solv3R experiments for later use.
 
 ## Try an agent edit

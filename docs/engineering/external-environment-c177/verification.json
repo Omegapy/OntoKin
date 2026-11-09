@@ -1,0 +1,141 @@
+{
+  "checkpoint": "C177",
+  "state": "experimental",
+  "platform": "Linux x86-64",
+  "python": "3.12.14",
+  "newTestsPassed": 17,
+  "serviceRegressionsPassed": 7,
+  "languageTestsPassed": 66,
+  "cartCases": {
+    "baseline": {
+      "manifest": "baseline.json",
+      "cartWidthM": 0.58,
+      "clearanceM": {
+        "post": 0.4599999934434891,
+        "panel": 0.46000000834465027
+      },
+      "environmentSha256": "718bc0555e4cc40ab7505669f807c7bb51d894901a1188935676d0da87886407"
+    },
+    "widened": {
+      "manifest": "widened.json",
+      "cartWidthM": 0.9,
+      "clearanceM": {
+        "post": 0.29999999701976776,
+        "panel": 0.30000001192092896
+      },
+      "environmentSha256": "718bc0555e4cc40ab7505669f807c7bb51d894901a1188935676d0da87886407"
+    }
+  },
+  "externalBiker": {
+    "sha256": "6cf16ff76fa6e223e2a759b4204f89730a84db6202bc7b0093dccae8bdc1a06c",
+    "bytes": 9166460,
+    "three": "186",
+    "backend": "WebGL2",
+    "splats": 152746,
+    "splatObjects": 1,
+    "parseMs": 108.1000000005588,
+    "chromium": "153.0.8010.0",
+    "errors": [],
+    "rasterizer": "SwiftShader",
+    "canvas": [
+      360,
+      300
+    ],
+    "status": "passed",
+    "metricDefinition": "Count of canvas pixels with a difference greater than 2/255 in any RGB channel between the visible and hidden splat. All other scene inputs were held fixed.",
+    "boundsOfAnyDifference": [
+      140,
+      0,
+      236,
+      272
+    ],
+    "visibleCanvasRGB_SHA256": "7677c7b1f4d1596b9b69aa1539c4d42a9620ffb0810aa042e5c33a85e6446634",
+    "hiddenCanvasRGB_SHA256": "40fe7956ba7298108b8e0e04ecd46df254fa1a4f7b1bb8ec759cf909bd7df4df",
+    "source": "https://github.com/playcanvas/engine/blob/33af7ccdff97b2380e5810fd89059525c8a020b6/examples/assets/splats/biker.glb",
+    "scope": "Single load and draw with only the external asset. No world registration or joint occlusion claim.",
+    "changedPixels": 14168
+  },
+  "registrationFixture": {
+    "kind": "rigid",
+    "scale": 1.0,
+    "anchorResidualsM": {
+      "screen-bottom-left": 4.6606344241969086e-09,
+      "screen-bottom-right": 4.6606344241969086e-09,
+      "screen-top-left": 1.0612305288979745e-08
+    },
+    "maxResidualM": 1.0612305288979745e-08,
+    "rmsResidualM": 7.212582755585917e-09,
+    "toleranceM": 1e-06
+  },
+  "occlusion": {
+    "metric": "Fraction of gold deck pixels still gold with environment enabled, at identical camera and recorded time.",
+    "posesSeconds": {
+      "behind": 1.08,
+      "partial": 1.294,
+      "front": 1.8
+    },
+    "results": {
+      "behind": {
+        "referenceCartPixels": 2626,
+        "visibleCartPixels": 0,
+        "fraction": 0.0
+      },
+      "partial": {
+        "referenceCartPixels": 3052,
+        "visibleCartPixels": 2255,
+        "fraction": 0.7388597640891219
+      },
+      "front": {
+        "referenceCartPixels": 6007,
+        "visibleCartPixels": 6007,
+        "fraction": 1.0
+      }
+    }
+  },
+  "renderedWith": {
+    "chromium": "153.0.8010.0",
+    "backend": "WebGL2",
+    "rasterizer": "SwiftShader",
+    "three": "0.186.1",
+    "viewport": [
+      840,
+      660
+    ],
+    "captureBufferPixels": [
+      792,
+      364
+    ]
+  },
+  "viewer": {
+    "environmentRequestsAcrossEdit": 1,
+    "tamperedSource": "Could not load baseline. SHA-256 mismatch for /demo/baseline/main.ok",
+    "acceptedVariantAfterRefusal": "widened",
+    "defaultRun": {
+      "backend": "WebGL2",
+      "requestedBackend": "WebGL2",
+      "environmentName": "Registration screen",
+      "environmentSha256": "718bc0555e4cc40ab7505669f807c7bb51d894901a1188935676d0da87886407",
+      "environmentLoads": 1,
+      "environmentBytes": 80692,
+      "splatCount": 1416,
+      "storedSplatCount": 1416,
+      "environmentParseMs": 11.4,
+      "variant": "baseline",
+      "authoredSha256": "bfc1f3b18aa1504989a6243f5f0318cec7d269eba1d5e7bc9014e4f5984627d7",
+      "authoredBytes": 918356,
+      "authoredParseMs": 13.2,
+      "authoredObjects": [
+        "post",
+        "gate",
+        "cart"
+      ],
+      "clipSeconds": 3.25,
+      "firstCompositeSubmitMs": 234.1,
+      "frameSamples": 120,
+      "medianFrameIntervalMs": 16.8,
+      "p95FrameIntervalMs": 216.6
+    }
+  },
+  "otherBackend": "WebGPU request without an adapter fell back to WebGL2. An earlier explicit software Vulkan probe on the r186 prototype gave white frames and popErrorScope errors. Hardware WebGPU is unqualified.",
+  "khronosValidator": "2.0.0-dev.3.10 accepted both authored GLBs with zero errors or warnings. On the splat control it flagged 4 namespaced attributes and reported the extension unsupported. Extension-aware preflight and actual rendering are separate evidence."
+}
