@@ -8,7 +8,7 @@ The two-elbow fitter can now repair a legal 1 mm straight that measures 0.999927
 
 **Duct fitting is paused after C169.** The next development work is the owner's planned features for developing the language. Start that work from current `main`. Resume duct fitting when the owner selects it again. The first deferred task is to fit two fixed ports with the same flow direction using a caller-specified lead length. A hand-authored example exists in the C169 handoff. The solver work has not started.
 
-Owner `c170-observe-b7f3` holds the main integration lease until 00:28 UTC on November 9, 2026 for the observation development tool on `work/c170-observation-development`.
+Owner `c170-observe-b7f3` renews the main integration lease until 00:52 UTC on November 9, 2026. [PR #107](https://github.com/Omegapy/OntoKin/pull/107) holds the isolated observation tool. Separate Linux environments have executed a complete pretrained Solv3R reconstruction and a FlowHMR motion-generator control. Restricted body assets still block fresh FlowHMR video reconstruction. The legacy Linux core run and feature qualification are in progress.
 
 ## Previous checkpoint at C168
 
