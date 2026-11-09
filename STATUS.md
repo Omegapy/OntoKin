@@ -1,10 +1,16 @@
-# OntoKin development status — C179
-
-## Main integration lease
-
-Owner `c180-scope-6451` holds the lease through 2026-11-09T17:17:00Z for the semantic and physical language scope and the rotary pilot preflight. Base `11f6f10bea46dbae6a7cf2cdb135398fbe8e0a32`. Bounded branch `work/c180-semantic-physical-scope`. Reserved files: README.md, GOAL.md and STATUS.md.
+# OntoKin development status — C180
 
 ## Current checkpoint
+
+The owner adopted a narrower [project goal](GOAL.md). OntoKin will keep the identity, dimensions, relationships and allowed edits of a physical assembly in typed source. The investment decision now turns on whether agents can repair and reuse these assemblies more reliably or at lower cost than with direct Blender/Python. Recorded GLB delivery and the existing physical profiles provide the starting evidence.
+
+The first comparison is the frozen rotary repair below. Both toolchains share its evaluator and viewer, and each uses its own native exporter. The proposed 30–50-task study would use the same Blender backend for both routes after an OntoKin adapter qualifies. It depends on the pilot result. [C180 scope and decision record](docs/engineering/semantic-physical-scope-c180/README.md)
+
+The C180 Linux replay passed 95 focused tests. All three stored starter GLBs reproduced the same interior guard penetration. All 18 evaluator controls passed, both staged inventories matched, and the staged OntoKin source regenerated its GLB byte for byte. The current host could read a file across sibling workspaces, denied nested namespace setup and produced no model usage receipt on the harmless preflight. Neither timed arm started. The next gate is a confined worker and an external controller that can demonstrate and enforce the 60-minute and 60,000-token limits before either agent sees the task. Full release qualification remains open.
+
+Owner `c180-scope-6451` releases the main integration lease when this checkpoint merges.
+
+## Previous checkpoint at C179
 
 The [rotary-indexer admission](docs/engineering/rotary-indexer-c179/README.md) qualifies independently editable OntoKin and Blender starters for the same held-out repair. Both native exports reproduce the five-part common fixture and its interior guard penetration. A neutral decoder measured 18.953 mm of east clearance and 7.047 mm of north penetration across all three files. The early Blender export eased between correct endpoints. Fixing its key interpolation brought the full motion within tolerance. The checker passed 13 geometry and motion controls, and the scorecard passed five private controls.
 
