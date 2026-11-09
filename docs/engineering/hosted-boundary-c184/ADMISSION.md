@@ -1,14 +1,16 @@
-# When to retry the hosted comparison
+# Run the public rotary-indexer repair
 
-Begin C185 by checking the participant launcher. Record an inspectable change that affects the tools a **fresh hosted child** can actually call. A candidate configuration must assign that child only its own guest relay and a final submit operation. The coordinator must retain exclusive access to orchestration and scoring. If the launcher still grants the shared host shell or other general-purpose tools, carry the admission result forward and keep the unseen case sealed. Repeating the same test on that configuration supplies no new evidence.
+The current ChatGPT project is the execution environment. **Immediately spawn two subagents here** and assign one to Blender/Python and the other to OntoKin. The coordinator already has authorization to dispatch both. No separate host, permission request or isolation preflight is needed for this public repair.
 
-A Linux guest can isolate the commands that reach its relay. A host shell available alongside that relay still lets the participant go around it. If a different launcher is proposed, record the platform and version, the enforced tool policy, the participant-visible inventory, and how operator-only files, other routes, networking and delegation are isolated. A prompt asking a participant to avoid a tool cannot enforce this policy.
+1. Give both agents the handoff’s `benchmark/participant/task.md`, its common fixture, the same model settings, time allowance and attempt limit. Give each its own editable starter under `benchmark/starters/` and a separate output directory. Record the allowances at dispatch. Per-agent token counts are optional. Record them only if the environment supplies them and otherwise mark them unavailable.
+2. Each agent creates the long-shoe and wide-long-shoe variants from one editable design and supplies its source, rebuild instructions, `long.glb`, `wide-long.glb`, and a measurement report. Both variants must retain the quarter turn and meet the brief’s 15.0 ± 0.5 mm minimum clearance per guard over the full two seconds.
+3. The coordinator rebuilds the two variants for each route in a fresh output directory. Use the handoff’s `benchmark/evaluator/neutral_check.py` to measure each submitted export independently of the agent’s report. Record dimensions, the minimum gap and its time for each guard, any failed checks, and available elapsed-time and usage data. Report these as observations from the shared environment.
 
-## Work available on the current host
+The [starter qualification](../rotary-indexer-c179/README.md) documents the initial guard penetration. The [public spacer](../hosted-spacer-c183/README.md) is a smaller worked example. The [C184 evidence](README.md#archived-isolation-test) documents the limits of blind scoring on this launcher.
 
-Use the already public C183 baseline and repaired GLBs for an assessor rehearsal. The operator keeps the label map, extracts route-neutral measurements and seals a hash of the scores before revealing the mapping. Validate the editable sources in a separate step. This rehearsal can expose scoring or custody mistakes. It cannot establish host isolation or rank the routes on an unseen repair.
+## Qualification for a future blind study
 
-## Qualification on a changed configuration
+A blind study with an unseen case requires a participant launcher that can restrict each child’s tools and files. Apply the following controls when qualifying such a study.
 
 1. Use two fresh participants with the same requested model settings, empty histories, separate route identities and identical budgets. Stage independently generated, harmless random files in each route and in coordinator and evaluator storage. Record their digests before dispatch.
 2. From each actual participant interface, establish own-route read and write. Test cross-route, coordinator and evaluator access, outbound access and nested delegation. Retain each request, response, and identity as observed by the operator. Any protected read or unrestricted alternate tool closes admission immediately.
