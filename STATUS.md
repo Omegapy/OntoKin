@@ -1,16 +1,16 @@
-# OntoKin development status — C187 two-carriage gauge
-
-## Active main integration lease
-
-Owner `c188-shoe-2c02b689` holds main integration for the C188 left-shoe repair evidence on `work/c188-localized-shoe-repair` until 2026-11-09T21:39:45Z. Reserved paths are `STATUS.md`, `README.md` and `docs/engineering/linear-gauge-repair-c188/`. Base `9286338765966fc57e67d8b5c8db19a726cdc9ff`. Independent work on other paths may continue.
+# OntoKin development status — C188 localized left-shoe repair
 
 ## Current checkpoint
 
+Blender/Python and OntoKin each extended only the left shoe of the two-carriage gauge by 30 mm. Both exports preserved the front face, the six other parts and their motion. The minimum clearance on each lane remained 15.000 mm at 2.000 s, rounded to three decimal places. Both first submissions passed, and four clean rebuilds reproduced their submitted GLBs byte for byte. [Evidence and editable sources](docs/engineering/linear-gauge-repair-c188/README.md)
+
+C189 tests the repaired left shoe at two carriage speeds while the right lane retains its original drive setting. Inspect the source of motion as well as the resulting clip. [C189 dispatch and expected clearances](docs/engineering/linear-gauge-repair-c188/README.md#next-experiment)
+
+Owner `c188-shoe-2c02b689` releases the main integration lease on merge.
+
+## Previous checkpoint at C187
+
 Two fresh agents built seven-part, editable two-carriage gauges in Blender/Python and OntoKin. Both starters passed on their first submission. Each lane reached its 15 mm minimum gap at 2 s after 300 mm of travel. Four clean rebuilds reproduced the submitted GLBs byte for byte, and both exports opened at the same three poses. [Measurements, editable starters and verification](docs/engineering/linear-gauge-c187/README.md)
-
-C188 assigns each starter to a fresh agent. Extend only the rear of the left shoe by 30 mm, preserve both front faces and compare the other six parts with the original export. Comparative cost, broader repair reliability and release qualification remain open. [Repair brief and coordinator checks](docs/engineering/linear-gauge-c187/NEXT-TASK.md)
-
-Owner `c187-gauge-a5b624b3` releases the main integration lease on merge.
 
 ## Previous checkpoint at C186
 
