@@ -1,0 +1,49 @@
+{
+  "schema": "ontokin-landmark-plan/1",
+  "kind": "similarity",
+  "environmentSha256": "3f749b56cb5399292dcd8b6c014042529e6772cb7ac37bf5797146cc72347fad",
+  "referenceMethod": "Horizontal position at four outer Aula eave corners in the independent 3DBAG BAG building polygon (NL.IMBAG.Pand.0503100000019275). AHN 0.5 m DSM samples within 2.4 m, retaining heights between 8 and 14.5 m NAP; use 85th percentile of those roof returns to reduce mixed wall/ground edges. Local (X,Y,Z) = (RD easting - 85454, NAP height + 0.6969, 446477 - RD northing), metres. Ground origin uses the AHN DTM cell containing the specified RD position.",
+  "scaleBasis": "The original photogrammetric point cloud has arbitrary units. Fit one positive uniform scale to three spatially separated metric references from the Dutch independent mapping and airborne laser data.",
+  "referenceUncertaintyM": 0.6,
+  "toleranceM": 1.0,
+  "toleranceBasis": "Before fitting, allow 1.00 m for site visualization from 0.5 m laser raster, map outline and optical eave localization. Reference uncertainty is an engineering estimate of 0.60 m, not a certified survey precision. Require every anchor, including the withheld corner, to meet the gate. No mechanical clearance or site collision claims.",
+  "minimumAltitudeM": 10,
+  "landmarks": [
+    {
+      "name": "Aula-west-north",
+      "role": "fit",
+      "world": [
+        -122.19763,
+        11.0854,
+        17.573
+      ]
+    },
+    {
+      "name": "Aula-west-south",
+      "role": "fit",
+      "world": [
+        -107.95263,
+        11.1236,
+        51.924
+      ]
+    },
+    {
+      "name": "Aula-north-wing-east",
+      "role": "fit",
+      "world": [
+        -28.69362,
+        12.6793,
+        -34.058
+      ]
+    },
+    {
+      "name": "Aula-south-wing-east",
+      "role": "holdout",
+      "world": [
+        -5.37762,
+        12.6766,
+        22.297
+      ]
+    }
+  ]
+}
