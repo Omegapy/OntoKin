@@ -1,5 +1,9 @@
 # OntoKin development status — C177
 
+## Main integration lease
+
+Owner `c178-anchors-846f` holds the main integration lease through 2026-11-09T15:11:00Z for the surveyed-capture experiment and checkpoint. The observed base is `172bd8ae5900dcd5d002584e04cef90b0ef784a2`. The bounded branch is `work/c178-capture-registration`.
+
 ## Current checkpoint
 
 The selected feature is a read-only external environment for agent-authored physical objects. The [composite example](examples/splat-composite/README.md) binds an editable cart, its recorded GLB, an existing splat GLB and a measured frame transform. The Linux experiment reproduced 0.46 m and 0.30 m of clearance on each side after widening the cart from 0.58 m to 0.90 m. Chromium drew the two layers on software WebGL2. The fixed-camera trial observed the cart behind, partly behind and in front of a synthetic screen. A separate published Biker scan passed preflight and rendered on its own. [Evidence](docs/engineering/external-environment-c177/verification.json)
