@@ -1,16 +1,16 @@
-# OntoKin development status — C188 localized left-shoe repair
-
-## Active main integration lease
-
-Owner `c189-drive-69d28120` holds main integration until 2026-11-09T22:13:03Z for the C189 carriage drive and shoe following experiment on `work/c189-carriage-drive`. Reserved paths are `STATUS.md`, `README.md` and `docs/engineering/carriage-drive-c189/`. Base `11b4d5adadece376b6576904ecaeadb41adeb236`.
+# OntoKin development status — C189 carriage drive and following
 
 ## Current checkpoint
 
+Both C189 native designs propagated a left carriage speed edit to its attached shoe. At 125 and 100 mm/s the left minimum clearance was 65 and 115 mm respectively. A coordinator edit to 110 mm/s produced 95 mm. The right lane retained its 15 mm clearance in all three cases. The eight formal-case rebuilds reproduced the four final GLBs. [Native sources, checker and playback](docs/engineering/carriage-drive-c189/README.md)
+
+C190 moves a fixed stop into the shoe's path to determine whether contact there is represented and can halt the carriage. The current OntoKin shoe is a massless spatial follower with collision disabled. [Next experiment](docs/engineering/carriage-drive-c189/README.md#next-experiment)
+
+Owner `c189-drive-69d28120` releases the main integration lease on merge.
+
+## Previous checkpoint at C188
+
 Blender/Python and OntoKin each extended only the left shoe of the two-carriage gauge by 30 mm. Both exports preserved the front face, the six other parts and their motion. The minimum clearance on each lane remained 15.000 mm at 2.000 s, rounded to three decimal places. Both first submissions passed, and four clean rebuilds reproduced their submitted GLBs byte for byte. [Evidence and editable sources](docs/engineering/linear-gauge-repair-c188/README.md)
-
-C189 tests the repaired left shoe at two carriage speeds while the right lane retains its original drive setting. Inspect the source of motion as well as the resulting clip. [C189 dispatch and expected clearances](docs/engineering/linear-gauge-repair-c188/README.md#next-experiment)
-
-Owner `c188-shoe-2c02b689` releases the main integration lease on merge.
 
 ## Previous checkpoint at C187
 
