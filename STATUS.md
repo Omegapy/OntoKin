@@ -1,5 +1,9 @@
 # OntoKin development status — C175
 
+## Main integration lease
+
+Owner `c177-composite-4ca2` holds the main integration lease through 2026-11-09T14:37:03Z for the read-only external environment experiment, project goal and handoff. The observed base is `d4f621bba518be6fd5b0e64d5b2c0ad59f4d29a9`. The bounded development branch is `work/c177-composite`.
+
 ## Current checkpoint
 
 **Language development is active.** Start from GitHub `main` and use the first language feature the owner specifies. A fresh Linux CPU checkout can run the [agent editing example](README.md#try-an-agent-edit) and export an animation. The language implementation and its tests match the [C169 graceful-stop checkpoint](https://github.com/Omegapy/OntoKin/commit/941f350b98512ab9967b5ac16ec569fe04beb8be).
