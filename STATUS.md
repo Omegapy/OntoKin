@@ -2,6 +2,8 @@
 
 ## Current checkpoint
 
+Integration owner `c183-hosted-39b8` holds the main lease through 2026-11-09 19:25 UTC for PR #115, the hosted spacer practice. Reserved paths are STATUS.md and docs/engineering/hosted-spacer-c183/.
+
 The [rotary repair pilot](docs/engineering/pilot-controller-c181/README.md) ran both frozen native workflows. Each participant had 60 minutes and 60,000 aggregate tokens. The same local Qwen2.5-Coder-1.5B-Instruct model used a private Linux VM for each route. Both stopped at the token boundary with empty submissions and no changes to the starting files. The masked checker scored each route 0/100. Blender used 58,721 tokens in 11 min 01 s. OntoKin used 56,618 in 16 min 13 s.
 
 Each model sent task prose to its shell and then repeated replies in an unsupported format. Neither invoked the native exporter. The controller, native tools, frozen starting geometry and two independent starter rebuilds per route passed their checks. This pair identifies a model and command-interface failure. It provides no successful repair with which to measure the benefit or cost of the typed language.
