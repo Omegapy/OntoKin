@@ -1,0 +1,85 @@
+{
+  "python": "Python 3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "assembleScriptSha256": "56108641ef07e1fe11d8ae3e8fcc1a7371bdf4bde5e22566ef4ec587255e4abf",
+  "planSha256": "e84a2d3b473be59eb31ed5a8460e2cb35e018a47c0e27a87d7dd4a7e481d90f3",
+  "picksSha256": "4c40f72ebe3ac00e151bb696e24e773ea1bf51f4c280a6025d749745f7fc2751",
+  "glbSha256": "3f749b56cb5399292dcd8b6c014042529e6772cb7ac37bf5797146cc72347fad",
+  "controls": "C177 packaged control, both manifests and authored layers plus unmodified passage checker",
+  "cli": [
+    "python3.12",
+    "-IB",
+    "examples/splat-composite/prepare_delft.py",
+    "<control>",
+    "<GLB>",
+    "<plan>",
+    "<picks>",
+    "<new output>"
+  ],
+  "cases": [
+    {
+      "case": "accepted",
+      "modification": {},
+      "planSha256": "e84a2d3b473be59eb31ed5a8460e2cb35e018a47c0e27a87d7dd4a7e481d90f3",
+      "picksSha256": "4c40f72ebe3ac00e151bb696e24e773ea1bf51f4c280a6025d749745f7fc2751",
+      "fitExit": 0,
+      "fitMaxM": 0.07557798004827733,
+      "holdoutErrorM": 0.2155057553892286,
+      "registrationProduced": true,
+      "assemblyExit": 0,
+      "assemblyStdout": "",
+      "assemblyStderr": "",
+      "outputDirectoryExists": true,
+      "receiptExists": true,
+      "newOutputParentEntries": [
+        "preview"
+      ],
+      "receiptSha256": "0f139648902e919a5876da6c381c677630ee6c56c6f22fe74c95bf2fe9869742",
+      "admittedManifestHashes": {
+        "baseline": "bd710ee118c40735752cbd4cd94afb8c58adb37be740f52caced2015daa8a0e3",
+        "widened": "8f553f8618e32426bdfacf7d42144f581a81c4e98f17157135c0a73adce38682"
+      }
+    },
+    {
+      "case": "holdout-moved",
+      "modification": {
+        "onlyField": "picks.environment.Aula-south-wing-east[0]",
+        "nativeBefore": 1.067,
+        "nativeAfter": 1.167,
+        "deltaNative": 0.1
+      },
+      "planSha256": "e84a2d3b473be59eb31ed5a8460e2cb35e018a47c0e27a87d7dd4a7e481d90f3",
+      "picksSha256": "7652612c8665ac6a1a224760bb86c7b1b0c993febfecd7429c109989a76ae2d0",
+      "fitExit": 1,
+      "fitMaxM": 0.07557798004827733,
+      "holdoutErrorM": 2.236601909516571,
+      "registrationProduced": false,
+      "assemblyExit": 1,
+      "assemblyStdout": "",
+      "assemblyStderr": "Cannot assemble the measured site: Delft requires a passing fit and at least one passing held-out landmark",
+      "outputDirectoryExists": false,
+      "receiptExists": false,
+      "newOutputParentEntries": []
+    },
+    {
+      "case": "all-world-X-plus-100-metres",
+      "modification": {
+        "worldField": "plan.landmarks[*].world[0]",
+        "deltaMetres": 100,
+        "pairedPicksPlanHashUpdated": true
+      },
+      "planSha256": "53c67600166fd05075fb3068745f3fe259d07d5108c4a4437ecbf25c81a2bb60",
+      "picksSha256": "41f2ada2d7115120461f15c0122a064564391300dcddf5d287f0cb8c121ebc8b",
+      "fitExit": 0,
+      "fitMaxM": 0.07557798004827476,
+      "holdoutErrorM": 0.21550575538923236,
+      "registrationProduced": true,
+      "assemblyExit": 1,
+      "assemblyStdout": "",
+      "assemblyStderr": "Cannot assemble the measured site: Expected the frozen Delft plan and optical observations",
+      "outputDirectoryExists": false,
+      "receiptExists": false,
+      "newOutputParentEntries": []
+    }
+  ],
+  "passed": true
+}

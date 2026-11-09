@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Delft campus capture · OntoKin</title>
+<style>
+:root{color-scheme:dark;font:16px/1.45 system-ui,sans-serif;background:#101a21;color:#e3ebe8}
+main{max-width:1060px;margin:auto;padding:1.5rem}h1{margin:0;font-weight:620}p{max-width:80ch}
+canvas{display:block;width:100%;height:clamp(320px,62vh,660px);background:#23343e;border-radius:8px}
+button{border:1px solid #627e88;border-radius:5px;background:#263c46;color:white;font:inherit;padding:.45em .8em;cursor:pointer}
+a{color:#9fe0cf}.controls{display:flex;align-items:center;flex-wrap:wrap;gap:1rem;margin-top:1rem}
+small{display:block;margin-top:1rem}pre{white-space:pre-wrap}
+</style>
+<script type="importmap">{"imports":{"three":"./three/build/three.webgpu.js","three/webgpu":"./three/build/three.webgpu.js","three/tsl":"./three/build/three.tsl.js","three/addons/":"./three/examples/jsm/"}}</script>
+<main>
+<h1>The Aula and Library in Delft</h1>
+<p>The cone rises from the library's grass roof. The Aula is the long building across the plaza. Drag to orbit the photographic capture, or scroll to zoom. This view uses the scan's original coordinate frame.</p>
+<canvas id="canvas" aria-label="Interactive photographic reconstruction of the university campus"></canvas>
+<div class="controls"><button id="reset">Campus view</button><label><input type="checkbox" checked id="visible"> Show scan</label><span id="status" role="status">Opening the local capture…</span></div>
+<small>Capture by Yingwen Yu, 2025. The preview retains 140,000 of 1,991,216 splats and uses view-independent color. <a href="https://doi.org/10.17605/OSF.IO/P3CW7">Original dataset</a> · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></small>
+</main>
+<script type="module">
+import * as THREE from 'three/webgpu';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {GLTFGaussianSplatLoaderExtension} from 'three/addons/loaders/GLTFGaussianSplatLoaderExtension.js';
+const $ = id => document.getElementById(id);
+async function openScan() {
+  const report = await (await fetch('delft.json')).json();
+  const response = await fetch('delft.glb');
+  if (!response.ok) throw Error('Could not open the campus GLB');
+  const bytes = await response.arrayBuffer();
+  const sha = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),v=>v.toString(16).padStart(2,'0')).join('');
+  if (sha !== report.glbSha256 || bytes.byteLength !== report.glbBytes) throw Error('Scan digest or length differs from the conversion report');
+  const loader = new GLTFLoader(); loader.register(p=>new GLTFGaussianSplatLoaderExtension(p));
+  const begin = performance.now();
+  const gltf = await loader.parseAsync(bytes,'');
+  const parseMs = performance.now() - begin;
+  let splats=0;
+  gltf.scene.traverse(o=>{if(o.isGaussianSplat) splats+=o.splatGeometry.getAttribute('position').count;});
+  if(splats !== report.retainedSplats) throw Error('Splat count differs from the conversion report');
+  const renderer = new THREE.WebGPURenderer({canvas:$('canvas'),forceWebGL:true,antialias:false});
+  await renderer.init();
+  const scene=new THREE.Scene(); scene.background=new THREE.Color(0x23343e);scene.add(gltf.scene);
+  const camera=new THREE.PerspectiveCamera(37,1,.02,80);camera.up.set(0,-1,0);
+  const controls=new OrbitControls(camera,$('canvas'));
+  function draw(){ renderer.render(scene,camera); }
+  function reset(){camera.position.set(-2,-13,0.2);controls.target.set(.2,-.7,9.7);controls.update();draw();}
+  controls.addEventListener('change',draw);
+  new ResizeObserver(()=>{const c=$('canvas');renderer.setSize(c.clientWidth,c.clientHeight,false);camera.aspect=c.clientWidth/c.clientHeight;camera.updateProjectionMatrix();draw();}).observe($('canvas'));
+  $('reset').onclick=reset;
+  $('visible').onchange=()=>{gltf.scene.visible=$('visible').checked;draw();};
+  reset();
+  $('status').textContent=splats.toLocaleString('en-US')+' splats · WebGL2';
+  $('status').dataset.receipt=JSON.stringify({sha256:sha,bytes:bytes.byteLength,splats,parseMs,backend:renderer.backend.isWebGLBackend?'WebGL2':'other'});
+}
+openScan().catch(e=>{$('status').textContent=e.message;$('status').dataset.error='true';});
+</script></html>

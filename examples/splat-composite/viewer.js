@@ -31,6 +31,9 @@ const loader = new GLTFLoader(manager);
 loader.register(parser => new GLTFGaussianSplatLoaderExtension(parser));
 let renderer, mixer, action, admission, authoredScene, selected, environmentKey, previousFrame, playing = false;
 let frameSamples = [], metrics = {}, firstFrameAt, sceneTime = 0;
+const capturedSite = Boolean($('campus'));
+let needsRender = true;
+controls.addEventListener('change', () => { needsRender = true; });
 
 function relative(path, base) {
   if (typeof path !== 'string' || !path.split('/').every(s => /^[A-Za-z0-9_-][A-Za-z0-9_.-]*$/.test(s))) {
@@ -97,7 +100,21 @@ function checkedAsset(base, asset, limit) {
   return readBytes(relative(asset.path, base), limit, asset.sha256);
 }
 
+function setCamera(eye, target, far, fov = 36) {
+  controls.target.set(...target);
+  camera.position.set(...eye);
+  camera.far = far;
+  camera.fov = fov;
+  camera.updateProjectionMatrix();
+  controls.update();
+}
+
 function fixedView(screen) {
+  if (capturedSite) {
+    if (screen) setCamera([0.07, 0.55, 3.45], [0, 0.31, -0.34], 600);
+    else setCamera([8, 4, 4], [0, 0.7, 0], 600);
+    return;
+  }
   // Only authored geometry influences the orbit target and overview.
   const box = new THREE.Box3().setFromObject(authoredRoot);
   if (box.isEmpty()) return;
@@ -114,6 +131,7 @@ function fixedView(screen) {
 }
 
 function setTime(value) {
+  needsRender = true;
   sceneTime = value;
   $('time').value = String(value);
   $('seconds').textContent = value.toFixed(3) + ' s';
@@ -236,18 +254,31 @@ async function start() {
   new ResizeObserver(([entry]) => {
     const {width, height} = entry.contentRect;
     renderer.setSize(width, height, false);
+    needsRender = true;
     camera.aspect = width / Math.max(1,height); camera.updateProjectionMatrix();
   }).observe($('canvas').parentElement);
   $('time').oninput = () => setTime(Number($('time').value));
   $('play').onclick = () => { playing = !playing; $('play').textContent = playing ? 'Pause' : 'Play'; };
-  $('environment').onchange = () => { backgroundRoot.visible = $('environment').checked; };
+  $('environment').onchange = () => {
+    backgroundRoot.visible = $('environment').checked;
+    needsRender = true;
+  };
   $('overview').onclick = () => fixedView(false);
   $('screen').onclick = () => fixedView(true);
+  if (capturedSite) {
+    $('assembly').onchange = () => { authoredRoot.visible = $('assembly').checked; needsRender = true; };
+    $('campus').onclick = () => setCamera([45, 145, 120], [0, 0, -20], 600);
+    $('reverse').onclick = () => setCamera([-4, 1.7, -1.5], [0, .45, 0], 600);
+    $('foreground').onclick = () => setCamera([11.177, 4.727, .567], [0, .22, 0], 600, 14);
+    $('low').onclick = () => setCamera([7.449, .693, 5.015], [0, .22, 0], 600, 14);
+  }
   $('baseline').onclick = () => load('baseline');
   $('widened').onclick = () => load('widened');
   await load('baseline');
   renderer.setAnimationLoop(now => {
     if (rendererFailure) return;
+    // The larger capture has no changing pixels while paused and the camera is stationary.
+    if (capturedSite && !playing && !needsRender) { previousFrame = undefined; return; }
     if (previousFrame !== undefined && authoredScene) {
       const dt = now - previousFrame;
       if (frameSamples.length < 120 && dt > 0) { frameSamples.push(dt); if (frameSamples.length % 10 === 0) updateMetrics(); }
@@ -255,6 +286,7 @@ async function start() {
     }
     previousFrame = now;
     renderer.render(scene, camera);
+    needsRender = false;
     if (firstFrameAt !== undefined) {
       metrics.firstCompositeSubmitMs = +(performance.now() - firstFrameAt).toFixed(2);
       firstFrameAt = undefined; updateMetrics();
