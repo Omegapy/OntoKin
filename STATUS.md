@@ -1,10 +1,14 @@
-# OntoKin development status — C177
-
-## Main integration lease
-
-Owner `c178-anchors-846f` holds the main integration lease through 2026-11-09T15:11:00Z for the surveyed-capture experiment and checkpoint. The observed base is `172bd8ae5900dcd5d002584e04cef90b0ef784a2`. The bounded branch is `work/c178-capture-registration`.
+# OntoKin development status — C178
 
 ## Current checkpoint
+
+The [Delft campus trial](docs/engineering/captured-environment-c178/README.md) registers an existing photographic Gaussian-splat capture to independent Dutch building outlines and airborne laser elevations. Three roof corners gave a 0.061 m RMS fit error. The fourth corner was held out and differed by 0.216 m against a 1.00 m visual tolerance. The estimated reference uncertainty is 0.60 m. An edited cart and gate play in the courtyard. Both source-to-mesh checks still measure 0.46 m per side for the original cart and 0.30 m after widening.
+
+[PR #111](https://github.com/Omegapy/OntoKin/pull/111) merged at [5de9ea6cf348](https://github.com/Omegapy/OntoKin/commit/5de9ea6cf348579f3e4c89ea51615552d3bfc31e) with the reviewed tree. The merged replay rebuilt both carts, reproduced the fit and both receipts, and refused an altered holdout and a consistently shifted site. The software WebGL2 viewer fetched the campus once across the edit. Photo-derived foreground splats attenuated the cart at a fixed camera. The late pose retained a faint rim. The 30-interval software runs had multi-second stalls. The reduced aerial capture has limited cart-scale detail.
+
+The C178 kit freezes a rotary-indexer repair task and a neutral scoring protocol. Next prepare equivalent editable starters and qualify a shared GLB checker before running the two agent trials. Cart-scale visual fidelity, native hardware WebGPU, collision geometry, full release verification and comparative costs remain open. In broader local QA, unit discovery reached the stock 900-second limit after 1,796 recorded passing methods on the identified QA snapshot. The 95 focused product tests and seven service-entrance regressions passed separately. Owner `c178-anchors-846f` releases the main integration lease on publication of this record.
+
+## Previous checkpoint at C177
 
 The selected feature is a read-only external environment for agent-authored physical objects. The [composite example](examples/splat-composite/README.md) binds an editable cart, its recorded GLB, an existing splat GLB and a measured frame transform. The Linux experiment reproduced 0.46 m and 0.30 m of clearance on each side after widening the cart from 0.58 m to 0.90 m. Chromium drew the two layers on software WebGL2. The fixed-camera trial observed the cart behind, partly behind and in front of a synthetic screen. A separate published Biker scan passed preflight and rendered on its own. [Evidence](docs/engineering/external-environment-c177/verification.json)
 
