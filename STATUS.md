@@ -1,20 +1,14 @@
-# OntoKin development status — C170
-
-## Main integration lease
-
-Owner `c175-language-d194` holds the main integration lease through 2026-11-09T13:41:08Z to archive the external model experiments and return active development to the C169 language baseline. Starting main is `038370794d828972cf5a06cdceac50275eda65f0`. The archive worker owns only `archive/c174-model-research`.
+# OntoKin development status — C175
 
 ## Current checkpoint
 
-The [observation developer tools](examples/perception/README.md) import model outputs into a versioned, inspectable format and test editable OntoKin actions against measured samples. On a published 155-frame human capture, a root-motion segment had 17.58 mm maximum error over eight held-out frames. A 13-phase left-knee hinge reached 9.83° maximum error over 38 held-out frames. A separately calibrated synthetic object track recovered −8.2 m/s² acceleration and passed a half-gravity counterfactual.
+**Language development is active.** Start from GitHub `main` and use the first language feature the owner specifies. A fresh Linux CPU checkout can run the [agent editing example](README.md#try-an-agent-edit) and export an animation. The language implementation and its tests match the [C169 graceful-stop checkpoint](https://github.com/Omegapy/OntoKin/commit/941f350b98512ab9967b5ac16ec569fe04beb8be).
 
-**Language-function and duct development remain paused for a fresh FlowHMR video reconstruction.** Solv3R completed real image and video reconstruction on Linux CPU. In a separate Linux environment, FlowHMR executed its pretrained 20-step motion generator. The official fixed-camera video command stopped at the access checks for the SAM 3D Body weights, MHR model and neutral MANO/SMPL-H model. The next task is to run that video through a project-controlled Linux worker with the authorized assets, then evaluate the recovered motion. [Linux execution record](examples/perception/LINUX-WORKERS.md)
+The owner archived the FlowHMR and Solv3R work for a future persistent environment. The unfinished greenhouse capture is recorded with the [research archive](docs/maintenance/model-research-archive.md). Existing C169 evidence and its outstanding torque timeout are recorded below. The same-direction duct solver is deferred until the owner selects duct fitting again.
 
-[PR #107](https://github.com/Omegapy/OntoKin/pull/107) integrated the feature. [PR #108](https://github.com/Omegapy/OntoKin/pull/108) corrected the timeout test for Linux PID namespaces at [c8710c5bb834](https://github.com/Omegapy/OntoKin/commit/c8710c5bb8347933fe35554e9db09fb1e19a1ae7). The 37 developer-tool tests and all 73 targeted parser, evaluator and exporter tests passed. The three generated GLBs passed Khronos validation and Three.js playback checks. The original C169 duct replay also passed. The full Linux core on the first C170 candidate is recorded as failed. 4,210 unit tests reported success. The original 30-second torque export timed out during class setup, preventing 13 torque-read tests from starting. 6 other stages passed.
+Owner `c175-language-d194` releases the main integration lease with publication of this checkpoint.
 
-Owner `c170-observe-b7f3` releases the main integration lease with publication of this checkpoint.
-
-## Previous checkpoint at C169
+## Previous language checkpoint at C169
 
 The two-elbow fitter can now repair a legal 1 mm straight that measures 0.99992752 mm in the starting GLB. It tests whether the recorded port positions support the correction, then verifies all six openings on a trial export before submitting one atomic source edit. The 16 frozen cases gave 13 fits and three pre-edit refusals. Three.js measured at most 5.746 µm of rim separation across 78 joints against a 10 µm limit. Original clearances that round to identical geometry can produce the same fit. [Source, limits and replay](examples/connected-duct/README.md#c169--fit-straight-lengths-at-the-source-limits)
 
@@ -22,7 +16,7 @@ The two-elbow fitter can now repair a legal 1 mm straight that measures 0.999927
 
 **Duct fitting is paused after C169.** The next development work is the owner's planned features for developing the language. Start that work from current `main`. Resume duct fitting when the owner selects it again. The first deferred task is to fit two fixed ports with the same flow direction using a caller-specified lead length. A hand-authored example exists in the C169 handoff. The solver work has not started.
 
-Owner `c169-pause-be0d` released the C169 lease at the pause checkpoint.
+Owner `c169-pause-be0d` releases the integration lease with publication of this pause.
 
 ## Previous checkpoint at C168
 

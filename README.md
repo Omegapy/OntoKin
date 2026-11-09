@@ -6,7 +6,7 @@ OntoKin (pronounced **ON-toh-kin**) is a programming language under development,
 
 The current direction begins with exterior 3D models and short animations. Those objects should remain reusable in larger scenes, video games, and eventually more complex virtual worlds. Physics and mechanics are central to the design; mathematics gives those descriptions precise meaning.
 
-Developers can also [fit an editable OntoKin action to observed motion](examples/perception/README.md) and check the exported animation against a published human capture.
+Current development uses the CPU-based language tools below. The [model research archive](docs/maintenance/model-research-archive.md) preserves the separate FlowHMR and Solv3R experiments for later use.
 
 ## Try an agent edit
 
