@@ -1,5 +1,9 @@
 # OntoKin development status — C187 two-carriage gauge
 
+## Active main integration lease
+
+Owner `c188-shoe-2c02b689` holds main integration for the C188 left-shoe repair evidence on `work/c188-localized-shoe-repair` until 2026-11-09T21:39:45Z. Reserved paths are `STATUS.md`, `README.md` and `docs/engineering/linear-gauge-repair-c188/`. Base `9286338765966fc57e67d8b5c8db19a726cdc9ff`. Independent work on other paths may continue.
+
 ## Current checkpoint
 
 Two fresh agents built seven-part, editable two-carriage gauges in Blender/Python and OntoKin. Both starters passed on their first submission. Each lane reached its 15 mm minimum gap at 2 s after 300 mm of travel. Four clean rebuilds reproduced the submitted GLBs byte for byte, and both exports opened at the same three poses. [Measurements, editable starters and verification](docs/engineering/linear-gauge-c187/README.md)
