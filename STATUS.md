@@ -1,6 +1,16 @@
-# OntoKin development status — C169
+# OntoKin development status — C170
 
 ## Current checkpoint
+
+The [observation developer tools](examples/perception/README.md) import model outputs into a versioned, inspectable format and test editable OntoKin actions against measured samples. On a published 155-frame human capture, a root-motion segment had 17.58 mm maximum error over eight held-out frames. A 13-phase left-knee hinge reached 9.83° maximum error over 38 held-out frames. A separately calibrated synthetic object track recovered −8.2 m/s² acceleration and passed a half-gravity counterfactual.
+
+**Language-function and duct development remain paused for a fresh FlowHMR video reconstruction.** Solv3R completed real image and video reconstruction on Linux CPU. In a separate Linux environment, FlowHMR executed its pretrained 20-step motion generator. The official fixed-camera video command stopped at the access checks for the SAM 3D Body weights, MHR model and neutral MANO/SMPL-H model. The next task is to run that video through a project-controlled Linux worker with the authorized assets, then evaluate the recovered motion. [Linux execution record](examples/perception/LINUX-WORKERS.md)
+
+[PR #107](https://github.com/Omegapy/OntoKin/pull/107) integrated the feature. [PR #108](https://github.com/Omegapy/OntoKin/pull/108) corrected the timeout test for Linux PID namespaces at [c8710c5bb834](https://github.com/Omegapy/OntoKin/commit/c8710c5bb8347933fe35554e9db09fb1e19a1ae7). The 37 developer-tool tests and all 73 targeted parser, evaluator and exporter tests passed. The three generated GLBs passed Khronos validation and Three.js playback checks. The original C169 duct replay also passed. The full Linux core on the first C170 candidate is recorded as failed. 4,210 unit tests reported success. The original 30-second torque export timed out during class setup, preventing 13 torque-read tests from starting. 6 other stages passed.
+
+Owner `c170-observe-b7f3` releases the main integration lease with publication of this checkpoint.
+
+## Previous checkpoint at C169
 
 The two-elbow fitter can now repair a legal 1 mm straight that measures 0.99992752 mm in the starting GLB. It tests whether the recorded port positions support the correction, then verifies all six openings on a trial export before submitting one atomic source edit. The 16 frozen cases gave 13 fits and three pre-edit refusals. Three.js measured at most 5.746 µm of rim separation across 78 joints against a 10 µm limit. Original clearances that round to identical geometry can produce the same fit. [Source, limits and replay](examples/connected-duct/README.md#c169--fit-straight-lengths-at-the-source-limits)
 
@@ -8,7 +18,7 @@ The two-elbow fitter can now repair a legal 1 mm straight that measures 0.999927
 
 **Duct fitting is paused after C169.** The next development work is the owner's planned features for developing the language. Start that work from current `main`. Resume duct fitting when the owner selects it again. The first deferred task is to fit two fixed ports with the same flow direction using a caller-specified lead length. A hand-authored example exists in the C169 handoff. The solver work has not started.
 
-Owner `c170-observe-b7f3` renews the main integration lease until 00:52 UTC on November 9, 2026. [PR #107](https://github.com/Omegapy/OntoKin/pull/107) holds the isolated observation tool. Separate Linux environments have executed a complete pretrained Solv3R reconstruction and a FlowHMR motion-generator control. Restricted body assets still block fresh FlowHMR video reconstruction. The legacy Linux core run and feature qualification are in progress.
+Owner `c169-pause-be0d` released the C169 lease at the pause checkpoint.
 
 ## Previous checkpoint at C168
 
