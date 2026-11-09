@@ -14,6 +14,12 @@ Start with complete exterior models, characters, props, mechanisms, and short an
 
 The [capability definition](docs/product/OK-CAP-001-modeling-motion-and-object-structure.md) supplies this modeling emphasis. The [PRD](docs/product/OK-PRD-001-product-requirements.md) retains the broader product ambition. Their historical review statuses remain visible; adopted language rules and measured implementation claims have separate records.
 
+## November 2026 priority • Editable objects in external environments
+
+An agent should be able to place an OntoKin assembly in an existing captured or generated environment, change one named part, and verify the effect on the delivered geometry and motion. The language owns editable object identity, units, physical intent and revision history. Specialized tools can provide scenery, rendering, geometry or simulation through explicit, independently checked interfaces.
+
+Start with a read-only Gaussian-splat environment and the service-entrance cart. Keep the environment and its coordinate registration fixed while the agent edits the cart. Base each clearance or collision claim on identified engineering geometry with a stated check. Before increasing investment in new backends, compare an unseen repair and reuse task with the same agent using Blender/Python. Record correctness, local edit isolation, tokens, time and human intervention. [C177 product decision and acceptance sequence](docs/engineering/external-environment-c177/README.md)
+
 ## Development priority: flexible execution budgets
 
 The owner's October 29, 2026 direction prioritizes developing the language's capabilities and enabling increasingly complex 3D objects, animations and simulations. Keep the ordinary execution defaults of 100,000 operations and 30,000 ms, while adding an explicit language feature through which an entry program requests higher limits within resource ceilings authorized by its execution environment. Examples include 200,000 or 400,000 operations and 60, 75 or 80 seconds of computation time. Modeled animation duration remains a separate source value.

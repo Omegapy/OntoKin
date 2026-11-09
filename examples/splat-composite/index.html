@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OntoKin · Composite scene lab</title>
+<style>
+:root{color-scheme:dark;font:16px/1.45 system-ui,sans-serif;background:#101a21;color:#e3ebe8}
+*{box-sizing:border-box}body{margin:0}main{max-width:1100px;margin:auto;padding:1.5rem}
+header{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap}
+h1{font-size:clamp(1.5rem,4vw,2.25rem);margin:0}.eyebrow{font:600 .75rem system-ui,sans-serif;letter-spacing:.15em;color:#8fcfc0;text-transform:uppercase}
+p{margin:.55rem 0 1rem}.stage{background:#23343e;position:relative;height:clamp(300px,55vh,640px);border-radius:.55rem;overflow:hidden}
+canvas{display:block;width:100%;height:100%}.row{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;margin:.8rem 0}
+button{background:#263c46;color:#f3f8fa;border:1px solid #506975;border-radius:.35rem;padding:.5rem .85rem;font:inherit;cursor:pointer}
+button:hover,button[aria-pressed=true]{background:#335b5b}button:disabled{opacity:.55;cursor:wait}input{accent-color:#8bcabb}#time{width:min(45vw,420px)}
+output{font-variant-numeric:tabular-nums}#status{color:#b3d9cb;min-height:1.5rem}#status[data-error=true]{color:#ffc1a8}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#17262e;padding:1em}summary{cursor:pointer}
+</style>
+<script type="importmap">{"imports":{"three":"./three/build/three.webgpu.js","three/webgpu":"./three/build/three.webgpu.js","three/tsl":"./three/build/three.tsl.js","three/addons/":"./three/examples/jsm/"}}</script>
+<main><header><h1>Composite scene lab</h1><span class="eyebrow">OntoKin · experimental</span></header>
+<p>The editable cart and gate share a scene with a read-only splat environment. Drag to orbit, or choose a fixed view.</p>
+<div class="stage"><canvas id="canvas" aria-label="3D scene with cart, gate and registered splat environment"></canvas></div>
+<div class="row"><button id="baseline" disabled>Original cart</button><button id="widened" disabled>Widened cart</button>
+<button id="overview">Overview</button><button id="screen">Screen view</button>
+<label><input type="checkbox" id="environment" checked> Show environment</label></div>
+<div class="row"><button id="play" disabled>Play</button><label for="time">Time</label>
+<input type="range" id="time" min="0" max="1" step="0.01" value="0" disabled>
+<output for="time" id="seconds">0.00 s</output></div>
+<p role="status" id="status">Opening renderer…</p>
+<details><summary>Load and frame measurements</summary><pre id="metrics">Waiting for first frame</pre></details>
+</main>
+<script type="module">
+import('./viewer.js').catch(error => {
+  const status = document.querySelector('#status');
+  status.dataset.error = 'true';
+  status.textContent = 'Viewer could not start. Serve this folder on localhost with the pinned Three.js files installed. ' + error.message;
+});
+</script>
+</html>
