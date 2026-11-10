@@ -2,7 +2,7 @@
 
 ## Main integration lease
 
-No active main integration lease. Owner `c193-recovery-3be63d9c` releases the lease with verified publication of this record, prepared `2026-11-10T21:39:16.796661+00:00`, after [PR #126](https://github.com/Omegapy/OntoKin/pull/126) merged at `fd9b17ba30617da8bea939321e2dc2bb7823385f` and actual resulting-main checks passed. The reviewed and merged trees match exactly. [Merge verification](docs/engineering/guide-repair-c193/evidence/recovery/publication/resulting-main/result.json) · [Recovery and integration](docs/engineering/guide-repair-c193/RECOVERY.md)
+Owner `c194-recovery-40c44e91` holds the C194 integration lease, acquired from observed main `3c9fcaa4daff7b32e7b813ba05041212c1a5bc2f` at `2026-11-10T22:46:03.136283+00:00` and expiring `2026-11-10T23:16:03.136283+00:00`. Scope: publish and review the recovered C194 preparation, original public edit/reuse pair and retained evidence; verify resulting main; release the lease and save the complete handoff. Reserved shared files: `STATUS.md` and the C194 integration records. Original worker histories and all historical failures remain preserved. Independent nonoverlapping work may continue on its own branch.
 
 ## Current checkpoint
 
