@@ -2,7 +2,7 @@
 
 ## Main integration lease
 
-Owner `c190-recovery-eb7f3f78` holds main integration through `2026-11-10T00:54:00Z` for recovery and completion of the C190 shoe-contact experiment, `docs/engineering/shoe-contact-c190/**` and its STATUS update in [PR #123](https://github.com/Omegapy/OntoKin/pull/123). The preceding `c190-contact-2c282014` lease expired at 00:08:54Z. Recovery reconciled unchanged main `ce5d6e4b1efc9388f9d5a0072288b11fe009c4b6`, preserved the original checkpoint, published the reconstructed evaluator, and received the sealed native unsupported-contact result. The missing original trial artifacts are being replaced by explicitly identified recovery replication evidence. Runtime, legacy tests and hosted workflows remain unchanged. Release follows verified integration.
+Owner `c190-completion-d0b9f6a7` holds main integration through `2026-11-10T01:39:48Z` to complete and publish the recovered C190 results in [PR #123](https://github.com/Omegapy/OntoKin/pull/123). Scope: `README.md`, `STATUS.md`, and `docs/engineering/shoe-contact-c190/**`. The prior recovery lease expired at `2026-11-10T00:54:00Z`. Current reconciliation found main `4e1b5d1f1eeb5dc67807ed82f3675ab0412f3de2` and the scope branch `b54ff44546df2f675916aabbe02d55382a000ea1` unchanged. The surviving recovery workspace contains sealed native deliveries, completed audits, rendered evidence and uncommitted publication files. Fresh replay reproduced all six expected outcomes and verified the evaluator/runtime seals. This continuation verifies and publishes those surviving results; it is not another participant trial. Runtime, legacy tests and hosted workflows remain unchanged. Release follows verified integration.
 
 ## Current checkpoint
 
