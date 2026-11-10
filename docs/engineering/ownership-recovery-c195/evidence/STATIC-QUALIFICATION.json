@@ -1,0 +1,106 @@
+{
+  "schema": "ontokin.c195.static-qualification/0.1",
+  "native_builds": 0,
+  "native_resimulations": 0,
+  "author_trials": 0,
+  "passed": true,
+  "sources": {
+    "ok": {
+      "baseline_sha256": "2143515f358e36c1dd9a1deef83dba2519a99be6141b64d8bd9dae987761fbd0",
+      "candidate_sha256": "3a56565df8cc0f5e3707835b96a485652d47fc94191e6c1a45bd4bda3f2e788b",
+      "exact_two_deltas": true
+    },
+    "python": {
+      "baseline_sha256": "c8530e67bdc8d5afa6be10091476544f12623824e4862a7a12ff7b42f0d55bde",
+      "candidate_sha256": "55bb4349dddb05b4301c08b35ac46d8b820600f4bbea3247acc1aedb149024dc",
+      "exact_two_deltas": true
+    }
+  },
+  "diagnostics": {
+    "ok": {
+      "binding": "glb-guided-contact-0.1",
+      "attempt_id": "0bd4ea4a79fb4d7abb36d1cfae520a75",
+      "source_sha256": "3a56565df8cc0f5e3707835b96a485652d47fc94191e6c1a45bd4bda3f2e788b",
+      "canonical_input_sha256": null,
+      "successful": false,
+      "committed": false,
+      "accepted_revision": null,
+      "previous_revision": null,
+      "levels": {
+        "represented": true,
+        "constructed": false,
+        "evaluated": false,
+        "exported": false,
+        "destination_validated": false
+      },
+      "diagnostics": [
+        {
+          "code": "C193_E_OWNERSHIP",
+          "phase": "validate",
+          "message": "Collider is assigned to the wrong mass owner",
+          "span": {
+            "path": "candidate.ok",
+            "source_sha256": "3a56565df8cc0f5e3707835b96a485652d47fc94191e6c1a45bd4bda3f2e788b",
+            "start_byte": 2400,
+            "end_byte": 2412,
+            "start_line": 81,
+            "start_column": 17,
+            "end_line": 81,
+            "end_column": 29
+          },
+          "blocked_levels": [
+            "constructed",
+            "evaluated",
+            "exported",
+            "destination_validated"
+          ]
+        }
+      ],
+      "cost": {
+        "requested_operations": null,
+        "requested_elapsed_ms": null,
+        "host_operations_ceiling": 1000000,
+        "host_elapsed_ms_ceiling": 80000,
+        "operations_consumed": 921,
+        "operation_components": {
+          "source_field_checks": 82,
+          "source_reference_checks": 12,
+          "source_tokens": 827
+        },
+        "elapsed_ms": 3.7590540014207363,
+        "native_elapsed_ms": 0.0,
+        "cancellation_completion_ms": null,
+        "native_result_bytes": 0,
+        "native_log_bytes": 0,
+        "staged_output_bytes": 0
+      },
+      "runtime": {
+        "executable_sha256": null,
+        "build_hash": null,
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+      },
+      "artifact_directory": null,
+      "artifacts": {}
+    },
+    "python": {
+      "error": "ValueError: $.colliders.contact.left_shoe.owner: differs from frozen constant",
+      "cost": {
+        "requested_operations": null,
+        "requested_elapsed_ms": null,
+        "host_operations_ceiling": 1000000,
+        "host_elapsed_ms_ceiling": 80000,
+        "operations_consumed": 25,
+        "operation_components": {
+          "schema_values": 25
+        },
+        "elapsed_ms": 0.07519999962823931,
+        "native_elapsed_ms": 0.0,
+        "cancellation_completion_ms": null,
+        "native_result_bytes": 0,
+        "native_log_bytes": 0,
+        "staged_output_bytes": 0
+      },
+      "native_launched": false
+    }
+  }
+}
