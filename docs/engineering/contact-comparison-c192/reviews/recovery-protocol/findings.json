@@ -1,0 +1,99 @@
+{
+  "review": "C192 recovery protocol/source review",
+  "candidate": "0dd0e1fb44abb73d2fef65bc3a318c54ca2ea13f",
+  "baseline": "afae5f59558bc90200691f6727709124d2e119ea",
+  "reviewer_identity": "c192_protocol_recovery",
+  "branch": "work/c192-recovery-protocol",
+  "owned_scope": "docs/engineering/contact-comparison-c192/reviews/recovery-protocol/**",
+  "independence": "New recovery reviewer, not an original author or previous cross-reviewer; original workspace read only",
+  "decision": "APPROVE_EVIDENCE_INTEGRATION",
+  "approved_delivery_count": 0,
+  "protocol_or_source_blockers": [],
+  "publication_closure_obligations": [
+    {
+      "id": "C192-RECOVERY-PROTOCOL-01",
+      "status": "integrator_closure_required",
+      "severity": "publication",
+      "finding": "At the reviewed candidate, old STATUS lease/merge language is conditional, no actual merge receipt is supplied, and NEXT-TASK refers to outgoing CHECKPOINT-C192.json and README-START-HERE.md absent from that candidate tree.",
+      "required_action": "Publish observed main/PR/lease and applicable resulting-main checks. Include the named outgoing files with exact recovery instructions and the C193 boundary.",
+      "integrator_response": "Root reports that outgoing files will be created after actual integration and STATUS updated under a new observed-head lease. Completion is not claimed by this review."
+    },
+    {
+      "id": "C192-RECOVERY-PROTOCOL-02",
+      "status": "integrator_retention_required",
+      "severity": "recoverability",
+      "finding": "Four participant commit objects were absent from the restored repository at initial review. Their original source/receipt bytes are recovered, and the old repository still has both two-commit participant histories.",
+      "required_action": "Retain and verify original participant commits in the outgoing Git bundle; disclose any remaining history boundary.",
+      "integrator_response": "Root will retain original participant commits under refs/checkpoints/c192-* and verify the final bundle. This review independently read the old Git objects without writing to that workspace."
+    }
+  ],
+  "evidence_limits": [
+    "Pre-dispatch freeze is established by hashes, commit ancestry and saved timestamps. Fresh/default/empty-history/no-extra-delegation/no-human-intervention statements are coordinator and participant attestations, not independently recovered provider telemetry.",
+    "First observations are not provider launch timestamps; endpoints and optional inspection/report work differ. No comparative speed/cost inference is supported.",
+    "Only saved build-attempt records can be enumerated; provider-level work not exposed by the environment cannot be audited.",
+    "This review did not rerun native, receiving, original fresh-author trials, or the inherited failed legacy cohort.",
+    "Prior route reviewers reviewed the opposite author route and disclosed prior authorship; they did not independently approve their own authored route.",
+    "No live destination collision-physics, general reusable program, production backend, broader comparative reliability, complete release, or full GOAL acceptance is established."
+  ],
+  "narrative_and_next_task": {
+    "both_routes_rejected_at_both_targets": true,
+    "recorded_native_contact_and_playback_distinguished_from_acceptance": true,
+    "literal_source_reuse_not_general_libraries": true,
+    "C193_requires_original_gates_and_versioned_change": true,
+    "capture_frame_alignment_is_hypothesis_only": true,
+    "C193_execution_in_this_review": false,
+    "legacy_driver": "FAILED; 4239 passing methods and 13 torque artifact-read methods not run at original setup deadline, retained without rerun or relabeling",
+    "runtime_historical_tests_contracts_checkers_workflows": "No diff outside authorized C192/README/STATUS scope against merged C191",
+    "prior_metadata_correction": "Original verification script and prior arrays retained; no-additional-rebuild entries now use fresh_rebuild_performed=false and rebuild_exact=null. No numerical gate changed."
+  },
+  "reviewed_file_hashes": {
+    "README.md": "0bd5d69af4f237b473bd0badfa3368234872d69b007a298431aeb2b9b1d27cea",
+    "NEXT-TASK.md": "04b68aa1af663de11b170f0e3c83bf338f46bd6f6d0e77421c52079eb0a65cb4",
+    "results.json": "0a2cce4ef173938b573ba425fb80263fe69d925407f8278fcd36141eeabefa53",
+    "frozen/INPUT-FREEZE.json": "ee0840f60497964c77d2c2ee2355ff369d807aa3b4d3b6fb648e2bd0a416e3d2",
+    "frozen/BRIEF.md": "1cda40e65a5bb9e51356d310649859d91d9fe7abe198e5c543ab54313b194ab5",
+    "evidence/dispatch.json": "0bb9d8ea18d92973af6b6ab89a617c1681455d9b139cbce662202bce7d077964",
+    "evidence/accounting.json": "79b8c6194559315d5b8346c5f8f16accfa257720c6653afec0ccc5671140f0b6",
+    "evidence/first-edit-scores.json": "d547e4b0b15416de47357f040b919365f3188d51f6e6eff7eee9d70ea98e86e4",
+    "evidence/archive.json": "572a93e6ba61f1fb7234f6fd00b57135e592e223c9d828fb127171623a198223",
+    "evidence/phase1-archive.json": "db507f713d74ee974f725b2ff722854125ae58a0a2ce115717f3edbaa5d8f1ce",
+    "reviews/protocol/REVIEW.md": "4113b362b0e54531e713cd346a65dc504a67cef74a71b8fb71e6851e381f2996",
+    "reviews/protocol/findings.json": "5f4b349a698c262beba2c93faf77f01ce287a3508a8d7f17e18b4019c1e3e577",
+    "reviews/numerical/REVIEW.md": "b41d560c69c95868004cdd82cff9ceabaecb6ec1f5b78c28af50fc0832080be2",
+    "reviews/numerical/findings.json": "ddabceb278c5da847c7c9a296a2c698503cb4bd96d4ae733b79e0c67c6c597ec",
+    "reviews/final-narrative.json": "0293db6a5cb8836700179cacc4c1d20465c43653710da93a8e8b3eb0c81d8454"
+  },
+  "reviewer_nonzero_commands": [
+    {
+      "argv": [
+        "python3",
+        "-"
+      ],
+      "cwd": "/workspace/scratch/9c186c07eb69/review-protocol",
+      "stdin": "from pathlib import Path\nimport json,tarfile\np=Path('docs/engineering/contact-comparison-c192')\nfor name in ['phase1-evidence.tar.xz','evidence.tar.xz']:\n with tarfile.open(p/name) as t:\n  names=t.getnames(); print(name,len(names),names[:4]);print('manifest',json.dumps(json.load(t.extractfile('MANIFEST.json')) if len(names)<20 else {k:type(v).__name__ for k,v in json.load(t.extractfile('MANIFEST.json')).items()}))\nprint('ok inventory',json.dumps({k:type(v).__name__ for k,v in json.loads((p/'participants/ok/evidence/reuse/phase-start.json').read_text()).items()}))\nprint('python inventory',json.dumps({k:type(v).__name__ for k,v in json.loads((p/'participants/python/receipts/reuse/prior-build-inventory.json').read_text()).items()}))\nprint('phase1 receipt',json.dumps({k:v for k,v in json.loads((p/'evidence/phase1-archive.json').read_text()).items() if k!='files'},indent=2))\n",
+      "exit_code": 1,
+      "error": "KeyError: filename MANIFEST.json not found",
+      "classification": "Reviewer-only archive layout assumption; phase1 uses external evidence/phase1-archive.json. Corrected audit verifies all 86 members and passes; no original evidence was changed."
+    },
+    {
+      "argv_template": [
+        "git",
+        "show",
+        "-s",
+        "--format=%H %P %cI",
+        "<participant_commit>"
+      ],
+      "cwd": "/workspace/scratch/9c186c07eb69/review-protocol",
+      "commits": [
+        "721f3691935cadf0d11cead973db11358071d33b",
+        "9a98e15ad242ddc0d20288fa8f43e6ef44e164c6",
+        "375f0df7bb63e8d7b72c7f0cf41643db3000da22",
+        "f3b1b5fa89e1e19075793e0c75b3e68b53c5a844"
+      ],
+      "exit_code_each": 128,
+      "error_each": "fatal: bad object <participant_commit>",
+      "classification": "Observed initial restored-object boundary; successful original-repository show commands are retained in receipt.json."
+    }
+  ],
+  "reviewed_at_utc": "2026-11-10T15:54:48.178214+00:00"
+}

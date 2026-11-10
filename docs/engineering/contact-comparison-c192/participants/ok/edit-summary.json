@@ -1,0 +1,77 @@
+{
+  "version": "C192-ok-edit-participant-1",
+  "route": "ok",
+  "phase": "edit",
+  "formal_submission": 1,
+  "first_observed_utc": "2026-11-10T14:54:02+00:00",
+  "work_complete_utc": "2026-11-10T14:58:43.373569+00:00",
+  "observed_work_elapsed_s": 281.373569,
+  "timing_note": "First timestamp is the first shell observation after dispatch, not a provider dispatch timestamp. Work completion is recorded before the local evidence commit and final handoff.",
+  "starting_commit": "9d1118f63195c8458aa804f2a99922cc780365aa",
+  "starting_tree": "5a5b22ddc1763d876c6f10339f20112977ee699d",
+  "branch": "work/c192-ok-author",
+  "source_path": "/workspace/scratch/d52b43d02a92/participants/ok/docs/engineering/contact-comparison-c192/participants/ok/sources/01-edit.ok",
+  "source_sha256": "d399117bde6bd6bdd1d224f7794494f03938e1dcb21a7a7d1ff3c71aca0fd782",
+  "formal_submissions": 1,
+  "source_edit_actions": 1,
+  "repair_rounds": 0,
+  "native_build_attempts": 1,
+  "native_build_failures": 1,
+  "independent_checker_calls": 1,
+  "native_reopens": 1,
+  "observed_participant_invocations": 1,
+  "coordinator_followups": 1,
+  "human_interventions": 0,
+  "coordinator_followup": "Preserve the numerical mapping failure as formal submission 1, finish the independent self-check, and conclude without an extra native retry.",
+  "model_settings": "platform defaults as assigned",
+  "provider_tokens": "unavailable",
+  "provider_cost": "unavailable",
+  "hidden_model_turns": "unavailable",
+  "build_successful": false,
+  "accepted_artifact_directory": null,
+  "retained_failed_stage": "/workspace/scratch/d52b43d02a92/c192-runs/ok/edit-build-01/store/attempts/88e214ce617f4f609190ecf9a710ef66/failed-stage",
+  "delivery_receipt": "/workspace/scratch/d52b43d02a92/c192-runs/ok/edit-build-01/delivery.json",
+  "failure_diagnostics": [
+    {
+      "code": "C191_E_MAPPING",
+      "phase": "export",
+      "message": "Mapping exceeds 0.2 mm: native=0.24463765670705492, continuous=0.2719610733359383",
+      "span": {
+        "path": "01-edit.ok",
+        "source_sha256": "d399117bde6bd6bdd1d224f7794494f03938e1dcb21a7a7d1ff3c71aca0fd782",
+        "start_byte": 133,
+        "end_byte": 157,
+        "start_line": 5,
+        "start_column": 8,
+        "end_line": 5,
+        "end_column": 32
+      },
+      "blocked_levels": [
+        "exported",
+        "destination_validated"
+      ]
+    }
+  ],
+  "self_check": {
+    "overall_pass": false,
+    "playback_pass": true,
+    "mapping_pass": false,
+    "mapping_reason": "AssertionError: "
+  },
+  "independent_native_reopen": {
+    "passed": true,
+    "samples": 481,
+    "configuration_unchanged": true,
+    "reconstructed_or_repaired": false,
+    "all_481_native_samples_equal": true
+  },
+  "read_only_nonzero_command": {
+    "command": "rg --files docs -g AGENTS.md",
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "",
+    "meaning": "No matching nested instructions; a chained git identity read was rerun successfully."
+  },
+  "reuse_started": false,
+  "interpretation": "Shared-environment workflow evidence only. The required source edit was represented, constructed and evaluated but failed export mapping. No comparative advantage, isolation, provider cost, complete release or GOAL completion claim."
+}

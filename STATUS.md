@@ -1,10 +1,22 @@
-# OntoKin development status — C191 source-owned guided contact
+# OntoKin development status — C192 paired contact edit results
 
 ## Main integration lease
 
-Owner `c192-recovery-9c186c07` holds the main integration lease for recovery and final integration of C192 evidence through `2026-11-10T16:20:06.981646+00:00`. Acquired from observed main `1b311a9b884d5de638d0247d2e0233dd19f05e62` through an expected-head nonforce update after the former lease expired at 2026-11-10T15:44:36.028873+00:00. Scope is README.md, STATUS.md and docs/engineering/contact-comparison-c192/**. PR #125 and the surviving final local checkpoint are being reconciled. Preserve all failed deliveries and unchanged gates; release after verified merge and resulting-main checks.
+Owner `c192-recovery-9c186c07` holds the main integration lease through `2026-11-10T16:20:06.981646+00:00` for final recovery of [PR #125](https://github.com/Omegapy/OntoKin/pull/125). Lease `4f54fa0ee87fe1b11660652a2373ca9ad2c9b9f1` was acquired from observed main `1b311a9b884d5de638d0247d2e0233dd19f05e62` after its former lease expired. Scope is README.md, STATUS.md and docs/engineering/contact-comparison-c192/**. Release follows the actual merge and resulting-main checks. [Recovery record](docs/engineering/contact-comparison-c192/RECOVERY.md)
 
 ## Current checkpoint
+
+[C192's public paired comparison](docs/engineering/contact-comparison-c192/README.md) is complete with **both routes rejected at both targets**. Two fresh default authors changed only the left-stop coordinate in experimental .ok and direct Python sources, using the same qualified native constructor and recorded-output binding. At 362.5 and 372.5 mm, both routes reproduce the expected 182.5 and 192.5 mm left travel and approximately 15 mm right clearance. Their canonical inputs, native poses and raw/final GLBs match exactly.
+
+Both correct edits exceed the unchanged 0.2 mm mapping allowance: native-sample maxima are 0.244638 and 0.292416 mm; continuous bounds are 0.271961 and 0.322647 mm. Native contact and final playback checks pass, but all six participant builds remain unaccepted diagnostic outputs. Four fresh coordinator rebuilds reproduce them; ten independent saved-scene replays match all 481 samples. The first sources and earlier outputs remain unchanged through reuse. [Measurements](docs/engineering/contact-comparison-c192/results.json)
+
+Eight raw/final GLB paths have zero Khronos errors/warnings and four informational unused-sampler findings. Three.js evaluates 24 poses; twelve actual Blender import/render panels were reviewed. Two post-participant cross-reviews approve integration of the evidence, not acceptance of the rejected recordings. Provider tokens/cost/exact snapshot remain unavailable. Prepared setup and participant work are separately disclosed; no comparative advantage is established.
+
+Next: [C193 diagnoses and repairs the shared native guide/mapping failure](docs/engineering/contact-comparison-c192/NEXT-TASK.md). Use two fresh default subagents with empty histories here, separate directories, and no separate host or isolation preflight. Preserve the failures and original gates. Do not repeat completed C190/C191/C192 trials to recover an interrupted conversation.
+
+The inherited legacy driver remains **FAILED**: C191 recorded 4,239 passing methods and thirteen .22 torque artifact-read methods NOT RUN after the original 30,000 ms setup deadline. C192 changes no historical runtime, contract, test, checker, budget or hosted workflow and does not rerun or relabel that old gate. Sixteen external roles, other unexecuted compatibility, general contact, live destination physics, a production backend and the full GOAL remain open.
+
+## Previous checkpoint at C191
 
 [C191](docs/engineering/guided-contact-c191/README.md) qualifies an explicitly selected experimental source-to-Blender/Bullet contact adapter for the seven-part gauge. The source owns two 1 kg carriage bodies, four shoe/stop collider identities and their geometry/relationships; the native solver supplies motion. Three enabled stop cases yield 200, 175 and 187.5 mm left travel. Disabling only the left shoe collider yields 250 mm. The other lane retains 300 mm travel and 15 mm clearance.
 

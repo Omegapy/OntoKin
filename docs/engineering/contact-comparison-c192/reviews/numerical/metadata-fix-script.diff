@@ -1,0 +1,12 @@
+--- verify_builds-before.py
++++ verify_builds.py
+@@ -72,7 +72,8 @@
+             assert inspection["opened_scene_sha256"] == report["hashes"]["scene.blend"]
+             inspections.append({"kind": kind, "all_481_samples_equal": True, "configuration_unchanged": True,
+                                 "scene_sha256": inspection["opened_scene_sha256"]})
+-        result = {"id": label, "submitted": original_score, "rebuild_exact": entry.get("rebuild", True),
++        result = {"id": label, "submitted": original_score, "fresh_rebuild_performed": entry.get("rebuild", True),
++                  "rebuild_exact": True if entry.get("rebuild", True) else None,
+                   "native_inspections": inspections, "verification_completed": True,
+                   "experimental_delivery_pass": original_score["pass"]}
+         results.append(result)

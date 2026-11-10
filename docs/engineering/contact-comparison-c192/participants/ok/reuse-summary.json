@@ -1,0 +1,230 @@
+{
+  "version": "C192-ok-reuse-participant-1",
+  "route": "ok",
+  "phase": "reuse",
+  "formal_submission_in_phase": 1,
+  "first_phase_commit": "721f3691935cadf0d11cead973db11358071d33b",
+  "first_observed_utc": "2026-11-10T14:59:55.533894407Z",
+  "work_complete_utc": "2026-11-10T15:03:45.045669+00:00",
+  "observed_work_elapsed_s": 229.511775,
+  "timing_note": "Measured from first shell observation after dispatch through report preparation; final commit and handoff follow. Coordinator owns exact dispatch and submission timestamps.",
+  "first_submission_remains_rejected": true,
+  "source_edit_actions": 1,
+  "formal_submissions": 1,
+  "repair_rounds": 0,
+  "native_build_attempts": 2,
+  "native_build_failures": 2,
+  "independent_checker_calls": 2,
+  "native_reopens": 0,
+  "observed_participant_invocations": 1,
+  "coordinator_followups_after_phase_dispatch": 0,
+  "human_interventions": 0,
+  "model_settings": "platform defaults as assigned",
+  "provider_tokens": "unavailable",
+  "provider_cost": "unavailable",
+  "hidden_model_turns": "unavailable",
+  "sources": {
+    "earlier": {
+      "path": "/workspace/scratch/d52b43d02a92/participants/ok/docs/engineering/contact-comparison-c192/participants/ok/sources/01-edit.ok",
+      "sha256": "d399117bde6bd6bdd1d224f7794494f03938e1dcb21a7a7d1ff3c71aca0fd782"
+    },
+    "reuse": {
+      "path": "/workspace/scratch/d52b43d02a92/participants/ok/docs/engineering/contact-comparison-c192/participants/ok/sources/02-reuse.ok",
+      "sha256": "9e12b46d44c33a7a8701b8947ffc3d060e033a4564bae5f489dbd00aef009f5d"
+    }
+  },
+  "cases": {
+    "reuse": {
+      "artifact_directory": "/workspace/scratch/d52b43d02a92/c192-runs/ok/reuse-build-01/store/attempts/ca5af75b3b5c426faa1db0ce3bca769d/failed-stage",
+      "delivery_receipt": "/workspace/scratch/d52b43d02a92/c192-runs/ok/reuse-build-01/delivery.json",
+      "source_sha256": "9e12b46d44c33a7a8701b8947ffc3d060e033a4564bae5f489dbd00aef009f5d",
+      "canonical_sha256": "80d0c4d04ee531069c8c220872904e382ae468070c73fbf2dd2fcf9113f5b123",
+      "build_successful": false,
+      "diagnostics": [
+        {
+          "code": "C191_E_MAPPING",
+          "phase": "export",
+          "message": "Mapping exceeds 0.2 mm: native=0.29241623943579215, continuous=0.32264731193203877",
+          "span": {
+            "path": "02-reuse.ok",
+            "source_sha256": "9e12b46d44c33a7a8701b8947ffc3d060e033a4564bae5f489dbd00aef009f5d",
+            "start_byte": 133,
+            "end_byte": 157,
+            "start_line": 5,
+            "start_column": 8,
+            "end_line": 5,
+            "end_column": 32
+          },
+          "blocked_levels": [
+            "exported",
+            "destination_validated"
+          ]
+        }
+      ],
+      "self_check": {
+        "case": "reuse",
+        "pass": false,
+        "playback_pass": true,
+        "mapping_pass": false,
+        "final_sha256": "cf2b08ceb1c31b1c588f4e14311ed560ad58def10682d4c61ccbcb4878f7875a"
+      },
+      "playback_metrics": {
+        "left_travel_mm": 192.49999523162842,
+        "left_gap_mm": -6.51925802230835e-06,
+        "right_travel_mm": 300.00001192092896,
+        "right_gap_mm": 14.99998290091753,
+        "contact_band_entry_s": 1.5359998667796984,
+        "max_penetration_mm": 0.05193706601858139,
+        "maximum_rebound_mm": 0.05193054676055908,
+        "unrelated_pairs": 20
+      },
+      "artifact_hashes": {
+        "source.ok": {
+          "bytes": 3400,
+          "sha256": "9e12b46d44c33a7a8701b8947ffc3d060e033a4564bae5f489dbd00aef009f5d"
+        },
+        "canonical-input.json": {
+          "bytes": 2370,
+          "sha256": "80d0c4d04ee531069c8c220872904e382ae468070c73fbf2dd2fcf9113f5b123"
+        },
+        "scene.blend": {
+          "bytes": 613968,
+          "sha256": "ddde89339f9093605d67442fb587be45786be559ba9af1aa317ab96dc35e3bdb"
+        },
+        "raw.glb": {
+          "bytes": 33640,
+          "sha256": "0076951b6475b1be1d20b5da0db491aad13c1869d20b63624a7cac388763f042"
+        },
+        "final.glb": {
+          "bytes": 33588,
+          "sha256": "cf2b08ceb1c31b1c588f4e14311ed560ad58def10682d4c61ccbcb4878f7875a"
+        },
+        "native-transforms.json": {
+          "bytes": 935374,
+          "sha256": "131e91618a9ba926212f19e56504101ee77a6d725f8c79c22baf136e57612b5f"
+        }
+      }
+    },
+    "edit-regeneration": {
+      "artifact_directory": "/workspace/scratch/d52b43d02a92/c192-runs/ok/edit-regeneration-01/store/attempts/a1a958b383664c64aca5db144454f015/failed-stage",
+      "delivery_receipt": "/workspace/scratch/d52b43d02a92/c192-runs/ok/edit-regeneration-01/delivery.json",
+      "source_sha256": "d399117bde6bd6bdd1d224f7794494f03938e1dcb21a7a7d1ff3c71aca0fd782",
+      "canonical_sha256": "1358dde89cb28862f827ddad9b56a1479f44677270b2d1ce77f6c2091db2f86c",
+      "build_successful": false,
+      "diagnostics": [
+        {
+          "code": "C191_E_MAPPING",
+          "phase": "export",
+          "message": "Mapping exceeds 0.2 mm: native=0.24463765670705492, continuous=0.2719610733359383",
+          "span": {
+            "path": "01-edit.ok",
+            "source_sha256": "d399117bde6bd6bdd1d224f7794494f03938e1dcb21a7a7d1ff3c71aca0fd782",
+            "start_byte": 133,
+            "end_byte": 157,
+            "start_line": 5,
+            "start_column": 8,
+            "end_line": 5,
+            "end_column": 32
+          },
+          "blocked_levels": [
+            "exported",
+            "destination_validated"
+          ]
+        }
+      ],
+      "self_check": {
+        "case": "edit",
+        "pass": false,
+        "playback_pass": true,
+        "mapping_pass": false,
+        "final_sha256": "9eea3d5931a26bff7ec8d4a98b1ba3f1963c0e89802a70e5e8284ae9d10828c1"
+      },
+      "playback_metrics": {
+        "left_travel_mm": 182.50000476837158,
+        "left_gap_mm": -6.51925802230835e-06,
+        "right_travel_mm": 300.00001192092896,
+        "right_gap_mm": 14.99998290091753,
+        "contact_band_entry_s": 1.4559999859929085,
+        "max_penetration_mm": 0.052801333367824554,
+        "maximum_rebound_mm": 0.052794814109802246,
+        "unrelated_pairs": 20
+      },
+      "artifact_hashes": {
+        "source.ok": {
+          "bytes": 3400,
+          "sha256": "d399117bde6bd6bdd1d224f7794494f03938e1dcb21a7a7d1ff3c71aca0fd782"
+        },
+        "canonical-input.json": {
+          "bytes": 2370,
+          "sha256": "1358dde89cb28862f827ddad9b56a1479f44677270b2d1ce77f6c2091db2f86c"
+        },
+        "scene.blend": {
+          "bytes": 613968,
+          "sha256": "eb818725c7ad0f0613651ec264ad75311ba40a0e71888b49f1efa0fc15cd3220"
+        },
+        "raw.glb": {
+          "bytes": 33640,
+          "sha256": "e29bf3d15092aed5f9535367d586e9970cdc62a7a9af13c227b5e32120ff9d06"
+        },
+        "final.glb": {
+          "bytes": 33588,
+          "sha256": "9eea3d5931a26bff7ec8d4a98b1ba3f1963c0e89802a70e5e8284ae9d10828c1"
+        },
+        "native-transforms.json": {
+          "bytes": 939106,
+          "sha256": "63666ee88dfc95659e727ba9de80d2d822d3a41487c472709dc1e42f1e199c87"
+        }
+      }
+    }
+  },
+  "preservation": {
+    "pass": true,
+    "original_scoped_files_checked": 37,
+    "original_external_files_checked": 62,
+    "failures": [],
+    "first_source_sha256": "d399117bde6bd6bdd1d224f7794494f03938e1dcb21a7a7d1ff3c71aca0fd782",
+    "first_phase_commit": "721f3691935cadf0d11cead973db11358071d33b"
+  },
+  "canonical_changes": [
+    {
+      "path": "$.parts.left_stop.at_mm[0]",
+      "before": 362.5,
+      "after": 372.5
+    }
+  ],
+  "regeneration": {
+    "source.ok": {
+      "byte_equal": true,
+      "original_sha256": "d399117bde6bd6bdd1d224f7794494f03938e1dcb21a7a7d1ff3c71aca0fd782",
+      "regenerated_sha256": "d399117bde6bd6bdd1d224f7794494f03938e1dcb21a7a7d1ff3c71aca0fd782"
+    },
+    "canonical-input.json": {
+      "byte_equal": true,
+      "original_sha256": "1358dde89cb28862f827ddad9b56a1479f44677270b2d1ce77f6c2091db2f86c",
+      "regenerated_sha256": "1358dde89cb28862f827ddad9b56a1479f44677270b2d1ce77f6c2091db2f86c"
+    },
+    "native-transforms.json": {
+      "byte_equal": true,
+      "original_sha256": "63666ee88dfc95659e727ba9de80d2d822d3a41487c472709dc1e42f1e199c87",
+      "regenerated_sha256": "63666ee88dfc95659e727ba9de80d2d822d3a41487c472709dc1e42f1e199c87"
+    },
+    "raw.glb": {
+      "byte_equal": true,
+      "original_sha256": "e29bf3d15092aed5f9535367d586e9970cdc62a7a9af13c227b5e32120ff9d06",
+      "regenerated_sha256": "e29bf3d15092aed5f9535367d586e9970cdc62a7a9af13c227b5e32120ff9d06"
+    },
+    "final.glb": {
+      "byte_equal": true,
+      "original_sha256": "9eea3d5931a26bff7ec8d4a98b1ba3f1963c0e89802a70e5e8284ae9d10828c1",
+      "regenerated_sha256": "9eea3d5931a26bff7ec8d4a98b1ba3f1963c0e89802a70e5e8284ae9d10828c1"
+    },
+    "scene.blend": {
+      "byte_equal": false,
+      "original_sha256": "cdf89ef009e703ff2a33f6f9ba4f903eeba572ca489c7af0bce364db70d91bd3",
+      "regenerated_sha256": "eb818725c7ad0f0613651ec264ad75311ba40a0e71888b49f1efa0fc15cd3220"
+    },
+    "native_samples_equal": true
+  },
+  "phase_outcome": "Both requested source variants were built and checked. Both final playbacks pass and both fixed mapping gates fail. Reuse acceptance is not established.",
+  "interpretation": "Literal-source reuse with retained failures in a public shared environment. No general class/library reuse, comparative advantage, isolation, provider cost or complete release claim."
+}
