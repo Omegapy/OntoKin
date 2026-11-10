@@ -2,7 +2,7 @@
 import csv
 import math
 
-from .common import Failure, PARTS, canonical_bytes, schema_check, strict_json
+from .common import Failure, PARTS, canonical_bytes, schema_check, sha256, strict_json
 
 
 def near(value, expected, tolerance=1e-7):
@@ -42,6 +42,7 @@ def validate_native(path, context, budget, contract):
             raise ValueError("Native result revision or canonical-input mismatch")
         initial = result["samples"][0]
         centers = source_centers(context.canonical)
+        maximum_attachment_deviation_mm = 0.0
         for frame, record in enumerate(result["samples"]):
             if record["frame"] != frame or record["time_s"] != frame / 240:
                 raise ValueError("Native sample sequence/time mismatch")
@@ -77,12 +78,32 @@ def validate_native(path, context, budget, contract):
                                    [max(point[a] for point in points) for a in range(3)]]
                 if not near(bounds, expected_bounds, tolerance=0.0002):
                     raise ValueError("Native bounds disagree with recorded matrices/geometry")
+            for lane in ("left", "right"):
+                parent_name, child_name = lane + "_carriage", lane + "_shoe"
+                parent = record["matrices_blender_m"][parent_name]
+                child = record["matrices_blender_m"][child_name]
+                child_config = result["configuration"]["objects"][child_name]
+                offset = child_config["location"]
+                for vertex in child_config["mesh_vertices"]:
+                    budget.charge("native_attachment_vertex_checks")
+                    actual = [sum(child[a][k] * vertex[k] for k in range(3)) + child[a][3] for a in range(3)]
+                    expected = [sum(parent[a][k] * (vertex[k] + offset[k]) for k in range(3)) + parent[a][3] for a in range(3)]
+                    deviation_mm = 1000 * math.sqrt(sum((a - b) ** 2 for a, b in zip(actual, expected)))
+                    maximum_attachment_deviation_mm = max(maximum_attachment_deviation_mm, deviation_mm)
+                    if deviation_mm > 0.1:
+                        raise ValueError("Native shoe/body attachment exceeds 0.1 mm: " + child_name)
         for lane in ("left", "right"):
             name = lane + "_carriage"
             first_speed = (result["samples"][1]["matrices_blender_m"][name][0][3]
                            - initial["matrices_blender_m"][name][0][3]) * 1000 * 240
             if abs(first_speed - context.canonical["bodies"]["body." + lane]["feed_mm_s"]) > 0.5:
                 raise ValueError("Native first-interval feed differs from source")
+        (path.parent / "native-validation.json").write_bytes(canonical_bytes({
+            "source_sha256": context.sha, "native_result_sha256": sha256(data),
+            "samples_checked": len(result["samples"]),
+            "maximum_attachment_vertex_deviation_mm": maximum_attachment_deviation_mm,
+            "attachment_limit_mm": 0.1,
+            "method": "At every recorded state, compare each shoe vertex transformed by its own native world matrix with the same vertex through its frozen body-local offset and owning carriage native matrix."}))
         return result
     except Failure:
         raise
