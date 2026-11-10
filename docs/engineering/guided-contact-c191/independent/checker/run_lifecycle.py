@@ -65,7 +65,7 @@ def source_span(source, anchor):
         "start_line": line, "start_column": column, "end_line": end_line, "end_column": end_column}
 
 
-def mutate_float(path, *, axis=0, time_value=False, increment=.001):
+def mutate_float(path, *, axis=0, time_value=False, rotation_value=False, increment=.001):
     data = bytearray(path.read_bytes())
     length, kind = struct.unpack_from("<II", data, 12)
     assert kind == 0x4E4F534A
@@ -74,19 +74,38 @@ def mutate_float(path, *, axis=0, time_value=False, increment=.001):
     assert bin_kind == 0x004E4942 and bin_length > 0
     animation = doc["animations"][0]
     channel = next(row for row in animation["channels"]
-        if row["target"]["path"] == "translation" and doc["nodes"][row["target"]["node"]]["name"] == "left_carriage")
+        if row["target"]["path"] == ("rotation" if rotation_value else "translation")
+        and doc["nodes"][row["target"]["node"]]["name"] == "left_carriage")
     sampler = animation["samplers"][channel["sampler"]]
     accessor = doc["accessors"][sampler["input" if time_value else "output"]]
     view = doc["bufferViews"][accessor["bufferView"]]
     assert accessor["componentType"] == 5126 and accessor["count"] == 481
-    width = 1 if time_value else 3
+    width = 1 if time_value else 4 if rotation_value else 3
     offset = 28 + length + view.get("byteOffset", 0) + accessor.get("byteOffset", 0)
     offset += 100 * view.get("byteStride", width * 4) + axis * 4
     before = struct.unpack_from("<f", data, offset)[0]
     struct.pack_into("<f", data, offset, before + increment)
     path.write_bytes(data)
-    return {"file": path.name, "frame": 100, "axis": axis, "time": time_value,
+    return {"file": path.name, "frame": 100, "axis": axis, "time": time_value, "rotation": rotation_value,
         "before": before, "after": struct.unpack_from("<f", data, offset)[0], "byte_offset": offset}
+
+
+def remove_raw_rotation(path):
+    data = path.read_bytes()
+    length, = struct.unpack_from("<I", data, 12)
+    doc = json.loads(data[20:20 + length])
+    animation, = doc["animations"]
+    original = len(animation["channels"])
+    animation["channels"] = [row for row in animation["channels"]
+        if not (row["target"]["path"] == "rotation"
+                and doc["nodes"][row["target"]["node"]]["name"] == "left_carriage")]
+    assert len(animation["channels"]) == original - 1
+    encoded = json.dumps(doc, sort_keys=True, separators=(",", ":")).encode()
+    encoded += b" " * (-len(encoded) % 4)
+    binary_chunk = data[20 + length:]
+    path.write_bytes(struct.pack("<4sII", b"glTF", 2, 20 + len(encoded) + len(binary_chunk)) +
+                     struct.pack("<I4s", len(encoded), b"JSON") + encoded + binary_chunk)
+    return {"file": path.name, "removed_channel": "left_carriage rotation", "binary_bytes_unchanged": True}
 
 
 def mutate_native(stage, mutation):
@@ -132,6 +151,14 @@ def mutate_native(stage, mutation):
         record["matrices_blender_m"]["left_shoe"][0][3] += .00015
         for bound in record["bounds_gltf_mm"]["left_shoe"]:
             bound[0] += .15
+    elif mutation.startswith("helper-world:"):
+        objects[mutation.split(":", 1)[1]]["matrix_world"][0][3] += .01
+    elif mutation == "missing-native":
+        path.unlink()
+        return
+    elif mutation == "truncated-native":
+        path.write_bytes(raw[:len(raw) // 2])
+        return
     else:
         raise ValueError(mutation)
     path.write_text(json.dumps(obj, sort_keys=True, separators=(",", ":"), allow_nan=True) + "\n")
@@ -145,7 +172,7 @@ def process_group_exists(pid):
         return False
 
 
-def run(repo, destination, revision, blender, formal):
+def run(repo, destination, revision, blender, formal, selected_ids=None):
     destination.mkdir(parents=True, exist_ok=False)
     sys.path.insert(0, str(repo))
     from prototypes.guided_contact_v01.api import run as adapter_run
@@ -208,8 +235,20 @@ def run(repo, destination, revision, blender, formal):
         ("T18-disallowed-time-map", "T18", "A", "map-time"),
         ("T19-mapping-bound", "T19", "A", "map-bound"),
         ("S01-native-attachment-0p15mm", "T10", "A", "attachment"),
+        ("S02-generic-world-frame", "T10", "A", "helper-world:_left_generic"),
+        ("S03-motor-world-frame", "T10", "A", "helper-world:_left_motor"),
+        ("S04-hidden-box-world-frame", "T10", "A", "helper-world:_left_carriage_collision"),
+        ("S05-raw-native-transverse", "T17", "A", "map-native-transverse"),
+        ("S06-raw-native-quaternion", "T17", "A", "map-native-quaternion"),
+        ("S07-missing-raw-rotation-channel", "T17", "A", "map-native-rotation-drop"),
+        ("S08-missing-native-result", "T06", "A", "missing-native"),
+        ("S09-truncated-native-result", "T06", "A", "truncated-native"),
         *[(name, None, name, None) for name in ("N12-missing-backend", "N20-host-ceiling", "N36-mismatched-backend")],
     ]
+    if selected_ids:
+        unknown = set(selected_ids) - {row[0] for row in specifications}
+        assert not unknown, "Unknown selected lifecycle cases: " + repr(sorted(unknown))
+        specifications = [row for row in specifications if row[0] in selected_ids]
     save(destination / "TEST-PLAN.json", [{"id": name, "frozen_test": test, "source": source, "mutation": mutation}
         for name, test, source, mutation in specifications])
     records = []
@@ -253,20 +292,33 @@ def run(repo, destination, revision, blender, formal):
                     threads.append(thread)
                     thread.start()
             hooks["worker_started"] = worker_started
-        if mutation not in (None, "cancel", "block", "log", "stale", "output-size", "publication", "map-x", "map-time", "map-bound"):
+        if mutation not in (None, "cancel", "block", "log", "stale", "output-size", "publication",
+                            "map-x", "map-time", "map-bound", "map-native-transverse",
+                            "map-native-quaternion", "map-native-rotation-drop"):
             def before_native(stage):
                 if mutation == "native-size":
                     with (stage / "native-result.json").open("r+b") as stream:
                         stream.truncate(16777217)
                 else:
                     mutate_native(stage, mutation)
-                events["mutated_native_sha256"] = digest(stage / "native-result.json")
+                events["mutated_native_sha256"] = digest(stage / "native-result.json") if (stage / "native-result.json").exists() else None
             hooks["before_native_validation"] = before_native
         if mutation in ("map-x", "map-time"):
             def before_mapping(stage):
                 events["glb_mutation"] = mutate_float(stage / "final.glb", time_value=mutation == "map-time",
                     increment=.0001 if mutation == "map-time" else .001)
             hooks["before_mapping_validation"] = before_mapping
+        if mutation in ("map-native-transverse", "map-native-quaternion", "map-native-rotation-drop"):
+            def before_projection(stage):
+                if mutation == "map-native-transverse":
+                    events["glb_mutations"] = [mutate_float(stage / "raw.glb", axis=1, increment=.00001)]
+                elif mutation == "map-native-quaternion":
+                    events["glb_mutations"] = [mutate_float(stage / "raw.glb", rotation_value=True, increment=.00001)]
+                else:
+                    events["glb_mutations"] = [remove_raw_rotation(stage / "raw.glb")]
+            # Let the real projection produce matching receipt hashes. This
+            # isolates native correspondence from the generic digest check.
+            hooks["before_projection"] = before_projection
         if mutation == "map-bound":
             def before_projection(stage):
                 events["glb_mutation"] = mutate_float(stage / "raw.glb", axis=1, increment=.001)
@@ -378,13 +430,15 @@ def run(repo, destination, revision, blender, formal):
         print(json.dumps({"id": name, "pass": record["pass"], "failure": record.get("failure")}), flush=True)
     unchanged = inventory(repo / "prototypes/guided_contact_v01") == lock["prototype_files"] and inventory(contract) == lock["contract_files"]
     covered = {row["frozen_test"] for row in records if row["pass"] and row["frozen_test"]}
+    required = {row[1] for row in specifications if row[1]} if selected_ids else set(tests)
     return {"version": "C191-independent-lifecycle-report-1", "implementation_revision": revision,
         "input_lock_sha256": digest(destination / "INPUT-LOCK.json"), "snapshot_inputs_unchanged": unchanged,
         "accepted_baseline_formal_artifacts": str(seed), "accepted_store_copy": str(accepted_store),
         "cases": records, "passed": sum(row["pass"] for row in records), "total": len(records),
         "frozen_failure_methods_covered": sorted(covered), "frozen_failure_method_count": len(covered),
+        "selected_cases": selected_ids, "full_frozen_lifecycle_run": not bool(selected_ids),
         "all_prior_accepted_bytes_unchanged": (accepted_store / "state.json").read_bytes() == old_state and inventory(accepted_dir) == accepted_inventory,
-        "pass": all(row["pass"] for row in records) and covered == set(tests) and unchanged}
+        "pass": all(row["pass"] for row in records) and covered == required and unchanged}
 
 
 if __name__ == "__main__":
@@ -394,8 +448,9 @@ if __name__ == "__main__":
     parser.add_argument("--revision", required=True)
     parser.add_argument("--blender", type=Path, required=True)
     parser.add_argument("--formal", type=Path, required=True)
+    parser.add_argument("--only", action="append", help="Run one named case; repeated flags select several. A subset is not a full qualification.")
     args = parser.parse_args()
-    report = run(args.repo.resolve(), args.out.resolve(), args.revision, args.blender.resolve(), args.formal.resolve())
+    report = run(args.repo.resolve(), args.out.resolve(), args.revision, args.blender.resolve(), args.formal.resolve(), args.only)
     save(args.out / "summary.json", report)
     print(json.dumps({"pass": report["pass"], "passed": report["passed"], "total": report["total"]}, indent=2))
     raise SystemExit(0 if report["pass"] else 1)

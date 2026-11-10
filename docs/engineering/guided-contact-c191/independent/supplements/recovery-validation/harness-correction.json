@@ -1,0 +1,26 @@
+{
+  "version": "C191-recovery-harness-correction-1",
+  "created_utc": "2026-11-10T12:53:52.537994+00:00",
+  "original_supplement_manifest_sha256": "bb69728c39a10d60261dd1c05f6d271f0789d38948d46a7f3ef43a5029d137f2",
+  "original_frozen_inputs_changed": false,
+  "expected_outcomes_changed": false,
+  "corrected_implementation_outputs_inspected": false,
+  "reason": [
+    "The first S05/S07 mutations were after projection; they reached only the existing receipt-digest rejection, not native-pose validation.",
+    "The first S06 attempted to locate the removed rotation channel in the final GLB and raised StopIteration in the harness.",
+    "Corrected S05-S07 mutate raw GLB before the real projection. The projection generates matching receipt hashes and unchanged rotation bytes in the final buffer, so tests isolate raw/native correspondence."
+  ],
+  "before_checker_sha256": "17be41f8859f80b9358a85e0b2be0451e2ab07d2ba754935542b5822894886af",
+  "after_checker_sha256": "beb804e53b135533d9cc8cc164921b12af975d9f33d4dadf41efb4f657ab3719",
+  "retained_first_attempts": [
+    "recovery-baseline-S05-raw-native-transverse",
+    "recovery-baseline-S06-raw-native-quaternion",
+    "recovery-baseline-S07-missing-raw-rotation-channel"
+  ],
+  "retained_corrected_attempts": [
+    "recovery-baseline-r2-S05-raw-native-transverse",
+    "recovery-baseline-r2-S06-raw-native-quaternion",
+    "recovery-baseline-r2-S07-missing-raw-rotation-channel"
+  ],
+  "corrected_baseline_observation": "All three raw-native mutations were committed by f610812; expected rejection remains unchanged."
+}
