@@ -10,8 +10,13 @@ rules are unchanged.
 Both former failure witnesses now meet the original **0.2 mm** mapping limit.
 Their continuous bounds fall from **0.271961075 to 0.116436993 mm** and from
 **0.322647313 to 0.181935687 mm**. The independent native, numerical, lifecycle
-and receiving checks pass. The complete legacy driver and resulting-main
-integration disposition are recorded separately before integration.
+and receiving checks pass. The [fresh legacy disposition](evidence/recovery/legacy/disposition.json)
+records 4,239 distinct passing methods across a timed-out stock prefix and an
+independently reviewed ordered continuation. The same thirteen experimental
+torque-read methods remain NOT RUN after their unchanged setup deadline.
+All six other core command stages pass. The stock driver and the supplemental
+run remain FAILED; this is a bounded development result, not a full regression
+or release pass. Main integration and its checks are recorded separately.
 
 The interrupted-session [recovery record](RECOVERY.md) distinguishes the already
 completed qualification from fresh recovery checks. Its independent recorded

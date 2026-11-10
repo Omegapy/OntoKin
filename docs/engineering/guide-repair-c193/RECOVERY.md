@@ -60,13 +60,65 @@ two namespace controls. The reviewer inspected all 18 original render panels.
 the commands, outputs and actual scope. No native construction, resimulation or
 receiving application was rerun.
 
-The final legacy failure disposition, conditional integration and resulting-main
-verification will be published before this checkpoint closes.
-The inherited torque setup timeout remains an open, separately identified
-obligation. No hosted job, paid execution, new native trial or C194 target has
-been started by this recovery.
+The fresh legacy disposition is complete as detailed below. Conditional
+integration and resulting-main verification remain the coordinator's final
+publication steps. No hosted job, paid execution, new native trial or C194
+target has been started by this recovery.
 
 The next bounded task remains [C194](NEXT-TASK.md): first freeze and qualify
 the two new stop targets, and dispatch authors only if both pass the unchanged
 gates. C193's six cases do not prove every admitted position, a general authoring
 advantage, a production backend or completion of OntoKin.
+
+## Fresh legacy disposition
+
+[The complete disposition](evidence/recovery/legacy/disposition.json) identifies
+CPython 3.12.14 on Linux x86-64, the exact seven pinned verification packages,
+and tested commit `bc8c0918045248cd3d34c64e40c135fff0eec985`. An initial default
+900-second-supervisor attempt was intentionally stopped after 377 passing
+methods when prior complete-run evidence justified a longer command allowance.
+Its logs and incomplete result remain separate from the original unavailable run.
+
+The subsequent stock driver used its existing finite `--timeout 1800` option.
+This changes only the command supervisor; every product fixture retained its
+original operation and elapsed-time caps. Its unit command reached that outer
+limit after 3,282 passing methods and one interrupted method. The other six
+core stages then passed normally. The stock driver remains **FAILED**.
+
+An [independent review](evidence/recovery/legacy/ORDERED-REMAINDER-REVIEW.md)
+approved a separately identified continuation after that actual timeout. Fresh
+discovery reproduced all 4,252 IDs in their original order. The intact boundary
+module and all later module suites selected 970 methods, with normal unittest
+class and method setup/teardown. No previously passing method was repeated; the
+one interrupted method was retried. The tail ran 957 methods successfully.
+Its only error was the unchanged `TorqueArtifactReadTests.setUpClass` deadline,
+which prevented the remaining thirteen methods from running. The tail remains
+**FAILED** and does not relabel the stock invocation. Process warm state was not
+restored, and single-process or performance equivalence is not claimed.
+
+Combined coverage contains **4,239 distinct passing methods and exactly thirteen
+NOT RUN methods**. Every discovered obligation is accounted for, with no other
+error, failure, skip, unexpected ID or unresolved started method. The torque
+failure fingerprint matches the prior C191 baseline on program, entry, runtime
+and policy identities, `OKL-E-RESOURCE`, `execution_deadline_exceeded`, stage
+`recording_export_readback`, and the original 30,000 ms / 1,000,000-operation
+limits. Source and immutable workspace inputs remain unchanged. All inherited
+files except the existing README edit match current C192 main; shared runtime,
+tests, tools, workflows and the original v01 profile remain identical.
+
+Under [OK-ENG-009](../OK-ENG-009-development-integration-and-branch-lifecycle.md),
+this supports integration of the separately selected C193 prototype with its
+passing finite qualification. The new guide binding does not alter the affected
+legacy runtime or default entry paths. The same contained incomplete-feature
+failure remains open. Neither failed invocation, the torque release, the sixteen
+pending external roles nor the complete project is declared passed.
+
+The [final independent review](evidence/recovery/legacy/FINAL-REGRESSION-REVIEW.json)
+passes 93 audit checks, independently reconciles the raw logs and exact missing
+set, and compares the complete stable failure payload with both retained C191
+attempts. It finds no additional blocker for this bounded development increment.
+The [readable regression report](evidence/recovery/legacy/REGRESSION.md) and
+[complete 67-member archive](evidence/recovery/legacy/legacy-regression-recovery.tar.xz)
+retain all attempts, exact discovery and selection, logs, dependency pins, helpers
+and input-equality evidence. The archive has SHA-256
+`ea56f3cdf64769edbd897e42fe5133538a87020d0eaa63e6ec482a80c7ebbed7`.

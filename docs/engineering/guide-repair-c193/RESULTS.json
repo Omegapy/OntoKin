@@ -1,6 +1,6 @@
 {
   "checkpoint": "C193",
-  "state": "Native, numerical, lifecycle and receiving qualification passed; legacy driver and main integration pending",
+  "state": "Six-case experimental qualification and recovery review complete; legacy failures explicitly reconciled; main integration pending",
   "source_binding": "c193-experimental-0.1",
   "backend_binding": "blender-bullet-c193-0.1",
   "mapping_limit_mm": 0.2,
@@ -213,15 +213,61 @@
     "visual_review_pass": true
   },
   "legacy": {
-    "current_c193_driver": "RUNNING",
-    "tested_local_commit": "0ee37e101683d3eaa777c314cc2f377bd2627274",
-    "tested_tree": "ed01e6a148b50d88a52f0b7f10405cc32072b8a6",
-    "historical_c191_driver": "FAILED",
-    "historical_passing_methods": 4239,
-    "historical_not_run_methods": 13,
-    "historical_cause": "Original30000ms torque artifact-read class setup deadline"
+    "current_c193_driver": "FAILED: outer unit watchdog at 1800.045 seconds",
+    "original_interrupted_run": {
+      "publication_snapshot": {
+        "current_c193_driver": "RUNNING",
+        "tested_local_commit": "0ee37e101683d3eaa777c314cc2f377bd2627274",
+        "tested_tree": "ed01e6a148b50d88a52f0b7f10405cc32072b8a6",
+        "historical_c191_driver": "FAILED",
+        "historical_passing_methods": 4239,
+        "historical_not_run_methods": 13,
+        "historical_cause": "Original30000ms torque artifact-read class setup deadline"
+      },
+      "completed_result_recovered": false,
+      "outcome": "UNKNOWN"
+    },
+    "recovery_tested_commit": "bc8c0918045248cd3d34c64e40c135fff0eec985",
+    "recovery_tested_tree": "631034be6fcd5249af753a9852a13f76baf44493",
+    "stock_prefix_passed_methods": 3282,
+    "supplemental_tail_passed_methods": 957,
+    "combined_unique_passed_methods": 4239,
+    "combined_not_run_methods": 13,
+    "supplemental_tail": "FAILED: unchanged original .22 torque artifact-read setup deadline",
+    "same_prior_failure_fingerprint": true,
+    "six_other_core_roles_passed": true,
+    "all_fixture_limits_unchanged": true,
+    "all_method_obligations_passed": false,
+    "stock_driver_passed": false,
+    "coverage_form": "combined split-process method coverage; prior process warm state was not restored",
+    "single_process_equivalence_claimed": false,
+    "performance_equivalence_established": false,
+    "pending_external_cases": 16,
+    "receipt": "evidence/recovery/legacy/disposition.json",
+    "independent_review": {
+      "passed": true,
+      "checks": 93,
+      "receipt": "evidence/recovery/legacy/FINAL-REGRESSION-REVIEW.json"
+    },
+    "complete_archive": {
+      "path": "evidence/recovery/legacy/legacy-regression-recovery.tar.xz",
+      "bytes": 1120456,
+      "sha256": "ea56f3cdf64769edbd897e42fe5133538a87020d0eaa63e6ec482a80c7ebbed7"
+    }
   },
   "full_release_claimed": false,
   "general_authoring_advantage_claimed": false,
-  "c194_executed": false
+  "c194_executed": false,
+  "recovery": {
+    "owner": "c193-recovery-3be63d9c",
+    "independent_recorded_audit_pass": true,
+    "original_worker_git_objects_recovered": false,
+    "new_native_trials": 0,
+    "new_receiving_runs": 0,
+    "original_interrupted_regression_outcome": "UNKNOWN",
+    "current_legacy_disposition_complete": true,
+    "full_regression_pass_claimed": false,
+    "record": "RECOVERY.md",
+    "fresh_independent_audit_roles": 2
+  }
 }

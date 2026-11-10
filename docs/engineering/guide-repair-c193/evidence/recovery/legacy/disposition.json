@@ -1,0 +1,504 @@
+{
+  "schema": "c193-recovery-combined-legacy-disposition/1",
+  "created_at": "2026-11-10T21:24:53.008421+00:00",
+  "analysis_status": "completed",
+  "source": {
+    "available": true,
+    "local_head": "bc8c0918045248cd3d34c64e40c135fff0eec985",
+    "local_tree": "631034be6fcd5249af753a9852a13f76baf44493",
+    "tracked_worktree_status": "",
+    "untracked_source_files": [],
+    "head_is_base_revision": true,
+    "source_inventory_includes_untracked_files": true,
+    "remote_head_verified": false
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "python_executable": "/workspace/scratch/3be63d9ca584/recovery-regression/venv/bin/python",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "architecture": "x86_64"
+  },
+  "dependencies": {
+    "attrs": {
+      "expected": "26.1.0",
+      "actual": "26.1.0",
+      "matches": true
+    },
+    "jsonschema": {
+      "expected": "4.26.0",
+      "actual": "4.26.0",
+      "matches": true
+    },
+    "jsonschema-specifications": {
+      "expected": "2025.9.1",
+      "actual": "2025.9.1",
+      "matches": true
+    },
+    "referencing": {
+      "expected": "0.37.0",
+      "actual": "0.37.0",
+      "matches": true
+    },
+    "rpds-py": {
+      "expected": "2026.5.1",
+      "actual": "2026.5.1",
+      "matches": true
+    },
+    "typing_extensions": {
+      "expected": "4.16.0",
+      "actual": "4.16.0",
+      "matches": true
+    },
+    "Pillow": {
+      "expected": "13.0.0",
+      "actual": "13.0.0",
+      "matches": true
+    }
+  },
+  "dependency_lock_sha256": "a7f17491000c2e139ccc5d213ca0e8a6f917e5befb4b878fef29f5ff72ae780f",
+  "original_c193_interrupted_execution": {
+    "status": "unknown",
+    "result_recovered": false
+  },
+  "recovery_default900_attempt": {
+    "schema": "c193-recovery-intentionally-interrupted-inventory/1",
+    "execution": "recovery default900s attempt, distinct from original unavailable C193 run",
+    "status": "intentionally_interrupted",
+    "outer_exec_exit_code": 130,
+    "driver_final_summary_available": false,
+    "driver_summary_retained_status": "running, stale after termination",
+    "log_sha256": "4d3ebf3dc19f690bb5dce14cf97d06e7731312464105058b3771648f74496d04",
+    "started_method_count": 378,
+    "completed_success_count": 377,
+    "incomplete_started_methods": [
+      {
+        "test_id": "test_extrusion_source.ExtrusionSourceTests.test_every_valid_frozen_shape_delivers_under_default_budget",
+        "status": "no_result"
+      }
+    ],
+    "failed_started_methods": [],
+    "fixture_errors": [],
+    "official_test_counts": [],
+    "official_endings": [],
+    "subsequent_driver_steps_executed": false,
+    "complete_regression_claim": false
+  },
+  "stock_driver_status": "failed",
+  "stock_driver_exit_code": 1,
+  "stock_driver_unit_status": "failed",
+  "stock_driver_unit_reason": "Exceeded 1800 seconds",
+  "stock_driver_complete_regression_passed": false,
+  "stock_driver_steps": [
+    {
+      "id": "unit-tests",
+      "status": "failed",
+      "duration_seconds": 1800.045
+    },
+    {
+      "id": "source",
+      "status": "passed",
+      "duration_seconds": 1.273
+    },
+    {
+      "id": "agent",
+      "status": "passed",
+      "duration_seconds": 1.274
+    },
+    {
+      "id": "construction",
+      "status": "passed",
+      "duration_seconds": 76.828
+    },
+    {
+      "id": "surface",
+      "status": "passed",
+      "duration_seconds": 39.988
+    },
+    {
+      "id": "impulse",
+      "status": "passed",
+      "duration_seconds": 92.234
+    },
+    {
+      "id": "documents",
+      "status": "passed",
+      "duration_seconds": 2.678
+    }
+  ],
+  "stock_prefix_passed_methods": 3282,
+  "stock_prefix_started_methods": 3283,
+  "stock_prefix_interrupted_methods": [
+    {
+      "test_id": "test_reach_reference_sparse_cartesian.IndependentSparseCartesianTests.test_actual_character_prefix_bytes_reports_and_observed_product_costs",
+      "status": "no_result"
+    }
+  ],
+  "supplemental_tail_status": "failed",
+  "supplemental_selected_count": 970,
+  "supplemental_tests_run": 957,
+  "supplemental_passed_methods": 957,
+  "supplemental_complete_selected_cohort_passed": false,
+  "full_discovered_method_count": 4252,
+  "combined_unique_passed_methods": 4239,
+  "combined_not_run_count": 13,
+  "combined_not_run_methods": [
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_close_defers_borrowed_connection_release_without_losing_fence",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_completed_close_cannot_be_followed_by_inflight_cache_publication",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_current_authority_is_rechecked_and_reopen_has_no_cached_grant",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_idle_handle_has_no_snapshot_and_services_observe_each_commit",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_nested_and_concurrent_contexts_keep_separate_transactions",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_original_callback_cannot_mutate_verified_proof_to_accept_corrupt_bytes",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_original_callbacks_cannot_replace_proof_from_any_request_stage",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_original_miss_and_equal_bytes_preserve_all_charges_and_callbacks",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_predecessor_store_and_schema_refusal_remain_unchanged",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_real_publication_exception_rolls_back_and_close_fences_identity",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_uncaught_cache_assignment_preserves_original_callback_exception",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_warm_proof_rereads_entire_blob_metadata_and_source",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_warm_read_retains_cap_deadline_cancel_and_original_exception"
+  ],
+  "unresolved_started_methods": [],
+  "completed_nonpassing_method_observations": [],
+  "unexpected_methods": [],
+  "duplicates_within_invocation": {
+    "stock": [],
+    "tail": []
+  },
+  "previously_passing_method_overlap": [],
+  "started_method_overlap": [
+    "test_reach_reference_sparse_cartesian.IndependentSparseCartesianTests.test_actual_character_prefix_bytes_reports_and_observed_product_costs"
+  ],
+  "completed_after_original_interruption": [
+    "test_reach_reference_sparse_cartesian.IndependentSparseCartesianTests.test_actual_character_prefix_bytes_reports_and_observed_product_costs"
+  ],
+  "fixture_errors": {
+    "stock": [],
+    "tail": [
+      {
+        "fixture": "setUpClass",
+        "identity": "test_torque_artifact_reads.TorqueArtifactReadTests",
+        "status": "ERROR"
+      }
+    ]
+  },
+  "tail_skipped": [],
+  "tail_expected_failures": [],
+  "official_tail_counts_consistent": true,
+  "same_prior_thirteen_method_gap": true,
+  "fresh_failure_fingerprints": [
+    {
+      "schema_version": "ontokin.agent/0.22",
+      "operation": "export",
+      "status": "failed",
+      "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+      "entry_revision": "sha256:435c772d86ae9d43779d4a924daa9e4a287e55163a5c08cc655ed5c4e72d9a54",
+      "implementation": {
+        "name": "ontokin-reference",
+        "source_code_sha256": "sha256:3e6ef2df6a7e8837050abb949075bff9b65f6a4aa4a9f1587850d7ddd59bce56",
+        "version": "0.4.0"
+      },
+      "policy_id": "sha256:7fa5c9e224d9ca55e4f34ffcfa6986574957acd3d5a9124c4408179913fe85fc",
+      "effective": {
+        "max_elapsed_ms": 30000,
+        "max_operations": 1000000
+      },
+      "host_ceilings": {
+        "max_elapsed_ms": 30000,
+        "max_operations": 1000000
+      },
+      "source_request": {
+        "max_elapsed_ms": 30000,
+        "max_operations": 1000000
+      },
+      "stage": "recording_export_readback",
+      "budget_reason": "execution_deadline_exceeded",
+      "diagnostics": [
+        {
+          "code": "OKL-E-RESOURCE",
+          "category": "resource_limit",
+          "budget": "max_elapsed_ms",
+          "budget_reason": "execution_deadline_exceeded",
+          "limit": 30000,
+          "stage": "recording_export_readback"
+        }
+      ]
+    }
+  ],
+  "prior_baseline_failure_fingerprints": [
+    {
+      "schema_version": "ontokin.agent/0.22",
+      "operation": "export",
+      "status": "failed",
+      "program_revision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+      "entry_revision": "sha256:435c772d86ae9d43779d4a924daa9e4a287e55163a5c08cc655ed5c4e72d9a54",
+      "implementation": {
+        "name": "ontokin-reference",
+        "source_code_sha256": "sha256:3e6ef2df6a7e8837050abb949075bff9b65f6a4aa4a9f1587850d7ddd59bce56",
+        "version": "0.4.0"
+      },
+      "policy_id": "sha256:7fa5c9e224d9ca55e4f34ffcfa6986574957acd3d5a9124c4408179913fe85fc",
+      "effective": {
+        "max_elapsed_ms": 30000,
+        "max_operations": 1000000
+      },
+      "host_ceilings": {
+        "max_elapsed_ms": 30000,
+        "max_operations": 1000000
+      },
+      "source_request": {
+        "max_elapsed_ms": 30000,
+        "max_operations": 1000000
+      },
+      "stage": "recording_export_readback",
+      "budget_reason": "execution_deadline_exceeded",
+      "diagnostics": [
+        {
+          "code": "OKL-E-RESOURCE",
+          "category": "resource_limit",
+          "budget": "max_elapsed_ms",
+          "budget_reason": "execution_deadline_exceeded",
+          "limit": 30000,
+          "stage": "recording_export_readback"
+        }
+      ]
+    }
+  ],
+  "same_prior_failure_fingerprint": true,
+  "source_and_workspace_inputs_stable": true,
+  "same_contained_incomplete_feature_failure": true,
+  "no_new_or_worsened_legacy_product_failure_observed": true,
+  "performance_equivalence_established": false,
+  "outer_supervision_failures_retained": true,
+  "all_method_obligations_passed": false,
+  "coverage_form": "combined split-process method coverage; prior process warm state was not restored",
+  "single_process_equivalence_claimed": false,
+  "stock_driver_result_relabelled": false,
+  "fixture_limits_changed": false,
+  "remote_checks_executed": false,
+  "pending_external_cases": [
+    {
+      "step": "construction",
+      "report": "reports/construction.json",
+      "id": "C20",
+      "reasons": [
+        "The identified independent visual-delivery gate is pending."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M01",
+      "reasons": [
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M02",
+      "reasons": [
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M03",
+      "reasons": [
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M04",
+      "reasons": [
+        "destination: No identified surface release evidence manifest was supplied.",
+        "workflow: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M05",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M06",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M07",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M08",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M09",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M11",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied.",
+        "browser: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M12",
+      "reasons": [
+        "regression: No identified surface release evidence manifest was supplied.",
+        "ci: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "impulse",
+      "report": "reports/impulse.json",
+      "id": "I07",
+      "reasons": [
+        "workflow: No identified impulse release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "impulse",
+      "report": "reports/impulse.json",
+      "id": "I09",
+      "reasons": [
+        "workflow: No identified impulse release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "impulse",
+      "report": "reports/impulse.json",
+      "id": "I11",
+      "reasons": [
+        "workflow: No identified impulse release evidence manifest was supplied.",
+        "destination: No identified impulse release evidence manifest was supplied.",
+        "browser: No identified impulse release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "impulse",
+      "report": "reports/impulse.json",
+      "id": "I12",
+      "reasons": [
+        "regression: No identified impulse release evidence manifest was supplied.",
+        "ci: No identified impulse release evidence manifest was supplied."
+      ]
+    }
+  ],
+  "unexecuted_compatibility": "Only CPython 3.12.14 Linux x86_64 was executed; other interpreter/platform roles remain open.",
+  "release_certified": false,
+  "full_product_goal_completed": false,
+  "commands": {
+    "stock": [
+      "/workspace/scratch/3be63d9ca584/recovery-regression/venv/bin/python",
+      "tools/check_local.py",
+      "--timeout",
+      "1800",
+      "--output-dir",
+      "/workspace/scratch/3be63d9ca584/recovery-regression/stock-core-1800"
+    ],
+    "supplemental_supervisor": [
+      "/workspace/scratch/3be63d9ca584/recovery-regression/venv/bin/python",
+      "/workspace/scratch/3be63d9ca584/recovery-regression/ordered_remainder.py"
+    ],
+    "supplemental_child": [
+      "/workspace/scratch/3be63d9ca584/recovery-regression/venv/bin/python",
+      "/workspace/scratch/3be63d9ca584/recovery-regression/ordered_remainder.py",
+      "--execute"
+    ]
+  },
+  "evidence": [
+    {
+      "path": "stock-core-1800/summary.json",
+      "bytes": 21908,
+      "sha256": "fe238109dde851cd6e5719c32b00466aa1039397f3f2e29a00878647beb4bc3a"
+    },
+    {
+      "path": "stock-core-1800/logs/unit-tests.log",
+      "bytes": 626663,
+      "sha256": "8a373f7763c6c6df32c29e07432920a028760a1d2a989c4f26554338aa5501c6"
+    },
+    {
+      "path": "ordered-tail/unit-tests.log",
+      "bytes": 181253,
+      "sha256": "8c293d8b6854977fd46749e6c63fda517a03617e2181c5dee80c92e52e12cc1a"
+    },
+    {
+      "path": "ordered-tail/selection.json",
+      "bytes": 1051760,
+      "sha256": "e155075399199acc94858fa3c9b50c77b5a646b267c944f24e92958795b2ad74"
+    },
+    {
+      "path": "ordered-tail/test-result.json",
+      "bytes": 4007,
+      "sha256": "644433f0db0bdc9b49155994a450118747751e581a7b7d4af039ce0efff7177e"
+    },
+    {
+      "path": "ordered-tail/command.json",
+      "bytes": 3248,
+      "sha256": "e38260a708884e638bee53ead5a3ca0768c1756694a32c7bd2a30d788c855770"
+    },
+    {
+      "path": "input-equality.json",
+      "bytes": 2780117,
+      "sha256": "442ea844bcf430c07b00d8152aa308757ee611ec5c6c2e5c9a212fcddb2f41c6"
+    },
+    {
+      "path": "prior-source-binding.json",
+      "bytes": 2929,
+      "sha256": "b11297d55e3f92c27fbe6e9517060d0e361c940a8aab7d719a78daedf80289d3"
+    },
+    {
+      "path": "dependencies.json",
+      "bytes": 1948,
+      "sha256": "1c6a66031af8c85c31117dc78a60bb36e530872f4c9d74fd679580e855436c38"
+    },
+    {
+      "path": "ordered_remainder.py",
+      "bytes": 12337,
+      "sha256": "cfee2f1453581079a53e56137f173bfbed6f9ac6b9d9e9ea2bdadd3de53c35a1"
+    },
+    {
+      "path": "reconcile.py",
+      "bytes": 9191,
+      "sha256": "ddef88be8c195c4cf7b78f980055d0285469eeac16daf21011af39851778568a"
+    },
+    {
+      "path": "reconcile_combined.py",
+      "bytes": 11636,
+      "sha256": "51b5a57fb56543643eebb22f9880b67319abbadfa8e4400ebbab214a68db9f44"
+    }
+  ],
+  "interpretation": "The original stock driver remains FAILED for its outer unit watchdog. Separately recorded prefix and ordered-tail observations account for the complete inventory. The only unexecuted methods are the same thirteen experimental .22 artifact-read methods after the unchanged real-clock A08 setup failure. This supports the bounded development failure disposition under OK-ENG-009; it does not pass the complete regression driver, torque release, external roles, or unexecuted compatibility."
+}
