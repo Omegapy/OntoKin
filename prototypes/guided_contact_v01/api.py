@@ -28,6 +28,8 @@ def _failure(result, error, contract):
                               "blocked_levels": rule["blocked_levels"]}]
     result["successful"] = False
     result["committed"] = False
+    for level in rule["blocked_levels"]:
+        result["levels"][level] = False
     return result
 
 

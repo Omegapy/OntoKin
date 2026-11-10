@@ -119,8 +119,10 @@ class Budget:
             raise Failure("E_TIMEOUT", "Attempt elapsed deadline exhausted", self.anchor)
 
     def authorize(self, operations, elapsed_ms, operation_span, elapsed_span):
-        self.requested_operations = operations
-        self.requested_elapsed_ms = elapsed_ms
+        # Invalid fractional requests are located in source diagnostics. They
+        # are not represented as an admitted integer budget in the envelope.
+        self.requested_operations = operations if type(operations) is int else None
+        self.requested_elapsed_ms = elapsed_ms if type(elapsed_ms) is int else None
         if (type(operations) is not int or operations < 1 or operations > 1000000
                 or operations > self.host_operations):
             raise Failure("E_BUDGET", "Source operation request exceeds the authorized ceiling", operation_span)
