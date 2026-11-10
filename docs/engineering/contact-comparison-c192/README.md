@@ -155,3 +155,11 @@ is now null when no additional coordinator rebuild was requested, with a separat
 See [verification instructions](tools/README.md) for recorded replay and fresh
 native commands. The outgoing handoff's checkpoint identifies actual integration;
 inspect remote main, PR and lease before continuing after any interruption.
+
+## Interrupted-session recovery
+
+The final local evidence checkpoint survived the earlier conversation limit.
+A later continuation recovered that exact tree, retained both participant Git
+histories and performed fresh independent numerical and protocol audits. No
+participant trial was repeated. [Recovery and publication provenance](RECOVERY.md)
+records the original and recovered identities and the remaining telemetry limits.

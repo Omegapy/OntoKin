@@ -2,7 +2,7 @@
 
 ## Main integration lease
 
-Owner `c192-integration-2d0c791f` releases the main integration lease on verified merge of [PR #125](https://github.com/Omegapy/OntoKin/pull/125) and resulting-main checks. Lease `1b311a9b884d5de638d0247d2e0233dd19f05e62` was acquired by expected-head nonforce update from `afae5f59558bc90200691f6727709124d2e119ea`, bounded through `2026-11-10T15:44:36.028873+00:00`. Scope is README.md, STATUS.md and docs/engineering/contact-comparison-c192/**. The outgoing checkpoint records actual integration; a candidate alone is not a merged result.
+Owner `c192-recovery-9c186c07` holds the main integration lease through `2026-11-10T16:20:06.981646+00:00` for final recovery of [PR #125](https://github.com/Omegapy/OntoKin/pull/125). Lease `4f54fa0ee87fe1b11660652a2373ca9ad2c9b9f1` was acquired from observed main `1b311a9b884d5de638d0247d2e0233dd19f05e62` after its former lease expired. Scope is README.md, STATUS.md and docs/engineering/contact-comparison-c192/**. Release follows the actual merge and resulting-main checks. [Recovery record](docs/engineering/contact-comparison-c192/RECOVERY.md)
 
 ## Current checkpoint
 
