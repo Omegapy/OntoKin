@@ -1,0 +1,174 @@
+{
+  "version": "C193-formal-qualification-plan-1",
+  "frozen_at_utc": "2026-11-10T16:33:20.272948+00:00",
+  "authorized_by": "C193 coordinator before formal execution",
+  "preconditions": [
+    "Reviewed new contract/backend/implementation published before qualification",
+    "Independent expectations and checker freezes published before qualification",
+    "Exact pinned Blender executable verified"
+  ],
+  "source_binding": "c193-experimental-0.1",
+  "backend_binding": "blender-bullet-c193-0.1",
+  "profile": "guided-box-contact-0.1",
+  "output": "glb-guided-contact-0.1",
+  "formal_builds": [
+    {
+      "id": "A-ok-1",
+      "case": "A",
+      "route": "ok",
+      "repeat": 1,
+      "fresh_empty_scene": true,
+      "saved_scene_replay_required": true
+    },
+    {
+      "id": "A-ok-2",
+      "case": "A",
+      "route": "ok",
+      "repeat": 2,
+      "fresh_empty_scene": true,
+      "saved_scene_replay_required": true
+    },
+    {
+      "id": "B-ok-1",
+      "case": "B",
+      "route": "ok",
+      "repeat": 1,
+      "fresh_empty_scene": true,
+      "saved_scene_replay_required": true
+    },
+    {
+      "id": "B-ok-2",
+      "case": "B",
+      "route": "ok",
+      "repeat": 2,
+      "fresh_empty_scene": true,
+      "saved_scene_replay_required": true
+    },
+    {
+      "id": "C-ok-1",
+      "case": "C",
+      "route": "ok",
+      "repeat": 1,
+      "fresh_empty_scene": true,
+      "saved_scene_replay_required": true
+    },
+    {
+      "id": "C-ok-2",
+      "case": "C",
+      "route": "ok",
+      "repeat": 2,
+      "fresh_empty_scene": true,
+      "saved_scene_replay_required": true
+    },
+    {
+      "id": "D-ok-1",
+      "case": "D",
+      "route": "ok",
+      "repeat": 1,
+      "fresh_empty_scene": true,
+      "saved_scene_replay_required": true
+    },
+    {
+      "id": "D-ok-2",
+      "case": "D",
+      "route": "ok",
+      "repeat": 2,
+      "fresh_empty_scene": true,
+      "saved_scene_replay_required": true
+    },
+    {
+      "id": "E-ok-1",
+      "case": "E",
+      "route": "ok",
+      "repeat": 1,
+      "fresh_empty_scene": true,
+      "saved_scene_replay_required": true
+    },
+    {
+      "id": "E-ok-2",
+      "case": "E",
+      "route": "ok",
+      "repeat": 2,
+      "fresh_empty_scene": true,
+      "saved_scene_replay_required": true
+    },
+    {
+      "id": "F-ok-1",
+      "case": "F",
+      "route": "ok",
+      "repeat": 1,
+      "fresh_empty_scene": true,
+      "saved_scene_replay_required": true
+    },
+    {
+      "id": "F-ok-2",
+      "case": "F",
+      "route": "ok",
+      "repeat": 2,
+      "fresh_empty_scene": true,
+      "saved_scene_replay_required": true
+    },
+    {
+      "id": "E-python-1",
+      "case": "E",
+      "route": "python",
+      "repeat": 1,
+      "fresh_empty_scene": true,
+      "saved_scene_replay_required": true
+    },
+    {
+      "id": "F-python-1",
+      "case": "F",
+      "route": "python",
+      "repeat": 1,
+      "fresh_empty_scene": true,
+      "saved_scene_replay_required": true
+    }
+  ],
+  "fresh_build_count": 14,
+  "saved_scene_replay_count": 14,
+  "case_expectations": "expectations.json",
+  "required_equality": {
+    "each_ok_pair": [
+      "canonical-input.json",
+      "native-transforms.json",
+      "raw.glb",
+      "final.glb"
+    ],
+    "E_F_ok_vs_python": [
+      "canonical-input.json",
+      "native-transforms.json",
+      "raw.glb",
+      "final.glb"
+    ],
+    "saved_scene_replay": "all481 frames, times, world matrices and bounds equal to original capture",
+    "right_lane_and_unrelated_parts": "unchanged source geometry/frames/identity; compare actual native samples across every case and against retained baseline; original motion limits remain mandatory"
+  },
+  "source_conformance": {
+    "inherited_fixtures": 37,
+    "exact_translations": "source-fixtures/manifest.json",
+    "cross_binding_rejections": 2,
+    "native_execution_allowed": false
+  },
+  "independent_checks": [
+    "source canonical against independent prior fixture+case changes+new explicit selectors/hash",
+    "native scene mesh/mass/ownership/authority/settings/initial frames",
+    "unchanged historical final playback and continuous penetration/pair checks",
+    "unchanged historical all481 native/raw/final X/time and0.2mm mapping gates",
+    "independent peak vertex and guide-residual measurements",
+    "C191 D collider removal causal pass-through",
+    "all native result/constructor/backend/source/budget manifests retained"
+  ],
+  "receiving": {
+    "owner": "coordinator",
+    "raw_final_paths": 28,
+    "threejs_clips": 28,
+    "threejs_sample_poses": 84,
+    "distinct_case_final_glbs_rendered": 6,
+    "panels_per_case": 3,
+    "rendered_panels": 18,
+    "duplicate_route_render_coverage": "Exact raw/final byte equality permits same-artifact rendering evidence for duplicates",
+    "raw_visual_render_condition": "Additional raw renders only if actual mapping/receiving ambiguity needs resolution"
+  },
+  "failure_rule": "Retain every failed attempt and result. Any required failed gate leaves the new backend unqualified. No tolerance widening, added native parameter search, combined candidate or silent substitution."
+}

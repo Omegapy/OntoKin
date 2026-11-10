@@ -1,0 +1,26 @@
+(* C193 experimental finite source; not an extension accepted by the .22 parser. *)
+program = "ontokin", string, ";", "module", identifier, "@", string, ";",
+          "profile", string, ";", "backend", string, ";", "output", string, ";",
+          [ "execution", fields ], "scene", identifier, "@", string, "{",
+          { assignment | declaration }, "}" ;
+declaration = ("part" | "body" | "collider" | "follow"), identifier, "@", string, fields ;
+fields = "{", { assignment }, "}" ;
+assignment = identifier, "=", value, ";" ;
+value = string | boolean | number, [unit] | vector, [unit] ;
+vector = "[", scalar, { ",", scalar }, "]" ;
+scalar = number | string ;
+unit = "[", ("mm" | "kg" | "s" | "mm/s" | "m/s^2"), "]" ;
+boolean = "true" | "false" ;
+number = ["-"], digit, {digit}, [".", digit, {digit}], [("e"|"E"), ["+"|"-"], digit, {digit}] ;
+identifier = letter, {letter | digit | "_"} ;
+letter = "A".."Z" | "a".."z" | "_" ;
+digit = "0".."9" ;
+string = JSON_STRING ;
+(* UTF-8; JSON string escaping; // comments through end of line; whitespace is
+   insignificant. NaN/Infinity, expressions, imports, classes, inheritance,
+   arbitrary statements, duplicate/unknown fields and duplicate keys reject.
+   Module, scene and declaration labels are nonsemantic. All references use @
+   keys. Stable declaration keys are ASCII [A-Za-z_][A-Za-z0-9_.-]{0,63}.
+   Units are exact tokens; no implicit or alternate-unit conversion exists.
+   A vector of strings is syntactically representable only so invalid owner
+   cardinality receives E_OWNERSHIP instead of being silently flattened. *)

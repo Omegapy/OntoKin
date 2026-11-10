@@ -1,0 +1,71 @@
+{
+  "version": "C193-independent-final-verification-1",
+  "passed": true,
+  "source_candidate_revision": "61d20e9a941b14cea091dc38ed1e43232280ecb5",
+  "adoption_sha256": "43914daa1d93ed8f5bad4645909b4af2ff14a0b44558c6dacf6ceb71ddb5fb69",
+  "fresh_native_builds_reviewed": 14,
+  "fresh_saved_scene_replays": 14,
+  "recorded_only_replay_passed": true,
+  "native_executions_in_recorded_replay": 0,
+  "retained_failing_formal_builds_or_replays": 0,
+  "frozen_mapping_limit_mm": 0.2,
+  "maximum_native_sample_mm": 0.16554448843422753,
+  "maximum_continuous_mapping_bound_mm": 0.1819356872909128,
+  "formal_archive_sha256": "ac3c394def0f47dac0d09a9b0e24505387147f743d5c064357d210fe06d42ec0",
+  "independent_archive_sha256": "074cbe4c9392319d6a858159d09538386229cf0be97a815b5ca613ad165337c9",
+  "reports": {
+    "evidence/qualification.json": {
+      "sha256": "275349ba12592ddd69d1a5550c4914f74fc73b90788e449b9a734af4e4a02d57",
+      "bytes": 25002
+    },
+    "evidence/qualification-archive.json": {
+      "sha256": "a7a6fc2e4b02283304de37ee24aa9aa0759b44a2d84b0d5947fb4593e2544e45",
+      "bytes": 19274
+    },
+    "evidence/lifecycle-review.json": {
+      "sha256": "b2c47eff164446069e348934b2f3236a26461976c4d2099bfaf18338e73fb25e",
+      "bytes": 18359
+    },
+    "evidence/recorded-replay.json": {
+      "sha256": "71f47214748346433b5fa65ed5b22434f5b536df23f5407fdcef84d1ed1a2d20",
+      "bytes": 24993
+    }
+  },
+  "documentation_check": {
+    "command": [
+      "python3",
+      "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+    ],
+    "returncode": 0,
+    "sources_verified": 29,
+    "sections_verified": 233,
+    "documents": 710,
+    "local_links": 3861,
+    "failures": [],
+    "receipt_sha256": "89f30db8e780ddff7f008d2ccf51ba6b32b7755b68bf62a84eab702b46d25413"
+  },
+  "replay_command": {
+    "argv": [
+      "python3",
+      "-B",
+      "docs/engineering/guide-repair-c193/independent/replay_evidence.py",
+      "--formal",
+      "/workspace/scratch/ded1778500bb/c193-repair/docs/engineering/guide-repair-c193/native/formal-native-complete.tar.xz",
+      "--contract",
+      "/workspace/scratch/ded1778500bb/c193-repair/docs/language-design/guided-contact-v0.2",
+      "--candidate-repo",
+      "/workspace/scratch/ded1778500bb/c193-repair",
+      "--out",
+      "/workspace/scratch/ded1778500bb/c193-independent-recorded-replay"
+    ],
+    "cwd": "/workspace/scratch/ded1778500bb/c193-review",
+    "returncode": 0,
+    "driver_sha256": "f33a5b15967a172c9fb012b458bfa3b617d78b7a8e4ea9b1d93348142c31fbc8"
+  },
+  "historical_preservation": {
+    "files": 474,
+    "unchanged": true,
+    "original_freezes_and_checkers_unchanged": true
+  },
+  "approval_scope": "Independent numerical/source/provenance/native-scene and lifecycle obligations pass for the frozen six-case qualification. Coordinator receiving, legacy regression disposition and publication/handoff remain separate obligations."
+}

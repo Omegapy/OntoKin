@@ -1,0 +1,30 @@
+{
+  "version": "C193-provenance-control-1",
+  "passed": true,
+  "controls": [
+    {
+      "case": "current-contract",
+      "expected_acceptance": true,
+      "accepted": true,
+      "passed": true,
+      "reason": null
+    },
+    {
+      "case": "stale-C191-contract",
+      "expected_acceptance": false,
+      "accepted": false,
+      "passed": true,
+      "reason": "Source manifest names wrong contract"
+    },
+    {
+      "case": "altered-dependency-hash",
+      "expected_acceptance": false,
+      "accepted": false,
+      "passed": true,
+      "reason": "Source dependency closure differs from reviewed bytes"
+    }
+  ],
+  "checker_sha256": "cdc325180e6a785dd53f836e5888eb9be49da4c3f5ff08b779b2f611c0019759",
+  "native_executions": 0,
+  "scope": "Synthetic manifest guard controls only; formal artifact audit remains required."
+}

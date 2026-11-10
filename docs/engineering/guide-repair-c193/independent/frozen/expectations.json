@@ -1,0 +1,240 @@
+{
+  "version": "C193-independent-expectations-1",
+  "status": "frozen before native diagnostic construction changes; historical failed witnesses already inspected",
+  "base_commit": "294d84ac5c5a15e07d042e5225646c2dab440293",
+  "cases": [
+    {
+      "id": "A",
+      "left_stop_near_face_mm": 380,
+      "left_shoe_collider_enabled": true,
+      "ideal_first_contact_s": 1.6,
+      "left_final_travel_mm": 200,
+      "left_final_signed_gap_mm": 0
+    },
+    {
+      "id": "B",
+      "left_stop_near_face_mm": 355,
+      "left_shoe_collider_enabled": true,
+      "ideal_first_contact_s": 1.4,
+      "left_final_travel_mm": 175,
+      "left_final_signed_gap_mm": 0
+    },
+    {
+      "id": "C",
+      "role": "independent interpolation edit",
+      "left_stop_near_face_mm": 367.5,
+      "left_shoe_collider_enabled": true,
+      "ideal_first_contact_s": 1.5,
+      "left_final_travel_mm": 187.5,
+      "left_final_signed_gap_mm": 0
+    },
+    {
+      "id": "D",
+      "role": "causal negative control",
+      "left_stop_near_face_mm": 380,
+      "left_shoe_collider_enabled": false,
+      "ideal_first_contact_s": null,
+      "left_final_travel_mm": 250,
+      "left_final_signed_gap_mm": -50,
+      "expected_behavior": "native pass-through; no contact response"
+    },
+    {
+      "id": "E",
+      "left_stop_near_face_mm": 362.5,
+      "left_shoe_collider_enabled": true,
+      "ideal_first_contact_s": 1.46,
+      "left_final_travel_mm": 182.5,
+      "left_final_signed_gap_mm": 0,
+      "prior_case": "edit"
+    },
+    {
+      "id": "F",
+      "left_stop_near_face_mm": 372.5,
+      "left_shoe_collider_enabled": true,
+      "ideal_first_contact_s": 1.54,
+      "left_final_travel_mm": 192.5,
+      "left_final_signed_gap_mm": 0,
+      "prior_case": "reuse"
+    }
+  ],
+  "unchanged_limits": {
+    "initial_bounds_and_dimensions_mm": 0.2,
+    "linear_color_channel": 0.005,
+    "fixed_part_or_attachment_drift_mm": 0.1,
+    "final_travel_mm": 0.5,
+    "final_signed_gap_mm": 0.5,
+    "contact_onset_s": 0.005,
+    "precontact_and_right_speed_mm_s": 0.5,
+    "postcontact_speed_mm_s": 0.5,
+    "postcontact_speed_check_starts_after_ideal_s": 0.025,
+    "postcontact_rebound_displacement_mm": 0.1,
+    "maximum_native_fixed_step_s": 0.0004166666666666667,
+    "raw_to_final_vertex_mapping_mm": 0.2,
+    "positive_contact_maximum_near_face_penetration_mm": 0.5
+  },
+  "unchanged_recording": {
+    "duration_s": 2,
+    "fps": 240,
+    "keys": 481,
+    "frame_sequence": [
+      0,
+      480
+    ],
+    "time_rule": "Native capture is all frame/240 times. Every final GLB time is the unchanged IEEE float32 encoding of the corresponding native time; raw and final time accessors are identical. No dropped, added, interpolated, retimed or reordered samples.",
+    "x_rule": "Every carriage X coordinate is the unchanged IEEE float32 encoding of its native sample after the declared axis/unit/body-frame transform. Raw and final X logical values and bytes must match."
+  },
+  "unchanged_acceptance_rules": {
+    "continuous_playback_rule": "Fixed basis and piecewise-linear positions imply affine face gaps. Check every union-key interval. All 20 unrelated pairs require swept-slab separation, including D. Intended left shoe/stop is excluded only from unrelated nonoverlap; A-C penetration <=0.5 mm, D expected pass-through.",
+    "contact_onset_rule": "Report first interpolated entry into the 0.5 mm contact gap band and first zero gap separately; first 0.5 mm entry must be within 0.005 s of ideal contact. This playback time is not a Bullet event.",
+    "settling_rule": "All finite-difference intervals starting at or after ideal contact+0.025 s through 2 s have absolute left X speed <=0.5 mm/s. Do not replace this with a 10 ms gate. Pre-contact intervals ending by ideal contact-1/240 s must be within 0.5 mm/s of 125; first interval must be within 0.5.",
+    "rebound_rule": "After ideal first contact, the greatest retreat from any prior X maximum is <=0.1 mm. The 25 ms gate affects residual-speed checking only.",
+    "nonoverlap_roundoff_mm": 0.001,
+    "time_roundoff_s": 3e-07
+  },
+  "unchanged_twenty_unrelated_pairs": [
+    [
+      "base",
+      "left_carriage"
+    ],
+    [
+      "base",
+      "left_shoe"
+    ],
+    [
+      "base",
+      "left_stop"
+    ],
+    [
+      "base",
+      "right_carriage"
+    ],
+    [
+      "base",
+      "right_shoe"
+    ],
+    [
+      "base",
+      "right_stop"
+    ],
+    [
+      "left_carriage",
+      "left_shoe"
+    ],
+    [
+      "left_carriage",
+      "left_stop"
+    ],
+    [
+      "left_carriage",
+      "right_carriage"
+    ],
+    [
+      "left_carriage",
+      "right_shoe"
+    ],
+    [
+      "left_carriage",
+      "right_stop"
+    ],
+    [
+      "left_shoe",
+      "right_carriage"
+    ],
+    [
+      "left_shoe",
+      "right_shoe"
+    ],
+    [
+      "left_shoe",
+      "right_stop"
+    ],
+    [
+      "left_stop",
+      "right_carriage"
+    ],
+    [
+      "left_stop",
+      "right_shoe"
+    ],
+    [
+      "left_stop",
+      "right_stop"
+    ],
+    [
+      "right_carriage",
+      "right_shoe"
+    ],
+    [
+      "right_carriage",
+      "right_stop"
+    ],
+    [
+      "right_shoe",
+      "right_stop"
+    ]
+  ],
+  "source_invariants": {
+    "visible_parts": 7,
+    "moving_mass_owners": {
+      "body.left": 1,
+      "body.right": 1
+    },
+    "one_solver_authority_per_lane": true,
+    "source_shoe_stop_colliders": 4,
+    "massless_shoe_follow_relationships": 2,
+    "only_per_case_design_changes": [
+      "left_stop.at_mm.x",
+      "contact.left_shoe.enabled"
+    ],
+    "unrelated_source_geometry_frames_colors_relationships": "exactly unchanged",
+    "no_carriage_or_shoe_transform_driver_or_action": true,
+    "no_derived_or_authored_stop_time": true
+  },
+  "mapping_invariants": {
+    "raw_and_final_separate": true,
+    "native_to_raw_all_xyz_float32_exact": true,
+    "raw_to_final_x_bytes_exact": true,
+    "all_481_times_float32_exact": true,
+    "source_meshes_colors_hierarchy_fixed_transforms_shoe_local_transforms_identical": true,
+    "allowed_projection": [
+      "remove carriage rotation channels",
+      "replace carriage transverse translation with initial values"
+    ],
+    "all_other_binary_bytes_identical": true,
+    "native_sample_vertex_limit_mm": 0.2,
+    "raw_sample_vertex_limit_mm": 0.2,
+    "continuous_raw_to_final_vertex_bound_mm": 0.2,
+    "continuous_method": "unchanged C190 conservative rotation/translation bound; no claim over native unrecorded substeps"
+  },
+  "qualification": {
+    "versioned_backend_mapping_adopted_before_qualification": true,
+    "retained_bindings_and_bytes_preserved": true,
+    "both_routes_same_new_constructor": true,
+    "fresh_builds_per_case": 2,
+    "saved_scene_reopen_clear_cache_resimulation_for_each_build": true,
+    "new_backend_native_configuration_matches_adopted_bytes": true,
+    "repeated_canonical_native_raw_final_bytes_identical": true,
+    "blend_bytes_need_not_be_identical": true,
+    "right_lane_source_exactly_unchanged": true,
+    "right_lane_native_samples_identical_across_cases": true,
+    "right_lane_vs_historical_native_samples_reported": true,
+    "causal_collider_removal": "D must pass through at 380 mm; also diagnostic N1 removes only the left shoe collider at retained failing stop 372.5 mm",
+    "independent_source_native_geometry_continuous_checks": true,
+    "receiving_application_checks": "root coordinator owns fresh receiving and independent format/playback inspection",
+    "all_attempts_retained": true,
+    "no_full_release_or_comparative_advantage_claim": true
+  },
+  "runtime": {
+    "blender_version": [
+      4,
+      5,
+      3
+    ],
+    "build_hash": "67807e1800cc",
+    "executable_sha256": "5e15447670804c855fef6033ac9b8fd82696b762095becf0df79b1c2f8034397",
+    "qualification_operations_ceiling": 1000000,
+    "qualification_elapsed_ms_ceiling": 80000
+  },
+  "unchanged_legacy_gate": "FAILED: 4239 passed; 13 torque artifact-read methods NOT RUN after original 30000 ms setup deadline",
+  "checker_policy": "Reuse historical numerical gate bytes without editing them; freeze new C193 independent checker bytes separately before candidate qualification."
+}

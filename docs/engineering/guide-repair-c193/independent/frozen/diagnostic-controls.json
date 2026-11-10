@@ -1,0 +1,61 @@
+{
+  "version": "C193-diagnostic-controls-1",
+  "status": "frozen before mutation runner and diagnostic construction changes",
+  "purpose": "Distinguish retained guide residual from collision removal, guide convergence, and guide anchor placement. Diagnostic outputs are not qualified deliveries.",
+  "retained_analysis": [
+    "C191 A/B/C/D as available from exact archives",
+    "C192 edit362.5",
+    "C192 reuse372.5"
+  ],
+  "fresh_control_limit": 4,
+  "common": {
+    "left_stop_near_face_mm": 372.5,
+    "left_shoe_enabled": true,
+    "base_backend": "blender-bullet-c190-0.1",
+    "world_iterations": 100,
+    "motor_iterations": 100,
+    "fps": 240,
+    "substeps_per_frame": 10,
+    "samples": 481,
+    "geometry_mass_feed_motor_body_frame": "unchanged original source and constructor",
+    "unbounded_parameter_sweep": false
+  },
+  "controls": [
+    {
+      "id": "N0",
+      "change": "none",
+      "purpose": "Exact original-settings reuse witness reproduction; native samples must match retained witness"
+    },
+    {
+      "id": "N1",
+      "change": "Remove only left_shoe native rigid-body collision component; retain visible mesh, parent, transform, guide, motor, body",
+      "expected_left_travel_mm": 250,
+      "expected_final_signed_gap_mm": -57.5,
+      "purpose": "Causal control for contact-generated residual and stopping response"
+    },
+    {
+      "id": "N2",
+      "change": "Set only both GENERIC guide override solver_iterations from100 to400",
+      "unchanged": "world and MOTOR iteration counts100; all frames and geometry",
+      "purpose": "One-factor guide convergence test"
+    },
+    {
+      "id": "N3",
+      "change": "Move only both GENERIC constraint origins to respective declared source shoe centers",
+      "frame_formula": "carriage minimum corner + follow.offset + shoe.box/2, mapped (x,-z,y)/1000",
+      "unchanged": "MOTOR and carriage body frames, constraints types/limits, iteration counts, geometry and all source design bytes",
+      "purpose": "One-factor anchor-placement test"
+    }
+  ],
+  "required_observations": [
+    "canonical/source/constructor/settings hashes",
+    "sample and continuous mapping maxima",
+    "peak-error part, frame, vertex, world position and displacement vector",
+    "body center transverse residual and orientation near contact",
+    "unchanged right lane native samples",
+    "native contact/feed/settling and final playback checks",
+    "all saved scenes, traces, raw/final outputs and failures"
+  ],
+  "selection_rule": "Select at most one independently passing one-factor correction for versioned adoption; if none pass, publish bounded diagnosis. No combined or additional native parameter search without a separate explicit freeze and review.",
+  "phase_hypothesis": "Retained frame-aligned C191 versus nonaligned C192 contacts supply descriptive comparison only; timing correlation is not established cause."
+}

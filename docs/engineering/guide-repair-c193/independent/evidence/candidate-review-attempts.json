@@ -1,0 +1,23 @@
+{
+  "version": "C193-independent-candidate-review-attempts-1",
+  "recorded_at_utc": "2026-11-10T16:38:12.926479+00:00",
+  "native_formal_runs_started": false,
+  "attempts": [
+    {
+      "requested_revision": "33975f336067f9965859019d8660fa6d4b3cc5ae",
+      "observed_revision": "bc349fec297701a1f3dad47c6d05c413daa93d4b",
+      "result": "refused expected-head mismatch",
+      "reason": "Repairer added diagnostic archive and qualification harness while reviewer prepared read-only audit. No constructor or contract bytes changed."
+    },
+    {
+      "revision": "bc349fec297701a1f3dad47c6d05c413daa93d4b",
+      "result": "REJECTED before adoption",
+      "checker_assertion": "Change beyond explicit namespace/path/hash translation: source.py",
+      "finding": "New source.py retained old contract_manifest_sha256 fallback. Source has no contract_path attribute, so emitted .ok source manifests would identify the old C191 contract.",
+      "actual_sha256": "bc85696002d641122322313cf5167f84eb1ae377599930112e3afd0f054b0137",
+      "required_sha256": "d5ce5afa4e1a548f493b9b0184798bfe8e88f954a2f57771e2d20e0256037037",
+      "physical_algorithm_affected": false,
+      "next_action": "Correct only new v02 source-manifest identity, retain old bytes/history, independently review and execute source-manifest check before adoption."
+    }
+  ]
+}

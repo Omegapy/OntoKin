@@ -1,10 +1,20 @@
-# OntoKin development status — C192 paired contact edit results
+# OntoKin development status — C193 guide repair and recovered qualification
 
 ## Main integration lease
 
 Owner `c193-recovery-3be63d9c` holds the main integration lease for C193 recovery and guide repair, [PR #126](https://github.com/Omegapy/OntoKin/pull/126). Acquired `2026-11-10T21:33:13.041165+00:00`; expires `2026-11-10T22:03:13.041165+00:00`. Expected main at acquisition: `294d84ac5c5a15e07d042e5225646c2dab440293`. Scope: reviewed C193 integration, actual resulting-main verification and publication of the completed recovery record. Independent nonoverlapping work may continue on separate branches.
 
 ## Current checkpoint
+
+[C193](docs/engineering/guide-repair-c193/README.md) qualifies explicitly selected source `c193-experimental-0.1` and Blender/Bullet backend `blender-bullet-c193-0.1` for the six frozen gauge cases. Only the two straight-guide solver overrides change, from 100 to 400 iterations. Earlier defaults, v01, geometry, mass, guide frames, X/time samples and the 0.2 mm mapping limit remain unchanged. The former C192 failure witnesses at 362.5 and 372.5 mm now have continuous bounds of 0.116436993 and 0.181935687 mm. Original C192 outputs remain rejected.
+
+The retained qualification has fourteen native builds, fourteen independent saved-scene resimulations, all 481 samples per run, source/checker/provenance/lifecycle controls and actual receiving checks. Recovery independently replays all fourteen artifacts, verifies adopted and historical bytes, and reviews eighteen render panels. No new native trial was used to recover the interrupted discussion. Published source/evidence is intact; original local C193 worker Git histories are unavailable. [Recovery and provenance](docs/engineering/guide-repair-c193/RECOVERY.md)
+
+**The fresh legacy driver and supplemental tail both remain FAILED.** Their independently reconciled split-process coverage records 4,239 distinct passing methods and thirteen experimental .22 torque-read methods NOT RUN after the same original 30,000 ms setup failure as C191. The stock unit command separately hit its 1,800-second outer watchdog. All six other core stages passed. Exact affected input identities and the unchanged failure support this contained development increment under OK-ENG-009, with no full regression, performance-equivalence or torque-release claim. [Disposition and independent review](docs/engineering/guide-repair-c193/evidence/recovery/legacy/REGRESSION.md)
+
+Next: [C194](docs/engineering/guide-repair-c193/NEXT-TASK.md) first freezes and qualifies 365.0 and 375.0 mm on this adopted backend. Stop if either fails; only after both pass may the exactly two fresh default authors receive their edit/reuse tasks. No C194 trial has run. Sixteen external roles, other compatibility, general contact, live destination physics, a production backend, comparative advantage and the full GOAL remain open.
+
+## Previous checkpoint at C192
 
 [C192's public paired comparison](docs/engineering/contact-comparison-c192/README.md) is complete with **both routes rejected at both targets**. Two fresh default authors changed only the left-stop coordinate in experimental .ok and direct Python sources, using the same qualified native constructor and recorded-output binding. At 362.5 and 372.5 mm, both routes reproduce the expected 182.5 and 192.5 mm left travel and approximately 15 mm right clearance. Their canonical inputs, native poses and raw/final GLBs match exactly.
 
