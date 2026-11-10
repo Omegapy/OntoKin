@@ -1,0 +1,85 @@
+{
+  "verifiedAtUtc": "2026-11-10T15:58:59.005957+00:00",
+  "main": "1b16f2754b964899c9c8b4993342f4246df26f15",
+  "tree": "921267e1c43b8620acb70182a720527874538564",
+  "candidate": "332a78aadbd8e95e04dc128c91f610d0d6ee4cf1",
+  "candidateTreeEqual": true,
+  "parents": [
+    "4f54fa0ee87fe1b11660652a2373ca9ad2c9b9f1",
+    "332a78aadbd8e95e04dc128c91f610d0d6ee4cf1"
+  ],
+  "worktreeClean": true,
+  "python": "3.12.14",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "docs/engineering/contact-comparison-c192/shared/verify_inputs.py",
+        "--repo",
+        "/workspace/scratch/9c186c07eb69/OntoKin"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "3ff2d1927655a5ae421082a985357cbe20354b87a0c9c25dde1701935eea9ae6",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": {
+        "pass": true,
+        "checked": 116,
+        "failures": []
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "5ec477c0090355d67d3352b5e2a786ef3e895937ca9a6d551e928c77dc3b1937",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "summary": {
+        "status": "passed",
+        "sources_verified": 29,
+        "sections_verified": 233,
+        "links": {
+          "documents": 706,
+          "local_links": 3835,
+          "anchors": 110,
+          "external_skipped": 703
+        },
+        "failures": []
+      }
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "332a78aadbd8e95e04dc128c91f610d0d6ee4cf1",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--name-only",
+        "afae5f59558bc90200691f6727709124d2e119ea",
+        "HEAD",
+        "--",
+        ".",
+        ":!README.md",
+        ":!STATUS.md",
+        ":!docs/engineering/contact-comparison-c192"
+      ],
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "unrelatedDifferences": []
+    }
+  ],
+  "pass": true,
+  "legacyDriver": "FAILED unchanged; 4239 passed and 13 not run in inherited C191 evidence; not rerun for documentation-only recovery"
+}

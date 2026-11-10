@@ -77,3 +77,14 @@ The outgoing checkpoint and publication receipt identify the actual merge,
 resulting-main verification and lease release. A review approval here means the
 experiment record is fit to integrate. It does not accept its rejected outputs,
 establish an authoring advantage, or qualify a release.
+
+## Verified publication
+
+PR #125 merged at `1b16f2754b964899c9c8b4993342f4246df26f15`, with reviewed
+candidate `332a78aadbd8e95e04dc128c91f610d0d6ee4cf1`. Both have tree
+`921267e1c43b8620acb70182a720527874538564`. Fresh resulting-main checks passed
+all 116 frozen inputs and documentation preservation (29 source records, 706
+documents and 3,835 local links). Exact candidate-tree equality and unchanged
+legacy scope were verified. [The publication receipt](evidence/recovery/publication/resulting-main/result.json)
+records those commands and the clean checkout. A subsequent status/evidence
+commit releases the lease; the outgoing checkpoint names that actual final main.
