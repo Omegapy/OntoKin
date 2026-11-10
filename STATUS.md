@@ -1,5 +1,9 @@
 # OntoKin development status — C189 carriage drive and following
 
+## Main integration lease
+
+Owner `c190-recovery-eb7f3f78` holds main integration through `2026-11-10T00:54:00Z` for recovery and completion of the C190 shoe-contact experiment, `docs/engineering/shoe-contact-c190/**` and its STATUS update in [PR #123](https://github.com/Omegapy/OntoKin/pull/123). The preceding `c190-contact-2c282014` lease expired at 00:08:54Z. Recovery reconciled unchanged main `ce5d6e4b1efc9388f9d5a0072288b11fe009c4b6`, preserved the original checkpoint, published the reconstructed evaluator, and received the sealed native unsupported-contact result. The missing original trial artifacts are being replaced by explicitly identified recovery replication evidence. Runtime, legacy tests and hosted workflows remain unchanged. Release follows verified integration.
+
 ## Current checkpoint
 
 Both C189 native designs propagated a left carriage speed edit to its attached shoe. At 125 and 100 mm/s the left minimum clearance was 65 and 115 mm respectively. A coordinator edit to 110 mm/s produced 95 mm. The right lane retained its 15 mm clearance in all three cases. The eight formal-case rebuilds reproduced the four final GLBs. [Native sources, checker and playback](docs/engineering/carriage-drive-c189/README.md)
