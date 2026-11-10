@@ -2,7 +2,7 @@
 
 ## Main integration lease
 
-Owner `c191-close-97d3cf97` releases the main integration lease on verified merge of [PR #124](https://github.com/Omegapy/OntoKin/pull/124) and resulting-main verification. Lease commit `1d31f6073142cf56ab2892fcd0ea4c31a8568c19` was acquired by expected-head nonforce update from `ec5c1fd3299dd915e6ef5d68944b3955978f3eb1`, bounded through `2026-11-10T14:46:16.022Z`. The [finalization record](docs/engineering/guided-contact-c191/FINALIZATION.md) identifies recovery, independent review and the isolated-development integration decision. The outgoing checkpoint records the actual merge; a candidate alone does not prove integration.
+Owner `c192-integration-2d0c791f` holds the main integration lease for C192 experiment-record integration through `2026-11-10T15:44:36.028873+00:00`. Acquired from observed main `afae5f59558bc90200691f6727709124d2e119ea` using expected-head nonforce update. Scope is README.md, STATUS.md and docs/engineering/contact-comparison-c192/**. PR #125 contains the frozen public comparison and preserved failures; the existing C191 runtime and legacy failure remain unchanged. Release only after the actual merge and resulting-main checks.
 
 ## Current checkpoint
 
