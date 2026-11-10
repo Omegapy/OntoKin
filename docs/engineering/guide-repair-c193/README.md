@@ -16,7 +16,9 @@ independently reviewed ordered continuation. The same thirteen experimental
 torque-read methods remain NOT RUN after their unchanged setup deadline.
 All six other core command stages pass. The stock driver and the supplemental
 run remain FAILED; this is a bounded development result, not a full regression
-or release pass. Main integration and its checks are recorded separately.
+or release pass. [PR #126](https://github.com/Omegapy/OntoKin/pull/126) is merged;
+the actual merged tree matches the reviewed candidate and passes the
+[resulting-main checks](evidence/recovery/publication/resulting-main/result.json).
 
 The interrupted-session [recovery record](RECOVERY.md) distinguishes the already
 completed qualification from fresh recovery checks. Its independent recorded

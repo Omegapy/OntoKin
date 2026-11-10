@@ -2,8 +2,8 @@
 
 Coordinator `c193-recovery-3be63d9c` resumes the existing C193 scope on
 November 10, 2026. The observed main is the completed C192 revision
-`294d84ac5c5a15e07d042e5225646c2dab440293`. Draft
-[PR #126](https://github.com/Omegapy/OntoKin/pull/126) already contains five
+`294d84ac5c5a15e07d042e5225646c2dab440293`. At recovery start, draft
+[PR #126](https://github.com/Omegapy/OntoKin/pull/126) contained five
 published C193 commits through `bc8c0918045248cd3d34c64e40c135fff0eec985`,
 tree `631034be6fcd5249af753a9852a13f76baf44493`.
 
@@ -41,7 +41,7 @@ records. The published implementation, adopted hashes, source, artifacts and
 five publication commits remain available for direct verification. Recovering
 their contents does not recover those original local Git histories.
 
-## Recovery review and remaining integration work
+## Completed recovery review
 
 Two independent recovery auditors use separate worktrees at the exact published
 candidate. One replays the saved artifacts and checks the freezes, adoption,
@@ -60,9 +60,8 @@ two namespace controls. The reviewer inspected all 18 original render panels.
 the commands, outputs and actual scope. No native construction, resimulation or
 receiving application was rerun.
 
-The fresh legacy disposition is complete as detailed below. Conditional
-integration and resulting-main verification remain the coordinator's final
-publication steps. No hosted job, paid execution, new native trial or C194
+The fresh legacy disposition and actual resulting-main verification are complete,
+as detailed below. PR #126 is merged as an integrated development increment. No hosted job, paid execution, new native trial or C194
 target has been started by this recovery.
 
 The next bounded task remains [C194](NEXT-TASK.md): first freeze and qualify
@@ -122,3 +121,31 @@ The [readable regression report](evidence/recovery/legacy/REGRESSION.md) and
 retain all attempts, exact discovery and selection, logs, dependency pins, helpers
 and input-equality evidence. The archive has SHA-256
 `ea56f3cdf64769edbd897e42fe5133538a87020d0eaa63e6ec482a80c7ebbed7`.
+
+## Verified integration
+
+[PR #126](https://github.com/Omegapy/OntoKin/pull/126) merged at
+`fd9b17ba30617da8bea939321e2dc2bb7823385f`, with tree
+`84ae87f3002ee9ff834e9583fee1351a673608d7`. It exactly matches reviewed candidate
+`bb3f53c12f7f9faf114bf4864e7f3d79a917bf6a`. The candidate retained the main lease
+as a parent and passed a further
+[49-check independent integration review](evidence/recovery/publication/INTEGRATION-CANDIDATE-REVIEW.json).
+Only coordination documents and recovery evidence changed after the tested
+qualification revision; all eligible executable, test, adopted and frozen inputs
+remain equal. The full GOAL and prior STATUS history remain intact.
+
+Fresh [actual-main verification](evidence/recovery/publication/resulting-main/result.json)
+passes documentation preservation/navigation, 43 source cases with 694 assertions,
+and recorded numerical/provenance replay for all fourteen artifacts. The checkout
+remains clean. These checks use the actual merged commit, not a synthetic merge;
+no new native solve or receiving execution occurs. The
+[verification archive](evidence/recovery/publication/resulting-main/resulting-main-evidence.tar.xz)
+contains the exact helper, logs, source conformance and all replay reports.
+
+The [integration receipt](evidence/recovery/publication/integration.json) binds
+the lease, protected merge, actual readback and checks. Publication of this
+closing documentation/evidence record releases the lease. The final handoff
+identifies the subsequent actual main head, verifies its unchanged execution
+inputs and supplies a complete offline source bundle. The failed legacy
+invocations, thirteen unexecuted methods and broader release obligations remain
+open. C194 is the next task; it has not been executed here.
