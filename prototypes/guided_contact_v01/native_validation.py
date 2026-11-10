@@ -1,6 +1,10 @@
 """Validate the finite native interchange before recording or publication."""
+from collections import Counter
 import csv
+import hashlib
 import math
+import os
+import struct
 
 from .common import Failure, PARTS, canonical_bytes, schema_check, sha256, strict_json
 
@@ -22,6 +26,83 @@ def source_centers(source):
     for follow in source["follows"].values():
         origins[follow["child"]] = [a + b for a, b in zip(origins[follow["parent"]], follow["offset_mm"])]
     return {key: [origins[key][a] + part["box_mm"][a] / 2 for a in range(3)] for key, part in source["parts"].items()}
+
+
+def validate_scene_artifact(path, context, budget, contract):
+    """Validate the complete pinned .blend envelope; reopen is a separate gate.
+
+    A valid trace cannot stand in for the editable saved scene promised by the
+    output contract. Walk every uncompressed 64-bit block, require complete
+    payloads and the final ENDB, and reject trailing bytes. Payload semantics and
+    replay are intentionally left to the independent native reopening gate.
+    """
+    span = context.span(context.headers["backend"])
+    budget.check()
+    if not path.is_file():
+        raise Failure("E_NATIVE_FAILURE", "Native worker did not create scene.blend", span)
+    try:
+        block_header = struct.Struct("<4siQii")
+        counts = Counter()
+        digest = hashlib.sha256()
+        with path.open("rb") as stream:
+            total_bytes = os.fstat(stream.fileno()).st_size
+            if total_bytes > contract["backend"]["limits"]["staged_output_bytes"]:
+                raise Failure("E_RESOURCE_LIMIT", "Saved native scene exceeds output ceiling", budget.anchor)
+            header = stream.read(12)
+            major, minor, _ = contract["backend"]["runtime"]["blender_version"]
+            expected = b"BLENDER-v" + f"{major}{minor:02d}".encode("ascii")
+            if header != expected:
+                raise ValueError("Saved native scene has no compatible Blender file header")
+            digest.update(header)
+            position = len(header)
+            while True:
+                budget.charge("native_scene_block_fields", 5)
+                encoded = stream.read(block_header.size)
+                if len(encoded) != block_header.size:
+                    raise ValueError("Saved native scene has a truncated block header or missing ENDB")
+                digest.update(encoded)
+                position += len(encoded)
+                code, payload_size, old_address, dna_index, count = block_header.unpack(encoded)
+                counts[code] += 1
+                if payload_size < 0 or dna_index < 0 or count < 0:
+                    raise ValueError("Saved native scene has negative block fields")
+                if code == b"ENDB":
+                    if (payload_size, old_address, dna_index, count) != (0, 0, 0, 0):
+                        raise ValueError("Saved native scene has a malformed ENDB block")
+                    if position != total_bytes or stream.read(1):
+                        raise ValueError("Saved native scene has bytes after ENDB")
+                    break
+                if payload_size > total_bytes - position:
+                    raise ValueError("Saved native scene block payload extends beyond EOF")
+                if code == b"DNA1" and payload_size < 4:
+                    raise ValueError("Saved native scene has an incomplete DNA block")
+                remaining = payload_size
+                first_chunk = True
+                while remaining:
+                    budget.check()
+                    chunk = stream.read(min(65536, remaining))
+                    if not chunk:
+                        raise ValueError("Saved native scene has a truncated block payload")
+                    if code == b"DNA1" and first_chunk and chunk[:4] != b"SDNA":
+                        raise ValueError("Saved native scene has no SDNA payload marker")
+                    first_chunk = False
+                    digest.update(chunk)
+                    remaining -= len(chunk)
+                    position += len(chunk)
+            if counts[b"GLOB"] != 1 or counts[b"DNA1"] != 1:
+                raise ValueError("Saved native scene must have one global and one DNA block")
+            if any(not counts[code] for code in (b"SC\x00\x00", b"OB\x00\x00", b"ME\x00\x00")):
+                raise ValueError("Saved native scene lacks scene/object/mesh blocks")
+        report = {"source_sha256": context.sha, "scene_sha256": digest.hexdigest(),
+                  "bytes_checked": position, "blocks_checked": sum(counts.values()),
+                  "block_counts": {code.rstrip(b"\x00").decode("ascii", "backslashreplace"): count
+                                   for code, count in sorted(counts.items())},
+                  "method": "Complete bounded uncompressed 64-bit little-endian .blend block envelope through ENDB, with no trailing bytes; each block and payload chunk checks the attempt budget.",
+                  "scope_limit": "No DNA/scene semantics or replay claim. Fresh pinned Blender opening, configuration inspection and native re-simulation remain separate gates."}
+        (path.parent / "native-scene-validation.json").write_bytes(canonical_bytes(report))
+    except (OSError, ValueError, struct.error) as exc:
+        raise Failure("E_NATIVE_RESULT", str(exc), span) from exc
+    budget.check()
 
 
 def validate_native(path, context, budget, contract):
@@ -132,6 +213,9 @@ def validate_configuration(configuration, context, contract):
     identity = [[1 if a == b else 0 for b in range(4)] for a in range(4)]
     for name, row in rows.items():
         obj = objects[name]
+        expected_type = "EMPTY" if row["kind"] == "constraint" else "MESH"
+        if obj["type"] != expected_type:
+            raise ValueError("Native object type differs from its declared role: " + name)
         part, body, collider = row.get("source_part") or "", row.get("source_body") or "", row.get("source_collider") or ""
         expected_props = {"part_id": part, "body_id": body, "collider_id": collider,
                           "helper_role": row["kind"], "source_occurrence": f'{source["module_key"]}/{source["scene_key"]}/{part or body}'}

@@ -1,0 +1,103 @@
+{
+  "version": "C191-R2-author-native-boundary-audit-1",
+  "implementation_revision": "dc782500d74a8b269c3471121345d6c8566508eb",
+  "implementation_files": {
+    "__init__.py": "8190d7b7098ce322f146f7bc4650e388ad5fca423dd850bb5eb51ab9a667d970",
+    "__main__.py": "09a06e30b3c298207a3a0f36c208213b906f55c245f00d1ed5e2a72fedfd59cb",
+    "api.py": "aafffafed3b13405062065043063341bedde361874d6d66e40d290586c1e6d5b",
+    "common.py": "181f170aa521edd092edd7278a279471e81552c6b75dcd89bd0093990db2a8dd",
+    "glb.py": "7a4f3b72082d67487927c080ddd1e0dd1e101d143dd7e3fdd49654805ce45cdb",
+    "native_validation.py": "72388fd48002876a09062cfe7c538b68662ba83548f78cba8ae895ba0b635587",
+    "native_worker.py": "56f83f5392a42e505fe2401655e4606a6a4df007e6ab64b0149e17a6817fdf08",
+    "playback_projection.py": "6bb4403290cecde27007d127fe6afb4f93a67f8ecee264e3c7eaccbefa3ac4b8",
+    "source.py": "a6ac97056d5e907d91508ffae1b762de21dfce005d9f0969a8c9ac9a9e6a2158",
+    "supervisor.py": "172bed0e4f295481f2332b1716d08080803a4fc2d434a9546465b894cbbb64ff",
+    "transaction.py": "af55ac1ab2523cc30c2871e768e199d28b3999643a8cc3ee79ae22ec624ae44e"
+  },
+  "script_sha256": "d2847ce058785df1c6ebda12fcfb3ece476061b5cc4b30ae682637a1251325c8",
+  "seed_directory": "/workspace/scratch/8f2c3db0e313/author-audit-baseline-A/artifacts/01ecec3bf6de4202af832e646f967cc6",
+  "seed_native_result_sha256": "a11d6e719fb71d3cebd6953dc4fa06fedd6f7ffd91ac3b656a0419f269979a02",
+  "seed_final_glb_sha256": "1ccfdd4691edb924747a5b7b48bfdf01b2647e3393979cf088b9de231f00f38d",
+  "method": "Actual transaction and supervisor with trusted copying-worker faults; no fresh native claim",
+  "cases": [
+    {
+      "case": "valid-copy-control",
+      "expected_code": null,
+      "actual_codes": [],
+      "successful": true,
+      "committed": true,
+      "pointer_changed": true,
+      "previous_artifacts_unchanged": true,
+      "pass": true,
+      "returned_result_sha256": "3ae25a2aa660ccc9838c3065f15ee3b699ccf26ef66696a58e1bafa4f6523166"
+    },
+    {
+      "case": "mesh-reported-as-empty",
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "actual_codes": [
+        "C191_E_NATIVE_RESULT"
+      ],
+      "successful": false,
+      "committed": false,
+      "pointer_changed": false,
+      "previous_artifacts_unchanged": true,
+      "pass": true,
+      "returned_result_sha256": "d4704b80b1d9b1555711aa802988a732a5248450f6cc429a66b3c061a3bb8a8c"
+    },
+    {
+      "case": "constraint-reported-as-mesh",
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "actual_codes": [
+        "C191_E_NATIVE_RESULT"
+      ],
+      "successful": false,
+      "committed": false,
+      "pointer_changed": false,
+      "previous_artifacts_unchanged": true,
+      "pass": true,
+      "returned_result_sha256": "594a80834420865a922632f1592fbcec5dc9f51eed40b3bd41e7ee2022cd9b21"
+    },
+    {
+      "case": "missing-native-scene",
+      "expected_code": "C191_E_NATIVE_FAILURE",
+      "actual_codes": [
+        "C191_E_NATIVE_FAILURE"
+      ],
+      "successful": false,
+      "committed": false,
+      "pointer_changed": false,
+      "previous_artifacts_unchanged": true,
+      "pass": true,
+      "returned_result_sha256": "a5c3fa74a3e052c129d9c1986e34e721b30cf7b1c6a95df080062533de862bd4"
+    },
+    {
+      "case": "empty-native-scene",
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "actual_codes": [
+        "C191_E_NATIVE_RESULT"
+      ],
+      "successful": false,
+      "committed": false,
+      "pointer_changed": false,
+      "previous_artifacts_unchanged": true,
+      "pass": true,
+      "returned_result_sha256": "6a6100ac8f9b95c15917f006e2de97258d8ce47c67ae3dc6610d0fcc7e1f02b6"
+    },
+    {
+      "case": "invalid-native-scene-header",
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "actual_codes": [
+        "C191_E_NATIVE_RESULT"
+      ],
+      "successful": false,
+      "committed": false,
+      "pointer_changed": false,
+      "previous_artifacts_unchanged": true,
+      "pass": true,
+      "returned_result_sha256": "2a3121c556fe9a82ae600f40248bd7be03790a5a09d8197f7b936b67055192ea"
+    }
+  ],
+  "passed": 6,
+  "total": 6,
+  "pass": true
+}

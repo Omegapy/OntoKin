@@ -13,7 +13,7 @@ import uuid
 from .api import _envelope, _failure, _read_source
 from .common import Budget, CONTRACT, Failure, canonical_bytes, load_contract, schema_check, sha256, strict_json
 from .glb import encode_raw, project, verify_mapping
-from .native_validation import validate_native, write_native_evidence
+from .native_validation import validate_native, validate_scene_artifact, write_native_evidence
 from .supervisor import check_sizes, staged_size, supervise
 
 
@@ -181,6 +181,7 @@ def run_transaction(source, *, store, blender, host_max_operations=100000, host_
             hooks["before_native_validation"](stage)
         check_sizes(stage, budget, backend["limits"])
         native = validate_native(stage / "native-result.json", context, budget, contract)
+        validate_scene_artifact(stage / "scene.blend", context, budget, contract)
         result["runtime"]["build_hash"] = native["blender_build_hash"]
         result["levels"]["constructed"] = result["levels"]["evaluated"] = True
         write_native_evidence(stage, native, context)
