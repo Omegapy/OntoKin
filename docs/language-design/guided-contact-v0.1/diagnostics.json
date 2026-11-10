@@ -1,0 +1,353 @@
+{
+  "binding": "ontokin.c191.diagnostics/0.1",
+  "prefix": "C191_",
+  "codes": [
+    {
+      "code": "C191_E_PARSE",
+      "phase": "parse",
+      "message_meaning": "Unexpected token, missing syntax or malformed UTF-8/JSON string.",
+      "span": "offending token; EOF is zero-width",
+      "blocked_levels": [
+        "represented",
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_FIELD",
+      "phase": "validate",
+      "message_meaning": "Unknown or duplicate field; unknown declaration kind.",
+      "span": "unknown field name or second duplicate field name",
+      "blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_BINDING",
+      "phase": "validate",
+      "message_meaning": "Wrong source/profile/backend/output binding.",
+      "span": "offending header string",
+      "blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_ID",
+      "phase": "validate",
+      "message_meaning": "Duplicate or malformed stable declaration ID.",
+      "span": "second duplicate @ string or invalid @ string",
+      "blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_TYPE",
+      "phase": "validate",
+      "message_meaning": "Wrong literal type, vector size, nonfinite value or exact unit token.",
+      "span": "complete offending value including its unit",
+      "blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_REFERENCE",
+      "phase": "validate",
+      "message_meaning": "Reference missing or of the wrong declaration kind.",
+      "span": "offending reference value",
+      "blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_OWNERSHIP",
+      "phase": "validate",
+      "message_meaning": "Absent/multiple collider owners, wrong owner, extra mass owner or multiply-followed shoe.",
+      "span": "owner value, extra body part value, or second follow child value",
+      "blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_AUTHORITY",
+      "phase": "validate",
+      "message_meaning": "Prescribed or competing carriage authority or independent shoe placement.",
+      "span": "authority value or shoe at field name",
+      "blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_SHAPE",
+      "phase": "validate",
+      "message_meaning": "Unsupported source contact shape.",
+      "span": "shape value",
+      "blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_GUIDE",
+      "phase": "validate",
+      "message_meaning": "Unsupported guide axis or type.",
+      "span": "guide value",
+      "blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_ROTATION",
+      "phase": "validate",
+      "message_meaning": "Nonidentity part or follow quaternion.",
+      "span": "rotation value",
+      "blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_CONTACT_LAW",
+      "phase": "validate",
+      "message_meaning": "Nonzero gravity, friction or restitution.",
+      "span": "offending value",
+      "blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_INITIAL_OVERLAP",
+      "phase": "validate",
+      "message_meaning": "Positive-volume initial visible-box overlap.",
+      "span": "at value for root location edit, otherwise offending box/offset value",
+      "blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_SCOPE",
+      "phase": "validate",
+      "message_meaning": "Any other out-of-scope geometry, feed, mass, initial state, ID set or source field value.",
+      "span": "offending value; scene @ string for missing declaration",
+      "blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_BUDGET",
+      "phase": "authorize",
+      "message_meaning": "Source request exceeds host ceiling or invalid requested budget.",
+      "span": "offending execution value; header if block absent",
+      "blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_BACKEND_MISSING",
+      "phase": "backend",
+      "message_meaning": "Backend path unavailable or not executable.",
+      "span": "backend header string",
+      "blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_BACKEND_MISMATCH",
+      "phase": "backend",
+      "message_meaning": "Executable/build/platform identity is not the pinned binding.",
+      "span": "backend header string",
+      "blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_CANCELLED",
+      "phase": "execute",
+      "message_meaning": "Cancellation observed; worker group reaped; late results forbidden.",
+      "span": "execution block or source header",
+      "blocked_levels": [
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_TIMEOUT",
+      "phase": "execute",
+      "message_meaning": "Finite attempt deadline exhausted; worker group reaped.",
+      "span": "execution block or source header",
+      "blocked_levels": [
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_RESOURCE_LIMIT",
+      "phase": "execute",
+      "message_meaning": "Operation, step, object, source/token or byte ceiling exceeded.",
+      "span": "execution block or source header",
+      "blocked_levels": [
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_NATIVE_FAILURE",
+      "phase": "execute",
+      "message_meaning": "Native worker failed, exited abnormally or did not create required results.",
+      "span": "backend header string",
+      "blocked_levels": [
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_NATIVE_RESULT",
+      "phase": "validate_result",
+      "message_meaning": "Malformed/nonfinite/unknown/duplicate native result, incompatible config, identity or cadence.",
+      "span": "backend header string",
+      "blocked_levels": [
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_MAPPING",
+      "phase": "export",
+      "message_meaning": "Disallowed X/time edit or raw/final mapping bound exceeds 0.2 mm.",
+      "span": "output header string",
+      "blocked_levels": [
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_STALE_REVISION",
+      "phase": "publish",
+      "message_meaning": "Expected accepted revision no longer matches store.",
+      "span": "source header",
+      "blocked_levels": [
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_PUBLICATION",
+      "phase": "publish",
+      "message_meaning": "Cannot atomically publish; prior accepted pointer/artifacts retained.",
+      "span": "output header string",
+      "blocked_levels": [
+        "exported",
+        "destination_validated"
+      ]
+    },
+    {
+      "code": "C191_E_IO",
+      "phase": "read",
+      "message_meaning": "Source/read/store IO failure.",
+      "span": "source header, or null only when no source bytes could be read",
+      "blocked_levels": [
+        "represented",
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ]
+    }
+  ],
+  "span_convention": {
+    "path": "exact source file basename",
+    "source_sha256": "SHA-256 of the candidate UTF-8 bytes",
+    "start_byte": "zero-based inclusive UTF-8 byte offset",
+    "end_byte": "zero-based exclusive UTF-8 byte offset",
+    "start_line": "one-based",
+    "start_column": "one-based Unicode code point column",
+    "end_line": "one-based",
+    "end_column": "one-based exclusive Unicode code point column"
+  },
+  "precedence": [
+    "lex/parse",
+    "unknown/duplicate fields before missing fields",
+    "binding",
+    "duplicate IDs",
+    "literal type/unit and required fields",
+    "references/owner cardinality and motion authority",
+    "unsupported shapes/guides/rotation/contact laws",
+    "initial overlap before finite dimension/range scope",
+    "remaining finite scope",
+    "host budget",
+    "backend identity",
+    "native supervision",
+    "native result",
+    "mapping",
+    "publication"
+  ],
+  "missing_field_span": "declaration @ key string; header for missing global field",
+  "determinism": "first error only; source order within a phase; initial-overlap pair order follows fixed visible-key order",
+  "unknown_native_json": "duplicate keys, unknown keys and nonfinite constants reject with C191_E_NATIVE_RESULT",
+  "runtime_span_anchors": {
+    "source_header": "First ontokin keyword through its semicolon; end offset is immediately after semicolon.",
+    "execution_block": "execution keyword through its closing brace; end offset is immediately after closing brace.",
+    "backend_header_string": "Quoted binding string only, including quotation marks.",
+    "output_header_string": "Quoted binding string only, including quotation marks."
+  },
+  "specific_precedence": {
+    "unknown_owner_string": "C191_E_REFERENCE",
+    "existing_wrong_owner": "C191_E_OWNERSHIP",
+    "owner_vector_any_cardinality": "C191_E_OWNERSHIP",
+    "missing_owner_field": "C191_E_OWNERSHIP on collider @ string",
+    "other_missing_required_field": "C191_E_TYPE on declaration @ string",
+    "initial_overlap_range_conflict": "C191_E_INITIAL_OVERLAP before C191_E_SCOPE"
+  }
+}

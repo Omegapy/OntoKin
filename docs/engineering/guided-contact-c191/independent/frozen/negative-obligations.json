@@ -1,0 +1,152 @@
+{
+  "version": "C191-independent-negative-obligations-1",
+  "fixtures": [
+    {
+      "id": "N01-duplicate-body-id",
+      "mutation": "duplicate body stable key",
+      "phase": "construction",
+      "expected": "reject; no accepted revision/artifacts replaced"
+    },
+    {
+      "id": "N02-duplicate-collider-id",
+      "mutation": "duplicate collider stable key",
+      "phase": "construction",
+      "expected": "reject; no accepted revision/artifacts replaced"
+    },
+    {
+      "id": "N03-multiple-owner",
+      "mutation": "one collider names two body owners",
+      "phase": "construction",
+      "expected": "reject ambiguous or multiple mass owner"
+    },
+    {
+      "id": "N04-absent-owner",
+      "mutation": "collider names no or unknown mass owner",
+      "phase": "construction",
+      "expected": "reject owner"
+    },
+    {
+      "id": "N05-competing-motion",
+      "mutation": "prescribed position authority added to solver X",
+      "phase": "construction",
+      "expected": "reject competing authority"
+    },
+    {
+      "id": "N06-unsupported-shape",
+      "mutation": "replace BOX with sphere or mesh",
+      "phase": "construction",
+      "expected": "reject unsupported native shape"
+    },
+    {
+      "id": "N07-unsupported-guide",
+      "mutation": "world Y or arbitrary guide",
+      "phase": "construction",
+      "expected": "reject unqualified guide"
+    },
+    {
+      "id": "N08-rotation",
+      "mutation": "nonzero source part/collider/body rotation",
+      "phase": "construction",
+      "expected": "reject unsupported rotation"
+    },
+    {
+      "id": "N09-contact-law",
+      "mutation": "nonzero friction or restitution",
+      "phase": "construction",
+      "expected": "reject unqualified contact law"
+    },
+    {
+      "id": "N10-initial-overlap",
+      "mutation": "move left stop to overlap initial shoe",
+      "phase": "construction",
+      "expected": "reject initial overlap"
+    },
+    {
+      "id": "N11-backend-binding",
+      "mutation": "unknown backend settings or version",
+      "phase": "construction",
+      "expected": "reject unqualified backend"
+    },
+    {
+      "id": "N12-missing-backend",
+      "mutation": "no pinned executable available",
+      "phase": "evaluation",
+      "expected": "no evaluated/exported/published later success"
+    },
+    {
+      "id": "N13-invalid-edit",
+      "mutation": "valid accepted A then edit to N10",
+      "phase": "edit",
+      "expected": "accepted A source revision, mapping and artifacts unchanged"
+    },
+    {
+      "id": "N14-unknown-field",
+      "mutation": "source includes hidden schedule, force, Python, external asset, network or transform field",
+      "phase": "parse-or-construction",
+      "expected": "reject rather than ignore"
+    },
+    {
+      "id": "N15-budget-operations",
+      "mutation": "operation cap smaller than actual charged work",
+      "phase": "evaluation",
+      "expected": "bounded failure before publication"
+    },
+    {
+      "id": "N16-budget-elapsed",
+      "mutation": "deadline expires while backend is running",
+      "phase": "evaluation",
+      "expected": "kill supervised process; no successful later state"
+    },
+    {
+      "id": "N17-cancellation",
+      "mutation": "cancel during backend run",
+      "phase": "evaluation",
+      "expected": "stop within frozen cancellation cap; prior accepted revision/artifacts unchanged"
+    },
+    {
+      "id": "N18-malformed-native",
+      "mutation": "missing/truncated JSON, NaN, wrong sample count/time/ID/native configuration or altered X correspondence",
+      "phase": "native-result-validation",
+      "expected": "reject before final artifact publication"
+    },
+    {
+      "id": "N19-publication-failure",
+      "mutation": "fail atomic publication after valid backend work",
+      "phase": "publication",
+      "expected": "old accepted artifacts/revision unchanged; no partially published success"
+    },
+    {
+      "id": "N20-source-budgets",
+      "mutation": "source asks above host authorized operation/elapsed ceilings",
+      "phase": "admission",
+      "expected": "reject; source request cannot authorize itself"
+    },
+    {
+      "id": "N21-size-caps",
+      "mutation": "native object count or trace/output bytes exceeds frozen cap",
+      "phase": "evaluation-or-validation",
+      "expected": "bounded failure with no successful later state"
+    },
+    {
+      "id": "N22-owner-mass",
+      "mutation": "shoe collider adds mass or body is not exactly 1 kg",
+      "phase": "construction",
+      "expected": "reject one-mass-owner violation"
+    },
+    {
+      "id": "N23-misattached-collider",
+      "mutation": "shoe owner changed to sibling carriage or world",
+      "phase": "construction",
+      "expected": "reject ownership/frame mismatch"
+    },
+    {
+      "id": "N24-missing-field",
+      "mutation": "omit a required body, collider, feed, dimension or binding",
+      "phase": "parse-or-construction",
+      "expected": "reject missing declaration"
+    }
+  ],
+  "positive_identity_control": "Rename all display labels and reorder sibling part/body/collider/follow declarations, preserving stable keys and geometric/physical fields. Source revision changes; canonical physical input and final GLB bytes must remain equal. Native identity links continue to target the same stable IDs.",
+  "positive_edit_control": "Only source left_stop X changes A->B or C; the C case is independently authored from A after grammar freeze, not copied from an adapter output.",
+  "legacy_022_preservation": "C190 .22 contact rejection and pass-through inputs and outputs remain byte-identical. Root runs compatibility and archived replay."
+}

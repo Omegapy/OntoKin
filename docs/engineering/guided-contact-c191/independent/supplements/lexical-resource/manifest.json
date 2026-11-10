@@ -1,0 +1,100 @@
+{
+  "version": "C191-supplemental-lexical-resource-1",
+  "scope": "Exact regression fixtures for the existing adopted token/declaration caps and full-source-header runtime diagnostic anchors; no contract or original fixture changes.",
+  "implementation_failure": "8629e15 token overflow reports first-character placeholder span; observed separately in evidence/token-cap-review-8629e15.",
+  "fixtures": [
+    {
+      "file": "tokens-8192.ok",
+      "bytes": 16412,
+      "sha256": "5d06fb1aecc8274e479cfb941cb83b75f47775689dc9ced590db9f220947e1c7",
+      "expected_code": "C191_E_PARSE",
+      "expected_phase": "parse",
+      "expected_span": {
+        "path": "tokens-8192.ok",
+        "source_sha256": "5d06fb1aecc8274e479cfb941cb83b75f47775689dc9ced590db9f220947e1c7",
+        "start_byte": 33,
+        "end_byte": 34,
+        "start_line": 2,
+        "start_column": 1,
+        "end_line": 2,
+        "end_column": 2
+      },
+      "preexisting_cancel": false,
+      "exact_lexical_token_count": 8192
+    },
+    {
+      "file": "tokens-8193.ok",
+      "bytes": 16414,
+      "sha256": "be416faa35d6ed9f5b21c1da54bdd4ca4aba7bb3a48de49a14201742d4cc0b6f",
+      "expected_code": "C191_E_RESOURCE_LIMIT",
+      "expected_phase": "execute",
+      "expected_span": {
+        "path": "tokens-8193.ok",
+        "source_sha256": "be416faa35d6ed9f5b21c1da54bdd4ca4aba7bb3a48de49a14201742d4cc0b6f",
+        "start_byte": 0,
+        "end_byte": 32,
+        "start_line": 1,
+        "start_column": 1,
+        "end_line": 1,
+        "end_column": 33
+      },
+      "preexisting_cancel": false,
+      "exact_lexical_token_count": 8193
+    },
+    {
+      "file": "declarations-16.ok",
+      "bytes": 3452,
+      "sha256": "ec0196835bffef559f94672c1f67ac3d29c64b2027034c1eef4c6b65c78cfe64",
+      "expected_code": "C191_E_RESOURCE_LIMIT",
+      "expected_phase": "execute",
+      "expected_span": {
+        "path": "declarations-16.ok",
+        "source_sha256": "ec0196835bffef559f94672c1f67ac3d29c64b2027034c1eef4c6b65c78cfe64",
+        "start_byte": 159,
+        "end_byte": 219,
+        "start_line": 6,
+        "start_column": 1,
+        "end_line": 6,
+        "end_column": 61
+      },
+      "preexisting_cancel": false,
+      "exact_declaration_count": 16
+    },
+    {
+      "file": "pre-cancel-A.ok",
+      "bytes": 3398,
+      "sha256": "d474a6a109bb1bf9314ea8544d2f5868d99b6afa339c6655f11f8c1f82ccdfae",
+      "expected_code": "C191_E_CANCELLED",
+      "expected_phase": "execute",
+      "expected_span": {
+        "path": "pre-cancel-A.ok",
+        "source_sha256": "d474a6a109bb1bf9314ea8544d2f5868d99b6afa339c6655f11f8c1f82ccdfae",
+        "start_byte": 0,
+        "end_byte": 32,
+        "start_line": 1,
+        "start_column": 1,
+        "end_line": 1,
+        "end_column": 33
+      },
+      "preexisting_cancel": true
+    },
+    {
+      "file": "pre-cancel-leading-comment.ok",
+      "bytes": 3449,
+      "sha256": "8458095a8dc187eb631d91d22083800d4e1c4b0cf35b9f4e02d4489013490a22",
+      "expected_code": "C191_E_CANCELLED",
+      "expected_phase": "execute",
+      "expected_span": {
+        "path": "pre-cancel-leading-comment.ok",
+        "source_sha256": "8458095a8dc187eb631d91d22083800d4e1c4b0cf35b9f4e02d4489013490a22",
+        "start_byte": 51,
+        "end_byte": 83,
+        "start_line": 2,
+        "start_column": 1,
+        "end_line": 2,
+        "end_column": 33
+      },
+      "preexisting_cancel": true
+    }
+  ]
+}

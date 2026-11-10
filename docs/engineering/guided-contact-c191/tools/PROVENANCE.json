@@ -1,0 +1,40 @@
+{
+  "checkpoint": "C191",
+  "basis": "Verified C190 handoff",
+  "files": [
+    {
+      "current": "render_frames.py",
+      "currentSha256": "f66da4ad633faf780b33fccdaf2e19c8d5ef103ce67cdfba0f9728db983b54db",
+      "basis": "C190/audit/render_frames.py",
+      "basisSha256": "6b968ae4b0861bac14f6002d79ecbb646a4bf55ded5c00e04c725d24b02c1032",
+      "purpose": "Actual delivered GLB import, receiving-runtime readback or format checks; no design or dynamics generation"
+    },
+    {
+      "current": "three_readback.mjs",
+      "currentSha256": "b0a85fa55eb2c8e627e15741aaa6841ce1f2ac26f5f8a8823dcc6bfdb0f98f49",
+      "basis": "C190/audit/three_readback.mjs",
+      "basisSha256": "83c5e758b1e893cd725a65a4ba8eae006e7955693e55c11e5b5d13527e007a3c",
+      "purpose": "Actual delivered GLB import, receiving-runtime readback or format checks; no design or dynamics generation"
+    },
+    {
+      "current": "three_loader.mjs",
+      "currentSha256": "927190e6d34940b2c7f9586c72459c24dc5fad497268bded628acd459ec9235e",
+      "basis": "C190/audit/three_loader.mjs",
+      "basisSha256": "927190e6d34940b2c7f9586c72459c24dc5fad497268bded628acd459ec9235e",
+      "purpose": "Actual delivered GLB import, receiving-runtime readback or format checks; no design or dynamics generation"
+    },
+    {
+      "current": "validate_glbs.cjs",
+      "currentSha256": "dc48c0d8ed73df13d526b25adf70ff535323cc7ada57059b8a702f1d8d4e5a6f",
+      "basis": "C190/audit/validate_glbs.cjs",
+      "basisSha256": "dc48c0d8ed73df13d526b25adf70ff535323cc7ada57059b8a702f1d8d4e5a6f",
+      "purpose": "Actual delivered GLB import, receiving-runtime readback or format checks; no design or dynamics generation"
+    }
+  ],
+  "changes": {
+    "render_frames.py": "Receipt/task labels only; C187 camera and independent import bounds comparison unchanged",
+    "three_readback.mjs": "Replace old route-based left-gap checks with explicit per-case expected final gap; native playback/mixer unchanged",
+    "three_loader.mjs": "Unchanged",
+    "validate_glbs.cjs": "Unchanged"
+  }
+}

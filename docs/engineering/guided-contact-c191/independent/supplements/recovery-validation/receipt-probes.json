@@ -1,0 +1,42 @@
+{
+  "version": "C191-recovery-receipt-probes-1",
+  "created_utc": "2026-11-10T12:53:52.538317+00:00",
+  "scope": "Auxiliary receipt IO faults preserve the actual atomic pointer outcome and return a truthful structured result.",
+  "baseline_outputs_inspected": true,
+  "corrected_implementation_outputs_inspected": false,
+  "original_frozen_inputs_changed": false,
+  "checker_sha256": "9977377033025d260e3f156867ad075e0fc29bef32e78ae902112f3130312e3b",
+  "cases": [
+    {
+      "id": "R01-committed-attempt-receipt",
+      "fault": "attempt result.json write after accepted pointer changed",
+      "expected_committed": true,
+      "expected_code": null
+    },
+    {
+      "id": "R02-rejected-attempt-receipt",
+      "fault": "attempt result.json write after N10 invalid source",
+      "expected_committed": false,
+      "expected_code": "C191_E_INITIAL_OVERLAP"
+    },
+    {
+      "id": "R03-orphan-candidate-receipt",
+      "fault": "atomic pointer replacement fails, then unreferenced-candidate.json write fails",
+      "expected_committed": false,
+      "expected_code": "C191_E_PUBLICATION"
+    },
+    {
+      "id": "R04-optional-output-error-receipt",
+      "fault": "optional result output fails after commit, then optional-result-error.json fails",
+      "expected_committed": true,
+      "expected_code": null
+    }
+  ],
+  "all_cases_require": [
+    "structured result returns without raised receipt exception",
+    "all older accepted artifacts remain unchanged",
+    "returned commit matches actual pointer change",
+    "receipt loss is reported on stderr"
+  ],
+  "baseline_observation": "All four raised OSError; accepted pointer changed in R01/R04; previous artifact bytes stayed unchanged."
+}

@@ -1,0 +1,27 @@
+{
+  "version": "C191-A1-independent-approval-1",
+  "approvedAtUtc": "2026-11-10T03:19:37.304789+00:00",
+  "reviewer": "c191_reviewer",
+  "decision": "approve exact additive C191-A1 clarification for publication before formal runtime qualification",
+  "amendment_path": "docs/language-design/guided-contact-v0.1/amendments/C191-A1.md",
+  "amendment_sha256": "c05699cdeec319b8f594c771cba7ef1ec8e7d7a4eb267569873171b8839d791e",
+  "supplemental_fixture_manifest_sha256": "7e21dfa14b64ed6788f265db38222e2bfe296371b31b1c3f432a3d643b4786a8",
+  "reviewed_behavior": {
+    "source_read_bound_bytes": 65537,
+    "source_admission_limit_bytes": 65536,
+    "at_limit": "validate otherwise valid padded A with complete source hash and ordinary grammar/token/semantic/budget checks",
+    "over_limit": "C191_E_RESOURCE_LIMIT, execute phase, existing blocked levels, null full-source hash and null source span; no achieved source level or accepted-state change",
+    "prefix_hash_may_identify_full_source": false
+  },
+  "reviewed_unchanged": [
+    "all original contract and fixture bytes",
+    "ordinary and qualification budgets",
+    "all physical limits and expectations",
+    "canonical solver input bytes",
+    "all exact admitted-source diagnostic spans",
+    "source/profile/backend/output bindings"
+  ],
+  "date_context": "Decision date November 9 is the user-facing America/Denver date; this approval timestamp is explicit UTC.",
+  "candidate_boundary_outputs_inspected": false,
+  "scope": "Resolves original prose/schema ambiguity only at oversized source pre-admission; does not excuse missing identity or span for any admitted source."
+}

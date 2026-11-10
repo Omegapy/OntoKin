@@ -1,0 +1,157 @@
+{
+  "checkpoint": "C191",
+  "status": "proposal_not_adopted",
+  "scope": "source-owned guided X box contact through a pinned Blender/Bullet adapter",
+  "source_profile_binding": null,
+  "backend_contract_binding": null,
+  "recorded_output_binding": null,
+  "bindings_note": "Assign exact versioned bindings only through the C191 adoption decision. Existing 0.22 bindings remain unchanged.",
+  "duration_s": 2,
+  "initial_left_face_mm": 180,
+  "right_stop_near_face_mm": 495,
+  "left_stop_thickness_mm": 30,
+  "moving_mass_kg_per_lane": 1,
+  "total_moving_mass_kg": 2,
+  "cases": [
+    {
+      "id": "A",
+      "left_stop_near_face_mm": 380,
+      "left_shoe_collider_enabled": true,
+      "ideal_first_contact_s": 1.6,
+      "left_final_travel_mm": 200,
+      "left_final_signed_gap_mm": 0
+    },
+    {
+      "id": "B",
+      "left_stop_near_face_mm": 355,
+      "left_shoe_collider_enabled": true,
+      "ideal_first_contact_s": 1.4,
+      "left_final_travel_mm": 175,
+      "left_final_signed_gap_mm": 0
+    },
+    {
+      "id": "C",
+      "role": "independent interpolation edit",
+      "left_stop_near_face_mm": 367.5,
+      "left_shoe_collider_enabled": true,
+      "ideal_first_contact_s": 1.5,
+      "left_final_travel_mm": 187.5,
+      "left_final_signed_gap_mm": 0
+    },
+    {
+      "id": "D",
+      "role": "causal negative control",
+      "left_stop_near_face_mm": 380,
+      "left_shoe_collider_enabled": false,
+      "ideal_first_contact_s": null,
+      "left_final_travel_mm": 250,
+      "left_final_signed_gap_mm": -50,
+      "expected_behavior": "native pass-through; no contact response"
+    }
+  ],
+  "all_cases": {
+    "right_final_travel_mm": 300,
+    "right_final_gap_mm": 15,
+    "visible_solids": 7,
+    "moving_bodies": 2,
+    "one_mass_owner_per_collider": true,
+    "one_solver_motion_authority_per_lane": true,
+    "fixed_shoe_to_carriage_transform": true,
+    "right_lane_unchanged": true,
+    "zero_gravity_friction_restitution": true,
+    "source_owned_shoe_stop_boxes": 4,
+    "native_construction": {
+      "compound_carriage_bodies": 2,
+      "shoe_box_children": 2,
+      "hidden_carriage_box_children": 2,
+      "fixed_stop_boxes": 2,
+      "passive_base_anchor_box": 1,
+      "independent_linear_feed_motors": 2,
+      "additional_moving_mass_authorities": 0
+    },
+    "feed_may_remain_active_against_contact": true,
+    "unrelated_visible_part_pairs_continuously_nonoverlapping": 20
+  },
+  "proposed_tolerances": {
+    "initial_bounds_and_dimensions_mm": 0.2,
+    "linear_color_channel": 0.005,
+    "fixed_part_or_attachment_drift_mm": 0.1,
+    "final_travel_mm": 0.5,
+    "final_signed_gap_mm": 0.5,
+    "contact_onset_s": 0.005,
+    "precontact_and_right_speed_mm_s": 0.5,
+    "postcontact_speed_mm_s": 0.5,
+    "postcontact_speed_check_starts_after_ideal_s": 0.025,
+    "postcontact_rebound_displacement_mm": 0.1,
+    "maximum_native_fixed_step_s": 0.0004166666666666667,
+    "raw_to_final_vertex_mapping_mm": 0.2,
+    "positive_contact_maximum_near_face_penetration_mm": 0.5
+  },
+  "recording": {
+    "fps": 240,
+    "common_keys": 481,
+    "native_substeps_per_frame": 10,
+    "native_solver_iterations": 100,
+    "nominal_solver_step_s": 0.0004166666666666667,
+    "native_step_is_distinct_from_recording_cadence": true,
+    "every_native_x_sample_and_time_preserved": true,
+    "recorded_velocity": "finite differences of native evaluated poses; not direct Bullet velocity telemetry"
+  },
+  "must_freeze_before_candidate_output": [
+    "exact source grammar, new profile and backend/output bindings",
+    "exact Blender executable/build hash and Bullet provenance",
+    "axis/unit and body-frame mappings",
+    "exact solver step, substeps, iterations, collision margins and filters",
+    "native contact/velocity observability and required trace cadence",
+    "native motor target mapping, maximum impulse, initial pose and solver authority from modeled t=0",
+    "diagnostic codes, source spans, phases and blocked levels",
+    "independent inputs, analytic expectations and tolerance decision",
+    "source operation/elapsed limits and backend supervisor deadline",
+    "step, object, trace/output byte and cancellation latency caps",
+    "atomic edit, evaluation and artifact-publication behavior"
+  ],
+  "required_negative_and_boundary_fixtures": [
+    "collider-disabled pass-through",
+    "duplicate body/collider ID",
+    "collider assigned to multiple or absent mass owners",
+    "competing prescribed and solver motion authority",
+    "unsupported shape, guide, rotation or contact law",
+    "initial overlap",
+    "unqualified or missing backend",
+    "invalid source edit preserves accepted revision",
+    "renamed/reordered siblings preserve identities and mapping",
+    "resource exhaustion, cancellation and malformed native result publish no successful later state",
+    "unchanged 0.22 contact rejection and pass-through"
+  ],
+  "qualification": {
+    "fresh_source_builds_per_case": 2,
+    "canonical_solver_inputs_identical": true,
+    "final_glb_bytes_identical_on_pinned_environment": true,
+    "blend_byte_identity_required": false,
+    "fresh_blend_reopen_clear_cache_and_native_resimulation": true,
+    "scene_reconstruction_or_manual_repair_after_reopen_allowed": false,
+    "raw_and_final_glb_independent_geometry_motion_and_format_checks": true,
+    "native_contact_records_must_not_be_inferred_from_overlap": true,
+    "artifact_bound_receiving_application_playback_review": true,
+    "unobservable_native_claims_remain_unqualified": true,
+    "positive_contact_penetration_checked_over_every_exported_interpolation_interval": true,
+    "all_twenty_unrelated_pairs_certified_over_full_clip": true,
+    "intended_left_shoe_left_stop_pair_evaluated_separately": true
+  },
+  "not_claimed": [
+    "already adopted syntax or version",
+    "general contact engine",
+    "production Blender adapter or importer",
+    "changed 0.22 semantics",
+    "comparative authoring benefit",
+    "full feature release or full GOAL completion"
+  ],
+  "left_feed_mm_s": 125,
+  "right_feed_mm_s": 150,
+  "motor_binding": {
+    "native_target_m_s": "-source_feed_mm_s / 1000 for the measured base/carriage ordering",
+    "maximum_native_impulse": 100000,
+    "calibrated_force_model_claimed": false
+  },
+  "proposal_basis": "Reviewed against C190-R2 native measurements; no C190 gate or original profile is changed."
+}

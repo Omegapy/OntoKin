@@ -1,0 +1,66 @@
+{
+  "version": "C191-recovery-validation-supplement-1",
+  "created_utc": "2026-11-10T12:48:26.421518+00:00",
+  "baseline_implementation": "f610812ffce58ad039cd14af6e316cbc661dfecc",
+  "provenance": "Additional contract-obligation probes derived during recovery source review after original candidate inspection. Not part of the original pre-candidate freeze.",
+  "frozen_expectations_changed": false,
+  "baseline_outputs_inspected": true,
+  "corrected_implementation_outputs_inspected": false,
+  "contract_manifest_sha256": "bc85696002d641122322313cf5167f84eb1ae377599930112e3afd0f054b0137",
+  "original_source_freeze_sha256": "3d19e48b080119172eb9793ea39065c3245317b6c00a1377a080fccf913d8a81",
+  "new_cases": [
+    {
+      "id": "S02-generic-world-frame",
+      "mutation": "Add 10 mm to native configuration _left_generic.matrix_world X",
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "must_preserve_accepted_state_and_artifacts": true
+    },
+    {
+      "id": "S03-motor-world-frame",
+      "mutation": "Add 10 mm to native configuration _left_motor.matrix_world X",
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "must_preserve_accepted_state_and_artifacts": true
+    },
+    {
+      "id": "S04-hidden-box-world-frame",
+      "mutation": "Add 10 mm to native configuration _left_carriage_collision.matrix_world X",
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "must_preserve_accepted_state_and_artifacts": true
+    },
+    {
+      "id": "S05-raw-native-transverse",
+      "mutation": "Add 0.01 mm to frame 100 raw carriage Y translation; preserve native capture",
+      "expected_code": "C191_E_MAPPING",
+      "must_preserve_accepted_state_and_artifacts": true
+    },
+    {
+      "id": "S06-raw-native-quaternion",
+      "mutation": "Add 0.00001 to frame 100 raw carriage quaternion X; retain identical unused final bytes",
+      "expected_code": "C191_E_MAPPING",
+      "must_preserve_accepted_state_and_artifacts": true
+    },
+    {
+      "id": "S07-missing-raw-rotation-channel",
+      "mutation": "Remove left carriage rotation channel from raw GLB while retaining samplers and bytes",
+      "expected_code": "C191_E_MAPPING",
+      "must_preserve_accepted_state_and_artifacts": true
+    },
+    {
+      "id": "S08-missing-native-result",
+      "mutation": "Remove native-result.json before validation",
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "must_preserve_accepted_state_and_artifacts": true
+    },
+    {
+      "id": "S09-truncated-native-result",
+      "mutation": "Keep only the first half of native-result.json bytes before validation",
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "must_preserve_accepted_state_and_artifacts": true
+    }
+  ],
+  "checks": {
+    "checker/run_lifecycle.py": "17be41f8859f80b9358a85e0b2be0451e2ab07d2ba754935542b5822894886af",
+    "checker/audit_recovered_batch.py": "50d6c5b76970741747fbdb53569ee1ca38b1ed72bc58683be8a86b7904cdb256"
+  },
+  "existing_physical_limits": "All original limits and fixtures remain byte-identical. The supplementary raw/native basis comparison uses 32 float32 epsilons as a codec roundoff guard, not a physical tolerance."
+}

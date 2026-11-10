@@ -1,0 +1,177 @@
+{
+  "version": "C191-R2-author-output-alias-audit-1",
+  "implementation_revision": "d18e707a8ecd3e22b485d1c59341ff0244512732",
+  "implementation_files": {
+    "__init__.py": "8190d7b7098ce322f146f7bc4650e388ad5fca423dd850bb5eb51ab9a667d970",
+    "__main__.py": "09a06e30b3c298207a3a0f36c208213b906f55c245f00d1ed5e2a72fedfd59cb",
+    "api.py": "9f581efad4aeba4b917f57f1ffc5338fccab2cc27ffd3ec40ca562277743c47f",
+    "common.py": "a2d059ddd263f966607ed0e66788c7b49c326c1dafc708df1ea60f673c70025d",
+    "glb.py": "7a4f3b72082d67487927c080ddd1e0dd1e101d143dd7e3fdd49654805ce45cdb",
+    "native_validation.py": "e71085acaf92f2f1758f9dcc0c3a01f219276f59a202121fce80525bf69e3d53",
+    "native_worker.py": "56f83f5392a42e505fe2401655e4606a6a4df007e6ab64b0149e17a6817fdf08",
+    "playback_projection.py": "6bb4403290cecde27007d127fe6afb4f93a67f8ecee264e3c7eaccbefa3ac4b8",
+    "source.py": "a6ac97056d5e907d91508ffae1b762de21dfce005d9f0969a8c9ac9a9e6a2158",
+    "supervisor.py": "172bed0e4f295481f2332b1716d08080803a4fc2d434a9546465b894cbbb64ff",
+    "transaction.py": "ec3be139f6f7dda0d315d0ea3060935b765b55d50a8133b1b0b377e865aabca9"
+  },
+  "script_sha256": "9db84301b2234d4900f92406a24128cb8a0c83488f49eff0c0a40964f8cc4116",
+  "seed_native_result_sha256": "a11d6e719fb71d3cebd6953dc4fa06fedd6f7ffd91ac3b656a0419f269979a02",
+  "method": "Actual API with copying worker for valid transactions; invalid-source cases do not invoke a worker",
+  "cases": [
+    {
+      "case": "invalid-state",
+      "expected_code": "C191_E_INITIAL_OVERLAP",
+      "actual_codes": [
+        "C191_E_INITIAL_OVERLAP"
+      ],
+      "committed": false,
+      "worker_invoked": false,
+      "state_valid": true,
+      "rejected_state_preserved": true,
+      "previous_artifact_and_source_bytes_preserved": true,
+      "pass": true,
+      "returned_result_sha256": "9e800402c9290276f826440027b5ca7a314cf8954937158c754d3f47269b6176"
+    },
+    {
+      "case": "invalid-artifact",
+      "expected_code": "C191_E_INITIAL_OVERLAP",
+      "actual_codes": [
+        "C191_E_INITIAL_OVERLAP"
+      ],
+      "committed": false,
+      "worker_invoked": false,
+      "state_valid": true,
+      "rejected_state_preserved": true,
+      "previous_artifact_and_source_bytes_preserved": true,
+      "pass": true,
+      "returned_result_sha256": "6e6e1c2cd48a438f9858ce5cf9417408d6ac9f12a3c86bb05773e8c17632816d"
+    },
+    {
+      "case": "invalid-source",
+      "expected_code": "C191_E_INITIAL_OVERLAP",
+      "actual_codes": [
+        "C191_E_INITIAL_OVERLAP"
+      ],
+      "committed": false,
+      "worker_invoked": false,
+      "state_valid": true,
+      "rejected_state_preserved": true,
+      "previous_artifact_and_source_bytes_preserved": true,
+      "pass": true,
+      "returned_result_sha256": "ef3c069e50c0f2eb8d1d14297f2e7730d8214099f4a38dabd54b594d3ea6bb19"
+    },
+    {
+      "case": "invalid-state-symlink",
+      "expected_code": "C191_E_INITIAL_OVERLAP",
+      "actual_codes": [
+        "C191_E_INITIAL_OVERLAP"
+      ],
+      "committed": false,
+      "worker_invoked": false,
+      "state_valid": true,
+      "rejected_state_preserved": true,
+      "previous_artifact_and_source_bytes_preserved": true,
+      "pass": true,
+      "returned_result_sha256": "17c0462fa0f9be1a1895a6b66bd2951c88fe0c5b7c5728656898722bd53ae71c"
+    },
+    {
+      "case": "invalid-artifact-hardlink",
+      "expected_code": "C191_E_INITIAL_OVERLAP",
+      "actual_codes": [
+        "C191_E_INITIAL_OVERLAP"
+      ],
+      "committed": false,
+      "worker_invoked": false,
+      "state_valid": true,
+      "rejected_state_preserved": true,
+      "previous_artifact_and_source_bytes_preserved": true,
+      "pass": true,
+      "returned_result_sha256": "eab9dba1db4bcfd05c2b91ffc12905b1a63942c367f022930b4f1036d3c5cf43"
+    },
+    {
+      "case": "valid-state",
+      "expected_code": "C191_E_PUBLICATION",
+      "actual_codes": [
+        "C191_E_PUBLICATION"
+      ],
+      "committed": false,
+      "worker_invoked": false,
+      "state_valid": true,
+      "rejected_state_preserved": true,
+      "previous_artifact_and_source_bytes_preserved": true,
+      "pass": true,
+      "returned_result_sha256": "d3802ae35ec077e5ac50df31a6dcfcbb5c8c89540526c51c5296352c063e57b9"
+    },
+    {
+      "case": "valid-source",
+      "expected_code": "C191_E_PUBLICATION",
+      "actual_codes": [
+        "C191_E_PUBLICATION"
+      ],
+      "committed": false,
+      "worker_invoked": false,
+      "state_valid": true,
+      "rejected_state_preserved": true,
+      "previous_artifact_and_source_bytes_preserved": true,
+      "pass": true,
+      "returned_result_sha256": "0406b08a1cbdd2d8113e50091ac4c94b17ad3b37f35d5802759fc6c9019d0b4a"
+    },
+    {
+      "case": "valid-external",
+      "expected_code": null,
+      "actual_codes": [],
+      "committed": true,
+      "worker_invoked": true,
+      "state_valid": true,
+      "rejected_state_preserved": true,
+      "previous_artifact_and_source_bytes_preserved": true,
+      "pass": true,
+      "returned_result_sha256": "f9a243d4e87f40fe9c3c72644e59cd90b5f726daf96c9283c9e277bf374fe312"
+    },
+    {
+      "case": "valid-late-alias",
+      "expected_code": null,
+      "actual_codes": [],
+      "committed": true,
+      "worker_invoked": true,
+      "state_valid": true,
+      "rejected_state_preserved": true,
+      "previous_artifact_and_source_bytes_preserved": true,
+      "pass": true,
+      "returned_result_sha256": "e49ec7cb76497b48017b422cf6456e3ac5f2a9de8682ee88bd801689432206c6"
+    },
+    {
+      "case": "validate-canonical-source",
+      "expected_code": "C191_E_IO",
+      "actual_codes": [
+        "C191_E_IO"
+      ],
+      "source_and_output_preserved": true,
+      "pass": true,
+      "returned_result_sha256": "2f37da73ab51d4a73e422b2df854cdb675cb3804ec5e5be942293e2fdb7597a2"
+    },
+    {
+      "case": "validate-result-source",
+      "expected_code": "C191_E_IO",
+      "actual_codes": [
+        "C191_E_IO"
+      ],
+      "source_and_output_preserved": true,
+      "pass": true,
+      "returned_result_sha256": "0b0b277729ff23e3d8170d9f629544f4ba267452582456ff7a4430894b2a9ac4"
+    },
+    {
+      "case": "validate-shared-output",
+      "expected_code": "C191_E_IO",
+      "actual_codes": [
+        "C191_E_IO"
+      ],
+      "source_and_output_preserved": true,
+      "pass": true,
+      "returned_result_sha256": "5b6fc7d11c895b8af5ef56f4927d5dacc15897c82fe695e23752c53c5d7189c0"
+    }
+  ],
+  "passed": 12,
+  "total": 12,
+  "pass": true
+}

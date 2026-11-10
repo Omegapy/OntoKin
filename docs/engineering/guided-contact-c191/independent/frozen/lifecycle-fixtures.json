@@ -1,0 +1,418 @@
+{
+  "version": "C191-independent-lifecycle-fixtures-1",
+  "frozen_before_candidate_outputs": true,
+  "host_ceilings": {
+    "operations": 1000000,
+    "elapsed_ms": 80000
+  },
+  "caps": {
+    "source_bytes": 65536,
+    "tokens": 8192,
+    "declarations": 15,
+    "native_objects": 13,
+    "native_rigid_body_components": 9,
+    "native_samples": 481,
+    "scheduled_native_substeps": 4800,
+    "native_result_bytes": 16777216,
+    "native_log_bytes": 4194304,
+    "staged_output_bytes": 67108864,
+    "supervisor_poll_ms": 50,
+    "terminate_grace_ms": 500,
+    "cancellation_completion_ms": 2000,
+    "ordinary_operations": 100000,
+    "ordinary_elapsed_ms": 30000,
+    "qualification_requested_operations": 1000000,
+    "qualification_requested_elapsed_ms": 80000,
+    "qualification_host_operations_ceiling": 1000000,
+    "qualification_host_elapsed_ms_ceiling": 80000
+  },
+  "failure_tests": [
+    {
+      "id": "T01-invalid-edit-rollback",
+      "method": "Run A successfully, snapshot accepted pointer/artifacts, then run source fixture N10-initial-overlap against expected A revision",
+      "expected_code": "C191_E_INITIAL_OVERLAP",
+      "phase": "validate",
+      "blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "assertions": [
+        "successful=false",
+        "committed=false",
+        "no new accepted revision",
+        "previous state pointer bytes and every prior accepted artifact byte unchanged",
+        "failed attempt retained separately",
+        "no worker or process-group descendant alive after return"
+      ]
+    },
+    {
+      "id": "T02-cancel-after-start",
+      "method": "With accepted A, start a new backend attempt and request cancellation after native process start; use actual supervisor and token, no late result accepted",
+      "expected_code": "C191_E_CANCELLED",
+      "phase": "execute",
+      "blocked_levels": [
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "assertions": [
+        "successful=false",
+        "committed=false",
+        "no new accepted revision",
+        "previous state pointer bytes and every prior accepted artifact byte unchanged",
+        "failed attempt retained separately",
+        "no worker or process-group descendant alive after return",
+        "elapsed from cancellation request to complete process-group reap <=2000 ms",
+        "supervisor poll <=50 ms; termination grace <=500 ms"
+      ]
+    },
+    {
+      "id": "T03-deadline-running-worker",
+      "method": "Exercise actual supervisor with a controlled blocking native test worker and finite deadline; worker creates a descendant so group termination is observable",
+      "expected_code": "C191_E_TIMEOUT",
+      "phase": "execute",
+      "blocked_levels": [
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "assertions": [
+        "successful=false",
+        "committed=false",
+        "no new accepted revision",
+        "previous state pointer bytes and every prior accepted artifact byte unchanged",
+        "failed attempt retained separately",
+        "no worker or process-group descendant alive after return",
+        "bounded deadline observed; late worker output discarded"
+      ]
+    },
+    {
+      "id": "T04-operation-exhaustion",
+      "method": "Run frozen N15-operation-exhaustion on accepted A",
+      "expected_code": "C191_E_RESOURCE_LIMIT",
+      "phase": "execute",
+      "blocked_levels": [
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "assertions": [
+        "successful=false",
+        "committed=false",
+        "no new accepted revision",
+        "previous state pointer bytes and every prior accepted artifact byte unchanged",
+        "failed attempt retained separately",
+        "no worker or process-group descendant alive after return",
+        "operation charges include attempted source/validation work; no successful later state"
+      ]
+    },
+    {
+      "id": "T05-source-deadline",
+      "method": "Run frozen N16-deadline-exhaustion on accepted A",
+      "expected_code": "C191_E_TIMEOUT",
+      "phase": "execute",
+      "blocked_levels": [
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "assertions": [
+        "successful=false",
+        "committed=false",
+        "no new accepted revision",
+        "previous state pointer bytes and every prior accepted artifact byte unchanged",
+        "failed attempt retained separately",
+        "no worker or process-group descendant alive after return"
+      ]
+    },
+    {
+      "id": "T06-unknown-native-field",
+      "method": "Add one unknown field to a valid native result and call the actual validation/publication path",
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "phase": "validate_result",
+      "blocked_levels": [
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "assertions": [
+        "successful=false",
+        "committed=false",
+        "no new accepted revision",
+        "previous state pointer bytes and every prior accepted artifact byte unchanged",
+        "failed attempt retained separately",
+        "no worker or process-group descendant alive after return"
+      ]
+    },
+    {
+      "id": "T07-duplicate-native-key",
+      "method": "Serialize a valid native result with duplicate source_sha256 key and call the actual validation/publication path",
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "phase": "validate_result",
+      "blocked_levels": [
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "assertions": [
+        "successful=false",
+        "committed=false",
+        "no new accepted revision",
+        "previous state pointer bytes and every prior accepted artifact byte unchanged",
+        "failed attempt retained separately",
+        "no worker or process-group descendant alive after return"
+      ]
+    },
+    {
+      "id": "T08-nonfinite-native",
+      "method": "Replace one native carriage X scalar with NaN or Infinity in serialized JSON",
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "phase": "validate_result",
+      "blocked_levels": [
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "assertions": [
+        "successful=false",
+        "committed=false",
+        "no new accepted revision",
+        "previous state pointer bytes and every prior accepted artifact byte unchanged",
+        "failed attempt retained separately",
+        "no worker or process-group descendant alive after return"
+      ]
+    },
+    {
+      "id": "T09-wrong-cadence",
+      "method": "Remove one native sample, duplicate a frame, or alter one time_s; each mutation is a distinct attempt",
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "phase": "validate_result",
+      "blocked_levels": [
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "assertions": [
+        "successful=false",
+        "committed=false",
+        "no new accepted revision",
+        "previous state pointer bytes and every prior accepted artifact byte unchanged",
+        "failed attempt retained separately",
+        "no worker or process-group descendant alive after return"
+      ]
+    },
+    {
+      "id": "T10-wrong-native-identity",
+      "method": "Swap body/collider tags or parent, change native shape, or alter one guide/motor/config field; each mutation is distinct",
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "phase": "validate_result",
+      "blocked_levels": [
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "assertions": [
+        "successful=false",
+        "committed=false",
+        "no new accepted revision",
+        "previous state pointer bytes and every prior accepted artifact byte unchanged",
+        "failed attempt retained separately",
+        "no worker or process-group descendant alive after return"
+      ]
+    },
+    {
+      "id": "T11-nonaffine-native",
+      "method": "Set a homogeneous matrix bottom row to [0,0,1,1]",
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "phase": "validate_result",
+      "blocked_levels": [
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "assertions": [
+        "successful=false",
+        "committed=false",
+        "no new accepted revision",
+        "previous state pointer bytes and every prior accepted artifact byte unchanged",
+        "failed attempt retained separately",
+        "no worker or process-group descendant alive after return"
+      ]
+    },
+    {
+      "id": "T12-native-byte-cap",
+      "method": "Provide a native result file of 16777217 bytes through the bounded result-reader/supervisor",
+      "expected_code": "C191_E_RESOURCE_LIMIT",
+      "phase": "execute",
+      "blocked_levels": [
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "assertions": [
+        "successful=false",
+        "committed=false",
+        "no new accepted revision",
+        "previous state pointer bytes and every prior accepted artifact byte unchanged",
+        "failed attempt retained separately",
+        "no worker or process-group descendant alive after return"
+      ]
+    },
+    {
+      "id": "T13-log-byte-cap",
+      "method": "A supervised native test worker writes more than 4194304 combined stdout/stderr bytes",
+      "expected_code": "C191_E_RESOURCE_LIMIT",
+      "phase": "execute",
+      "blocked_levels": [
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "assertions": [
+        "successful=false",
+        "committed=false",
+        "no new accepted revision",
+        "previous state pointer bytes and every prior accepted artifact byte unchanged",
+        "failed attempt retained separately",
+        "no worker or process-group descendant alive after return"
+      ]
+    },
+    {
+      "id": "T14-output-byte-cap",
+      "method": "Cause staged artifact total to exceed 67108864 bytes before publication",
+      "expected_code": "C191_E_RESOURCE_LIMIT",
+      "phase": "execute",
+      "blocked_levels": [
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "assertions": [
+        "successful=false",
+        "committed=false",
+        "no new accepted revision",
+        "previous state pointer bytes and every prior accepted artifact byte unchanged",
+        "failed attempt retained separately",
+        "no worker or process-group descendant alive after return"
+      ]
+    },
+    {
+      "id": "T15-atomic-publication-failure",
+      "method": "With accepted A, inject an IO error at the actual atomic state-file replacement after the new artifact directory has been renamed",
+      "expected_code": "C191_E_PUBLICATION",
+      "phase": "publish",
+      "blocked_levels": [
+        "exported",
+        "destination_validated"
+      ],
+      "assertions": [
+        "successful=false",
+        "committed=false",
+        "no new accepted revision",
+        "previous state pointer bytes and every prior accepted artifact byte unchanged",
+        "failed attempt retained separately",
+        "no worker or process-group descendant alive after return",
+        "an unreferenced immutable candidate directory is failure evidence only; it is not accepted"
+      ]
+    },
+    {
+      "id": "T16-stale-revision",
+      "method": "Invoke run with an expected revision different from the accepted source hash",
+      "expected_code": "C191_E_STALE_REVISION",
+      "phase": "publish",
+      "blocked_levels": [
+        "exported",
+        "destination_validated"
+      ],
+      "assertions": [
+        "successful=false",
+        "committed=false",
+        "no new accepted revision",
+        "previous state pointer bytes and every prior accepted artifact byte unchanged",
+        "failed attempt retained separately",
+        "no worker or process-group descendant alive after return"
+      ]
+    },
+    {
+      "id": "T17-disallowed-X-map",
+      "method": "Change one final carriage X float while preserving the raw value",
+      "expected_code": "C191_E_MAPPING",
+      "phase": "export",
+      "blocked_levels": [
+        "exported",
+        "destination_validated"
+      ],
+      "assertions": [
+        "successful=false",
+        "committed=false",
+        "no new accepted revision",
+        "previous state pointer bytes and every prior accepted artifact byte unchanged",
+        "failed attempt retained separately",
+        "no worker or process-group descendant alive after return"
+      ]
+    },
+    {
+      "id": "T18-disallowed-time-map",
+      "method": "Change one final time float while preserving the raw value",
+      "expected_code": "C191_E_MAPPING",
+      "phase": "export",
+      "blocked_levels": [
+        "exported",
+        "destination_validated"
+      ],
+      "assertions": [
+        "successful=false",
+        "committed=false",
+        "no new accepted revision",
+        "previous state pointer bytes and every prior accepted artifact byte unchanged",
+        "failed attempt retained separately",
+        "no worker or process-group descendant alive after return"
+      ]
+    },
+    {
+      "id": "T19-mapping-bound",
+      "method": "Supply a raw guide residual that forces the continuous or native-sample mapping bound above 0.2 mm",
+      "expected_code": "C191_E_MAPPING",
+      "phase": "export",
+      "blocked_levels": [
+        "exported",
+        "destination_validated"
+      ],
+      "assertions": [
+        "successful=false",
+        "committed=false",
+        "no new accepted revision",
+        "previous state pointer bytes and every prior accepted artifact byte unchanged",
+        "failed attempt retained separately",
+        "no worker or process-group descendant alive after return"
+      ]
+    }
+  ],
+  "rebuild_tests": {
+    "cases": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "fresh_empty_scene_builds_each": 2,
+    "same_canonical_input_bytes": true,
+    "same_final_glb_bytes": true,
+    "blend_byte_identity_claimed": false,
+    "identity_source": "E-rename-reorder",
+    "identity_canonical_and_final_bytes_match_A": true
+  },
+  "reopen_tests": {
+    "cases": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "method": "new pinned Blender process opens delivered scene, inspect all persisted objects/settings/identities, explicitly clear point cache, sequentially replay 0..480 without reconstruction/repair",
+    "compare": "481 native carriage X/time records and final responses reproduced; right trajectory invariant under left disabled control"
+  },
+  "source_spans": "Use exact frozen manifest spans for source fixtures; runtime failures use finalized diagnostics.json source-header/execution/backend/output span definitions."
+}

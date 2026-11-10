@@ -1,0 +1,403 @@
+{
+  "version": "C191-R2-author-saved-scene-structure-audit-1",
+  "implementation_revision": "0afeb31ba87195cd133734f1a0ec09ad950be255",
+  "validator_sha256": "e71085acaf92f2f1758f9dcc0c3a01f219276f59a202121fce80525bf69e3d53",
+  "script_sha256": "90afc9eb0d6eca422bc42fa97fa40abe9bb30668fa712cec4976e8b5c5afd324",
+  "seed_sha256": "b320da6373729d97599dbccac6b3e48743b8b9b9a1a7fe8bf406bc68e56d57e2",
+  "method": "Direct structural validator; no native solve or transaction assertion",
+  "cases": [
+    {
+      "case": "valid-scene",
+      "input_sha256": "b320da6373729d97599dbccac6b3e48743b8b9b9a1a7fe8bf406bc68e56d57e2",
+      "input_bytes": 613968,
+      "expected_code": null,
+      "actual_code": null,
+      "message": null,
+      "pass": true,
+      "cost": {
+        "requested_operations": 1000000,
+        "requested_elapsed_ms": 80000,
+        "host_operations_ceiling": 1000000,
+        "host_elapsed_ms_ceiling": 80000,
+        "operations_consumed": 10549,
+        "operation_components": {
+          "initial_pair_checks": 21,
+          "native_scene_block_fields": 9410,
+          "schema_values": 197,
+          "source_field_checks": 82,
+          "source_reference_checks": 12,
+          "source_tokens": 827
+        },
+        "elapsed_ms": 7.936757999686961,
+        "native_elapsed_ms": 0.0,
+        "cancellation_completion_ms": null,
+        "native_result_bytes": 0,
+        "native_log_bytes": 0,
+        "staged_output_bytes": 0
+      }
+    },
+    {
+      "case": "header-only",
+      "input_sha256": "6038e8408dedbaca80923006ede5d3e308794ad89d219db3126f1d63d8ff0f71",
+      "input_bytes": 12,
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "actual_code": "C191_E_NATIVE_RESULT",
+      "message": "Saved native scene has a truncated block header or missing ENDB",
+      "pass": true,
+      "cost": {
+        "requested_operations": 1000000,
+        "requested_elapsed_ms": 80000,
+        "host_operations_ceiling": 1000000,
+        "host_elapsed_ms_ceiling": 80000,
+        "operations_consumed": 1144,
+        "operation_components": {
+          "initial_pair_checks": 21,
+          "native_scene_block_fields": 5,
+          "schema_values": 197,
+          "source_field_checks": 82,
+          "source_reference_checks": 12,
+          "source_tokens": 827
+        },
+        "elapsed_ms": 3.5570180002650886,
+        "native_elapsed_ms": 0.0,
+        "cancellation_completion_ms": null,
+        "native_result_bytes": 0,
+        "native_log_bytes": 0,
+        "staged_output_bytes": 0
+      }
+    },
+    {
+      "case": "header-plus-one-byte",
+      "input_sha256": "8b6bd3508f6ff5dac67d335671b789cd6288e3cddc0acc3eb2cdff537d711e13",
+      "input_bytes": 13,
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "actual_code": "C191_E_NATIVE_RESULT",
+      "message": "Saved native scene has a truncated block header or missing ENDB",
+      "pass": true,
+      "cost": {
+        "requested_operations": 1000000,
+        "requested_elapsed_ms": 80000,
+        "host_operations_ceiling": 1000000,
+        "host_elapsed_ms_ceiling": 80000,
+        "operations_consumed": 1144,
+        "operation_components": {
+          "initial_pair_checks": 21,
+          "native_scene_block_fields": 5,
+          "schema_values": 197,
+          "source_field_checks": 82,
+          "source_reference_checks": 12,
+          "source_tokens": 827
+        },
+        "elapsed_ms": 3.1502440001531795,
+        "native_elapsed_ms": 0.0,
+        "cancellation_completion_ms": null,
+        "native_result_bytes": 0,
+        "native_log_bytes": 0,
+        "staged_output_bytes": 0
+      }
+    },
+    {
+      "case": "truncated-block-header",
+      "input_sha256": "6d02c887202f05077e50ce3cd2b93d42f6279917d76f88d7ba0d211337beac63",
+      "input_bytes": 20,
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "actual_code": "C191_E_NATIVE_RESULT",
+      "message": "Saved native scene has a truncated block header or missing ENDB",
+      "pass": true,
+      "cost": {
+        "requested_operations": 1000000,
+        "requested_elapsed_ms": 80000,
+        "host_operations_ceiling": 1000000,
+        "host_elapsed_ms_ceiling": 80000,
+        "operations_consumed": 1144,
+        "operation_components": {
+          "initial_pair_checks": 21,
+          "native_scene_block_fields": 5,
+          "schema_values": 197,
+          "source_field_checks": 82,
+          "source_reference_checks": 12,
+          "source_tokens": 827
+        },
+        "elapsed_ms": 3.028861000075267,
+        "native_elapsed_ms": 0.0,
+        "cancellation_completion_ms": null,
+        "native_result_bytes": 0,
+        "native_log_bytes": 0,
+        "staged_output_bytes": 0
+      }
+    },
+    {
+      "case": "truncated-block-payload",
+      "input_sha256": "7224dc1f1a1fa18aa0bdd48d36adde5e31d75542245360ed11f6fd13531168dc",
+      "input_bytes": 107,
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "actual_code": "C191_E_NATIVE_RESULT",
+      "message": "Saved native scene block payload extends beyond EOF",
+      "pass": true,
+      "cost": {
+        "requested_operations": 1000000,
+        "requested_elapsed_ms": 80000,
+        "host_operations_ceiling": 1000000,
+        "host_elapsed_ms_ceiling": 80000,
+        "operations_consumed": 1144,
+        "operation_components": {
+          "initial_pair_checks": 21,
+          "native_scene_block_fields": 5,
+          "schema_values": 197,
+          "source_field_checks": 82,
+          "source_reference_checks": 12,
+          "source_tokens": 827
+        },
+        "elapsed_ms": 3.4036060001199075,
+        "native_elapsed_ms": 0.0,
+        "cancellation_completion_ms": null,
+        "native_result_bytes": 0,
+        "native_log_bytes": 0,
+        "staged_output_bytes": 0
+      }
+    },
+    {
+      "case": "missing-end-block",
+      "input_sha256": "7c89c107b38ce5ea3cedad96d166e9a267071796385194e63d46de577684d558",
+      "input_bytes": 613944,
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "actual_code": "C191_E_NATIVE_RESULT",
+      "message": "Saved native scene has a truncated block header or missing ENDB",
+      "pass": true,
+      "cost": {
+        "requested_operations": 1000000,
+        "requested_elapsed_ms": 80000,
+        "host_operations_ceiling": 1000000,
+        "host_elapsed_ms_ceiling": 80000,
+        "operations_consumed": 10549,
+        "operation_components": {
+          "initial_pair_checks": 21,
+          "native_scene_block_fields": 9410,
+          "schema_values": 197,
+          "source_field_checks": 82,
+          "source_reference_checks": 12,
+          "source_tokens": 827
+        },
+        "elapsed_ms": 7.407018000321841,
+        "native_elapsed_ms": 0.0,
+        "cancellation_completion_ms": null,
+        "native_result_bytes": 0,
+        "native_log_bytes": 0,
+        "staged_output_bytes": 0
+      }
+    },
+    {
+      "case": "truncated-end-block",
+      "input_sha256": "74f49f740bc7ae707d1a5c9fdecf4e0c64fbdb6fcd6c9e6ade623412bc198f3f",
+      "input_bytes": 613967,
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "actual_code": "C191_E_NATIVE_RESULT",
+      "message": "Saved native scene has a truncated block header or missing ENDB",
+      "pass": true,
+      "cost": {
+        "requested_operations": 1000000,
+        "requested_elapsed_ms": 80000,
+        "host_operations_ceiling": 1000000,
+        "host_elapsed_ms_ceiling": 80000,
+        "operations_consumed": 10549,
+        "operation_components": {
+          "initial_pair_checks": 21,
+          "native_scene_block_fields": 9410,
+          "schema_values": 197,
+          "source_field_checks": 82,
+          "source_reference_checks": 12,
+          "source_tokens": 827
+        },
+        "elapsed_ms": 7.528993000050832,
+        "native_elapsed_ms": 0.0,
+        "cancellation_completion_ms": null,
+        "native_result_bytes": 0,
+        "native_log_bytes": 0,
+        "staged_output_bytes": 0
+      }
+    },
+    {
+      "case": "trailing-data",
+      "input_sha256": "80c68ca8a5e878895f3fae6e880067a96396b2407fdad2372316d10f7153544b",
+      "input_bytes": 613969,
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "actual_code": "C191_E_NATIVE_RESULT",
+      "message": "Saved native scene has bytes after ENDB",
+      "pass": true,
+      "cost": {
+        "requested_operations": 1000000,
+        "requested_elapsed_ms": 80000,
+        "host_operations_ceiling": 1000000,
+        "host_elapsed_ms_ceiling": 80000,
+        "operations_consumed": 10549,
+        "operation_components": {
+          "initial_pair_checks": 21,
+          "native_scene_block_fields": 9410,
+          "schema_values": 197,
+          "source_field_checks": 82,
+          "source_reference_checks": 12,
+          "source_tokens": 827
+        },
+        "elapsed_ms": 7.910539000022254,
+        "native_elapsed_ms": 0.0,
+        "cancellation_completion_ms": null,
+        "native_result_bytes": 0,
+        "native_log_bytes": 0,
+        "staged_output_bytes": 0
+      }
+    },
+    {
+      "case": "negative-block-size",
+      "input_sha256": "4436fe5133fc182803bdbdd49e1513f653d26de9f344faaab2ce20e19706bca7",
+      "input_bytes": 613968,
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "actual_code": "C191_E_NATIVE_RESULT",
+      "message": "Saved native scene has negative block fields",
+      "pass": true,
+      "cost": {
+        "requested_operations": 1000000,
+        "requested_elapsed_ms": 80000,
+        "host_operations_ceiling": 1000000,
+        "host_elapsed_ms_ceiling": 80000,
+        "operations_consumed": 1144,
+        "operation_components": {
+          "initial_pair_checks": 21,
+          "native_scene_block_fields": 5,
+          "schema_values": 197,
+          "source_field_checks": 82,
+          "source_reference_checks": 12,
+          "source_tokens": 827
+        },
+        "elapsed_ms": 3.912424000191095,
+        "native_elapsed_ms": 0.0,
+        "cancellation_completion_ms": null,
+        "native_result_bytes": 0,
+        "native_log_bytes": 0,
+        "staged_output_bytes": 0
+      }
+    },
+    {
+      "case": "block-size-overrun",
+      "input_sha256": "865966a01e9f3d6930c4df4f6160602ededcf501f01f7eaed5eecc384dc0d0a1",
+      "input_bytes": 613968,
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "actual_code": "C191_E_NATIVE_RESULT",
+      "message": "Saved native scene block payload extends beyond EOF",
+      "pass": true,
+      "cost": {
+        "requested_operations": 1000000,
+        "requested_elapsed_ms": 80000,
+        "host_operations_ceiling": 1000000,
+        "host_elapsed_ms_ceiling": 80000,
+        "operations_consumed": 1144,
+        "operation_components": {
+          "initial_pair_checks": 21,
+          "native_scene_block_fields": 5,
+          "schema_values": 197,
+          "source_field_checks": 82,
+          "source_reference_checks": 12,
+          "source_tokens": 827
+        },
+        "elapsed_ms": 4.022730000087904,
+        "native_elapsed_ms": 0.0,
+        "cancellation_completion_ms": null,
+        "native_result_bytes": 0,
+        "native_log_bytes": 0,
+        "staged_output_bytes": 0
+      }
+    },
+    {
+      "case": "nonempty-end-block",
+      "input_sha256": "f3ca84380a30ecffa03962dd3fc970889e3f5533d50beb738b04a6bd5d559aea",
+      "input_bytes": 613968,
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "actual_code": "C191_E_NATIVE_RESULT",
+      "message": "Saved native scene has a malformed ENDB block",
+      "pass": true,
+      "cost": {
+        "requested_operations": 1000000,
+        "requested_elapsed_ms": 80000,
+        "host_operations_ceiling": 1000000,
+        "host_elapsed_ms_ceiling": 80000,
+        "operations_consumed": 10549,
+        "operation_components": {
+          "initial_pair_checks": 21,
+          "native_scene_block_fields": 9410,
+          "schema_values": 197,
+          "source_field_checks": 82,
+          "source_reference_checks": 12,
+          "source_tokens": 827
+        },
+        "elapsed_ms": 7.838118999643484,
+        "native_elapsed_ms": 0.0,
+        "cancellation_completion_ms": null,
+        "native_result_bytes": 0,
+        "native_log_bytes": 0,
+        "staged_output_bytes": 0
+      }
+    },
+    {
+      "case": "missing-dna-block",
+      "input_sha256": "79a6c8ab1e1e4da0c337e36b5d6f739bffd97e8ca733545c68c444098d1300a9",
+      "input_bytes": 613968,
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "actual_code": "C191_E_NATIVE_RESULT",
+      "message": "Saved native scene must have one global and one DNA block",
+      "pass": true,
+      "cost": {
+        "requested_operations": 1000000,
+        "requested_elapsed_ms": 80000,
+        "host_operations_ceiling": 1000000,
+        "host_elapsed_ms_ceiling": 80000,
+        "operations_consumed": 10549,
+        "operation_components": {
+          "initial_pair_checks": 21,
+          "native_scene_block_fields": 9410,
+          "schema_values": 197,
+          "source_field_checks": 82,
+          "source_reference_checks": 12,
+          "source_tokens": 827
+        },
+        "elapsed_ms": 7.474179999917396,
+        "native_elapsed_ms": 0.0,
+        "cancellation_completion_ms": null,
+        "native_result_bytes": 0,
+        "native_log_bytes": 0,
+        "staged_output_bytes": 0
+      }
+    },
+    {
+      "case": "header-and-end-only",
+      "input_sha256": "a434c3b82cee29a6b1ebcf45095bc089bbd26650d1fa114a74a07eede64b1577",
+      "input_bytes": 36,
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "actual_code": "C191_E_NATIVE_RESULT",
+      "message": "Saved native scene must have one global and one DNA block",
+      "pass": true,
+      "cost": {
+        "requested_operations": 1000000,
+        "requested_elapsed_ms": 80000,
+        "host_operations_ceiling": 1000000,
+        "host_elapsed_ms_ceiling": 80000,
+        "operations_consumed": 1144,
+        "operation_components": {
+          "initial_pair_checks": 21,
+          "native_scene_block_fields": 5,
+          "schema_values": 197,
+          "source_field_checks": 82,
+          "source_reference_checks": 12,
+          "source_tokens": 827
+        },
+        "elapsed_ms": 3.6670239996965392,
+        "native_elapsed_ms": 0.0,
+        "cancellation_completion_ms": null,
+        "native_result_bytes": 0,
+        "native_log_bytes": 0,
+        "staged_output_bytes": 0
+      }
+    }
+  ],
+  "passed": 13,
+  "total": 13,
+  "pass": true
+}

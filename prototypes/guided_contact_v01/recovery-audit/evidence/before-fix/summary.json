@@ -1,0 +1,93 @@
+{
+  "version": "C191-R2-author-native-boundary-audit-1",
+  "implementation_revision": "dc782500d74a8b269c3471121345d6c8566508eb",
+  "implementation_files": {
+    "__init__.py": "8190d7b7098ce322f146f7bc4650e388ad5fca423dd850bb5eb51ab9a667d970",
+    "__main__.py": "09a06e30b3c298207a3a0f36c208213b906f55c245f00d1ed5e2a72fedfd59cb",
+    "api.py": "aafffafed3b13405062065043063341bedde361874d6d66e40d290586c1e6d5b",
+    "common.py": "181f170aa521edd092edd7278a279471e81552c6b75dcd89bd0093990db2a8dd",
+    "glb.py": "7a4f3b72082d67487927c080ddd1e0dd1e101d143dd7e3fdd49654805ce45cdb",
+    "native_validation.py": "14efcda57c59d88f3275bce6e80f79f542b75f3f262d8e66fa28406b40650a87",
+    "native_worker.py": "56f83f5392a42e505fe2401655e4606a6a4df007e6ab64b0149e17a6817fdf08",
+    "playback_projection.py": "6bb4403290cecde27007d127fe6afb4f93a67f8ecee264e3c7eaccbefa3ac4b8",
+    "source.py": "a6ac97056d5e907d91508ffae1b762de21dfce005d9f0969a8c9ac9a9e6a2158",
+    "supervisor.py": "172bed0e4f295481f2332b1716d08080803a4fc2d434a9546465b894cbbb64ff",
+    "transaction.py": "822c262154dbeec031b23c50b673fba0a13c46c010604cb3811b19d7b5a3a585"
+  },
+  "script_sha256": "d2847ce058785df1c6ebda12fcfb3ece476061b5cc4b30ae682637a1251325c8",
+  "seed_directory": "/workspace/scratch/8f2c3db0e313/author-audit-baseline-A/artifacts/01ecec3bf6de4202af832e646f967cc6",
+  "seed_native_result_sha256": "a11d6e719fb71d3cebd6953dc4fa06fedd6f7ffd91ac3b656a0419f269979a02",
+  "seed_final_glb_sha256": "1ccfdd4691edb924747a5b7b48bfdf01b2647e3393979cf088b9de231f00f38d",
+  "method": "Actual transaction and supervisor with trusted copying-worker faults; no fresh native claim",
+  "cases": [
+    {
+      "case": "valid-copy-control",
+      "expected_code": null,
+      "actual_codes": [],
+      "successful": true,
+      "committed": true,
+      "pointer_changed": true,
+      "previous_artifacts_unchanged": true,
+      "pass": true,
+      "returned_result_sha256": "cfa8650f681220b23905d5e7993a73babc28289294e3d652fbf63a005a76ed49"
+    },
+    {
+      "case": "mesh-reported-as-empty",
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "actual_codes": [],
+      "successful": true,
+      "committed": true,
+      "pointer_changed": true,
+      "previous_artifacts_unchanged": true,
+      "pass": false,
+      "returned_result_sha256": "998899e7698305dfd036a2d33403389855c4b52e6d2ce429947d14ba742e56aa"
+    },
+    {
+      "case": "constraint-reported-as-mesh",
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "actual_codes": [],
+      "successful": true,
+      "committed": true,
+      "pointer_changed": true,
+      "previous_artifacts_unchanged": true,
+      "pass": false,
+      "returned_result_sha256": "fae816521cab8bb8c0cf02aee6fe12363baa15ae9c754874d18c253d4fcbcef6"
+    },
+    {
+      "case": "missing-native-scene",
+      "expected_code": "C191_E_NATIVE_FAILURE",
+      "actual_codes": [],
+      "successful": true,
+      "committed": true,
+      "pointer_changed": true,
+      "previous_artifacts_unchanged": true,
+      "pass": false,
+      "returned_result_sha256": "12a3554fa6b9bdf3efdbe1a96e20ee4f8994307905342b3ff9d407e6b43e906b"
+    },
+    {
+      "case": "empty-native-scene",
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "actual_codes": [],
+      "successful": true,
+      "committed": true,
+      "pointer_changed": true,
+      "previous_artifacts_unchanged": true,
+      "pass": false,
+      "returned_result_sha256": "a5249e27f5540da138c7f6688c237742e6eb127fa06604971988854799ea03b5"
+    },
+    {
+      "case": "invalid-native-scene-header",
+      "expected_code": "C191_E_NATIVE_RESULT",
+      "actual_codes": [],
+      "successful": true,
+      "committed": true,
+      "pointer_changed": true,
+      "previous_artifacts_unchanged": true,
+      "pass": false,
+      "returned_result_sha256": "a15e088bbb7f5b8d300ab07bd80747435001a02db954f4615784e7b77c1b021e"
+    }
+  ],
+  "passed": 1,
+  "total": 6,
+  "pass": false
+}
