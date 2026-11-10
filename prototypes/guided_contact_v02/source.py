@@ -418,7 +418,7 @@ class Source:
         self.source_manifest = {
             "source_sha256": self.sha, "source_bytes": len(self.data), "source_path": self.path.name,
             "canonical_input_sha256": self.canonical_sha,
-            "contract_manifest_sha256": sha256((self.contract_path / "CONTRACT-FILES.json").read_bytes()) if hasattr(self, "contract_path") else "bc85696002d641122322313cf5167f84eb1ae377599930112e3afd0f054b0137",
+            "contract_manifest_sha256": sha256((self.contract_path / "CONTRACT-FILES.json").read_bytes()) if hasattr(self, "contract_path") else "d5ce5afa4e1a548f493b9b0184798bfe8e88f954a2f57771e2d20e0256037037",
             "dependency_closure": self.contract["dependency_closure"],
             "module_label": self.module_label, "scene_label": self.scene_label,
             "occurrences": [{"id": d.key.value, "kind": d.kind, "label": d.label,

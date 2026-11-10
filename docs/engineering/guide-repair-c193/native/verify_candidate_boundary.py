@@ -23,6 +23,8 @@ def main():
     root = args.repo.resolve()
     sys.path.insert(0, str(root))
     from prototypes.guided_contact_v02.api import validate_source
+    from prototypes.guided_contact_v02.common import Budget, load_contract
+    from prototypes.guided_contact_v02.source import Source
     from prototypes.guided_contact_v01.api import validate_source as validate_legacy
     old, new = root / "prototypes/guided_contact_v01", root / "prototypes/guided_contact_v02"
     origin = [{"name": path.name,
@@ -52,6 +54,10 @@ def main():
             assert result["successful"]
             row = {"case": case, "source_sha256": result["source_sha256"],
                    "canonical_sha256": result["canonical_input_sha256"], "validated": True}
+            context = Source(source, source.read_bytes(), Budget(1000000, 80000), load_contract()).parse().validate()
+            row["source_manifest_contract_sha256"] = context.source_manifest["contract_manifest_sha256"]
+            assert row["source_manifest_contract_sha256"] == hashlib.sha256(
+                (root / "docs/language-design/guided-contact-v0.2/CONTRACT-FILES.json").read_bytes()).hexdigest()
             if case in "EF":
                 direct = runpy.run_path(str(root / f"docs/engineering/guide-repair-c193/native/direct-sources/{case}.py"))["DESIGN"]
                 row["direct_canonical_equal"] = json.loads(canonical.read_text()) == direct

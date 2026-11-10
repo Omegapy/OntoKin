@@ -34,7 +34,18 @@ def main():
     (output / "adoption-receipt.md").write_bytes(args.adoption.read_bytes())
     matrix = [(f"ok-{case}-{repeat}", "ok", case) for case in "ABCDEF" for repeat in (1, 2)]
     matrix += [(f"python-{case}-1", "python", case) for case in "EF"]
+    revision = subprocess.check_output(["git", "-C", str(repo), "rev-parse", "HEAD"], text=True).strip()
+    locked = [path for path in (repo / "prototypes/guided_contact_v02").glob("*.py")]
+    locked += [path for path in contract.rglob("*") if path.is_file()]
+    locked += [Path(__file__).resolve(), Path(__file__).resolve().parent / "build.py",
+               Path(__file__).resolve().parent / "direct_runner.py"]
+    locked += list((Path(__file__).resolve().parent / "direct-sources").glob("*.py"))
+    input_lock = {"implementation_revision": revision, "adoption_sha256": args.adoption_sha256,
+                  "files": {str(path.relative_to(repo)): {"bytes": path.stat().st_size, "sha256": digest(path)}
+                            for path in sorted(locked)}}
+    (output / "INPUT-LOCK.json").write_text(json.dumps(input_lock, indent=2) + "\n")
     manifest = {"schema": "ontokin.c193.formal-builds/0.1", "started_unix_s": time.time(),
+                "implementation_revision": revision, "input_lock_sha256": digest(output / "INPUT-LOCK.json"),
                 "adoption_sha256": args.adoption_sha256, "backend_sha256": BACKEND_SHA,
                 "contract_manifest_sha256": CONTRACT_SHA,
                 "planned_builds": len(matrix), "native_resimulations_performed_here": 0,

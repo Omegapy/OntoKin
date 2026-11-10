@@ -27,7 +27,7 @@ def main():
     started = time.time()
     args.out.mkdir(parents=True, exist_ok=False)
     sys.path.insert(0, str(args.repo.resolve()))
-    from prototypes.guided_contact_v02.common import Budget, CONTRACT, canonical_bytes, load_contract, schema_check, sha256
+    from prototypes.guided_contact_v02.common import Budget, CONTRACT, CONTRACT_MANIFEST_SHA256, canonical_bytes, load_contract, schema_check, sha256
     from prototypes.guided_contact_v02.glb import encode_raw, project, verify_mapping
     from prototypes.guided_contact_v02.native_validation import validate_native, validate_scene_artifact, write_native_evidence
     from prototypes.guided_contact_v02.supervisor import check_sizes, supervise
@@ -43,7 +43,11 @@ def main():
         design = runpy.run_path(str(args.design))["DESIGN"]
         contract = load_contract()
         backend = contract["backend"]
+        contract_manifest_sha256 = sha256((CONTRACT / "CONTRACT-FILES.json").read_bytes())
+        assert contract_manifest_sha256 == CONTRACT_MANIFEST_SHA256
         assert design["backend_sha256"] == contract["backend_sha256"], "Direct design backend hash differs from selected contract"
+        receipt.update(contract_manifest_sha256=contract_manifest_sha256,
+                       backend_sha256=contract["backend_sha256"])
         schema_check(design, contract["source_schema"], budget=budget)
         budget.authorize(design["execution"]["max_operations"], design["execution"]["max_elapsed_ms"], None, None)
         encoded = canonical_bytes(design)
@@ -54,6 +58,9 @@ def main():
         (args.out / "source.py").write_bytes(source)
         (args.out / "canonical-input.json").write_bytes(encoded)
         manifest = {"source_sha256": context.sha, "canonical_input_sha256": context.canonical_sha,
+                    "contract_manifest_sha256": contract_manifest_sha256,
+                    "backend_sha256": contract["backend_sha256"],
+                    "dependency_closure": contract["dependency_closure"],
                     "authoring_route": "direct-python", "source_path": args.design.name,
                     "canonical_profile_label": "The shared source_binding field names the C193 interchange profile; this route does not parse .ok"}
         (args.out / "source-manifest.json").write_bytes(canonical_bytes(manifest))
