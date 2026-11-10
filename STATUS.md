@@ -1,16 +1,18 @@
-# OntoKin development status — C189 carriage drive and following
+# OntoKin development status — C190 attached-shoe contact
 
 ## Main integration lease
 
-Owner `c190-recovery-eb7f3f78` holds main integration through `2026-11-10T00:54:00Z` for recovery and completion of the C190 shoe-contact experiment, `docs/engineering/shoe-contact-c190/**` and its STATUS update in [PR #123](https://github.com/Omegapy/OntoKin/pull/123). The preceding `c190-contact-2c282014` lease expired at 00:08:54Z. Recovery reconciled unchanged main `ce5d6e4b1efc9388f9d5a0072288b11fe009c4b6`, preserved the original checkpoint, published the reconstructed evaluator, and received the sealed native unsupported-contact result. The missing original trial artifacts are being replaced by explicitly identified recovery replication evidence. Runtime, legacy tests and hosted workflows remain unchanged. Release follows verified integration.
+Owner `c190-completion-d0b9f6a7` releases the main integration lease on verified merge of [PR #123](https://github.com/Omegapy/OntoKin/pull/123). Its completion lease expires at `2026-11-10T01:39:48Z`. The C190-R2 sources, results and audits survived the later interruption; this continuation verified and published them without another participant trial. The original unavailable trial and the separate recovery replication retain their distinct provenance.
 
 ## Current checkpoint
 
+Native Blender contact at an attached shoe stops its carriage at the two formal stop positions and an independent third edit. Removing only the shoe collider lets the carriage continue. A disclosed final playback projection preserves every native carriage X sample and timestamp; the maximum continuous raw-playback deviation bound is 0.056596 mm. The unchanged OntoKin profile retains massless following but has no contact response, so its shoe passes each stop. Twelve independent source rebuilds reproduce the raw/final outputs. [Results, sources and limits](docs/engineering/shoe-contact-c190/README.md)
+
+C191 should adopt a bounded source-to-solver contact binding and qualify a thin `.ok`-to-Blender/Bullet adapter. Preserve source identity, one mass owner, one motion authority, declared helper geometry and current native semantics. [Next task](docs/engineering/shoe-contact-c190/NEXT-TASK.md)
+
+## Previous checkpoint at C189
+
 Both C189 native designs propagated a left carriage speed edit to its attached shoe. At 125 and 100 mm/s the left minimum clearance was 65 and 115 mm respectively. A coordinator edit to 110 mm/s produced 95 mm. The right lane retained its 15 mm clearance in all three cases. The eight formal-case rebuilds reproduced the four final GLBs. [Native sources, checker and playback](docs/engineering/carriage-drive-c189/README.md)
-
-C190 moves a fixed stop into the shoe's path to determine whether contact there is represented and can halt the carriage. The current OntoKin shoe is a massless spatial follower with collision disabled. [Next experiment](docs/engineering/carriage-drive-c189/README.md#next-experiment)
-
-Owner `c189-drive-69d28120` releases the main integration lease on merge.
 
 ## Previous checkpoint at C188
 
