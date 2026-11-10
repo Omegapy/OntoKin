@@ -49,8 +49,16 @@ def config(scene, backend):
                 if obj.rigid_body else None}
         if obj.type == "MESH":
             row["vertices"] = [list(vertex.co) for vertex in obj.data.vertices]
+            row["polygons"] = [list(face.vertices) for face in obj.data.polygons]
             row["local_bounds"] = [[min(vertex.co[a] for vertex in obj.data.vertices) for a in range(3)],
                                    [max(vertex.co[a] for vertex in obj.data.vertices) for a in range(3)]]
+            row["materials"] = []
+            for material in obj.data.materials:
+                principled = [node for node in material.node_tree.nodes if node.type == "BSDF_PRINCIPLED"] if material.use_nodes else []
+                row["materials"].append({"diffuse_color": list(material.diffuse_color), "use_nodes": material.use_nodes,
+                    "principled_base_colors": [list(node.inputs["Base Color"].default_value) for node in principled],
+                    "linked_base_color": any(node.inputs["Base Color"].is_linked for node in principled),
+                    "animated": material.animation_data is not None})
         if obj.rigid_body_constraint:
             joint = obj.rigid_body_constraint
             fields = ["type", "disable_collisions", "use_override_solver_iterations", "solver_iterations",
@@ -87,6 +95,26 @@ def verify_configuration(configuration, backend, source_path, canonical_path, ca
         if key in world:
             assert world[key] == value, "Stored world setting mismatch: " + key
     objects = configuration["objects"]
+    design = json.loads((Path(__file__).resolve().parent.parent / "frozen/c190-assembly.json").read_text())
+    for part in design["parts"]:
+        name = part["id"]
+        native = bpy.context.scene.objects[name]
+        corners = [native.matrix_world @ Vector(corner) for corner in native.bound_box]
+        source_corners = [[point.x * 1000, point.z * 1000, -point.y * 1000] for point in corners]
+        actual_bounds = [[min(point[a] for point in source_corners) for a in range(3)],
+                         [max(point[a] for point in source_corners) for a in range(3)]]
+        expected = [list(corner) for corner in part["worldBoundsAt0Mm"]]
+        if name == "left_stop":
+            for corner in expected:
+                corner[0] += STOPS[case] - 495
+        assert max(abs(actual_bounds[i][j] - expected[i][j]) for i in range(2) for j in range(3)) <= .2
+        material, = objects[name]["materials"]
+        assert not material["animated"] and not material["linked_base_color"]
+        if material["use_nodes"]:
+            color, = material["principled_base_colors"]
+        else:
+            color = material["diffuse_color"]
+        assert max(abs(a - b) for a, b in zip(color, part["baseColorLinearRGB"] + [1])) <= .005
     assert set(objects) == {row["name"] for row in backend["native_objects"]}
     assert len(objects) == 13
     assert sum(row["type"] == "MESH" and not row["hide_render"] for row in objects.values()) == 7
@@ -112,6 +140,18 @@ def verify_configuration(configuration, backend, source_path, canonical_path, ca
             assert row["type"] == "EMPTY" and row["rigid_body"] is None and row["hide_render"]
             continue
         assert row["type"] == "MESH" and len(row["vertices"]) == 8
+        assert len(row["polygons"]) == 6
+        face_keys = []
+        for indices in row["polygons"]:
+            assert len(indices) == 4 and len(set(indices)) == 4
+            vertices = [Vector(row["vertices"][index]) for index in indices]
+            face = [(axis, side) for axis in range(3) for side in range(2)
+                    if all(vertex[axis] == row["local_bounds"][side][axis] for vertex in vertices)]
+            assert len(face) == 1
+            face_keys.append(face[0])
+            normal = (vertices[1] - vertices[0]).cross(vertices[2] - vertices[0])
+            assert normal.dot(sum(vertices, Vector()) / 4) > 0, "Inward native box face: " + name
+        assert len(set(face_keys)) == 6
         assert row["hide_render"] == bool(mapping.get("hide_render", False))
         if name == "left_shoe" and case == "D":
             assert row["rigid_body"] is None

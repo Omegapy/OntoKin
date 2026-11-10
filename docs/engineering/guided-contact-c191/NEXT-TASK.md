@@ -41,6 +41,12 @@ must use its accepted source and the explicit experimental adapter. Neither
 route may hand-edit the recorded trajectory, substitute a timed stop, change a
 gate, or repair a delivered scene after the formal submission.
 
+Use the qualified C191 native constructor and captured-pose GLB binding as the
+common execution and delivery baseline for both routes. The direct Python
+starter can supply the equivalent design data to that constructor. Disclose
+this shared preparation. C190's earlier native Blender animation exporter has
+different output bytes and is not the C191 recorded-output binding.
+
 ## Run and assess
 
 1. Give both agents the frozen first edit and their respective editable starter.

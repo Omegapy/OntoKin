@@ -59,7 +59,7 @@ def encode_raw(stage, native, context, budget, backend):
              "accessors": [], "bufferViews": [], "buffers": []}
     binary = bytearray()
 
-    def add(rows, kind, component=5126, target=None):
+    def add(rows, kind, component=5126, target=None, include_bounds=True):
         width = {"SCALAR": 1, "VEC3": 3, "VEC4": 4}[kind]
         values = [(value,) for value in rows] if width == 1 else rows
         if component == 5126:
@@ -75,9 +75,10 @@ def encode_raw(stage, native, context, budget, backend):
             view["target"] = target
         model["bufferViews"].append(view)
         accessor = {"bufferView": len(model["bufferViews"]) - 1, "componentType": component,
-                    "count": len(values), "type": kind,
-                    "min": [min(row[a] for row in values) for a in range(width)],
-                    "max": [max(row[a] for row in values) for a in range(width)]}
+                    "count": len(values), "type": kind}
+        if include_bounds:
+            accessor.update(min=[min(row[a] for row in values) for a in range(width)],
+                            max=[max(row[a] for row in values) for a in range(width)])
         model["accessors"].append(accessor)
         return len(model["accessors"]) - 1
 
@@ -114,7 +115,10 @@ def encode_raw(stage, native, context, budget, backend):
         if any(any(abs(q[a] - [0, 0, 0, 1][a]) > 0 for a in range(4)) for q in rotations):
             tracks.append(("rotation", rotations, "VEC4"))
         for path, rows, kind in tracks:
-            output = add(rows, kind)
+            # Output-track bounds are optional in glTF. Omit them in raw so
+            # transverse projection cannot leave stale bounds or require an
+            # extra raw/final metadata edit beyond the frozen mapping contract.
+            output = add(rows, kind, include_bounds=False)
             animation["samplers"].append({"input": times, "output": output, "interpolation": "LINEAR"})
             animation["channels"].append({"sampler": len(animation["samplers"]) - 1,
                                            "target": {"node": PARTS.index(name), "path": path}})
