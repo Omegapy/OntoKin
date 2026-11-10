@@ -1,0 +1,743 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ontokin:c191:source:0.1",
+  "type": "object",
+  "properties": {
+    "source_binding": {
+      "const": "c191-experimental-0.1"
+    },
+    "profile": {
+      "const": "guided-box-contact-0.1"
+    },
+    "backend": {
+      "const": "blender-bullet-c190-0.1"
+    },
+    "output": {
+      "const": "glb-guided-contact-0.1"
+    },
+    "backend_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "module_key": {
+      "const": "gauge"
+    },
+    "scene_key": {
+      "const": "slide"
+    },
+    "duration_s": {
+      "const": 2
+    },
+    "gravity_m_s2": {
+      "const": [
+        0,
+        0,
+        0
+      ]
+    },
+    "execution": {
+      "type": "object",
+      "properties": {
+        "max_operations": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "max_elapsed_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 80000
+        }
+      },
+      "required": [
+        "max_operations",
+        "max_elapsed_ms"
+      ],
+      "additionalProperties": false
+    },
+    "parts": {
+      "type": "object",
+      "properties": {
+        "base": {
+          "type": "object",
+          "properties": {
+            "box_mm": {
+              "const": [
+                730,
+                80,
+                600
+              ]
+            },
+            "color_linear_rgba": {
+              "const": [
+                0.21,
+                0.26,
+                0.3,
+                1
+              ]
+            },
+            "rotation_wxyz": {
+              "const": [
+                1,
+                0,
+                0,
+                0
+              ]
+            },
+            "at_mm": {
+              "const": [
+                -160,
+                0,
+                -300
+              ]
+            }
+          },
+          "required": [
+            "box_mm",
+            "color_linear_rgba",
+            "rotation_wxyz",
+            "at_mm"
+          ],
+          "additionalProperties": false
+        },
+        "left_carriage": {
+          "type": "object",
+          "properties": {
+            "box_mm": {
+              "const": [
+                200,
+                40,
+                80
+              ]
+            },
+            "color_linear_rgba": {
+              "const": [
+                0.17,
+                0.5,
+                0.54,
+                1
+              ]
+            },
+            "rotation_wxyz": {
+              "const": [
+                1,
+                0,
+                0,
+                0
+              ]
+            },
+            "at_mm": {
+              "const": [
+                -100,
+                80,
+                -200
+              ]
+            }
+          },
+          "required": [
+            "box_mm",
+            "color_linear_rgba",
+            "rotation_wxyz",
+            "at_mm"
+          ],
+          "additionalProperties": false
+        },
+        "left_shoe": {
+          "type": "object",
+          "properties": {
+            "box_mm": {
+              "const": [
+                130,
+                50,
+                80
+              ]
+            },
+            "color_linear_rgba": {
+              "const": [
+                0.84,
+                0.6,
+                0.18,
+                1
+              ]
+            },
+            "rotation_wxyz": {
+              "const": [
+                1,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "required": [
+            "box_mm",
+            "color_linear_rgba",
+            "rotation_wxyz"
+          ],
+          "additionalProperties": false
+        },
+        "left_stop": {
+          "type": "object",
+          "properties": {
+            "box_mm": {
+              "const": [
+                30,
+                40,
+                120
+              ]
+            },
+            "color_linear_rgba": {
+              "const": [
+                0.61,
+                0.25,
+                0.19,
+                1
+              ]
+            },
+            "rotation_wxyz": {
+              "const": [
+                1,
+                0,
+                0,
+                0
+              ]
+            },
+            "at_mm": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "number",
+                  "minimum": 200,
+                  "maximum": 495
+                },
+                {
+                  "const": 130
+                },
+                {
+                  "const": -220
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            }
+          },
+          "required": [
+            "box_mm",
+            "color_linear_rgba",
+            "rotation_wxyz",
+            "at_mm"
+          ],
+          "additionalProperties": false
+        },
+        "right_carriage": {
+          "type": "object",
+          "properties": {
+            "box_mm": {
+              "const": [
+                200,
+                40,
+                80
+              ]
+            },
+            "color_linear_rgba": {
+              "const": [
+                0.17,
+                0.5,
+                0.54,
+                1
+              ]
+            },
+            "rotation_wxyz": {
+              "const": [
+                1,
+                0,
+                0,
+                0
+              ]
+            },
+            "at_mm": {
+              "const": [
+                -100,
+                80,
+                120
+              ]
+            }
+          },
+          "required": [
+            "box_mm",
+            "color_linear_rgba",
+            "rotation_wxyz",
+            "at_mm"
+          ],
+          "additionalProperties": false
+        },
+        "right_shoe": {
+          "type": "object",
+          "properties": {
+            "box_mm": {
+              "const": [
+                100,
+                50,
+                80
+              ]
+            },
+            "color_linear_rgba": {
+              "const": [
+                0.84,
+                0.6,
+                0.18,
+                1
+              ]
+            },
+            "rotation_wxyz": {
+              "const": [
+                1,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "required": [
+            "box_mm",
+            "color_linear_rgba",
+            "rotation_wxyz"
+          ],
+          "additionalProperties": false
+        },
+        "right_stop": {
+          "type": "object",
+          "properties": {
+            "box_mm": {
+              "const": [
+                30,
+                40,
+                120
+              ]
+            },
+            "color_linear_rgba": {
+              "const": [
+                0.61,
+                0.25,
+                0.19,
+                1
+              ]
+            },
+            "rotation_wxyz": {
+              "const": [
+                1,
+                0,
+                0,
+                0
+              ]
+            },
+            "at_mm": {
+              "const": [
+                495,
+                130,
+                100
+              ]
+            }
+          },
+          "required": [
+            "box_mm",
+            "color_linear_rgba",
+            "rotation_wxyz",
+            "at_mm"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "base",
+        "left_carriage",
+        "left_shoe",
+        "left_stop",
+        "right_carriage",
+        "right_shoe",
+        "right_stop"
+      ],
+      "additionalProperties": false
+    },
+    "bodies": {
+      "type": "object",
+      "properties": {
+        "body.left": {
+          "type": "object",
+          "properties": {
+            "part": {
+              "const": "left_carriage"
+            },
+            "mass_kg": {
+              "const": 1
+            },
+            "authority": {
+              "const": "solver"
+            },
+            "guide": {
+              "const": "world_x"
+            },
+            "feed_mm_s": {
+              "const": 125
+            },
+            "initial_velocity_mm_s": {
+              "const": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "required": [
+            "part",
+            "mass_kg",
+            "authority",
+            "guide",
+            "feed_mm_s",
+            "initial_velocity_mm_s"
+          ],
+          "additionalProperties": false
+        },
+        "body.right": {
+          "type": "object",
+          "properties": {
+            "part": {
+              "const": "right_carriage"
+            },
+            "mass_kg": {
+              "const": 1
+            },
+            "authority": {
+              "const": "solver"
+            },
+            "guide": {
+              "const": "world_x"
+            },
+            "feed_mm_s": {
+              "const": 150
+            },
+            "initial_velocity_mm_s": {
+              "const": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "required": [
+            "part",
+            "mass_kg",
+            "authority",
+            "guide",
+            "feed_mm_s",
+            "initial_velocity_mm_s"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "body.left",
+        "body.right"
+      ],
+      "additionalProperties": false
+    },
+    "colliders": {
+      "type": "object",
+      "properties": {
+        "contact.left_shoe": {
+          "type": "object",
+          "properties": {
+            "part": {
+              "const": "left_shoe"
+            },
+            "owner": {
+              "const": "body.left"
+            },
+            "shape": {
+              "const": "box"
+            },
+            "box_mm": {
+              "const": [
+                130,
+                50,
+                80
+              ]
+            },
+            "offset_mm": {
+              "const": [
+                0,
+                0,
+                0
+              ]
+            },
+            "enabled": {
+              "type": "boolean"
+            },
+            "friction": {
+              "const": 0
+            },
+            "restitution": {
+              "const": 0
+            }
+          },
+          "required": [
+            "part",
+            "owner",
+            "shape",
+            "box_mm",
+            "offset_mm",
+            "enabled",
+            "friction",
+            "restitution"
+          ],
+          "additionalProperties": false
+        },
+        "contact.left_stop": {
+          "type": "object",
+          "properties": {
+            "part": {
+              "const": "left_stop"
+            },
+            "owner": {
+              "const": "world"
+            },
+            "shape": {
+              "const": "box"
+            },
+            "box_mm": {
+              "const": [
+                30,
+                40,
+                120
+              ]
+            },
+            "offset_mm": {
+              "const": [
+                0,
+                0,
+                0
+              ]
+            },
+            "enabled": {
+              "const": true
+            },
+            "friction": {
+              "const": 0
+            },
+            "restitution": {
+              "const": 0
+            }
+          },
+          "required": [
+            "part",
+            "owner",
+            "shape",
+            "box_mm",
+            "offset_mm",
+            "enabled",
+            "friction",
+            "restitution"
+          ],
+          "additionalProperties": false
+        },
+        "contact.right_shoe": {
+          "type": "object",
+          "properties": {
+            "part": {
+              "const": "right_shoe"
+            },
+            "owner": {
+              "const": "body.right"
+            },
+            "shape": {
+              "const": "box"
+            },
+            "box_mm": {
+              "const": [
+                100,
+                50,
+                80
+              ]
+            },
+            "offset_mm": {
+              "const": [
+                0,
+                0,
+                0
+              ]
+            },
+            "enabled": {
+              "const": true
+            },
+            "friction": {
+              "const": 0
+            },
+            "restitution": {
+              "const": 0
+            }
+          },
+          "required": [
+            "part",
+            "owner",
+            "shape",
+            "box_mm",
+            "offset_mm",
+            "enabled",
+            "friction",
+            "restitution"
+          ],
+          "additionalProperties": false
+        },
+        "contact.right_stop": {
+          "type": "object",
+          "properties": {
+            "part": {
+              "const": "right_stop"
+            },
+            "owner": {
+              "const": "world"
+            },
+            "shape": {
+              "const": "box"
+            },
+            "box_mm": {
+              "const": [
+                30,
+                40,
+                120
+              ]
+            },
+            "offset_mm": {
+              "const": [
+                0,
+                0,
+                0
+              ]
+            },
+            "enabled": {
+              "const": true
+            },
+            "friction": {
+              "const": 0
+            },
+            "restitution": {
+              "const": 0
+            }
+          },
+          "required": [
+            "part",
+            "owner",
+            "shape",
+            "box_mm",
+            "offset_mm",
+            "enabled",
+            "friction",
+            "restitution"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "contact.left_shoe",
+        "contact.left_stop",
+        "contact.right_shoe",
+        "contact.right_stop"
+      ],
+      "additionalProperties": false
+    },
+    "follows": {
+      "type": "object",
+      "properties": {
+        "follow.left": {
+          "type": "object",
+          "properties": {
+            "parent": {
+              "const": "left_carriage"
+            },
+            "child": {
+              "const": "left_shoe"
+            },
+            "offset_mm": {
+              "const": [
+                150,
+                40,
+                0
+              ]
+            },
+            "rotation_wxyz": {
+              "const": [
+                1,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "required": [
+            "parent",
+            "child",
+            "offset_mm",
+            "rotation_wxyz"
+          ],
+          "additionalProperties": false
+        },
+        "follow.right": {
+          "type": "object",
+          "properties": {
+            "parent": {
+              "const": "right_carriage"
+            },
+            "child": {
+              "const": "right_shoe"
+            },
+            "offset_mm": {
+              "const": [
+                180,
+                40,
+                0
+              ]
+            },
+            "rotation_wxyz": {
+              "const": [
+                1,
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "required": [
+            "parent",
+            "child",
+            "offset_mm",
+            "rotation_wxyz"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "follow.left",
+        "follow.right"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "source_binding",
+    "profile",
+    "backend",
+    "output",
+    "backend_sha256",
+    "module_key",
+    "scene_key",
+    "duration_s",
+    "gravity_m_s2",
+    "execution",
+    "parts",
+    "bodies",
+    "colliders",
+    "follows"
+  ],
+  "additionalProperties": false
+}
