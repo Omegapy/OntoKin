@@ -1,14 +1,22 @@
-# OntoKin development status — C190 attached-shoe contact
+# OntoKin development status — C191 source-owned guided contact
 
 ## Main integration lease
 
-Owner `c190-finalization-9a708195` releases the main integration lease on verified merge of [PR #123](https://github.com/Omegapy/OntoKin/pull/123). The final lease was acquired at `845ebd00aa48c9483c43e9ec6542bb01b6f464ae` after honoring the preceding expiry and is bounded through `2026-11-10T02:10:16Z`. The recovered C190-R2 result, independently checked source bundle and final handoff are identified in [the finalization record](docs/engineering/shoe-contact-c190/FINALIZATION.md). This continuation verified surviving evidence and completed delivery without another participant trial. The original unavailable trial and the distinct recovery replication retain their provenance.
+Owner `c191-close-97d3cf97` releases the main integration lease on verified merge of [PR #124](https://github.com/Omegapy/OntoKin/pull/124) and resulting-main verification. Lease commit `1d31f6073142cf56ab2892fcd0ea4c31a8568c19` was acquired by expected-head nonforce update from `ec5c1fd3299dd915e6ef5d68944b3955978f3eb1`, bounded through `2026-11-10T14:46:16.022Z`. The [finalization record](docs/engineering/guided-contact-c191/FINALIZATION.md) identifies recovery, independent review and the isolated-development integration decision. The outgoing checkpoint records the actual merge; a candidate alone does not prove integration.
 
 ## Current checkpoint
 
-Native Blender contact at an attached shoe stops its carriage at the two formal stop positions and an independent third edit. Removing only the shoe collider lets the carriage continue. A disclosed final playback projection preserves every native carriage X sample and timestamp; the maximum continuous raw-playback deviation bound is 0.056596 mm. The unchanged OntoKin profile retains massless following but has no contact response, so its shoe passes each stop. Twelve independent source rebuilds reproduce the raw/final outputs. [Results, sources and limits](docs/engineering/shoe-contact-c190/README.md)
+[C191](docs/engineering/guided-contact-c191/README.md) qualifies an explicitly selected experimental source-to-Blender/Bullet contact adapter for the seven-part gauge. The source owns two 1 kg carriage bodies, four shoe/stop collider identities and their geometry/relationships; the native solver supplies motion. Three enabled stop cases yield 200, 175 and 187.5 mm left travel. Disabling only the left shoe collider yields 250 mm. The other lane retains 300 mm travel and 15 mm clearance.
 
-C191 should adopt a bounded source-to-solver contact binding and qualify a thin `.ok`-to-Blender/Bullet adapter. Preserve source identity, one mass owner, one motion authority, declared helper geometry and current native semantics. [Next task](docs/engineering/shoe-contact-c190/NEXT-TASK.md)
+Nine formal native builds and nine independent saved-scene replays agree; all 481 reopened samples match. Renaming/reordering preserves physical input/output identity. Continuous maximum final penetration is 0.0119573 mm (limit 0.5 mm); maximum raw/final mapping bound is 0.0851883 mm (limit 0.2 mm), with all carriage X/time samples preserved. The exact frozen source/lifecycle and receiving-application checks pass. The final continuation recovered and replayed existing C191-R2 evidence without a new native trial. [Measurements](docs/engineering/guided-contact-c191/evidence/native-qualification.json) · [Current verification](docs/engineering/guided-contact-c191/evidence/finalization.json)
+
+**Legacy driver: FAILED.** Of 4,252 discovered methods, 4,239 passed and thirteen `.22` torque artifact-read methods were NOT RUN after the original 30,000 ms class-setup export deadline. Fresh candidate and unchanged-main attempts reproduce the same failure; inherited runtime/tests/shared verification/workflows are byte-identical. This contained incomplete-feature failure is retained under OK-ENG-009 and does not qualify the full driver or torque release. Sixteen external roles and unexecuted interpreter coverage remain pending. No hosted execution was requested.
+
+The next task is [C192's public edit-and-reuse comparison](docs/engineering/guided-contact-c191/NEXT-TASK.md) on the same qualified backend. Verify the actual C191 merge before dispatch. Start two fresh default subagents with empty histories here, one per authoring route; no separate host or isolation preflight. Freeze the comparison inputs first. General dynamics, production backend, live destination physics, comparative advantage and the full GOAL remain open.
+
+## Previous checkpoint at C190
+
+Native Blender contact at an attached shoe stops its carriage at two formal stop positions and an independent third edit. Removing its collider restores motion. C190's separate final playback mapping preserved native carriage X/time with maximum continuous deviation 0.056596 mm. The unchanged native OntoKin profile preserved following but passed through each stop. Its recovered C190-R2 result and original unavailable trial retain their distinct provenance. [C190 sources and evidence](docs/engineering/shoe-contact-c190/README.md)
 
 ## Previous checkpoint at C189
 

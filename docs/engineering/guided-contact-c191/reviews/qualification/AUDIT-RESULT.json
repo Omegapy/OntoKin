@@ -1,0 +1,300 @@
+{
+  "version": "C191-independent-current-continuation-review-1",
+  "reviewed_utc": "2026-11-10T14:16:33.810367+00:00",
+  "reviewer": "c191_reviewer",
+  "reviewed_repository_revision": "2c140286a3b1ca0ef0d3b435f8280ccafaf03490",
+  "decision": "ACCEPT assigned finite source, fixture, native-evidence and destination qualification scope",
+  "assigned_scope_blockers": [],
+  "evidence_boundary": "Current review verifies existing C191-R2 evidence; it does not claim nine new native solves or reopen executions. The 32 public-CLI source cases and portable numerical replay are fresh executions.",
+  "freeze": {
+    "seals": [
+      {
+        "file": "SEMANTIC-FREEZE.json",
+        "sha256": "4fda03c7dba064660c77481380203a2371ce17f99ce52d67bdb3acce04683a6a",
+        "created_utc": "2026-11-10T02:56:22.475418+00:00",
+        "manifest_entries_verified": 6
+      },
+      {
+        "file": "CHECKER-FREEZE.json",
+        "sha256": "61578a945fd828d86ca64349f1941eaabf038d017fff9879f87df9eb67da7074",
+        "created_utc": "2026-11-10T02:59:44.902246+00:00",
+        "manifest_entries_verified": 16
+      },
+      {
+        "file": "SOURCE-FREEZE.json",
+        "sha256": "3d19e48b080119172eb9793ea39065c3245317b6c00a1377a080fccf913d8a81",
+        "created_utc": "2026-11-10T03:06:40.294613+00:00",
+        "manifest_entries_verified": 62
+      }
+    ],
+    "original_contract_entries_verified": 11,
+    "admission_amendment_sha256": "c05699cdeec319b8f594c771cba7ef1ec8e7d7a4eb267569873171b8839d791e",
+    "legacy_control_files_verified": 12,
+    "adoption_publication": {
+      "checkpoint": "C191",
+      "kind": "contract-adoption-publication",
+      "verifiedAtUtc": "2026-11-10T03:08:00.513330+00:00",
+      "repository": "https://github.com/Omegapy/OntoKin",
+      "branch": "work/c191-guided-contact",
+      "pullRequest": 124,
+      "commit": "a1cde0a1aed54513bac30037e8356dee8ef75f09",
+      "tree": "8dac36b581d4c5426a8242b1cbab118af40d3238",
+      "remoteReadback": "git fetch and exact complete tree equality",
+      "contractManifestSha256": "bc85696002d641122322313cf5167f84eb1ae377599930112e3afd0f054b0137",
+      "independentSourceFreezeSha256": "3d19e48b080119172eb9793ea39065c3245317b6c00a1377a080fccf913d8a81",
+      "independentReviewSha256": "730949d62c26ac5ed4b644a6fff403bdba9d487fef809c9bc19eea52aeb7d2de",
+      "implementationPresent": false,
+      "candidateOutputsInspected": false,
+      "decision": "Exact adopted contract and independent expectations published and verified; implementation gate satisfied",
+      "scope": "Experimental finite profile only; no runtime qualification or merge claimed"
+    },
+    "adoption_commit_has_no_prototype_files": true,
+    "adoption_precedes_first_implementation_by_git_ancestry": true,
+    "first_source_implementation_commit": "61d14d39d176af49ec3c02f9b63292a1e115d031",
+    "original_freezes_changed": false
+  },
+  "archives": [
+    {
+      "file": "author-recovery-evidence.tar.xz",
+      "sha256": "0b071b12330601ca51cd312cac0fb7d5f8c3a7afca7c2b8f2ee3b52d924a523f",
+      "bytes": 254884,
+      "members": 1758,
+      "extracted_to": "/workspace/scratch/97d3cf9720a1/c191-reviewer/author-recovery-evidence",
+      "manifest_entries_verified": 1757,
+      "manifest_sha256": "b3e04ded0f99ac7d5e802f65edb2295bf5666d24c4ef2f84ef8d73c62b9960e8",
+      "manifest_bytes_total": 140469081
+    },
+    {
+      "file": "qualification-evidence.tar.xz",
+      "sha256": "392cce364da6b4f589bd41c49076feac31792dbfb6c059d425488c9d56370495",
+      "bytes": 6356588,
+      "members": 7340,
+      "extracted_to": "/workspace/scratch/97d3cf9720a1/c191-reviewer/qualification-evidence",
+      "manifest_entries_verified": 7339,
+      "manifest_sha256": "877f96147bb3a12de9601ee127d46facffc9d200c7afc15bffd89668d5e79c39",
+      "manifest_bytes_total": 591086576
+    }
+  ],
+  "tested_input_equivalence": {
+    "tested_revision": "de813a652ab5380a9c96f2a72ad9bd9ce5bbb96e",
+    "current_revision": "2c140286a3b1ca0ef0d3b435f8280ccafaf03490",
+    "input_lock_sha256": "8018746dc52b8e50c05e05f09ee6c983a5b01f2a6db5459aa196af46a5cdfe9a",
+    "current_files_matching_formal_input_lock": {
+      "prototype_files": 60,
+      "contract_files": 14,
+      "checker_files": 17
+    }
+  },
+  "fresh_checks": {
+    "source_conformance": {
+      "passed": 32,
+      "total": 32,
+      "summary_sha256": "9e0c7474338fde2fc4f502148ce58fb0fdc5935e2904f3557709ad4796da3243",
+      "exact_code_phase_span_blocked_levels": true
+    },
+    "portable_replay": {
+      "passed": true,
+      "report_sha256": "005feecb7fb87bd29d540cb150f61dfa965accd065a7392d49624d1d4b13e3a5",
+      "builds": 9,
+      "original_summary_unchanged": true,
+      "all_481_reopened_native_samples_equal": true,
+      "analytic_controls": {
+        "positive": 8,
+        "negative": 54,
+        "swept_slabs": 3,
+        "sealed_bytes_match": true
+      },
+      "repeat_checks": [
+        {
+          "case": "A",
+          "equality": {
+            "canonical-input.json": true,
+            "final.glb": true,
+            "raw.glb": true,
+            "native-transforms.json": true
+          }
+        },
+        {
+          "case": "B",
+          "equality": {
+            "canonical-input.json": true,
+            "final.glb": true,
+            "raw.glb": true,
+            "native-transforms.json": true
+          }
+        },
+        {
+          "case": "C",
+          "equality": {
+            "canonical-input.json": true,
+            "final.glb": true,
+            "raw.glb": true,
+            "native-transforms.json": true
+          }
+        },
+        {
+          "case": "D",
+          "equality": {
+            "canonical-input.json": true,
+            "final.glb": true,
+            "raw.glb": true,
+            "native-transforms.json": true
+          }
+        }
+      ],
+      "identity": {
+        "canonical-input.json": true,
+        "final.glb": true
+      },
+      "causal_invariant_parts": {
+        "base": true,
+        "left_stop": true,
+        "right_carriage": true,
+        "right_shoe": true,
+        "right_stop": true
+      }
+    }
+  },
+  "archived_lifecycle_and_supplemental_cohorts": {
+    "source": {
+      "passed": 32,
+      "total": 32,
+      "summary_sha256": "168f435e64ffdee9720fd141f0629e231ff36922fad08cb9a579a212b3caa428"
+    },
+    "admission": {
+      "passed": 7,
+      "total": 7,
+      "summary_sha256": "673c92fd16bd8e55490459473b2b583d1ba8c1d3d89f75a2a5d2bbe80b923eb8"
+    },
+    "lexical": {
+      "passed": 5,
+      "total": 5,
+      "summary_sha256": "2d30ec0dde4996abd03e6451b1d43c6aa035e89018c36d0487ecbf312a33c888"
+    },
+    "lifecycle": {
+      "passed": 42,
+      "total": 42,
+      "summary_sha256": "e326f1a230dbce2a7797418873b2ff1cffeea02136c9b95575b4615c3cf2d738"
+    },
+    "native-artifact-edges": {
+      "passed": 13,
+      "total": 13,
+      "summary_sha256": "e937b1963dede2f7a0bc7d1298a6841278fcf01493b07ec81601487adbd9ede8"
+    },
+    "output-aliases": {
+      "passed": 26,
+      "total": 26,
+      "summary_sha256": "1e7bc19f7482571d56a4b600180a5d658cb4a9a72decb3a10f72f7e564aa209d"
+    },
+    "receipts": {
+      "passed": 4,
+      "total": 4,
+      "summary_sha256": "dc883802ce0225b7e7047e9ea63cb84ff47e251dde5a063cc5836a72037a96bb"
+    }
+  },
+  "lifecycle": {
+    "frozen_methods_covered": [
+      "T01",
+      "T02",
+      "T03",
+      "T04",
+      "T05",
+      "T06",
+      "T07",
+      "T08",
+      "T09",
+      "T10",
+      "T11",
+      "T12",
+      "T13",
+      "T14",
+      "T15",
+      "T16",
+      "T17",
+      "T18",
+      "T19"
+    ],
+    "all_prior_accepted_bytes_unchanged": true,
+    "cancellation_request_to_api_return_ms": 521.8026450002071,
+    "cancellation_limit_ms": 2000,
+    "descendant_reaped": true,
+    "archived_exact_diagnostic_envelopes_independently_rechecked": 42,
+    "checked_case_ids": [
+      "T01-invalid-edit-rollback",
+      "T02-cancel-after-start",
+      "T03-deadline-running-worker",
+      "T04-operation-exhaustion",
+      "T05-source-deadline",
+      "T06-unknown-native-field",
+      "T07-duplicate-native-key",
+      "T08-nonfinite-NaN",
+      "T08-nonfinite-Infinity",
+      "T09-missing-sample",
+      "T09-duplicate-frame",
+      "T09-wrong-time",
+      "T10-body-tag",
+      "T10-collider-tag",
+      "T10-parent",
+      "T10-shape",
+      "T10-guide",
+      "T10-motor",
+      "T10-substeps",
+      "T10-object-count",
+      "T10-native-steps",
+      "T11-nonaffine-native",
+      "T12-native-byte-cap",
+      "T13-log-byte-cap",
+      "T14-output-byte-cap",
+      "T15-atomic-publication-failure",
+      "T16-stale-revision",
+      "T17-disallowed-X-map",
+      "T18-disallowed-time-map",
+      "T19-mapping-bound",
+      "S01-native-attachment-0p15mm",
+      "S02-generic-world-frame",
+      "S03-motor-world-frame",
+      "S04-hidden-box-world-frame",
+      "S05-raw-native-transverse",
+      "S06-raw-native-quaternion",
+      "S07-missing-raw-rotation-channel",
+      "S08-missing-native-result",
+      "S09-truncated-native-result",
+      "N12-missing-backend",
+      "N20-host-ceiling",
+      "N36-mismatched-backend"
+    ]
+  },
+  "numerical_limits": {
+    "maximum_continuous_mapping_mm": 0.08518822576030151,
+    "maximum_native_sample_mapping_mm": 0.08130203585571448,
+    "mapping_limit_mm": 0.2,
+    "maximum_enabled_penetration_mm": 0.011957250535488129,
+    "enabled_penetration_limit_mm": 0.5,
+    "all_twenty_pairs_checked_over_480_intervals": true
+  },
+  "receiving_applications": {
+    "khronos_file_paths": 8,
+    "distinct_glb_sha256": 7,
+    "khronos_errors": 0,
+    "khronos_warnings": 0,
+    "khronos_information_count": 3,
+    "three_revision": "186",
+    "three_clips": 8,
+    "three_poses": 24,
+    "rendered_final_glbs": 4,
+    "rendered_frames": 12,
+    "all_hash_links_verified": true,
+    "maximum_blender_import_bounds_error_mm": 2.60770320892334e-05,
+    "published_comparison_sha256": "86b30db3cfab7bf89265f0bd793ed48f272575696cc065f56427e0c45f6fe2f5",
+    "published_twelve_panel_comparison_visually_inspected": true,
+    "browser_capture_claimed": false,
+    "note": "Historical khronosUniqueFiles=8 field is retained unchanged; precise new count is eight paths and seven distinct GLB hashes, because D raw and final are identical."
+  },
+  "delivery_map_file": "DELIVERY-MAP.json",
+  "portable_replay_command": "python -B <repo>/docs/engineering/guided-contact-c191/independent/supplements/recovery-r2-review/replay_evidence.py --formal <archive-root>/evidence/r2/reviewer/formal-de813a65 --contract <repo>/docs/language-design/guided-contact-v0.1 --out <new-output-path>",
+  "outside_assigned_scope": {
+    "main_integration": "Coordinator must publish and verify the actual merge; no main integration claim here.",
+    "legacy_full_driver": "Coordinator reports the original 30000 ms .22 setup timeout on both baseline ec5c1fd and candidate 2c14028; full driver is FAILED; 4,239 methods passed; 13 test methods NOT RUN. This review does not relabel it a pass.",
+    "release": "This assigned-scope acceptance supports review of the isolated development increment under OK-ENG-009. It does not close .22 release, compatibility matrix, general contact, production backend, live destination physics, authoring advantage or full GOAL."
+  }
+}
