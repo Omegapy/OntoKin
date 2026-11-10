@@ -49,8 +49,19 @@ lifecycle and receiving evidence. The other executes the stock local legacy
 driver with pinned verification dependencies and compares affected inputs with
 current main. Their scopes are recovery verification, not new authoring trials.
 
-Current recovery results, final failure disposition, conditional integration and
-resulting-main verification will be published before this checkpoint closes.
+The [independent recovery audit](evidence/recovery/audits/AUDIT.json) passes all
+14 recorded artifact audits and reproduces the prior numerical summary byte for
+byte. Its 185 integrity checks cover five archives and 2,177 payload files, all
+11 implementation modules, eight adoption pins and 474 historical files against
+the actual C192 Git blobs. Recorded lifecycle review passes all 42 cases and
+two namespace controls. The reviewer inspected all 18 original render panels.
+[Detailed findings](evidence/recovery/audits/READOUT.md) and the
+[complete new audit archive](evidence/recovery/audits/recovery-audit.tar.xz) retain
+the commands, outputs and actual scope. No native construction, resimulation or
+receiving application was rerun.
+
+The final legacy failure disposition, conditional integration and resulting-main
+verification will be published before this checkpoint closes.
 The inherited torque setup timeout remains an open, separately identified
 obligation. No hosted job, paid execution, new native trial or C194 target has
 been started by this recovery.

@@ -13,6 +13,12 @@ Their continuous bounds fall from **0.271961075 to 0.116436993 mm** and from
 and receiving checks pass. The complete legacy driver and resulting-main
 integration disposition are recorded separately before integration.
 
+The interrupted-session [recovery record](RECOVERY.md) distinguishes the already
+completed qualification from fresh recovery checks. Its independent recorded
+replay reproduces all fourteen artifacts exactly and verifies the adopted bytes,
+historical inputs, lifecycle and receiving evidence. Original local worker Git
+histories remain unavailable; the published source and evidence are retained.
+
 ## What changed, and why
 
 The retained C192 traces show a small carriage rotation at contact. Because
