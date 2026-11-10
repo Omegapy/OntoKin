@@ -1,0 +1,65 @@
+{
+  "version": "C191-independent-supplemental-source-boundaries-1",
+  "created_utc": "2026-11-10T03:17:56.647412+00:00",
+  "baseline_source_fixture_sha256": "d474a6a109bb1bf9314ea8544d2f5868d99b6afa339c6655f11f8c1f82ccdfae",
+  "original_freeze_files_unchanged": true,
+  "candidate_boundary_outputs_inspected": false,
+  "scope": "Exact source-byte admission boundary plus already normative EOF/ASCII grammar controls; oversized null identity/span requires separately recorded C191-A1 clarification before qualification.",
+  "fixtures": [
+    {
+      "file": "source-65536-bytes.ok",
+      "bytes": 65536,
+      "sha256": "103692b841572cf5a4fce302df24c289e5ffbb489851a778cad7e49f1085b200",
+      "expected_success": true
+    },
+    {
+      "file": "source-65537-bytes.ok",
+      "bytes": 65537,
+      "sha256": "a5c5fff4dcf896b15ce97171e9a79881b61da7766748a879c820d0bc034b27fc",
+      "expected_success": false,
+      "expected_code": "C191_E_RESOURCE_LIMIT",
+      "expected_phase": "execute",
+      "expected_source_sha256": null,
+      "expected_span": null,
+      "adoption_required": "C191-A1 additive pre-admission clarification"
+    },
+    {
+      "file": "missing-scene-close.ok",
+      "bytes": 3396,
+      "sha256": "db13c873b8a72cdec04760366e3b90990dc45b925a1077045709071b809f5a74",
+      "expected_success": false,
+      "expected_code": "C191_E_PARSE",
+      "expected_phase": "parse",
+      "expected_source_sha256": "db13c873b8a72cdec04760366e3b90990dc45b925a1077045709071b809f5a74",
+      "expected_span": {
+        "path": "missing-scene-close.ok",
+        "source_sha256": "db13c873b8a72cdec04760366e3b90990dc45b925a1077045709071b809f5a74",
+        "start_byte": 3396,
+        "end_byte": 3396,
+        "start_line": 119,
+        "start_column": 1,
+        "end_line": 119,
+        "end_column": 1
+      }
+    },
+    {
+      "file": "non-ascii-digit.ok",
+      "bytes": 3400,
+      "sha256": "9124f42becb1eaadf5c8bd86b46904232d98308ce33e853e125308fdebfb8d2f",
+      "expected_success": false,
+      "expected_code": "C191_E_PARSE",
+      "expected_phase": "parse",
+      "expected_source_sha256": "9124f42becb1eaadf5c8bd86b46904232d98308ce33e853e125308fdebfb8d2f",
+      "expected_span": {
+        "path": "non-ascii-digit.ok",
+        "source_sha256": "9124f42becb1eaadf5c8bd86b46904232d98308ce33e853e125308fdebfb8d2f",
+        "start_byte": 211,
+        "end_byte": 213,
+        "start_line": 6,
+        "start_column": 53,
+        "end_line": 6,
+        "end_column": 54
+      }
+    }
+  ]
+}
