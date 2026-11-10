@@ -1,0 +1,19 @@
+{
+  "attempts": [
+    {
+      "id": 1,
+      "command": "python -IB checker/qualify.py --out qualifier-attempt-1",
+      "status": "failed",
+      "reason": "ModuleNotFoundError: check; isolated Python excludes script directory from import path",
+      "correction": "Explicitly insert the known checker directory before local imports; numerical limits unchanged"
+    },
+    {
+      "id": 2,
+      "command": "python -IB checker/qualify.py --out qualifier-attempt-2",
+      "status": "passed",
+      "positive_controls": 8,
+      "negative_controls": 54,
+      "slab_controls": 3
+    }
+  ]
+}

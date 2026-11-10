@@ -1,0 +1,194 @@
+{
+  "assembly": "two-carriage linear gauge",
+  "coordinateFrame": "glTF, right handed, metres, +Y up",
+  "dimensionTableUnit": "mm",
+  "tolerances": {
+    "boundsAndWorldPositionsMm": 0.2,
+    "minimumGapMm": 0.5,
+    "colorMaxChannelError": 0.005
+  },
+  "parts": [
+    {
+      "id": "base",
+      "worldBoundsAt0Mm": [
+        [
+          -160,
+          0,
+          -300
+        ],
+        [
+          570,
+          80,
+          300
+        ]
+      ],
+      "baseColorLinearRGB": [
+        0.21,
+        0.26,
+        0.3
+      ],
+      "motion": "fixed"
+    },
+    {
+      "id": "left_carriage",
+      "worldBoundsAt0Mm": [
+        [
+          -100,
+          80,
+          -200
+        ],
+        [
+          100,
+          120,
+          -120
+        ]
+      ],
+      "baseColorLinearRGB": [
+        0.17,
+        0.5,
+        0.54
+      ],
+      "motion": "translate"
+    },
+    {
+      "id": "left_shoe",
+      "worldBoundsAt0Mm": [
+        [
+          50,
+          120,
+          -200
+        ],
+        [
+          180,
+          170,
+          -120
+        ]
+      ],
+      "baseColorLinearRGB": [
+        0.84,
+        0.6,
+        0.18
+      ],
+      "motion": "translate"
+    },
+    {
+      "id": "left_stop",
+      "worldBoundsAt0Mm": [
+        [
+          495,
+          130,
+          -220
+        ],
+        [
+          525,
+          170,
+          -100
+        ]
+      ],
+      "baseColorLinearRGB": [
+        0.61,
+        0.25,
+        0.19
+      ],
+      "motion": "fixed"
+    },
+    {
+      "id": "right_carriage",
+      "worldBoundsAt0Mm": [
+        [
+          -100,
+          80,
+          120
+        ],
+        [
+          100,
+          120,
+          200
+        ]
+      ],
+      "baseColorLinearRGB": [
+        0.17,
+        0.5,
+        0.54
+      ],
+      "motion": "translate"
+    },
+    {
+      "id": "right_shoe",
+      "worldBoundsAt0Mm": [
+        [
+          80,
+          120,
+          120
+        ],
+        [
+          180,
+          170,
+          200
+        ]
+      ],
+      "baseColorLinearRGB": [
+        0.84,
+        0.6,
+        0.18
+      ],
+      "motion": "translate"
+    },
+    {
+      "id": "right_stop",
+      "worldBoundsAt0Mm": [
+        [
+          495,
+          130,
+          100
+        ],
+        [
+          525,
+          170,
+          220
+        ]
+      ],
+      "baseColorLinearRGB": [
+        0.61,
+        0.25,
+        0.19
+      ],
+      "motion": "fixed"
+    }
+  ],
+  "motion": {
+    "durationS": 2,
+    "rate": "constant positive X; no rotation",
+    "driver": "one native carriage motion authority per lane; the shoe follows its carriage",
+    "fixed": [
+      "base",
+      "left_stop",
+      "right_stop"
+    ],
+    "cases": [
+      {
+        "id": "feed-125",
+        "leftSpeedMmPerS": 125,
+        "rightSpeedMmPerS": 150,
+        "leftTravelMm": 250,
+        "rightTravelMm": 300,
+        "leftMinimumGapMm": 65,
+        "rightMinimumGapMm": 15
+      },
+      {
+        "id": "feed-100",
+        "leftSpeedMmPerS": 100,
+        "rightSpeedMmPerS": 150,
+        "leftTravelMm": 200,
+        "rightTravelMm": 300,
+        "leftMinimumGapMm": 115,
+        "rightMinimumGapMm": 15
+      }
+    ]
+  },
+  "gap": {
+    "expression": "matching stop minimum X minus shoe maximum X, with positive overlap in Y and Z",
+    "bothInitialMm": 315,
+    "minimumTimeS": 2
+  }
+}

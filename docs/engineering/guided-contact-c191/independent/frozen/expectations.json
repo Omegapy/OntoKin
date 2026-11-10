@@ -1,0 +1,224 @@
+{
+  "version": "C191-independent-semantic-expectations-1",
+  "frozen_before_candidate_output": true,
+  "derived_from": "C190 assembly dimensions plus ideal positive X feed; no candidate output inspected",
+  "cases": [
+    {
+      "id": "A",
+      "left_stop_near_face_mm": 380,
+      "left_shoe_collider_enabled": true,
+      "ideal_first_contact_s": 1.6,
+      "left_final_travel_mm": 200,
+      "left_final_signed_gap_mm": 0
+    },
+    {
+      "id": "B",
+      "left_stop_near_face_mm": 355,
+      "left_shoe_collider_enabled": true,
+      "ideal_first_contact_s": 1.4,
+      "left_final_travel_mm": 175,
+      "left_final_signed_gap_mm": 0
+    },
+    {
+      "id": "C",
+      "role": "independent interpolation edit",
+      "left_stop_near_face_mm": 367.5,
+      "left_shoe_collider_enabled": true,
+      "ideal_first_contact_s": 1.5,
+      "left_final_travel_mm": 187.5,
+      "left_final_signed_gap_mm": 0
+    },
+    {
+      "id": "D",
+      "role": "causal negative control",
+      "left_stop_near_face_mm": 380,
+      "left_shoe_collider_enabled": false,
+      "ideal_first_contact_s": null,
+      "left_final_travel_mm": 250,
+      "left_final_signed_gap_mm": -50,
+      "expected_behavior": "native pass-through; no contact response"
+    }
+  ],
+  "limits": {
+    "initial_bounds_and_dimensions_mm": 0.2,
+    "linear_color_channel": 0.005,
+    "fixed_part_or_attachment_drift_mm": 0.1,
+    "final_travel_mm": 0.5,
+    "final_signed_gap_mm": 0.5,
+    "contact_onset_s": 0.005,
+    "precontact_and_right_speed_mm_s": 0.5,
+    "postcontact_speed_mm_s": 0.5,
+    "postcontact_speed_check_starts_after_ideal_s": 0.025,
+    "postcontact_rebound_displacement_mm": 0.1,
+    "maximum_native_fixed_step_s": 0.0004166666666666667,
+    "raw_to_final_vertex_mapping_mm": 0.2,
+    "positive_contact_maximum_near_face_penetration_mm": 0.5
+  },
+  "recording": {
+    "fps": 240,
+    "common_keys": 481,
+    "native_substeps_per_frame": 10,
+    "native_solver_iterations": 100,
+    "nominal_solver_step_s": 0.0004166666666666667,
+    "native_step_is_distinct_from_recording_cadence": true,
+    "every_native_x_sample_and_time_preserved": true,
+    "recorded_velocity": "finite differences of native evaluated poses; not direct Bullet velocity telemetry"
+  },
+  "all_cases": {
+    "right_final_travel_mm": 300,
+    "right_final_gap_mm": 15,
+    "visible_solids": 7,
+    "moving_bodies": 2,
+    "one_mass_owner_per_collider": true,
+    "one_solver_motion_authority_per_lane": true,
+    "fixed_shoe_to_carriage_transform": true,
+    "right_lane_unchanged": true,
+    "zero_gravity_friction_restitution": true,
+    "source_owned_shoe_stop_boxes": 4,
+    "native_construction": {
+      "compound_carriage_bodies": 2,
+      "shoe_box_children": 2,
+      "hidden_carriage_box_children": 2,
+      "fixed_stop_boxes": 2,
+      "passive_base_anchor_box": 1,
+      "independent_linear_feed_motors": 2,
+      "additional_moving_mass_authorities": 0
+    },
+    "feed_may_remain_active_against_contact": true,
+    "unrelated_visible_part_pairs_continuously_nonoverlapping": 20
+  },
+  "duration_s": 2,
+  "initial_left_front_face_mm": 180,
+  "right_stop_near_face_mm": 495,
+  "left_feed_mm_s": 125,
+  "right_feed_mm_s": 150,
+  "analytic_formula": "ideal_contact_s=(left_stop_near_face_mm-180)/125; positive travel=left_stop_near_face_mm-180; disabled travel=125*2; right travel=150*2; right gap=495-(180+300)",
+  "all_twenty_pairs": [
+    [
+      "base",
+      "left_carriage"
+    ],
+    [
+      "base",
+      "left_shoe"
+    ],
+    [
+      "base",
+      "left_stop"
+    ],
+    [
+      "base",
+      "right_carriage"
+    ],
+    [
+      "base",
+      "right_shoe"
+    ],
+    [
+      "base",
+      "right_stop"
+    ],
+    [
+      "left_carriage",
+      "left_shoe"
+    ],
+    [
+      "left_carriage",
+      "left_stop"
+    ],
+    [
+      "left_carriage",
+      "right_carriage"
+    ],
+    [
+      "left_carriage",
+      "right_shoe"
+    ],
+    [
+      "left_carriage",
+      "right_stop"
+    ],
+    [
+      "left_shoe",
+      "right_carriage"
+    ],
+    [
+      "left_shoe",
+      "right_shoe"
+    ],
+    [
+      "left_shoe",
+      "right_stop"
+    ],
+    [
+      "left_stop",
+      "right_carriage"
+    ],
+    [
+      "left_stop",
+      "right_shoe"
+    ],
+    [
+      "left_stop",
+      "right_stop"
+    ],
+    [
+      "right_carriage",
+      "right_shoe"
+    ],
+    [
+      "right_carriage",
+      "right_stop"
+    ],
+    [
+      "right_shoe",
+      "right_stop"
+    ]
+  ],
+  "continuous_playback_rule": "Fixed basis and piecewise-linear positions imply affine face gaps. Check every union-key interval. All 20 unrelated pairs require swept-slab separation, including D. Intended left shoe/stop is excluded only from unrelated nonoverlap; A-C penetration <=0.5 mm, D expected pass-through.",
+  "nonoverlap_roundoff_mm": 0.001,
+  "time_roundoff_s": 3e-07,
+  "time_preservation_rule": "Native capture is all frame/240 times. Every final GLB time is the unchanged IEEE float32 encoding of the corresponding native time; raw and final time accessors are identical. No dropped, added, interpolated, retimed or reordered samples.",
+  "x_preservation_rule": "Every carriage X coordinate is the unchanged IEEE float32 encoding of its native sample after the declared axis/unit/body-frame transform. Raw and final X logical values and bytes must match.",
+  "contact_onset_rule": "Report first interpolated entry into the 0.5 mm contact gap band and first zero gap separately; first 0.5 mm entry must be within 0.005 s of ideal contact. This playback time is not a Bullet event.",
+  "settling_rule": "All finite-difference intervals starting at or after ideal contact+0.025 s through 2 s have absolute left X speed <=0.5 mm/s. Do not replace this with a 10 ms gate. Pre-contact intervals ending by ideal contact-1/240 s must be within 0.5 mm/s of 125; first interval must be within 0.5.",
+  "rebound_rule": "After ideal first contact, the greatest retreat from any prior X maximum is <=0.1 mm. The 25 ms gate affects residual-speed checking only.",
+  "output_evidence": {
+    "fresh_source_builds_per_case": 2,
+    "canonical_solver_inputs_identical": true,
+    "final_glb_bytes_identical_on_pinned_environment": true,
+    "blend_byte_identity_required": false,
+    "fresh_blend_reopen_clear_cache_and_native_resimulation": true,
+    "scene_reconstruction_or_manual_repair_after_reopen_allowed": false,
+    "raw_and_final_glb_independent_geometry_motion_and_format_checks": true,
+    "native_contact_records_must_not_be_inferred_from_overlap": true,
+    "artifact_bound_receiving_application_playback_review": true,
+    "unobservable_native_claims_remain_unqualified": true,
+    "positive_contact_penetration_checked_over_every_exported_interpolation_interval": true,
+    "all_twenty_unrelated_pairs_certified_over_full_clip": true,
+    "intended_left_shoe_left_stop_pair_evaluated_separately": true
+  },
+  "fixed_backend_configuration": {
+    "fps": 240,
+    "substeps_per_frame": 10,
+    "iterations": 100,
+    "native_motor_target": "-speed_mm_s / 1000",
+    "native_motor_max_impulse": 100000,
+    "initialization": "measured C190 no preroll; source state at modeled t=0; continuous motor active",
+    "gravity": [
+      0,
+      0,
+      0
+    ],
+    "friction": 0,
+    "restitution": 0
+  },
+  "no_claims": [
+    "already adopted syntax or version",
+    "general contact engine",
+    "production Blender adapter or importer",
+    "changed 0.22 semantics",
+    "comparative authoring benefit",
+    "full feature release or full GOAL completion"
+  ]
+}
