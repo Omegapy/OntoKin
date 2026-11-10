@@ -1,0 +1,42 @@
+{
+  "audit": "Independent offline C190 candidate recovery from C189-only seed",
+  "completedAtUtc": "2026-11-10T01:35:32.585110+00:00",
+  "pass": true,
+  "sourcePackageChanged": false,
+  "sourceRepositoryChanged": false,
+  "runtimeTestsRun": false,
+  "bundleSha256": "9fae70fe75efadc7cf2733e8f198311d2314fc98a3e11fba8b8b2995e815ea87",
+  "bundleBytes": 17040092,
+  "baseCommit": "18ea74b977e853ea2ab3b3ac7ede9ee76cf43ec5",
+  "baseTree": "1869027179839c8664365e51288ee59c75b77be9",
+  "seed": {
+    "repository": "/workspace/scratch/9a70819518c4/verification/evaluator/c189-only-seed.git",
+    "shallowBoundary": "18ea74b977e853ea2ab3b3ac7ede9ee76cf43ec5",
+    "objectCount": 10630,
+    "objectTypes": {
+      "tree": 740,
+      "blob": 9889,
+      "commit": 1
+    },
+    "uncompressedObjectBytes": 678866810,
+    "seedPackAndIndexBytes": 494068234,
+    "exactObjectSetVerified": true,
+    "candidateAbsentBeforeImport": true,
+    "alternatesConfigured": false,
+    "fsckExitCode": 0
+  },
+  "bundleVerifyExitCode": 0,
+  "bundleUnbundleExitCode": 0,
+  "recoveredCommit": "0879c08356011e663736f3e07fab02c915701f42",
+  "recoveredTree": "d255453da2c16bfa5492b0b59a697af7bcabdd28",
+  "rawCommitMatchesSource": true,
+  "recoveredFsckExitCode": 0,
+  "recoveredReachableCommitCount": 9,
+  "elapsedSeconds": 15.246,
+  "integrityScope": "All seeded and imported Git objects checked; exact recovered candidate commit and tree; no working-tree checkout or runtime execution.",
+  "limitations": [
+    "The seed deliberately omits history before C189 and marks C189 as a shallow boundary.",
+    "This validates the identified candidate bundle, not a later final-merge bundle.",
+    "The destination is a bare repository; full working-tree materialization was unnecessary and was not performed."
+  ]
+}
