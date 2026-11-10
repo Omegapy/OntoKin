@@ -1,0 +1,51 @@
+{
+  "native_sample_count": 481,
+  "native_sample_cadence_hz": 240,
+  "native_sample_to_final_max_vertex_distance_mm": 0.29241623943579215,
+  "raw_sample_to_final_max_vertex_distance_mm": 0.29242087760187363,
+  "continuous_raw_export_to_final_full_clip_bound_mm": 0.32264731193203877,
+  "per_part": {
+    "base": {
+      "max_native_sample_to_final_vertex_distance_mm": 0.0,
+      "max_raw_sample_to_final_vertex_distance_mm": 0.0
+    },
+    "left_carriage": {
+      "max_native_sample_to_final_vertex_distance_mm": 0.16455400607895426,
+      "max_raw_sample_to_final_vertex_distance_mm": 0.1645549353404416
+    },
+    "left_shoe": {
+      "max_native_sample_to_final_vertex_distance_mm": 0.29241623943579215,
+      "max_raw_sample_to_final_vertex_distance_mm": 0.29242087760187363
+    },
+    "left_stop": {
+      "max_native_sample_to_final_vertex_distance_mm": 0.0,
+      "max_raw_sample_to_final_vertex_distance_mm": 0.0
+    },
+    "right_carriage": {
+      "max_native_sample_to_final_vertex_distance_mm": 0.0,
+      "max_raw_sample_to_final_vertex_distance_mm": 0.0
+    },
+    "right_shoe": {
+      "max_native_sample_to_final_vertex_distance_mm": 1.666000468656264e-05,
+      "max_raw_sample_to_final_vertex_distance_mm": 0.0
+    },
+    "right_stop": {
+      "max_native_sample_to_final_vertex_distance_mm": 0.0,
+      "max_raw_sample_to_final_vertex_distance_mm": 0.0
+    }
+  },
+  "per_lane_continuous_bound": {
+    "left": {
+      "carriage_and_shoe_max_local_radius_mm": 197.23082954670053,
+      "continuous_raw_to_final_vertex_deviation_upper_bound_mm": 0.32264731193203877,
+      "intervals_checked": 480
+    },
+    "right": {
+      "carriage_and_shoe_max_local_radius_mm": 197.23082614686567,
+      "continuous_raw_to_final_vertex_deviation_upper_bound_mm": 0.0,
+      "intervals_checked": 480
+    }
+  },
+  "continuous_bound_method": "Per each of 480 intervals, preserve identical linear X samples, bound removed transverse translation by endpoint norm, and bound rotated vertex displacement by 2*r*sin(theta/2), where theta is min(endpoint orientation angles)+endpoint SO(3) arc. This covers the full LINEAR/SLERP raw GLB playback clip.",
+  "scope_limit": "The native solver has unrecorded substeps. All 481 recorded native poses are measured directly. The continuous bound covers interpolated raw native-export playback against final playback, not unknown substep native poses."
+}

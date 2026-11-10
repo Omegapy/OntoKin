@@ -1,0 +1,369 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ontokin:c193:output:0.1",
+  "type": "object",
+  "properties": {
+    "binding": {
+      "const": "glb-guided-contact-0.1"
+    },
+    "attempt_id": {
+      "type": "string"
+    },
+    "source_sha256": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "canonical_input_sha256": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "successful": {
+      "type": "boolean"
+    },
+    "committed": {
+      "type": "boolean"
+    },
+    "accepted_revision": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "previous_revision": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "levels": {
+      "type": "object",
+      "properties": {
+        "represented": {
+          "type": "boolean"
+        },
+        "constructed": {
+          "type": "boolean"
+        },
+        "evaluated": {
+          "type": "boolean"
+        },
+        "exported": {
+          "type": "boolean"
+        },
+        "destination_validated": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "represented",
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "additionalProperties": false
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "enum": [
+              "C193_E_PARSE",
+              "C193_E_FIELD",
+              "C193_E_BINDING",
+              "C193_E_ID",
+              "C193_E_TYPE",
+              "C193_E_REFERENCE",
+              "C193_E_OWNERSHIP",
+              "C193_E_AUTHORITY",
+              "C193_E_SHAPE",
+              "C193_E_GUIDE",
+              "C193_E_ROTATION",
+              "C193_E_CONTACT_LAW",
+              "C193_E_INITIAL_OVERLAP",
+              "C193_E_SCOPE",
+              "C193_E_BUDGET",
+              "C193_E_BACKEND_MISSING",
+              "C193_E_BACKEND_MISMATCH",
+              "C193_E_CANCELLED",
+              "C193_E_TIMEOUT",
+              "C193_E_RESOURCE_LIMIT",
+              "C193_E_NATIVE_FAILURE",
+              "C193_E_NATIVE_RESULT",
+              "C193_E_MAPPING",
+              "C193_E_STALE_REVISION",
+              "C193_E_PUBLICATION",
+              "C193_E_IO"
+            ]
+          },
+          "phase": {
+            "enum": [
+              "authorize",
+              "backend",
+              "execute",
+              "export",
+              "parse",
+              "publish",
+              "read",
+              "validate",
+              "validate_result"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "span": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "source_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "start_byte": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "end_byte": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "start_line": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "start_column": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "end_line": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "end_column": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                },
+                "required": [
+                  "path",
+                  "source_sha256",
+                  "start_byte",
+                  "end_byte",
+                  "start_line",
+                  "start_column",
+                  "end_line",
+                  "end_column"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "blocked_levels": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "represented",
+                "constructed",
+                "evaluated",
+                "exported",
+                "destination_validated"
+              ]
+            }
+          }
+        },
+        "required": [
+          "code",
+          "phase",
+          "message",
+          "span",
+          "blocked_levels"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "cost": {
+      "type": "object",
+      "properties": {
+        "requested_operations": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "requested_elapsed_ms": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "host_operations_ceiling": {
+          "type": "integer"
+        },
+        "host_elapsed_ms_ceiling": {
+          "type": "integer"
+        },
+        "operations_consumed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "operation_components": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "elapsed_ms": {
+          "type": "number",
+          "minimum": 0
+        },
+        "native_elapsed_ms": {
+          "type": "number",
+          "minimum": 0
+        },
+        "cancellation_completion_ms": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "native_result_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "native_log_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "staged_output_bytes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "requested_operations",
+        "requested_elapsed_ms",
+        "host_operations_ceiling",
+        "host_elapsed_ms_ceiling",
+        "operations_consumed",
+        "operation_components",
+        "elapsed_ms",
+        "native_elapsed_ms",
+        "cancellation_completion_ms",
+        "native_result_bytes",
+        "native_log_bytes",
+        "staged_output_bytes"
+      ],
+      "additionalProperties": false
+    },
+    "runtime": {
+      "type": "object",
+      "properties": {
+        "executable_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "build_hash": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "platform": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "executable_sha256",
+        "build_hash",
+        "platform"
+      ],
+      "additionalProperties": false
+    },
+    "artifact_directory": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "sha256",
+          "bytes"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "binding",
+    "attempt_id",
+    "source_sha256",
+    "canonical_input_sha256",
+    "successful",
+    "committed",
+    "accepted_revision",
+    "previous_revision",
+    "levels",
+    "diagnostics",
+    "cost",
+    "runtime",
+    "artifact_directory",
+    "artifacts"
+  ],
+  "additionalProperties": false
+}

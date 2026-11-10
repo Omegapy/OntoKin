@@ -22,16 +22,37 @@ mass ownership and solver motion authority remain fixed.
 [The freeze receipt](frozen/FREEZE.json) identifies these files and a
 [474-file preservation manifest](frozen/inherited-hashes.json) covering the
 original prototype, contract, C191 evidence and C192 evidence. Historical
-expectations and checkers must remain unchanged. New independent checker bytes
-will receive a separate freeze before qualification.
+expectations and checkers must remain unchanged. The separate
+[checker freeze](frozen/CHECKER-FREEZE.json) now identifies the new source,
+numerical and saved-scene auditors, their inputs and control receipts before
+formal qualification.
+
+## Diagnostic result and checker controls
+
+[The independent diagnosis](DIAGNOSIS.md) confirms all four controlled outcomes
+from actual bytes. The guide-only iteration increase passes the worst retained
+case; moving the guide anchor fails. The original failed outputs and the first
+N2 postprocessing failure remain preserved. Qualification is still required.
+
+Seventeen positive/negative numerical/source guard controls pass. The new
+saved-scene auditor accepts both diagnostic frame arrangements and rejects an
+incorrect frame claim; those inspections do not resimulate native motion.
+All 37 translated historical source fixtures and both cross-binding rejection
+controls pass, with no native worker execution. The translation changes only
+same-length selector text, diagnostic prefix and corresponding source/backend
+hashes; original diagnostic span coordinates remain exact.
 
 ## Required evidence
 
 A chosen correction needs a separately versioned, reviewed backend decision
 before qualification. The same constructor must serve both authoring routes.
-Qualify C191 A/B/C/D and both C192 failures with two fresh builds per case,
-saved-scene resimulation, native and recorded geometry checks, causal collider
-removal, all continuous playback gates and receiving-application inspection.
+The [formal plan](frozen/QUALIFICATION-PLAN.json) specifies two fresh `.ok`
+builds per A/B/C/D/E/F case and one direct-Python build at each C192 witness:
+fourteen builds and fourteen independent saved-scene replays. E and F are the
+362.5 and 372.5 mm witnesses. Compare canonical inputs, native trajectories and
+raw/final GLBs exactly across repeats and routes. Native and recorded geometry
+checks, causal collider removal, all continuous playback gates and
+receiving-application inspection remain mandatory.
 Preserve unsuccessful attempts. A passing render cannot override a mapping
 failure.
 

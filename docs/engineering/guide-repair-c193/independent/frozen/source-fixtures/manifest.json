@@ -1,0 +1,929 @@
+{
+  "version": "C193-independent-source-fixture-translation-1",
+  "candidate_outputs_inspected": "Four predeclared diagnostics only; no formal C193 output",
+  "fixtures": [
+    {
+      "id": "A",
+      "file": "A.ok",
+      "sha256": "5ad8be95df1ce1320f0f6e4c5bfe36ea78755f5cf3b6a0e95b87cdc5f9ea16c1",
+      "mode": "validate",
+      "kind": "positive",
+      "expected_success": true,
+      "prior_sha256": "d474a6a109bb1bf9314ea8544d2f5868d99b6afa339c6655f11f8c1f82ccdfae"
+    },
+    {
+      "id": "B",
+      "file": "B.ok",
+      "sha256": "89ac86500c3bcdef0aa046ffb38ad9716b06fe1e9ccdcfdfc6b250f036cb9136",
+      "mode": "validate",
+      "kind": "positive",
+      "expected_success": true,
+      "prior_sha256": "1da8dc410d08720eb8e4062905be47422df36b25569af1c19dbfaa2674d68253"
+    },
+    {
+      "id": "C",
+      "file": "C.ok",
+      "sha256": "28a7abf870607e2aa56e3dad661da2c98fa78dc7065b3ea8de033ebe7ba9d321",
+      "mode": "validate",
+      "kind": "positive",
+      "expected_success": true,
+      "prior_sha256": "e96b70f10df12fd46d57bd17608c1b9e5dbbede8ece7a8f77e43845ed9fbb923"
+    },
+    {
+      "id": "D",
+      "file": "D.ok",
+      "sha256": "a5b347389aaa71bca87f91c180b1c165938fb3cce7fbca94f2dcd8e7554a59b5",
+      "mode": "validate",
+      "kind": "positive",
+      "expected_success": true,
+      "prior_sha256": "6bd1ab19225bbbb8d8880b0b55d0055c1fea4a96c5c0d9f454b86f49d2252343"
+    },
+    {
+      "id": "E-rename-reorder",
+      "file": "E-rename-reorder.ok",
+      "sha256": "614e05496f8be3284d683fd141d9d2002bff29a7e36ddb367f7b54c3b1a12c1d",
+      "mode": "validate",
+      "kind": "identity",
+      "expected_success": true,
+      "same_canonical_input_as": "A",
+      "same_final_glb_as": "A",
+      "same_native_mappings_as": "A",
+      "different_source_revision_from": "A",
+      "physical_identity_invariant": true,
+      "prior_sha256": "555164d8cc77822cb7cdbccb50a15bdaaaca7bf50f7358f95f09b10238195315"
+    },
+    {
+      "id": "F-ordinary-defaults",
+      "file": "F-ordinary-defaults.ok",
+      "sha256": "c348a2dee3f90bbb6196202d38223a3727d88f6e33dad5b9160a2452e8260058",
+      "mode": "validate",
+      "kind": "defaults",
+      "expected_success": true,
+      "requested_operations": 100000,
+      "requested_elapsed_ms": 30000,
+      "prior_sha256": "e17c9808b5fc38ac2837131ed349e16e031cf233974856b8babd547786bb237d"
+    },
+    {
+      "id": "N01-duplicate-body-id",
+      "file": "N01-duplicate-body-id.ok",
+      "sha256": "db175ff97c64da3d91baa0b634f4f6e9f0782c63a4c15c2dec68840f7f255c31",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_ID",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N01-duplicate-body-id.ok",
+        "source_sha256": "db175ff97c64da3d91baa0b634f4f6e9f0782c63a4c15c2dec68840f7f255c31",
+        "start_byte": 1921,
+        "end_byte": 1932,
+        "start_line": 65,
+        "start_column": 23,
+        "end_line": 65,
+        "end_column": 34
+      },
+      "prior_sha256": "b5b1da452d8aa6256c5cf094b7b534b4b4185b81ed44e888ac1a77e001116a45"
+    },
+    {
+      "id": "N02-duplicate-collider-id",
+      "file": "N02-duplicate-collider-id.ok",
+      "sha256": "b4b8ae149619132ea11ebe6e92210ca8d8344c7e755e82617f584421bdfb8ef8",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_ID",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N02-duplicate-collider-id.ok",
+        "source_sha256": "b4b8ae149619132ea11ebe6e92210ca8d8344c7e755e82617f584421bdfb8ef8",
+        "start_byte": 3154,
+        "end_byte": 3173,
+        "start_line": 109,
+        "start_column": 31,
+        "end_line": 109,
+        "end_column": 50
+      },
+      "prior_sha256": "da5a3fdea2af644814ca990a711a25e9765fff021c1b154e7d5c2929607ec03f"
+    },
+    {
+      "id": "N03-multiple-owner",
+      "file": "N03-multiple-owner.ok",
+      "sha256": "39ed023bd7a5f72f69a69c8be8ea191806a66af54997975786267326ce247ec6",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_OWNERSHIP",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N03-multiple-owner.ok",
+        "source_sha256": "39ed023bd7a5f72f69a69c8be8ea191806a66af54997975786267326ce247ec6",
+        "start_byte": 2400,
+        "end_byte": 2427,
+        "start_line": 81,
+        "start_column": 17,
+        "end_line": 81,
+        "end_column": 44
+      },
+      "prior_sha256": "0eb62a26e44f24ae2a6ace0b4c619751a6284267a8fe381c447a276bc1108a86"
+    },
+    {
+      "id": "N04-unknown-owner",
+      "file": "N04-unknown-owner.ok",
+      "sha256": "f71ca1a3f750f8f15b18c538a1bea3a7ab1a0685ada78d6161dea56051cbcf1c",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_REFERENCE",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N04-unknown-owner.ok",
+        "source_sha256": "f71ca1a3f750f8f15b18c538a1bea3a7ab1a0685ada78d6161dea56051cbcf1c",
+        "start_byte": 2400,
+        "end_byte": 2414,
+        "start_line": 81,
+        "start_column": 17,
+        "end_line": 81,
+        "end_column": 31
+      },
+      "prior_sha256": "c1782c5eb8696f57b95152efbca49296861ad44da24dfed63dfc5fd0562328d9"
+    },
+    {
+      "id": "N05-prescribed-authority",
+      "file": "N05-prescribed-authority.ok",
+      "sha256": "381159660e31e33f49a7d69c0c26e133e29facbc97fbad2aa90e52f8ab50494c",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_AUTHORITY",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N05-prescribed-authority.ok",
+        "source_sha256": "381159660e31e33f49a7d69c0c26e133e29facbc97fbad2aa90e52f8ab50494c",
+        "start_byte": 1609,
+        "end_byte": 1621,
+        "start_line": 54,
+        "start_column": 21,
+        "end_line": 54,
+        "end_column": 33
+      },
+      "prior_sha256": "c96f3604dedf3380681ad57919b3e53996084eff3331b37fdc1a697baa1c3f4d"
+    },
+    {
+      "id": "N06-unsupported-shape",
+      "file": "N06-unsupported-shape.ok",
+      "sha256": "9dfb8047891aab3fd88a17a8794bc10babb6089c063dae0929c1d2f223f98e99",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_SHAPE",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N06-unsupported-shape.ok",
+        "source_sha256": "9dfb8047891aab3fd88a17a8794bc10babb6089c063dae0929c1d2f223f98e99",
+        "start_byte": 2429,
+        "end_byte": 2437,
+        "start_line": 82,
+        "start_column": 17,
+        "end_line": 82,
+        "end_column": 25
+      },
+      "prior_sha256": "4dea0f6b3fad46aac3f82a96256485c6728d781af6f2a615c4d907c1909baaca"
+    },
+    {
+      "id": "N07-unsupported-guide",
+      "file": "N07-unsupported-guide.ok",
+      "sha256": "26966f57f32a07dd48914ab2633441ca94b618429d6b17226fc70a26c0f6b528",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_GUIDE",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N07-unsupported-guide.ok",
+        "source_sha256": "26966f57f32a07dd48914ab2633441ca94b618429d6b17226fc70a26c0f6b528",
+        "start_byte": 1635,
+        "end_byte": 1644,
+        "start_line": 55,
+        "start_column": 17,
+        "end_line": 55,
+        "end_column": 26
+      },
+      "prior_sha256": "812abfbea992f03ff2945ce98c36db75eefa6c24684a517e37e4b859d669fe81"
+    },
+    {
+      "id": "N08-rotation",
+      "file": "N08-rotation.ok",
+      "sha256": "7c93535b09815a68475a912857d076d13fe91baba298f95b126bbdc942684fc7",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_ROTATION",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N08-rotation.ok",
+        "source_sha256": "7c93535b09815a68475a912857d076d13fe91baba298f95b126bbdc942684fc7",
+        "start_byte": 601,
+        "end_byte": 613,
+        "start_line": 20,
+        "start_column": 20,
+        "end_line": 20,
+        "end_column": 32
+      },
+      "prior_sha256": "14e51243bd1e44c84b97060b5dd031b91fe4002b2aee030ca530db4d18d75bd8"
+    },
+    {
+      "id": "N09-friction",
+      "file": "N09-friction.ok",
+      "sha256": "c0bf4e9fc1fe32e42cc385d5137b252daef9c74e5b2306ec7daf06b863cf6a57",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_CONTACT_LAW",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N09-friction.ok",
+        "source_sha256": "c0bf4e9fc1fe32e42cc385d5137b252daef9c74e5b2306ec7daf06b863cf6a57",
+        "start_byte": 2544,
+        "end_byte": 2547,
+        "start_line": 86,
+        "start_column": 20,
+        "end_line": 86,
+        "end_column": 23
+      },
+      "prior_sha256": "509150383ed21148ad2d7f96efcf81fb72c419217ab2b1922e1b6855c8054635"
+    },
+    {
+      "id": "N10-initial-overlap",
+      "file": "N10-initial-overlap.ok",
+      "sha256": "61b65c7371179470379ab373f9a0a25ad3451c10485f11d69b7e69e7ed9c6ad0",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_INITIAL_OVERLAP",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N10-initial-overlap.ok",
+        "source_sha256": "61b65c7371179470379ab373f9a0a25ad3451c10485f11d69b7e69e7ed9c6ad0",
+        "start_byte": 954,
+        "end_byte": 974,
+        "start_line": 32,
+        "start_column": 14,
+        "end_line": 32,
+        "end_column": 34
+      },
+      "prior_sha256": "c9a61aa2a87bef7bc39b0ec36f4cf1bd7d1e9ab2d15f623416def64c45c5f5a2"
+    },
+    {
+      "id": "N11-unqualified-backend",
+      "file": "N11-unqualified-backend.ok",
+      "sha256": "29d2078d3b7e4abda9fa996de2209b1864565ac6b9ed706ff6edba3319cab1d7",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_BINDING",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N11-unqualified-backend.ok",
+        "source_sha256": "29d2078d3b7e4abda9fa996de2209b1864565ac6b9ed706ff6edba3319cab1d7",
+        "start_byte": 99,
+        "end_byte": 118,
+        "start_line": 4,
+        "start_column": 9,
+        "end_line": 4,
+        "end_column": 28
+      },
+      "prior_sha256": "e09ff6bd4cb348e80b30afe8f6aac6aa50dc8abf2420e2890cc68b9f20f03f1f"
+    },
+    {
+      "id": "N14-hidden-schedule",
+      "file": "N14-hidden-schedule.ok",
+      "sha256": "3a35776915586e5faaefa73e1ae662e31b2763f5344c9bb13d77c77e74205916",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_FIELD",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N14-hidden-schedule.ok",
+        "source_sha256": "3a35776915586e5faaefa73e1ae662e31b2763f5344c9bb13d77c77e74205916",
+        "start_byte": 1680,
+        "end_byte": 1689,
+        "start_line": 57,
+        "start_column": 9,
+        "end_line": 57,
+        "end_column": 18
+      },
+      "prior_sha256": "62120e0179f40396dccb64fe13918d2a577b6c6224b3b41b08037ca10fe822de"
+    },
+    {
+      "id": "N22-mass-count",
+      "file": "N22-mass-count.ok",
+      "sha256": "107283ae4a189d6386cda741bc347f0cfb70a30940f19e13842fbded0aa25095",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_SCOPE",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N22-mass-count.ok",
+        "source_sha256": "107283ae4a189d6386cda741bc347f0cfb70a30940f19e13842fbded0aa25095",
+        "start_byte": 1582,
+        "end_byte": 1587,
+        "start_line": 53,
+        "start_column": 16,
+        "end_line": 53,
+        "end_column": 21
+      },
+      "prior_sha256": "b83f5b1bea8c3cae411e0c8ab174c0c6e179246d9719e1b04b6635f685eb6191"
+    },
+    {
+      "id": "N23-wrong-owner",
+      "file": "N23-wrong-owner.ok",
+      "sha256": "838b47f672ca29457352d02570b1791d1654d43794a6b241f805a23a3d99d504",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_OWNERSHIP",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N23-wrong-owner.ok",
+        "source_sha256": "838b47f672ca29457352d02570b1791d1654d43794a6b241f805a23a3d99d504",
+        "start_byte": 2400,
+        "end_byte": 2412,
+        "start_line": 81,
+        "start_column": 17,
+        "end_line": 81,
+        "end_column": 29
+      },
+      "prior_sha256": "76f33bcc8969b3113acef109bc41f37edc07a5c510dfba9d0cda8450753c8fb1"
+    },
+    {
+      "id": "N24-missing-feed",
+      "file": "N24-missing-feed.ok",
+      "sha256": "40699e961aca856167bc92d3ffabe0869b6e4a0be8b4946829179da12369230c",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_TYPE",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N24-missing-feed.ok",
+        "source_sha256": "40699e961aca856167bc92d3ffabe0869b6e4a0be8b4946829179da12369230c",
+        "start_byte": 1521,
+        "end_byte": 1532,
+        "start_line": 51,
+        "start_column": 22,
+        "end_line": 51,
+        "end_column": 33
+      },
+      "prior_sha256": "6256eb3747a8536d79e343abb19b364dde6c59d2e2e95eb8f52db29ef2a3d798"
+    },
+    {
+      "id": "N25-missing-owner",
+      "file": "N25-missing-owner.ok",
+      "sha256": "c5cdb9deddcd78a26e3d99c441a6312410f8bebf024fed18251d62d7cd4631ab",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_OWNERSHIP",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N25-missing-owner.ok",
+        "source_sha256": "c5cdb9deddcd78a26e3d99c441a6312410f8bebf024fed18251d62d7cd4631ab",
+        "start_byte": 2334,
+        "end_byte": 2353,
+        "start_line": 79,
+        "start_column": 30,
+        "end_line": 79,
+        "end_column": 49
+      },
+      "prior_sha256": "c39578ba559ea858f31594791b0ff863c2f7225642a321bb89d656cacee234a1"
+    },
+    {
+      "id": "N26-duplicate-field",
+      "file": "N26-duplicate-field.ok",
+      "sha256": "32f1f29c472cc18312d3e9fef9c22648ba83a7fb803f19c378a920ef1b89de11",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_FIELD",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N26-duplicate-field.ok",
+        "source_sha256": "32f1f29c472cc18312d3e9fef9c22648ba83a7fb803f19c378a920ef1b89de11",
+        "start_byte": 1680,
+        "end_byte": 1684,
+        "start_line": 57,
+        "start_column": 9,
+        "end_line": 57,
+        "end_column": 13
+      },
+      "prior_sha256": "f041882e4f8b09dd9ec22c8d4a8a4f0cd86b0821034d432c50225b8566c750fd"
+    },
+    {
+      "id": "N27-wrong-unit",
+      "file": "N27-wrong-unit.ok",
+      "sha256": "355090d1c3e99f99a9823bb9f1d7724c8501c28207e482d64331f88c9ccf7323",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_TYPE",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N27-wrong-unit.ok",
+        "source_sha256": "355090d1c3e99f99a9823bb9f1d7724c8501c28207e482d64331f88c9ccf7323",
+        "start_byte": 1661,
+        "end_byte": 1668,
+        "start_line": 56,
+        "start_column": 16,
+        "end_line": 56,
+        "end_column": 23
+      },
+      "prior_sha256": "650832f9c62e996d69ebe5c5824c29c928063ec0bd52e0ecdd90fa250f4f73b9"
+    },
+    {
+      "id": "N28-nonfinite-number",
+      "file": "N28-nonfinite-number.ok",
+      "sha256": "7abf4d83bf8016fec02f015dd97b24818a6fa5dccff67d176f4adb6744125e72",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_TYPE",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N28-nonfinite-number.ok",
+        "source_sha256": "7abf4d83bf8016fec02f015dd97b24818a6fa5dccff67d176f4adb6744125e72",
+        "start_byte": 1582,
+        "end_byte": 1591,
+        "start_line": 53,
+        "start_column": 16,
+        "end_line": 53,
+        "end_column": 25
+      },
+      "prior_sha256": "b3480bddc8e7884922631d47a687e1e41f9bd3a9131e585abdcf66b6cc291585"
+    },
+    {
+      "id": "N29-extra-shoe-mass",
+      "file": "N29-extra-shoe-mass.ok",
+      "sha256": "1b98e8440d54da235462081778e21eceafb82a7ffb9db7782603b48a2470ff4a",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_OWNERSHIP",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N29-extra-shoe-mass.ok",
+        "source_sha256": "1b98e8440d54da235462081778e21eceafb82a7ffb9db7782603b48a2470ff4a",
+        "start_byte": 1550,
+        "end_byte": 1561,
+        "start_line": 52,
+        "start_column": 16,
+        "end_line": 52,
+        "end_column": 27
+      },
+      "prior_sha256": "01823c3ef9976ace55e87847577990cee6e95594aa2bf8122124639e5f521c15"
+    },
+    {
+      "id": "N30-independent-shoe-pose",
+      "file": "N30-independent-shoe-pose.ok",
+      "sha256": "2ec9fe302eb46b8c0ab4cd460e1bd284cb90eac0fa7aebcf7a6d7d4f0ad5f920",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_AUTHORITY",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N30-independent-shoe-pose.ok",
+        "source_sha256": "2ec9fe302eb46b8c0ab4cd460e1bd284cb90eac0fa7aebcf7a6d7d4f0ad5f920",
+        "start_byte": 803,
+        "end_byte": 805,
+        "start_line": 27,
+        "start_column": 9,
+        "end_line": 27,
+        "end_column": 11
+      },
+      "prior_sha256": "516fdb718970ca41950a052c2d76dcb39ef18ecd8dc95f6be767a8dfe55ef13a"
+    },
+    {
+      "id": "N31-gravity",
+      "file": "N31-gravity.ok",
+      "sha256": "e26b4cbeecb7cb3ba91476a2166ec2a78549ad4f9365152d911bc32504c3c7f7",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_CONTACT_LAW",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N31-gravity.ok",
+        "source_sha256": "e26b4cbeecb7cb3ba91476a2166ec2a78549ad4f9365152d911bc32504c3c7f7",
+        "start_byte": 280,
+        "end_byte": 300,
+        "start_line": 10,
+        "start_column": 15,
+        "end_line": 10,
+        "end_column": 35
+      },
+      "prior_sha256": "acdc1fa0fbb6c87a133ee0140a6da881d30466e40bf7bc700109089e8b164685"
+    },
+    {
+      "id": "N32-unicode-span",
+      "file": "N32-unicode-span.ok",
+      "sha256": "b9743749cbe057e33b60f3d70cbd9c33c3e4be0459490de06673cdef9082a893",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_SHAPE",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N32-unicode-span.ok",
+        "source_sha256": "b9743749cbe057e33b60f3d70cbd9c33c3e4be0459490de06673cdef9082a893",
+        "start_byte": 2457,
+        "end_byte": 2466,
+        "start_line": 83,
+        "start_column": 17,
+        "end_line": 83,
+        "end_column": 26
+      },
+      "prior_sha256": "4eb9b5dcc57ccda425a3fb320335da6a78f5830946f7124895530b03d278bc2d"
+    },
+    {
+      "id": "N33-unsupported-output",
+      "file": "N33-unsupported-output.ok",
+      "sha256": "13733e5925df1c011a8696284bc33d68b471e9d7e00d29ca89d61344ff670899",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_BINDING",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N33-unsupported-output.ok",
+        "source_sha256": "13733e5925df1c011a8696284bc33d68b471e9d7e00d29ca89d61344ff670899",
+        "start_byte": 133,
+        "end_byte": 143,
+        "start_line": 5,
+        "start_column": 8,
+        "end_line": 5,
+        "end_column": 18
+      },
+      "prior_sha256": "b08f350bd1c2b92ce6df4e14164d8db25da60d7902e16713b9a7de34ff65e112"
+    },
+    {
+      "id": "N34-wrong-source-binding",
+      "file": "N34-wrong-source-binding.ok",
+      "sha256": "36c79e76cc19bf35189fd23c61c60e6b9da5dd3fe80d2a8ad504db30777c0d30",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_BINDING",
+      "expected_phase": "validate",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N34-wrong-source-binding.ok",
+        "source_sha256": "36c79e76cc19bf35189fd23c61c60e6b9da5dd3fe80d2a8ad504db30777c0d30",
+        "start_byte": 8,
+        "end_byte": 14,
+        "start_line": 1,
+        "start_column": 9,
+        "end_line": 1,
+        "end_column": 15
+      },
+      "prior_sha256": "e653cef8cc43b6b697a17690fdb93b511621faf0e0ed9d7f7941784a85a70827"
+    },
+    {
+      "id": "N35-malformed-syntax",
+      "file": "N35-malformed-syntax.ok",
+      "sha256": "9dc4e30455c44402641b6fdb859b3c233c682efb12228050e3845bd8979b06a3",
+      "mode": "validate",
+      "kind": "negative",
+      "expected_success": false,
+      "expected_code": "C193_E_PARSE",
+      "expected_phase": "parse",
+      "expected_blocked_levels": [
+        "represented",
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N35-malformed-syntax.ok",
+        "source_sha256": "9dc4e30455c44402641b6fdb859b3c233c682efb12228050e3845bd8979b06a3",
+        "start_byte": 1661,
+        "end_byte": 1662,
+        "start_line": 56,
+        "start_column": 16,
+        "end_line": 56,
+        "end_column": 17
+      },
+      "prior_sha256": "5d67b8372af0a7af796f06f531c6f3eca37bd9dc10f3d04c2765083d413c45a1"
+    },
+    {
+      "id": "N15-operation-exhaustion",
+      "file": "N15-operation-exhaustion.ok",
+      "sha256": "7de73212dec9e1463fb67c36c06a3164cd6c3d6b37f8a1392cc217bf33dd6de8",
+      "mode": "run",
+      "kind": "runtime-negative",
+      "expected_success": false,
+      "expected_code": "C193_E_RESOURCE_LIMIT",
+      "expected_phase": "execute",
+      "expected_blocked_levels": [
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N15-operation-exhaustion.ok",
+        "source_sha256": "7de73212dec9e1463fb67c36c06a3164cd6c3d6b37f8a1392cc217bf33dd6de8",
+        "start_byte": 159,
+        "end_byte": 213,
+        "start_line": 6,
+        "start_column": 1,
+        "end_line": 6,
+        "end_column": 55
+      },
+      "prior_sha256": "70f909029e01b44ab052851b22d4bf16dcedb6059e3ef98f943793fc0d1c268d"
+    },
+    {
+      "id": "N16-deadline-exhaustion",
+      "file": "N16-deadline-exhaustion.ok",
+      "sha256": "3b509a526d1901ebe74934589497fc50df24c84a4d10229a6961512d54e1364c",
+      "mode": "run",
+      "kind": "runtime-negative",
+      "expected_success": false,
+      "expected_code": "C193_E_TIMEOUT",
+      "expected_phase": "execute",
+      "expected_blocked_levels": [
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N16-deadline-exhaustion.ok",
+        "source_sha256": "3b509a526d1901ebe74934589497fc50df24c84a4d10229a6961512d54e1364c",
+        "start_byte": 159,
+        "end_byte": 222,
+        "start_line": 6,
+        "start_column": 1,
+        "end_line": 6,
+        "end_column": 64
+      },
+      "prior_sha256": "bdf47a0a6b974c344fc1caf7c8acd912f3fd4e0e5c1b6f5146b372bacb7a1268"
+    },
+    {
+      "id": "N20-host-ceiling",
+      "file": "N20-host-ceiling.ok",
+      "sha256": "5ad8be95df1ce1320f0f6e4c5bfe36ea78755f5cf3b6a0e95b87cdc5f9ea16c1",
+      "mode": "run",
+      "kind": "runtime-negative",
+      "expected_success": false,
+      "expected_code": "C193_E_BUDGET",
+      "expected_phase": "authorize",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N20-host-ceiling.ok",
+        "source_sha256": "5ad8be95df1ce1320f0f6e4c5bfe36ea78755f5cf3b6a0e95b87cdc5f9ea16c1",
+        "start_byte": 188,
+        "end_byte": 195,
+        "start_line": 6,
+        "start_column": 30,
+        "end_line": 6,
+        "end_column": 37
+      },
+      "host_ceilings": {
+        "operations": 100000,
+        "elapsed_ms": 80000
+      },
+      "prior_sha256": "d474a6a109bb1bf9314ea8544d2f5868d99b6afa339c6655f11f8c1f82ccdfae"
+    },
+    {
+      "id": "N12-missing-backend",
+      "file": "N12-missing-backend.ok",
+      "sha256": "5ad8be95df1ce1320f0f6e4c5bfe36ea78755f5cf3b6a0e95b87cdc5f9ea16c1",
+      "mode": "run",
+      "kind": "runtime-negative",
+      "expected_success": false,
+      "expected_code": "C193_E_BACKEND_MISSING",
+      "expected_phase": "backend",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N12-missing-backend.ok",
+        "source_sha256": "5ad8be95df1ce1320f0f6e4c5bfe36ea78755f5cf3b6a0e95b87cdc5f9ea16c1",
+        "start_byte": 99,
+        "end_byte": 124,
+        "start_line": 4,
+        "start_column": 9,
+        "end_line": 4,
+        "end_column": 34
+      },
+      "backend_fixture": "path known absent in a new reviewer temporary directory",
+      "prior_sha256": "d474a6a109bb1bf9314ea8544d2f5868d99b6afa339c6655f11f8c1f82ccdfae"
+    },
+    {
+      "id": "N36-mismatched-backend",
+      "file": "N36-mismatched-backend.ok",
+      "sha256": "5ad8be95df1ce1320f0f6e4c5bfe36ea78755f5cf3b6a0e95b87cdc5f9ea16c1",
+      "mode": "run",
+      "kind": "runtime-negative",
+      "expected_success": false,
+      "expected_code": "C193_E_BACKEND_MISMATCH",
+      "expected_phase": "backend",
+      "expected_blocked_levels": [
+        "constructed",
+        "evaluated",
+        "exported",
+        "destination_validated"
+      ],
+      "expected_span": {
+        "path": "N36-mismatched-backend.ok",
+        "source_sha256": "5ad8be95df1ce1320f0f6e4c5bfe36ea78755f5cf3b6a0e95b87cdc5f9ea16c1",
+        "start_byte": 99,
+        "end_byte": 124,
+        "start_line": 4,
+        "start_column": 9,
+        "end_line": 4,
+        "end_column": 34
+      },
+      "backend_fixture": "existing executable whose hash differs from the pinned Blender SHA-256",
+      "prior_sha256": "d474a6a109bb1bf9314ea8544d2f5868d99b6afa339c6655f11f8c1f82ccdfae"
+    }
+  ],
+  "default_host_ceilings": {
+    "operations": 1000000,
+    "elapsed_ms": 80000
+  },
+  "translation": {
+    "source_selector": [
+      "c191-experimental-0.1",
+      "c193-experimental-0.1"
+    ],
+    "backend_selector": [
+      "blender-bullet-c190-0.1",
+      "blender-bullet-c193-0.1"
+    ],
+    "diagnostic_prefix": [
+      "C191_",
+      "C193_"
+    ],
+    "all_spans_same_length": true,
+    "original_manifest_sha256": "9185c36af4f92595973a9f99cb336b52ce4b4f019370a26a7d484b30f97cd19c"
+  }
+}

@@ -1,0 +1,484 @@
+{
+  "binding": "blender-bullet-c193-0.1",
+  "status": "selected_by_C193_decision_after_review_before_qualification",
+  "runtime": {
+    "blender_version": [
+      4,
+      5,
+      3
+    ],
+    "build_hash": "67807e1800cc",
+    "platform": "Linux x86-64",
+    "archive_url": "https://download.blender.org/release/Blender4.5/blender-4.5.3-linux-x64.tar.xz",
+    "archive_bytes": 377397328,
+    "archive_sha256": "975c58fcb244273838534bba771e64ad87739216b0f9b39a888531a49a72d845",
+    "executable_sha256": "5e15447670804c855fef6033ac9b8fd82696b762095becf0df79b1c2f8034397",
+    "threads": 2,
+    "factory_startup": true,
+    "python_exit_code": 1
+  },
+  "bullet_provenance": {
+    "vendor_repository": "https://github.com/blender/blender",
+    "blender_commit": "67807e1800cc",
+    "vendor_path": "extern/bullet2",
+    "bt_bullet_version_macro": 289,
+    "version_interpretation": "Pinned Blender binary/build is executable authority. The vendored btScalar.h version macro is 289; release license metadata says 3.07. These identify distinct provenance records, not an independently queried Bullet runtime version. No separate Bullet-library binary hash is exposed.",
+    "source_files": [
+      {
+        "path": "extern/bullet2/src/LinearMath/btScalar.h",
+        "url": "https://raw.githubusercontent.com/blender/blender/67807e1800cc/extern/bullet2/src/LinearMath/btScalar.h",
+        "sha256": "5636465365da8e0101bc43e1a727427c195dff4db4458d9a51720def98df7539",
+        "bytes": 24920
+      },
+      {
+        "path": "extern/bullet2/CMakeLists.txt",
+        "url": "https://raw.githubusercontent.com/blender/blender/67807e1800cc/extern/bullet2/CMakeLists.txt",
+        "sha256": "94645af37f8e883d9eb2b489ccb80954d1b251027af332d71b8039c178ccf563",
+        "bytes": 21978
+      }
+    ],
+    "release_license": {
+      "path": "license/license.md",
+      "sha256": "61d6a00c1de431a0ea7a84bb93162cd7e71927a3946cea07db7c008a44859895",
+      "label": "Bullet Continuous Collision Detection and Physics Library",
+      "version_metadata": "3.07",
+      "line": 3869
+    }
+  },
+  "axis_mapping": {
+    "source": "right-handed, +Y up, millimetres",
+    "native": "right-handed, +Z up, metres",
+    "source_to_native_matrix": [
+      [
+        0.001,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        -0.001
+      ],
+      [
+        0,
+        0.001,
+        0
+      ]
+    ],
+    "native_to_gltf_matrix": [
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        0,
+        -1,
+        0
+      ]
+    ],
+    "part_mesh_origin": "source minimum-corner origin + source box/2",
+    "body_frame": "centered owning visible carriage mesh frame",
+    "shoe_center_relative_body": "follow.offset + shoe.box/2 - carriage.box/2",
+    "source_rotation_order": "wxyz"
+  },
+  "world": {
+    "frame_start": 0,
+    "frame_end": 480,
+    "fps": 240,
+    "fps_base": 1.0,
+    "duration_s": 2,
+    "gravity": [
+      0,
+      0,
+      0
+    ],
+    "time_scale": 1.0,
+    "substeps_per_frame": 10,
+    "solver_iterations": 100,
+    "use_split_impulse": true,
+    "cache_frame_start": 0,
+    "cache_frame_end": 480,
+    "cache_is_baked": false,
+    "cache_use_disk": "native default; do not assign because C190 records a pinned-build setup crash"
+  },
+  "rigid_body_defaults": {
+    "mass": 1.0,
+    "kinematic": false,
+    "enabled": true,
+    "friction": 0.0,
+    "restitution": 0.0,
+    "linear_damping": 0.0,
+    "angular_damping": 0.0,
+    "use_margin": true,
+    "collision_margin": 0.0,
+    "use_deactivation": false,
+    "collision_collections": [
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "native_objects": [
+    {
+      "name": "base",
+      "kind": "visible",
+      "native_type": "PASSIVE",
+      "collision_shape": "BOX",
+      "source_part": "base",
+      "source_collider": null,
+      "source_body": null,
+      "mass_count_kg": 0,
+      "geometry": "source base box",
+      "frame": "centered source base world frame"
+    },
+    {
+      "name": "left_carriage",
+      "kind": "visible_compound_owner",
+      "native_type": "ACTIVE",
+      "collision_shape": "COMPOUND",
+      "source_part": "left_carriage",
+      "source_collider": null,
+      "source_body": "body.left",
+      "mass_count_kg": 1,
+      "geometry": "source carriage box",
+      "frame": "centered source carriage world frame"
+    },
+    {
+      "name": "right_carriage",
+      "kind": "visible_compound_owner",
+      "native_type": "ACTIVE",
+      "collision_shape": "COMPOUND",
+      "source_part": "right_carriage",
+      "source_collider": null,
+      "source_body": "body.right",
+      "mass_count_kg": 1,
+      "geometry": "source carriage box",
+      "frame": "centered source carriage world frame"
+    },
+    {
+      "name": "left_shoe",
+      "kind": "visible_compound_child",
+      "native_type": "ACTIVE if source collider enabled, otherwise absent",
+      "collision_shape": "BOX if enabled, otherwise absent",
+      "source_part": "left_shoe",
+      "source_collider": "contact.left_shoe",
+      "source_body": "body.left",
+      "parent": "left_carriage",
+      "mass_count_kg": 0,
+      "geometry": "source shoe collider box",
+      "frame": "source follow.offset + shoe.box/2 - carriage.box/2"
+    },
+    {
+      "name": "right_shoe",
+      "kind": "visible_compound_child",
+      "native_type": "ACTIVE if source collider enabled, otherwise absent",
+      "collision_shape": "BOX if enabled, otherwise absent",
+      "source_part": "right_shoe",
+      "source_collider": "contact.right_shoe",
+      "source_body": "body.right",
+      "parent": "right_carriage",
+      "mass_count_kg": 0,
+      "geometry": "source shoe collider box",
+      "frame": "source follow.offset + shoe.box/2 - carriage.box/2"
+    },
+    {
+      "name": "left_stop",
+      "kind": "visible_fixed_contact",
+      "native_type": "PASSIVE",
+      "collision_shape": "BOX",
+      "source_part": "left_stop",
+      "source_collider": "contact.left_stop",
+      "source_body": null,
+      "mass_count_kg": 0,
+      "geometry": "source stop collider box",
+      "frame": "centered source stop world frame"
+    },
+    {
+      "name": "right_stop",
+      "kind": "visible_fixed_contact",
+      "native_type": "PASSIVE",
+      "collision_shape": "BOX",
+      "source_part": "right_stop",
+      "source_collider": "contact.right_stop",
+      "source_body": null,
+      "mass_count_kg": 0,
+      "geometry": "source stop collider box",
+      "frame": "centered source stop world frame"
+    },
+    {
+      "name": "_left_carriage_collision",
+      "kind": "hidden_compound_child",
+      "native_type": "ACTIVE",
+      "collision_shape": "BOX",
+      "source_part": "left_carriage",
+      "source_collider": null,
+      "source_body": "body.left",
+      "parent": "left_carriage",
+      "mass_count_kg": 0,
+      "geometry": "copy of centered source carriage box",
+      "frame": "identity in centered carriage body frame",
+      "hide_render": true
+    },
+    {
+      "name": "_right_carriage_collision",
+      "kind": "hidden_compound_child",
+      "native_type": "ACTIVE",
+      "collision_shape": "BOX",
+      "source_part": "right_carriage",
+      "source_collider": null,
+      "source_body": "body.right",
+      "parent": "right_carriage",
+      "mass_count_kg": 0,
+      "geometry": "copy of centered source carriage box",
+      "frame": "identity in centered carriage body frame",
+      "hide_render": true
+    },
+    {
+      "name": "_left_generic",
+      "kind": "constraint",
+      "constraint_type": "GENERIC",
+      "source_body": "body.left",
+      "geometry": null,
+      "frame": "initial centered carriage world frame",
+      "hide_render": true
+    },
+    {
+      "name": "_left_motor",
+      "kind": "constraint",
+      "constraint_type": "MOTOR",
+      "source_body": "body.left",
+      "geometry": null,
+      "frame": "initial centered carriage world frame",
+      "hide_render": true
+    },
+    {
+      "name": "_right_generic",
+      "kind": "constraint",
+      "constraint_type": "GENERIC",
+      "source_body": "body.right",
+      "geometry": null,
+      "frame": "initial centered carriage world frame",
+      "hide_render": true
+    },
+    {
+      "name": "_right_motor",
+      "kind": "constraint",
+      "constraint_type": "MOTOR",
+      "source_body": "body.right",
+      "geometry": null,
+      "frame": "initial centered carriage world frame",
+      "hide_render": true
+    }
+  ],
+  "guide": {
+    "object1": "base",
+    "object2": "matching carriage",
+    "disable_collisions": true,
+    "use_override_solver_iterations": true,
+    "solver_iterations": 400,
+    "use_limit_lin_x": false,
+    "use_limit_lin_y": true,
+    "use_limit_lin_z": true,
+    "linear_y_z_lower_upper": [
+      0,
+      0
+    ],
+    "use_limit_ang_xyz": [
+      true,
+      true,
+      true
+    ],
+    "angular_xyz_lower_upper": [
+      0,
+      0
+    ]
+  },
+  "motor": {
+    "object1": "base",
+    "object2": "matching carriage",
+    "disable_collisions": true,
+    "use_override_solver_iterations": true,
+    "solver_iterations": 100,
+    "use_motor_lin": true,
+    "use_motor_ang": false,
+    "target_velocity_m_s": "-source.body.feed_mm_s / 1000.0",
+    "motor_lin_max_impulse": 100000.0,
+    "driver_expression": "-speed_mm_s / 1000.0",
+    "driver_variable_name": "speed_mm_s",
+    "driver_variable_type": "SINGLE_PROP",
+    "driver_variable_data_path": "[\"speed_mm_s\"]",
+    "driver_variable_target": "own carriage",
+    "independent_motion_authority": false
+  },
+  "stop_driver": {
+    "object": "left_stop",
+    "property": "near_face_mm",
+    "data_path": "location",
+    "array_index": 0,
+    "expression": "(near_face_mm + half_width_mm) / 1000.0",
+    "variables": {
+      "near_face_mm": "source left_stop.at.x",
+      "half_width_mm": "source left_stop.box.x / 2"
+    },
+    "time_dependent": false
+  },
+  "native_tags": {
+    "scene": [
+      "source_sha256",
+      "canonical_input_sha256",
+      "source_binding",
+      "profile_binding",
+      "backend_binding",
+      "output_binding",
+      "module_key",
+      "scene_key"
+    ],
+    "objects": [
+      "part_id",
+      "body_id",
+      "collider_id",
+      "helper_role",
+      "source_occurrence"
+    ],
+    "absent_values": "empty string; no false identity inferred",
+    "body_motion_property": "motion_authority = solver",
+    "carriage_feed_property": "speed_mm_s",
+    "left_stop_near_face_property": "near_face_mm",
+    "left_stop_half_width_property": "half_width_mm"
+  },
+  "capture": {
+    "samples": 481,
+    "sequential_frames": [
+      0,
+      480
+    ],
+    "nominal_substeps": 4800,
+    "native_record_fields": [
+      "frame",
+      "time_s",
+      "matrices_blender_m",
+      "bounds_gltf_mm"
+    ],
+    "native_record_cadence_hz": 240,
+    "velocity": "finite differences of evaluated matrices; no direct Bullet telemetry",
+    "contact_impulses": "not exposed; not claimed",
+    "initial_velocity": "zero by uninitialized native resting body; constant motor owns every subsequent step"
+  },
+  "limits": {
+    "source_bytes": 65536,
+    "tokens": 8192,
+    "declarations": 15,
+    "native_objects": 13,
+    "native_rigid_body_components": 9,
+    "native_samples": 481,
+    "scheduled_native_substeps": 4800,
+    "native_result_bytes": 16777216,
+    "native_log_bytes": 4194304,
+    "staged_output_bytes": 67108864,
+    "supervisor_poll_ms": 50,
+    "terminate_grace_ms": 500,
+    "cancellation_completion_ms": 2000,
+    "ordinary_operations": 100000,
+    "ordinary_elapsed_ms": 30000,
+    "qualification_requested_operations": 1000000,
+    "qualification_requested_elapsed_ms": 80000,
+    "qualification_host_operations_ceiling": 1000000,
+    "qualification_host_elapsed_ms_ceiling": 80000
+  },
+  "c190_basis": {
+    "deliveries/blender/build.py": "7869fb8440ff849120fd342819f8ae6143e495f1a5f166c87b7127fbae08a4b8",
+    "deliveries/blender/map_playback.py": "c6d590c6a9306e83752e4de20e6f2007c64bc522cac59dd353631698dc168b59",
+    "audit/blender/probe_native.py": "7bb598c76324e19fa92a874f0f3f29053fdc340d0052d3072cd3bf129525602f",
+    "audit/blender/glb_difference.py": "11703152541595017f48b51f77ccfcf73aa32bb0af726891d98047d60f0485b9"
+  },
+  "inactive_constraint_defaults": {
+    "all_constraints": {
+      "initial_rotation_wxyz": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "initial_scale": [
+        1,
+        1,
+        1
+      ],
+      "matrix_parent_inverse": "identity",
+      "use_motor_ang": false
+    },
+    "generic": {
+      "use_motor_lin": false,
+      "motor_lin_target_velocity": 1.0,
+      "motor_lin_max_impulse": 1.0,
+      "limit_lin_x_lower": -1.0,
+      "limit_lin_x_upper": 1.0
+    },
+    "motor": {
+      "all_linear_and_angular_limit_flags": false,
+      "all_linear_lower": -1.0,
+      "all_linear_upper": 1.0,
+      "all_angular_lower": -0.7853981852531433,
+      "all_angular_upper": 0.7853981852531433
+    },
+    "meaning": "These inactive bounds are recorded for exact scene inspection; they exert no guide or stop authority."
+  },
+  "construction_order": {
+    "visible_parts": [
+      "base",
+      "left_carriage",
+      "left_shoe",
+      "left_stop",
+      "right_carriage",
+      "right_shoe",
+      "right_stop"
+    ],
+    "fixed_bodies": [
+      "base",
+      "left_stop",
+      "right_stop"
+    ],
+    "moving_lanes": [
+      "left",
+      "right"
+    ],
+    "per_lane": [
+      "carriage compound",
+      "shoe box",
+      "hidden carriage box",
+      "GENERIC guide",
+      "MOTOR"
+    ],
+    "disabled_control": "Construct then remove only the left-shoe rigid-body component before saving/capture; preserve geometry, parent and pose."
+  },
+  "glb_material": {
+    "metallicFactor": 0.0,
+    "roughnessFactor": 0.65,
+    "baseColorFactor": "source linear RGBA",
+    "doubleSided": false
+  },
+  "native_scene_objects_extra_allowed": false
+}
