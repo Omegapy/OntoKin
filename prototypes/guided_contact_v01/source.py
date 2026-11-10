@@ -74,10 +74,30 @@ class Source:
     def fail(self, code, message, value):
         raise Failure(code, message, self.span(value))
 
+    def prime_header_anchor(self, pattern):
+        # Locate the bounded first statement before lexical work is charged.
+        # The same token pattern skips comments and keeps quoted semicolons
+        # inside their strings, so a comment cannot impersonate the header.
+        offset, first = 0, None
+        while offset < len(self.text):
+            match = pattern.match(self.text, offset)
+            if not match:
+                return
+            if match.lastgroup not in ("space", "comment"):
+                if first is None:
+                    if match.group() != "ontokin":
+                        return
+                    first = offset
+                if match.group() == ";":
+                    self.budget.anchor = self.span((first, match.end()))
+                    return
+            offset = match.end()
+
     def parse(self):
         if len(self.data) > self.contract["backend"]["limits"]["source_bytes"]:
             self.fail("E_RESOURCE_LIMIT", "Source byte ceiling exceeded", (0, min(len(self.text), 1)))
         pattern = re.compile(r'(?P<space>\s+)|(?P<comment>//[^\n]*)|(?P<string>"(?:[^"\\\r\n]|\\.)*")|(?P<number>-?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)|(?P<id>[A-Za-z_][A-Za-z0-9_]*)|(?P<symbol>[@;{}=\[\],/^])')
+        self.prime_header_anchor(pattern)
         self.tokens = []
         offset = 0
         while offset < len(self.text):
@@ -89,7 +109,7 @@ class Source:
                 self.tokens.append(Token(match.group(), kind, offset, match.end()))
                 self.budget.charge("source_tokens")
                 if len(self.tokens) > self.contract["backend"]["limits"]["tokens"]:
-                    self.fail("E_RESOURCE_LIMIT", "Token ceiling exceeded", (0, min(len(self.text), 1)))
+                    raise Failure("E_RESOURCE_LIMIT", "Token ceiling exceeded", self.budget.anchor)
             offset = match.end()
         self.tokens.append(Token("<EOF>", "eof", len(self.text), len(self.text)))
         self.index = 0
