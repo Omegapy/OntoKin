@@ -1,0 +1,77 @@
+{
+  "schema": "ontokin.c194.independent-integration-review/0.1",
+  "reviewer": "repo_audit-91d3",
+  "reviewed_utc": "2026-11-10T23:30:56.147126+00:00",
+  "reviewed_working_head": "67a35c2d9b1c2df2f5c8a982a37b3c9ec56e68d0",
+  "baseline_main": "ee7dc2b71710dc8963b01ab6db68a1c75e22c27a",
+  "review_scope": "C194 recovered helpers, historical preservation scope, relocated evidence extraction and recorded numerical/provenance replay; final committed candidate review to follow",
+  "passed": true,
+  "checks": [
+    {
+      "name": "source scope preserves 13567 historical files and limits prior-file edits to three navigation/status documents",
+      "passed": true
+    },
+    {
+      "name": "new current extractor accepts original empty-directory members without touching archive or manifest bytes",
+      "passed": true
+    },
+    {
+      "name": "original failed extractor preserved at exact reviewed hash",
+      "passed": true
+    },
+    {
+      "name": "portable recorded numerical and provenance replay passes for all 16 constructions",
+      "passed": true
+    },
+    {
+      "name": "all 10 preserved saved-scene replay receipts identify 481 exact records",
+      "passed": true
+    },
+    {
+      "name": "all 30 retained image identities and original visual-review receipts verify",
+      "passed": true
+    },
+    {
+      "name": "no native, saved-scene, author or receiver execution during portability verification",
+      "passed": true
+    }
+  ],
+  "environment": {
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "numpy_version": "2.3.5"
+  },
+  "extractor_fix": {
+    "first_attempt_exit_code": 1,
+    "failure": "Unexpected archive directory: preparation/builds/ok-G/store/.staging",
+    "first_failure_log_sha256": "d47bb6d9368eed8e988eb885c76b7e39883a1aa542fc2c84a7a6b37016c9d00c",
+    "original_helper_sha256": "5b1add438e12ace2d8d23d748b81b6d10c50f2588399dea6de79cd765e5879ed",
+    "fixed_helper_sha256": "3488e26565a936f3be8b4806b77d9fc81778d741c0c188a71f78e8bbbf6abc6d",
+    "scope": "Permit and skip safe mapped empty directories; still validate path/root and reject file/directory ancestor collisions; all archive, manifest and regular-file integrity rules unchanged",
+    "actual_original_empty_directory_count": 3,
+    "successful_retry_exit_code": 0
+  },
+  "successful_outputs": {
+    "files_extracted": 1038,
+    "uncompressed_bytes": 77154823,
+    "extraction_result_sha256": "2c22446ea9e188b37d6cfa0f3cf386c6a8ddab443de2cca2c51df13dc952d26e",
+    "replay_helper_sha256": "6a128833f05828e4f9298d6d30549484272aa070c0c99b25c150a056d5a4732e",
+    "replay_result_sha256": "f8382bfa70b91676a472f0812b199a93bb230f0f823caa8ce6e0fb2b27827ddc",
+    "replay_assertions": 1755,
+    "recorded_artifacts": 16,
+    "saved_scene_receipts": 10,
+    "visual_receipt_panels": 30,
+    "continuous_bounds_mm": [
+      0.07451646802035088,
+      0.116442262620993
+    ]
+  },
+  "assertion_scope": "1755 receipt/integrity/numerical assertions are not 1755 unit tests. The separate c194_evidence review reports 3925 integrity/consistency assertions, also not unit tests. These outcomes do not change the inherited failed unit-driver/tail disposition.",
+  "limits": [
+    "Review verifies original visual receipts and image identities; this reviewer did not newly view images",
+    "No native construction, saved-scene resimulation, author or receiving application executed",
+    "Original extractor failure is retained; passing synthetic controls did not establish composed archive usability",
+    "Final committed candidate, actual remote integration, resulting-main verification and final handoff packaging remain separate steps"
+  ]
+}

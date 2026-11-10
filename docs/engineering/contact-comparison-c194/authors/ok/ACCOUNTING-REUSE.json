@@ -1,0 +1,398 @@
+{
+  "schema": "ontokin.c194.author-accounting/0.1",
+  "route": "ok",
+  "phase": "reuse",
+  "phase_started_utc": "2026-11-10T22:24:01+00:00",
+  "start_recorded_before_inspection": true,
+  "start_time_source": "clock tool before first phase2 inspection",
+  "exact_dispatch_timestamp": "not exposed to author; coordinator task receipt precedes recorded start",
+  "submitted_utc": "2026-11-10T22:26:29.670945+00:00",
+  "elapsed_from_recorded_start_s": 148.670945,
+  "allowances": {
+    "phase_wall_seconds": 1200,
+    "max_formal_submissions": 3,
+    "max_native_builds": 6,
+    "native_operations_per_build": 1000000,
+    "native_elapsed_ms_per_build": 80000,
+    "wrapper_watchdog_seconds": 100
+  },
+  "counts": {
+    "formal_submissions_including_this": 1,
+    "native_build_attempts_including_failures": 2,
+    "successful_native_builds": 2,
+    "failed_native_builds": 0,
+    "invalid_source_candidates": 0,
+    "formal_repairs": 0,
+    "independent_checker_calls_by_author": 2,
+    "author_scene_replays": 0,
+    "human_interventions": 0,
+    "coordinator_interventions_after_phase2_dispatch": 0,
+    "subagents_delegated": 0
+  },
+  "accepted_first_commit": "b0981029530ada7bb08fedce60a036f8b1ebcf9f",
+  "prior_phase_acceptance": {
+    "path": "/workspace/scratch/efc86516cbb7/c194-first-validation/ACCEPTANCE.json",
+    "bytes": 3605,
+    "sha256": "d4e7540d0b20ace41c2ed2d5405cd1eef210d9af2fc58106627d491891b4a93e"
+  },
+  "inspection_commands": [
+    {
+      "command": "git status --short --branch",
+      "cwd": "/workspace/scratch/efc86516cbb7/authors/ok",
+      "exit_code": 0,
+      "tool_output_chunk_id": "439101"
+    },
+    {
+      "command": "git rev-parse HEAD",
+      "cwd": "/workspace/scratch/efc86516cbb7/authors/ok",
+      "exit_code": 0,
+      "tool_output_chunk_id": "e7d94d"
+    },
+    {
+      "command": "python3 -B - [acceptance SHA-256 verification and readback]",
+      "cwd": "/workspace/scratch/efc86516cbb7/authors/ok",
+      "exit_code": 0,
+      "tool_output_chunk_id": "074aa3"
+    },
+    {
+      "command": "cat docs/engineering/contact-comparison-c194/authors/ok/SOURCE-DELTA-FIRST.patch docs/engineering/contact-comparison-c194/frozen/BRIEF.md",
+      "cwd": "/workspace/scratch/efc86516cbb7/authors/ok",
+      "exit_code": 0,
+      "tool_output_chunk_id": "b1286d"
+    }
+  ],
+  "source_edit_action": {
+    "command": "python3 -B - [verify first commit/source and 45 original run files; copy first.ok; replace one stop coordinate; write new edit/preservation receipts]",
+    "exit_code": 0,
+    "tool_output_chunk_id": "4dc5d1",
+    "edit": {
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SOURCE-EDIT-REUSE.json",
+      "bytes": 877,
+      "sha256": "ae44a6a986105d9e0cd3b91d0fde5138650a906db8477f71c9932640c07b4030"
+    },
+    "delta": {
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SOURCE-DELTA-REUSE.patch",
+      "bytes": 415,
+      "sha256": "c8ced9ac96387227e223610b643c307e5d4174e57cb2a9e4dc996110c458bc09"
+    }
+  },
+  "native_build_attempts": [
+    {
+      "number": 1,
+      "wrapper_argv": [
+        "python3",
+        "-B",
+        "docs/engineering/guide-repair-c193/native/build.py",
+        "--repo",
+        "/workspace/scratch/efc86516cbb7/authors/ok",
+        "--route",
+        "ok",
+        "--source",
+        "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/reuse.ok",
+        "--out",
+        "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01",
+        "--blender",
+        "/workspace/scratch/efc86516cbb7/deps/blender-4.5.3-linux-x64/blender"
+      ],
+      "command_receipt": {
+        "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/command.json",
+        "bytes": 2275,
+        "sha256": "35e468a5f8e8fc77b4016e2c393310cd45b24eae0f2ed257d35a0f38653ae3cd"
+      },
+      "delivery_receipt": {
+        "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/delivery.json",
+        "bytes": 2275,
+        "sha256": "35e468a5f8e8fc77b4016e2c393310cd45b24eae0f2ed257d35a0f38653ae3cd"
+      },
+      "result": {
+        "route": "ok",
+        "source": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/reuse.ok",
+        "source_sha256": "2143515f358e36c1dd9a1deef83dba2519a99be6141b64d8bd9dae987761fbd0",
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "-m",
+          "prototypes.guided_contact_v02",
+          "run",
+          "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/reuse.ok",
+          "--store",
+          "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/store",
+          "--blender",
+          "/workspace/scratch/efc86516cbb7/deps/blender-4.5.3-linux-x64/blender",
+          "--host-max-operations",
+          "1000000",
+          "--host-max-elapsed-ms",
+          "80000"
+        ],
+        "cwd": "/workspace/scratch/efc86516cbb7/authors/ok",
+        "started_unix_s": 1794349479.2384455,
+        "successful": true,
+        "returncode": 0,
+        "finished_unix_s": 1794349482.4649172,
+        "elapsed_s": 3.2264716625213623,
+        "artifact_directory": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/store/artifacts/15699cbbbf8842b3836f999dab6aa05a",
+        "cost": {
+          "requested_operations": 1000000,
+          "requested_elapsed_ms": 80000,
+          "host_operations_ceiling": 1000000,
+          "host_elapsed_ms_ceiling": 80000,
+          "operations_consumed": 450690,
+          "operation_components": {
+            "encoded_scalar_values": 6551,
+            "initial_pair_checks": 21,
+            "native_attachment_vertex_checks": 7696,
+            "native_bound_vertex_checks": 26936,
+            "native_matrix_scalars": 53872,
+            "native_scene_block_fields": 9410,
+            "projection_accessor_scalars": 24096,
+            "projection_intervals": 1920,
+            "projection_vertices": 161616,
+            "scheduled_native_substeps": 4800,
+            "schema_values": 105506,
+            "source_field_checks": 82,
+            "source_reference_checks": 12,
+            "source_tokens": 827,
+            "verified_animation_scalar_values": 6253,
+            "verified_binary_bytes": 25700,
+            "verified_native_pose_scalars": 15392
+          },
+          "elapsed_ms": 3095.278867000161,
+          "native_elapsed_ms": 899.1060960015602,
+          "cancellation_completion_ms": null,
+          "native_result_bytes": 940103,
+          "native_log_bytes": 174,
+          "staged_output_bytes": 2821421
+        },
+        "source_unchanged_during_build": true
+      }
+    },
+    {
+      "number": 2,
+      "wrapper_argv": [
+        "python3",
+        "-B",
+        "docs/engineering/guide-repair-c193/native/build.py",
+        "--repo",
+        "/workspace/scratch/efc86516cbb7/authors/ok",
+        "--route",
+        "ok",
+        "--source",
+        "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/first.ok",
+        "--out",
+        "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01",
+        "--blender",
+        "/workspace/scratch/efc86516cbb7/deps/blender-4.5.3-linux-x64/blender"
+      ],
+      "command_receipt": {
+        "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/command.json",
+        "bytes": 2299,
+        "sha256": "0f9edb998fa61b9dbf0e539c67bd6a12f1cef6d0654a764bfb4abae67f540aa6"
+      },
+      "delivery_receipt": {
+        "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/delivery.json",
+        "bytes": 2299,
+        "sha256": "0f9edb998fa61b9dbf0e539c67bd6a12f1cef6d0654a764bfb4abae67f540aa6"
+      },
+      "result": {
+        "route": "ok",
+        "source": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/first.ok",
+        "source_sha256": "ba105a8ca6e9c19dfd06fabd7a06a2254c4ba14d76042dfa88ca365d5de6f7ee",
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "-m",
+          "prototypes.guided_contact_v02",
+          "run",
+          "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/first.ok",
+          "--store",
+          "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store",
+          "--blender",
+          "/workspace/scratch/efc86516cbb7/deps/blender-4.5.3-linux-x64/blender",
+          "--host-max-operations",
+          "1000000",
+          "--host-max-elapsed-ms",
+          "80000"
+        ],
+        "cwd": "/workspace/scratch/efc86516cbb7/authors/ok",
+        "started_unix_s": 1794349485.9286754,
+        "successful": true,
+        "returncode": 0,
+        "finished_unix_s": 1794349489.1565688,
+        "elapsed_s": 3.227893352508545,
+        "artifact_directory": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2",
+        "cost": {
+          "requested_operations": 1000000,
+          "requested_elapsed_ms": 80000,
+          "host_operations_ceiling": 1000000,
+          "host_elapsed_ms_ceiling": 80000,
+          "operations_consumed": 450690,
+          "operation_components": {
+            "encoded_scalar_values": 6551,
+            "initial_pair_checks": 21,
+            "native_attachment_vertex_checks": 7696,
+            "native_bound_vertex_checks": 26936,
+            "native_matrix_scalars": 53872,
+            "native_scene_block_fields": 9410,
+            "projection_accessor_scalars": 24096,
+            "projection_intervals": 1920,
+            "projection_vertices": 161616,
+            "scheduled_native_substeps": 4800,
+            "schema_values": 105506,
+            "source_field_checks": 82,
+            "source_reference_checks": 12,
+            "source_tokens": 827,
+            "verified_animation_scalar_values": 6253,
+            "verified_binary_bytes": 25700,
+            "verified_native_pose_scalars": 15392
+          },
+          "elapsed_ms": 3083.5419860013644,
+          "native_elapsed_ms": 861.6904530008469,
+          "cancellation_completion_ms": null,
+          "native_result_bytes": 947142,
+          "native_log_bytes": 174,
+          "staged_output_bytes": 2834671
+        },
+        "source_unchanged_during_build": true
+      }
+    }
+  ],
+  "public_checker_calls": [
+    {
+      "number": 1,
+      "case": "H",
+      "command_receipt": {
+        "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/author-check-command.json",
+        "bytes": 700,
+        "sha256": "89bdabd0aa3a8830b4d1019cbad883edc1e04bf9fa002a42b806a15828f341b9"
+      },
+      "result": {
+        "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/author-check-H.json",
+        "bytes": 70678,
+        "sha256": "1cef9a1d6737a733a721ba94e2d19084e4403c21d7b9c67b78dbcc586f896614"
+      },
+      "passed": true,
+      "failures": []
+    },
+    {
+      "number": 2,
+      "case": "G",
+      "command_receipt": {
+        "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/author-check-command.json",
+        "bytes": 722,
+        "sha256": "71e5b5487fb2addeb07c7e49fe7ec7d8e392b6cf6ac22f56f7a1038b1eb0e4a6"
+      },
+      "result": {
+        "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/author-check-G.json",
+        "bytes": 70113,
+        "sha256": "540cfb31076135ee5445e66e7e89bac521e12926bdf738b5fdf5ceaab93bd99d"
+      },
+      "passed": true,
+      "failures": []
+    }
+  ],
+  "preservation_and_equality_action": {
+    "command": "python3 -B - [source-copy, phase1-byte preservation, original/fresh artifact equality and output-inventory checks]",
+    "exit_code": 0,
+    "tool_output_chunk_id": "404030",
+    "record": {
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/OWN-CHECKS-REUSE.json",
+      "bytes": 3214,
+      "sha256": "204f1abc75978cafa4bbd113b9a60e7901db6e282abf55d098fbeaf1450f7428"
+    },
+    "equality": {
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/EQUALITY-FIRST-REGENERATION.json",
+      "bytes": 3974,
+      "sha256": "3b5d6082a79387d70f9e54dd17032d28f041c41ff6bd36ea00df71b33a865a15"
+    }
+  },
+  "failed_commands": [],
+  "invalid_attempts": [],
+  "phase2_first_pass_acceptance": null,
+  "coordinator_acceptance": "pending; public checker and equality checks are author verification",
+  "execution_configuration": {
+    "model_override": null,
+    "reasoning_override": null,
+    "requested_settings": "same default author continues after independent first-phase acceptance",
+    "exact_provider_model_snapshot": null
+  },
+  "unavailable_telemetry": [
+    "provider token totals",
+    "provider cost",
+    "exact provider model snapshot",
+    "hidden internal turns",
+    "exact task dispatch timestamp"
+  ],
+  "command_costs": [
+    {
+      "requested_operations": 1000000,
+      "requested_elapsed_ms": 80000,
+      "host_operations_ceiling": 1000000,
+      "host_elapsed_ms_ceiling": 80000,
+      "operations_consumed": 450690,
+      "operation_components": {
+        "encoded_scalar_values": 6551,
+        "initial_pair_checks": 21,
+        "native_attachment_vertex_checks": 7696,
+        "native_bound_vertex_checks": 26936,
+        "native_matrix_scalars": 53872,
+        "native_scene_block_fields": 9410,
+        "projection_accessor_scalars": 24096,
+        "projection_intervals": 1920,
+        "projection_vertices": 161616,
+        "scheduled_native_substeps": 4800,
+        "schema_values": 105506,
+        "source_field_checks": 82,
+        "source_reference_checks": 12,
+        "source_tokens": 827,
+        "verified_animation_scalar_values": 6253,
+        "verified_binary_bytes": 25700,
+        "verified_native_pose_scalars": 15392
+      },
+      "elapsed_ms": 3095.278867000161,
+      "native_elapsed_ms": 899.1060960015602,
+      "cancellation_completion_ms": null,
+      "native_result_bytes": 940103,
+      "native_log_bytes": 174,
+      "staged_output_bytes": 2821421
+    },
+    {
+      "requested_operations": 1000000,
+      "requested_elapsed_ms": 80000,
+      "host_operations_ceiling": 1000000,
+      "host_elapsed_ms_ceiling": 80000,
+      "operations_consumed": 450690,
+      "operation_components": {
+        "encoded_scalar_values": 6551,
+        "initial_pair_checks": 21,
+        "native_attachment_vertex_checks": 7696,
+        "native_bound_vertex_checks": 26936,
+        "native_matrix_scalars": 53872,
+        "native_scene_block_fields": 9410,
+        "projection_accessor_scalars": 24096,
+        "projection_intervals": 1920,
+        "projection_vertices": 161616,
+        "scheduled_native_substeps": 4800,
+        "schema_values": 105506,
+        "source_field_checks": 82,
+        "source_reference_checks": 12,
+        "source_tokens": 827,
+        "verified_animation_scalar_values": 6253,
+        "verified_binary_bytes": 25700,
+        "verified_native_pose_scalars": 15392
+      },
+      "elapsed_ms": 3083.5419860013644,
+      "native_elapsed_ms": 861.6904530008469,
+      "cancellation_completion_ms": null,
+      "native_result_bytes": 947142,
+      "native_log_bytes": 174,
+      "staged_output_bytes": 2834671
+    }
+  ],
+  "aggregate_counted_build_operations": 901380,
+  "command_costs_are_provider_tokens": false,
+  "first_phase_preserved_byte_for_byte": true,
+  "phase2_outputs_immutable": true,
+  "phase2_finished": true,
+  "reuse_scope": "Retained literal source variants; no claim of general classes, parameters, libraries or composition.",
+  "next_action": "Stop and await independent coordinator review."
+}

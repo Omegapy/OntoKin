@@ -1,5 +1,10 @@
 # OntoKin documentation guide
 
+## Current engineering checkpoint
+
+[C194: accepted contact edit and reuse](engineering/contact-comparison-c194/README.md) records the recovered public OntoKin/Blender-Python pair, measured outputs, original author histories and limits. Continue with [C195's ownership-error diagnosis and recovery task](engineering/contact-comparison-c194/NEXT-TASK.md) after checking [current status and the integration lease](../STATUS.md).
+
+
 The [C161 connected duct](../examples/connected-duct/README.md) joins two editable hollow parts and verifies the common opening before and after an Agent repair.
 
 The [C160 descriptor guard study](engineering/torque-verification-c160/README.md) records an observable exception and work-charge difference, A08 playback in Chromium and VTK, and an editable hollow-duct pilot.

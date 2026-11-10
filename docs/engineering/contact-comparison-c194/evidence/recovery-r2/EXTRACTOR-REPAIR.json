@@ -1,0 +1,17 @@
+{
+  "schema": "ontokin.c194.extractor-repair/0.1",
+  "date_utc": "2026-11-10T23:30:59.456686+00:00",
+  "before_sha256": "5b1add438e12ace2d8d23d748b81b6d10c50f2588399dea6de79cd765e5879ed",
+  "after_sha256": "3488e26565a936f3be8b4806b77d9fc81778d741c0c188a71f78e8bbbf6abc6d",
+  "original_failure": "Unexpected archive directory: preparation/builds/ok-G/store/.staging",
+  "cause": "Empty directories are not file parents in the file-only manifest",
+  "correction": "Validate mapped paths and reject file/ancestor collisions; ignore safe empty directory entries",
+  "archives_changed": false,
+  "manifests_changed": false,
+  "native_builds": 0,
+  "author_trials": 0,
+  "recorded_replay_assertions": 1755,
+  "retained_original_helper": "extract_evidence-before-empty-directory-fix.py",
+  "failed_log": "c194-extraction.log",
+  "successful_log": "c194-extraction-fixed.log"
+}

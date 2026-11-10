@@ -1,0 +1,149 @@
+{
+  "schema": "ontokin.c194.author-accounting/0.1",
+  "route": "python",
+  "phase": "first",
+  "phase_start_utc": "2026-11-10T22:17:18+00:00",
+  "submission_utc": "2026-11-10T22:19:46.335981+00:00",
+  "elapsed_to_submission_s": 148.335981,
+  "start_observation": "UTC recorded before first repository inspection; exact provider dispatch timestamp unavailable to author.",
+  "worktree": "/workspace/scratch/efc86516cbb7/authors/python",
+  "branch": "work/c194-python-author-efc8",
+  "starting_commit": "3ee9614c74267c41a6b73ad5fd3c3d4282f29a7b",
+  "allowances": {
+    "wall_time_s": 1200,
+    "formal_submissions": 3,
+    "native_build_attempts": 6,
+    "build_max_operations": 1000000,
+    "build_max_elapsed_ms": 80000,
+    "wrapper_watchdog_s": 100
+  },
+  "formal_submissions_used": 1,
+  "native_build_attempts_used": 1,
+  "native_failed_attempts": 0,
+  "formal_repair_turns": 0,
+  "invalid_source_attempts": 0,
+  "source_edit_count": 1,
+  "failed_commands": [
+    {
+      "command": "cat docs/engineering/guide-repair-c193/native/README.md && cat GOAL.md && rg -n 'C193|C194|guided-contact|guide-repair|contact-comparison' docs/README.md && sed -n '1,35p' docs/engineering/contact-comparison-c194/frozen/INPUTS.json",
+      "cwd": "/workspace/scratch/efc86516cbb7/authors/python",
+      "exit_code": 1,
+      "kind": "read_only_inspection",
+      "reason": "rg found no matching current-stage keywords in docs/README.md; its exit code prevented the trailing sed command. The two cat reads completed. No source or artifact changed.",
+      "native_build_attempt": false,
+      "tool_chunk_id": "afef92",
+      "stdout_note": "Complete native README and GOAL were returned in tool output; no rg match output.",
+      "stderr_observed": false
+    }
+  ],
+  "human_interventions": [],
+  "coordinator_interventions_during_phase": [],
+  "delegated_subagents": 0,
+  "build_attempts": [
+    {
+      "attempt": 1,
+      "purpose": "first 365 mm delivery",
+      "wrapper_command": "python3 -B docs/engineering/guide-repair-c193/native/build.py --repo /workspace/scratch/efc86516cbb7/authors/python --route python --source /workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/first.py --out /workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01 --blender /workspace/scratch/efc86516cbb7/deps/blender-4.5.3-linux-x64/blender",
+      "command_receipt": {
+        "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/command.json",
+        "bytes": 2189,
+        "sha256": "04f33b5b179a0bd983129a875bd322bb94ef462ada14ee681286e41aa942d7f7"
+      },
+      "build_receipt": {
+        "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/build-receipt.json",
+        "bytes": 1712,
+        "sha256": "8511f3cb22111a5a41f35f49a82681df8d69ad2a306b44a3208e1f9a34e8b0e8"
+      },
+      "successful": true,
+      "cost": {
+        "cancellation_completion_ms": null,
+        "elapsed_ms": 2896.88526000009,
+        "host_elapsed_ms_ceiling": 80000,
+        "host_operations_ceiling": 1000000,
+        "native_elapsed_ms": 904.7140209995632,
+        "native_log_bytes": 174,
+        "native_result_bytes": 947142,
+        "operation_components": {
+          "encoded_scalar_values": 6551,
+          "native_attachment_vertex_checks": 7696,
+          "native_bound_vertex_checks": 26936,
+          "native_matrix_scalars": 53872,
+          "native_scene_block_fields": 9410,
+          "projection_accessor_scalars": 24096,
+          "projection_intervals": 1920,
+          "projection_vertices": 161616,
+          "scheduled_native_substeps": 4800,
+          "schema_values": 105422,
+          "verified_animation_scalar_values": 6253,
+          "verified_binary_bytes": 25700,
+          "verified_native_pose_scalars": 15392
+        },
+        "operations_consumed": 449664,
+        "requested_elapsed_ms": 80000,
+        "requested_operations": 1000000,
+        "staged_output_bytes": 2817313
+      }
+    }
+  ],
+  "author_checks": [
+    {
+      "kind": "source delta",
+      "result": {
+        "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/FIRST-SOURCE-EDIT.json",
+        "bytes": 1085,
+        "sha256": "4c66800fbc8be332da2d1aa3639c81f837736407a51cba3e65b62ce181d20451"
+      },
+      "passed": true
+    },
+    {
+      "kind": "public artifact checker G",
+      "command_receipt": {
+        "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-check-01-command.json",
+        "bytes": 837,
+        "sha256": "0550404f381b0577b22ada881e014d661d6aae00d697092afc9055544ab6fd4f"
+      },
+      "result": {
+        "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-check-01.json",
+        "bytes": 70065,
+        "sha256": "f97835e85d91cbcf52a6fce7b75abbc9a72877fab3dec9922ae168d2b5d10104"
+      },
+      "passed": true
+    },
+    {
+      "kind": "all sealed inputs unchanged",
+      "result": {
+        "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-input-preservation.json",
+        "bytes": 246,
+        "sha256": "0a310dd62e7ba9743f1bcd8cc96a6f918e0f01a946717cbfe8e03412972a1555"
+      },
+      "passed": true,
+      "file_count": 607
+    },
+    {
+      "kind": "source copies",
+      "passed": true,
+      "paths": [
+        "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/first.py",
+        "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/submitted-source.py",
+        "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/source.py"
+      ]
+    }
+  ],
+  "first_pass_author_check": true,
+  "independent_coordinator_acceptance": "pending",
+  "provider_telemetry": {
+    "tokens": null,
+    "cost": null,
+    "exact_model_snapshot": null,
+    "hidden_internal_turns": null,
+    "availability": "unavailable",
+    "default_model_and_settings": "assigned default; no override requested"
+  },
+  "scope_limits": [
+    "Literal-source edit only; reusable constructor is prepared setup.",
+    "No general authoring advantage, token equivalence, production backend or live-destination physics claim.",
+    "Receiving, saved-scene replay and clean coordinator rebuild acceptance remain independent coordinator work."
+  ],
+  "shared_runtime_or_gates_modified": false,
+  "historical_gates": "Unchanged; no inherited cohort rerun or relabeling."
+}
