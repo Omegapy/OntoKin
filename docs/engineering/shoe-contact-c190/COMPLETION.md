@@ -1,6 +1,6 @@
 # C190 publication completion after the later interruption
 
-**November 9, 2026, America/Denver.** This continuation recovered the completed C190-R2 experiment from the surviving workspace, verified it independently, and finished its publication and handoff. It did not run another authoring trial. The exact publication result is in the user handoff checkpoint and [PR #123](https://github.com/Omegapy/OntoKin/pull/123).
+**Provenance note.** This record describes the preceding continuation and its native audits. That continuation published candidate `0879c08356011e663736f3e07fab02c915701f42` before another interruption; integration and outgoing handoff files were still unfinished at recovery. [FINALIZATION.md](FINALIZATION.md) records the final continuation and preserves the distinction between verified evidence, candidate publication and main integration.
 
 ## Two interruptions, different recovery outcomes
 
@@ -31,7 +31,7 @@ The native Blender control again changes left final travel from 200.000003 mm to
 
 ## Publication and restart
 
-Owner `c190-completion-d0b9f6a7` reconciled the expired recovery lease and acquired completion lease `47c1c5a42a7b85f344e22fff724aaff952711de5` with an expected-head update. The scope is the project README, STATUS and `docs/engineering/shoe-contact-c190/`. The current result, preserved evidence and concrete C191 proposal are published through the existing PR. The outgoing source snapshot and checkpoint identify the actual resulting main; no synthetic snapshot is presented as the remote head.
+Owner `c190-completion-d0b9f6a7` reconciled the expired recovery lease and acquired completion lease `47c1c5a42a7b85f344e22fff724aaff952711de5` with an expected-head update. The scope is the project README, STATUS and `docs/engineering/shoe-contact-c190/`. The current result, preserved evidence and concrete C191 proposal are published through the existing PR. That continuation planned to identify the resulting main in the outgoing source snapshot and checkpoint, but those files were still absent at its interruption. The final handoff checkpoint records the actual resulting revision; no synthetic snapshot is presented as the remote head.
 
 The two original evidence ZIPs retain their recovered bytes. New completion receipts are separately identified. Product runtime, historical tests, adopted meanings and hosted workflows remain unchanged. The applicable repository gate is documentation preservation plus this experiment's replay and native audits. No full regression, hosted CI pass, unseen-task advantage or complete contact release is claimed.
 

@@ -2,7 +2,7 @@
 
 ## Main integration lease
 
-Owner `c190-completion-d0b9f6a7` releases the main integration lease on verified merge of [PR #123](https://github.com/Omegapy/OntoKin/pull/123). Its completion lease expires at `2026-11-10T01:39:48Z`. The C190-R2 sources, results and audits survived the later interruption; this continuation verified and published them without another participant trial. The original unavailable trial and the separate recovery replication retain their distinct provenance.
+Owner `c190-finalization-9a708195` releases the main integration lease on verified merge of [PR #123](https://github.com/Omegapy/OntoKin/pull/123). The final lease was acquired at `845ebd00aa48c9483c43e9ec6542bb01b6f464ae` after honoring the preceding expiry and is bounded through `2026-11-10T02:10:16Z`. The recovered C190-R2 result, independently checked source bundle and final handoff are identified in [the finalization record](docs/engineering/shoe-contact-c190/FINALIZATION.md). This continuation verified surviving evidence and completed delivery without another participant trial. The original unavailable trial and the distinct recovery replication retain their provenance.
 
 ## Current checkpoint
 

@@ -1,5 +1,7 @@
 # C191 · Explicit source-owned contact binding
 
+Verify that [C190 PR #123](https://github.com/Omegapy/OntoKin/pull/123) is merged before dispatching C191 implementation. If a supplied handoff checkpoint still says `merged: false`, complete that reviewed integration after reconciling current refs and the lease, verify the resulting main and refresh the checkpoint.
+
 Reconcile current main, GOAL, AGENTS, STATUS, active PRs and the integration lease. C190's recovery replication is complete; retain its successful native Blender response and its native OntoKin unsupported-contact result as separate facts. [Results and evidence](README.md)
 
 Spawn two fresh subagents in the current conversation's execution environment with empty histories and default settings. One owns the bounded contract/adapter; the other independently freezes fixtures and reviews conformance. A separate host or isolation preflight is not required.

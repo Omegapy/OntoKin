@@ -2,7 +2,7 @@
 
 C189 showed that a shoe follows its carriage when the carriage speed changes. C190 moves a fixed stop into the shoe's path and asks whether contact there stops the carriage. The other lane must continue independently.
 
-**Blender supplies the native contact response. The pinned OntoKin profile does not.** These are newly executed recovery replication results, identified as C190-R2. The original interrupted C190 discussion published its plan and evaluator identity but no recoverable trial outputs. [Recovery provenance](RECOVERY.md) · [Publication completion](COMPLETION.md)
+**Blender supplies the native contact response. The pinned OntoKin profile does not.** These are newly executed recovery replication results, identified as C190-R2. The original interrupted C190 discussion published its plan and evaluator identity but no recoverable trial outputs. [Recovery provenance](RECOVERY.md) · [Earlier completion audit](COMPLETION.md) · [Final recovery and integration](FINALIZATION.md)
 
 ![Actual recorded GLBs at rest, contact and the final pose](playback.png)
 
