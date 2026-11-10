@@ -11,7 +11,8 @@ import time
 import uuid
 
 from .api import _envelope, _failure, _read_source
-from .common import Budget, CONTRACT, Failure, canonical_bytes, load_contract, schema_check, sha256, strict_json
+from .common import (Budget, CONTRACT, Failure, OutputPathConflict, atomic_write_output,
+                     canonical_bytes, check_output_path, load_contract, schema_check, sha256, strict_json)
 from .glb import encode_raw, project, verify_mapping
 from .native_validation import validate_native, validate_scene_artifact, write_native_evidence
 from .supervisor import check_sizes, staged_size, supervise
@@ -84,10 +85,14 @@ def _sync_file(path):
         os.fsync(stream.fileno())
 
 
-def write_receipt(path, value, committed):
+def write_receipt(path, value, committed, *, protected_files=None, store=None):
     """A receipt delivery error cannot change the store's commit outcome."""
     try:
-        Path(path).write_bytes(canonical_bytes(value))
+        if protected_files is None:
+            Path(path).write_bytes(canonical_bytes(value))
+        else:
+            check_output_path(path, protected_files=protected_files, store=store)
+            atomic_write_output(path, canonical_bytes(value))
         return None
     except OSError as exc:
         message = str(exc)
@@ -148,6 +153,11 @@ def run_transaction(source, *, store, blender, host_max_operations=100000, host_
         previous = load_state(store)
         result["accepted_revision"] = result["previous_revision"] = previous["accepted_revision"] if previous else None
         context = _read_source(source, budget, contract, result)
+        if result_path is not None:
+            try:
+                check_output_path(result_path, protected_files=(source, reopen), store=store)
+            except OutputPathConflict as exc:
+                raise Failure("E_PUBLICATION", str(exc), context.span(context.headers["output"])) from exc
         if expected_revision is not None and expected_revision != result["accepted_revision"]:
             raise Failure("E_STALE_REVISION", "Expected accepted revision is stale", context.span(context.header_range))
         executable = verify_backend(blender, context, result, backend, budget)
@@ -257,7 +267,7 @@ def run_transaction(source, *, store, blender, host_max_operations=100000, host_
                           {"directory": str(candidate), "accepted": False}, committed)
         write_receipt(attempt_dir / "result.json", result, committed)
     if result_path:
-        message = write_receipt(result_path, result, committed)
+        message = write_receipt(result_path, result, committed, protected_files=(source, reopen), store=store)
         if message is not None and attempt_dir is not None:
             write_receipt(attempt_dir / "optional-result-error.json",
                           {"message": message, "committed": committed}, committed)

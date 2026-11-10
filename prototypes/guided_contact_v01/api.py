@@ -3,9 +3,11 @@ from __future__ import annotations
 
 import platform
 from pathlib import Path
+import sys
 import uuid
 
-from .common import Budget, Failure, LEVELS, canonical_bytes, load_contract, sha256
+from .common import (Budget, Failure, LEVELS, OutputPathConflict, atomic_write_output,
+                     canonical_bytes, check_output_path, load_contract, sha256)
 from .source import Source
 
 
@@ -63,9 +65,13 @@ def validate_source(source, *, host_max_operations=100000, host_max_elapsed_ms=3
     try:
         context = _read_source(source, budget, contract, result)
         if canonical_out is not None:
+            check_output_path(canonical_out, protected_files=(source,), other_output=result_path)
+        if result_path is not None:
+            check_output_path(result_path, protected_files=(source,), other_output=canonical_out)
+        if canonical_out is not None:
             target = Path(canonical_out)
             target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_bytes(context.canonical_bytes)
+            atomic_write_output(target, context.canonical_bytes)
         result["successful"] = True
     except Failure as exc:
         _failure(result, exc, contract)
@@ -74,7 +80,14 @@ def validate_source(source, *, host_max_operations=100000, host_max_elapsed_ms=3
     result["cost"] = budget.cost()
     if result_path:
         try:
-            Path(result_path).write_bytes(canonical_bytes(result))
+            check_output_path(result_path, protected_files=(source,), other_output=canonical_out)
+            atomic_write_output(result_path, canonical_bytes(result))
+        except OutputPathConflict as exc:
+            # Keep an earlier source rejection; an unsafe auxiliary receipt
+            # must not replace its diagnostic or mutate the admitted bytes.
+            if not result["diagnostics"]:
+                _failure(result, Failure("E_IO", str(exc), context.span(context.header_range) if context else None), contract)
+            print("C191 optional validation receipt suppressed: " + str(exc), file=sys.stderr)
         except OSError as exc:
             _failure(result, Failure("E_IO", str(exc), context.span(context.header_range) if context else None), contract)
     return result

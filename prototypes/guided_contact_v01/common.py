@@ -6,7 +6,9 @@ from dataclasses import dataclass
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
+import tempfile
 import time
 
 
@@ -25,6 +27,55 @@ def sha256(data: bytes) -> str:
 def canonical_bytes(value) -> bytes:
     return (json.dumps(value, sort_keys=True, separators=(",", ":"),
                        ensure_ascii=False, allow_nan=False) + "\n").encode("utf8")
+
+
+class OutputPathConflict(OSError):
+    """A caller-selected diagnostic path aliases protected input/state bytes."""
+
+
+def check_output_path(path, *, protected_files=(), store=None, other_output=None):
+    """Reject known local aliases, including existing symlinks and hard links.
+
+    External outputs are also replaced atomically, so a separate hard-link name
+    cannot modify a protected inode. This is a trusted-caller path check, not
+    adversarial cross-process filesystem isolation.
+    """
+    try:
+        target = Path(path)
+        absolute = Path(os.path.abspath(target))
+        resolved = target.resolve()
+        if store is not None:
+            store_path = Path(store)
+            roots = (Path(os.path.abspath(store_path)), store_path.resolve())
+            if any(location.is_relative_to(root) for location in (absolute, resolved) for root in roots):
+                raise OutputPathConflict("Optional output must be outside the accepted store")
+        protected = [value for value in protected_files if value is not None]
+        if other_output is not None:
+            protected.append(other_output)
+        for value in protected:
+            other = Path(value)
+            if (absolute == Path(os.path.abspath(other)) or resolved == other.resolve()
+                    or (target.exists() and other.exists() and target.samefile(other))):
+                raise OutputPathConflict("Optional output aliases an input or another requested output")
+    except OutputPathConflict:
+        raise
+    except (OSError, RuntimeError) as exc:
+        raise OutputPathConflict("Cannot safely resolve optional output: " + str(exc)) from exc
+
+
+def atomic_write_output(path, data):
+    """Replace an external diagnostic file without mutating a hard-link target."""
+    path = Path(path)
+    descriptor, name = tempfile.mkstemp(prefix="." + path.name + ".", suffix=".tmp", dir=path.parent)
+    temporary = Path(name)
+    try:
+        with os.fdopen(descriptor, "wb") as stream:
+            stream.write(data)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def strict_json(data):

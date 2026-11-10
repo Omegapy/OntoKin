@@ -46,6 +46,15 @@ cancellation request. `--reopen PATH/scene.blend` reopens and clears the saved
 native scene in a new process, without reconstruction or repairs. The supplied
 source must match the scene's saved source identity.
 
+Optional `--result` paths for `run` must be outside `--store` and separate from
+the input source and reopened scene. `validate` canonical and result outputs
+must be separate from the source and each other. Known direct/symlink input or
+store aliases reject before native execution; receipt delivery rechecks the
+paths. External diagnostic files are replaced atomically, preserving any other
+hard-link name's bytes. An unsafe late receipt is suppressed without changing
+an already committed transaction's result. This is a trusted local path check,
+not a guarantee against adversarial concurrent filesystem mutation.
+
 ## Artifacts and commit point
 
 `STORE/state.json` is the sole accepted-state pointer. It binds the accepted
