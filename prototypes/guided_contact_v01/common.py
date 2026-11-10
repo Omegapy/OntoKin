@@ -12,6 +12,7 @@ import time
 
 CONTRACT = Path(__file__).resolve().parents[2] / "docs/language-design/guided-contact-v0.1"
 CONTRACT_MANIFEST_SHA256 = "bc85696002d641122322313cf5167f84eb1ae377599930112e3afd0f054b0137"
+AMENDMENTS = {"amendments/C191-A1.md": "c05699cdeec319b8f594c771cba7ef1ec8e7d7a4eb267569873171b8839d791e"}
 LEVELS = ("represented", "constructed", "evaluated", "exported", "destination_validated")
 PARTS = ("base", "left_carriage", "left_shoe", "left_stop",
          "right_carriage", "right_shoe", "right_stop")
@@ -51,8 +52,15 @@ def load_contract():
         if len(data) != item["bytes"] or sha256(data) != item["sha256"]:
             raise RuntimeError("C191 adopted contract file changed: " + item["path"])
         content[item["path"]] = data
+    closure = list(manifest["files"])
+    for path, expected_hash in AMENDMENTS.items():
+        data = (CONTRACT / path).read_bytes()
+        if sha256(data) != expected_hash:
+            raise RuntimeError("C191 adopted amendment changed: " + path)
+        closure.append({"path": path, "bytes": len(data), "sha256": expected_hash})
     return {
         "manifest": manifest,
+        "dependency_closure": closure,
         "backend": strict_json(content["backend.json"]),
         "backend_sha256": sha256(content["backend.json"]),
         "source_schema": strict_json(content["source.schema.json"]),

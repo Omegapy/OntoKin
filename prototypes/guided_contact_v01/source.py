@@ -50,8 +50,13 @@ class Source:
         try:
             self.text = data.decode("utf8")
         except UnicodeDecodeError as exc:
-            self.text = data.decode("utf8", errors="replace")
-            raise Failure("E_PARSE", "Source is not UTF-8", None) from exc
+            prefix = data[:exc.start].decode("utf8")
+            line, column = prefix.count("\n") + 1, len(prefix.rsplit("\n", 1)[-1]) + 1
+            span = {"path": self.path.name, "source_sha256": self.sha,
+                    "start_byte": exc.start, "end_byte": exc.end,
+                    "start_line": line, "start_column": column,
+                    "end_line": line, "end_column": column + 1}
+            raise Failure("E_PARSE", "Source is not UTF-8", span) from exc
         self.headers = {}
         self.declarations = []
         self.execution = []
@@ -394,7 +399,7 @@ class Source:
             "source_sha256": self.sha, "source_bytes": len(self.data), "source_path": self.path.name,
             "canonical_input_sha256": self.canonical_sha,
             "contract_manifest_sha256": sha256((self.contract_path / "CONTRACT-FILES.json").read_bytes()) if hasattr(self, "contract_path") else "bc85696002d641122322313cf5167f84eb1ae377599930112e3afd0f054b0137",
-            "dependency_closure": self.contract["manifest"]["files"],
+            "dependency_closure": self.contract["dependency_closure"],
             "module_label": self.module_label, "scene_label": self.scene_label,
             "occurrences": [{"id": d.key.value, "kind": d.kind, "label": d.label,
                              "occurrence": f"{self.module_key.value}/{self.scene_key.value}/{d.key.value}",

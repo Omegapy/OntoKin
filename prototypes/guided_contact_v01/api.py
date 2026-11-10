@@ -57,6 +57,7 @@ def validate_source(source, *, host_max_operations=100000, host_max_elapsed_ms=3
     budget = Budget(host_max_operations, host_max_elapsed_ms, cancel_file)
     contract = load_contract()
     result = _envelope(uuid.uuid4().hex, budget)
+    context = None
     try:
         context = _read_source(source, budget, contract, result)
         if canonical_out is not None:
@@ -66,9 +67,14 @@ def validate_source(source, *, host_max_operations=100000, host_max_elapsed_ms=3
         result["successful"] = True
     except Failure as exc:
         _failure(result, exc, contract)
+    except OSError as exc:
+        _failure(result, Failure("E_IO", str(exc), context.span(context.header_range) if context else None), contract)
     result["cost"] = budget.cost()
     if result_path:
-        Path(result_path).write_bytes(canonical_bytes(result))
+        try:
+            Path(result_path).write_bytes(canonical_bytes(result))
+        except OSError as exc:
+            _failure(result, Failure("E_IO", str(exc), context.span(context.header_range) if context else None), contract)
     return result
 
 
