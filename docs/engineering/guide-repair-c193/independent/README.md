@@ -1,5 +1,12 @@
 # C193 independent expectations and correction review
 
+[Independent qualification](QUALIFICATION.md) now records passing source,
+numerical and provenance checks for all fourteen formal builds, fourteen
+independent saved-scene replays, and the recorded review of all 42 lifecycle
+cases plus two namespace controls. The largest continuous mapping bound is
+0.181935687 mm, within the unchanged 0.2 mm limit. The evidence and the
+recorded-only replay command are linked there.
+
 The independent reviewer owns only this directory on
 `work/c193-independent-review`, starting from observed main
 `294d84ac5c5a15e07d042e5225646c2dab440293`. The native repairer owns a separate
@@ -32,7 +39,8 @@ formal qualification.
 [The independent diagnosis](DIAGNOSIS.md) confirms all four controlled outcomes
 from actual bytes. The guide-only iteration increase passes the worst retained
 case; moving the guide anchor fails. The original failed outputs and the first
-N2 postprocessing failure remain preserved. Qualification is still required.
+N2 postprocessing failure remain preserved. The subsequent formal qualification
+uses the separately adopted C193 backend and the frozen plan below.
 
 Seventeen positive/negative numerical/source guard controls pass. The new
 saved-scene auditor accepts both diagnostic frame arrangements and rejects an

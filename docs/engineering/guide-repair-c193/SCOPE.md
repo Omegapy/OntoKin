@@ -51,7 +51,10 @@ The legacy torque driver remains separately FAILED: 4,239 methods passed and
 thirteen were not run after its original 30,000 ms setup deadline. This task
 does not retroactively pass that gate or complete the full project.
 
-## Current next action
+## Initial next action
 
 Freeze independent expectations, inspect the retained native residuals and
 obtain the exact pinned Blender 4.5.3 executable before new native execution.
+
+The [C193 result](README.md) records the subsequent work. This scope retains
+the observed starting state and initial assignment.
