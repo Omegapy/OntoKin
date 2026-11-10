@@ -2,7 +2,7 @@
 
 ## Main integration lease
 
-Owner `c192-integration-2d0c791f` holds the main integration lease for C192 experiment-record integration through `2026-11-10T15:44:36.028873+00:00`. Acquired from observed main `afae5f59558bc90200691f6727709124d2e119ea` using expected-head nonforce update. Scope is README.md, STATUS.md and docs/engineering/contact-comparison-c192/**. PR #125 contains the frozen public comparison and preserved failures; the existing C191 runtime and legacy failure remain unchanged. Release only after the actual merge and resulting-main checks.
+Owner `c192-recovery-9c186c07` holds the main integration lease for recovery and final integration of C192 evidence through `2026-11-10T16:20:06.981646+00:00`. Acquired from observed main `1b311a9b884d5de638d0247d2e0233dd19f05e62` through an expected-head nonforce update after the former lease expired at 2026-11-10T15:44:36.028873+00:00. Scope is README.md, STATUS.md and docs/engineering/contact-comparison-c192/**. PR #125 and the surviving final local checkpoint are being reconciled. Preserve all failed deliveries and unchanged gates; release after verified merge and resulting-main checks.
 
 ## Current checkpoint
 
