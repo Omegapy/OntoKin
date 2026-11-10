@@ -147,7 +147,13 @@ def validate_configuration(configuration, context, contract):
             raise ValueError("Native transform authority/initial orientation differs: " + name)
         if not near(obj["matrix_parent_inverse"], identity):
             raise ValueError("Native parent inverse differs: " + name)
-        expected_location = native(centers[part]) if part else native(centers[source["bodies"][body]["part"]])
+        expected_center = native(centers[part]) if part else native(centers[source["bodies"][body]["part"]])
+        expected_world = [row[:] for row in identity]
+        for axis in range(3):
+            expected_world[axis][3] = expected_center[axis]
+        if not near(obj["matrix_world"], expected_world):
+            raise ValueError("Native initial world frame differs: " + name)
+        expected_location = expected_center
         if row["kind"] == "hidden_compound_child":
             expected_location = [0, 0, 0]
         elif row.get("parent"):

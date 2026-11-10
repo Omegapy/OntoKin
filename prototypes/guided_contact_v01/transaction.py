@@ -84,6 +84,19 @@ def _sync_file(path):
         os.fsync(stream.fileno())
 
 
+def write_receipt(path, value, committed):
+    """A receipt delivery error cannot change the store's commit outcome."""
+    try:
+        Path(path).write_bytes(canonical_bytes(value))
+        return None
+    except OSError as exc:
+        message = str(exc)
+        print("C191 receipt delivery failed at " + str(path)
+              + "; committed=" + str(committed).lower()
+              + "; accepted store state is unchanged: " + message, file=sys.stderr)
+        return message
+
+
 def retain_implementation(stage, budget):
     package = Path(__file__).parent
     destination = stage / "implementation"
@@ -239,13 +252,12 @@ def run_transaction(source, *, store, blender, host_max_operations=100000, host_
             except OSError:
                 pass
         if not committed and candidate is not None:
-            (attempt_dir / "unreferenced-candidate.json").write_bytes(canonical_bytes({"directory": str(candidate), "accepted": False}))
-        (attempt_dir / "result.json").write_bytes(canonical_bytes(result))
+            write_receipt(attempt_dir / "unreferenced-candidate.json",
+                          {"directory": str(candidate), "accepted": False}, committed)
+        write_receipt(attempt_dir / "result.json", result, committed)
     if result_path:
-        try:
-            Path(result_path).write_bytes(canonical_bytes(result))
-        except OSError as exc:
-            print("C191 optional result-file delivery failed; committed store state is unchanged: " + str(exc), file=sys.stderr)
-            if attempt_dir is not None:
-                (attempt_dir / "optional-result-error.json").write_bytes(canonical_bytes({"message": str(exc), "committed": committed}))
+        message = write_receipt(result_path, result, committed)
+        if message is not None and attempt_dir is not None:
+            write_receipt(attempt_dir / "optional-result-error.json",
+                          {"message": message, "committed": committed}, committed)
     return result

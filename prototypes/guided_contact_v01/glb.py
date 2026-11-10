@@ -34,6 +34,15 @@ def quaternion(matrix):
     return [v / norm for v in q]
 
 
+def rotation_samples(matrices):
+    """Use one deterministic quaternion hemisphere along the native capture."""
+    rotations = [quaternion(matrix) for matrix in matrices]
+    for index in range(1, len(rotations)):
+        if sum(a * b for a, b in zip(rotations[index - 1], rotations[index])) < 0:
+            rotations[index] = [-value for value in rotations[index]]
+    return rotations
+
+
 def mesh_geometry(box):
     x, y, z = [value / 2000 for value in box]
     corners = [(-x, -y, -z), (x, -y, -z), (x, y, -z), (-x, y, -z),
@@ -107,10 +116,7 @@ def encode_raw(stage, native, context, budget, backend):
     for name in ("left_carriage", "right_carriage"):
         matrices = [record["matrices_blender_m"][name] for record in native["samples"]]
         translations = [[m[0][3], m[2][3], -m[1][3]] for m in matrices]
-        rotations = [quaternion(matrix) for matrix in matrices]
-        for i in range(1, len(rotations)):
-            if sum(a * b for a, b in zip(rotations[i - 1], rotations[i])) < 0:
-                rotations[i] = [-v for v in rotations[i]]
+        rotations = rotation_samples(matrices)
         tracks = [("translation", translations, "VEC3")]
         if any(any(abs(q[a] - [0, 0, 0, 1][a]) > 0 for a in range(4)) for q in rotations):
             tracks.append(("rotation", rotations, "VEC4"))
@@ -142,6 +148,8 @@ def verify_mapping(stage, native, context, budget):
     try:
         raw_bytes, raw, raw_bin = projection.decode(stage / "raw.glb")
         final_bytes, final, final_bin = projection.decode(stage / "final.glb")
+        if len(raw["animations"]) != 1 or len(final["animations"]) != 1:
+            raise ValueError("GLB must contain exactly one native animation")
         if any(raw[key] != final[key] for key in ("asset", "nodes", "meshes", "materials", "scenes", "accessors", "bufferViews", "buffers")):
             raise ValueError("Projection changed a forbidden static field")
         if raw["animations"][0]["samplers"] != final["animations"][0]["samplers"]:
@@ -149,6 +157,19 @@ def verify_mapping(stage, native, context, budget):
         names = [node["name"] for node in raw["nodes"]]
         if names != list(PARTS):
             raise ValueError("GLB stable IDs differ")
+        native_tracks = {}
+        for name in ("left_carriage", "right_carriage"):
+            matrices = [record["matrices_blender_m"][name] for record in native["samples"]]
+            budget.charge("verified_native_pose_scalars", len(matrices) * 16)
+            native_tracks[(name, "translation")] = [
+                (f32(matrix[0][3]), f32(matrix[2][3]), f32(-matrix[1][3])) for matrix in matrices]
+            rotations = rotation_samples(matrices)
+            if any(any(value != (1 if axis == 3 else 0) for axis, value in enumerate(row)) for row in rotations):
+                native_tracks[(name, "rotation")] = [tuple(f32(value) for value in row) for row in rotations]
+        actual_targets = [(names[channel["target"]["node"]], channel["target"]["path"])
+                          for channel in raw["animations"][0]["channels"]]
+        if actual_targets != list(native_tracks):
+            raise ValueError("Raw GLB channel inventory differs from native capture")
         expected_channels = [c for c in raw["animations"][0]["channels"] if c["target"]["path"] != "rotation"]
         if final["animations"][0]["channels"] != expected_channels:
             raise ValueError("Projection changed forbidden animation channels")
@@ -164,7 +185,10 @@ def verify_mapping(stage, native, context, budget):
                 raise ValueError("GLB time keys changed")
             node = names[channel["target"]["node"]]
             values, start, stride = projection.accessor(raw, raw_bin, sampler["output"])
-            if channel["target"]["path"] == "translation":
+            path = channel["target"]["path"]
+            if values != native_tracks[(node, path)]:
+                raise ValueError("Raw carriage " + path + " samples differ from native capture")
+            if path == "translation":
                 final_values, _, _ = projection.accessor(final, final_bin, sampler["output"])
                 expected_x = [f32(record["matrices_blender_m"][node][0][3]) for record in native["samples"]]
                 if [row[0] for row in values] != expected_x or [row[0] for row in final_values] != expected_x:
