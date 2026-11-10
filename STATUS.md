@@ -2,7 +2,7 @@
 
 ## Main integration lease
 
-Owner `c194-recovery-40c44e91` holds the C194 integration lease, acquired from observed main `3c9fcaa4daff7b32e7b813ba05041212c1a5bc2f` at `2026-11-10T22:46:03.136283+00:00` and expiring `2026-11-10T23:16:03.136283+00:00`. Scope: publish and review the recovered C194 preparation, original public edit/reuse pair and retained evidence; verify resulting main; release the lease and save the complete handoff. Reserved shared files: `STATUS.md` and the C194 integration records. Original worker histories and all historical failures remain preserved. Independent nonoverlapping work may continue on its own branch.
+Owner `c194-recovery-91d3` holds the C194 recovery and integration lease, acquired from observed main `ee7dc2b71710dc8963b01ab6db68a1c75e22c27a` at `2026-11-10T23:29:43.627614+00:00` and expiring `2026-11-10T23:59:43.627614+00:00`. The previous `c194-recovery-40c44e91` lease expired without publication; its original local source, worker histories and evidence were recovered unchanged before resumption. Scope: finish the portable evidence extractor, publish and independently review recovered C194 results, verify resulting main, release this lease and save the self-contained handoff. Reserved shared files: `STATUS.md` and C194 integration records. Independent nonoverlapping work may continue on its own branch.
 
 ## Current checkpoint
 
