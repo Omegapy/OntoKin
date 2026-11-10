@@ -1,0 +1,95 @@
+{
+  "version": "C192-accounting-1",
+  "phases": [
+    {
+      "route": "ok",
+      "phase": "edit",
+      "first_observed_utc": "2026-11-10T14:54:02Z",
+      "end_utc": "2026-11-10T14:59:04.047489+00:00",
+      "observed_wall_seconds": 302.047489,
+      "end_definition": "commit confirmed",
+      "native_builds": 1,
+      "native_build_failures": 1,
+      "formal_submissions": 1,
+      "source_edit_actions": 1,
+      "repair_rounds": 0,
+      "source_commit": "721f3691935cadf0d11cead973db11358071d33b"
+    },
+    {
+      "route": "ok",
+      "phase": "reuse",
+      "first_observed_utc": "2026-11-10T14:59:55.533894407Z",
+      "end_utc": "2026-11-10T15:03:45.143556+00:00",
+      "observed_wall_seconds": 229.609662,
+      "end_definition": "commit confirmed",
+      "native_builds": 2,
+      "native_build_failures": 2,
+      "formal_submissions": 1,
+      "source_edit_actions": 1,
+      "repair_rounds": 0,
+      "source_commit": "9a98e15ad242ddc0d20288fa8f43e6ef44e164c6"
+    },
+    {
+      "route": "python",
+      "phase": "edit",
+      "first_observed_utc": "2026-11-10T14:54:15+00:00",
+      "end_utc": "2026-11-10T14:58:58.171448+00:00",
+      "observed_wall_seconds": 283.171448,
+      "end_definition": "submission ready after commit",
+      "native_builds": 1,
+      "native_build_failures": 1,
+      "formal_submissions": 1,
+      "source_edit_actions": 1,
+      "repair_rounds": 0,
+      "source_commit": "375f0df7bb63e8d7b72c7f0cf41643db3000da22"
+    },
+    {
+      "route": "python",
+      "phase": "reuse",
+      "first_observed_utc": "2026-11-10T14:59:42+00:00",
+      "end_utc": "2026-11-10T15:03:20.203328+00:00",
+      "observed_wall_seconds": 218.203328,
+      "end_definition": "submission ready after commit",
+      "native_builds": 2,
+      "native_build_failures": 2,
+      "formal_submissions": 1,
+      "source_edit_actions": 1,
+      "repair_rounds": 0,
+      "source_commit": "f3b1b5fa89e1e19075793e0c75b3e68b53c5a844"
+    }
+  ],
+  "within_20_minute_phase_allowance": true,
+  "requested_agent_settings": "two fresh default subagents, fork_turns=none, no model override",
+  "exact_provider_model_snapshot": null,
+  "provider_tokens": null,
+  "provider_cost": null,
+  "hidden_model_turns": null,
+  "usage_unavailability": "Provider metadata is not surfaced; no estimates or hard token cap claimed",
+  "human_interventions_during_pair": 0,
+  "coordinator_messages_per_route": {
+    "initial_frozen_first_task": 1,
+    "first_failure_preservation_instruction": 1,
+    "frozen_reuse_followup_after_independent_scoring": 1
+  },
+  "read_only_commands_with_no_matches": {
+    "ok": 1,
+    "python": 1
+  },
+  "tool_transport_failures_before_process_creation": {
+    "ok": 0,
+    "python": 2
+  },
+  "participant_optional_native_reopens": {
+    "ok": 1,
+    "python": 0
+  },
+  "reusable_setup": {
+    "inherited": "C191 source contract, adapter, native construction, independent checkers and recorded-output utilities",
+    "new": "C192 direct Python starter and runner, common command recorder, target-value wrappers,28 analytic controls, two baseline builds and two native reopens",
+    "setup_start_receipt": "evidence/SETUP-START.json",
+    "pre_dispatch_freeze": "frozen/INPUT-FREEZE.json",
+    "full_setup_token_cost": null,
+    "full_setup_wall_time": "Not completely instrumented; recorded setup boundaries exclude earlier archive/repository inspection"
+  },
+  "interpretation": "Reported phase times include differing inspection/report work. No comparative speed or cost advantage is inferred. Subsequent cross-review and coordinator validation are excluded from participant effort."
+}

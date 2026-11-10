@@ -1,0 +1,120 @@
+{
+  "version": "C192-direct-route-protocol-review-1",
+  "verdict": "APPROVE",
+  "approval_scope": "Integration of experiment records only",
+  "deliveries_approved": false,
+  "review_role": "Independent review of the other direct-Python route and coordinator protocol/receiving evidence after participant phases closed",
+  "independence_boundary": "Reviewer authored the .ok participant route. That route is not independently approved by this review; own-route source, physics and authoring claims are excluded.",
+  "review_started_utc": "2026-11-10T15:05:05.059320646Z",
+  "review_completed_utc": "2026-11-10T15:14:09.472391+00:00",
+  "participant_effort": false,
+  "new_native_trials": 0,
+  "coordinator_head_observed": "4519a3964ec8528aeb249260aedbe6b54c3c2d04",
+  "checks_passed": 23,
+  "checks_failed": 0,
+  "open_blockers": [],
+  "findings": [
+    {
+      "id": "C192-PROTOCOL-01",
+      "severity": "low",
+      "status": "resolved",
+      "title": "An unperformed additional rebuild was encoded as a failed equality result",
+      "initial_observation": "The two edit-regenerated records used rebuild_exact:false, although no additional coordinator rebuild was run for those records and participant regeneration had reproduced the earlier output.",
+      "resolution": "Coordinator added fresh_rebuild_performed:false and set rebuild_exact:null for those records. Original results-before-review.json snapshots remain preserved. All source, measurements, hashes, rejection outcomes and other fields were compared and remain unchanged.",
+      "resolution_verified": true,
+      "evidence": [
+        {
+          "stage": "first-reproduction",
+          "original_retained": "/workspace/scratch/d52b43d02a92/c192-audit/first-reproduction/results-before-review.json",
+          "original_sha256": "6cf8051640586781be1e6facd9f5380c637683a9792dbe593d1b5b0532ad3c00",
+          "corrected": "/workspace/scratch/d52b43d02a92/c192-audit/first-reproduction/results.json",
+          "corrected_sha256": "53f4faf77b142c98a6e11dd0632f65b78caab2badd60aa31a5d92c530c6b66e7",
+          "all_non_reporting_fields_unchanged": true
+        },
+        {
+          "stage": "reuse-reproduction",
+          "original_retained": "/workspace/scratch/d52b43d02a92/c192-audit/reuse-reproduction/results-before-review.json",
+          "original_sha256": "79852a7105600ec08f4edc20df8a2ea8346fc58f02e040c0fc4503ff697ec455",
+          "corrected": "/workspace/scratch/d52b43d02a92/c192-audit/reuse-reproduction/results.json",
+          "corrected_sha256": "d9db5693d77d88b94a648ec9c3f3de13b4cdcdc37dcf839495d2adbbd4bded85",
+          "all_non_reporting_fields_unchanged": true
+        }
+      ]
+    }
+  ],
+  "direct_route_source_hashes": {
+    "edit": "03e0955c421541f144074bda5983a9363a9cccf32d5cf226c8a8f288f17bc798",
+    "reuse": "c7f5e6755250b31dd7daed1af36320c279c69c417770a22d13af9ec248181c5e"
+  },
+  "direct_route_outcomes": {
+    "edit": "REJECTED_MAPPING",
+    "reuse": "REJECTED_MAPPING",
+    "regenerated_edit": "REJECTED_MAPPING"
+  },
+  "receiving_scope": {
+    "khronos_direct_files": 4,
+    "khronos_direct_errors": 0,
+    "khronos_direct_warnings": 0,
+    "khronos_direct_infos": 2,
+    "three_direct_clips": 4,
+    "three_direct_poses": 12,
+    "blender_direct_final_imports": 2,
+    "direct_rendered_frames_visually_inspected": 6,
+    "browser_or_gpu_playback_claim": false,
+    "live_destination_physics_claim": false
+  },
+  "limitations": [
+    "Receiving validation concerns retained rejected outputs and cannot override mapping failure.",
+    "Three.js evidence is Node GLTFLoader/AnimationMixer readback at three poses; Blender evidence is CPU rendering of imported final GLBs.",
+    "Frozen default agent settings were requested; exact provider snapshot, tokens, cost and hidden turns are unavailable.",
+    "The reviewed sources are literal Python dictionary variants; general parameter, class or library reuse is not established.",
+    "Final packaging and any later edits must preserve the reviewed file identities; final narrative and integration commit were still being prepared."
+  ],
+  "reviewed_inputs": {
+    "/workspace/scratch/d52b43d02a92/OntoKin/docs/engineering/contact-comparison-c192/frozen/BRIEF.md": {
+      "sha256": "1cda40e65a5bb9e51356d310649859d91d9fe7abe198e5c543ab54313b194ab5",
+      "bytes": 4703
+    },
+    "/workspace/scratch/d52b43d02a92/OntoKin/docs/engineering/contact-comparison-c192/frozen/INPUT-FREEZE.json": {
+      "sha256": "ee0840f60497964c77d2c2ee2355ff369d807aa3b4d3b6fb648e2bd0a416e3d2",
+      "bytes": 23474
+    },
+    "/workspace/scratch/d52b43d02a92/OntoKin/docs/engineering/contact-comparison-c192/results.json": {
+      "sha256": "0a2cce4ef173938b573ba425fb80263fe69d925407f8278fcd36141eeabefa53",
+      "bytes": 20791
+    },
+    "/workspace/scratch/d52b43d02a92/OntoKin/docs/engineering/contact-comparison-c192/shared/direct_runner.py": {
+      "sha256": "54353fc13fbe52dfd5cdae2d2c426c5bd4260ca1ba80e48003b10cf1b1abfbf4",
+      "bytes": 5839
+    },
+    "/workspace/scratch/d52b43d02a92/OntoKin/docs/engineering/contact-comparison-c192/shared/build.py": {
+      "sha256": "49bb207cebc996c9c11975ed5b5e522855664ff97215229c57c1cd74c290f1be",
+      "bytes": 2797
+    },
+    "/workspace/scratch/d52b43d02a92/OntoKin/docs/engineering/contact-comparison-c192/evidence/accounting.json": {
+      "sha256": "79b8c6194559315d5b8346c5f8f16accfa257720c6653afec0ccc5671140f0b6",
+      "bytes": 3620
+    },
+    "/workspace/scratch/d52b43d02a92/OntoKin/docs/engineering/contact-comparison-c192/evidence/dispatch.json": {
+      "sha256": "0bb9d8ea18d92973af6b6ab89a617c1681455d9b139cbce662202bce7d077964",
+      "bytes": 503
+    },
+    "/workspace/scratch/d52b43d02a92/OntoKin/docs/engineering/contact-comparison-c192/evidence/starter-equivalence.json": {
+      "sha256": "b2b3d7a7242aa6ca00ba11cecea1696bdb48d93d6888d2b734b3549bc3d550fc",
+      "bytes": 494
+    },
+    "/workspace/scratch/d52b43d02a92/c192-receiving/khronos.json": {
+      "sha256": "b52bf43fc7a83a03490b4d19d4ae53d52115fec7e65e88f7cf665ad297cf8259",
+      "bytes": 10499
+    },
+    "/workspace/scratch/d52b43d02a92/c192-receiving/three.json": {
+      "sha256": "2620b300c5b397c62ddbe762ca6207af614be5fc90015a1d80d66baf6b4629ba",
+      "bytes": 63208
+    },
+    "/workspace/scratch/d52b43d02a92/c192-receiving/renders/receipt.json": {
+      "sha256": "dade68ecff5a1ba9a59ffd823bf2cc429b099ccad29ebfa2c6b5ccc1fb4d7b69",
+      "bytes": 73827
+    }
+  },
+  "supporting_evidence": "evidence-checks.json"
+}

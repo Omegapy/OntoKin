@@ -1,0 +1,663 @@
+{
+  "review_scope": "Other direct-Python route and coordinator protocol/receiving records; no independent review of own .ok route",
+  "review_started_utc": "2026-11-10T15:05:05.059320646Z",
+  "checked_at_utc": "2026-11-10T15:14:09.471646+00:00",
+  "native_trials_run": 0,
+  "checks": [
+    {
+      "id": "frozen_inputs_coordinator",
+      "passed": true,
+      "details": {
+        "checked": 116,
+        "failures": []
+      }
+    },
+    {
+      "id": "inherited_files_coordinator",
+      "passed": true,
+      "details": {
+        "changed_outside_authorized_experiment_or_navigation": [],
+        "head": "4519a3964ec8528aeb249260aedbe6b54c3c2d04"
+      }
+    },
+    {
+      "id": "frozen_inputs_python",
+      "passed": true,
+      "details": {
+        "checked": 116,
+        "failures": []
+      }
+    },
+    {
+      "id": "inherited_files_python",
+      "passed": true,
+      "details": {
+        "changed_outside_authorized_experiment_or_navigation": [],
+        "head": "f3b1b5fa89e1e19075793e0c75b3e68b53c5a844"
+      }
+    },
+    {
+      "id": "editable_python_source",
+      "passed": true,
+      "details": {
+        "starter": {
+          "path": "/workspace/scratch/d52b43d02a92/participants/python/docs/engineering/contact-comparison-c192/participants/python/source-00-starter.py",
+          "sha256": "3a036250910ce1411745579d148eed8acab84a90a56fa42e3c1d9b2012f1525a",
+          "literal_design_only": true,
+          "calls": 0
+        },
+        "edit": {
+          "path": "/workspace/scratch/d52b43d02a92/participants/python/docs/engineering/contact-comparison-c192/participants/python/design-edit.py",
+          "sha256": "03e0955c421541f144074bda5983a9363a9cccf32d5cf226c8a8f288f17bc798",
+          "literal_design_only": true,
+          "calls": 0
+        },
+        "reuse": {
+          "path": "/workspace/scratch/d52b43d02a92/participants/python/docs/engineering/contact-comparison-c192/participants/python/design-reuse.py",
+          "sha256": "c7f5e6755250b31dd7daed1af36320c279c69c417770a22d13af9ec248181c5e",
+          "literal_design_only": true,
+          "calls": 0
+        }
+      }
+    },
+    {
+      "id": "starter_matches_frozen",
+      "passed": true,
+      "details": {
+        "sha256": "3a036250910ce1411745579d148eed8acab84a90a56fa42e3c1d9b2012f1525a"
+      }
+    },
+    {
+      "id": "source_localization",
+      "passed": true,
+      "details": {
+        "edit": [
+          {
+            "path": "$.parts.left_stop.at_mm[0]",
+            "before": 380,
+            "after": 362.5
+          }
+        ],
+        "reuse": [
+          {
+            "path": "$.parts.left_stop.at_mm[0]",
+            "before": 362.5,
+            "after": 372.5
+          }
+        ],
+        "edit_exact_byte_substitution": true,
+        "reuse_exact_byte_substitution": true
+      }
+    },
+    {
+      "id": "first_source_preserved",
+      "passed": true,
+      "details": {
+        "first_phase_commit": "375f0df7bb63e8d7b72c7f0cf41643db3000da22",
+        "source_sha256": "03e0955c421541f144074bda5983a9363a9cccf32d5cf226c8a8f288f17bc798"
+      }
+    },
+    {
+      "id": "complete_first_build_preserved",
+      "passed": true,
+      "details": {
+        "files_checked": 39,
+        "failures": [],
+        "inventory": "/workspace/scratch/d52b43d02a92/participants/python/docs/engineering/contact-comparison-c192/participants/python/receipts/reuse/prior-build-inventory.json"
+      }
+    },
+    {
+      "id": "retained_build_edit",
+      "passed": true,
+      "details": {
+        "artifact": "/workspace/scratch/d52b43d02a92/c192-runs/python/edit-build-01/artifact",
+        "source_sha256": "03e0955c421541f144074bda5983a9363a9cccf32d5cf226c8a8f288f17bc798",
+        "source_snapshots_match": true,
+        "manifest_files": 33,
+        "manifest_failures": [],
+        "implementation_files": 11,
+        "implementation_failures": [],
+        "runner_exact": true,
+        "common_returncode": 1,
+        "native_returncode": 0,
+        "ok_source_parsed": false,
+        "error": "ValueError: Mapping exceeds 0.2 mm: native=0.24463765670705492, continuous=0.2719610733359383",
+        "source_unchanged": true,
+        "requested_operations": 1000000,
+        "requested_elapsed_ms": 80000,
+        "elapsed_s": 1.7202398777008057
+      }
+    },
+    {
+      "id": "retained_build_reuse",
+      "passed": true,
+      "details": {
+        "artifact": "/workspace/scratch/d52b43d02a92/c192-runs/python/reuse-build-01/artifact",
+        "source_sha256": "c7f5e6755250b31dd7daed1af36320c279c69c417770a22d13af9ec248181c5e",
+        "source_snapshots_match": true,
+        "manifest_files": 33,
+        "manifest_failures": [],
+        "implementation_files": 11,
+        "implementation_failures": [],
+        "runner_exact": true,
+        "common_returncode": 1,
+        "native_returncode": 0,
+        "ok_source_parsed": false,
+        "error": "ValueError: Mapping exceeds 0.2 mm: native=0.29241623943579215, continuous=0.32264731193203877",
+        "source_unchanged": true,
+        "requested_operations": 1000000,
+        "requested_elapsed_ms": 80000,
+        "elapsed_s": 1.668755292892456
+      }
+    },
+    {
+      "id": "retained_build_regenerated-edit",
+      "passed": true,
+      "details": {
+        "artifact": "/workspace/scratch/d52b43d02a92/c192-runs/python/reuse-edit-regeneration-01/artifact",
+        "source_sha256": "03e0955c421541f144074bda5983a9363a9cccf32d5cf226c8a8f288f17bc798",
+        "source_snapshots_match": true,
+        "manifest_files": 33,
+        "manifest_failures": [],
+        "implementation_files": 11,
+        "implementation_failures": [],
+        "runner_exact": true,
+        "common_returncode": 1,
+        "native_returncode": 0,
+        "ok_source_parsed": false,
+        "error": "ValueError: Mapping exceeds 0.2 mm: native=0.24463765670705492, continuous=0.2719610733359383",
+        "source_unchanged": true,
+        "requested_operations": 1000000,
+        "requested_elapsed_ms": 80000,
+        "elapsed_s": 1.8190884590148926
+      }
+    },
+    {
+      "id": "earlier_regeneration_exact",
+      "passed": true,
+      "details": {
+        "files": {
+          "source.py": {
+            "equal": true,
+            "sha256": "03e0955c421541f144074bda5983a9363a9cccf32d5cf226c8a8f288f17bc798"
+          },
+          "canonical-input.json": {
+            "equal": true,
+            "sha256": "1358dde89cb28862f827ddad9b56a1479f44677270b2d1ce77f6c2091db2f86c"
+          },
+          "native-transforms.json": {
+            "equal": true,
+            "sha256": "63666ee88dfc95659e727ba9de80d2d822d3a41487c472709dc1e42f1e199c87"
+          },
+          "native-trace.csv": {
+            "equal": true,
+            "sha256": "c31a4405d6144a9da2f6a1b9ff28e3e0145201d8995daf1d429ee2240cca736c"
+          },
+          "raw.glb": {
+            "equal": true,
+            "sha256": "e29bf3d15092aed5f9535367d586e9970cdc62a7a9af13c227b5e32120ff9d06"
+          },
+          "final.glb": {
+            "equal": true,
+            "sha256": "9eea3d5931a26bff7ec8d4a98b1ba3f1963c0e89802a70e5e8284ae9d10828c1"
+          }
+        },
+        "scene_byte_identity_required": false
+      }
+    },
+    {
+      "id": "coordinator_fresh_rebuild_edit",
+      "passed": true,
+      "details": {
+        "equality": {
+          "canonical-input.json": true,
+          "native-transforms.json": true,
+          "raw.glb": true,
+          "final.glb": true
+        },
+        "receipt": "/workspace/scratch/d52b43d02a92/c192-audit/first-reproduction/python-edit/rebuild.command.json",
+        "returncode": 1
+      }
+    },
+    {
+      "id": "coordinator_fresh_rebuild_reuse",
+      "passed": true,
+      "details": {
+        "equality": {
+          "canonical-input.json": true,
+          "native-transforms.json": true,
+          "raw.glb": true,
+          "final.glb": true
+        },
+        "receipt": "/workspace/scratch/d52b43d02a92/c192-audit/reuse-reproduction/python-reuse/rebuild.command.json",
+        "returncode": 1
+      }
+    },
+    {
+      "id": "coordinator_reopens_direct_route",
+      "passed": true,
+      "details": [
+        {
+          "case": "edit",
+          "kind": "submitted",
+          "path": "/workspace/scratch/d52b43d02a92/c192-audit/first-reproduction/python-edit/submitted-reopen",
+          "pass": true,
+          "returncode": 0,
+          "samples": 481,
+          "all_native_samples_equal": true,
+          "configuration_unchanged": true,
+          "reconstructed_or_repaired": false,
+          "scene_sha256_matches": true
+        },
+        {
+          "case": "edit",
+          "kind": "rebuilt",
+          "path": "/workspace/scratch/d52b43d02a92/c192-audit/first-reproduction/python-edit/rebuilt-reopen",
+          "pass": true,
+          "returncode": 0,
+          "samples": 481,
+          "all_native_samples_equal": true,
+          "configuration_unchanged": true,
+          "reconstructed_or_repaired": false,
+          "scene_sha256_matches": true
+        },
+        {
+          "case": "reuse",
+          "kind": "submitted",
+          "path": "/workspace/scratch/d52b43d02a92/c192-audit/reuse-reproduction/python-reuse/submitted-reopen",
+          "pass": true,
+          "returncode": 0,
+          "samples": 481,
+          "all_native_samples_equal": true,
+          "configuration_unchanged": true,
+          "reconstructed_or_repaired": false,
+          "scene_sha256_matches": true
+        },
+        {
+          "case": "reuse",
+          "kind": "rebuilt",
+          "path": "/workspace/scratch/d52b43d02a92/c192-audit/reuse-reproduction/python-reuse/rebuilt-reopen",
+          "pass": true,
+          "returncode": 0,
+          "samples": 481,
+          "all_native_samples_equal": true,
+          "configuration_unchanged": true,
+          "reconstructed_or_repaired": false,
+          "scene_sha256_matches": true
+        },
+        {
+          "case": "regenerated-edit",
+          "kind": "submitted",
+          "path": "/workspace/scratch/d52b43d02a92/c192-audit/reuse-reproduction/python-edit-regenerated/submitted-reopen",
+          "pass": true,
+          "returncode": 0,
+          "samples": 481,
+          "all_native_samples_equal": true,
+          "configuration_unchanged": true,
+          "reconstructed_or_repaired": false,
+          "scene_sha256_matches": true
+        }
+      ]
+    },
+    {
+      "id": "khronos_direct_raw_and_final",
+      "passed": true,
+      "details": {
+        "validator_version": "2.0.0-dev.3.10",
+        "returncode": 0,
+        "files": [
+          {
+            "path": "c192-runs/python/edit-build-01/artifact/raw.glb",
+            "sha256_matches": true,
+            "errors": 0,
+            "warnings": 0,
+            "infos": 0,
+            "messages": []
+          },
+          {
+            "path": "c192-runs/python/edit-build-01/artifact/final.glb",
+            "sha256_matches": true,
+            "errors": 0,
+            "warnings": 0,
+            "infos": 1,
+            "messages": [
+              {
+                "code": "UNUSED_OBJECT",
+                "message": "This object may be unused.",
+                "severity": 2,
+                "pointer": "/animations/0/samplers/1"
+              }
+            ]
+          },
+          {
+            "path": "c192-runs/python/reuse-build-01/artifact/raw.glb",
+            "sha256_matches": true,
+            "errors": 0,
+            "warnings": 0,
+            "infos": 0,
+            "messages": []
+          },
+          {
+            "path": "c192-runs/python/reuse-build-01/artifact/final.glb",
+            "sha256_matches": true,
+            "errors": 0,
+            "warnings": 0,
+            "infos": 1,
+            "messages": [
+              {
+                "code": "UNUSED_OBJECT",
+                "message": "This object may be unused.",
+                "severity": 2,
+                "pointer": "/animations/0/samplers/1"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "three_direct_raw_and_final",
+      "passed": true,
+      "details": {
+        "revision": "186",
+        "scope": "Independent Three.js decoder and animation mixer; no browser or GPU-rendering claim",
+        "returncode": 0,
+        "reports": [
+          {
+            "id": "python-edit-raw",
+            "sha256_matches": true,
+            "rejected_label": "REJECTED_MAPPING",
+            "duration": 2,
+            "meshes": 7,
+            "poses": [
+              {
+                "time": 0,
+                "gaps_mm": {
+                  "left": 182.49999824911356,
+                  "right": 314.9999948218465
+                }
+              },
+              {
+                "time": 1.46,
+                "gaps_mm": {
+                  "left": 0.12240965316556185,
+                  "right": 95.99998230490178
+                }
+              },
+              {
+                "time": 2,
+                "gaps_mm": {
+                  "left": -6.51925802230835e-06,
+                  "right": 14.99998290091753
+                }
+              }
+            ]
+          },
+          {
+            "id": "python-edit-final",
+            "sha256_matches": true,
+            "rejected_label": "REJECTED_MAPPING",
+            "duration": 2,
+            "meshes": 7,
+            "poses": [
+              {
+                "time": 0,
+                "gaps_mm": {
+                  "left": 182.49999824911356,
+                  "right": 314.9999948218465
+                }
+              },
+              {
+                "time": 1.46,
+                "gaps_mm": {
+                  "left": 0.1198740817587236,
+                  "right": 95.99998230490178
+                }
+              },
+              {
+                "time": 2,
+                "gaps_mm": {
+                  "left": -6.51925802230835e-06,
+                  "right": 14.99998290091753
+                }
+              }
+            ]
+          },
+          {
+            "id": "python-reuse-raw",
+            "sha256_matches": true,
+            "rejected_label": "REJECTED_MAPPING",
+            "duration": 2,
+            "meshes": 7,
+            "poses": [
+              {
+                "time": 0,
+                "gaps_mm": {
+                  "left": 192.4999887123704,
+                  "right": 314.9999948218465
+                }
+              },
+              {
+                "time": 1.54,
+                "gaps_mm": {
+                  "left": 0.11628945190278728,
+                  "right": 83.99997455623651
+                }
+              },
+              {
+                "time": 2,
+                "gaps_mm": {
+                  "left": -6.51925802230835e-06,
+                  "right": 14.99998290091753
+                }
+              }
+            ]
+          },
+          {
+            "id": "python-reuse-final",
+            "sha256_matches": true,
+            "rejected_label": "REJECTED_MAPPING",
+            "duration": 2,
+            "meshes": 7,
+            "poses": [
+              {
+                "time": 0,
+                "gaps_mm": {
+                  "left": 192.4999887123704,
+                  "right": 314.9999948218465
+                }
+              },
+              {
+                "time": 1.54,
+                "gaps_mm": {
+                  "left": 0.10286989818143866,
+                  "right": 83.99997455623651
+                }
+              },
+              {
+                "time": 2,
+                "gaps_mm": {
+                  "left": -6.51925802230835e-06,
+                  "right": 14.99998290091753
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "blender_direct_import_and_renders",
+      "passed": true,
+      "details": {
+        "returncode": 0,
+        "browser_claim": false,
+        "engine": "CYCLES",
+        "device": "CPU",
+        "script_sha256": "f66da4ad633faf780b33fccdaf2e19c8d5ef103ce67cdfba0f9728db983b54db",
+        "script_hash_matches": true,
+        "jobs": [
+          {
+            "label": "python-edit-rejected",
+            "input_sha256_matches": true,
+            "mesh_count": 7,
+            "all_sampled_imports_match_glb": true,
+            "frames": [
+              {
+                "time": 0.0,
+                "png": "/workspace/scratch/d52b43d02a92/c192-receiving/renders/python-edit-rejected/t-0.000.png",
+                "sha256_matches": true,
+                "bytes_match": true,
+                "import_error_m": 1.4901161193847656e-08
+              },
+              {
+                "time": 1.46,
+                "png": "/workspace/scratch/d52b43d02a92/c192-receiving/renders/python-edit-rejected/t-1.460.png",
+                "sha256_matches": true,
+                "bytes_match": true,
+                "import_error_m": 1.4901161193847656e-08
+              },
+              {
+                "time": 2.0,
+                "png": "/workspace/scratch/d52b43d02a92/c192-receiving/renders/python-edit-rejected/t-2.000.png",
+                "sha256_matches": true,
+                "bytes_match": true,
+                "import_error_m": 1.4901161193847656e-08
+              }
+            ]
+          },
+          {
+            "label": "python-reuse-rejected",
+            "input_sha256_matches": true,
+            "mesh_count": 7,
+            "all_sampled_imports_match_glb": true,
+            "frames": [
+              {
+                "time": 0.0,
+                "png": "/workspace/scratch/d52b43d02a92/c192-receiving/renders/python-reuse-rejected/t-0.000.png",
+                "sha256_matches": true,
+                "bytes_match": true,
+                "import_error_m": 1.4901161193847656e-08
+              },
+              {
+                "time": 1.54,
+                "png": "/workspace/scratch/d52b43d02a92/c192-receiving/renders/python-reuse-rejected/t-1.540.png",
+                "sha256_matches": true,
+                "bytes_match": true,
+                "import_error_m": 2.5242597789798538e-08
+              },
+              {
+                "time": 2.0,
+                "png": "/workspace/scratch/d52b43d02a92/c192-receiving/renders/python-reuse-rejected/t-2.000.png",
+                "sha256_matches": true,
+                "bytes_match": true,
+                "import_error_m": 1.4901161193847656e-08
+              }
+            ]
+          }
+        ],
+        "six_direct_route_images_visually_inspected": true
+      }
+    },
+    {
+      "id": "receiving_dependencies_match_c191_archive",
+      "passed": true,
+      "details": {
+        "files_checked": 29,
+        "archive_sha256": "392cce364da6b4f589bd41c49076feac31792dbfb6c059d425488c9d56370495",
+        "member_prefix": "evidence/r2/coordinator/receiving/",
+        "failures": []
+      }
+    },
+    {
+      "id": "honest_rejection_classification",
+      "passed": true,
+      "details": {
+        "experiment_status": "COMPLETED_WITH_BOTH_ROUTES_REJECTED_AT_BOTH_TARGETS",
+        "accepted_first": 0,
+        "accepted_reuse": 0,
+        "receiving_acceptance": false
+      }
+    },
+    {
+      "id": "accounting_and_setup_disclosure",
+      "passed": true,
+      "details": {
+        "direct_route_phases": [
+          {
+            "phase": "edit",
+            "pass": true,
+            "elapsed_s": 283.171448,
+            "builds": 1,
+            "commit": "375f0df7bb63e8d7b72c7f0cf41643db3000da22"
+          },
+          {
+            "phase": "reuse",
+            "pass": true,
+            "elapsed_s": 218.203328,
+            "builds": 2,
+            "commit": "f3b1b5fa89e1e19075793e0c75b3e68b53c5a844"
+          }
+        ],
+        "provider_metadata_null": true,
+        "setup_accounting": {
+          "inherited": "C191 source contract, adapter, native construction, independent checkers and recorded-output utilities",
+          "new": "C192 direct Python starter and runner, common command recorder, target-value wrappers,28 analytic controls, two baseline builds and two native reopens",
+          "setup_start_receipt": "evidence/SETUP-START.json",
+          "pre_dispatch_freeze": "frozen/INPUT-FREEZE.json",
+          "full_setup_token_cost": null,
+          "full_setup_wall_time": "Not completely instrumented; recorded setup boundaries exclude earlier archive/repository inspection"
+        },
+        "interpretation": "Reported phase times include differing inspection/report work. No comparative speed or cost advantage is inferred. Subsequent cross-review and coordinator validation are excluded from participant effort.",
+        "accounting_sha256": "79b8c6194559315d5b8346c5f8f16accfa257720c6653afec0ccc5671140f0b6"
+      }
+    },
+    {
+      "id": "reporting_correction_preserves_originals",
+      "passed": true,
+      "details": {
+        "regeneration_metadata_fixed": true,
+        "preserved_snapshots": [
+          {
+            "stage": "first-reproduction",
+            "original_retained": "/workspace/scratch/d52b43d02a92/c192-audit/first-reproduction/results-before-review.json",
+            "original_sha256": "6cf8051640586781be1e6facd9f5380c637683a9792dbe593d1b5b0532ad3c00",
+            "corrected": "/workspace/scratch/d52b43d02a92/c192-audit/first-reproduction/results.json",
+            "corrected_sha256": "53f4faf77b142c98a6e11dd0632f65b78caab2badd60aa31a5d92c530c6b66e7",
+            "all_non_reporting_fields_unchanged": true
+          },
+          {
+            "stage": "reuse-reproduction",
+            "original_retained": "/workspace/scratch/d52b43d02a92/c192-audit/reuse-reproduction/results-before-review.json",
+            "original_sha256": "79852a7105600ec08f4edc20df8a2ea8346fc58f02e040c0fc4503ff697ec455",
+            "corrected": "/workspace/scratch/d52b43d02a92/c192-audit/reuse-reproduction/results.json",
+            "corrected_sha256": "d9db5693d77d88b94a648ec9c3f3de13b4cdcdc37dcf839495d2adbbd4bded85",
+            "all_non_reporting_fields_unchanged": true
+          }
+        ]
+      }
+    }
+  ],
+  "all_checks_passed": true,
+  "results_sha256": "0a2cce4ef173938b573ba425fb80263fe69d925407f8278fcd36141eeabefa53",
+  "results_regenerated_metadata": [
+    {
+      "id": "ok-edit-regenerated",
+      "fresh_rebuild_performed": false,
+      "rebuild_exact": null,
+      "regeneration_exact": null
+    },
+    {
+      "id": "python-edit-regenerated",
+      "fresh_rebuild_performed": false,
+      "rebuild_exact": null,
+      "regeneration_exact": null
+    }
+  ],
+  "basis_hashes": {
+    "docs/engineering/contact-comparison-c192/frozen/BRIEF.md": "1cda40e65a5bb9e51356d310649859d91d9fe7abe198e5c543ab54313b194ab5",
+    "docs/engineering/contact-comparison-c192/frozen/INPUT-FREEZE.json": "ee0840f60497964c77d2c2ee2355ff369d807aa3b4d3b6fb648e2bd0a416e3d2",
+    "docs/engineering/contact-comparison-c192/shared/direct_runner.py": "54353fc13fbe52dfd5cdae2d2c426c5bd4260ca1ba80e48003b10cf1b1abfbf4",
+    "docs/engineering/contact-comparison-c192/shared/build.py": "49bb207cebc996c9c11975ed5b5e522855664ff97215229c57c1cd74c290f1be"
+  }
+}

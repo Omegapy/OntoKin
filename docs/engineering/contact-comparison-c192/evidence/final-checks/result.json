@@ -1,0 +1,61 @@
+{
+  "checked_at_utc": "2026-11-10T15:20:53.651668+00:00",
+  "results_sha256": "0a2cce4ef173938b573ba425fb80263fe69d925407f8278fcd36141eeabefa53",
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "docs/engineering/contact-comparison-c192/shared/verify_inputs.py",
+        "--repo",
+        "/workspace/scratch/d52b43d02a92/OntoKin"
+      ],
+      "exit_code": 0,
+      "stdout_bytes": 47,
+      "stderr_bytes": 0,
+      "stdout_sha256": "3ff2d1927655a5ae421082a985357cbe20354b87a0c9c25dde1701935eea9ae6",
+      "stdout_tail": "{\"pass\": true, \"checked\": 116, \"failures\": []}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exit_code": 0,
+      "stdout_bytes": 6607,
+      "stderr_bytes": 0,
+      "stdout_sha256": "3e6423257962f67f0ca180d554da77ce773cce8311d2ea509534ef3f1fd6ec57",
+      "stdout_tail": " \"SRC-26\",\n      \"destination\": \"docs/product/OK-PRD-001-product-requirements.md\",\n      \"bytes\": 184908,\n      \"verified\": true\n    },\n    {\n      \"source_id\": \"SRC-27\",\n      \"destination\": \"docs/maintenance/reorganization-2026-10-17/navigation-history.md\",\n      \"bytes\": 5349,\n      \"verified\": true\n    },\n    {\n      \"source_id\": \"SRC-28\",\n      \"destination\": \"docs/maintenance/reorganization-2026-10-17/navigation-history.md\",\n      \"bytes\": 1384,\n      \"verified\": true\n    },\n    {\n      \"source_id\": \"SRC-29\",\n      \"destination\": \"docs/maintenance/reorganization-2026-10-17/navigation-history.md\",\n      \"bytes\": 7217,\n      \"verified\": true\n    }\n  ],\n  \"sections_verified\": 233,\n  \"registries\": {\n    \"SEM_rules\": {\n      \"count\": 28,\n      \"exact_rows_preserved\": true\n    },\n    \"SEM_behavior_checks\": {\n      \"count\": 24,\n      \"exact_rows_preserved\": true\n    },\n    \"CAP_requirements\": {\n      \"count\": 18,\n      \"exact_rows_preserved\": true\n    },\n    \"PRD_requirements\": {\n      \"count\": 226,\n      \"exact_rows_preserved\": true,\n      \"priorities\": {\n        \"MUST\": 213,\n        \"SHOULD\": 13\n      }\n    },\n    \"PRD_acceptance\": {\n      \"count\": 22,\n      \"exact_rows_preserved\": true\n    },\n    \"PRD_owner_intentions\": {\n      \"count\": 16,\n      \"exact_rows_preserved\": true\n    }\n  },\n  \"links\": {\n    \"documents\": 703,\n    \"local_links\": 3821,\n    \"anchors\": 110,\n    \"external_skipped\": 703\n  },\n  \"baseline_commit\": \"2a2b394119229031db78162ab7b82897f4a0064e\",\n  \"repository\": \"Omegapy/OntoKin\",\n  \"source_count\": 29,\n  \"active_substantive_documents\": 6,\n  \"baseline_tree\": {\n    \"expected\": \"72aa56f6b74ff9e637fc0def3ba25acb7bd2bb43\",\n    \"reconstructed\": \"72aa56f6b74ff9e637fc0def3ba25acb7bd2bb43\",\n    \"source_files\": 27\n  },\n  \"sources_verified\": 29,\n  \"failures\": []\n}\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_tail": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--name-only",
+        "afae5f59558bc90200691f6727709124d2e119ea",
+        "--",
+        ".",
+        ":!README.md",
+        ":!STATUS.md",
+        ":!docs/engineering/contact-comparison-c192"
+      ],
+      "exit_code": 0,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_tail": ""
+    }
+  ],
+  "passed": true
+}
