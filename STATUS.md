@@ -2,7 +2,7 @@
 
 ## Main integration lease
 
-Owner `c199-tray-9d641f68` releases the main integration lease on verified guarded publication and STATUS readback of this closing record, prepared at `2026-11-11T04:55:28.570310+00:00`. The bounded lease began at `2026-11-11T04:46:13.304593+00:00` and expires at `2026-11-11T05:16:13.304593+00:00`. [PR #135](https://github.com/Omegapy/OntoKin/pull/135) is merged and verified on actual main at `83ff4a5533bbeea3c607a90734d3d8586671de6c`. C199 is closed as an incomplete experimental implementation with a stopped failed qualification; no native job or author remains. The work branch is absent after merge under the repository's automatic deletion setting; its exact head remains a verified merge parent and retained checkpoint. Reconcile actual heads and ownership before acquiring another lease.
+Owner `c200-exporter-ef5ae2` holds the bounded main integration lease for C200 recovery, pinned-exporter compatibility qualification and handoff integration. It begins at `2026-11-11T12:44:24.746626+00:00` and expires at `2026-11-11T13:14:24.746626+00:00`. The observed starting main is `e8df6496033b13ac7e387c9525fc83c5fada1453`; scoped work is on `work/c200-exporter-recovery-ef5ae2` under [issue #136](https://github.com/Omegapy/OntoKin/issues/136). The C199 schedule remains stopped and immutable. Current C200 qualification and later integration results must be recorded separately. Other nonoverlapping branch work remains permitted; only this verified holder may change shared integration state while the lease is live.
 
 ## Current checkpoint
 
