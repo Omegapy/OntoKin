@@ -1,0 +1,83 @@
+{
+  "actual_child_starts": 0,
+  "corrected_before_snapshot": [
+    "Full 3000 ms promotion allowance",
+    "Post-replace error UNKNOWN classification",
+    "Nonblocking clock-aware ledger lock",
+    "Cleanup clock bound and reserved outer time"
+  ],
+  "native_starts": 0,
+  "official_controls_rerun": false,
+  "probes": [
+    {
+      "id": "P01",
+      "observed": false,
+      "rejected": {
+        "code": "OTRAY-E-RESOURCE",
+        "reason": "Remaining transaction allowance cannot cover stage",
+        "state": "TIMEOUT"
+      }
+    },
+    {
+      "actual_state": {
+        "revision": "new"
+      },
+      "exception_state": "UNKNOWN",
+      "exception_type": "Stop",
+      "finding": "Postcommit durability error is not classified UNKNOWN although the accepted pointer changed",
+      "id": "P02",
+      "observed": false
+    },
+    {
+      "finding": "Promotion returns success after its stage and transaction deadlines expire following replace",
+      "id": "P03",
+      "observed": true,
+      "returned": {
+        "promoted": true,
+        "state": {
+          "revision": "new"
+        }
+      },
+      "simulated_elapsed_seconds": 10.0
+    },
+    {
+      "actual_stderr_closed": false,
+      "actual_stdout_closed": false,
+      "finding": "Failure opening the first log occurs after Popen but before start notification; both pipe handles remain open while receipt says handles_closed",
+      "id": "P04",
+      "observed": true,
+      "receipt_handles_closed": true,
+      "scope": "Mocked Popen and cleanup only; zero process or native launches",
+      "simulated_start_notifications": 0
+    }
+  ],
+  "schema": "ontokin.c199.independent-supervisor-prelock-review/0.1",
+  "scope": "Review of exact captured implementation bytes. Existing successful L01-L08 receipts remain preserved; no native or subprocess rerun was requested or performed.",
+  "source_snapshot": {
+    "lifecycle.py": {
+      "bytes": 7597,
+      "sha256": "78fc36483faadb569aaa0370998e58e862745368e7ae73ddb983cd1fb9c86fe5"
+    },
+    "lifecycle_stub.py": {
+      "bytes": 939,
+      "sha256": "119dc5798f508e815444b897716c7f6f6009fbb129d94d486cdffa44546f2a44"
+    },
+    "store.py": {
+      "bytes": 6669,
+      "sha256": "87df58a43591e9063d529cc7f8b4effe6e0e09dc48bafea3505c7a85185656df"
+    },
+    "supervisor.py": {
+      "bytes": 10671,
+      "sha256": "6e4761a8fb806fea069aca48adec1261271a5a6decee57de2540d75ddf0c3218"
+    }
+  },
+  "static_findings": [
+    {
+      "file": "supervisor.py",
+      "finding": "Each poll performs a complete rglob/inventory before selector wait; poll_ms bounds selector sleep only, not complete poll intervals. Inspect the final entry/time bounds before asserting a general 50 ms polling ceiling.",
+      "function": "run_process",
+      "id": "S03"
+    }
+  ],
+  "status": "CHANGES_REQUIRED"
+}

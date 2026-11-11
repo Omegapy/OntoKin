@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/801d9d641f68/c199-independent-preflight/review_supervisor.py", line 78, in <module>
+    result=store.promote(p,expected='old',state={'revision':'new'},clock=SimulatedClock(),cleanup_records=cleanup)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/801d9d641f68/c199-independent-preflight/supervisor-review/snapshot/store.py", line 75, in promote
+    deadline = clock.stage(3000)
+               ^^^^^^^^^^^
+AttributeError: 'SimulatedClock' object has no attribute 'stage'

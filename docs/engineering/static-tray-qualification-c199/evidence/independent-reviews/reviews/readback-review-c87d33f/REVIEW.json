@@ -1,0 +1,75 @@
+{
+  "schema": "ontokin.c199.independent-readback-repair-review/0.1.0",
+  "decision": "REPAIR_CHECKS_PASSED_PENDING_COMPLETE_INPUT_LOCK",
+  "reviewer": "/root/repo_status",
+  "reviewed_checkout": "/workspace/scratch/801d9d641f68/ontokin",
+  "integrated_commit": "c87d33f",
+  "source_commit": "20ce3b8fee0fd9bf87ce2c30cec3f4d786c3b0f5",
+  "native_starts": 0,
+  "node_starts": 0,
+  "lifecycle_starts": 0,
+  "files": {
+    "prototypes/static_tray_v01/format_check.py": {
+      "sha256": "e0d71482b9878fbdf9ca1287013756fc0f6b9df530864f5634b8863354a29447",
+      "size_bytes": 15959
+    },
+    "prototypes/static_tray_v01/readback.mjs": {
+      "sha256": "156c988ffc478adafe59c495a07e0a48f5ac77c12829d85d147838578b523b4c",
+      "size_bytes": 11537
+    },
+    "prototypes/static_tray_v01/transaction.py": {
+      "sha256": "83e91a7ccb249a53db839fa64e7a6b47548cc9b6036d1b0f0d4739ed86bf6dd3",
+      "size_bytes": 28343
+    },
+    "prototypes/static_tray_v01/supervisor.py": {
+      "sha256": "c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10",
+      "size_bytes": 11286
+    },
+    "prototypes/static_tray_v01/store.py": {
+      "sha256": "d0006497ff6fc13ff0b563cdb58445789cd1a26c489ac4ce2a84e77a03607bd0",
+      "size_bytes": 6735
+    },
+    "tests/test_static_tray_readback_v01.py": {
+      "sha256": "2f0abd812aa668b7abf9e249315acdb9c0fd175adb59672ab1c454679d494394",
+      "size_bytes": 9812
+    },
+    "docs/engineering/static-tray-qualification-c199/EXTERNAL-READBACK.md": {
+      "sha256": "d0f1c1d143e9be92005c5af93aeb59dccb208555e1d927585fadc6593c6651ad",
+      "size_bytes": 6181
+    }
+  },
+  "tests": {
+    "methods": 4,
+    "errors": 0,
+    "failures": 0,
+    "elapsed_ms": 15.45774699843605,
+    "passed": true
+  },
+  "static_checks": [
+    {
+      "check": "Outer SIGALRM suspended only inside run_process while supervisor owns absolute stage/cleanup clocks",
+      "passed": true
+    },
+    {
+      "check": "Original remaining absolute alarm restored and clock checked immediately after run_process",
+      "passed": true
+    },
+    {
+      "check": "Successful result persistence, pending unlink and directory fsync run within remaining host alarm",
+      "passed": true
+    },
+    {
+      "check": "Failure before successful finalization retains pending; uncertain marker removal attempts to recreate pending and writes finalization.failed",
+      "passed": true
+    },
+    {
+      "check": "Standalone predecessor gate rejects pending/failed readback finalization",
+      "passed": true
+    },
+    {
+      "check": "Qualified supervisor/store source unchanged",
+      "passed": true
+    }
+  ],
+  "limits": "No native, controlled stub, or actual Node readback execution. Complete supplemental lock, dependency closure and full native closure remain separately subject to final independent approval."
+}

@@ -1,0 +1,141 @@
+{
+  "checks": [
+    {
+      "detail": null,
+      "name": "isolated no-site no-bytecode reviewer",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "qualified supervisor unchanged",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "qualified store unchanged",
+      "passed": true
+    },
+    {
+      "detail": {
+        "errors": 0,
+        "failures": 0,
+        "prior_review_assertion": "Earlier run passed 22 tests; stale reviewer count expected 20. Its passing log is retained separately.",
+        "skipped": 0,
+        "tests": 22
+      },
+      "name": "all currently assigned preparation CPU tests pass",
+      "passed": true
+    },
+    {
+      "detail": [
+        {
+          "pid": 424242,
+          "signal": 15
+        },
+        {
+          "pid": 424242,
+          "signal": 9
+        }
+      ],
+      "name": "stage alarm cannot interrupt mandatory kill",
+      "passed": true
+    },
+    {
+      "detail": {
+        "cleanup": {
+          "elapsed_ms": 503.2339389981644,
+          "passed": true,
+          "process_group_absent": true,
+          "reaped": true
+        },
+        "failure": {
+          "code": "OTRAY-E-CANCELLED",
+          "reason": "Controlled cancellation after child start",
+          "state": "CANCELLED"
+        }
+      },
+      "name": "original cancellation preserves complete cleanup receipt",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "outer alarm restored to original inactive state",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "lost terminal reply returns UNKNOWN",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "pending and stop markers retained after uncertain accepted ledger",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "uncertain terminal cannot authorize following standalone slot",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "reviewed bytes stayed stable:prototypes/static_tray_v01/transaction.py",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "reviewed bytes stayed stable:prototypes/static_tray_v01/supervisor.py",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "reviewed bytes stayed stable:prototypes/static_tray_v01/store.py",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "reviewed bytes stayed stable:tests/test_static_tray_transaction_v01.py",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "reviewed bytes stayed stable:tests/test_static_tray_finalization_v01.py",
+      "passed": true
+    }
+  ],
+  "controlled_child_starts": 0,
+  "cpu_log_sha256": "11f335735e28e366415ee5818fdabd79474c3174cbbc728edf21a7ff67639b8d",
+  "decision": "TRANSACTION_REPAIRS_PASS",
+  "files": {
+    "prototypes/static_tray_v01/store.py": {
+      "bytes": 6735,
+      "sha256": "d0006497ff6fc13ff0b563cdb58445789cd1a26c489ac4ce2a84e77a03607bd0"
+    },
+    "prototypes/static_tray_v01/supervisor.py": {
+      "bytes": 11286,
+      "sha256": "c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10"
+    },
+    "prototypes/static_tray_v01/transaction.py": {
+      "bytes": 28343,
+      "sha256": "83e91a7ccb249a53db839fa64e7a6b47548cc9b6036d1b0f0d4739ed86bf6dd3"
+    },
+    "tests/test_static_tray_finalization_v01.py": {
+      "bytes": 5517,
+      "sha256": "40ddac6df56d19f7ac7bd13f585bd4a25876094a594b61342ecb5ed6d945bce0"
+    },
+    "tests/test_static_tray_transaction_v01.py": {
+      "bytes": 15596,
+      "sha256": "a035e8a93e408cb8cb1fd39845f262ac93ee06722198fd7879250e3e843a1645"
+    }
+  },
+  "limits": [
+    "The test runner and independent probes prohibit real Popen; process behavior uses explicit fakes.",
+    "This approves the reviewed integration repairs, not the final native lock.",
+    "Pending host/bootstrap/source/reader lock changes still require final closure verification."
+  ],
+  "native_starts": 0,
+  "passed_checks": 15,
+  "reviewer": "/root/repo_status",
+  "reviewer_script_sha256": "b6185c03374b97abb67e6b92ae204d4ae2b1c2f1b0457c876451a54a33a150ca",
+  "schema": "ontokin.c199.independent-transaction-repair-review/0.1"
+}

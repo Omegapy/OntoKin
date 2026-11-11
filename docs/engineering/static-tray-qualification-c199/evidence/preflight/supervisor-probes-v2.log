@@ -1,0 +1,83 @@
+{
+  "schema": "ontokin.c199.independent-supervisor-prelock-review/0.1",
+  "status": "CHANGES_REQUIRED",
+  "source_snapshot": {
+    "supervisor.py": {
+      "bytes": 10671,
+      "sha256": "6e4761a8fb806fea069aca48adec1261271a5a6decee57de2540d75ddf0c3218"
+    },
+    "store.py": {
+      "bytes": 6669,
+      "sha256": "87df58a43591e9063d529cc7f8b4effe6e0e09dc48bafea3505c7a85185656df"
+    },
+    "lifecycle.py": {
+      "bytes": 7597,
+      "sha256": "78fc36483faadb569aaa0370998e58e862745368e7ae73ddb983cd1fb9c86fe5"
+    },
+    "lifecycle_stub.py": {
+      "bytes": 939,
+      "sha256": "119dc5798f508e815444b897716c7f6f6009fbb129d94d486cdffa44546f2a44"
+    }
+  },
+  "actual_child_starts": 0,
+  "native_starts": 0,
+  "official_controls_rerun": false,
+  "probes": [
+    {
+      "id": "P01",
+      "observed": false,
+      "rejected": {
+        "code": "OTRAY-E-RESOURCE",
+        "reason": "Remaining transaction allowance cannot cover stage",
+        "state": "TIMEOUT"
+      }
+    },
+    {
+      "id": "P02",
+      "finding": "Postcommit durability error is not classified UNKNOWN although the accepted pointer changed",
+      "exception_type": "Stop",
+      "exception_state": "UNKNOWN",
+      "actual_state": {
+        "revision": "new"
+      },
+      "observed": false
+    },
+    {
+      "id": "P03",
+      "finding": "Promotion returns success after its stage and transaction deadlines expire following replace",
+      "returned": {
+        "promoted": true,
+        "state": {
+          "revision": "new"
+        }
+      },
+      "simulated_elapsed_seconds": 10.0,
+      "observed": true
+    },
+    {
+      "id": "P04",
+      "finding": "Failure opening the first log occurs after Popen but before start notification; both pipe handles remain open while receipt says handles_closed",
+      "simulated_start_notifications": 0,
+      "receipt_handles_closed": true,
+      "actual_stdout_closed": false,
+      "actual_stderr_closed": false,
+      "observed": true,
+      "scope": "Mocked Popen and cleanup only; zero process or native launches"
+    }
+  ],
+  "corrected_before_snapshot": [
+    "Full 3000 ms promotion allowance",
+    "Post-replace error UNKNOWN classification",
+    "Nonblocking clock-aware ledger lock",
+    "Cleanup clock bound and reserved outer time"
+  ],
+  "static_findings": [
+    {
+      "id": "S03",
+      "file": "supervisor.py",
+      "function": "run_process",
+      "finding": "Each poll performs a complete rglob/inventory before selector wait; poll_ms bounds selector sleep only, not complete poll intervals. Inspect the final entry/time bounds before asserting a general 50 ms polling ceiling."
+    }
+  ],
+  "scope": "Review of exact captured implementation bytes. Existing successful L01-L08 receipts remain preserved; no native or subprocess rerun was requested or performed."
+}

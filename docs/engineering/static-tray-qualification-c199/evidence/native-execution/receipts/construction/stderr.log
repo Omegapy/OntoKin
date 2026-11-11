@@ -1,0 +1,29 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/801d9d641f68/deps/blender-4.5.3-linux-x64/4.5/scripts/addons_core/io_scene_gltf2/__init__.py", line 130, in on_export_action_filter_changed
+    bpy.data.scenes[0].gltf_action_filter.clear()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Scene' object has no attribute 'gltf_action_filter'
+File "/workspace/scratch/801d9d641f68/deps/blender-4.5.3-linux-x64/4.5/scripts/addons_core/io_scene_gltf2/__init__.py", line 118, in on_export_action_filter_changed
+Traceback (most recent call last):
+  File "/workspace/scratch/801d9d641f68/deps/blender-4.5.3-linux-x64/4.5/scripts/addons_core/io_scene_gltf2/__init__.py", line 1349, in execute
+    export_settings['log'] = Log(export_settings['loglevel'])
+                                 ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'loglevel'
+Traceback (most recent call last):
+  File "/workspace/scratch/801d9d641f68/ontokin/prototypes/static_tray_v01/worker.py", line 175, in <module>
+    main()
+  File "/workspace/scratch/801d9d641f68/ontokin/prototypes/static_tray_v01/worker.py", line 160, in main
+    status = bpy.ops.export_scene.gltf(**settings)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/801d9d641f68/deps/blender-4.5.3-linux-x64/4.5/scripts/modules/bpy/ops.py", line 109, in __call__
+    ret = _op_call(self.idname_py(), kw)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Error: Python: Traceback (most recent call last):
+  File "/workspace/scratch/801d9d641f68/deps/blender-4.5.3-linux-x64/4.5/scripts/addons_core/io_scene_gltf2/__init__.py", line 1349, in execute
+    export_settings['log'] = Log(export_settings['loglevel'])
+                                 ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'loglevel'
+Location: /workspace/scratch/801d9d641f68/deps/blender-4.5.3-linux-x64/4.5/scripts/modules/bpy/ops.py:109
+
+
+Error: script failed, file: '/workspace/scratch/801d9d641f68/ontokin/prototypes/static_tray_v01/worker.py', exiting.

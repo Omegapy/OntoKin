@@ -1,0 +1,129 @@
+{
+  "checks": [
+    {
+      "detail": null,
+      "name": "isolated reviewer",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "requested repaired source bytes",
+      "passed": true
+    },
+    {
+      "detail": {
+        "errors": 0,
+        "failures": 0,
+        "seconds": 47.86180962100116,
+        "skipped": 0,
+        "tests": 31
+      },
+      "name": "all original and resource controls pass",
+      "passed": true
+    },
+    {
+      "detail": {
+        "candidate_identity": "sha256:78ba8c0ce34c1aa4f66025af05f86866e792894ec1cd2fafaf9ded6e81f2e181",
+        "code": "OTRAY-E-SHAPE",
+        "contract": "OK-MAP-STATIC-TRAY-001/0.1.0",
+        "details": {},
+        "findings": [],
+        "message": "Only a single guarded nonslice item-assignment target is admitted.",
+        "pointer": "main.py",
+        "profile": "ontokin.static-tray/0.1.0",
+        "stage": "mapping"
+      },
+      "name": "exact independent slice-growth probe now rejects",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stable exact bytes:prototypes/static_tray_v01/sources.py",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stable exact bytes:prototypes/static_tray_v01/canonical.py",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stable exact bytes:tests/test_static_tray_source_v01.py",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stable exact bytes:tests/test_static_tray_source_resources_v01.py",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stable exact bytes:docs/engineering/static-tray-qualification-c199/SOURCE-ADMISSION.md",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stable exact bytes:docs/engineering/static-tray-mapping-c198/CONTROLS.json",
+      "passed": true
+    },
+    {
+      "detail": null,
+      "name": "stable exact bytes:docs/engineering/static-tray-mapping-c198/canonical-record.schema.json",
+      "passed": true
+    }
+  ],
+  "controlled_child_starts": 0,
+  "cpu_methods": 31,
+  "decision": "SOURCE_RESOURCE_REPAIRS_PASS",
+  "elapsed_seconds": 47.86180962100116,
+  "files": {
+    "docs/engineering/static-tray-mapping-c198/CONTROLS.json": {
+      "bytes": 28255,
+      "sha256": "69178feff0c0e566e8f9b648af0ea4b8aa8a1aa8a9524e6a90e0cc6044dc3950"
+    },
+    "docs/engineering/static-tray-mapping-c198/canonical-record.schema.json": {
+      "bytes": 37598,
+      "sha256": "1d06f6be7841719f624a0137bf584704abbf156e6abf99870a21b3abe5e2b08c"
+    },
+    "docs/engineering/static-tray-qualification-c199/SOURCE-ADMISSION.md": {
+      "bytes": 6730,
+      "sha256": "821f2cd3e1dbe04158b489688019487de94435ea7d60515a18ad2b01bcc3d78d"
+    },
+    "prototypes/static_tray_v01/canonical.py": {
+      "bytes": 12078,
+      "sha256": "ce3f67349ade5af1d966ed0f1f240b264278c14f1f77c8ecc5cdeabb12ad6433"
+    },
+    "prototypes/static_tray_v01/sources.py": {
+      "bytes": 46148,
+      "sha256": "c785153c1b7a92441c59cbfae1daf7da4fbc6101e7c7e67a3da0c3b0bfdc546e"
+    },
+    "tests/test_static_tray_source_resources_v01.py": {
+      "bytes": 10136,
+      "sha256": "b993bdb54ea355cd90bdbaa56d984e80a5b70908447e8d55cc4bfc5ddb1181e2"
+    },
+    "tests/test_static_tray_source_v01.py": {
+      "bytes": 27732,
+      "sha256": "de71f8981bc03b79d5aa22626d574c701eb475ff20015ad4febf5e301c08fbbf"
+    }
+  },
+  "limits": [
+    "No general Python sandbox claim is made. This is a versioned finite source surface.",
+    "No process lifecycle, native export, import, render or artifact promotion is qualified by these CPU controls.",
+    "This source-specific review does not approve the final native executable lock."
+  ],
+  "log_sha256": "1baad5444db402f9f0b5814d0fd884aacde6d80c86ebc3f0a7913f5e927f0a30",
+  "native_starts": 0,
+  "passed_checks": 11,
+  "review_summary": [
+    "Bounded opened-file reads and three-entry inventory bound happen before source execution.",
+    "Guarded arithmetic, numeric limb work, materialization/reduction, methods and value traversal share the source counter/deadline.",
+    "Simple item assignment preserves RHS-object-key evaluation order and validates bounded list/dict mutation.",
+    "Slice writes, deletion, starred and nested mutation targets reject before execution.",
+    "Original source controls/fixtures and canonical arithmetic remain unchanged; actual source pairs, exact orientation twins and diagnostics pass.",
+    "The independently reproduced earlier discarded-intermediate bypass is preserved and rejected by the repaired bytes."
+  ],
+  "reviewed_commit": "5b4b108",
+  "reviewer": "/root/repo_status",
+  "reviewer_script_sha256": "1933ebca14532a5525f02d2d320c3aa3c36ca4e1ade367cc367cba560090127a",
+  "schema": "ontokin.c199.independent-source-resource-review/0.1"
+}

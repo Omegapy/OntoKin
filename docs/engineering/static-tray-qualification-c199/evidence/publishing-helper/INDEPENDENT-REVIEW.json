@@ -1,0 +1,54 @@
+{
+  "schema": "ontokin.c199.independent-github-commit-helper-review/0.1.0",
+  "reviewer": "/root/repo_status",
+  "decision": "APPROVED_FOR_EXACT_OBJECT_IMPORT",
+  "helper": {
+    "path": "/workspace/scratch/801d9d641f68/c199-publishing-helper/import_git_commit.py",
+    "sha256": "0c76297e08a6d8593768c729fd88d1284ad8c0ec579f14796b37cea47ee90b96"
+  },
+  "checks": [
+    {
+      "check": "c198-final exact raw bytes and requested object identity",
+      "passed": true,
+      "commit": "0e1ef6a64e78d8478f40cbc2d2f25238014e8825",
+      "method": "unsigned/exact-api-message"
+    },
+    {
+      "check": "c198-final requested SHA mismatch rejects before Git",
+      "passed": true
+    },
+    {
+      "check": "c198-merge exact raw bytes and requested object identity",
+      "passed": true,
+      "commit": "7e0e7da3dd97779c2c96d4d8a22a72b1282607e2",
+      "method": "verification-payload/preserve-signature/header-5"
+    },
+    {
+      "check": "c198-merge requested SHA mismatch rejects before Git",
+      "passed": true
+    },
+    {
+      "check": "Missing original unsigned timezone fails closed",
+      "passed": true
+    },
+    {
+      "check": "Changed signed bytes fail requested exact hash",
+      "passed": true
+    }
+  ],
+  "observed_child_starts": 0,
+  "ref_mutations": 0,
+  "object_writes_by_reviewer": 0,
+  "static_review": [
+    "Default mode verifies without object writes. Explicit --write is reachable only after requested SHA matches API and a unique reconstructed commit hashes exactly.",
+    "Independent Python Git-object hash is checked again by git hash-object; direct tree and parent object types must exist, original parent order is preserved.",
+    "Optional write uses git hash-object -w -t commit --stdin and verifies raw object bytes; no update-ref, checkout, merge, push or network commands exist.",
+    "Git invocation is an argument list, strips inherited GIT_* settings, disables replacement objects and hooks, and limits individual commands to 30 seconds.",
+    "Signed payload and signature folding are preserved; the helper reports API verification but makes no independent PGP trust claim.",
+    "JSON input is capped at 2 MiB, duplicate members reject, parent/header/candidate reconstruction counts are finite; evidence outputs use exclusive creation."
+  ],
+  "limitations": [
+    "Review covers this exact helper byte set and exact commit-object reconstruction. Repository reference updates remain separate actions.",
+    "Author evidence reports seven tests including object write/readback in a disposable bare repository; reviewer reran only six pure reconstruction controls with real subprocess creation forbidden."
+  ]
+}

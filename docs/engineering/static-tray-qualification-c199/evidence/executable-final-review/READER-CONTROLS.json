@@ -1,0 +1,107 @@
+{
+  "schema": "ontokin.c199.final-independent-reader-controls/0.1.0",
+  "decision": "PASS",
+  "reviewer": "/root/repo_status",
+  "input_lock_sha256": "bbebf20c05e98a4fa34832fe9cf33b225e9a1251a49d5f22aa05365a69fb0cc3",
+  "implementation": {
+    "commit": "498b161f2cf166c67c2d381029f109e03f06ce7c",
+    "tree": "b9ecb3582b0d3fa6f529ec23f0ab2dd5082ded71"
+  },
+  "reader_files": {
+    "audit.py": "bea1cc6370997a4b0d1ee335569b920759e9022394001752eebe3336be02ede5",
+    "corrupt.py": "716824ef584e9ebf9f9065925018ab35185bf61d29f41eb14d32a7d360832b18",
+    "expected.py": "b677815b42bbd439c590091b7668acd14fea189bea659aefb52ea16c0f264e10",
+    "glb.py": "15e539c1c5225b8b6c2e8c42beec42a1e5fd00ce8bec1530c7c2dc04bf425774",
+    "reader.py": "4cd7be509bd286f482b1f34bfb9bbf574ae93e3970c89bbce13295320430f34c"
+  },
+  "rules_sha256": "b96f29fa65a1f684a85d70dbc4df0db5fd981baadba61377a4142b2d70ff2de6",
+  "tests": {
+    "methods": 21,
+    "reader_methods": 20,
+    "manifest_methods": 1,
+    "failures": 0,
+    "errors": 0,
+    "child_starts": 0,
+    "excluded_from_reviewer_execution": [
+      "test_entry_scripts_reject_unbound_bytecode_before_helper_import",
+      "test_exact_lock_and_isolated_cli"
+    ],
+    "excluded_reason": "The two host-Python CLI tests were run in the retained 92-method integrated cohort; reviewer examined those scripts statically and prohibited every real child."
+  },
+  "exact_original_metadata_probes": [
+    {
+      "probe": "asset-generator",
+      "passed": true,
+      "classes": [
+        "LAYOUT",
+        "UNSUPPORTED"
+      ],
+      "nodes": 14,
+      "measurements": 2056,
+      "input_sha256": "a800d2e3c1dcd6330e042a75b5a9e9ae747116285e7d3a8d2ac7bdc72d930471"
+    },
+    {
+      "probe": "scene-name",
+      "passed": true,
+      "classes": [
+        "LAYOUT",
+        "UNSUPPORTED"
+      ],
+      "nodes": 14,
+      "measurements": 2056,
+      "input_sha256": "b76374349dda5f6246e2f3e033e34a9d35addea915b582bbe5a46f862d922367"
+    },
+    {
+      "probe": "buffer-name",
+      "passed": true,
+      "classes": [
+        "LAYOUT",
+        "UNSUPPORTED"
+      ],
+      "nodes": 14,
+      "measurements": 2056,
+      "input_sha256": "af7644eb5166e8952879f5c87f1c8647785330aed193fb786e5083f11bd7d740"
+    },
+    {
+      "probe": "view-name",
+      "passed": true,
+      "classes": [
+        "LAYOUT",
+        "UNSUPPORTED"
+      ],
+      "nodes": 14,
+      "measurements": 2056,
+      "input_sha256": "6759ee3eb45fb45495ed1048aa9669a8777e429751000c121ee4dac9d52aa167"
+    },
+    {
+      "probe": "accessor-name",
+      "passed": true,
+      "classes": [
+        "LAYOUT",
+        "UNSUPPORTED"
+      ],
+      "nodes": 14,
+      "measurements": 2056,
+      "input_sha256": "986bd289ccb01d5b3ca3bc26d16bd2c4c5f47c3585855e5ccb9464d84f204479"
+    }
+  ],
+  "static_checks": [
+    "Complete fixed delivery declarations include exact production generator v4.5.48, StaticTray scene, and forbidden buffer/bufferView/accessor names.",
+    "Metadata/layout mismatches remain findings while structurally valid geometry is measured. Existing D01-D07 classifications and D08 controls remain covered by the selected reader methods.",
+    "Independent expected.py unchanged; 5 micrometre geometry and 1e-6 matrix tolerances unchanged.",
+    "Bounded manifest helper reads a regular nonsymlink nonblocking file once up to32768+1 bytes, checks exact locked size/hash, and stages those same raw bytes.",
+    "No source, canonical, native, geometry or lifecycle implementation was modified by the reviewer."
+  ],
+  "full_verify": {
+    "passed": true,
+    "runtime_flag": false,
+    "approval_required": false,
+    "elapsed_ms": 7951.070568000432,
+    "repository_files": 280,
+    "host_file_targets": 4119,
+    "native_starts": 0,
+    "node_starts": 0,
+    "lifecycle_starts": 0
+  },
+  "scope": "Readiness evidence only; actual native and receiving qualification remains unrun."
+}

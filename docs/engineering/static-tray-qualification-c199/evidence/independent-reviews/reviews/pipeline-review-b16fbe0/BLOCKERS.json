@@ -1,0 +1,66 @@
+{
+  "actual_controlled_starts": 0,
+  "actual_native_starts": 0,
+  "decision": "BLOCKED_BEFORE_NATIVE_LOCK",
+  "findings": [
+    {
+      "expected": "Reject before any later start",
+      "missing_result": "/workspace/scratch/801d9d641f68/c199-independent-preflight/pipeline-review-b16fbe0/accepted-ledger-without-final-result/missing-N01.json",
+      "name": "accepted ledger without durable predecessor result",
+      "observed": "Allowed",
+      "reproduced": true
+    },
+    {
+      "expected": "Mandatory kill and reaping continue despite stage deadline",
+      "failure": {
+        "code": "OTRAY-E-RESOURCE",
+        "reason": "In-process stage deadline elapsed",
+        "state": "TIMEOUT"
+      },
+      "method": "Real one-shot 50 ms SIGALRM around unchanged run_process; Popen, killpg and group existence replaced by in-memory fakes. No child exists or signal reaches a process group.",
+      "name": "production stage alarm interrupts owned-group cleanup grace",
+      "observed_signals": [
+        {
+          "pid": 424242,
+          "signal": 15
+        }
+      ],
+      "process_record": {
+        "argv": [
+          "fake-only-no-native"
+        ],
+        "cancellation_completion_ms": 49.03918899799464,
+        "cleanup": {
+          "passed": false,
+          "reason": "In-process stage deadline elapsed"
+        },
+        "cwd": "/workspace/scratch/801d9d641f68/c199-independent-preflight/pipeline-review-b16fbe0/alarm-during-cleanup",
+        "end_monotonic": 27718.905414138,
+        "environment": {},
+        "error": {
+          "code": "OTRAY-E-RESOURCE",
+          "reason": "In-process stage deadline elapsed",
+          "state": "TIMEOUT"
+        },
+        "handles_closed": true,
+        "label": "fault-probe",
+        "observed_log_bytes": 0,
+        "pid": 424242,
+        "process_group": 424242,
+        "retained_log_bytes": 0,
+        "returncode": null,
+        "start_monotonic": 27718.856153497
+      },
+      "reproduced": true
+    }
+  ],
+  "limits": [
+    "These fault probes explain integration defects. They do not consume or qualify lifecycle/native slots.",
+    "Qualified supervisor/store runtime was not modified. Parent is repairing transaction.py."
+  ],
+  "reviewer_script_sha256": "e56173ed623c44ca63240b5a853269743333b559ffa126441b4bfc37958b7c17",
+  "schema": "ontokin.c199.independent-pipeline-blocker-probes/0.1",
+  "snapshot_commit": "b16fbe0",
+  "supervisor_sha256": "c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10",
+  "transaction_sha256": "ed225ca9404f490528f1cd2dddfe5d2b1bb69ad383eb61987a6e67c452f57b21"
+}

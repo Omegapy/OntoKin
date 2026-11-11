@@ -1,0 +1,28 @@
+ontokin "0.2";
+module EquipmentTray @ "equipment-tray";
+profile "construction-0.1";
+import trays @ "tray-library" from "ontokin.static-tray" version "0.1.0" digest "sha256:849f784ee51a84908f1921e92d8136fefad409627199f6df17f4c0cdf8cdfb34";
+scene Pair @ "pair" {
+ duration = 1[s];
+ gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);
+ object left @ "left": trays.Tray {
+  payload_width = 0.18[m];
+  payload_height = 0.06[m];
+  payload_depth = 0.12[m];
+  clearance = 0.005[m];
+  wall_thickness = 0.004[m];
+  base_thickness = 0.006[m];
+  headroom = 0.02[m];
+  placement = pose(world, vec3(-0.3[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+ }
+ object right @ "right": trays.Tray {
+  payload_width = 0.16[m];
+  payload_height = 0.04[m];
+  payload_depth = 0.1[m];
+  clearance = 0.005[m];
+  wall_thickness = 0.004[m];
+  base_thickness = 0.006[m];
+  headroom = 0.02[m];
+  placement = pose(world, vec3(0.3[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+ }
+}

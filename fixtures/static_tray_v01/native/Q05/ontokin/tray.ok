@@ -1,0 +1,85 @@
+ontokin "0.2";
+module StaticTray @ "static-tray";
+profile "construction-0.1";
+private class Box @ "box" {
+ public param extent @ "extent": Vec3<Length> = vec3(1[m], 1[m], 1[m]);
+ geometry = box(self.extent);
+ physical = no_body();
+ motion = prescribed;
+ collision = disabled;
+ appearance = rgba(0.25, 0.5, 0.75, 1);
+}
+public class Tray @ "tray" {
+ public param payload_width @ "payload-width": Length = 0.2[m];
+ public param payload_height @ "payload-height": Length = 0.06[m];
+ public param payload_depth @ "payload-depth": Length = 0.12[m];
+ public param clearance @ "clearance": Length = 0.005[m];
+ public param wall_thickness @ "wall-thickness": Length = 0.004[m];
+ public param base_thickness @ "base-thickness": Length = 0.006[m];
+ public param headroom @ "headroom": Length = 0.02[m];
+ role = "tray-root";
+ geometry = empty();
+ physical = no_body();
+ motion = prescribed;
+ collision = disabled;
+ private derive W @ "width": Length = self.payload_width + (2 * self.clearance);
+ private derive D @ "depth": Length = self.payload_depth + (2 * self.clearance);
+ private derive H @ "height": Length = self.payload_height + self.headroom;
+ private derive OX @ "outer-width": Length = self.W + (2 * self.wall_thickness);
+ private derive OZ @ "outer-depth": Length = self.D + (2 * self.wall_thickness);
+ private part back @ "back": Box {
+  extent = vec3(self.OX, self.H, self.wall_thickness);
+  role = "back";
+ }
+ private follow follow_back @ "follow-back" {
+  parent = self.frame;
+  child = self.back;
+  offset = pose(self.frame, vec3(0[m], self.H / 2, -((self.D + self.wall_thickness) / 2)), quat(1, 0, 0, 0));
+ }
+ private part base @ "base": Box {
+  extent = vec3(self.OX, self.base_thickness, self.OZ);
+  role = "base";
+ }
+ private follow follow_base @ "follow-base" {
+  parent = self.frame;
+  child = self.base;
+  offset = pose(self.frame, vec3(0[m], -(self.base_thickness / 2), 0[m]), quat(1, 0, 0, 0));
+ }
+ private part front @ "front": Box {
+  extent = vec3(self.OX, self.H, self.wall_thickness);
+  role = "front";
+ }
+ private follow follow_front @ "follow-front" {
+  parent = self.frame;
+  child = self.front;
+  offset = pose(self.frame, vec3(0[m], self.H / 2, (self.D + self.wall_thickness) / 2), quat(1, 0, 0, 0));
+ }
+ private part left_wall @ "left-wall": Box {
+  extent = vec3(self.wall_thickness, self.H, self.D);
+  role = "left-wall";
+ }
+ private follow follow_left_wall @ "follow-left-wall" {
+  parent = self.frame;
+  child = self.left_wall;
+  offset = pose(self.frame, vec3(-((self.W + self.wall_thickness) / 2), self.H / 2, 0[m]), quat(1, 0, 0, 0));
+ }
+ private part payload @ "payload": Box {
+  extent = vec3(self.payload_width, self.payload_height, self.payload_depth);
+  role = "payload-proxy";
+  appearance = rgba(0.75, 0.5, 0.25, 1);
+ }
+ private follow follow_payload @ "follow-payload" {
+  parent = self.frame;
+  child = self.payload;
+  offset = pose(self.frame, vec3(0[m], self.payload_height / 2, 0[m]), quat(1, 0, 0, 0));
+ }
+ private part right_wall @ "right-wall": Box {
+  extent = vec3(self.wall_thickness, self.H, self.D);
+  role = "right-wall";
+ }
+ private follow follow_right_wall @ "follow-right-wall" {
+  parent = self.frame;
+  child = self.right_wall;
+  offset = pose(self.frame, vec3((self.W + self.wall_thickness) / 2, self.H / 2, 0[m]), quat(1, 0, 0, 0));
+ }
+}
