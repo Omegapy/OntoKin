@@ -1,0 +1,55 @@
+{
+  "schema": "ontokin.c205.input-lock-implementation/0.1",
+  "base": "5183504302ad0c21f1e9e91c6ad146eee64a22c8",
+  "commit": "28bf6d74f651b22acc0ee5a4154dcd21b861c81b",
+  "tree": "7acaeb92a51d88fd3c10f3edaed72e651eb42cb2",
+  "branch": "work/c205-input-lock-4ba2fd",
+  "scope": "C201 separate four-slot input-binding validator only",
+  "checked_at_utc": "2026-11-11T17:58:00.334472+00:00",
+  "runtime": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64"
+  },
+  "checks": {
+    "command": "python3 -B -m unittest discover -s tests -p test_static_tray_admission_c201_input_lock.py -v",
+    "methods": 72,
+    "passed": true,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "log": "final-tests.log",
+    "diff_check": "passed"
+  },
+  "files": [
+    {
+      "path": "prototypes/static_tray_admission_c201/input_lock.py",
+      "bytes": 26003,
+      "sha256": "5f55f5dd9efb179ec70387cfc2d16404ead9cf5d4cdc907c9dfb6fe30110c1b7"
+    },
+    {
+      "path": "tests/test_static_tray_admission_c201_input_lock.py",
+      "bytes": 29554,
+      "sha256": "af9839ccd05fe0d7a68727bcbcefb657304e450e7948610195247d477c90fb61"
+    },
+    {
+      "path": "docs/engineering/static-tray-admission-c201/INPUT-LOCK-C205.md",
+      "bytes": 12055,
+      "sha256": "62e152ce0b9e61405b6461792e701dda62235eee10829fbc12fa005ffbc15db1"
+    }
+  ],
+  "tested_revision_note": "The final test run preceded the commit; committed owned bytes exactly match the tested files. No source changes occurred between final run and commit. Independent reviewer/root will bind exact candidate checks separately.",
+  "native_starts": 0,
+  "receiving_starts": 0,
+  "node_starts": 0,
+  "lifecycle_starts": 0,
+  "timed_author_starts": 0,
+  "unresolved_production_gates": [
+    "trusted persistent bootstrap/current Git and interpreter observation",
+    "complete transitive dependency and alias inventories",
+    "actual current host receipts and independent approval",
+    "transaction/readback/coordinator compatibility",
+    "native readiness and sole invocation"
+  ],
+  "working_tree_status": ""
+}

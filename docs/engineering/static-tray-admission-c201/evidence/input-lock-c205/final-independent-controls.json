@@ -1,0 +1,218 @@
+{
+  "schema": "ontokin.c205.independent-lock-controls/0.1",
+  "observedAtUtc": "2026-11-11T17:57:59.067325+00:00",
+  "validatorSha256": "5f55f5dd9efb179ec70387cfc2d16404ead9cf5d4cdc907c9dfb6fe30110c1b7",
+  "fixtureTestSha256": "af9839ccd05fe0d7a68727bcbcefb657304e450e7948610195247d477c90fb61",
+  "inputsUnchangedDuringRun": true,
+  "passed": 23,
+  "failed": 0,
+  "nativeStarts": 0,
+  "receiverStarts": 0,
+  "nodeStarts": 0,
+  "lifecycleStarts": 0,
+  "authorStarts": 0,
+  "context": "All inputs are explicitly synthetic fixtures; no native readiness evidence is created.",
+  "controls": [
+    {
+      "name": "baseline-fixture-no-authorization",
+      "expected": "accept-fixture-only",
+      "observed": "accept-fixture-only",
+      "passed": true,
+      "elapsedSeconds": 0.051361
+    },
+    {
+      "name": "nested-double-slash-output",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "PATH",
+      "message": "Expected normalized absolute path",
+      "passed": true,
+      "elapsedSeconds": 0.030188
+    },
+    {
+      "name": "dependency-reachable-only-via-frozen-constructor",
+      "expected": "accept-fixture-only",
+      "observed": "accept-fixture-only",
+      "passed": true,
+      "elapsedSeconds": 0.043671
+    },
+    {
+      "name": "omitted-transitive-input-independent-anchor",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "DEPENDENCY",
+      "message": "Dependency closure differs from independently sealed inventory",
+      "passed": true,
+      "elapsedSeconds": 0.022281
+    },
+    {
+      "name": "missing-fixed-role-even-with-resealed-fixture-anchor",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "ROLE",
+      "message": "Missing, extra, or wrong-type fields",
+      "passed": true,
+      "elapsedSeconds": 0.021319
+    },
+    {
+      "name": "same-size-altered-dependency-bytes",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "FILE",
+      "message": "Input hash differs",
+      "passed": true,
+      "elapsedSeconds": 0.021221
+    },
+    {
+      "name": "fifo-lock-nonblocking",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "FILE",
+      "message": "Unsafe, aliased or overlarge file",
+      "passed": true,
+      "elapsedSeconds": 0.017451
+    },
+    {
+      "name": "symlink-dependency",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "FILESYSTEM",
+      "message": "Missing, unsafe or inaccessible bound path",
+      "passed": true,
+      "elapsedSeconds": 0.023477
+    },
+    {
+      "name": "replaced-authority-same-path",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "AUTHORITY",
+      "message": "Persistent authority filesystem identity changed",
+      "passed": true,
+      "elapsedSeconds": 0.028202
+    },
+    {
+      "name": "stopped-authority-with-new-output",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "REPLAY",
+      "message": "Existing invocation or journal prevents another invocation",
+      "passed": true,
+      "elapsedSeconds": 0.028607
+    },
+    {
+      "name": "missing-independent-host-gate",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "APPROVAL",
+      "message": "Missing, extra, or wrong-type fields",
+      "passed": true,
+      "elapsedSeconds": 0.030365
+    },
+    {
+      "name": "reviewer-equals-producer",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "CONTEXT",
+      "message": "Independent identities are required",
+      "passed": true,
+      "elapsedSeconds": 0.018437
+    },
+    {
+      "name": "approval-wrong-commit",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "APPROVAL",
+      "message": "Independent exact-input approval differs",
+      "passed": true,
+      "elapsedSeconds": 0.042853
+    },
+    {
+      "name": "receipt-boolean-integer-confusion",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "APPROVAL",
+      "message": "Missing, stale or incomplete gate receipt",
+      "passed": true,
+      "elapsedSeconds": 0.043501
+    },
+    {
+      "name": "schedule-boolean-integer-confusion",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "SCHEMA",
+      "message": "Malformed input or schedule binding",
+      "passed": true,
+      "elapsedSeconds": 0.019026
+    },
+    {
+      "name": "duplicate-json-fields",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "JSON",
+      "message": "Duplicate JSON field",
+      "passed": true,
+      "elapsedSeconds": 0.0182
+    },
+    {
+      "name": "native-safe-flag-omitted-even-after-plan-reseal",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "COMMAND",
+      "message": "Expanded child command differs from fixed safe policy",
+      "passed": true,
+      "elapsedSeconds": 0.041247
+    },
+    {
+      "name": "blender-user-script-environment-changed-after-plan-reseal",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "COMMAND",
+      "message": "Clean environment, working directory or output differs",
+      "passed": true,
+      "elapsedSeconds": 0.045076
+    },
+    {
+      "name": "node-evaluation-extra-after-plan-reseal",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "COMMAND",
+      "message": "Expanded child command differs from fixed safe policy",
+      "passed": true,
+      "elapsedSeconds": 0.040895
+    },
+    {
+      "name": "preexisting-environment-root-file",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "PATH",
+      "message": "Output/store directory is not empty",
+      "passed": true,
+      "elapsedSeconds": 0.027626
+    },
+    {
+      "name": "root-host-namespace-with-actual-bound-input-paths",
+      "expected": "accept-fixture-only",
+      "observed": "accept-fixture-only",
+      "passed": true,
+      "elapsedSeconds": 0.044173
+    },
+    {
+      "name": "host-namespace-cannot-hide-input-inside-repository",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "PATH",
+      "message": "Host or gate input overlaps repository, authority or writable roots",
+      "passed": true,
+      "elapsedSeconds": 0.041077
+    },
+    {
+      "name": "multiple-node-loader-inputs-even-after-closure-reseal",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "ROLE",
+      "message": "Node loader role must name one file",
+      "passed": true,
+      "elapsedSeconds": 0.023042
+    }
+  ]
+}

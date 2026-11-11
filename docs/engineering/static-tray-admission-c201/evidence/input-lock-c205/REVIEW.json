@@ -1,0 +1,191 @@
+{
+  "schema": "ontokin.c205.independent-input-lock-component-review/0.1",
+  "decision": "APPROVE_COMPONENT_ONLY",
+  "reviewer": "independent input-lock review agent /root/state_audit",
+  "reviewedAtUtc": "2026-11-11T17:59:51.520981+00:00",
+  "candidate": {
+    "commit": "28bf6d74f651b22acc0ee5a4154dcd21b861c81b",
+    "tree": "7acaeb92a51d88fd3c10f3edaed72e651eb42cb2",
+    "baseMain": "5183504302ad0c21f1e9e91c6ad146eee64a22c8",
+    "worktreeCleanAtFinalReadback": true
+  },
+  "scope": "Separate C201 input-binding validator, dedicated fixture CPU controls and component documentation only. No complete production lock, coordinator, host sealing or native readiness approval.",
+  "changedFiles": [
+    "docs/engineering/static-tray-admission-c201/INPUT-LOCK-C205.md",
+    "prototypes/static_tray_admission_c201/input_lock.py",
+    "tests/test_static_tray_admission_c201_input_lock.py"
+  ],
+  "fileBindings": [
+    {
+      "path": "prototypes/static_tray_admission_c201/input_lock.py",
+      "bytes": 26003,
+      "sha256": "5f55f5dd9efb179ec70387cfc2d16404ead9cf5d4cdc907c9dfb6fe30110c1b7"
+    },
+    {
+      "path": "tests/test_static_tray_admission_c201_input_lock.py",
+      "bytes": 29554,
+      "sha256": "af9839ccd05fe0d7a68727bcbcefb657304e450e7948610195247d477c90fb61"
+    },
+    {
+      "path": "docs/engineering/static-tray-admission-c201/INPUT-LOCK-C205.md",
+      "bytes": 12055,
+      "sha256": "62e152ce0b9e61405b6461792e701dda62235eee10829fbc12fa005ffbc15db1"
+    }
+  ],
+  "checks": {
+    "exactCandidateInputBindings": 50,
+    "allCandidateBindingsMatch": true,
+    "implementationMethodsObserved": 72,
+    "implementationMethodsRunByReviewer": 0,
+    "implementationEvidence": "../input-lock-impl/IMPLEMENTATION.json and ../input-lock-impl/final-tests.log",
+    "implementationLogSha256": "8a00b3dca58df9c2cee604aab1c75f3d1ac486d8f98af77af757b514a5b634ba",
+    "independentControlsExecuted": 23,
+    "independentControlsPassed": 23,
+    "independentControlsFailed": 0,
+    "independentControlInputsUnchanged": true,
+    "nativeConstructionStarts": 0,
+    "receivingStarts": 0,
+    "nodeStarts": 0,
+    "lifecycleStarts": 0,
+    "timedAuthorStarts": 0,
+    "platform": {
+      "python": "3.12.14",
+      "machine": "x86_64",
+      "system": "Linux"
+    }
+  },
+  "findings": [
+    {
+      "id": "C205-R01",
+      "kind": "draft rejection defect",
+      "status": "RESOLVED",
+      "finding": "Double-leading-slash path spelling bypassed textual output/input ancestry checks while inode uniqueness still passed.",
+      "evidence": "draft-path-control.json and draft-independent-controls.json; actual public validator accepted a nested output.",
+      "resolution": "Absolute path validation rejects //; final public validator independently rejects the nested spelling."
+    },
+    {
+      "id": "C205-R02",
+      "kind": "draft acceptance defect",
+      "status": "RESOLVED",
+      "finding": "Preseeding reached with frozen inputs skipped traversing their dependency edges. Root and reviewer independently identified this in draft source.",
+      "evidence": "Manual draft inspection; repaired before first independent full control run.",
+      "resolution": "Initialize reached empty and include frozen inputs in frontier. Positive control with a dependency reachable only through the frozen constructor passes."
+    },
+    {
+      "id": "C205-R03",
+      "kind": "launch policy compatibility",
+      "status": "RESOLVED",
+      "finding": "Initial generic argv matching and minimal environment could not represent the qualified clean native environment.",
+      "evidence": "Retained input_lock.draft-observed.py.txt and manual review.",
+      "resolution": "Exact inherited safe Blender flags/job commands, exact Node policy/loader, per-slot empty native-environment roots and expanded environment variables. Independent controls reject unsafe changes even after fixture plan reseal."
+    },
+    {
+      "id": "C205-R04",
+      "kind": "host namespace compatibility",
+      "status": "RESOLVED",
+      "finding": "A single host namespace required disjoint from repo/output roots could not represent real OS/runtime paths spanning directories.",
+      "evidence": "Manual design review against current-host full-closure requirement.",
+      "resolution": "Host namespace can be /; individual bound host and gate input files remain disjoint from repository, authority and writable roots. Independent positive and overlap rejection controls pass."
+    },
+    {
+      "id": "C205-R05",
+      "kind": "role cardinality verification",
+      "status": "VERIFIED",
+      "finding": "Node command consumes one loader path; role must not silently accept unused additional loader members.",
+      "evidence": "Final role inspection and multiple-node-loader-inputs-even-after-closure-reseal control.",
+      "resolution": "Exact singleton node_loader check present; final independent control rejects extra member."
+    }
+  ],
+  "blockers": [],
+  "approvalBoundaries": {
+    "validatorComponentApproved": true,
+    "exactInputBindingReviewOnly": true,
+    "completeProductionLockPreparedOrApproved": false,
+    "trustedBootstrapImplementedOrAuthenticated": false,
+    "currentHostVerifiedForC201": false,
+    "coordinatorImplementedOrReviewed": false,
+    "nativeReadinessApproved": false,
+    "nativeExecutionApproved": false,
+    "admissionCompleted": false,
+    "producerMayIssueOwnReadiness": false
+  },
+  "remainingRequirements": [
+    "Independent bootstrap must establish actual Git/current interpreter identities and persist/authenticate the trusted context and fixed authority across restarts.",
+    "Complete actual transitive imports, OS/runtime and alias inventories remain a separate sealing/integration gate. Current validator conservatively rejects symlinks/hardlinks; it does not discover dynamic dependencies or prove completeness from a graph.",
+    "Actual C201 transaction/readback/coordinator compatibility, accepted-source regeneration resolution, equality/sibling checks, cleanup/deadlines and atomic promotion remain pending.",
+    "Validation is a read-only preflight snapshot. Runtime retention/revalidation and creation/verification of environment subdirectories must precede any actual launch; initial empty-directory checks cannot substitute for runtime safety.",
+    "Independent real binding/native-readiness approval must precede the sole four/four/four invocation; image and independent result reviews follow execution."
+  ],
+  "retainedLimits": {
+    "C199C200Schedules": "closed",
+    "C201StartsInThisReview": 0,
+    "historicalRegressionState": "FAILED",
+    "historicalPassingMethods": 4239,
+    "historicalTorqueReadMethodsNotRun": 13,
+    "unchangedSetupTimeoutMs": 30000,
+    "broaderReleaseOrAuthoringAdvantageEstablished": false
+  },
+  "nextGate": "Integrate this exact reviewed component only after root-owned applicable checks. Next bounded development is separately reviewed C201 transaction/readback compatibility; preserve production sealing, bootstrap and native-readiness gates.",
+  "evidence": [
+    {
+      "path": "CANDIDATE-BINDINGS.json",
+      "size_bytes": 11924,
+      "sha256": "ce7a4b9bf9b9d9ddcf702c967c4eb4ef92a89d132e85ec70edb13939c9505bdd"
+    },
+    {
+      "path": "final-independent-controls.json",
+      "size_bytes": 6501,
+      "sha256": "64a6f68996842f81853fc99581e4bd25fa4dfc8925e6b8ceec677b621e37a612"
+    },
+    {
+      "path": "independent_controls.py",
+      "size_bytes": 10417,
+      "sha256": "8664765245ae653ad5b0222b8c8c3edd628457f1bffd3ef0d62e841633575a1f"
+    },
+    {
+      "path": "draft-independent-controls.json",
+      "size_bytes": 4523,
+      "sha256": "871496e08d41cdae71538ca0a731c4a4cd1e51744b12bca60c26c1215b1916e2"
+    },
+    {
+      "path": "draft-path-control.json",
+      "size_bytes": 581,
+      "sha256": "8530188b93663efae1cb736c89eef730dbbf404d31a7658f0429055f6ed7b4d3"
+    },
+    {
+      "path": "draft_path_control.py",
+      "size_bytes": 1603,
+      "sha256": "f8ca76f6523768e9deb362dae2f42ade89b28d2cd8d9053692622e0af6a7e039"
+    },
+    {
+      "path": "input_lock.draft-observed.py.txt",
+      "size_bytes": 23457,
+      "sha256": "a127af001297efc253f9e176a5f2550369a1f3c7946d4be9d46bf98c90052118"
+    },
+    {
+      "path": "draft_fixture.py.txt",
+      "size_bytes": 22017,
+      "sha256": "06df8030b9bba28d7bf74daeaa49c49280367da59692acf54ce4a41a525ec7f8"
+    },
+    {
+      "path": "revised-independent-controls.json",
+      "size_bytes": 5709,
+      "sha256": "efa3aefb6dbfb6cdcce19aa56097346ba3772b10ca3c0ae5305998fa52558399"
+    },
+    {
+      "path": "REVIEW-PLAN.json",
+      "size_bytes": 4252,
+      "sha256": "3a23910e44aaf70b902c9d26789ccc945dbece6d74fc8b0a6e3f0332b5d8081d"
+    },
+    {
+      "path": "REQUIREMENTS.md",
+      "size_bytes": 2560,
+      "sha256": "83fc2d41e8127f4bdd587f3003cad8ab22f9bd68afc2a0b446d76adff6ab96ad"
+    },
+    {
+      "path": "candidate-diff.patch",
+      "size_bytes": 69670,
+      "sha256": "66ead34219253840218b5aea16a1d78276792b10dd23c04fb0c6039fde56afd1"
+    }
+  ]
+}

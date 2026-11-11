@@ -69,13 +69,36 @@ lock. Complete coordinator implementation, transaction/readback compatibility,
 current-host sealing, independent readiness and native admission remain pending.
 [Remaining implementation](docs/engineering/static-tray-admission-c201/IMPLEMENTATION-NEXT.md)
 
-The next bounded step is the separate four-slot executable-lock validator with
-meaningful CPU rejection controls, followed by transaction/readback integration and
-actual process orchestration. C201 still has zero native, receiver and actual-delivery
-Node starts. Its eventual sole invocation permits at most four of each, counting
+C205 adds the separate input-binding validator described below. Transaction/readback
+integration and actual process orchestration remain pending. C201 still has zero
+native, receiver and actual-delivery Node starts. Its eventual sole invocation permits at most four of each, counting
 failed or unknown starts, with zero timed authors and retries. The C199/C200
 schedules stay closed. Protocol-document approval and this component review do not
 constitute native readiness or family admission.
+
+## C205 input-binding validator reviewed; integration checks pending
+
+The separate [C201 executable input-binding validator](docs/engineering/static-tray-admission-c201/INPUT-LOCK-C205.md)
+rejects mismatched protocol, schedule, source/dependency bytes, roles, commands,
+clean environments, writable paths, durable reservation authority and independent
+approval bindings. It reads actual files and starts no children. Trusted facts must
+come from independently retained sealing/review infrastructure; this component does
+not authenticate a reviewer, discover the complete host closure or grant readiness.
+
+Independent review approved exact local commit
+`28bf6d74f651b22acc0ee5a4154dcd21b861c81b` for this boundary only. All 72 dedicated
+methods and 23 independent controls passed. Review corrected dependency traversal,
+alternate-path ancestry, clean-launch compatibility and host namespace handling.
+Existing checks passed 36 ledger and 78 source/compiler methods, 43 core cases /
+694 assertions, and all 301 historical inputs plus four frozen protocol documents.
+[Review and evidence](docs/engineering/static-tray-admission-c201/evidence/input-lock-c205/README.md)
+
+Resulting-main checks and publication are recorded separately after the actual
+merge. The next bounded task is a separate C201 transaction/accepted-source
+compatibility layer with CPU controls. Full readback and coordinator integration,
+real host/dependency and alias sealing, durable trusted bootstrap, independent
+native readiness and the sole four/four/four invocation remain pending. No native,
+receiving, Node, lifecycle or timed-author start occurred in this increment.
 
 ## Verification and remaining limits
 

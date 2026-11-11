@@ -1,0 +1,457 @@
+"""Actual CPU/file rejection controls; all future-role and host files are fixtures."""
+from __future__ import annotations
+
+import copy
+from dataclasses import FrozenInstanceError, replace
+import hashlib
+import json
+import os
+from pathlib import Path
+import shutil
+import tempfile
+import unittest
+from unittest import mock
+
+from prototypes.static_tray_admission_c201 import input_lock as module
+from prototypes.static_tray_admission_c201.ledger import JOURNAL, MARKER
+from prototypes.static_tray_admission_c201.schedule import (
+    PROTOCOL_SHA256, SCHEDULE_ID, SCHEDULE_SHA256, canonical, expected_schedule,
+)
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+class Fixture:
+    """Synthetic independent context for CPU tests, never a production-lock maker."""
+
+    def __init__(self, base):
+        self.base = Path(base)
+        self.repo, self.host, self.authority = (self.base / name for name in ("repository", "host", "authority"))
+        for path in (self.repo, self.host, self.authority):
+            path.mkdir()
+        protocol = json.loads((ROOT / module.PROTOCOL_PATH).read_bytes())
+        review = json.loads((ROOT / module.PROTOCOL_REVIEW_PATH).read_bytes())
+        frozen = [*review["documentBindings"], *protocol["normative_bindings"],
+                  *protocol["qualified_role_bindings"].values(),
+                  *protocol["public_task"]["source_closures"]["ontokin"],
+                  *protocol["public_task"]["source_closures"]["direct-python"],
+                  {"path": module.PROTOCOL_REVIEW_PATH}]
+        inputs = {}
+        for row in frozen:
+            path = row["path"]
+            target = self.repo / path
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(ROOT / path, target)
+            inputs["repository:" + path] = self.binding(target, "repository")
+        roles = {name: ["repository:" + row["path"]]
+                 for name, row in protocol["qualified_role_bindings"].items()
+                 if not name.startswith("historical_")}
+        for role, path in module.ADMISSION_ROLES.items():
+            target = self.repo / path
+            target.parent.mkdir(parents=True, exist_ok=True)
+            if (ROOT / path).is_file():
+                shutil.copyfile(ROOT / path, target)
+            else:
+                target.write_text("# CPU fixture only: " + role + "\n")
+            inputs["repository:" + path] = self.binding(target, "repository")
+            roles[role] = ["repository:" + path]
+        for role in module.HOST_ROLES:
+            target = self.host / role
+            target.write_text("CPU fixture, never executable evidence: " + role + "\n")
+            if role.endswith("_executable"):
+                target.chmod(0o700)
+            inputs["host:" + role] = self.binding(target, "host")
+            roles[role] = ["host:" + role]
+        extra = self.host / "transitive-library"
+        extra.write_text("CPU fixture transitive dependency\n")
+        inputs["host:transitive-library"] = self.binding(extra, "host")
+        dependencies = {name: [] for name in inputs}
+        dependencies["host:shared_libraries"] = ["host:transitive-library"]
+        stores, outputs, commands = {}, {}, {}
+        for slot in ("A01", "A02", "A03", "A04"):
+            store = self.base / (slot + "-store")
+            store.mkdir()
+            stores[slot] = str(store)
+            outputs[slot], commands[slot] = {}, {}
+            for stage in module.STAGES:
+                output = self.base / (slot + "-" + stage)
+                output.mkdir()
+                outputs[slot][stage] = str(output)
+                executable = "node_executable" if stage == "node" else "blender_executable"
+                script_role = {"construction": "constructor", "receiving": "receiver",
+                               "node": "admission_node_probe"}[stage]
+                script = inputs[roles[script_role][0]]["path"]
+                commands[slot][stage] = {
+                    "argv": [str(self.host / executable), str(self.repo / script), "--output", str(output)],
+                    "environment": dict(module.ENVIRONMENT), "cwd": str(self.repo), "output": str(output),
+                }
+        info = self.authority.stat()
+        self.lock = {
+            "schema": module.SCHEMA, "purpose": "fixture-only", "producer": "fixture-producer",
+            "source": {"commit": "1" * 40, "tree": "2" * 40,
+                       "files": sorted(name for name in inputs if name.startswith("repository:"))},
+            "protocol_sha256": PROTOCOL_SHA256, "schedule": expected_schedule(), "limits": protocol["limits"],
+            "inputs": inputs, "roles": roles, "dependencies": dependencies,
+            "commands": commands, "stores": stores, "outputs": outputs,
+            "authority": {"schedule_id": SCHEDULE_ID, "path": str(self.authority),
+                          "device": info.st_dev, "inode": info.st_ino},
+            "host": {"mode": "fixture-only", "target": {k: v for k, v in protocol["intended_dependencies"].items()
+                     if k not in ("pin_source", "current_host_verified",
+                                  "complete_distribution_loader_shared_library_stdlib_environment_verification_required")}},
+            "gate_receipts": {},
+        }
+        self.context = module.TrustedContext(
+            repository_root=str(self.repo), host_root=str(self.host), source_commit="1" * 40,
+            source_tree="2" * 40, lock_sha256="0" * 64, approval_sha256="0" * 64,
+            closure_sha256=module.closure_digest(self.lock), launch_plan_sha256=module.launch_plan_digest(self.lock),
+            authority_path=str(self.authority), authority_device=info.st_dev, authority_inode=info.st_ino,
+            producer="fixture-producer", reviewer="fixture-independent-reviewer", purpose="fixture-only",
+            gate_issuers=("fixture-implementation-reviewer", "fixture-control-runner", "fixture-host-observer"),
+        )
+        for index, gate in enumerate(module.GATES):
+            receipt = {"schema": module.RECEIPT_SCHEMA, "gate": gate, "purpose": "fixture-only",
+                       "issuer": self.context.gate_issuers[index], "passed": True,
+                       "source_commit": self.context.source_commit, "source_tree": self.context.source_tree,
+                       "protocol_sha256": PROTOCOL_SHA256, "schedule_sha256": SCHEDULE_SHA256,
+                       "closure_sha256": self.context.closure_sha256}
+            path = self.host / (gate + ".json")
+            path.write_bytes(canonical(receipt))
+            self.lock["gate_receipts"][gate] = self.binding(path, "host")
+        self.lock_path, self.approval_path = self.base / "fixture-lock.json", self.base / "fixture-approval.json"
+        self.repin()
+
+    def binding(self, path, root):
+        root_path = self.repo if root == "repository" else self.host
+        return {"root": root, "path": path.relative_to(root_path).as_posix(), "size_bytes": path.stat().st_size,
+                "sha256": sha(path.read_bytes()), "mode": path.stat().st_mode & 0o777}
+
+    def repin(self):
+        """Test-only deliberate digest repin; immutable closure/plan trust stays fixed."""
+        raw = canonical(self.lock)
+        self.lock_path.write_bytes(raw)
+        self.approval = {
+            "schema": module.APPROVAL_SCHEMA, "purpose": "fixture-only", "decision": "FIXTURE_BINDINGS_ONLY",
+            "producer": self.context.producer, "reviewer": self.context.reviewer,
+            "source_commit": self.context.source_commit, "source_tree": self.context.source_tree,
+            "lock_sha256": sha(raw), "protocol_sha256": PROTOCOL_SHA256, "schedule_sha256": SCHEDULE_SHA256,
+            "closure_sha256": self.context.closure_sha256, "launch_plan_sha256": self.context.launch_plan_sha256,
+            "authority": copy.deepcopy(self.lock["authority"]), "ceilings": expected_schedule()["ceilings"],
+            "gate_receipts": {name: row["sha256"] for name, row in self.lock["gate_receipts"].items()},
+            "native_start_authorized": False,
+        }
+        self.save_approval()
+        self.context = replace(self.context, lock_sha256=sha(raw))
+
+    def save_approval(self):
+        raw = canonical(self.approval)
+        self.approval_path.write_bytes(raw)
+        self.context = replace(self.context, approval_sha256=sha(raw))
+
+    def validate(self):
+        return module.validate_input_lock(self.lock_path, self.approval_path, context=self.context)
+
+
+class InputLockControls(unittest.TestCase):
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory(prefix="ontokin-c205-fixture-")
+        self.addCleanup(self.temporary.cleanup)
+        for target in ("subprocess.Popen", "os.fork", "os.system"):
+            self.enterContext(mock.patch(target, side_effect=AssertionError("No child may start")))
+        self.fixture = Fixture(self.temporary.name)
+
+    def reject(self, code=None):
+        with self.assertRaises(module.InputLockError) as caught:
+            self.fixture.validate()
+        if code:
+            self.assertEqual(caught.exception.code, code)
+
+    def mutate(self, fn, code=None):
+        fn(self.fixture.lock)
+        self.fixture.repin()
+        self.reject(code)
+
+    def test_real_fixture_bindings_pass_without_authorization(self):
+        before = sorted(p.relative_to(self.fixture.base).as_posix() for p in self.fixture.base.rglob("*"))
+        result = self.fixture.validate()
+        self.assertEqual(result.purpose, "fixture-only")
+        self.assertGreater(result.input_count, 40)
+        self.assertFalse(result.native_start_authorized)
+        self.assertFalse(result.native_readiness)
+        self.assertFalse(result.admission_completed)
+        self.assertEqual(before, sorted(p.relative_to(self.fixture.base).as_posix() for p in self.fixture.base.rglob("*")))
+
+    def test_context_and_result_are_immutable(self):
+        with self.assertRaises(FrozenInstanceError):
+            self.fixture.context.source_commit = "3" * 40
+        result = self.fixture.validate()
+        with self.assertRaises(FrozenInstanceError):
+            result.native_start_authorized = True
+
+    def test_untrusted_context_dict_rejected(self):
+        self.fixture.context = self.fixture.context.__dict__
+        self.reject("CONTEXT")
+
+    def test_changed_lock_bytes_rejected_without_repin(self):
+        self.fixture.lock_path.write_bytes(self.fixture.lock_path.read_bytes() + b"\n")
+        self.reject("DIGEST")
+
+    def test_changed_approval_bytes_rejected_without_repin(self):
+        self.fixture.approval_path.write_bytes(self.fixture.approval_path.read_bytes() + b"\n")
+        self.reject("DIGEST")
+
+    def test_old_twelve_slot_schema_rejected(self):
+        self.mutate(lambda x: x.__setitem__("schema", "ontokin.static-tray.input-lock/0.1.0"), "SCHEMA")
+
+    def test_wrong_schedule_route_rejected_after_repin(self):
+        self.mutate(lambda x: x["schedule"]["slots"][0].__setitem__("route", "direct-python"))
+
+    def test_wrong_regeneration_reference_rejected_after_repin(self):
+        self.mutate(lambda x: x["schedule"]["slots"][2].__setitem__("accepted_source_reference", "A02"))
+
+    def test_fifth_slot_rejected_after_repin(self):
+        self.mutate(lambda x: x["schedule"]["slots"].append(copy.deepcopy(x["schedule"]["slots"][0])))
+
+    def test_boolean_slot_limit_rejected_after_repin(self):
+        self.mutate(lambda x: x["schedule"]["slots"][0].__setitem__("maximum_native_starts", True))
+
+    def test_changed_limits_rejected_after_repin(self):
+        self.mutate(lambda x: x["limits"].__setitem__("construction_ms", 31000), "LIMITS")
+
+    def test_float_limit_rejected_after_repin(self):
+        self.mutate(lambda x: x["limits"].__setitem__("cleanup_ms", 2000.0), "LIMITS")
+
+    def test_extra_top_level_field_rejected(self):
+        self.mutate(lambda x: x.__setitem__("ready", True), "SCHEMA")
+
+    def test_missing_top_level_field_rejected(self):
+        self.mutate(lambda x: x.pop("host"), "SCHEMA")
+
+    def test_stale_source_commit_rejected(self):
+        self.mutate(lambda x: x["source"].__setitem__("commit", "3" * 40), "SOURCE")
+
+    def test_stale_source_tree_rejected(self):
+        self.mutate(lambda x: x["source"].__setitem__("tree", "3" * 40), "SOURCE")
+
+    def test_missing_role_rejected_even_with_resealed_closure(self):
+        self.fixture.lock["roles"].pop("admission_transaction")
+        self.fixture.context = replace(self.fixture.context, closure_sha256=module.closure_digest(self.fixture.lock))
+        self.fixture.repin()
+        self.reject("ROLE")
+
+    def test_extra_role_rejected(self):
+        self.mutate(lambda x: x["roles"].__setitem__("fallback", ["host:node_executable"]), "ROLE")
+
+    def test_historical_transaction_cannot_replace_c201_role(self):
+        self.mutate(lambda x: x["roles"].__setitem__("admission_transaction", ["repository:prototypes/static_tray_v01/transaction.py"]), "ROLE")
+
+    def test_missing_frozen_binding_rejected_even_with_resealed_closure(self):
+        key = "repository:fixtures/static_tray_v01/native/Q01/ontokin/main.ok"
+        self.fixture.lock["inputs"].pop(key)
+        self.fixture.lock["dependencies"].pop(key)
+        self.fixture.lock["source"]["files"].remove(key)
+        self.fixture.context = replace(self.fixture.context, closure_sha256=module.closure_digest(self.fixture.lock))
+        self.fixture.repin()
+        self.reject("FROZEN")
+
+    def test_changed_current_source_bytes_rejected(self):
+        path = self.fixture.repo / "fixtures/static_tray_v01/native/Q01/ontokin/main.ok"
+        data = path.read_bytes()
+        path.write_bytes(b"X" + data[1:])
+        self.reject("FILE")
+
+    def test_changed_protocol_bytes_rejected(self):
+        path = self.fixture.repo / module.PROTOCOL_PATH
+        path.write_bytes(path.read_bytes() + b"\n")
+        self.reject("PROTOCOL")
+
+    def test_changed_protocol_review_rejected(self):
+        path = self.fixture.repo / module.PROTOCOL_REVIEW_PATH
+        path.write_bytes(path.read_bytes() + b"\n")
+        self.reject("PROTOCOL")
+
+    def test_omitted_transitive_dependency_rejected_after_repin(self):
+        key = "host:transitive-library"
+        self.fixture.lock["inputs"].pop(key)
+        self.fixture.lock["dependencies"].pop(key)
+        self.fixture.lock["dependencies"]["host:shared_libraries"] = []
+        self.fixture.repin()
+        self.reject("DEPENDENCY")
+
+    def test_unresolved_dependency_rejected(self):
+        self.mutate(lambda x: x["dependencies"]["host:shared_libraries"].append("host:missing"), "DEPENDENCY")
+
+    def test_duplicate_dependency_rejected(self):
+        self.mutate(lambda x: x["dependencies"]["host:shared_libraries"].append("host:transitive-library"), "DEPENDENCY")
+
+    def test_missing_dependency_node_rejected(self):
+        self.mutate(lambda x: x["dependencies"].pop("host:transitive-library"), "DEPENDENCY")
+
+    def test_unreachable_extra_input_rejected(self):
+        target = self.fixture.host / "extra"
+        target.write_text("extra")
+        self.fixture.lock["inputs"]["host:extra"] = self.fixture.binding(target, "host")
+        self.fixture.lock["dependencies"]["host:extra"] = []
+        self.fixture.repin()
+        self.reject("DEPENDENCY")
+
+    def test_changed_executable_mode_rejected(self):
+        (self.fixture.host / "node_executable").chmod(0o600)
+        self.reject("FILE")
+
+    def test_changed_command_rejected_by_sealed_plan(self):
+        self.mutate(lambda x: x["commands"]["A01"]["construction"]["argv"].append("--changed"), "COMMAND")
+
+    def test_unexpanded_command_rejected_even_with_resealed_plan(self):
+        self.fixture.lock["commands"]["A01"]["construction"]["argv"].append("{output}")
+        self.fixture.context = replace(self.fixture.context, launch_plan_sha256=module.launch_plan_digest(self.fixture.lock))
+        self.fixture.repin()
+        self.reject("COMMAND")
+
+    def test_changed_environment_rejected(self):
+        self.mutate(lambda x: x["commands"]["A01"]["node"]["environment"].__setitem__("PYTHONPATH", "/tmp"), "COMMAND")
+
+    def test_wrong_stage_executable_rejected(self):
+        self.mutate(lambda x: x["commands"]["A01"]["node"]["argv"].__setitem__(0, str(self.fixture.host / "blender_executable")), "COMMAND")
+
+    def test_authority_cannot_change_with_output_directory(self):
+        new = self.fixture.base / "new-authority"
+        new.mkdir()
+        info = new.stat()
+        self.fixture.lock["authority"].update(path=str(new), device=info.st_dev, inode=info.st_ino)
+        self.fixture.repin()
+        self.reject("AUTHORITY")
+
+    def test_replaced_authority_same_path_rejected(self):
+        old = self.fixture.base / "old-authority"
+        self.fixture.authority.rename(old)
+        self.fixture.authority.mkdir()
+        self.reject("AUTHORITY")
+
+    def test_existing_invocation_receipt_rejected(self):
+        (self.fixture.authority / MARKER).write_text("historical attempted invocation")
+        self.reject("REPLAY")
+
+    def test_orphaned_journal_rejected(self):
+        (self.fixture.authority / JOURNAL).write_text("unknown prior outcome")
+        self.reject("REPLAY")
+
+    def test_output_alias_rejected(self):
+        self.mutate(lambda x: x["outputs"]["A02"].__setitem__("node", x["outputs"]["A01"]["node"]), "PATH")
+
+    def test_output_inside_authority_rejected(self):
+        path = self.fixture.authority / "out"
+        path.mkdir()
+        self.mutate(lambda x: x["outputs"]["A01"].__setitem__("node", str(path)), "PATH")
+
+    def test_nonempty_store_rejected(self):
+        (Path(self.fixture.lock["stores"]["A03"]) / "old-result").write_text("old")
+        self.reject("PATH")
+
+    def test_symbolic_link_input_rejected(self):
+        path = self.fixture.host / "transitive-library"
+        other = self.fixture.host / "moved"
+        path.rename(other)
+        path.symlink_to(other)
+        self.reject("FILESYSTEM")
+
+    def test_hard_link_input_rejected(self):
+        path = self.fixture.host / "transitive-library"
+        os.link(path, self.fixture.host / "alias")
+        self.reject("FILE")
+
+    def test_fifo_input_rejected_without_blocking(self):
+        path = self.fixture.host / "transitive-library"
+        path.unlink()
+        os.mkfifo(path)
+        self.reject("FILE")
+
+    def test_fifo_lock_rejected_without_blocking(self):
+        self.fixture.lock_path.unlink()
+        os.mkfifo(self.fixture.lock_path)
+        self.reject("FILE")
+
+    def test_fifo_approval_rejected_without_blocking(self):
+        self.fixture.approval_path.unlink()
+        os.mkfifo(self.fixture.approval_path)
+        self.reject("FILE")
+
+    def test_symbolic_directory_ancestor_rejected(self):
+        actual = self.fixture.base / "real-host"
+        self.fixture.host.rename(actual)
+        self.fixture.host.symlink_to(actual, target_is_directory=True)
+        self.reject("FILESYSTEM")
+
+    def test_changed_gate_receipt_rejected(self):
+        path = self.fixture.host / "cpu_controls.json"
+        path.write_bytes(path.read_bytes() + b"\n")
+        self.reject("FILE")
+
+    def test_false_gate_receipt_rejected_after_repin(self):
+        path = self.fixture.host / "cpu_controls.json"
+        receipt = json.loads(path.read_bytes())
+        receipt["passed"] = False
+        path.write_bytes(canonical(receipt))
+        self.fixture.lock["gate_receipts"]["cpu_controls"] = self.fixture.binding(path, "host")
+        self.fixture.repin()
+        self.reject("APPROVAL")
+
+    def test_missing_gate_receipt_rejected(self):
+        self.mutate(lambda x: x["gate_receipts"].pop("current_host"), "APPROVAL")
+
+    def test_producer_cannot_approve_itself(self):
+        self.fixture.context = replace(self.fixture.context, reviewer=self.fixture.context.producer)
+        self.fixture.repin()
+        self.reject("CONTEXT")
+
+    def test_producer_cannot_issue_implementation_review(self):
+        self.fixture.context = replace(self.fixture.context, gate_issuers=(self.fixture.context.producer,
+                                       *self.fixture.context.gate_issuers[1:]))
+        self.reject("CONTEXT")
+
+    def test_approval_missing_fields_rejected_after_repin(self):
+        self.fixture.approval.pop("gate_receipts")
+        self.fixture.save_approval()
+        self.reject("APPROVAL")
+
+    def test_approval_cannot_grant_native_authority(self):
+        self.fixture.approval["native_start_authorized"] = True
+        self.fixture.save_approval()
+        self.reject("APPROVAL")
+
+    def test_fixture_cannot_be_relabelled_production(self):
+        self.mutate(lambda x: x.__setitem__("purpose", "production-inputs"), "SCHEMA")
+
+    def test_host_version_rejected_after_repin(self):
+        self.mutate(lambda x: x["host"]["target"].__setitem__("blender", "4.5.4"), "HOST")
+
+    def test_duplicate_json_object_key_rejected_after_repin(self):
+        raw = self.fixture.lock_path.read_bytes()
+        raw = raw[:-1] + b',"schema":"' + module.SCHEMA.encode() + b'"}'
+        self.fixture.lock_path.write_bytes(raw)
+        self.fixture.context = replace(self.fixture.context, lock_sha256=sha(raw))
+        self.reject("JSON")
+
+    def test_nonfinite_json_rejected_after_repin(self):
+        raw = self.fixture.lock_path.read_bytes().replace(b'"source_operations":100000', b'"source_operations":NaN')
+        self.fixture.lock_path.write_bytes(raw)
+        self.fixture.context = replace(self.fixture.context, lock_sha256=sha(raw))
+        self.reject("JSON")
+
+    def test_missing_file_blocks_validation(self):
+        (self.fixture.host / "transitive-library").unlink()
+        self.reject("FILESYSTEM")
+
+    def test_file_parent_traversal_rejected(self):
+        self.mutate(lambda x: x["inputs"]["host:transitive-library"].__setitem__("path", "../transitive-library"), "PATH")
+
+    def test_boolean_input_size_rejected(self):
+        self.mutate(lambda x: x["inputs"]["host:transitive-library"].__setitem__("size_bytes", True), "INPUT")
+
+
+if __name__ == "__main__":
+    unittest.main()
