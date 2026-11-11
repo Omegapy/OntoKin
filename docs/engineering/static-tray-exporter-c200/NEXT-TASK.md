@@ -1,31 +1,31 @@
-# Next task: integrate C200, then prepare C201 tray admission
+# Next task: implement the prepared C201 admission protocol
 
-C200's historical finite qualification passed. The immediate gate for this
-publication candidate is independent review of the actual proposed source and
-evidence, applicable fresh candidate checks, guarded integration and checks of
-resulting main. Preserve the executed source identity and original reviews;
-they do not automatically certify a different candidate tree.
+C200's finite qualification is integrated through
+[PR #137](https://github.com/Omegapy/OntoKin/pull/137), and actual-main applicable
+checks passed at `2b2f3e7de7595099ad5f9e0176c5596220c0c2dc`.
+[Integration and verification record](evidence/publication-c203/INTEGRATION.json)
+Both C199/C200 schedules remain closed; their evidence is not rerun for context.
 
-## Complete publication
+The separate [C201 protocol](../static-tray-admission-c201/ADMISSION.md) and
+[bound rules](../static-tray-admission-c201/ADMISSION.json) are prepared.
+Independent static review of those documents passed 171 consistency checks. Its
+[implementation instructions](../static-tray-admission-c201/IMPLEMENTATION-NEXT.md)
+identify the next bounded work: separate four-slot coordinator, lock,
+transaction/readback compatibility, explicit references and durable state,
+followed by meaningful controls, full executable closure and independent
+native-readiness approval. No coordinator or admission execution is claimed.
 
-Re-read current main, the C200 branch, issue #136, open PRs and the integration
-lease before each mutable remote step. Preserve candidate parent, tree and
-commit identities and reconcile any unknown write outcome. Use the repository's
-conditional branch update and reviewed PR integration procedure. Record the
-actual resulting main and ownership release or handoff. Keep original receipts
-and new publication checks in separate records.
+Reconcile current main, work scope, PRs and the integration lease before editing.
+The C201 preparation scope is recorded in [issue #138](https://github.com/Omegapy/OntoKin/issues/138).
+Preserve the [recovered evidence](evidence/publication-c203/PRESERVATION.md),
+including its original missingness observations and later source-path log
+recovery. Retain the inherited failed regression and reject newly introduced
+or worsened legacy behavior.
 
-The [preservation record](evidence/publication-c203/PRESERVATION.md) retains the
-supplied handoff's nine missing-log observations and their later original-path
-recovery. Preserve the distinct historical hash bindings and newly observed
-stream hashes. Do not rerun the completed C199/C200 native schedules to replace
-historical evidence. Preserve the failed inherited regression and reject any
-newly introduced or worsened legacy failure.
+## Preserve the prepared admission boundary
 
-## Prepare the separate admission gate
-
-Only after verified C200 integration, define and independently review C201 tray
-admission under its own protocol, coordinator, invocation gate and ledger.
+Follow the independently reviewed C201 preparation protocol. Build
+and review its own coordinator, invocation gate and ledger before execution.
 
 | Route | Maximum native exports, including failures |
 | --- | --- |

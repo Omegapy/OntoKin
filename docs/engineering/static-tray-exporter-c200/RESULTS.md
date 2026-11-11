@@ -94,7 +94,7 @@ The inherited full regression remains **FAILED**, with 4,239 distinct passing
 methods and thirteen torque-read methods **NOT RUN** after the unchanged
 30,000 ms setup timeout. This result does not relabel that failure.
 
-## Fresh publication checks and remaining integration
+## Fresh publication checks and completed integration
 
 [Fresh C203 check receipts](evidence/publication-c203/checks/CHECKS-SUMMARY.json)
 record 107 focused methods passed with zero skips, including five exact
@@ -106,7 +106,33 @@ the actual tested implementation. These checks launched eight ordinary Python
 reader CLI child calls, with no native, receiving, Node, lifecycle or author
 execution.
 
-Independent review of the completed publication candidate, reviewed PR
-integration and checks of resulting main remain separate, pending obligations.
-No successful publication or merge is asserted here. After C200 integration,
-[prepare the separate four-export C201 admission](NEXT-TASK.md).
+Independent review approved local candidate
+`125353836119e50215287c27d80e99cef6d85e8f`, tree
+`b0e62bdefcb9afd1ea0708ba2b5ab459f457fbcd`. Publication added only five unchanged
+review artifacts, producing local commit
+`5a7f0b0544684e76a10cdaa88edb09a084eae45e` and published commit
+`0e02d761d70e09fd987cfad1dd85ae8aa1ce679e`, with the same tree
+`7e1ab341160cf5b86807e8ffec2cc3bb7b47db92`.
+
+[PR #137](https://github.com/Omegapy/OntoKin/pull/137) merged at
+`2b2f3e7de7595099ad5f9e0176c5596220c0c2dc`, with that exact tree. Fresh
+[actual-main checks](evidence/publication-c203/main-checks/CHECKS-SUMMARY.json)
+passed 107 focused methods with zero skips, ten protocol controls and 43 core
+cases with 694 assertions. Documentation preservation passed 29 sources and
+4,106 local links. All 301 locked inputs matched before and after. The earlier
+47-method compiler pass was reused after its inputs were verified unchanged;
+it was not rerun or added to the fresh counts. No native, receiving, Node,
+lifecycle or author run was repeated.
+
+The [integration record](evidence/publication-c203/INTEGRATION.json) retains
+exact parents, publication and merge readbacks, evidence identities and process
+scope. The old work branch was observed absent after merge; its history is
+retained through merge ancestry, and this session issued no explicit deletion.
+GitGuardian concluded neutral because the PR was too large to scan. That is
+not a security pass. The inherited full-regression failure remains unchanged.
+
+[C201's public admission protocol](../static-tray-admission-c201/README.md) is
+prepared and passed 171 independent static document checks. The
+coordinator, executable lock, native-readiness approval and execution remain
+pending. [Implement and review that separate gate](NEXT-TASK.md) before any
+C201 native start.

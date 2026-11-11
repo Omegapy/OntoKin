@@ -11,47 +11,55 @@ more reliably or at lower cost than with direct Blender/Python. The complete
 
 Owner `c203-integration-a4d913-20261111` continues the bounded main integration lease after verified C200 publication and merge through [PR #137](https://github.com/Omegapy/OntoKin/pull/137). Renewed `2026-11-11T15:08:01.762481+00:00`; expiry `2026-11-11T15:38:01.762481+00:00`. The original lease began `2026-11-11T14:43:57.246211+00:00`. The completed checkpoint is actual main `2b2f3e7de7595099ad5f9e0176c5596220c0c2dc`, tree `7e1ab341160cf5b86807e8ffec2cc3bb7b47db92`, equal to the independently reviewed publication. Remaining scope is actual-main verification, the separate preparation-only C201 protocol under [issue #138](https://github.com/Omegapy/OntoKin/issues/138), current status and the C203 handoff. The lease protects main, STATUS and overlapping C200/C201 publication records. Independent nonoverlapping work may continue. C199/C200 schedules stay closed; C201 has zero native starts and no reviewed coordinator or execution approval. Release ownership after final publication and readback.
 
-## C200 qualification and evidence integrated
+## C200 integrated; finite qualification retained
 
-The recovered [C200 static-tray qualification](docs/engineering/static-tray-exporter-c200/README.md)
-passed on executed source `62b2316cc3f88db187f69fbd7fdb2cf0997a97de`. Its twelve
-transactions were accepted, with twelve receiving checks, twelve checks of
-actual delivered GLBs, nine delivered control variants and twelve reviewed
-images. The final independent review passed 16,645 checks; the separate numeric
-review passed 497,809 assertions. These are preserved historical results.
-[Measured result and limits](docs/engineering/static-tray-exporter-c200/RESULTS.md)
+C200 merged through [PR #137](https://github.com/Omegapy/OntoKin/pull/137) at
+`2b2f3e7de7595099ad5f9e0176c5596220c0c2dc`, tree
+`7e1ab341160cf5b86807e8ffec2cc3bb7b47db92`, equal to the independently reviewed
+publication. Its historical executed source remains
+`62b2316cc3f88db187f69fbd7fdb2cf0997a97de`. All twelve C200 transactions were
+accepted, with twelve receiving and actual-delivery checks, nine controls and
+twelve reviewed images. Historical final review passed 16,645 checks and the
+separate numeric review passed 497,809 assertions.
+[Measured result](docs/engineering/static-tray-exporter-c200/RESULTS.md)
 
-C199's failed first construction remains preserved. C199 and C200 consumed
-thirteen constructions together, and both schedules are closed. The original
-coordinator's `qualified=false` records its pending reviews; the later
-independent review records `qualified=true`. Neither receipt is rewritten.
+Fresh actual-main checks passed 107 focused methods, ten protocol controls,
+43 core cases with 694 assertions and documentation preservation of 29 sources
+and 4,106 local links. All 301 locked inputs remained exact. The earlier
+47-method compiler pass was reused after input equality checks. These are
+separate counts, with no new native, receiving, Node, lifecycle or author run.
+[Integration receipt](docs/engineering/static-tray-exporter-c200/evidence/publication-c203/INTEGRATION.json)
 
-[PR #137](https://github.com/Omegapy/OntoKin/pull/137) integrated the completed C200 source and evidence at `2b2f3e7de7595099ad5f9e0176c5596220c0c2dc`. Its tree `7e1ab341160cf5b86807e8ffec2cc3bb7b47db92` exactly matches the reviewed publication tree.
-Fresh publication checks passed 107 focused methods, 47 compiler methods, ten
-protocol controls and 43 core cases with 694 assertions. The focused cohort
-includes five exact pinned-exporter source checks. These cohorts remain
-separate counts. [Fresh check receipts](docs/engineering/static-tray-exporter-c200/evidence/publication-c203/checks/CHECKS-SUMMARY.json)
-Independent candidate review and PR integration are complete. Fresh checks of the exact resulting main are in progress; their results will be recorded separately. No new native construction, receiving process or timed
-author has been started for this publication. C201 admission has not begun.
+C199's failed first construction remains preserved; the combined historical
+construction count is thirteen. Both C199 and C200 schedules are closed. The
+original coordinator's pending-review `qualified=false` and later independent
+`qualified=true` remain separate unchanged receipts. All nine preparation-log
+candidates missing from the supplied handoff were subsequently recovered from
+original paths; eight stream hashes remain new recovery bindings.
 
-C198 and C199 remain integrated through PRs
-[#133](https://github.com/Omegapy/OntoKin/pull/133) and
-[#135](https://github.com/Omegapy/OntoKin/pull/135). Earlier source, contracts,
-failures and evidence remain preserved. The exact earlier status text is
-retained in the [historical checkpoint archive](docs/engineering/static-tray-exporter-c200/evidence/publication-c203/STATUS-before-C203.md.txt).
-It is a verbatim raw record whose relative links originally resolved from the
-repository root; use current navigation for the next action.
+GitGuardian returned neutral because the publication PR was too large to scan;
+no security pass is claimed. The former C200 branch was observed absent after
+merge, with history retained in merge ancestry and no explicit deletion by
+this session. Earlier checkpoints remain in the
+[verbatim historical status archive](docs/engineering/static-tray-exporter-c200/evidence/publication-c203/STATUS-before-C203.md.txt).
+Its relative links originally resolved from the repository root.
 
-## Next gate: separate C201 tray admission
+## Next gate: implement the prepared C201 admission protocol
 
-C200 has merged. Prepare and independently review a separate
-four-export protocol and coordinator: one baseline and one clean regeneration
-for OntoKin, and the same for direct Python, counting failures. There are zero
-timed authors. Freeze the exact task, executable closure, measurements,
-receiving checks, unchanged-sibling rules, regeneration comparisons and stop
-rules before native execution. The consumed twelve-transaction C200 coordinator
-cannot be reset or reused for admission.
-[Continuation instructions](docs/engineering/static-tray-exporter-c200/NEXT-TASK.md)
+**C201 admission protocol prepared; coordinator and execution gates pending.**
+The [public Q01 protocol](docs/engineering/static-tray-admission-c201/ADMISSION.md)
+fixes the exact sources, task, A01-A04 order, real D01/D03 controls, measurements,
+regeneration rules and limits. Independent static review passed 171 consistency checks,
+including all 38 referenced file bindings. No coordinator, executable lock, native-readiness
+approval, C201 invocation or admission result is claimed.
+
+[Implement and review the separate orchestration](docs/engineering/static-tray-admission-c201/IMPLEMENTATION-NEXT.md)
+as a new bounded task. [Issue #138](https://github.com/Omegapy/OntoKin/issues/138) records protocol preparation. The future
+schedule permits one baseline and one clean regeneration per route: at most
+four native starts, four receiving starts and four actual-delivery Node checks,
+counting failures, with zero timed authors or automatic retries. The consumed
+C200 coordinator cannot be reset or reused. Independent exact-input approval
+must precede the sole invocation.
 
 ## Verification and remaining limits
 

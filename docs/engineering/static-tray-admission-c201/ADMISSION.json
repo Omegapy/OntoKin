@@ -1,0 +1,646 @@
+{
+  "schema": "ontokin.c201.static-tray-admission-protocol/0.1",
+  "revision_id": "OK-ADMIT-STATIC-TRAY-C201/0.1.0",
+  "state": "PREPARATION_ONLY_PENDING_INDEPENDENT_PROTOCOL_REVIEW",
+  "status_sentence": "C201 admission protocol prepared; coordinator and execution gates pending.",
+  "authority": {
+    "scope": "Separate public Q01 workflow admission preparation after completed C200 integration",
+    "mapping": "OK-MAP-STATIC-TRAY-001/0.1.0",
+    "profile": "ontokin.static-tray/0.1.0",
+    "native_execution_authorized_now": false,
+    "admission_completed": false,
+    "issue": "https://github.com/Omegapy/OntoKin/issues/138",
+    "branch": "work/c201-admission-protocol-a4d913",
+    "c200_integration": {
+      "pr": 137,
+      "merge_commit": "2b2f3e7de7595099ad5f9e0176c5596220c0c2dc",
+      "merge_tree": "7e1ab341160cf5b86807e8ffec2cc3bb7b47db92"
+    },
+    "c200_executed_source": {
+      "commit": "62b2316cc3f88db187f69fbd7fdb2cf0997a97de",
+      "tree": "87779ee65fb31dbd6de0f4372697a91f1bf4744a"
+    },
+    "c200_input_lock_sha256": "e22d12703926740c2c4cb8596781192b9f0412836e3fba7c6f353bedfc60e0e0",
+    "closed_historical_schedules": {
+      "C199": {
+        "native_starts": 1,
+        "accepted": 0
+      },
+      "C200": {
+        "native_starts": 12,
+        "accepted": 12
+      }
+    },
+    "precedence": "Adopted C198 mapping and immutable C200 qualification govern inherited meaning. C201 defines only this new task/schedule. A conflict among normative records or Markdown/JSON blocks readiness and requires an identified reviewed amendment; no silent override."
+  },
+  "normative_bindings": [
+    {
+      "path": "docs/engineering/static-tray-mapping-c198/ADOPTION.md",
+      "size_bytes": 4831,
+      "sha256": "4756fef8432a7fd6aed551e5d842399f79787f7f83e98e7c70be3deb665006fa"
+    },
+    {
+      "path": "docs/engineering/static-tray-mapping-c198/SPECIFICATION.md",
+      "size_bytes": 32954,
+      "sha256": "e9baeec43feb7b6455494055b54ffcca9b6dfea0e3c705b4c9eaaf7b4f7a5a0a"
+    },
+    {
+      "path": "docs/engineering/static-tray-mapping-c198/canonical-record.schema.json",
+      "size_bytes": 37598,
+      "sha256": "1d06f6be7841719f624a0137bf584704abbf156e6abf99870a21b3abe5e2b08c"
+    },
+    {
+      "path": "docs/engineering/static-tray-mapping-c198/VALIDATION-PLAN.md",
+      "size_bytes": 26148,
+      "sha256": "37599b557b0866e6f191c61195e0c195e6f8171ad2bc98649a020a6995867850"
+    },
+    {
+      "path": "docs/engineering/static-tray-mapping-c198/CONTROLS.json",
+      "size_bytes": 28255,
+      "sha256": "69178feff0c0e566e8f9b648af0ea4b8aa8a1aa8a9524e6a90e0cc6044dc3950"
+    },
+    {
+      "path": "docs/engineering/static-tray-mapping-c198/INPUT-FREEZE.json",
+      "size_bytes": 2679,
+      "sha256": "86e1476851c7e3ed14b6e9f4674375bc683e891bfc5037c2727dfc3b15557231"
+    },
+    {
+      "path": "docs/engineering/static-tray-exporter-c200/ADOPTION.md",
+      "size_bytes": 5837,
+      "sha256": "c307693d298f41ae17b5c8e93315dbcf805768793495314a801945ffe4e68ee0"
+    },
+    {
+      "path": "docs/engineering/static-tray-exporter-c200/QUALIFICATION.md",
+      "size_bytes": 9013,
+      "sha256": "459dd225d44dad11c6cf7713bf157afed44471a250aebc352cf788ba66c68dc0"
+    },
+    {
+      "path": "docs/engineering/static-tray-exporter-c200/QUALIFICATION.json",
+      "size_bytes": 6207,
+      "sha256": "3bf40be2b1edbdf6e2a3109a3865b5845dfe6e4bb4bbfc22b6bd7e7d4f8b21ff"
+    },
+    {
+      "path": "docs/engineering/static-tray-exporter-c200/EXECUTABLE-INPUTS.json",
+      "size_bytes": 1998902,
+      "sha256": "e22d12703926740c2c4cb8596781192b9f0412836e3fba7c6f353bedfc60e0e0"
+    },
+    {
+      "path": "docs/engineering/static-tray-exporter-c200/EXECUTABLE-INPUTS.approval.json",
+      "size_bytes": 3973,
+      "sha256": "aa9c5234b666b5f4a79924502f3074dada274ff1135b78b11a8d83a560ceae2a"
+    },
+    {
+      "path": "docs/engineering/static-tray-exporter-c200/evidence/result-review/RESULT-REVIEW.json",
+      "size_bytes": 32361,
+      "sha256": "a09f8a1ec3d5a3bf6a3d8bd9d8ccf60ef946a4923be93d3a519060c9c294b895"
+    }
+  ],
+  "binding_path_basis": "All binding paths are relative to the repository root.",
+  "public_task": {
+    "id": "C201-Q01-public-two-tray-baseline",
+    "case": "Q01",
+    "held_out": false,
+    "frame": "ontokin-world-rh-y-up",
+    "length_unit": "m",
+    "axes": {
+      "x": "width",
+      "y": "height",
+      "z": "depth"
+    },
+    "node_count": 14,
+    "mesh_count": 12,
+    "root_count": 2,
+    "root_ids": [
+      [
+        "equipment-tray",
+        "pair",
+        "left"
+      ],
+      [
+        "equipment-tray",
+        "pair",
+        "right"
+      ]
+    ],
+    "ordered_child_keys": [
+      "back",
+      "base",
+      "front",
+      "left-wall",
+      "payload",
+      "right-wall"
+    ],
+    "physical": "no_body",
+    "motion": "prescribed",
+    "collision": "disabled",
+    "aggregate_mass": 0,
+    "payload_meaning": "Visible measurement proxy only; no load, mass, collision or live-physics claim",
+    "left": {
+      "payload_xyz_m": [
+        0.2,
+        0.06,
+        0.12
+      ],
+      "horizontal_clearance_m": 0.005,
+      "wall_m": 0.004,
+      "base_m": 0.006,
+      "headroom_m": 0.02,
+      "translation_xyz_m": [
+        -0.3,
+        0,
+        0
+      ],
+      "rotation_wxyz": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "cavity_width_height_depth_m": [
+        0.21,
+        0.08,
+        0.13
+      ],
+      "outside_width_depth_m": [
+        0.218,
+        0.138
+      ]
+    },
+    "right": {
+      "payload_xyz_m": [
+        0.16,
+        0.04,
+        0.1
+      ],
+      "horizontal_clearance_m": 0.005,
+      "wall_m": 0.004,
+      "base_m": 0.006,
+      "headroom_m": 0.02,
+      "translation_xyz_m": [
+        0.3,
+        0,
+        0
+      ],
+      "rotation_wxyz": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "cavity_width_height_depth_m": [
+        0.17,
+        0.06,
+        0.11
+      ],
+      "outside_width_depth_m": [
+        0.178,
+        0.118
+      ]
+    },
+    "materials": {
+      "set": "static-tray-materials/0.1.0",
+      "tray_linear_rgba": [
+        0.25,
+        0.5,
+        0.75,
+        1
+      ],
+      "payload_linear_rgba": [
+        0.75,
+        0.5,
+        0.25,
+        1
+      ],
+      "opaque": true,
+      "remaining_settings": "Exact qualified worker/export/import settings bindings"
+    },
+    "equal_route_conditions": [
+      "same public dimensions and independent expected measurements",
+      "same stable identities, materials and supported profile",
+      "same shared qualified constructor and receiving/checker code",
+      "same output, tolerance, source and process limits",
+      "same inspection information; no model or timed author trial"
+    ],
+    "source_closures": {
+      "ontokin": [
+        {
+          "path": "fixtures/static_tray_v01/native/Q01/ontokin/main.ok",
+          "size_bytes": 930,
+          "sha256": "458b996c4bb1564c1bf2ad32541099ddcbc30cf2570129cd9ffb130fe9f9e2be"
+        },
+        {
+          "path": "fixtures/static_tray_v01/native/Q01/ontokin/source.json",
+          "size_bytes": 191,
+          "sha256": "a170cd8622cfcae2f2979a5c56c7fcd38e0bdd16e11b81fde8e2bc8b8836a01a"
+        },
+        {
+          "path": "fixtures/static_tray_v01/native/Q01/ontokin/tray.ok",
+          "size_bytes": 3298,
+          "sha256": "849f784ee51a84908f1921e92d8136fefad409627199f6df17f4c0cdf8cdfb34"
+        }
+      ],
+      "direct-python": [
+        {
+          "path": "fixtures/static_tray_v01/native/Q01/direct-python/main.py",
+          "size_bytes": 789,
+          "sha256": "67e318628e4f8f1997cf9516aca47ef0fbedce10f2c825d467689ec951c52d17"
+        },
+        {
+          "path": "fixtures/static_tray_v01/native/Q01/direct-python/source.json",
+          "size_bytes": 363,
+          "sha256": "dee8a9f153bbf8220751059f508dcfdfa0501731cda5061dc45921a2248e4d4d"
+        },
+        {
+          "path": "fixtures/static_tray_v01/native/Q01/direct-python/tray.py",
+          "size_bytes": 2657,
+          "sha256": "562de2b1d558f421315fe8f0350cb01830ba0ce7726d2263e020808025413b03"
+        }
+      ]
+    }
+  },
+  "schedule": {
+    "schedule_id": "C201-Q01-A01-A04-v0.1.0",
+    "one_use_invocation_required": true,
+    "current_executable_invocation": null,
+    "order": [
+      "A01",
+      "D01",
+      "D03",
+      "A02",
+      "A03",
+      "A04"
+    ],
+    "native_slot_order": [
+      "A01",
+      "A02",
+      "A03",
+      "A04"
+    ],
+    "slots": [
+      {
+        "slot": "A01",
+        "route": "ontokin",
+        "kind": "baseline",
+        "case": "Q01",
+        "source_closure": "ontokin",
+        "accepted_source_reference": null,
+        "completed_predecessor": null,
+        "equality_references": [],
+        "maximum_native_starts": 1,
+        "maximum_receiving_starts": 1,
+        "maximum_actual_delivery_node_starts": 1
+      },
+      {
+        "slot": "A02",
+        "route": "direct-python",
+        "kind": "baseline",
+        "case": "Q01",
+        "source_closure": "direct-python",
+        "accepted_source_reference": null,
+        "completed_predecessor": "A01",
+        "required_completed_controls": [
+          "D01",
+          "D03"
+        ],
+        "equality_references": [
+          "A01"
+        ],
+        "maximum_native_starts": 1,
+        "maximum_receiving_starts": 1,
+        "maximum_actual_delivery_node_starts": 1
+      },
+      {
+        "slot": "A03",
+        "route": "ontokin",
+        "kind": "clean-regeneration",
+        "case": "Q01",
+        "source_closure": "A01 retained accepted source/dependencies",
+        "accepted_source_reference": "A01",
+        "completed_predecessor": "A02",
+        "equality_references": [
+          "A01"
+        ],
+        "maximum_native_starts": 1,
+        "maximum_receiving_starts": 1,
+        "maximum_actual_delivery_node_starts": 1
+      },
+      {
+        "slot": "A04",
+        "route": "direct-python",
+        "kind": "clean-regeneration",
+        "case": "Q01",
+        "source_closure": "A02 retained accepted source/dependencies",
+        "accepted_source_reference": "A02",
+        "completed_predecessor": "A03",
+        "equality_references": [
+          "A02",
+          "A03"
+        ],
+        "maximum_native_starts": 1,
+        "maximum_receiving_starts": 1,
+        "maximum_actual_delivery_node_starts": 1
+      }
+    ],
+    "ceilings": {
+      "native_starts": 4,
+      "receiving_starts": 4,
+      "actual_delivery_node_starts": 4,
+      "renders_per_receiving_job": 1,
+      "timed_authors": 0,
+      "simulations": 0,
+      "automatic_retries": 0,
+      "extra_renders": 0,
+      "extra_receiver_jobs": 0,
+      "lifecycle_cohorts": 0,
+      "deliberate_blender_cancellation_experiments": 0,
+      "synthetic_node_preparation_cohorts": 0
+    },
+    "consumption_rule": "Every attempted child start consumes its assigned stage allowance, including failure, timeout, cancellation and unknown outcome. A ceiling is not permission to continue after an unexpected result.",
+    "receiving_then_node": "Receiving measurements and cleanup precede conditional promotion; actual-delivery Node checking then gates the next slot. Node failure stops the schedule and does not turn a technically accepted transaction into family admission."
+  },
+  "delivered_controls": [
+    {
+      "id": "D01",
+      "after_slot": "A01",
+      "before_slot": "A02",
+      "source": "fresh copy of A01 actual final.glb",
+      "mutation": "Increase actual left payload full X extent by 0.004 m without changing source or metadata",
+      "nominal_side_clearance_after_mutation_m": 0.003,
+      "required_side_clearance_m": 0.005,
+      "required_findings": [
+        "CLEARANCE"
+      ],
+      "generic_parse_or_geometry_error_sufficient": false,
+      "native_receiving_node_starts": 0
+    },
+    {
+      "id": "D03",
+      "after_control": "D01",
+      "before_slot": "A02",
+      "source": "fresh separate copy of A01 actual final.glb",
+      "mutation": "Move actual right/front node transform +0.002 m along tray-local Z without changing names or expected metadata",
+      "independent_sibling_reference": "A01 independently decoded stable-ID right-sibling closure",
+      "required_findings": [
+        "SIBLING"
+      ],
+      "generic_parse_or_geometry_error_sufficient": false,
+      "native_receiving_node_starts": 0
+    }
+  ],
+  "measurements": {
+    "raw_and_final_glb": [
+      "actual buffer/index geometry",
+      "closed box corners and outward triangle topology",
+      "signed volume",
+      "hierarchy and transforms",
+      "stable IDs and roles",
+      "material values",
+      "wall/base and cavity dimensions",
+      "four horizontal payload gaps",
+      "floor contact and headroom",
+      "material overlap"
+    ],
+    "tolerances": {
+      "dimension_m": 5e-06,
+      "world_corner_m": 5e-06,
+      "signed_clearance_m": 5e-06,
+      "rigid_transform_element": 1e-06
+    },
+    "receiving": "Each slot reopens its own saved native scene and imports its actual final GLB; both measurements must match the independent reader before promotion.",
+    "visual": {
+      "required_images": 4,
+      "width": 1024,
+      "height": 768,
+      "view": "Existing qualified fixed isometric Workbench view",
+      "review": "Inspect all four actual images; retain visible findings and any occlusion/resolution limitation; no hidden-surface certification"
+    },
+    "exact_equalities": {
+      "files": [
+        "canonical-input.json",
+        "raw.glb",
+        "final.glb"
+      ],
+      "pairs": [
+        [
+          "A01",
+          "A02"
+        ],
+        [
+          "A03",
+          "A04"
+        ],
+        [
+          "A01",
+          "A03"
+        ],
+        [
+          "A02",
+          "A04"
+        ]
+      ],
+      "new_volatile_metadata_exemptions": false,
+      "native_blend_byte_equality_required": false
+    },
+    "right_sibling": "Exact stable-ID keyed geometry, transform, topology, material and relationship values; only inherited unrelated GLB index renumbering exclusion applies.",
+    "regeneration": "Resolve A01/A02 durable accepted pointer and sealed source/dependency closure; fresh empty stores; preserve original source, module, accepted output/receipt closure and pointer before/after. Mutable fixtures or canonical caches are not regeneration source authority.",
+    "detached_route_provenance_required": true
+  },
+  "limits": {
+    "cleanup_ms": 2000,
+    "construction_ms": 30000,
+    "glb_bytes": 8388608,
+    "log_bytes": 4194304,
+    "output_bytes": 67108864,
+    "poll_ms": 50,
+    "promotion_ms": 3000,
+    "receiving_ms": 30000,
+    "result_bytes": 4194304,
+    "source_elapsed_ms": 30000,
+    "source_operations": 100000,
+    "terminate_grace_ms": 500,
+    "transaction_ms": 65000,
+    "actual_delivery_node_outer_ms": 30000,
+    "actual_delivery_node_work_ms": 28000
+  },
+  "qualified_role_bindings": {
+    "source_lowering": {
+      "path": "prototypes/static_tray_v01/sources.py",
+      "size_bytes": 46148,
+      "sha256": "c785153c1b7a92441c59cbfae1daf7da4fbc6101e7c7e67a3da0c3b0bfdc546e"
+    },
+    "canonical_arithmetic": {
+      "path": "prototypes/static_tray_v01/canonical.py",
+      "size_bytes": 12078,
+      "sha256": "ce3f67349ade5af1d966ed0f1f240b264278c14f1f77c8ecc5cdeabb12ad6433"
+    },
+    "constructor": {
+      "path": "prototypes/static_tray_v01/worker.py",
+      "size_bytes": 12289,
+      "sha256": "2651bbcff9140f9e95c31388e7b9599af342caffc7ed1c1791f4657b75565302"
+    },
+    "receiver": {
+      "path": "prototypes/static_tray_v01/receiver.py",
+      "size_bytes": 10558,
+      "sha256": "02dd0a479ba0849ac0433550daca6bba35dfce0d66a96daa603d0565ff3ceea1"
+    },
+    "receiving_comparison": {
+      "path": "prototypes/static_tray_v01/receive_check.py",
+      "size_bytes": 13780,
+      "sha256": "9cde23fd1008491bc8dc87e4863cf1badda239157a693de27e7f4146a025168a"
+    },
+    "supervisor": {
+      "path": "prototypes/static_tray_v01/supervisor.py",
+      "size_bytes": 11286,
+      "sha256": "c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10"
+    },
+    "immutable_store": {
+      "path": "prototypes/static_tray_v01/store.py",
+      "size_bytes": 6735,
+      "sha256": "d0006497ff6fc13ff0b563cdb58445789cd1a26c489ac4ce2a84e77a03607bd0"
+    },
+    "export_settings": {
+      "path": "prototypes/static_tray_v01/export-settings.json",
+      "size_bytes": 3696,
+      "sha256": "4a148619a8d7cb0618a6b0b6fc3098ad9943cfc01cb061625ea3514b2eb865e4"
+    },
+    "import_settings": {
+      "path": "prototypes/static_tray_v01/import-settings.json",
+      "size_bytes": 626,
+      "sha256": "8ea29a41e898b0aee5f2479cbe42a49a7f9af271597dcf04e1c1ec61b1e5e050"
+    },
+    "delivery_rules": {
+      "path": "prototypes/static_tray_v01/delivery-rules.json",
+      "size_bytes": 2220,
+      "sha256": "b96f29fa65a1f684a85d70dbc4df0db5fd981baadba61377a4142b2d70ff2de6"
+    },
+    "independent_reader": {
+      "path": "tools/static_tray_reader_v01/reader.py",
+      "size_bytes": 33399,
+      "sha256": "4cd7be509bd286f482b1f34bfb9bbf574ae93e3970c89bbce13295320430f34c"
+    },
+    "independent_decoder": {
+      "path": "tools/static_tray_reader_v01/glb.py",
+      "size_bytes": 10284,
+      "sha256": "15e539c1c5225b8b6c2e8c42beec42a1e5fd00ce8bec1530c7c2dc04bf425774"
+    },
+    "independent_audit": {
+      "path": "tools/static_tray_reader_v01/audit.py",
+      "size_bytes": 2607,
+      "sha256": "bea1cc6370997a4b0d1ee335569b920759e9022394001752eebe3336be02ede5"
+    },
+    "independent_expectations": {
+      "path": "tools/static_tray_reader_v01/expected.py",
+      "size_bytes": 6456,
+      "sha256": "b677815b42bbd439c590091b7668acd14fea189bea659aefb52ea16c0f264e10"
+    },
+    "delivered_corruption_writer": {
+      "path": "tools/static_tray_reader_v01/corrupt.py",
+      "size_bytes": 9410,
+      "sha256": "716824ef584e9ebf9f9065925018ab35185bf61d29f41eb14d32a7d360832b18"
+    },
+    "historical_qualification_coordinator": {
+      "path": "prototypes/static_tray_v01/qualification.py",
+      "size_bytes": 9022,
+      "sha256": "611f85be0beb2e700075fc062521453bbc105e434eb060bf19d845a0bcae9bae"
+    },
+    "historical_transaction": {
+      "path": "prototypes/static_tray_v01/transaction.py",
+      "size_bytes": 28617,
+      "sha256": "4fc05f614189a5782023a6701195ddc631395d053172092c9ede9f30db360466"
+    },
+    "historical_lock": {
+      "path": "prototypes/static_tray_v01/lock.py",
+      "size_bytes": 23327,
+      "sha256": "bb98718bcfcca82e7eabb310bccc51cbf2ab2903af5b0c203c673d56bebb47e0"
+    },
+    "historical_format_check": {
+      "path": "prototypes/static_tray_v01/format_check.py",
+      "size_bytes": 15959,
+      "sha256": "e0d71482b9878fbdf9ca1287013756fc0f6b9df530864f5634b8863354a29447"
+    },
+    "historical_node_probe": {
+      "path": "prototypes/static_tray_v01/readback.mjs",
+      "size_bytes": 11537,
+      "sha256": "156c988ffc478adafe59c495a07e0a48f5ac77c12829d85d147838578b523b4c"
+    }
+  },
+  "role_binding_scope": "These hashes identify existing qualified/reviewed roles and historical code to inspect; they are not a complete new C201 executable lock. No unchanged historical twelve-slot coordinator or ledger may execute this schedule.",
+  "intended_dependencies": {
+    "platform": "Linux x86-64",
+    "cpython": "3.12.14",
+    "blender": "4.5.3",
+    "blender_build": "67807e1800cc",
+    "gltf_exporter": "4.5.48",
+    "node": "v24.22.1",
+    "khronos_validator": "2.0.0-dev.3.10",
+    "three": "0.186.1",
+    "three_revision": "186",
+    "pin_source": "C200 EXECUTABLE-INPUTS.json and EXTERNAL-INPUTS.json",
+    "current_host_verified": false,
+    "complete_distribution_loader_shared_library_stdlib_environment_verification_required": true
+  },
+  "readiness_pending": {
+    "implementation_commit": null,
+    "implementation_tree": null,
+    "complete_executable_lock_sha256": null,
+    "independent_protocol_review": null,
+    "independent_native_readiness_approval": null,
+    "coordinator_implemented": false,
+    "transaction_lock_readback_adaptations_implemented": false,
+    "meaningful_cpu_controls_completed": false,
+    "current_host_dependencies_verified": false,
+    "sole_invocation_started": false,
+    "admission_result": null
+  },
+  "future_lock_requirements": [
+    "committed exact C201 implementation and transitive imports",
+    "source and independently expected fixture hashes",
+    "all qualified shared-role and setting identities",
+    "actual interpreter/stdlib/distribution/executable/loader/shared-library and Node package inventories",
+    "expanded commands and exact clean environments",
+    "distinct immutable stores and output paths for all stages",
+    "explicit slot/pair/regeneration/control references",
+    "protocol and input-lock digests and independently issued approval",
+    "historical C199/C200 closed-ledger and input identities"
+  ],
+  "stop_and_state_rules": [
+    "exclusive one-use C201 invocation before any child start",
+    "own append-only durable attempt ledger with one reservation per slot/stage",
+    "existing invocation or stopped/unknown outcome blocks reuse even in a new directory",
+    "first unexpected transaction, receiving, readback, control, cleanup, identity or persistence result stops later work",
+    "cleanup and reaping precede promotion; failed promotion preserves prior accepted pointer",
+    "reconcile unknown durable state without replacement child or repaired continuation",
+    "retain partial outputs and all raw logs/results; do not rewrite failed receipts",
+    "every later revised schedule requires identified review rather than resetting this one"
+  ],
+  "final_admission_requirements": [
+    "exactly four successful accepted transactions",
+    "four receiving comparisons",
+    "four actual-delivery Node checks",
+    "both controls rejected with their required findings",
+    "all required pair/regeneration and sibling preservation checks",
+    "four actual image reviews",
+    "independent final result review of exact retained closure"
+  ],
+  "result_separation": "Coordinator measured status, image-review completion and independent final admission decision remain separate chronological records; ACCEPTED is not family admission.",
+  "legacy_regression": {
+    "state": "FAILED",
+    "distinct_passing_methods": 4239,
+    "torque_read_methods_not_run": 13,
+    "unchanged_setup_timeout_ms": 30000
+  },
+  "unestablished": [
+    "coordinator readiness",
+    "current native execution readiness",
+    "C201 admission completion",
+    "new localized edit or reuse performance",
+    "unseen-task or comparative authoring advantage",
+    "actual-Blender cancellation behavior",
+    "general contact",
+    "live destination physics",
+    "broad compatibility and sixteen external roles",
+    "full regression",
+    "full release",
+    "complete GOAL"
+  ]
+}
