@@ -1,0 +1,33 @@
+{
+  "recordedAtUtc": "2026-11-11T18:33:53.245413+00:00",
+  "candidateStatus": "uncommitted initial draft",
+  "sha256": "d8a34fc5df726c988309ab0a06328309b58a3bb4159112885c9b8ed2a4470f90",
+  "findings": [
+    {
+      "id": "R1",
+      "kind": "static-review",
+      "status": "open",
+      "description": "Draft exact build/receive inventories omit native-startup.json and qualified supervisor process JSON outputs, so unchanged native roles cannot satisfy them."
+    },
+    {
+      "id": "R2",
+      "kind": "static-review",
+      "status": "open",
+      "description": "Draft seals job.json and source-provenance.json without comparing their contents with prepared expected bytes; altered settings or provenance can enter accepted closure."
+    },
+    {
+      "id": "R3",
+      "kind": "executed-independent-control",
+      "status": "open",
+      "description": "Actual os.replace followed by controlled KeyboardInterrupt escapes without UNKNOWN while the accepted pointer is committed."
+    }
+  ],
+  "sourceEvidence": [
+    "prototypes/static_tray_v01/worker.py",
+    "prototypes/static_tray_v01/supervisor.py",
+    "docs/engineering/static-tray-exporter-c200/evidence/native-execution/receipts/c200-native/stores/ontokin/objects/N01/closure.json",
+    "docs/engineering/static-tray-exporter-c200/evidence/native-execution/receipts/c200-native/stores/ontokin/objects/N01-receiving/closure.json"
+  ],
+  "nativeStarts": 0,
+  "executionClaim": "Four independent CPU controls in draft-controls.json confirm initial draft R1/R2/R3 findings."
+}

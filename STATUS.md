@@ -100,11 +100,21 @@ Fresh actual-main checks passed all 108 component/ledger methods, 43 core cases 
 The 78 source/compiler methods and 23 independent controls remain eligible through
 exact input equality. [Integration receipt](docs/engineering/static-tray-admission-c201/evidence/input-lock-c205/INTEGRATION.json)
 
-The next bounded task is a separate C201 transaction/accepted-source
-compatibility layer with CPU controls. Full readback and coordinator integration,
+C206 adds the separate transaction/accepted-source component below. Full
+readback and coordinator integration,
 real host/dependency and alias sealing, durable trusted bootstrap, independent
 native readiness and the sole four/four/four invocation remain pending. No native,
 receiving, Node, lifecycle or timed-author start occurred in this increment.
+
+## C206 fixture-only transaction component reviewed; production alignment blocked
+
+The separate [C201 transaction and accepted-source component](docs/engineering/static-tray-admission-c201/TRANSACTION-C206.md) resolves actual retained baseline source and dependencies, validates complete construction/receiving/receipt closures, and conditionally promotes an accepted pointer. Pre-commit rejection preserves the prior pointer; post-replacement interruption reports UNKNOWN. It starts no children and does not advance the coordinator ledger.
+
+Independent review approved local commit `afa0a9d40ab0ffbf88e6540bbb685d889a67d391` for fixture-only preparation. All 47 new methods, 108 existing C201 methods, 22 independent controls and 78 source/compiler methods passed. Core conformance passed 43 cases / 694 assertions; all 301 historical inputs and four protocol documents remained exact. [Review and evidence](docs/engineering/static-tray-admission-c201/evidence/transaction-c206/README.md)
+
+Production bindings fail `C201-NATIVE-CWD`: C205's launch plan requires repository working directories while the qualified supervisor and worker require each stage's output directory. The next bounded step is an independently reviewed alignment of that contract and its checks. C205 and the historical worker/supervisor remain unchanged. Readback, actual process provenance/deadlines, full coordinator, trusted bootstrap/host sealing, native readiness and admission remain pending. This increment has zero native, receiving, Node, lifecycle or timed-author starts.
+
+The exact original C205 `final-tests.log`, already present in the previous handoff, is restored as tracked evidence to repair its existing documentation link. The original failed documentation check and byte-binding record are retained. Repaired documentation verification passed 29 preserved sources and 4,199 local links. Resulting-main checks and publication remain pending until separately observed.
 
 ## Verification and remaining limits
 

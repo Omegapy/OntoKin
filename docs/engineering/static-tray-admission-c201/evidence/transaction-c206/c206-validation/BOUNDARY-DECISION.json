@@ -1,0 +1,19 @@
+{
+  "recordedAtUtc": "2026-11-11T18:36:22.012204+00:00",
+  "base": "f90e012fa9b68a1111b97586c6462851e6166dea",
+  "decision": "Preserve current input-lock and qualified supervisor; fail closed for production in C206. Fixture-only component checking remains permitted. Do not fix the cross-component plan in this bounded increment.",
+  "evidence": [
+    {
+      "path": "prototypes/static_tray_admission_c201/input_lock.py",
+      "sha256": "5f55f5dd9efb179ec70387cfc2d16404ead9cf5d4cdc907c9dfb6fe30110c1b7"
+    },
+    {
+      "path": "prototypes/static_tray_v01/supervisor.py",
+      "sha256": "c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10"
+    }
+  ],
+  "blocker": "The input-lock validator requires each planned cwd to equal repository_root; qualified run_process uses the stage output directory as cwd.",
+  "nextAction": "Independently review one explicit working-directory contract for C201 and align the input validator and transaction checks with the unchanged qualified supervisor, preserving the four-slot protocol and legacy bytes.",
+  "nativeReadiness": false,
+  "nativeStarts": 0
+}

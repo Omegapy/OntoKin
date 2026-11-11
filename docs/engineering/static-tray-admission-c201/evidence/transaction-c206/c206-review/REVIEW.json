@@ -1,0 +1,66 @@
+{
+  "schema": "ontokin.c206.independent-component-review/0.1",
+  "reviewer": "independent_review",
+  "decision": "APPROVE_FIXTURE_COMPONENT_ONLY",
+  "candidateCommit": "afa0a9d40ab0ffbf88e6540bbb685d889a67d391",
+  "candidateTree": "2ab3ea43db443f3a33c1aed0cb3a8e36a28cf79d",
+  "baseMain": "f90e012fa9b68a1111b97586c6462851e6166dea",
+  "exactBindingCount": 56,
+  "allBindingsMatch": true,
+  "worktreeClean": true,
+  "independentControls": {
+    "executed": 22,
+    "passed": 22,
+    "failures": 0,
+    "report": "final/independent-controls.json",
+    "sourceBytesUnchanged": true,
+    "productChildStartAttempts": 0
+  },
+  "implementationTests": {
+    "methods": 47,
+    "status": "PASS",
+    "evidence": "../c206-implementation/candidate-tests.log",
+    "reviewerRepeated": false,
+    "logSha256": "7b07799c4f3f609a64085ea2d069b6a2cf4438e867f38c9299ef0dfc77eb6980"
+  },
+  "resolvedFindings": [
+    "R1: native-startup and both qualified supervisor receipts are retained, inventoried and validated",
+    "R2: construction/receiving jobs and source provenance are compared against exact expected bytes",
+    "R3: post-replacement and lost-promotion-return interruptions reconcile actual pointer and produce UNKNOWN",
+    "R4: validated fixture-only factory and constructor/session invariants prevent ordinary direct-construction bypass"
+  ],
+  "productionBlockers": [
+    {
+      "id": "C206-NATIVE-CWD",
+      "description": "C205 requires command cwd equal to repository root while unchanged qualified supervisor/worker require the stage output directory. Production purpose is rejected, not reinterpreted.",
+      "resolution": "A later independently reviewed C201 command-working-directory compatibility change must reconcile the contract before production support."
+    }
+  ],
+  "nativeStarts": 0,
+  "receiverStarts": 0,
+  "nodeStarts": 0,
+  "lifecycleStarts": 0,
+  "timedAuthorStarts": 0,
+  "productionCompatible": false,
+  "nativeReadiness": false,
+  "admissionCompleted": false,
+  "unknownReviewOutcomes": [],
+  "pendingIntegration": [
+    "Root-owned relevant existing checks",
+    "Serialized publication and actual-main verification",
+    "Durable handoff verification and delivery"
+  ],
+  "unchangedLimits": [
+    "Historical regression remains FAILED: 4239 distinct passing methods; 13 torque-read methods not run after unchanged 30000 ms setup timeout",
+    "C199/C200 schedules remain closed",
+    "Actual process observation authentication, hard child deadlines, Node/readback, controls and ledger orchestration remain external pending gates",
+    "No current-host seal, complete production input lock, native-readiness approval or broader release evidence"
+  ],
+  "separateEvidenceRestoration": {
+    "reportedBy": "root",
+    "statusAtReview": "planned by root; not claimed executed by reviewer",
+    "path": "docs/engineering/static-tray-admission-c201/evidence/input-lock-c205/final-tests.log",
+    "source": "c205/workers/input-lock-impl/final-tests.log",
+    "reason": "Existing C205 README links to missing exact historical log; root retains initial failing documentation report and restores manifest-bound bytes."
+  }
+}
