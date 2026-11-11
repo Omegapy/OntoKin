@@ -9,7 +9,7 @@ more reliably or at lower cost than with direct Blender/Python. The complete
 
 ## Main integration lease
 
-No active main integration lease. Owner `c208-readback-integration-4c105e-20261111` released the C208 scope at `2026-11-11T20:06:43.474768+00:00` after observing [PR #149](https://github.com/Omegapy/OntoKin/pull/149), actual merge `f8e397405b432d7a63464b136431d15a009c38df`, unchanged reviewed bindings and the explicitly limited actual-main results below. Issue #148 is closed; the work branch was observed absent. The next bounded step is exact named package-entry resolution for a versioned C201 job. Future shared writes require fresh state reconciliation and an expected-head lease. C199/C200 remain closed.
+Owner `c209-entries-dcff4f-20261111` holds the C209 main integration lease from `2026-11-11T23:09:40Z` until `2026-11-11T23:39:40.000Z`. Scope: [issue #150](https://github.com/Omegapy/OntoKin/issues/150), one CPU-only versioned C201 readback job extension binding exact named dependency entries. Base observed main: `160d8ebfe8acf47c0f487340baacd10f20364b2a`. Reserved shared files: STATUS.md and C209 integration/evidence records. Independent worker `c209-entry-implementation` owns `work/c209-readback-entries`; independent review and package engineering own separate files. No Node, native, receiving, lifecycle or timed-author starts. Renew only after a substantive checkpoint; future shared writes require expected-head verification. C199/C200 remain closed.
 
 ## C200 integrated; finite qualification retained
 
