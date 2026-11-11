@@ -9,9 +9,9 @@ more reliably or at lower cost than with direct Blender/Python. The complete
 
 ## Main integration lease
 
-Owner `c203-integration-a4d913-20261111` holds the bounded main integration lease for publication and review of the preserved completed C200 qualification. Start `2026-11-11T14:43:57.246211+00:00`; expiry `2026-11-11T15:13:57.246211+00:00`. Observed main `1f250705d019088cb2a5f90021359bd78afe0177` and C200 branch `f1ab5ff0d64800f6e53c58f3d12c7cf843e73877` were reconciled with issue #136 and zero open PRs after the former lease expired. This lease protects main, current STATUS and the overlapping C200 publication scope. C199/C200 schedules remain closed; no new native qualification or timed author is authorized by this coordination record. Independent nonoverlapping work may continue. The exact recovered source is `62b2316cc3f88db187f69fbd7fdb2cf0997a97de`; publication, candidate checks and resulting-main verification remain pending. See [issue #136](https://github.com/Omegapy/OntoKin/issues/136).
+Owner `c203-integration-a4d913-20261111` continues the bounded main integration lease after verified C200 publication and merge through [PR #137](https://github.com/Omegapy/OntoKin/pull/137). Renewed `2026-11-11T15:08:01.762481+00:00`; expiry `2026-11-11T15:38:01.762481+00:00`. The original lease began `2026-11-11T14:43:57.246211+00:00`. The completed checkpoint is actual main `2b2f3e7de7595099ad5f9e0176c5596220c0c2dc`, tree `7e1ab341160cf5b86807e8ffec2cc3bb7b47db92`, equal to the independently reviewed publication. Remaining scope is actual-main verification, the separate preparation-only C201 protocol under [issue #138](https://github.com/Omegapy/OntoKin/issues/138), current status and the C203 handoff. The lease protects main, STATUS and overlapping C200/C201 publication records. Independent nonoverlapping work may continue. C199/C200 schedules stay closed; C201 has zero native starts and no reviewed coordinator or execution approval. Release ownership after final publication and readback.
 
-## C200 qualification passed; integration is pending
+## C200 qualification and evidence integrated
 
 The recovered [C200 static-tray qualification](docs/engineering/static-tray-exporter-c200/README.md)
 passed on executed source `62b2316cc3f88db187f69fbd7fdb2cf0997a97de`. Its twelve
@@ -26,13 +26,12 @@ thirteen constructions together, and both schedules are closed. The original
 coordinator's `qualified=false` records its pending reviews; the later
 independent review records `qualified=true`. Neither receipt is rewritten.
 
-C203 is preparing publication of the completed C200 source and evidence.
+[PR #137](https://github.com/Omegapy/OntoKin/pull/137) integrated the completed C200 source and evidence at `2b2f3e7de7595099ad5f9e0176c5596220c0c2dc`. Its tree `7e1ab341160cf5b86807e8ffec2cc3bb7b47db92` exactly matches the reviewed publication tree.
 Fresh publication checks passed 107 focused methods, 47 compiler methods, ten
 protocol controls and 43 core cases with 694 assertions. The focused cohort
 includes five exact pinned-exporter source checks. These cohorts remain
 separate counts. [Fresh check receipts](docs/engineering/static-tray-exporter-c200/evidence/publication-c203/checks/CHECKS-SUMMARY.json)
-Independent candidate review, reviewed PR integration and checks of actual
-resulting main remain pending. No new native construction, receiving process or timed
+Independent candidate review and PR integration are complete. Fresh checks of the exact resulting main are in progress; their results will be recorded separately. No new native construction, receiving process or timed
 author has been started for this publication. C201 admission has not begun.
 
 C198 and C199 remain integrated through PRs
@@ -45,7 +44,7 @@ repository root; use current navigation for the next action.
 
 ## Next gate: separate C201 tray admission
 
-After verified C200 integration, prepare and independently review a separate
+C200 has merged. Prepare and independently review a separate
 four-export protocol and coordinator: one baseline and one clean regeneration
 for OntoKin, and the same for direct Python, counting failures. There are zero
 timed authors. Freeze the exact task, executable closure, measurements,
