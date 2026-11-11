@@ -1,0 +1,155 @@
+{
+  "schema": "ontokin.c205.independent-lock-controls/0.1",
+  "observedAtUtc": "2026-11-11T17:54:22.556953+00:00",
+  "validatorSha256": "a127af001297efc253f9e176a5f2550369a1f3c7946d4be9d46bf98c90052118",
+  "fixtureTestSha256": "06df8030b9bba28d7bf74daeaa49c49280367da59692acf54ce4a41a525ec7f8",
+  "inputsUnchangedDuringRun": true,
+  "passed": 15,
+  "failed": 1,
+  "nativeStarts": 0,
+  "receiverStarts": 0,
+  "nodeStarts": 0,
+  "lifecycleStarts": 0,
+  "authorStarts": 0,
+  "context": "All inputs are explicitly synthetic fixtures; no native readiness evidence is created.",
+  "controls": [
+    {
+      "name": "baseline-fixture-no-authorization",
+      "expected": "accept-fixture-only",
+      "observed": "accept-fixture-only",
+      "passed": true,
+      "elapsedSeconds": 0.054615
+    },
+    {
+      "name": "nested-double-slash-output",
+      "expected": "reject",
+      "observed": "accept-fixture-only",
+      "passed": false,
+      "elapsedSeconds": 0.028694
+    },
+    {
+      "name": "dependency-reachable-only-via-frozen-constructor",
+      "expected": "accept-fixture-only",
+      "observed": "accept-fixture-only",
+      "passed": true,
+      "elapsedSeconds": 0.02896
+    },
+    {
+      "name": "omitted-transitive-input-independent-anchor",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "DEPENDENCY",
+      "message": "Dependency closure differs from independently sealed inventory",
+      "passed": true,
+      "elapsedSeconds": 0.021142
+    },
+    {
+      "name": "missing-fixed-role-even-with-resealed-fixture-anchor",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "ROLE",
+      "message": "Missing, extra, or wrong-type fields",
+      "passed": true,
+      "elapsedSeconds": 0.0191
+    },
+    {
+      "name": "same-size-altered-dependency-bytes",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "FILE",
+      "message": "Input hash differs",
+      "passed": true,
+      "elapsedSeconds": 0.017227
+    },
+    {
+      "name": "fifo-lock-nonblocking",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "FILE",
+      "message": "Unsafe, aliased or overlarge file",
+      "passed": true,
+      "elapsedSeconds": 0.017005
+    },
+    {
+      "name": "symlink-dependency",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "FILESYSTEM",
+      "message": "Missing, unsafe or inaccessible bound path",
+      "passed": true,
+      "elapsedSeconds": 0.02044
+    },
+    {
+      "name": "replaced-authority-same-path",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "AUTHORITY",
+      "message": "Persistent authority filesystem identity changed",
+      "passed": true,
+      "elapsedSeconds": 0.027301
+    },
+    {
+      "name": "stopped-authority-with-new-output",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "REPLAY",
+      "message": "Existing invocation or journal prevents another invocation",
+      "passed": true,
+      "elapsedSeconds": 0.027773
+    },
+    {
+      "name": "missing-independent-host-gate",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "APPROVAL",
+      "message": "Missing, extra, or wrong-type fields",
+      "passed": true,
+      "elapsedSeconds": 0.02809
+    },
+    {
+      "name": "reviewer-equals-producer",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "CONTEXT",
+      "message": "Independent identities are required",
+      "passed": true,
+      "elapsedSeconds": 0.015565
+    },
+    {
+      "name": "approval-wrong-commit",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "APPROVAL",
+      "message": "Independent exact-input approval differs",
+      "passed": true,
+      "elapsedSeconds": 0.027995
+    },
+    {
+      "name": "receipt-boolean-integer-confusion",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "APPROVAL",
+      "message": "Missing, stale or incomplete gate receipt",
+      "passed": true,
+      "elapsedSeconds": 0.027908
+    },
+    {
+      "name": "schedule-boolean-integer-confusion",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "SCHEMA",
+      "message": "Malformed input or schedule binding",
+      "passed": true,
+      "elapsedSeconds": 0.015494
+    },
+    {
+      "name": "duplicate-json-fields",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "JSON",
+      "message": "Duplicate JSON field",
+      "passed": true,
+      "elapsedSeconds": 0.01618
+    }
+  ]
+}

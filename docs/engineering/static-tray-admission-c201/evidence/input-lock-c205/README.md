@@ -1,0 +1,12 @@
+# C205 component evidence
+
+The [input-lock validator](../../INPUT-LOCK-C205.md) is independently approved for its component boundary at local commit `28bf6d74f651b22acc0ee5a4154dcd21b861c81b`, tree `7acaeb92a51d88fd3c10f3edaed72e651eb42cb2`. This directory retains actual implementation checks, independent controls, original draft findings and applicable existing checks. Publication and resulting-main checks are separate later observations.
+
+- [Check summary](CHECKS.json), [implementation report](IMPLEMENTATION.md) and [72-method log](final-tests.log).
+- [Independent exact-revision review](REVIEW.md), [decision](REVIEW.json), [50 file bindings](CANDIDATE-BINDINGS.json), [23 controls](final-independent-controls.json) and [reproduction script](independent_controls.py).
+- [Original draft controls](draft-independent-controls.json), [path finding](draft-path-control.json) and [later controls](revised-independent-controls.json). The failed draft remains historical evidence; it does not describe the final code.
+- [36 ledger methods](ledger-checks.json), [78 source/compiler methods](source-compiler-checks.json), [core conformance](core.json), [protected inputs](protected-inputs.json) and [documentation](documentation.json).
+
+All work used Linux x86-64 CPython 3.12.14. Test dependencies, future role files and approval records are explicitly fixture-only. There were zero native, receiving, actual-delivery Node, lifecycle or timed-author starts. No production lock, actual host seal, trusted-bootstrap persistence/authentication or native readiness was established. The historical full regression remains failed with 4,239 passing methods and thirteen torque-read methods not run after the unchanged 30,000 ms setup timeout. Source/compiler checks were selected for this separate control component; the full local driver plan was inspected but its broader cohort was not rerun.
+
+Worker reports retain their original paths and chronology. In this published copy, implementation and review files are colocated: original `../input-lock-impl/IMPLEMENTATION.json` and `../input-lock-impl/final-tests.log` refer to the same named files here. The final handoff also preserves the original `workers/input-lock-impl` and `workers/input-lock-review` layouts. Earlier candidate metadata and observations remain historical; the exact reviewed commit and final file bindings govern this component approval.

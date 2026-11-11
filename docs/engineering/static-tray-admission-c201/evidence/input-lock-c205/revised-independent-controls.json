@@ -1,0 +1,193 @@
+{
+  "schema": "ontokin.c205.independent-lock-controls/0.1",
+  "observedAtUtc": "2026-11-11T17:56:35.283501+00:00",
+  "validatorSha256": "7c9e99ef1d7391566aecc94efcebcf75fe775142a2ecfc57ea4024600b3f120f",
+  "fixtureTestSha256": "813a6a8ec0f708f0339eb05d8faf4552195dd2e34060f0674777b31950308050",
+  "inputsUnchangedDuringRun": true,
+  "passed": 20,
+  "failed": 0,
+  "nativeStarts": 0,
+  "receiverStarts": 0,
+  "nodeStarts": 0,
+  "lifecycleStarts": 0,
+  "authorStarts": 0,
+  "context": "All inputs are explicitly synthetic fixtures; no native readiness evidence is created.",
+  "controls": [
+    {
+      "name": "baseline-fixture-no-authorization",
+      "expected": "accept-fixture-only",
+      "observed": "accept-fixture-only",
+      "passed": true,
+      "elapsedSeconds": 0.080561
+    },
+    {
+      "name": "nested-double-slash-output",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "PATH",
+      "message": "Expected normalized absolute path",
+      "passed": true,
+      "elapsedSeconds": 0.040835
+    },
+    {
+      "name": "dependency-reachable-only-via-frozen-constructor",
+      "expected": "accept-fixture-only",
+      "observed": "accept-fixture-only",
+      "passed": true,
+      "elapsedSeconds": 0.04071
+    },
+    {
+      "name": "omitted-transitive-input-independent-anchor",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "DEPENDENCY",
+      "message": "Dependency closure differs from independently sealed inventory",
+      "passed": true,
+      "elapsedSeconds": 0.021295
+    },
+    {
+      "name": "missing-fixed-role-even-with-resealed-fixture-anchor",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "ROLE",
+      "message": "Missing, extra, or wrong-type fields",
+      "passed": true,
+      "elapsedSeconds": 0.029495
+    },
+    {
+      "name": "same-size-altered-dependency-bytes",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "FILE",
+      "message": "Input hash differs",
+      "passed": true,
+      "elapsedSeconds": 0.024501
+    },
+    {
+      "name": "fifo-lock-nonblocking",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "FILE",
+      "message": "Unsafe, aliased or overlarge file",
+      "passed": true,
+      "elapsedSeconds": 0.025803
+    },
+    {
+      "name": "symlink-dependency",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "FILESYSTEM",
+      "message": "Missing, unsafe or inaccessible bound path",
+      "passed": true,
+      "elapsedSeconds": 0.040825
+    },
+    {
+      "name": "replaced-authority-same-path",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "AUTHORITY",
+      "message": "Persistent authority filesystem identity changed",
+      "passed": true,
+      "elapsedSeconds": 0.032465
+    },
+    {
+      "name": "stopped-authority-with-new-output",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "REPLAY",
+      "message": "Existing invocation or journal prevents another invocation",
+      "passed": true,
+      "elapsedSeconds": 0.029433
+    },
+    {
+      "name": "missing-independent-host-gate",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "APPROVAL",
+      "message": "Missing, extra, or wrong-type fields",
+      "passed": true,
+      "elapsedSeconds": 0.041392
+    },
+    {
+      "name": "reviewer-equals-producer",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "CONTEXT",
+      "message": "Independent identities are required",
+      "passed": true,
+      "elapsedSeconds": 0.023861
+    },
+    {
+      "name": "approval-wrong-commit",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "APPROVAL",
+      "message": "Independent exact-input approval differs",
+      "passed": true,
+      "elapsedSeconds": 0.037233
+    },
+    {
+      "name": "receipt-boolean-integer-confusion",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "APPROVAL",
+      "message": "Missing, stale or incomplete gate receipt",
+      "passed": true,
+      "elapsedSeconds": 0.048416
+    },
+    {
+      "name": "schedule-boolean-integer-confusion",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "SCHEMA",
+      "message": "Malformed input or schedule binding",
+      "passed": true,
+      "elapsedSeconds": 0.027811
+    },
+    {
+      "name": "duplicate-json-fields",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "JSON",
+      "message": "Duplicate JSON field",
+      "passed": true,
+      "elapsedSeconds": 0.018222
+    },
+    {
+      "name": "native-safe-flag-omitted-even-after-plan-reseal",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "COMMAND",
+      "message": "Expanded child command differs from fixed safe policy",
+      "passed": true,
+      "elapsedSeconds": 0.036873
+    },
+    {
+      "name": "blender-user-script-environment-changed-after-plan-reseal",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "COMMAND",
+      "message": "Clean environment, working directory or output differs",
+      "passed": true,
+      "elapsedSeconds": 0.040308
+    },
+    {
+      "name": "node-evaluation-extra-after-plan-reseal",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "COMMAND",
+      "message": "Expanded child command differs from fixed safe policy",
+      "passed": true,
+      "elapsedSeconds": 0.03589
+    },
+    {
+      "name": "preexisting-environment-root-file",
+      "expected": "reject",
+      "observed": "reject",
+      "code": "PATH",
+      "message": "Output/store directory is not empty",
+      "passed": true,
+      "elapsedSeconds": 0.033732
+    }
+  ]
+}

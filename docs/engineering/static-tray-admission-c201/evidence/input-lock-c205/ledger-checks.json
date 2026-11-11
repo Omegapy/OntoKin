@@ -1,0 +1,77 @@
+{
+  "schema": "ontokin.c205.cpu-checks/0.1",
+  "startedAtUtc": "2026-11-11T17:57:56.916896+00:00",
+  "completedAtUtc": "2026-11-11T17:57:57.272926+00:00",
+  "source": {
+    "commit": "28bf6d74f651b22acc0ee5a4154dcd21b861c81b",
+    "tree": "7acaeb92a51d88fd3c10f3edaed72e651eb42cb2",
+    "status": ""
+  },
+  "python": "3.12.14",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "command": [
+    "handoff-next/evidence/c205-validation/run_cpu_checks.py",
+    "--repo",
+    "repo",
+    "--output",
+    "handoff-next/evidence/c205-validation/candidate-ledger",
+    "--modules",
+    "tests.test_static_tray_admission_c201_ledger"
+  ],
+  "modules": [
+    "tests.test_static_tray_admission_c201_ledger"
+  ],
+  "moduleBindings": [
+    {
+      "path": "tests/test_static_tray_admission_c201_ledger.py",
+      "sha256": "ea363ae96a8e8ed441da0992fca870047f81f4deabb528786bca9306d85c7b1f"
+    }
+  ],
+  "testsRun": 36,
+  "passed": 36,
+  "failures": [],
+  "errors": [],
+  "skipped": [],
+  "executedIds": [
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_active_reservation_cannot_be_repeated_or_completed_with_forged_receipt",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_changed_protocol_bytes_are_not_approved",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_complete_observation_schedule_consumes_exactly_four_each",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_concurrent_reservation_cannot_double_consume",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_control_requires_named_finding_and_accepted_closure_preservation",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_controls_must_follow_a01_node_and_d01_then_d03",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_corrupt_replaced_aliased_or_missing_files_poison_live_capability",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_directory_change_does_not_allow_second_invocation",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_directory_sync_failure_does_not_erase_marker",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_each_failed_unknown_timeout_or_cancelled_stage_is_consumed",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_exact_approved_protocol_and_fixed_schedule",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_explicit_unknown_stop_and_journal_bound_are_terminal",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_failed_cleanup_blocks_receiving_or_promotion_or_next_slot",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_fifo_reservation_files_are_rejected_without_open_blocking",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_inspection_rejects_partial_or_noncanonical_journal",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_interrupt_after_durable_event_poisons_every_public_mutation",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_interrupted_finalization_is_not_reported_as_completed",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_invalid_stage_evidence_or_cleanup_type_stops",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_lost_append_sync_result_never_returns_a_reservation",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_marker_sync_failure_preserves_consumed_authority",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_missing_or_cleared_journal_never_resets_invocation",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_mutating_caller_schedule_cannot_change_live_contract",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_node_cannot_skip_conditional_promotion",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_orphaned_journal_also_blocks_new_invocation",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_partial_append_is_preserved_and_poisoned",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_path_aliases_overlap_and_nonempty_output_fail_before_claim",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_promotion_failure_or_uncertainty_blocks_node",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_readonly_inspection_never_creates_or_resumes_capability",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_receiving_node_and_promotion_cannot_skip_predecessors",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_regeneration_must_bind_its_exact_baseline_and_predecessor",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_rejects_historical_twelve_slot_schedule",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_rejects_malformed_or_changed_schedule_before_invocation",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_replaced_authority_or_output_directory_poison_live_capability",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_result_persistence_failure_preserves_prior_consumption",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_structural_failure_cannot_substitute_for_a_delivered_control",
+    "tests.test_static_tray_admission_c201_ledger.LedgerControls.test_wrong_slot_route_or_reference_stops_before_reservation"
+  ],
+  "childStartAttempts": [],
+  "testModuleInputsUnchanged": true,
+  "success": true,
+  "scope": "In-process CPU controls only; no native, receiving, Node, lifecycle or timed-author execution"
+}
