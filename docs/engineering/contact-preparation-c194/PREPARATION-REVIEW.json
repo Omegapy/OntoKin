@@ -1,0 +1,89 @@
+{
+  "version": "C194-independent-preparation-review-1",
+  "passed": true,
+  "decision": "approve exact reviewed preparation for sealing and four bounded coordinator builds; no author dispatch authorized",
+  "reviewer": "c194_review",
+  "reviewed_at_utc": "2026-11-10T22:09:42.028688+00:00",
+  "candidate_commit": "7c8a150a6678a52866b6b931f5a81517497a3257",
+  "base_commit": "3c9fcaa4daff7b32e7b813ba05041212c1a5bc2f",
+  "input_manifest_sha256": "1af793422365caef6398bfe06ba0fa8c9773a6a6b7ecb72048c00377e10fa6a1",
+  "input_files_verified": 589,
+  "input_bytes_verified": 15437452,
+  "required_dependency_paths_verified": 182,
+  "changed_paths": [
+    "docs/engineering/contact-preparation-c194/INPUTS.json",
+    "docs/engineering/contact-preparation-c194/PROTOCOL.md",
+    "docs/engineering/contact-preparation-c194/README.md",
+    "docs/engineering/contact-preparation-c194/check_artifact.py",
+    "docs/engineering/contact-preparation-c194/common.py",
+    "docs/engineering/contact-preparation-c194/finalize.py",
+    "docs/engineering/contact-preparation-c194/frozen/G-canonical.json",
+    "docs/engineering/contact-preparation-c194/frozen/H-canonical.json",
+    "docs/engineering/contact-preparation-c194/frozen/expectations.json",
+    "docs/engineering/contact-preparation-c194/inspect_scene.py",
+    "docs/engineering/contact-preparation-c194/run_preparation.py",
+    "docs/engineering/contact-preparation-c194/seal.py",
+    "docs/engineering/contact-preparation-c194/sources/G.ok",
+    "docs/engineering/contact-preparation-c194/sources/G.py",
+    "docs/engineering/contact-preparation-c194/sources/H.ok",
+    "docs/engineering/contact-preparation-c194/sources/H.py",
+    "docs/engineering/contact-preparation-c194/starters/gauge.ok",
+    "docs/engineering/contact-preparation-c194/starters/gauge.py",
+    "docs/engineering/contact-preparation-c194/static_check.py"
+  ],
+  "all_changes_in_new_c194_directory": true,
+  "worktree_clean": true,
+  "all_inherited_tracked_files_unchanged": true,
+  "unchanged_gate_groups": [
+    "unchanged_limits",
+    "unchanged_recording",
+    "unchanged_twenty_unrelated_pairs",
+    "mapping_invariants",
+    "runtime"
+  ],
+  "independent_source_equivalence_review": {
+    "file": "SOURCE-REVIEW.json",
+    "sha256": "e7a67da9e6a16f15e89c89c053b3fe159240ee4a1e47e5ce8991ff025df287f5",
+    "source_cases": 3,
+    "passed": true
+  },
+  "case_extension_controls": {
+    "file": "CASE-EXTENSION-CONTROLS.json",
+    "sha256": "79edcd969f45c793670e933a5fdd4c9018b8918afbcbd8a6af3cba08ba9e0531",
+    "controls": 6,
+    "passed": true
+  },
+  "reviewed_behavior": {
+    "native_build_matrix": [
+      "ok-G",
+      "python-G",
+      "ok-H",
+      "python-H"
+    ],
+    "maximum_fresh_builds": 4,
+    "case_data_only_checker_extension": true,
+    "native_scene_reopen_without_reconstruction": true,
+    "all_481_decoded_trace_records_required_equal": true,
+    "canonical_native_raw_final_route_files_required_byte_equal": true,
+    "right_lane_and_base_historical_trace_required_equal": true,
+    "rejected_artifacts_retained_and_measured_without_rebuild": true,
+    "execution_ledger_blocks_second_invocation": true,
+    "all_receiving_and_visual_checks_required": true,
+    "required_raw_final_glb_paths": 8,
+    "required_three_poses": 24,
+    "required_blender_imports": 4,
+    "required_original_render_panels": 12,
+    "failure_blocks_author_dispatch": true
+  },
+  "native_builds_executed_by_reviewer": 0,
+  "native_replays_executed_by_reviewer": 0,
+  "preparation_targets_executed_before_review": false,
+  "material_findings": [],
+  "scope_limits": [
+    "No target outcome is established by static review",
+    "Exact executable/environment still checked by runner",
+    "All fresh native, numerical, provenance, receiving and visual gates remain mandatory",
+    "Inherited legacy driver and torque failures retain their separate failed disposition",
+    "Public author protocol requires separate freeze after both targets qualify"
+  ]
+}

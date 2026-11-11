@@ -1,0 +1,54 @@
+{
+  "schema": "ontokin.c194.orchestrator-review/0.1",
+  "reviewer": "c194-preparation-efc8",
+  "reviewed_at_utc": "2026-11-10T22:21:24.057388+00:00",
+  "script": "/workspace/scratch/efc86516cbb7/ontokin/docs/engineering/contact-comparison-c194/verify_deliveries.py",
+  "sha256": "5be2048af2621c5a56f841272db501a7c3e3cc4b324c1172eab1dfe768299d7a",
+  "passed": true,
+  "scope": "Static review of after-dispatch orchestration; acceptance rules remain delegated to frozen C193/C194 readers and unchanged receiving tools",
+  "native_builds": 0,
+  "native_replays": 0,
+  "syntax_passed": true,
+  "checks_passed": [
+    "Frozen public manifest and inherited preparation verified",
+    "Author and coordinator frozen tool files verified",
+    "Pinned Blender executable checked before native work",
+    "Retained source hash and exact canonical case checked",
+    "Inherited source/implementation/test-hook provenance audit used",
+    "OntoKin accepted-store namespace and pointer checked",
+    "Unchanged independent source/playback/native-sample/continuous gates delegated",
+    "Unchanged saved-scene reopen uses complete481sample equality",
+    "Clean rebuild compared on canonical/native/raw/final bytes",
+    "Submitted-run inventory compared before and after validation",
+    "Receiving count/format/playback gates retained",
+    "Visual review explicitly remains pending",
+    "Failed automated gate cannot return success",
+    "Exact route/case matrix enforced before native work",
+    "Reuse G rows require first-accepted comparison paths",
+    "Author public manifest/freeze bytes must equal approved root bytes"
+  ],
+  "findings": [
+    {
+      "id": "M1",
+      "severity": "required",
+      "issue": "Manifest count alone does not enforce route/case matrix; two same-route G deliveries with distinct IDs could satisfy route_equality",
+      "fix": "Require exact unique pairs: first{(G,ok),(G,python)}; reuse{(G,ok),(G,python),(H,ok),(H,python)} before any native work",
+      "status": "resolved in4677188 before native validation"
+    },
+    {
+      "id": "M2",
+      "severity": "required",
+      "issue": "First-accepted regeneration check is optional through preserve_from; reuse G rows can omit it yet pass",
+      "fix": "Require preserve_from for both G rows in the four-row reuse invocation, bound to identified first accepted artifacts",
+      "status": "resolved in4677188 before native validation"
+    },
+    {
+      "id": "O1",
+      "severity": "recording_limit",
+      "issue": "Original editable source is outside submitted run inventory; script hashes it before validation but not after, and preserve_from checks only canonical/native/raw/final files",
+      "fix": "Record and compare submitted source hash after validation; independently retain first accepted source identity across reuse, either here or in a separate mandatory receipt"
+    }
+  ],
+  "decision": "M1 and M2 resolved; focused static orchestration review passes. Preserve original editable-source identity as noted O1 before claiming reuse preservation.",
+  "reviewed_commit": "4677188"
+}

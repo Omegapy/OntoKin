@@ -1,0 +1,2433 @@
+{
+  "schema": "ontokin.c194.source-accounting-review/0.1",
+  "passed": true,
+  "reviewer": "c194_evidence_audit",
+  "reviewed_at_utc": "2026-11-10T22:42:01.163402+00:00",
+  "scope": "Recovered actual authored sources, immutable submissions, phase chronology, native attempts, repair and available telemetry accounting",
+  "author_heads": {
+    "ok": "9031edddc48db12891a3504e31894da5770d75e7",
+    "python": "ae7b4f2da85873afbc154449b97f8231a698ef51"
+  },
+  "phases": [
+    {
+      "route": "ok",
+      "phase": "FIRST",
+      "started_utc": "2026-11-10T22:17:08+00:00",
+      "submitted_utc": "2026-11-10T22:19:36.044528+00:00",
+      "elapsed_s": 148.044528,
+      "formal_submissions": 1,
+      "native_attempts": 1,
+      "formal_repairs": 0,
+      "failed_commands": [
+        {
+          "command": "rg -n 'C193|C194|guided.contact' docs/README.md",
+          "cwd": "/workspace/scratch/efc86516cbb7/authors/ok",
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "",
+          "meaning": "No matching navigation entry; read the supplied specific tool paths directly. No build or candidate failed.",
+          "tool_output_chunk_id": "72decb"
+        }
+      ],
+      "provider_telemetry": null
+    },
+    {
+      "route": "ok",
+      "phase": "REUSE",
+      "started_utc": "2026-11-10T22:24:01+00:00",
+      "submitted_utc": "2026-11-10T22:26:29.670945+00:00",
+      "elapsed_s": 148.670945,
+      "formal_submissions": 1,
+      "native_attempts": 2,
+      "formal_repairs": 0,
+      "failed_commands": [],
+      "provider_telemetry": null
+    },
+    {
+      "route": "python",
+      "phase": "FIRST",
+      "started_utc": "2026-11-10T22:17:18+00:00",
+      "submitted_utc": "2026-11-10T22:19:46.335981+00:00",
+      "elapsed_s": 148.335981,
+      "formal_submissions": 1,
+      "native_attempts": 1,
+      "formal_repairs": 0,
+      "failed_commands": [
+        {
+          "command": "cat docs/engineering/guide-repair-c193/native/README.md && cat GOAL.md && rg -n 'C193|C194|guided-contact|guide-repair|contact-comparison' docs/README.md && sed -n '1,35p' docs/engineering/contact-comparison-c194/frozen/INPUTS.json",
+          "cwd": "/workspace/scratch/efc86516cbb7/authors/python",
+          "exit_code": 1,
+          "kind": "read_only_inspection",
+          "reason": "rg found no matching current-stage keywords in docs/README.md; its exit code prevented the trailing sed command. The two cat reads completed. No source or artifact changed.",
+          "native_build_attempt": false,
+          "tool_chunk_id": "afef92",
+          "stdout_note": "Complete native README and GOAL were returned in tool output; no rg match output.",
+          "stderr_observed": false
+        }
+      ],
+      "provider_telemetry": {
+        "tokens": null,
+        "cost": null,
+        "exact_model_snapshot": null,
+        "hidden_internal_turns": null,
+        "availability": "unavailable",
+        "default_model_and_settings": "assigned default; no override requested"
+      }
+    },
+    {
+      "route": "python",
+      "phase": "REUSE",
+      "started_utc": "2026-11-10T22:24:11+00:00",
+      "submitted_utc": "2026-11-10T22:26:31.918925+00:00",
+      "elapsed_s": 140.918925,
+      "formal_submissions": 1,
+      "native_attempts": 2,
+      "formal_repairs": 0,
+      "failed_commands": [],
+      "provider_telemetry": {
+        "tokens": null,
+        "cost": null,
+        "exact_model_snapshot": null,
+        "hidden_internal_turns": null,
+        "availability": "unavailable",
+        "default_model_and_settings": "same assigned author; no override requested"
+      }
+    }
+  ],
+  "single_coordinate_deltas": [
+    {
+      "route": "ok",
+      "phase": "first",
+      "before": "80",
+      "after": "65"
+    },
+    {
+      "route": "ok",
+      "phase": "reuse",
+      "before": "6",
+      "after": "7"
+    },
+    {
+      "route": "python",
+      "phase": "first",
+      "before": "80",
+      "after": "65"
+    },
+    {
+      "route": "python",
+      "phase": "reuse",
+      "before": "6",
+      "after": "7"
+    }
+  ],
+  "all_reference_hashes_verified": 373,
+  "unique_referenced_files_verified": 229,
+  "complete_submitted_inventories_verified": [
+    {
+      "stage": "first",
+      "id": "ok-first",
+      "files": 45,
+      "snapshot_sha256": "020e30964316e8a89358796943a7dd024fbc8eb3f9b5560f740038478d6ccfca",
+      "exact_inventory_and_bytes": true
+    },
+    {
+      "stage": "first",
+      "id": "python-first",
+      "files": 39,
+      "snapshot_sha256": "04e0cf9784e44f56042dd2c335b2b3c3d56560e9e9875dbca456ab7d3073111b",
+      "exact_inventory_and_bytes": true
+    },
+    {
+      "stage": "reuse",
+      "id": "ok-first-regenerated",
+      "files": 45,
+      "snapshot_sha256": "35480b5fcd35fb2e5cb78d56ded4469df53d2c9781266dab583fa50589564f72",
+      "exact_inventory_and_bytes": true
+    },
+    {
+      "stage": "reuse",
+      "id": "python-first-regenerated",
+      "files": 39,
+      "snapshot_sha256": "de3007983d08f1cecf56abaaf6f97438c6a073e52ee67ea5278a0844aeef18aa",
+      "exact_inventory_and_bytes": true
+    },
+    {
+      "stage": "reuse",
+      "id": "ok-reuse",
+      "files": 45,
+      "snapshot_sha256": "dd4745c5f8213b29c660caac6e6d5fbea97b86d821ea3f0007bfe541d133d026",
+      "exact_inventory_and_bytes": true
+    },
+    {
+      "stage": "reuse",
+      "id": "python-reuse",
+      "files": 39,
+      "snapshot_sha256": "125567c07bb417868e4bb0a7295e296f88cafa0042c759a8390a8224e4dd9e64",
+      "exact_inventory_and_bytes": true
+    }
+  ],
+  "first_acceptance_sha256": "d4e7540d0b20ace41c2ed2d5405cd1eef210d9af2fc58106627d491891b4a93e",
+  "reuse_results_sha256": "d41ae7aea9273eb900b16499b48c76c4043a13b50241e0bdc48c82227067f9d1",
+  "numerical_and_receiving_audit_sha256": "a77b777ff26055c6f21f72a77eec208033a2bb340c866ebae539092862f3cd75",
+  "qualified_before_dispatch": true,
+  "exactly_two_recorded_authors": true,
+  "same_authors_reused_own_accepted_sources": true,
+  "first_acceptance_precedes_both_reuse_phases": true,
+  "first_sources_and_output_bytes_preserved": true,
+  "first_pass_automatic_gates_both_phases": true,
+  "reuse_visual_acceptance_separate": true,
+  "native_author_builds": 6,
+  "failed_author_native_builds": 0,
+  "invalid_author_source_attempts": 0,
+  "formal_repair_turns": 0,
+  "failed_read_only_inspection_commands": 2,
+  "human_interventions": 0,
+  "coordinator_interventions_during_author_phases": 0,
+  "native_builds_by_this_recovery_audit": 0,
+  "author_redispatches_by_this_recovery_audit": 0,
+  "limits": [
+    "Counts and phase times are bound author receipts; unavailable provider tokens, cost, snapshot and hidden turns are not inferred",
+    "Two original dispatch records were written after author starts; recorded_utc denotes record publication, not exact provider dispatch time",
+    "The .ok and Python forms are prepared literal variants through a shared constructor; no general authoring advantage is established"
+  ],
+  "reference_checks": [
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ACCOUNTING-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/command.json",
+      "sha256": "52db240443be6933c191c6c93429368094c69d20cedf124d9829eaf014cba456",
+      "bytes": 2277
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ACCOUNTING-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/delivery.json",
+      "sha256": "52db240443be6933c191c6c93429368094c69d20cedf124d9829eaf014cba456",
+      "bytes": 2277
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ACCOUNTING-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/author-check-command.json",
+      "sha256": "aa7dedd860ba299fbb647f3b9be1c0a213729eec076aa8839b64c27384a9fe7b",
+      "bytes": 700
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ACCOUNTING-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/author-check-G.json",
+      "sha256": "de9c69f6f590b219f5dfbd7a339420663169a18eab9d9fa7db6d7596d54cd03a",
+      "bytes": 70101
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ACCOUNTING-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/OWN-CHECKS-FIRST.json",
+      "sha256": "bdde8622234d45cb58246616e7996bd87d9b91093e51e13cd32eed847c36d82a",
+      "bytes": 747
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-first-validation/ACCEPTANCE.json",
+      "sha256": "d4e7540d0b20ace41c2ed2d5405cd1eef210d9af2fc58106627d491891b4a93e",
+      "bytes": 3605
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SOURCE-EDIT-REUSE.json",
+      "sha256": "ae44a6a986105d9e0cd3b91d0fde5138650a906db8477f71c9932640c07b4030",
+      "bytes": 877
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SOURCE-DELTA-REUSE.patch",
+      "sha256": "c8ced9ac96387227e223610b643c307e5d4174e57cb2a9e4dc996110c458bc09",
+      "bytes": 415
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/command.json",
+      "sha256": "35e468a5f8e8fc77b4016e2c393310cd45b24eae0f2ed257d35a0f38653ae3cd",
+      "bytes": 2275
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/delivery.json",
+      "sha256": "35e468a5f8e8fc77b4016e2c393310cd45b24eae0f2ed257d35a0f38653ae3cd",
+      "bytes": 2275
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/command.json",
+      "sha256": "0f9edb998fa61b9dbf0e539c67bd6a12f1cef6d0654a764bfb4abae67f540aa6",
+      "bytes": 2299
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/delivery.json",
+      "sha256": "0f9edb998fa61b9dbf0e539c67bd6a12f1cef6d0654a764bfb4abae67f540aa6",
+      "bytes": 2299
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/author-check-command.json",
+      "sha256": "89bdabd0aa3a8830b4d1019cbad883edc1e04bf9fa002a42b806a15828f341b9",
+      "bytes": 700
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/author-check-H.json",
+      "sha256": "1cef9a1d6737a733a721ba94e2d19084e4403c21d7b9c67b78dbcc586f896614",
+      "bytes": 70678
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/author-check-command.json",
+      "sha256": "71e5b5487fb2addeb07c7e49fe7ec7d8e392b6cf6ac22f56f7a1038b1eb0e4a6",
+      "bytes": 722
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/author-check-G.json",
+      "sha256": "540cfb31076135ee5445e66e7e89bac521e12926bdf738b5fdf5ceaab93bd99d",
+      "bytes": 70113
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/OWN-CHECKS-REUSE.json",
+      "sha256": "204f1abc75978cafa4bbd113b9a60e7901db6e282abf55d098fbeaf1450f7428",
+      "bytes": 3214
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/EQUALITY-FIRST-REGENERATION.json",
+      "sha256": "3b5d6082a79387d70f9e54dd17032d28f041c41ff6bd36ea00df71b33a865a15",
+      "bytes": 3974
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/EQUALITY-FIRST-REGENERATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/canonical-input.json",
+      "sha256": "45967169571ae5d4c577c05db139ef356add0350eff2349259511199ec7db9a3",
+      "bytes": 2368
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/EQUALITY-FIRST-REGENERATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/canonical-input.json",
+      "sha256": "45967169571ae5d4c577c05db139ef356add0350eff2349259511199ec7db9a3",
+      "bytes": 2368
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/EQUALITY-FIRST-REGENERATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/native-transforms.json",
+      "sha256": "00bcfa6b7002f9da86c7d7fe5609f2a50d81e028b497a188bb30b933d44cd1c3",
+      "bytes": 924010
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/EQUALITY-FIRST-REGENERATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/native-transforms.json",
+      "sha256": "00bcfa6b7002f9da86c7d7fe5609f2a50d81e028b497a188bb30b933d44cd1c3",
+      "bytes": 924010
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/EQUALITY-FIRST-REGENERATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/raw.glb",
+      "sha256": "7d07926c6010abc8b67e317c53bb45742398c6b60c6df2f225e5555d81d4b265",
+      "bytes": 33640
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/EQUALITY-FIRST-REGENERATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/raw.glb",
+      "sha256": "7d07926c6010abc8b67e317c53bb45742398c6b60c6df2f225e5555d81d4b265",
+      "bytes": 33640
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/EQUALITY-FIRST-REGENERATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/final.glb",
+      "sha256": "dde807fe51758fc00d5a95cb9bfe48d6234ec4f8d35c6ad9c7c5a726bb693319",
+      "bytes": 33588
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/EQUALITY-FIRST-REGENERATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/final.glb",
+      "sha256": "dde807fe51758fc00d5a95cb9bfe48d6234ec4f8d35c6ad9c7c5a726bb693319",
+      "bytes": 33588
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/EQUALITY-FIRST-REGENERATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/native-trace.csv",
+      "sha256": "bc2f5d52430394ec29c6912ab72083d8f6ca73a4baa806128b6b98e79dd53a0e",
+      "bytes": 65057
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/EQUALITY-FIRST-REGENERATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/native-trace.csv",
+      "sha256": "bc2f5d52430394ec29c6912ab72083d8f6ca73a4baa806128b6b98e79dd53a0e",
+      "bytes": 65057
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/PRE-REUSE-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ACCOUNTING-FIRST.json",
+      "sha256": "cc8c8a37f1e497ab71de84850e7e02bff307a1d0780424061c2907c9718ab8aa",
+      "bytes": 11351
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/PRE-REUSE-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ARTIFACT-INVENTORY-FIRST.json",
+      "sha256": "b039c76ea234556bce58d27b55a68d39b1820fa4fee615fd32ed57d7a90304f3",
+      "bytes": 8848
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/PRE-REUSE-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/OWN-CHECKS-FIRST.json",
+      "sha256": "bdde8622234d45cb58246616e7996bd87d9b91093e51e13cd32eed847c36d82a",
+      "bytes": 747
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/PRE-REUSE-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SOURCE-DELTA-FIRST.patch",
+      "sha256": "59d01904f4d260228ad6ada68053f9b5a610b77435c4f1631ffc6890e3fb9479",
+      "bytes": 414
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/PRE-REUSE-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SOURCE-EDIT-FIRST.json",
+      "sha256": "688dae6ee7ff630cc25f6b3514ca2e8d45b5838c8c5f0d725274707b371660c8",
+      "bytes": 854
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/PRE-REUSE-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "sha256": "084034d6b952185d5548ee922069c2500db4f7c63982c2493b1d1bb0151a717d",
+      "bytes": 10458
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/PRE-REUSE-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/first.ok",
+      "sha256": "ba105a8ca6e9c19dfd06fabd7a06a2254c4ba14d76042dfa88ca365d5de6f7ee",
+      "bytes": 3398
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/first.ok",
+      "sha256": "ba105a8ca6e9c19dfd06fabd7a06a2254c4ba14d76042dfa88ca365d5de6f7ee",
+      "bytes": 3398
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-preparation-c194/starters/gauge.ok",
+      "sha256": "5ad8be95df1ce1320f0f6e4c5bfe36ea78755f5cf3b6a0e95b87cdc5f9ea16c1",
+      "bytes": 3398
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SOURCE-EDIT-FIRST.json",
+      "sha256": "688dae6ee7ff630cc25f6b3514ca2e8d45b5838c8c5f0d725274707b371660c8",
+      "bytes": 854
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SOURCE-DELTA-FIRST.patch",
+      "sha256": "59d01904f4d260228ad6ada68053f9b5a610b77435c4f1631ffc6890e3fb9479",
+      "bytes": 414
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/state.json",
+      "sha256": "0ceab4cfd477703a66e63a25cc1e0171cb0f4c5bddb8418c1ced0a30ac21f6a7",
+      "bytes": 366
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/command.json",
+      "sha256": "52db240443be6933c191c6c93429368094c69d20cedf124d9829eaf014cba456",
+      "bytes": 2277
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ARTIFACT-INVENTORY-FIRST.json",
+      "sha256": "b039c76ea234556bce58d27b55a68d39b1820fa4fee615fd32ed57d7a90304f3",
+      "bytes": 8848
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/source.ok",
+      "sha256": "ba105a8ca6e9c19dfd06fabd7a06a2254c4ba14d76042dfa88ca365d5de6f7ee",
+      "bytes": 3398
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/canonical-input.json",
+      "sha256": "45967169571ae5d4c577c05db139ef356add0350eff2349259511199ec7db9a3",
+      "bytes": 2368
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/scene.blend",
+      "sha256": "2f19d71ea0f9bb79f0cbf97e5a5bef3aa3f2fcb989dd00904497c6baa3ec59b1",
+      "bytes": 613968
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/native-transforms.json",
+      "sha256": "00bcfa6b7002f9da86c7d7fe5609f2a50d81e028b497a188bb30b933d44cd1c3",
+      "bytes": 924010
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/native-trace.csv",
+      "sha256": "bc2f5d52430394ec29c6912ab72083d8f6ca73a4baa806128b6b98e79dd53a0e",
+      "bytes": 65057
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/raw.glb",
+      "sha256": "7d07926c6010abc8b67e317c53bb45742398c6b60c6df2f225e5555d81d4b265",
+      "bytes": 33640
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/final.glb",
+      "sha256": "dde807fe51758fc00d5a95cb9bfe48d6234ec4f8d35c6ad9c7c5a726bb693319",
+      "bytes": 33588
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/manifest.json",
+      "sha256": "9c00952aa4c7d95a937d8a437415a1f2bded31e056fc8bf88055b2271e83e0b4",
+      "bytes": 3873
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/source-manifest.json",
+      "sha256": "018a23a8a2cda4579c3e8316f0db3f5f633474468b1f65e3bcaf4fcf81018c11",
+      "bytes": 23169
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/implementation-manifest.json",
+      "sha256": "64cf6b084963d6ee86555985d18066ebe5b8a5c7d6566c8f4845a26ae333b674",
+      "bytes": 1417
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/backend.json",
+      "sha256": "9ce64fd758b4e7f659ddd9d4bb3bcf7a0faa6a1883cc018c673e10536fe0aefe",
+      "bytes": 14039
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/native-configuration.json",
+      "sha256": "51acfcc37d8d3bdd553eca9e41721f2f2257f6377ebb135844dda47547d1f88b",
+      "bytes": 22791
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/native-command.json",
+      "sha256": "bd348069210ab3c4aaeb05a66b7bf74aac276f1cfe47726f4fff0d2da82d76dc",
+      "bytes": 1066
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/native-summary.json",
+      "sha256": "7cd383a928e28f8e1bc164dc28ded75a440863358be427174786d879afa9f3e7",
+      "bytes": 692
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/native-validation.json",
+      "sha256": "ba7916bf21bef6c7072d98fccb36a7d6afbe3a22fe4a5c2ce294e2029a50f1ab",
+      "bytes": 483
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/native-scene-validation.json",
+      "sha256": "6153c5195a77d794b5008c03f23c6dcb1f985c7c52b7ab2c167bdb9f56b82a62",
+      "bytes": 673
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/mapping.json",
+      "sha256": "7ddb73ff9a9fe24e4ebe0d3dd02b9dbba8905195a7ca6f623ee0d8e22bde20c8",
+      "bytes": 9995
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/store/artifacts/469f5d87001047acb47d2c219b3ae96b/post-export.json",
+      "sha256": "d48d2570a620e97df78fbe5d2220e8690b28d26b5214e0f4f39463c7ca69064a",
+      "bytes": 4852
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/delivery.json",
+      "sha256": "52db240443be6933c191c6c93429368094c69d20cedf124d9829eaf014cba456",
+      "bytes": 2277
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ACCOUNTING-FIRST.json",
+      "sha256": "cc8c8a37f1e497ab71de84850e7e02bff307a1d0780424061c2907c9718ab8aa",
+      "bytes": 11351
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/OWN-CHECKS-FIRST.json",
+      "sha256": "bdde8622234d45cb58246616e7996bd87d9b91093e51e13cd32eed847c36d82a",
+      "bytes": 747
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-01/author-check-G.json",
+      "sha256": "de9c69f6f590b219f5dfbd7a339420663169a18eab9d9fa7db6d7596d54cd03a",
+      "bytes": 70101
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/first.ok",
+      "sha256": "ba105a8ca6e9c19dfd06fabd7a06a2254c4ba14d76042dfa88ca365d5de6f7ee",
+      "bytes": 3398
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/reuse.ok",
+      "sha256": "2143515f358e36c1dd9a1deef83dba2519a99be6141b64d8bd9dae987761fbd0",
+      "bytes": 3398
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-first-validation/ACCEPTANCE.json",
+      "sha256": "d4e7540d0b20ace41c2ed2d5405cd1eef210d9af2fc58106627d491891b4a93e",
+      "bytes": 3605
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-FIRST.json",
+      "sha256": "084034d6b952185d5548ee922069c2500db4f7c63982c2493b1d1bb0151a717d",
+      "bytes": 10458
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SOURCE-EDIT-REUSE.json",
+      "sha256": "ae44a6a986105d9e0cd3b91d0fde5138650a906db8477f71c9932640c07b4030",
+      "bytes": 877
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SOURCE-DELTA-REUSE.patch",
+      "sha256": "c8ced9ac96387227e223610b643c307e5d4174e57cb2a9e4dc996110c458bc09",
+      "bytes": 415
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/PRE-REUSE-PRESERVATION.json",
+      "sha256": "e7878e5226ee2e8eab960c2c959b1975d2456982fe403188ae43b06a18adf93c",
+      "bytes": 2722
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/reuse.ok",
+      "sha256": "2143515f358e36c1dd9a1deef83dba2519a99be6141b64d8bd9dae987761fbd0",
+      "bytes": 3398
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/command.json",
+      "sha256": "35e468a5f8e8fc77b4016e2c393310cd45b24eae0f2ed257d35a0f38653ae3cd",
+      "bytes": 2275
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/delivery.json",
+      "sha256": "35e468a5f8e8fc77b4016e2c393310cd45b24eae0f2ed257d35a0f38653ae3cd",
+      "bytes": 2275
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/author-check-command.json",
+      "sha256": "89bdabd0aa3a8830b4d1019cbad883edc1e04bf9fa002a42b806a15828f341b9",
+      "bytes": 700
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/author-check-H.json",
+      "sha256": "1cef9a1d6737a733a721ba94e2d19084e4403c21d7b9c67b78dbcc586f896614",
+      "bytes": 70678
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/store/state.json",
+      "sha256": "30a6502050e5c2081ea6b59e9e0a7bdcd902f3e5b3ffa10a5dde7c891d294665",
+      "bytes": 366
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/store/artifacts/15699cbbbf8842b3836f999dab6aa05a/source.ok",
+      "sha256": "2143515f358e36c1dd9a1deef83dba2519a99be6141b64d8bd9dae987761fbd0",
+      "bytes": 3398
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/store/artifacts/15699cbbbf8842b3836f999dab6aa05a/canonical-input.json",
+      "sha256": "a9ba6e08493dfd102d3e7dd2020394eca536cc8ec70d5a3b27571ae1aee840b9",
+      "bytes": 2368
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/store/artifacts/15699cbbbf8842b3836f999dab6aa05a/scene.blend",
+      "sha256": "fc9e1d6f56c7b28878f4961bce3e4089791fa7d44f99b08fe52f24d01a356233",
+      "bytes": 613968
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/store/artifacts/15699cbbbf8842b3836f999dab6aa05a/native-transforms.json",
+      "sha256": "1142acf6edfebdf5271d3fe1a2fad14b176e7c698d7da0cdc11dc116a64be85d",
+      "bytes": 916969
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/store/artifacts/15699cbbbf8842b3836f999dab6aa05a/native-trace.csv",
+      "sha256": "940fc0231f2909d8b5d78e8add85aa20640ead5e30aec675e945e0214a87fcf8",
+      "bytes": 65724
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/store/artifacts/15699cbbbf8842b3836f999dab6aa05a/raw.glb",
+      "sha256": "86715a1936de7e4ba938807fff5b94efab13816ad9ffb7aa73f41eccb1bd7f4f",
+      "bytes": 33640
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/store/artifacts/15699cbbbf8842b3836f999dab6aa05a/final.glb",
+      "sha256": "8d8f7ed65b9201bbdaa2f2b1f2b07cdbc93730e144d7be7a15e86c3309d92226",
+      "bytes": 33588
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/store/artifacts/15699cbbbf8842b3836f999dab6aa05a/manifest.json",
+      "sha256": "b0a8cfdd51a60eb65d0b5f62b6a871b98ae5e2483904a17f8840148a789768fc",
+      "bytes": 3873
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/store/artifacts/15699cbbbf8842b3836f999dab6aa05a/source-manifest.json",
+      "sha256": "350489ec4c4c477477a8807631e19787c8f40271e13111c923576714ae5bd068",
+      "bytes": 23169
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/store/artifacts/15699cbbbf8842b3836f999dab6aa05a/implementation-manifest.json",
+      "sha256": "7b78324e037bd85abac5bb3ab46316970b23edc64de66ffef9d4fa27b1f72426",
+      "bytes": 1417
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/store/artifacts/15699cbbbf8842b3836f999dab6aa05a/backend.json",
+      "sha256": "9ce64fd758b4e7f659ddd9d4bb3bcf7a0faa6a1883cc018c673e10536fe0aefe",
+      "bytes": 14039
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/store/artifacts/15699cbbbf8842b3836f999dab6aa05a/native-configuration.json",
+      "sha256": "6ce75101c8792c56351cd5d5abb730607e572eb4ca8b571c848af469f6907860",
+      "bytes": 22793
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/store/artifacts/15699cbbbf8842b3836f999dab6aa05a/native-command.json",
+      "sha256": "64e62b37c84930c905c878dffc4ce9975f95e0e8ff36133146e084c437c92f92",
+      "bytes": 1066
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/store/artifacts/15699cbbbf8842b3836f999dab6aa05a/native-summary.json",
+      "sha256": "0244c0cc59792c620f3989e5246735029b0151c8d5a253070520a48b903dc5c5",
+      "bytes": 694
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/store/artifacts/15699cbbbf8842b3836f999dab6aa05a/native-validation.json",
+      "sha256": "191a901fcbbaa6f15c8456e0a69d685b829aecba3b074416d33a70acd5bf3109",
+      "bytes": 483
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/store/artifacts/15699cbbbf8842b3836f999dab6aa05a/native-scene-validation.json",
+      "sha256": "7538c1cea0e1128dc62ab1f3827214bbf4cf47ae4bed3535cef48d3833e577d1",
+      "bytes": 673
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/store/artifacts/15699cbbbf8842b3836f999dab6aa05a/mapping.json",
+      "sha256": "598ac9ec7ee3101bdaa17e57c5ab15e63a6dd7298c1d5a6c10390c5af9349802",
+      "bytes": 9997
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/reuse-01/store/artifacts/15699cbbbf8842b3836f999dab6aa05a/post-export.json",
+      "sha256": "eeca8e34d51cc40709f184a10913a91888b4b3b3ac4ec654d19be08afb9a3037",
+      "bytes": 5069
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/first.ok",
+      "sha256": "ba105a8ca6e9c19dfd06fabd7a06a2254c4ba14d76042dfa88ca365d5de6f7ee",
+      "bytes": 3398
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/command.json",
+      "sha256": "0f9edb998fa61b9dbf0e539c67bd6a12f1cef6d0654a764bfb4abae67f540aa6",
+      "bytes": 2299
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/delivery.json",
+      "sha256": "0f9edb998fa61b9dbf0e539c67bd6a12f1cef6d0654a764bfb4abae67f540aa6",
+      "bytes": 2299
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/author-check-command.json",
+      "sha256": "71e5b5487fb2addeb07c7e49fe7ec7d8e392b6cf6ac22f56f7a1038b1eb0e4a6",
+      "bytes": 722
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/author-check-G.json",
+      "sha256": "540cfb31076135ee5445e66e7e89bac521e12926bdf738b5fdf5ceaab93bd99d",
+      "bytes": 70113
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/state.json",
+      "sha256": "cb80f8bc7f5c0ff1db896d96558dceb70b8930efeed3789feec2928e9b8d7a31",
+      "bytes": 366
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/source.ok",
+      "sha256": "ba105a8ca6e9c19dfd06fabd7a06a2254c4ba14d76042dfa88ca365d5de6f7ee",
+      "bytes": 3398
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/canonical-input.json",
+      "sha256": "45967169571ae5d4c577c05db139ef356add0350eff2349259511199ec7db9a3",
+      "bytes": 2368
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/scene.blend",
+      "sha256": "13488117a3cacda64425a8fc73dcd2288c2a15e4d1480be4eec364556d7f596d",
+      "bytes": 613968
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/native-transforms.json",
+      "sha256": "00bcfa6b7002f9da86c7d7fe5609f2a50d81e028b497a188bb30b933d44cd1c3",
+      "bytes": 924010
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/native-trace.csv",
+      "sha256": "bc2f5d52430394ec29c6912ab72083d8f6ca73a4baa806128b6b98e79dd53a0e",
+      "bytes": 65057
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/raw.glb",
+      "sha256": "7d07926c6010abc8b67e317c53bb45742398c6b60c6df2f225e5555d81d4b265",
+      "bytes": 33640
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/final.glb",
+      "sha256": "dde807fe51758fc00d5a95cb9bfe48d6234ec4f8d35c6ad9c7c5a726bb693319",
+      "bytes": 33588
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/manifest.json",
+      "sha256": "50d3356bb89bc3145dab3bbeb4c320e0973ba31965a8b8012e539e39028397e2",
+      "bytes": 3873
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/source-manifest.json",
+      "sha256": "018a23a8a2cda4579c3e8316f0db3f5f633474468b1f65e3bcaf4fcf81018c11",
+      "bytes": 23169
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/implementation-manifest.json",
+      "sha256": "7b78324e037bd85abac5bb3ab46316970b23edc64de66ffef9d4fa27b1f72426",
+      "bytes": 1417
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/backend.json",
+      "sha256": "9ce64fd758b4e7f659ddd9d4bb3bcf7a0faa6a1883cc018c673e10536fe0aefe",
+      "bytes": 14039
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/native-configuration.json",
+      "sha256": "51acfcc37d8d3bdd553eca9e41721f2f2257f6377ebb135844dda47547d1f88b",
+      "bytes": 22791
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/native-command.json",
+      "sha256": "3222265d1da56cad13ea214e615480553f0546449582a8941e7804206f92976e",
+      "bytes": 1126
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/native-summary.json",
+      "sha256": "7cd383a928e28f8e1bc164dc28ded75a440863358be427174786d879afa9f3e7",
+      "bytes": 692
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/native-validation.json",
+      "sha256": "ba7916bf21bef6c7072d98fccb36a7d6afbe3a22fe4a5c2ce294e2029a50f1ab",
+      "bytes": 483
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/native-scene-validation.json",
+      "sha256": "6b22964aec271b0d3ee86a27f33c163ef218e197fa910c32ca304aa8ccda4550",
+      "bytes": 673
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/mapping.json",
+      "sha256": "7ddb73ff9a9fe24e4ebe0d3dd02b9dbba8905195a7ca6f623ee0d8e22bde20c8",
+      "bytes": 9995
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/ok/first-regenerated-01/store/artifacts/0d4b9069fbde4a24822902e1031b10e2/post-export.json",
+      "sha256": "d48d2570a620e97df78fbe5d2220e8690b28d26b5214e0f4f39463c7ca69064a",
+      "bytes": 4852
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ARTIFACT-INVENTORY-REUSE.json",
+      "sha256": "846b5d9909977d6d1266372edc609850ce8df54041b1a782ca40d2718f9c3876",
+      "bytes": 19617
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/ACCOUNTING-REUSE.json",
+      "sha256": "e1fa2f47fa41622f1fd68a0b2c58f86e9995f19e245378d5e86b66430cc2f2cc",
+      "bytes": 15973
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/OWN-CHECKS-REUSE.json",
+      "sha256": "204f1abc75978cafa4bbd113b9a60e7901db6e282abf55d098fbeaf1450f7428",
+      "bytes": 3214
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/ok/docs/engineering/contact-comparison-c194/authors/ok/EQUALITY-FIRST-REGENERATION.json",
+      "sha256": "3b5d6082a79387d70f9e54dd17032d28f041c41ff6bd36ea00df71b33a865a15",
+      "bytes": 3974
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "sha256": "b5f91aa52228488a53de3a47a060949df6eeda59e0458ec3d98d1f4c34c9e60e",
+      "bytes": 15400
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-first-validation/ACCEPTANCE.json",
+      "sha256": "d4e7540d0b20ace41c2ed2d5405cd1eef210d9af2fc58106627d491891b4a93e",
+      "bytes": 3605
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/command.json",
+      "sha256": "cd344835560a2aa706cfdce6bebc01e875945918e12ea148785e7232d5004659",
+      "bytes": 2188
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/build-receipt.json",
+      "sha256": "a05e599638de8d301906bd53dba8bb3e4609fa199daaa631c8b0220820a96c69",
+      "bytes": 1714
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/command.json",
+      "sha256": "bb8c5a023c989e094c2c7c7e94237f857f478e8ce4c375afe66c28554e887f65",
+      "bytes": 2211
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/build-receipt.json",
+      "sha256": "61101cbe98948c75a0f039d9d6c26d3ae22261d38e794c08046a0facea0e95cb",
+      "bytes": 1725
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "sha256": "cfc46a2820d3c24823d79a6f8c33d08eaf3d5fbe1d9d18dc494fffd9013f5ca5",
+      "bytes": 11798
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-SOURCE-EDIT.json",
+      "sha256": "5247da99dddb133cb255e5d21b5a74d7643a3c4ef18bd586257c956b5de617e9",
+      "bytes": 1042
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-check-01-command.json",
+      "sha256": "0715b36c47a509ce5f38e525587564c2ba072b3091801cfbc135f279c41c9746",
+      "bytes": 839
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-check-01.json",
+      "sha256": "458a394fc7dda476136f0a467a3037c5dd0af03052fca37174f4941b6794a506",
+      "bytes": 70642
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-check-01-command.json",
+      "sha256": "69bb9b0e1549f314e810a3c218d53a86bf44cd87149be00820ec4e61ccaa0574",
+      "bytes": 899
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-check-01.json",
+      "sha256": "48ccaf47b7dbba37868e8957e1aad2ef430765fc54810f9c23b2d24f1b684e13",
+      "bytes": 70077
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/ACCOUNTING-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-VERIFICATION.json",
+      "sha256": "985b347945d82b69fb4c9e24611a00645f7938dbe3387745153fb4c8394e755a",
+      "bytes": 5378
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/AUTHOR-ACCOUNTING-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/command.json",
+      "sha256": "04f33b5b179a0bd983129a875bd322bb94ef462ada14ee681286e41aa942d7f7",
+      "bytes": 2189
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/AUTHOR-ACCOUNTING-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/build-receipt.json",
+      "sha256": "8511f3cb22111a5a41f35f49a82681df8d69ad2a306b44a3208e1f9a34e8b0e8",
+      "bytes": 1712
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/AUTHOR-ACCOUNTING-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/FIRST-SOURCE-EDIT.json",
+      "sha256": "4c66800fbc8be332da2d1aa3639c81f837736407a51cba3e65b62ce181d20451",
+      "bytes": 1085
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/AUTHOR-ACCOUNTING-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-check-01-command.json",
+      "sha256": "0550404f381b0577b22ada881e014d661d6aae00d697092afc9055544ab6fd4f",
+      "bytes": 837
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/AUTHOR-ACCOUNTING-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-check-01.json",
+      "sha256": "f97835e85d91cbcf52a6fce7b75abbc9a72877fab3dec9922ae168d2b5d10104",
+      "bytes": 70065
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/AUTHOR-ACCOUNTING-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-input-preservation.json",
+      "sha256": "0a310dd62e7ba9743f1bcd8cc96a6f918e0f01a946717cbfe8e03412972a1555",
+      "bytes": 246
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/AUTHOR-ACCOUNTING-FIRST.json",
+      "sha256": "23aac71209c2042ab4b34ab416b441e60a90cc0b220d6028ce7f18b571e6db22",
+      "bytes": 6457
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/FIRST-SOURCE-DELTA.patch",
+      "sha256": "34761c2e80f1415b22b628183dd92ba3490f0abb2264718727e87d0ccef52dfd",
+      "bytes": 614
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/FIRST-SOURCE-EDIT.json",
+      "sha256": "4c66800fbc8be332da2d1aa3639c81f837736407a51cba3e65b62ce181d20451",
+      "bytes": 1085
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "sha256": "b5f91aa52228488a53de3a47a060949df6eeda59e0458ec3d98d1f4c34c9e60e",
+      "bytes": 15400
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/first.py",
+      "sha256": "f0d2fe39ba77aaea14eac7e7782709b99e8903b519afe83a429e0e8b887cf158",
+      "bytes": 4951
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/backend.json",
+      "sha256": "9ce64fd758b4e7f659ddd9d4bb3bcf7a0faa6a1883cc018c673e10536fe0aefe",
+      "bytes": 14039
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/build-receipt.json",
+      "sha256": "8511f3cb22111a5a41f35f49a82681df8d69ad2a306b44a3208e1f9a34e8b0e8",
+      "bytes": 1712
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/canonical-input.json",
+      "sha256": "45967169571ae5d4c577c05db139ef356add0350eff2349259511199ec7db9a3",
+      "bytes": 2368
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/direct-runner.py",
+      "sha256": "1be526486b86a697ace350975ca679ca0311f8cfe89ef6ea9e09a6a264aacab3",
+      "bytes": 6509
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/final.glb",
+      "sha256": "dde807fe51758fc00d5a95cb9bfe48d6234ec4f8d35c6ad9c7c5a726bb693319",
+      "bytes": 33588
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/__init__.py",
+      "sha256": "b7d36fc4d913db028ab31d53b7d978ac5d7a1fe70b9baaf66a6b1d915b418661",
+      "bytes": 84
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/__main__.py",
+      "sha256": "09a06e30b3c298207a3a0f36c208213b906f55c245f00d1ed5e2a72fedfd59cb",
+      "bytes": 1321
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/api.py",
+      "sha256": "cdbbb7f9440edbb4c466a940545986261f7269c669ca760f9cb90731e71c92bd",
+      "bytes": 4991
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/common.py",
+      "sha256": "ddb7d1d61df6f07d302524e5bcf7d52c818ee4e773bc82b29bf7cc8a6f00b20c",
+      "bytes": 12161
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/glb.py",
+      "sha256": "3c3187c288955139dd9dbbfc0127b42d084e6bcd58c95a191cf0c17363d6bd40",
+      "bytes": 12648
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/native_validation.py",
+      "sha256": "e71085acaf92f2f1758f9dcc0c3a01f219276f59a202121fce80525bf69e3d53",
+      "bytes": 22380
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/native_worker.py",
+      "sha256": "00aa0d0d0d7bb1b9067d4e93e56de45c6e2f7e6f5c15a1edf5b11119cd87f928",
+      "bytes": 17444
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/playback_projection.py",
+      "sha256": "b5c4d1821c885a8e4080a1b5af5e77210cdd33bf055f2e88544e5a084d833153",
+      "bytes": 13246
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/source.py",
+      "sha256": "81b9db80b3ee0e5b798eddae8f2735635a76bca9e9a91525d6061ba2dd7d25a3",
+      "bytes": 22408
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/supervisor.py",
+      "sha256": "172bed0e4f295481f2332b1716d08080803a4fc2d434a9546465b894cbbb64ff",
+      "bytes": 6711
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/transaction.py",
+      "sha256": "233d31ec1e75c3815ff10329f2f3fa91506eb8ef15331f6f6740a6514736ec37",
+      "bytes": 14482
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation-manifest.json",
+      "sha256": "64cf6b084963d6ee86555985d18066ebe5b8a5c7d6566c8f4845a26ae333b674",
+      "bytes": 1417
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/manifest.json",
+      "sha256": "532374b41f6b664e4a1fd0965de8c819fc37a12c5754974e0ed16dad16aa39bd",
+      "bytes": 3805
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/mapping.json",
+      "sha256": "f52130f84b90fa96ecf272562b8d5e35c9331e04f6fd25992dfd58c39742ab48",
+      "bytes": 9995
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native-command.json",
+      "sha256": "1976e0943159a3304d6ca9979e64f8a31fa319f69e2ee92ae2844a166cba280a",
+      "bytes": 891
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native-configuration.json",
+      "sha256": "e3f6c9ab5b0c2e28f56cfa3117e48d2bc602acfc5808f26e11819eb1b57732fa",
+      "bytes": 22791
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native-result.json",
+      "sha256": "3b82f2f58752e8e60eb78e678de8bd6f3239a3fdd6882b7e244b926978c7a061",
+      "bytes": 947142
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native-scene-validation.json",
+      "sha256": "fe10cbb8de3a266a9be19dfe34e4a50e1cd1185b2209b3975b6e07de85aaa463",
+      "bytes": 673
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native-summary.json",
+      "sha256": "0e4303a65f0a6ba8e6feb4c44f1482612209bf10b3d0065cdedc0a26b3fc5edf",
+      "bytes": 692
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native-trace.csv",
+      "sha256": "bc2f5d52430394ec29c6912ab72083d8f6ca73a4baa806128b6b98e79dd53a0e",
+      "bytes": 65057
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native-transforms.json",
+      "sha256": "00bcfa6b7002f9da86c7d7fe5609f2a50d81e028b497a188bb30b933d44cd1c3",
+      "bytes": 924010
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native-validation.json",
+      "sha256": "7d1d994488f401a215e35591dfc946712cb4af6ba26571f2a51bb035fa502b87",
+      "bytes": 483
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native.stdout.txt",
+      "sha256": "72f9756f77e36e341c86b3c08b9c1406e655ac8d2b5baaf7b635a52c7693b702",
+      "bytes": 174
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/post-export.json",
+      "sha256": "d48d2570a620e97df78fbe5d2220e8690b28d26b5214e0f4f39463c7ca69064a",
+      "bytes": 4852
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/raw.glb",
+      "sha256": "7d07926c6010abc8b67e317c53bb45742398c6b60c6df2f225e5555d81d4b265",
+      "bytes": 33640
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/scene.blend",
+      "sha256": "e33570a394e71c85d893d8f57ccf938f3a2f27eb883e60c7cf3b9ff533096f96",
+      "bytes": 613968
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/source-manifest.json",
+      "sha256": "895c56ad7710ccefe4f6073cfedffe85fc7f18db6ec6dbf42b7f54ffa7a8ba57",
+      "bytes": 2197
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/source.py",
+      "sha256": "f0d2fe39ba77aaea14eac7e7782709b99e8903b519afe83a429e0e8b887cf158",
+      "bytes": 4951
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/command.json",
+      "sha256": "04f33b5b179a0bd983129a875bd322bb94ef462ada14ee681286e41aa942d7f7",
+      "bytes": 2189
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/delivery.json",
+      "sha256": "04f33b5b179a0bd983129a875bd322bb94ef462ada14ee681286e41aa942d7f7",
+      "bytes": 2189
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/stdout.txt",
+      "sha256": "ccffb37f481a342a7e6895ed22db0c4e82e873f600a7ee43c987e272a3baff9f",
+      "bytes": 1793
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/submitted-source.py",
+      "sha256": "f0d2fe39ba77aaea14eac7e7782709b99e8903b519afe83a429e0e8b887cf158",
+      "bytes": 4951
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-check-01-command.json",
+      "sha256": "0550404f381b0577b22ada881e014d661d6aae00d697092afc9055544ab6fd4f",
+      "bytes": 837
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-check-01.json",
+      "sha256": "f97835e85d91cbcf52a6fce7b75abbc9a72877fab3dec9922ae168d2b5d10104",
+      "bytes": 70065
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-check-01.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-check-01.stdout.txt",
+      "sha256": "c482c596274d252aa57aea00f55a9f63543b1fccdd6aa9dd739f11a30577e962",
+      "bytes": 129
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-input-preservation.json",
+      "sha256": "0a310dd62e7ba9743f1bcd8cc96a6f918e0f01a946717cbfe8e03412972a1555",
+      "bytes": 246
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/backend.json",
+      "sha256": "9ce64fd758b4e7f659ddd9d4bb3bcf7a0faa6a1883cc018c673e10536fe0aefe",
+      "bytes": 14039
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/build-receipt.json",
+      "sha256": "a05e599638de8d301906bd53dba8bb3e4609fa199daaa631c8b0220820a96c69",
+      "bytes": 1714
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/canonical-input.json",
+      "sha256": "a9ba6e08493dfd102d3e7dd2020394eca536cc8ec70d5a3b27571ae1aee840b9",
+      "bytes": 2368
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/direct-runner.py",
+      "sha256": "1be526486b86a697ace350975ca679ca0311f8cfe89ef6ea9e09a6a264aacab3",
+      "bytes": 6509
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/final.glb",
+      "sha256": "8d8f7ed65b9201bbdaa2f2b1f2b07cdbc93730e144d7be7a15e86c3309d92226",
+      "bytes": 33588
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/implementation/__init__.py",
+      "sha256": "b7d36fc4d913db028ab31d53b7d978ac5d7a1fe70b9baaf66a6b1d915b418661",
+      "bytes": 84
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/implementation/__main__.py",
+      "sha256": "09a06e30b3c298207a3a0f36c208213b906f55c245f00d1ed5e2a72fedfd59cb",
+      "bytes": 1321
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/implementation/api.py",
+      "sha256": "cdbbb7f9440edbb4c466a940545986261f7269c669ca760f9cb90731e71c92bd",
+      "bytes": 4991
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/implementation/common.py",
+      "sha256": "ddb7d1d61df6f07d302524e5bcf7d52c818ee4e773bc82b29bf7cc8a6f00b20c",
+      "bytes": 12161
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/implementation/glb.py",
+      "sha256": "3c3187c288955139dd9dbbfc0127b42d084e6bcd58c95a191cf0c17363d6bd40",
+      "bytes": 12648
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/implementation/native_validation.py",
+      "sha256": "e71085acaf92f2f1758f9dcc0c3a01f219276f59a202121fce80525bf69e3d53",
+      "bytes": 22380
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/implementation/native_worker.py",
+      "sha256": "00aa0d0d0d7bb1b9067d4e93e56de45c6e2f7e6f5c15a1edf5b11119cd87f928",
+      "bytes": 17444
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/implementation/playback_projection.py",
+      "sha256": "b5c4d1821c885a8e4080a1b5af5e77210cdd33bf055f2e88544e5a084d833153",
+      "bytes": 13246
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/implementation/source.py",
+      "sha256": "81b9db80b3ee0e5b798eddae8f2735635a76bca9e9a91525d6061ba2dd7d25a3",
+      "bytes": 22408
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/implementation/supervisor.py",
+      "sha256": "172bed0e4f295481f2332b1716d08080803a4fc2d434a9546465b894cbbb64ff",
+      "bytes": 6711
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/implementation/transaction.py",
+      "sha256": "233d31ec1e75c3815ff10329f2f3fa91506eb8ef15331f6f6740a6514736ec37",
+      "bytes": 14482
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/implementation-manifest.json",
+      "sha256": "8eb0dde591e32528280487e4423ddbab83f3f23453b84f3f1abae494eccb4db6",
+      "bytes": 1417
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/manifest.json",
+      "sha256": "d0b6440c9d6cc141201a2592d339ee5bbfca1a0677194f444e7fbe1c0cf7c5a7",
+      "bytes": 3805
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/mapping.json",
+      "sha256": "2053c376eae3247d91998515829532dfa942feec0e3ff2efa9235fcf2d8fcb5e",
+      "bytes": 9997
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/native-command.json",
+      "sha256": "6931ca6541b7bf329b71c0ca18ce285a27df3c8e0790be4fc9fa68fdf386b23f",
+      "bytes": 891
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/native-configuration.json",
+      "sha256": "89a45f3bc6adc02584c5920f364967b7efa1b40fdb8f6edb50c862789f5ad846",
+      "bytes": 22793
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/native-result.json",
+      "sha256": "26e4e1e1562029edb0eccbf6a340cd85d7f3680755681da631bb87671c6d1151",
+      "bytes": 940103
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/native-scene-validation.json",
+      "sha256": "5ddfc0b953a5e443e74752ebb76f011d92d67c0cab40b30873445d5efc8fdb77",
+      "bytes": 673
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/native-summary.json",
+      "sha256": "f31844f11a1746515364bc650e9c7c75921c76ec0f78357e2fb1119498e83241",
+      "bytes": 694
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/native-trace.csv",
+      "sha256": "940fc0231f2909d8b5d78e8add85aa20640ead5e30aec675e945e0214a87fcf8",
+      "bytes": 65724
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/native-transforms.json",
+      "sha256": "1142acf6edfebdf5271d3fe1a2fad14b176e7c698d7da0cdc11dc116a64be85d",
+      "bytes": 916969
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/native-validation.json",
+      "sha256": "2d92a2bd1f8a1d3d99b383230dd465565e6d57ea6421cacfe3850136cfb4d396",
+      "bytes": 483
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/native.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/native.stdout.txt",
+      "sha256": "72f9756f77e36e341c86b3c08b9c1406e655ac8d2b5baaf7b635a52c7693b702",
+      "bytes": 174
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/post-export.json",
+      "sha256": "eeca8e34d51cc40709f184a10913a91888b4b3b3ac4ec654d19be08afb9a3037",
+      "bytes": 5069
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/raw.glb",
+      "sha256": "86715a1936de7e4ba938807fff5b94efab13816ad9ffb7aa73f41eccb1bd7f4f",
+      "bytes": 33640
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/scene.blend",
+      "sha256": "34cbac392adf7c9be81e4abf1afc7f27b1abce44aaf8464aebeb05833b6ac2be",
+      "bytes": 613968
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/source-manifest.json",
+      "sha256": "eeee403b2bcdf794acd305d8049aef6c2150ba671d4d4d296b59a1c5d57a6759",
+      "bytes": 2197
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/source.py",
+      "sha256": "c8530e67bdc8d5afa6be10091476544f12623824e4862a7a12ff7b42f0d55bde",
+      "bytes": 4951
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/command.json",
+      "sha256": "cd344835560a2aa706cfdce6bebc01e875945918e12ea148785e7232d5004659",
+      "bytes": 2188
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/delivery.json",
+      "sha256": "cd344835560a2aa706cfdce6bebc01e875945918e12ea148785e7232d5004659",
+      "bytes": 2188
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/stdout.txt",
+      "sha256": "0605fb399ff3dcc93965e3900455e3adf6e99717880f79f23039f142d0d2f71d",
+      "bytes": 1795
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/submitted-source.py",
+      "sha256": "c8530e67bdc8d5afa6be10091476544f12623824e4862a7a12ff7b42f0d55bde",
+      "bytes": 4951
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/backend.json",
+      "sha256": "9ce64fd758b4e7f659ddd9d4bb3bcf7a0faa6a1883cc018c673e10536fe0aefe",
+      "bytes": 14039
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/build-receipt.json",
+      "sha256": "61101cbe98948c75a0f039d9d6c26d3ae22261d38e794c08046a0facea0e95cb",
+      "bytes": 1725
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/canonical-input.json",
+      "sha256": "45967169571ae5d4c577c05db139ef356add0350eff2349259511199ec7db9a3",
+      "bytes": 2368
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/direct-runner.py",
+      "sha256": "1be526486b86a697ace350975ca679ca0311f8cfe89ef6ea9e09a6a264aacab3",
+      "bytes": 6509
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/final.glb",
+      "sha256": "dde807fe51758fc00d5a95cb9bfe48d6234ec4f8d35c6ad9c7c5a726bb693319",
+      "bytes": 33588
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/implementation/__init__.py",
+      "sha256": "b7d36fc4d913db028ab31d53b7d978ac5d7a1fe70b9baaf66a6b1d915b418661",
+      "bytes": 84
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/implementation/__main__.py",
+      "sha256": "09a06e30b3c298207a3a0f36c208213b906f55c245f00d1ed5e2a72fedfd59cb",
+      "bytes": 1321
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/implementation/api.py",
+      "sha256": "cdbbb7f9440edbb4c466a940545986261f7269c669ca760f9cb90731e71c92bd",
+      "bytes": 4991
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/implementation/common.py",
+      "sha256": "ddb7d1d61df6f07d302524e5bcf7d52c818ee4e773bc82b29bf7cc8a6f00b20c",
+      "bytes": 12161
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/implementation/glb.py",
+      "sha256": "3c3187c288955139dd9dbbfc0127b42d084e6bcd58c95a191cf0c17363d6bd40",
+      "bytes": 12648
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/implementation/native_validation.py",
+      "sha256": "e71085acaf92f2f1758f9dcc0c3a01f219276f59a202121fce80525bf69e3d53",
+      "bytes": 22380
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/implementation/native_worker.py",
+      "sha256": "00aa0d0d0d7bb1b9067d4e93e56de45c6e2f7e6f5c15a1edf5b11119cd87f928",
+      "bytes": 17444
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/implementation/playback_projection.py",
+      "sha256": "b5c4d1821c885a8e4080a1b5af5e77210cdd33bf055f2e88544e5a084d833153",
+      "bytes": 13246
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/implementation/source.py",
+      "sha256": "81b9db80b3ee0e5b798eddae8f2735635a76bca9e9a91525d6061ba2dd7d25a3",
+      "bytes": 22408
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/implementation/supervisor.py",
+      "sha256": "172bed0e4f295481f2332b1716d08080803a4fc2d434a9546465b894cbbb64ff",
+      "bytes": 6711
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/implementation/transaction.py",
+      "sha256": "233d31ec1e75c3815ff10329f2f3fa91506eb8ef15331f6f6740a6514736ec37",
+      "bytes": 14482
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/implementation-manifest.json",
+      "sha256": "8eb0dde591e32528280487e4423ddbab83f3f23453b84f3f1abae494eccb4db6",
+      "bytes": 1417
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/manifest.json",
+      "sha256": "b3344cc09ae77318078242554f20d8cd38ffffbbcd7883c8087f376f2e9e2087",
+      "bytes": 3805
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/mapping.json",
+      "sha256": "f52130f84b90fa96ecf272562b8d5e35c9331e04f6fd25992dfd58c39742ab48",
+      "bytes": 9995
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/native-command.json",
+      "sha256": "c26507692cdba9d0ec3384e1a8c3b2bb88100b25e4acc44e9dc4cbbbdbb6369c",
+      "bytes": 951
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/native-configuration.json",
+      "sha256": "e3f6c9ab5b0c2e28f56cfa3117e48d2bc602acfc5808f26e11819eb1b57732fa",
+      "bytes": 22791
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/native-result.json",
+      "sha256": "3b82f2f58752e8e60eb78e678de8bd6f3239a3fdd6882b7e244b926978c7a061",
+      "bytes": 947142
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/native-scene-validation.json",
+      "sha256": "5d7ccb445b8986366b7c3bdea2973f74cdf1dbd32b2a1a82c154f63542dba556",
+      "bytes": 673
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/native-summary.json",
+      "sha256": "0e4303a65f0a6ba8e6feb4c44f1482612209bf10b3d0065cdedc0a26b3fc5edf",
+      "bytes": 692
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/native-trace.csv",
+      "sha256": "bc2f5d52430394ec29c6912ab72083d8f6ca73a4baa806128b6b98e79dd53a0e",
+      "bytes": 65057
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/native-transforms.json",
+      "sha256": "00bcfa6b7002f9da86c7d7fe5609f2a50d81e028b497a188bb30b933d44cd1c3",
+      "bytes": 924010
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/native-validation.json",
+      "sha256": "7d1d994488f401a215e35591dfc946712cb4af6ba26571f2a51bb035fa502b87",
+      "bytes": 483
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/native.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/native.stdout.txt",
+      "sha256": "72f9756f77e36e341c86b3c08b9c1406e655ac8d2b5baaf7b635a52c7693b702",
+      "bytes": 174
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/post-export.json",
+      "sha256": "d48d2570a620e97df78fbe5d2220e8690b28d26b5214e0f4f39463c7ca69064a",
+      "bytes": 4852
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/raw.glb",
+      "sha256": "7d07926c6010abc8b67e317c53bb45742398c6b60c6df2f225e5555d81d4b265",
+      "bytes": 33640
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/scene.blend",
+      "sha256": "ebbea67dbf4521bd1f58a55b52b5018f808dedd14c9e6016e150184a0a38bba1",
+      "bytes": 613968
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/source-manifest.json",
+      "sha256": "895c56ad7710ccefe4f6073cfedffe85fc7f18db6ec6dbf42b7f54ffa7a8ba57",
+      "bytes": 2197
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/source.py",
+      "sha256": "f0d2fe39ba77aaea14eac7e7782709b99e8903b519afe83a429e0e8b887cf158",
+      "bytes": 4951
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/command.json",
+      "sha256": "bb8c5a023c989e094c2c7c7e94237f857f478e8ce4c375afe66c28554e887f65",
+      "bytes": 2211
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/delivery.json",
+      "sha256": "bb8c5a023c989e094c2c7c7e94237f857f478e8ce4c375afe66c28554e887f65",
+      "bytes": 2211
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/stdout.txt",
+      "sha256": "2aa4d58859f1d979cca3d210ee7b139ff5846df316532139f66ee0b8b0b429c4",
+      "bytes": 1806
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/submitted-source.py",
+      "sha256": "f0d2fe39ba77aaea14eac7e7782709b99e8903b519afe83a429e0e8b887cf158",
+      "bytes": 4951
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-check-01.json",
+      "sha256": "458a394fc7dda476136f0a467a3037c5dd0af03052fca37174f4941b6794a506",
+      "bytes": 70642
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-check-01.stdout.txt",
+      "sha256": "4173085a5aa83d68f98c4bfae00678ecb5c07b17228af82db724e2568125d7c1",
+      "bytes": 127
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-check-01.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-check-01-command.json",
+      "sha256": "0715b36c47a509ce5f38e525587564c2ba072b3091801cfbc135f279c41c9746",
+      "bytes": 839
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-check-01.json",
+      "sha256": "48ccaf47b7dbba37868e8957e1aad2ef430765fc54810f9c23b2d24f1b684e13",
+      "bytes": 70077
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-check-01.stdout.txt",
+      "sha256": "c482c596274d252aa57aea00f55a9f63543b1fccdd6aa9dd739f11a30577e962",
+      "bytes": 129
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-check-01.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-check-01-command.json",
+      "sha256": "69bb9b0e1549f314e810a3c218d53a86bf44cd87149be00820ec4e61ccaa0574",
+      "bytes": 899
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/first.py",
+      "sha256": "f0d2fe39ba77aaea14eac7e7782709b99e8903b519afe83a429e0e8b887cf158",
+      "bytes": 4951
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/FIRST-SOURCE-EDIT.json",
+      "sha256": "4c66800fbc8be332da2d1aa3639c81f837736407a51cba3e65b62ce181d20451",
+      "bytes": 1085
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/FIRST-SOURCE-DELTA.patch",
+      "sha256": "34761c2e80f1415b22b628183dd92ba3490f0abb2264718727e87d0ccef52dfd",
+      "bytes": 614
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/AUTHOR-ACCOUNTING-FIRST.json",
+      "sha256": "23aac71209c2042ab4b34ab416b441e60a90cc0b220d6028ce7f18b571e6db22",
+      "bytes": 6457
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/scene.blend",
+      "sha256": "e33570a394e71c85d893d8f57ccf938f3a2f27eb883e60c7cf3b9ff533096f96",
+      "bytes": 613968
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/canonical-input.json",
+      "sha256": "45967169571ae5d4c577c05db139ef356add0350eff2349259511199ec7db9a3",
+      "bytes": 2368
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native-result.json",
+      "sha256": "3b82f2f58752e8e60eb78e678de8bd6f3239a3fdd6882b7e244b926978c7a061",
+      "bytes": 947142
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native-transforms.json",
+      "sha256": "00bcfa6b7002f9da86c7d7fe5609f2a50d81e028b497a188bb30b933d44cd1c3",
+      "bytes": 924010
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native-trace.csv",
+      "sha256": "bc2f5d52430394ec29c6912ab72083d8f6ca73a4baa806128b6b98e79dd53a0e",
+      "bytes": 65057
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/raw.glb",
+      "sha256": "7d07926c6010abc8b67e317c53bb45742398c6b60c6df2f225e5555d81d4b265",
+      "bytes": 33640
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/final.glb",
+      "sha256": "dde807fe51758fc00d5a95cb9bfe48d6234ec4f8d35c6ad9c7c5a726bb693319",
+      "bytes": 33588
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/build-receipt.json",
+      "sha256": "8511f3cb22111a5a41f35f49a82681df8d69ad2a306b44a3208e1f9a34e8b0e8",
+      "bytes": 1712
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/command.json",
+      "sha256": "04f33b5b179a0bd983129a875bd322bb94ef462ada14ee681286e41aa942d7f7",
+      "bytes": 2189
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/manifest.json",
+      "sha256": "532374b41f6b664e4a1fd0965de8c819fc37a12c5754974e0ed16dad16aa39bd",
+      "bytes": 3805
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-check-01.json",
+      "sha256": "f97835e85d91cbcf52a6fce7b75abbc9a72877fab3dec9922ae168d2b5d10104",
+      "bytes": 70065
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-input-preservation.json",
+      "sha256": "0a310dd62e7ba9743f1bcd8cc96a6f918e0f01a946717cbfe8e03412972a1555",
+      "bytes": 246
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/backend.json",
+      "sha256": "9ce64fd758b4e7f659ddd9d4bb3bcf7a0faa6a1883cc018c673e10536fe0aefe",
+      "bytes": 14039
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/build-receipt.json",
+      "sha256": "8511f3cb22111a5a41f35f49a82681df8d69ad2a306b44a3208e1f9a34e8b0e8",
+      "bytes": 1712
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/canonical-input.json",
+      "sha256": "45967169571ae5d4c577c05db139ef356add0350eff2349259511199ec7db9a3",
+      "bytes": 2368
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/direct-runner.py",
+      "sha256": "1be526486b86a697ace350975ca679ca0311f8cfe89ef6ea9e09a6a264aacab3",
+      "bytes": 6509
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/final.glb",
+      "sha256": "dde807fe51758fc00d5a95cb9bfe48d6234ec4f8d35c6ad9c7c5a726bb693319",
+      "bytes": 33588
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/__init__.py",
+      "sha256": "b7d36fc4d913db028ab31d53b7d978ac5d7a1fe70b9baaf66a6b1d915b418661",
+      "bytes": 84
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/__main__.py",
+      "sha256": "09a06e30b3c298207a3a0f36c208213b906f55c245f00d1ed5e2a72fedfd59cb",
+      "bytes": 1321
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/api.py",
+      "sha256": "cdbbb7f9440edbb4c466a940545986261f7269c669ca760f9cb90731e71c92bd",
+      "bytes": 4991
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/common.py",
+      "sha256": "ddb7d1d61df6f07d302524e5bcf7d52c818ee4e773bc82b29bf7cc8a6f00b20c",
+      "bytes": 12161
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/glb.py",
+      "sha256": "3c3187c288955139dd9dbbfc0127b42d084e6bcd58c95a191cf0c17363d6bd40",
+      "bytes": 12648
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/native_validation.py",
+      "sha256": "e71085acaf92f2f1758f9dcc0c3a01f219276f59a202121fce80525bf69e3d53",
+      "bytes": 22380
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/native_worker.py",
+      "sha256": "00aa0d0d0d7bb1b9067d4e93e56de45c6e2f7e6f5c15a1edf5b11119cd87f928",
+      "bytes": 17444
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/playback_projection.py",
+      "sha256": "b5c4d1821c885a8e4080a1b5af5e77210cdd33bf055f2e88544e5a084d833153",
+      "bytes": 13246
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/source.py",
+      "sha256": "81b9db80b3ee0e5b798eddae8f2735635a76bca9e9a91525d6061ba2dd7d25a3",
+      "bytes": 22408
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/supervisor.py",
+      "sha256": "172bed0e4f295481f2332b1716d08080803a4fc2d434a9546465b894cbbb64ff",
+      "bytes": 6711
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation/transaction.py",
+      "sha256": "233d31ec1e75c3815ff10329f2f3fa91506eb8ef15331f6f6740a6514736ec37",
+      "bytes": 14482
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/implementation-manifest.json",
+      "sha256": "64cf6b084963d6ee86555985d18066ebe5b8a5c7d6566c8f4845a26ae333b674",
+      "bytes": 1417
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/manifest.json",
+      "sha256": "532374b41f6b664e4a1fd0965de8c819fc37a12c5754974e0ed16dad16aa39bd",
+      "bytes": 3805
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/mapping.json",
+      "sha256": "f52130f84b90fa96ecf272562b8d5e35c9331e04f6fd25992dfd58c39742ab48",
+      "bytes": 9995
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native-command.json",
+      "sha256": "1976e0943159a3304d6ca9979e64f8a31fa319f69e2ee92ae2844a166cba280a",
+      "bytes": 891
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native-configuration.json",
+      "sha256": "e3f6c9ab5b0c2e28f56cfa3117e48d2bc602acfc5808f26e11819eb1b57732fa",
+      "bytes": 22791
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native-result.json",
+      "sha256": "3b82f2f58752e8e60eb78e678de8bd6f3239a3fdd6882b7e244b926978c7a061",
+      "bytes": 947142
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native-scene-validation.json",
+      "sha256": "fe10cbb8de3a266a9be19dfe34e4a50e1cd1185b2209b3975b6e07de85aaa463",
+      "bytes": 673
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native-summary.json",
+      "sha256": "0e4303a65f0a6ba8e6feb4c44f1482612209bf10b3d0065cdedc0a26b3fc5edf",
+      "bytes": 692
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native-trace.csv",
+      "sha256": "bc2f5d52430394ec29c6912ab72083d8f6ca73a4baa806128b6b98e79dd53a0e",
+      "bytes": 65057
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native-transforms.json",
+      "sha256": "00bcfa6b7002f9da86c7d7fe5609f2a50d81e028b497a188bb30b933d44cd1c3",
+      "bytes": 924010
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native-validation.json",
+      "sha256": "7d1d994488f401a215e35591dfc946712cb4af6ba26571f2a51bb035fa502b87",
+      "bytes": 483
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/native.stdout.txt",
+      "sha256": "72f9756f77e36e341c86b3c08b9c1406e655ac8d2b5baaf7b635a52c7693b702",
+      "bytes": 174
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/post-export.json",
+      "sha256": "d48d2570a620e97df78fbe5d2220e8690b28d26b5214e0f4f39463c7ca69064a",
+      "bytes": 4852
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/raw.glb",
+      "sha256": "7d07926c6010abc8b67e317c53bb45742398c6b60c6df2f225e5555d81d4b265",
+      "bytes": 33640
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/scene.blend",
+      "sha256": "e33570a394e71c85d893d8f57ccf938f3a2f27eb883e60c7cf3b9ff533096f96",
+      "bytes": 613968
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/source-manifest.json",
+      "sha256": "895c56ad7710ccefe4f6073cfedffe85fc7f18db6ec6dbf42b7f54ffa7a8ba57",
+      "bytes": 2197
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/artifact/source.py",
+      "sha256": "f0d2fe39ba77aaea14eac7e7782709b99e8903b519afe83a429e0e8b887cf158",
+      "bytes": 4951
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/command.json",
+      "sha256": "04f33b5b179a0bd983129a875bd322bb94ef462ada14ee681286e41aa942d7f7",
+      "bytes": 2189
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/delivery.json",
+      "sha256": "04f33b5b179a0bd983129a875bd322bb94ef462ada14ee681286e41aa942d7f7",
+      "bytes": 2189
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/stdout.txt",
+      "sha256": "ccffb37f481a342a7e6895ed22db0c4e82e873f600a7ee43c987e272a3baff9f",
+      "bytes": 1793
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-01/submitted-source.py",
+      "sha256": "f0d2fe39ba77aaea14eac7e7782709b99e8903b519afe83a429e0e8b887cf158",
+      "bytes": 4951
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-check-01-command.json",
+      "sha256": "0550404f381b0577b22ada881e014d661d6aae00d697092afc9055544ab6fd4f",
+      "bytes": 837
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-check-01.json",
+      "sha256": "f97835e85d91cbcf52a6fce7b75abbc9a72877fab3dec9922ae168d2b5d10104",
+      "bytes": 70065
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-check-01.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-check-01.stdout.txt",
+      "sha256": "c482c596274d252aa57aea00f55a9f63543b1fccdd6aa9dd739f11a30577e962",
+      "bytes": 129
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-input-preservation.json",
+      "sha256": "0a310dd62e7ba9743f1bcd8cc96a6f918e0f01a946717cbfe8e03412972a1555",
+      "bytes": 246
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/frozen/FREEZE.json",
+      "sha256": "41a47821ab073beeac121679f13b5da661edc55c396d0f68edff58154943847c",
+      "bytes": 789
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/reuse.py",
+      "sha256": "c8530e67bdc8d5afa6be10091476544f12623824e4862a7a12ff7b42f0d55bde",
+      "bytes": 4951
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/first.py",
+      "sha256": "f0d2fe39ba77aaea14eac7e7782709b99e8903b519afe83a429e0e8b887cf158",
+      "bytes": 4951
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-FIRST.json",
+      "sha256": "b5f91aa52228488a53de3a47a060949df6eeda59e0458ec3d98d1f4c34c9e60e",
+      "bytes": 15400
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-first-validation/ACCEPTANCE.json",
+      "sha256": "d4e7540d0b20ace41c2ed2d5405cd1eef210d9af2fc58106627d491891b4a93e",
+      "bytes": 3605
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-SOURCE-EDIT.json",
+      "sha256": "5247da99dddb133cb255e5d21b5a74d7643a3c4ef18bd586257c956b5de617e9",
+      "bytes": 1042
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-SOURCE-DELTA.patch",
+      "sha256": "410700615436e450fed75a56b466a56196813f48dbfafbbab401e6313cdf481e",
+      "bytes": 619
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/ACCOUNTING-REUSE.json",
+      "sha256": "e1cce1d8e51fe47698ff38003af841b0728ba90c0172e493307c331a97f5fb96",
+      "bytes": 9932
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/reuse.py",
+      "sha256": "c8530e67bdc8d5afa6be10091476544f12623824e4862a7a12ff7b42f0d55bde",
+      "bytes": 4951
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/scene.blend",
+      "sha256": "34cbac392adf7c9be81e4abf1afc7f27b1abce44aaf8464aebeb05833b6ac2be",
+      "bytes": 613968
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/canonical-input.json",
+      "sha256": "a9ba6e08493dfd102d3e7dd2020394eca536cc8ec70d5a3b27571ae1aee840b9",
+      "bytes": 2368
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/native-result.json",
+      "sha256": "26e4e1e1562029edb0eccbf6a340cd85d7f3680755681da631bb87671c6d1151",
+      "bytes": 940103
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/native-transforms.json",
+      "sha256": "1142acf6edfebdf5271d3fe1a2fad14b176e7c698d7da0cdc11dc116a64be85d",
+      "bytes": 916969
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/native-trace.csv",
+      "sha256": "940fc0231f2909d8b5d78e8add85aa20640ead5e30aec675e945e0214a87fcf8",
+      "bytes": 65724
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/raw.glb",
+      "sha256": "86715a1936de7e4ba938807fff5b94efab13816ad9ffb7aa73f41eccb1bd7f4f",
+      "bytes": 33640
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/final.glb",
+      "sha256": "8d8f7ed65b9201bbdaa2f2b1f2b07cdbc93730e144d7be7a15e86c3309d92226",
+      "bytes": 33588
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/command.json",
+      "sha256": "cd344835560a2aa706cfdce6bebc01e875945918e12ea148785e7232d5004659",
+      "bytes": 2188
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/build-receipt.json",
+      "sha256": "a05e599638de8d301906bd53dba8bb3e4609fa199daaa631c8b0220820a96c69",
+      "bytes": 1714
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-01/artifact/manifest.json",
+      "sha256": "d0b6440c9d6cc141201a2592d339ee5bbfca1a0677194f444e7fbe1c0cf7c5a7",
+      "bytes": 3805
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/reuse-check-01.json",
+      "sha256": "458a394fc7dda476136f0a467a3037c5dd0af03052fca37174f4941b6794a506",
+      "bytes": 70642
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/first.py",
+      "sha256": "f0d2fe39ba77aaea14eac7e7782709b99e8903b519afe83a429e0e8b887cf158",
+      "bytes": 4951
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/scene.blend",
+      "sha256": "ebbea67dbf4521bd1f58a55b52b5018f808dedd14c9e6016e150184a0a38bba1",
+      "bytes": 613968
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/canonical-input.json",
+      "sha256": "45967169571ae5d4c577c05db139ef356add0350eff2349259511199ec7db9a3",
+      "bytes": 2368
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/native-result.json",
+      "sha256": "3b82f2f58752e8e60eb78e678de8bd6f3239a3fdd6882b7e244b926978c7a061",
+      "bytes": 947142
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/native-transforms.json",
+      "sha256": "00bcfa6b7002f9da86c7d7fe5609f2a50d81e028b497a188bb30b933d44cd1c3",
+      "bytes": 924010
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/native-trace.csv",
+      "sha256": "bc2f5d52430394ec29c6912ab72083d8f6ca73a4baa806128b6b98e79dd53a0e",
+      "bytes": 65057
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/raw.glb",
+      "sha256": "7d07926c6010abc8b67e317c53bb45742398c6b60c6df2f225e5555d81d4b265",
+      "bytes": 33640
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/final.glb",
+      "sha256": "dde807fe51758fc00d5a95cb9bfe48d6234ec4f8d35c6ad9c7c5a726bb693319",
+      "bytes": 33588
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/command.json",
+      "sha256": "bb8c5a023c989e094c2c7c7e94237f857f478e8ce4c375afe66c28554e887f65",
+      "bytes": 2211
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/build-receipt.json",
+      "sha256": "61101cbe98948c75a0f039d9d6c26d3ae22261d38e794c08046a0facea0e95cb",
+      "bytes": 1725
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-01/artifact/manifest.json",
+      "sha256": "b3344cc09ae77318078242554f20d8cd38ffffbbcd7883c8087f376f2e9e2087",
+      "bytes": 3805
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/c194-author-runs/python/first-regenerated-check-01.json",
+      "sha256": "48ccaf47b7dbba37868e8957e1aad2ef430765fc54810f9c23b2d24f1b684e13",
+      "bytes": 70077
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-INITIAL-PRESERVATION.json",
+      "sha256": "cfc46a2820d3c24823d79a6f8c33d08eaf3d5fbe1d9d18dc494fffd9013f5ca5",
+      "bytes": 11798
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-VERIFICATION.json",
+      "sha256": "985b347945d82b69fb4c9e24611a00645f7938dbe3387745153fb4c8394e755a",
+      "bytes": 5378
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/REUSE-RUN-INVENTORY.json",
+      "sha256": "eecde108d9771fedab2ecb996c905d4afd97b664c48f16df291bbed460f7e90d",
+      "bytes": 20083
+    },
+    {
+      "origin": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/authors/python/SUBMISSION-REUSE.json",
+      "path": "/workspace/scratch/efc86516cbb7/authors/python/docs/engineering/contact-comparison-c194/frozen/FREEZE.json",
+      "sha256": "41a47821ab073beeac121679f13b5da661edc55c396d0f68edff58154943847c",
+      "bytes": 789
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "version": "C194-independent-case-extension-controls-1",
+  "passed": true,
+  "checks": [
+    {
+      "source_case": "G",
+      "gate_case": "G",
+      "expected": true,
+      "accepted": true,
+      "passed": true,
+      "rejection": null
+    },
+    {
+      "source_case": "H",
+      "gate_case": "H",
+      "expected": true,
+      "accepted": true,
+      "passed": true,
+      "rejection": null
+    },
+    {
+      "source_case": "G",
+      "gate_case": "H",
+      "expected": false,
+      "accepted": false,
+      "passed": true,
+      "rejection": "Canonical source differs from independently frozen design/case/binding"
+    },
+    {
+      "source_case": "H",
+      "gate_case": "G",
+      "expected": false,
+      "accepted": false,
+      "passed": true,
+      "rejection": "Canonical source differs from independently frozen design/case/binding"
+    },
+    {
+      "mutation": "right_stop",
+      "expected": false,
+      "accepted": false,
+      "passed": true,
+      "rejection": "Canonical source differs from independently frozen design/case/binding"
+    },
+    {
+      "mutation": "body_mass",
+      "expected": false,
+      "accepted": false,
+      "passed": true,
+      "rejection": "Canonical source differs from independently frozen design/case/binding"
+    }
+  ],
+  "controls": 6,
+  "native_builds": 0,
+  "scope": "Synthetic canonical source controls only; no artifact, scene, solver or receiving execution",
+  "wrapper_sha256": "4e0b42c060b01778396b5404468cc2d2f039e6a852a72a31bbe5bef290d8e15a",
+  "expectations_sha256": "481c414396c5ccf27fdcfe609e9284b85d0dd850604300323e9c47a9e4f60581"
+}

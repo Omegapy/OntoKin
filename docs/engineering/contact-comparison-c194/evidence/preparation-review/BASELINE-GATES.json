@@ -1,0 +1,132 @@
+{
+  "version": "C194-independent-baseline-gates-1",
+  "reviewer": "c194_review",
+  "reviewed_at_utc": "2026-11-10T22:04:25.520926+00:00",
+  "observed_base_commit": "3c9fcaa4daff7b32e7b813ba05041212c1a5bc2f",
+  "scope": "Read-only baseline review; no C194 target executed; candidate audit pending",
+  "expected_target_cases": [
+    {
+      "id": "G",
+      "left_stop_near_face_mm": 365.0,
+      "left_final_travel_mm": 185.0,
+      "ideal_first_contact_s": 1.48,
+      "left_shoe_collider_enabled": true
+    },
+    {
+      "id": "H",
+      "left_stop_near_face_mm": 375.0,
+      "left_final_travel_mm": 195.0,
+      "ideal_first_contact_s": 1.56,
+      "left_shoe_collider_enabled": true
+    }
+  ],
+  "required_unchanged_limits": {
+    "initial_bounds_and_dimensions_mm": 0.2,
+    "linear_color_channel": 0.005,
+    "fixed_part_or_attachment_drift_mm": 0.1,
+    "final_travel_mm": 0.5,
+    "final_signed_gap_mm": 0.5,
+    "contact_onset_s": 0.005,
+    "precontact_and_right_speed_mm_s": 0.5,
+    "postcontact_speed_mm_s": 0.5,
+    "postcontact_speed_check_starts_after_ideal_s": 0.025,
+    "postcontact_rebound_displacement_mm": 0.1,
+    "maximum_native_fixed_step_s": 0.0004166666666666667,
+    "raw_to_final_vertex_mapping_mm": 0.2,
+    "positive_contact_maximum_near_face_penetration_mm": 0.5
+  },
+  "required_unchanged_recording": {
+    "duration_s": 2,
+    "fps": 240,
+    "keys": 481,
+    "frame_sequence": [
+      0,
+      480
+    ],
+    "time_rule": "Native capture is all frame/240 times. Every final GLB time is the unchanged IEEE float32 encoding of the corresponding native time; raw and final time accessors are identical. No dropped, added, interpolated, retimed or reordered samples.",
+    "x_rule": "Every carriage X coordinate is the unchanged IEEE float32 encoding of its native sample after the declared axis/unit/body-frame transform. Raw and final X logical values and bytes must match."
+  },
+  "reviewed_files": [
+    {
+      "path": "AGENTS.md",
+      "bytes": 12169,
+      "sha256": "54fda7f5d98ffa60dac2ecbde1becac2d0101c2a814fea6b64f23b55634ff473"
+    },
+    {
+      "path": "GOAL.md",
+      "bytes": 24355,
+      "sha256": "8fa2497368624c3b94e230590f1cae63fcec1520cf89e5f8bed41d5ba7cc2a25"
+    },
+    {
+      "path": "STATUS.md",
+      "bytes": 51579,
+      "sha256": "59bbaecec46438c58178c663ba62cf7a6c3f040306a043c3e000348c1f5017a0"
+    },
+    {
+      "path": "docs/engineering/guide-repair-c193/NEXT-TASK.md",
+      "bytes": 4430,
+      "sha256": "09ffbdbf5ed12bed1efa84f6baaf647393f8e110737ec94bd8ee0cdbc34219a7"
+    },
+    {
+      "path": "docs/language-design/guided-contact-v0.2/ADOPTION.md",
+      "bytes": 4983,
+      "sha256": "43914daa1d93ed8f5bad4645909b4af2ff14a0b44558c6dacf6ceb71ddb5fb69"
+    },
+    {
+      "path": "docs/language-design/guided-contact-v0.2/SPECIFICATION.md",
+      "bytes": 7497,
+      "sha256": "fc526cf9e47a9b12dd26441167c9d66fb8187b631aef4d8680688c1d7263ea6d"
+    },
+    {
+      "path": "docs/language-design/guided-contact-v0.2/backend.json",
+      "bytes": 14039,
+      "sha256": "9ce64fd758b4e7f659ddd9d4bb3bcf7a0faa6a1883cc018c673e10536fe0aefe"
+    },
+    {
+      "path": "docs/engineering/guide-repair-c193/independent/check_artifact.py",
+      "bytes": 12035,
+      "sha256": "198ae1451e8f750cdda22a5ee231c933edff60df5c4d950adb3e992270f8576e"
+    },
+    {
+      "path": "docs/engineering/guide-repair-c193/independent/inspect_scene.py",
+      "bytes": 22544,
+      "sha256": "8b029c720a245f5314e8127e179b7c57790b1f7dc5ebe44c481c776c8e3c8ca0"
+    },
+    {
+      "path": "docs/engineering/guided-contact-c191/independent/checker/audit_mapping.py",
+      "bytes": 5784,
+      "sha256": "cdcfcee2b472577c8cc961a71f61bda840c4c4b21ceff7550c4cffaa5b4606cf"
+    },
+    {
+      "path": "docs/engineering/guided-contact-c191/independent/checker/measure_c191.py",
+      "bytes": 10207,
+      "sha256": "8b2252404d624a1aae6d14371ff3948a33517d8a3cd2117bae5be3309032b0af"
+    },
+    {
+      "path": "docs/engineering/guided-contact-c191/independent/checker/c190_glb_difference.py",
+      "bytes": 13155,
+      "sha256": "11703152541595017f48b51f77ccfcf73aa32bb0af726891d98047d60f0485b9"
+    },
+    {
+      "path": "docs/engineering/guide-repair-c193/native/build.py",
+      "bytes": 2797,
+      "sha256": "8c056f2e8effb4873fb3f47df44accfd67558e15370e3289ba356da6aab89a05"
+    },
+    {
+      "path": "docs/engineering/guide-repair-c193/native/direct_runner.py",
+      "bytes": 6509,
+      "sha256": "1be526486b86a697ace350975ca679ca0311f8cfe89ef6ea9e09a6a264aacab3"
+    }
+  ],
+  "review_requirements": [
+    "Keep canonical source identical to independent historical design except selected target and already-adopted C193 selectors/hash",
+    "Two distinct 1 kg solver-authoritative bodies and enabled left shoe collider",
+    "Frozen inherited checker bytes and implementation closure",
+    "At most one .ok and one direct Python fresh build per target, retained unknown/failure outcomes, no implicit retries",
+    "Independent reopen of each saved scene without reconstruction; full 481 sample exact equality",
+    "Byte-identical canonical input, native transforms, raw and final GLBs between routes for each case; scene.blend exempt",
+    "Right lane source and native traces preserved between targets",
+    "All actual receiving checks required before author dispatch",
+    "No author dispatch if either target or applicable gate fails; no target/settings/tolerance changes"
+  ]
+}

@@ -1,4 +1,4 @@
-# OntoKin development status — C193 guide repair and recovered qualification
+# OntoKin development status — C194 accepted contact edit and reuse
 
 ## Main integration lease
 
@@ -6,13 +6,23 @@ Owner `c195-integration-3cb152` holds the recovered C194 and C195 main integrati
 
 ## Current checkpoint
 
+[C194](docs/engineering/contact-comparison-c194/README.md) accepts both original public author routes for the 365 mm first edit and 375 mm reuse. Their continuous mapping bounds are 0.074516468 and 0.116442263 mm under the unchanged 0.2 mm gate. Both routes produce identical canonical inputs, all native samples, raw GLBs and final GLBs. Each author preserved its accepted first source and regenerated its result exactly. The common constructor and source/backend bindings remain unchanged. [Measured result](docs/engineering/contact-comparison-c194/results.json)
+
+The completed evidence retains four preparation builds, six original author builds, six independent coordinator rebuilds and ten exact 481-sample saved-scene replays. Receiving checks cover twenty raw/final paths and sixty Three.js poses; thirty imported-output panels have visual receipts. Recovery reviewed the twelve pending reuse panels and completed explicit acceptance without a new author or native trial. Both authors passed each phase on the first formal submission, with zero native/source failures or formal repairs. Provider cost/token telemetry remains unavailable, and the paired timings do not establish a comparative advantage. [Recovery and original histories](docs/engineering/contact-comparison-c194/RECOVERY.md)
+
+**The inherited legacy driver and supplemental tail remain FAILED:** 4,239 distinct passing methods and thirteen torque artifact-read methods NOT RUN after the original 30,000 ms setup failure. C194 changes no historical runtime, tests, backend, contract or hosted workflow and does not rerun or relabel that cohort. [Inherited disposition](docs/engineering/guide-repair-c193/evidence/recovery/legacy/REGRESSION.md)
+
+Next: [C195](docs/engineering/contact-comparison-c194/NEXT-TASK.md), one paired ownership-error diagnosis and recovery task. Freeze and statically qualify both invalid input variants before author dispatch; stop if either admits the malformed relationship. Reuse C194's accepted positive inputs. General contact, live destination physics, a production backend, broader comparative reliability, sixteen external roles, other pending compatibility and the full GOAL remain open.
+
+## Previous checkpoint at C193
+
 [C193](docs/engineering/guide-repair-c193/README.md) qualifies explicitly selected source `c193-experimental-0.1` and Blender/Bullet backend `blender-bullet-c193-0.1` for the six frozen gauge cases. Only the two straight-guide solver overrides change, from 100 to 400 iterations. Earlier defaults, v01, geometry, mass, guide frames, X/time samples and the 0.2 mm mapping limit remain unchanged. The former C192 failure witnesses at 362.5 and 372.5 mm now have continuous bounds of 0.116436993 and 0.181935687 mm. Original C192 outputs remain rejected.
 
 The retained qualification has fourteen native builds, fourteen independent saved-scene resimulations, all 481 samples per run, source/checker/provenance/lifecycle controls and actual receiving checks. Recovery independently replays all fourteen artifacts, verifies adopted and historical bytes, and reviews eighteen render panels. No new native trial was used to recover the interrupted discussion. Published source/evidence is intact; original local C193 worker Git histories are unavailable. [Recovery and provenance](docs/engineering/guide-repair-c193/RECOVERY.md)
 
 **The fresh legacy driver and supplemental tail both remain FAILED.** Their independently reconciled split-process coverage records 4,239 distinct passing methods and thirteen experimental .22 torque-read methods NOT RUN after the same original 30,000 ms setup failure as C191. The stock unit command separately hit its 1,800-second outer watchdog. All six other core stages passed. Exact affected input identities and the unchanged failure support this contained development increment under OK-ENG-009, with no full regression, performance-equivalence or torque-release claim. [Disposition and independent review](docs/engineering/guide-repair-c193/evidence/recovery/legacy/REGRESSION.md)
 
-Next: [C194](docs/engineering/guide-repair-c193/NEXT-TASK.md) first freezes and qualifies 365.0 and 375.0 mm on this adopted backend. Stop if either fails; only after both pass may the exactly two fresh default authors receive their edit/reuse tasks. No C194 trial has run. Sixteen external roles, other compatibility, general contact, live destination physics, a production backend, comparative advantage and the full GOAL remain open.
+At the C193 checkpoint, [C194](docs/engineering/guide-repair-c193/NEXT-TASK.md) was the next unexecuted task: qualify 365.0 and 375.0 mm before dispatching the two authors. That work is now complete as recorded in the current checkpoint above. Sixteen external roles, other compatibility, general contact, live destination physics, a production backend, comparative advantage and the full GOAL remain open.
 
 ## Previous checkpoint at C192
 
