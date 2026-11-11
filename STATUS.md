@@ -9,7 +9,7 @@ more reliably or at lower cost than with direct Blender/Python. The complete
 
 ## Main integration lease
 
-Owner `c205-input-lock-integration-4ba2fd-20261111` holds the C205 integration scope from `2026-11-11T17:55:42.209897+00:00` through `2026-11-11T18:25:42.209897+00:00`. Scope: independently reviewed C201 input-lock validator, its CPU controls, scoped documentation/evidence and closure of [issue #142](https://github.com/Omegapy/OntoKin/issues/142). Implementation branch `work/c205-input-lock-4ba2fd` starts from observed main `5183504302ad0c21f1e9e91c6ad146eee64a22c8`. This lease is acquired through an expected-head update. Other nonoverlapping branch work remains permitted; main/STATUS integration writes are serialized. No native, receiver, Node, lifecycle or timed-author run is authorized by this increment. C199/C200 schedules remain closed. Release after actual-main checks and durable handoff preparation; renew only at a meaningful recorded checkpoint.
+No active main integration lease. Owner `c205-input-lock-integration-4ba2fd-20261111` released the C205 scope at `2026-11-11T18:04:46.427945+00:00` after verifying [PR #143](https://github.com/Omegapy/OntoKin/pull/143), actual merge `759a91f65331e69491524db06c86ae411ecd3f80`, matching reviewed inputs and applicable actual-main checks. Issue #142 is closed for this validator increment; its work branch was observed absent after merge. Full C201 transaction/readback/coordinator integration, current-host sealing, trusted bootstrap and native readiness remain pending. Future shared writes require fresh state reconciliation and a new expected-head lease. C199/C200 schedules remain closed.
 
 ## C200 integrated; finite qualification retained
 
@@ -76,7 +76,7 @@ failed or unknown starts, with zero timed authors and retries. The C199/C200
 schedules stay closed. Protocol-document approval and this component review do not
 constitute native readiness or family admission.
 
-## C205 input-binding validator reviewed; integration checks pending
+## C205 input-binding validator integrated; orchestration pending
 
 The separate [C201 executable input-binding validator](docs/engineering/static-tray-admission-c201/INPUT-LOCK-C205.md)
 rejects mismatched protocol, schedule, source/dependency bytes, roles, commands,
@@ -93,8 +93,14 @@ Existing checks passed 36 ledger and 78 source/compiler methods, 43 core cases /
 694 assertions, and all 301 historical inputs plus four frozen protocol documents.
 [Review and evidence](docs/engineering/static-tray-admission-c201/evidence/input-lock-c205/README.md)
 
-Resulting-main checks and publication are recorded separately after the actual
-merge. The next bounded task is a separate C201 transaction/accepted-source
+[PR #143](https://github.com/Omegapy/OntoKin/pull/143) merged at
+`759a91f65331e69491524db06c86ae411ecd3f80`, with the exact local publication tree.
+Fresh actual-main checks passed all 108 component/ledger methods, 43 core cases /
+694 assertions and documentation preservation of 29 sources and 4,166 local links.
+The 78 source/compiler methods and 23 independent controls remain eligible through
+exact input equality. [Integration receipt](docs/engineering/static-tray-admission-c201/evidence/input-lock-c205/INTEGRATION.json)
+
+The next bounded task is a separate C201 transaction/accepted-source
 compatibility layer with CPU controls. Full readback and coordinator integration,
 real host/dependency and alias sealing, durable trusted bootstrap, independent
 native readiness and the sole four/four/four invocation remain pending. No native,

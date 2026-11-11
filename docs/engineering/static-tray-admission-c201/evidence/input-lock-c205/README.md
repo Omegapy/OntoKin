@@ -1,6 +1,6 @@
 # C205 component evidence
 
-The [input-lock validator](../../INPUT-LOCK-C205.md) is independently approved for its component boundary at local commit `28bf6d74f651b22acc0ee5a4154dcd21b861c81b`, tree `7acaeb92a51d88fd3c10f3edaed72e651eb42cb2`. This directory retains actual implementation checks, independent controls, original draft findings and applicable existing checks. Publication and resulting-main checks are separate later observations.
+The [input-lock validator](../../INPUT-LOCK-C205.md) is independently approved for its component boundary at local commit `28bf6d74f651b22acc0ee5a4154dcd21b861c81b`, tree `7acaeb92a51d88fd3c10f3edaed72e651eb42cb2`. This directory retains actual implementation checks, independent controls, original draft findings and applicable existing checks. [PR #143](https://github.com/Omegapy/OntoKin/pull/143) merged the exact publication tree; [the integration receipt](INTEGRATION.json) and [actual-main methods](main-components.json) record later verified observations. The original component and draft records retain their chronology.
 
 - [Check summary](CHECKS.json), [implementation report](IMPLEMENTATION.md) and [72-method log](final-tests.log).
 - [Independent exact-revision review](REVIEW.md), [decision](REVIEW.json), [50 file bindings](CANDIDATE-BINDINGS.json), [23 controls](final-independent-controls.json) and [reproduction script](independent_controls.py).
