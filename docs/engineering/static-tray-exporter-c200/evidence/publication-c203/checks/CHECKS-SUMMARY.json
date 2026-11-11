@@ -1,0 +1,120 @@
+{
+  "schema": "ontokin.c203.candidate-applicable-checks/0.1",
+  "reviewed_at_utc": "2026-11-11T14:48:34.706329+00:00",
+  "decision": "PASS_APPLICABLE_CPU_SOURCE_PROTOCOL_COMPILER_AND_CORE_CHECKS",
+  "source_commit_at_tests": "16c736c522c1f3684b5baabe6e72e56536ef08ce",
+  "source_tree_at_tests": "278dcd3f8ba14fd3d632dbd92af33d5a8d5a998e",
+  "source_worktree_status_at_tests": [
+    "?? docs/engineering/static-tray-exporter-c200/EXECUTABLE-INPUTS.approval.json",
+    "?? docs/engineering/static-tray-exporter-c200/EXECUTABLE-INPUTS.json",
+    "?? docs/engineering/static-tray-exporter-c200/EXTERNAL-INPUTS.json",
+    "?? docs/engineering/static-tray-exporter-c200/evidence/independent/",
+    "?? docs/engineering/static-tray-exporter-c200/evidence/native-execution/",
+    "?? docs/engineering/static-tray-exporter-c200/evidence/preflight/",
+    "?? docs/engineering/static-tray-exporter-c200/evidence/preparation/ROOT-PROTOCOL-VERIFICATION.json",
+    "?? docs/engineering/static-tray-exporter-c200/evidence/preparation/synthetic-driver/",
+    "?? docs/engineering/static-tray-exporter-c200/evidence/preparation/synthetic/",
+    "?? docs/engineering/static-tray-exporter-c200/evidence/publication-c203/",
+    "?? docs/engineering/static-tray-exporter-c200/evidence/repository/",
+    "?? docs/engineering/static-tray-exporter-c200/evidence/result-review/"
+  ],
+  "latest_candidate_commit_observed": "16c736c522c1f3684b5baabe6e72e56536ef08ce",
+  "latest_candidate_tree_observed": "278dcd3f8ba14fd3d632dbd92af33d5a8d5a998e",
+  "locked_source_files_checked_before_and_after": 301,
+  "locked_source_mismatches": [],
+  "executable_code_diff_from_executed_source": [],
+  "python_version": "3.12.14",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "cohorts": {
+    "focused": {
+      "passed": 107,
+      "planned": 107,
+      "skipped": 0,
+      "pinned_exporter_ast_methods": 5,
+      "result": "focused/RESULTS.json"
+    },
+    "compiler": {
+      "passed": 47,
+      "planned": 47,
+      "skipped": 0,
+      "result": "compiler/RESULTS.json"
+    },
+    "protocol": {
+      "passed": 10,
+      "planned": 10,
+      "skipped": 0,
+      "result": "protocol.stderr.log"
+    },
+    "core": {
+      "passed": 43,
+      "failed": 0,
+      "total": 43,
+      "assertions": 694,
+      "expected_valid": 12,
+      "expected_invalid_or_conflicting": 29,
+      "expected_unsupported": 2
+    }
+  },
+  "observed_test_child_processes": {
+    "focused_python_reader_cli": 8,
+    "focused_git_metadata": 3,
+    "compiler_git_metadata": 3,
+    "protocol_children": 0,
+    "unexpected_blocked_children": 0
+  },
+  "new_lifecycle_scope": {
+    "native_constructions": 0,
+    "receiving": 0,
+    "node": 0,
+    "lifecycle_stubs": 0,
+    "timed_authors": 0,
+    "qualification_runs": 0
+  },
+  "historical_c199_c200_schedules_closed": true,
+  "full_regression": {
+    "rerun": false,
+    "reason": "No changes to main runtime, schemas, conformance, grammar, tools or workflows relative to observed current main; all executable code matches the already executed C200 source. Focused exporter/source controls cover this experimental increment without claiming a new full legacy pass.",
+    "inherited_status": "FAILED",
+    "distinct_passing_methods": 4239,
+    "torque_read_methods_not_run": 13,
+    "setup_timeout_ms": 30000
+  },
+  "pinned_source": {
+    "availability": "Original historical dependency paths available in this session; exact hashes verified before use.",
+    "files": [
+      {
+        "path": "/workspace/scratch/ef5ae272e66e/deps/blender-4.5.3-linux-x64/4.5/scripts/addons_core/io_scene_gltf2/__init__.py",
+        "sha256": "82428a0415e11c27a285fd950f63e874add5ba2f8bacc6806ed762614560fa2e",
+        "size_bytes": 84361
+      },
+      {
+        "path": "/workspace/scratch/ef5ae272e66e/deps/blender-4.5.3-linux-x64/4.5/scripts/addons_core/io_scene_gltf2/io/com/debug.py",
+        "sha256": "a0112a1488ce1520f6554f1c337494845ab0aea9b683a73b0b747505d6a2fa94",
+        "size_bytes": 3783
+      }
+    ],
+    "historical_ast_checks_unrun": 0
+  },
+  "notes": [
+    "The unchanged runner docstring says focused starts no subprocess, but the actual cohort includes eight isolated Python reader CLI children. This report records the observed count.",
+    "Core conformance was run directly and its subprocess activity was not instrumented.",
+    "No external compatibility or new native qualification is claimed.",
+    "Final candidate commit may add unlocked documentation/evidence after these checks; exact-tree review must verify the TESTED-SOURCE-MANIFEST remains unchanged."
+  ],
+  "artifacts": [
+    "SOURCE-COVERAGE.json",
+    "TESTED-SOURCE-MANIFEST.json",
+    "focused/INPUTS.json",
+    "focused/RESULTS.json",
+    "focused/tests.log",
+    "focused-command.json",
+    "compiler/INPUTS.json",
+    "compiler/RESULTS.json",
+    "compiler/tests.log",
+    "compiler-command.json",
+    "protocol-command.json",
+    "protocol.stderr.log",
+    "core-command.json",
+    "core-conformance.json"
+  ]
+}

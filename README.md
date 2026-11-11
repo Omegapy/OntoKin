@@ -12,11 +12,11 @@ Current development uses the CPU-based language tools below. The [model research
 
 ## Continue from the verified checkpoint
 
-[C198's finite static-tray mapping](docs/engineering/static-tray-mapping-c198/README.md) defines how two reusable equipment trays will pass through the same Blender constructor from OntoKin and direct Python. The versioned contract preserves the adopted construction compiler and fixes stable part identities, dimensions and frames, supported geometry, atomic failure behavior and independent output checks. It is a contract decision: the adapter is not yet implemented or qualified, and no tray or author exercise is admitted.
+[C200's finite static-tray qualification](docs/engineering/static-tray-exporter-c200/README.md) passed on preserved source: twelve accepted transactions through the shared Blender constructor, receiving and actual-delivery checks, nine control variants and twelve reviewed images. The final independent review passed 16,645 checks; the separate numeric review passed 497,809 assertions. These historical results qualify the selected static mapping. C199's failed first start remains preserved, and both native schedules are closed.
 
-Read [current status and the integration lease](STATUS.md), then [C199's implementation and qualification task](docs/engineering/static-tray-mapping-c198/NEXT-TASK.md). The frozen controls require actual exported geometry, scoped edits with an unchanged right sibling, real corruption rejections, receiving measurements and clean regeneration. Future executable dependencies and settings must be locked and independently reviewed before native work.
+Read [current status and the integration lease](STATUS.md), then the [C200 results and publication boundary](docs/engineering/static-tray-exporter-c200/RESULTS.md). The C203 publication candidate is being prepared; fresh candidate review, integration and actual-main verification remain separate gates. After C200 integration, [prepare the separate C201 tray admission](docs/engineering/static-tray-exporter-c200/NEXT-TASK.md) with four exports total and zero timed authors. Admission has not begun.
 
-C193–C197 remain integrated with their original evidence and limits. C198's inherited recorded audit repeated no native construction, simulation or receiving job. The failed legacy regression and broader release obligations remain open. No comparative advantage or full-product completion is claimed. Do not repeat completed trials to recover an interrupted conversation.
+The inherited failed regression, fixed-view resolution/occlusion limits and broader release obligations remain open. No comparative authoring advantage or full-product completion is claimed. Do not repeat completed native trials to recover an interrupted conversation.
 
 ## Try an agent edit
 

@@ -1,0 +1,164 @@
+{
+  "authorization_scope": {
+    "automatic_retries": 0,
+    "blender_starts": 0,
+    "cohort_invocations": 1,
+    "dependency_inspections": [
+      {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "--version"
+        ],
+        "maximum_starts": 1,
+        "timeout_seconds": 5
+      },
+      {
+        "command": [
+          "/usr/bin/ldd",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node"
+        ],
+        "maximum_starts": 1,
+        "timeout_seconds": 5
+      }
+    ],
+    "lifecycle_starts": 0,
+    "native_construction_starts": 0,
+    "read_only_node_checker_starts": 3,
+    "receiving_starts": 0,
+    "stop_first_unexpected": true,
+    "timed_authors": 0
+  },
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "-IBS",
+    "/workspace/scratch/ef5ae272e66e/ontokin/docs/engineering/static-tray-exporter-c200/run_cpu_controls.py",
+    "--cohort",
+    "synthetic",
+    "--output",
+    "/workspace/scratch/ef5ae272e66e/c200-preparation-synthetic",
+    "--dependencies-root",
+    "/workspace/scratch/ef5ae272e66e/c198-recorded-audit-correct/work/prior-replay/evidence/c195-validation/receiving",
+    "--host-inventory",
+    "/workspace/scratch/ef5ae272e66e/ontokin/docs/engineering/static-tray-exporter-c200/evidence/preflight/HOST-RUNTIME-INVENTORY.json",
+    "--node",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node"
+  ],
+  "complete_byte_verification": {
+    "path": "/workspace/scratch/ef5ae272e66e/ontokin/docs/engineering/static-tray-exporter-c200/evidence/independent/PRE-SYNTHETIC-BYTE-VERIFICATION.json",
+    "sha256": "631ffeca5c0c427e8fc4c06f68f91da49677892b0d63f5ed2dd6d96022cc894a",
+    "size_bytes": 2040
+  },
+  "decision": "APPROVED_FOR_THREE_READONLY_SYNTHETIC_CHECKS",
+  "expected_outcomes": [
+    "Q01 synthetic geometry passes independent reader, Khronos and Three",
+    "Q03 synthetic rotated geometry passes independent reader, Khronos and Three",
+    "Q01 reference translated by 0.001 m is rejected by Three matrix comparison while its GLB passes Khronos"
+  ],
+  "external_dependency_manifest": {
+    "path": "/workspace/scratch/ef5ae272e66e/ontokin/docs/engineering/static-tray-exporter-c200/EXTERNAL-INPUTS.json",
+    "sha256": "6ae664568719ddc0579011230745f954415efe000d9b6bde00b80a0d021767ff",
+    "size_bytes": 20490
+  },
+  "host_inventory": {
+    "path": "/workspace/scratch/ef5ae272e66e/ontokin/docs/engineering/static-tray-exporter-c200/evidence/preflight/HOST-RUNTIME-INVENTORY.json",
+    "sha256": "e53b291f3afc535cd2a7d945558e291b8838c0b3942027eb11ca06c727db3336",
+    "size_bytes": 2706604
+  },
+  "implementation": {
+    "commit": "62b2316cc3f88db187f69fbd7fdb2cf0997a97de",
+    "tree": "87779ee65fb31dbd6de0f4372697a91f1bf4744a"
+  },
+  "initial_host_environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "OMP_NUM_THREADS": "2",
+    "OPENBLAS_NUM_THREADS": "2",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONHASHSEED": "0",
+    "PYTHONNOUSERSITE": "1",
+    "TZ": "UTC"
+  },
+  "input_lock": {
+    "path": "/workspace/scratch/ef5ae272e66e/ontokin/docs/engineering/static-tray-exporter-c200/EXECUTABLE-INPUTS.json",
+    "sha256": "e22d12703926740c2c4cb8596781192b9f0412836e3fba7c6f353bedfc60e0e0",
+    "size_bytes": 1998902
+  },
+  "issued_at_utc": "2026-11-11T12:43:25.523635+00:00",
+  "native_approval": false,
+  "native_approval_pending": "Actual synthetic receipt review and a fresh full exact-input verification",
+  "output_must_not_exist": "/workspace/scratch/ef5ae272e66e/c200-preparation-synthetic",
+  "planned_test_ids": [
+    "tests.test_static_tray_readback_v01.ReadbackCPUControls.test_q01_actual_synthetic_meshes_load_in_both_libraries",
+    "tests.test_static_tray_readback_v01.ReadbackCPUControls.test_q03_actual_synthetic_rotations_load_in_both_libraries",
+    "tests.test_static_tray_readback_v01.ReadbackCPUControls.test_three_rejects_changed_synthetic_reference"
+  ],
+  "qualification_revision_id": "OK-QUAL-STATIC-TRAY-C200/0.1.0",
+  "reviewed_behavior": [
+    "The harness substitutes only observed current DEPS/HOST/NODE globals and reevaluates the original skip predicate. Original test bodies, assertions and expected data remain byte-identical to C199.",
+    "The harness requires exactly three unique test methods, rejects skips, runs with failfast, records actual test IDs and three bounded process receipts, and checks its source bindings after execution.",
+    "Each checker retains the original 30000 ms host / 28000 ms child-work / 2000 ms cleanup bounds and exact module/runtime environment.",
+    "The initial fixed host environment is augmented only by the documented synthetic output variable inside the harness. Node children receive the unchanged manifest environment.",
+    "Read-only preparation outcomes cannot qualify native geometry; actual native and receiving evidence remains required."
+  ],
+  "reviewer": "independent /root/repository_audit",
+  "schema": "ontokin.c200.independent-synthetic-preparation-approval/0.1",
+  "selected_source_bindings": {
+    "docs/engineering/static-tray-exporter-c200/run_cpu_controls.py": {
+      "path": "/workspace/scratch/ef5ae272e66e/ontokin/docs/engineering/static-tray-exporter-c200/run_cpu_controls.py",
+      "sha256": "a6ee7eb38c2f04fbfc234cf09c725b5445996b26167efd8f2563a6c7a890877e",
+      "size_bytes": 8583
+    },
+    "docs/engineering/static-tray-mapping-c198/CONTROLS.json": {
+      "path": "/workspace/scratch/ef5ae272e66e/ontokin/docs/engineering/static-tray-mapping-c198/CONTROLS.json",
+      "sha256": "69178feff0c0e566e8f9b648af0ea4b8aa8a1aa8a9524e6a90e0cc6044dc3950",
+      "size_bytes": 28255
+    },
+    "prototypes/static_tray_v01/format_check.py": {
+      "path": "/workspace/scratch/ef5ae272e66e/ontokin/prototypes/static_tray_v01/format_check.py",
+      "sha256": "e0d71482b9878fbdf9ca1287013756fc0f6b9df530864f5634b8863354a29447",
+      "size_bytes": 15959
+    },
+    "prototypes/static_tray_v01/readback.mjs": {
+      "path": "/workspace/scratch/ef5ae272e66e/ontokin/prototypes/static_tray_v01/readback.mjs",
+      "sha256": "156c988ffc478adafe59c495a07e0a48f5ac77c12829d85d147838578b523b4c",
+      "size_bytes": 11537
+    },
+    "prototypes/static_tray_v01/supervisor.py": {
+      "path": "/workspace/scratch/ef5ae272e66e/ontokin/prototypes/static_tray_v01/supervisor.py",
+      "sha256": "c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10",
+      "size_bytes": 11286
+    },
+    "prototypes/static_tray_v01/transaction.py": {
+      "path": "/workspace/scratch/ef5ae272e66e/ontokin/prototypes/static_tray_v01/transaction.py",
+      "sha256": "4fc05f614189a5782023a6701195ddc631395d053172092c9ede9f30db360466",
+      "size_bytes": 28617
+    },
+    "tests/test_static_tray_readback_v01.py": {
+      "path": "/workspace/scratch/ef5ae272e66e/ontokin/tests/test_static_tray_readback_v01.py",
+      "sha256": "2f0abd812aa668b7abf9e249315acdb9c0fd175adb59672ab1c454679d494394",
+      "size_bytes": 9812
+    },
+    "tests/test_static_tray_reader_v01.py": {
+      "path": "/workspace/scratch/ef5ae272e66e/ontokin/tests/test_static_tray_reader_v01.py",
+      "sha256": "cb62893652f553d61d55a1d80b9855d16dda3d54a47a8914058b78b6cc6b6706",
+      "size_bytes": 27925
+    },
+    "tools/static_tray_reader_v01/expected.py": {
+      "path": "/workspace/scratch/ef5ae272e66e/ontokin/tools/static_tray_reader_v01/expected.py",
+      "sha256": "b677815b42bbd439c590091b7668acd14fea189bea659aefb52ea16c0f264e10",
+      "size_bytes": 6456
+    },
+    "tools/static_tray_reader_v01/glb.py": {
+      "path": "/workspace/scratch/ef5ae272e66e/ontokin/tools/static_tray_reader_v01/glb.py",
+      "sha256": "15e539c1c5225b8b6c2e8c42beec42a1e5fd00ce8bec1530c7c2dc04bf425774",
+      "size_bytes": 10284
+    },
+    "tools/static_tray_reader_v01/reader.py": {
+      "path": "/workspace/scratch/ef5ae272e66e/ontokin/tools/static_tray_reader_v01/reader.py",
+      "sha256": "4cd7be509bd286f482b1f34bfb9bbf574ae93e3970c89bbce13295320430f34c",
+      "size_bytes": 33399
+    }
+  },
+  "working_directory": "/workspace/scratch/ef5ae272e66e/ontokin"
+}

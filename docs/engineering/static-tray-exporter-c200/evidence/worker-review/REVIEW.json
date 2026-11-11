@@ -1,0 +1,163 @@
+{
+  "schema": "ontokin.c200.worker-independent-source-review/0.1",
+  "reviewer": "/root/repository_audit",
+  "implementation_commit": "91e69c498b7f1e901699a1d97aa2b5314c7c665d",
+  "implementation_tree": "2a517659eb844e232a48172961a8446001a05d02",
+  "reviewed_files": {
+    "prototypes/static_tray_v01/worker.py": {
+      "sha256": "2651bbcff9140f9e95c31388e7b9599af342caffc7ed1c1791f4657b75565302",
+      "size_bytes": 12289
+    },
+    "prototypes/static_tray_v01/export-settings.json": {
+      "sha256": "4a148619a8d7cb0618a6b0b6fc3098ad9943cfc01cb061625ea3514b2eb865e4",
+      "size_bytes": 3696
+    },
+    "tests/test_static_tray_exporter_c200.py": {
+      "sha256": "74ad7ed060cbf370ff3536e412a3f8e9f3c471c1ba642a97a93ded51eb3373ad",
+      "size_bytes": 19105
+    },
+    "docs/engineering/static-tray-exporter-c200/EXPORTER-COMPATIBILITY.md": {
+      "sha256": "2475bee4968f7e7f725a78aa657cb93d5db7cf3e25719604dd4709cf169614ec",
+      "size_bytes": 7745
+    },
+    "docs/engineering/static-tray-exporter-c200/run_cpu_controls.py": {
+      "sha256": "a6ee7eb38c2f04fbfc234cf09c725b5445996b26167efd8f2563a6c7a890877e",
+      "size_bytes": 8583
+    }
+  },
+  "checks": [
+    {
+      "name": "complete 108-property inventory retained",
+      "passed": true
+    },
+    {
+      "name": "only settings change is positive logging level to sentinel",
+      "passed": true
+    },
+    {
+      "name": "unchanged previous worker function: scalar",
+      "passed": true
+    },
+    {
+      "name": "unchanged previous worker function: vector",
+      "passed": true
+    },
+    {
+      "name": "unchanged previous worker function: digest",
+      "passed": true
+    },
+    {
+      "name": "unchanged previous worker function: write_json",
+      "passed": true
+    },
+    {
+      "name": "unchanged previous worker function: python_startup",
+      "passed": true
+    },
+    {
+      "name": "unchanged previous worker function: materials",
+      "passed": true
+    },
+    {
+      "name": "unchanged previous worker function: metadata",
+      "passed": true
+    },
+    {
+      "name": "unchanged previous worker function: box",
+      "passed": true
+    },
+    {
+      "name": "unchanged previous worker function: assert_operator",
+      "passed": true
+    },
+    {
+      "name": "native scene save precedes transient filter/export helper",
+      "passed": true
+    },
+    {
+      "name": "startup evidence precedes actual exporter invocation",
+      "passed": true
+    },
+    {
+      "name": "explicit EXEC_DEFAULT binding",
+      "passed": true
+    },
+    {
+      "name": "no historical test changed",
+      "passed": true
+    },
+    {
+      "name": "unchanged inherited file: prototypes/static_tray_v01/receiver.py",
+      "passed": true
+    },
+    {
+      "name": "unchanged inherited file: prototypes/static_tray_v01/receive_check.py",
+      "passed": true
+    },
+    {
+      "name": "unchanged inherited file: prototypes/static_tray_v01/format_check.py",
+      "passed": true
+    },
+    {
+      "name": "unchanged inherited file: prototypes/static_tray_v01/readback.mjs",
+      "passed": true
+    },
+    {
+      "name": "unchanged inherited file: prototypes/static_tray_v01/transaction.py",
+      "passed": true
+    },
+    {
+      "name": "unchanged inherited file: prototypes/static_tray_v01/supervisor.py",
+      "passed": true
+    },
+    {
+      "name": "unchanged inherited file: prototypes/static_tray_v01/store.py",
+      "passed": true
+    },
+    {
+      "name": "unchanged inherited file: prototypes/static_tray_v01/fixtures.py",
+      "passed": true
+    },
+    {
+      "name": "unchanged inherited file: prototypes/static_tray_v01/sources.py",
+      "passed": true
+    },
+    {
+      "name": "unchanged inherited file: prototypes/static_tray_v01/canonical.py",
+      "passed": true
+    },
+    {
+      "name": "unchanged inherited file: tools/static_tray_reader_v01/reader.py",
+      "passed": true
+    },
+    {
+      "name": "unchanged inherited file: tools/static_tray_reader_v01/expected.py",
+      "passed": true
+    },
+    {
+      "name": "unchanged inherited file: tools/static_tray_reader_v01/corrupt.py",
+      "passed": true
+    },
+    {
+      "name": "five exact pinned-source controls passed with zero skips",
+      "passed": true
+    }
+  ],
+  "checks_passed": 29,
+  "pinned_source_controls": {
+    "passed": true,
+    "methods": 5,
+    "skipped": 0,
+    "log_sha256": "599375e612779e8fe959667a9f0b5523d3e768580e9102f50c1fc1542ef1ac88"
+  },
+  "native_starts": 0,
+  "receiving_starts": 0,
+  "read_only_node_starts": 0,
+  "lifecycle_starts": 0,
+  "decision": "WORKER_COMPATIBILITY_SOURCE_REVIEW_PASSED; not pre-execution approval",
+  "limitations": [
+    "CPU mocks do not validate native RNA registration behavior or final geometry.",
+    "Complete newly sealed protocol, dependency lock, approval and actual native evidence remain required."
+  ],
+  "test_harness_assessment": "Rebinds recovered paths and only re-evaluates the unchanged availability predicate; exact test method bodies and assertions preserved. Rejects skipped controls and unexpected synthetic method count. Records source hashes, command, commit/tree and process receipts."
+}
