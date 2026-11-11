@@ -36,7 +36,10 @@ promise. The proposal is unadopted and unimplemented. The [independent exact-pro
 passed for this proposal-only integration. It verified all 57 input files, ten
 archived builders and preservation of the 39 inherited checkpoint references.
 The required packaging README correction is applied; final package execution
-and main integration are recorded separately.
+is recorded separately. [PR #131](https://github.com/Omegapy/OntoKin/pull/131)
+merged at `d34451b97c184878c69ef0acc025fc610482ee98`; the actual-main tree matches
+the published candidate exactly and its fresh documentation check passed.
+[Integration receipt](evidence/INTEGRATION.json)
 
 ## Next bounded work
 
