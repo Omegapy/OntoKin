@@ -1,10 +1,22 @@
-# OntoKin development status — C196 accepted revision promotion and stale edit rejection
+# OntoKin development status — C197 equipment-tray feasibility proposal
 
 ## Main integration lease
 
 Owner `c197-integration-7f9a31` holds the C196 completion and C197 admission integration lease from `2026-11-11T01:29:00Z` until `2026-11-11T01:59:00Z`, acquired conditionally from observed main `055ebf330a77513c47bad4bb4c092f54190ff8d5`. Reconciliation found PR #130 still draft at unchanged candidate `b5e8094f0af5557e8d52541884750a8febbc0e6f`, no later coordination writes, and the preceding lease expired at `2026-11-11T01:01:06.131683+00:00`. Expiry is not evidence that the earlier worker stopped; conditional updates and preserved candidate bytes protect concurrent work. Scope: finish reviewed C196 integration and actual-main recorded verification; then perform only the frozen C197 equipment-tray feasibility/admission task; publish the next self-contained handoff and release ownership. Reserved shared files: `STATUS.md`, root/documentation navigation, new C196 integration records and `docs/engineering/equipment-tray-c197/`. Independent nonoverlapping branches remain permitted. Coordination: PR #130 and issue #127.
 
 ## Current checkpoint
+
+[C197](docs/engineering/equipment-tray-c197/README.md) reached the permitted **feasibility proposal required** outcome for a second reusable equipment-tray family. Existing core/construction source supports typed dimensions, explicit frames, reusable definitions, independently identified instances and derived box geometry. The scoped source/backend reviews found no existing qualified common construction path for those trays. The C193 shared Blender adapter admits only its fixed carriage gauge; previous standard-source routes share GLB checking while using separate native constructors. No tray baseline export, simulation, receiving job or timed author ran.
+
+The [feature map and exact input bindings](docs/engineering/equipment-tray-c197/FEASIBILITY.md) support a separately versioned [static box-assembly mapping proposal](docs/engineering/equipment-tray-c197/PROPOSAL.md). The proposal is unadopted and unimplemented. It preserves standard language semantics and C191/C193 meaning; estimated implementation and independent qualification effort is 5–10 focused engineering days under stated assumptions. The independent exact-proposal review passed; C197 integration and resulting-main checks are separately recorded.
+
+C196 is integrated through [PR #130](https://github.com/Omegapy/OntoKin/pull/130) at `6cbcf9c8c136659def1aac94829330cb81872511`, tree `13eb2463217d3021c7783c6c6d8be749e8c2e145`. Independent resulting-main documentation and recorded-evidence checks passed. All 13,838 candidate files except the reviewed lease paragraph retain their blobs and modes. Completed native trials were not repeated. [Integration receipts](docs/engineering/equipment-tray-c197/C196-INTEGRATION.md)
+
+The inherited legacy driver and supplemental tail remain **FAILED**: **4,239 distinct passing methods and thirteen torque-read methods NOT RUN** after the unchanged 30,000 ms setup failure. No historical runtime, tests, contracts, fixtures, evidence, numerical gates or hosted workflows change here. Full regression, release, general contact, live destination physics, comparative benefit and every broader GOAL gate remain open.
+
+Next: [C198, decide and freeze the bounded static-tray mapping](docs/engineering/equipment-tray-c197/NEXT-TASK.md). Review the versioned mapping and independent controls before implementation. No timed authors, baseline exports or general backend expansion belong to that contract decision.
+
+## Previous checkpoint at C196
 
 [C196](docs/engineering/accepted-revision-c196/README.md) qualifies the accepted-store transition from the preserved 375 mm revision H to the already accepted 365 mm repair G. One real transaction promoted G in a copy of C195's accepted store. Every preexisting source, artifact and receipt retained its bytes, size and mode except the intentionally replaced state pointer. A request using the real formerly accepted H revision was rejected before native work; G remained accepted and only its failed-attempt receipt was added.
 

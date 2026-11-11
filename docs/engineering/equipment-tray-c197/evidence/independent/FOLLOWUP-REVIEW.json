@@ -1,0 +1,74 @@
+{
+  "schema": "ontokin.c197.independent-followup-review/0.1",
+  "reviewer": "c196-audit-independent-agent",
+  "reviewed_at_utc": "2026-11-11T01:42:37.476933+00:00",
+  "decision": "PASS_FOR_PROPOSAL_ONLY_PUBLICATION",
+  "candidate": {
+    "commit": "544a7f813728d6288ed9edcc3addbda2d04f5379",
+    "tree": "9eff9f83d1b1e8a9051a17060efca84d0e3ba808",
+    "clean": true
+  },
+  "prior_reviewed_candidate": "a3eac5acd922e1be147c4fd0e1419772e546c325",
+  "changes": [
+    "M\tSTATUS.md",
+    "M\tdocs/engineering/equipment-tray-c197/README.md",
+    "A\tdocs/engineering/equipment-tray-c197/evidence/CANDIDATE-VALIDATION.json",
+    "A\tdocs/engineering/equipment-tray-c197/evidence/c197-candidate-documentation.log",
+    "A\tdocs/engineering/equipment-tray-c197/evidence/independent/FINAL-BINDING-CHECKS.json",
+    "A\tdocs/engineering/equipment-tray-c197/evidence/independent/FINAL-REVIEW.json",
+    "A\tdocs/engineering/equipment-tray-c197/evidence/independent/FINAL-REVIEW.md",
+    "M\tdocs/engineering/equipment-tray-c197/handoff_tools/README.md",
+    "M\tdocs/engineering/equipment-tray-c197/handoff_tools/build_handoff.py",
+    "M\tdocs/engineering/equipment-tray-c197/handoff_tools/verify_package.py",
+    "M\tdocs/engineering/equipment-tray-c197/results.json"
+  ],
+  "unchanged_substantive_documents": [
+    {
+      "path": "PROPOSAL.md",
+      "sha256": "323ec044536656f96acf06f3299a109604cee034e6201424cb53a7a7ca1e2d54"
+    },
+    {
+      "path": "FEASIBILITY.md",
+      "sha256": "6bfdc7c7b05d4385dc8ad57d713587af24018f698f8bc67eeac74b033ae1696a"
+    },
+    {
+      "path": "NEXT-TASK.md",
+      "sha256": "b53e03b3776f2fa280f4df698a819d7938cbab6994ebf46ff129d6d0043d52b6"
+    },
+    {
+      "path": "FEASIBILITY-INPUTS.json",
+      "sha256": "d6e24bdff6028c3498a90b1550e642b9d85325801e6718391ebca1443d2864cc"
+    }
+  ],
+  "findings": [
+    "P01 is resolved in source: builder copies the committed tools README, package verifier requires it, and README gives the restored-source builder location. Final sealed ZIP execution remains a separate gate.",
+    "The three independent-review files are exact copies of the sealed reviewer outputs. The result links to the correct reviewed commit/tree and matching review hash.",
+    "The added candidate-validation receipt binds the actual earlier documentation log and reproduces its parsed result.",
+    "STATUS, current README and results change only review/publication status and packaging correction facts. Proposal remains unadopted/unimplemented, tray admission false, native execution counters zero.",
+    "No historical source/evidence, language meaning, contract, runtime, fixture, numerical gate, hosted workflow or budget change is introduced by the delta."
+  ],
+  "fresh_documentation": {
+    "command": [
+      "python3",
+      "-IB",
+      "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+    ],
+    "cwd": "/workspace/scratch/21331b7111cc/c197",
+    "returncode": 0,
+    "log": "followup-documentation.log",
+    "log_sha256": "293d4c0c7e26922697f1e0aceb0ef4569484ab70224f3566192c51a601adbb2f",
+    "status": "passed",
+    "sources_verified": 29,
+    "failures": []
+  },
+  "publication_condition": "Connector-created published commit may differ from local reviewed commit; verify exact full tree equality to 9eff9f83d1b1e8a9051a17060efca84d0e3ba808 and preserve both commit identities. Any further content delta requires scoped verification.",
+  "pending": [
+    "Guarded integration and actual resulting-main verification",
+    "Lease release",
+    "Final handoff inventory, offline restore, all 39 inherited checkpoint refs, and unchanged C196 recorded-only replay"
+  ],
+  "new_native_work": 0,
+  "new_product_runtime_tests": 0,
+  "tray_admission_approved": false,
+  "adapter_adoption_approved": false
+}

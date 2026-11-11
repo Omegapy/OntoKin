@@ -2,7 +2,7 @@
 
 ## Current engineering checkpoint
 
-[C196: accepted revision promotion and stale edit rejection](engineering/accepted-revision-c196/README.md) records the observed same-store repair, accepted-source readback, exact regeneration, independent checks and inherited receiving evidence. Continue with [C197's second-assembly admission task](engineering/accepted-revision-c196/NEXT-TASK.md) after checking [current status and the integration lease](../STATUS.md).
+[C197: equipment-tray feasibility](engineering/equipment-tray-c197/README.md) records the existing source capabilities, missing common construction mapping and bounded unadopted proposal. C196 is integrated and verified; its exact recovery receipts are retained. Continue with [C198's mapping decision and freeze](engineering/equipment-tray-c197/NEXT-TASK.md) after checking [current status and the integration lease](../STATUS.md).
 
 The [C161 connected duct](../examples/connected-duct/README.md) joins two editable hollow parts and verifies the common opening before and after an Agent repair.
 
