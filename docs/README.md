@@ -2,7 +2,7 @@
 
 ## Current engineering checkpoint
 
-[C197: equipment-tray feasibility](engineering/equipment-tray-c197/README.md) records the existing source capabilities, missing common construction mapping and bounded unadopted proposal. C196 is integrated and verified; its exact recovery receipts are retained. Continue with [C198's mapping decision and freeze](engineering/equipment-tray-c197/NEXT-TASK.md) after checking [current status and the integration lease](../STATUS.md).
+[C198: finite static-tray mapping](engineering/static-tray-mapping-c198/README.md) defines the versioned contract, canonical construction record and independent qualification controls for a shared two-tray Blender backend. The adapter remains unimplemented and no tray is admitted. Continue with [C199 implementation and qualification](engineering/static-tray-mapping-c198/NEXT-TASK.md) after checking [current status and the integration lease](../STATUS.md). C193–C197 evidence and the inherited failed regression remain unchanged.
 
 The [C161 connected duct](../examples/connected-duct/README.md) joins two editable hollow parts and verifies the common opening before and after an Agent repair.
 
