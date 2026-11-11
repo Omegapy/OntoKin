@@ -1,10 +1,24 @@
-# OntoKin development status — C195 ownership recovery and preserved accepted design
+# OntoKin development status — C196 accepted revision promotion and stale edit rejection
 
 ## Main integration lease
 
 Owner `c197-integration-7f9a31` holds the C196 completion and C197 admission integration lease from `2026-11-11T01:29:00Z` until `2026-11-11T01:59:00Z`, acquired conditionally from observed main `055ebf330a77513c47bad4bb4c092f54190ff8d5`. Reconciliation found PR #130 still draft at unchanged candidate `b5e8094f0af5557e8d52541884750a8febbc0e6f`, no later coordination writes, and the preceding lease expired at `2026-11-11T01:01:06.131683+00:00`. Expiry is not evidence that the earlier worker stopped; conditional updates and preserved candidate bytes protect concurrent work. Scope: finish reviewed C196 integration and actual-main recorded verification; then perform only the frozen C197 equipment-tray feasibility/admission task; publish the next self-contained handoff and release ownership. Reserved shared files: `STATUS.md`, root/documentation navigation, new C196 integration records and `docs/engineering/equipment-tray-c197/`. Independent nonoverlapping branches remain permitted. Coordination: PR #130 and issue #127.
 
 ## Current checkpoint
+
+[C196](docs/engineering/accepted-revision-c196/README.md) qualifies the accepted-store transition from the preserved 375 mm revision H to the already accepted 365 mm repair G. One real transaction promoted G in a copy of C195's accepted store. Every preexisting source, artifact and receipt retained its bytes, size and mode except the intentionally replaced state pointer. A request using the real formerly accepted H revision was rejected before native work; G remained accepted and only its failed-attempt receipt was added.
+
+The runner then resolved the accepted state pointer, copied the retained G source bytes and regenerated them in a fresh store. Both new deliveries exactly match C195's accepted G canonical input, native transforms, raw GLB and final GLB. Each independently reopened saved scene reproduced all 481 motion samples. The continuous mapping bound is 0.07451646802035088 mm under the unchanged 0.2 mm allowance. Matching receiving and visual receipts are explicitly inherited from C195; no new receiving or render job was run.
+
+The independently reviewed preparation at `53ef0584cb07c9c5d7ce03d1a0b97378f9b4b482` passed 2,831 pre-execution checks. The sole execution consumed exactly two native constructions, one static stale-revision rejection and two saved-scene replays, with no native retry or new author. The independent result review passed 958 checks. [Acceptance and limits](docs/engineering/accepted-revision-c196/evidence/ACCEPTANCE.json) and the [result review](docs/engineering/accepted-revision-c196/evidence/FINAL-RESULT-REVIEW.json) identify the exact evidence. Integration and resulting-main verification remain separately recorded.
+
+C195 was recovered without repeating its original trials, verified by 5,812 recorded checks, and integrated through [PR #128](https://github.com/Omegapy/OntoKin/pull/128) at `055ebf330a77513c47bad4bb4c092f54190ff8d5`. Its actual-main tree preserves every reviewed candidate file except coordination text. C194 and C193 remain integrated with their original evidence and failures intact.
+
+The inherited legacy driver and supplemental tail remain **FAILED**: 4,239 distinct passing methods and thirteen torque-read methods **NOT RUN** after the unchanged 30,000 ms setup failure. No historical runtime, test, contract or hosted workflow changed in C196. This finite accepted-revision result does not establish concurrent-writer safety, general contact, production backends, live destination physics, comparative authoring advantage, a complete release or the full GOAL.
+
+Next: [C197, admit a second assembly family](docs/engineering/accepted-revision-c196/NEXT-TASK.md). Check existing language and common-backend feasibility first, then freeze and qualify a public equipment-tray task and its independent evaluator. No timed authors or silent language/backend expansion belong to that admission step.
+
+## Previous checkpoint at C195
 
 [C195](docs/engineering/ownership-recovery-c195/README.md) accepts both public ownership-error recovery submissions. Each route rejected the malformed collider owner before native work, repaired locally to 365 mm, preserved its actual accepted 375 mm source/output/acceptance closure, and regenerated that design exactly. OntoKin returned an owner-token diagnostic and preserved its accepted store pointer; direct Python rejected the schema owner and preserved ordinary staged files. Both positive builds used fresh stores. No successful promotion of the repaired revision in the original accepted store is claimed.
 
