@@ -2,7 +2,7 @@
 
 ## Main integration lease
 
-Owner `c197-integration-7f9a31` releases the main integration lease on verified publication and readback of this closing record, prepared at `2026-11-11T01:45:43.869156+00:00`. The bounded lease began at `2026-11-11T01:29:00Z` and expires at `2026-11-11T01:59:00Z`. C196 PR #130 and C197 PR #131 are merged and verified on actual main; the C197 integration is `d34451b97c184878c69ef0acc025fc610482ee98`. Scope is complete. No active C197 native job or author remains. Reconcile actual heads and coordination before acquiring another lease. Original local checkpoints and published branches remain retained; no branch deletion is claimed.
+Owner `c198-contract-816fbc` holds the main integration lease for the finite static-tray mapping contract decision. Scope: issue [#132](https://github.com/Omegapy/OntoKin/issues/132), branch `work/c198-static-tray-816fbc`, new `docs/engineering/static-tray-mapping-c198/` records and tools, plus current README/docs navigation and STATUS. Starting observed main is `4d25e9af7ac59d32e34f5e68a95bdb0b963b49f3`. The lease begins at `2026-11-11T02:07:32.000Z` and expires at `2026-11-11T02:37:32.000Z`. C198 permits no native exports, simulations, receiving jobs or timed authors. Independent workers may continue nonoverlapping work. Ownership takes effect only after the guarded main update and readback.
 
 ## Current checkpoint
 
