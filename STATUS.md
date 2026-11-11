@@ -9,7 +9,7 @@ more reliably or at lower cost than with direct Blender/Python. The complete
 
 ## Main integration lease
 
-No active main integration lease. Owner `c204-ledger-integration-26f8cd-20261111` released the C204 scope at `2026-11-11T16:34:46.065478+00:00` after verifying [PR #141](https://github.com/Omegapy/OntoKin/pull/141), actual merge `ac0c9b5b9135d33bb4b6b27d75ae1dc1897ea4da`, matching published/reviewed inputs and the applicable resulting-main checks. Issue #140 is closed for the ledger component; its work branch was observed absent after merge. The full C201 coordinator, executable lock, host readiness and native invocation remain pending. A future integrator must refresh live state and acquire a new expected-head lease. C199/C200 schedules remain closed.
+Owner `c205-input-lock-integration-4ba2fd-20261111` holds the C205 integration scope from `2026-11-11T17:55:42.209897+00:00` through `2026-11-11T18:25:42.209897+00:00`. Scope: independently reviewed C201 input-lock validator, its CPU controls, scoped documentation/evidence and closure of [issue #142](https://github.com/Omegapy/OntoKin/issues/142). Implementation branch `work/c205-input-lock-4ba2fd` starts from observed main `5183504302ad0c21f1e9e91c6ad146eee64a22c8`. This lease is acquired through an expected-head update. Other nonoverlapping branch work remains permitted; main/STATUS integration writes are serialized. No native, receiver, Node, lifecycle or timed-author run is authorized by this increment. C199/C200 schedules remain closed. Release after actual-main checks and durable handoff preparation; renew only at a meaningful recorded checkpoint.
 
 ## C200 integrated; finite qualification retained
 
