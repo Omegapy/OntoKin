@@ -44,22 +44,31 @@ this session. Earlier checkpoints remain in the
 [verbatim historical status archive](docs/engineering/static-tray-exporter-c200/evidence/publication-c203/STATUS-before-C203.md.txt).
 Its relative links originally resolved from the repository root.
 
-## Next gate: implement the prepared C201 admission protocol
+## C204 ledger component reviewed; C201 coordinator pending
 
-**C201 admission protocol prepared; coordinator and execution gates pending.**
-The [public Q01 protocol](docs/engineering/static-tray-admission-c201/ADMISSION.md)
-fixes the exact sources, task, A01-A04 order, real D01/D03 controls, measurements,
-regeneration rules and limits. Independent static review passed 171 consistency checks,
-including all 38 referenced file bindings. No coordinator, executable lock, native-readiness
-approval, C201 invocation or admission result is claimed.
+The [C201 schedule and reservation ledger](docs/engineering/static-tray-admission-c201/LEDGER-C204.md)
+is implemented as an isolated control component. Independent review approved exact local
+commit `7861e2d0d7ed940cdf2be4b4fe98dbde3e8c373d` for this boundary only.
+Its fixed A01/D01/D03/A02/A03/A04 order, persistent one-use receipt, stage reservations,
+failed/unknown stopping and interruption handling passed 36 focused methods and six
+independent CPU controls. Source/compiler checks passed 78 methods; core conformance
+passed 43 cases / 694 assertions. All 301 historical locked inputs and four approved
+C201 protocol documents remain unchanged. [Review and evidence](docs/engineering/static-tray-admission-c201/evidence/ledger-c204/REVIEW.md)
 
-[Implement and review the separate orchestration](docs/engineering/static-tray-admission-c201/IMPLEMENTATION-NEXT.md)
-as a new bounded task. [Issue #138](https://github.com/Omegapy/OntoKin/issues/138) records protocol preparation. The future
-schedule permits one baseline and one clean regeneration per route: at most
-four native starts, four receiving starts and four actual-delivery Node checks,
-counting failures, with zero timed authors or automatic retries. The consumed
-C200 coordinator cannot be reset or reused. Independent exact-input approval
-must precede the sole invocation.
+The component starts no children and grants no execution approval. Its recorded
+cleanup, promotion and delivery results are caller observations, not validation of
+actual outputs. A fixed trusted authority root must be bound by the future executable
+lock. Complete coordinator implementation, transaction/readback compatibility,
+current-host sealing, independent readiness and native admission remain pending.
+[Remaining implementation](docs/engineering/static-tray-admission-c201/IMPLEMENTATION-NEXT.md)
+
+The next bounded step is the separate four-slot executable-lock validator with
+meaningful CPU rejection controls, followed by transaction/readback integration and
+actual process orchestration. C201 still has zero native, receiver and actual-delivery
+Node starts. Its eventual sole invocation permits at most four of each, counting
+failed or unknown starts, with zero timed authors and retries. The C199/C200
+schedules stay closed. Protocol-document approval and this component review do not
+constitute native readiness or family admission.
 
 ## Verification and remaining limits
 

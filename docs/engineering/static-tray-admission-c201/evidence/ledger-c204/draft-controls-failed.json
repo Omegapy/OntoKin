@@ -1,0 +1,131 @@
+{
+  "scope": "Independent CPU-only draft review; no native readiness claim",
+  "source_sha256": {
+    "prototypes/static_tray_admission_c201/__init__.py": "62f9f1bdd351320a7d91e6c5f355150eb708f684f8801996e83f1136f6291f60",
+    "prototypes/static_tray_admission_c201/schedule.py": "db98570f3e7711db56c8d9575e208184b14ae5132577f5bcf0bab86eee9c8073",
+    "prototypes/static_tray_admission_c201/ledger.py": "0826ff09c0cc6b3c397f2de70377a13d5e348d6be16bd24b384b2a70e683e433"
+  },
+  "child_starts": 0,
+  "probes": [
+    {
+      "probe": "D03_STRUCTURE_does_not_advance",
+      "passed": false,
+      "observed": {
+        "invocation_id": "ba89b2965aab4182882d7c5d7bb0c7c5",
+        "consumed": {
+          "construction": 1,
+          "receiving": 1,
+          "node": 1
+        },
+        "stopped": false,
+        "ledger_complete": false,
+        "next_item": "A02",
+        "native_readiness": false,
+        "admission_completed": false
+      }
+    },
+    {
+      "probe": "interruption_poison_live_capability",
+      "passed": false,
+      "after_interrupt": {
+        "invocation_id": "b82988de97b64c219a1410541eeb8f6e",
+        "consumed": {
+          "construction": 0,
+          "receiving": 0,
+          "node": 0
+        },
+        "stopped": false,
+        "ledger_complete": false,
+        "next_item": "A01",
+        "native_readiness": false,
+        "admission_completed": false
+      },
+      "second_reservation_rejected": false,
+      "durable_reservations": [
+        {
+          "consumed": 1,
+          "references": {
+            "accepted_source_reference": null,
+            "completed_predecessor": null,
+            "equality_references": [],
+            "required_completed_controls": []
+          },
+          "route": "ontokin",
+          "slot": "A01",
+          "stage": "construction",
+          "type": "RESERVED"
+        },
+        {
+          "consumed": 1,
+          "references": {
+            "accepted_source_reference": null,
+            "completed_predecessor": null,
+            "equality_references": [],
+            "required_completed_controls": []
+          },
+          "route": "ontokin",
+          "slot": "A01",
+          "stage": "construction",
+          "type": "RESERVED"
+        }
+      ]
+    },
+    {
+      "probe": "inspection_rejects_impossible_complete_event",
+      "passed": false,
+      "observed": {
+        "consumed": true,
+        "journal_valid": true,
+        "events": [
+          {
+            "marker_sha256": "839511a48410ebf6a63b402a0ff701dedd521b024eca92b37bc31195d511f0b3",
+            "type": "INVOKED"
+          },
+          {
+            "admission_completed": false,
+            "native_readiness": false,
+            "type": "LEDGER_COMPLETE"
+          }
+        ],
+        "native_readiness": false,
+        "admission_completed": false,
+        "resumable": false
+      }
+    },
+    {
+      "probe": "FIFO_kind_rejection_is_nonblocking",
+      "target": "C201-Q01-A01-A04-v0.1.0.invocation.json",
+      "passed": false,
+      "blocked_before_controlled_unblock": true,
+      "observed": [
+        {
+          "consumed": true,
+          "journal_valid": false,
+          "events": [],
+          "native_readiness": false,
+          "admission_completed": false,
+          "resumable": false,
+          "error": "Unsafe reservation file"
+        }
+      ]
+    },
+    {
+      "probe": "FIFO_kind_rejection_is_nonblocking",
+      "target": "C201-Q01-A01-A04-v0.1.0.ledger.jsonl",
+      "passed": false,
+      "blocked_before_controlled_unblock": true,
+      "observed": [
+        {
+          "consumed": true,
+          "journal_valid": false,
+          "events": [],
+          "native_readiness": false,
+          "admission_completed": false,
+          "resumable": false,
+          "error": "Unsafe reservation file"
+        }
+      ]
+    }
+  ],
+  "passed": false
+}
