@@ -1,0 +1,94 @@
+{
+  "schema": "ontokin.c209.implementation/0.1",
+  "base": "160d8ebfe8acf47c0f487340baacd10f20364b2a",
+  "candidate": "d5d02cfadfcd549d527e7699224ff07aa389d4be",
+  "tree": "bd21f686c4b72a91967d84bf4f2d081ee7ce9c21",
+  "branch": "work/c209-readback-entries",
+  "changed_files": [
+    {
+      "path": "prototypes/static_tray_admission_c201/readback_entries.py",
+      "sha256": "76ca8635a3388043fe469faa348fc064e98f7c2ed86f2152567b2c1b3e5be123",
+      "size_bytes": 15724
+    },
+    {
+      "path": "tests/test_static_tray_admission_c201_readback_entries.py",
+      "sha256": "48110484c3510d4acd04b3d5feb5ce87091dd5dae26230dd74c6a103d9d5144b",
+      "size_bytes": 22782
+    },
+    {
+      "path": "docs/engineering/static-tray-admission-c201/READBACK-ENTRIES-C209.md",
+      "sha256": "64606781be512ce117f45353272b8a374c93612204a530c72af26e3b6404e3e6",
+      "size_bytes": 9060
+    }
+  ],
+  "checks": [
+    {
+      "name": "focused-first",
+      "command": "python3 -B -m unittest tests.test_static_tray_admission_c201_readback_entries -v",
+      "passed": true,
+      "methods": 58,
+      "seconds": 9.812,
+      "log": "focused-first.log",
+      "log_sha256": "d8b26e912ce43b99bd427f24cdc51a412de877be4f78f12100851f3b7eb08b55",
+      "source": "pre-final source before added stale-context guards"
+    },
+    {
+      "name": "focused-candidate",
+      "command": "python3 -B -m unittest tests.test_static_tray_admission_c201_readback_entries -v",
+      "passed": true,
+      "methods": 61,
+      "seconds": 11.579,
+      "log": "focused-candidate.log",
+      "log_sha256": "93a75534a4d8a1472a0b67c173bd0a9a71fbd670afc81bd9705703d3645fcd02",
+      "source": "d5d02cfadfcd549d527e7699224ff07aa389d4be"
+    }
+  ],
+  "frozen_documents": [
+    {
+      "path": "docs/engineering/static-tray-admission-c201/README.md",
+      "sha256": "414fcf481d61b36bfe7effc110894dd70744efc8f16417db94438962a8e65889",
+      "size_bytes": 1951,
+      "expected_sha256": "414fcf481d61b36bfe7effc110894dd70744efc8f16417db94438962a8e65889",
+      "unchanged": true
+    },
+    {
+      "path": "docs/engineering/static-tray-admission-c201/ADMISSION.md",
+      "sha256": "2dd7b250dae4afbbcc363a84f14590e7746016274db6c62e977761953572119b",
+      "size_bytes": 14606,
+      "expected_sha256": "2dd7b250dae4afbbcc363a84f14590e7746016274db6c62e977761953572119b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/engineering/static-tray-admission-c201/ADMISSION.json",
+      "sha256": "f1bd2895cc448f5a1ecb6495814c261dfeba8fecab8ea266e274a35475386064",
+      "size_bytes": 22787,
+      "expected_sha256": "f1bd2895cc448f5a1ecb6495814c261dfeba8fecab8ea266e274a35475386064",
+      "unchanged": true
+    },
+    {
+      "path": "docs/engineering/static-tray-admission-c201/IMPLEMENTATION-NEXT.md",
+      "sha256": "0d43582742824e0421274e1083a915f4e53d7effa17e52513d39e1a5d3f514bd",
+      "size_bytes": 4848,
+      "expected_sha256": "0d43582742824e0421274e1083a915f4e53d7effa17e52513d39e1a5d3f514bd",
+      "unchanged": true
+    }
+  ],
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "child_starts": 0,
+  "native_starts": 0,
+  "receiving_starts": 0,
+  "node_starts": 0,
+  "lifecycle_starts": 0,
+  "timed_author_starts": 0,
+  "production_lock_created": false,
+  "node_imports_intercepted": false,
+  "job01_changed": false,
+  "future_roles": "CPU fixture placeholders only; wrapper/probe/loader still require independent executable implementation/review",
+  "review_status": "awaiting independent exact-byte review",
+  "pending": [
+    "independent review and repairs if required",
+    "root-owned applicable existing C201/source/compiler/core/documentation checks",
+    "coordinated publication and verified durable handoff"
+  ]
+}
