@@ -2,7 +2,7 @@
 
 ## Main integration lease
 
-Owner `c198-contract-816fbc` releases the main integration lease on verified guarded publication and STATUS readback of this closing record, prepared at `2026-11-11T02:23:36.104946+00:00`. The bounded lease began at `2026-11-11T02:07:32Z` and expires at `2026-11-11T02:37:32Z`. [PR #133](https://github.com/Omegapy/OntoKin/pull/133) is merged and verified on actual main at `7e0e7da3dd97779c2c96d4d8a22a72b1282607e2`. Scope is complete; no C198 native job or author remains. The integrated work ref is retained and inactive; no branch deletion is claimed. Reconcile actual heads and ownership before acquiring another lease.
+Owner `c199-tray-9d641f68` holds the main integration lease from `2026-11-11T04:46:13.304593+00:00` until `2026-11-11T05:16:13.304593+00:00` for the reviewed C199 explicit static-tray prototype and stopped native qualification. The observed starting main is `0e1ef6a64e78d8478f40cbc2d2f25238014e8825`; scope is issue #134 and branch `work/c199-static-tray-9d641f68`. Native execution is finished with N01 rejected, no accepted delivery and no retry. Independent branch work remains permitted; shared integration state and this merge are reserved to this holder.
 
 ## Current checkpoint
 
