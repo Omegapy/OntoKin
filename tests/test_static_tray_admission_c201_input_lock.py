@@ -98,7 +98,7 @@ class Fixture:
                             str(self.repo / script), "--", "--job", str(output / "job.json")]
                     environment = module.native_environment(str(environment_root))
                 commands[slot][stage] = {"argv": argv, "environment": environment,
-                                         "cwd": str(self.repo), "output": str(output)}
+                                         "cwd": str(output), "output": str(output)}
         info = self.authority.stat()
         self.lock = {
             "schema": module.SCHEMA, "purpose": "fixture-only", "producer": "fixture-producer",

@@ -1,5 +1,7 @@
 # C206: C201 transaction and accepted-source component
 
+> **C207 update:** The [working-directory contract](WORKING-DIRECTORIES-C207.md) now binds each planned command, supervisor observation and native job to the same stage output directory. The fixture-only production-cwd block described below is the historical C206 state. Validated production-shaped bindings no longer fail that obsolete gate; they still confer no native authorization, current-host approval or admission. Readback and coordinator implementation remain pending.
+
 This increment implements the file and source portion of the four-slot
 [C201 admission protocol](ADMISSION.md). It can retain a baseline transaction,
 resolve that transaction's accepted editable source and dependency, and validate
