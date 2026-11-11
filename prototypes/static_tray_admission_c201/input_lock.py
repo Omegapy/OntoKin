@@ -448,7 +448,7 @@ def _validate(lock_path, approval_path, context):
                 environment = native_environment(lock["environments"][slot])
             _require(exact(argv, expected_argv), "COMMAND", "Expanded child command differs from fixed safe policy")
             _require(exact(command["environment"], environment)
-                     and command["cwd"] == str(repo)
+                     and command["cwd"] == str(output)
                      and command["output"] == lock["outputs"][slot][stage],
                      "COMMAND", "Clean environment, working directory or output differs")
     _require(launch_plan_digest(lock) == context.launch_plan_sha256,

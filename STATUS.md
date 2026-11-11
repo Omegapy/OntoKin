@@ -106,15 +106,23 @@ real host/dependency and alias sealing, durable trusted bootstrap, independent
 native readiness and the sole four/four/four invocation remain pending. No native,
 receiving, Node, lifecycle or timed-author start occurred in this increment.
 
-## C206 fixture-only transaction component integrated; production alignment blocked
+## C206 transaction component integrated; original cwd block resolved by C207
 
 The separate [C201 transaction and accepted-source component](docs/engineering/static-tray-admission-c201/TRANSACTION-C206.md) resolves actual retained baseline source and dependencies, validates complete construction/receiving/receipt closures, and conditionally promotes an accepted pointer. Pre-commit rejection preserves the prior pointer; post-replacement interruption reports UNKNOWN. It starts no children and does not advance the coordinator ledger.
 
 Independent review approved local commit `afa0a9d40ab0ffbf88e6540bbb685d889a67d391` for fixture-only preparation. All 47 new methods, 108 existing C201 methods, 22 independent controls and 78 source/compiler methods passed. Core conformance passed 43 cases / 694 assertions; all 301 historical inputs and four protocol documents remained exact. [Review and evidence](docs/engineering/static-tray-admission-c201/evidence/transaction-c206/README.md)
 
-Production bindings fail `C201-NATIVE-CWD`: C205's launch plan requires repository working directories while the qualified supervisor and worker require each stage's output directory. The next bounded step is an independently reviewed alignment of that contract and its checks. C205 and the historical worker/supervisor remain unchanged. Readback, actual process provenance/deadlines, full coordinator, trusted bootstrap/host sealing, native readiness and admission remain pending. This increment has zero native, receiving, Node, lifecycle or timed-author starts.
+C206 originally rejected production bindings with `C201-NATIVE-CWD` because the C205 launch plan required repository cwd while the qualified supervisor and worker required the stage output directory. C207 below resolves that mismatch in the C201 bindings. The historical worker/supervisor remain unchanged. Readback, actual process provenance/deadlines, full coordinator, trusted bootstrap/host sealing, native readiness and admission remain pending. This increment has zero native, receiving, Node, lifecycle or timed-author starts.
 
 The exact original C205 `final-tests.log`, already present in the previous handoff, is restored as tracked evidence to repair its existing documentation link. The original failed documentation check and byte-binding record are retained. Repaired documentation verification passed 29 preserved sources and 4,199 local links. [PR #145](https://github.com/Omegapy/OntoKin/pull/145) merged at `6573597a699ed90920a9cea3e17250bce5babbdc` with the exact local publication tree. Fresh actual-main checks passed all 155 C201 methods, 43 core cases / 694 assertions and 29 preserved documentation sources / 4,199 local links. All 56 independent bindings and complete product/test prefixes matched. [Integration receipt](docs/engineering/static-tray-admission-c201/evidence/transaction-c206/INTEGRATION.json)
+
+## C207 working-directory alignment reviewed; readback remains pending
+
+The [C207 contract](docs/engineering/static-tray-admission-c201/WORKING-DIRECTORIES-C207.md) binds every planned command cwd to its own stage output directory. Construction/receiving jobs and supervisor receipts must agree with that same path. Wrong or changed paths/commands reject before acceptance. The former blanket `C201-NATIVE-CWD` purpose block is removed; validated production-shaped fixture records still confer no native authorization, current-host approval or admission.
+
+Independent review approved exact local candidate `bd9fbf1487e557b9c21baf1d39e7b9cb818d4773` for this component only. All 171 C201 methods, 29 independent controls, 78 source/compiler methods and 43 core cases / 694 assertions passed. All 36 reviewed bindings, 301 historical inputs and four frozen protocol documents remain exact. [Review and evidence](docs/engineering/static-tray-admission-c201/evidence/cwd-c207/README.md)
+
+The next bounded step is the separate C201 readback/probe compatibility component. Its Node cwd is consistently planned, but the C201 probe and wrapper roles remain unimplemented. Complete coordinator/process provenance/deadlines, trusted bootstrap, real host/dependency/alias sealing, independent native readiness and actual admission remain pending. No C201 native, receiving, Node, lifecycle or timed-author process started. Publication and actual-main verification are recorded after integration.
 
 ## Verification and remaining limits
 

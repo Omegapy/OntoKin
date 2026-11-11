@@ -1,5 +1,7 @@
 # C205: C201 executable input-binding validator
 
+> **C207 update:** The [reviewed working-directory contract](WORKING-DIRECTORIES-C207.md) requires every planned stage cwd to equal its own output directory. It preserves the exact argument, environment, output, approval and source bindings below. Old repository-cwd plans reject before preparation. This binding correction grants no process-start or native-readiness authority.
+
 This increment adds a separate validator for the approved four-slot
 [C201 admission protocol](ADMISSION.md). An input lock is a record of the exact
 source, dependencies, commands and paths that a future invocation intends to

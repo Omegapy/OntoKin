@@ -1,0 +1,86 @@
+{
+  "schema": "ontokin.c207.cwd-component-checks/0.1",
+  "recordedAtUtc": "2026-11-11T19:18:45.046534+00:00",
+  "base": "2a1ac8ccbdc290942e88504c640790b1bda9229c",
+  "candidateCommit": "bd9fbf1487e557b9c21baf1d39e7b9cb818d4773",
+  "candidateTree": "701e7ea878434c6f6d06366eaa3f08754d4c55d7",
+  "branch": "work/c207-cwd-impl-cbf19c",
+  "clean": true,
+  "environment": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "python": "3.12.14",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3"
+  },
+  "commands": [
+    {
+      "command": "python3 -B -m unittest tests.test_static_tray_admission_c201_input_lock tests.test_static_tray_admission_c201_transaction tests.test_static_tray_admission_c201_working_directories -v",
+      "exitCode": 0,
+      "methods": 135,
+      "elapsedSeconds": 25.202,
+      "log": "component-tests.log",
+      "logSha256": "b178465d3dbdccc5d4c2a851daf4ab759dd7b300631ff11f83c3d92d42a1c1f7",
+      "sourceUnchangedFromExecution": true
+    }
+  ],
+  "counts": {
+    "existingInputLockMethods": 72,
+    "transactionMethods": 47,
+    "newDirectoryMethods": 16,
+    "totalMethods": 135
+  },
+  "sourceBindings": [
+    {
+      "path": "docs/engineering/static-tray-admission-c201/WORKING-DIRECTORIES-C207.md",
+      "bytes": 8517,
+      "sha256": "6b7a930e1c4f54f833a2e766b7a63a329a1beb4a9f2a155735a159f45c941bc1",
+      "mode": 420
+    },
+    {
+      "path": "prototypes/static_tray_admission_c201/input_lock.py",
+      "bytes": 26005,
+      "sha256": "ac5963045acb6a6ab4d58356ea5635dc38370b2779024abd2062b7f3b2bd283b",
+      "mode": 420
+    },
+    {
+      "path": "prototypes/static_tray_admission_c201/transaction.py",
+      "bytes": 40197,
+      "sha256": "c13c09b50d09a99bb496ca3406212e832f1e0b1d5aa7c8c9ebcf8a7c4566a0cd",
+      "mode": 420
+    },
+    {
+      "path": "tests/test_static_tray_admission_c201_input_lock.py",
+      "bytes": 29551,
+      "sha256": "80059dac6838288b3495d6473dc4b309fe6edba6ee272412aadf73b74f45b7d6",
+      "mode": 420
+    },
+    {
+      "path": "tests/test_static_tray_admission_c201_transaction.py",
+      "bytes": 29399,
+      "sha256": "032121e9b89b8386c0847872db4034e94c03941150312153d9f2072631575c77",
+      "mode": 420
+    },
+    {
+      "path": "tests/test_static_tray_admission_c201_working_directories.py",
+      "bytes": 13364,
+      "sha256": "fd53cf06c53df05596733aa7ddc40ecb2dcb51f6c11eb172bcf1bf65af4e6ad4",
+      "mode": 420
+    }
+  ],
+  "nativeConstructionStarts": 0,
+  "receivingStarts": 0,
+  "nodeStarts": 0,
+  "lifecycleStarts": 0,
+  "timedAuthorStarts": 0,
+  "productionInputLockCreated": false,
+  "nativeReadiness": false,
+  "admissionCompleted": false,
+  "nextGate": "Separately reviewed C201 readback/probe compatibility; no coordinator or native execution in this scope",
+  "originalMismatchEvidence": "original-cwd-reproduction.json",
+  "limits": [
+    "Production-shaped controls are synthetic fixtures only",
+    "No full regression rerun; inherited failed regression remains unchanged",
+    "Caller process observations are consistency evidence, not authenticated native provenance",
+    "Independent review and publication belong to parent integrator"
+  ]
+}

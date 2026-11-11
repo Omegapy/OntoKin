@@ -1,0 +1,23 @@
+{
+  "schema": "ontokin.c207.original-cwd-reproduction/0.1",
+  "source": "2a1ac8ccbdc290942e88504c640790b1bda9229c",
+  "environment": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "python": "3.12.14",
+  "fixture_only": true,
+  "child_starts": 0,
+  "cases": [
+    {
+      "case": "original_repository_cwd_passes_validator",
+      "passed": true,
+      "declared": "/tmp/ontokin-c207-original-cpu-jjw3ifx4/repository",
+      "worker_required_output": "/tmp/ontokin-c207-original-cpu-jjw3ifx4/A01-construction",
+      "equal": false
+    },
+    {
+      "case": "qualified_stage_cwd_rejected_by_original_validator",
+      "passed": true,
+      "code": "COMMAND",
+      "message": "Clean environment, working directory or output differs"
+    }
+  ]
+}

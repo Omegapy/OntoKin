@@ -182,8 +182,9 @@ class TransactionBindings:
 
     def __init__(self, lock_bytes, approval_bytes, context, validation, *, _token=None):
         _require(_token is _BINDING_TOKEN and type(validation) is input_lock.ValidationResult
-                 and validation.purpose == context.purpose == "fixture-only", "NATIVE-CWD",
-                 "Only the validated fixture-only factory may construct this component session")
+                 and validation.purpose == context.purpose
+                 and context.purpose in ("fixture-only", "production-inputs"), "BINDING",
+                 "Only the validated factory may construct this component session")
         self._creation_token = _token
         self._lock_bytes = lock_bytes
         self._approval_bytes = approval_bytes
@@ -217,14 +218,12 @@ class TransactionBindings:
 
 @_boundary
 def bind_transactions(lock_path, approval_path, *, context):
-    """Run the unchanged C205 validator and retain its exact verified inputs."""
+    """Validate and retain exact inputs without granting native authorization."""
     validation = input_lock.validate_input_lock(lock_path, approval_path, context=context)
     lock_raw = _read(lock_path, input_lock.MAX_JSON_BYTES)
     approval_raw = _read(approval_path, input_lock.MAX_JSON_BYTES)
     _require(_sha(lock_raw) == validation.lock_sha256 and _sha(approval_raw) == validation.approval_sha256,
              "BINDING", "Lock or approval changed after validation")
-    _require(validation.purpose == "fixture-only", "NATIVE-CWD",
-             "Production is blocked: C205 locks repository cwd but qualified stages execute in output cwd")
     return TransactionBindings(lock_raw, approval_raw, context, validation, _token=_BINDING_TOKEN)
 
 
@@ -232,8 +231,9 @@ def _session(value):
     _require(type(value) is TransactionBindings, "BINDING", "Validated transaction bindings are required")
     _require(value._creation_token is _BINDING_TOKEN
              and type(value.validation) is input_lock.ValidationResult
-             and value.validation.purpose == value._context.purpose == "fixture-only",
-             "NATIVE-CWD", "This component requires a validated fixture-only session")
+             and value.validation.purpose == value._context.purpose
+             and value._context.purpose in ("fixture-only", "production-inputs"),
+             "BINDING", "This component requires a validated session")
     return value
 
 
@@ -286,9 +286,9 @@ def _process(session, slot, stage, value, directory):
                 "error", "end_monotonic"}
     _require(type(observed) is dict and observed.keys() == required, "PROCESS", "Incomplete supervisor receipt")
     command = lock["commands"][slot][stage]
-    # Fixture-only bridge exposes the unresolved C205/qualified-supervisor cwd mismatch.
     _require(exact(observed["argv"], command["argv"]) and exact(observed["environment"], command["environment"])
-             and observed["cwd"] == lock["outputs"][slot][stage] and observed["label"] == stage
+             and observed["cwd"] == command["cwd"] == command["output"] == lock["outputs"][slot][stage]
+             and observed["label"] == stage
              and type(observed["pid"]) is int and observed["pid"] == value["process_id"]
              and type(observed["process_group"]) is int and observed["process_group"] == observed["pid"]
              and type(observed["returncode"]) is int and observed["returncode"] == value["returncode"]

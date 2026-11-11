@@ -41,7 +41,7 @@ class TransactionFixture:
         if not path.exists():
             name = slot if stage == "construction" else slot + "-receiving"
             path = Path(self.inputs.lock["stores"][slot]) / "objects" / name / (stage + ".process.json")
-        return {"schema": tx.PROCESS_SCHEMA, "purpose": "fixture-only", "slot": slot,
+        return {"schema": tx.PROCESS_SCHEMA, "purpose": self.session.validation.purpose, "slot": slot,
                 "stage": stage, "input_lock_sha256": self.session.validation.lock_sha256,
                 "command": deepcopy(self.inputs.lock["commands"][slot][stage]),
                 "process_id": 12345, "started_monotonic": 1.0, "completed_monotonic": 1.5,
@@ -473,9 +473,10 @@ class TransactionControls(unittest.TestCase):
     def test_constructor_cannot_bypass_validated_factory(self):
         fixture = self.fixture.inputs
         self.reject(lambda: tx.TransactionBindings(fixture.lock_path.read_bytes(), fixture.approval_path.read_bytes(),
-                                                   fixture.context, fixture.validate()), "NATIVE-CWD")
+                                                   fixture.context, fixture.validate()), "BINDING")
 
-    def test_production_binding_rejected_for_unresolved_cwd(self):
+    def test_production_shaped_cpu_transactions_grant_no_native_authority(self):
+        # These purpose strings exercise the binding path using synthetic files
         fixture = self.fixture.inputs
         fixture.context = replace(fixture.context, purpose="production-inputs")
         fixture.lock["purpose"] = "production-inputs"
@@ -491,9 +492,19 @@ class TransactionControls(unittest.TestCase):
         fixture.approval["decision"] = "APPROVE_INPUT_BINDINGS_ONLY"
         fixture.save_approval()
         self.assertEqual(fixture.validate().purpose, "production-inputs")
-        self.reject(lambda: tx.bind_transactions(fixture.lock_path, fixture.approval_path,
-                                                context=fixture.context), "NATIVE-CWD")
+        self.fixture.session = tx.bind_transactions(fixture.lock_path, fixture.approval_path,
+                                                    context=fixture.context)
+        self.assertFalse(self.fixture.session.validation.native_start_authorized)
+        self.assertFalse(self.fixture.session.validation.native_readiness)
+        self.assertFalse(self.fixture.session.validation.admission_completed)
         self.assertEqual(os.listdir(fixture.lock["stores"]["A01"]), [])
+        for slot in SLOTS:
+            handle = self.fixture.accept(slot.name)
+            receipt = tx.inspect_accepted(self.fixture.session, handle)
+            self.assertEqual(receipt["purpose"], "production-inputs")
+            self.assertFalse(handle.native_start_authorized)
+            self.assertFalse(handle.native_readiness)
+            self.assertFalse(handle.admission_completed)
 
     def test_expired_original_clock_cannot_be_restarted(self):
         prepared = self.fixture.prepare("A01")
