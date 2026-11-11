@@ -9,7 +9,7 @@ more reliably or at lower cost than with direct Blender/Python. The complete
 
 ## Main integration lease
 
-Owner `c204-ledger-integration-26f8cd-20261111` holds the bounded C204 integration lease, acquired `2026-11-11T16:22:42.920432+00:00`; expiry `2026-11-11T16:52:42.920432+00:00`. Starting main is `a4747c06611066c09cd8daf5a67e7244de60f178`. Scope: review and integrate the C201 schedule/reservation ledger component on `work/c204-admission-ledger-26f8cd`, its CPU evidence, current STATUS/navigation and the C204 handoff under [issue #140](https://github.com/Omegapy/OntoKin/issues/140). The former C203 lease expired and live heads, open PRs, issue handoffs and surviving unpublished evidence were reconciled before acquisition. This lease reserves main, STATUS and overlapping C204 integration records; independent nonoverlapping branch work may continue. The full C201 coordinator, executable lock, current-host readiness and native invocation remain pending. C199/C200 schedules stay closed; C201 has zero native starts. Release after verified publication and resulting-main checks.
+No active main integration lease. Owner `c204-ledger-integration-26f8cd-20261111` released the C204 scope at `2026-11-11T16:34:46.065478+00:00` after verifying [PR #141](https://github.com/Omegapy/OntoKin/pull/141), actual merge `ac0c9b5b9135d33bb4b6b27d75ae1dc1897ea4da`, matching published/reviewed inputs and the applicable resulting-main checks. Issue #140 is closed for the ledger component; its work branch was observed absent after merge. The full C201 coordinator, executable lock, host readiness and native invocation remain pending. A future integrator must refresh live state and acquire a new expected-head lease. C199/C200 schedules remain closed.
 
 ## C200 integrated; finite qualification retained
 
@@ -44,7 +44,7 @@ this session. Earlier checkpoints remain in the
 [verbatim historical status archive](docs/engineering/static-tray-exporter-c200/evidence/publication-c203/STATUS-before-C203.md.txt).
 Its relative links originally resolved from the repository root.
 
-## C204 ledger component reviewed; C201 coordinator pending
+## C204 ledger component integrated; C201 coordinator pending
 
 The [C201 schedule and reservation ledger](docs/engineering/static-tray-admission-c201/LEDGER-C204.md)
 is implemented as an isolated control component. Independent review approved exact local
@@ -54,6 +54,13 @@ failed/unknown stopping and interruption handling passed 36 focused methods and 
 independent CPU controls. Source/compiler checks passed 78 methods; core conformance
 passed 43 cases / 694 assertions. All 301 historical locked inputs and four approved
 C201 protocol documents remain unchanged. [Review and evidence](docs/engineering/static-tray-admission-c201/evidence/ledger-c204/REVIEW.md)
+
+[PR #141](https://github.com/Omegapy/OntoKin/pull/141) merged the component at
+`ac0c9b5b9135d33bb4b6b27d75ae1dc1897ea4da`. Fresh resulting-main checks passed
+36 ledger methods, 43 core cases / 694 assertions and documentation preservation
+of 29 original sources and 4,141 local links. The 78 source/compiler methods and
+six independent controls remain eligible through exact input equality.
+[Integration receipt](docs/engineering/static-tray-admission-c201/evidence/ledger-c204/INTEGRATION.json)
 
 The component starts no children and grants no execution approval. Its recorded
 cleanup, promotion and delivery results are caller observations, not validation of

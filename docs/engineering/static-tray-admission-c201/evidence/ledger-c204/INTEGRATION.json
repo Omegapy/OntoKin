@@ -1,0 +1,61 @@
+{
+  "schema": "ontokin.c204.ledger-integration/0.1",
+  "recordedAtUtc": "2026-11-11T16:34:46.064998+00:00",
+  "decision": "PASS_BOUNDED_LEDGER_COMPONENT_INTEGRATION",
+  "scope": "Schedule and durable reservation accounting only; no executable native coordinator or readiness authority",
+  "componentReviewedCommit": "7861e2d0d7ed940cdf2be4b4fe98dbde3e8c373d",
+  "componentReviewedTree": "76108c1059129419356c6504fc478ed49138f4e9",
+  "localPublicationCommit": "e98fed7a958e3b522f61a62b6dcbeb4b1d7c2af7",
+  "remotePublicationCommit": "086fbba53aba9ce62ce4b0e2f68ba76d826aebc0",
+  "publishedTree": "860454ab455bc8b6f74c069e92aa5f99f973233b",
+  "pullRequest": 141,
+  "mergeCommit": "ac0c9b5b9135d33bb4b6b27d75ae1dc1897ea4da",
+  "mergeTree": "860454ab455bc8b6f74c069e92aa5f99f973233b",
+  "issue": 140,
+  "issueStateObserved": "closed",
+  "branch": "work/c204-admission-ledger-26f8cd",
+  "branchStateObserved": "absent after merge; no explicit deletion by this session",
+  "actualMainChecks": {
+    "commit": "ac0c9b5b9135d33bb4b6b27d75ae1dc1897ea4da",
+    "tree": "860454ab455bc8b6f74c069e92aa5f99f973233b",
+    "ledgerMethodsPassed": 36,
+    "ledgerChildStarts": 0,
+    "coreCasesPassed": 43,
+    "coreAssertions": 694,
+    "documentationSourcesVerified": 29,
+    "localLinksChecked": 4141,
+    "protectedInputsMatched": 301,
+    "protocolDocumentsMatched": 4,
+    "worktreeClean": true,
+    "reviewedFileBytesEqual": true
+  },
+  "reusedEligibleChecks": {
+    "sourceAndCompilerMethods": 78,
+    "independentControls": 6,
+    "reason": "Published and merged trees equal the local publication tree. All five component files and every existing tracked source/compiler/runtime input are unchanged from their identified checked sources."
+  },
+  "hostedChecks": {
+    "requestedByThisTask": false,
+    "observedAtMerge": [],
+    "combinedStatus": "pending with zero status entries; not a failed or passing job",
+    "hostedPassClaimed": false
+  },
+  "legacyRegression": {
+    "state": "FAILED",
+    "passingMethods": 4239,
+    "torqueReadMethodsNotRun": 13,
+    "setupTimeoutMs": 30000,
+    "rerun": false
+  },
+  "currentC201Activity": {
+    "nativeStarts": 0,
+    "receivingStarts": 0,
+    "nodeStarts": 0,
+    "lifecycleStarts": 0,
+    "timedAuthors": 0,
+    "nativeReadinessApproved": false,
+    "admissionCompleted": false
+  },
+  "leaseDisposition": "Accompanying STATUS declares release after these verified actual-main checks. The C204 handoff records the separate expected-head publication and final readback; this source record does not prove its own publication.",
+  "nextAction": "Implement and review the separate C201 four-slot executable input-lock validator and meaningful CPU rejection controls. Native execution remains gated on the complete coordinator, actual transaction/readback integration, host sealing and independent readiness approval."
+}
