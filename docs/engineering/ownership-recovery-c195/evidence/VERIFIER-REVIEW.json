@@ -1,0 +1,131 @@
+{
+  "schema": "ontokin.c195.independent-verifier-review/0.1",
+  "reviewer": "c195_prepare",
+  "reviewed_utc": "2026-11-10T23:55:07.686596+00:00",
+  "passed": true,
+  "verifier_path": "docs/engineering/ownership-recovery-c195/verify_deliveries.py",
+  "verifier_sha256": "d3eaa6a4e7090563c353d5dfd72be1b4cc8129b13f140617757fa75ea16dd610",
+  "input_manifest_sha256": "e6b7cf1da886d61a81a1795f33871d8fd780cd3e8c83d0d481109ee30da34411",
+  "freeze_sha256": "e920566b0a3771eb906d8074d2a66214ce26abed9aad5c7f28abab331f312f6b",
+  "review_scope": "Source review and non-native preflight/control probes only; no native construction, scene replay, receiving or author evidence acceptance",
+  "frozen_input_probes": [
+    {
+      "role": "coordinator",
+      "root": "/workspace/scratch/3cb1527378cd/repo",
+      "frozen_inputs": {
+        "passed": true,
+        "files": 618,
+        "manifest_sha256": "e6b7cf1da886d61a81a1795f33871d8fd780cd3e8c83d0d481109ee30da34411",
+        "freeze_sha256": "e920566b0a3771eb906d8074d2a66214ce26abed9aad5c7f28abab331f312f6b"
+      }
+    },
+    {
+      "role": "ok",
+      "root": "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+      "frozen_inputs": {
+        "passed": true,
+        "files": 618,
+        "manifest_sha256": "e6b7cf1da886d61a81a1795f33871d8fd780cd3e8c83d0d481109ee30da34411",
+        "freeze_sha256": "e920566b0a3771eb906d8074d2a66214ce26abed9aad5c7f28abab331f312f6b"
+      }
+    },
+    {
+      "role": "python",
+      "root": "/workspace/scratch/3cb1527378cd/c195-authors/python",
+      "frozen_inputs": {
+        "passed": true,
+        "files": 618,
+        "manifest_sha256": "e6b7cf1da886d61a81a1795f33871d8fd780cd3e8c83d0d481109ee30da34411",
+        "freeze_sha256": "e920566b0a3771eb906d8074d2a66214ce26abed9aad5c7f28abab331f312f6b"
+      }
+    }
+  ],
+  "source_and_baseline_probes": [
+    {
+      "passed": true,
+      "baseline_source_sha256": "2143515f358e36c1dd9a1deef83dba2519a99be6141b64d8bd9dae987761fbd0",
+      "source_sha256": "ba105a8ca6e9c19dfd06fabd7a06a2254c4ba14d76042dfa88ca365d5de6f7ee",
+      "only_intended_stop_delta": true,
+      "exact_accepted_source": false
+    },
+    {
+      "passed": true,
+      "baseline_source_sha256": "2143515f358e36c1dd9a1deef83dba2519a99be6141b64d8bd9dae987761fbd0",
+      "source_sha256": "2143515f358e36c1dd9a1deef83dba2519a99be6141b64d8bd9dae987761fbd0",
+      "only_intended_stop_delta": false,
+      "exact_accepted_source": true,
+      "accepted_artifact": "/workspace/scratch/3cb1527378cd/c194-evidence/c194-author-runs/ok/reuse-01/store/artifacts/15699cbbbf8842b3836f999dab6aa05a",
+      "acceptance_sha256": "ea8e284c69cdd373740396850e3f158e3fef12de2a4d4982fb96296223d7407e",
+      "accepted_artifact_inventory_sha256": "c96b8005b172d3e47c1b576913bee26340104aef92cf0fa0e4beb55c1b54c420"
+    },
+    {
+      "passed": true,
+      "baseline_source_sha256": "c8530e67bdc8d5afa6be10091476544f12623824e4862a7a12ff7b42f0d55bde",
+      "source_sha256": "f0d2fe39ba77aaea14eac7e7782709b99e8903b519afe83a429e0e8b887cf158",
+      "only_intended_stop_delta": true,
+      "exact_accepted_source": false
+    },
+    {
+      "passed": true,
+      "baseline_source_sha256": "c8530e67bdc8d5afa6be10091476544f12623824e4862a7a12ff7b42f0d55bde",
+      "source_sha256": "c8530e67bdc8d5afa6be10091476544f12623824e4862a7a12ff7b42f0d55bde",
+      "only_intended_stop_delta": false,
+      "exact_accepted_source": true,
+      "accepted_artifact": "/workspace/scratch/3cb1527378cd/c194-evidence/c194-author-runs/python/reuse-01/artifact",
+      "acceptance_sha256": "ea8e284c69cdd373740396850e3f158e3fef12de2a4d4982fb96296223d7407e",
+      "accepted_artifact_inventory_sha256": "1aaba99cbc316c078e3a61c524408a531340f9684ed636e2fcf9c0e727974487"
+    }
+  ],
+  "negative_probes": [
+    {
+      "case": "missing-H-baseline",
+      "rejected": true,
+      "message": "Both H deliveries require their actual C194 accepted artifact"
+    },
+    {
+      "case": "duplicate-native-run",
+      "rejected": true,
+      "message": "Submitted variants must use four separate native runs"
+    },
+    {
+      "case": "wrong-target-matrix",
+      "rejected": true,
+      "message": "Expected repaired G and preserved H for both routes"
+    },
+    {
+      "case": "unsafe-id",
+      "rejected": true,
+      "message": "Unsafe delivery identity"
+    },
+    {
+      "case": "ok-unrepaired-owner",
+      "rejected": true,
+      "message": "Source has an unrelated or incomplete repair"
+    },
+    {
+      "case": "python-unrepaired-owner",
+      "rejected": true,
+      "message": "Source has an unrelated or incomplete repair"
+    }
+  ],
+  "review_findings": {
+    "reservation": "One exclusive COORDINATOR-EXECUTION.json reserves all four build identities before any native call. Each clean rebuild is recorded before its single invocation; no retry loop exists. Output and command paths are exclusive. Failure is retained, not converted to acceptance.",
+    "preservation_direction": "H requires preserve_from, verifies complete accepted C194 artifact inventory and acceptance identity, and compares canonical/native/raw/final bytes plus retained source. G requires exactly the stop change from accepted H with owner repaired.",
+    "provenance": "Actual submitted and clean rebuilt artifacts both pass the inherited independent provenance reader; retained source bytes, canonical target, accepted-store manifest/pointer and source/implementation identities are checked. Artifact paths are constrained inside submitted runs by inherited retained_artifact.",
+    "native_and_receiving": "Inherited artifact reader is frozen. Existing reopen verifies original scene/source/backend identities, cache clear, unchanged configuration, no reconstruction and exact 481 decoded samples. Clean rebuild compares four exact files. Receiving requires all four deliveries, eight GLB paths, 24 poses, four Blender imports and zero Khronos errors/warnings. Visual acceptance remains explicitly pending.",
+    "author_audit": "Automated acceptance remains pending until an independent raw-evidence audit binds exact input/freeze/delivery manifest and each source/run inventory, baseline preservation at both checkpoints, diagnostic accuracy, zero negative native work, wall/submission/native limits. Raw dossier paths/sizes/hashes are rechecked.",
+    "finalize": "Finalization checks retained result/delivery manifest and immutable submitted bytes, attaches the independent author audit and writes a distinct exclusive final receipt. It invokes no native or receiving tool.",
+    "failure_semantics": "Exceptions mark per-run failures; missing/failed receiving cannot pass. Any failed source, provenance, numerical, regeneration, preservation or author gate prevents complete automated acceptance."
+  },
+  "limitations": [
+    "The independent author audit is a review attestation; its factual assertions must be established from actual raw dossiers, not filled from author summaries alone.",
+    "Protocol is public and identifies the injected defect; no blind diagnosis or cost superiority claim follows.",
+    "Verifier is coordinator orchestration added after author freeze; it must preserve the frozen outcome rules and be bound by this exact reviewed hash in actual run receipts.",
+    "Visual review and explicit final acceptance are separate from this verifier.",
+    "This review does not authorize repeated native attempts after an interrupted or unknown outcome; inspect ledger and actual outputs first."
+  ],
+  "native_builds": 0,
+  "native_replays": 0,
+  "receiving_executions": 0,
+  "decision": "Approve exact verifier for one reserved validation of the four actual author variants, with independent author audit and later visual acceptance."
+}

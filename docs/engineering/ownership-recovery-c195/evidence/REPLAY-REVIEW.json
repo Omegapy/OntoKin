@@ -1,0 +1,157 @@
+{
+  "schema": "ontokin.c195.replay-tooling-review/0.1",
+  "reviewer": "c195-author-ok-post-participant-tooling-review",
+  "reviewed_utc": "2026-11-11T00:01:55.301979+00:00",
+  "review_scope": "Independent replay/tooling code review only, separate from and after the immutable measured author phase. No review or approval of own author performance.",
+  "helper_path": "/workspace/scratch/3cb1527378cd/repo/docs/engineering/ownership-recovery-c195/recorded_replay.py",
+  "helper_sha256": "59e23b24e40d1a3b0c8efacd35582acaf04f7081ec187f442333bccd9f42e423",
+  "helper_bytes": 29033,
+  "passed": true,
+  "decision": "Pass corrected helper code for archive-restoration validation; actual archive replay remains pending.",
+  "initial_review": {
+    "helper_sha256": "4351f919fd233924c2163864dbf88ba447d8a2d55a54bbf3428c6cb5aff76b2c",
+    "helper_bytes": 28533,
+    "passed": false,
+    "decision": "Changes requested: directly bind receiver copies to the validated delivery label and filename.",
+    "findings": [
+      {
+        "id": "C195-REPLAY-01",
+        "severity": "medium",
+        "status": "resolved_in_final_hash",
+        "location": "check_receiving, initial lines 222-225",
+        "finding": "Receiving copies were compared with a receipt-selected source path but were not directly bound to the artifact corresponding to the delivery label and filename. Later Blender receipts bound final.glb, but a mislabeled raw.glb could satisfy the retained raw-receiver identity checks.",
+        "required_change": "Map every deliveries/{id}/{raw.glb|final.glb} entry directly to artifact_paths[id]/filename; require both exact relocated source-path equality and copied/receipt/expected-artifact SHA equality.",
+        "final_resolution": "Corrected code checks the artifact-map IDs, builds expected_sources from the validated artifact map, requires relocated source equality, and binds all three SHA values to that expected source."
+      }
+    ]
+  },
+  "final_review": {
+    "helper_sha256": "59e23b24e40d1a3b0c8efacd35582acaf04f7081ec187f442333bccd9f42e423",
+    "passed": true,
+    "unresolved_findings": [],
+    "exact_change_scope_proven": true,
+    "change_scope_proof": "Replacing only the corrected receiving-identity block in memory with its originally reviewed block reproduces SHA-256 4351f919fd233924c2163864dbf88ba447d8a2d55a54bbf3428c6cb5aff76b2c.",
+    "syntax_valid": true,
+    "checks": [
+      {
+        "name": "Path-safe files-only archive extraction",
+        "passed": true,
+        "evidence": "relative_path rejects absolute, parent, backslash and noncanonical paths. Extraction admits only non-sparse ordinary files, rejects duplicate or undeclared members and file-ancestor collisions, uses containment-resolved children and exclusive file creation, and never calls extractall."
+      },
+      {
+        "name": "Archive and replay-map integrity",
+        "passed": true,
+        "evidence": "Archive bytes and SHA bind to RECORDED-EVIDENCE; replay map SHA binds to the descriptor; manifest paths are unique and sizes nonnegative; each extracted file must match its declared exact size and SHA; the seen inventory must equal the manifest."
+      },
+      {
+        "name": "Fail-closed, nonoverwriting restoration",
+        "passed": true,
+        "evidence": "Output must be new and outside/not containing the source checkout. Failed extraction/audit records passed=false. Original receipts are retained rather than rewritten; all relocated paths use explicit prefix mappings and containment checks."
+      },
+      {
+        "name": "No native or receiving execution on replay entry path",
+        "passed": true,
+        "evidence": "The helper has no subprocess, shell or network calls. Imports use the supplied source checkout; native-capable main/command/reopen functions in imported orchestration modules are guarded or uncalled. The called source, provenance and numerical readers are data readers. Bytecode writes are disabled."
+      },
+      {
+        "name": "Exact inherited readers and frozen gates",
+        "passed": true,
+        "evidence": "public_inputs verifies the frozen C195 closure; C194 common.verify_freeze and the inherited C193 reader.verify_frozen run before numerical reviews. artifact_reader imports C193 check_artifact with only frozen G/H case-map additions. Provenance audit uses the inherited candidate review and contract closure; the unchanged 0.2 mm bound remains enforced."
+      },
+      {
+        "name": "481 saved-sample comparisons and saved-scene provenance",
+        "passed": true,
+        "evidence": "Each mapped reopen must contain exactly 481 records identical to its submitted native trace. Summary hashes bind source, original scene.blend, canonical input, backend and exact inspector, with cache reset/configuration/no-reconstruction flags. Original result hashes bind the retained summary, configuration and both traces."
+      },
+      {
+        "name": "H baseline preservation and regeneration",
+        "passed": true,
+        "evidence": "source_and_baseline checks exact accepted source/localized G delta and C194 acceptance identity. The entire mapped baseline artifact inventory must equal BASELINES. Four required output hashes must match each coordinator rebuild, and each H output must additionally equal its accepted original."
+      },
+      {
+        "name": "Independent author evidence mapping logic",
+        "passed": true,
+        "evidence": "check_author_audit requires the independent receipt to bind the freeze, input and delivery manifests; maps and hashes all raw evidence references; and ties each declared source/run inventory to mapped bytes. This reviews the binding mechanism only; it does not evaluate or approve either author performance."
+      },
+      {
+        "name": "Receiving identities after correction",
+        "passed": true,
+        "evidence": "Every copied raw/final GLB is now bound by exact path and hash to the validated delivery artifact. Khronos and Three receipts cover all eight paths and bind their hashes; four Blender import receipts bind actual final GLBs and retain twelve hashed PNGs."
+      },
+      {
+        "name": "Visual and final acceptance identities",
+        "passed": true,
+        "evidence": "Visual review must pass and contain twelve unique panels whose exact path/hash/size set equals the receiver panels. Final acceptance binds numerical results, independent author audit, visual review and optional separate automated finalization by SHA."
+      },
+      {
+        "name": "Restoration portability design",
+        "passed": true,
+        "evidence": "Longest-prefix mappings relocate original absolute provenance references under the extraction root; missing mappings fail. Repository source/checker dependencies are resolved from --repo. No original output directory is used as a fallback. Actual archive/map restoration remains unexecuted and is required separately."
+      }
+    ]
+  },
+  "dependencies_inspected": [
+    {
+      "path": "docs/engineering/ownership-recovery-c195/verify_deliveries.py",
+      "sha256": "d3eaa6a4e7090563c353d5dfd72be1b4cc8129b13f140617757fa75ea16dd610"
+    },
+    {
+      "path": "docs/engineering/contact-preparation-c194/common.py",
+      "sha256": "4e0b42c060b01778396b5404468cc2d2f039e6a852a72a31bbe5bef290d8e15a"
+    },
+    {
+      "path": "docs/engineering/contact-preparation-c194/run_preparation.py",
+      "sha256": "649bc1e378f95032311bc3a79362c373fe1797dc67116289e03cc8930c6e6311"
+    },
+    {
+      "path": "docs/engineering/guide-repair-c193/independent/check_artifact.py",
+      "sha256": "198ae1451e8f750cdda22a5ee231c933edff60df5c4d950adb3e992270f8576e"
+    },
+    {
+      "path": "docs/engineering/guide-repair-c193/independent/audit_provenance.py",
+      "sha256": "cdc325180e6a785dd53f836e5888eb9be49da4c3f5ff08b779b2f611c0019759"
+    },
+    {
+      "path": "docs/engineering/guided-contact-c191/independent/checker/c190_glb_difference.py",
+      "sha256": "11703152541595017f48b51f77ccfcf73aa32bb0af726891d98047d60f0485b9"
+    },
+    {
+      "path": "docs/engineering/guided-contact-c191/independent/checker/audit_mapping.py",
+      "sha256": "cdcfcee2b472577c8cc961a71f61bda840c4c4b21ceff7550c4cffaa5b4606cf"
+    },
+    {
+      "path": "docs/engineering/guided-contact-c191/independent/checker/measure_c191.py",
+      "sha256": "8b2252404d624a1aae6d14371ff3948a33517d8a3cd2117bae5be3309032b0af"
+    },
+    {
+      "path": "docs/engineering/guide-repair-c193/tools/receive.py",
+      "sha256": "c28e8bcc232cc8771e04ba29fddc3def25b09e8852f5b38b299749e5eadc9c2a"
+    }
+  ],
+  "validation_method": {
+    "manual_code_review": true,
+    "ast_syntax_parse": true,
+    "in_memory_change_scope_hash_check": true,
+    "archive_extraction_executed": false,
+    "recorded_artifact_readers_executed": false,
+    "synthetic_mutation_tests_executed": false
+  },
+  "no_native_statement": "No native construction, saved-scene replay, receiving process, author dispatch or network operation was performed in this tooling review. The corrected replay helper was not executed.",
+  "new_native_builds": 0,
+  "new_native_replays": 0,
+  "new_receiving_executions": 0,
+  "new_authors": 0,
+  "source_or_author_run_edits": false,
+  "limitations": [
+    "The evidence archive, archive descriptor and final replay mapping were pending; actual extraction, complete provenance relocation, inherited-reader execution and final recorded acceptance still require a separate run.",
+    "The current trusted source checkout anchors helper/descriptor/reader identity; the extractor does not authenticate an arbitrary replacement checkout.",
+    "Recorded visual review remains a retained human receipt; the helper does not itself view panels or rerun destination software."
+  ],
+  "inspection_command_failures": [
+    {
+      "kind": "read-only missing-path search",
+      "returncode": 2,
+      "detail": "An rg query named nonexistent docs/engineering/guide-repair-c193/tools/import_render.py; receive.py was read successfully and the actual C191 render_frames.py reference was identified. No code or evidence was changed."
+    }
+  ]
+}

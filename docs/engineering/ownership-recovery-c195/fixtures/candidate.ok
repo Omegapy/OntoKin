@@ -1,0 +1,119 @@
+ontokin "c193-experimental-0.1";
+module Gauge @ "gauge";
+profile "guided-box-contact-0.1";
+backend "blender-bullet-c193-0.1";
+output "glb-guided-contact-0.1";
+execution { max_operations = 1000000; max_elapsed = 80[s]; }
+
+scene Slide @ "slide" {
+    duration = 2[s];
+    gravity = [0, 0, 0][m/s^2];
+    part base @ "base" {
+        box = [730, 80, 600][mm];
+        color = [0.21, 0.26, 0.3, 1];
+        rotation = [1, 0, 0, 0];
+        at = [-160, 0, -300][mm];
+    }
+    part left_carriage @ "left_carriage" {
+        box = [200, 40, 80][mm];
+        color = [0.17, 0.5, 0.54, 1];
+        rotation = [1, 0, 0, 0];
+        at = [-100, 80, -200][mm];
+    }
+    part left_shoe @ "left_shoe" {
+        box = [130, 50, 80][mm];
+        color = [0.84, 0.6, 0.18, 1];
+        rotation = [1, 0, 0, 0];
+    }
+    part left_stop @ "left_stop" {
+        box = [30, 40, 120][mm];
+        color = [0.61, 0.25, 0.19, 1];
+        rotation = [1, 0, 0, 0];
+        at = [365, 130, -220][mm];
+    }
+    part right_carriage @ "right_carriage" {
+        box = [200, 40, 80][mm];
+        color = [0.17, 0.5, 0.54, 1];
+        rotation = [1, 0, 0, 0];
+        at = [-100, 80, 120][mm];
+    }
+    part right_shoe @ "right_shoe" {
+        box = [100, 50, 80][mm];
+        color = [0.84, 0.6, 0.18, 1];
+        rotation = [1, 0, 0, 0];
+    }
+    part right_stop @ "right_stop" {
+        box = [30, 40, 120][mm];
+        color = [0.61, 0.25, 0.19, 1];
+        rotation = [1, 0, 0, 0];
+        at = [495, 130, 100][mm];
+    }
+    body left_body @ "body.left" {
+        part = "left_carriage";
+        mass = 1[kg];
+        authority = "solver";
+        guide = "world_x";
+        feed = 125[mm/s];
+        initial_velocity = [0, 0, 0][mm/s];
+    }
+    follow left_mount @ "follow.left" {
+        parent = "left_carriage";
+        child = "left_shoe";
+        offset = [150, 40, 0][mm];
+        rotation = [1, 0, 0, 0];
+    }
+    body right_body @ "body.right" {
+        part = "right_carriage";
+        mass = 1[kg];
+        authority = "solver";
+        guide = "world_x";
+        feed = 150[mm/s];
+        initial_velocity = [0, 0, 0][mm/s];
+    }
+    follow right_mount @ "follow.right" {
+        parent = "right_carriage";
+        child = "right_shoe";
+        offset = [180, 40, 0][mm];
+        rotation = [1, 0, 0, 0];
+    }
+    collider left_shoe_box @ "contact.left_shoe" {
+        part = "left_shoe";
+        owner = "body.right";
+        shape = "box";
+        box = [130, 50, 80][mm];
+        offset = [0, 0, 0][mm];
+        enabled = true;
+        friction = 0;
+        restitution = 0;
+    }
+    collider left_stop_box @ "contact.left_stop" {
+        part = "left_stop";
+        owner = "world";
+        shape = "box";
+        box = [30, 40, 120][mm];
+        offset = [0, 0, 0][mm];
+        enabled = true;
+        friction = 0;
+        restitution = 0;
+    }
+    collider right_shoe_box @ "contact.right_shoe" {
+        part = "right_shoe";
+        owner = "body.right";
+        shape = "box";
+        box = [100, 50, 80][mm];
+        offset = [0, 0, 0][mm];
+        enabled = true;
+        friction = 0;
+        restitution = 0;
+    }
+    collider right_stop_box @ "contact.right_stop" {
+        part = "right_stop";
+        owner = "world";
+        shape = "box";
+        box = [30, 40, 120][mm];
+        offset = [0, 0, 0][mm];
+        enabled = true;
+        friction = 0;
+        restitution = 0;
+    }
+}

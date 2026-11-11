@@ -1,0 +1,69 @@
+{
+  "schema": "ontokin.c195.independent-fixture-review/0.1",
+  "reviewer": "c195_prepare",
+  "reviewed_utc": "2026-11-10T23:51:52.409256+00:00",
+  "passed": true,
+  "input_manifest_sha256": "e6b7cf1da886d61a81a1795f33871d8fd780cd3e8c83d0d481109ee30da34411",
+  "frozen_files_verified": 618,
+  "assertions_passed": 1932,
+  "source_dependency": "c5527aca1b2ba6f58232c2451ad23ef5ba8d8963",
+  "routes": {
+    "ok": {
+      "baseline_source_sha256": "2143515f358e36c1dd9a1deef83dba2519a99be6141b64d8bd9dae987761fbd0",
+      "candidate_sha256": "3a56565df8cc0f5e3707835b96a485652d47fc94191e6c1a45bd4bda3f2e788b",
+      "run_files_verified": 45,
+      "artifact_files_verified": 33,
+      "diagnostic": {
+        "code": "C193_E_OWNERSHIP",
+        "phase": "validate",
+        "message": "Collider is assigned to the wrong mass owner",
+        "span": {
+          "path": "candidate.ok",
+          "source_sha256": "3a56565df8cc0f5e3707835b96a485652d47fc94191e6c1a45bd4bda3f2e788b",
+          "start_byte": 2400,
+          "end_byte": 2412,
+          "start_line": 81,
+          "start_column": 17,
+          "end_line": 81,
+          "end_column": 29
+        },
+        "blocked_levels": [
+          "constructed",
+          "evaluated",
+          "exported",
+          "destination_validated"
+        ]
+      }
+    },
+    "python": {
+      "baseline_source_sha256": "c8530e67bdc8d5afa6be10091476544f12623824e4862a7a12ff7b42f0d55bde",
+      "candidate_sha256": "55bb4349dddb05b4301c08b35ac46d8b820600f4bbea3247acc1aedb149024dc",
+      "run_files_verified": 39,
+      "artifact_files_verified": 34,
+      "diagnostic": "ValueError: $.colliders.contact.left_shoe.owner: differs from frozen constant"
+    }
+  },
+  "static_rerun": {
+    "path": "/workspace/scratch/3cb1527378cd/c195-prep/independent-static-qualification.json",
+    "sha256": "8a4cb8968d43825da1c4ef91b3407dacb9867f3d9d04447b421b639bb7ecbc34",
+    "passed": true
+  },
+  "manual_reviews": {
+    "negative_control_flow": "validate_source performs parse/validate only; Source.validate ownership rejection precedes backend work. Direct runner schema_check precedes budget authorization, Blender hash check and supervise. run_transaction loads accepted state before source validation and cannot reach staging/supervise for this malformed source.",
+    "fairness": "Same physical targets, equal wall/submission/native caps and shared tools. OntoKin copied-store transaction versus direct ordinary staging are explicitly disclosed. Positive builds use fresh run directories and do not imply an in-place repaired pointer advance.",
+    "gates": "C193 source/backend and C194 G/H numerical, artifact, saved-scene and receiving readers are frozen; 0.2 mm mapping cap and all 481 times retained. Coordinator has at most one rebuild per submitted variant, no retry.",
+    "scope": "Source-derived diagnostic distinction preserved; malformed inputs must not reach native execution; no replacement positive matrix."
+  },
+  "native_builds": 0,
+  "native_resimulations": 0,
+  "receiving_executions": 0,
+  "author_dispatches": 0,
+  "caveats": [
+    "This reviews preparation and author-dispatch eligibility only; actual transaction preservation, author repairs and native/destination acceptance remain unexecuted.",
+    "The public protocol identifies the injected error and expected diagnoses; this measures execution of a supplied diagnosis/recovery workflow, not blind or unaided error discovery.",
+    "The direct schema constrains one finite assembly; rejection alone is not evidence of general physical-relationship reasoning or comparative advantage.",
+    "C194 main integration must be reconciled before C195 integration; current review does not assert that C194 is merged.",
+    "Inherited FAILED legacy driver and thirteen unrun torque-read methods remain unchanged."
+  ],
+  "decision": "Approve exact frozen fixtures and protocol for sealing and the specified two-author public exercise; no blocking flaw found."
+}

@@ -1,10 +1,22 @@
-# OntoKin development status — C194 accepted contact edit and reuse
+# OntoKin development status — C195 ownership recovery and preserved accepted design
 
 ## Main integration lease
 
 Owner `c196-integration-b3a9f7` holds the C195 recovery and C196 integration lease from `2026-11-11T00:31:06.131683+00:00` until `2026-11-11T01:01:06.131683+00:00`, acquired conditionally from observed main `cbb8499dbcad929ed14e9d44401fe5dd7c558ca0`. The preceding `c195-integration-3cb152` reservation expired at `2026-11-11T00:30:32Z`. Post-expiry reconciliation found unchanged main, unchanged published C195 PR #128 at `3ad887d680454faf56b82b8607dfcfd22e60ab34`, and a clean original worker checkout at `0270f97403f2616728fa43ccc2cbe2c42767f82c` with the identical tree `b113aa5094212b941a39828c1a98aef1357c55cb`. Expiry alone is not treated as proof that the earlier worker stopped; expected-head updates preserve concurrent work. Scope: complete reviewed C195 integration, verify resulting main, execute and integrate only the frozen C196 accepted-revision workflow after independent approval, publish the complete handoff and release ownership. Reserved shared files: `STATUS.md`, root/documentation navigation, and new C195/C196 integration records. Prior evidence remains immutable; independent nonoverlapping branches remain permitted. Coordination: issue #127.
 
 ## Current checkpoint
+
+[C195](docs/engineering/ownership-recovery-c195/README.md) accepts both public ownership-error recovery submissions. Each route rejected the malformed collider owner before native work, repaired locally to 365 mm, preserved its actual accepted 375 mm source/output/acceptance closure, and regenerated that design exactly. OntoKin returned an owner-token diagnostic and preserved its accepted store pointer; direct Python rejected the schema owner and preserved ordinary staged files. Both positive builds used fresh stores. No successful promotion of the repaired revision in the original accepted store is claimed.
+
+Four author constructions and four independent clean rebuilds passed. Four actual saved scenes replayed all 481 samples exactly. Both routes share continuous mapping bounds of 0.074516468 and 0.116442263 mm under the unchanged 0.2 mm allowance, with exact canonical/native/raw/final regeneration and unchanged siblings. Eight receiving paths, twenty-four Three.js poses and twelve reviewed import panels pass. Each author used one formal submission and no native retry. The independent author audit passed 867 evidence assertions; portable recorded replay passed 5,812 checks without new native or receiving work. [Acceptance and limits](docs/engineering/ownership-recovery-c195/evidence/ACCEPTANCE.json)
+
+C193 was already complete. C194's original work was recovered and independently audited, then [PR #129](https://github.com/Omegapy/OntoKin/pull/129) integrated candidate c5527aca at cbb8499dbcad929ed14e9d44401fe5dd7c558ca0. Its actual-main checks passed. C195 publication and actual-main verification are recorded separately. Original author histories and complete recorded evidence are retained. This public supplied-defect exercise does not establish blind diagnosis, a comparative advantage or a full release.
+
+The inherited legacy driver and supplemental tail remain **FAILED**: 4,239 distinct passing methods and thirteen torque-read methods **NOT RUN** after the unchanged 30,000 ms setup failure. No historical runtime, schema, solver, test or hosted workflow changed in C195. General contact, live destination physics, production backends, broader compatibility and external roles, measured authoring benefit and the full GOAL remain open.
+
+Next: [C196, promote the repaired revision in the same accepted store](docs/engineering/ownership-recovery-c195/NEXT-TASK.md), then reject the actual formerly accepted revision and regenerate from authoritative state readback. Reuse the qualified inputs and matching receiving evidence; do not repeat the completed author trials.
+
+## Previous checkpoint at C194
 
 [C194](docs/engineering/contact-comparison-c194/README.md) accepts both original public author routes for the 365 mm first edit and 375 mm reuse. Their continuous mapping bounds are 0.074516468 and 0.116442263 mm under the unchanged 0.2 mm gate. Both routes produce identical canonical inputs, all native samples, raw GLBs and final GLBs. Each author preserved its accepted first source and regenerated its result exactly. The common constructor and source/backend bindings remain unchanged. [Measured result](docs/engineering/contact-comparison-c194/results.json)
 
