@@ -2,8 +2,7 @@
 
 ## Current engineering checkpoint
 
-[C194: accepted contact edit and reuse](engineering/contact-comparison-c194/README.md) records the recovered public OntoKin/Blender-Python pair, measured outputs, original author histories and limits. Continue with [C195's ownership-error diagnosis and recovery task](engineering/contact-comparison-c194/NEXT-TASK.md) after checking [current status and the integration lease](../STATUS.md).
-
+[C195: ownership recovery and preserved accepted design](engineering/ownership-recovery-c195/README.md) records the public paired recovery, actual accepted sources and outputs, original worker histories, independent checks and limits. Continue with [C196's accepted-store promotion task](engineering/ownership-recovery-c195/NEXT-TASK.md) after checking [current status and the integration lease](../STATUS.md).
 
 The [C161 connected duct](../examples/connected-duct/README.md) joins two editable hollow parts and verifies the common opening before and after an Agent repair.
 

@@ -1,0 +1,574 @@
+{
+  "author": "c195-author-ok-3cb152",
+  "author_delegations": 0,
+  "branch": "work/c195-author-ok-3cb152",
+  "charged_operations_total": 902301,
+  "commands": {
+    "active_seal": {
+      "argv": [
+        "python3",
+        "-B",
+        "/workspace/scratch/3cb1527378cd/c195-runs/ok/seal_submission.py"
+      ],
+      "cwd": "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+      "recording": "Active sealing invocation; completion is appended to the external command journal after this immutable submission is written.",
+      "started_unix_s": 1794355082.3041456,
+      "started_utc": "2026-11-10T23:58:02.304133+00:00",
+      "timeout_s": null
+    },
+    "append_only_journal_path": "/workspace/scratch/3cb1527378cd/c195-runs/ok/commands.jsonl",
+    "initial_read_only": [
+      {
+        "cwd": "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+        "recording": "Retrospectively transcribed from actual tool calls; stdout remained in tool transcript, not in an original local log.",
+        "returncode": 0,
+        "shell": "pwd && rg --files -g 'AGENTS.md' -g 'GOAL*' -g 'STATUS*' -g 'PROTOCOL.md' -g 'FREEZE.json' -g 'PROVISION.json' -g 'DISPATCH.json' .",
+        "timestamp": null
+      },
+      {
+        "cwd": "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+        "display_output_truncated": true,
+        "recording": "Retrospectively transcribed from actual tool calls; stdout remained in tool transcript, not in an original local log.",
+        "returncode": 0,
+        "shell": "cat GOAL.md AGENTS.md STATUS.md",
+        "timestamp": null
+      },
+      {
+        "cwd": "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+        "recording": "Retrospectively transcribed from actual tool calls; stdout remained in tool transcript, not in an original local log.",
+        "returncode": 0,
+        "shell": "cat docs/engineering/ownership-recovery-c195/PROTOCOL.md docs/engineering/ownership-recovery-c195/FREEZE.json",
+        "timestamp": null
+      },
+      {
+        "cwd": "/workspace/scratch/3cb1527378cd/c195-runs/ok",
+        "recording": "Retrospectively transcribed from actual tool calls; stdout remained in tool transcript, not in an original local log.",
+        "returncode": 0,
+        "shell": "cat PROVISION.json DISPATCH.json",
+        "timestamp": null
+      },
+      {
+        "cwd": "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+        "recording": "Retrospectively transcribed from actual tool calls; stdout remained in tool transcript, not in an original local log.",
+        "returncode": 0,
+        "shell": "cat AGENTS.md && git status --short && git branch --show-current && sed -n '1,240p' docs/engineering/guide-repair-c193/native/build.py && cat docs/engineering/ownership-recovery-c195/fixtures/candidate.ok && find /workspace/scratch/3cb1527378cd/c195-runs/ok -maxdepth 3 -type f",
+        "timestamp": null
+      },
+      {
+        "cwd": "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+        "failure_note": "Read/search only. rg received an unmatched inspection glob; stderr was suppressed. Exact error text was not available; final chained sed was not executed. No source mutation or native launch.",
+        "recording": "Retrospectively transcribed from actual tool calls; stdout remained in tool transcript, not in an original local log.",
+        "returncode": 2,
+        "shell": "cat /workspace/scratch/3cb1527378cd/c195-runs/ok/accepted-run/store/state.json && cat /workspace/scratch/3cb1527378cd/c195-runs/ok/C194-ACCEPTANCE.json && rg -n 'expected-revision|native_substeps|C193_E_OWNERSHIP' prototypes/guided_contact_v02 docs/engineering/guide-repair-c193/native/author* docs/engineering/contact-preparation-c194 2>/dev/null && sed -n '1,140p' STATUS.md",
+        "timestamp": null
+      },
+      {
+        "cwd": "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+        "recording": "Retrospectively transcribed from actual tool calls; stdout remained in tool transcript, not in an original local log.",
+        "returncode": 0,
+        "shell": "sed -n '1,300p' prototypes/guided_contact_v02/transaction.py && cat prototypes/guided_contact_v02/__main__.py && sed -n '1,85p' STATUS.md && rg --files docs/engineering/ownership-recovery-c195 docs/engineering/contact-preparation-c194 docs/engineering/guide-repair-c193 | rg 'check|author|manifest|INPUT' ",
+        "timestamp": null
+      }
+    ],
+    "post_submission_commit_commands": "Retained in the external append-only journal; Git commit identity is supplied in the handoff without modifying SUBMISSION.json.",
+    "recorded": [
+      {
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "-m",
+          "prototypes.guided_contact_v02",
+          "run",
+          "/workspace/scratch/3cb1527378cd/c195-authors/ok/docs/engineering/ownership-recovery-c195/fixtures/candidate.ok",
+          "--store",
+          "/workspace/scratch/3cb1527378cd/c195-runs/ok/accepted-run/store",
+          "--blender",
+          "/workspace/scratch/efc86516cbb7/deps/blender-4.5.3-linux-x64/blender",
+          "--host-max-operations",
+          "1000000",
+          "--host-max-elapsed-ms",
+          "80000",
+          "--expected-revision",
+          "2143515f358e36c1dd9a1deef83dba2519a99be6141b64d8bd9dae987761fbd0",
+          "--result",
+          "/workspace/scratch/3cb1527378cd/c195-runs/ok/negative-result.json"
+        ],
+        "cwd": "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+        "elapsed_s": 0.166212797164917,
+        "finished_unix_s": 1794354882.0619545,
+        "finished_utc": "2026-11-10T23:54:42.061936+00:00",
+        "returncode": 1,
+        "started_unix_s": 1794354881.8957417,
+        "started_utc": "2026-11-10T23:54:41.895726+00:00",
+        "timeout_s": 100
+      },
+      {
+        "argv": [
+          "sed",
+          "-n",
+          "1,250p",
+          "docs/engineering/contact-preparation-c194/check_artifact.py"
+        ],
+        "cwd": "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+        "elapsed_s": 0.0027115345001220703,
+        "finished_unix_s": 1794354889.8278127,
+        "finished_utc": "2026-11-10T23:54:49.827802+00:00",
+        "returncode": 0,
+        "started_unix_s": 1794354889.8251011,
+        "started_utc": "2026-11-10T23:54:49.825083+00:00",
+        "timeout_s": null
+      },
+      {
+        "argv": [
+          "cat",
+          "docs/engineering/ownership-recovery-c195/INPUTS.json"
+        ],
+        "cwd": "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+        "elapsed_s": 0.0024378299713134766,
+        "finished_unix_s": 1794354890.3170202,
+        "finished_utc": "2026-11-10T23:54:50.317011+00:00",
+        "returncode": 0,
+        "started_unix_s": 1794354890.3145823,
+        "started_utc": "2026-11-10T23:54:50.314563+00:00",
+        "timeout_s": null
+      },
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "/workspace/scratch/3cb1527378cd/c195-runs/ok/prepare_repair.py"
+        ],
+        "cwd": "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+        "elapsed_s": 0.27802133560180664,
+        "finished_unix_s": 1794354907.3691492,
+        "finished_utc": "2026-11-10T23:55:07.369135+00:00",
+        "returncode": 0,
+        "started_unix_s": 1794354907.0911279,
+        "started_utc": "2026-11-10T23:55:07.091114+00:00",
+        "timeout_s": null
+      },
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "docs/engineering/guide-repair-c193/native/build.py",
+          "--repo",
+          "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+          "--route",
+          "ok",
+          "--source",
+          "/workspace/scratch/3cb1527378cd/c195-authors/ok/docs/engineering/ownership-recovery-c195/authors/ok/repaired.ok",
+          "--out",
+          "/workspace/scratch/3cb1527378cd/c195-runs/ok/repaired-01",
+          "--blender",
+          "/workspace/scratch/efc86516cbb7/deps/blender-4.5.3-linux-x64/blender"
+        ],
+        "cwd": "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+        "elapsed_s": 3.6397769451141357,
+        "finished_unix_s": 1794354916.6411302,
+        "finished_utc": "2026-11-10T23:55:16.641033+00:00",
+        "returncode": 0,
+        "started_unix_s": 1794354913.0013533,
+        "started_utc": "2026-11-10T23:55:13.001340+00:00",
+        "timeout_s": null
+      },
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "docs/engineering/guide-repair-c193/native/build.py",
+          "--repo",
+          "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+          "--route",
+          "ok",
+          "--source",
+          "/workspace/scratch/3cb1527378cd/c195-runs/ok/accepted-source.ok",
+          "--out",
+          "/workspace/scratch/3cb1527378cd/c195-runs/ok/baseline-regenerated-01",
+          "--blender",
+          "/workspace/scratch/efc86516cbb7/deps/blender-4.5.3-linux-x64/blender"
+        ],
+        "cwd": "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+        "elapsed_s": 3.280184507369995,
+        "finished_unix_s": 1794354922.9221103,
+        "finished_utc": "2026-11-10T23:55:22.922094+00:00",
+        "returncode": 0,
+        "started_unix_s": 1794354919.6419258,
+        "started_utc": "2026-11-10T23:55:19.641912+00:00",
+        "timeout_s": null
+      },
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "docs/engineering/contact-preparation-c194/check_artifact.py",
+          "--artifact",
+          "/workspace/scratch/3cb1527378cd/c195-runs/ok/repaired-01/store/artifacts/2007dc7ba3cd4bafa7127e99add3b884",
+          "--case",
+          "G",
+          "--out",
+          "/workspace/scratch/3cb1527378cd/c195-runs/ok/check-repaired-G.json"
+        ],
+        "cwd": "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+        "elapsed_s": 0.6530375480651855,
+        "finished_unix_s": 1794354931.3747222,
+        "finished_utc": "2026-11-10T23:55:31.374705+00:00",
+        "returncode": 0,
+        "started_unix_s": 1794354930.7216847,
+        "started_utc": "2026-11-10T23:55:30.721666+00:00",
+        "timeout_s": null
+      },
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "docs/engineering/contact-preparation-c194/check_artifact.py",
+          "--artifact",
+          "/workspace/scratch/3cb1527378cd/c195-runs/ok/baseline-regenerated-01/store/artifacts/503bab1a59a74dc39a42fd7ad305b0a6",
+          "--case",
+          "H",
+          "--out",
+          "/workspace/scratch/3cb1527378cd/c195-runs/ok/check-baseline-H.json"
+        ],
+        "cwd": "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+        "elapsed_s": 0.7837226390838623,
+        "finished_unix_s": 1794354931.492266,
+        "finished_utc": "2026-11-10T23:55:31.492249+00:00",
+        "returncode": 0,
+        "started_unix_s": 1794354930.7085433,
+        "started_utc": "2026-11-10T23:55:30.708447+00:00",
+        "timeout_s": null
+      },
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "-c",
+          "import json; from pathlib import Path; p=Path(\"/workspace/scratch/3cb1527378cd/c195-runs/ok\"); print(json.dumps({\"before\": {k:v for k,v in json.loads((p/\"preservation-before-negative.json\").read_text()).items() if k != \"files\"}, \"repaired_check_keys\": list(json.loads((p/\"check-repaired-G.json\").read_text())), \"baseline_check_keys\": list(json.loads((p/\"check-baseline-H.json\").read_text()))}, indent=2))"
+        ],
+        "cwd": "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+        "elapsed_s": 0.03254127502441406,
+        "finished_unix_s": 1794354962.1721878,
+        "finished_utc": "2026-11-10T23:56:02.172174+00:00",
+        "returncode": 0,
+        "started_unix_s": 1794354962.1396465,
+        "started_utc": "2026-11-10T23:56:02.139633+00:00",
+        "timeout_s": null
+      },
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "-c",
+          "import json; from pathlib import Path; p=Path(\"/workspace/scratch/3cb1527378cd/c195-runs/ok\"); print(json.dumps({name: {k:v for k,v in json.loads((p/name).read_text()).items() if k in (\"source\",\"playback\",\"mapping_measurements\",\"mapping\",\"diagnosis\")} for name in (\"check-repaired-G.json\",\"check-baseline-H.json\")},indent=2))"
+        ],
+        "cwd": "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+        "elapsed_s": 0.04736971855163574,
+        "finished_unix_s": 1794354976.4173014,
+        "finished_utc": "2026-11-10T23:56:16.417287+00:00",
+        "returncode": 0,
+        "started_unix_s": 1794354976.3699317,
+        "started_utc": "2026-11-10T23:56:16.369917+00:00",
+        "timeout_s": null
+      },
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "/workspace/scratch/3cb1527378cd/c195-runs/ok/prepare_submission.py"
+        ],
+        "cwd": "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+        "elapsed_s": 0.14826512336730957,
+        "finished_unix_s": 1794355027.4999886,
+        "finished_utc": "2026-11-10T23:57:07.499973+00:00",
+        "returncode": 0,
+        "started_unix_s": 1794355027.3517234,
+        "started_utc": "2026-11-10T23:57:07.351709+00:00",
+        "timeout_s": null
+      },
+      {
+        "argv": [
+          "git",
+          "status",
+          "--short"
+        ],
+        "cwd": "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+        "elapsed_s": 0.034987449645996094,
+        "finished_unix_s": 1794355036.8770955,
+        "finished_utc": "2026-11-10T23:57:16.877079+00:00",
+        "returncode": 0,
+        "started_unix_s": 1794355036.842108,
+        "started_utc": "2026-11-10T23:57:16.842094+00:00",
+        "timeout_s": null
+      },
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+        ],
+        "cwd": "/workspace/scratch/3cb1527378cd/c195-authors/ok",
+        "elapsed_s": 2.8743104934692383,
+        "finished_unix_s": 1794355039.7194104,
+        "finished_utc": "2026-11-10T23:57:19.719394+00:00",
+        "returncode": 0,
+        "started_unix_s": 1794355036.8451,
+        "started_utc": "2026-11-10T23:57:16.845090+00:00",
+        "timeout_s": null
+      }
+    ],
+    "snapshot_path": "/workspace/scratch/3cb1527378cd/c195-runs/ok/commands-at-submission.json",
+    "snapshot_sha256": "fc39527c42b710bb26679847ef3e1c3ba81cd5b57b20c3bc0310621819586137"
+  },
+  "completed_before_deadline": true,
+  "coordinator_repair_corrections": 0,
+  "deadline_utc": "2026-11-11T00:13:26.248442+00:00",
+  "elapsed_wall_seconds": 276.108493,
+  "environment": {
+    "blender": "/workspace/scratch/efc86516cbb7/deps/blender-4.5.3-linux-x64/blender",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "python": "3.12.14"
+  },
+  "evidence_scripts": {
+    "prepare_repair.py": {
+      "path": "/workspace/scratch/3cb1527378cd/c195-runs/ok/prepare_repair.py",
+      "sha256": "a1df67798cf6c9c30a275ff1642b7da1a59dfc4e9007d2211f565f6dadb4d13f"
+    },
+    "prepare_submission.py": {
+      "path": "/workspace/scratch/3cb1527378cd/c195-runs/ok/prepare_submission.py",
+      "sha256": "9bcfb172f5d8f7957e18d7dadeb5d2fc0dc6afbcee6aade3aa9a9a9241c2757e"
+    },
+    "run_control.py": {
+      "path": "/workspace/scratch/3cb1527378cd/c195-runs/ok/run_control.py",
+      "sha256": "bc97ac1acbbe43d3d8534d3060bfd46774934113b8bd7af5bb383d47e23a325a"
+    },
+    "seal_submission.py": {
+      "path": "/workspace/scratch/3cb1527378cd/c195-runs/ok/seal_submission.py",
+      "sha256": "1bb86dba795812fe47f75c81a7753ed3cafe82922a13af699624cbb22d35993d"
+    }
+  },
+  "expected_static_rejections": 1,
+  "finished_utc": "2026-11-10T23:58:02.356935+00:00",
+  "formal_submission_history": [
+    {
+      "manifest": "SUBMISSION.json",
+      "number": 1,
+      "status": "Submitted for independent coordinator acceptance",
+      "submitted_utc": "2026-11-10T23:58:02.356935+00:00"
+    }
+  ],
+  "formal_submissions": 1,
+  "human_interventions": 0,
+  "incorrect_repairs": 0,
+  "intermediate_alternative_sources": 0,
+  "limits": [
+    "Supplied public known-defect task in a shared environment.",
+    "One pair cannot establish reliability or language/cost superiority.",
+    "Coordinator replay, receiving validation, visual review and final acceptance are separate.",
+    "Original accepted store remains on 375 mm; repaired build uses a fresh store.",
+    "Inherited legacy driver/tail FAILED; thirteen torque methods NOT RUN."
+  ],
+  "model_override": null,
+  "native_constructions": {
+    "baseline_regeneration": 1,
+    "failed": 0,
+    "receiving_native_checks": 0,
+    "reopens": 0,
+    "repaired": 1,
+    "retries": 0
+  },
+  "native_substeps_total": 9600,
+  "negative_result": {
+    "accepted_revision": "2143515f358e36c1dd9a1deef83dba2519a99be6141b64d8bd9dae987761fbd0",
+    "artifact_directory": null,
+    "artifacts": {},
+    "attempt_id": "93adb81a2e5c41afa7b60ba23df54477",
+    "binding": "glb-guided-contact-0.1",
+    "canonical_input_sha256": null,
+    "committed": false,
+    "cost": {
+      "cancellation_completion_ms": null,
+      "elapsed_ms": 8.535906001270632,
+      "host_elapsed_ms_ceiling": 80000,
+      "host_operations_ceiling": 1000000,
+      "native_elapsed_ms": 0.0,
+      "native_log_bytes": 0,
+      "native_result_bytes": 0,
+      "operation_components": {
+        "source_field_checks": 82,
+        "source_reference_checks": 12,
+        "source_tokens": 827
+      },
+      "operations_consumed": 921,
+      "requested_elapsed_ms": null,
+      "requested_operations": null,
+      "staged_output_bytes": 0
+    },
+    "diagnostics": [
+      {
+        "blocked_levels": [
+          "constructed",
+          "evaluated",
+          "exported",
+          "destination_validated"
+        ],
+        "code": "C193_E_OWNERSHIP",
+        "message": "Collider is assigned to the wrong mass owner",
+        "phase": "validate",
+        "span": {
+          "end_byte": 2412,
+          "end_column": 29,
+          "end_line": 81,
+          "path": "candidate.ok",
+          "source_sha256": "3a56565df8cc0f5e3707835b96a485652d47fc94191e6c1a45bd4bda3f2e788b",
+          "start_byte": 2400,
+          "start_column": 17,
+          "start_line": 81
+        }
+      }
+    ],
+    "levels": {
+      "constructed": false,
+      "destination_validated": false,
+      "evaluated": false,
+      "exported": false,
+      "represented": true
+    },
+    "previous_revision": "2143515f358e36c1dd9a1deef83dba2519a99be6141b64d8bd9dae987761fbd0",
+    "runtime": {
+      "build_hash": null,
+      "executable_sha256": null,
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+    },
+    "source_sha256": "3a56565df8cc0f5e3707835b96a485652d47fc94191e6c1a45bd4bda3f2e788b",
+    "successful": false
+  },
+  "positive_costs": {
+    "baseline-regenerated-01": {
+      "cost": {
+        "cancellation_completion_ms": null,
+        "elapsed_ms": 3115.168905000246,
+        "host_elapsed_ms_ceiling": 80000,
+        "host_operations_ceiling": 1000000,
+        "native_elapsed_ms": 863.1991380007094,
+        "native_log_bytes": 174,
+        "native_result_bytes": 940103,
+        "operation_components": {
+          "encoded_scalar_values": 6551,
+          "initial_pair_checks": 21,
+          "native_attachment_vertex_checks": 7696,
+          "native_bound_vertex_checks": 26936,
+          "native_matrix_scalars": 53872,
+          "native_scene_block_fields": 9410,
+          "projection_accessor_scalars": 24096,
+          "projection_intervals": 1920,
+          "projection_vertices": 161616,
+          "scheduled_native_substeps": 4800,
+          "schema_values": 105506,
+          "source_field_checks": 82,
+          "source_reference_checks": 12,
+          "source_tokens": 827,
+          "verified_animation_scalar_values": 6253,
+          "verified_binary_bytes": 25700,
+          "verified_native_pose_scalars": 15392
+        },
+        "operations_consumed": 450690,
+        "requested_elapsed_ms": 80000,
+        "requested_operations": 1000000,
+        "staged_output_bytes": 2822401
+      },
+      "recorder_elapsed_s": 3.2233457565307617
+    },
+    "repaired-01": {
+      "cost": {
+        "cancellation_completion_ms": null,
+        "elapsed_ms": 3450.05516999845,
+        "host_elapsed_ms_ceiling": 80000,
+        "host_operations_ceiling": 1000000,
+        "native_elapsed_ms": 1133.3050840003125,
+        "native_log_bytes": 174,
+        "native_result_bytes": 947142,
+        "operation_components": {
+          "encoded_scalar_values": 6551,
+          "initial_pair_checks": 21,
+          "native_attachment_vertex_checks": 7696,
+          "native_bound_vertex_checks": 26936,
+          "native_matrix_scalars": 53872,
+          "native_scene_block_fields": 9410,
+          "projection_accessor_scalars": 24096,
+          "projection_intervals": 1920,
+          "projection_vertices": 161616,
+          "scheduled_native_substeps": 4800,
+          "schema_values": 105506,
+          "source_field_checks": 82,
+          "source_reference_checks": 12,
+          "source_tokens": 827,
+          "verified_animation_scalar_values": 6253,
+          "verified_binary_bytes": 25700,
+          "verified_native_pose_scalars": 15392
+        },
+        "operations_consumed": 450690,
+        "requested_elapsed_ms": 80000,
+        "requested_operations": 1000000,
+        "staged_output_bytes": 2834873
+      },
+      "recorder_elapsed_s": 3.5776913166046143
+    }
+  },
+  "provider_telemetry": {
+    "exact_model_snapshot": null,
+    "provider_cost": null,
+    "reason": "Unavailable in this session; no token cutoff or provider-cost comparison claimed.",
+    "tokens": null
+  },
+  "read_only_checks": [
+    {
+      "kind": "C194 artifact reader",
+      "passed": true,
+      "result": "/workspace/scratch/3cb1527378cd/c195-runs/ok/check-baseline-H.json",
+      "variant": "baseline-regenerated-01"
+    },
+    {
+      "kind": "C194 artifact reader",
+      "passed": true,
+      "result": "/workspace/scratch/3cb1527378cd/c195-runs/ok/check-repaired-G.json",
+      "variant": "repaired-01"
+    },
+    {
+      "kind": "documentation preservation and navigation",
+      "passed": true,
+      "result": "/workspace/scratch/3cb1527378cd/c195-runs/ok/documentation-check-01/stdout.txt"
+    },
+    {
+      "files": 618,
+      "kind": "frozen file preservation",
+      "passed": true,
+      "result": "/workspace/scratch/3cb1527378cd/c195-runs/ok/frozen-input-verification-at-submission.json"
+    }
+  ],
+  "reasoning_override": null,
+  "route": "ok",
+  "schema": "ontokin.c195.author-accounting/0.1",
+  "scope": "docs/engineering/ownership-recovery-c195/authors/ok only; raw runs outside repository",
+  "source_edit": {
+    "accepted_source_path": "/workspace/scratch/3cb1527378cd/c195-runs/ok/accepted-source.ok",
+    "accepted_source_sha256": "2143515f358e36c1dd9a1deef83dba2519a99be6141b64d8bd9dae987761fbd0",
+    "baseline_preserved_byte_for_byte": true,
+    "candidate_preserved_byte_for_byte": true,
+    "candidate_sha256": "3a56565df8cc0f5e3707835b96a485652d47fc94191e6c1a45bd4bda3f2e788b",
+    "candidate_source_path": "/workspace/scratch/3cb1527378cd/c195-authors/ok/docs/engineering/ownership-recovery-c195/fixtures/candidate.ok",
+    "edited_utc": "2026-11-10T23:55:07.357890+00:00",
+    "incorrect_repairs": 0,
+    "prepared_positive_sources_read_or_copied": false,
+    "preserved_candidate_path": "/workspace/scratch/3cb1527378cd/c195-authors/ok/docs/engineering/ownership-recovery-c195/authors/ok/candidate.ok",
+    "relative_to_accepted_baseline": "Only left_stop X coordinate changes from 375 to 365 mm.",
+    "repair": "Change only contact.left_shoe owner from body.right to body.left in the malformed candidate.",
+    "repaired_source_path": "/workspace/scratch/3cb1527378cd/c195-authors/ok/docs/engineering/ownership-recovery-c195/authors/ok/repaired.ok",
+    "repaired_source_sha256": "ba105a8ca6e9c19dfd06fabd7a06a2254c4ba14d76042dfa88ca365d5de6f7ee"
+  },
+  "source_repairs": 1,
+  "source_revision_at_execution": "b9e62c8a3eaeb267ba11f929c9da168ebf73bc5b",
+  "started_utc": "2026-11-10T23:53:26.248442+00:00",
+  "unexpected_inspection_command_failures": 1,
+  "unmetered_work": "Read-only checkers, shell inspection, hashing, report creation and Git publication provide no shared runtime operation count; their actual commands and available elapsed times are retained."
+}

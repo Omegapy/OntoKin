@@ -10,13 +10,13 @@ The research question is whether the same agent makes more reliable repairs, or 
 
 Current development uses the CPU-based language tools below. The [model research archive](docs/maintenance/model-research-archive.md) preserves the separate FlowHMR and Solv3R experiments for later use.
 
-## Continue with subagents here
+## Continue from the verified checkpoint
 
-[C194's public contact edit and reuse](docs/engineering/contact-comparison-c194/README.md) is accepted for both the OntoKin source and direct Python routes. Each original author moved the left stop to 365 mm, then created a 375 mm variant while retaining and exactly regenerating the first result. Their recorded continuous mapping bounds are approximately 0.0745 and 0.1164 mm, below the unchanged 0.2 mm limit. The shared constructor, original authors, all completed validation and original Git histories were recovered after the interrupted discussion; no replacement trial was dispatched.
+[C195's ownership-error recovery](docs/engineering/ownership-recovery-c195/README.md) is accepted for both OntoKin source and direct Python. Each route rejected a collider assigned to the wrong body before simulation, repaired the intended 365 mm design, preserved its accepted 375 mm source and outputs, and regenerated that design exactly. Both actual deliveries and independent rebuilds pass the unchanged numerical, source, saved-scene and receiving gates. The defect was public; this result does not establish blind diagnosis or a language advantage.
 
-After checking the delivered checkpoint, actual main and integration lease, follow [C195's bounded ownership-error diagnosis task](docs/engineering/contact-comparison-c194/NEXT-TASK.md). First freeze and statically qualify the negative input pair. Only if both routes reject the incorrect collider owner before native execution should two fresh default authors with empty histories receive the public recovery task. No separate host or isolation preflight is required.
+Read [current status and the integration lease](STATUS.md), then [C196's accepted-store promotion task](docs/engineering/ownership-recovery-c195/NEXT-TASK.md). C195 used fresh stores for its positive builds. The next bounded product workflow promotes the already qualified repair in the same accepted store, rejects the actual old revision, and regenerates from accepted-state readback. No new author pair or target is needed.
 
-The [original C192 comparison](docs/engineering/contact-comparison-c192/README.md) remains rejected under its original backend. [C193](docs/engineering/guide-repair-c193/README.md) qualified the separately selected guide correction; C194 used that exact backend without changing its gates. The inherited legacy driver remains failed, and one successful public pair does not establish comparative advantage or a full release. See [STATUS](STATUS.md) for current integration evidence and remaining gates. Do not repeat completed trials to recover an interrupted conversation.
+[C194's original contact edit/reuse](docs/engineering/contact-comparison-c194/README.md) is integrated and retained; [C193's guide correction](docs/engineering/guide-repair-c193/README.md) remains qualified for its named cases. The original C192 failures and inherited failed legacy regression retain their meanings. Do not repeat completed trials to recover an interrupted conversation.
 
 ## Try an agent edit
 

@@ -1,0 +1,58 @@
+{
+  "schema": "ontokin.c196.nonduplication-review/0.1",
+  "reviewed_utc": "2026-11-11T00:07:43.619392+00:00",
+  "passed": true,
+  "new_native_executions": 0,
+  "finding": "The reviewed C193 lifecycle seeds accepted A and requires all 42 attempts to fail without promotion; T16 uses a fabricated zero hash. C195 uses fresh G/H stores after negative preservation. A valid H-to-G promotion in that accepted store followed by the real old H expectation is not covered by these recorded workflows. This is not a claim that generic commit/stale/rollback semantics lack prior testing.",
+  "existing_cases": [
+    "T01-invalid-edit-rollback",
+    "T15-atomic-publication-failure",
+    "T16-stale-revision",
+    "selected_rejects_legacy_store",
+    "legacy_rejects_selected_store"
+  ],
+  "source_evidence": [
+    {
+      "path": "docs/engineering/guide-repair-c193/native/lifecycle/checker/run_lifecycle.py",
+      "bytes": 27546,
+      "sha256": "b7dad10f94d6afa4d3fc23221f4b582d60c585fe26e795cd623a496f3a938527"
+    },
+    {
+      "path": "docs/engineering/guide-repair-c193/native/lifecycle/frozen/lifecycle-fixtures.json",
+      "bytes": 14885,
+      "sha256": "4180244b8b4e19847d08a0ab233ca44ef15e2bd27eae353de56e0b4ad45b51a0"
+    },
+    {
+      "path": "docs/engineering/guide-repair-c193/native/lifecycle/checker/check_store_namespaces.py",
+      "bytes": 3464,
+      "sha256": "d2065ace40eb8ea17dc75df7370c9dafe08ae8fd92c8176b865b28b4c89de87d"
+    },
+    {
+      "path": "docs/engineering/guide-repair-c193/native/lifecycle-results/summary.json",
+      "bytes": 72788,
+      "sha256": "fd59e7fb0cee4653df63c411fe65e9d801996180683698e8dab1c39f4f7ab50b"
+    },
+    {
+      "path": "docs/engineering/guide-repair-c193/native/lifecycle-results/store-namespace-summary.json",
+      "bytes": 4061,
+      "sha256": "5e17dc8e9784d28a29eaf26febd0d3cfa87238b49f305ab6d853a338b827b44b"
+    },
+    {
+      "path": "docs/engineering/guide-repair-c193/independent/evidence/lifecycle-review.json",
+      "bytes": 18359,
+      "sha256": "b2c47eff164446069e348934b2f3236a26461976c4d2099bfaf18338e73fb25e"
+    },
+    {
+      "path": "docs/engineering/ownership-recovery-c195/PROTOCOL.md",
+      "bytes": 7072,
+      "sha256": "ee4507338e5a095c972bca601f46b519e84a385be3cb356a093895c18e1b0113"
+    },
+    {
+      "path": "prototypes/guided_contact_v02/transaction.py",
+      "bytes": 14482,
+      "sha256": "233d31ec1e75c3815ff10329f2f3fa91506eb8ef15331f6f6740a6514736ec37"
+    }
+  ],
+  "draft_sha256": "7a1fea96c95067d65605cded26d30a19de9736ce216519b3dcb7cb6288152c93",
+  "execution_accounting_clarification": "Two new constructions maximum: one in-place promotion and one clean regeneration from accepted-state readback. Two independent saved-scene replays are separately reserved to preserve the inherited gate. Identical GLBs reuse hash-bound C195 receiving/visual evidence; changed artifacts stop."
+}
