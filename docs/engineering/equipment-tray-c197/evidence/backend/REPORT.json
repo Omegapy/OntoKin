@@ -1,0 +1,856 @@
+{
+  "schema": "ontokin.c197.backend-feasibility-review/0.1",
+  "reviewer": "repo_state-c197-backend",
+  "reviewed_utc": "2026-11-11T01:35:21.491288+00:00",
+  "repository": {
+    "commit": "6cbcf9c8c136659def1aac94829330cb81872511",
+    "tree": "13eb2463217d3021c7783c6c6d8be749e8c2e145",
+    "clean": true
+  },
+  "decision": "feasibility_proposal_required",
+  "admission_passed": false,
+  "reason": "No existing documented and qualified common Blender construction mapping for the proposed standard-language equipment-tray assembly. The only explicit shared constructor is confined to the C191/C193 gauge schema; extending it adds a new representation mapping.",
+  "language_tray_geometry_missing": false,
+  "common_backend_mapping_missing": true,
+  "glb_import_assessed": {
+    "existing_role": "Receiving validation and render of already exported gauge GLBs",
+    "qualified_standard_source_tray_constructor": false,
+    "qualified_tray_roundtrip_identity_mapping": false,
+    "note": "Shared receiving application or glTF exporter does not establish shared geometry construction or preserved source/instance semantics."
+  },
+  "checker_assessed": {
+    "actual_vertices_and_transforms_supported": true,
+    "already_qualified_static_tray_checker": false,
+    "new_task_checker_is_permitted_after_feasibility": true
+  },
+  "proposed_bounded_followup": {
+    "provisional_mapping": "separate static-box-assembly to Blender 0.1",
+    "standard_language_semantics_unchanged": true,
+    "new_canonical_mapping_required": true,
+    "same_constructor_for_both_routes": true,
+    "maximum_first_case_visible_boxes": 12,
+    "instances": 2,
+    "components_per_instance": [
+      "base",
+      "wall_left",
+      "wall_right",
+      "wall_front",
+      "wall_back",
+      "payload_proxy"
+    ],
+    "no_contact_animation_or_live_physics": true,
+    "estimated_engineer_days": [
+      3,
+      7
+    ],
+    "estimate_not_measured": true,
+    "estimate_assumptions": [
+      "Twelve static boxes",
+      "Existing compiler/identity machinery reusable",
+      "Pinned tools available",
+      "No new standard-language defect",
+      "No general importer or production backend"
+    ]
+  },
+  "execution_accounting": {
+    "native_exports": 0,
+    "native_simulations": 0,
+    "authors_dispatched": 0,
+    "product_tests": 0,
+    "repository_mutations": 0,
+    "remote_mutations": 0,
+    "network_fetches": 0
+  },
+  "legacy_regression": {
+    "driver": "FAILED inherited",
+    "supplemental_tail": "FAILED inherited",
+    "distinct_passing_methods": 4239,
+    "not_run_torque_read_methods": 13
+  },
+  "source_evidence": [
+    {
+      "path": "GOAL.md",
+      "sha256": "8fa2497368624c3b94e230590f1cae63fcec1520cf89e5f8bed41d5ba7cc2a25",
+      "bytes": 24355,
+      "git_blob": "e61236b8b46677d61b37032b8a2b1dd4ad3a9f3b",
+      "matches_reviewed_commit": true,
+      "line_count": 135,
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 38,
+          "text": "# OntoKin goal\n\nThe owner refined the October 28 mission on November 9, 2026 after reviewing *OntoKin in the Age of AI-Generated 3D*. Current results are recorded in [STATUS.md](STATUS.md). Repository coordination follows [AGENTS.md](AGENTS.md).\n\n## Mission\n\nBuild OntoKin as a typed semantic and physical intermediate language for AI agents. An agent should be able to describe what an object is, inspect how its parts connect and move, change one instance, validate that change, and regenerate the object for a named destination. The accepted `.ok` revision owns the design intent. Classes, instances, functions and reusable libraries give that intent a programmable form that people can review. Ordinary execution must continue without a model call per frame.\n\nTake a wheel mounted on a robot. Its visual mesh may come from an artist, an image-conditioned generator or a CAD kernel. The program should name the wheel, give its radius and mass in declared units, identify the axle frame and specify allowed rotation. An agent replacing the mesh must still verify dimensions, attachment and motion. For an external asset, the proposed workflow is to pin its origin and bytes, fit it to the declared frame and check the mapping. A photograph or Gaussian-splat capture can supply scenery. A physical claim about that scene needs independently measured engineering geometry or a validated collision proxy.\n\n## Near-term investment\n\nFund features that help an agent complete a measured physical-asset task. Concentrate on five capabilities.\n\n| Capability | What the agent must be able to demonstrate |\n| --- | --- |\n| Semantic assemblies | Address an instance by a stable identity, reuse its class and preserve the identities of its siblings. |\n| Dimensions and constraints | Check quantities in declared units and frames, and locate a violated constraint in source or delivered geometry. |\n| Physical relationships | Distinguish part ownership, spatial following and mechanical connection. Identify the authority for each motion and check the relevant range or physical result. |\n| Targeted repair | Inspect a failure, apply an atomic edit to the accepted source, and show that an invalid edit preserved the last accepted revision and an intended edit preserved unrelated parts. |\n| Multi-backend delivery | Map the same source revision to named destination profiles. Verify which identities, dimensions, joint properties and motions survive each mapping and report any loss. |\n\nDelegate mesh synthesis, precision solid modeling, rendering and general-purpose simulation to specialist tools where a task needs them. Keep the reference implementation and its bounded physical profiles for reproducible checks. New language or engine work should address a demonstrated authoring failure or an essential validation need. Defer a general importer, capture pipeline or new production backend until the comparison below justifies the expense.\n\nRecorded GLB (binary glTF) is the current delivery path. Candidate destinations include Blender for visualization, OpenUSD Physics for bodies and joints, Unreal for engine delivery, and a CAD kernel for representable solids. A proposed adapter needs a versioned mapping and a test in the receiving application. Reopen the actual output, measure geometry and playback where applicable, and exercise any claimed live behavior. Record unsupported features explicitly. The [export and validation contract](docs/engineering/OK-ENG-002-3d-scene-animation-export-and-visual-validation.md) distinguishes delivery from destination evidence.\n\n## How to decide whether to expand\n\n**Can the same agent make reliable, localized repairs and reuse the result more effectively with OntoKin than with direct Blender/Python?** The [cart trial](docs/engineering/external-environment-c177/README.md) established a source-edit and clearance check. The [rotary-indexer pilot](docs/engineering/rotary-indexer-c179/README.md) is the first held-out paired task. Preserve its frozen prompts, run order, two native exporters, common GLB checker and viewer. Start only after an isolated controller demonstrates the wall-clock and token cutoffs. Score the deliveries before revealing their routes.\n\nIf that pilot supports further study, target **30\u201350 unseen physical-asset tasks** with localized edits and later reuse. C177 sketched a cohort of 10\u201320 objects. Count distinct assemblies separately from tasks, and include variations across task families. Before runs, freeze the prompts, allowable preparation, success criteria, acceptable tolerances and the improvement large enough to justify continued investment. Give both routes the same model snapshot, settings, information, tools for inspection, resources and output requirements. In a study intended to isolate the language's contribution, use the same versioned Blender backend for both routes. Qualify that OntoKin adapter first. The existing pilot compares complete native workflows with a shared evaluator.\n\nRecord first-pass acceptance, invalid intermediate states, model and repair turns, token use, elapsed time and human interventions. On the actual deliveries, measure dimensions, unchanged siblings, prescribed motion or physical outcomes as applicable, clean regeneration and success on a later localized edit. Report paired successes and failures across all tasks. Compare cost at matched success levels and separate reusable setup from task-specific work.\n\nExpand only where the measured improvement meets the predeclared criterion. A mixed result should narrow investment to the task families or semantics that earned their cost. If direct tooling performs as well or better, pause broad language and backend expansion. One successful repair can qualify a workflow for further study. It cannot establish a general authoring advantage. [C180 comparison design and decision record](docs/engineering/semantic-physical-scope-c180/README.md)\n\n## Execution budgets\n\n",
+          "sha256": "9abbc12545272a4ae3c92096b0d621a3b761d6fc1d4c5816676864a626c5ee6b"
+        }
+      ]
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "54fda7f5d98ffa60dac2ecbde1becac2d0101c2a814fea6b64f23b55634ff473",
+      "bytes": 12169,
+      "git_blob": "dc8f3433ef3563ab2d2b4af550da807946f98bac",
+      "matches_reviewed_commit": true,
+      "line_count": 75,
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 16,
+          "text": "# Working on OntoKin\n\nThe owner authorizes autonomous technical development and repository stewardship toward [GOAL.md](GOAL.md). Routine work within that mandate should continue through implementation, verification, and reviewable publication. This is not legal ownership and does not enlarge platform permissions or authorization outside the project.\n\n## Recenter and resume\n\nAt the start of a session, after compaction, and before choosing or closing a milestone:\n\n1. Read GOAL and [STATUS.md](STATUS.md). Restate the current goal and the next unmet acceptance gate to yourself.\n2. Inspect repository status/tree, the actual GitHub head, the integration lease, and relevant CI. Do not treat a synthetic local snapshot commit as the remote head or discard existing work.\n3. Read the relevant specifications through [docs/README.md](docs/README.md), especially the adopted language rules and the active engineering contract. Historical proposals are not current implementation guarantees.\n4. Continue authorized useful work. Record genuine blockers and the concrete next action; do not silently replace the goal with an easier demonstration.\n\n## Coordinate parallel workers and main integration\n\n**Parallel branch development is allowed; main integration remains serialized.** A live integration lease is **not** a project-wide read-only lock. It protects writes to `main`, integration ownership in `STATUS.md`, and any explicitly reserved overlapping/shared files. Independent workers (including scheduled reviewers that have actual editing tools) may implement, test, and publish **nonoverlapping** work on their **own** branches while someone else integrates. An enabled schedule or branch is not proof that multiple agents are executing.\n",
+          "sha256": "e9d9ca55f9b65724d29a00dfc1164907f5b38ab9331835b91f6d0cba2aa12a49"
+        }
+      ]
+    },
+    {
+      "path": "STATUS.md",
+      "sha256": "8405ffd0df1322f7cd56a8ddee650c1ede87969dad56677d66ce734893ad3488",
+      "bytes": 59797,
+      "git_blob": "88223a674e2780d00252565f3d282bf9884cc030",
+      "matches_reviewed_commit": true,
+      "line_count": 321,
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 23,
+          "text": "# OntoKin development status \u2014 C196 accepted revision promotion and stale edit rejection\n\n## Main integration lease\n\nOwner `c197-integration-7f9a31` holds the C196 completion and C197 admission integration lease from `2026-11-11T01:29:00Z` until `2026-11-11T01:59:00Z`, acquired conditionally from observed main `055ebf330a77513c47bad4bb4c092f54190ff8d5`. Reconciliation found PR #130 still draft at unchanged candidate `b5e8094f0af5557e8d52541884750a8febbc0e6f`, no later coordination writes, and the preceding lease expired at `2026-11-11T01:01:06.131683+00:00`. Expiry is not evidence that the earlier worker stopped; conditional updates and preserved candidate bytes protect concurrent work. Scope: finish reviewed C196 integration and actual-main recorded verification; then perform only the frozen C197 equipment-tray feasibility/admission task; publish the next self-contained handoff and release ownership. Reserved shared files: `STATUS.md`, root/documentation navigation, new C196 integration records and `docs/engineering/equipment-tray-c197/`. Independent nonoverlapping branches remain permitted. Coordination: PR #130 and issue #127.\n\n## Current checkpoint\n\n[C196](docs/engineering/accepted-revision-c196/README.md) qualifies the accepted-store transition from the preserved 375 mm revision H to the already accepted 365 mm repair G. One real transaction promoted G in a copy of C195's accepted store. Every preexisting source, artifact and receipt retained its bytes, size and mode except the intentionally replaced state pointer. A request using the real formerly accepted H revision was rejected before native work; G remained accepted and only its failed-attempt receipt was added.\n\nThe runner then resolved the accepted state pointer, copied the retained G source bytes and regenerated them in a fresh store. Both new deliveries exactly match C195's accepted G canonical input, native transforms, raw GLB and final GLB. Each independently reopened saved scene reproduced all 481 motion samples. The continuous mapping bound is 0.07451646802035088 mm under the unchanged 0.2 mm allowance. Matching receiving and visual receipts are explicitly inherited from C195; no new receiving or render job was run.\n\nThe independently reviewed preparation at `53ef0584cb07c9c5d7ce03d1a0b97378f9b4b482` passed 2,831 pre-execution checks. The sole execution consumed exactly two native constructions, one static stale-revision rejection and two saved-scene replays, with no native retry or new author. The independent result review passed 958 checks. [Acceptance and limits](docs/engineering/accepted-revision-c196/evidence/ACCEPTANCE.json) and the [result review](docs/engineering/accepted-revision-c196/evidence/FINAL-RESULT-REVIEW.json) identify the exact evidence. Integration and resulting-main verification remain separately recorded.\n\nC195 was recovered without repeating its original trials, verified by 5,812 recorded checks, and integrated through [PR #128](https://github.com/Omegapy/OntoKin/pull/128) at `055ebf330a77513c47bad4bb4c092f54190ff8d5`. Its actual-main tree preserves every reviewed candidate file except coordination text. C194 and C193 remain integrated with their original evidence and failures intact.\n\nThe inherited legacy driver and supplemental tail remain **FAILED**: 4,239 distinct passing methods and thirteen torque-read methods **NOT RUN** after the unchanged 30,000 ms setup failure. No historical runtime, test, contract or hosted workflow changed in C196. This finite accepted-revision result does not establish concurrent-writer safety, general contact, production backends, live destination physics, comparative authoring advantage, a complete release or the full GOAL.\n\nNext: [C197, admit a second assembly family](docs/engineering/accepted-revision-c196/NEXT-TASK.md). Check existing language and common-backend feasibility first, then freeze and qualify a public equipment-tray task and its independent evaluator. No timed authors or silent language/backend expansion belong to that admission step.\n\n## Previous checkpoint at C195\n\n[C195](docs/engineering/ownership-recovery-c195/README.md) accepts both public ownership-error recovery submissions. Each route rejected the malformed collider owner before native work, repaired locally to 365 mm, preserved its actual accepted 375 mm source/output/acceptance closure, and regenerated that design exactly. OntoKin returned an owner-token diagnostic and preserved its accepted store pointer; direct Python rejected the schema owner and preserved ordinary staged files. Both positive builds used fresh stores. No successful promotion of the repaired revision in the original accepted store is claimed.\n",
+          "sha256": "1f28092bef24d91ed00c4e59de4eb72e1a3770ddb7849d42c30f470b396bca93"
+        }
+      ]
+    },
+    {
+      "path": "docs/engineering/accepted-revision-c196/NEXT-TASK.md",
+      "sha256": "0a155c598fbad7dafc4c32faa8bf092e6a8fd0e37553fb9b454b8a45e724e2d2",
+      "bytes": 11259,
+      "git_blob": "7ade0ad42a23c51b07d68a02220aa8b67018365c",
+      "matches_reviewed_commit": true,
+      "line_count": 185,
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 66,
+          "text": "# C197: admit a second assembly family for a public comparison\n\nStart only after C196 is accepted, integrated and verified on actual `main`.\nRead [GOAL](../../../GOAL.md), [AGENTS](../../../AGENTS.md) and\n[STATUS](../../../STATUS.md), then reconcile the current head, PRs, work scopes\nand integration lease. Verify the C196 acceptance, source identities, complete\nrecorded evidence and resulting-main checks. Restore retained evidence to recover\ncontext; do not repeat completed C193\u2013C196 author, construction or scene trials.\n\n## Question and bounded outcome\n\nCan the existing language and an existing common backend express and deliver a\nsmall reusable equipment-tray assembly well enough to admit a later paired\nauthor exercise? This is a second task family, selected to exercise coordinated\ndimensions, reusable definitions and preservation of an independent sibling.\nIt is not another stop-coordinate variation on the prepared carriage gauge.\n\nC197 has two valid closing outcomes:\n\n1. **Admitted:** a frozen public task, qualified common backend path, accepted\n   baseline deliveries, independent regeneration and checked failure controls\n   are ready for a later author exercise.\n2. **Feasibility proposal required:** an identified missing semantic feature or\n   substantial adapter/backend change prevents admission. Publish the bounded,\n   versioned proposal and effort estimate described below, with no baseline\n   exports or author dispatch beyond the reached gate.\n\nNeither outcome establishes an authoring advantage. There are no timed authors\nin C197, and this public qualification is not described as blind or unseen.\n\n## First gate: establish feasibility from existing capabilities\n\nInspect the actual adopted specifications, implementation and backend contracts\nbefore creating native output. Produce a concise feature-to-implementation map\ncovering:\n\n| Needed capability | Evidence required before admission work |\n| --- | --- |\n| Typed dimensions and frames | Existing syntax/profile for lengths, positions and relationships; exact units and frame interpretation. |\n| Reusable tray definition | An existing supported class, module or reusable construction mechanism with its dependency closure. |\n| Independent instances | Stable, addressable left/right instances and their component identities; a scoped instance change must preserve its sibling. |\n| Derived geometry | An existing supported way to derive base/wall placement and dimensions from the selected cavity and wall dimensions. |\n| Common delivery | A real existing path from both routes into the same pinned backend, construction meaning and export settings. |\n| Independent checking | A reader that can measure delivered geometry and stable identities without trusting the author's claimed dimensions. |\n\nThe finite C193 carriage adapter does not by itself establish a tray mapping.\nCheck its actual supported schema and the other available mappings. Do not\nrename gauge roles or quietly extend an experimental namespace to admit this\ndifferent assembly.\n\nIf a language semantic change, a new general importer, a production backend, or\na substantial new adapter is required, stop before baseline exports. A change\nis substantial here if it must add a new representation/relationship mapping,\ninterpret unsupported constructs, or introduce new runtime semantics rather\nthan connect already supported operations through an existing documented path.\nDo not make those additions inside this qualification milestone.\n\nInstead publish a versioned feasibility proposal that identifies the exact\nunsupported requirement, proposed bounded mapping or language change,\ndependencies, expected implementation and validation work, effort range and\nassumptions, and the evidence needed for a later go/no-go decision. Distinguish\nmeasured facts from estimates. Keep the complete product goal intact. A small\nadapter proposal is not approval to build a general backend.\n\nProceed only when an independent reviewer agrees that the selected family fits\nthe existing semantics and common delivery path. Keep the review and exact\n",
+          "sha256": "83bfc1ee6b773cadb9cc2fed14ea9fdcd90de2abb660ff56c9b1d36d1f8d6d02"
+        },
+        {
+          "start_line": 126,
+          "end_line": 185,
+          "text": "\n## Bounded baseline qualification\n\nReserve at most **one baseline export and one independent clean regeneration\nper route: four native exports in total, including failures**. Run the two\nroutes against the same frozen backend settings. No automatic retry is allowed.\nNo new authors or unrelated native simulations are authorized by this task.\n\nEach operation must have a finite host allowance and an independently enforced\nouter deadline. Record requested/effective budgets, observed work, complete\ncommands and completion or stop reasons. If a required gate fails or an export\ntimes out, stop the remaining native work, retain the reached state and publish\nthe failure. Do not raise an allowance after seeing a failure.\n\nOn the actual deliveries:\n\n1. Verify source, dependency and backend identities, then independently measure\n   the tray, payload/proxy, cavity, walls, clearances and instance frames.\n2. Verify component and instance identities and the predetermined unchanged-\n   sibling expectations. Do not accept matching pictures as this proof.\n3. Reopen the selected destination output using its actual receiving path and\n   retain the checks appropriate to this static delivery contract. Record the\n   receiving implementation and artifact identities.\n4. Run both frozen failure controls through the same checker. Insufficient\n   clearance and the changed/missing sibling must be rejected for the expected\n   reasons. These controls operate on retained output copies and do not authorize\n   additional native exports.\n5. Regenerate each baseline from its exact editable source in a fresh output\n   location. Apply the frozen determinism and identity rules. Preserve the\n   submitted baseline and its original receipts.\n\nBoth routes must qualify. A route using a different backend, a checker that\naccepts either failure control, incomplete output/source provenance, a changed\nacceptance rule or failed regeneration blocks admission. Preserve the result;\ndo not substitute a hand-repaired artifact or quietly choose another task.\n\n## Closing evidence and subsequent work\n\nPublish the feasibility map, independent freeze review, exact sources, complete\nattempt ledger, actual artifacts, receiving and measurement receipts, negative\ncontrol results, regeneration comparison, known failures and admission decision.\nIdentify the actual branch/head, applicable local verification and resulting-main\nstate under [OK-ENG-009](../OK-ENG-009-development-integration-and-branch-lifecycle.md).\nSave a self-contained current handoff that needs no earlier handoff ZIP.\n\nAn admitted result authorizes preparation of the later public paired repair and\nreuse exercise; it does not dispatch authors automatically. Before that later\nexercise, freeze equal author information/resources and the measured success,\neffort and cost criteria. A broader 30\u201350-task study and any claimed comparative\nbenefit remain separate decisions. One qualified family or successful pair is\ninsufficient evidence of superiority.\n\nPreserve the inherited **FAILED** legacy driver and supplemental tail,\n**4,239 distinct passing methods**, and **thirteen torque-read methods NOT RUN**\nafter the unchanged 30,000 ms setup failure. Retain all other external and\ncompatibility gaps. Ordinary defaults remain **100,000 operations / 30,000 ms**;\nno existing runtime, contract, fixture, tolerance, release gate or hosted-workflow\npolicy changes in this task. General contact, live destination physics,\nproduction backend expansion and every unmet [GOAL](../../../GOAL.md) domain\nremain open.\n",
+          "sha256": "bcfe281e55db2a2dbdb60aa5d07d671cb7ae4db721c816f566b82f54a6be8345"
+        }
+      ]
+    },
+    {
+      "path": "docs/language-design/polygon-pockets-v0.1/ADOPTION.md",
+      "sha256": "f94abe4603d324c388689ba43fbffa7a5f89eefa30a84884b024fba6db860d49",
+      "bytes": 18747,
+      "git_blob": "f0424fe83b7bedcaa29d41ebdf7b8c1e173d29d1",
+      "matches_reviewed_commit": true,
+      "line_count": 113,
+      "excerpts": [
+        {
+          "start_line": 7,
+          "end_line": 24,
+          "text": "## Purpose and explicit bindings\n\nSource `ontokin \"0.12\";` selects `polygon-pockets-0.1`, explicit Agent `ontokin.agent/0.12` and recorded destination `ontokin.glb/0.12`. The new geometry is a constant exterior XY outline extruded from z=0 to an authored height, with zero through eight keyed blind pockets. Every pocket opens at the common top and ends at its own interior floor. This supports editable trays, recessed panels and open housings while preserving the complete [GOAL](../../../GOAL.md).\n\nEarlier source, Agent, destination, constructors, diagnostics and defaults retain their meanings. A .12 entry can import compatible earlier pinned definitions under their own declaring semantics. An earlier declaring module cannot import .12 definitions. Existing `extrude`, `extrude_rings`, `loft_rings` and `loft_framed_rings` do not acquire pocket semantics. One existing `placed` operation may rigidly place an unplaced pocket body in its carrier's `self.frame`; nested placement remains invalid.\n\nPocket geometry is visual. It adds no mass, inertia, collision body, attachment, following relationship or motion authority. Existing physical declarations and evaluated carrier world motion remain authoritative. This decision does not supply general Boolean subtraction, intersecting or nested cavities, tunnels, branching, changing cavity frames, bevels, smooth sweeps, deformation or live engine physics.\n\n## Types, source identity and immutable input\n\n| Constructor | Signature and meaning |\n| --- | --- |\n| `polygon_pocket` | `(order: Int, vertices: Keyed<PolygonVertex>, depth: Length, floor_region: String) -> PolygonPocket` |\n| `extrude_pockets` | `(outer_vertices: Keyed<PolygonVertex>, pockets: Keyed<PolygonPocket>, palette: Keyed<SurfaceMaterial>, height: Length, bottom_region: String, top_region: String) -> Geometry` |\n\nThe enclosing keyed entry supplies each pocket's stable key. Its integer order determines traversal independently of declaration order and key spelling. Existing `planar_point`, `polygon_vertex`, `SurfaceMaterial`, nominal classes, functions, parameters, pinned modules, keyed generation and exact source edits keep their rules. Each vertex's `side_region` owns its outgoing wall edge. A pocket's `floor_region` owns its whole floor.\n\nVertex identity is scoped by its boundary. Logical mesh identity is `(boundary_kind, boundary_key, vertex_key, level)`: exterior uses `(\"outer\",\"outer\",vertex_key,\"lower\"|\"top\")`; a pocket uses `(\"pocket\",pocket_key,vertex_key,\"lower\"|\"top\")`. Thus a user pocket key `outer` cannot collide with the exterior namespace. Exterior lower vertices lie on z=0; pocket lower vertices lie on the corresponding rounded floor. Derived triangles/corners are read-only inspection data, not writable source identities.\n",
+          "sha256": "d78ec46299b4c69f5068e538f6ba134aa001111011ccb4585147b8fa3634652b"
+        }
+      ]
+    },
+    {
+      "path": "examples/polygon-pockets/heldout-stepped-tray.ok",
+      "sha256": "c01c15cb820569cf118c4cd263b6a0374612182cc9d77b8de6ed04c3395cddf6",
+      "bytes": 2169,
+      "git_blob": "c8def54fceb72e4ff471aed2b39beda93507e8e7",
+      "matches_reviewed_commit": true,
+      "line_count": 43,
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 40,
+          "text": "ontokin \"0.12\";\nmodule PocketCase @ \"pocket-case\";\nprofile \"polygon-pockets-0.1\";\n\npublic class Shape @ \"shape\" {\n    public param outer_vertices @ \"outer-vertices\": Keyed<PolygonVertex> = keyed<PolygonVertex> {\n        \"v0\": polygon_vertex(0, planar_point(0[m], 0[m]), \"outer\"),\n        \"v1\": polygon_vertex(10, planar_point(7[m], 0[m]), \"outer\"),\n        \"v2\": polygon_vertex(20, planar_point(7[m], 3[m]), \"outer\"),\n        \"v3\": polygon_vertex(30, planar_point(5[m], 3[m]), \"outer\"),\n        \"v4\": polygon_vertex(40, planar_point(5[m], 5[m]), \"outer\"),\n        \"v5\": polygon_vertex(50, planar_point(0[m], 5[m]), \"outer\")\n    };\n    public param pockets @ \"pockets\": Keyed<PolygonPocket> = keyed<PolygonPocket> {\n        \"recess\": polygon_pocket(101, keyed<PolygonVertex> {\n            \"v0\": polygon_vertex(0, planar_point(1[m], 1[m]), \"inner\"),\n            \"v1\": polygon_vertex(10, planar_point(1[m], 4[m]), \"inner\"),\n            \"v2\": polygon_vertex(20, planar_point(3[m], 4[m]), \"inner\"),\n            \"v3\": polygon_vertex(30, planar_point(4[m], 2[m]), \"inner\"),\n            \"v4\": polygon_vertex(40, planar_point(3[m], 1[m]), \"inner\")\n        }, 0.625[m], \"floor\")\n    };\n    public param height @ \"height\": Length = 1.5[m];\n    public param palette @ \"palette\": Keyed<SurfaceMaterial> = keyed<SurfaceMaterial> {\n        \"bottom\": surface_material(rgba(0.3, 0.35, 0.4, 1), 0.1, 0.65),\n        \"floor\": surface_material(rgba(0.85, 0.65, 0.15, 1), 0.1, 0.65),\n        \"inner\": surface_material(rgba(0.15, 0.65, 0.3, 1), 0.1, 0.65),\n        \"outer\": surface_material(rgba(0.7, 0.3, 0.1, 1), 0.1, 0.65),\n        \"top\": surface_material(rgba(0.1, 0.5, 0.8, 1), 0.1, 0.65)\n    };\n    geometry = extrude_pockets(self.outer_vertices, self.pockets, self.palette, self.height, \"bottom\", \"top\");\n    physical = no_body();\n}\n\nscene Demo @ \"demo\" {\n    duration = 1[s];\n    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);\n    object shape @ \"shape\": Shape {\n        placement = pose(world, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n    }\n",
+          "sha256": "28ce817e1a32353d683444bd56ba80f5ac834899cc742f0c3d42234a05d53e8d"
+        }
+      ]
+    },
+    {
+      "path": "examples/textured-surfaces/sources/marked-tray.ok",
+      "sha256": "68ba158a2fb2a29212c76727d39650e29811504eb52752ce270f095d9b4f3795",
+      "bytes": 2155,
+      "git_blob": "b5c99aee61289238964a494537cada8e529e0041",
+      "matches_reviewed_commit": true,
+      "line_count": 36,
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 32,
+          "text": "ontokin \"0.13\";\nmodule TextureCase @ \"texture-case\";\nprofile \"textured-surfaces-0.1\";\n\n\npublic class Shape @ \"shape\" {\n    geometry = texture_surface(extrude_pockets(keyed<PolygonVertex> {\n        \"v0\": polygon_vertex(0, planar_point(0[m], 0[m]), \"side\"),\n        \"v1\": polygon_vertex(10, planar_point(4[m], 0[m]), \"side\"),\n        \"v2\": polygon_vertex(20, planar_point(4[m], 2[m]), \"side\"),\n        \"v3\": polygon_vertex(30, planar_point(0[m], 2[m]), \"side\")\n    }, keyed<PolygonPocket> { \"recess\": polygon_pocket(10, keyed<PolygonVertex> {\n        \"v0\": polygon_vertex(0, planar_point(1[m], 0.5[m]), \"inner\"),\n        \"v1\": polygon_vertex(10, planar_point(1[m], 1.5[m]), \"inner\"),\n        \"v2\": polygon_vertex(20, planar_point(3[m], 1.5[m]), \"inner\"),\n        \"v3\": polygon_vertex(30, planar_point(3[m], 0.5[m]), \"inner\")\n    }, 0.5[m], \"floor\") }, keyed<SurfaceMaterial> {\n        \"bottom\": surface_material(rgba(1, 1, 1, 1), 0.0, 0.7),\n        \"side\": surface_material(rgba(1, 1, 1, 1), 0.0, 0.7),\n        \"top\": surface_material(rgba(1, 1, 1, 1), 0.0, 0.7),\n        \"floor\": surface_material(rgba(1, 1, 1, 1), 0.0, 0.7),\n        \"inner\": surface_material(rgba(1, 1, 1, 1), 0.0, 0.7),\n        \"unused\": surface_material(rgba(1, 1, 1, 1), 0.0, 0.7)\n    }, 2[m], \"bottom\", \"top\"), keyed<TextureBinding> { \"floor\": texture_binding(png_asset(\"label\", \"sha256:0f5874192f4a3dbf06be0688b34ab490363ddc1da5a26e53bde40e78e4d01989\"), planar_uv(vec3(1[m], 0.5[m], 0[m]), vec3(0.5[m^-1], 0[m^-1], 0[m^-1]), vec3(0[m^-1], -1[m^-1], 0[m^-1]), 0, 1)), \"inner\": texture_binding(png_asset(\"wall\", \"sha256:4fccd316436166a77091fcabcbadd8b5864788d2253acac59e48ce2935b38fcb\"), planar_uv(vec3(0[m], 0[m], 0[m]), vec3(0.25[m^-1], 0[m^-1], 0[m^-1]), vec3(0[m^-1], 0[m^-1], -0.5[m^-1]), 0, 1)) });\n    physical = no_body();\n}\n\nscene Demo @ \"demo\" {\n    duration = 1[s];\n    gravity = vector(world, 0[m/s^2], 0[m/s^2], 0[m/s^2]);\n    object shape @ \"shape\": Shape {\n        placement = pose(world, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n",
+          "sha256": "3b16abe3e418f32cdcad5b4caa86e20877ed23cee5721a32a4cb449e4e26fb79"
+        }
+      ]
+    },
+    {
+      "path": "ontokin/scene.py",
+      "sha256": "7a2d3e2f7185184fc19cd8573284498c67f14d118f6c261428241de6ea5a9189",
+      "bytes": 92178,
+      "git_blob": "a283fd781496abb1d3381afc2af5cde9308aea23",
+      "matches_reviewed_commit": true,
+      "line_count": 1546,
+      "excerpts": [
+        {
+          "start_line": 1120,
+          "end_line": 1142,
+          "text": "def _nodes(model: SceneModel, options: ExportOptions, *,\n           check: Callable[[], None] | None = None, work=None) -> list[BakedNode]:\n    nodes: list[BakedNode] = []\n    meshes: dict[tuple, Mesh] = {}\n    vertex_count = 0\n    native = model.profile in SURFACE_PROFILES\n\n    if native:\n        predicted = 0\n        for obj in model.objects.values():\n            if check is not None:\n                check()\n            geometry = obj.geometry\n            kind = geometry[\"kind\"]\n            if kind in (\"loft\", \"placed\", \"extrusion\", \"holes\", \"ring_loft\", \"framed_loft\", \"pockets\"):\n                surface = geometry.get(\"surface\", geometry)\n                if surface[\"kind\"] == \"pockets\":\n                    authored = len(surface[\"outer_vertices\"])\n                    for pocket in surface[\"pockets\"]:\n                        if check is not None:\n                            check()\n                        authored += len(pocket.vertices)\n                    predicted += 12 * authored - 12\n",
+          "sha256": "869f7028b8163d97b0a0c095299dcf87229f9146dba80eb8e3f5f4c52d6c39fd"
+        },
+        {
+          "start_line": 1250,
+          "end_line": 1266,
+          "text": "    for path, obj in model.objects.items():\n        if check is not None:\n            check()\n        metadata = {\"kind\": \"object\", \"path\": path, \"element_id\": list(obj.element_id),\n                    \"owner\": obj.owner, \"class_name\": obj.class_name,\n                    \"geometry\": geometries[path] if geometries is not None else obj.geometry, \"physical\": obj.physical,\n                    \"collision\": obj.collision, \"authored_motion\": obj.motion,\n                    \"appearance_linear_rgba\": list(obj.appearance), \"pose_frame\": \"world\",\n                    \"role\": obj.role, \"properties\": properties[path] if properties is not None else\n                    {name: value.to_data() for name, value in obj.properties.items()}}\n        if model.profile in CONSTRUCTION_PROFILES:\n            metadata[\"source_mapping\"] = model.occurrence_provenance[path]\n            metadata[\"program_revision\"] = model.program_revision\n        mesh = mesh_for(obj.geometry, obj)\n        if isinstance(mesh, SurfaceMesh):\n            metadata[\"surface\"] = surface_metadata(obj.geometry, mesh, check=check)\n        baked_node = BakedNode(path, path + \".frame\", mesh, obj.appearance, metadata)\n",
+          "sha256": "370c75c4bbabe9148f8ba39754195352ae7c76595a3758fb83725a1942755933"
+        },
+        {
+          "start_line": 1441,
+          "end_line": 1449,
+          "text": "                                   \"resolved parameters\", \"joint/follow declarations\", \"boundary lifecycle and pose authority\"],\n            \"baked\": [\"world translations\", \"world orientations\", \"prescribed joint/follow motion\", \"released sphere trajectories\"],\n            \"not_executable_in_glb\": [\"source classes/methods\", \"action commands\", \"joint constraints\", \"mass/inertia/gravity\", \"release transactions\"],\n            \"losses\": [\"Binary64 transforms and exact timestamps are quantized to binary32.\",\n                       \"Analytical continuous motion becomes sampled LINEAR/SLERP animation.\",\n                       \"Sphere surfaces are triangulated; no exact curved-surface retention is claimed.\",\n                       \"Source syntax, class/callable definitions, source spans, site definitions, and source action/event arguments are not embedded for program reconstruction; retain the .ok source.\",\n                       \"Velocities and accelerations are not native animation channels.\",\n                       \"Blender/game-engine re-export may discard OntoKin extras; .ok remains authoritative.\"],\n",
+          "sha256": "85e020222a8ce53b9e4e0823a3c3d4db145bfb6a3ad08bf44a4aed6a8f14fad5"
+        }
+      ]
+    },
+    {
+      "path": "ontokin/gltf.py",
+      "sha256": "07aad92e9da11f2d7d6ff207770b1bba0498d7c8c37def0c17d22a0246b8319c",
+      "bytes": 77572,
+      "git_blob": "439095f19e08c1225a327a4d2113b474bd1e7f60",
+      "matches_reviewed_commit": true,
+      "line_count": 1229,
+      "excerpts": [
+        {
+          "start_line": 158,
+          "end_line": 175,
+          "text": "def _encode(scene: BakedScene, *, check=None, work=None) -> tuple[bytes, float]:\n    builder = _BufferBuilder(check)\n    nodes, meshes, materials, samplers, channels = [], [], [], [], []\n    geometry_cache, mesh_cache, material_cache = {}, {}, {}\n    pending_textures = []\n    time_accessor = builder.add(scene.times, 1, bounds=True)\n    for index, node in enumerate(scene.nodes):\n        if check:\n            check()\n        record: dict[str, Any] = {\n            \"name\": node.name,\n            \"translation\": [float32(v, context=\"node position\") for v in node.translations[0]],\n            \"rotation\": [float32(v, context=\"node rotation\") for v in node.rotations_xyzw[0]],\n            \"extras\": {\"ontokin\": node.metadata},\n        }\n        if isinstance(node.mesh, SurfaceMesh):\n            mesh = node.mesh\n            positions = builder.add(mesh.positions, 3, target=34962, bounds=True,\n",
+          "sha256": "f0cc8684705ad1c9f3c6eb10f5688b27538996fe0b33d080fd411bbd6f319cd9"
+        }
+      ]
+    },
+    {
+      "path": "docs/language-design/guided-contact-v0.1/SPECIFICATION.md",
+      "sha256": "3e9fdd37732771cb639c358f0ad6902cebb180e94e0d389acd4270b0b7670301",
+      "bytes": 15503,
+      "git_blob": "daf95a6df64d51ed2f730a456ed8f23bb617882d",
+      "matches_reviewed_commit": true,
+      "line_count": 247,
+      "excerpts": [
+        {
+          "start_line": 18,
+          "end_line": 64,
+          "text": "This is a separately invoked, finite declarative `.ok` prototype. It reuses\nOntoKin's readable unit literals and stable `@` keys but does not inherit the\nexisting parser, classes, functions, imports, Agent interface or physical\nconstructors. The original source `0.22`, `torque-0.1`, Agent/0.22, GLB/0.22,\ndefaults, contact rejection and pass-through fixtures remain unchanged. A new\nexperimental source sent to the old parser is unsupported. There is no new\nAgent binding. This contract qualifies only the seven-part C190 assembly.\n\nThe normative grammar is [GRAMMAR.ebnf](GRAMMAR.ebnf). The normalized literal\nmodel is [source.schema.json](source.schema.json). The exact backend mapping and\nresource limits are [backend.json](backend.json); result fields and diagnostics\nare [output.schema.json](output.schema.json) and\n[diagnostics.json](diagnostics.json). The strict native worker envelope is\n[native-result.schema.json](native-result.schema.json). The examples are editable source inputs,\nnot native `.22` programs.\n\n## Source ownership and admitted model\n\nAn immutable UTF-8 `.ok` revision owns geometry, colors, local frames, attachment,\ntwo masses, four contact-box dimensions and offsets, feeds, initial state,\ncollision enablement and left-stop placement. No external imports or assets are\nallowed. Its dependency closure is the exact adopted grammar, schemas and\nbackend mapping; each file is SHA-256 identified. Generated Python maps these\ndeclarations and never supplies an undeclared geometric or physical design\nconstant. Source SHA-256 and closure hashes accompany every attempt.\n\nThe scene contains exactly these stable visible-part keys: `base`,\n`left_carriage`, `left_shoe`, `left_stop`, `right_carriage`, `right_shoe`,\n`right_stop`. Names preceding `@` are labels; rename and declaration reorder\nhave no effect on semantic identity or mapping. Every declaration key is unique\nacross part/body/collider/follow namespaces. Native names and GLB node names use\nstable keys. Occurrence identity is `(module_key, scene_key, declaration_key)`;\nrevision identity is recorded separately. A label or source-line change cannot\nreattach a collider.\n\n`part` declares `box`, `color`, `rotation`, and, for a root part, `at`. Box and\nplacement vectors have unit `[mm]`; color is unitless linear RGBA; quaternion is\nunitless `[w,x,y,z]`. Geometry has a minimum-corner source origin. A followed\nshoe has no independent `at` field. `follow` declares `parent`, `child`,\n`offset[mm]` and identity `rotation`. This relationship is a massless, rigid\nspatial attachment only. It supplies no force-bearing joint. Each shoe has one\nfollow parent, its matching carriage, and no body declaration.\n\n`body` declares `part`, `mass[kg]`, `authority`, `guide`, `feed[mm/s]` and\n`initial_velocity[mm/s]`. Only the two matching carriage bodies exist, with\nstable IDs `body.left` and `body.right`, mass 1 kg each, `authority=\"solver\"`,\n`guide=\"world_x\"`, initial velocity `[0,0,0]`, feeds 125 and 150 mm/s respectively.\n",
+          "sha256": "80d2d6bc39ecd08e8804f9bb800ea05b189a708c26c739f1d1264aebf62cd7f0"
+        },
+        {
+          "start_line": 105,
+          "end_line": 132,
+          "text": "## Native construction and solver boundary\n\n`backend.json` enumerates two active COMPOUND carriage parents, two source shoe\nBOX children (one may be disabled), two hidden carriage BOX children, two passive\nstop boxes, one passive base box, two GENERIC guides and two MOTOR constraints.\nOnly seven solids are visible. Native child rigid-body mass fields remain the\nmeasured C190 value 1 kg but are ignored as separate mass owners by the compound\nconstruction. The owning carriage's 1 kg mass is the only moving mass per lane.\n\nConstruct a fresh empty scene from source on every build. Do not open the C189 or\nC190 `.blend` as a design input. The C190 build and audit remain historical\nevidence for this construction. Native helper geometry is derived only from\nthe declared carriage or base box. Explicitly set the measured defaults; do not\ninvent exclusive pair filtering or a four-native-shape engine.\n\nThe source frame is right-handed, +Y up, in mm. Blender is right-handed, +Z up,\nin m: `(x,y,z)_source -> (x,-z,y)_Blender / 1000`. A part's centered native mesh\norigin is source minimum corner plus half its box dimensions. The carriage\nbody frame is this centered visible carriage frame. A shoe's centered native\nlocal origin is `follow.offset + shoe.box/2 - carriage.box/2`, transformed by\nthe same axis/unit map. Stop center X is `at.x + box.x/2`; its static property\ndriver uses this declared half-width, never an independent 15 mm constant.\n\nEach guide has native object1=base and object2=carriage, X unbounded, Y/Z and\nall rotations locked, with collisions between the constrained objects disabled.\nEach motor has the same ordering, target `-feed_mm_s/1000`, maximum impulse\n100000, and an own-carriage speed-property driver. There are no carriage or\nshoe transform drivers/actions. Collision groups are the measured Blender\n",
+          "sha256": "43f31574d71aa6aa4fa332db55a5ea54999de40af0f542af7dec49804d31bbae"
+        },
+        {
+          "start_line": 225,
+          "end_line": 247,
+          "text": "Successful adapter output establishes represented, constructed, evaluated and\nexported levels. Destination validation remains false until independent\nreceiving-application evidence is attached. Every failure has `successful=false`,\n`committed=false`, exact diagnostics, source hash, reached/blocked levels and\nattempt costs. Previously committed artifacts retain their original revision\nand are never relabeled as the failed candidate. Native logs and failed stages\nare preserved under separate attempt identifiers, subject to caps.\n\n## Qualification boundary\n\nFreeze independent A/B/C/D source fixtures, analytic expectations, negative\ndiagnostics, rename/reorder control and failure tests before any adapter output.\nBuild every case twice in fresh native processes and empty scenes. Canonical\ninputs and final GLBs must be byte-identical on this pinned environment; `.blend`\nbyte identity is not required. Reopen every saved scene and reproduce native\nresponse. Independently inspect raw/final geometry, matrices, identities, native\nsettings, collider removal, all interpolation intervals and actual destination\nplayback. Preserve exact commands, hashes, run times and failures.\n\nC191 establishes neither general collision dynamics, arbitrary inertia,\ndynamic/dynamic contact, a production backend nor comparative authoring value.\nThe next step after a complete pass is a separately frozen same-backend task\ncomparison with adapter preparation cost disclosed.\n",
+          "sha256": "d4a9ccc7bd0943c5d220b2bffd81f7187a5db84bc233dcd1a7e365379dd2d20f"
+        }
+      ]
+    },
+    {
+      "path": "docs/language-design/guided-contact-v0.2/SPECIFICATION.md",
+      "sha256": "fc526cf9e47a9b12dd26441167c9d66fb8187b631aef4d8680688c1d7263ea6d",
+      "bytes": 7497,
+      "git_blob": "76d1753b0b1342c7e79764111dff2689b98fa37b",
+      "matches_reviewed_commit": true,
+      "line_count": 133,
+      "excerpts": [
+        {
+          "start_line": 20,
+          "end_line": 50,
+          "text": "The new source and backend are explicit selectors for the guide-convergence\ncorrection. They do not alter the original `c191-experimental-0.1` source,\n`blender-bullet-c190-0.1` backend, prototype v01, standard parser, Agent interface,\nor ordinary execution defaults. Old and new source selectors are rejected by\nthe other prototype. Use a distinct store for the new store envelope.\n\nThe physical profile and recorded-output meanings remain unchanged. The native\nresult/store/diagnostic namespaces identify the new invocation; their field\nstructure and rejection meanings are inherited, with only the prefix changed.\nThe literal grammar retains its prior forms. This is not a general language\nextension, production backend or live destination simulation.\n\n## Inherited requirements\n\nThe original [C191 specification](../guided-contact-v0.1/SPECIFICATION.md),\nSHA-256 `3e9fdd37732771cb639c358f0ad6902cebb180e94e0d389acd4270b0b7670301`,\nremains the normative basis except for the explicit selector and guide setting\nchanges in this document. The copied [grammar](GRAMMAR.ebnf),\n[source schema](source.schema.json), [native-result schema](native-result.schema.json),\n[output schema](output.schema.json), [diagnostics](diagnostics.json), and exact\n[backend](backend.json) provide the new selected bytes. The\n[C191-A1 bounded-source clarification](amendments/C191-A1.md) is inherited without\nchanging its original bytes or diagnostic semantics; its C193 equivalents use\nthe `C193_` prefix.\n\nThe source still owns exactly seven visible boxes, two 1 kg carriage mass owners,\nfour shoe/stop contact boxes and two massless follow relationships. Identity,\nownership, one solver motion authority per lane, units, initial poses, body and\nguide frames, compound child geometry, collider groups, source limits and stable\nkeys keep their original meanings. The only admitted design edits remain the\nleft stop's X coordinate in 200\u2013495 mm and left-shoe collider enablement.\n",
+          "sha256": "9e0d0df289bab6122e8dc574967998c727510325acc1b0884fcc12cae0140c50"
+        },
+        {
+          "start_line": 71,
+          "end_line": 80,
+          "text": "The constructor and capture functions are copied without algorithm changes.\nThey read the selected backend value when assigning each guide's override.\nThe native worker's envelope/console labels identify C193. The recorder uses the\nsame algorithm, with a C193 generator label. It captures all 481 sequential native\nposes; it neither creates nor replaces a stopping response.\n\nBoth `.ok` and direct Python routes must supply the same canonical model to this\nsame constructor and backend. Their canonical solver bytes, native samples,\nraw GLBs and final GLBs must agree for the compared cases. The direct runner\ndoes not parse `.ok` or claim an Agent interface.\n",
+          "sha256": "9b4aa9cb28b93fc17e9f2ae4d0c5375290b1bafb874e5ca44d195f85dd5edf94"
+        }
+      ]
+    },
+    {
+      "path": "docs/language-design/guided-contact-v0.2/source.schema.json",
+      "sha256": "b0c3d25671c9dce8a7e96007cdc4fb22ab0274eb728ab8425df23c41ac9db3b3",
+      "bytes": 16067,
+      "git_blob": "9577888fd72a7a105c47cb6964586790ad078e33",
+      "matches_reviewed_commit": true,
+      "line_count": 743,
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 80,
+          "text": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"$id\": \"urn:ontokin:c193:source:0.1\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"source_binding\": {\n      \"const\": \"c193-experimental-0.1\"\n    },\n    \"profile\": {\n      \"const\": \"guided-box-contact-0.1\"\n    },\n    \"backend\": {\n      \"const\": \"blender-bullet-c193-0.1\"\n    },\n    \"output\": {\n      \"const\": \"glb-guided-contact-0.1\"\n    },\n    \"backend_sha256\": {\n      \"type\": \"string\",\n      \"pattern\": \"^[0-9a-f]{64}$\"\n    },\n    \"module_key\": {\n      \"const\": \"gauge\"\n    },\n    \"scene_key\": {\n      \"const\": \"slide\"\n    },\n    \"duration_s\": {\n      \"const\": 2\n    },\n    \"gravity_m_s2\": {\n      \"const\": [\n        0,\n        0,\n        0\n      ]\n    },\n    \"execution\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"max_operations\": {\n          \"type\": \"integer\",\n          \"minimum\": 1,\n          \"maximum\": 1000000\n        },\n        \"max_elapsed_ms\": {\n          \"type\": \"integer\",\n          \"minimum\": 1,\n          \"maximum\": 80000\n        }\n      },\n      \"required\": [\n        \"max_operations\",\n        \"max_elapsed_ms\"\n      ],\n      \"additionalProperties\": false\n    },\n    \"parts\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"base\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"box_mm\": {\n              \"const\": [\n                730,\n                80,\n                600\n              ]\n            },\n            \"color_linear_rgba\": {\n              \"const\": [\n                0.21,\n                0.26,\n                0.3,\n                1\n              ]\n            },\n            \"rotation_wxyz\": {\n              \"const\": [\n",
+          "sha256": "bfa1320e2575a4ed37b7c11ad3a6bfe72319e4278430b34c6eba448e2b8623e9"
+        }
+      ]
+    },
+    {
+      "path": "prototypes/guided_contact_v02/source.py",
+      "sha256": "81b9db80b3ee0e5b798eddae8f2735635a76bca9e9a91525d6061ba2dd7d25a3",
+      "bytes": 22408,
+      "git_blob": "fdb899dfda1b5901c54722ac6a65aa10b64533e9",
+      "matches_reviewed_commit": true,
+      "line_count": 429,
+      "excerpts": [
+        {
+          "start_line": 384,
+          "end_line": 417,
+          "text": "        source_schema = self.contract[\"source_schema\"][\"properties\"]\n        for key, value in ((\"module_key\", self.module_key), (\"scene_key\", self.scene_key), (\"duration_s\", scene[\"duration\"].value)):\n            try:\n                schema_check(value.value, source_schema[key], budget=self.budget)\n            except ValueError as exc:\n                self.fail(\"E_SCOPE\", str(exc), value)\n        for kind, collection in ((\"part\", \"parts\"), (\"body\", \"bodies\"), (\"collider\", \"colliders\"), (\"follow\", \"follows\")):\n            expected = source_schema[collection][\"properties\"]\n            if set(canonical[collection]) != set(expected):\n                self.fail(\"E_SCOPE\", \"Declaration ID set is outside this finite assembly\", self.scene_key)\n            for declaration in self.declarations:\n                if declaration.kind != kind:\n                    continue\n                rules = expected[declaration.key.value][\"properties\"]\n                for field in declaration.fields:\n                    name = normalized_names.get(field.name.text, field.name.text)\n                    try:\n                        schema_check(field.value.value, rules[name], budget=self.budget)\n                    except (ValueError, KeyError) as exc:\n                        self.fail(\"E_SCOPE\", str(exc), field.value)\n        if len(self.declarations) != self.contract[\"backend\"][\"limits\"][\"declarations\"]:\n            self.fail(\"E_SCOPE\", \"Exactly fifteen declarations are required\", self.scene_key)\n        operations = execution[\"max_operations\"].value.value if execution else 100000\n        elapsed = execution[\"max_elapsed\"].value.value * 1000 if execution else 30000\n        if type(elapsed) in (int, float) and math.isfinite(elapsed) and elapsed == int(elapsed):\n            elapsed = int(elapsed)\n        self.budget.authorize(operations, elapsed,\n                              self.span(execution[\"max_operations\"].value) if execution else self.span(self.header_range),\n                              self.span(execution[\"max_elapsed\"].value) if execution else self.span(self.header_range))\n        canonical[\"execution\"] = {\"max_operations\": operations, \"max_elapsed_ms\": elapsed}\n        schema_check(canonical, self.contract[\"source_schema\"], budget=self.budget)\n        self.canonical = canonical\n        self.canonical_bytes = canonical_bytes(canonical)\n        self.canonical_sha = sha256(self.canonical_bytes)\n",
+          "sha256": "c17ae560925c4f7ff974fa567c9fbd0adf2f97db605980d8820cca069096f115"
+        }
+      ]
+    },
+    {
+      "path": "prototypes/guided_contact_v02/native_worker.py",
+      "sha256": "00aa0d0d0d7bb1b9067d4e93e56de45c6e2f7e6f5c15a1edf5b11119cd87f928",
+      "bytes": 17444,
+      "git_blob": "3c7a608e73ca569eb189e988fde79d027e582104",
+      "matches_reviewed_commit": true,
+      "line_count": 335,
+      "excerpts": [
+        {
+          "start_line": 14,
+          "end_line": 55,
+          "text": "PARTS = (\"base\", \"left_carriage\", \"left_shoe\", \"left_stop\",\n         \"right_carriage\", \"right_shoe\", \"right_stop\")\nSCENE_TAGS = (\"source_sha256\", \"canonical_input_sha256\", \"source_binding\", \"profile_binding\",\n              \"backend_binding\", \"output_binding\", \"module_key\", \"scene_key\")\nOBJECT_TAGS = (\"part_id\", \"body_id\", \"collider_id\", \"helper_role\", \"source_occurrence\")\n\n\ndef native_point(point_mm):\n    return (point_mm[0] / 1000, -point_mm[2] / 1000, point_mm[1] / 1000)\n\n\ndef gltf_point(point_m):\n    return [1000 * point_m[0], 1000 * point_m[2], -1000 * point_m[1]]\n\n\ndef select(obj):\n    bpy.ops.object.select_all(action=\"DESELECT\")\n    obj.select_set(True)\n    bpy.context.view_layer.objects.active = obj\n\n\ndef mesh_box(name, box_mm):\n    x, y, z = [value / 2 for value in box_mm]\n    corners = [(-x, -y, -z), (x, -y, -z), (x, y, -z), (-x, y, -z),\n               (-x, -y, z), (x, -y, z), (x, y, z), (-x, y, z)]\n    faces = [(0, 3, 2, 1), (4, 5, 6, 7), (0, 1, 5, 4),\n             (3, 7, 6, 2), (0, 4, 7, 3), (1, 2, 6, 5)]\n    mesh = bpy.data.meshes.new(name + \"_mesh\")\n    mesh.from_pydata([native_point(corner) for corner in corners], [], faces)\n    mesh.update()\n    return mesh\n\n\ndef tag_object(obj, mapping, source):\n    part = mapping.get(\"source_part\") or \"\"\n    body = mapping.get(\"source_body\") or \"\"\n    collider = mapping.get(\"source_collider\") or \"\"\n    obj[\"part_id\"] = part\n    obj[\"body_id\"] = body\n    obj[\"collider_id\"] = collider\n    obj[\"helper_role\"] = mapping[\"kind\"]\n    obj[\"source_occurrence\"] = \"/\".join([source[\"module_key\"], source[\"scene_key\"], part or body])\n",
+          "sha256": "e3084c01741d86a64205dfa6b8cf0eb25b77d6c650edef47aa47406a0e05f67f"
+        },
+        {
+          "start_line": 120,
+          "end_line": 140,
+          "text": "def construct(source, manifest, backend):\n    bpy.ops.wm.read_factory_settings(use_empty=True)\n    scene = bpy.context.scene\n    settings = backend[\"world\"]\n    for name in (\"frame_start\", \"frame_end\"):\n        setattr(scene, name, settings[name])\n    scene.render.fps = settings[\"fps\"]\n    scene.render.fps_base = settings[\"fps_base\"]\n    scene.gravity = source[\"gravity_m_s2\"]\n    mappings = {row[\"name\"]: row for row in backend[\"native_objects\"]}\n    origins = {key: part[\"at_mm\"] for key, part in source[\"parts\"].items() if \"at_mm\" in part}\n    for follow in source[\"follows\"].values():\n        origins[follow[\"child\"]] = [a + b for a, b in zip(origins[follow[\"parent\"]], follow[\"offset_mm\"])]\n    for name in backend[\"construction_order\"][\"visible_parts\"]:\n        part = source[\"parts\"][name]\n        obj = bpy.data.objects.new(name, mesh_box(name, part[\"box_mm\"]))\n        scene.collection.objects.link(obj)\n        center = [value + size / 2 for value, size in zip(origins[name], part[\"box_mm\"])]\n        obj.location = native_point(center)\n        obj.rotation_mode = \"QUATERNION\"\n        obj.rotation_quaternion = part[\"rotation_wxyz\"]\n",
+          "sha256": "56b94812eda0a73bf9ba7457c854cfd76b8b0693680cda39dab9daabbd6768a3"
+        },
+        {
+          "start_line": 175,
+          "end_line": 205,
+          "text": "    for name in backend[\"construction_order\"][\"fixed_bodies\"]:\n        add_body(scene.objects[name], \"PASSIVE\", \"BOX\", backend)\n    for lane in backend[\"construction_order\"][\"moving_lanes\"]:\n        carriage, shoe = scene.objects[lane + \"_carriage\"], scene.objects[lane + \"_shoe\"]\n        body = add_body(carriage, \"ACTIVE\", \"COMPOUND\", backend)\n        body.mass = source[\"bodies\"][\"body.\" + lane][\"mass_kg\"]\n        add_body(shoe, \"ACTIVE\", \"BOX\", backend)\n        proxy_name = \"_\" + lane + \"_carriage_collision\"\n        proxy = bpy.data.objects.new(proxy_name, carriage.data.copy())\n        scene.collection.objects.link(proxy)\n        proxy.parent = carriage\n        proxy.matrix_parent_inverse = Matrix.Identity(4)\n        proxy.location = (0, 0, 0)\n        proxy.hide_render = True\n        proxy.display_type = \"WIRE\"\n        tag_object(proxy, mappings[proxy_name], source)\n        add_body(proxy, \"ACTIVE\", \"BOX\", backend)\n        add_constraint(scene, lane, \"GENERIC\", source, backend, mappings)\n        add_constraint(scene, lane, \"MOTOR\", source, backend, mappings)\n    if not source[\"colliders\"][\"contact.left_shoe\"][\"enabled\"]:\n        select(scene.objects[\"left_shoe\"])\n        bpy.ops.rigidbody.object_remove()\n    world = scene.rigidbody_world\n    for name in (\"time_scale\", \"substeps_per_frame\", \"solver_iterations\", \"use_split_impulse\"):\n        setattr(world, name, settings[name])\n    world.point_cache.frame_start = settings[\"cache_frame_start\"]\n    world.point_cache.frame_end = settings[\"cache_frame_end\"]\n    # Do not assign use_disk_cache: the archived C190 build records a crash for\n    # that redundant assignment in this pinned Blender. Its default is checked.\n    tags = {\"source_sha256\": manifest[\"source_sha256\"],\n            \"canonical_input_sha256\": manifest[\"canonical_input_sha256\"],\n",
+          "sha256": "fec2dca9f06a8af04c2fa73c8dfb3cb79a424f3596b69cdada16c6c261d1c113"
+        },
+        {
+          "start_line": 302,
+          "end_line": 331,
+          "text": "    output = Path(output_name)\n    if list(bpy.app.version) != backend[\"runtime\"][\"blender_version\"] or bpy.app.build_hash.decode() != backend[\"runtime\"][\"build_hash\"]:\n        raise RuntimeError(\"Pinned Blender identity mismatch\")\n    if extra:\n        if len(extra) != 2 or extra[0] != \"--reopen\":\n            raise ValueError(\"Unsupported worker arguments\")\n        bpy.ops.wm.open_mainfile(filepath=extra[1])\n        scene = bpy.context.scene\n        scene.frame_set(0)\n        # Fresh process plus explicit native cache clearing, without reconstruction.\n        bpy.ops.ptcache.free_bake_all()\n        scene.frame_set(0)\n        bpy.context.view_layer.update()\n    else:\n        scene = construct(source, manifest, backend)\n    if len(scene.objects) > backend[\"limits\"][\"native_objects\"]:\n        raise RuntimeError(\"Native object ceiling exceeded\")\n    config = configuration(scene)\n    bpy.context.preferences.filepaths.save_version = 0\n    bpy.ops.wm.save_as_mainfile(filepath=str(output / \"scene.blend\"))\n    samples, scheduled_substeps = capture(scene, backend)\n    result = {\"schema\": \"ontokin.c193.native-result/0.1\", \"source_sha256\": manifest[\"source_sha256\"],\n              \"canonical_input_sha256\": manifest[\"canonical_input_sha256\"],\n              \"blender_version\": list(bpy.app.version), \"blender_build_hash\": bpy.app.build_hash.decode(),\n              \"nominal_scheduled_substeps\": scheduled_substeps, \"configuration\": config, \"samples\": samples}\n    encoded = (json.dumps(result, sort_keys=True, separators=(\",\", \":\"), allow_nan=False) + \"\\n\").encode()\n    if len(encoded) > backend[\"limits\"][\"native_result_bytes\"]:\n        raise RuntimeError(\"Native result byte ceiling exceeded\")\n    (output / \"native-result.json\").write_bytes(encoded)\n    print(\"C193 native capture complete:\", len(samples), \"samples;\", scheduled_substeps, \"scheduled substeps\")\n",
+          "sha256": "74f4bca4dd26eaf502541f029c627ebf3f16d36cab49f526f4ba6261efef8625"
+        }
+      ]
+    },
+    {
+      "path": "docs/language-design/guided-contact-v0.2/backend.json",
+      "sha256": "9ce64fd758b4e7f659ddd9d4bb3bcf7a0faa6a1883cc018c673e10536fe0aefe",
+      "bytes": 14039,
+      "git_blob": "2b2483fc198bbe48a430151e217b30f2931bd5d7",
+      "matches_reviewed_commit": true,
+      "line_count": 484,
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 18,
+          "text": "{\n  \"binding\": \"blender-bullet-c193-0.1\",\n  \"status\": \"selected_by_C193_decision_after_review_before_qualification\",\n  \"runtime\": {\n    \"blender_version\": [\n      4,\n      5,\n      3\n    ],\n    \"build_hash\": \"67807e1800cc\",\n    \"platform\": \"Linux x86-64\",\n    \"archive_url\": \"https://download.blender.org/release/Blender4.5/blender-4.5.3-linux-x64.tar.xz\",\n    \"archive_bytes\": 377397328,\n    \"archive_sha256\": \"975c58fcb244273838534bba771e64ad87739216b0f9b39a888531a49a72d845\",\n    \"executable_sha256\": \"5e15447670804c855fef6033ac9b8fd82696b762095becf0df79b1c2f8034397\",\n    \"threads\": 2,\n    \"factory_startup\": true,\n    \"python_exit_code\": 1\n",
+          "sha256": "af950f83153f76b42174ac9137cb2b79da054fc17faacdecc2e0deac8bab1dc9"
+        },
+        {
+          "start_line": 449,
+          "end_line": 475,
+          "text": "  \"construction_order\": {\n    \"visible_parts\": [\n      \"base\",\n      \"left_carriage\",\n      \"left_shoe\",\n      \"left_stop\",\n      \"right_carriage\",\n      \"right_shoe\",\n      \"right_stop\"\n    ],\n    \"fixed_bodies\": [\n      \"base\",\n      \"left_stop\",\n      \"right_stop\"\n    ],\n    \"moving_lanes\": [\n      \"left\",\n      \"right\"\n    ],\n    \"per_lane\": [\n      \"carriage compound\",\n      \"shoe box\",\n      \"hidden carriage box\",\n      \"GENERIC guide\",\n      \"MOTOR\"\n    ],\n    \"disabled_control\": \"Construct then remove only the left-shoe rigid-body component before saving/capture; preserve geometry, parent and pose.\"\n",
+          "sha256": "f6e96ea1b665af44ef72f5e8dfaa0bc4afe184b44132d83c2960fb8625d184f1"
+        }
+      ]
+    },
+    {
+      "path": "docs/engineering/guide-repair-c193/native/direct_runner.py",
+      "sha256": "1be526486b86a697ace350975ca679ca0311f8cfe89ef6ea9e09a6a264aacab3",
+      "bytes": 6509,
+      "git_blob": "b906a5989372369dc657ca3c389b0e1af9405a81",
+      "matches_reviewed_commit": true,
+      "line_count": 105,
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 5,
+          "text": "#!/usr/bin/env python3\n\"\"\"C193 prepared direct-Python runner on the unchanged C193 native constructor.\n\nThe editable Python file supplies DESIGN. No .ok parser or .ok source is used.\nThis runner and the native construction/export utilities count as reusable setup.\n",
+          "sha256": "05744ea5acd621b069c0cfce2efa8aa388730ff21dff40446afdb62a912d71e5"
+        },
+        {
+          "start_line": 30,
+          "end_line": 75,
+          "text": "    from prototypes.guided_contact_v02.common import Budget, CONTRACT, CONTRACT_MANIFEST_SHA256, canonical_bytes, load_contract, schema_check, sha256\n    from prototypes.guided_contact_v02.glb import encode_raw, project, verify_mapping\n    from prototypes.guided_contact_v02.native_validation import validate_native, validate_scene_artifact, write_native_evidence\n    from prototypes.guided_contact_v02.supervisor import check_sizes, supervise\n    from prototypes.guided_contact_v02.transaction import file_hash, retain_implementation, write_mapping\n\n    budget = Budget(1000000, 80000)\n    receipt = {\"route\": \"direct-python\", \"successful\": False, \"started_unix_s\": started,\n               \"python\": platform.python_version(), \"platform\": platform.platform(),\n               \"reusable_setup\": \"C193 direct runner and unchanged C193 constructor/validation/recorded-output utilities\",\n               \"ok_source_parsed\": False, \"product_transaction_claimed\": False}\n    try:\n        source = args.design.read_bytes()\n        design = runpy.run_path(str(args.design))[\"DESIGN\"]\n        contract = load_contract()\n        backend = contract[\"backend\"]\n        contract_manifest_sha256 = sha256((CONTRACT / \"CONTRACT-FILES.json\").read_bytes())\n        assert contract_manifest_sha256 == CONTRACT_MANIFEST_SHA256\n        assert design[\"backend_sha256\"] == contract[\"backend_sha256\"], \"Direct design backend hash differs from selected contract\"\n        receipt.update(contract_manifest_sha256=contract_manifest_sha256,\n                       backend_sha256=contract[\"backend_sha256\"])\n        schema_check(design, contract[\"source_schema\"], budget=budget)\n        budget.authorize(design[\"execution\"][\"max_operations\"], design[\"execution\"][\"max_elapsed_ms\"], None, None)\n        encoded = canonical_bytes(design)\n        context = SimpleNamespace(sha=sha256(source), canonical=design,\n            canonical_sha=sha256(encoded), headers={\"backend\": None, \"output\": None}, span=lambda _: None)\n        assert platform.system() == \"Linux\" and platform.machine() == \"x86_64\"\n        assert file_hash(args.blender, budget) == backend[\"runtime\"][\"executable_sha256\"]\n        (args.out / \"source.py\").write_bytes(source)\n        (args.out / \"canonical-input.json\").write_bytes(encoded)\n        manifest = {\"source_sha256\": context.sha, \"canonical_input_sha256\": context.canonical_sha,\n                    \"contract_manifest_sha256\": contract_manifest_sha256,\n                    \"backend_sha256\": contract[\"backend_sha256\"],\n                    \"dependency_closure\": contract[\"dependency_closure\"],\n                    \"authoring_route\": \"direct-python\", \"source_path\": args.design.name,\n                    \"canonical_profile_label\": \"The shared source_binding field names the C193 interchange profile; this route does not parse .ok\"}\n        (args.out / \"source-manifest.json\").write_bytes(canonical_bytes(manifest))\n        (args.out / \"backend.json\").write_bytes((CONTRACT / \"backend.json\").read_bytes())\n        retain_implementation(args.out, budget)\n        (args.out / \"direct-runner.py\").write_bytes(Path(__file__).read_bytes())\n        command = [str(args.blender.resolve()), \"--factory-startup\", \"-b\", \"-t\", \"2\", \"--python-exit-code\", \"1\",\n                   \"--python\", str((args.out / \"implementation/native_worker.py\").resolve()), \"--\",\n                   str((args.out / \"canonical-input.json\").resolve()), str((args.out / \"source-manifest.json\").resolve()),\n                   str((args.out / \"backend.json\").resolve()), str(args.out.resolve())]\n        if args.reopen:\n            command.extend([\"--reopen\", str(args.reopen.resolve())])\n",
+          "sha256": "5dbac3ec9e07ce5b6c4ad39e2a5469c297ae05f810007576d6248019d36cd45e"
+        }
+      ]
+    },
+    {
+      "path": "docs/engineering/guided-contact-c191/tools/render_frames.py",
+      "sha256": "f66da4ad633faf780b33fccdaf2e19c8d5ef103ce67cdfba0f9728db983b54db",
+      "bytes": 17538,
+      "git_blob": "6f267a8ce46185bb532bc28017b833e1051d9afa",
+      "matches_reviewed_commit": true,
+      "line_count": 386,
+      "excerpts": [
+        {
+          "start_line": 310,
+          "end_line": 375,
+          "text": "    output.mkdir(parents=True, exist_ok=True)\n    receipt = {\"task\": \"C191 actual GLB import renders\", \"started_utc\": utc(),\n        \"attempt\": args.attempt, \"area_light_scale\": args.light_scale,\n        \"capture_kind\": \"Blender CPU-rendered frames of imported delivered GLBs\",\n        \"browser_capture\": False, \"browser_playback_claim\": False,\n        \"renderer_change\": \"C187 camera preserved; CPU Cycles differs from the C189 browser renderer.\",\n        \"engine\": \"CYCLES\", \"device\": \"CPU\", \"samples\": args.samples, \"threads\": args.threads,\n        \"blender_version\": bpy.app.version_string, \"blender_build_hash\": bpy.app.build_hash.decode(),\n        \"blender_executable\": bpy.app.binary_path, \"blender_executable_sha256\": digest(bpy.app.binary_path),\n        \"script_sha256\": digest(__file__), \"command_argv\": sys.argv,\n        \"import_scene_fps\": FPS, \"frame_origin\": \"t=0 maps to Blender frame 0\",\n        \"import_vs_glb_bounds_tolerance_m\": BOUNDS_TOLERANCE_M, \"jobs\": []}\n    if args.append:\n        old = json.loads((output / \"receipt.json\").read_text())\n        for key in [\"script_sha256\", \"attempt\", \"area_light_scale\", \"engine\", \"device\", \"samples\", \"threads\"]:\n            assert old[key] == receipt[key], (key, old[key], receipt[key])\n        old.setdefault(\"command_history\", [old[\"command_argv\"]]).append(sys.argv)\n        receipt = old\n    for label, filename, contact_text in args.job:\n        assert label.replace(\"-\", \"\").replace(\"_\", \"\").isalnum()\n        path = Path(filename).resolve()\n        contact = float(contact_text)\n        assert 0 < contact < 2\n        directory = output / label\n        directory.mkdir(exist_ok=False)\n        reader = GlbReader(path)\n        bpy.ops.wm.read_factory_settings(use_empty=True)\n        scene = bpy.context.scene\n        scene.render.fps = FPS\n        scene.render.fps_base = 1\n        bpy.ops.import_scene.gltf(filepath=str(path))\n        meshes = [obj for obj in scene.objects if obj.type == \"MESH\"]\n        assert {obj.name for obj in meshes} == EXPECTED_IDS and len(meshes) == 7\n        assert not scene.rigidbody_world and not any(obj.rigid_body for obj in meshes)\n        job = {\"label\": label, \"input_glb\": str(path), \"input_sha256\": digest(path),\n            \"mesh_names\": sorted(obj.name for obj in meshes), \"mesh_count\": len(meshes),\n            \"imported_actions\": [{\"name\": a.name, \"frame_range\": list(a.frame_range)} for a in bpy.data.actions],\n            \"all_sampled_imports_match_glb\": False, \"frames\": []}\n        for time in [0.0, contact, 2.0]:\n            frame = set_time(time)\n            actual = imported_bounds()\n            expected = reader.world_bounds(time)\n            error = max(abs(a-b) for name in EXPECTED_IDS\n                        for actual_corner, expected_corner in zip(actual[name], expected[name])\n                        for a, b in zip(actual_corner, expected_corner))\n            assert error <= BOUNDS_TOLERANCE_M, (label, time, error, actual, expected)\n            job[\"frames\"].append({\"time_seconds\": time, \"blender_frame\": frame,\n                \"maximum_import_vs_glb_bounds_error_m\": error,\n                \"expected_glb_world_bounds_m\": expected, \"imported_world_bounds_gltf_m\": actual,\n                \"left_signed_gap_mm\": 1000*(actual[\"left_stop\"][0][0] - actual[\"left_shoe\"][1][0]),\n                \"right_signed_gap_mm\": 1000*(actual[\"right_stop\"][0][0] - actual[\"right_shoe\"][1][0])})\n        job[\"all_sampled_imports_match_glb\"] = True\n        job[\"camera\"] = configure_renderer(args.samples, args.threads, args.light_scale)\n        write_json(directory / \"receipt.json\", job)\n        for record in job[\"frames\"]:\n            set_time(record[\"time_seconds\"])\n            image = directory / f\"t-{record['time_seconds']:.3f}.png\"\n            scene.render.filepath = str(image)\n            bpy.ops.render.render(write_still=True)\n            record[\"png\"] = image.name\n            record[\"png_sha256\"] = digest(image)\n            record[\"png_bytes\"] = image.stat().st_size\n            write_json(directory / \"receipt.json\", job)\n        job[\"finished_utc\"] = utc()\n        write_json(directory / \"receipt.json\", job)\n        receipt[\"jobs\"].append(job)\n",
+          "sha256": "9295dc1451d3b74ffb99e9ded134fae9564243e354c38686bede52551d212bf1"
+        }
+      ]
+    },
+    {
+      "path": "docs/engineering/OK-ENG-002-3d-scene-animation-export-and-visual-validation.md",
+      "sha256": "137bb3e93dfc26d280808b56045e36da3a94e5d0393a5f14c7b34e236cb2214b",
+      "bytes": 48450,
+      "git_blob": "a55beb5f147779d6ffe25bbd683774d95d4777f5",
+      "matches_reviewed_commit": true,
+      "line_count": 406,
+      "excerpts": [
+        {
+          "start_line": 128,
+          "end_line": 151,
+          "text": "The writer emits one glTF 2.0 scene and one animation clip in a GLB version 2 container. Its JSON and embedded binary chunks use the required alignment. Geometry uses indexed triangles with float32 positions/normals and unsigned 16- or 32-bit indices. All nodes have translation and rotation channels sharing one float32 time accessor. No external asset URI, required extension, skin, or live physics payload is needed for this profile. These choices define the adapter's narrow output subset. [G1]\n\nGlobal source and relationship metadata lives at `extras.ontokin`. Each node's `extras.ontokin` identifies its source occurrence or helper role. Animation metadata retains exact sampled and boundary times. Geometry buffers and materials can be shared while each object retains its own node identity and tracks. The bounded reader in `ontokin.gltf` checks this specific layout; it is not a general-purpose glTF importer or a replacement for the Khronos validator.\n\n| Source feature | `ontokin.glb/0.1` treatment | What the destination receives |\n| --- | --- | --- |\n| Spheres and boxes | Converted to meshes; sphere curvature approximated | Visible rigid polygon surfaces with recorded construction settings. |\n| Empty geometry | Retained as an object identity without an authored surface | An inspectable node; an optional separately marked display helper. |\n| Object occurrence identity | Preserved in metadata | Mapping from an output node back to the source occurrence. |\n| Source ownership and relationships | Preserved as metadata; spatial hierarchy flattened | Inspectable records, without executable mechanical constraints. |\n| Evaluated positions and orientations | Baked to sampled tracks | Playback within the measured output tolerances. |\n| Concurrent actions, holding, and release | Baked to their combined evaluated result | One authoritative recorded pose per object at each sample. |\n| Gravity and physical body descriptions | Evaluated by OntoKin; relevant assumptions retained as metadata | Recorded motion and traceability, without a destination physics simulation. |\n| RGBA appearance | Converted to a basic display material | Authored color/alpha plus disclosed exporter shading defaults. |\n| Classes, pure methods, parameters, and action definitions | Remain authoritative in `.ok` | The GLB is a derived result, not a round-trip source editor. |\n| Textures, skins, morph targets, collisions, general dynamic joints, and live controllers | Outside this profile | No implicit approximation or claim of destination support. |\n\nThe JSON report uses schema `ontokin.glb-report/0.1` and identifies the target contract separately. Its `source`, `scene`, `sampling`, `tolerances`, `representation`, `geometry`, `retention`, and `budgets` sections expose the corresponding decisions. The `retention` section distinguishes preserved metadata, baked motion, semantics that are not executable in the GLB, known conversion losses, helpers, and any source interval intentionally excluded by `--end`. Source syntax, callable definitions, source spans, complete site definitions, and source action/event arguments are not embedded for program reconstruction. The `.ok` must supply them.\n\nOutput identity and decoded numerical observations identify the checked artifact. The report also records the exporter version, Python/operating-system environment, and `source_code_sha256` over the sorted `ontokin/*.py` filenames and exact bytes, using the existing conformance report's hashing convention. This implementation digest is distinct from both the authored program's revision and the output GLB hash. A warning about an allowed presentation conversion is distinct from a blocking unsupported capability or exceeded tolerance.\n\nExplicit export authorizes the recorded-pose conversion described here. It does not authorize silently substituting recorded playback when a user requests live destination physics, new interactive input, a skeletal rig, or a feature outside this profile. Such a request needs its own supported contract.\n\nMetadata can help a downstream tool find an OntoKin source object, but an arbitrary importer may discard application-specific metadata. The authoritative `.ok` must remain available alongside the derived file when further editing or source delivery is required. A successful GLB write does not prove that another tool preserved the mapping after editing and re-export.\n",
+          "sha256": "0ab9ce06be1e38085c4117f4c1ae0924b8a53394aaadc8cfb40c7685d68b452f"
+        },
+        {
+          "start_line": 254,
+          "end_line": 269,
+          "text": "Open either `.glb` through Blender's glTF import path or a compatible glTF viewer, select its animation, and play the recorded interval. These are reproduction instructions, not a claim that every Blender or viewer version has been tested. The actual tested destinations and versions are recorded below.\n\n### 7.3 Command options\n\n| Option | Purpose |\n| --- | --- |\n| `--output PATH.glb` | Choose the binary glTF destination. |\n| `--report PATH.json` | Choose the conversion report path; otherwise `name.glb` receives `name.export.json` alongside it. |\n| `--fps 60` | Choose the base sampling cadence; boundary and angular safeguards can add keys. |\n| `--end SECONDS` | Select the end of the interval beginning at zero, within the available source horizon. |\n| `--no-helpers` | Omit derived display helpers while retaining authored geometry. |\n| `--position-tolerance METERS` | Set the permitted position error for export validation. |\n| `--rotation-tolerance RADIANS` | Set the permitted orientation error. |\n| `--time-tolerance SECONDS` | Set the permitted source-to-file timestamp error. |\n\nFor programmatic use, `ontokin.scene.ExportOptions` holds these settings and `ontokin.gltf.export_glb(model, options=..., source_uri=..., source_sha256=...)` returns the GLB bytes, conversion report, and scene representation. This is an experimental Python adapter API. It is not the future revision-safe agent-editing service.\n",
+          "sha256": "991ac601df1f3f728525a2162ecb6b427680245b24f15208275981bf756e369f"
+        }
+      ]
+    },
+    {
+      "path": "docs/engineering/guided-contact-c191/independent/checker/gltf.py",
+      "sha256": "468844dae7f632419a72e1545dc96b58778c2c5f8cf64fa30de4c512f84b4ab6",
+      "bytes": 10867,
+      "git_blob": "c30a1b06520aa862bcb6e59b80129ed677af4dc0",
+      "matches_reviewed_commit": true,
+      "line_count": 215,
+      "excerpts": [
+        {
+          "start_line": 56,
+          "end_line": 140,
+          "text": "    def __init__(self, path, ids):\n        raw = Path(path).read_bytes()\n        require(len(raw) >= 28 and struct.unpack_from(\"<4sII\", raw) == (b\"glTF\", 2, len(raw)),\n                \"invalid GLB header\")\n        size, tag = struct.unpack_from(\"<I4s\", raw, 12)\n        require(tag == b\"JSON\" and size % 4 == 0 and 28+size <= len(raw), \"invalid JSON chunk\")\n        self.doc = d = json.loads(raw[20:20+size])\n        def check_extensions(x):\n            if isinstance(x, dict):\n                require(not x.get(\"extensions\"), \"extension payload outside core glTF profile\")\n                for k, v in x.items():\n                    if k not in (\"extras\", \"extensions\"):\n                        check_extensions(v)\n            elif isinstance(x, list):\n                for v in x:\n                    check_extensions(v)\n        check_extensions(d)\n        blob_size, tag = struct.unpack_from(\"<I4s\", raw, 20+size)\n        require(tag == b\"BIN\\0\" and blob_size % 4 == 0 and 28+size+blob_size == len(raw), \"invalid BIN chunk\")\n        self.bin = raw[28+size:]\n        require(d[\"asset\"][\"version\"] == \"2.0\" and not d.get(\"extensionsRequired\"),\n                \"unsupported required extension or glTF version\")\n        require(len(d[\"buffers\"]) == 1 and \"uri\" not in d[\"buffers\"][0]\n                and 0 <= blob_size - d[\"buffers\"][0][\"byteLength\"] <= 3, \"expected one embedded buffer\")\n        require(len(d[\"scenes\"]) == 1, \"expected exactly one scene\")\n        require(not any(d.get(k) for k in (\"skins\", \"images\", \"textures\")),\n                \"skins and textures outside solid rigid profile\")\n        self.nodes = d[\"nodes\"]\n        roots = at(d[\"scenes\"], d.get(\"scene\", 0))[\"nodes\"]\n        self.parent, self.order, self.parts, self.tracks = {}, [], {}, {}\n\n        def visit(i, parent):\n            n = at(self.nodes, i)\n            require(i not in self.parent, \"cycle or shared child in scene\")\n            self.parent[i] = parent\n            self.order.append(i)\n            require(\"skin\" not in n and \"weights\" not in n and not n.get(\"extensions\"),\n                    \"unsupported skin, morph or node extension\")\n            if \"mesh\" in n:\n                mesh = at(d[\"meshes\"], n[\"mesh\"])\n                name = n.get(\"name\")\n                require(name in ids and mesh.get(\"name\") == name,\n                        f\"mesh node and mesh must share the specified ID: {name!r} / {mesh.get('name')!r}\")\n                require(name not in self.parts, \"part ID occurs on multiple mesh nodes\")\n                self.parts[name] = (i, *self.geometry(mesh))\n            for child in n.get(\"children\", []):\n                visit(child, i)\n\n        for i in roots:\n            visit(i, None)\n        require(set(self.parts) == ids, \"missing semantic part\")\n        require(len(self.parent) == len(self.nodes), \"unreachable node outside the default scene\")\n        for name in ids:\n            require(sum(n.get(\"name\") == name for n in self.nodes) == 1,\n                    f\"duplicate stable node ID: {name}\")\n        require(len(d[\"meshes\"]) == len(ids), \"unreferenced or extra mesh\")\n        for name in ids:\n            require(sum(m.get(\"name\") == name for m in d[\"meshes\"]) == 1,\n                    f\"duplicate stable mesh ID: {name}\")\n        require(len(d[\"animations\"]) == 1, \"expected exactly one animation\")\n        anim = d[\"animations\"][0]\n        times = []\n        for chan in anim[\"channels\"]:\n            i, path = chan[\"target\"][\"node\"], chan[\"target\"][\"path\"]\n            require(i in self.parent and path in (\"rotation\", \"translation\", \"scale\")\n                    and \"matrix\" not in self.nodes[i] and (i, path) not in self.tracks,\n                    \"unsupported or duplicate animation target\")\n            s = at(anim[\"samplers\"], chan[\"sampler\"])\n            require(s.get(\"interpolation\", \"LINEAR\") == \"LINEAR\", \"unsupported interpolation\")\n            t = self.access(s[\"input\"], \"SCALAR\", (5126,))[:, 0]\n            require(len(t) and (np.diff(t) > 0).all() and t[0] >= 0 and t[-1] <= 2,\n                    \"invalid time range or key order\")\n            v = self.access(s[\"output\"], \"VEC4\" if path == \"rotation\" else \"VEC3\", (5126,))\n            require(len(v) == len(t), \"inconsistent animation key counts\")\n            if path == \"rotation\":\n                v = normalize_quats(v)\n                # q and -q describe the same rotation and slerp takes the short arc.\n                same = np.all(v == v[0], axis=1) | np.all(v == -v[0], axis=1)\n                require(same.all(), \"time-varying rotation outside translation-only profile\")\n                v[:] = v[0]\n            if path == \"scale\":\n                require((v == v[0]).all(), \"time-varying scale is outside the rigid profile\")\n            self.tracks[i, path] = t, v\n            times.extend(t)\n        require(times and min(times) == 0 and max(times) == 2, \"clip does not span [0,2] seconds\")\n",
+          "sha256": "996efee96cd1a3e59186e8841e7ab7bff7480d7bc534a3a2199db948a2dcc335"
+        },
+        {
+          "start_line": 161,
+          "end_line": 180,
+          "text": "    def geometry(self, mesh):\n        triangles, colors = [], []\n        require(not mesh.get(\"weights\") and not mesh.get(\"extensions\"), \"morphed or extended mesh\")\n        for p in mesh[\"primitives\"]:\n            require(p.get(\"mode\", 4) == 4 and not p.get(\"targets\") and not p.get(\"extensions\")\n                    and not any(k.startswith(\"COLOR_\") for k in p[\"attributes\"]), \"unsupported triangle or color profile\")\n            pos = self.access(p[\"attributes\"][\"POSITION\"], \"VEC3\", (5126,))\n            ix = (self.access(p[\"indices\"], \"SCALAR\", (5121, 5123, 5125))[:, 0]\n                  if \"indices\" in p else np.arange(len(pos)))\n            require(len(ix) > 0 and len(ix) % 3 == 0 and ix.max() < len(pos), \"invalid triangle indices\")\n            triangles.append(pos[ix].reshape(-1, 3, 3))\n            m = at(self.doc[\"materials\"], p[\"material\"])\n            pbr = m.get(\"pbrMetallicRoughness\", {})\n            rgb = finite(pbr.get(\"baseColorFactor\", [1]*4), (4,))\n            require(\"baseColorTexture\" not in pbr and np.all((rgb >= 0) & (rgb <= 1)) and not m.get(\"extensions\") and\n                    m.get(\"alphaMode\", \"OPAQUE\") == \"OPAQUE\" and rgb[3] == 1,\n                    \"unsupported non-solid material\")\n            colors.append(rgb[:3])\n        require(bool(triangles), \"empty visible mesh\")\n        return np.concatenate(triangles), np.array(colors)\n",
+          "sha256": "b42e34f22702802f963d0ba1e79c9c360c0e516ee23969862bbe60f8495eda05"
+        },
+        {
+          "start_line": 198,
+          "end_line": 215,
+          "text": "    def transforms(self, times):\n        world, local = {}, {}\n        for i in self.order:\n            n = self.nodes[i]\n            if \"matrix\" in n:\n                require(not any(k in n for k in (\"rotation\", \"scale\", \"translation\")), \"matrix and TRS mixed\")\n                mat = finite(n[\"matrix\"], (16,)).reshape(4, 4).T\n                require(np.array_equal(mat[3], [0, 0, 0, 1]), \"non-affine node matrix\")\n                m = np.broadcast_to(mat, (len(times), 4, 4))\n            else:\n                m = np.zeros((len(times), 4, 4))\n                m[:, 3, 3] = 1\n                m[:, :3, 3] = self.track(i, \"translation\", times)\n                m[:, :3, :3] = quaternion_matrix(self.track(i, \"rotation\", times)) * self.track(i, \"scale\", times)[:, None, :]\n            parent = self.parent[i]\n            local[i] = m\n            world[i] = world[parent] @ m if parent is not None else m\n        return world, local\n",
+          "sha256": "ec177ed64fa422907a3953cf27724a5e83f58f348793db721cd2d069cd8cf376"
+        }
+      ]
+    },
+    {
+      "path": "docs/engineering/public-rotary-c185/README.md",
+      "sha256": "e2975eb7987a410c0a5842a8f58c3864b0ff0c4451f00875467f214586ea3da2",
+      "bytes": 2560,
+      "git_blob": "a6f6c2511abf0df17a7de13815a0a89cd6dc6014",
+      "matches_reviewed_commit": true,
+      "line_count": 20,
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 16,
+          "text": "# C185 \u00b7 Paired public rotary repair\n\nThe original indexer shoe penetrated the north guard by 7.047 mm during its two-second turn. Two fresh coding subagents independently extended the shoe by 100 mm, produced versions 180 mm and 260 mm wide, and moved both guards. Each route passed all ten scoring rows on its first formal submission. The coordinator regenerated all four GLBs twice in fresh output directories. All eight rebuilds matched the respective submissions byte for byte.\n\n| Shoe width | Tool | East minimum at time | North minimum at time |\n| --- | --- | --- | --- |\n| 180 mm | Blender/Python | 15.000005 mm at 0.126902 s | 15.000005 mm at 1.873098 s |\n| 180 mm | OntoKin | 15.000027 mm at 0.126902 s | 15.000005 mm at 1.873098 s |\n| 260 mm | Blender/Python | 14.999972 mm at 0.182649 s | 14.999972 mm at 1.817351 s |\n| 260 mm | OntoKin | 15.000023 mm at 0.182649 s | 15.000001 mm at 1.817351 s |\n\nThe independent reader verified the actual GLB triangles, five stable identities and materials, constant-rate rotation, permitted guard translation and clearance throughout the sweep. The permitted error was \u00b10.2 mm for dimensions and \u00b10.5 mm for minimum clearance. Both routes passed the geometry and reuse gates with 100/100. The coordinator opened all four files in the fixed Delft viewer and inspected three poses with the same camera and registration. [Measurements and hashes](results.json)\n\nThe Blender generator computes vertex support from the starter scene. The OntoKin program derives each guard placement from the shoe tip and selected half-width. OntoKin\u2019s final export copies each stable node name onto its mesh. The native and final binary chunks match exactly. The [editable deliveries](deliveries.zip) contain both designs, the four final GLBs, the native OntoKin comparisons, commands, author reports and full scorecards.\n\nBoth authors used the same public brief and allowances in one shared workspace. Provider token totals and active model time were unavailable. One successful public pair leaves comparative reliability and cost open. [Dispatch conditions](dispatch.json)\n",
+          "sha256": "ba6ee4a599f3c3d6525acaca4a3085e5e38048500b0825dd142afcddb947e759"
+        }
+      ]
+    },
+    {
+      "path": "docs/engineering/rotary-reuse-c186/README.md",
+      "sha256": "ad8f9882d1f25fb7e070e6a823d3c4cb8bd4ba8b67cae87cf8b311d544a06359",
+      "bytes": 2297,
+      "git_blob": "1e93d86daf1705730027172a8ae17a9f5b1c860f",
+      "matches_reviewed_commit": true,
+      "line_count": 18,
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 18,
+          "text": "# C186 \u00b7 Reuse of a rotary indexer design\n\nTwo fresh subagents independently added a 220 mm wide gauge shoe to an existing editable assembly. Each kept the 180 mm and 260 mm selections working. The independent GLB decoder verified all five part identities and colors, shoe and guard geometry, the two-second quarter turn and the clearance to each guard. Both routes passed on their first formal submission. [Measurements and hashes](results.json)\n\n| 220 mm export | East minimum | Time | North minimum | Time |\n| --- | ---: | ---: | ---: | ---: |\n| Blender/Python | 14.999980 mm | 0.154850 s | 14.999980 mm | 1.845150 s |\n| OntoKin | 15.000024 mm | 0.154850 s | 15.000002 mm | 1.845150 s |\n\nBlender needed one new entry in its width table. The older Blender exports matched C185 byte for byte. OntoKin needed a named half-width in the program and a selection in the build script. Its older exports retained their embedded binary data and all standard glTF fields. The updated source revision and source locations changed 104 custom metadata fields in each file. [Editable designs, six exports and author reports](deliveries.zip)\n\nThe coordinator rebuilt all six GLBs twice in fresh directories. All twelve matched their submitted files byte for byte and passed the checker. All six opened in the fixed Delft viewer at the start, midpoint and end of the turn. [Viewer comparison](comparison.png)\n\nBoth agents worked in separate directories in a shared environment under matched allowances. The result shows that another agent can reuse either design for this parameter change. Cost and general reliability remain open. [Dispatch conditions](dispatch.json)\n\n## Next assembly\n\nC187 qualifies two reference starters for a two-carriage gauge. The common source definition for both shoes sets up a later test of changing one instance while preserving its sibling. Spawn one fresh Blender/Python subagent and one fresh OntoKin subagent in the current conversation\u2019s execution environment. Give them the same [starter brief](starter-brief.md) and [numeric design](assembly.json). The coordinator independently verifies the seven part IDs, decoded dimensions, constant translation, fixed stops, per-lane gaps and clean rebuilds. The C186 handoff ZIP includes the full dispatch and control requirements.\n",
+          "sha256": "ad8f9882d1f25fb7e070e6a823d3c4cb8bd4ba8b67cae87cf8b311d544a06359"
+        }
+      ]
+    },
+    {
+      "path": "docs/engineering/linear-gauge-c187/README.md",
+      "sha256": "58662a69638ec9bce12a92ccbf428e2529facca2abe06b33f965e2e0e721a43a",
+      "bytes": 3673,
+      "git_blob": "55832426c643c431bd7e9337f590eb34e1765a2d",
+      "matches_reviewed_commit": true,
+      "line_count": 30,
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 14,
+          "text": "# C187 \u00b7 Two-carriage linear gauge starters\n\nTwo fresh coding agents built the same seven-part gauge from a common design, one in Blender/Python and the other in OntoKin. Both passed on their first formal submission. Each shoe moves 300 mm with its carriage in two seconds. The base and both stops stay fixed. The checker measured the gap from each shoe\u2019s front face to its own stop across the full animation. [Design dimensions and tolerances](assembly.json) \u00b7 [Measurements and hashes](results.json)\n\n| Submitted GLB | Initial gap, both lanes | Left minimum | Right minimum | Time of minima |\n| --- | ---: | ---: | ---: | ---: |\n| Blender/Python | 315.0000 mm | 14.999993 mm | 14.999993 mm | 2.000 s |\n| OntoKin | 315.0000 mm | 15.000008 mm | 15.000008 mm | 2.000 s |\n\nThe checker decoded geometry, colors, names and world-space motion from each GLB. It checked all 21 pairs of parts for overlap throughout the clip. Four accepted controls, 26 deliberately defective controls and three swept-overlap cases exercised the checker. Two builds in fresh directories per route reproduced the submitted GLBs byte for byte. Both exports opened in the same viewer at 0, 1 and 2 seconds. [Six-pose comparison](comparison.png) \u00b7 [Frozen checker, controls, independent reviews, playback and rebuilds](verification.zip)\n\nBlender gives both shoes a common size in the build script and parents each shoe to its moving carriage. Reopening the submitted `.blend` and exporting it again reproduced the delivered GLB. OntoKin instantiates a common `Shoe` class for the two shoes and gives each shoe and carriage its own 0.15 m/s motion. Its source uses spherical body proxies with collision responses disabled. The exported cuboids follow the same paths. A mechanical attachment or collision response therefore needs separate evidence. Recompiling the `.ok` program independently reproduced the sealed native GLB. The OntoKin build copies seven node IDs into mesh names after native export. All other JSON values and the embedded binary chunk match the native GLB. [Native sources, build instructions, author reports and exports](deliveries.zip)\n\nBoth agents worked in separate directories in a shared environment, with 30 minutes from tool readiness and up to four formal submissions. Their reports describe the corrections they made before submitting. Provider token totals, active model time and cost were unavailable. Khronos glTF Validator 2.0.0-dev.3.10 reported zero errors, warnings, infos and hints on both submitted GLBs and the raw native OntoKin GLB. These observations qualify two starting assemblies for the localized repair. [Dispatch conditions](dispatch.json)\n",
+          "sha256": "2f9b141cf2550adc983fcd55a583413dbd0654f01471c88bcb7134d2138e10ce"
+        }
+      ]
+    },
+    {
+      "path": "docs/engineering/carriage-drive-c189/README.md",
+      "sha256": "642b3e53726f61ec3116af7101753571f80bb86d66be8ab2a006006c508a76aa",
+      "bytes": 3203,
+      "git_blob": "7f04eced0fa0119b03103661a7a33f5a76bbe24f",
+      "matches_reviewed_commit": true,
+      "line_count": 25,
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 25,
+          "text": "# C189 \u00b7 Carriage drive and shoe following\n\nC188 lengthened one shoe while the two lanes moved at the same speed. The accepted OntoKin design drove each shoe separately. C189 gave two fresh coding agents their respective [C188 repair](../linear-gauge-repair-c188/README.md) and asked each to make a left carriage speed edit carry through to its shoe. Both first submissions passed. [Experiment sources, controls and raw evidence](trial-evidence.zip)\n\n| Left carriage feed | Minimum left gap | Minimum right gap | Source of the setting |\n| ---: | ---: | ---: | --- |\n| 125 mm/s | 65.000 mm | 15.000 mm | First formal setting |\n| 100 mm/s | 115.000 mm | 15.000 mm | Second formal setting |\n| 110 mm/s | 95.000 mm | 15.000 mm | Independent edit to each native design |\n\nBoth starting gaps measured 315.000 mm and all minima occurred at 2.000 s. The right carriage ran at 150 mm/s throughout. Removing 25 mm/s from the left feed for two seconds adds 50 mm to the final clearance. The upper lane in the captures shows that change. [Measured results](results.json)\n\n![Two speeds in Blender and OntoKin captured at zero, one and two seconds](playback.png)\n\n## How the designs produced the motion\n\nThe Blender author kept each shoe parented to its carriage and added an X-location driver that reads the carriage's speed property. The independent review reopened the editable scenes, tested a third left feed and checked both carriage-to-shoe relationships at all 49 native frame times. Rebuilt Blender scene files differed at the byte level. The exported GLBs reproduced exactly.\n\nThe OntoKin author replaced the two independently moving shoes with massless prescribed followers. Each native `follow` declaration attaches a shoe to its carriage frame. The right carriage takes the class default. The two submitted programs differ by one left-carriage speed literal. The native exporter baked world motion into the GLB, and seven mesh names were normalized after export. All 11,552 binary payload bytes were preserved per file. [Editable 125 mm/s program](feed-125.ok)\n\nThe independent checker accepted four positive controls, rejected fourteen faulty exports and passed three analytic swept-intersection checks. It compared all seven solids and their colors to each route's original, checked constant velocity and attachment offset over every linear interval and tested all 21 pairs for penetration. Eight fresh formal-case builds reproduced the four final GLBs, twice per case. The six distinct raw/final files passed the Khronos validator with zero findings. The two agents worked on the same public fixture under a shared Linux environment. Token counts and costs were unavailable.\n\n## Next experiment\n\nC190 moves a fixed stop into the left shoe's path. Contact at the shoe should halt its carriage while the right lane keeps moving. In C189 the OntoKin shoes have no collision body, and the Blender scene uses transform drivers. Physical force transfer is the next unanswered question. Two fresh coding subagents should receive their own C189 designs and the two stop positions in the archive. A documented capability limit is a valid result. [Trial archive and next-task instructions](trial-evidence.zip)\n",
+          "sha256": "642b3e53726f61ec3116af7101753571f80bb86d66be8ab2a006006c508a76aa"
+        }
+      ]
+    },
+    {
+      "path": "docs/engineering/shoe-contact-c190/README.md",
+      "sha256": "f1d7cb52adee21bb254ab146f556370ee58bbafc5647e2e7935350bb5de4997b",
+      "bytes": 7352,
+      "git_blob": "274f839716c9f2cbf36cab4974bff36f406ffb86",
+      "matches_reviewed_commit": true,
+      "line_count": 45,
+      "excerpts": [
+        {
+          "start_line": 1,
+          "end_line": 43,
+          "text": "# C190 \u00b7 Contact at an attached shoe\n\nC189 showed that a shoe follows its carriage when the carriage speed changes. C190 moves a fixed stop into the shoe's path and asks whether contact there stops the carriage. The other lane must continue independently.\n\n**Blender supplies the native contact response. The pinned OntoKin profile does not.** These are newly executed recovery replication results, identified as C190-R2. The original interrupted C190 discussion published its plan and evaluator identity but no recoverable trial outputs. [Recovery provenance](RECOVERY.md) \u00b7 [Earlier completion audit](COMPLETION.md) \u00b7 [Final recovery and integration](FINALIZATION.md)\n\n![Actual recorded GLBs at rest, contact and the final pose](playback.png)\n\n## Measured result\n\n| Left stop near face | Ideal contact | Blender final left travel | OntoKin final left travel | OntoKin signed final gap |\n| ---: | ---: | ---: | ---: | ---: |\n| 380 mm | 1.600 s | 200.000 mm | 250.000 mm | \u221250.000 mm |\n| 355 mm | 1.400 s | 175.000 mm | 250.000 mm | \u221275.000 mm |\n| 367.5 mm, independent edit | 1.500 s | 187.500 mm | 250.000 mm | \u221262.500 mm |\n\nThe signed gap measures the shoe's leading face against the stop's near face; a negative value means that face passed the stop. It is not a native contact-manifold penetration estimate. Both routes preserve the right lane's 15.000 mm final gap, rounded to three decimals, and all twenty unrelated pairs remain clear. [Exact results](results.json)\n\n### Native physics and final playback\n\nBlender uses one 1 kg compound carriage body per lane. The attached shoe is a native box collision child; a hidden carriage box supplies the other shape. Each lane has an X-unbounded guide and a continuously active feed motor. There is no timed stop or X-position clamp. Removing only the left shoe's rigid-body component makes the carriage travel 250 mm instead of 200 mm; the right lane and fixed-part records remain bit-identical. This independently reproduced control establishes the shoe collider's causal role within the measured setup.\n\nThe first Blender submission failed the frozen translation-only playback profile because its native solver retained a small rotation. Submission two preserves the native scenes, raw exports and traces byte for byte. Its declared final mapping removes one rotation channel and restores three transverse float values. **Every native carriage X sample and recorded timestamp remains unchanged.** All three projected final files pass; their raw files retain the original profile rejection. Independent inspection bounds continuous interpolated raw-to-final vertex deviation by 0.056596 mm. This is a playback bound, not a bound on unrecorded solver substeps. Maximum final near-face penetration is 0.007584 mm and final left gap is approximately 0.000001 mm.\n\nThe native run uses Blender 4.5.3 LTS build `67807e1800cc`, 240 Hz recording, 481 states, ten substeps per frame and 100 solver iterations. Contact flags and velocities in the audit are derived from native poses; Bullet manifolds and normal impulses are not exposed by this audit. The motor remains active at contact; no calibrated actuator-force claim is made.\n\nOntoKin's unchanged source/profile .22 accepts independent carriage velocities and massless `no_body()` shoe following, with collision disabled and contact response unavailable. Its inherited carriage sphere does not represent the shoe face; visible stops have no collider. At all three positions the left carriage continues at 125 mm/s, while the right remains at 150 mm/s. The final export changes only seven mesh-name fields; the native binary payload remains identical. Minimal probes reproduce `OKL-E-NAME` for the unsupported collision value and `OKL-E-PHYSICAL-DOMAIN` for a mass-bearing following shoe. These are explicit capability limits, not a simulated collision failure.\n\n## Evidence and reproduction\n\n[trial-evidence.zip](trial-evidence.zip) contains the sealed submissions, failed first Blender submission, native sources and scenes, raw/final GLBs, frozen checker, independent rebuilds, causal control, validators and the visual comparison. [render-evidence.zip](render-evidence.zip) adds all actual rendered frames, import receipts and the retained lighting attempt. Extract both into the same directory and read `TRIAL-README.md`. The separate [frozen checker archive](recovery-r2-checker.zip) preserves the pre-submission checkpoint. The original [plan](plan.json), [cases](cases.json), [participant brief](participant.md) and [evaluator identity](evaluator-freeze.json) remain unchanged.\n\nThe reconstructed C190-R2.1 evaluator was frozen before submission readback. All 45 trajectory controls\u2014ten positive and 35 negative\u2014and three continuous swept-intersection controls received their expected classifications. Regeneration reproduced their bytes. Two fresh builds per formal route/setting and two per independent stop edit reproduced the raw and final outputs: twelve source builds. Two additional native Blender runs exercised the collider control. All 209 pinned OntoKin runtime files remained unchanged.\n\nKhronos validation found zero errors and warnings across twelve distinct raw/final outputs. Each projected Blender final retains one informational unused rotation sampler; the other outputs have zero findings. Three.js r186 independently decoded six final clips at three poses each. The 18 images above use actual GLB reimport in Blender CPU Cycles with the fixed C187 camera. Their imported world bounds agree with independent GLB bounds within 0.000030 mm. Browser startup failed in this environment; these images do not claim browser playback or a new physics simulation.\n\nThe quick replay requires CPython 3.12.14 with NumPy 2.3.5 and Node 24.22.1. Run `python -IB replay.py` after extracting the trial archive. Native rebuild commands are in `audit/blender/README.md` and `audit/ontokin/README.md`; Blender is a separately installed, pinned prerequisite. The full user handoff additionally supplies the NumPy wheel, package manifest, repository checkpoint and restart instructions. [completion-evidence.zip](completion-evidence.zip) preserves the later continuation\u2019s fresh checks of the recovered artifacts; it does not represent another authoring trial.\n\nBoth authors had fresh histories, default settings, 30 minutes from tool readiness and at most four formal submissions. OntoKin supplied one negative-result submission; Blender passed final playback on submission two. The earlier thread's reported outcomes were disclosed during recovery. This is a public shared-environment experiment, without a blind-isolation or comparative token/cost claim.\n\n## Next unmet gate\n\nC191 should adopt an explicit experimental source-to-solver binding for a shoe collider owned by one mass-owning carriage, then qualify a thin adapter to this measured Blender/Bullet setup. Preserve current native semantics, source identity, one motion authority, declared helper geometry and raw/final evidence boundaries. [Concrete next task](NEXT-TASK.md)\n",
+          "sha256": "1dd8ace8ed325ebc4633f47f5f14f514d75416864f2d26597cf3c3f2da2df8b1"
+        }
+      ]
+    }
+  ],
+  "archived_source_evidence": [
+    {
+      "path": "docs/engineering/public-rotary-c185/deliveries.zip",
+      "sha256": "31a1782fa6d66d744078151263ed74958ac489d57a88f5c9ccdbdd34a82fc1b2",
+      "bytes": 388007,
+      "git_blob": "267b329ebd7532e4ae97a94443ade1a261e5d3e5",
+      "matches_reviewed_commit": true,
+      "members": [
+        {
+          "path": "blender/source/build_variants.py",
+          "sha256": "c0ea1b06a39d79699a6625204c849465de0634dffc50837940ed935844e0fb8e",
+          "bytes": 2798,
+          "line_count": 73,
+          "excerpts": [
+            {
+              "start_line": 6,
+              "end_line": 16,
+              "text": "\nimport bpy\n\n\nSTARTER = Path(__file__).resolve().parent / \"starter\" / \"indexer.blend\"\nHALF_WIDTH_M = {\"long\": 0.090, \"wide-long\": 0.130}\nEXTENSION_M = 0.100\nGAP_M = 0.015\nEND_ANGLE = pi / 2\n\n\n"
+            },
+            {
+              "start_line": 33,
+              "end_line": 43,
+              "text": "def build(variant, out):\n    bpy.ops.wm.open_mainfile(filepath=str(STARTER))\n    scene = bpy.context.scene\n    scene.frame_set(0)\n    shoe = scene.objects[\"gauge_shoe\"]\n    arm = scene.objects[\"index_arm\"]\n    tip_x = max(v.co.x for v in shoe.data.vertices)\n    for vertex in shoe.data.vertices:\n        if vertex.co.x == tip_x:\n            vertex.co.x += EXTENSION_M\n        vertex.co.y = HALF_WIDTH_M[variant] if vertex.co.y > 0 else -HALF_WIDTH_M[variant]\n"
+            },
+            {
+              "start_line": 54,
+              "end_line": 64,
+              "text": "    bpy.ops.wm.save_as_mainfile(filepath=str(out / f\"{variant}.blend\"))\n    bpy.ops.export_scene.gltf(\n        filepath=str(out / f\"{variant}.glb\"), export_format=\"GLB\",\n        export_yup=True, export_animations=True,\n        export_animation_mode=\"ACTIVE_ACTIONS\",\n        export_nla_strips_merged_animation_name=\"index\",\n        export_force_sampling=True, export_frame_range=True,\n        export_optimize_animation_size=True, export_extras=False,\n    )\n\n\n"
+            }
+          ]
+        },
+        {
+          "path": "ontokin/source/build.py",
+          "sha256": "e694c4365c1e59b6d84b721f3f74fb2194f576cbeb3a629890592fef7df2f0eb",
+          "bytes": 4274,
+          "line_count": 94,
+          "excerpts": [
+            {
+              "start_line": 56,
+              "end_line": 66,
+              "text": "    sys.path.insert(0, str(args.runtime.resolve()))\n    from ontokin.budget_runtime import execute_torque_export\n    from ontokin.execution_budget import HostPolicy\n    from ontokin.scene import ExportOptions\n    from ontokin.texture_bundle import load_texture_bundle\n\n    default_source = Path(__file__).with_name(\"main.ok\").read_text(encoding=\"utf-8\")\n    default_choice = \"    return long_half_width_m();\"\n    if default_source.count(default_choice) != 1:\n        raise ValueError(\"Expected one variant selection in half_width_m().\")\n    args.output.mkdir(parents=True, exist_ok=False)\n"
+            },
+            {
+              "start_line": 77,
+              "end_line": 87,
+              "text": "        })\n        result = execute_torque_export(\n            bundle, policy=HostPolicy(max_operations=1_000_000, max_elapsed_ms=80_000),\n            caller_caps={\"max_operations\": 1_000_000, \"max_elapsed_ms\": 80_000},\n            options=ExportOptions(end=\"2\", fps=12, helpers=False),\n        )\n        (audit / \"export.json\").write_text(json.dumps(result.report, indent=2) + \"\\n\")\n        if result.data is None:\n            raise SystemExit(f\"{variant} export failed; inspect {audit / 'export.json'}\")\n        (audit / f\"{variant}.glb\").write_bytes(result.data)\n        final, comparison = name_meshes(result.data)\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "docs/engineering/rotary-reuse-c186/deliveries.zip",
+      "sha256": "83da3ccb75467bc82139bd3e052e891d0678fd28539ac08b0b8eeeeee5e77c12",
+      "bytes": 516765,
+      "git_blob": "ad442e5011432243389e6c2152b750d6b96aee86",
+      "matches_reviewed_commit": true,
+      "members": [
+        {
+          "path": "blender/source/build_variants.py",
+          "sha256": "17a366f4bd4b30d6d37c490bd862e5f7388c4c0560d66145915a51b16887b0be",
+          "bytes": 2820,
+          "line_count": 73,
+          "excerpts": [
+            {
+              "start_line": 6,
+              "end_line": 16,
+              "text": "\nimport bpy\n\n\nSTARTER = Path(__file__).resolve().parent / \"starter\" / \"indexer.blend\"\nHALF_WIDTH_M = {\"long\": 0.090, \"medium-long\": 0.110, \"wide-long\": 0.130}\nEXTENSION_M = 0.100\nGAP_M = 0.015\nEND_ANGLE = pi / 2\n\n\n"
+            },
+            {
+              "start_line": 33,
+              "end_line": 43,
+              "text": "def build(variant, out):\n    bpy.ops.wm.open_mainfile(filepath=str(STARTER))\n    scene = bpy.context.scene\n    scene.frame_set(0)\n    shoe = scene.objects[\"gauge_shoe\"]\n    arm = scene.objects[\"index_arm\"]\n    tip_x = max(v.co.x for v in shoe.data.vertices)\n    for vertex in shoe.data.vertices:\n        if vertex.co.x == tip_x:\n            vertex.co.x += EXTENSION_M\n        vertex.co.y = HALF_WIDTH_M[variant] if vertex.co.y > 0 else -HALF_WIDTH_M[variant]\n"
+            },
+            {
+              "start_line": 54,
+              "end_line": 64,
+              "text": "    bpy.ops.wm.save_as_mainfile(filepath=str(out / f\"{variant}.blend\"))\n    bpy.ops.export_scene.gltf(\n        filepath=str(out / f\"{variant}.glb\"), export_format=\"GLB\",\n        export_yup=True, export_animations=True,\n        export_animation_mode=\"ACTIVE_ACTIONS\",\n        export_nla_strips_merged_animation_name=\"index\",\n        export_force_sampling=True, export_frame_range=True,\n        export_optimize_animation_size=True, export_extras=False,\n    )\n\n\n"
+            }
+          ]
+        },
+        {
+          "path": "ontokin/source/build.py",
+          "sha256": "80d4107eb653b5f24d558d032f7ed375c1901b1b645cc91a1036e1b3fbd4d8b6",
+          "bytes": 4386,
+          "line_count": 101,
+          "excerpts": [
+            {
+              "start_line": 60,
+              "end_line": 70,
+              "text": "    sys.path.insert(0, str(args.runtime.resolve()))\n    from ontokin.budget_runtime import execute_torque_export\n    from ontokin.execution_budget import HostPolicy\n    from ontokin.scene import ExportOptions\n    from ontokin.texture_bundle import load_texture_bundle\n\n    default_source = Path(__file__).with_name(\"main.ok\").read_text(encoding=\"utf-8\")\n    default_choice = \"    return long_half_width_m();\"\n    if default_source.count(default_choice) != 1:\n        raise ValueError(\"Expected one variant selection in half_width_m().\")\n    args.output.mkdir(parents=True, exist_ok=False)\n"
+            },
+            {
+              "start_line": 84,
+              "end_line": 94,
+              "text": "        })\n        result = execute_torque_export(\n            bundle, policy=HostPolicy(max_operations=1_000_000, max_elapsed_ms=80_000),\n            caller_caps={\"max_operations\": 1_000_000, \"max_elapsed_ms\": 80_000},\n            options=ExportOptions(end=\"2\", fps=12, helpers=False),\n        )\n        (audit / \"export.json\").write_text(json.dumps(result.report, indent=2) + \"\\n\")\n        if result.data is None:\n            raise SystemExit(f\"{variant} export failed; inspect {audit / 'export.json'}\")\n        (audit / f\"{variant}.glb\").write_bytes(result.data)\n        final, comparison = name_meshes(result.data)\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "docs/engineering/linear-gauge-c187/deliveries.zip",
+      "sha256": "a50bc5f02a4ee83e7912b9c19480bc64d293a1586a93f95b34ddc207a25d5e6d",
+      "bytes": 133483,
+      "git_blob": "f07627e868d45ffbcb32b4b503d1eea586bce5c4",
+      "matches_reviewed_commit": true,
+      "members": [
+        {
+          "path": "gauge/deliveries/blender/build.py",
+          "sha256": "678ce81b6731bea1c8ffbcf4068c75a076e3f8e8b807c793bf2047f44241ba66",
+          "bytes": 5277,
+          "line_count": 140,
+          "excerpts": [
+            {
+              "start_line": 4,
+              "end_line": 14,
+              "text": "\nimport bpy\nfrom mathutils import Vector\n\n\n# Public dimensions use the output frame: X along the slide, Y up, Z across lanes.\n# Each cuboid is anchored at its minimum X, minimum Y and centre Z.\n# Geometry dimensions are (length X, height Y, width Z), in millimetres.\nSIZE_MM = {\n    \"base\": (730, 80, 600),\n    \"carriage\": (200, 40, 80),\n"
+            },
+            {
+              "start_line": 51,
+              "end_line": 61,
+              "text": "    ]\n    mesh = bpy.data.meshes.new(part_id)\n    mesh.from_pydata(vertices, [], faces)\n    mesh.update()\n    part = bpy.data.objects.new(part_id, mesh)\n    scene.collection.objects.link(part)\n    part.parent = parent\n    part.location = blender_point(*anchor_mm)\n    mesh.materials.append(materials[kind])\n    return part\n\n"
+            },
+            {
+              "start_line": 123,
+              "end_line": 133,
+              "text": "    bpy.ops.wm.save_as_mainfile(filepath=str(output / \"gauge.blend\"))\n    result = bpy.ops.export_scene.gltf(\n        filepath=str(output / \"gauge.glb\"), export_format=\"GLB\",\n        export_yup=True, export_animations=True, export_animation_mode=\"SCENE\",\n        export_anim_scene_split_object=False,\n        export_frame_range=True, export_force_sampling=True,\n        export_texcoords=False, export_normals=True, export_skins=False,\n        export_morph=False, export_cameras=False, export_lights=False,\n    )\n    if \"FINISHED\" not in result:\n        raise RuntimeError(f\"glTF export failed: {result!r}\")\n"
+            }
+          ]
+        },
+        {
+          "path": "gauge/deliveries/ontokin/build.py",
+          "sha256": "376826aae144b892038e3a72f4480b8153b59f98f8885f9cf377d5d00f95d926",
+          "bytes": 3339,
+          "line_count": 78,
+          "excerpts": [
+            {
+              "start_line": 50,
+              "end_line": 60,
+              "text": "    sys.path.insert(0, str(args.checkout.resolve()))\n    from ontokin.budget_runtime import execute_torque_export\n    from ontokin.execution_budget import HostPolicy\n    from ontokin.scene import ExportOptions\n    from ontokin.texture_bundle import load_texture_bundle\n\n    entry = Path(__file__).with_name(\"main.ok\")\n    bundle = load_texture_bundle({\n        \"schema_version\": \"ontokin.bundle/0.2\",\n        \"entry\": {\"filename\": entry.name, \"source\": entry.read_text(encoding=\"utf-8\")},\n        \"modules\": [], \"assets\": [],\n"
+            },
+            {
+              "start_line": 62,
+              "end_line": 72,
+              "text": "    args.output.mkdir(parents=True, exist_ok=False)\n    result = execute_torque_export(\n        bundle, policy=HostPolicy(max_operations=1_000_000, max_elapsed_ms=80_000),\n        caller_caps={\"max_operations\": 1_000_000, \"max_elapsed_ms\": 80_000},\n        options=ExportOptions(end=\"2\", fps=12, helpers=False),\n    )\n    (args.output / \"export.json\").write_text(json.dumps(result.report, indent=2) + \"\\n\")\n    if result.data is None:\n        raise SystemExit(\"Export failed. See export.json.\")\n    (args.output / \"native.glb\").write_bytes(result.data)\n    output, diff = label_meshes(result.data)\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "docs/engineering/carriage-drive-c189/trial-evidence.zip",
+      "sha256": "1a6bb6650b8fe91043750591d7801933cfbea0cd5b2a4d6feb129e1dd5a66cc3",
+      "bytes": 3206678,
+      "git_blob": "3a35aa431c97c9d72512e4bbf9f1c9457d1aa88b",
+      "matches_reviewed_commit": true,
+      "members": [
+        {
+          "path": "drive/deliveries/blender/build.py",
+          "sha256": "62e0b98a8a7bba94b472bfc31b209e9ed6023378795750a98417df5d47ca0838",
+          "bytes": 3146,
+          "line_count": 80,
+          "excerpts": [
+            {
+              "start_line": 5,
+              "end_line": 15,
+              "text": "\nimport bpy\n\n\ndef add_drive(carriage, feed_mm_s, scene):\n    \"\"\"Drive local X in metres from the carriage object's own feed in mm/s.\"\"\"\n    start_x = carriage.location.x\n    carriage.animation_data_clear()\n    carriage[\"speed_mm_s\"] = float(feed_mm_s)\n    carriage.id_properties_ui(\"speed_mm_s\").update(\n        description=\"Carriage feed along +X, in millimetres per second\",\n"
+            },
+            {
+              "start_line": 65,
+              "end_line": 75,
+              "text": "def export_scene(path):\n    result = bpy.ops.export_scene.gltf(\n        filepath=str(path), export_format=\"GLB\",\n        export_yup=True, export_animations=True, export_animation_mode=\"SCENE\",\n        export_anim_scene_split_object=False,\n        export_frame_range=True, export_force_sampling=True,\n        export_texcoords=False, export_normals=True, export_skins=False,\n        export_morph=False, export_cameras=False, export_lights=False,\n    )\n    if \"FINISHED\" not in result:\n        raise RuntimeError(f\"glTF export failed: {result!r}\")\n"
+            }
+          ]
+        },
+        {
+          "path": "drive/deliveries/ontokin/build.py",
+          "sha256": "19099a8cf8ce9e7f378a5280d83dac17a9e69f37dcadb1f22b88a51b09abefc5",
+          "bytes": 3395,
+          "line_count": 79,
+          "excerpts": [
+            {
+              "start_line": 51,
+              "end_line": 61,
+              "text": "    sys.path.insert(0, str(args.checkout.resolve()))\n    from ontokin.budget_runtime import execute_torque_export\n    from ontokin.execution_budget import HostPolicy\n    from ontokin.scene import ExportOptions\n    from ontokin.texture_bundle import load_texture_bundle\n\n    entry = args.source\n    bundle = load_texture_bundle({\n        \"schema_version\": \"ontokin.bundle/0.2\",\n        \"entry\": {\"filename\": \"main.ok\", \"source\": entry.read_text(encoding=\"utf-8\")},\n        \"modules\": [], \"assets\": [],\n"
+            },
+            {
+              "start_line": 63,
+              "end_line": 73,
+              "text": "    args.output.mkdir(parents=True, exist_ok=False)\n    result = execute_torque_export(\n        bundle, policy=HostPolicy(max_operations=1_000_000, max_elapsed_ms=80_000),\n        caller_caps={\"max_operations\": 1_000_000, \"max_elapsed_ms\": 80_000},\n        options=ExportOptions(end=\"2\", fps=12, helpers=False),\n    )\n    (args.output / \"export.json\").write_text(json.dumps(result.report, indent=2) + \"\\n\")\n    if result.data is None:\n        raise SystemExit(\"Export failed. See export.json.\")\n    (args.output / \"native.glb\").write_bytes(result.data)\n    output, diff = label_meshes(result.data)\n"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "docs/engineering/shoe-contact-c190/trial-evidence.zip",
+      "sha256": "87cefb40d9d58581f90a77caf1e0d4f66bbd82c847909fa9e99fc79d0b6f437d",
+      "bytes": 6854251,
+      "git_blob": "abe3915a24fb55500c0d4dec4053e38b718b1602",
+      "matches_reviewed_commit": true,
+      "members": [
+        {
+          "path": "deliveries/blender/build.py",
+          "sha256": "7869fb8440ff849120fd342819f8ae6143e495f1a5f166c87b7127fbae08a4b8",
+          "bytes": 13681,
+          "line_count": 318,
+          "excerpts": [
+            {
+              "start_line": 14,
+              "end_line": 24,
+              "text": "\nimport bpy\nfrom mathutils import Matrix, Vector\n\nPARTS = ('base', 'left_carriage', 'left_shoe', 'left_stop',\n         'right_carriage', 'right_shoe', 'right_stop')\nFPS = 240\nDURATION_S = 2\nSUBSTEPS = 10\nITERATIONS = 100\nFEEDS_MM_S = {'left': 125.0, 'right': 150.0}\n"
+            },
+            {
+              "start_line": 103,
+              "end_line": 113,
+              "text": "        raise RuntimeError('Requires Blender 4.5.3 LTS; found ' + bpy.app.version_string)\n    bpy.ops.wm.open_mainfile(filepath=str(source))\n    scene = bpy.context.scene\n    scene.frame_set(0)\n    visible = [scene.objects[name] for name in PARTS]\n    initial_world = {obj.name: obj.matrix_world.copy() for obj in visible}\n    for obj in visible:\n        obj.animation_data_clear()\n        obj.parent = None\n        obj.matrix_world = initial_world[obj.name]\n    for obj in visible:\n"
+            },
+            {
+              "start_line": 272,
+              "end_line": 282,
+              "text": "    bpy.context.view_layer.objects.active = scene.objects['left_carriage']\n    result = bpy.ops.export_scene.gltf(\n        filepath=str(target), export_format='GLB',\n        use_selection=True, export_yup=True, export_animations=True,\n        export_animation_mode='SCENE', export_anim_scene_split_object=False,\n        export_frame_range=True, export_frame_step=1, export_force_sampling=True,\n        export_bake_animation=True, export_optimize_animation_size=False,\n        export_texcoords=False, export_normals=True, export_skins=False,\n        export_morph=False, export_cameras=False, export_lights=False,\n        export_extras=False,\n    )\n"
+            }
+          ]
+        },
+        {
+          "path": "deliveries/ontokin/build.py",
+          "sha256": "9c89b14590ccd30f5e4162f16bccc10aa3000bda6ff827f43f2e16e4cc3a1ffe",
+          "bytes": 5196,
+          "line_count": 113,
+          "excerpts": [
+            {
+              "start_line": 59,
+              "end_line": 69,
+              "text": "    sys.path.insert(0, str(args.runtime.resolve()))\n    from ontokin.budget_runtime import execute_torque_export\n    from ontokin.construction import compile_construction\n    from ontokin.evaluator import evaluate\n    from ontokin.execution_budget import HostPolicy, SharedExecutionBudget, admit_entry_budget\n    from ontokin.profile_capabilities import TORQUE_PROFILE\n    from ontokin.program_runtime import _support\n    from ontokin.scene import ExportOptions\n    from ontokin.texture_bundle import load_texture_bundle\n\n    source = args.source.read_text(encoding=\"utf-8\")\n"
+            },
+            {
+              "start_line": 77,
+              "end_line": 87,
+              "text": "    caps = {\"max_operations\": 1_000_000, \"max_elapsed_ms\": 80_000}\n    result = execute_torque_export(bundle, policy=policy, caller_caps=caps,\n        options=ExportOptions(end=\"2\", fps=60, helpers=False))\n    write_json(args.output / \"export.json\", result.report)\n    if result.data is None:\n        print(\"Native export rejected this source; raw diagnostic is in export.json.\")\n        return 2\n    (args.output / \"native.glb\").write_bytes(result.data)\n    final, diff = label_meshes(result.data)\n    (args.output / \"assembly.glb\").write_bytes(final)\n    write_json(args.output / \"export-diff.json\", diff)\n"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "searches": [
+    {
+      "argv": [
+        "rg",
+        "-l",
+        "(^import bpy|^from bpy|bpy\\.ops\\.(import_scene|export_scene)|bpy\\.data\\.meshes)",
+        "--glob",
+        "*.py",
+        "--glob",
+        "!**/evidence/**",
+        "--glob",
+        "!**/baseline/**",
+        "--glob",
+        "!**/baseline-addendum/**",
+        "--glob",
+        "!**/participants/**",
+        "--glob",
+        "!**/recovery/**",
+        "."
+      ],
+      "returncode": 0,
+      "stdout": "./prototypes/guided_contact_v01/native_worker.py\n./prototypes/guided_contact_v02/native_worker.py\n./docs/engineering/guide-repair-c193/independent/inspect_scene.py\n./docs/engineering/guided-contact-c191/tools/render_frames.py\n./docs/engineering/guided-contact-c191/independent/checker/inspect_native.py\n./docs/engineering/hosted-spacer-c183/practice/starters/blender/build_spacer.py\n./docs/engineering/hosted-spacer-c183/submissions/blender/build_spacer.py\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rg",
+        "-n",
+        "-i",
+        "common backend|same backend|same.*constructor",
+        "prototypes",
+        "ontokin",
+        "docs/language-design",
+        "docs/engineering",
+        "--glob",
+        "*.md",
+        "--glob",
+        "*.py",
+        "--glob",
+        "!**/evidence/**",
+        "--glob",
+        "!**/recovery/**"
+      ],
+      "returncode": 0,
+      "stdout": "docs/language-design/keyed-zip-v0.1/ADOPTION.md:150:The independent corpus covers both-empty, singleton, mixed, 256-entry maximum, 257-entry input refusals, reordered and boundary keys, each one-sided empty mismatch, same-count unequal key sets, multiple mismatches, case-sensitive keys, all 24 families at applicable input/output positions, alias equality and exact boundary mismatches. Include malformed syntax, duplicate/shadowed binders, invalid constructors, private access, cycles, older reserved-name and declaring-unit compatibility, nested compositions, selected dependencies, empty taints, ignored binders, shared-payload isolation and guarded-cache replay.\ndocs/engineering/shoe-contact-c190/next/C191-BRIEF.md:9:GOAL keeps design intent in `.ok`, delegates simulation to specialists and requires a qualified common backend before isolating the language's contribution.[2] Reuse the exact C190-qualified Blender/Bullet build through a thin adapter; defer a general engine, importer and production backend.\ndocs/engineering/guide-repair-c193/independent/README.md:56:before qualification. The same constructor must serve both authoring routes.\ndocs/engineering/guide-repair-c193/NEXT-TASK.md:31:direct-Python construction through the same backend, and independently reopen\ndocs/language-design/keyed-merge-v0.1/ADOPTION.md:28:Use inherited semantic type and alias resolution. For example, an established quantity alias and its equivalent `Quantity` dimension are the same type. Merge introduces no Int/Real widening, common-type inference, conversion or coercion at either boundary. Literal and constructor conversions that formed an admitted input retain their existing meanings. Units, frames and imported nominal identity remain subject to their inherited rules.\ndocs/language-design/keyed-merge-v0.1/ADOPTION.md:122:An exact `T` boundary mismatch uses `OKL-E-TYPE`, category `invalid`, phase `type`, rule `LANG-003`, at the first lexical token of the offending operand, including quantity-dimension mismatches. Apply the same opening-parenthesis convention defined for collision locations. The mismatch has no related location. Its exact details contain `expected` and `actual`: `expected` is the canonical resolved `Keyed<T>` spelling, and `actual` is the offending operand's canonical resolved type spelling. For an operand that is itself Keyed, both spellings therefore name resolved Keyed types; a non-Keyed operand retains its actual non-Keyed type. Diagnose the left mismatch before the right mismatch when both are statically invalid. Unsupported leaf families retain `OKL-E-CAPABILITY-UNSUPPORTED`; invalid constructor internals retain their established type, unit, frame or domain diagnostic. Access, naming and pure-call-cycle failures retain their inherited families and original locations. Resource failures name the actual exhausted bound.\ndocs/engineering/accepted-revision-c196/NEXT-TASK.md:12:Can the existing language and an existing common backend express and deliver a\ndocs/engineering/accepted-revision-c196/NEXT-TASK.md:20:1. **Admitted:** a frozen public task, qualified common backend path, accepted\ndocs/language-design/guided-contact-v0.2/SPECIFICATION.md:78:same constructor and backend. Their canonical solver bytes, native samples,\ndocs/engineering/guided-contact-c191/independent/frozen/C191-BRIEF.md:9:GOAL keeps design intent in `.ok`, delegates simulation to specialists and requires a qualified common backend before isolating the language's contribution.[2] Reuse the exact C190-qualified Blender/Bullet build through a thin adapter; defer a general engine, importer and production backend.\ndocs/engineering/pilot-controller-c181/README.md:32:The study's interpretation still follows the [C180 comparison design](../semantic-physical-scope-c180/README.md). Results for this model and native toolchains are one case study. A claim about the value of the language across tasks also needs a common backend and a broader set of independent repairs.\ndocs/engineering/reach-offset-expression-design-2026-10-29-c065/NEXT-TASK.md:9:Begin with the 32-segment, 16-band sphere constructor in `ontokin/geometry.py` and `_vertex_extrema_uncached` in `ontokin/reach_conformance.py`. The target is the exact rational maximum of `abs(x)+abs(y)+abs(z)` over the **actual generated binary64 vertices**. An ideal Euclidean radius or `radius*sqrt(3)` is not the same result. A small set near the discrete latitude/longitude extrema is a hypothesis; actual constructor rounding and ties require proof.\ndocs/engineering/contact-comparison-c192/reviews/protocol/REVIEW.md:17:## Direct source and common backend\ndocs/engineering/contact-comparison-c192/NEXT-TASK.md:4:0.2 mm mapping gate on the same backend. The failures, native replays and received\ndocs/engineering/reach-recording-validation-2026-10-23/checkpoint-041-reviews/p23-l03.md:48:The [C038 analysis](https://github.com/Omegapy/OntoKin/blob/0fab8a2fe00047ebf3f8778721d0a77b7a1d5420/docs/engineering/reach-recording-validation-2026-10-23/checkpoint-038-analysis.json) has `pose_stationary_check=36`, `pose_vector_domain=883`, `pose_norm_bound=360`, and `pose_position_negate=3`. Thus the same-type three-charge constructor specialization has a P16 gross ceiling of 108 operations on that retained flow, and a smaller eligible subset may apply. This source-flow upper bound does not measure a new optimization.\ndocs/language-design/keyed-filter-v0.1/ADOPTION.md:24:The exact form is `filter_keyed<T>(input, (key, value) -> predicate)`. One explicit generic type `T` names the input and surviving leaf type. The input must have type `Keyed<T>` and the result has type `Keyed<T>`. Compare semantic types through inherited type/alias resolution: `Length` and its existing equivalent quantity alias are the same type. Filtering introduces no Int/Real widening, coercion, common-type inference or value conversion at its boundary. Existing literal/constructor conversions that formed the input remain unchanged.\ndocs/language-design/polygon-loft-v0.1/README.md:25:Each section contains one counterclockwise outer ring and zero through eight clockwise holes, viewed from positive Z. A section's XY coordinates and Z station define its vertices. Section keys and explicit integer orders are unique. Orders select traversal; declaration order does not. Stations must strictly increase in that order. All sections have the same ring keys, roles and orders, and every matched ring has the same vertex keys and orders. Coordinates and material regions may vary. The constructor does not rotate, resample or align mismatched rings automatically.\ndocs/engineering/reach-recording-validation-2026-10-23/checkpoint-042-reviews/constructor-cost.md:51:The inspected alternative is a per-construction receipt at the original derivative-admission point, after the unchanged position and orientation work. Its intended native branch uses the actual bound default objects, retains the two original cache keys and cache call sequences, and constructs the same full `PoseValue`. Ineligible or changed contexts take the original constructor using the same work object and remaining allowance.\ndocs/engineering/reach-recording-validation-2026-10-23/checkpoint-050-reviews/authority/review.md:71:Construct a native `ConstructionBudget` with a nested `check` callback that remains inert until the first genuine factorial tuple is retained. This nested callback is a supported constructor argument. The work's external callback remains the same bound native `ConstructionBudget.tick` throughout; there is no asynchronous mutation. The callback can close over the newly created arithmetic owner after its constructor returns, and remain inert during the first cold factory.\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "rg",
+        "-n",
+        "import_scene\\.gltf|export_scene\\.gltf",
+        "prototypes",
+        "ontokin",
+        "tools",
+        "--glob",
+        "*.py"
+      ],
+      "returncode": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "report_sha256": "32413f179cb06e09e04f1456edbf30f9a7adf862cb4123ba554583bdeb0c56bb",
+  "limits": [
+    "This is source inspection and feasibility reasoning, not executed tray qualification.",
+    "Searches cover current source and selected retained native-route archives; no universal absence claim outside the reviewed repository.",
+    "Pinned Blender executable identity is read from contract, not freshly executed."
+  ]
+}
