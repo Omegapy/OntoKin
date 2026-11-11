@@ -9,7 +9,7 @@ more reliably or at lower cost than with direct Blender/Python. The complete
 
 ## Main integration lease
 
-Owner `c207-cwd-integration-cbf19c-20261111` holds the bounded C207 working-directory alignment integration lease from `2026-11-11T19:16:12.256644+00:00` through `2026-11-11T19:46:12.256644+00:00`. Starting observed main is `2a1ac8ccbdc290942e88504c640790b1bda9229c`. Scope [issue #146](https://github.com/Omegapy/OntoKin/issues/146), integration branch `work/c207-cwd-cbf19c`; isolated implementation branch `work/c207-cwd-impl-cbf19c`. Independent review owns separate controls. Only this owner may change shared STATUS/integration state. The task aligns C201 planned command, supervisor and job working directories with CPU-only checks. C199/C200 schedules stay closed; no C201 native, receiving, Node, lifecycle or timed-author starts are authorized. Native readiness, readback implementation and the full coordinator remain separate gates.
+No active main integration lease. Owner `c207-cwd-integration-cbf19c-20261111` released the C207 scope at `2026-11-11T19:26:45.724706+00:00` after verifying [PR #147](https://github.com/Omegapy/OntoKin/pull/147), actual merge `d952254d5e63602e6d11c696e62ae8965d57c78e`, the exact reviewed bindings and fresh actual-main checks. Issue #146 is closed; the work branch was observed absent. The next bounded step is C201 readback/probe compatibility. Future shared writes require fresh state reconciliation and a new expected-head lease. C199/C200 schedules remain closed.
 
 ## C200 integrated; finite qualification retained
 
@@ -116,13 +116,13 @@ C206 originally rejected production bindings with `C201-NATIVE-CWD` because the 
 
 The exact original C205 `final-tests.log`, already present in the previous handoff, is restored as tracked evidence to repair its existing documentation link. The original failed documentation check and byte-binding record are retained. Repaired documentation verification passed 29 preserved sources and 4,199 local links. [PR #145](https://github.com/Omegapy/OntoKin/pull/145) merged at `6573597a699ed90920a9cea3e17250bce5babbdc` with the exact local publication tree. Fresh actual-main checks passed all 155 C201 methods, 43 core cases / 694 assertions and 29 preserved documentation sources / 4,199 local links. All 56 independent bindings and complete product/test prefixes matched. [Integration receipt](docs/engineering/static-tray-admission-c201/evidence/transaction-c206/INTEGRATION.json)
 
-## C207 working-directory alignment reviewed; readback remains pending
+## C207 working-directory alignment integrated; readback remains pending
 
 The [C207 contract](docs/engineering/static-tray-admission-c201/WORKING-DIRECTORIES-C207.md) binds every planned command cwd to its own stage output directory. Construction/receiving jobs and supervisor receipts must agree with that same path. Wrong or changed paths/commands reject before acceptance. The former blanket `C201-NATIVE-CWD` purpose block is removed; validated production-shaped fixture records still confer no native authorization, current-host approval or admission.
 
 Independent review approved exact local candidate `bd9fbf1487e557b9c21baf1d39e7b9cb818d4773` for this component only. All 171 C201 methods, 29 independent controls, 78 source/compiler methods and 43 core cases / 694 assertions passed. All 36 reviewed bindings, 301 historical inputs and four frozen protocol documents remain exact. [Review and evidence](docs/engineering/static-tray-admission-c201/evidence/cwd-c207/README.md)
 
-The next bounded step is the separate C201 readback/probe compatibility component. Its Node cwd is consistently planned, but the C201 probe and wrapper roles remain unimplemented. Complete coordinator/process provenance/deadlines, trusted bootstrap, real host/dependency/alias sealing, independent native readiness and actual admission remain pending. No C201 native, receiving, Node, lifecycle or timed-author process started. Publication and actual-main verification are recorded after integration.
+The next bounded step is the separate C201 readback/probe compatibility component. Its Node cwd is consistently planned, but the C201 probe and wrapper roles remain unimplemented. Complete coordinator/process provenance/deadlines, trusted bootstrap, real host/dependency/alias sealing, independent native readiness and actual admission remain pending. No C201 native, receiving, Node, lifecycle or timed-author process started. [PR #147](https://github.com/Omegapy/OntoKin/pull/147) merged at `d952254d5e63602e6d11c696e62ae8965d57c78e` with the exact reviewed publication tree. Fresh actual-main checks passed all 171 C201 methods, 43 core cases / 694 assertions and documentation preservation of 29 sources / 4,233 links. [Integration receipt](docs/engineering/static-tray-admission-c201/evidence/cwd-c207/INTEGRATION.json)
 
 ## Verification and remaining limits
 
