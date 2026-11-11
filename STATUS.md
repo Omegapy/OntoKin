@@ -9,7 +9,7 @@ more reliably or at lower cost than with direct Blender/Python. The complete
 
 ## Main integration lease
 
-No active main integration lease. Owner `c206-transaction-integration-ad77b7-20261111` released the C206 scope at `2026-11-11T18:46:42.223293+00:00` after verifying [PR #145](https://github.com/Omegapy/OntoKin/pull/145), actual merge `6573597a699ed90920a9cea3e17250bce5babbdc`, all reviewed input bindings and applicable actual-main checks. Issue #144 is closed for the fixture-only transaction component; its work branch was observed absent after merge. Production remains blocked by the C201 working-directory conflict. Future shared writes require fresh state reconciliation and a new expected-head lease. C199/C200 schedules remain closed.
+Owner `c207-cwd-integration-cbf19c-20261111` holds the bounded C207 working-directory alignment integration lease from `2026-11-11T19:16:12.256644+00:00` through `2026-11-11T19:46:12.256644+00:00`. Starting observed main is `2a1ac8ccbdc290942e88504c640790b1bda9229c`. Scope [issue #146](https://github.com/Omegapy/OntoKin/issues/146), integration branch `work/c207-cwd-cbf19c`; isolated implementation branch `work/c207-cwd-impl-cbf19c`. Independent review owns separate controls. Only this owner may change shared STATUS/integration state. The task aligns C201 planned command, supervisor and job working directories with CPU-only checks. C199/C200 schedules stay closed; no C201 native, receiving, Node, lifecycle or timed-author starts are authorized. Native readiness, readback implementation and the full coordinator remain separate gates.
 
 ## C200 integrated; finite qualification retained
 
