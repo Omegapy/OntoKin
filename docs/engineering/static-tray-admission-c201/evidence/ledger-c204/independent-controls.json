@@ -1,0 +1,126 @@
+{
+  "scope": "Independent CPU-only component review; no native readiness claim",
+  "reviewed_commit": "7861e2d0d7ed940cdf2be4b4fe98dbde3e8c373d",
+  "source_sha256": {
+    "prototypes/static_tray_admission_c201/__init__.py": "69aea6566b5a6efd53722925296b3c8405f09e8b99893a4d693dbfafda80fc08",
+    "prototypes/static_tray_admission_c201/schedule.py": "0999af91d55d3a37743692ea7678c49ca3b7c23e8d18c21bb17b3849c3f66422",
+    "prototypes/static_tray_admission_c201/ledger.py": "0b4cee3520ba7a0002ec6958b37511e4b541a9823c8a1bc955214ec132924243"
+  },
+  "child_starts": 0,
+  "probes": [
+    {
+      "probe": "D03_STRUCTURE_does_not_advance",
+      "passed": true,
+      "observed": {
+        "invocation_id": "24a97587a370477d9eed58dc515e46f0",
+        "consumed": {
+          "construction": 1,
+          "receiving": 1,
+          "node": 1
+        },
+        "stopped": true,
+        "ledger_complete": false,
+        "persistence_or_interruption_uncertain": false,
+        "accounting_scope": "In-process reservation attempts, including uncertain persistence; not child starts or permission to run",
+        "next_item": null,
+        "native_readiness": false,
+        "admission_completed": false
+      }
+    },
+    {
+      "probe": "interruption_poison_live_capability",
+      "passed": true,
+      "after_interrupt": {
+        "invocation_id": "f982fba2d8d145978c9c939041418c9d",
+        "consumed": {
+          "construction": 1,
+          "receiving": 0,
+          "node": 0
+        },
+        "stopped": true,
+        "ledger_complete": false,
+        "persistence_or_interruption_uncertain": true,
+        "accounting_scope": "In-process reservation attempts, including uncertain persistence; not child starts or permission to run",
+        "next_item": null,
+        "native_readiness": false,
+        "admission_completed": false
+      },
+      "second_reservation_rejected": true,
+      "durable_reservations": [
+        {
+          "consumed": 1,
+          "references": {
+            "accepted_source_reference": null,
+            "completed_predecessor": null,
+            "equality_references": [],
+            "required_completed_controls": []
+          },
+          "route": "ontokin",
+          "slot": "A01",
+          "stage": "construction",
+          "type": "RESERVED"
+        }
+      ]
+    },
+    {
+      "probe": "inspection_exposes_only_framing_integrity_without_semantic_or_resume_claim",
+      "passed": true,
+      "observed": {
+        "consumed": true,
+        "journal_integrity_valid": true,
+        "semantics_verified": false,
+        "events": [
+          {
+            "marker_sha256": "0376e7d411e21b6beba1a7a8cc2de1fe722ce2277aac8e67e8d97ad91413d6c7",
+            "type": "INVOKED"
+          },
+          {
+            "admission_completed": false,
+            "native_readiness": false,
+            "type": "LEDGER_COMPLETE"
+          }
+        ],
+        "native_readiness": false,
+        "admission_completed": false,
+        "resumable": false
+      }
+    },
+    {
+      "probe": "FIFO_kind_rejection_is_nonblocking",
+      "target": "C201-Q01-A01-A04-v0.1.0.invocation.json",
+      "passed": true,
+      "blocked_before_controlled_unblock": false,
+      "observed": [
+        {
+          "consumed": true,
+          "journal_integrity_valid": false,
+          "semantics_verified": false,
+          "events": [],
+          "native_readiness": false,
+          "admission_completed": false,
+          "resumable": false,
+          "error": "Unsafe reservation file"
+        }
+      ]
+    },
+    {
+      "probe": "FIFO_kind_rejection_is_nonblocking",
+      "target": "C201-Q01-A01-A04-v0.1.0.ledger.jsonl",
+      "passed": true,
+      "blocked_before_controlled_unblock": false,
+      "observed": [
+        {
+          "consumed": true,
+          "journal_integrity_valid": false,
+          "semantics_verified": false,
+          "events": [],
+          "native_readiness": false,
+          "admission_completed": false,
+          "resumable": false,
+          "error": "Unsafe reservation file"
+        }
+      ]
+    }
+  ],
+  "passed": true
+}
