@@ -1,0 +1,780 @@
+{
+  "contract": "OK-MAP-STATIC-TRAY-001/0.1.0",
+  "controls": [
+    {
+      "category": "positive",
+      "expected": "ACCEPT",
+      "id": "P01",
+      "input_basis": "Q01",
+      "mutation_or_requirement": "Both route frontends produce exact canonical geometry from the frozen heterogeneous pair",
+      "stage": "native"
+    },
+    {
+      "category": "positive",
+      "expected": "Canonical geometry identical; source/dependency receipt changes as appropriate",
+      "id": "P02",
+      "input_basis": "Q01",
+      "mutation_or_requirement": "Replace source length spellings with exactly equivalent metre/millimetre quantities; do not change source semantics",
+      "stage": "pre_native"
+    },
+    {
+      "category": "positive",
+      "expected": "Canonical geometry and semantic IDs unchanged",
+      "id": "P03",
+      "input_basis": "Q01",
+      "mutation_or_requirement": "Reorder source sibling declarations; independently vary Python dictionary insertion order before canonical serialization. Serialized record bytes must still use the mandatory canonical key order.",
+      "stage": "pre_native"
+    },
+    {
+      "category": "boundary",
+      "expected": "ACCEPT",
+      "id": "B01",
+      "input_basis": "Q02",
+      "mutation_or_requirement": "Left uses every minimum admissible length; right uses every maximum; root translations hit opposite \u00b110 m corners",
+      "stage": "native"
+    },
+    {
+      "category": "boundary",
+      "expected": "ACCEPT canonical record; exact proper signed-permutation transform",
+      "id": "B02",
+      "input_basis": "Q01",
+      "mutation_or_requirement": "Exercise all 12 allowed exact quaternion tuples in each root independently, plus each sign-reversed equivalent authored with the existing literal quat constructor; source twins produce the same canonical record rotation",
+      "stage": "pre_native"
+    },
+    {
+      "category": "boundary",
+      "expected": "REJECT; no Blender start",
+      "expected_diagnostic_class": "RANGE",
+      "id": "B03",
+      "input_basis": "Q01",
+      "mutation_or_requirement": "Change each of the seven positive length parameters to the immediate binary64 predecessor of its lower bound or successor of its upper bound, one field at a time",
+      "stage": "pre_native"
+    },
+    {
+      "category": "boundary",
+      "expected": "REJECT; no Blender start",
+      "expected_diagnostic_class": "RANGE",
+      "id": "B04",
+      "input_basis": "Q01",
+      "mutation_or_requirement": "Root translation component beyond \u00b110 m by one binary64 step",
+      "stage": "pre_native"
+    },
+    {
+      "category": "composition",
+      "expected": "ACCEPT; all independent local and world measurements correct",
+      "id": "C01",
+      "input_basis": "Q03",
+      "mutation_or_requirement": "Distinct translated roots with nonidentity allowed rotations; child follow offsets are resolved once, ownership contributes no transform",
+      "stage": "native"
+    },
+    {
+      "category": "composition",
+      "expected": "Canonical geometry unchanged",
+      "id": "C02",
+      "input_basis": "Q03",
+      "mutation_or_requirement": "Resolve children in reverse declaration order with the same stable keys",
+      "stage": "pre_native"
+    },
+    {
+      "category": "scoped_edit",
+      "expected": "ACCEPT; right canonical geometry/identity and all unrelated source bytes preserved",
+      "id": "E01",
+      "input_basis": "Q04",
+      "mutation_or_requirement": "Only left payload width changes from .20 m to .24 m; left base/front/back and left/right wall offsets derive from it",
+      "stage": "native"
+    },
+    {
+      "category": "reuse",
+      "expected": "ACCEPT; prior selectors still compile to their original canonical records; right closure unchanged",
+      "id": "E02",
+      "input_basis": "Q05",
+      "mutation_or_requirement": "Add left .18 m selection using the same shared definition while retaining accepted .20 and .24 selections and source/output closures",
+      "stage": "native"
+    },
+    {
+      "category": "negative",
+      "expected": "REJECT before native start. Structural enum/encoding/type violations stop at record validation; representable but out-of-domain positive length values fail RANGE; nonfinite payload/translation values that reach numeric decoding fail NUMERIC.",
+      "expected_diagnostic_class": "RECORD_OR_RANGE_OR_NUMERIC_BY_FIXED_STAGE",
+      "id": "N01",
+      "input_basis": "Q01 canonical record",
+      "mutation_or_requirement": "For strictly positive length parameters, substitute zero or a negative finite value. Independently test each numeric-field schema position with wrong JSON type, malformed bit-string, NaN or infinity bit-pattern. Signed/zero root translations and allowed signed/zero quaternion components remain valid.",
+      "stage": "pre_native"
+    },
+    {
+      "category": "negative",
+      "expected": "REJECT; no Blender start",
+      "expected_diagnostic_class": "IDENTITY",
+      "id": "N02",
+      "input_basis": "Q01",
+      "mutation_or_requirement": "Omit, duplicate, rename, alias or add root/part/role identity; swap child ownership",
+      "stage": "pre_native"
+    },
+    {
+      "category": "negative",
+      "expected": "REJECT under finite orientation profile; structural enum rejection is RECORD, unsupported valid source rotation is ROTATION, source invalid quaternion retains its existing compiler error; never round/snap",
+      "expected_diagnostic_class": "FRAME",
+      "id": "N03",
+      "input_basis": "Q01 canonical record and separately named source variants",
+      "mutation_or_requirement": "Replace a canonical-record root rotation with Ry90, a nonunit or noncanonical-sign tuple, a reflection, scale or shear. For source controls use an unsupported Ry90 or nonunit construction; preserve existing compiler semantics/diagnostics for quaternion normalization.",
+      "stage": "pre_native"
+    },
+    {
+      "category": "negative",
+      "expected": "REJECT; preserve compiler diagnostic where applicable; no Blender start",
+      "expected_diagnostic_class": "AUTHORITY",
+      "id": "N04",
+      "input_basis": "Q01",
+      "mutation_or_requirement": "Child has authored placement in addition to follow, wrong parent, another incoming relation, cycle or missing follow",
+      "stage": "pre_native"
+    },
+    {
+      "category": "negative",
+      "expected": "REJECT; ownership must not synthesize placement",
+      "expected_diagnostic_class": "AUTHORITY",
+      "id": "N05",
+      "input_basis": "Q01",
+      "mutation_or_requirement": "Ownership-only child arrangement without required follows",
+      "stage": "pre_native"
+    },
+    {
+      "category": "negative",
+      "expected": "REJECT explicitly before native work; do not silently omit",
+      "expected_diagnostic_class": "UNSUPPORTED",
+      "id": "N06",
+      "input_basis": "Q01",
+      "mutation_or_requirement": "Dynamic body, nonzero mass/collider, nonzero gravity, joint, action, animation, force, mesh, texture, unsupported material or additional source construct; the required exactly zero authored gravity remains valid",
+      "stage": "pre_native"
+    },
+    {
+      "category": "negative",
+      "expected": "REJECT the inconsistency between full-side part geometry and tray parameters at semantic record validation; no Blender start",
+      "expected_diagnostic_class": "SHAPE",
+      "id": "N07",
+      "input_basis": "Q01",
+      "mutation_or_requirement": "Replace only canonical part full extents with one-half their specified values, leaving the positive in-range tray parameters, roles and transforms unchanged",
+      "stage": "pre_native"
+    },
+    {
+      "category": "negative",
+      "expected": "REJECT before compilation/native work; accepted closure intact",
+      "expected_diagnostic_class": "PROVENANCE",
+      "id": "N08",
+      "input_basis": "Q01",
+      "mutation_or_requirement": "Change dependency bytes, omit a transitive file, wrong digest/version, extra unlisted file or path traversal",
+      "stage": "pre_native"
+    },
+    {
+      "category": "negative",
+      "expected": "REJECT; no permissive recovery",
+      "expected_diagnostic_class": "SCHEMA",
+      "id": "N09",
+      "input_basis": "Q01 canonical record bytes",
+      "mutation_or_requirement": "Malformed JSON, duplicate keys, unknown keys, noncanonical hex/string encodings or extra trailing bytes",
+      "stage": "pre_native"
+    },
+    {
+      "category": "negative",
+      "expected": "REJECT; annotation cannot override geometry",
+      "expected_diagnostic_class": "GEOMETRY",
+      "id": "N10",
+      "input_basis": "Q01",
+      "mutation_or_requirement": "Caller annotates expected clearance while supplied box geometry disagrees",
+      "stage": "pre_native"
+    },
+    {
+      "category": "negative",
+      "expected": "REJECT positive interior overlap; shared faces allowed",
+      "expected_diagnostic_class": "GEOMETRY",
+      "id": "N11",
+      "input_basis": "Q01",
+      "mutation_or_requirement": "Wall partition extends left/right walls into corner strips already occupied by front/back walls",
+      "stage": "pre_native"
+    },
+    {
+      "category": "negative",
+      "expected": "REJECT parameter upper-range violation before box derivation/native work; valid equivalent metre/millimetre spellings in P02 still pass",
+      "expected_diagnostic_class": "RANGE",
+      "id": "N12",
+      "input_basis": "Q01 source and separately canonical-record parameter variant",
+      "mutation_or_requirement": "Multiply only the left payload X length of .20 m by 1000, giving 200 m; all other fields unchanged",
+      "stage": "pre_native"
+    },
+    {
+      "additional_findings_permitted": [
+        "GEOMETRY"
+      ],
+      "category": "delivered_negative",
+      "expected": "REJECT insufficient measured side clearance: .003 m versus .005 m requirement",
+      "expected_diagnostic_class": "CLEARANCE",
+      "id": "D01",
+      "input_basis": "Q01 accepted final GLB",
+      "mutation_or_requirement": "In left payload POSITION buffer increase full X extent by .004 m without changing source/metadata",
+      "required_findings": [
+        "CLEARANCE"
+      ],
+      "stage": "delivered_reader"
+    },
+    {
+      "additional_findings_permitted": [
+        "SIBLING",
+        "GEOMETRY"
+      ],
+      "category": "delivered_negative",
+      "expected": "REJECT missing right identity/geometry; left remains independently readable",
+      "expected_diagnostic_class": "IDENTITY",
+      "id": "D02",
+      "input_basis": "Q01 accepted final GLB",
+      "mutation_or_requirement": "Remove the actual right/base mesh node and its now-unreferenced mesh only, retaining a structurally valid GLB",
+      "required_findings": [
+        "IDENTITY"
+      ],
+      "stage": "delivered_reader"
+    },
+    {
+      "additional_findings_permitted": [
+        "FRAME",
+        "GEOMETRY",
+        "CLEARANCE"
+      ],
+      "category": "delivered_negative",
+      "expected": "REJECT changed right sibling geometry/closure",
+      "expected_diagnostic_class": "SIBLING",
+      "id": "D03",
+      "input_basis": "Q01 accepted final GLB",
+      "mutation_or_requirement": "Move right/front actual node transform by +.002 m along its tray-local Z without changing name or expected metadata",
+      "required_findings": [
+        "SIBLING"
+      ],
+      "stage": "delivered_reader"
+    },
+    {
+      "category": "delivered_negative",
+      "expected": "REJECT topology/surface coverage; AABB alone must not pass",
+      "expected_diagnostic_class": "TOPOLOGY",
+      "id": "D04",
+      "input_basis": "Q01 accepted final GLB",
+      "mutation_or_requirement": "Keep box bounds but delete one face or add an interior triangle",
+      "stage": "delivered_reader"
+    },
+    {
+      "category": "delivered_negative",
+      "expected": "REJECT world corner/handedness/pose check",
+      "expected_diagnostic_class": "FRAME",
+      "id": "D05",
+      "input_basis": "Q03 accepted final GLB",
+      "mutation_or_requirement": "Transpose a root/part transform, introduce reflection, or apply axis conversion twice",
+      "stage": "delivered_reader"
+    },
+    {
+      "category": "delivered_negative",
+      "expected": "REJECT identity even when dimensions look correct",
+      "expected_diagnostic_class": "IDENTITY",
+      "id": "D06",
+      "input_basis": "Q01 accepted final GLB",
+      "mutation_or_requirement": "Change a semantic ID while retaining geometry or duplicate ID on a second actual node",
+      "stage": "delivered_reader"
+    },
+    {
+      "category": "delivered_negative",
+      "expected": "REJECT unsupported output explicitly",
+      "expected_diagnostic_class": "UNSUPPORTED",
+      "id": "D07",
+      "input_basis": "Q01 accepted final GLB",
+      "mutation_or_requirement": "Insert sparse/external/compressed accessor, unexpected scene/node, animation, morph, skin, camera or light",
+      "stage": "delivered_reader"
+    },
+    {
+      "category": "delivered_positive",
+      "expected": "Exact copy ACCEPT; reordered JSON remains measured-equivalent but fails byte-regeneration equality if presented as a rebuild",
+      "id": "D08",
+      "input_basis": "Q01 accepted final GLB",
+      "mutation_or_requirement": "Copy exact accepted bytes to a fresh path; reverse JSON object-key order only in a separate corruption-control copy",
+      "stage": "delivered_reader"
+    },
+    {
+      "category": "lifecycle",
+      "expected": "ACCEPT only after receiving/measurement gates; BUILT_PENDING_RECEIVING had not changed accepted pointer",
+      "id": "L01",
+      "input_basis": "controlled subprocess stub",
+      "mutation_or_requirement": "Receiving stub succeeds for a sealed constructed candidate; validation and atomic expected-predecessor promotion follow",
+      "stage": "supervisor_stub"
+    },
+    {
+      "category": "lifecycle",
+      "expected": "REJECT; previous accepted bytes and pointer unchanged",
+      "id": "L02",
+      "input_basis": "controlled subprocess stub",
+      "mutation_or_requirement": "Nonzero child exit with partial files",
+      "stage": "supervisor_stub"
+    },
+    {
+      "category": "lifecycle",
+      "expected": "TIMEOUT; entire process group reaped; prior acceptance unchanged",
+      "id": "L03",
+      "input_basis": "controlled subprocess stub",
+      "mutation_or_requirement": "Hung child reaches outer deadline",
+      "stage": "supervisor_stub"
+    },
+    {
+      "category": "lifecycle",
+      "expected": "CANCELLED; process group reaped within fixed cancellation bound; no promotion",
+      "id": "L04",
+      "input_basis": "controlled subprocess stub",
+      "mutation_or_requirement": "Cancellation after child starts",
+      "stage": "supervisor_stub"
+    },
+    {
+      "category": "lifecycle",
+      "expected": "Deadline/cancel sends final group kill and verifies no survivor; fail control if not reaped",
+      "id": "L05",
+      "input_basis": "controlled subprocess stub",
+      "mutation_or_requirement": "Child spawns grandchild that ignores graceful termination",
+      "stage": "supervisor_stub"
+    },
+    {
+      "category": "lifecycle",
+      "expected": "REJECT and kill group; bounded retained diagnostic; no accepted mutation",
+      "id": "L06",
+      "input_basis": "controlled subprocess stub",
+      "mutation_or_requirement": "Child overflows output/log limit",
+      "stage": "supervisor_stub"
+    },
+    {
+      "category": "lifecycle",
+      "expected": "REJECT despite process success; no promotion",
+      "id": "L07",
+      "input_basis": "controlled subprocess stub",
+      "mutation_or_requirement": "Successful process returns malformed result or output that independent reader rejects",
+      "stage": "supervisor_stub"
+    },
+    {
+      "category": "lifecycle",
+      "expected": "Reject stale promotion; reconcile unknown without second child start or duplicate promotion",
+      "id": "L08",
+      "input_basis": "controlled subprocess stub",
+      "mutation_or_requirement": "One successful receiving stub supplies a validated candidate; exercise stale promotion and unknown pointer-write reconciliation against separate sealed store copies, with no second child start",
+      "stage": "supervisor_stub"
+    }
+  ],
+  "current_checkpoint_native_exports_allowed": 0,
+  "diagnostic_policy": {
+    "adapter_class_mapping": {
+      "AUTHORITY": "OTRAY-E-RELATIONSHIP",
+      "FRAME": "OTRAY-E-ROTATION",
+      "GEOMETRY": "OTRAY-E-SHAPE",
+      "IDENTITY": "OTRAY-E-IDENTITY",
+      "NUMBER": "OTRAY-E-NUMERIC",
+      "PROVENANCE": "OTRAY-E-CLOSURE",
+      "RANGE": "OTRAY-E-RANGE",
+      "RECORD": "OTRAY-E-RECORD",
+      "SCHEMA": "OTRAY-E-RECORD",
+      "SHAPE": "OTRAY-E-SHAPE"
+    },
+    "compiler": "Preserve the unchanged original OKL diagnostic when core compilation rejects first. Adapter diagnostics apply only after successful ordinary compilation or at the canonical record boundary.",
+    "delivered_reader": "CLEARANCE, IDENTITY, SIBLING, TOPOLOGY, FRAME and UNSUPPORTED are independent audit finding classes retained under an OTRAY-E-DELIVERY envelope; structural parse failure does not satisfy a required geometric negative.",
+    "multiple_independent_mutations": "Each listed variant is a separate fixture, changed one field or one named semantic feature at a time. The executable input lock expands every variant and fixes its exact expected existing/compiler or adapter diagnostic before native work. No one corrupted fixture combines several independent failures.",
+    "precedence": [
+      "selector and candidate/source binding",
+      "existing source compilation or direct-record structural validation",
+      "finite mapping admission",
+      "exact record/source binding",
+      "native preflight",
+      "staged native construction",
+      "independent output and receiving checks",
+      "accepted-state transition"
+    ],
+    "structural_precedence": "The exact canonical-record schema can reject a mutated enum/encoding before finite numeric or rotation checks. A one-field control must expect that actual stage; it may not insist on a later code. Source syntax and quaternion-domain failures retain existing OKL errors. A valid sign-reversed literal source quaternion is positive, while noncanonical record bits are negative.",
+    "within_stage": "Report all bounded discovered violations sorted by semantic ID and code. No priority race is inferred. Exact unchanged compiler errors remain unchanged."
+  },
+  "fixture_sets": {
+    "Q01": {
+      "left": {
+        "base_m": 0.006,
+        "clearance_m": 0.005,
+        "headroom_m": 0.02,
+        "payload_m": [
+          0.2,
+          0.06,
+          0.12
+        ],
+        "rotation_wxyz": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "translation_m": [
+          -0.3,
+          0,
+          0
+        ],
+        "wall_m": 0.004
+      },
+      "right": {
+        "base_m": 0.006,
+        "clearance_m": 0.005,
+        "headroom_m": 0.02,
+        "payload_m": [
+          0.16,
+          0.04,
+          0.1
+        ],
+        "rotation_wxyz": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "translation_m": [
+          0.3,
+          0,
+          0
+        ],
+        "wall_m": 0.004
+      }
+    },
+    "Q02": {
+      "left": {
+        "base_m": 0.001,
+        "clearance_m": 0.001,
+        "headroom_m": 0.001,
+        "payload_m": [
+          0.01,
+          0.01,
+          0.01
+        ],
+        "rotation_wxyz": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "translation_m": [
+          -10,
+          -10,
+          -10
+        ],
+        "wall_m": 0.001
+      },
+      "right": {
+        "base_m": 0.025,
+        "clearance_m": 0.05,
+        "headroom_m": 0.1,
+        "payload_m": [
+          1,
+          0.5,
+          1
+        ],
+        "rotation_wxyz": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "translation_m": [
+          10,
+          10,
+          10
+        ],
+        "wall_m": 0.025
+      }
+    },
+    "Q03": {
+      "left": {
+        "base_m": 0.006,
+        "clearance_m": 0.005,
+        "headroom_m": 0.02,
+        "payload_m": [
+          0.2,
+          0.06,
+          0.12
+        ],
+        "rotation_wxyz": [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        "translation_m": [
+          -0.3,
+          0.2,
+          0.1
+        ],
+        "wall_m": 0.004
+      },
+      "right": {
+        "base_m": 0.006,
+        "clearance_m": 0.005,
+        "headroom_m": 0.02,
+        "payload_m": [
+          0.16,
+          0.04,
+          0.1
+        ],
+        "rotation_wxyz": [
+          0.5,
+          0.5,
+          -0.5,
+          0.5
+        ],
+        "translation_m": [
+          0.3,
+          0.1,
+          -0.2
+        ],
+        "wall_m": 0.004
+      }
+    },
+    "Q04": {
+      "left": {
+        "base_m": 0.006,
+        "clearance_m": 0.005,
+        "headroom_m": 0.02,
+        "payload_m": [
+          0.24,
+          0.06,
+          0.12
+        ],
+        "rotation_wxyz": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "translation_m": [
+          -0.3,
+          0,
+          0
+        ],
+        "wall_m": 0.004
+      },
+      "right": {
+        "base_m": 0.006,
+        "clearance_m": 0.005,
+        "headroom_m": 0.02,
+        "payload_m": [
+          0.16,
+          0.04,
+          0.1
+        ],
+        "rotation_wxyz": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "translation_m": [
+          0.3,
+          0,
+          0
+        ],
+        "wall_m": 0.004
+      }
+    },
+    "Q05": {
+      "left": {
+        "base_m": 0.006,
+        "clearance_m": 0.005,
+        "headroom_m": 0.02,
+        "payload_m": [
+          0.18,
+          0.06,
+          0.12
+        ],
+        "rotation_wxyz": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "translation_m": [
+          -0.3,
+          0,
+          0
+        ],
+        "wall_m": 0.004
+      },
+      "right": {
+        "base_m": 0.006,
+        "clearance_m": 0.005,
+        "headroom_m": 0.02,
+        "payload_m": [
+          0.16,
+          0.04,
+          0.1
+        ],
+        "rotation_wxyz": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "translation_m": [
+          0.3,
+          0,
+          0
+        ],
+        "wall_m": 0.004
+      }
+    }
+  },
+  "future_qualification_limits": {
+    "accepted_pointer_rule": "BUILT_PENDING_RECEIVING leaves accepted pointer untouched. Required native-scene/GLB receiving measurements must pass before conditional promotion, all within one monotonic transaction deadline.",
+    "automatic_retries": 0,
+    "cleanup_ms": 2000,
+    "construction_reader_stage_ms": 30000,
+    "controlled_stub_direct_starts": 8,
+    "controlled_stub_grandchildren": 1,
+    "controlled_stub_total_processes": 9,
+    "explicit_new_transaction_host_allowance_ms": 65000,
+    "host_allowance_authority": "C198 finite future static-tray qualification decision; input lock must request and record effective limit. Not a source budget increase or historical gate relaxation; zero C198 execution.",
+    "native_simulations": 0,
+    "native_starts_including_failure": 12,
+    "ordinary_source_elapsed_ms": 30000,
+    "ordinary_source_operations": 100000,
+    "promotion_ms": 3000,
+    "receiver_stage_ms": 30000,
+    "receiving_import_jobs": 12,
+    "receiving_renders_per_job": 1,
+    "rule": "A failed/timeout/cancelled start consumes its slot. Stop remaining slots on any unexpected result, preserve evidence, then revise/review before a new versioned attempt. These are ceilings, not permission to execute in C198."
+  },
+  "future_qualification_native_slots": [
+    {
+      "case": "Q01",
+      "maximum_starts": 1,
+      "purpose": "baseline",
+      "route": "ontokin",
+      "slot": "N01"
+    },
+    {
+      "case": "Q01",
+      "maximum_starts": 1,
+      "purpose": "baseline",
+      "route": "direct-python",
+      "slot": "N02"
+    },
+    {
+      "case": "Q01",
+      "maximum_starts": 1,
+      "purpose": "clean-regeneration",
+      "route": "ontokin",
+      "slot": "N03"
+    },
+    {
+      "case": "Q01",
+      "maximum_starts": 1,
+      "purpose": "clean-regeneration",
+      "route": "direct-python",
+      "slot": "N04"
+    },
+    {
+      "case": "Q02",
+      "maximum_starts": 1,
+      "purpose": "boundary",
+      "route": "ontokin",
+      "slot": "N05"
+    },
+    {
+      "case": "Q02",
+      "maximum_starts": 1,
+      "purpose": "boundary",
+      "route": "direct-python",
+      "slot": "N06"
+    },
+    {
+      "case": "Q03",
+      "maximum_starts": 1,
+      "purpose": "composition",
+      "route": "ontokin",
+      "slot": "N07"
+    },
+    {
+      "case": "Q03",
+      "maximum_starts": 1,
+      "purpose": "composition",
+      "route": "direct-python",
+      "slot": "N08"
+    },
+    {
+      "case": "Q04",
+      "maximum_starts": 1,
+      "purpose": "scoped-repair",
+      "route": "ontokin",
+      "slot": "N09"
+    },
+    {
+      "case": "Q04",
+      "maximum_starts": 1,
+      "purpose": "scoped-repair",
+      "route": "direct-python",
+      "slot": "N10"
+    },
+    {
+      "case": "Q05",
+      "maximum_starts": 1,
+      "purpose": "reuse",
+      "route": "ontokin",
+      "slot": "N11"
+    },
+    {
+      "case": "Q05",
+      "maximum_starts": 1,
+      "purpose": "reuse",
+      "route": "direct-python",
+      "slot": "N12"
+    }
+  ],
+  "independent_reader_geometry_rules": {
+    "corner_assignment": "Unique measured bounding-box corner within maximum component distance tolerance; all eight buckets present; lexicographically smallest actual tuple per bucket; every bucket member within tolerance of representative",
+    "faces": 6,
+    "finding_accumulation": "On structurally valid measurable geometry, collect every required bounded finding; generic GEOMETRY/FRAME does not replace required CLEARANCE or SIBLING",
+    "orientation": "Actual triangle cross product dotted with expected outward face direction strictly positive",
+    "overlap": "Forbidden for solid parts when all three measured intersection lengths exceed \u03b4; payload proxy excluded from matter, still clearance-checked",
+    "signed_volume": "Exact rational triangle sum from decoded binary values; positive; compare to expected product with (sx+2\u03b4)(sy+2\u03b4)(sz+2\u03b4)-sx*sy*sz allowance",
+    "triangle_count_per_box": 12,
+    "triangles_per_face": 2,
+    "weld_coordinate_tolerance_m": 5e-06,
+    "welded_edge_incidence": 2
+  },
+  "later_admission_limits": {
+    "automatic_retries": 0,
+    "native_starts_including_failure": 4,
+    "per_route": "one baseline plus one clean regeneration",
+    "separately_frozen": true,
+    "timed_authors": 0
+  },
+  "numeric_encoding": {
+    "format": "Exactly 16 lowercase hex digits for eight big-endian IEEE-754 binary64 bytes; no float.hex syntax",
+    "name": "binary64-be-hex/1",
+    "negative_zero": "Reject noncanonical received negative zero; producer normalizes to positive zero",
+    "rounding": "Use SPECIFICATION per-operation nearest-even binary64 operation order; no reassociation"
+  },
+  "origin": "New C198 technical qualification fixtures; not historical requirements, native observations or the future author-admission protocol",
+  "profile": "ontokin.static-tray/0.1.0",
+  "schema": "ontokin.static-tray.controls/0.1",
+  "source_and_record_caps": {
+    "canonical_record_bytes": 32768,
+    "direct_python_source_files": [
+      "main.py",
+      "tray.py"
+    ],
+    "ontokin_source_files": [
+      "main.ok",
+      "tray.ok"
+    ],
+    "source_total_utf8_bytes": 65536,
+    "source_unit_utf8_bytes": 32768
+  },
+  "state": "NO_IMPLEMENTATION_OR_QUALIFICATION_CLAIM",
+  "status": "FROZEN_EXPECTATIONS_NOT_EXECUTED",
+  "timed_authors_allowed": 0,
+  "tolerances": {
+    "dimension_m": 5e-06,
+    "regeneration_equality": "exact raw GLB and final GLB byte equality; no volatile field exceptions",
+    "right_sibling_equality": "exact stable-ID, geometry, transform, topology and material values in canonical sibling closure; ignore unrelated GLB index renumbering only",
+    "rigid_transform_element": 1e-06,
+    "signed_clearance_m": 5e-06,
+    "source_record_equality": "exact canonical byte equality",
+    "world_corner_m": 5e-06
+  }
+}

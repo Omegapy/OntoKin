@@ -1,10 +1,20 @@
-# OntoKin development status — C197 equipment-tray feasibility proposal
+# OntoKin development status — C198 finite static-tray mapping
 
 ## Main integration lease
 
 Owner `c198-contract-816fbc` holds the main integration lease for the finite static-tray mapping contract decision. Scope: issue [#132](https://github.com/Omegapy/OntoKin/issues/132), branch `work/c198-static-tray-816fbc`, new `docs/engineering/static-tray-mapping-c198/` records and tools, plus current README/docs navigation and STATUS. Starting observed main is `4d25e9af7ac59d32e34f5e68a95bdb0b963b49f3`. The lease begins at `2026-11-11T02:07:32.000Z` and expires at `2026-11-11T02:37:32.000Z`. C198 permits no native exports, simulations, receiving jobs or timed authors. Independent workers may continue nonoverlapping work. Ownership takes effect only after the guarded main update and readback.
 
 ## Current checkpoint
+
+[C198](docs/engineering/static-tray-mapping-c198/README.md) defines the finite `ontokin.static-tray/0.1.0` mapping under `OK-MAP-STATIC-TRAY-001/0.1.0`. The [versioned decision](docs/engineering/static-tray-mapping-c198/ADOPTION.md) selects a shared static Blender constructor for two trays using the existing construction compiler and separate direct-Python input. The contract fixes identities, source relationships, positive full-side boxes, units, a finite proper-orientation subset, payload proxies, canonical numeric records, atomicity and unsupported diagnostics. The adapter remains unimplemented and unqualified; no tray is admitted.
+
+The [frozen inputs and independent validation plan](docs/engineering/static-tray-mapping-c198/INPUT-FREEZE.json) distinguish the known historical dependency pins from future executable bytes that must be locked and independently reviewed before native work. Qualification controls cover boundaries, composition, scoped repair/reuse, real delivered-geometry corruption, right-sibling preservation, receiving measurements and clean regeneration. [Review and execution state](docs/engineering/static-tray-mapping-c198/results.json) records the exact approval and integration evidence separately.
+
+C198 ran zero native exports, native simulations, receiving jobs and timed authors. The incoming C197 package verified and restored offline, and its inherited 911-file C196 recorded audit passed without new native work. No historical runtime, tests, fixtures, numerical gates, earlier contracts or hosted workflows change here. The legacy driver and supplemental tail remain **FAILED**: **4,239 distinct passing methods and thirteen torque-read methods NOT RUN** after the unchanged 30,000 ms setup failure. Full regression, release, general contact, live destination physics, comparative advantage and every broader GOAL gate remain open.
+
+Next: [C199, implement and qualify this finite mapping](docs/engineering/static-tray-mapping-c198/NEXT-TASK.md). Create the two frontends, shared worker and independent reader; seal and review the exact executable closure; then run only the assigned bounded qualification schedule if preparation passes. The later tray-admission protocol and author exercise remain separate.
+
+## Previous checkpoint at C197
 
 [C197](docs/engineering/equipment-tray-c197/README.md) reached the permitted **feasibility proposal required** outcome for a second reusable equipment-tray family. Existing core/construction source supports typed dimensions, explicit frames, reusable definitions, independently identified instances and derived box geometry. The scoped source/backend reviews found no existing qualified common construction path for those trays. The C193 shared Blender adapter admits only its fixed carriage gauge; previous standard-source routes share GLB checking while using separate native constructors. No tray baseline export, simulation, receiving job or timed author ran.
 

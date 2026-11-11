@@ -1,0 +1,1189 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ontokin:schema:static-tray-canonical:0.1.0",
+  "title": "OntoKin finite static-tray canonical construction record 0.1.0",
+  "$comment": "Contract OK-MAP-STATIC-TRAY-001/0.1.0. This schema validates structure, constant identities and scalar spellings. Source/dependency binding, decoded finite bounds, exact compiled equations, canonical JSON bytes and delivered geometry require the separate mandatory semantic checks. Geometry contains no route-specific provenance.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "profile",
+    "contract",
+    "template_id",
+    "length_unit",
+    "frame",
+    "numeric_encoding",
+    "material_set",
+    "trays"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "ontokin.static-tray.record/0.1.0"
+    },
+    "profile": {
+      "const": "ontokin.static-tray/0.1.0"
+    },
+    "contract": {
+      "const": "OK-MAP-STATIC-TRAY-001/0.1.0"
+    },
+    "template_id": {
+      "const": "static-tray-six-box/0.1.0"
+    },
+    "length_unit": {
+      "const": "m"
+    },
+    "frame": {
+      "const": "ontokin-world-rh-y-up"
+    },
+    "numeric_encoding": {
+      "const": "binary64-be-hex/1"
+    },
+    "material_set": {
+      "const": "static-tray-materials/0.1.0"
+    },
+    "trays": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "prefixItems": [
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/tray"
+            },
+            {
+              "properties": {
+                "id": {
+                  "const": [
+                    "equipment-tray",
+                    "pair",
+                    "left"
+                  ]
+                },
+                "parts": {
+                  "prefixItems": [
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/part"
+                        },
+                        {
+                          "properties": {
+                            "id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "left",
+                                "back"
+                              ]
+                            },
+                            "owner_id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "left"
+                              ]
+                            },
+                            "key": {
+                              "const": "back"
+                            },
+                            "role": {
+                              "const": "back"
+                            },
+                            "material": {
+                              "const": "tray"
+                            },
+                            "following": {
+                              "properties": {
+                                "id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "left",
+                                    "follow-back"
+                                  ]
+                                },
+                                "parent_id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "left"
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/part"
+                        },
+                        {
+                          "properties": {
+                            "id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "left",
+                                "base"
+                              ]
+                            },
+                            "owner_id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "left"
+                              ]
+                            },
+                            "key": {
+                              "const": "base"
+                            },
+                            "role": {
+                              "const": "base"
+                            },
+                            "material": {
+                              "const": "tray"
+                            },
+                            "following": {
+                              "properties": {
+                                "id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "left",
+                                    "follow-base"
+                                  ]
+                                },
+                                "parent_id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "left"
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/part"
+                        },
+                        {
+                          "properties": {
+                            "id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "left",
+                                "front"
+                              ]
+                            },
+                            "owner_id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "left"
+                              ]
+                            },
+                            "key": {
+                              "const": "front"
+                            },
+                            "role": {
+                              "const": "front"
+                            },
+                            "material": {
+                              "const": "tray"
+                            },
+                            "following": {
+                              "properties": {
+                                "id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "left",
+                                    "follow-front"
+                                  ]
+                                },
+                                "parent_id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "left"
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/part"
+                        },
+                        {
+                          "properties": {
+                            "id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "left",
+                                "left-wall"
+                              ]
+                            },
+                            "owner_id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "left"
+                              ]
+                            },
+                            "key": {
+                              "const": "left-wall"
+                            },
+                            "role": {
+                              "const": "left-wall"
+                            },
+                            "material": {
+                              "const": "tray"
+                            },
+                            "following": {
+                              "properties": {
+                                "id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "left",
+                                    "follow-left-wall"
+                                  ]
+                                },
+                                "parent_id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "left"
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/part"
+                        },
+                        {
+                          "properties": {
+                            "id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "left",
+                                "payload"
+                              ]
+                            },
+                            "owner_id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "left"
+                              ]
+                            },
+                            "key": {
+                              "const": "payload"
+                            },
+                            "role": {
+                              "const": "payload-proxy"
+                            },
+                            "material": {
+                              "const": "payload"
+                            },
+                            "following": {
+                              "properties": {
+                                "id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "left",
+                                    "follow-payload"
+                                  ]
+                                },
+                                "parent_id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "left"
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/part"
+                        },
+                        {
+                          "properties": {
+                            "id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "left",
+                                "right-wall"
+                              ]
+                            },
+                            "owner_id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "left"
+                              ]
+                            },
+                            "key": {
+                              "const": "right-wall"
+                            },
+                            "role": {
+                              "const": "right-wall"
+                            },
+                            "material": {
+                              "const": "tray"
+                            },
+                            "following": {
+                              "properties": {
+                                "id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "left",
+                                    "follow-right-wall"
+                                  ]
+                                },
+                                "parent_id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "left"
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/tray"
+            },
+            {
+              "properties": {
+                "id": {
+                  "const": [
+                    "equipment-tray",
+                    "pair",
+                    "right"
+                  ]
+                },
+                "parts": {
+                  "prefixItems": [
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/part"
+                        },
+                        {
+                          "properties": {
+                            "id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "right",
+                                "back"
+                              ]
+                            },
+                            "owner_id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "right"
+                              ]
+                            },
+                            "key": {
+                              "const": "back"
+                            },
+                            "role": {
+                              "const": "back"
+                            },
+                            "material": {
+                              "const": "tray"
+                            },
+                            "following": {
+                              "properties": {
+                                "id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "right",
+                                    "follow-back"
+                                  ]
+                                },
+                                "parent_id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "right"
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/part"
+                        },
+                        {
+                          "properties": {
+                            "id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "right",
+                                "base"
+                              ]
+                            },
+                            "owner_id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "right"
+                              ]
+                            },
+                            "key": {
+                              "const": "base"
+                            },
+                            "role": {
+                              "const": "base"
+                            },
+                            "material": {
+                              "const": "tray"
+                            },
+                            "following": {
+                              "properties": {
+                                "id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "right",
+                                    "follow-base"
+                                  ]
+                                },
+                                "parent_id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "right"
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/part"
+                        },
+                        {
+                          "properties": {
+                            "id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "right",
+                                "front"
+                              ]
+                            },
+                            "owner_id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "right"
+                              ]
+                            },
+                            "key": {
+                              "const": "front"
+                            },
+                            "role": {
+                              "const": "front"
+                            },
+                            "material": {
+                              "const": "tray"
+                            },
+                            "following": {
+                              "properties": {
+                                "id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "right",
+                                    "follow-front"
+                                  ]
+                                },
+                                "parent_id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "right"
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/part"
+                        },
+                        {
+                          "properties": {
+                            "id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "right",
+                                "left-wall"
+                              ]
+                            },
+                            "owner_id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "right"
+                              ]
+                            },
+                            "key": {
+                              "const": "left-wall"
+                            },
+                            "role": {
+                              "const": "left-wall"
+                            },
+                            "material": {
+                              "const": "tray"
+                            },
+                            "following": {
+                              "properties": {
+                                "id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "right",
+                                    "follow-left-wall"
+                                  ]
+                                },
+                                "parent_id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "right"
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/part"
+                        },
+                        {
+                          "properties": {
+                            "id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "right",
+                                "payload"
+                              ]
+                            },
+                            "owner_id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "right"
+                              ]
+                            },
+                            "key": {
+                              "const": "payload"
+                            },
+                            "role": {
+                              "const": "payload-proxy"
+                            },
+                            "material": {
+                              "const": "payload"
+                            },
+                            "following": {
+                              "properties": {
+                                "id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "right",
+                                    "follow-payload"
+                                  ]
+                                },
+                                "parent_id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "right"
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "allOf": [
+                        {
+                          "$ref": "#/$defs/part"
+                        },
+                        {
+                          "properties": {
+                            "id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "right",
+                                "right-wall"
+                              ]
+                            },
+                            "owner_id": {
+                              "const": [
+                                "equipment-tray",
+                                "pair",
+                                "right"
+                              ]
+                            },
+                            "key": {
+                              "const": "right-wall"
+                            },
+                            "role": {
+                              "const": "right-wall"
+                            },
+                            "material": {
+                              "const": "tray"
+                            },
+                            "following": {
+                              "properties": {
+                                "id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "right",
+                                    "follow-right-wall"
+                                  ]
+                                },
+                                "parent_id": {
+                                  "const": [
+                                    "equipment-tray",
+                                    "pair",
+                                    "right"
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "items": false
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "items": false
+    }
+  },
+  "$defs": {
+    "f64": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{16}$",
+      "allOf": [
+        {
+          "not": {
+            "pattern": "^(?:7ff|fff)[0-9a-f]{13}$"
+          }
+        },
+        {
+          "not": {
+            "const": "8000000000000000"
+          }
+        }
+      ],
+      "description": "Canonical finite IEEE-754 binary64 bit pattern in eight big-endian bytes, sixteen lowercase hex digits. Negative zero, NaN and infinity forbidden. Field-specific numeric bounds require decoded semantic validation."
+    },
+    "positiveF64": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/f64"
+        },
+        {
+          "pattern": "^[0-7][0-9a-f]{15}$"
+        },
+        {
+          "not": {
+            "const": "0000000000000000"
+          }
+        }
+      ],
+      "description": "Strictly positive finite binary64 scalar; input/domain limits remain mandatory semantic checks."
+    },
+    "instanceId": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "prefixItems": [
+        {
+          "const": "equipment-tray"
+        },
+        {
+          "const": "pair"
+        },
+        {
+          "enum": [
+            "left",
+            "right"
+          ]
+        }
+      ],
+      "items": false
+    },
+    "partId": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        {
+          "const": "equipment-tray"
+        },
+        {
+          "const": "pair"
+        },
+        {
+          "enum": [
+            "left",
+            "right"
+          ]
+        },
+        {
+          "enum": [
+            "back",
+            "base",
+            "front",
+            "left-wall",
+            "payload",
+            "right-wall"
+          ]
+        }
+      ],
+      "items": false
+    },
+    "followId": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        {
+          "const": "equipment-tray"
+        },
+        {
+          "const": "pair"
+        },
+        {
+          "enum": [
+            "left",
+            "right"
+          ]
+        },
+        {
+          "enum": [
+            "follow-back",
+            "follow-base",
+            "follow-front",
+            "follow-left-wall",
+            "follow-payload",
+            "follow-right-wall"
+          ]
+        }
+      ],
+      "items": false
+    },
+    "rootPose": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reference",
+        "translation_m",
+        "rotation_wxyz"
+      ],
+      "properties": {
+        "reference": {
+          "const": "world"
+        },
+        "translation_m": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/f64"
+          }
+        },
+        "rotation_wxyz": {
+          "enum": [
+            [
+              "3ff0000000000000",
+              "0000000000000000",
+              "0000000000000000",
+              "0000000000000000"
+            ],
+            [
+              "0000000000000000",
+              "3ff0000000000000",
+              "0000000000000000",
+              "0000000000000000"
+            ],
+            [
+              "0000000000000000",
+              "0000000000000000",
+              "3ff0000000000000",
+              "0000000000000000"
+            ],
+            [
+              "0000000000000000",
+              "0000000000000000",
+              "0000000000000000",
+              "3ff0000000000000"
+            ],
+            [
+              "3fe0000000000000",
+              "3fe0000000000000",
+              "3fe0000000000000",
+              "3fe0000000000000"
+            ],
+            [
+              "3fe0000000000000",
+              "3fe0000000000000",
+              "3fe0000000000000",
+              "bfe0000000000000"
+            ],
+            [
+              "3fe0000000000000",
+              "3fe0000000000000",
+              "bfe0000000000000",
+              "3fe0000000000000"
+            ],
+            [
+              "3fe0000000000000",
+              "3fe0000000000000",
+              "bfe0000000000000",
+              "bfe0000000000000"
+            ],
+            [
+              "3fe0000000000000",
+              "bfe0000000000000",
+              "3fe0000000000000",
+              "3fe0000000000000"
+            ],
+            [
+              "3fe0000000000000",
+              "bfe0000000000000",
+              "3fe0000000000000",
+              "bfe0000000000000"
+            ],
+            [
+              "3fe0000000000000",
+              "bfe0000000000000",
+              "bfe0000000000000",
+              "3fe0000000000000"
+            ],
+            [
+              "3fe0000000000000",
+              "bfe0000000000000",
+              "bfe0000000000000",
+              "bfe0000000000000"
+            ]
+          ]
+        }
+      },
+      "description": "Translation components must each be within [-10,10] metres. Only the twelve catalog proper rotations are admitted."
+    },
+    "followOffset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reference",
+        "translation_m",
+        "rotation_wxyz"
+      ],
+      "properties": {
+        "reference": {
+          "const": "parent-frame"
+        },
+        "translation_m": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/f64"
+          }
+        },
+        "rotation_wxyz": {
+          "const": [
+            "3ff0000000000000",
+            "0000000000000000",
+            "0000000000000000",
+            "0000000000000000"
+          ]
+        }
+      },
+      "description": "Fixed follow offset expressed in the parent_id implicit object frame. Translation must match the exact source-derived role equation."
+    },
+    "following": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "parent_id",
+        "offset"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/followId"
+        },
+        "parent_id": {
+          "$ref": "#/$defs/instanceId"
+        },
+        "offset": {
+          "$ref": "#/$defs/followOffset"
+        }
+      }
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "payload_size_m",
+        "horizontal_clearance_m",
+        "wall_thickness_m",
+        "base_thickness_m",
+        "headroom_m"
+      ],
+      "properties": {
+        "payload_size_m": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/positiveF64"
+          }
+        },
+        "horizontal_clearance_m": {
+          "$ref": "#/$defs/positiveF64"
+        },
+        "wall_thickness_m": {
+          "$ref": "#/$defs/positiveF64"
+        },
+        "base_thickness_m": {
+          "$ref": "#/$defs/positiveF64"
+        },
+        "headroom_m": {
+          "$ref": "#/$defs/positiveF64"
+        }
+      },
+      "description": "Payload components are [width,height,depth]. Decode and enforce the closed bounds and written binary64 operation trees in SPECIFICATION.md; JSON lexical validation does not establish numeric admission."
+    },
+    "box": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "size_m"
+      ],
+      "properties": {
+        "type": {
+          "const": "box"
+        },
+        "size_m": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "$ref": "#/$defs/positiveF64"
+          }
+        }
+      },
+      "description": "Centered axis-aligned full box side lengths in the part frame; no half-extents or transform scale."
+    },
+    "part": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "owner_id",
+        "key",
+        "role",
+        "geometry",
+        "physical",
+        "motion",
+        "collision",
+        "material",
+        "following"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/partId"
+        },
+        "owner_id": {
+          "$ref": "#/$defs/instanceId"
+        },
+        "key": {
+          "enum": [
+            "back",
+            "base",
+            "front",
+            "left-wall",
+            "payload",
+            "right-wall"
+          ]
+        },
+        "role": {
+          "enum": [
+            "back",
+            "base",
+            "front",
+            "left-wall",
+            "payload-proxy",
+            "right-wall"
+          ]
+        },
+        "geometry": {
+          "$ref": "#/$defs/box"
+        },
+        "physical": {
+          "const": "no_body"
+        },
+        "motion": {
+          "const": "prescribed"
+        },
+        "collision": {
+          "const": "disabled"
+        },
+        "material": {
+          "enum": [
+            "tray",
+            "payload"
+          ]
+        },
+        "following": {
+          "$ref": "#/$defs/following"
+        }
+      }
+    },
+    "tray": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "owner_id",
+        "role",
+        "geometry",
+        "physical",
+        "motion",
+        "collision",
+        "root_pose",
+        "parameters",
+        "parts"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/instanceId"
+        },
+        "owner_id": {
+          "const": [
+            "equipment-tray",
+            "pair"
+          ]
+        },
+        "role": {
+          "const": "tray-root"
+        },
+        "geometry": {
+          "const": "empty"
+        },
+        "physical": {
+          "const": "no_body"
+        },
+        "motion": {
+          "const": "prescribed"
+        },
+        "collision": {
+          "const": "disabled"
+        },
+        "root_pose": {
+          "$ref": "#/$defs/rootPose"
+        },
+        "parameters": {
+          "$ref": "#/$defs/parameters"
+        },
+        "parts": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {
+            "$ref": "#/$defs/part"
+          }
+        }
+      }
+    }
+  }
+}
