@@ -1,0 +1,24 @@
+{
+  "schema": "ontokin.c203.c201-protocol-manual-findings/0.1",
+  "createdAtUtc": "2026-11-11T15:13:05.448738+00:00",
+  "reviewState": "ONE_WORDING_CORRECTION_REQUESTED_BEFORE_FINAL_BINDING",
+  "input": {
+    "path": "docs/engineering/static-tray-admission-c201/IMPLEMENTATION-NEXT.md",
+    "size_bytes": 4595,
+    "sha256": "9d154935eb8a38d37ee0fd1b484cf3953bed2ec2479215969635e91452ea2ce3"
+  },
+  "findings": [
+    {
+      "id": "C201-DOC-01",
+      "severity": "preparation-clarity",
+      "state": "OPEN",
+      "observation": "The CPU-control bullet combines final readiness/completion and actual-delivery/image requirements in one phrase. Native readiness precedes these outputs; admission completion follows them.",
+      "requestedChange": "State native readiness and final admission completion as separate evidence gates. Neither may be substituted by mock counts or producer-issued approval.",
+      "otherDocumentsAlreadySequenceCorrectly": true
+    }
+  ],
+  "staticAudit": "PRECOMMIT-AUDIT.json",
+  "staticAuditChecksPassed": 171,
+  "documentApprovalGranted": false,
+  "nativeExecutionApproved": false
+}

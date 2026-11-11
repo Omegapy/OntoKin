@@ -12,11 +12,11 @@ Current development uses the CPU-based language tools below. The [model research
 
 ## Continue from the verified checkpoint
 
-[C200's finite static-tray qualification](docs/engineering/static-tray-exporter-c200/README.md) passed on preserved source: twelve accepted transactions through the shared Blender constructor, receiving and actual-delivery checks, nine control variants and twelve reviewed images. The final independent review passed 16,645 checks; the separate numeric review passed 497,809 assertions. These historical results qualify the selected static mapping. C199's failed first start remains preserved, and both native schedules are closed.
+[C200's finite static-tray qualification](docs/engineering/static-tray-exporter-c200/README.md) is integrated through [PR #137](https://github.com/Omegapy/OntoKin/pull/137). Its twelve accepted transactions, receiving and actual-delivery checks, nine control variants and twelve image reviews remain bound to the original executed source. The historical final review passed 16,645 checks; the separate numeric review passed 497,809 assertions. Fresh actual-main focused, protocol, core and documentation checks also passed. [Exact integration and limits](docs/engineering/static-tray-exporter-c200/evidence/publication-c203/INTEGRATION.json)
 
-Read [current status and the integration lease](STATUS.md), then the [C200 results and publication boundary](docs/engineering/static-tray-exporter-c200/RESULTS.md). The C203 publication candidate is being prepared; fresh candidate review, integration and actual-main verification remain separate gates. After C200 integration, [prepare the separate C201 tray admission](docs/engineering/static-tray-exporter-c200/NEXT-TASK.md) with four exports total and zero timed authors. Admission has not begun.
+Read [current status and the integration lease](STATUS.md), then the [prepared C201 admission protocol](docs/engineering/static-tray-admission-c201/README.md). Independent static document review passed 171 consistency checks, including all 38 referenced file bindings. The [next implementation gate](docs/engineering/static-tray-admission-c201/IMPLEMENTATION-NEXT.md) is a separate coordinator, lock and checked execution path for four exports total, with zero timed authors. C201 native readiness and admission execution remain pending.
 
-The inherited failed regression, fixed-view resolution/occlusion limits and broader release obligations remain open. No comparative authoring advantage or full-product completion is claimed. Do not repeat completed native trials to recover an interrupted conversation.
+C199's failed first start, both closed native schedules, the inherited failed regression, image limits and broader release obligations remain explicit. No comparative authoring advantage or full-product completion is claimed. Do not repeat completed native trials to recover an interrupted conversation.
 
 ## Try an agent edit
 

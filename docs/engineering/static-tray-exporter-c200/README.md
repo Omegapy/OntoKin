@@ -34,22 +34,30 @@ independent review were pending. The later
 `qualified=true`. Both receipts remain unchanged and represent different points
 in the same completed qualification.
 
-## Publication and continuation
+## Integration and continuation
 
-This result record accompanies the C203 publication candidate. The
-[fresh publication checks](evidence/publication-c203/checks/CHECKS-SUMMARY.json)
-passed their identified focused, compiler, protocol and core cohorts. Final
-candidate review, PR integration and actual-main verification remain pending
-and must be recorded separately. The
-[preservation record](evidence/publication-c203/PRESERVATION.md) identifies the
-recovered evidence, including the later recovery of all nine preparation-log
-candidates that were unavailable in the supplied handoff.
+[C200 is integrated through PR #137](https://github.com/Omegapy/OntoKin/pull/137)
+at `2b2f3e7de7595099ad5f9e0176c5596220c0c2dc`. Its tree
+`7e1ab341160cf5b86807e8ffec2cc3bb7b47db92` equals the reviewed publication tree.
+The [integration record](evidence/publication-c203/INTEGRATION.json) distinguishes
+executed, reviewed, published and merged identities. Actual-main checks passed
+107 focused methods, ten protocol controls, 43 core cases with 694 assertions,
+and documentation preservation. The 47-method compiler result was reused after
+exact input equality checks. These remain separate cohorts.
 
-After verified C200 integration, prepare [C201 tray admission](NEXT-TASK.md)
-with a separate reviewed coordinator and ledger: four native exports total,
-one baseline and one clean regeneration per route, counting failures, and zero
-timed authors. The C200 twelve-transaction coordinator must not be repurposed or
-reset for this gate.
+The [preservation record](evidence/publication-c203/PRESERVATION.md) identifies
+the original evidence, 74 archived log copies and the later original-path
+recovery of all nine preparation logs missing from the supplied handoff. Eight
+stream hashes are new recovery bindings, not retroactive historical hashes.
+GitGuardian returned neutral because the PR exceeded its scan limit; no
+security-scan pass is claimed.
+
+[C201's admission protocol is prepared](../static-tray-admission-c201/README.md).
+Independent static document review passed 171 consistency checks. Coordinator,
+executable lock, native-readiness approval and execution remain pending. The
+[next task](NEXT-TASK.md) is the separately reviewed implementation of that
+four-export protocol, with zero timed authors. Neither C200 qualification nor
+this integration supplies C201 execution approval.
 
 The [handoff tools](handoff_tools/README.md) preserve source, bounded history and
 evidence for offline restoration. Their recorded audits do not launch native
