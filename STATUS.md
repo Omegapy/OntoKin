@@ -1,10 +1,24 @@
-# OntoKin development status — C198 finite static-tray mapping
+# OntoKin development status — C199 static-tray prototype
 
 ## Main integration lease
 
 Owner `c199-tray-9d641f68` holds the main integration lease from `2026-11-11T04:46:13.304593+00:00` until `2026-11-11T05:16:13.304593+00:00` for the reviewed C199 explicit static-tray prototype and stopped native qualification. The observed starting main is `0e1ef6a64e78d8478f40cbc2d2f25238014e8825`; scope is issue #134 and branch `work/c199-static-tray-9d641f68`. Native execution is finished with N01 rejected, no accepted delivery and no retry. Independent branch work remains permitted; shared integration state and this merge are reserved to this holder.
 
 ## Current checkpoint
+
+[C199](docs/engineering/static-tray-qualification-c199/README.md) implements the explicitly selected `ontokin.static-tray/0.1.0` prototype: two source frontends, one shared Blender worker, an independent GLB reader, receiving comparison and bounded transaction/qualification coordination. The [C198 mapping](docs/engineering/static-tray-mapping-c198/ADOPTION.md) and existing construction compiler retain their bytes and meaning. **The prototype is unqualified; no tray is admitted.** It is proposed for integration as an incomplete experimental increment under `OK-ENG-009/0.1.0`.
+
+The one approved native qualification execution stopped at N01, the first OntoKin baseline. The pinned exporter raised `KeyError: 'loglevel'`; stderr also captured an action-filter callback accessing an absent scene property. One native construction started, zero transactions were accepted, and no GLB, receiving measurement, delivered corruption control or review image was produced. The partial saved scene is diagnostic evidence only. N02–N12 were not started. No retry, exporter repair or change to the approved settings followed the failure. [Measured result and limits](docs/engineering/static-tray-qualification-c199/RESULTS.md)
+
+Preparation passed 92 integrated CPU methods, the reviewed eight-case L-R1 process-lifecycle cohort with 131 independent result checks, three synthetic format-reader controls, 57 existing compiler methods and 43 core conformance cases with 694 assertions. The independent final result review passed 38 checks and approved only the explicit incomplete integration. Original failed preparation attempts and all actual start counts remain retained. [Result disposition](docs/engineering/static-tray-qualification-c199/results.json)
+
+Publication and resulting-main verification are pending the guarded PR merge. The executed implementation is `498b161f2cf166c67c2d381029f109e03f06ce7c`; later evidence and publication commits retain its exact 280-file locked repository input closure. An implementation or package verification is not native qualification.
+
+The legacy driver and supplemental tail remain **FAILED**: **4,239 distinct passing methods and thirteen torque-read methods NOT RUN** after the unchanged 30,000 ms setup failure. C199 does not change historical runtime, tests, numerical gates, contracts or hosted workflows. Full regression, release, general contact, live destination physics, comparative advantage and the wider GOAL remain open.
+
+Next: [C200, repair the pinned exporter compatibility and prepare a new qualification protocol](docs/engineering/static-tray-qualification-c199/NEXT-TASK.md). Review the logging and inactive action-filter policy, seal the revised executable inputs and obtain independent approval for a new bounded schedule. The stopped C199 schedule cannot be resumed; tray admission and timed author work remain later tasks.
+
+## Previous checkpoint at C198
 
 [C198](docs/engineering/static-tray-mapping-c198/README.md) defines the finite `ontokin.static-tray/0.1.0` mapping under `OK-MAP-STATIC-TRAY-001/0.1.0`. The [versioned decision](docs/engineering/static-tray-mapping-c198/ADOPTION.md) selects a shared static Blender constructor for two trays using the existing construction compiler and separate direct-Python input. The contract fixes identities, source relationships, positive full-side boxes, units, a finite proper-orientation subset, payload proxies, canonical numeric records, atomicity and unsupported diagnostics. The adapter remains unimplemented and unqualified; no tray is admitted.
 

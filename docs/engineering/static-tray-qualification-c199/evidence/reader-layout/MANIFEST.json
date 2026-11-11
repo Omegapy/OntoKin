@@ -1,0 +1,91 @@
+{
+  "archive": "EVIDENCE.zip",
+  "bundle": "reader-layout",
+  "cohorts": [
+    {
+      "id": "original-layout19",
+      "log": "original-layout-preparation/c199-reader-layout-attempt-1.log",
+      "methods": 19,
+      "passed": 19,
+      "seconds": 5.714,
+      "snapshot_status": "Passing pre-auxiliary-read-cap preparation; final20 snapshot is retained separately."
+    },
+    {
+      "id": "original-layout20",
+      "input_status": "Original temporary fixtures were cleaned; the later separate capture replay is not relabeled as this original run.",
+      "log": "original-layout-preparation/c199-reader-layout-attempt-2.log",
+      "methods": 20,
+      "passed": 20,
+      "seconds": 7.304,
+      "snapshot_prefix": "original-layout-preparation/snapshot",
+      "source_commit": "fc7d91a"
+    },
+    {
+      "audit_calls": 105,
+      "corruption_calls": 11,
+      "id": "captured-original20",
+      "isolated_reader_cli_starts": 8,
+      "methods": 20,
+      "original_result_replaced": false,
+      "passed": 20,
+      "report": "captured-original20/REPLAY.json",
+      "source_commit": "fc7d91a"
+    },
+    {
+      "id": "independent-original-metadata-probes",
+      "observed": "Five provenance-bearing GLBs passed old reader; exact original artifacts/report retained.",
+      "prefix": "independent-original-metadata-probes"
+    },
+    {
+      "audit_calls": 138,
+      "corruption_calls": 11,
+      "id": "captured-repaired22",
+      "isolated_reader_cli_starts": 8,
+      "methods": 22,
+      "passed": 22,
+      "reader_sha256": "4cd7be509bd286f482b1f34bfb9bbf574ae93e3970c89bbce13295320430f34c",
+      "report": "captured-repaired22/REPLAY.json",
+      "seconds": 11.479,
+      "source_commit": "7e2fecc2f0883a3689221f8f9ee60fd3ac908ddc"
+    },
+    {
+      "artifacts": 5,
+      "id": "metadata-probe-repairs",
+      "measurements_per_artifact": 2056,
+      "nodes_measured_per_artifact": 14,
+      "passed_expected_rejections": 5,
+      "report": "metadata-probe-repairs/PROBES.json"
+    }
+  ],
+  "external_archives": {
+    "independent-reviews": {
+      "format": "tar",
+      "path": "docs/engineering/static-tray-qualification-c199/evidence/independent-reviews/captured-reviews.tar.gz",
+      "sha256": "7f20a6f72d5135ca67f180cb24b9bb10b985d61c6c084fece935f5a1efc0bc71",
+      "size_bytes": 548397
+    },
+    "source-corpus": {
+      "format": "zip",
+      "path": "fixtures/static_tray_v01/controls.zip",
+      "sha256": "cd7426b8e2153d73c2c67efcecf0e1ea9a3185a2cef1dd64be00c77f05f26bb5",
+      "size_bytes": 2308542
+    }
+  },
+  "files_manifest_sha256": "ef2fc80502ef71703bde1f3145c2f0b0f18bcc3b240f27a7fe118a3d594155f9",
+  "hardlink_groups": [],
+  "logical_entries": 747,
+  "logical_external_bytes_verified_and_referenced": 177163,
+  "logical_internal_bytes": 101437863,
+  "notes": [
+    "Original20 pass and separately captured20 replay are distinct executions; neither is native qualification.",
+    "Both captured cohorts bind actual GLB bytes at every API audit invocation, expectations, rules, baseline inputs and returned reports. CLI observations bind executable-directory files, commands, locks, artifacts, process replies and result files.",
+    "Capture observer sources are retained by their own hashes within each captured cohort. The original observer report omitted -IB from its reconstructed command field; its runtime flags attest isolated/no-bytecode mode and the exact executed shell command was python3 -IB capture_reader.py with the recorded arguments. The repaired22 report uses sys.orig_argv.",
+    "Historical synthetic generator metadata remains visible in the original20 corpus. Repaired22 synthetic fixtures imitate fixed production metadata as test data; they do not claim Blender produced those files.",
+    "All native, Node and lifecycle starts are zero for these cohorts. The only child processes are the existing isolated Python reader CLI controls.",
+    "Pinned exporter metadata source observations are static code inspection, not a native exporter run."
+  ],
+  "schema": "ontokin.static-tray.preserved-evidence/0.1.0",
+  "sha256": "fcf6c6388ce5c8c9e516110a35fdf9fe94f8c82d8723169f015413286a615b14",
+  "size_bytes": 2940874,
+  "unique_internal_blobs": 672
+}

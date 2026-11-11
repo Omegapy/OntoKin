@@ -1,0 +1,46 @@
+{
+  "after": {
+    "errors": 0,
+    "failures": 0,
+    "methods": 4,
+    "passed": true
+  },
+  "before": {
+    "errors": 0,
+    "failures": 3,
+    "methods": 4,
+    "passed": false
+  },
+  "controls": [
+    "Suspend outer alarm while the qualified process supervisor cleans up",
+    "Keep successful result persistence under the remaining outer deadline",
+    "Recreate the pending marker when removal outcome is uncertain",
+    "Keep failed result persistence from unlocking the next scheduled check"
+  ],
+  "files": {
+    "readback-cleanup-controls-after-fix.log": {
+      "bytes": 800,
+      "sha256": "9eeb51292fbc279cbce870d6979c0c24e3744b882e1b78284f572accc0c9f9a5"
+    },
+    "readback-cleanup-controls-before-fix.log": {
+      "bytes": 2633,
+      "sha256": "19f1a23c0073c0110c37b056e3691e8a29d09b2adac0a0acac225757070438b6"
+    }
+  },
+  "independent_review": {
+    "method": "4 seams with real Popen forbidden; supervisor and store unchanged",
+    "passed": true,
+    "review_receipt_sha256": "3e931964eee3123d4f2e1f758db9fdb12f88df767c6321da22a50d111e4f225c",
+    "reviewed_integrated_commit": "c87d33f"
+  },
+  "integrated_repair_commit": "c87d33f",
+  "process_starts": {
+    "blender": 0,
+    "lifecycle_stub": 0,
+    "node": 0
+  },
+  "repair_commit": "20ce3b8",
+  "repaired_format_check_sha256": "e0d71482b9878fbdf9ca1287013756fc0f6b9df530864f5634b8863354a29447",
+  "schema": "ontokin.static-tray-readback-cleanup-repair/0.1",
+  "scope": "No-child coordinator seams; no native or readback geometry qualification"
+}

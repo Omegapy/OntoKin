@@ -1,0 +1,40 @@
+test_01_all_five_real_source_pairs_and_frozen_sources (tests.test_static_tray_source_v01.StaticTraySourceTests.test_01_all_five_real_source_pairs_and_frozen_sources) ... ok
+test_02_units_order_renames_and_clean_source_identity (tests.test_static_tray_source_v01.StaticTraySourceTests.test_02_units_order_renames_and_clean_source_identity) ... ok
+test_03_all_catalog_source_rotations_and_sign_twins (tests.test_static_tray_source_v01.StaticTraySourceTests.test_03_all_catalog_source_rotations_and_sign_twins) ... ok
+test_04_length_boundaries_nextafter_both_routes (tests.test_static_tray_source_v01.StaticTraySourceTests.test_04_length_boundaries_nextafter_both_routes) ... ok
+test_05_translation_boundaries_nextafter_both_routes (tests.test_static_tray_source_v01.StaticTraySourceTests.test_05_translation_boundaries_nextafter_both_routes) ... ok
+test_06_every_numeric_record_position_strict_types_and_encoding (tests.test_static_tray_source_v01.StaticTraySourceTests.test_06_every_numeric_record_position_strict_types_and_encoding) ... ok
+test_07_source_identity_and_structure_mutations (tests.test_static_tray_source_v01.StaticTraySourceTests.test_07_source_identity_and_structure_mutations) ... ok
+test_08_actual_rotation_and_pose_authority_rejections (tests.test_static_tray_source_v01.StaticTraySourceTests.test_08_actual_rotation_and_pose_authority_rejections) ... FAIL
+test_09_unsupported_physics_motion_material_and_constructs (tests.test_static_tray_source_v01.StaticTraySourceTests.test_09_unsupported_physics_motion_material_and_constructs) ... 
+  test_09_unsupported_physics_motion_material_and_constructs (tests.test_static_tray_source_v01.StaticTraySourceTests.test_09_unsupported_physics_motion_material_and_constructs) (variant=2) ... FAIL
+test_10_wrong_source_geometry_is_not_reconstructed (tests.test_static_tray_source_v01.StaticTraySourceTests.test_10_wrong_source_geometry_is_not_reconstructed) ... ok
+test_11_closed_pins_paths_sizes_and_imports (tests.test_static_tray_source_v01.StaticTraySourceTests.test_11_closed_pins_paths_sizes_and_imports) ... ok
+test_12_noncanonical_records_identifiers_and_full_source_scale (tests.test_static_tray_source_v01.StaticTraySourceTests.test_12_noncanonical_records_identifiers_and_full_source_scale) ... ok
+test_13_direct_identity_and_actual_reusable_helper_calls (tests.test_static_tray_source_v01.StaticTraySourceTests.test_13_direct_identity_and_actual_reusable_helper_calls) ... ok
+test_14_numeric_order_selector_and_diagnostic_binding (tests.test_static_tray_source_v01.StaticTraySourceTests.test_14_numeric_order_selector_and_diagnostic_binding) ... ok
+
+======================================================================
+FAIL: test_08_actual_rotation_and_pose_authority_rejections (tests.test_static_tray_source_v01.StaticTraySourceTests.test_08_actual_rotation_and_pose_authority_rejections)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/801d9d641f68/c199-source/tests/test_static_tray_source_v01.py", line 182, in test_08_actual_rotation_and_pose_authority_rejections
+    self.assert_reject(lambda: lower_source('ontokin', p, PROFILE), ['OTRAY-E-ROTATION'])
+  File "/workspace/scratch/801d9d641f68/c199-source/tests/test_static_tray_source_v01.py", line 56, in assert_reject
+    self.assertIn(caught.exception.code, codes)
+AssertionError: 'OKL-E-ROTATION' not found in ['OTRAY-E-ROTATION']
+
+======================================================================
+FAIL: test_09_unsupported_physics_motion_material_and_constructs (tests.test_static_tray_source_v01.StaticTraySourceTests.test_09_unsupported_physics_motion_material_and_constructs) (variant=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/801d9d641f68/c199-source/tests/test_static_tray_source_v01.py", line 211, in test_09_unsupported_physics_motion_material_and_constructs
+    self.assert_reject(lambda: lower_source('ontokin', p, PROFILE), codes)
+  File "/workspace/scratch/801d9d641f68/c199-source/tests/test_static_tray_source_v01.py", line 56, in assert_reject
+    self.assertIn(caught.exception.code, codes)
+AssertionError: 'OKL-E-NAME' not found in ['OKL-E-PHYSICAL-DOMAIN', 'OTRAY-E-PHYSICS']
+
+----------------------------------------------------------------------
+Ran 14 tests in 19.955s
+
+FAILED (failures=2)

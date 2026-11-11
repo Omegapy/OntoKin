@@ -1,0 +1,71 @@
+{
+  "schema": "ontokin.static-tray.input-approval/0.1.0",
+  "decision": "APPROVED_FOR_NATIVE",
+  "reviewer": "/root/repo_status",
+  "reviewed_at_utc": "2026-11-11T04:31:06.160248+00:00",
+  "input_lock_sha256": "bbebf20c05e98a4fa34832fe9cf33b225e9a1251a49d5f22aa05365a69fb0cc3",
+  "implementation": {
+    "commit": "498b161f2cf166c67c2d381029f109e03f06ce7c",
+    "tree": "b9ecb3582b0d3fa6f529ec23f0ab2dd5082ded71"
+  },
+  "readiness": {
+    "source_controls": true,
+    "reader_controls": true,
+    "lifecycle_controls": true,
+    "dependency_bytes": true,
+    "executable_closure": true
+  },
+  "evidence": {
+    "source_controls": {
+      "path": "/workspace/scratch/801d9d641f68/ontokin/docs/engineering/static-tray-qualification-c199/evidence/independent-reviews/reviews/source-resource-review-5b4b108/REVIEW.json",
+      "sha256": "2c479d76ba3d2006dfe32807c4809f9f9f0e8e789f5d30b8a58cd94f17b97bd6",
+      "size_bytes": 4787
+    },
+    "reader_controls": {
+      "path": "/workspace/scratch/801d9d641f68/ontokin/docs/engineering/static-tray-qualification-c199/evidence/executable-final-review/READER-CONTROLS.json",
+      "sha256": "1aec312e13fa07a2b9fd45e5ae508e096361dcbb9439e044ed7e7ec09934bdc4",
+      "size_bytes": 3891
+    },
+    "lifecycle_controls": {
+      "path": "/workspace/scratch/801d9d641f68/ontokin/docs/engineering/static-tray-qualification-c199/evidence/lifecycle-r1-review/RESULT-REVIEW.json",
+      "sha256": "de5db18d91d1580a4a647cfed6ed1423b3a6d9945dc919fdb047bc862dadca49",
+      "size_bytes": 18605
+    },
+    "dependency_bytes": {
+      "path": "/workspace/scratch/801d9d641f68/ontokin/docs/engineering/static-tray-qualification-c199/evidence/executable-final-review/DEPENDENCY-BYTES.json",
+      "sha256": "dd03f49d37119f27ce24af036b708f448569773a6ad48837b8a0b645e819eda9",
+      "size_bytes": 3570
+    },
+    "executable_closure": {
+      "path": "/workspace/scratch/801d9d641f68/ontokin/docs/engineering/static-tray-qualification-c199/evidence/executable-final-review/EXECUTABLE-CLOSURE.json",
+      "sha256": "5b7e88704688f43868288fa339ec0a5f5a6a2e95100ee4e680be21334562da77",
+      "size_bytes": 53858
+    }
+  },
+  "authorization_scope": {
+    "schedule_root": "/workspace/scratch/801d9d641f68/c199-native",
+    "maximum_native_construction_starts": 12,
+    "maximum_receiving_blender_starts": 12,
+    "maximum_separate_read_only_node_checks": 12,
+    "assigned_delivered_controls": 9,
+    "retries": 0,
+    "stop_first_unexpected": true,
+    "extra_lifecycle_starts": 0,
+    "scope": "The exact sealed N01-N12 schedule and fixed supplemental checks only; no repair/rerun, extra export, simulation or general tray admission."
+  },
+  "observed_before_approval": {
+    "native_starts": 0,
+    "receiving_starts": 0,
+    "schedule_absent": true,
+    "full_read_only_lock_verifier_passed": true,
+    "repository_files_exact_to_locked_commit": 280,
+    "new_no_child_control_methods_passed": 21,
+    "exact_previous_metadata_probes_rejected": 5
+  },
+  "limitations": [
+    "This approves readiness to execute, not native qualification. Actual native version/RNA/startup assertions, geometry, format/import readback, byte regeneration, resource limits and receiving images remain observed qualification gates.",
+    "Actual visual review must follow measured success before claiming overall qualification.",
+    "L-R1 exhausted its reviewed replacement allowance; cumulative controlled starts16 direct+2 grandchildren are retained separately. This approval adds no lifecycle controls.",
+    "Coordinator runs transactions in-process; row.command denotes the equivalent standalone command. Actual spawned command receipts must be retained."
+  ]
+}

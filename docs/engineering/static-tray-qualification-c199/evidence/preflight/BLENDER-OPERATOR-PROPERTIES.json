@@ -1,0 +1,4396 @@
+{
+  "export": {
+    "at_collection_center": {
+      "declaration": "at_collection_center: BoolProperty(\n        name=\"Export at Collection Center\",\n        description=\"Export at Collection center of mass of root objects of the collection\",\n        default=False,\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export at Collection center of mass of root objects of the collection'",
+          "is_literal": true,
+          "literal": "Export at Collection center of mass of root objects of the collection"
+        },
+        "name": {
+          "expression": "'Export at Collection Center'",
+          "is_literal": true,
+          "literal": "Export at Collection Center"
+        }
+      },
+      "line": 628,
+      "name": "at_collection_center",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "check_existing": {
+      "declaration": "check_existing: BoolProperty(\n        name=\"Check Existing\",\n        description=\"Check and warn on overwriting existing files\",\n        default=True,\n        options={'HIDDEN'},\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportHelper",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Check and warn on overwriting existing files'",
+          "is_literal": true,
+          "literal": "Check and warn on overwriting existing files"
+        },
+        "name": {
+          "expression": "'Check Existing'",
+          "is_literal": true,
+          "literal": "Check Existing"
+        },
+        "options": {
+          "expression": "{'HIDDEN'}",
+          "is_literal": true,
+          "literal": [
+            "HIDDEN"
+          ]
+        }
+      },
+      "line": 51,
+      "name": "check_existing",
+      "property_type": "BoolProperty",
+      "source": "io_utils"
+    },
+    "collection": {
+      "declaration": "collection: StringProperty(\n        name=\"Source Collection\",\n        description=\"Export only objects from this collection (and its children)\",\n        default=\"\",\n    )",
+      "declared_default": {
+        "expression": "''",
+        "is_literal": true,
+        "literal": ""
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "''",
+          "is_literal": true,
+          "literal": ""
+        },
+        "description": {
+          "expression": "'Export only objects from this collection (and its children)'",
+          "is_literal": true,
+          "literal": "Export only objects from this collection (and its children)"
+        },
+        "name": {
+          "expression": "'Source Collection'",
+          "is_literal": true,
+          "literal": "Source Collection"
+        }
+      },
+      "line": 621,
+      "name": "collection",
+      "property_type": "StringProperty",
+      "source": "gltf"
+    },
+    "export_action_filter": {
+      "declaration": "export_action_filter: BoolProperty(\n        name='Filter Actions',\n        description='Filter Actions to be exported',\n        default=False,\n        update=on_export_action_filter_changed,\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Filter Actions to be exported'",
+          "is_literal": true,
+          "literal": "Filter Actions to be exported"
+        },
+        "name": {
+          "expression": "'Filter Actions'",
+          "is_literal": true,
+          "literal": "Filter Actions"
+        },
+        "update": {
+          "expression": "on_export_action_filter_changed",
+          "is_literal": false
+        }
+      },
+      "line": 966,
+      "name": "export_action_filter",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_active_vertex_color_when_no_material": {
+      "declaration": "export_active_vertex_color_when_no_material: BoolProperty(\n        name='Export Active Vertex Color When No Material',\n        description='When there is no material on object, export active vertex color',\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'When there is no material on object, export active vertex color'",
+          "is_literal": true,
+          "literal": "When there is no material on object, export active vertex color"
+        },
+        "name": {
+          "expression": "'Export Active Vertex Color When No Material'",
+          "is_literal": true,
+          "literal": "Export Active Vertex Color When No Material"
+        }
+      },
+      "line": 551,
+      "name": "export_active_vertex_color_when_no_material",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_all_influences": {
+      "declaration": "export_all_influences: BoolProperty(\n        name='Include All Bone Influences',\n        description='Allow export of all joint vertex influences. Models may appear incorrectly in many viewers',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Allow export of all joint vertex influences. Models may appear incorrectly in many viewers'",
+          "is_literal": true,
+          "literal": "Allow export of all joint vertex influences. Models may appear incorrectly in many viewers"
+        },
+        "name": {
+          "expression": "'Include All Bone Influences'",
+          "is_literal": true,
+          "literal": "Include All Bone Influences"
+        }
+      },
+      "line": 900,
+      "name": "export_all_influences",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_all_vertex_colors": {
+      "declaration": "export_all_vertex_colors: BoolProperty(\n        name='Export All Vertex Colors',\n        description=(\n            'Export all vertex colors, even if not used by any material. '\n            'If no Vertex Color is used in the mesh materials, a fake COLOR_0 will be created, '\n            'in order to keep material unchanged'\n        ),\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Export all vertex colors, even if not used by any material. If no Vertex Color is used in the mesh materials, a fake COLOR_0 will be created, in order to keep material unchanged'",
+          "is_literal": true,
+          "literal": "Export all vertex colors, even if not used by any material. If no Vertex Color is used in the mesh materials, a fake COLOR_0 will be created, in order to keep material unchanged"
+        },
+        "name": {
+          "expression": "'Export All Vertex Colors'",
+          "is_literal": true,
+          "literal": "Export All Vertex Colors"
+        }
+      },
+      "line": 541,
+      "name": "export_all_vertex_colors",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_anim_scene_split_object": {
+      "declaration": "export_anim_scene_split_object: BoolProperty(\n        name='Split Animation by Object',\n        description=(\n            \"Export Scene as seen in Viewport, \"\n            \"But split animation by Object\"\n        ),\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Export Scene as seen in Viewport, But split animation by Object'",
+          "is_literal": true,
+          "literal": "Export Scene as seen in Viewport, But split animation by Object"
+        },
+        "name": {
+          "expression": "'Split Animation by Object'",
+          "is_literal": true,
+          "literal": "Split Animation by Object"
+        }
+      },
+      "line": 878,
+      "name": "export_anim_scene_split_object",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_anim_single_armature": {
+      "declaration": "export_anim_single_armature: BoolProperty(\n        name='Export all Armature Actions',\n        description=(\n            \"Export all actions, bound to a single armature. \"\n            \"WARNING: Option does not support exports including multiple armatures\"\n        ),\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Export all actions, bound to a single armature. WARNING: Option does not support exports including multiple armatures'",
+          "is_literal": true,
+          "literal": "Export all actions, bound to a single armature. WARNING: Option does not support exports including multiple armatures"
+        },
+        "name": {
+          "expression": "'Export all Armature Actions'",
+          "is_literal": true,
+          "literal": "Export all Armature Actions"
+        }
+      },
+      "line": 842,
+      "name": "export_anim_single_armature",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_anim_slide_to_zero": {
+      "declaration": "export_anim_slide_to_zero: BoolProperty(\n        name='Set All glTF Animation Starting at 0',\n        description=(\n            \"Set all glTF animation starting at 0.0s. \"\n            \"Can be useful for looping animations\"\n        ),\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Set all glTF animation starting at 0.0s. Can be useful for looping animations'",
+          "is_literal": true,
+          "literal": "Set all glTF animation starting at 0.0s. Can be useful for looping animations"
+        },
+        "name": {
+          "expression": "'Set All glTF Animation Starting at 0'",
+          "is_literal": true,
+          "literal": "Set All glTF Animation Starting at 0"
+        }
+      },
+      "line": 813,
+      "name": "export_anim_slide_to_zero",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_animation_mode": {
+      "declaration": "export_animation_mode: EnumProperty(\n        name='Animation Mode',\n        items=(('ACTIONS', 'Actions',\n                'Export actions (actives and on NLA tracks) as separate animations'),\n               ('ACTIVE_ACTIONS', 'Active actions merged',\n                'All the currently assigned actions become one glTF animation'),\n               ('BROADCAST', 'Broadcast actions',\n                'Broadcast all compatible actions to all objects. '\n                'Animated objects will get all actions compatible with them, '\n                'others will get no animation at all'),\n               ('NLA_TRACKS', 'NLA Tracks',\n                'Export individual NLA Tracks as separate animation'),\n               ('SCENE', 'Scene',\n                'Export baked scene as a single animation')\n               ),\n        description='Export Animation mode',\n        default='ACTIONS'\n    )",
+      "declared_default": {
+        "expression": "'ACTIONS'",
+        "is_literal": true,
+        "literal": "ACTIONS"
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "'ACTIONS'",
+          "is_literal": true,
+          "literal": "ACTIONS"
+        },
+        "description": {
+          "expression": "'Export Animation mode'",
+          "is_literal": true,
+          "literal": "Export Animation mode"
+        },
+        "items": {
+          "expression": "(('ACTIONS', 'Actions', 'Export actions (actives and on NLA tracks) as separate animations'), ('ACTIVE_ACTIONS', 'Active actions merged', 'All the currently assigned actions become one glTF animation'), ('BROADCAST', 'Broadcast actions', 'Broadcast all compatible actions to all objects. Animated objects will get all actions compatible with them, others will get no animation at all'), ('NLA_TRACKS', 'NLA Tracks', 'Export individual NLA Tracks as separate animation'), ('SCENE', 'Scene', 'Export baked scene as a single animation'))",
+          "is_literal": true,
+          "literal": [
+            [
+              "ACTIONS",
+              "Actions",
+              "Export actions (actives and on NLA tracks) as separate animations"
+            ],
+            [
+              "ACTIVE_ACTIONS",
+              "Active actions merged",
+              "All the currently assigned actions become one glTF animation"
+            ],
+            [
+              "BROADCAST",
+              "Broadcast actions",
+              "Broadcast all compatible actions to all objects. Animated objects will get all actions compatible with them, others will get no animation at all"
+            ],
+            [
+              "NLA_TRACKS",
+              "NLA Tracks",
+              "Export individual NLA Tracks as separate animation"
+            ],
+            [
+              "SCENE",
+              "Scene",
+              "Export baked scene as a single animation"
+            ]
+          ]
+        },
+        "name": {
+          "expression": "'Animation Mode'",
+          "is_literal": true,
+          "literal": "Animation Mode"
+        }
+      },
+      "line": 701,
+      "name": "export_animation_mode",
+      "property_type": "EnumProperty",
+      "source": "gltf"
+    },
+    "export_animations": {
+      "declaration": "export_animations: BoolProperty(\n        name='Animations',\n        description='Exports active actions and NLA tracks as glTF animations',\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Exports active actions and NLA tracks as glTF animations'",
+          "is_literal": true,
+          "literal": "Exports active actions and NLA tracks as glTF animations"
+        },
+        "name": {
+          "expression": "'Animations'",
+          "is_literal": true,
+          "literal": "Animations"
+        }
+      },
+      "line": 659,
+      "name": "export_animations",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_apply": {
+      "declaration": "export_apply: BoolProperty(\n        name='Apply Modifiers',\n        description='Apply modifiers (excluding Armatures) to mesh objects -'\n                    'WARNING: prevents exporting shape keys',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Apply modifiers (excluding Armatures) to mesh objects -WARNING: prevents exporting shape keys'",
+          "is_literal": true,
+          "literal": "Apply modifiers (excluding Armatures) to mesh objects -WARNING: prevents exporting shape keys"
+        },
+        "name": {
+          "expression": "'Apply Modifiers'",
+          "is_literal": true,
+          "literal": "Apply Modifiers"
+        }
+      },
+      "line": 646,
+      "name": "export_apply",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_armature_object_remove": {
+      "declaration": "export_armature_object_remove: BoolProperty(\n        name='Remove Armature Object',\n        description=(\n            'Remove Armature object if possible. '\n            'If Armature has multiple root bones, object will not be removed'\n        ),\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Remove Armature object if possible. If Armature has multiple root bones, object will not be removed'",
+          "is_literal": true,
+          "literal": "Remove Armature object if possible. If Armature has multiple root bones, object will not be removed"
+        },
+        "name": {
+          "expression": "'Remove Armature Object'",
+          "is_literal": true,
+          "literal": "Remove Armature Object"
+        }
+      },
+      "line": 746,
+      "name": "export_armature_object_remove",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_attributes": {
+      "declaration": "export_attributes: BoolProperty(\n        name='Attributes',\n        description='Export Attributes (when starting with underscore)',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export Attributes (when starting with underscore)'",
+          "is_literal": true,
+          "literal": "Export Attributes (when starting with underscore)"
+        },
+        "name": {
+          "expression": "'Attributes'",
+          "is_literal": true,
+          "literal": "Attributes"
+        }
+      },
+      "line": 557,
+      "name": "export_attributes",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_bake_animation": {
+      "declaration": "export_bake_animation: BoolProperty(\n        name='Bake All Objects Animations',\n        description=(\n            \"Force exporting animation on every object. \"\n            \"Can be useful when using constraints or driver. \"\n            \"Also useful when exporting only selection\"\n        ),\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Force exporting animation on every object. Can be useful when using constraints or driver. Also useful when exporting only selection'",
+          "is_literal": true,
+          "literal": "Force exporting animation on every object. Can be useful when using constraints or driver. Also useful when exporting only selection"
+        },
+        "name": {
+          "expression": "'Bake All Objects Animations'",
+          "is_literal": true,
+          "literal": "Bake All Objects Animations"
+        }
+      },
+      "line": 822,
+      "name": "export_bake_animation",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_cameras": {
+      "declaration": "export_cameras: BoolProperty(\n        name='Cameras',\n        description='Export cameras',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export cameras'",
+          "is_literal": true,
+          "literal": "Export cameras"
+        },
+        "name": {
+          "expression": "'Cameras'",
+          "is_literal": true,
+          "literal": "Cameras"
+        }
+      },
+      "line": 579,
+      "name": "export_cameras",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_convert_animation_pointer": {
+      "declaration": "export_convert_animation_pointer: BoolProperty(\n        name='Convert TRS/Weights to Animation Pointer',\n        description='Export TRS and weights as Animation Pointer. '\n                    'Using KHR_animation_pointer extension',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export TRS and weights as Animation Pointer. Using KHR_animation_pointer extension'",
+          "is_literal": true,
+          "literal": "Export TRS and weights as Animation Pointer. Using KHR_animation_pointer extension"
+        },
+        "name": {
+          "expression": "'Convert TRS/Weights to Animation Pointer'",
+          "is_literal": true,
+          "literal": "Convert TRS/Weights to Animation Pointer"
+        }
+      },
+      "line": 973,
+      "name": "export_convert_animation_pointer",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_copyright": {
+      "declaration": "export_copyright: StringProperty(\n        name='Copyright',\n        description='Legal rights and conditions for the model',\n        default=''\n    )",
+      "declared_default": {
+        "expression": "''",
+        "is_literal": true,
+        "literal": ""
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "''",
+          "is_literal": true,
+          "literal": ""
+        },
+        "description": {
+          "expression": "'Legal rights and conditions for the model'",
+          "is_literal": true,
+          "literal": "Legal rights and conditions for the model"
+        },
+        "name": {
+          "expression": "'Copyright'",
+          "is_literal": true,
+          "literal": "Copyright"
+        }
+      },
+      "line": 334,
+      "name": "export_copyright",
+      "property_type": "StringProperty",
+      "source": "gltf"
+    },
+    "export_current_frame": {
+      "declaration": "export_current_frame: BoolProperty(\n        name='Use Current Frame as Object Rest Transformations',\n        description=(\n            'Export the scene in the current animation frame. '\n            'When off, frame 0 is used as rest transformations for objects'\n        ),\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export the scene in the current animation frame. When off, frame 0 is used as rest transformations for objects'",
+          "is_literal": true,
+          "literal": "Export the scene in the current animation frame. When off, frame 0 is used as rest transformations for objects"
+        },
+        "name": {
+          "expression": "'Use Current Frame as Object Rest Transformations'",
+          "is_literal": true,
+          "literal": "Use Current Frame as Object Rest Transformations"
+        }
+      },
+      "line": 860,
+      "name": "export_current_frame",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_def_bones": {
+      "declaration": "export_def_bones: BoolProperty(\n        name='Export Deformation Bones Only',\n        description='Export Deformation bones only',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export Deformation bones only'",
+          "is_literal": true,
+          "literal": "Export Deformation bones only"
+        },
+        "name": {
+          "expression": "'Export Deformation Bones Only'",
+          "is_literal": true,
+          "literal": "Export Deformation Bones Only"
+        }
+      },
+      "line": 728,
+      "name": "export_def_bones",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_draco_color_quantization": {
+      "declaration": "export_draco_color_quantization: IntProperty(\n        name='Color Quantization Bits',\n        description='Quantization bits for color values (0 = no quantization)',\n        default=10,\n        min=0,\n        max=30\n    )",
+      "declared_default": {
+        "expression": "10",
+        "is_literal": true,
+        "literal": 10
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "10",
+          "is_literal": true,
+          "literal": 10
+        },
+        "description": {
+          "expression": "'Quantization bits for color values (0 = no quantization)'",
+          "is_literal": true,
+          "literal": "Quantization bits for color values (0 = no quantization)"
+        },
+        "max": {
+          "expression": "30",
+          "is_literal": true,
+          "literal": 30
+        },
+        "min": {
+          "expression": "0",
+          "is_literal": true,
+          "literal": 0
+        },
+        "name": {
+          "expression": "'Color Quantization Bits'",
+          "is_literal": true,
+          "literal": "Color Quantization Bits"
+        }
+      },
+      "line": 467,
+      "name": "export_draco_color_quantization",
+      "property_type": "IntProperty",
+      "source": "gltf"
+    },
+    "export_draco_generic_quantization": {
+      "declaration": "export_draco_generic_quantization: IntProperty(\n        name='Generic Quantization Bits',\n        description='Quantization bits for generic values like weights or joints (0 = no quantization)',\n        default=12,\n        min=0,\n        max=30\n    )",
+      "declared_default": {
+        "expression": "12",
+        "is_literal": true,
+        "literal": 12
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "12",
+          "is_literal": true,
+          "literal": 12
+        },
+        "description": {
+          "expression": "'Quantization bits for generic values like weights or joints (0 = no quantization)'",
+          "is_literal": true,
+          "literal": "Quantization bits for generic values like weights or joints (0 = no quantization)"
+        },
+        "max": {
+          "expression": "30",
+          "is_literal": true,
+          "literal": 30
+        },
+        "min": {
+          "expression": "0",
+          "is_literal": true,
+          "literal": 0
+        },
+        "name": {
+          "expression": "'Generic Quantization Bits'",
+          "is_literal": true,
+          "literal": "Generic Quantization Bits"
+        }
+      },
+      "line": 475,
+      "name": "export_draco_generic_quantization",
+      "property_type": "IntProperty",
+      "source": "gltf"
+    },
+    "export_draco_mesh_compression_enable": {
+      "declaration": "export_draco_mesh_compression_enable: BoolProperty(\n        name='Draco Mesh Compression',\n        description='Compress mesh using Draco',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Compress mesh using Draco'",
+          "is_literal": true,
+          "literal": "Compress mesh using Draco"
+        },
+        "name": {
+          "expression": "'Draco Mesh Compression'",
+          "is_literal": true,
+          "literal": "Draco Mesh Compression"
+        }
+      },
+      "line": 429,
+      "name": "export_draco_mesh_compression_enable",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_draco_mesh_compression_level": {
+      "declaration": "export_draco_mesh_compression_level: IntProperty(\n        name='Compression Level',\n        description='Compression level (0 = most speed, 6 = most compression, higher values currently not supported)',\n        default=6,\n        min=0,\n        max=10\n    )",
+      "declared_default": {
+        "expression": "6",
+        "is_literal": true,
+        "literal": 6
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "6",
+          "is_literal": true,
+          "literal": 6
+        },
+        "description": {
+          "expression": "'Compression level (0 = most speed, 6 = most compression, higher values currently not supported)'",
+          "is_literal": true,
+          "literal": "Compression level (0 = most speed, 6 = most compression, higher values currently not supported)"
+        },
+        "max": {
+          "expression": "10",
+          "is_literal": true,
+          "literal": 10
+        },
+        "min": {
+          "expression": "0",
+          "is_literal": true,
+          "literal": 0
+        },
+        "name": {
+          "expression": "'Compression Level'",
+          "is_literal": true,
+          "literal": "Compression Level"
+        }
+      },
+      "line": 435,
+      "name": "export_draco_mesh_compression_level",
+      "property_type": "IntProperty",
+      "source": "gltf"
+    },
+    "export_draco_normal_quantization": {
+      "declaration": "export_draco_normal_quantization: IntProperty(\n        name='Normal Quantization Bits',\n        description='Quantization bits for normal values (0 = no quantization)',\n        default=10,\n        min=0,\n        max=30\n    )",
+      "declared_default": {
+        "expression": "10",
+        "is_literal": true,
+        "literal": 10
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "10",
+          "is_literal": true,
+          "literal": 10
+        },
+        "description": {
+          "expression": "'Quantization bits for normal values (0 = no quantization)'",
+          "is_literal": true,
+          "literal": "Quantization bits for normal values (0 = no quantization)"
+        },
+        "max": {
+          "expression": "30",
+          "is_literal": true,
+          "literal": 30
+        },
+        "min": {
+          "expression": "0",
+          "is_literal": true,
+          "literal": 0
+        },
+        "name": {
+          "expression": "'Normal Quantization Bits'",
+          "is_literal": true,
+          "literal": "Normal Quantization Bits"
+        }
+      },
+      "line": 451,
+      "name": "export_draco_normal_quantization",
+      "property_type": "IntProperty",
+      "source": "gltf"
+    },
+    "export_draco_position_quantization": {
+      "declaration": "export_draco_position_quantization: IntProperty(\n        name='Position Quantization Bits',\n        description='Quantization bits for position values (0 = no quantization)',\n        default=14,\n        min=0,\n        max=30\n    )",
+      "declared_default": {
+        "expression": "14",
+        "is_literal": true,
+        "literal": 14
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "14",
+          "is_literal": true,
+          "literal": 14
+        },
+        "description": {
+          "expression": "'Quantization bits for position values (0 = no quantization)'",
+          "is_literal": true,
+          "literal": "Quantization bits for position values (0 = no quantization)"
+        },
+        "max": {
+          "expression": "30",
+          "is_literal": true,
+          "literal": 30
+        },
+        "min": {
+          "expression": "0",
+          "is_literal": true,
+          "literal": 0
+        },
+        "name": {
+          "expression": "'Position Quantization Bits'",
+          "is_literal": true,
+          "literal": "Position Quantization Bits"
+        }
+      },
+      "line": 443,
+      "name": "export_draco_position_quantization",
+      "property_type": "IntProperty",
+      "source": "gltf"
+    },
+    "export_draco_texcoord_quantization": {
+      "declaration": "export_draco_texcoord_quantization: IntProperty(\n        name='Texcoord Quantization Bits',\n        description='Quantization bits for texture coordinate values (0 = no quantization)',\n        default=12,\n        min=0,\n        max=30\n    )",
+      "declared_default": {
+        "expression": "12",
+        "is_literal": true,
+        "literal": 12
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "12",
+          "is_literal": true,
+          "literal": 12
+        },
+        "description": {
+          "expression": "'Quantization bits for texture coordinate values (0 = no quantization)'",
+          "is_literal": true,
+          "literal": "Quantization bits for texture coordinate values (0 = no quantization)"
+        },
+        "max": {
+          "expression": "30",
+          "is_literal": true,
+          "literal": 30
+        },
+        "min": {
+          "expression": "0",
+          "is_literal": true,
+          "literal": 0
+        },
+        "name": {
+          "expression": "'Texcoord Quantization Bits'",
+          "is_literal": true,
+          "literal": "Texcoord Quantization Bits"
+        }
+      },
+      "line": 459,
+      "name": "export_draco_texcoord_quantization",
+      "property_type": "IntProperty",
+      "source": "gltf"
+    },
+    "export_extra_animations": {
+      "declaration": "export_extra_animations: BoolProperty(\n        name='Prepare Extra Animations',\n        description=(\n            'Export additional animations.\\n'\n            'This feature is not standard and needs an external extension to be included in the glTF file'\n        ),\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export additional animations.\\nThis feature is not standard and needs an external extension to be included in the glTF file'",
+          "is_literal": true,
+          "literal": "Export additional animations.\nThis feature is not standard and needs an external extension to be included in the glTF file"
+        },
+        "name": {
+          "expression": "'Prepare Extra Animations'",
+          "is_literal": true,
+          "literal": "Prepare Extra Animations"
+        }
+      },
+      "line": 1013,
+      "name": "export_extra_animations",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_extras": {
+      "declaration": "export_extras: BoolProperty(\n        name='Custom Properties',\n        description='Export custom properties as glTF extras',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export custom properties as glTF extras'",
+          "is_literal": true,
+          "literal": "Export custom properties as glTF extras"
+        },
+        "name": {
+          "expression": "'Custom Properties'",
+          "is_literal": true,
+          "literal": "Custom Properties"
+        }
+      },
+      "line": 634,
+      "name": "export_extras",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_force_sampling": {
+      "declaration": "export_force_sampling: BoolProperty(\n        name='Always Sample Animations',\n        description='Apply sampling to all animations',\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Apply sampling to all animations'",
+          "is_literal": true,
+          "literal": "Apply sampling to all animations"
+        },
+        "name": {
+          "expression": "'Always Sample Animations'",
+          "is_literal": true,
+          "literal": "Always Sample Animations"
+        }
+      },
+      "line": 679,
+      "name": "export_force_sampling",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_format": {
+      "declaration": "export_format: EnumProperty(\n        name='Format',\n        items=get_format_items,\n        description=(\n            'Output format. Binary is most efficient, '\n            'but JSON may be easier to edit later'\n        ),\n        default=0,  # Warning => If you change the default, need to change the default filter too\n        update=on_export_format_changed,\n    )",
+      "declared_default": {
+        "expression": "0",
+        "is_literal": true,
+        "literal": 0
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "0",
+          "is_literal": true,
+          "literal": 0
+        },
+        "description": {
+          "expression": "'Output format. Binary is most efficient, but JSON may be easier to edit later'",
+          "is_literal": true,
+          "literal": "Output format. Binary is most efficient, but JSON may be easier to edit later"
+        },
+        "items": {
+          "expression": "get_format_items",
+          "is_literal": false
+        },
+        "name": {
+          "expression": "'Format'",
+          "is_literal": true,
+          "literal": "Format"
+        },
+        "update": {
+          "expression": "on_export_format_changed",
+          "is_literal": false
+        }
+      },
+      "line": 314,
+      "name": "export_format",
+      "property_type": "EnumProperty",
+      "source": "gltf"
+    },
+    "export_frame_range": {
+      "declaration": "export_frame_range: BoolProperty(\n        name='Limit to Playback Range',\n        description='Clips animations to selected playback range',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Clips animations to selected playback range'",
+          "is_literal": true,
+          "literal": "Clips animations to selected playback range"
+        },
+        "name": {
+          "expression": "'Limit to Playback Range'",
+          "is_literal": true,
+          "literal": "Limit to Playback Range"
+        }
+      },
+      "line": 665,
+      "name": "export_frame_range",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_frame_step": {
+      "declaration": "export_frame_step: IntProperty(\n        name='Sampling Rate',\n        description='How often to evaluate animated values (in frames)',\n        default=1,\n        min=1,\n        max=120\n    )",
+      "declared_default": {
+        "expression": "1",
+        "is_literal": true,
+        "literal": 1
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "1",
+          "is_literal": true,
+          "literal": 1
+        },
+        "description": {
+          "expression": "'How often to evaluate animated values (in frames)'",
+          "is_literal": true,
+          "literal": "How often to evaluate animated values (in frames)"
+        },
+        "max": {
+          "expression": "120",
+          "is_literal": true,
+          "literal": 120
+        },
+        "min": {
+          "expression": "1",
+          "is_literal": true,
+          "literal": 1
+        },
+        "name": {
+          "expression": "'Sampling Rate'",
+          "is_literal": true,
+          "literal": "Sampling Rate"
+        }
+      },
+      "line": 671,
+      "name": "export_frame_step",
+      "property_type": "IntProperty",
+      "source": "gltf"
+    },
+    "export_gltfpack_kn": {
+      "declaration": "export_gltfpack_kn: BoolProperty(\n        name='Keep Named Nodes',\n        description='Restrict some optimization to keep named nodes and meshes attached to named nodes so that named nodes can be transformed externally',\n        default=False,\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Restrict some optimization to keep named nodes and meshes attached to named nodes so that named nodes can be transformed externally'",
+          "is_literal": true,
+          "literal": "Restrict some optimization to keep named nodes and meshes attached to named nodes so that named nodes can be transformed externally"
+        },
+        "name": {
+          "expression": "'Keep Named Nodes'",
+          "is_literal": true,
+          "literal": "Keep Named Nodes"
+        }
+      },
+      "line": 300,
+      "name": "export_gltfpack_kn",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_gltfpack_noq": {
+      "declaration": "export_gltfpack_noq: BoolProperty(\n        name='Disable Quantization',\n        description='Disable quantization; produces much larger glTF files with no extensions',\n        default=True,\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Disable quantization; produces much larger glTF files with no extensions'",
+          "is_literal": true,
+          "literal": "Disable quantization; produces much larger glTF files with no extensions"
+        },
+        "name": {
+          "expression": "'Disable Quantization'",
+          "is_literal": true,
+          "literal": "Disable Quantization"
+        }
+      },
+      "line": 294,
+      "name": "export_gltfpack_noq",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_gltfpack_sa": {
+      "declaration": "export_gltfpack_sa: BoolProperty(\n        name='Aggressive Mesh Simplification',\n        description='Aggressively simplify to the target ratio disregarding quality',\n        default=False,\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Aggressively simplify to the target ratio disregarding quality'",
+          "is_literal": true,
+          "literal": "Aggressively simplify to the target ratio disregarding quality"
+        },
+        "name": {
+          "expression": "'Aggressive Mesh Simplification'",
+          "is_literal": true,
+          "literal": "Aggressive Mesh Simplification"
+        }
+      },
+      "line": 241,
+      "name": "export_gltfpack_sa",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_gltfpack_si": {
+      "declaration": "export_gltfpack_si: FloatProperty(\n        name='Mesh Simplification Ratio',\n        description='Simplify meshes targeting triangle count ratio',\n        default=1.0,\n        min=0.0,\n        max=1.0,\n    )",
+      "declared_default": {
+        "expression": "1.0",
+        "is_literal": true,
+        "literal": 1.0
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "1.0",
+          "is_literal": true,
+          "literal": 1.0
+        },
+        "description": {
+          "expression": "'Simplify meshes targeting triangle count ratio'",
+          "is_literal": true,
+          "literal": "Simplify meshes targeting triangle count ratio"
+        },
+        "max": {
+          "expression": "1.0",
+          "is_literal": true,
+          "literal": 1.0
+        },
+        "min": {
+          "expression": "0.0",
+          "is_literal": true,
+          "literal": 0.0
+        },
+        "name": {
+          "expression": "'Mesh Simplification Ratio'",
+          "is_literal": true,
+          "literal": "Mesh Simplification Ratio"
+        }
+      },
+      "line": 233,
+      "name": "export_gltfpack_si",
+      "property_type": "FloatProperty",
+      "source": "gltf"
+    },
+    "export_gltfpack_slb": {
+      "declaration": "export_gltfpack_slb: BoolProperty(\n        name='Lock Mesh Border Vertices',\n        description='Lock border vertices during simplification to avoid gaps on connected meshes',\n        default=False,\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Lock border vertices during simplification to avoid gaps on connected meshes'",
+          "is_literal": true,
+          "literal": "Lock border vertices during simplification to avoid gaps on connected meshes"
+        },
+        "name": {
+          "expression": "'Lock Mesh Border Vertices'",
+          "is_literal": true,
+          "literal": "Lock Mesh Border Vertices"
+        }
+      },
+      "line": 247,
+      "name": "export_gltfpack_slb",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_gltfpack_tc": {
+      "declaration": "export_gltfpack_tc: BoolProperty(\n        name='KTX2 Compression',\n        description='Convert all textures to KTX2 with BasisU supercompression',\n        default=True,\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Convert all textures to KTX2 with BasisU supercompression'",
+          "is_literal": true,
+          "literal": "Convert all textures to KTX2 with BasisU supercompression"
+        },
+        "name": {
+          "expression": "'KTX2 Compression'",
+          "is_literal": true,
+          "literal": "KTX2 Compression"
+        }
+      },
+      "line": 219,
+      "name": "export_gltfpack_tc",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_gltfpack_tq": {
+      "declaration": "export_gltfpack_tq: IntProperty(\n        name='Texture Encoding Quality',\n        description='Texture encoding quality',\n        default=8,\n        min=1,\n        max=10,\n    )",
+      "declared_default": {
+        "expression": "8",
+        "is_literal": true,
+        "literal": 8
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "8",
+          "is_literal": true,
+          "literal": 8
+        },
+        "description": {
+          "expression": "'Texture encoding quality'",
+          "is_literal": true,
+          "literal": "Texture encoding quality"
+        },
+        "max": {
+          "expression": "10",
+          "is_literal": true,
+          "literal": 10
+        },
+        "min": {
+          "expression": "1",
+          "is_literal": true,
+          "literal": 1
+        },
+        "name": {
+          "expression": "'Texture Encoding Quality'",
+          "is_literal": true,
+          "literal": "Texture Encoding Quality"
+        }
+      },
+      "line": 225,
+      "name": "export_gltfpack_tq",
+      "property_type": "IntProperty",
+      "source": "gltf"
+    },
+    "export_gltfpack_vc": {
+      "declaration": "export_gltfpack_vc: IntProperty(\n        name='Vertex Color Quantization',\n        description='Use N-bit quantization for colors',\n        default=8,\n        min=1,\n        max=16,\n    )",
+      "declared_default": {
+        "expression": "8",
+        "is_literal": true,
+        "literal": 8
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "8",
+          "is_literal": true,
+          "literal": 8
+        },
+        "description": {
+          "expression": "'Use N-bit quantization for colors'",
+          "is_literal": true,
+          "literal": "Use N-bit quantization for colors"
+        },
+        "max": {
+          "expression": "16",
+          "is_literal": true,
+          "literal": 16
+        },
+        "min": {
+          "expression": "1",
+          "is_literal": true,
+          "literal": 1
+        },
+        "name": {
+          "expression": "'Vertex Color Quantization'",
+          "is_literal": true,
+          "literal": "Vertex Color Quantization"
+        }
+      },
+      "line": 277,
+      "name": "export_gltfpack_vc",
+      "property_type": "IntProperty",
+      "source": "gltf"
+    },
+    "export_gltfpack_vn": {
+      "declaration": "export_gltfpack_vn: IntProperty(\n        name='Normal/Tangent Quantization',\n        description='Use N-bit quantization for normals and tangents',\n        default=8,\n        min=1,\n        max=16,\n    )",
+      "declared_default": {
+        "expression": "8",
+        "is_literal": true,
+        "literal": 8
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "8",
+          "is_literal": true,
+          "literal": 8
+        },
+        "description": {
+          "expression": "'Use N-bit quantization for normals and tangents'",
+          "is_literal": true,
+          "literal": "Use N-bit quantization for normals and tangents"
+        },
+        "max": {
+          "expression": "16",
+          "is_literal": true,
+          "literal": 16
+        },
+        "min": {
+          "expression": "1",
+          "is_literal": true,
+          "literal": 1
+        },
+        "name": {
+          "expression": "'Normal/Tangent Quantization'",
+          "is_literal": true,
+          "literal": "Normal/Tangent Quantization"
+        }
+      },
+      "line": 269,
+      "name": "export_gltfpack_vn",
+      "property_type": "IntProperty",
+      "source": "gltf"
+    },
+    "export_gltfpack_vp": {
+      "declaration": "export_gltfpack_vp: IntProperty(\n        name='Position Quantization',\n        description='Use N-bit quantization for positions',\n        default=14,\n        min=1,\n        max=16,\n    )",
+      "declared_default": {
+        "expression": "14",
+        "is_literal": true,
+        "literal": 14
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "14",
+          "is_literal": true,
+          "literal": 14
+        },
+        "description": {
+          "expression": "'Use N-bit quantization for positions'",
+          "is_literal": true,
+          "literal": "Use N-bit quantization for positions"
+        },
+        "max": {
+          "expression": "16",
+          "is_literal": true,
+          "literal": 16
+        },
+        "min": {
+          "expression": "1",
+          "is_literal": true,
+          "literal": 1
+        },
+        "name": {
+          "expression": "'Position Quantization'",
+          "is_literal": true,
+          "literal": "Position Quantization"
+        }
+      },
+      "line": 253,
+      "name": "export_gltfpack_vp",
+      "property_type": "IntProperty",
+      "source": "gltf"
+    },
+    "export_gltfpack_vpi": {
+      "declaration": "export_gltfpack_vpi: EnumProperty(\n        name='Vertex Position Attributes',\n        description='Type to use for vertex position attributes',\n        items=(('Integer', 'Integer', 'Use integer attributes for positions'),\n               ('Normalized', 'Normalized', 'Use normalized attributes for positions'),\n               ('Floating-point', 'Floating-point', 'Use floating-point attributes for positions')),\n        default='Integer',\n    )",
+      "declared_default": {
+        "expression": "'Integer'",
+        "is_literal": true,
+        "literal": "Integer"
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "'Integer'",
+          "is_literal": true,
+          "literal": "Integer"
+        },
+        "description": {
+          "expression": "'Type to use for vertex position attributes'",
+          "is_literal": true,
+          "literal": "Type to use for vertex position attributes"
+        },
+        "items": {
+          "expression": "(('Integer', 'Integer', 'Use integer attributes for positions'), ('Normalized', 'Normalized', 'Use normalized attributes for positions'), ('Floating-point', 'Floating-point', 'Use floating-point attributes for positions'))",
+          "is_literal": true,
+          "literal": [
+            [
+              "Integer",
+              "Integer",
+              "Use integer attributes for positions"
+            ],
+            [
+              "Normalized",
+              "Normalized",
+              "Use normalized attributes for positions"
+            ],
+            [
+              "Floating-point",
+              "Floating-point",
+              "Use floating-point attributes for positions"
+            ]
+          ]
+        },
+        "name": {
+          "expression": "'Vertex Position Attributes'",
+          "is_literal": true,
+          "literal": "Vertex Position Attributes"
+        }
+      },
+      "line": 285,
+      "name": "export_gltfpack_vpi",
+      "property_type": "EnumProperty",
+      "source": "gltf"
+    },
+    "export_gltfpack_vt": {
+      "declaration": "export_gltfpack_vt: IntProperty(\n        name='Texture Coordinate Quantization',\n        description='Use N-bit quantization for texture coordinates',\n        default=12,\n        min=1,\n        max=16,\n    )",
+      "declared_default": {
+        "expression": "12",
+        "is_literal": true,
+        "literal": 12
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "12",
+          "is_literal": true,
+          "literal": 12
+        },
+        "description": {
+          "expression": "'Use N-bit quantization for texture coordinates'",
+          "is_literal": true,
+          "literal": "Use N-bit quantization for texture coordinates"
+        },
+        "max": {
+          "expression": "16",
+          "is_literal": true,
+          "literal": 16
+        },
+        "min": {
+          "expression": "1",
+          "is_literal": true,
+          "literal": 1
+        },
+        "name": {
+          "expression": "'Texture Coordinate Quantization'",
+          "is_literal": true,
+          "literal": "Texture Coordinate Quantization"
+        }
+      },
+      "line": 261,
+      "name": "export_gltfpack_vt",
+      "property_type": "IntProperty",
+      "source": "gltf"
+    },
+    "export_gn_mesh": {
+      "declaration": "export_gn_mesh: BoolProperty(\n        name='Geometry Nodes Instances (Experimental)',\n        description='Export Geometry nodes instance meshes',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export Geometry nodes instance meshes'",
+          "is_literal": true,
+          "literal": "Export Geometry nodes instance meshes"
+        },
+        "name": {
+          "expression": "'Geometry Nodes Instances (Experimental)'",
+          "is_literal": true,
+          "literal": "Geometry Nodes Instances (Experimental)"
+        }
+      },
+      "line": 423,
+      "name": "export_gn_mesh",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_gpu_instances": {
+      "declaration": "export_gpu_instances: BoolProperty(\n        name='GPU Instances',\n        description='Export using EXT_mesh_gpu_instancing. '\n                    'Limited to children of a given Empty. '\n                    'Multiple materials might be omitted',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export using EXT_mesh_gpu_instancing. Limited to children of a given Empty. Multiple materials might be omitted'",
+          "is_literal": true,
+          "literal": "Export using EXT_mesh_gpu_instancing. Limited to children of a given Empty. Multiple materials might be omitted"
+        },
+        "name": {
+          "expression": "'GPU Instances'",
+          "is_literal": true,
+          "literal": "GPU Instances"
+        }
+      },
+      "line": 958,
+      "name": "export_gpu_instances",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_hierarchy_flatten_bones": {
+      "declaration": "export_hierarchy_flatten_bones: BoolProperty(\n        name='Flatten Bone Hierarchy',\n        description='Flatten Bone Hierarchy. Useful in case of non decomposable transformation matrix',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Flatten Bone Hierarchy. Useful in case of non decomposable transformation matrix'",
+          "is_literal": true,
+          "literal": "Flatten Bone Hierarchy. Useful in case of non decomposable transformation matrix"
+        },
+        "name": {
+          "expression": "'Flatten Bone Hierarchy'",
+          "is_literal": true,
+          "literal": "Flatten Bone Hierarchy"
+        }
+      },
+      "line": 734,
+      "name": "export_hierarchy_flatten_bones",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_hierarchy_flatten_objs": {
+      "declaration": "export_hierarchy_flatten_objs: BoolProperty(\n        name='Flatten Object Hierarchy',\n        description='Flatten Object Hierarchy. Useful in case of non decomposable transformation matrix',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Flatten Object Hierarchy. Useful in case of non decomposable transformation matrix'",
+          "is_literal": true,
+          "literal": "Flatten Object Hierarchy. Useful in case of non decomposable transformation matrix"
+        },
+        "name": {
+          "expression": "'Flatten Object Hierarchy'",
+          "is_literal": true,
+          "literal": "Flatten Object Hierarchy"
+        }
+      },
+      "line": 740,
+      "name": "export_hierarchy_flatten_objs",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_hierarchy_full_collections": {
+      "declaration": "export_hierarchy_full_collections: BoolProperty(\n        name='Full Collection Hierarchy',\n        description='Export full hierarchy, including intermediate collections',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export full hierarchy, including intermediate collections'",
+          "is_literal": true,
+          "literal": "Export full hierarchy, including intermediate collections"
+        },
+        "name": {
+          "expression": "'Full Collection Hierarchy'",
+          "is_literal": true,
+          "literal": "Full Collection Hierarchy"
+        }
+      },
+      "line": 1007,
+      "name": "export_hierarchy_full_collections",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_image_add_webp": {
+      "declaration": "export_image_add_webp: BoolProperty(\n        name='Create WebP',\n        description=(\n            \"Creates WebP textures for every texture. \"\n            \"For already WebP textures, nothing happens\"\n        ),\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Creates WebP textures for every texture. For already WebP textures, nothing happens'",
+          "is_literal": true,
+          "literal": "Creates WebP textures for every texture. For already WebP textures, nothing happens"
+        },
+        "name": {
+          "expression": "'Create WebP'",
+          "is_literal": true,
+          "literal": "Create WebP"
+        }
+      },
+      "line": 360,
+      "name": "export_image_add_webp",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_image_format": {
+      "declaration": "export_image_format: EnumProperty(\n        name='Images',\n        items=(('AUTO', 'Automatic',\n                'Save PNGs as PNGs, JPEGs as JPEGs, WebPs as WebPs. '\n                'For other formats, use PNG'),\n               ('JPEG', 'JPEG Format (.jpg)',\n                'Save images as JPEGs. (Images that need alpha are saved as PNGs though.) '\n                'Be aware of a possible loss in quality'),\n               ('WEBP', 'WebP Format',\n                'Save images as WebPs as main image (no fallback)'),\n               ('NONE', 'None',\n                'Don\\'t export images'),\n               ),\n        description=(\n            'Output format for images. PNG is lossless and generally preferred, but JPEG might be preferable for web '\n            'applications due to the smaller file size. Alternatively they can be omitted if they are not needed'\n        ),\n        default='AUTO'\n    )",
+      "declared_default": {
+        "expression": "'AUTO'",
+        "is_literal": true,
+        "literal": "AUTO"
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "'AUTO'",
+          "is_literal": true,
+          "literal": "AUTO"
+        },
+        "description": {
+          "expression": "'Output format for images. PNG is lossless and generally preferred, but JPEG might be preferable for web applications due to the smaller file size. Alternatively they can be omitted if they are not needed'",
+          "is_literal": true,
+          "literal": "Output format for images. PNG is lossless and generally preferred, but JPEG might be preferable for web applications due to the smaller file size. Alternatively they can be omitted if they are not needed"
+        },
+        "items": {
+          "expression": "(('AUTO', 'Automatic', 'Save PNGs as PNGs, JPEGs as JPEGs, WebPs as WebPs. For other formats, use PNG'), ('JPEG', 'JPEG Format (.jpg)', 'Save images as JPEGs. (Images that need alpha are saved as PNGs though.) Be aware of a possible loss in quality'), ('WEBP', 'WebP Format', 'Save images as WebPs as main image (no fallback)'), ('NONE', 'None', \"Don't export images\"))",
+          "is_literal": true,
+          "literal": [
+            [
+              "AUTO",
+              "Automatic",
+              "Save PNGs as PNGs, JPEGs as JPEGs, WebPs as WebPs. For other formats, use PNG"
+            ],
+            [
+              "JPEG",
+              "JPEG Format (.jpg)",
+              "Save images as JPEGs. (Images that need alpha are saved as PNGs though.) Be aware of a possible loss in quality"
+            ],
+            [
+              "WEBP",
+              "WebP Format",
+              "Save images as WebPs as main image (no fallback)"
+            ],
+            [
+              "NONE",
+              "None",
+              "Don't export images"
+            ]
+          ]
+        },
+        "name": {
+          "expression": "'Images'",
+          "is_literal": true,
+          "literal": "Images"
+        }
+      },
+      "line": 340,
+      "name": "export_image_format",
+      "property_type": "EnumProperty",
+      "source": "gltf"
+    },
+    "export_image_quality": {
+      "declaration": "export_image_quality: IntProperty(\n        name='Image Quality',\n        description='Quality of image export',\n        default=75,\n        min=0,\n        max=100\n    )",
+      "declared_default": {
+        "expression": "75",
+        "is_literal": true,
+        "literal": 75
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "75",
+          "is_literal": true,
+          "literal": 75
+        },
+        "description": {
+          "expression": "'Quality of image export'",
+          "is_literal": true,
+          "literal": "Quality of image export"
+        },
+        "max": {
+          "expression": "100",
+          "is_literal": true,
+          "literal": 100
+        },
+        "min": {
+          "expression": "0",
+          "is_literal": true,
+          "literal": 0
+        },
+        "name": {
+          "expression": "'Image Quality'",
+          "is_literal": true,
+          "literal": "Image Quality"
+        }
+      },
+      "line": 393,
+      "name": "export_image_quality",
+      "property_type": "IntProperty",
+      "source": "gltf"
+    },
+    "export_image_webp_fallback": {
+      "declaration": "export_image_webp_fallback: BoolProperty(\n        name='WebP Fallback',\n        description=(\n            \"For all WebP textures, create a PNG fallback texture\"\n        ),\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'For all WebP textures, create a PNG fallback texture'",
+          "is_literal": true,
+          "literal": "For all WebP textures, create a PNG fallback texture"
+        },
+        "name": {
+          "expression": "'WebP Fallback'",
+          "is_literal": true,
+          "literal": "WebP Fallback"
+        }
+      },
+      "line": 369,
+      "name": "export_image_webp_fallback",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_import_convert_lighting_mode": {
+      "declaration": "export_import_convert_lighting_mode: EnumProperty(\n        name='Lighting Mode',\n        items=(\n            ('SPEC', 'Standard', 'Physically-based glTF lighting units (cd, lx, nt)'),\n            ('COMPAT', 'Unitless', 'Non-physical, unitless lighting. Useful when exposure controls are not available'),\n            ('RAW', 'Raw (Deprecated)', 'Blender lighting strengths with no conversion'),\n        ),\n        description='Optional backwards compatibility for non-standard render engines. Applies to lights',  # TODO: and emissive materials',\n        default='SPEC'\n    )",
+      "declared_default": {
+        "expression": "'SPEC'",
+        "is_literal": true,
+        "literal": "SPEC"
+      },
+      "declaring_class": "ConvertGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "'SPEC'",
+          "is_literal": true,
+          "literal": "SPEC"
+        },
+        "description": {
+          "expression": "'Optional backwards compatibility for non-standard render engines. Applies to lights'",
+          "is_literal": true,
+          "literal": "Optional backwards compatibility for non-standard render engines. Applies to lights"
+        },
+        "items": {
+          "expression": "(('SPEC', 'Standard', 'Physically-based glTF lighting units (cd, lx, nt)'), ('COMPAT', 'Unitless', 'Non-physical, unitless lighting. Useful when exposure controls are not available'), ('RAW', 'Raw (Deprecated)', 'Blender lighting strengths with no conversion'))",
+          "is_literal": true,
+          "literal": [
+            [
+              "SPEC",
+              "Standard",
+              "Physically-based glTF lighting units (cd, lx, nt)"
+            ],
+            [
+              "COMPAT",
+              "Unitless",
+              "Non-physical, unitless lighting. Useful when exposure controls are not available"
+            ],
+            [
+              "RAW",
+              "Raw (Deprecated)",
+              "Blender lighting strengths with no conversion"
+            ]
+          ]
+        },
+        "name": {
+          "expression": "'Lighting Mode'",
+          "is_literal": true,
+          "literal": "Lighting Mode"
+        }
+      },
+      "line": 185,
+      "name": "export_import_convert_lighting_mode",
+      "property_type": "EnumProperty",
+      "source": "gltf"
+    },
+    "export_influence_nb": {
+      "declaration": "export_influence_nb: IntProperty(\n        name='Bone Influences',\n        description='Choose how many Bone influences to export',\n        default=4,\n        min=1\n    )",
+      "declared_default": {
+        "expression": "4",
+        "is_literal": true,
+        "literal": 4
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "4",
+          "is_literal": true,
+          "literal": 4
+        },
+        "description": {
+          "expression": "'Choose how many Bone influences to export'",
+          "is_literal": true,
+          "literal": "Choose how many Bone influences to export"
+        },
+        "min": {
+          "expression": "1",
+          "is_literal": true,
+          "literal": 1
+        },
+        "name": {
+          "expression": "'Bone Influences'",
+          "is_literal": true,
+          "literal": "Bone Influences"
+        }
+      },
+      "line": 893,
+      "name": "export_influence_nb",
+      "property_type": "IntProperty",
+      "source": "gltf"
+    },
+    "export_jpeg_quality": {
+      "declaration": "export_jpeg_quality: IntProperty(\n        name='JPEG Quality',\n        description='Quality of JPEG export',\n        default=75,\n        min=0,\n        max=100\n    )",
+      "declared_default": {
+        "expression": "75",
+        "is_literal": true,
+        "literal": 75
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "75",
+          "is_literal": true,
+          "literal": 75
+        },
+        "description": {
+          "expression": "'Quality of JPEG export'",
+          "is_literal": true,
+          "literal": "Quality of JPEG export"
+        },
+        "max": {
+          "expression": "100",
+          "is_literal": true,
+          "literal": 100
+        },
+        "min": {
+          "expression": "0",
+          "is_literal": true,
+          "literal": 0
+        },
+        "name": {
+          "expression": "'JPEG Quality'",
+          "is_literal": true,
+          "literal": "JPEG Quality"
+        }
+      },
+      "line": 384,
+      "name": "export_jpeg_quality",
+      "property_type": "IntProperty",
+      "source": "gltf"
+    },
+    "export_keep_originals": {
+      "declaration": "export_keep_originals: BoolProperty(\n        name='Keep Original',\n        description=('Keep original textures files if possible. '\n                     'WARNING: if you use more than one texture, '\n                     'where pbr standard requires only one, only one texture will be used. '\n                     'This can lead to unexpected results'\n                     ),\n        default=False,\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Keep original textures files if possible. WARNING: if you use more than one texture, where pbr standard requires only one, only one texture will be used. This can lead to unexpected results'",
+          "is_literal": true,
+          "literal": "Keep original textures files if possible. WARNING: if you use more than one texture, where pbr standard requires only one, only one texture will be used. This can lead to unexpected results"
+        },
+        "name": {
+          "expression": "'Keep Original'",
+          "is_literal": true,
+          "literal": "Keep Original"
+        }
+      },
+      "line": 401,
+      "name": "export_keep_originals",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_leaf_bone": {
+      "declaration": "export_leaf_bone: BoolProperty(\n        name='Add Leaf Bones',\n        description=(\n            'Append a final bone to the end of each chain to specify last bone length '\n            '(use this when you intend to edit the armature from exported data)'\n        ),\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Append a final bone to the end of each chain to specify last bone length (use this when you intend to edit the armature from exported data)'",
+          "is_literal": true,
+          "literal": "Append a final bone to the end of each chain to specify last bone length (use this when you intend to edit the armature from exported data)"
+        },
+        "name": {
+          "expression": "'Add Leaf Bones'",
+          "is_literal": true,
+          "literal": "Add Leaf Bones"
+        }
+      },
+      "line": 755,
+      "name": "export_leaf_bone",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_lights": {
+      "declaration": "export_lights: BoolProperty(\n        name='Punctual Lights',\n        description='Export directional, point, and spot lights. '\n                    'Uses \"KHR_lights_punctual\" glTF extension',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export directional, point, and spot lights. Uses \"KHR_lights_punctual\" glTF extension'",
+          "is_literal": true,
+          "literal": "Export directional, point, and spot lights. Uses \"KHR_lights_punctual\" glTF extension"
+        },
+        "name": {
+          "expression": "'Punctual Lights'",
+          "is_literal": true,
+          "literal": "Punctual Lights"
+        }
+      },
+      "line": 939,
+      "name": "export_lights",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_loglevel": {
+      "declaration": "export_loglevel: IntProperty(\n        name='Log Level',\n        description=\"Log Level\",\n        default=-1,\n    )",
+      "declared_default": {
+        "expression": "-1",
+        "is_literal": true,
+        "literal": -1
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "-1",
+          "is_literal": true,
+          "literal": -1
+        },
+        "description": {
+          "expression": "'Log Level'",
+          "is_literal": true,
+          "literal": "Log Level"
+        },
+        "name": {
+          "expression": "'Log Level'",
+          "is_literal": true,
+          "literal": "Log Level"
+        }
+      },
+      "line": 1022,
+      "name": "export_loglevel",
+      "property_type": "IntProperty",
+      "source": "gltf"
+    },
+    "export_materials": {
+      "declaration": "export_materials: EnumProperty(\n        name='Materials',\n        items=(\n            ('EXPORT',\n             'Export',\n             'Export all materials used by included objects'),\n            ('PLACEHOLDER',\n             'Placeholder',\n             'Do not export materials, but write multiple primitive groups per mesh, keeping material slot information'),\n            ('VIEWPORT',\n            'Viewport',\n            'Export minimal materials as defined in Viewport display properties'),\n            ('NONE',\n             'No export',\n             'Do not export materials, and combine mesh primitive groups, losing material slot information')),\n        description='Export materials',\n        default='EXPORT')",
+      "declared_default": {
+        "expression": "'EXPORT'",
+        "is_literal": true,
+        "literal": "EXPORT"
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "'EXPORT'",
+          "is_literal": true,
+          "literal": "EXPORT"
+        },
+        "description": {
+          "expression": "'Export materials'",
+          "is_literal": true,
+          "literal": "Export materials"
+        },
+        "items": {
+          "expression": "(('EXPORT', 'Export', 'Export all materials used by included objects'), ('PLACEHOLDER', 'Placeholder', 'Do not export materials, but write multiple primitive groups per mesh, keeping material slot information'), ('VIEWPORT', 'Viewport', 'Export minimal materials as defined in Viewport display properties'), ('NONE', 'No export', 'Do not export materials, and combine mesh primitive groups, losing material slot information'))",
+          "is_literal": true,
+          "literal": [
+            [
+              "EXPORT",
+              "Export",
+              "Export all materials used by included objects"
+            ],
+            [
+              "PLACEHOLDER",
+              "Placeholder",
+              "Do not export materials, but write multiple primitive groups per mesh, keeping material slot information"
+            ],
+            [
+              "VIEWPORT",
+              "Viewport",
+              "Export minimal materials as defined in Viewport display properties"
+            ],
+            [
+              "NONE",
+              "No export",
+              "Do not export materials, and combine mesh primitive groups, losing material slot information"
+            ]
+          ]
+        },
+        "name": {
+          "expression": "'Materials'",
+          "is_literal": true,
+          "literal": "Materials"
+        }
+      },
+      "line": 489,
+      "name": "export_materials",
+      "property_type": "EnumProperty",
+      "source": "gltf"
+    },
+    "export_merge_animation": {
+      "declaration": "export_merge_animation: EnumProperty(\n        name='Merge Animation',\n        items=(('NLA_TRACK', 'NLA Track Names', 'Merge by NLA Track Names'),\n               ('ACTION', 'Actions', 'Merge by Actions'),\n               ('NONE', 'No Merge', 'Do Not Merge Animations'),\n               ),\n        description='Merge Animations',\n        default='ACTION'\n    )",
+      "declared_default": {
+        "expression": "'ACTION'",
+        "is_literal": true,
+        "literal": "ACTION"
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "'ACTION'",
+          "is_literal": true,
+          "literal": "ACTION"
+        },
+        "description": {
+          "expression": "'Merge Animations'",
+          "is_literal": true,
+          "literal": "Merge Animations"
+        },
+        "items": {
+          "expression": "(('NLA_TRACK', 'NLA Track Names', 'Merge by NLA Track Names'), ('ACTION', 'Actions', 'Merge by Actions'), ('NONE', 'No Merge', 'Do Not Merge Animations'))",
+          "is_literal": true,
+          "literal": [
+            [
+              "NLA_TRACK",
+              "NLA Track Names",
+              "Merge by NLA Track Names"
+            ],
+            [
+              "ACTION",
+              "Actions",
+              "Merge by Actions"
+            ],
+            [
+              "NONE",
+              "No Merge",
+              "Do Not Merge Animations"
+            ]
+          ]
+        },
+        "name": {
+          "expression": "'Merge Animation'",
+          "is_literal": true,
+          "literal": "Merge Animation"
+        }
+      },
+      "line": 832,
+      "name": "export_merge_animation",
+      "property_type": "EnumProperty",
+      "source": "gltf"
+    },
+    "export_morph": {
+      "declaration": "export_morph: BoolProperty(\n        name='Shape Keys',\n        description='Export shape keys (morph targets)',\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Export shape keys (morph targets)'",
+          "is_literal": true,
+          "literal": "Export shape keys (morph targets)"
+        },
+        "name": {
+          "expression": "'Shape Keys'",
+          "is_literal": true,
+          "literal": "Shape Keys"
+        }
+      },
+      "line": 906,
+      "name": "export_morph",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_morph_animation": {
+      "declaration": "export_morph_animation: BoolProperty(\n        name='Shape Key Animations',\n        description='Export shape keys animations (morph targets)',\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Export shape keys animations (morph targets)'",
+          "is_literal": true,
+          "literal": "Export shape keys animations (morph targets)"
+        },
+        "name": {
+          "expression": "'Shape Key Animations'",
+          "is_literal": true,
+          "literal": "Shape Key Animations"
+        }
+      },
+      "line": 924,
+      "name": "export_morph_animation",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_morph_normal": {
+      "declaration": "export_morph_normal: BoolProperty(\n        name='Shape Key Normals',\n        description='Export vertex normals with shape keys (morph targets)',\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Export vertex normals with shape keys (morph targets)'",
+          "is_literal": true,
+          "literal": "Export vertex normals with shape keys (morph targets)"
+        },
+        "name": {
+          "expression": "'Shape Key Normals'",
+          "is_literal": true,
+          "literal": "Shape Key Normals"
+        }
+      },
+      "line": 912,
+      "name": "export_morph_normal",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_morph_reset_sk_data": {
+      "declaration": "export_morph_reset_sk_data: BoolProperty(\n        name='Reset Shape Keys Between Actions',\n        description=(\n            \"Reset shape keys between each action exported. \"\n            \"This is needed when some SK channels are not keyed on some animations\"\n        ),\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Reset shape keys between each action exported. This is needed when some SK channels are not keyed on some animations'",
+          "is_literal": true,
+          "literal": "Reset shape keys between each action exported. This is needed when some SK channels are not keyed on some animations"
+        },
+        "name": {
+          "expression": "'Reset Shape Keys Between Actions'",
+          "is_literal": true,
+          "literal": "Reset Shape Keys Between Actions"
+        }
+      },
+      "line": 930,
+      "name": "export_morph_reset_sk_data",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_morph_tangent": {
+      "declaration": "export_morph_tangent: BoolProperty(\n        name='Shape Key Tangents',\n        description='Export vertex tangents with shape keys (morph targets)',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export vertex tangents with shape keys (morph targets)'",
+          "is_literal": true,
+          "literal": "Export vertex tangents with shape keys (morph targets)"
+        },
+        "name": {
+          "expression": "'Shape Key Tangents'",
+          "is_literal": true,
+          "literal": "Shape Key Tangents"
+        }
+      },
+      "line": 918,
+      "name": "export_morph_tangent",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_negative_frame": {
+      "declaration": "export_negative_frame: EnumProperty(\n        name='Negative Frames',\n        items=(('SLIDE', 'Slide',\n                'Slide animation to start at frame 0'),\n               ('CROP', 'Crop',\n                'Keep only frames above frame 0'),\n               ),\n        description='Negative Frames are slid or cropped',\n        default='SLIDE'\n    )",
+      "declared_default": {
+        "expression": "'SLIDE'",
+        "is_literal": true,
+        "literal": "SLIDE"
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "'SLIDE'",
+          "is_literal": true,
+          "literal": "SLIDE"
+        },
+        "description": {
+          "expression": "'Negative Frames are slid or cropped'",
+          "is_literal": true,
+          "literal": "Negative Frames are slid or cropped"
+        },
+        "items": {
+          "expression": "(('SLIDE', 'Slide', 'Slide animation to start at frame 0'), ('CROP', 'Crop', 'Keep only frames above frame 0'))",
+          "is_literal": true,
+          "literal": [
+            [
+              "SLIDE",
+              "Slide",
+              "Slide animation to start at frame 0"
+            ],
+            [
+              "CROP",
+              "Crop",
+              "Keep only frames above frame 0"
+            ]
+          ]
+        },
+        "name": {
+          "expression": "'Negative Frames'",
+          "is_literal": true,
+          "literal": "Negative Frames"
+        }
+      },
+      "line": 802,
+      "name": "export_negative_frame",
+      "property_type": "EnumProperty",
+      "source": "gltf"
+    },
+    "export_nla_strips": {
+      "declaration": "export_nla_strips: BoolProperty(\n        name='Group by NLA Track',\n        description=(\n            \"When on, multiple actions become part of the same glTF animation if \"\n            \"they're pushed onto NLA tracks with the same name. \"\n            \"When off, all the currently assigned actions become one glTF animation\"\n        ),\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "\"When on, multiple actions become part of the same glTF animation if they're pushed onto NLA tracks with the same name. When off, all the currently assigned actions become one glTF animation\"",
+          "is_literal": true,
+          "literal": "When on, multiple actions become part of the same glTF animation if they're pushed onto NLA tracks with the same name. When off, all the currently assigned actions become one glTF animation"
+        },
+        "name": {
+          "expression": "'Group by NLA Track'",
+          "is_literal": true,
+          "literal": "Group by NLA Track"
+        }
+      },
+      "line": 983,
+      "name": "export_nla_strips",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_nla_strips_merged_animation_name": {
+      "declaration": "export_nla_strips_merged_animation_name: StringProperty(\n        name='Merged Animation Name',\n        description=(\n            \"Name of single glTF animation to be exported\"\n        ),\n        default='Animation'\n    )",
+      "declared_default": {
+        "expression": "'Animation'",
+        "is_literal": true,
+        "literal": "Animation"
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "'Animation'",
+          "is_literal": true,
+          "literal": "Animation"
+        },
+        "description": {
+          "expression": "'Name of single glTF animation to be exported'",
+          "is_literal": true,
+          "literal": "Name of single glTF animation to be exported"
+        },
+        "name": {
+          "expression": "'Merged Animation Name'",
+          "is_literal": true,
+          "literal": "Merged Animation Name"
+        }
+      },
+      "line": 720,
+      "name": "export_nla_strips_merged_animation_name",
+      "property_type": "StringProperty",
+      "source": "gltf"
+    },
+    "export_normals": {
+      "declaration": "export_normals: BoolProperty(\n        name='Normals',\n        description='Export vertex normals with meshes',\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Export vertex normals with meshes'",
+          "is_literal": true,
+          "literal": "Export vertex normals with meshes"
+        },
+        "name": {
+          "expression": "'Normals'",
+          "is_literal": true,
+          "literal": "Normals"
+        }
+      },
+      "line": 417,
+      "name": "export_normals",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_optimize_animation_keep_anim_armature": {
+      "declaration": "export_optimize_animation_keep_anim_armature: BoolProperty(\n        name='Force Keeping Channels for Bones',\n        description=(\n            \"If all keyframes are identical in a rig, \"\n            \"force keeping the minimal animation. \"\n            \"When off, all possible channels for \"\n            \"the bones will be exported, even if empty \"\n            \"(minimal animation, 2 keyframes)\"\n        ),\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'If all keyframes are identical in a rig, force keeping the minimal animation. When off, all possible channels for the bones will be exported, even if empty (minimal animation, 2 keyframes)'",
+          "is_literal": true,
+          "literal": "If all keyframes are identical in a rig, force keeping the minimal animation. When off, all possible channels for the bones will be exported, even if empty (minimal animation, 2 keyframes)"
+        },
+        "name": {
+          "expression": "'Force Keeping Channels for Bones'",
+          "is_literal": true,
+          "literal": "Force Keeping Channels for Bones"
+        }
+      },
+      "line": 772,
+      "name": "export_optimize_animation_keep_anim_armature",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_optimize_animation_keep_anim_object": {
+      "declaration": "export_optimize_animation_keep_anim_object: BoolProperty(\n        name='Force Keeping Channel for Objects',\n        description=(\n            \"If all keyframes are identical for object transformations, \"\n            \"force keeping the minimal animation\"\n        ),\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'If all keyframes are identical for object transformations, force keeping the minimal animation'",
+          "is_literal": true,
+          "literal": "If all keyframes are identical for object transformations, force keeping the minimal animation"
+        },
+        "name": {
+          "expression": "'Force Keeping Channel for Objects'",
+          "is_literal": true,
+          "literal": "Force Keeping Channel for Objects"
+        }
+      },
+      "line": 784,
+      "name": "export_optimize_animation_keep_anim_object",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_optimize_animation_size": {
+      "declaration": "export_optimize_animation_size: BoolProperty(\n        name='Optimize Animation Size',\n        description=(\n            \"Reduce exported file size by removing duplicate keyframes\"\n        ),\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Reduce exported file size by removing duplicate keyframes'",
+          "is_literal": true,
+          "literal": "Reduce exported file size by removing duplicate keyframes"
+        },
+        "name": {
+          "expression": "'Optimize Animation Size'",
+          "is_literal": true,
+          "literal": "Optimize Animation Size"
+        }
+      },
+      "line": 764,
+      "name": "export_optimize_animation_size",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_optimize_disable_viewport": {
+      "declaration": "export_optimize_disable_viewport: BoolProperty(\n        name='Disable Viewport for Other Objects',\n        description=(\n            \"When exporting animations, disable viewport for other objects, \"\n            \"for performance\"\n        ),\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'When exporting animations, disable viewport for other objects, for performance'",
+          "is_literal": true,
+          "literal": "When exporting animations, disable viewport for other objects, for performance"
+        },
+        "name": {
+          "expression": "'Disable Viewport for Other Objects'",
+          "is_literal": true,
+          "literal": "Disable Viewport for Other Objects"
+        }
+      },
+      "line": 793,
+      "name": "export_optimize_disable_viewport",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_original_specular": {
+      "declaration": "export_original_specular: BoolProperty(\n        name='Export Original PBR Specular',\n        description=(\n            'Export original glTF PBR Specular, instead of Blender Principled Shader Specular'\n        ),\n        default=False,\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export original glTF PBR Specular, instead of Blender Principled Shader Specular'",
+          "is_literal": true,
+          "literal": "Export original glTF PBR Specular, instead of Blender Principled Shader Specular"
+        },
+        "name": {
+          "expression": "'Export Original PBR Specular'",
+          "is_literal": true,
+          "literal": "Export Original PBR Specular"
+        }
+      },
+      "line": 994,
+      "name": "export_original_specular",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_pointer_animation": {
+      "declaration": "export_pointer_animation: BoolProperty(\n        name='Export Animation Pointer (Experimental)',\n        description='Export material, Light & Camera animation as Animation Pointer. '\n                    'Available only for baked animation mode \\'NLA Tracks\\' and \\'Scene\\'',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "\"Export material, Light & Camera animation as Animation Pointer. Available only for baked animation mode 'NLA Tracks' and 'Scene'\"",
+          "is_literal": true,
+          "literal": "Export material, Light & Camera animation as Animation Pointer. Available only for baked animation mode 'NLA Tracks' and 'Scene'"
+        },
+        "name": {
+          "expression": "'Export Animation Pointer (Experimental)'",
+          "is_literal": true,
+          "literal": "Export Animation Pointer (Experimental)"
+        }
+      },
+      "line": 694,
+      "name": "export_pointer_animation",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_reset_pose_bones": {
+      "declaration": "export_reset_pose_bones: BoolProperty(\n        name='Reset Pose Bones Between Actions',\n        description=(\n            \"Reset pose bones between each action exported. \"\n            \"This is needed when some bones are not keyed on some animations\"\n        ),\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Reset pose bones between each action exported. This is needed when some bones are not keyed on some animations'",
+          "is_literal": true,
+          "literal": "Reset pose bones between each action exported. This is needed when some bones are not keyed on some animations"
+        },
+        "name": {
+          "expression": "'Reset Pose Bones Between Actions'",
+          "is_literal": true,
+          "literal": "Reset Pose Bones Between Actions"
+        }
+      },
+      "line": 851,
+      "name": "export_reset_pose_bones",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_rest_position_armature": {
+      "declaration": "export_rest_position_armature: BoolProperty(\n        name='Use Rest Position Armature',\n        description=(\n            \"Export armatures using rest position as joints' rest pose. \"\n            \"When off, current frame pose is used as rest pose\"\n        ),\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "\"Export armatures using rest position as joints' rest pose. When off, current frame pose is used as rest pose\"",
+          "is_literal": true,
+          "literal": "Export armatures using rest position as joints' rest pose. When off, current frame pose is used as rest pose"
+        },
+        "name": {
+          "expression": "'Use Rest Position Armature'",
+          "is_literal": true,
+          "literal": "Use Rest Position Armature"
+        }
+      },
+      "line": 869,
+      "name": "export_rest_position_armature",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_sampling_interpolation_fallback": {
+      "declaration": "export_sampling_interpolation_fallback: EnumProperty(\n        name='Sampling Interpolation Fallback',\n        items=(('LINEAR', 'Linear', 'Linear interpolation between keyframes'),\n               ('STEP', 'Step', 'No interpolation between keyframes'),\n        ),\n        description='Interpolation fallback for sampled animations, when the property is not keyed',\n        default='LINEAR'\n    )",
+      "declared_default": {
+        "expression": "'LINEAR'",
+        "is_literal": true,
+        "literal": "LINEAR"
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "'LINEAR'",
+          "is_literal": true,
+          "literal": "LINEAR"
+        },
+        "description": {
+          "expression": "'Interpolation fallback for sampled animations, when the property is not keyed'",
+          "is_literal": true,
+          "literal": "Interpolation fallback for sampled animations, when the property is not keyed"
+        },
+        "items": {
+          "expression": "(('LINEAR', 'Linear', 'Linear interpolation between keyframes'), ('STEP', 'Step', 'No interpolation between keyframes'))",
+          "is_literal": true,
+          "literal": [
+            [
+              "LINEAR",
+              "Linear",
+              "Linear interpolation between keyframes"
+            ],
+            [
+              "STEP",
+              "Step",
+              "No interpolation between keyframes"
+            ]
+          ]
+        },
+        "name": {
+          "expression": "'Sampling Interpolation Fallback'",
+          "is_literal": true,
+          "literal": "Sampling Interpolation Fallback"
+        }
+      },
+      "line": 685,
+      "name": "export_sampling_interpolation_fallback",
+      "property_type": "EnumProperty",
+      "source": "gltf"
+    },
+    "export_shared_accessors": {
+      "declaration": "export_shared_accessors: BoolProperty(\n        name='Shared Accessors',\n        description='Export Primitives using shared accessors for attributes',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export Primitives using shared accessors for attributes'",
+          "is_literal": true,
+          "literal": "Export Primitives using shared accessors for attributes"
+        },
+        "name": {
+          "expression": "'Shared Accessors'",
+          "is_literal": true,
+          "literal": "Shared Accessors"
+        }
+      },
+      "line": 653,
+      "name": "export_shared_accessors",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_skins": {
+      "declaration": "export_skins: BoolProperty(\n        name='Skinning',\n        description='Export skinning (armature) data',\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Export skinning (armature) data'",
+          "is_literal": true,
+          "literal": "Export skinning (armature) data"
+        },
+        "name": {
+          "expression": "'Skinning'",
+          "is_literal": true,
+          "literal": "Skinning"
+        }
+      },
+      "line": 887,
+      "name": "export_skins",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_tangents": {
+      "declaration": "export_tangents: BoolProperty(\n        name='Tangents',\n        description='Export vertex tangents with meshes',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export vertex tangents with meshes'",
+          "is_literal": true,
+          "literal": "Export vertex tangents with meshes"
+        },
+        "name": {
+          "expression": "'Tangents'",
+          "is_literal": true,
+          "literal": "Tangents"
+        }
+      },
+      "line": 483,
+      "name": "export_tangents",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_texcoords": {
+      "declaration": "export_texcoords: BoolProperty(\n        name='UVs',\n        description='Export UVs (texture coordinates) with meshes',\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Export UVs (texture coordinates) with meshes'",
+          "is_literal": true,
+          "literal": "Export UVs (texture coordinates) with meshes"
+        },
+        "name": {
+          "expression": "'UVs'",
+          "is_literal": true,
+          "literal": "UVs"
+        }
+      },
+      "line": 411,
+      "name": "export_texcoords",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_texture_dir": {
+      "declaration": "export_texture_dir: StringProperty(\n        name='Textures',\n        description='Folder to place texture files in. Relative to the .gltf file',\n        default='',\n    )",
+      "declared_default": {
+        "expression": "''",
+        "is_literal": true,
+        "literal": ""
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "''",
+          "is_literal": true,
+          "literal": ""
+        },
+        "description": {
+          "expression": "'Folder to place texture files in. Relative to the .gltf file'",
+          "is_literal": true,
+          "literal": "Folder to place texture files in. Relative to the .gltf file"
+        },
+        "name": {
+          "expression": "'Textures'",
+          "is_literal": true,
+          "literal": "Textures"
+        }
+      },
+      "line": 377,
+      "name": "export_texture_dir",
+      "property_type": "StringProperty",
+      "source": "gltf"
+    },
+    "export_try_omit_sparse_sk": {
+      "declaration": "export_try_omit_sparse_sk: BoolProperty(\n        name='Omitting Sparse Accessor if Data is Empty',\n        description='Omitting Sparse Accessor if data is empty',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Omitting Sparse Accessor if data is empty'",
+          "is_literal": true,
+          "literal": "Omitting Sparse Accessor if data is empty"
+        },
+        "name": {
+          "expression": "'Omitting Sparse Accessor if Data is Empty'",
+          "is_literal": true,
+          "literal": "Omitting Sparse Accessor if Data is Empty"
+        }
+      },
+      "line": 952,
+      "name": "export_try_omit_sparse_sk",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_try_sparse_sk": {
+      "declaration": "export_try_sparse_sk: BoolProperty(\n        name='Use Sparse Accessor if Better',\n        description='Try using Sparse Accessor if it saves space',\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Try using Sparse Accessor if it saves space'",
+          "is_literal": true,
+          "literal": "Try using Sparse Accessor if it saves space"
+        },
+        "name": {
+          "expression": "'Use Sparse Accessor if Better'",
+          "is_literal": true,
+          "literal": "Use Sparse Accessor if Better"
+        }
+      },
+      "line": 946,
+      "name": "export_try_sparse_sk",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_unused_images": {
+      "declaration": "export_unused_images: BoolProperty(\n        name='Unused Images',\n        description='Export images not assigned to any material',\n        default=False)",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export images not assigned to any material'",
+          "is_literal": true,
+          "literal": "Export images not assigned to any material"
+        },
+        "name": {
+          "expression": "'Unused Images'",
+          "is_literal": true,
+          "literal": "Unused Images"
+        }
+      },
+      "line": 507,
+      "name": "export_unused_images",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_unused_textures": {
+      "declaration": "export_unused_textures: BoolProperty(\n        name='Prepare Unused Textures',\n        description=(\n            'Export image texture nodes not assigned to any material. '\n            'This feature is not standard and needs an external extension to be included in the glTF file'\n        ),\n        default=False)",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export image texture nodes not assigned to any material. This feature is not standard and needs an external extension to be included in the glTF file'",
+          "is_literal": true,
+          "literal": "Export image texture nodes not assigned to any material. This feature is not standard and needs an external extension to be included in the glTF file"
+        },
+        "name": {
+          "expression": "'Prepare Unused Textures'",
+          "is_literal": true,
+          "literal": "Prepare Unused Textures"
+        }
+      },
+      "line": 512,
+      "name": "export_unused_textures",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_use_gltfpack": {
+      "declaration": "export_use_gltfpack: BoolProperty(\n        name='Use Gltfpack',\n        description='Use gltfpack to simplify the mesh and/or compress its textures',\n        default=False,\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Use gltfpack to simplify the mesh and/or compress its textures'",
+          "is_literal": true,
+          "literal": "Use gltfpack to simplify the mesh and/or compress its textures"
+        },
+        "name": {
+          "expression": "'Use Gltfpack'",
+          "is_literal": true,
+          "literal": "Use Gltfpack"
+        }
+      },
+      "line": 213,
+      "name": "export_use_gltfpack",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_vertex_color": {
+      "declaration": "export_vertex_color: EnumProperty(\n        name='Use Vertex Color',\n        items=(\n            ('MATERIAL', 'Material',\n             'Export vertex color when used by material'),\n            ('ACTIVE', 'Active',\n             'Export active vertex color'),\n            ('NAME', 'Name',\n             'Export vertex color with this name'),\n            ('NONE', 'None',\n             'Do not export vertex color')),\n        description='How to export vertex color',\n        default='MATERIAL'\n    )",
+      "declared_default": {
+        "expression": "'MATERIAL'",
+        "is_literal": true,
+        "literal": "MATERIAL"
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "'MATERIAL'",
+          "is_literal": true,
+          "literal": "MATERIAL"
+        },
+        "description": {
+          "expression": "'How to export vertex color'",
+          "is_literal": true,
+          "literal": "How to export vertex color"
+        },
+        "items": {
+          "expression": "(('MATERIAL', 'Material', 'Export vertex color when used by material'), ('ACTIVE', 'Active', 'Export active vertex color'), ('NAME', 'Name', 'Export vertex color with this name'), ('NONE', 'None', 'Do not export vertex color'))",
+          "is_literal": true,
+          "literal": [
+            [
+              "MATERIAL",
+              "Material",
+              "Export vertex color when used by material"
+            ],
+            [
+              "ACTIVE",
+              "Active",
+              "Export active vertex color"
+            ],
+            [
+              "NAME",
+              "Name",
+              "Export vertex color with this name"
+            ],
+            [
+              "NONE",
+              "None",
+              "Do not export vertex color"
+            ]
+          ]
+        },
+        "name": {
+          "expression": "'Use Vertex Color'",
+          "is_literal": true,
+          "literal": "Use Vertex Color"
+        }
+      },
+      "line": 520,
+      "name": "export_vertex_color",
+      "property_type": "EnumProperty",
+      "source": "gltf"
+    },
+    "export_vertex_color_name": {
+      "declaration": "export_vertex_color_name: StringProperty(\n        name='Vertex Color Name',\n        description='Name of vertex color to export',\n        default='Color'\n    )",
+      "declared_default": {
+        "expression": "'Color'",
+        "is_literal": true,
+        "literal": "Color"
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "'Color'",
+          "is_literal": true,
+          "literal": "Color"
+        },
+        "description": {
+          "expression": "'Name of vertex color to export'",
+          "is_literal": true,
+          "literal": "Name of vertex color to export"
+        },
+        "name": {
+          "expression": "'Vertex Color Name'",
+          "is_literal": true,
+          "literal": "Vertex Color Name"
+        }
+      },
+      "line": 535,
+      "name": "export_vertex_color_name",
+      "property_type": "StringProperty",
+      "source": "gltf"
+    },
+    "export_yup": {
+      "declaration": "export_yup: BoolProperty(\n        name='+Y Up',\n        description='Export using glTF convention, +Y up',\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Export using glTF convention, +Y up'",
+          "is_literal": true,
+          "literal": "Export using glTF convention, +Y up"
+        },
+        "name": {
+          "expression": "'+Y Up'",
+          "is_literal": true,
+          "literal": "+Y Up"
+        }
+      },
+      "line": 640,
+      "name": "export_yup",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "filepath": {
+      "declaration": "filepath: StringProperty(\n        name=\"File Path\",\n        description=\"Filepath used for exporting the file\",\n        maxlen=1024,\n        subtype='FILE_PATH',\n    )",
+      "declaring_class": "ExportHelper",
+      "default_declared": false,
+      "keywords": {
+        "description": {
+          "expression": "'Filepath used for exporting the file'",
+          "is_literal": true,
+          "literal": "Filepath used for exporting the file"
+        },
+        "maxlen": {
+          "expression": "1024",
+          "is_literal": true,
+          "literal": 1024
+        },
+        "name": {
+          "expression": "'File Path'",
+          "is_literal": true,
+          "literal": "File Path"
+        },
+        "subtype": {
+          "expression": "'FILE_PATH'",
+          "is_literal": true,
+          "literal": "FILE_PATH"
+        }
+      },
+      "line": 45,
+      "name": "filepath",
+      "property_type": "StringProperty",
+      "source": "io_utils"
+    },
+    "filter_glob": {
+      "declaration": "filter_glob: StringProperty(default='*.glb', options={'HIDDEN'})",
+      "declared_default": {
+        "expression": "'*.glb'",
+        "is_literal": true,
+        "literal": "*.glb"
+      },
+      "declaring_class": "ExportGLTF2",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "'*.glb'",
+          "is_literal": true,
+          "literal": "*.glb"
+        },
+        "options": {
+          "expression": "{'HIDDEN'}",
+          "is_literal": true,
+          "literal": [
+            "HIDDEN"
+          ]
+        }
+      },
+      "line": 1839,
+      "name": "filter_glob",
+      "property_type": "StringProperty",
+      "source": "gltf"
+    },
+    "gltf_export_id": {
+      "declaration": "gltf_export_id: StringProperty(\n        name='Identifier',\n        description=(\n            'Identifier of caller (in case of add-on calling this exporter). '\n            'Can be useful in case of Extension added by other add-ons'\n        ),\n        default=''\n    )",
+      "declared_default": {
+        "expression": "''",
+        "is_literal": true,
+        "literal": ""
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "''",
+          "is_literal": true,
+          "literal": ""
+        },
+        "description": {
+          "expression": "'Identifier of caller (in case of add-on calling this exporter). Can be useful in case of Extension added by other add-ons'",
+          "is_literal": true,
+          "literal": "Identifier of caller (in case of add-on calling this exporter). Can be useful in case of Extension added by other add-ons"
+        },
+        "name": {
+          "expression": "'Identifier'",
+          "is_literal": true,
+          "literal": "Identifier"
+        }
+      },
+      "line": 203,
+      "name": "gltf_export_id",
+      "property_type": "StringProperty",
+      "source": "gltf"
+    },
+    "ui_tab": {
+      "declaration": "ui_tab: EnumProperty(\n        items=(('GENERAL', \"General\", \"General settings\"),\n               ('MESHES', \"Meshes\", \"Mesh settings\"),\n               ('OBJECTS', \"Objects\", \"Object settings\"),\n               ('ANIMATION', \"Animation\", \"Animation settings\")),\n        name=\"ui_tab\",\n        description=\"Export setting categories\",\n    )",
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": false,
+      "keywords": {
+        "description": {
+          "expression": "'Export setting categories'",
+          "is_literal": true,
+          "literal": "Export setting categories"
+        },
+        "items": {
+          "expression": "(('GENERAL', 'General', 'General settings'), ('MESHES', 'Meshes', 'Mesh settings'), ('OBJECTS', 'Objects', 'Object settings'), ('ANIMATION', 'Animation', 'Animation settings'))",
+          "is_literal": true,
+          "literal": [
+            [
+              "GENERAL",
+              "General",
+              "General settings"
+            ],
+            [
+              "MESHES",
+              "Meshes",
+              "Mesh settings"
+            ],
+            [
+              "OBJECTS",
+              "Objects",
+              "Object settings"
+            ],
+            [
+              "ANIMATION",
+              "Animation",
+              "Animation settings"
+            ]
+          ]
+        },
+        "name": {
+          "expression": "'ui_tab'",
+          "is_literal": true,
+          "literal": "ui_tab"
+        }
+      },
+      "line": 325,
+      "name": "ui_tab",
+      "property_type": "EnumProperty",
+      "source": "gltf"
+    },
+    "use_active_collection": {
+      "declaration": "use_active_collection: BoolProperty(\n        name='Active Collection',\n        description='Export objects in the active collection only',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export objects in the active collection only'",
+          "is_literal": true,
+          "literal": "Export objects in the active collection only"
+        },
+        "name": {
+          "expression": "'Active Collection'",
+          "is_literal": true,
+          "literal": "Active Collection"
+        }
+      },
+      "line": 609,
+      "name": "use_active_collection",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "use_active_collection_with_nested": {
+      "declaration": "use_active_collection_with_nested: BoolProperty(\n        name='Include Nested Collections',\n        description='Include active collection and nested collections',\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Include active collection and nested collections'",
+          "is_literal": true,
+          "literal": "Include active collection and nested collections"
+        },
+        "name": {
+          "expression": "'Include Nested Collections'",
+          "is_literal": true,
+          "literal": "Include Nested Collections"
+        }
+      },
+      "line": 603,
+      "name": "use_active_collection_with_nested",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "use_active_scene": {
+      "declaration": "use_active_scene: BoolProperty(\n        name='Active Scene',\n        description='Export active scene only',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export active scene only'",
+          "is_literal": true,
+          "literal": "Export active scene only"
+        },
+        "name": {
+          "expression": "'Active Scene'",
+          "is_literal": true,
+          "literal": "Active Scene"
+        }
+      },
+      "line": 615,
+      "name": "use_active_scene",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "use_mesh_edges": {
+      "declaration": "use_mesh_edges: BoolProperty(\n        name='Loose Edges',\n        description=(\n            'Export loose edges as lines, using the material from the first material slot'\n        ),\n        default=False,\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export loose edges as lines, using the material from the first material slot'",
+          "is_literal": true,
+          "literal": "Export loose edges as lines, using the material from the first material slot"
+        },
+        "name": {
+          "expression": "'Loose Edges'",
+          "is_literal": true,
+          "literal": "Loose Edges"
+        }
+      },
+      "line": 563,
+      "name": "use_mesh_edges",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "use_mesh_vertices": {
+      "declaration": "use_mesh_vertices: BoolProperty(\n        name='Loose Points',\n        description=(\n            'Export loose points as glTF points, using the material from the first material slot'\n        ),\n        default=False,\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export loose points as glTF points, using the material from the first material slot'",
+          "is_literal": true,
+          "literal": "Export loose points as glTF points, using the material from the first material slot"
+        },
+        "name": {
+          "expression": "'Loose Points'",
+          "is_literal": true,
+          "literal": "Loose Points"
+        }
+      },
+      "line": 571,
+      "name": "use_mesh_vertices",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "use_renderable": {
+      "declaration": "use_renderable: BoolProperty(\n        name='Renderable Objects',\n        description='Export renderable objects only',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export renderable objects only'",
+          "is_literal": true,
+          "literal": "Export renderable objects only"
+        },
+        "name": {
+          "expression": "'Renderable Objects'",
+          "is_literal": true,
+          "literal": "Renderable Objects"
+        }
+      },
+      "line": 597,
+      "name": "use_renderable",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "use_selection": {
+      "declaration": "use_selection: BoolProperty(\n        name='Selected Objects',\n        description='Export selected objects only',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export selected objects only'",
+          "is_literal": true,
+          "literal": "Export selected objects only"
+        },
+        "name": {
+          "expression": "'Selected Objects'",
+          "is_literal": true,
+          "literal": "Selected Objects"
+        }
+      },
+      "line": 585,
+      "name": "use_selection",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "use_visible": {
+      "declaration": "use_visible: BoolProperty(\n        name='Visible Objects',\n        description='Export visible objects only',\n        default=False\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Export visible objects only'",
+          "is_literal": true,
+          "literal": "Export visible objects only"
+        },
+        "name": {
+          "expression": "'Visible Objects'",
+          "is_literal": true,
+          "literal": "Visible Objects"
+        }
+      },
+      "line": 591,
+      "name": "use_visible",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "will_save_settings": {
+      "declaration": "will_save_settings: BoolProperty(\n        name='Remember Export Settings',\n        description='Store glTF export settings in the Blender project',\n        default=False)",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ExportGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Store glTF export settings in the Blender project'",
+          "is_literal": true,
+          "literal": "Store glTF export settings in the Blender project"
+        },
+        "name": {
+          "expression": "'Remember Export Settings'",
+          "is_literal": true,
+          "literal": "Remember Export Settings"
+        }
+      },
+      "line": 1002,
+      "name": "will_save_settings",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    }
+  },
+  "import": {
+    "bone_heuristic": {
+      "declaration": "bone_heuristic: EnumProperty(\n        name=\"Bone Dir\",\n        items=(\n            (\"BLENDER\", \"Blender (best for import/export round trip)\",\n                \"Good for re-importing glTFs exported from Blender, \"\n                \"and re-exporting glTFs to glTFs after Blender editing. \"\n                \"Bone tips are placed on their local +Y axis (in glTF space)\"),\n            (\"TEMPERANCE\", \"Temperance (average)\",\n                \"Decent all-around strategy. \"\n                \"A bone with one child has its tip placed on the local axis \"\n                \"closest to its child\"),\n            (\"FORTUNE\", \"Fortune (may look better, less accurate)\",\n                \"Might look better than Temperance, but also might have errors. \"\n                \"A bone with one child has its tip placed at its child's root. \"\n                \"Non-uniform scalings may get messed up though, so beware\"),\n        ),\n        description=\"Heuristic for placing bones. Tries to make bones pretty\",\n        default=\"BLENDER\",\n    )",
+      "declared_default": {
+        "expression": "'BLENDER'",
+        "is_literal": true,
+        "literal": "BLENDER"
+      },
+      "declaring_class": "ImportGLTF2",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "'BLENDER'",
+          "is_literal": true,
+          "literal": "BLENDER"
+        },
+        "description": {
+          "expression": "'Heuristic for placing bones. Tries to make bones pretty'",
+          "is_literal": true,
+          "literal": "Heuristic for placing bones. Tries to make bones pretty"
+        },
+        "items": {
+          "expression": "(('BLENDER', 'Blender (best for import/export round trip)', 'Good for re-importing glTFs exported from Blender, and re-exporting glTFs to glTFs after Blender editing. Bone tips are placed on their local +Y axis (in glTF space)'), ('TEMPERANCE', 'Temperance (average)', 'Decent all-around strategy. A bone with one child has its tip placed on the local axis closest to its child'), ('FORTUNE', 'Fortune (may look better, less accurate)', \"Might look better than Temperance, but also might have errors. A bone with one child has its tip placed at its child's root. Non-uniform scalings may get messed up though, so beware\"))",
+          "is_literal": true,
+          "literal": [
+            [
+              "BLENDER",
+              "Blender (best for import/export round trip)",
+              "Good for re-importing glTFs exported from Blender, and re-exporting glTFs to glTFs after Blender editing. Bone tips are placed on their local +Y axis (in glTF space)"
+            ],
+            [
+              "TEMPERANCE",
+              "Temperance (average)",
+              "Decent all-around strategy. A bone with one child has its tip placed on the local axis closest to its child"
+            ],
+            [
+              "FORTUNE",
+              "Fortune (may look better, less accurate)",
+              "Might look better than Temperance, but also might have errors. A bone with one child has its tip placed at its child's root. Non-uniform scalings may get messed up though, so beware"
+            ]
+          ]
+        },
+        "name": {
+          "expression": "'Bone Dir'",
+          "is_literal": true,
+          "literal": "Bone Dir"
+        }
+      },
+      "line": 1894,
+      "name": "bone_heuristic",
+      "property_type": "EnumProperty",
+      "source": "gltf"
+    },
+    "bone_shape_scale_factor": {
+      "declaration": "bone_shape_scale_factor: FloatProperty(\n        name='Bone Shape Scale',\n        description='Scale factor for bone shapes',\n        default=1.0,\n    )",
+      "declared_default": {
+        "expression": "1.0",
+        "is_literal": true,
+        "literal": 1.0
+      },
+      "declaring_class": "ImportGLTF2",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "1.0",
+          "is_literal": true,
+          "literal": 1.0
+        },
+        "description": {
+          "expression": "'Scale factor for bone shapes'",
+          "is_literal": true,
+          "literal": "Scale factor for bone shapes"
+        },
+        "name": {
+          "expression": "'Bone Shape Scale'",
+          "is_literal": true,
+          "literal": "Bone Shape Scale"
+        }
+      },
+      "line": 1920,
+      "name": "bone_shape_scale_factor",
+      "property_type": "FloatProperty",
+      "source": "gltf"
+    },
+    "directory": {
+      "declaration": "directory: StringProperty(\n        subtype='DIR_PATH',\n        options={'HIDDEN', 'SKIP_PRESET'},\n    )",
+      "declaring_class": "ImportGLTF2",
+      "default_declared": false,
+      "keywords": {
+        "options": {
+          "expression": "{'HIDDEN', 'SKIP_PRESET'}",
+          "is_literal": true,
+          "literal": [
+            "HIDDEN",
+            "SKIP_PRESET"
+          ]
+        },
+        "subtype": {
+          "expression": "'DIR_PATH'",
+          "is_literal": true,
+          "literal": "DIR_PATH"
+        }
+      },
+      "line": 1854,
+      "name": "directory",
+      "property_type": "StringProperty",
+      "source": "gltf"
+    },
+    "disable_bone_shape": {
+      "declaration": "disable_bone_shape: BoolProperty(\n        name='Disable Bone Shape',\n        description='Do not create bone shapes',\n        default=False,\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ImportGLTF2",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Do not create bone shapes'",
+          "is_literal": true,
+          "literal": "Do not create bone shapes"
+        },
+        "name": {
+          "expression": "'Disable Bone Shape'",
+          "is_literal": true,
+          "literal": "Disable Bone Shape"
+        }
+      },
+      "line": 1914,
+      "name": "disable_bone_shape",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "export_import_convert_lighting_mode": {
+      "declaration": "export_import_convert_lighting_mode: EnumProperty(\n        name='Lighting Mode',\n        items=(\n            ('SPEC', 'Standard', 'Physically-based glTF lighting units (cd, lx, nt)'),\n            ('COMPAT', 'Unitless', 'Non-physical, unitless lighting. Useful when exposure controls are not available'),\n            ('RAW', 'Raw (Deprecated)', 'Blender lighting strengths with no conversion'),\n        ),\n        description='Optional backwards compatibility for non-standard render engines. Applies to lights',  # TODO: and emissive materials',\n        default='SPEC'\n    )",
+      "declared_default": {
+        "expression": "'SPEC'",
+        "is_literal": true,
+        "literal": "SPEC"
+      },
+      "declaring_class": "ConvertGLTF2_Base",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "'SPEC'",
+          "is_literal": true,
+          "literal": "SPEC"
+        },
+        "description": {
+          "expression": "'Optional backwards compatibility for non-standard render engines. Applies to lights'",
+          "is_literal": true,
+          "literal": "Optional backwards compatibility for non-standard render engines. Applies to lights"
+        },
+        "items": {
+          "expression": "(('SPEC', 'Standard', 'Physically-based glTF lighting units (cd, lx, nt)'), ('COMPAT', 'Unitless', 'Non-physical, unitless lighting. Useful when exposure controls are not available'), ('RAW', 'Raw (Deprecated)', 'Blender lighting strengths with no conversion'))",
+          "is_literal": true,
+          "literal": [
+            [
+              "SPEC",
+              "Standard",
+              "Physically-based glTF lighting units (cd, lx, nt)"
+            ],
+            [
+              "COMPAT",
+              "Unitless",
+              "Non-physical, unitless lighting. Useful when exposure controls are not available"
+            ],
+            [
+              "RAW",
+              "Raw (Deprecated)",
+              "Blender lighting strengths with no conversion"
+            ]
+          ]
+        },
+        "name": {
+          "expression": "'Lighting Mode'",
+          "is_literal": true,
+          "literal": "Lighting Mode"
+        }
+      },
+      "line": 185,
+      "name": "export_import_convert_lighting_mode",
+      "property_type": "EnumProperty",
+      "source": "gltf"
+    },
+    "filepath": {
+      "declaration": "filepath: StringProperty(\n        name=\"File Path\",\n        description=\"Filepath used for importing the file\",\n        maxlen=1024,\n        subtype='FILE_PATH',\n        options={'SKIP_PRESET', 'HIDDEN'}\n    )",
+      "declaring_class": "ImportHelper",
+      "default_declared": false,
+      "keywords": {
+        "description": {
+          "expression": "'Filepath used for importing the file'",
+          "is_literal": true,
+          "literal": "Filepath used for importing the file"
+        },
+        "maxlen": {
+          "expression": "1024",
+          "is_literal": true,
+          "literal": 1024
+        },
+        "name": {
+          "expression": "'File Path'",
+          "is_literal": true,
+          "literal": "File Path"
+        },
+        "options": {
+          "expression": "{'SKIP_PRESET', 'HIDDEN'}",
+          "is_literal": true,
+          "literal": [
+            "HIDDEN",
+            "SKIP_PRESET"
+          ]
+        },
+        "subtype": {
+          "expression": "'FILE_PATH'",
+          "is_literal": true,
+          "literal": "FILE_PATH"
+        }
+      },
+      "line": 99,
+      "name": "filepath",
+      "property_type": "StringProperty",
+      "source": "io_utils"
+    },
+    "files": {
+      "declaration": "files: CollectionProperty(\n        name=\"File Path\",\n        type=bpy.types.OperatorFileListElement,\n    )",
+      "declaring_class": "ImportGLTF2",
+      "default_declared": false,
+      "keywords": {
+        "name": {
+          "expression": "'File Path'",
+          "is_literal": true,
+          "literal": "File Path"
+        },
+        "type": {
+          "expression": "bpy.types.OperatorFileListElement",
+          "is_literal": false
+        }
+      },
+      "line": 1859,
+      "name": "files",
+      "property_type": "CollectionProperty",
+      "source": "gltf"
+    },
+    "filter_glob": {
+      "declaration": "filter_glob: StringProperty(default=\"*.glb;*.gltf\", options={'HIDDEN'})",
+      "declared_default": {
+        "expression": "'*.glb;*.gltf'",
+        "is_literal": true,
+        "literal": "*.glb;*.gltf"
+      },
+      "declaring_class": "ImportGLTF2",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "'*.glb;*.gltf'",
+          "is_literal": true,
+          "literal": "*.glb;*.gltf"
+        },
+        "options": {
+          "expression": "{'HIDDEN'}",
+          "is_literal": true,
+          "literal": [
+            "HIDDEN"
+          ]
+        }
+      },
+      "line": 1852,
+      "name": "filter_glob",
+      "property_type": "StringProperty",
+      "source": "gltf"
+    },
+    "guess_original_bind_pose": {
+      "declaration": "guess_original_bind_pose: BoolProperty(\n        name='Guess Original Bind Pose',\n        description=(\n            'Try to guess the original bind pose for skinned meshes from '\n            'the inverse bind matrices. '\n            'When off, use default/rest pose as bind pose'\n        ),\n        default=True,\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ImportGLTF2",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Try to guess the original bind pose for skinned meshes from the inverse bind matrices. When off, use default/rest pose as bind pose'",
+          "is_literal": true,
+          "literal": "Try to guess the original bind pose for skinned meshes from the inverse bind matrices. When off, use default/rest pose as bind pose"
+        },
+        "name": {
+          "expression": "'Guess Original Bind Pose'",
+          "is_literal": true,
+          "literal": "Guess Original Bind Pose"
+        }
+      },
+      "line": 1926,
+      "name": "guess_original_bind_pose",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "import_merge_material_slots": {
+      "declaration": "import_merge_material_slots: BoolProperty(\n        name='Merge Material Slot when possible',\n        description='Merge material slots when possible',\n        default=True,\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ImportGLTF2",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Merge material slots when possible'",
+          "is_literal": true,
+          "literal": "Merge material slots when possible"
+        },
+        "name": {
+          "expression": "'Merge Material Slot when possible'",
+          "is_literal": true,
+          "literal": "Merge Material Slot when possible"
+        }
+      },
+      "line": 1970,
+      "name": "import_merge_material_slots",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "import_pack_images": {
+      "declaration": "import_pack_images: BoolProperty(\n        name='Pack Images',\n        description='Pack all images into .blend file',\n        default=True\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ImportGLTF2",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Pack all images into .blend file'",
+          "is_literal": true,
+          "literal": "Pack all images into .blend file"
+        },
+        "name": {
+          "expression": "'Pack Images'",
+          "is_literal": true,
+          "literal": "Pack Images"
+        }
+      },
+      "line": 1868,
+      "name": "import_pack_images",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "import_scene_as_collection": {
+      "declaration": "import_scene_as_collection: BoolProperty(\n        name='Import Scene as Collection',\n        description='Import the scene as a collection',\n        default=True,\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ImportGLTF2",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Import the scene as a collection'",
+          "is_literal": true,
+          "literal": "Import the scene as a collection"
+        },
+        "name": {
+          "expression": "'Import Scene as Collection'",
+          "is_literal": true,
+          "literal": "Import Scene as Collection"
+        }
+      },
+      "line": 1964,
+      "name": "import_scene_as_collection",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "import_scene_extras": {
+      "declaration": "import_scene_extras: BoolProperty(\n        name='Import Scene Extras',\n        description='Import scene extras as custom properties. '\n                    'Existing custom properties will be overwritten',\n        default=True,\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ImportGLTF2",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Import scene extras as custom properties. Existing custom properties will be overwritten'",
+          "is_literal": true,
+          "literal": "Import scene extras as custom properties. Existing custom properties will be overwritten"
+        },
+        "name": {
+          "expression": "'Import Scene Extras'",
+          "is_literal": true,
+          "literal": "Import Scene Extras"
+        }
+      },
+      "line": 1957,
+      "name": "import_scene_extras",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "import_select_created_objects": {
+      "declaration": "import_select_created_objects: BoolProperty(\n        name='Select Imported Objects',\n        description='Select created objects at the end of the import',\n        default=True,\n    )",
+      "declared_default": {
+        "expression": "True",
+        "is_literal": true,
+        "literal": true
+      },
+      "declaring_class": "ImportGLTF2",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "True",
+          "is_literal": true,
+          "literal": true
+        },
+        "description": {
+          "expression": "'Select created objects at the end of the import'",
+          "is_literal": true,
+          "literal": "Select created objects at the end of the import"
+        },
+        "name": {
+          "expression": "'Select Imported Objects'",
+          "is_literal": true,
+          "literal": "Select Imported Objects"
+        }
+      },
+      "line": 1951,
+      "name": "import_select_created_objects",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "import_shading": {
+      "declaration": "import_shading: EnumProperty(\n        name=\"Shading\",\n        items=((\"NORMALS\", \"Use Normal Data\", \"\"),\n               (\"FLAT\", \"Flat Shading\", \"\"),\n               (\"SMOOTH\", \"Smooth Shading\", \"\")),\n        description=\"How normals are computed during import\",\n        default=\"NORMALS\")",
+      "declared_default": {
+        "expression": "'NORMALS'",
+        "is_literal": true,
+        "literal": "NORMALS"
+      },
+      "declaring_class": "ImportGLTF2",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "'NORMALS'",
+          "is_literal": true,
+          "literal": "NORMALS"
+        },
+        "description": {
+          "expression": "'How normals are computed during import'",
+          "is_literal": true,
+          "literal": "How normals are computed during import"
+        },
+        "items": {
+          "expression": "(('NORMALS', 'Use Normal Data', ''), ('FLAT', 'Flat Shading', ''), ('SMOOTH', 'Smooth Shading', ''))",
+          "is_literal": true,
+          "literal": [
+            [
+              "NORMALS",
+              "Use Normal Data",
+              ""
+            ],
+            [
+              "FLAT",
+              "Flat Shading",
+              ""
+            ],
+            [
+              "SMOOTH",
+              "Smooth Shading",
+              ""
+            ]
+          ]
+        },
+        "name": {
+          "expression": "'Shading'",
+          "is_literal": true,
+          "literal": "Shading"
+        }
+      },
+      "line": 1886,
+      "name": "import_shading",
+      "property_type": "EnumProperty",
+      "source": "gltf"
+    },
+    "import_unused_materials": {
+      "declaration": "import_unused_materials: BoolProperty(\n        name='Import Unused Materials & Images',\n        description='Import materials & Images not assigned to any mesh',\n        default=False,\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ImportGLTF2",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'Import materials & Images not assigned to any mesh'",
+          "is_literal": true,
+          "literal": "Import materials & Images not assigned to any mesh"
+        },
+        "name": {
+          "expression": "'Import Unused Materials & Images'",
+          "is_literal": true,
+          "literal": "Import Unused Materials & Images"
+        }
+      },
+      "line": 1945,
+      "name": "import_unused_materials",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "import_webp_texture": {
+      "declaration": "import_webp_texture: BoolProperty(\n        name='Import WebP Textures',\n        description=(\n            \"If a texture exists in WebP format, \"\n            \"loads the WebP texture instead of the fallback PNG/JPEG one\"\n        ),\n        default=False,\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ImportGLTF2",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'If a texture exists in WebP format, loads the WebP texture instead of the fallback PNG/JPEG one'",
+          "is_literal": true,
+          "literal": "If a texture exists in WebP format, loads the WebP texture instead of the fallback PNG/JPEG one"
+        },
+        "name": {
+          "expression": "'Import WebP Textures'",
+          "is_literal": true,
+          "literal": "Import WebP Textures"
+        }
+      },
+      "line": 1936,
+      "name": "import_webp_texture",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    },
+    "loglevel": {
+      "declaration": "loglevel: IntProperty(\n        name='Log Level',\n        description=\"Log Level\")",
+      "declaring_class": "ImportGLTF2",
+      "default_declared": false,
+      "keywords": {
+        "description": {
+          "expression": "'Log Level'",
+          "is_literal": true,
+          "literal": "Log Level"
+        },
+        "name": {
+          "expression": "'Log Level'",
+          "is_literal": true,
+          "literal": "Log Level"
+        }
+      },
+      "line": 1864,
+      "name": "loglevel",
+      "property_type": "IntProperty",
+      "source": "gltf"
+    },
+    "merge_vertices": {
+      "declaration": "merge_vertices: BoolProperty(\n        name='Merge Vertices',\n        description=(\n            'The glTF format requires discontinuous normals, UVs, and '\n            'other vertex attributes to be stored as separate vertices, '\n            'as required for rendering on typical graphics hardware. '\n            'This option attempts to combine co-located vertices where possible. '\n            'Currently cannot combine verts with different normals'\n        ),\n        default=False,\n    )",
+      "declared_default": {
+        "expression": "False",
+        "is_literal": true,
+        "literal": false
+      },
+      "declaring_class": "ImportGLTF2",
+      "default_declared": true,
+      "keywords": {
+        "default": {
+          "expression": "False",
+          "is_literal": true,
+          "literal": false
+        },
+        "description": {
+          "expression": "'The glTF format requires discontinuous normals, UVs, and other vertex attributes to be stored as separate vertices, as required for rendering on typical graphics hardware. This option attempts to combine co-located vertices where possible. Currently cannot combine verts with different normals'",
+          "is_literal": true,
+          "literal": "The glTF format requires discontinuous normals, UVs, and other vertex attributes to be stored as separate vertices, as required for rendering on typical graphics hardware. This option attempts to combine co-located vertices where possible. Currently cannot combine verts with different normals"
+        },
+        "name": {
+          "expression": "'Merge Vertices'",
+          "is_literal": true,
+          "literal": "Merge Vertices"
+        }
+      },
+      "line": 1874,
+      "name": "merge_vertices",
+      "property_type": "BoolProperty",
+      "source": "gltf"
+    }
+  },
+  "limitations": [
+    "Maps declared inherited Python operator properties. Does not claim a dynamically observed RNA property dump.",
+    "Omitted defaults remain explicitly unidentified in the declared-default record.",
+    "export_format uses dynamic callback items and declared numeric default 0. get_format_items lists GLB first; explicit invocation should use GLB.",
+    "execute methods may derive internal exporter options from these operator inputs; those method bytes are pinned with the whole archive."
+  ],
+  "method": "AST inspection only; no bpy import or Blender execution",
+  "schema": "ontokin.c199.static-operator-inventory/0.1",
+  "sources": [
+    {
+      "bytes": 84361,
+      "name": "gltf",
+      "path": "/workspace/scratch/801d9d641f68/deps/blender-4.5.3-linux-x64/4.5/scripts/addons_core/io_scene_gltf2/__init__.py",
+      "sha256": "82428a0415e11c27a285fd950f63e874add5ba2f8bacc6806ed762614560fa2e"
+    },
+    {
+      "bytes": 22619,
+      "name": "io_utils",
+      "path": "/workspace/scratch/801d9d641f68/deps/blender-4.5.3-linux-x64/4.5/scripts/modules/bpy_extras/io_utils.py",
+      "sha256": "0e57763894fd49ca3828668fd8bcac8ac670d02c73c6b0c63216b4314564818a"
+    }
+  ]
+}

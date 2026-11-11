@@ -1,0 +1,32 @@
+{
+  "schema": "ontokin.c199.integrated-cpu/0.1.0",
+  "scope": "Integrated selected CPU suite. Excludes the already-executed synthetic Node cohort. No Blender or lifecycle stub starts. Reader CLI controls may start ordinary bounded host Python processes.",
+  "source_commit": "c87d33f421fa7fe35247cd556a94187cacf1eda8",
+  "source_tree": "3c9966c34fc7ec519c1e195438d85e4463d62581",
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-IBS",
+    "-c",
+    "import sys,unittest;sys.path.insert(0,'/workspace/scratch/801d9d641f68/ontokin');suite=unittest.defaultTestLoader.loadTestsFromNames(['tests.test_static_tray_source_v01', 'tests.test_static_tray_source_resources_v01', 'tests.test_static_tray_reader_v01', 'tests.test_static_tray_receiving_v01', 'tests.test_static_tray_transaction_v01', 'tests.test_static_tray_finalization_v01', 'tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams']);result=unittest.TextTestRunner(verbosity=2).run(suite);raise SystemExit(not result.wasSuccessful())"
+  ],
+  "environment": {
+    "PATH": "/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "ONTOKIN_STATIC_TRAY_CAPTURE": "/workspace/scratch/801d9d641f68/c199-integrated-cpu/source-inputs",
+    "ONTOKIN_STATIC_TRAY_RESOURCE_CAPTURE": "/workspace/scratch/801d9d641f68/c199-integrated-cpu/resource-inputs"
+  },
+  "started_utc": "2026-11-11T04:03:41.651962+00:00",
+  "returncode": 1,
+  "passed": false,
+  "finished_utc": "2026-11-11T04:04:49.030275+00:00",
+  "log_sha256": "f6906e6dfac3f686a7700d065e41fbf76d8cab843ad63a67b31fd850391fa0f8",
+  "observed_summary": {
+    "tests": 79,
+    "passed_methods": 78,
+    "import_errors": 1,
+    "error": "Receiving test imports discovery-only module name; no receiving test ran in this aggregate. Prior separate11-method receiving evidence unchanged.",
+    "test_seconds": 66.986
+  }
+}

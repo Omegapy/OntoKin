@@ -1,0 +1,47 @@
+test_host_aliases_deduplicate_content_without_omitting_aliases (tests.test_static_tray_transaction_v01.InputAndScheduleTests.test_host_aliases_deduplicate_content_without_omitting_aliases) ... ok
+test_individual_slot_cannot_skip_failed_delivered_control (tests.test_static_tray_transaction_v01.InputAndScheduleTests.test_individual_slot_cannot_skip_failed_delivered_control) ... ok
+test_mutated_file_rejected_by_actual_bytes (tests.test_static_tray_transaction_v01.InputAndScheduleTests.test_mutated_file_rejected_by_actual_bytes) ... ok
+test_qualification_stops_at_first_unexpected_result (tests.test_static_tray_transaction_v01.InputAndScheduleTests.test_qualification_stops_at_first_unexpected_result) ... ok
+test_failed_child_consumes_slot_without_retry (tests.test_static_tray_transaction_v01.TransactionSeamTests.test_failed_child_consumes_slot_without_retry) ... ok
+test_lock_verification_time_is_charged_to_original_clock (tests.test_static_tray_transaction_v01.TransactionSeamTests.test_lock_verification_time_is_charged_to_original_clock) ... ok
+test_locked_command_mismatch_cannot_launch (tests.test_static_tray_transaction_v01.TransactionSeamTests.test_locked_command_mismatch_cannot_launch) ... ok
+test_missing_approval_cannot_launch_or_reserve (tests.test_static_tray_transaction_v01.TransactionSeamTests.test_missing_approval_cannot_launch_or_reserve) ... ok
+test_read_only_reconciliation_does_not_retry_uncertain_promotion (tests.test_static_tray_transaction_v01.TransactionSeamTests.test_read_only_reconciliation_does_not_retry_uncertain_promotion) ... ok
+test_receiving_failure_preserves_predecessor (tests.test_static_tray_transaction_v01.TransactionSeamTests.test_receiving_failure_preserves_predecessor) ... ok
+test_sealed_pending_receiver_then_single_cas (tests.test_static_tray_transaction_v01.TransactionSeamTests.test_sealed_pending_receiver_then_single_cas) ... ok
+test_stale_predecessor_rejected_before_any_child (tests.test_static_tray_transaction_v01.TransactionSeamTests.test_stale_predecessor_rejected_before_any_child) ... ok
+test_unverified_cleanup_blocks_promotion (tests.test_static_tray_transaction_v01.TransactionSeamTests.test_unverified_cleanup_blocks_promotion) ... ok
+test_alarm_restores_only_unspent_absolute_time (tests.test_static_tray_finalization_v01.FinalizationTests.test_alarm_restores_only_unspent_absolute_time) ... ok
+test_changed_current_pointer_stops_after_valid_prior_receipt (tests.test_static_tray_finalization_v01.FinalizationTests.test_changed_current_pointer_stops_after_valid_prior_receipt) ... ok
+test_durable_result_and_both_closures_are_required_before_next_slot (tests.test_static_tray_finalization_v01.FinalizationTests.test_durable_result_and_both_closures_are_required_before_next_slot) ... FAIL
+test_expired_alarm_cannot_interrupt_returning_cleanup_receipt (tests.test_static_tray_finalization_v01.FinalizationTests.test_expired_alarm_cannot_interrupt_returning_cleanup_receipt) ... ok
+test_host_alarm_is_off_while_supervisor_owns_cleanup (tests.test_static_tray_finalization_v01.FinalizationTests.test_host_alarm_is_off_while_supervisor_owns_cleanup) ... ok
+test_result_persistence_is_charged_to_original_deadline (tests.test_static_tray_finalization_v01.FinalizationTests.test_result_persistence_is_charged_to_original_deadline) ... ok
+test_result_write_failure_blocks_later_slot_and_keeps_pointer_for_reconciliation (tests.test_static_tray_finalization_v01.FinalizationTests.test_result_write_failure_blocks_later_slot_and_keeps_pointer_for_reconciliation) ... ok
+test_failed_child_consumes_slot_without_retry (tests.test_static_tray_transaction_v01.TransactionSeamTests.test_failed_child_consumes_slot_without_retry) ... ok
+test_lock_verification_time_is_charged_to_original_clock (tests.test_static_tray_transaction_v01.TransactionSeamTests.test_lock_verification_time_is_charged_to_original_clock) ... ok
+test_locked_command_mismatch_cannot_launch (tests.test_static_tray_transaction_v01.TransactionSeamTests.test_locked_command_mismatch_cannot_launch) ... ok
+test_missing_approval_cannot_launch_or_reserve (tests.test_static_tray_transaction_v01.TransactionSeamTests.test_missing_approval_cannot_launch_or_reserve) ... ok
+test_read_only_reconciliation_does_not_retry_uncertain_promotion (tests.test_static_tray_transaction_v01.TransactionSeamTests.test_read_only_reconciliation_does_not_retry_uncertain_promotion) ... ok
+test_receiving_failure_preserves_predecessor (tests.test_static_tray_transaction_v01.TransactionSeamTests.test_receiving_failure_preserves_predecessor) ... ok
+test_sealed_pending_receiver_then_single_cas (tests.test_static_tray_transaction_v01.TransactionSeamTests.test_sealed_pending_receiver_then_single_cas) ... ok
+test_stale_predecessor_rejected_before_any_child (tests.test_static_tray_transaction_v01.TransactionSeamTests.test_stale_predecessor_rejected_before_any_child) ... ok
+test_unverified_cleanup_blocks_promotion (tests.test_static_tray_transaction_v01.TransactionSeamTests.test_unverified_cleanup_blocks_promotion) ... ok
+
+======================================================================
+FAIL: test_durable_result_and_both_closures_are_required_before_next_slot (tests.test_static_tray_finalization_v01.FinalizationTests.test_durable_result_and_both_closures_are_required_before_next_slot)
+----------------------------------------------------------------------
+prototypes.static_tray_v01.supervisor.Stop: Unsafe or over-limit JSON input: /tmp/static-tray-cpu-transaction-wjg_p2pa/schedule/results/N01.json
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/scratch/801d9d641f68/ontokin/tests/test_static_tray_finalization_v01.py", line 50, in test_durable_result_and_both_closures_are_required_before_next_slot
+    with self.assertRaisesRegex(Stop, "durable prior result"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "durable prior result" does not match "Unsafe or over-limit JSON input: /tmp/static-tray-cpu-transaction-wjg_p2pa/schedule/results/N01.json"
+
+----------------------------------------------------------------------
+Ran 29 tests in 2.445s
+
+FAILED (failures=1)

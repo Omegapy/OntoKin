@@ -1,0 +1,30 @@
+{
+  "actual_startup_module_loaded": true,
+  "amendment_sha256": "8c2f1bc73311dffd7675970daac67af24b07c7b630ffeedcad1ed55c003c76fd",
+  "approval_issued": false,
+  "controlled_child_starts": 0,
+  "decision": "BLOCKED_PENDING_STARTUP_CLOSURE_REPAIR",
+  "implementation": {
+    "commit": "6c82192c9289985556bacc1647c6c4cca8b4b535",
+    "tree": "cbe58c78c9ce9a80cc601658f0de47ea179c6aa0"
+  },
+  "input_lock_sha256": "8922dfd4e05011623e245a456043e11d1c215d20d46bc77bc2408a5ac4018651",
+  "native_starts": 0,
+  "no_site_flag": 0,
+  "reason": "-IB enables site startup and imports unbound setuptools code before the runner; the pinned host inventory excludes site-packages.",
+  "repair": "Use -IBS consistently for coordinator, controlled stub and grandchild; bind exact revised source/argv/environment in a new lock before approval.",
+  "unbound_startup_files": [
+    {
+      "bytes": 151,
+      "in_host_inventory": false,
+      "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/distutils-precedence.pth",
+      "sha256": "2638ce9e2500e572a5e0de7faed6661eb569d1b696fcba07b0dd223da5f5d224"
+    },
+    {
+      "bytes": 6800,
+      "in_host_inventory": false,
+      "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/_distutils_hack/__init__.py",
+      "sha256": "ced72e54431ecf2d8d7dbd8a1e27724f1b171af3ca1503c304bf11c59a7fe861"
+    }
+  ]
+}

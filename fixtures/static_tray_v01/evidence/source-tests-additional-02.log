@@ -1,0 +1,27 @@
+test_16_additional_compiler_authority_and_unsupported_controls (tests.test_static_tray_source_v01.StaticTraySourceTests.test_16_additional_compiler_authority_and_unsupported_controls) ... FAIL
+test_17_direct_output_binding_ambient_import_and_work_budget (tests.test_static_tray_source_v01.StaticTraySourceTests.test_17_direct_output_binding_ambient_import_and_work_budget) ... FAIL
+
+======================================================================
+FAIL: test_16_additional_compiler_authority_and_unsupported_controls (tests.test_static_tray_source_v01.StaticTraySourceTests.test_16_additional_compiler_authority_and_unsupported_controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/801d9d641f68/c199-source/tests/test_static_tray_source_v01.py", line 375, in test_16_additional_compiler_authority_and_unsupported_controls
+    self.assert_reject(lambda: lower_source('ontokin', p, PROFILE), ['OKL-E-POSE-AUTHORITY'])
+  File "/workspace/scratch/801d9d641f68/c199-source/tests/test_static_tray_source_v01.py", line 81, in assert_reject
+    self.assertIn(caught.exception.code, codes)
+AssertionError: 'OKL-E-FOLLOW-CYCLE' not found in ['OKL-E-POSE-AUTHORITY']
+
+======================================================================
+FAIL: test_17_direct_output_binding_ambient_import_and_work_budget (tests.test_static_tray_source_v01.StaticTraySourceTests.test_17_direct_output_binding_ambient_import_and_work_budget)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/801d9d641f68/c199-source/tests/test_static_tray_source_v01.py", line 401, in test_17_direct_output_binding_ambient_import_and_work_budget
+    self.assert_reject(lambda: lower_source('direct-python', p, PROFILE), [code])
+  File "/workspace/scratch/801d9d641f68/c199-source/tests/test_static_tray_source_v01.py", line 81, in assert_reject
+    self.assertIn(caught.exception.code, codes)
+AssertionError: 'OTRAY-E-BINDING' not found in ['OTRAY-E-SHAPE']
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.221s
+
+FAILED (failures=2)

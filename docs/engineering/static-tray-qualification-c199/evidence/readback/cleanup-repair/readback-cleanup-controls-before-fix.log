@@ -1,0 +1,33 @@
+test_host_alarm_cannot_interrupt_supervisor_cleanup (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_host_alarm_cannot_interrupt_supervisor_cleanup) ... FAIL
+test_result_write_failure_leaves_predecessor_gate_blocked (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_result_write_failure_leaves_predecessor_gate_blocked) ... ok
+test_success_finalization_uses_remaining_outer_alarm (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_success_finalization_uses_remaining_outer_alarm) ... FAIL
+test_uncertain_marker_removal_recreates_pending (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_uncertain_marker_removal_recreates_pending) ... FAIL
+
+======================================================================
+FAIL: test_host_alarm_cannot_interrupt_supervisor_cleanup (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_host_alarm_cannot_interrupt_supervisor_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/801d9d641f68/c199-source/tests/test_static_tray_readback_v01.py", line 87, in test_host_alarm_cannot_interrupt_supervisor_cleanup
+    self.assertEqual(observed["supervisor_alarm_seconds"], 0)
+AssertionError: 29.999291 != 0
+
+======================================================================
+FAIL: test_success_finalization_uses_remaining_outer_alarm (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_success_finalization_uses_remaining_outer_alarm)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/801d9d641f68/c199-source/tests/test_static_tray_readback_v01.py", line 92, in test_success_finalization_uses_remaining_outer_alarm
+    self.assertGreater(observed["finalization_alarm_seconds"], 0)
+AssertionError: 0.0 not greater than 0
+
+======================================================================
+FAIL: test_uncertain_marker_removal_recreates_pending (tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_uncertain_marker_removal_recreates_pending)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/801d9d641f68/c199-source/tests/test_static_tray_readback_v01.py", line 99, in test_uncertain_marker_removal_recreates_pending
+    self.assertTrue((stage / "finalization.pending").exists())
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.013s
+
+FAILED (failures=3)

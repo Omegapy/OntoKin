@@ -1,0 +1,117 @@
+{
+  "schema": "ontokin.c199.independent-native-python-startup-review/0.1.0",
+  "decision": "STATIC_STARTUP_SELECTION_REVIEW_PASSED",
+  "reviewer": "/root/repo_status",
+  "native_starts": 0,
+  "files": [
+    {
+      "path": "/workspace/scratch/801d9d641f68/ontokin/prototypes/static_tray_v01/lock.py",
+      "sha256": "d20816e3718e4e48a0594bcb7b5550ba5f6620abd05fc44fda8de09d4f0bbfc6",
+      "size_bytes": 23260
+    },
+    {
+      "path": "/workspace/scratch/801d9d641f68/ontokin/prototypes/static_tray_v01/worker.py",
+      "sha256": "37a31447b7a7d69685580b743641a72dfcf37172c147bda2e663b2db2ce8668b",
+      "size_bytes": 7661
+    },
+    {
+      "path": "/workspace/scratch/801d9d641f68/ontokin/prototypes/static_tray_v01/receiver.py",
+      "sha256": "02dd0a479ba0849ac0433550daca6bba35dfce0d66a96daa603d0565ff3ceea1",
+      "size_bytes": 10558
+    },
+    {
+      "path": "/workspace/scratch/801d9d641f68/c199-independent-preflight/pipeline-review-b16fbe0/blender-v4.5.3-bpy_interface.cc",
+      "sha256": "9460d6fb3764a987aabc4434eab014cb1bdd3dbd4baef528a42d5f0f39d4dcad",
+      "size_bytes": 29594
+    },
+    {
+      "path": "/workspace/scratch/801d9d641f68/c199-independent-preflight/pipeline-review-b16fbe0/blender-v4.5.3-creator_args.cc",
+      "sha256": "5bb2e7509cea465d41615d3320ace017263af77371307b2fb051df06bfeb47dd",
+      "size_bytes": 98319
+    },
+    {
+      "path": "/workspace/scratch/801d9d641f68/c199-independent-preflight/pipeline-review-b16fbe0/cpython-v3.11.11-initconfig.c",
+      "sha256": "1886ee2643cacb4c5d34e7e16936f5af471f931d0d5c67639aa88458ea039b4a",
+      "size_bytes": 90322
+    }
+  ],
+  "checks": [
+    {
+      "check": "worker.py: bytecode write suppression precedes non-sys imports",
+      "passed": true
+    },
+    {
+      "check": "worker.py: actual startup flags checked",
+      "passed": true,
+      "required": {
+        "isolated": 0,
+        "ignore_environment": 0,
+        "no_user_site": 1,
+        "safe_path": true,
+        "hash_randomization": 0,
+        "dont_write_bytecode": 1
+      }
+    },
+    {
+      "check": "worker.py: actual path, interpreter, flags and prefixes retained",
+      "passed": true
+    },
+    {
+      "check": "receiver.py: bytecode write suppression precedes non-sys imports",
+      "passed": true
+    },
+    {
+      "check": "receiver.py: actual startup flags checked",
+      "passed": true,
+      "required": {
+        "isolated": 0,
+        "ignore_environment": 0,
+        "no_user_site": 1,
+        "safe_path": true,
+        "hash_randomization": 0,
+        "dont_write_bytecode": 1
+      }
+    },
+    {
+      "check": "receiver.py: actual path, interpreter, flags and prefixes retained",
+      "passed": true
+    },
+    {
+      "check": "Native startup flag explicitly enables the finite supplied Python environment",
+      "passed": true,
+      "flags": [
+        "-b",
+        "--factory-startup",
+        "--disable-autoexec",
+        "--threads",
+        "2",
+        "--python-exit-code",
+        "1",
+        "--python-use-system-env"
+      ]
+    },
+    {
+      "check": "Native Python environment fixes bytecode, user site, hash seed and safe path",
+      "passed": true
+    }
+  ],
+  "basis": [
+    {
+      "url": "https://raw.githubusercontent.com/blender/blender/v4.5.3/source/blender/python/intern/bpy_interface.cc",
+      "finding": "py_use_system_env defaults false; default uses isolated PyPreConfig/PyConfig. Explicit option selects Python config; bundled home is still set before Py_InitializeFromConfig."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/blender/blender/v4.5.3/source/creator/creator_args.cc",
+      "finding": "--python-use-system-env is handled in ARG_PASS_ENVIRONMENT before Python starts."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.11.11/Python/initconfig.c",
+      "finding": "Isolated startup ignores Python environment variables. Python config reads the four explicitly selected startup environment variables. Bundled executable static version evidence is 3.11.11."
+    }
+  ],
+  "limitations": [
+    "Static primary-source review supports the startup selection; actual embedded flags, path, prefixes and Python version remain unobserved until the first independently approved native slot.",
+    "Full pinned Blender distribution includes startup/site/customization files; the exact launch environment excludes ambient PYTHONPATH/PYTHONHOME and uses new private user directories.",
+    "Host interpreter remains -IBS; its ignored PYTHONHASHSEED is separately documented and explicit canonical sorting plus actual regeneration equality remain required."
+  ]
+}

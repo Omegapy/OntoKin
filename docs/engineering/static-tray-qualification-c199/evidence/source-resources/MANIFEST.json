@@ -1,0 +1,95 @@
+{
+  "archive": "EVIDENCE.zip",
+  "bundle": "source-resources",
+  "cohorts": [
+    {
+      "failed": 3,
+      "id": "resource-attempt-1",
+      "input_status": "Shared deterministic fixture inputs recur in later captures; the unique4096-item-sum input is explicitly reconstructed.",
+      "log": "preparation/resource-repair/c199-source-resources-attempt-1.log",
+      "methods": 10,
+      "passed": 7,
+      "seconds": 2.498,
+      "source_snapshot": "Original executed modified source file was not separately captured before later edits; no original executable hash is claimed."
+    },
+    {
+      "id": "resource-attempt-2",
+      "log": "preparation/resource-repair/c199-source-resources-attempt-2.log",
+      "methods": 11,
+      "passed": 11,
+      "seconds": 5.379,
+      "source_snapshot": "Pre-directory-scan-bound preparation state; original file hash not captured separately."
+    },
+    {
+      "id": "existing-source-after-resources",
+      "log": "preparation/resource-repair/c199-source-existing-after-resources-attempt-1.log",
+      "methods": 18,
+      "passed": 18,
+      "seconds": 44.076
+    },
+    {
+      "id": "final29",
+      "log": "preparation/resource-repair/c199-source-resource-final-attempt-1.log",
+      "methods": 29,
+      "passed": 29,
+      "seconds": 40.223,
+      "snapshot_prefix": "preparation/resource-repair/snapshot",
+      "source_commit": "c585a72",
+      "source_sha256": "920b8691e047b18ececf1582f4c9afadd863b358e667be2bbb62837307d19c13"
+    },
+    {
+      "id": "independent-slice-probe",
+      "observed": "Earlier c585a72 admitted a12288-entry list through slice assignment; exact original inputs and report retained by reviewer.",
+      "prefix": "independent-slice-probe"
+    },
+    {
+      "actual_input_prefix": "captured-final31",
+      "id": "final31",
+      "log": "preparation/assignment-repair/CPU-TESTS.log",
+      "methods": 31,
+      "passed": 31,
+      "seconds": 40.126,
+      "snapshot_prefix": "preparation/assignment-repair/snapshot",
+      "source_commit": "5b4b108",
+      "source_sha256": "c785153c1b7a92441c59cbfae1daf7da4fbc6101e7c7e67a3da0c3b0bfdc546e"
+    }
+  ],
+  "external_archives": {
+    "independent-reviews": {
+      "format": "tar",
+      "path": "docs/engineering/static-tray-qualification-c199/evidence/independent-reviews/captured-reviews.tar.gz",
+      "sha256": "7f20a6f72d5135ca67f180cb24b9bb10b985d61c6c084fece935f5a1efc0bc71",
+      "size_bytes": 548397
+    },
+    "source-corpus": {
+      "format": "zip",
+      "path": "fixtures/static_tray_v01/controls.zip",
+      "sha256": "cd7426b8e2153d73c2c67efcecf0e1ea9a3185a2cef1dd64be00c77f05f26bb5",
+      "size_bytes": 2308542
+    }
+  },
+  "files_manifest_sha256": "5da5edbd87fbf470e81f6a5b39dc7a1d28a05e4e85ad15e64d85ab3b48e5db3f",
+  "hardlink_groups": [
+    {
+      "id": "h0001",
+      "paths": [
+        "captured-final31/resource-inputs/test_hardlinked_units_cannot_fake_two_distinct_files/1/main.py",
+        "captured-final31/resource-inputs/test_hardlinked_units_cannot_fake_two_distinct_files/1/tray.py"
+      ]
+    }
+  ],
+  "logical_entries": 2540,
+  "logical_external_bytes_verified_and_referenced": 14695797,
+  "logical_internal_bytes": 2004406,
+  "notes": [
+    "No old source cohort was rerun to replace missing early temporary inputs.",
+    "The initial three failures were invalid control assumptions about trace-event equality, aggregate budget exhaustion and callback position. A later independent slice-assignment probe found a real implementation defect; its repair is separately retained.",
+    "All source/metadata failures remain visible. Later passing cohorts do not overwrite earlier results.",
+    "Original modes are recorded on every logical entry; hardlink groups preserve the alias control. External archived content is referenced only after exact SHA256 and size comparison.",
+    "The full shared OntoKin compiler remains the C198 baseline and is hash-listed rather than duplicated."
+  ],
+  "schema": "ontokin.static-tray.preserved-evidence/0.1.0",
+  "sha256": "3106258bca65ccc999284ccb97e5390bd0a873af4ef790bfe01d8b9abff1644d",
+  "size_bytes": 328183,
+  "unique_internal_blobs": 20
+}
