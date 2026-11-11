@@ -1,0 +1,110 @@
+{
+  "schema": "ontokin.c206.transaction-implementation/0.1",
+  "recordedAtUtc": "2026-11-11T18:38:48.760467+00:00",
+  "baseCommit": "f90e012fa9b68a1111b97586c6462851e6166dea",
+  "commit": "afa0a9d40ab0ffbf88e6540bbb685d889a67d391",
+  "tree": "2ab3ea43db443f3a33c1aed0cb3a8e36a28cf79d",
+  "branch": "work/c206-transaction-ad77b7",
+  "worktreeStatus": "",
+  "files": [
+    {
+      "path": "prototypes/static_tray_admission_c201/transaction.py",
+      "sha256": "4aafadf609eed13f9b5b197897391e421b39992823818977a408c94513369617",
+      "sizeBytes": 40315
+    },
+    {
+      "path": "tests/test_static_tray_admission_c201_transaction.py",
+      "sha256": "ed85efe797a60e1f670febb913d32e744ef144bc2c802572b37c4ce1eecef265",
+      "sizeBytes": 28671
+    },
+    {
+      "path": "docs/engineering/static-tray-admission-c201/TRANSACTION-C206.md",
+      "sha256": "275ffa6c1e5c25f84ece4ba600e400c00936f8f48aeee771ca907c29bd1cd0c3",
+      "sizeBytes": 8999
+    }
+  ],
+  "scope": "Fixture-only C201 transaction/accepted-source compatibility component with no launcher or coordinator",
+  "tests": {
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "tests.test_static_tray_admission_c201_transaction",
+      "-v"
+    ],
+    "workingDirectory": "/workspace/scratch/ad77b712cdd9/transaction-work",
+    "methods": 47,
+    "passed": 47,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "durationSeconds": 18.924,
+    "log": "candidate-tests.log",
+    "logSha256": "7b07799c4f3f609a64085ea2d069b6a2cf4438e867f38c9299ef0dfc77eb6980",
+    "runChronology": "Executed immediately before the commit on the same three file bytes; exact committed hashes above retain the tested input identity."
+  },
+  "python": "3.12.14",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "draftResults": [
+    {
+      "log": "draft-tests.log",
+      "methods": 38,
+      "outcome": "PASS"
+    },
+    {
+      "log": "revised-tests.log",
+      "methods": 38,
+      "outcome": "FAILED",
+      "errors": 2,
+      "reason": "Test fixture tried reading receiving process hash from old stage path after sealed relocation; corrected fixture fallback reads the retained sealed file."
+    },
+    {
+      "log": "pretoken-tests.log",
+      "methods": 46,
+      "outcome": "PASS"
+    }
+  ],
+  "design": [
+    "Exact slot/route/predecessor/equality/regeneration references",
+    "Actual frozen baseline and retained accepted-source lowering",
+    "Sealed source/artifact/startup/process/measurement/equality/receiving/receipt closure",
+    "Underlying stage receipt and exact job/provenance validation",
+    "Conditional full-pointer absence check and post-commit UNKNOWN reconciliation",
+    "Factory and session guard restrict current interface to validated fixture-only input purpose"
+  ],
+  "productionBlocker": {
+    "code": "C201-NATIVE-CWD",
+    "lockedCwd": "repository_root",
+    "actualQualifiedSupervisorCwd": "stage output directory",
+    "workerRequirement": "job.output_directory must equal actual cwd",
+    "files": [
+      "prototypes/static_tray_admission_c201/input_lock.py",
+      "prototypes/static_tray_v01/supervisor.py",
+      "prototypes/static_tray_v01/worker.py"
+    ],
+    "nextAction": "Review a narrow C201 lock/coordinator working-directory alignment before lifting the fixture-only gate"
+  },
+  "limits": [
+    "Process observation authenticity remains caller responsibility",
+    "No Node, D01/D03, image review, native readiness or family admission",
+    "Clock checks are cooperative and no external child hard deadline is implemented",
+    "Durable invocation accounting and cross-restart authority remain ledger/coordinator responsibilities"
+  ],
+  "nativeStarts": 0,
+  "receivingStarts": 0,
+  "nodeStarts": 0,
+  "lifecycleStarts": 0,
+  "timedAuthorStarts": 0,
+  "remoteWritesByImplementationWorker": 0,
+  "unknownRemoteOutcomes": [],
+  "legacyRegression": {
+    "state": "FAILED",
+    "distinctPassingMethods": 4239,
+    "torqueReadMethodsNotRun": 13,
+    "setupTimeoutMs": 30000,
+    "rerun": false
+  },
+  "publication": "Local scoped commit only; root owns publication and integration",
+  "review": "Independent review is separate and pending at report creation"
+}

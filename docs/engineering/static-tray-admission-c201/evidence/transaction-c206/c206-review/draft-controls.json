@@ -1,0 +1,39 @@
+{
+  "schema": "ontokin.c206.independent-draft-controls/0.1",
+  "source_sha256": "d8a34fc5df726c988309ab0a06328309b58a3bb4159112885c9b8ed2a4470f90",
+  "fixture_only": true,
+  "native_starts": 0,
+  "receiver_starts": 0,
+  "node_starts": 0,
+  "lifecycle_starts": 0,
+  "timed_author_starts": 0,
+  "controls": [
+    {
+      "id": "R2-build-job",
+      "expected": "reject altered prepared job",
+      "observed": "accepted altered job",
+      "finding_confirmed": true
+    },
+    {
+      "id": "R1-qualified-output-inventory",
+      "expected": "allow qualified output filenames before receipt validation",
+      "observed": "C201-CLOSURE: Transaction file inventory is incomplete or has extra files",
+      "finding_confirmed": true
+    },
+    {
+      "id": "R2-receiving-job",
+      "expected": "reject altered receiver job",
+      "observed": "accepted altered receiver job",
+      "finding_confirmed": true,
+      "admission_completed": false
+    },
+    {
+      "id": "R3-post-replace-interruption",
+      "expected": "UNKNOWN after pointer commit with lost reply",
+      "observed": "KeyboardInterrupt: controlled lost reply after actual pointer replacement",
+      "state": null,
+      "pointer_committed": true,
+      "finding_confirmed": true
+    }
+  ]
+}
