@@ -9,7 +9,7 @@ more reliably or at lower cost than with direct Blender/Python. The complete
 
 ## Main integration lease
 
-Owner `c206-transaction-integration-ad77b7-20261111` holds the C206 integration scope from `2026-11-11T18:40:18.825Z` through `2026-11-11T19:10:18.825Z`. Scope: reviewed fixture-only C201 transaction/accepted-source component, its CPU evidence, exact restoration of the C205 test log already preserved in the handoff, scoped documentation and closure of [issue #144](https://github.com/Omegapy/OntoKin/issues/144). Implementation branch `work/c206-transaction-ad77b7` starts from observed main `f90e012fa9b68a1111b97586c6462851e6166dea`; candidate `afa0a9d40ab0ffbf88e6540bbb685d889a67d391`. Production binding is blocked by the C205/qualified-supervisor working-directory disagreement. This lease is acquired through an expected-head update. Other nonoverlapping branch work remains permitted; main/STATUS writes are serialized. No native, receiver, Node, lifecycle or timed-author execution is authorized. C199/C200 schedules remain closed. Release after actual-main checks and durable closure preparation.
+No active main integration lease. Owner `c206-transaction-integration-ad77b7-20261111` released the C206 scope at `2026-11-11T18:46:42.223293+00:00` after verifying [PR #145](https://github.com/Omegapy/OntoKin/pull/145), actual merge `6573597a699ed90920a9cea3e17250bce5babbdc`, all reviewed input bindings and applicable actual-main checks. Issue #144 is closed for the fixture-only transaction component; its work branch was observed absent after merge. Production remains blocked by the C201 working-directory conflict. Future shared writes require fresh state reconciliation and a new expected-head lease. C199/C200 schedules remain closed.
 
 ## C200 integrated; finite qualification retained
 
@@ -106,7 +106,7 @@ real host/dependency and alias sealing, durable trusted bootstrap, independent
 native readiness and the sole four/four/four invocation remain pending. No native,
 receiving, Node, lifecycle or timed-author start occurred in this increment.
 
-## C206 fixture-only transaction component reviewed; production alignment blocked
+## C206 fixture-only transaction component integrated; production alignment blocked
 
 The separate [C201 transaction and accepted-source component](docs/engineering/static-tray-admission-c201/TRANSACTION-C206.md) resolves actual retained baseline source and dependencies, validates complete construction/receiving/receipt closures, and conditionally promotes an accepted pointer. Pre-commit rejection preserves the prior pointer; post-replacement interruption reports UNKNOWN. It starts no children and does not advance the coordinator ledger.
 
@@ -114,7 +114,7 @@ Independent review approved local commit `afa0a9d40ab0ffbf88e6540bbb685d889a67d3
 
 Production bindings fail `C201-NATIVE-CWD`: C205's launch plan requires repository working directories while the qualified supervisor and worker require each stage's output directory. The next bounded step is an independently reviewed alignment of that contract and its checks. C205 and the historical worker/supervisor remain unchanged. Readback, actual process provenance/deadlines, full coordinator, trusted bootstrap/host sealing, native readiness and admission remain pending. This increment has zero native, receiving, Node, lifecycle or timed-author starts.
 
-The exact original C205 `final-tests.log`, already present in the previous handoff, is restored as tracked evidence to repair its existing documentation link. The original failed documentation check and byte-binding record are retained. Repaired documentation verification passed 29 preserved sources and 4,199 local links. Resulting-main checks and publication remain pending until separately observed.
+The exact original C205 `final-tests.log`, already present in the previous handoff, is restored as tracked evidence to repair its existing documentation link. The original failed documentation check and byte-binding record are retained. Repaired documentation verification passed 29 preserved sources and 4,199 local links. [PR #145](https://github.com/Omegapy/OntoKin/pull/145) merged at `6573597a699ed90920a9cea3e17250bce5babbdc` with the exact local publication tree. Fresh actual-main checks passed all 155 C201 methods, 43 core cases / 694 assertions and 29 preserved documentation sources / 4,199 local links. All 56 independent bindings and complete product/test prefixes matched. [Integration receipt](docs/engineering/static-tray-admission-c201/evidence/transaction-c206/INTEGRATION.json)
 
 ## Verification and remaining limits
 
