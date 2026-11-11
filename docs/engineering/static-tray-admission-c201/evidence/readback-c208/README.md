@@ -44,4 +44,23 @@ paths and hashes, reject ambient imports, and include this helper in the future
 wrapper dependency closure. Actual C201 wrapper/probe, authenticated supervision,
 complete coordinator, real host sealing, readiness and admission remain pending.
 
-Publication and resulting-main evidence are recorded separately when observed.
+## Observed integration and actual-main limit
+
+[PR #149](https://github.com/Omegapy/OntoKin/pull/149) merged at
+`f8e397405b432d7a63464b136431d15a009c38df` with the exact local publication tree.
+[Integration receipt](INTEGRATION.json) records the actual identities and checks.
+Issue #148 is closed; the work branch was observed absent.
+
+The first actual-main C201 run remains **FAILED: 222 passed and one timeout** in
+unchanged transaction promotion while setting up the synthetic four-slot fixture.
+The entire affected method passed separately in 6.416 seconds with identical
+source, limits and expectations. This establishes successful observations for all
+223 methods across two runs; it is not a single clean main batch or a timing
+reliability result. The cause remains unproven. Both complete logs are retained.
+
+[Supplemental independent assessment](main-timeout-review/ASSESSMENT.md) retained
+component-only approval with this explicit limitation. All 66 reviewed input
+hashes and complete product/test prefixes match. Fresh core conformance passed
+43 cases / 694 assertions; documentation preserved 29 sources and 4,258 links.
+No further code, limits or tests were changed to obtain the isolated pass.
+

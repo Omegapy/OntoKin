@@ -9,7 +9,7 @@ more reliably or at lower cost than with direct Blender/Python. The complete
 
 ## Main integration lease
 
-Owner `c208-readback-integration-4c105e-20261111` holds the bounded C208 integration lease from `2026-11-11T19:50:33.196250+00:00` until `2026-11-11T20:20:33.196250+00:00`. Scope: the separately reviewed CPU-only C201 readback job/result binding component, applicable evidence and handoff publication. Starting main is `60460e8eb7526f88c0cce9028ef077ca1c1d16d0`; scope is [issue #148](https://github.com/Omegapy/OntoKin/issues/148), component branch `work/c208-readback-binding`. Reserved shared files: `STATUS.md` and the C201 documentation index. Other workers may continue nonoverlapping work. No native, receiving, Node, lifecycle or timed-author start is authorized; C199/C200 remain closed.
+No active main integration lease. Owner `c208-readback-integration-4c105e-20261111` released the C208 scope at `2026-11-11T20:06:43.474768+00:00` after observing [PR #149](https://github.com/Omegapy/OntoKin/pull/149), actual merge `f8e397405b432d7a63464b136431d15a009c38df`, unchanged reviewed bindings and the explicitly limited actual-main results below. Issue #148 is closed; the work branch was observed absent. The next bounded step is exact named package-entry resolution for a versioned C201 job. Future shared writes require fresh state reconciliation and an expected-head lease. C199/C200 remain closed.
 
 ## C200 integrated; finite qualification retained
 
@@ -124,11 +124,13 @@ Independent review approved exact local candidate `bd9fbf1487e557b9c21baf1d39e7b
 
 C208 below adds the separate readback job/result binding component. The Node cwd is consistently planned, while executable dependency-entry mapping and the C201 probe/wrapper roles remain unimplemented. Complete coordinator/process provenance/deadlines, trusted bootstrap, real host/dependency/alias sealing, independent native readiness and actual admission remain pending. No C201 native, receiving, Node, lifecycle or timed-author process started. [PR #147](https://github.com/Omegapy/OntoKin/pull/147) merged at `d952254d5e63602e6d11c696e62ae8965d57c78e` with the exact reviewed publication tree. Fresh actual-main checks passed all 171 C201 methods, 43 core cases / 694 assertions and documentation preservation of 29 sources / 4,233 links. [Integration receipt](docs/engineering/static-tray-admission-c201/evidence/cwd-c207/INTEGRATION.json)
 
-## C208 readback job/result binding component
+## C208 readback binding integrated; executable job remains pending
 
 The separate [C208 component](docs/engineering/static-tray-admission-c201/READBACK-BINDING-C208.md) binds actual accepted source/transaction closures, GLB and audit bytes to exact jobs, output inventories, check options and process observations. It checks Khronos issue consistency and all 2,060 required Q01 numeric rows from supplied Three.js observations. Failed or unknown checks preserve the accepted pointer and stop that binding session. Returned evidence grants no execution, next-slot, readiness or admission authority.
 
 Independent review approved local candidate `a645731147e4ce95ddaab8132c5a261cc3a9f44a` for this boundary only. All 223 C201 methods, 63 independent controls, 78 source/compiler methods and 43 core cases / 694 assertions passed. All 66 reviewed input bindings, 301 historical locked inputs and four frozen protocol documents remain exact. [Review and evidence](docs/engineering/static-tray-admission-c201/evidence/readback-c208/README.md)
+
+[PR #149](https://github.com/Omegapy/OntoKin/pull/149) merged at `f8e397405b432d7a63464b136431d15a009c38df` with the exact publication tree. The first actual-main C201 batch remains FAILED: 222 methods passed and one synthetic four-slot setup hit the unchanged three-second promotion limit. The affected method passed separately with identical source/limits; all 223 methods have successful observations across two runs, not one clean batch. The cause is unproven. Independent review retained component approval with this timing limitation. Core passed 43 cases / 694 assertions; documentation preserved 29 sources and 4,258 links. [Integration and original failure](docs/engineering/static-tray-admission-c201/evidence/readback-c208/INTEGRATION.json)
 
 The next bounded step is a versioned job extension for exact lock-bound validator, Three.js and GLTFLoader entry points. The current job is preparation data, not an executable probe contract. Actual wrapper/probe, complete coordinator/process provenance, real host sealing, native readiness and admission remain pending. No C201 native, receiving, Node, lifecycle or timed-author process started.
 
