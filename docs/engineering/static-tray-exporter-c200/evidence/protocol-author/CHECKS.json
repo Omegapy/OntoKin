@@ -1,0 +1,46 @@
+{
+  "actual_checks": [
+    {
+      "command": "python3 -IBS docs/engineering/static-tray-exporter-c200/test_protocol.py",
+      "errors": 0,
+      "failures": 0,
+      "meaning": "Real preserved-failure hash check plus isolated C200 metadata/one-invocation guard seams; full runtime/dependency verification remains separate",
+      "passed": 10,
+      "tests": 10
+    },
+    {
+      "command": "verify_definition(root); verify_baseline_source(root, old_lock)",
+      "passed": true,
+      "preserved_c199_locked_source_files": 280
+    },
+    {
+      "command": "prepare_inputs.py --help; run_qualification.py --help",
+      "meaning": "Argument/bootstrap smoke checks only; no lock, approval or process cohort created",
+      "passed": true
+    }
+  ],
+  "base_commit": "e8df6496033b13ac7e387c9525fc83c5fada1453",
+  "controlled_lifecycle_starts": 0,
+  "final_control_command": [
+    "python3",
+    "-IBS",
+    "docs/engineering/static-tray-exporter-c200/test_protocol.py"
+  ],
+  "final_control_exit_code": 0,
+  "final_control_log_sha256": "31817dafceeb07ddbc123bbf4e17330fcbeada7a4515f30abe7e8cb1c613917a",
+  "native_starts": 0,
+  "observed_at_utc": "2026-11-11T12:37:04.817337+00:00",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "read_only_node_checker_starts": 0,
+  "receiving_starts": 0,
+  "schema": "ontokin.c200.protocol-author-checks/0.1",
+  "scope": "C200 authority guard and preparation source; no native qualification",
+  "source_hashes": {
+    "docs/engineering/static-tray-exporter-c200/inventory_host.py": "502350dcd132d598788352e24b32760f77e0721a61727a0e6b336d2b0dccee2a",
+    "docs/engineering/static-tray-exporter-c200/prepare_inputs.py": "0a545b58918925521297404185b5c3d5ae85447da6bf6173b4e6f96059d9a6e0",
+    "docs/engineering/static-tray-exporter-c200/qualification_gate.py": "be4d22c02844d89b6037b738d83b6a5aa7e9e68b026d94e6a572b65a40bb8b6e",
+    "docs/engineering/static-tray-exporter-c200/run_qualification.py": "1f38c57bd9985cd67ae107b3933272251142c17ad9e5a9ebfc1b3f242d247079",
+    "docs/engineering/static-tray-exporter-c200/test_protocol.py": "f59ff6a7af42f53912ad54ad772ec1febfe14e3f6eabdfa5323dcb575c1a99f8"
+  }
+}

@@ -1,0 +1,499 @@
+{
+  "counts": {
+    "assertions": 497809,
+    "audit_rows": 24672,
+    "control_rows": 18300,
+    "receiving_rows": 28212,
+    "three_recomputed_retained_exact_fields": 1248,
+    "three_rows": 24720
+  },
+  "d08": {
+    "copy_byte_identical": true,
+    "reordered_byte_different": true,
+    "reordered_decoded_json_and_binary_identical": true
+  },
+  "delivered_controls": [
+    {
+      "actual_findings": [
+        "CLEARANCE",
+        "FRAME",
+        "GEOMETRY"
+      ],
+      "control": "D01-copy",
+      "findings_count": 16,
+      "required_findings": [
+        "CLEARANCE"
+      ],
+      "rows": {
+        "absolute_difference": 2046,
+        "failed": 16,
+        "max_absolute_difference_to_allowance_ratio": 799.9992370605446,
+        "minimum": 10,
+        "smallest_comparison_boundary_margin": -0.0039949961853027235,
+        "total": 2056
+      }
+    },
+    {
+      "actual_findings": [
+        "IDENTITY",
+        "LAYOUT",
+        "SIBLING"
+      ],
+      "control": "D02-copy",
+      "findings_count": 10,
+      "required_findings": [
+        "IDENTITY"
+      ],
+      "rows": {
+        "absolute_difference": 1865,
+        "max_absolute_difference_to_allowance_ratio": 0.004882737994482689,
+        "minimum": 5,
+        "smallest_comparison_boundary_margin": 7.281688020444867e-08,
+        "total": 1870
+      }
+    },
+    {
+      "actual_findings": [
+        "CLEARANCE",
+        "FRAME",
+        "GEOMETRY",
+        "SIBLING"
+      ],
+      "control": "D03-copy",
+      "findings_count": 14,
+      "required_findings": [
+        "SIBLING"
+      ],
+      "rows": {
+        "absolute_difference": 2046,
+        "failed": 13,
+        "max_absolute_difference_to_allowance_ratio": 400.00002495944597,
+        "minimum": 10,
+        "smallest_comparison_boundary_margin": -0.00199500012479723,
+        "total": 2056
+      }
+    },
+    {
+      "actual_findings": [
+        "GEOMETRY",
+        "LAYOUT",
+        "TOPOLOGY"
+      ],
+      "control": "D04-copy",
+      "findings_count": 7,
+      "required_findings": [
+        "TOPOLOGY"
+      ],
+      "rows": {
+        "absolute_difference": 2028,
+        "failed": 1,
+        "max_absolute_difference_to_allowance_ratio": 93.36009640245517,
+        "minimum": 10,
+        "smallest_comparison_boundary_margin": -2.976176658872092e-05,
+        "total": 2038
+      }
+    },
+    {
+      "actual_findings": [
+        "CLEARANCE",
+        "FRAME",
+        "GEOMETRY",
+        "TOPOLOGY"
+      ],
+      "control": "D05-copy",
+      "findings_count": 59,
+      "required_findings": [
+        "FRAME"
+      ],
+      "rows": {
+        "absolute_difference": 2046,
+        "failed": 47,
+        "max_absolute_difference_to_allowance_ratio": 2000000.0,
+        "minimum": 10,
+        "smallest_comparison_boundary_margin": -1.999999,
+        "total": 2056
+      }
+    },
+    {
+      "actual_findings": [
+        "IDENTITY"
+      ],
+      "control": "D06-copy",
+      "findings_count": 1,
+      "required_findings": [
+        "IDENTITY"
+      ],
+      "rows": {
+        "absolute_difference": 2046,
+        "max_absolute_difference_to_allowance_ratio": 0.004882737994482689,
+        "minimum": 10,
+        "smallest_comparison_boundary_margin": 7.281688020444867e-08,
+        "total": 2056
+      }
+    },
+    {
+      "actual_findings": [
+        "IDENTITY",
+        "LAYOUT",
+        "UNSUPPORTED"
+      ],
+      "control": "D07-copy",
+      "findings_count": 6,
+      "required_findings": [
+        "UNSUPPORTED"
+      ],
+      "rows": {
+        "absolute_difference": 2046,
+        "max_absolute_difference_to_allowance_ratio": 0.004882737994482689,
+        "minimum": 10,
+        "smallest_comparison_boundary_margin": 7.281688020444867e-08,
+        "total": 2056
+      }
+    },
+    {
+      "actual_findings": [],
+      "control": "D08-copy",
+      "findings_count": 0,
+      "required_findings": [],
+      "rows": {
+        "absolute_difference": 2046,
+        "max_absolute_difference_to_allowance_ratio": 0.004882737994482689,
+        "minimum": 10,
+        "smallest_comparison_boundary_margin": 7.281688020444867e-08,
+        "total": 2056
+      }
+    },
+    {
+      "actual_findings": [],
+      "control": "D08-reordered",
+      "findings_count": 0,
+      "required_findings": [],
+      "rows": {
+        "absolute_difference": 2046,
+        "max_absolute_difference_to_allowance_ratio": 0.004882737994482689,
+        "minimum": 10,
+        "smallest_comparison_boundary_margin": 7.281688020444867e-08,
+        "total": 2056
+      }
+    }
+  ],
+  "discrepancies": [],
+  "input_lock_sha256": "e22d12703926740c2c4cb8596781192b9f0412836e3fba7c6f353bedfc60e0e0",
+  "limitations": [
+    "This is a retained-evidence numeric cross-check; no fresh Blender/receiving/Node observations were produced.",
+    "Independent-reader comparison operands are separately rounded JSON numbers; comparison outcomes and difference consistency were checked, allowing only serialization ULP error for the latter.",
+    "Receiving exact/numeric comparison decisions were recomputed from retained rows; receiving geometry was not reimported or rendered.",
+    "Khronos issue counts and versions were checked against retained reports; the validator was not rerun.",
+    "The retained qualification-result.json explicitly remains MEASURED_GATES_PASSED_VISUAL_REVIEW_PENDING and qualified=false; this review does not replace visual review, lifecycle review or the parent closure audit."
+  ],
+  "method": "Independent standard-library arithmetic over retained measured/expected operands; frozen thresholds and volume allowances recomputed; raw GLB accessors, transforms and world vertices decoded independently; Three retained numeric operands and exact identity/geometry fields cross-checked. No repository code imported.",
+  "native_results": [
+    {
+      "audit": {
+        "absolute_difference": 2046,
+        "max_absolute_difference_to_allowance_ratio": 0.004882737994482689,
+        "minimum": 10,
+        "smallest_comparison_boundary_margin": 7.281688020444867e-08,
+        "total": 2056
+      },
+      "case": "Q01",
+      "receiving": {
+        "absolute_difference": 2120,
+        "exact": 231,
+        "max_absolute_difference_to_allowance_ratio": 0.002980232238769531,
+        "smallest_comparison_boundary_margin": 7.276463300946475e-08,
+        "total": 2351
+      },
+      "slot": "N01",
+      "three": {
+        "absolute_difference": 2060,
+        "max_absolute_difference_to_allowance_ratio": 0.0,
+        "smallest_comparison_boundary_margin": 1e-06,
+        "total": 2060
+      }
+    },
+    {
+      "audit": {
+        "absolute_difference": 2046,
+        "max_absolute_difference_to_allowance_ratio": 0.004882737994482689,
+        "minimum": 10,
+        "smallest_comparison_boundary_margin": 7.281688020444867e-08,
+        "total": 2056
+      },
+      "case": "Q01",
+      "receiving": {
+        "absolute_difference": 2120,
+        "exact": 231,
+        "max_absolute_difference_to_allowance_ratio": 0.002980232238769531,
+        "smallest_comparison_boundary_margin": 7.276463300946475e-08,
+        "total": 2351
+      },
+      "slot": "N02",
+      "three": {
+        "absolute_difference": 2060,
+        "max_absolute_difference_to_allowance_ratio": 0.0,
+        "smallest_comparison_boundary_margin": 1e-06,
+        "total": 2060
+      }
+    },
+    {
+      "audit": {
+        "absolute_difference": 2046,
+        "max_absolute_difference_to_allowance_ratio": 0.004882737994482689,
+        "minimum": 10,
+        "smallest_comparison_boundary_margin": 7.281688020444867e-08,
+        "total": 2056
+      },
+      "case": "Q01",
+      "receiving": {
+        "absolute_difference": 2120,
+        "exact": 231,
+        "max_absolute_difference_to_allowance_ratio": 0.002980232238769531,
+        "smallest_comparison_boundary_margin": 7.276463300946475e-08,
+        "total": 2351
+      },
+      "slot": "N03",
+      "three": {
+        "absolute_difference": 2060,
+        "max_absolute_difference_to_allowance_ratio": 0.0,
+        "smallest_comparison_boundary_margin": 1e-06,
+        "total": 2060
+      }
+    },
+    {
+      "audit": {
+        "absolute_difference": 2046,
+        "max_absolute_difference_to_allowance_ratio": 0.004882737994482689,
+        "minimum": 10,
+        "smallest_comparison_boundary_margin": 7.281688020444867e-08,
+        "total": 2056
+      },
+      "case": "Q01",
+      "receiving": {
+        "absolute_difference": 2120,
+        "exact": 231,
+        "max_absolute_difference_to_allowance_ratio": 0.002980232238769531,
+        "smallest_comparison_boundary_margin": 7.276463300946475e-08,
+        "total": 2351
+      },
+      "slot": "N04",
+      "three": {
+        "absolute_difference": 2060,
+        "max_absolute_difference_to_allowance_ratio": 0.0,
+        "smallest_comparison_boundary_margin": 1e-06,
+        "total": 2060
+      }
+    },
+    {
+      "audit": {
+        "absolute_difference": 2046,
+        "max_absolute_difference_to_allowance_ratio": 0.09764675050968895,
+        "minimum": 10,
+        "smallest_comparison_boundary_margin": 1.5523942982027412e-09,
+        "total": 2056
+      },
+      "case": "Q02",
+      "receiving": {
+        "absolute_difference": 2120,
+        "exact": 231,
+        "max_absolute_difference_to_allowance_ratio": 0.17397105693817136,
+        "smallest_comparison_boundary_margin": 1.4664864050271464e-09,
+        "total": 2351
+      },
+      "slot": "N05",
+      "three": {
+        "absolute_difference": 2060,
+        "max_absolute_difference_to_allowance_ratio": 0.0,
+        "smallest_comparison_boundary_margin": 1e-06,
+        "total": 2060
+      }
+    },
+    {
+      "audit": {
+        "absolute_difference": 2046,
+        "max_absolute_difference_to_allowance_ratio": 0.09764675050968895,
+        "minimum": 10,
+        "smallest_comparison_boundary_margin": 1.5523942982027412e-09,
+        "total": 2056
+      },
+      "case": "Q02",
+      "receiving": {
+        "absolute_difference": 2120,
+        "exact": 231,
+        "max_absolute_difference_to_allowance_ratio": 0.17397105693817136,
+        "smallest_comparison_boundary_margin": 1.4664864050271464e-09,
+        "total": 2351
+      },
+      "slot": "N06",
+      "three": {
+        "absolute_difference": 2060,
+        "max_absolute_difference_to_allowance_ratio": 0.0,
+        "smallest_comparison_boundary_margin": 1e-06,
+        "total": 2060
+      }
+    },
+    {
+      "audit": {
+        "absolute_difference": 2046,
+        "max_absolute_difference_to_allowance_ratio": 0.002861022951883285,
+        "minimum": 10,
+        "smallest_comparison_boundary_margin": 7.281688020444867e-08,
+        "total": 2056
+      },
+      "case": "Q03",
+      "receiving": {
+        "absolute_difference": 2120,
+        "exact": 231,
+        "max_absolute_difference_to_allowance_ratio": 0.004470348358154297,
+        "smallest_comparison_boundary_margin": 7.276299387842059e-08,
+        "total": 2351
+      },
+      "slot": "N07",
+      "three": {
+        "absolute_difference": 2060,
+        "max_absolute_difference_to_allowance_ratio": 0.0,
+        "smallest_comparison_boundary_margin": 1e-06,
+        "total": 2060
+      }
+    },
+    {
+      "audit": {
+        "absolute_difference": 2046,
+        "max_absolute_difference_to_allowance_ratio": 0.002861022951883285,
+        "minimum": 10,
+        "smallest_comparison_boundary_margin": 7.281688020444867e-08,
+        "total": 2056
+      },
+      "case": "Q03",
+      "receiving": {
+        "absolute_difference": 2120,
+        "exact": 231,
+        "max_absolute_difference_to_allowance_ratio": 0.004470348358154297,
+        "smallest_comparison_boundary_margin": 7.276299387842059e-08,
+        "total": 2351
+      },
+      "slot": "N08",
+      "three": {
+        "absolute_difference": 2060,
+        "max_absolute_difference_to_allowance_ratio": 0.0,
+        "smallest_comparison_boundary_margin": 1e-06,
+        "total": 2060
+      }
+    },
+    {
+      "audit": {
+        "absolute_difference": 2046,
+        "max_absolute_difference_to_allowance_ratio": 0.004882737994482689,
+        "minimum": 10,
+        "smallest_comparison_boundary_margin": 7.281688020444867e-08,
+        "total": 2056
+      },
+      "case": "Q04",
+      "receiving": {
+        "absolute_difference": 2120,
+        "exact": 231,
+        "max_absolute_difference_to_allowance_ratio": 0.002980232238769531,
+        "smallest_comparison_boundary_margin": 7.276463300946475e-08,
+        "total": 2351
+      },
+      "slot": "N09",
+      "three": {
+        "absolute_difference": 2060,
+        "max_absolute_difference_to_allowance_ratio": 0.0,
+        "smallest_comparison_boundary_margin": 1e-06,
+        "total": 2060
+      }
+    },
+    {
+      "audit": {
+        "absolute_difference": 2046,
+        "max_absolute_difference_to_allowance_ratio": 0.004882737994482689,
+        "minimum": 10,
+        "smallest_comparison_boundary_margin": 7.281688020444867e-08,
+        "total": 2056
+      },
+      "case": "Q04",
+      "receiving": {
+        "absolute_difference": 2120,
+        "exact": 231,
+        "max_absolute_difference_to_allowance_ratio": 0.002980232238769531,
+        "smallest_comparison_boundary_margin": 7.276463300946475e-08,
+        "total": 2351
+      },
+      "slot": "N10",
+      "three": {
+        "absolute_difference": 2060,
+        "max_absolute_difference_to_allowance_ratio": 0.0,
+        "smallest_comparison_boundary_margin": 1e-06,
+        "total": 2060
+      }
+    },
+    {
+      "audit": {
+        "absolute_difference": 2046,
+        "max_absolute_difference_to_allowance_ratio": 0.004882737994482689,
+        "minimum": 10,
+        "smallest_comparison_boundary_margin": 7.281688020444867e-08,
+        "total": 2056
+      },
+      "case": "Q05",
+      "receiving": {
+        "absolute_difference": 2120,
+        "exact": 231,
+        "max_absolute_difference_to_allowance_ratio": 0.002980232238769531,
+        "smallest_comparison_boundary_margin": 7.276463300946475e-08,
+        "total": 2351
+      },
+      "slot": "N11",
+      "three": {
+        "absolute_difference": 2060,
+        "max_absolute_difference_to_allowance_ratio": 0.0,
+        "smallest_comparison_boundary_margin": 1e-06,
+        "total": 2060
+      }
+    },
+    {
+      "audit": {
+        "absolute_difference": 2046,
+        "max_absolute_difference_to_allowance_ratio": 0.004882737994482689,
+        "minimum": 10,
+        "smallest_comparison_boundary_margin": 7.281688020444867e-08,
+        "total": 2056
+      },
+      "case": "Q05",
+      "receiving": {
+        "absolute_difference": 2120,
+        "exact": 231,
+        "max_absolute_difference_to_allowance_ratio": 0.002980232238769531,
+        "smallest_comparison_boundary_margin": 7.276463300946475e-08,
+        "total": 2351
+      },
+      "slot": "N12",
+      "three": {
+        "absolute_difference": 2060,
+        "max_absolute_difference_to_allowance_ratio": 0.0,
+        "smallest_comparison_boundary_margin": 1e-06,
+        "total": 2060
+      }
+    }
+  ],
+  "passed": true,
+  "processes_started": {
+    "lifecycle": 0,
+    "native": 0,
+    "node": 0,
+    "qualification": 0,
+    "receiving": 0
+  },
+  "qualification_status": "MEASURED_GATES_PASSED_VISUAL_REVIEW_PENDING",
+  "schema": "ontokin.c200.numeric-result-review/0.1.0",
+  "versions": {
+    "blender": "4.5.3",
+    "blender_build_hash": "67807e1800cc",
+    "gltf_exporter": "4.5.48",
+    "khronos_validator": "2.0.0-dev.3.10",
+    "node": "v24.22.1",
+    "three": "0.186.1",
+    "three_revision": "186"
+  }
+}

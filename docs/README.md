@@ -2,7 +2,7 @@
 
 ## Current engineering checkpoint
 
-[C199: finite static-tray prototype](engineering/static-tray-qualification-c199/README.md) implements the [C198 mapping](engineering/static-tray-mapping-c198/ADOPTION.md). Native qualification stopped at its first baseline with a pinned exporter failure: one construction start, zero accepted transactions and no GLB delivery. The prototype remains **unqualified**, and no tray is admitted. Read the [measured result](engineering/static-tray-qualification-c199/RESULTS.md), then continue with [C200 exporter compatibility repair and a new qualification protocol](engineering/static-tray-qualification-c199/NEXT-TASK.md), after checking [current status and the integration lease](../STATUS.md). Earlier evidence and the inherited failed regression remain unchanged.
+[C200: qualified finite static-tray exporter](engineering/static-tray-exporter-c200/README.md) retains the completed twelve-transaction qualification, independent numeric and visual reviews, and C199's consumed failed start. Read the [result and publication boundary](engineering/static-tray-exporter-c200/RESULTS.md), then [current status and the integration lease](../STATUS.md). C203 publication review and integration are pending; C201 admission has not begun. After verified integration, prepare [the separate four-export admission protocol](engineering/static-tray-exporter-c200/NEXT-TASK.md), with zero timed authors. Both C199/C200 schedules are closed. Historical evidence, image limits and the inherited failed regression remain explicit.
 
 The [C161 connected duct](../examples/connected-duct/README.md) joins two editable hollow parts and verifies the common opening before and after an Agent repair.
 

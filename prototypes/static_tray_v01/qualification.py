@@ -96,7 +96,7 @@ def run_qualification(lock_path, *, progress=None):
               "transactions": [], "delivered_controls": [], "native_starts": 0, "receiving_starts": 0,
               "external_readbacks": [], "read_only_checker_starts": 0,
               "measured_gates_passed": False, "qualified": False, "visual_review": "PENDING_ACTUAL_ARTIFACT_REVIEW",
-              "scope": "Finite C199 geometry qualification; tray admission, timed authors and inherited regression are separate"}
+              "scope": "Finite static-tray geometry qualification; the exact input lock identifies its cohort; tray admission, timed authors and inherited regression are separate"}
     stopped = False
     for row in lock["slots"]:
         if stopped:
