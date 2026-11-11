@@ -105,3 +105,18 @@ historical tests, contracts, numerical gates and hosted workflows remain unchang
 compatibilities, freeze the exact revised invocation policy and inputs, and obtain
 independent approval for a separately identified qualification protocol. The
 stopped C199 cohort must not be retried or silently resumed.
+
+## Verified development integration
+
+[PR #135](https://github.com/Omegapy/OntoKin/pull/135) merged the explicit incomplete
+increment at `83ff4a5533bbeea3c607a90734d3d8586671de6c`. Its tree
+`f25b1eaa0a3d4d87302582d06f9b1da6c563e4d5` equals the reviewed local and published
+candidate trees exactly. Resulting-main checks passed 62 focused methods, full
+approved input/dependency verification and the documentation checker (29 preserved
+sources, no failures). Independent actual-main review passed 16 checks.
+
+The [integration receipt](evidence/repository/INTEGRATION.json) preserves the
+separate identities and actual commands. These reruns do not add unique coverage
+to the earlier methods or change native qualification. The guarded closing record
+adds evidence and documentation only; its resulting identity and lease-release
+readback are retained in the handoff controls.

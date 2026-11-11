@@ -1,0 +1,65 @@
+{
+  "schema": "ontokin.c199.independent-actual-main-identity-review/0.1.0",
+  "reviewer": "/root/repo_status",
+  "status": "IDENTITY_AND_CLOSURE_PASS_WAITING_FOR_RESULTING_MAIN_CHECK_RECEIPTS",
+  "actual_main_commit": "83ff4a5533bbeea3c607a90734d3d8586671de6c",
+  "actual_main_tree": "f25b1eaa0a3d4d87302582d06f9b1da6c563e4d5",
+  "reviewed_candidate": "e287dd673c26489c752f637b1fb607c4bb942bbf",
+  "published_candidate": "74eba60ca8beba9cc8ec473beaeb6195a1d5386b",
+  "checks": [
+    {
+      "check": "Live main ref equals locally checked out actual merge",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "Actual merge tree equals reviewed candidate and published tree",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "PR135 is actually merged at the same commit",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "Merge parent topology includes owned lease and exact published candidate",
+      "passed": true,
+      "details": [
+        "73eebfd68836bed7ed2474964cf24b12d6e16ee9",
+        "74eba60ca8beba9cc8ec473beaeb6195a1d5386b"
+      ]
+    },
+    {
+      "check": "Exact approved280-input executable/dependency closure matches actual main",
+      "passed": true,
+      "details": {
+        "elapsed_ms": 7113.0240819984465,
+        "files": 280
+      }
+    },
+    {
+      "check": "Native result review preserved byte-identically on actual main",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "Actual-main result remains stopped, unqualified and unadmitted",
+      "passed": true,
+      "details": null
+    }
+  ],
+  "passed": true,
+  "native_starts_by_reviewer": 0,
+  "qualification_reruns": 0,
+  "source_urls": [
+    "https://api.github.com/repos/Omegapy/OntoKin/git/ref/heads/main",
+    "https://api.github.com/repos/Omegapy/OntoKin/git/commits/83ff4a5533bbeea3c607a90734d3d8586671de6c",
+    "https://api.github.com/repos/Omegapy/OntoKin/pulls/135"
+  ],
+  "limitations": [
+    "Tree equality supports reuse of exact candidate evidence; this does not change the failed native qualification.",
+    "Applicable resulting-main check receipts, lease closure and final handoff still require review.",
+    "No claim of green hosted CI is made."
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "source_commit": "83ff4a5533bbeea3c607a90734d3d8586671de6c",
+  "commands": [
+    [
+      "cpu",
+      [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-IBS",
+        "-c",
+        "import sys,unittest; sys.path.insert(0,'/workspace/scratch/801d9d641f68/ontokin'); suite=unittest.defaultTestLoader.loadTestsFromNames(['tests.test_parser', 'tests.test_bundle', 'tests.test_construction', 'tests.test_construction_catalog', 'tests.test_static_tray_source_v01.StaticTraySourceTests.test_01_all_five_real_source_pairs_and_frozen_sources', 'tests.test_static_tray_source_v01.StaticTraySourceTests.test_04_length_boundaries_nextafter_both_routes', 'tests.test_static_tray_source_v01.StaticTraySourceTests.test_05_translation_boundaries_nextafter_both_routes', 'tests.test_static_tray_source_v01.StaticTraySourceTests.test_10_wrong_source_geometry_is_not_reconstructed', 'tests.test_static_tray_source_v01.StaticTraySourceTests.test_17_direct_output_binding_ambient_import_and_work_budget']); result=unittest.TextTestRunner(verbosity=2).run(suite); sys.exit(not result.wasSuccessful())"
+      ]
+    ],
+    [
+      "input-closure",
+      [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-IBS",
+        "/workspace/scratch/801d9d641f68/ontokin/prototypes/static_tray_v01/cli.py",
+        "verify-inputs",
+        "--lock",
+        "/workspace/scratch/801d9d641f68/ontokin/docs/engineering/static-tray-qualification-c199/EXECUTABLE-INPUTS.json",
+        "--result",
+        "/workspace/scratch/801d9d641f68/c199-actual-main-checks/input-closure.json"
+      ]
+    ],
+    [
+      "documentation",
+      [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-IBS",
+        "/workspace/scratch/801d9d641f68/ontokin/docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+        "--json-output",
+        "/workspace/scratch/801d9d641f68/c199-actual-main-checks/documentation.json"
+      ]
+    ]
+  ],
+  "env": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "OMP_NUM_THREADS": "2",
+    "OPENBLAS_NUM_THREADS": "2",
+    "PATH": "/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONHASHSEED": "0",
+    "PYTHONNOUSERSITE": "1",
+    "TZ": "UTC"
+  }
+}
