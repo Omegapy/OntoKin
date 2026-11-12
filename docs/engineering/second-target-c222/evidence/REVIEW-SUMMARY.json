@@ -1,0 +1,145 @@
+{
+  "schema": "ontokin.c222.independent-review/0.1",
+  "recorded_at_utc": "2026-11-12T23:35:13.409550+00:00",
+  "decision": "APPROVED_FOR_SCOPED_CPU_INTEGRATION",
+  "baseline": "bbf2bec6efeb537622475ae6727319e55af40ff6",
+  "tested_source": "526a20805a8011223bacb0556c6d125c4a2cd43c",
+  "approved_source": "6e02cef9e78b4b1ee51d9bf3eae50fb9e0968a8d",
+  "approved_tree": "5fc4c367283e957553fa72d9c86f142f7178c5d0",
+  "files": [
+    {
+      "path": "tools/second_target_c222/check_observations.py",
+      "reviewed_sha256": "1eab170204d8f02b5d281f7e67d7f649040a1c525884fcc17eadfed6c765b6b9",
+      "final_sha256": "1eab170204d8f02b5d281f7e67d7f649040a1c525884fcc17eadfed6c765b6b9",
+      "unchanged": true,
+      "bytes": 18786
+    },
+    {
+      "path": "docs/engineering/second-target-c222/CONTRACT.md",
+      "reviewed_sha256": "77ba5941e1694b7716045bc1d4c7d5118e6a96a0fb6bd4c1a9f838738a7dc79e",
+      "final_sha256": "77ba5941e1694b7716045bc1d4c7d5118e6a96a0fb6bd4c1a9f838738a7dc79e",
+      "unchanged": true,
+      "bytes": 9087
+    },
+    {
+      "path": "tools/second_target_c222/tests/run_controls.py",
+      "reviewed_sha256": "a9b038722a709c3ebcd9a5dda074d4a491c1761e4709847d49f94ac1f4635b0a",
+      "final_sha256": "ac74a4c8096c3d45373f61781c40057f48f2a8346c14e8428287b3c8753bbe82",
+      "unchanged": false,
+      "bytes": 13588
+    }
+  ],
+  "changed_paths": [
+    "A\tdocs/engineering/second-target-c222/CONTRACT.md",
+    "A\ttools/second_target_c222/check_observations.py",
+    "A\ttools/second_target_c222/tests/run_controls.py"
+  ],
+  "public_controls": {
+    "count": 49,
+    "passed": 49,
+    "failed": [],
+    "complete_mapping_positive_cases": 9,
+    "verified_mapping_rows": 210600,
+    "evidence": "controls-01/SUMMARY.json"
+  },
+  "internal_controls": {
+    "count": 10,
+    "passed": 10,
+    "static_conditions": {
+      "matcher_does_not_read_normals": true,
+      "matcher_does_not_read_display_names": true,
+      "matcher_does_not_read_native_labels": true,
+      "public_api_calls_authority_admission": true,
+      "no_product_runtime_import": true,
+      "no_subprocess_import_or_launch": true
+    },
+    "evidence": "internal-controls-01.json"
+  },
+  "focused_duplicate_control": {
+    "passed": true,
+    "evidence": "focused-duplicate-control.json"
+  },
+  "independent_fixture": {
+    "parts": 18,
+    "triangles": 7800,
+    "corners": 23400,
+    "independent_c214_position_assertions": 70200,
+    "glb_sha256": "05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8",
+    "map_sha256": "f8911b5d846114fe525ab753b78a16f665bd7a43775ecfce2e656d17eb1419ed",
+    "payload_sha256": "6f959056d0d61e5c0aed32929673a50f040136abbeb201307961bc90ee73b743"
+  },
+  "execution": {
+    "native_starts": 0,
+    "version_probes": 0,
+    "source_evaluations": 0,
+    "exports": 0,
+    "imports": 0,
+    "renders": 0,
+    "scene_writes": 0,
+    "product_regression_run": false
+  },
+  "reviewed_delta": "Final author commit changes only duplicate-triangle test fixture selection to preserve vertex usage and reach DUPLICATE_CORRESPONDENCE. Checker and contract are byte-identical. Independent focused public control verified the intended stage on final commit.",
+  "limits": [
+    "Synthetic CPU correspondence only; no Godot provenance or behavior established",
+    "Untrusted native labels cannot attest actual GLTFState mapping",
+    "Normal/material values, poses, persistence and target execution remain pending",
+    "Historical strict Blender normal failure and broad regression failure unchanged"
+  ],
+  "blockers": [],
+  "evidence_files": [
+    "HARNESS-NOTES.md",
+    "controls-01.log",
+    "controls-01/SUMMARY.json",
+    "controls-01/asserted_native_acceptance-report.json",
+    "controls-01/baseline-stdout.json",
+    "controls-01/boolean_gltf_node-report.json",
+    "controls-01/boolean_position_component-report.json",
+    "controls-01/boolean_vertex_index-report.json",
+    "controls-01/duplicate_gltf_identity-report.json",
+    "controls-01/duplicate_json_key-report.json",
+    "controls-01/duplicate_native_identity-report.json",
+    "controls-01/duplicate_triangle-report.json",
+    "controls-01/extra_part-report.json",
+    "controls-01/extra_surface-report.json",
+    "controls-01/extra_triangle-report.json",
+    "controls-01/immutable_authority_changed-report.json",
+    "controls-01/incomplete_triangle-report.json",
+    "controls-01/invalid_utf8-report.json",
+    "controls-01/missing_normal-report.json",
+    "controls-01/missing_part-report.json",
+    "controls-01/missing_triangle-report.json",
+    "controls-01/negative_vertex_index-report.json",
+    "controls-01/nonfinite_nan-report.json",
+    "controls-01/out_of_range_vertex_index-report.json",
+    "controls-01/overflowing_json_number-report.json",
+    "controls-01/raw_winding_not_reversed-report.json",
+    "controls-01/stale_source_revision-report.json",
+    "controls-01/string_normal_component-report.json",
+    "controls-01/swapped_element_ids-report.json",
+    "controls-01/tiny_position_change_with_original_normal-report.json",
+    "controls-01/truncated_json-report.json",
+    "controls-01/unknown_field-report.json",
+    "controls-01/unreferenced_extra_geometry-report.json",
+    "controls-01/wrong_actual_basis_with_identity_label-report.json",
+    "controls-01/wrong_actual_units_with_metre_label-report.json",
+    "controls-01/wrong_basis-report.json",
+    "controls-01/wrong_glb_identity-report.json",
+    "controls-01/wrong_material_assignment-report.json",
+    "controls-01/wrong_mesh-report.json",
+    "controls-01/wrong_primitive-report.json",
+    "controls-01/wrong_schema-report.json",
+    "controls-01/wrong_source_path-report.json",
+    "controls-01/wrong_units-report.json",
+    "controls-01/wrong_winding_declaration-report.json",
+    "focused-duplicate-control.json",
+    "focused-duplicate-control.log",
+    "focused_duplicate_control.py",
+    "independent-fixture-metadata.json",
+    "independent-observation.json",
+    "independent_controls.py",
+    "independent_fixture.py",
+    "internal-controls-01.json",
+    "internal-controls-01.log",
+    "internal_controls.py"
+  ]
+}

@@ -2,6 +2,14 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
+## C222 current result: CPU observation schema and exact correspondence passed
+
+[C222/0.1.0](docs/engineering/second-target-c222/RESULTS.md) supplies the finite observation format and geometry checker for the same 18-part fixture. C221 authority admission stays fixed. Exact positions and C220's predeclared winding conversion map all 7,800 triangles and 23,400 corners, with signed-zero canonicalization only. Names and normals cannot choose matches; malformed, missing, ambiguous, duplicate or extra geometry fails.
+
+All 23 author controls and 49 independent public controls pass, plus ten ambiguity/winding controls and six static conditions. Nine accepted synthetic variants received complete 23,400-row correspondence checks. [Contract](docs/engineering/second-target-c222/CONTRACT.md), [independent review](docs/engineering/second-target-c222/REVIEW.md). Native labels remain untrusted. No Godot behavior, numerical normal/material/pose fidelity, native persistence or full release is established; all native/version/source/export/import/render starts and scene writes remain zero.
+
+The [owner's review tracker](docs/engineering/review-integration-c221/README.md) retains all nine task records and criteria. R00 implementation is complete; its status stays active at archive seal until external delivery is confirmed. R01-R08 remain pending. After the verified C222 ZIP save, the next bounded action is [R01 validation-driver input/bytecode repair](docs/engineering/second-target-c222/NEXT-TASK.md), followed separately by R02 aggregate verification. R07 preserves the remaining second-target work. Stop after this handoff.
+
 ## C221 current result: CPU authority binding passed
 
 [C221/0.1.0](docs/engineering/second-target-c221/RESULTS.md) supplies an isolated standard-library checker for the eight fixed C220 input files and complete source mapping. Actual input admission passes two source units, 18 parts, 52 span occurrences over 16 distinct ranges, 54 accessor bindings, 7,800 triangle instances and 23,400 corner instances. The [contract](docs/engineering/second-target-c221/CONTRACT.md) separates immutable file admission, structural source joins and unimplemented numerical/destination claims.
