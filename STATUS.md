@@ -18,7 +18,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-No active integration lease. Owner `c210-semantic-7of9-20261111` releases the C210 lease after verified PR #153 and passing actual-main checks. The last renewal was due to expire at `2026-11-12T01:23:04.000Z`; this metadata publication closes it earlier. Root and implementation-worker scopes are finished. The published work branch was observed absent after merge; exact local/API histories remain separately retained. [Integration record](docs/engineering/semantic-export-c210/evidence/INTEGRATION.json). Recheck actual refs and ownership before starting a new scope.
+Active integration lease: owner `c211-blender-7of9-20261111`, [scope issue #154](https://github.com/Omegapy/OntoKin/issues/154), branch `work/c211-blender-receiving`. Acquired from observed main `4f7a62cf965066ee7f27540c3c5f2554732c6950` at `2026-11-12T01:52:47.000Z`; expires `2026-11-12T02:22:47.000Z`. Root owns current STATUS/navigation and serialized integration. The implementation worker owns only new `prototypes/semantic_receiving_c211/`, its dedicated tests and the new finite contract on `work/c211-receiver-implementation`. The separate reviewer owns independent evidence only. This scope receives C210's exact accepted after-artifact in installed Blender 4.3.2. C199/C200 remain closed and C201 admission remains deferred. Reconcile actual heads and outstanding writes before renewing or succeeding this lease.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
