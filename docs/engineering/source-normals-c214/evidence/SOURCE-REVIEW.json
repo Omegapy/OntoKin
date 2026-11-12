@@ -1,0 +1,153 @@
+{
+  "schema": "ontokin.c214.independent-source-review/0.1",
+  "reviewer": "root/package_restore",
+  "reviewedAtUtc": "2026-11-12T14:33:09.909507+00:00",
+  "outcome": "APPROVE_BOUNDED_CPU_INCREMENT",
+  "reviewedCommit": "3527a198baf5dc06290a508709024996cc00e048",
+  "reviewedTree": "fdad5bea2760cd070e90b13e32a57a731df6ae07",
+  "baseCommit": "d1ba7fcbf4e7efe41cff508356d1fe122674ae74",
+  "sourceReviewCriteriaPassed": 12,
+  "checks": [
+    {
+      "id": "S01",
+      "topic": "Scope",
+      "criterion": "Only new files under docs/engineering/source-normals-c214; no production import routing, dependency, workflow or released-path change",
+      "result": "PASS",
+      "observedEvidence": "All existing tracked object IDs and modes match C213 main. Exactly six new files under the isolated source-normals-c214 directory; no production path or default routing changes."
+    },
+    {
+      "id": "S02",
+      "topic": "Contract status",
+      "criterion": "Versioned proposed profile; retained metadata does not establish native shading fidelity and does not replace C211 strict tolerance",
+      "result": "PASS",
+      "observedEvidence": "CONTRACT.md declares C214/0.1 proposed experimental; C211 strict 2e-6 failure, original contract and held receiver remain unchanged. Native fidelity/receiving flags are hard-coded false; tolerance is null."
+    },
+    {
+      "id": "S03",
+      "topic": "Trusted input boundary",
+      "criterion": "Accepted C210 identity originates from fixed independently observed source/artifact pins rather than self-authenticating caller input",
+      "result": "PASS",
+      "observedEvidence": "build_payload checks exact size/SHA-256 pins of all three C210 bytes before decoding. Pinned digests match retained source. Bundle manifest/revision, semantic artifact/accessor hashes and GLB provenance are also verified."
+    },
+    {
+      "id": "S04",
+      "topic": "Source precision",
+      "criterion": "Exact float32 directions and signs retained without normalization; original binary representation bound and validated",
+      "result": "PASS",
+      "observedEvidence": "normal_f32le is twelve original little-endian source bytes encoded as lowercase hex. Validation reconstructs the complete expected canonical payload. No normalization or averaging changes source bits; low-level synthetic signed-zero tests grant no artifact acceptance."
+    },
+    {
+      "id": "S05",
+      "topic": "Corner identity",
+      "criterion": "Unambiguous mesh/primitive/triangle/corner/vertex/winding identity; shared meshes and source objects separated",
+      "result": "PASS",
+      "observedEvidence": "Payload keys mesh/primitive/triangle/corner plus vertex/winding/position bytes distinguish sharp boundaries. Instances bind node/mesh/path/element_id; report keys prepend node to the four-part source key."
+    },
+    {
+      "id": "S06",
+      "topic": "Source frame",
+      "criterion": "Explicit source-local normal frame; observation admission refuses unsupported transforms or guessed native mappings",
+      "result": "PASS",
+      "observedEvidence": "The literal source-local right-handed +Y frame is fixed and checked. Observation frame mismatch is refused. No native frame conversion or guessed corner mapping is implemented or claimed."
+    },
+    {
+      "id": "S07",
+      "topic": "Validator independence from submitted claims",
+      "criterion": "Exact recomputation/comparison of authoritative payload at the trusted boundary; nonfinite/zero values do not become valid source normals",
+      "result": "PASS",
+      "observedEvidence": "validate_payload rebuilds authoritative mapping from hard-pinned source and requires exact canonical equality. Missing/duplicate/reordered/changed/unknown payload records cannot self-authenticate with submitted hashes."
+    },
+    {
+      "id": "S08",
+      "topic": "Observation provenance",
+      "criterion": "Synthetic observations explicitly identified; arbitrary caller provenance cannot be promoted to native receiving evidence",
+      "result": "PASS",
+      "observedEvidence": "Only synthetic-cpu observation kind is accepted. Report authority/fidelity/evidence/acceptance fields originate in code; exact copies remain synthetic. Contract distinguishes extraction helpers and null digest for noncanonical direct-API observations."
+    },
+    {
+      "id": "S09",
+      "topic": "Loss-report semantics",
+      "criterion": "Raw component and direction angle definitions agree with code; missing/invalid observations remain explicit and totals do not hide them",
+      "result": "PASS",
+      "observedEvidence": "Component deltas compare raw same-frame values; only angle calculation normalizes using scale-first hypot and atan2 cross/dot. Every expected instance-corner receives observed/missing/invalid status. Empty valid populations have null maxima. Independent numerical controls establish observed behavior separately."
+    },
+    {
+      "id": "S10",
+      "topic": "Experiment containment",
+      "criterion": "Explicit CPU invocation only; no Blender/native launch, held receiver mutation, second-target claim or generated accepted export",
+      "result": "PASS",
+      "observedEvidence": "prototype.py imports standard-library modules only and launches no process. run_proof.py loads that file explicitly and starts only read-only Git rev-parse/status queries, with no OntoKin program, GLB export, Blender or native destination launch."
+    },
+    {
+      "id": "S11",
+      "topic": "Evidence and binding",
+      "criterion": "Implementation, accepted inputs and output identities are recorded with command/interpreter/platform; review conclusion binds exact source commit and file hashes",
+      "result": "PASS",
+      "observedEvidence": "Committed receipt binds executed commit 0adef30c, exact inputs, source bytes, output bytes, platform and command. Final prototype/driver hashes equal executed and independently reviewed bytes. All six generated output hashes/sizes match. Later contract clarification/link repair are documented without relabeling the original check failure."
+    },
+    {
+      "id": "S12",
+      "topic": "Validation suitability",
+      "criterion": "Focused independent controls + documentation checks appropriate only while existing production/semantic/numeric/Agent/export/test/workflow bytes remain unchanged; old failed regressions remain failed",
+      "result": "PASS",
+      "observedEvidence": "Focused independent CPU controls plus preservation/documentation checks are appropriate for this isolated analysis increment because every existing tracked byte/mode is unchanged and there is no product import integration. Full historical regressions remain failed/interrupted, with no fresh regression or native acceptance claimed."
+    }
+  ],
+  "sourceFiles": {
+    "docs/engineering/source-normals-c214/CONTRACT.md": "edaed7aedad845fe855676847cda403a5b5d7568b4bb5ce75b741a84b0c0d2ea",
+    "docs/engineering/source-normals-c214/README.md": "c33697a57a69babba5bad9431e67b8484fc58e6dd7792b1dc584459ce098cc1a",
+    "docs/engineering/source-normals-c214/RESULTS.md": "0e41546ab49b6a6dbb7dc2508f369f0cf28e4ec8b1370541a5f7496e3c7269f9",
+    "docs/engineering/source-normals-c214/evidence/CPU-PROOF.json": "dd0e6ec0c9208618719edfbf9b16ed2cb474045bea38574d776e20b609909f87",
+    "docs/engineering/source-normals-c214/prototype.py": "006be6d64253d01d88518d284f6daf483971487983606bb5f21dd832dd7e9b0b",
+    "docs/engineering/source-normals-c214/run_proof.py": "d6cb538463baa4de86c99e8526644dae5c16d59ff889eaa816552f3f80e12496"
+  },
+  "containmentReport": "SOURCE-CONTAINMENT.json",
+  "containmentReportSha256": "5ac4f1690884c11957b7b24974e9ebbb375a85c52e4155a488e9fa1894aa961f",
+  "validationPlanSha256": "f666cf7faff038e3f5da11c448528c4c1ff9a7294cd71601272dac44cf440cab",
+  "smokeEvidence": {
+    "file": "docs/engineering/source-normals-c214/evidence/CPU-PROOF.json",
+    "sha256": "dd0e6ec0c9208618719edfbf9b16ed2cb474045bea38574d776e20b609909f87",
+    "executedCommit": "0adef30c46697adffc5dfaaed6c7c2278d5b985e",
+    "checksPassed": 11,
+    "sourceWorktreeWasClean": true,
+    "allSixGeneratedOutputHashesAndSizesMatch": true,
+    "finalPrototypeAndDriverEqualExecutedBytes": true,
+    "postRunChanges": "Evidence/results additions plus contract wording clarification and one preserved contract link repair; no executable changes"
+  },
+  "independentNumericEvidence": {
+    "file": "evidence/c214-independent/initial-run/REVIEW.json",
+    "sha256": "a43decf1968744d803b971fd0101549141861741ea013f531bcb924ff8f2ee5b",
+    "passed": true,
+    "controls": 31,
+    "assertions": 52957,
+    "finalImplementationMatchesExecutedSnapshot": true,
+    "implementationSha256": "006be6d64253d01d88518d284f6daf483971487983606bb5f21dd832dd7e9b0b",
+    "executedBy": "root/live_state_audit"
+  },
+  "documentationEvidence": {
+    "initialFailureRetained": "workers/prototype/documentation-check.json",
+    "correctedPass": "workers/prototype/documentation-check-final.json",
+    "meaning": "One broken historical contract link repaired; original failure remains evidence. Root must run candidate and actual-main documentation checks after its navigation/evidence updates."
+  },
+  "nextTaskReview": {
+    "file": "evidence/c214/NEXT-TASK-DRAFT.md",
+    "sha256": "aa5766ffe866c4d0172ca65155032725b30c59b603bb0096cebe1d1af8caae0f",
+    "outcome": "CONSISTENT_WITH_CURRENT_STOP_BOUNDARY",
+    "clarificationRecommended": "Keep C214/0.1 synthetic-only behavior unchanged; a native adapter needs its own named/versioned profile and synthetic checks are not native evidence."
+  },
+  "blockers": [],
+  "limitations": [
+    "Approval covers the exact finite CPU source/contract increment, not all product requirements or destination fidelity",
+    "Only pinned C210 input triple accepted; low-level synthetic helpers are not general source acceptance",
+    "No new numerical tolerance or universal codec bound",
+    "No new native process, held receiver change, second destination or authoring comparison",
+    "Historical full regressions remain failed or interrupted/incomplete",
+    "Root owns publication, actual-main input equality, documentation checks, source restore, archive verification and confirmed delivery"
+  ],
+  "reviewerExecutedImplementation": false,
+  "reviewerNativeOrProductProcesses": 0,
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  }
+}

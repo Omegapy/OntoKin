@@ -1,0 +1,410 @@
+{
+  "schema": "ontokin.c214.independent-review/0.1",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "native_processes": 0,
+  "product_processes": 0,
+  "source_binding": {
+    "implementation": {
+      "input_path": "/workspace/scratch/9b0c97489d05/c214-prototype-worker/docs/engineering/source-normals-c214/prototype.py",
+      "executed_snapshot": "executed-prototype.py",
+      "sha256": "006be6d64253d01d88518d284f6daf483971487983606bb5f21dd832dd7e9b0b"
+    },
+    "independent_oracle_sha256": "99307f93d30f29d486960464cea56118a81ced0577a0664f058cb10d93b1046d",
+    "runner_sha256": "974abfe61f0999c71c826e619521670129c16682780ea4f9c7e8200066e0de77",
+    "predeclared_controls_sha256": "d1ed9ef2b84efa7e2cda50689d4b7eb1950dc167640c01a2bdee70671e5c2c55",
+    "inputs": {
+      "after.glb": {
+        "sha256": "05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8",
+        "bytes": 185236
+      },
+      "after.program.bundle.json": {
+        "sha256": "83ca659aadd23d7ce09ebcd209c210efd69028ca6e51ebd70d69ec47f65098e4",
+        "bytes": 4065
+      },
+      "after.semantic.json": {
+        "sha256": "1077eff813807c0b2058d35e2007c234b4d8c157f6dc0177f5a548924edd2c34",
+        "bytes": 191181
+      }
+    }
+  },
+  "passed": true,
+  "controls": 31,
+  "assertions": 52957,
+  "results": [
+    {
+      "id": "P01",
+      "passed": true,
+      "assertions": 3030,
+      "details": {
+        "source_corners": 3024,
+        "instances": 18,
+        "corners_sha256": "c4dea6969f3493fd4a4bdb15a268997f3621d277b904a1e515b90d1ac8f47f02"
+      }
+    },
+    {
+      "id": "P02",
+      "passed": true,
+      "assertions": 3026,
+      "details": {
+        "status": "EXACT_SOURCE_PAYLOAD",
+        "payloadSha256": "sha256:033bbc224803b7e1f73e7f223d3552ea3830d069767ef9ed9ec176d0fa2cf85c",
+        "sourceCorners": 3024,
+        "instances": 18,
+        "nativeFidelityEstablished": false,
+        "receivingEvidence": false
+      }
+    },
+    {
+      "id": "P03",
+      "passed": true,
+      "assertions": 3,
+      "details": {
+        "source": 3024,
+        "instance": 23400
+      }
+    },
+    {
+      "id": "P04",
+      "passed": true,
+      "assertions": 4,
+      "details": {
+        "normal_bytes": [
+          "0000803f0000008000000000",
+          "0000803f0000008000000000",
+          "0000803f0000008000000000",
+          "000000000000803f00000000",
+          "000000000000803f00000000",
+          "000000000000803f00000000"
+        ],
+        "accepted_C210": false
+      }
+    },
+    {
+      "id": "P05",
+      "passed": true,
+      "assertions": 33,
+      "details": {
+        "sharp_positions": 32
+      }
+    },
+    {
+      "id": "P06",
+      "passed": true,
+      "assertions": 46803,
+      "details": {
+        "expected": 23400,
+        "observed": 23400,
+        "missing": 0,
+        "invalid": 0,
+        "maximumComponentDifference": 0.0,
+        "maximumAngularDifferenceDegrees": 0.0
+      }
+    },
+    {
+      "id": "P07",
+      "passed": true,
+      "assertions": 2,
+      "details": {
+        "key": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "status": "observed",
+        "sourceNormal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "observedNormal": [
+          -1.0,
+          -0.0,
+          -0.0
+        ],
+        "componentDelta": [
+          -2.0,
+          -0.0,
+          -0.0
+        ],
+        "maximumComponentDifference": 2.0,
+        "angularDifferenceDegrees": 180.0
+      }
+    },
+    {
+      "id": "P08",
+      "passed": true,
+      "assertions": 1,
+      "details": {
+        "key": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "status": "observed",
+        "sourceNormal": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "observedNormal": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "componentDelta": [
+          -1.0,
+          1.0,
+          0.0
+        ],
+        "maximumComponentDifference": 1.0,
+        "angularDifferenceDegrees": 90.0
+      }
+    },
+    {
+      "id": "P09",
+      "passed": true,
+      "assertions": 12,
+      "details": [
+        {
+          "scale": 2.0,
+          "angle": 0.0,
+          "component": 1.0
+        },
+        {
+          "scale": 1e+308,
+          "angle": 0.0,
+          "component": 1e+308
+        },
+        {
+          "scale": 1e-308,
+          "angle": 0.0,
+          "component": 1.0
+        },
+        {
+          "scale": 5e-324,
+          "angle": 0.0,
+          "component": 1.0
+        }
+      ]
+    },
+    {
+      "id": "N01",
+      "passed": true,
+      "assertions": 1,
+      "details": "Payload differs from authoritative source mapping"
+    },
+    {
+      "id": "N02",
+      "passed": true,
+      "assertions": 1,
+      "details": "Payload differs from authoritative source mapping"
+    },
+    {
+      "id": "N03",
+      "passed": true,
+      "assertions": 4,
+      "details": {
+        "identity_components": 4
+      }
+    },
+    {
+      "id": "N04",
+      "passed": true,
+      "assertions": 1,
+      "details": "Payload differs from authoritative source mapping"
+    },
+    {
+      "id": "N05",
+      "passed": true,
+      "assertions": 1,
+      "details": "Payload differs from authoritative source mapping"
+    },
+    {
+      "id": "N06",
+      "passed": true,
+      "assertions": 1,
+      "details": "Payload differs from authoritative source mapping"
+    },
+    {
+      "id": "N07",
+      "passed": true,
+      "assertions": 1,
+      "details": "Payload differs from authoritative source mapping"
+    },
+    {
+      "id": "N08",
+      "passed": true,
+      "assertions": 3,
+      "details": [
+        "Source normal is nonfinite",
+        "Source normal is nonfinite",
+        "Source normal is nonfinite"
+      ]
+    },
+    {
+      "id": "N09",
+      "passed": true,
+      "assertions": 1,
+      "details": "Source normal is zero"
+    },
+    {
+      "id": "N10",
+      "passed": true,
+      "assertions": 1,
+      "details": "Stale or unaccepted input: glb"
+    },
+    {
+      "id": "N11",
+      "passed": true,
+      "assertions": 1,
+      "details": "Stale or unaccepted input: bundle"
+    },
+    {
+      "id": "N12",
+      "passed": true,
+      "assertions": 1,
+      "details": "Stale or unaccepted input: semantic"
+    },
+    {
+      "id": "N13",
+      "passed": true,
+      "assertions": 1,
+      "details": "Duplicate observation corner"
+    },
+    {
+      "id": "N14",
+      "passed": true,
+      "assertions": 3,
+      "details": {
+        "expected": 23400,
+        "observed": 0,
+        "missing": 23400,
+        "invalid": 0,
+        "maximumComponentDifference": null,
+        "maximumAngularDifferenceDegrees": null
+      }
+    },
+    {
+      "id": "N15",
+      "passed": true,
+      "assertions": 1,
+      "details": "Unknown or ambiguous observation corner"
+    },
+    {
+      "id": "N16",
+      "passed": true,
+      "assertions": 8,
+      "details": [
+        {
+          "key": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "status": "invalid",
+          "reason": "nonfinite-component"
+        },
+        {
+          "key": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "status": "invalid",
+          "reason": "nonfinite-component"
+        },
+        {
+          "key": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "status": "invalid",
+          "reason": "nonfinite-component"
+        },
+        {
+          "key": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "status": "invalid",
+          "reason": "non-numeric-or-bool-component"
+        }
+      ]
+    },
+    {
+      "id": "N17",
+      "passed": true,
+      "assertions": 2,
+      "details": {
+        "key": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "status": "invalid",
+        "reason": "zero-vector"
+      }
+    },
+    {
+      "id": "N18",
+      "passed": true,
+      "assertions": 1,
+      "details": "Stale source payload observation binding"
+    },
+    {
+      "id": "N19",
+      "passed": true,
+      "assertions": 1,
+      "details": "Only explicitly synthetic CPU observations are implemented"
+    },
+    {
+      "id": "N20",
+      "passed": true,
+      "assertions": 4,
+      "details": {
+        "noncanonical_type_controls": 4
+      }
+    },
+    {
+      "id": "N21",
+      "passed": true,
+      "assertions": 2,
+      "details": [
+        "Accessor exceeds bufferView",
+        "Vertex index out of bounds"
+      ]
+    },
+    {
+      "id": "N22",
+      "passed": true,
+      "assertions": 3,
+      "details": [
+        "Position/normal attributes required",
+        "Only TRIANGLES is supported",
+        "Sparse/normalized accessor unsupported"
+      ]
+    }
+  ],
+  "limitations": [
+    "Exact accepted C210 fixture and explicit synthetic CPU controls only",
+    "No native receiving/shading proof or replacement tolerance",
+    "Low-level malformed/signed-zero fixtures are untrusted extraction tests and never accepted C210 payloads"
+  ]
+}
