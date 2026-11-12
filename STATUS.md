@@ -2,7 +2,17 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
-## C218 current result: saved-scene reopen persistence passed
+## C219 current result: precise finite Blender receiving promise accepted
+
+[C219/0.1.0](docs/engineering/receiving-decision-c219/DECISION.md) accepts the one-fixture, one-build promise from C217/C218: exact retained source authority, independently checked native geometry and measured shading loss, useful inspected views, and exact persistence of observed native values through the specified save/reopen. Its requirement table binds all 18 objects, 7,800 triangles, 23,400 corners and 126 poses. This is an experimental feasibility decision; it does not establish a general or production importer.
+
+The original strict source-normal gate remains **FAILED** at maximum component difference `0.0001531541347503662` versus unchanged `2e-6`. No new normal, correspondence or shading tolerance is adopted. C215's automatic acceptance/provenance flags remain false. Retained source and mapped semantic metadata do not establish live native physics or actions. Held PRs #155/#165/#167/#169 remain unchanged; no prototype or runtime source is integrated. [Exact evidence bindings](docs/engineering/receiving-decision-c219/evidence/BINDINGS.json).
+
+C218's completed delivery is reconciled from the exact saved input ZIP, current package verification, documented offline restore and closed issue #168. C219 uses preserved observations and starts no native process, source program, import/export or renderer. Original failed regressions and every broader failed, unknown or unrun claim remain visible in the [decision](docs/engineering/receiving-decision-c219/DECISION.md).
+
+**Next action:** finish the verified saved C219 handoff and stop. The next thread may perform only the [second-target/source-traceability planning task](docs/engineering/receiving-decision-c219/NEXT-TASK.md), with actual availability, exact mappings, loss and review requirements established before future execution. Second-target execution, Unreal support and the matched direct-authoring comparison remain unrun.
+
+## C218 preserved result: saved-scene reopen persistence passed
 
 [C218](docs/engineering/native-reopen-c218/RESULTS.md) completed one independently reviewed reopening of C217's exact saved Blender scene with automatic scripts disabled. The process exited 0 after 9.911 seconds, with no timeout or remaining process group. All 18 objects, 7,800 triangles, 23,400 corner observations and 126 poses were retained. Complete numerical comparison with C217 found zero changed normal, position or pose values; two useful planned images were reviewed. The original scene bytes remain unchanged. The one-start schedule is consumed and closed.
 
@@ -10,7 +20,7 @@ The original strict normal gate remains **FAILED**: maximum source-normal compon
 
 Executed local observer `efd5002a8dd955a4fb59c96920b0263e35e01a25` and held published source `15c369134cf8ae42d092823aeab9348c9861adfd` have the same tree, but remain distinct Git identities. The nine prototype files stay outside main in [draft PR #169](https://github.com/Omegapy/OntoKin/pull/169). Earlier held PRs #155/#165/#167 remain unchanged. The documentation/evidence result is published at `4a8fea791840e3cf18010c0c9ee12ffc24f3a1ef`, tree `9f8267deb4ddcda4eae6d4c2082aa82b4fec5dc9`, exactly equal to the independently reviewed candidate. Fresh actual-main checks passed 29 preserved sources / 4,518 local links; all 15,561 non-navigation baseline entries remain exact. [Integration record](docs/engineering/native-reopen-c218/evidence/publication/INTEGRATION.json).
 
-**Next action:** finish the verified saved C218 handoff and stop. The later [evidence-only finite receiving decision](docs/engineering/native-reopen-c218/NEXT-TASK.md) must account for C217/C218 and every remaining failed/unrun gate before any second-target work. It authorizes no native start.
+**Successor disposition:** C218 final delivery is confirmed in closed [issue #168](https://github.com/Omegapy/OntoKin/issues/168) and independently reverified by C219. C219 above completes the separately versioned finite decision from those observations. C218 historical findings and its closed one-start schedule remain unchanged.
 
 ## C217 preserved result: namespace repair and native import/capture passed
 
