@@ -2,7 +2,17 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
-## C217 current result: namespace repair and native import/capture passed
+## C218 current result: saved-scene reopen persistence passed
+
+[C218](docs/engineering/native-reopen-c218/RESULTS.md) completed one independently reviewed reopening of C217's exact saved Blender scene with automatic scripts disabled. The process exited 0 after 9.911 seconds, with no timeout or remaining process group. All 18 objects, 7,800 triangles, 23,400 corner observations and 126 poses were retained. Complete numerical comparison with C217 found zero changed normal, position or pose values; two useful planned images were reviewed. The original scene bytes remain unchanged. The one-start schedule is consumed and closed.
+
+The original strict normal gate remains **FAILED**: maximum source-normal component difference `0.0001531541347503662` exceeds unchanged `2e-6`. Exact saved-scene persistence preserves native values that already contain measured loss. No new tolerance, broader receiving acceptance or full release is claimed. [Measured summary and independent evidence](docs/engineering/native-reopen-c218/evidence/MEASURED-SUMMARY.json).
+
+Executed local observer `efd5002a8dd955a4fb59c96920b0263e35e01a25` and held published source `15c369134cf8ae42d092823aeab9348c9861adfd` have the same tree, but remain distinct Git identities. The nine prototype files stay outside main in [draft PR #169](https://github.com/Omegapy/OntoKin/pull/169). Earlier held PRs #155/#165/#167 remain unchanged. Documentation/evidence publication is recorded separately in the [integration record](docs/engineering/native-reopen-c218/evidence/publication/INTEGRATION.json).
+
+**Next action:** finish the verified saved C218 handoff and stop. The later [evidence-only finite receiving decision](docs/engineering/native-reopen-c218/NEXT-TASK.md) must account for C217/C218 and every remaining failed/unrun gate before any second-target work. It authorizes no native start.
+
+## C217 preserved result: namespace repair and native import/capture passed
 
 [C217](docs/engineering/native-receiving-c217/RESULTS.md) completed one independently reviewed Blender 4.3.2 import/save/capture attempt in 14.217 seconds, exit 0, with no timeout or observed process-group residue. The corrected guard records raw module metadata before classification and accepts only pinned namespace directories while retaining exact concrete-source/cache checks. Actual C217 metadata confirms the selected package is a contained namespace; C216's unrecorded attributes remain unknown.
 
@@ -12,7 +22,7 @@ Actually executed local source `6af212204d58fbac2a98f3cded44facd67c52528` and pu
 
 The documentation/evidence result is published at `7ddb286bb39b3f6d093e03f3f7a306dbc5d539cb`, tree `acacf5aa2b3a208f486453099acd4c9eba1ba109`, exactly equal to the independently reviewed candidate. Fresh actual-main checks pass 29 preserved sources / 4,505 local links, with all 15,539 non-navigation baseline entries unchanged and all eight prototype files absent. [Integration receipt](docs/engineering/native-receiving-c217/evidence/publication/INTEGRATION.json).
 
-**Next action:** finish the verified saved C217 handoff and stop. A later [bounded reopen proof](docs/engineering/native-receiving-c217/NEXT-TASK.md) must use this exact saved scene with no GLB reimport, a fresh source/plan review and at most one new start. C217's native schedule is closed.
+**Successor disposition:** C218 completed the separately reviewed one-start reopen above. C217's original source, saved scene, normal failure and consumed schedule remain unchanged.
 
 ## C216 preserved result: native start failed before product import
 

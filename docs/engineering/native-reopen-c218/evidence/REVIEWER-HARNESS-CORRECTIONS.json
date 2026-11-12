@@ -1,0 +1,70 @@
+{
+  "schema": "ontokin.c218.reviewer-harness-corrections/0.1",
+  "recordedAtUtc": "2026-11-12T17:35:12.330818+00:00",
+  "nativeReruns": 0,
+  "observerSourceChanged": false,
+  "nativeInputOrOutputChanged": false,
+  "initialBindingsAuditor": {
+    "path": "/workspace/scratch/682636da9b46/handoff-c218/agent-results/review-c218/independent_reopen_bindings_audit.initial.py",
+    "bytes": 14433,
+    "sha256": "49ccca382189282cc300d6474e8dd76c01a2c51acd5c7d8feb392e3f1bd09c2c"
+  },
+  "correctedBindingsAuditor": {
+    "path": "/workspace/scratch/682636da9b46/handoff-c218/agent-results/review-c218/independent_reopen_bindings_audit.py",
+    "bytes": 15033,
+    "sha256": "ff359540263c920bf98f9caea04dcce6a5c62352bc9515cfbdead0d46cc89e60"
+  },
+  "initialResult": {
+    "path": "/workspace/scratch/682636da9b46/handoff-c218/agent-results/review-c218/NATIVE-BINDINGS-AUDIT.json",
+    "bytes": 5121,
+    "sha256": "ca6c3d11bf48076c46f5f9efebad385952bb16334dd77db5bd418023111b50c4"
+  },
+  "initialDetailsTraceback": {
+    "path": "/workspace/scratch/682636da9b46/handoff-c218/agent-results/review-c218/native-details-audit.log",
+    "bytes": 752,
+    "sha256": "1c82bdfcd554444942639d513ddb3e80720dafc466ee5eb27865afba178fb5ec"
+  },
+  "corrections": [
+    {
+      "kind": "approval serialization",
+      "originalAssumption": "Reserved approval bytes equal canonical run copy bytes",
+      "correction": "Reservation binds exact original root approval file;require parsed equality with canonical run copy as a separate check",
+      "originalRootApproval": {
+        "path": "/workspace/scratch/682636da9b46/handoff-c218/evidence/c218/native-start-approval.json",
+        "bytes": 1335,
+        "sha256": "c97c2939d62f8cd808c4098e48a1f23146e28f0e4b17947fe2388f42e958cf57"
+      }
+    },
+    {
+      "kind": "initial interpreter flag",
+      "originalAssumption": "Initial dont_write_bytecode was True",
+      "correction": "Actual initial False matches C217;require exact prior initial flag and actual observer-set True;prefix/cache/raw provenance checks remain unchanged"
+    },
+    {
+      "kind": "scene-extras oracle",
+      "originalAssumption": "Only initial scene extras and C217 metadata would exist",
+      "correction": "Include previously declared Cycles renderer property group,derived from exact C217 recorded render settings;no extra unknown scene properties permitted",
+      "deviceEnumSource": {
+        "path": "/usr/share/blender/scripts/addons_core/cycles/properties.py",
+        "bytes": 68011,
+        "sha256": "412e647aff369ffbec469e80ffb44adb1a241d738a1c81d8477f484c952dc5a6"
+      },
+      "deviceEnumExcerpt": {
+        "path": "/workspace/scratch/682636da9b46/handoff-c218/agent-results/review-c218/CYCLES-DEVICE-PROPERTY.txt",
+        "bytes": 465,
+        "sha256": "a903d052201e75a42b67f1ed77f4695282fd15a2baf417e1124fa37fb567d61b"
+      }
+    },
+    {
+      "kind": "details invocation",
+      "originalAssumption": "SOURCE-ORACLE.json was the material/pose expectation oracle",
+      "correction": "That file is source-only corner inventory;use unchanged retained source-expectations.json bound in C217 final details audit",
+      "correctOracle": {
+        "path": "/workspace/scratch/682636da9b46/source-handoff/workers/native-review/source-expectations.json",
+        "bytes": 1027965,
+        "sha256": "537e27b11ab0a66b7bdcb2e4f293f294f58815c905df6699fcfc44842f2efbc3"
+      }
+    }
+  ],
+  "meaning": "These correct review harness/input selection,not product source,expectations about authority/material/pose fidelity,tolerances,native execution or measured results. Initial failed records remain preserved."
+}
